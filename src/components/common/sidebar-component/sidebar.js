@@ -1,5 +1,4 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import logo from '../../../assets/images/endless-logo.png';
 import logo_compact from '../../../assets/images/logo/compact-logo.png';
 
@@ -18,7 +17,9 @@ const Sidebar = (props) => {
     const [hideLeftArrow, setHideLeftArrow] = useState(true);
     const [mainmenu, setMainMenu] = useState(MENUITEMS);
     const wrapper = configDB.data.settings.sidebar.wrapper;
-    const layout = useSelector(content => content.Customizer.layout);
+    const layout = "1tr";
+   // const layout = useSelector(content => content.Customizer.layout);
+    console.log(wrapper+ "*********"+layout)
 
     useEffect(() => {
         window.addEventListener('resize', handleResize)
@@ -180,7 +181,7 @@ const Sidebar = (props) => {
                     </div>
                 </div>
                 <div className="sidebar custom-scrollbar">
-                    <UserPanel />
+                    {/* <UserPanel /> */}
                     <ul
                         className="sidebar-menu"
                         id="myDIV"

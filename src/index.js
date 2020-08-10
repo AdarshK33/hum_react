@@ -7,8 +7,8 @@ import { ScrollContext } from 'react-router-scroll-4';
 import * as serviceWorker from './serviceWorker';
 
 // ** Import custom components for redux**
-import { Provider } from 'react-redux';
-import store from './store/index';
+//  import { Provider } from 'react-redux';
+//  import store from './store/index';
 import App from "./components/app";
 
 // Import custom Components 
@@ -18,10 +18,11 @@ import Ecommerce from './components/dashboard/ecommerce';
 import University from './components/dashboard/university';
 import CryptoComponent from './components/dashboard/crypto/cryptoComponent';
 import Project from './components/dashboard/project/project';
-
 // sample page
 import Samplepage from './components/sample/samplepage';
 import SupportTicket from './components/support-ticket/supportTicket';
+// Added by Ranjith 31 july 2020
+import { GlobalCustomThemeProvider } from './context/GlobalState';
 
 //firebase Auth
 function Root() {
@@ -31,7 +32,8 @@ function Root() {
     }, []);
     return (
         <div className="App">
-            <Provider store={store}>
+         {/* <Provider store={store}>  */}
+         <GlobalCustomThemeProvider>
                 <BrowserRouter basename={'/'}>
                     <ScrollContext>
                         <Switch>
@@ -56,7 +58,8 @@ function Root() {
                         </Switch>
                     </ScrollContext>
                 </BrowserRouter>
-            </Provider>
+             {/* </Provider>  */}
+             </GlobalCustomThemeProvider>
         </div>
     );
 }
