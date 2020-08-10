@@ -20,6 +20,7 @@ const LeaveAdd = (props) => {
                                     <option>Casual</option>
                                     <option>Sick</option>
                                     <option>Others</option>
+                                    <option></option>
                                 </Form.Control>
                             </Col>
                         </Form.Group>
