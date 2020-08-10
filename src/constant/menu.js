@@ -1,7 +1,7 @@
 import {
     Home,
     File,
-    Headphones
+    Calendar
 } from 'react-feather';
 
 export const MENUITEMS = [
@@ -15,7 +15,7 @@ export const MENUITEMS = [
         ]
     },
     {
-        title: 'Support Ticket', icon: Headphones, type: 'link', path: '/support-ticket/supportTicket', active: false
+        title: 'Roster', icon: Calendar, type: 'link', path: '/roster/roster', active: false
     },
     {
         path: '/sample/samplepage', title: 'Sample Page', icon: File, type: 'link', active: false

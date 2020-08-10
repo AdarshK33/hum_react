@@ -20,7 +20,8 @@ import CryptoComponent from './components/dashboard/crypto/cryptoComponent';
 import Project from './components/dashboard/project/project';
 // sample page
 import Samplepage from './components/sample/samplepage';
-import SupportTicket from './components/support-ticket/supportTicket';
+
+import Roster from './components/roster/roster';
 // Added by Ranjith 31 july 2020
 import { GlobalCustomThemeProvider } from './context/GlobalState';
 
@@ -51,7 +52,7 @@ function Root() {
                                     <Route path={`${process.env.PUBLIC_URL}/sample/samplepage`} component={Samplepage} />
 
                                     {/* Pricing */}
-                                    <Route path={`${process.env.PUBLIC_URL}/support-ticket/supportTicket`} component={SupportTicket} />
+                                    <Route path={`${process.env.PUBLIC_URL}/roster/roster`} component={Roster} />
 
                                 </App>
                             </Fragment>
