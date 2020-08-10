@@ -20,6 +20,8 @@ import CryptoComponent from './components/dashboard/crypto/cryptoComponent';
 import Project from './components/dashboard/project/project';
 // sample page
 import Samplepage from './components/sample/samplepage';
+//Leave Page
+import LeaveView from './components/Leaves/LeaveView'
 import SupportTicket from './components/support-ticket/supportTicket';
 // Added by Ranjith 31 july 2020
 import { GlobalCustomThemeProvider } from './context/GlobalState';
@@ -50,6 +52,9 @@ function Root() {
                                     {/* Sample page */}
                                     <Route path={`${process.env.PUBLIC_URL}/sample/samplepage`} component={Samplepage} />
 
+                                    {/* Leaves Page */}
+                                    <Route path={`${process.env.PUBLIC_URL}/Leaves/LeaveView`} component={LeaveView} />
+                                    
                                     {/* Pricing */}
                                     <Route path={`${process.env.PUBLIC_URL}/support-ticket/supportTicket`} component={SupportTicket} />
 

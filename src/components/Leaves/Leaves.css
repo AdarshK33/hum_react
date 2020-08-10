@@ -1,0 +1,47 @@
+*:focus, *:active, *:visited {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+button.apply-button.btn.btn-primary{
+    color: black;
+    background-color: white !important;
+    font-weight: bold;
+    margin: 7px 0;
+    height: 2.2em;
+    float: right;
+}
+.row.apply-button-row{
+    background-color: royalblue;
+}
+.col.leaveApplications{
+    color: white;
+    font-weight: bold;
+    line-height: 3em;
+}
+.col-sm-12.main-heading-row {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+.text-center{
+    justify-content: center;
+    display: flex;
+}
+.table thead th, .table tbody td{
+    text-align: center;
+}
+.padding-left{
+    padding-left: 0;
+}
+.padding-right{
+    padding-right: 0;
+}
+button.submit-button.btn.btn-primary{
+    color: black;
+    background-color: whitesmoke !important;
+    border-color: lightgray !important;
+    float: right;
+}
+h5.modal-heading{
+    margin-left: 8rem;
+}
