@@ -31,7 +31,7 @@ const ShiftModal=(props)=> {
                   <div className="col-sm-7 ">
                     <div class="form-group">
                       <select class="form-control" id="exampleFormControlSelect1">
-                        <option>8:00 AM- 5:00 PM(Genral Shift)</option>
+                        <option>8:00 AM- 5:00 PM(Genral Shifts )</option>
                       </select>
                     </div>
                   </div>
