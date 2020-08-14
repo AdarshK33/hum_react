@@ -6,7 +6,7 @@ import Footer from './common/footer';
 import ThemeCustomizer from './common/theme-customizer'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Loader from './common/loader';
+// import Loader from './common/loader';
 
 
 const AppLayout = ({children}) => {

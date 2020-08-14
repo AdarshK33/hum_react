@@ -14,6 +14,7 @@ function DateFromEnd(props) {
                     <DatePicker
                       className="form-control"
                       selected={startDate}
+                      required
                       onChange={(date) => setStartDate(date)}
                     />
                   </div>
@@ -24,6 +25,7 @@ function DateFromEnd(props) {
                     <DatePicker
                       className="form-control"
                       selected={endtDate}
+                      required
                       onChange={(date) => setEndDate(date)}
                     />
                   </div>

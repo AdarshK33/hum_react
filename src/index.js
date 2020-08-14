@@ -23,9 +23,10 @@ import Samplepage from './components/sample/samplepage';
 
 
 import Roster from './components/roster/roster';
+import CreateShift from "./components/roster/createShift";
+import EditShift from "./components/roster/editShift";
 //Leave Page
 import LeaveView from './components/Leaves/LeaveView'
-import SupportTicket from './components/support-ticket/supportTicket';
 // Added by Ranjith 31 july 2020
 import { GlobalCustomThemeProvider } from './context/GlobalState';
 
@@ -58,8 +59,13 @@ function Root() {
                                     {/* Leaves Page */}
                                     <Route path={`${process.env.PUBLIC_URL}/Leaves/LeaveView`} component={LeaveView} />
                                     
-                                    {/* Pricing */}
+                                    {/* Roaster */}
                                     <Route path={`${process.env.PUBLIC_URL}/roster/roster`} component={Roster} />
+                                    <Route path={`${process.env.PUBLIC_URL}/roster/createShift`} component={CreateShift} />
+                                    <Route path={`${process.env.PUBLIC_URL}/roster/editShift`} component={EditShift} />
+                               
+                                    
+                                    
 
                                 </App>
                             </Fragment>
