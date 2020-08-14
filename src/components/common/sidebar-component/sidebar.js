@@ -1,8 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import logo from '../../../assets/images/endless-logo.png';
 import logo_compact from '../../../assets/images/logo/compact-logo.png';
-
-import UserPanel from './userPanel';
 import { MENUITEMS } from '../../../constant/menu';
 import { Link } from 'react-router-dom';
 import { translate } from 'react-switch-lang';
@@ -19,7 +17,7 @@ const Sidebar = (props) => {
     const wrapper = configDB.data.settings.sidebar.wrapper;
     const layout = "1tr";
    // const layout = useSelector(content => content.Customizer.layout);
-    console.log(wrapper+ "*********"+layout)
+  //  console.log(wrapper+ "*********"+layout)
 
     useEffect(() => {
         window.addEventListener('resize', handleResize)
