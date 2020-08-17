@@ -6,8 +6,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const LeaveAdd = (props) => {
-    const [startDate, setStartDate] = useState();
-    const [endDate, setEndDate] = useState()
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date())
     const [leaveType, setLeaveType] = useState("")
     const [plannedLeave, setPlannedLeave] = useState('')
     const [unplannedLeave, setUnplannedLeave] = useState('')
@@ -44,18 +44,22 @@ const LeaveAdd = (props) => {
         }
         return flag;
     }
+   
     const applyLeaves = async (event) => {
         event.preventDefault()
         const cflag = validation();
         
         if(cflag){
-            console.log("submitted successfully")
+            toast.info("Leave applied successfully")
             const setModal = props.handleClose;
             setModal()
             setBalanceLeave('')
             setReason('')
-            setStartDate('')
-            setEndDate('')
+            setStartDate(new Date())
+            setEndDate(new Date())
+            setLeaveType('')
+            setPlannedLeave('')
+            setUnplannedLeave('')
         }
 
         /* fetch('/leave_transaction/create',{
@@ -87,7 +91,7 @@ const LeaveAdd = (props) => {
                             <Form.Label column sm="3" className="padding-right">Leave Type:</Form.Label>
                             <Col sm="9" className="padding-left">
                                 <Form.Control as="select" size="sm" 
-                                onChange={(e) => setLeaveType(e.target.value)}>
+                                onChange={(e) => setLeaveType(e.target.value)} required>
                                     <option value=''>Select</option>
                                     <option value="planned">Planned Leaves</option>
                                     <option value="unplanned">Unplanned Leaves</option>
@@ -95,8 +99,7 @@ const LeaveAdd = (props) => {
                             </Col>
                         </Form.Group>
                         {leaveType == 'select' && ''}
-                       {leaveType == 'planned' ? 
-                        <React.Fragment>
+                       {leaveType == 'planned' ?
                             <Form.Group as={Row}>
                             <Form.Label column sm="3" className="padding-right">Sub Leave Type:</Form.Label>
                             <Col sm="9" className="padding-left">
@@ -108,23 +111,7 @@ const LeaveAdd = (props) => {
                                 </Form.Control>
                             </Col>
                         </Form.Group>
-                         <Form.Group as={Row}>
-                         <Form.Label column sm="3" className="padding-right">From Date:</Form.Label>
-                         <Col sm="3" className="padding-left">
-                             <DatePicker selected={startDate} onChange={(date) => setStartDate(date)}
-                                 dateFormat="MM/dd/yyyy" filterDate={isWeekDay} minDate={today}
-                                 placeholderText ="MM/dd/yyy" showMonthYearDropdown />
-                         </Col>
-                         <Form.Label column sm="3" className="padding-right"
-                             style={{ display: 'flex', justifyContent: 'center' }}>To Date:</Form.Label>
-                         <Col sm="3" className="padding-left">
-                             <DatePicker selected={endDate} onChange={(date) => setEndDate(date)}
-                                 dateFormat="MM/dd/yyyy" filterDate={isWeekDay} 
-                                 minDate={startDate}
-                                 placeholderText ="MM/dd/yyy" showMonthYearDropdown />
-                         </Col>
-                     </Form.Group>
-                     </React.Fragment>
+                         
                        : ''}
                        {leaveType == 'unplanned' ? 
                         <React.Fragment>
@@ -143,7 +130,7 @@ const LeaveAdd = (props) => {
                          <Col sm="3" className="padding-left">
                              <DatePicker selected={startDate} onChange={(date) => setStartDate(date)}
                                  dateFormat="MM/dd/yyyy" filterDate={isWeekDay} maxDate={maxDate}
-                                 placeholderText ="MM/dd/yyy" showMonthYearDropdown />
+                                 placeholderText ="MM/dd/yyy" showMonthYearDropdown required/>
                          </Col>
                          <Form.Label column sm="3" className="padding-right"
                              style={{ display: 'flex', justifyContent: 'center' }}>To Date:</Form.Label>
@@ -151,17 +138,32 @@ const LeaveAdd = (props) => {
                              <DatePicker selected={endDate} onChange={(date) => setEndDate(date)}
                                  dateFormat="MM/dd/yyyy" filterDate={isWeekDay} 
                                  maxDate={startDate}
-                                 placeholderText ="MM/dd/yyy" showMonthYearDropdown />
+                                 placeholderText ="MM/dd/yyy" showMonthYearDropdown required />
                          </Col>
                      </Form.Group>
                      </React.Fragment>
-                       : ''}
+                       : <Form.Group as={Row}>
+                       <Form.Label column sm="3" className="padding-right">From Date:</Form.Label>
+                       <Col sm="3" className="padding-left">
+                           <DatePicker selected={startDate} onChange={(date) => setStartDate(date)}
+                               dateFormat="MM/dd/yyyy" filterDate={isWeekDay} minDate={today}
+                               placeholderText ="MM/dd/yyy" showMonthYearDropdown required />
+                       </Col>
+                       <Form.Label column sm="3" className="padding-right"
+                           style={{ display: 'flex', justifyContent: 'center' }}>To Date:</Form.Label>
+                       <Col sm="3" className="padding-left">
+                           <DatePicker selected={endDate} onChange={(date) => setEndDate(date)}
+                               dateFormat="MM/dd/yyyy" filterDate={isWeekDay} 
+                               minDate={startDate}
+                               placeholderText ="MM/dd/yyy" showMonthYearDropdown required />
+                       </Col>
+                   </Form.Group>}
                         
                        
                         <Form.Group as={Row}>
                             <Form.Label column sm="3" className="padding-right">Balance leaves:</Form.Label>
                             <Col sm="9" className="padding-left">
-                                <Form.Control type="number" size="sm" name="balanceLeave" value={balanceLeave}
+                                <Form.Control type="number" min="0" max="40" size="sm" name="balanceLeave" value={balanceLeave}
                                 onChange={(event) => {setBalanceLeave(event.target.value)}} />
                             </Col>
                         </Form.Group>
