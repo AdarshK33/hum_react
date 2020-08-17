@@ -45,3 +45,6 @@ button.submit-button.btn.btn-primary{
 h5.modal-heading{
     margin-left: 8rem;
 }
+.react-datepicker__input-container input[type="text"]{
+    width: 102px;
+}
