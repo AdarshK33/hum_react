@@ -1,17 +1,18 @@
 import React, { Fragment, useState } from "react";
 import Breadcrumb from "../common/breadcrumb";
-import DateFromEnd from "./dateFromEnd";
-import ShiftModal from "./shiftModal";
 import {Modal,ModalHeader} from 'reactstrap';
-import RosterTableBody from "./rosterTableBody";
+import {Button } from 'react-bootstrap'
+import ShiftModal from "./shiftModal";
+import DateFromEnd from "./dateFromEnd";
 const Roster = () => {
-  const [modal, setModal] = useState();
-  const toggle = () => {
-    setModal(!modal)
-  }
   const sendDate = (sdate, edate) => {
     alert(sdate + " " + edate);
   }
+  const toggle = () => {
+    setModal(!modal)
+  }
+  const [modal, setModal] = useState(false)
+  const handleShow = () => setModal(true)
   return (
     <Fragment>
       <Breadcrumb title="Roster" parent="Roster page" />
@@ -35,10 +36,40 @@ const Roster = () => {
                     </tr>
                   </thead>
                   <tbody>
-                  <RosterTableBody/>
-                  <RosterTableBody/>
-                  <RosterTableBody/>
-                  <RosterTableBody/>
+                  <Fragment>
+                <tr>
+                      <td>
+                        <div className="row">
+                          <div className="box" style={{ display: "flex", flexDirection: "row", width: "250px" }}>
+                            <i
+                              className="box fa fa-user-circle fa-4x m-r-10 m-l-10 py-1" aria-hidden="true"></i>
+                            <div className="box name f-w-600">Pavithra Anand
+                              <br />
+                              <span className="text-danger d-block">DSI000174{" "}
+                                <span className="text-primary">Permanent</span>
+                              </span>
+                              <p>Legal Partner Coach</p>
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <button className="btn btn-square btn-warning btn-sm" type="button">08:00 Am - 05:00 Pm</button>
+                      </td>
+                      <td>
+                        <button className="btn btn-square btn-warning btn-sm" type="button">08:00 Am - 05:00 Pm</button>
+                      </td>
+                      <td>
+                      <button  className="btn btn-square btn-primary btn-sm pl-5 pr-5" onClick={handleShow}>+</button>
+                      </td>
+                      <td>
+                        <button className="btn btn-square btn-warning btn-sm" type="button">08:00 Am - 05:00 Pm</button>
+                      </td>
+                      <td>
+                        <button className="btn btn-square btn-danger btn-sm pl-5 pr-5" type="button">Leave</button>
+                      </td>
+                    </tr>
+                   </Fragment>
                   </tbody>
                 </table>
               </div>
@@ -49,6 +80,7 @@ const Roster = () => {
         <ModalHeader  style={{borderBottom:"0px solid #e9ecef",paddingTop:"10px"}} toggle={toggle}>Modal title</ModalHeader>
        <ShiftModal/>
        </Modal>
+      
       </div>
     </Fragment>
   );

@@ -1,4 +1,5 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useContext } from 'react';
+import { RosterContext } from '../../context/RosterState';
 import Breadcrumb from '../common/breadcrumb';
 import DatePicker from "react-datepicker";
 import Dropdown from "../common/dropDown";
@@ -6,46 +7,51 @@ import moment from 'moment';
 import "react-datepicker/dist/react-datepicker.css";
 
 const CreateShift = () => {
-
-
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
   const [workingHours, setWorkingHour] = useState('');
   const [shiftName, setShiftName] = useState('');
   const [contractType, setContractType] = useState('');
-  const [breakDuration, setBreakDuration] = useState('');
   const [productTarget, setProductTarget] = useState('');
   const [startBreakTime, setStartBreakTime] = useState(null);
   const [endBreakTime, setEndBreakTIme] = useState(null);
   const [successMsg, setSuccessMsg] = useState(false);
-  const[breakDuationMsg,setBreakDurationMsg]= useState(false);
-  const[shiftButton,setShiftButton] = useState(false);
+  const [breakDuationMsg, setBreakDurationMsg] = useState(false);
+  const [shiftButton, setShiftButton] = useState(false);
 
-
+  const setClear = () => {
+    setStartTime('')
+    setEndTime('')
+    setShiftName('')
+    setWorkingHour('')
+    setContractType('')
+    setProductTarget('')
+    setStartBreakTime('')
+    setEndBreakTIme('');
+    setSuccessMsg('');
+  }
   const calcTime = () => {
-     const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
-     const etime = moment(endTime, ["h:mm A"]).format("HH:mm");
-     const result = moment.utc(moment(etime, "HH:mm:ss").diff(moment(stime, "HH:mm:ss"))).format("HH:mm:ss")
-     var workingHours = result.replace(/:/g, ".");
-     alert(workingHours);
-     setWorkingHour(workingHours);
-    }
+    const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
+    const etime = moment(endTime, ["h:mm A"]).format("HH:mm");
+    const result = moment.utc(moment(etime, "HH:mm:ss").diff(moment(stime, "HH:mm:ss"))).format("HH:mm:ss")
+    var workingHours = result.replace(/:/g, ".");
+    setWorkingHour(workingHours);
+  }
   const calcBreaktime = () => {
     const stime = moment(startBreakTime, ["h:mm A"]).format("HH:mm");
     const etime = moment(endBreakTime, ["h:mm A"]).format("HH:mm");
     const breakHours = moment.utc(moment(etime, "HH:mm").diff(moment(stime, "HH:mm"))).format("HH:mm")
-    console.log(breakHours+ typeof(breakHours));
+    console.log(breakHours + typeof (breakHours));
     var res = breakHours.replace(/:/g, ".");
-     if (parseFloat(res)<=1) {
+    if (parseFloat(res) <= 1) {
       setBreakDurationMsg(false)
       setShiftButton(false)
     }
     else {
-      alert(breakHours + "failure");
       setBreakDurationMsg(true)
       setShiftButton(true)
     }
-   }
+  }
 
   const handleShiftDropdown = (shiftName) => {
     setShiftName(shiftName)
@@ -70,6 +76,7 @@ const CreateShift = () => {
     setSuccessMsg(true);
     console.log("======" + JSON.stringify(newShift));
   }
+
   return (
     <Fragment>
       <Breadcrumb title="Create Shift" parent="create Shift" />
@@ -177,9 +184,9 @@ const CreateShift = () => {
                                   timeFormat="HH:mm"
                                   timeIntervals={30}
                                   timeCaption="Time"
-                                  onCalendarClose={() => { calcBreaktime() }}              
+                                  onCalendarClose={() => { calcBreaktime() }}
                                   minTime={startTime}
-                                  maxTime={endTime}  
+                                  maxTime={endTime}
                                   dateFormat="h:mm aa"
                                   placeholderText="Select end time"
                                 />
@@ -219,7 +226,8 @@ const CreateShift = () => {
                       </div>
                     </div>
                   </div>
-                  <button className="btn btn-primary mb-2" type="submit" disabled={shiftButton} value="Submit">Save</button>
+                  <button className="btn btn-primary mb-2 mr-2" type="submit" disabled={shiftButton} value="Submit">Save</button>
+                  <button className="btn btn-primary mb-2 ml-2" value="reset" onClick={setClear}>Clear</button>
                 </form>
                 <h5>{successMsg && <div className="text-success">Shift Create successfully</div>}</h5>
               </div>

@@ -6,9 +6,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ScrollContext } from 'react-router-scroll-4';
 import * as serviceWorker from './serviceWorker';
 
-// ** Import custom components for redux**
-//  import { Provider } from 'react-redux';
-//  import store from './store/index';
 import App from "./components/app";
 
 // Import custom Components 
@@ -20,8 +17,6 @@ import CryptoComponent from './components/dashboard/crypto/cryptoComponent';
 import Project from './components/dashboard/project/project';
 // sample page
 import Samplepage from './components/sample/samplepage';
-
-
 import Roster from './components/roster/roster';
 import CreateShift from "./components/roster/createShift";
 import EditShift from "./components/roster/editShift";
@@ -63,10 +58,6 @@ function Root() {
                                     <Route path={`${process.env.PUBLIC_URL}/roster/roster`} component={Roster} />
                                     <Route path={`${process.env.PUBLIC_URL}/roster/createShift`} component={CreateShift} />
                                     <Route path={`${process.env.PUBLIC_URL}/roster/editShift`} component={EditShift} />
-                               
-                                    
-                                    
-
                                 </App>
                             </Fragment>
                         </Switch>

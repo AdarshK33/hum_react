@@ -38,8 +38,8 @@ const ShiftModal=(props)=> {
                 </div>
                 <div className="note text-primary text-center">
                  <button type="button" className="btn btn-square btn-primary btn-cm pl-5 pr-5">Assign</button>
-                <h6 className="note text-secondary">Note: Weekly off is mandatory to assign shift</h6> 
               </div>
+              <h6 className="note text-secondary text-center">Note: Weekly off is mandatory to assign shift</h6> 
               </TabPane>
               <TabPane tabId="2">
                 <br/>

@@ -1,4 +1,5 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState,useContext } from 'react';
+import {RosterContext} from '../../context/RosterState';
 import Breadcrumb from '../common/breadcrumb';
 import DatePicker from "react-datepicker";
 import Dropdown from "../common/dropDown";
@@ -6,28 +7,34 @@ import moment from 'moment';
 import "react-datepicker/dist/react-datepicker.css";
 
 const EditShift = () => {
-
-
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
   const [workingHours, setWorkingHour] = useState('');
   const [shiftName, setShiftName] = useState('');
   const [contractType, setContractType] = useState('');
-  const [breakDuration, setBreakDuration] = useState('');
   const [productTarget, setProductTarget] = useState('');
   const [startBreakTime, setStartBreakTime] = useState(null);
   const [endBreakTime, setEndBreakTIme] = useState(null);
   const [successMsg, setSuccessMsg] = useState(false);
-  const[breakDuationMsg,setBreakDurationMsg]= useState(false);
-  const[shiftButton,setShiftButton] = useState(false);
+  const [breakDuationMsg,setBreakDurationMsg]= useState(false);
+  const [shiftButton,setShiftButton] = useState(false);
 
-
+const setClear=()=>{
+setStartTime('')
+setEndTime('')
+setShiftName('')
+setWorkingHour('')
+setContractType('')
+setProductTarget('')
+setStartBreakTime('')
+setEndBreakTIme('');
+setSuccessMsg('');
+}
   const calcTime = () => {
      const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
      const etime = moment(endTime, ["h:mm A"]).format("HH:mm");
      const result = moment.utc(moment(etime, "HH:mm:ss").diff(moment(stime, "HH:mm:ss"))).format("HH:mm:ss")
      var workingHours = result.replace(/:/g, ".");
-     alert(workingHours);
      setWorkingHour(workingHours);
     }
   const calcBreaktime = () => {
@@ -41,7 +48,6 @@ const EditShift = () => {
       setShiftButton(false)
     }
     else {
-      alert(breakHours + "failure");
       setBreakDurationMsg(true)
       setShiftButton(true)
     }
@@ -54,6 +60,10 @@ const EditShift = () => {
     setContractType(contractType)
   };
 
+
+  
+
+
   const onSubmit = e => {
     e.preventDefault();
     const newShift = {
@@ -62,7 +72,6 @@ const EditShift = () => {
       shiftName,
       contractType,
       shiftMasterId: 0,
-      breakDuration,
       productTarget: parseInt(productTarget),
       workingHours: parseInt(workingHours),
       startBreakTime: moment(startBreakTime, ["h:mm A"]).format("HH:mm:ss"),
@@ -71,9 +80,10 @@ const EditShift = () => {
     setSuccessMsg(true);
     console.log("======" + JSON.stringify(newShift));
   }
+  
   return (
     <Fragment>
-      <Breadcrumb title="Edit Shift" parent="Edit Shift" />
+      <Breadcrumb title="Create Shift" parent="create Shift" />
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
@@ -220,9 +230,10 @@ const EditShift = () => {
                       </div>
                     </div>
                   </div>
-                  <button className="btn btn-primary mb-2" type="submit" disabled={shiftButton} value="Submit">Save</button>
+                  <button className="btn btn-primary mb-2 mr-2" type="submit" disabled={shiftButton} value="Submit">Save</button>
+                  <button className="btn btn-primary mb-2 ml-2"  value="reset" onClick={setClear}>Clear</button>
                 </form>
-                <h5>{successMsg && <div className="text-success">Shift Updated successfully</div>}</h5>
+                <h5>{successMsg && <div className="text-success">Shift Update successfully</div>}</h5>
               </div>
             </div>
           </div>
