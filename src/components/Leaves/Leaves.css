@@ -45,6 +45,6 @@ button.submit-button.btn.btn-primary{
 h5.modal-heading{
     margin-left: 8rem;
 }
-input.react-datepicker-ignore-onclickoutside{
+.react-datepicker__input-container  input[type="text"].input_date{
     width: 102px;
 }
