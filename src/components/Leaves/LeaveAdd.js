@@ -129,6 +129,7 @@ const LeaveAdd = (props) => {
                          <Form.Label column sm="3" className="padding-right">From Date:</Form.Label>
                          <Col sm="3" className="padding-left">
                              <DatePicker selected={startDate} onChange={(date) => setStartDate(date)}
+                             className="input_date"
                                  dateFormat="MM/dd/yyyy" filterDate={isWeekDay} maxDate={maxDate}
                                  placeholderText ="MM/dd/yyy" showMonthYearDropdown required/>
                          </Col>
@@ -136,6 +137,7 @@ const LeaveAdd = (props) => {
                              style={{ display: 'flex', justifyContent: 'center' }}>To Date:</Form.Label>
                          <Col sm="3" className="padding-left">
                              <DatePicker selected={endDate} onChange={(date) => setEndDate(date)}
+                             className="input_date"
                                  dateFormat="MM/dd/yyyy" filterDate={isWeekDay} 
                                  maxDate={startDate}
                                  placeholderText ="MM/dd/yyy" showMonthYearDropdown required />
@@ -146,6 +148,7 @@ const LeaveAdd = (props) => {
                        <Form.Label column sm="3" className="padding-right">From Date:</Form.Label>
                        <Col sm="3" className="padding-left">
                            <DatePicker selected={startDate} onChange={(date) => setStartDate(date)}
+                           className="input_date"
                                dateFormat="MM/dd/yyyy" filterDate={isWeekDay} minDate={today}
                                placeholderText ="MM/dd/yyy" showMonthYearDropdown required />
                        </Col>
@@ -153,6 +156,7 @@ const LeaveAdd = (props) => {
                            style={{ display: 'flex', justifyContent: 'center' }}>To Date:</Form.Label>
                        <Col sm="3" className="padding-left">
                            <DatePicker selected={endDate} onChange={(date) => setEndDate(date)}
+                           className="input_date"
                                dateFormat="MM/dd/yyyy" filterDate={isWeekDay} 
                                minDate={startDate}
                                placeholderText ="MM/dd/yyy" showMonthYearDropdown required />
