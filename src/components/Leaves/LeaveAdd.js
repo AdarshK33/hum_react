@@ -146,6 +146,7 @@ const LeaveAdd = (props) => {
                        <Form.Label column sm="3" className="padding-right">From Date:</Form.Label>
                        <Col sm="3" className="padding-left">
                            <DatePicker selected={startDate} onChange={(date) => setStartDate(date)}
+                            className="date_for_leave"
                                dateFormat="MM/dd/yyyy" filterDate={isWeekDay} minDate={today}
                                placeholderText ="MM/dd/yyy" showMonthYearDropdown required />
                        </Col>

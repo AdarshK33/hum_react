@@ -153,12 +153,6 @@ export const GlobalCustomThemeProvider = ({ children }) => {
 
 
 
-    
-            function addShift(newShift)
-            {
-                alert(newShift);
-            }
-
     function handleSidebarColor(e){
          //alert("hanleSidebarColor")
         document.querySelectorAll(".sidebar-bg-settings li").forEach((item) => {
@@ -245,7 +239,10 @@ export const GlobalCustomThemeProvider = ({ children }) => {
         }
         window.location.reload();
     }
-
+// function addShift(newShift)
+// {
+//     alert(JSON.stringify(newShift));
+// }
     return (<GlobalContextTheme.Provider value={{
         closeCustomizer,
         openCustomizer,
@@ -256,7 +253,8 @@ export const GlobalCustomThemeProvider = ({ children }) => {
         colorChangeTheme,
         handleCustomizerMix,
         handleSidebarColor,
-        addShift
+        //addShift
+       
     }}>
         {children}
     </GlobalContextTheme.Provider>);

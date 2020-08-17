@@ -1,10 +1,11 @@
 import React, { Fragment, useState, useContext } from 'react';
-import { RosterContext } from '../../context/RosterState';
+// import { RosterContext } from '../../context/RosterState';
 import Breadcrumb from '../common/breadcrumb';
 import DatePicker from "react-datepicker";
 import Dropdown from "../common/dropDown";
 import moment from 'moment';
 import "react-datepicker/dist/react-datepicker.css";
+import {GlobalContextTheme} from "../../context/GlobalState";
 
 const CreateShift = () => {
   const [startTime, setStartTime] = useState(null);
@@ -18,7 +19,7 @@ const CreateShift = () => {
   const [successMsg, setSuccessMsg] = useState(false);
   const [breakDuationMsg, setBreakDurationMsg] = useState(false);
   const [shiftButton, setShiftButton] = useState(false);
-
+  const {addShift} = useContext(GlobalContextTheme);
   const setClear = () => {
     setStartTime('')
     setEndTime('')
@@ -75,6 +76,7 @@ const CreateShift = () => {
     }
     setSuccessMsg(true);
     console.log("======" + JSON.stringify(newShift));
+    addShift(newShift);
   }
 
   return (
