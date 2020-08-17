@@ -151,6 +151,14 @@ export const GlobalCustomThemeProvider = ({ children }) => {
         document.querySelector(".customizer-links").classList.remove('open');
     }
 
+
+
+    
+            function addShift(newShift)
+            {
+                alert(newShift);
+            }
+
     function handleSidebarColor(e){
          //alert("hanleSidebarColor")
         document.querySelectorAll(".sidebar-bg-settings li").forEach((item) => {
@@ -247,7 +255,8 @@ export const GlobalCustomThemeProvider = ({ children }) => {
         toggle,
         colorChangeTheme,
         handleCustomizerMix,
-        handleSidebarColor
+        handleSidebarColor,
+        addShift
     }}>
         {children}
     </GlobalContextTheme.Provider>);
