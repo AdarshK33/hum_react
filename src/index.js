@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
-
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { ScrollContext } from 'react-router-scroll-4';
 import * as serviceWorker from './serviceWorker';
@@ -24,6 +23,7 @@ import EditShift from "./components/roster/editShift";
 import LeaveView from './components/Leaves/LeaveView'
 // Added by Ranjith 31 july 2020
 import { GlobalCustomThemeProvider } from './context/GlobalState';
+import {RosterProvider} from './context/RosterState';
 
 //firebase Auth
 function Root() {
@@ -35,6 +35,8 @@ function Root() {
         <div className="App">
          {/* <Provider store={store}>  */}
          <GlobalCustomThemeProvider>
+             <RosterProvider>
+                 leavPrivovider
                 <BrowserRouter basename={'/'}>
                     <ScrollContext>
                         <Switch>
@@ -64,6 +66,7 @@ function Root() {
                     </ScrollContext>
                 </BrowserRouter>
              {/* </Provider>  */}
+             </RosterProvider>
              </GlobalCustomThemeProvider>
         </div>
     );

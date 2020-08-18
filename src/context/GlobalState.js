@@ -239,10 +239,7 @@ export const GlobalCustomThemeProvider = ({ children }) => {
         }
         window.location.reload();
     }
-// function addShift(newShift)
-// {
-//     alert(JSON.stringify(newShift));
-// }
+
     return (<GlobalContextTheme.Provider value={{
         closeCustomizer,
         openCustomizer,
@@ -253,8 +250,6 @@ export const GlobalCustomThemeProvider = ({ children }) => {
         colorChangeTheme,
         handleCustomizerMix,
         handleSidebarColor,
-        //addShift
-       
     }}>
         {children}
     </GlobalContextTheme.Provider>);

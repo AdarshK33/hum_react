@@ -1,11 +1,12 @@
 import React, { Fragment, useState, useContext } from 'react';
-// import { RosterContext } from '../../context/RosterState';
 import Breadcrumb from '../common/breadcrumb';
 import DatePicker from "react-datepicker";
 import Dropdown from "../common/dropDown";
 import moment from 'moment';
 import "react-datepicker/dist/react-datepicker.css";
-import {GlobalContextTheme} from "../../context/GlobalState";
+import {RosterContext} from "../../context/RosterState";
+import { add } from 'date-fns';
+
 
 const CreateShift = () => {
   const [startTime, setStartTime] = useState(null);
@@ -14,12 +15,13 @@ const CreateShift = () => {
   const [shiftName, setShiftName] = useState('');
   const [contractType, setContractType] = useState('');
   const [productTarget, setProductTarget] = useState('');
-  const [startBreakTime, setStartBreakTime] = useState(null);
-  const [endBreakTime, setEndBreakTIme] = useState(null);
+  const [breakStartTime, setStartBreakTime] = useState(null);
+  const [breakEndTime, setEndBreakTIme] = useState(null);
   const [successMsg, setSuccessMsg] = useState(false);
   const [breakDuationMsg, setBreakDurationMsg] = useState(false);
   const [shiftButton, setShiftButton] = useState(false);
-  const {addShift} = useContext(GlobalContextTheme);
+  const { addShift} = useContext(RosterContext);
+
   const setClear = () => {
     setStartTime('')
     setEndTime('')
@@ -39,8 +41,8 @@ const CreateShift = () => {
     setWorkingHour(workingHours);
   }
   const calcBreaktime = () => {
-    const stime = moment(startBreakTime, ["h:mm A"]).format("HH:mm");
-    const etime = moment(endBreakTime, ["h:mm A"]).format("HH:mm");
+    const stime = moment(breakStartTime, ["h:mm A"]).format("HH:mm");
+    const etime = moment(breakEndTime, ["h:mm A"]).format("HH:mm");
     const breakHours = moment.utc(moment(etime, "HH:mm").diff(moment(stime, "HH:mm"))).format("HH:mm")
     console.log(breakHours + typeof (breakHours));
     var res = breakHours.replace(/:/g, ".");
@@ -71,12 +73,15 @@ const CreateShift = () => {
       shiftMasterId: 0,
       productTarget: parseInt(productTarget),
       workingHours: parseInt(workingHours),
-      startBreakTime: moment(startBreakTime, ["h:mm A"]).format("HH:mm:ss"),
-      endBreakTime: moment(endBreakTime, ["h:mm A"]).format("HH:mm:ss"),
+      breakStartTime: moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
+      breakEndTime: moment(breakEndTime, ["h:mm A"]).format("HH:mm:ss"),
+      status:0
     }
     setSuccessMsg(true);
-    console.log("======" + JSON.stringify(newShift));
+     // console.log("======" + JSON.stringify(newShift));
     addShift(newShift);
+    // const result = addShift(newShift)
+    // console.log(result);
   }
 
   return (
@@ -119,7 +124,7 @@ const CreateShift = () => {
                           timeFormat="HH:mm"
                           timeIntervals={30}
                           timeCaption="Time"
-                          dateFormat="h:mm aa"
+                          dateFormat="HH:mm aa"
                           placeholderText="Select start time"
                           required
                         />
@@ -137,10 +142,10 @@ const CreateShift = () => {
                           onCalendarClose={() => { calcTime() }}
                           showTimeSelect
                           showTimeSelectOnly
-                          timeFormat="HH:mm"
+                          timeFormat="HH:mm aa"
                           timeIntervals={30}
                           timeCaption="Time"
-                          dateFormat="h:mm aa"
+                          dateFormat="HH:mm aa"
                           placeholderText="Select end time"
                         />
                       </div>
@@ -157,7 +162,7 @@ const CreateShift = () => {
                                 <br />
                                 <DatePicker
                                   className="form-control"
-                                  selected={startBreakTime}
+                                  selected={breakStartTime}
                                   onChange={date => setStartBreakTime(date)}
                                   showTimeSelect
                                   showTimeSelectOnly
@@ -177,7 +182,7 @@ const CreateShift = () => {
                                 <label htmlFor="exampleFormControlInput1">End Time</label>
                                 <br />
                                 <DatePicker
-                                  selected={endBreakTime}
+                                  selected={breakEndTime}
                                   className="form-control"
                                   required
                                   onChange={date => setEndBreakTIme(date)}
