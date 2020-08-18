@@ -153,12 +153,6 @@ export const GlobalCustomThemeProvider = ({ children }) => {
 
 
 
-    
-            function addShift(newShift)
-            {
-                alert(newShift);
-            }
-
     function handleSidebarColor(e){
          //alert("hanleSidebarColor")
         document.querySelectorAll(".sidebar-bg-settings li").forEach((item) => {
@@ -256,7 +250,6 @@ export const GlobalCustomThemeProvider = ({ children }) => {
         colorChangeTheme,
         handleCustomizerMix,
         handleSidebarColor,
-        addShift
     }}>
         {children}
     </GlobalContextTheme.Provider>);

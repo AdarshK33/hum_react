@@ -83,7 +83,7 @@ setSuccessMsg('');
   
   return (
     <Fragment>
-      <Breadcrumb title="Create Shift" parent="create Shift" />
+      <Breadcrumb title="Edit Shift" parent="edit Shift" />
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
