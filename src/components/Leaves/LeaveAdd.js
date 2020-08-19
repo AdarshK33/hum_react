@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import axios from 'axios';
 import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap'
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
@@ -6,36 +7,51 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const LeaveAdd = (props) => {
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date())
-    const [leaveType, setLeaveType] = useState("planned")
-    const [plannedLeave, setPlannedLeave] = useState('')
-    const [unplannedLeave, setUnplannedLeave] = useState('')
-    const [balanceLeave, setBalanceLeave] = useState('')
+    const [empId, setEmpId] = useState('DSI000035')
+    const [ltId, setLtId] = useState()
+    const [numberOfDays, setNumberOfDays] = useState()
+    const [status, setStatus] = useState()
+    const [viewLeavePopup, setViewLeavePopup] = useState()
+    const [year, setYear] = useState('2020')
+    const [startDate, setStartDate] = useState();
+    const [endDate, setEndDate] = useState()
+    const [leaveType, setLeaveType] = useState()
     const [reason, setReason] = useState('')
+    const [disable, setDisable] = useState(true)
 
-    const isWeekDay = date => {
-        if (date.getDay() === 0 || date.getDay() === 6) {
-            return false;
-        } else {
-            return true;
-        }
-    }
+    /*  const isWeekDay = date => {
+         if (date.getDay() === 0 || date.getDay() === 6) {
+             return false;
+         } else {
+             return true;
+         }
+     } */
 
     const today = new Date();
     today.setDate(today.getDate() + 1);
 
-    const maxDate = new Date();
-    maxDate.setDate(maxDate.getDate() - 1);
+    const fromDateHandler = (date) => {
+        let value = date
+        console.log("value of datepicker-----------", value)
+        setStartDate(value);
+
+        //For disable the To Date initially
+        setDisable(false)
+            console.log("disable value===", disable)
+        
+        if(startDate == value){
+            console.log("StartDate======", startDate)
+        }
+    }
+   
+
+    const maxFromDate = new Date();
+    maxFromDate.setDate(maxFromDate.getDate() - 1);
+
+   
 
     const validation = (event) => {
         let flag = true
-
-        if (balanceLeave == '') {
-            toast.info("Enter balance leave")
-            flag = false;
-            return;
-        }
 
         if (reason == '') {
             toast.info("Reason is mandatory")
@@ -53,26 +69,43 @@ const LeaveAdd = (props) => {
             toast.info("Leave applied successfully")
             const setModal = props.handleClose;
             setModal()
-            setBalanceLeave('')
             setReason('')
             setStartDate(new Date())
             setEndDate(new Date())
             setLeaveType('')
-            setPlannedLeave('')
-            setUnplannedLeave('')
         }
-
-        /* fetch('/leave_transaction/create',{
-            method: 'Post',
+        const applyLeave = {
+            empId,
+            startDate,
+            leaveType,
+            ltId,
+            numberOfDays,
+            status,
+            endDate,
+            viewLeavePopup,
+            year
+        }
+        axios.post('http://humine.theretailinsights.co/leave_transaction/create', applyLeave, {
             headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(balanceLeave)
-        }).then((result) => {
-            result.json().then((response) => {
-                console.log("api response",response)
-            })
-        }) */
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk3ODg3NDk1LCJpYXQiOjE1OTc4NTE0OTV9.HEgvqgeA6QLVoooPhjLSi6jozdMwn-KvPqujkFsWUe4'
+            }
+        })
+            .then((result) => {
+                console.log("Create API response======", result)
+            });
+        /*  fetch('http://humine.theretailinsights.co/leave_transaction/create',{
+             method: 'Post',
+             headers: {
+                 'Content-Type': 'application/json',
+                 Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk3ODQ5NzgwLCJpYXQiOjE1OTc4MTM3ODB9.ijcUbY1vIrT2AiLRgKPxEA2PLHKb-5HPUAFmeWBZAEk'   
+             },
+             body: JSON.stringify(applyLeave)
+         }).then((result) => {
+             result.json().then((response) => {
+                 console.log("create api response=======",response)
+             })
+         }) */
     }
 
     return (
@@ -86,35 +119,71 @@ const LeaveAdd = (props) => {
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Form>
+                        <Form onSubmit={applyLeaves}>
                             <Form.Group as={Row} >
                                 <Form.Label column sm="3" className="padding-right">Leave Type:</Form.Label>
                                 <Col sm="9" className="padding-left">
                                     <Form.Control as="select" size="sm"
                                         onChange={(e) => setLeaveType(e.target.value)} required>
-                                        <option value="planned" >Planned Leaves</option>
-                                        <option value="unplanned">Unplanned Leaves</option>
+                                        <option value="planned" >General Leaves</option>
+                                        <option value="unplanned">Maternity Leaves</option>
+                                        <option value="unplanned">Paternity Leaves</option>
                                     </Form.Control>
                                 </Col>
                             </Form.Group>
+                            <Form.Group as={Row}>
+                                <Form.Label column sm="3" className="padding-right">From Date:</Form.Label>
+                                <Col sm="3" className="padding-left">
+                                    <DatePicker selected={startDate} onChange={(e) => fromDateHandler(e)}
+                                        className="input_date"
+                                        dateFormat="MM/dd/yyyy"
+                                        placeholderText="From Date" required />
+                                </Col>
+                                {disable ?
+                                    <React.Fragment>
+                                        <Form.Label column sm="3" className="padding-right"
+                                        style={{ display: 'flex', justifyContent: 'center' }}>To Date:</Form.Label>
+                                    <Col sm="3" className="padding-left">
+                                        <DatePicker selected={endDate} onChange={(date) => setEndDate(date)}
+                                            className="input_date"
+                                            dateFormat="MM/dd/yyyy"
+                                            /*  maxDate={maxToDate} */
+                                            placeholderText="To Date" disabled={true} />
+                                    </Col>
+                                    </React.Fragment>
+                                 :
+                                   <React.Fragment>
+                                        <Form.Label column sm="3" className="padding-right"
+                                        style={{ display: 'flex', justifyContent: 'center' }}>To Date:</Form.Label>
+                                    <Col sm="3" className="padding-left">
+                                        <DatePicker selected={endDate} onChange={(date) => setEndDate(date)}
+                                            className="input_date"
+                                            dateFormat="MM/dd/yyyy"
+                                            /*  maxDate={maxToDate} */
+                                            placeholderText="To Date"  />
+                                    </Col> 
+                                   </React.Fragment>   
+                                }
 
-                            {leaveType == 'unplanned' ?
+                            </Form.Group>
+
+                            {/* {leaveType == 'unplanned' ?
                                 <Form.Group as={Row}>
                                     <Form.Label column sm="3" className="padding-right">From Date:</Form.Label>
                                     <Col sm="3" className="padding-left">
                                         <DatePicker selected={startDate} onChange={(date) => setStartDate(date)}
                                             className="input_date"
-                                            dateFormat="MM/dd/yyyy" filterDate={isWeekDay} maxDate={maxDate}
-                                            placeholderText="MM/dd/yyy" showMonthYearDropdown required />
+                                            dateFormat="MM/dd/yyyy"  maxDate={maxFromDate}
+                                            placeholderText="MM/dd/yyy" required />
                                     </Col>
                                     <Form.Label column sm="3" className="padding-right"
                                         style={{ display: 'flex', justifyContent: 'center' }}>To Date:</Form.Label>
                                     <Col sm="3" className="padding-left">
                                         <DatePicker selected={endDate} onChange={(date) => setEndDate(date)}
                                             className="input_date"
-                                            dateFormat="MM/dd/yyyy" filterDate={isWeekDay}
-                                            maxDate={startDate}
-                                            placeholderText="MM/dd/yyy" showMonthYearDropdown required />
+                                            dateFormat="MM/dd/yyyy"
+                                            maxDate={maxToDate}
+                                            placeholderText="MM/dd/yyy" required />
                                     </Col>
                                 </Form.Group>
                                 :
@@ -123,27 +192,26 @@ const LeaveAdd = (props) => {
                                     <Col sm="3" className="padding-left">
                                         <DatePicker selected={startDate} onChange={(date) => setStartDate(date)}
                                             className="input_date"
-                                            dateFormat="MM/dd/yyyy" filterDate={isWeekDay} minDate={today}
-                                            placeholderText="MM/dd/yyy" showMonthYearDropdown required />
+                                            dateFormat="MM/dd/yyyy" minDate={today}
+                                            placeholderText="MM/dd/yyy" required />
                                     </Col>
                                     <Form.Label column sm="3" className="padding-right"
                                         style={{ display: 'flex', justifyContent: 'center' }}>To Date:</Form.Label>
                                     <Col sm="3" className="padding-left">
                                         <DatePicker selected={endDate} onChange={(date) => setEndDate(date)}
                                             className="input_date"
-                                            dateFormat="MM/dd/yyyy" filterDate={isWeekDay}
+                                            dateFormat="MM/dd/yyyy" 
                                             minDate={startDate}
-                                            placeholderText="MM/dd/yyy" showMonthYearDropdown required />
+                                            placeholderText="MM/dd/yyy" required />
                                     </Col>
                                 </Form.Group>
                             }
-
+ */}
 
                             <Form.Group as={Row}>
-                                <Form.Label column sm="3" className="padding-right">Balance leaves:</Form.Label>
+                                <Col sm="3"></Col>
                                 <Col sm="9" className="padding-left">
-                                    <Form.Control type="number" min="0" max="40" size="sm" name="balanceLeave" value={balanceLeave}
-                                        onChange={(event) => { setBalanceLeave(event.target.value) }} />
+                                    <p></p>
                                 </Col>
                             </Form.Group>
                             <Form.Group as={Row}>
@@ -153,7 +221,7 @@ const LeaveAdd = (props) => {
                                         onChange={(event) => setReason(event.target.value)} />
                                 </Col>
                             </Form.Group>
-                            <Button onClick={(e) => applyLeaves(e)} type="submit" className="submit-button" size="sm">Submit</Button>
+                            <Button type="submit" className="submit-button" size="sm">Submit</Button>
                         </Form>
 
                     </Modal.Body>

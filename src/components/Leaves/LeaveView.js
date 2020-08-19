@@ -1,4 +1,5 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useContext, useEffect } from 'react';
+import axios from 'axios'
 import Breadcrumb from '../common/breadcrumb';
 import { Card, Row, Col, Table, Button, Modal } from 'react-bootstrap'
 import { X, Edit2 } from 'react-feather'
@@ -7,11 +8,55 @@ import LeaveAdd from './LeaveAdd'
 import './Leaves.css'
 
 const LeaveView = () => {
-    const [modal, setModal] = useState(false)
+    const [modal, setModal] = useState(false);
 
     const handleClose = () => setModal(false)
     const handleShow = () => setModal(true)
 
+  /*  useEffect(() => {
+    fetch('http://humine.theretailinsights.co/leave_transaction/view',{
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk3ODg3NDk1LCJpYXQiOjE1OTc4NTE0OTV9.HEgvqgeA6QLVoooPhjLSi6jozdMwn-KvPqujkFsWUe4'   
+        }
+    }).then((result) => {
+        result.json().then((response) => {
+            console.log("api response",response.message)
+        })
+    })
+   }, []) */
+
+   /* useEffect(() => {
+    axios('http://humine.theretailinsights.co/leave_transaction/view',{
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk3Nzg4Njk2LCJpYXQiOjE1OTc3NTI2OTZ9.drYvc0vOPLQJkzKvYXJZHyGZYJFukyiYITEYItn15_A'   
+        }
+    }).then((response) => {
+        console.log("API response=====",response)
+    })
+   }, [])  */
+    
+useEffect(() => {  
+
+  const GetData = async () => {  
+
+    const result = await axios('http://humine.theretailinsights.co/leave_transaction/view',{
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk3ODQ5NzgwLCJpYXQiOjE1OTc4MTM3ODB9.ijcUbY1vIrT2AiLRgKPxEA2PLHKb-5HPUAFmeWBZAEk'   
+        }
+    });  
+
+    /* setData(result.data);   */
+    console.log("API respone=====",result)
+
+  }; 
+
+  GetData();  
+}, []); 
     return (
         <Fragment>
             <Breadcrumb title="Leave View" parent="Leave View" />
