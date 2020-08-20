@@ -1,11 +1,10 @@
-import React, { Fragment, useState, useContext } from 'react';
+import React, { Fragment, useState,useEffect,useContext } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import DatePicker from "react-datepicker";
 import Dropdown from "../common/dropDown";
 import moment from 'moment';
 import "react-datepicker/dist/react-datepicker.css";
 import {RosterContext} from "../../context/RosterState";
-import { add } from 'date-fns';
 
 
 const CreateShift = () => {
@@ -17,10 +16,10 @@ const CreateShift = () => {
   const [productTarget, setProductTarget] = useState('');
   const [breakStartTime, setStartBreakTime] = useState(null);
   const [breakEndTime, setEndBreakTIme] = useState(null);
-  const [successMsg, setSuccessMsg] = useState(false);
+  const [successMsg, setSuccessMsg] = useState("");
   const [breakDuationMsg, setBreakDurationMsg] = useState(false);
   const [shiftButton, setShiftButton] = useState(false);
-  const { addShift} = useContext(RosterContext);
+  const { addShift,shiftResult} = useContext(RosterContext);
 
   const setClear = () => {
     setStartTime('')
@@ -78,10 +77,17 @@ const CreateShift = () => {
       status:0
     }
     setSuccessMsg(true);
-     // console.log("======" + JSON.stringify(newShift));
-    addShift(newShift);
-    // const result = addShift(newShift)
-    // console.log(result);
+       const result = addShift(newShift)
+      .then((result) => {     
+        console.log("api response===",result.data.message);
+        console.log("api response===",result.data);
+        console.log("api response===",result.data.status);
+        setSuccessMsg(result.data.message);
+   })
+     .catch((error) => {
+       alert(" In error catch ",error);
+     })
+      console.log(result, "in competent");
   }
 
   return (
@@ -142,7 +148,7 @@ const CreateShift = () => {
                           onCalendarClose={() => { calcTime() }}
                           showTimeSelect
                           showTimeSelectOnly
-                          timeFormat="HH:mm aa"
+                          timeFormat="HH:mm"
                           timeIntervals={30}
                           timeCaption="Time"
                           dateFormat="HH:mm aa"
@@ -158,7 +164,7 @@ const CreateShift = () => {
                           <div className="row">
                             <div className="col-sm-3">
                               <div className="form-group">
-                                <label htmlFor="exampleFormControlInput1">From Time</label>
+                                <label htmlFor="exampleFormControlInput1">From Break Time</label>
                                 <br />
                                 <DatePicker
                                   className="form-control"
@@ -171,7 +177,7 @@ const CreateShift = () => {
                                   timeCaption="Time"
                                   minTime={startTime}
                                   maxTime={endTime}
-                                  dateFormat="h:mm aa"
+                                  dateFormat="HH:mm aa"
                                   placeholderText="Select start time"
                                   required
                                 />
@@ -179,8 +185,11 @@ const CreateShift = () => {
                             </div>
                             <div className="col-sm-3">
                               <div className="form-group">
-                                <label htmlFor="exampleFormControlInput1">End Time</label>
+                                <label htmlFor="exampleFormControlInput1">End Break Time</label>
                                 <br />
+
+
+                                {/* <input type="number" className="form-control" placeholder={moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss")} /> */}
                                 <DatePicker
                                   selected={breakEndTime}
                                   className="form-control"
@@ -194,7 +203,7 @@ const CreateShift = () => {
                                   onCalendarClose={() => { calcBreaktime() }}
                                   minTime={startTime}
                                   maxTime={endTime}
-                                  dateFormat="h:mm aa"
+                                  dateFormat="HH:mm aa"
                                   placeholderText="Select end time"
                                 />
                               </div>
@@ -206,7 +215,7 @@ const CreateShift = () => {
                     </div>
                     <h6>{breakDuationMsg && <div className="text-danger pl-3">Break Should be one hour</div>}</h6>
                   </div>
-
+                    <h1>{shiftResult}</h1>
                   <div className="row">
                     <div className="col-sm-6">
                       <div className="form-group">
@@ -236,7 +245,7 @@ const CreateShift = () => {
                   <button className="btn btn-primary mb-2 mr-2" type="submit" disabled={shiftButton} value="Submit">Save</button>
                   <button className="btn btn-primary mb-2 ml-2" value="reset" onClick={setClear}>Clear</button>
                 </form>
-                <h5>{successMsg && <div className="text-success">Shift Create successfully</div>}</h5>
+                        <h5>{successMsg.length!==0 && <div className="text-success">{successMsg}</div>}</h5>
               </div>
             </div>
           </div>

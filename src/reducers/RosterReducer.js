@@ -1,16 +1,33 @@
+// const initial_state = {
+//     statusMsg:"welcome"
+// };
 
-
-export default (state, action) => {
+//  const RosterReducer = (state=initial_state, action) => {
  
-    switch (action.type) {
+//     switch (action.type) {
 
-        case 'CREATE_SHIFT':
-            console.log("App reducer")
+//         case 'SHIFT_CREATED':
+//             alert("App reducer"+JSON.stringify(state))
 
-            return {
-                ...state,
-                shift:action.payload
-            };
-        default: return state;
-    }
-}
+//             return {
+//                 ...state,
+//                 statusMsg:action.payload
+               
+//             };
+
+//             case 'SHIFT_EXIST':
+//                 alert("App reducer"+state)
+    
+//                 return {
+//                     ...state,
+//                     shift:action.payload
+//                 };
+
+
+
+
+//         default: return state;
+//     }
+// }
+
+// export default RosterReducer

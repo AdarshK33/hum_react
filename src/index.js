@@ -36,7 +36,7 @@ function Root() {
          {/* <Provider store={store}>  */}
          <GlobalCustomThemeProvider>
              <RosterProvider>
-                 leavPrivovider
+            
                 <BrowserRouter basename={'/'}>
                     <ScrollContext>
                         <Switch>
