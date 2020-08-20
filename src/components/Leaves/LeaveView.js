@@ -18,7 +18,7 @@ const LeaveView = () => {
         method: 'get',
         headers: {
             'Content-Type': 'application/json',
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk3ODg3NDk1LCJpYXQiOjE1OTc4NTE0OTV9.HEgvqgeA6QLVoooPhjLSi6jozdMwn-KvPqujkFsWUe4'   
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk3ODg5MTcyLCJpYXQiOjE1OTc4NTMxNzJ9.h0AhfPcd65AyoG-KOaQotvB-xSDL4XY99AM2JFpQ5xk'   
         }
     }).then((result) => {
         result.json().then((response) => {
@@ -46,12 +46,12 @@ useEffect(() => {
     const result = await axios('http://humine.theretailinsights.co/leave_transaction/view',{
         headers: {
             'Content-Type': 'application/json',
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk3ODQ5NzgwLCJpYXQiOjE1OTc4MTM3ODB9.ijcUbY1vIrT2AiLRgKPxEA2PLHKb-5HPUAFmeWBZAEk'   
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk3OTM4OTA1LCJpYXQiOjE1OTc5MDI5MDV9.aU8KYr5LsY49TuhsbF7oa0zxZ5ZFZHfwVbPqvOmbTHY'   
         }
     });  
 
     /* setData(result.data);   */
-    console.log("API respone=====",result)
+    console.log("API respone=====",result.data.message)
 
   }; 
 

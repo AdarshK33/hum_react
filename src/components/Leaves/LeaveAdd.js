@@ -18,37 +18,48 @@ const LeaveAdd = (props) => {
     const [leaveType, setLeaveType] = useState()
     const [reason, setReason] = useState('')
     const [disable, setDisable] = useState(true)
+    const [min, setMin] = useState(false)
+    const [max, setMax] = useState(false)
 
-    /*  const isWeekDay = date => {
-         if (date.getDay() === 0 || date.getDay() === 6) {
-             return false;
-         } else {
-             return true;
-         }
-     } */
 
+
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
     const today = new Date();
-    today.setDate(today.getDate() + 1);
 
     const fromDateHandler = (date) => {
         let value = date
-        console.log("value of datepicker-----------", value)
+        console.log("value of From datepicker-----------", value)
         setStartDate(value);
 
         //For disable the To Date initially
         setDisable(false)
-            console.log("disable value===", disable)
-        
-        if(startDate == value){
-            console.log("StartDate======", startDate)
+        console.log("disable value===", disable)
+
+        if (value <= new Date()) {
+            console.log("=============unplanned")
+            setMax(true);
+            setMin(false);
         }
+        
+         if (value > new Date()) {
+             console.log("=============planned")
+             setMin(true);
+             setMax(false);
+         }
+
     }
-   
+
+    const toDateHandler = (date) => {
+        let value1 = date
+        console.log("value of To datepicker-----------", value1)
+        setEndDate(value1);
+    }
 
     const maxFromDate = new Date();
     maxFromDate.setDate(maxFromDate.getDate() - 1);
 
-   
+
 
     const validation = (event) => {
         let flag = true
@@ -70,9 +81,12 @@ const LeaveAdd = (props) => {
             const setModal = props.handleClose;
             setModal()
             setReason('')
-            setStartDate(new Date())
-            setEndDate(new Date())
+            setStartDate()
+            setEndDate()
             setLeaveType('')
+            setDisable(true)
+            setMin(false)
+            setMax(false)
         }
         const applyLeave = {
             empId,
@@ -88,24 +102,12 @@ const LeaveAdd = (props) => {
         axios.post('http://humine.theretailinsights.co/leave_transaction/create', applyLeave, {
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk3ODg3NDk1LCJpYXQiOjE1OTc4NTE0OTV9.HEgvqgeA6QLVoooPhjLSi6jozdMwn-KvPqujkFsWUe4'
+                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk3OTM4OTA1LCJpYXQiOjE1OTc5MDI5MDV9.aU8KYr5LsY49TuhsbF7oa0zxZ5ZFZHfwVbPqvOmbTHY'
             }
         })
             .then((result) => {
                 console.log("Create API response======", result)
             });
-        /*  fetch('http://humine.theretailinsights.co/leave_transaction/create',{
-             method: 'Post',
-             headers: {
-                 'Content-Type': 'application/json',
-                 Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk3ODQ5NzgwLCJpYXQiOjE1OTc4MTM3ODB9.ijcUbY1vIrT2AiLRgKPxEA2PLHKb-5HPUAFmeWBZAEk'   
-             },
-             body: JSON.stringify(applyLeave)
-         }).then((result) => {
-             result.json().then((response) => {
-                 console.log("create api response=======",response)
-             })
-         }) */
     }
 
     return (
@@ -139,32 +141,46 @@ const LeaveAdd = (props) => {
                                         dateFormat="MM/dd/yyyy"
                                         placeholderText="From Date" required />
                                 </Col>
-                                {disable ?
+                                {disable &&
                                     <React.Fragment>
                                         <Form.Label column sm="3" className="padding-right"
-                                        style={{ display: 'flex', justifyContent: 'center' }}>To Date:</Form.Label>
-                                    <Col sm="3" className="padding-left">
-                                        <DatePicker selected={endDate} onChange={(date) => setEndDate(date)}
-                                            className="input_date"
-                                            dateFormat="MM/dd/yyyy"
-                                            /*  maxDate={maxToDate} */
-                                            placeholderText="To Date" disabled={true} />
-                                    </Col>
+                                            style={{ display: 'flex', justifyContent: 'center' }}>To Date:</Form.Label>
+                                        <Col sm="3" className="padding-left">
+                                            <DatePicker selected={endDate} onChange={(date) => setEndDate(date)}
+                                                className="input_date"
+                                                dateFormat="MM/dd/yyyy"
+                                                /*  maxDate={maxToDate} */
+                                                placeholderText="To Date" disabled={true} />
+                                        </Col>
                                     </React.Fragment>
-                                 :
-                                   <React.Fragment>
-                                        <Form.Label column sm="3" className="padding-right"
-                                        style={{ display: 'flex', justifyContent: 'center' }}>To Date:</Form.Label>
-                                    <Col sm="3" className="padding-left">
-                                        <DatePicker selected={endDate} onChange={(date) => setEndDate(date)}
-                                            className="input_date"
-                                            dateFormat="MM/dd/yyyy"
-                                            /*  maxDate={maxToDate} */
-                                            placeholderText="To Date"  />
-                                    </Col> 
-                                   </React.Fragment>   
                                 }
+                                {min &&
+                                    <React.Fragment>
+                                        <Form.Label column sm="3" className="padding-right"
+                                            style={{ display: 'flex', justifyContent: 'center' }}>To Date:</Form.Label>
+                                        <Col sm="3" className="padding-left">
+                                            <DatePicker selected={endDate} onChange={(e) => toDateHandler(e)}
+                                                className="input_date"
+                                                dateFormat="MM/dd/yyyy"
+                                                minDate={startDate}
+                                                placeholderText="To Date" />
+                                        </Col>
+                                    </React.Fragment>
 
+                                }
+                                {max &&
+                                 <React.Fragment>
+                                 <Form.Label column sm="3" className="padding-right"
+                                     style={{ display: 'flex', justifyContent: 'center' }}>To Date:</Form.Label>
+                                 <Col sm="3" className="padding-left">
+                                     <DatePicker selected={endDate} onChange={(e) => toDateHandler(e)}
+                                         className="input_date"
+                                         dateFormat="MM/dd/yyyy"
+                                         maxDate={today}
+                                         placeholderText="To Date" />
+                                 </Col>
+                             </React.Fragment>}
+                                
                             </Form.Group>
 
                             {/* {leaveType == 'unplanned' ?
