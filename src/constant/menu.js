@@ -18,7 +18,8 @@ export const MENUITEMS = [
     {
         title: 'Roster', icon: Calendar, type: 'link', path: '/roster/roster', active: false,children:[
             { path: '/roster/createShift', title: 'Create Shift', type: 'link' },
-            { path: '/roster/editShift', title: 'Edit Shift', type: 'link' },
+            // { path: '/roster/editShift', title: 'Edit Shift', type: 'link' },
+            { path: '/roster/viewShift', title: 'View Shift', type: 'link' },
         ]
     },
     {

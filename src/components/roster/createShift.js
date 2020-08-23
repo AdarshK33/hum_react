@@ -1,4 +1,4 @@
-import React, { Fragment, useState,useEffect,useContext } from 'react';
+import React, { Fragment, useState,useContext } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import DatePicker from "react-datepicker";
 import Dropdown from "../common/dropDown";
@@ -37,22 +37,25 @@ const CreateShift = () => {
     const etime = moment(endTime, ["h:mm A"]).format("HH:mm");
     const result = moment.utc(moment(etime, "HH:mm:ss").diff(moment(stime, "HH:mm:ss"))).format("HH:mm:ss")
     var workingHours = result.replace(/:/g, ".");
+    alert(workingHours);
     setWorkingHour(workingHours);
   }
   const calcBreaktime = () => {
-    const stime = moment(breakStartTime, ["h:mm A"]).format("HH:mm");
-    const etime = moment(breakEndTime, ["h:mm A"]).format("HH:mm");
-    const breakHours = moment.utc(moment(etime, "HH:mm").diff(moment(stime, "HH:mm"))).format("HH:mm")
-    console.log(breakHours + typeof (breakHours));
-    var res = breakHours.replace(/:/g, ".");
-    if (parseFloat(res) <= 1) {
-      setBreakDurationMsg(false)
-      setShiftButton(false)
-    }
-    else {
-      setBreakDurationMsg(true)
-      setShiftButton(true)
-    }
+     const stime = moment(breakStartTime).add(1,'hours').format('HH:mm');
+    // alert(stime);
+    // const etime = moment(breakEndTime, ["h:mm A"]).format("HH:mm");
+    // const breakHours = moment.utc(moment(etime, "HH:mm").diff(moment(stime, "HH:mm"))).format("HH:mm")
+    // console.log(breakHours + typeof (breakHours));
+    // var res = breakHours.replace(/:/g, ".");
+    // if (parseFloat(res) <= 1) {
+    //   setBreakDurationMsg(false)
+    //   setShiftButton(false)
+    // }
+    // else {
+    //   setBreakDurationMsg(true)
+    //   setShiftButton(true)
+    // }
+    
   }
 
   const handleShiftDropdown = (shiftName) => {
@@ -63,17 +66,21 @@ const CreateShift = () => {
   };
 
   const onSubmit = e => {
+    // const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
+    // const etime = moment(endTime, ["h:mm A"]).format("HH:mm");
+    // const workingHours = moment.utc(moment(etime, "HH:mm:ss").diff(moment(stime, "HH:mm:ss"))).format("HH:mm:ss");
+    // alert(workingHours);
     e.preventDefault();
     const newShift = {
       startTime: moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
       endTime: moment(endTime, ["h:mm A"]).format("HH:mm:ss"),
       shiftName,
-      contractType,
+      contractType,   
       shiftMasterId: 0,
       productTarget: parseInt(productTarget),
       workingHours: parseInt(workingHours),
       breakStartTime: moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
-      breakEndTime: moment(breakEndTime, ["h:mm A"]).format("HH:mm:ss"),
+      breakEndTime: moment(breakStartTime).add(1,'hours').format('HH:mm:ss'),
       status:0
     }
     setSuccessMsg(true);
@@ -82,6 +89,7 @@ const CreateShift = () => {
         console.log("api response===",result.data.message);
         console.log("api response===",result.data);
         console.log("api response===",result.data.status);
+        console.log("api response===",result.data.length);
         setSuccessMsg(result.data.message);
    })
      .catch((error) => {
@@ -157,6 +165,14 @@ const CreateShift = () => {
                       </div>
                     </div>
                   </div>
+                  {/* <div className="row">
+                      <div className="col-sm-3">
+                      Total working Hours:
+                      </div>
+                      <div className="col-sm-3">
+                        Break Hour:
+                      </div>
+                    </div> */}
                   <div className="row">
                     <div className="col-sm-12">
                       {parseFloat(workingHours) > 5 ?
@@ -179,18 +195,19 @@ const CreateShift = () => {
                                   maxTime={endTime}
                                   dateFormat="HH:mm aa"
                                   placeholderText="Select start time"
+                                 
                                   required
                                 />
                               </div>
                             </div>
-                            <div className="col-sm-3">
+                           <div className="col-sm-3">
                               <div className="form-group">
                                 <label htmlFor="exampleFormControlInput1">End Break Time</label>
                                 <br />
+ 
 
-
-                                {/* <input type="number" className="form-control" placeholder={moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss")} /> */}
-                                <DatePicker
+                                 <input type="text" className="form-control"  placeholder={moment(breakStartTime).add(1,'hours').format('HH:mm A')} /> 
+                                {/* <DatePicker
                                   selected={breakEndTime}
                                   className="form-control"
                                   required
@@ -201,11 +218,12 @@ const CreateShift = () => {
                                   timeIntervals={30}
                                   timeCaption="Time"
                                   onCalendarClose={() => { calcBreaktime() }}
-                                  minTime={startTime}
-                                  maxTime={endTime}
+                                  minTime={setStartBreakTime}
+                                  maxTime={setStartBreakTime+1}
                                   dateFormat="HH:mm aa"
                                   placeholderText="Select end time"
-                                />
+                                /> */}
+                                
                               </div>
                             </div>
                           </div>
@@ -215,7 +233,7 @@ const CreateShift = () => {
                     </div>
                     <h6>{breakDuationMsg && <div className="text-danger pl-3">Break Should be one hour</div>}</h6>
                   </div>
-                    <h1>{shiftResult}</h1>
+                
                   <div className="row">
                     <div className="col-sm-6">
                       <div className="form-group">
