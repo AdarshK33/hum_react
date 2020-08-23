@@ -1,33 +1,111 @@
-import React, { createContext,useReducer,useEffect } from 'react';
+import React, { createContext, useReducer} from 'react';
 import axios from 'axios';
+import environmentVariables from '../components/common/environment';
+
 import RosterReducer from '../reducers/RosterReducer';
+const baseUrl = "http://humine.theretailinsights.co/";
+const initial_state = {
+  shiftList:[]
+}
+
 
 export const RosterContext = createContext();
 export const RosterProvider = ({ children }) => {
-const [state,dispatch] = useReducer(RosterReducer);
+ const [state, dispatch] = useReducer(RosterReducer,initial_state);
+ const headers = {
+  'Content-Type': 'application/json',
+  Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk4MTkwMzMyLCJpYXQiOjE1OTgxNTQzMzJ9.iZzxySXdEFMCYWlNGzPz2empeD54sW9voK_xbg2hd6U'
+}
+
+
+// VIEWSHIFT
+
+function viewShift(){
+  axios.get(baseUrl+'shift/view',{
+    headers: headers
+  }).then(function (response) {
+ // console.log("data==>" + JSON.stringify(response));
+  state.shiftList=response.data.data;
+  return dispatch({ type: 'FETCH_SHIFT_LIST', payload: state.shiftList });
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
+
+//EDIT SHIFT
+
+
+function editShift(shiftMasterId){
+  alert(shiftMasterId);
+  axios.get(baseUrl+'shift/view/'+shiftMasterId,{
+    headers: headers
+  }).then(function (response) {
+  console.log("data==>" + JSON.stringify(response));
+   state.shiftList=response.data.data;
+   return dispatch({ type: 'EDIT_SHIFT_LIST', payload: state.shiftList });
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
+
+function updateShift(newEditShift) {
+  return axios.put(baseUrl+"shift/update", newEditShift, {
+    headers: headers
+  }).then(function (response) {
+  console.log("data==>" + JSON.stringify(response));
+   state.shiftList=response.data.data;
+   return dispatch({ type: 'EDIT_SHIFT_LIST', payload: state.shiftList });
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
 
 
 
-function addShift(newShift)
-{
-  const headers = {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk3ODU0NTIwLCJpYXQiOjE1OTc4MTg1MjB9.AbByjOUE55L3Ya5wmwiqOkbkLbLQ2pjepZ-E5ACTqPE'   
-    }
-    return axios.post("http://humine.theretailinsights.co/shift/create", newShift, {
-         headers: headers
-      }) 
-    }
-   
+
+
+// ADD SHIFT
+
+  function addShift(newShift) {
+    return axios.post(baseUrl+"shift/create", newShift, {
+      headers: headers
+    })
+  }
+
+
+// DELETE SHIFT
+
+  function deleteShift(shiftMasterId) {
+    axios.delete(baseUrl+'shift/delete'+"?shiftId="+ shiftMasterId,{
+      headers: headers
+    }).then(function (response) {
+      console.log("data==>" + JSON.stringify(response));
+     // let myresult = response.data.data.shiftMasterId;
+     
+
+    return dispatch({ type: 'DELETE_SHIFT', payload:shiftMasterId });
+    
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    viewShift();
+};
 
 
 
 
-   
-    return (<RosterContext.Provider value={{
-       addShift
-      
-    }}>
-        {children}
-    </RosterContext.Provider>);
+  return (<RosterContext.Provider value={{
+    addShift,
+    viewShift,
+    deleteShift,
+    editShift,
+    updateShift,
+   shiftList:state.shiftList
+  }}>
+    {children}
+  </RosterContext.Provider>);
 }

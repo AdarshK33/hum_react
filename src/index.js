@@ -10,8 +10,6 @@ import App from "./components/app";
 // Import custom Components 
 
 import Default from './components/dashboard/defaultCompo/default';
-import Ecommerce from './components/dashboard/ecommerce';
-import University from './components/dashboard/university';
 import CryptoComponent from './components/dashboard/crypto/cryptoComponent';
 import Project from './components/dashboard/project/project';
 // sample page
@@ -19,6 +17,7 @@ import Samplepage from './components/sample/samplepage';
 import Roster from './components/roster/roster';
 import CreateShift from "./components/roster/createShift";
 import EditShift from "./components/roster/editShift";
+import ViewShift from  "./components/roster/viewShift"
 //Leave Page
 import LeaveView from './components/Leaves/LeaveView'
 // Added by Ranjith 31 july 2020
@@ -46,8 +45,6 @@ function Root() {
                                     {/* dashboard menu */}
                                     <Route exact path={`${process.env.PUBLIC_URL}/`} component={Default} />
                                     <Route exact path={`${process.env.PUBLIC_URL}/dashboard/default`} component={Default} />
-                                    <Route path={`${process.env.PUBLIC_URL}/dashboard/ecommerce`} component={Ecommerce} />
-                                    <Route path={`${process.env.PUBLIC_URL}/dashboard/university`} component={University} />
                                     <Route path={`${process.env.PUBLIC_URL}/dashboard/crypto`} component={CryptoComponent} />
                                     <Route path={`${process.env.PUBLIC_URL}/dashboard/project`} component={Project} />
 
@@ -61,6 +58,8 @@ function Root() {
                                     <Route path={`${process.env.PUBLIC_URL}/roster/roster`} component={Roster} />
                                     <Route path={`${process.env.PUBLIC_URL}/roster/createShift`} component={CreateShift} />
                                     <Route path={`${process.env.PUBLIC_URL}/roster/editShift`} component={EditShift} />
+                                     <Route path={`${process.env.PUBLIC_URL}/roster/viewShift`} component={ViewShift} /> 
+                                    
                                 </App>
                             </Fragment>
                         </Switch>

@@ -22,15 +22,15 @@ const Header = () => {
     }
   }
 
-  function showRightSidebar() {
-    if (rightSidebar) {
-      setRightSidebar(!rightSidebar)
-      document.querySelector(".right-sidebar").classList.add('show');
-    } else {
-      setRightSidebar(!rightSidebar)
-      document.querySelector(".right-sidebar").classList.remove('show');
-    }
-  }
+  // function showRightSidebar() {
+  //   if (rightSidebar) {
+  //     setRightSidebar(!rightSidebar)
+  //     document.querySelector(".right-sidebar").classList.add('show');
+  //   } else {
+  //     setRightSidebar(!rightSidebar)
+  //     document.querySelector(".right-sidebar").classList.remove('show');
+  //   }
+  // }
 
   //full screen function
   function goFull() {
