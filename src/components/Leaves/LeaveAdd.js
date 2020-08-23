@@ -1,31 +1,35 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap'
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {format} from 'date-fns'
+import moment from 'moment'
 
 const LeaveAdd = (props) => {
-    const [empId, setEmpId] = useState('DSI000035')
-    const [ltId, setLtId] = useState()
-    const [numberOfDays, setNumberOfDays] = useState()
-    const [status, setStatus] = useState()
-    const [viewLeavePopup, setViewLeavePopup] = useState()
-    const [year, setYear] = useState('2020')
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState()
-    const [leaveType, setLeaveType] = useState()
+    const [leaveType, setLeaveType] = useState([])
     const [reason, setReason] = useState('')
     const [disable, setDisable] = useState(true)
     const [min, setMin] = useState(false)
     const [max, setMax] = useState(false)
-
-
-
+const today = new Date()
+/* 
     const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    const today = new Date();
+    const tomorrowDate = format(tomorrow, "dd-MM-yyyy")
+    tomorrowDate.setDate(tomorrowDate.getDate() + 1); */
+    /* const today = new Date();
+   const todayDate = format(today, 'yyyy-MM-dd')
+   console.log("new Date==================",todayDate) */
+
+    /* const newDate = moment(startDate).format('YYYY-MM-DD')
+    const newEndDate = moment(endDate).format('YYYY-MM-DD') */
+    /* const newDate = format(startDate, 'yyyy-MM-dd')
+    const newEndDate = format(endDate, 'yyyy-MM-dd')
+    console.log("new Date==================",newDate) */
 
     const fromDateHandler = (date) => {
         let value = date
@@ -36,7 +40,7 @@ const LeaveAdd = (props) => {
         setDisable(false)
         console.log("disable value===", disable)
 
-        if (value <= new Date()) {
+        if (value <= new Date() ){
             console.log("=============unplanned")
             setMax(true);
             setMin(false);
@@ -55,12 +59,8 @@ const LeaveAdd = (props) => {
         console.log("value of To datepicker-----------", value1)
         setEndDate(value1);
     }
-
-    const maxFromDate = new Date();
-    maxFromDate.setDate(maxFromDate.getDate() - 1);
-
-
-
+    
+    // Fields validation
     const validation = (event) => {
         let flag = true
 
@@ -71,7 +71,27 @@ const LeaveAdd = (props) => {
         }
         return flag;
     }
+    //get api for leave type
+    useEffect(() => {  
 
+        const GetLeave = async () => {  
+      
+          const result = await axios('http://humine.theretailinsights.co/leave_type/view',{
+              headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk4MTg5MTM2LCJpYXQiOjE1OTgxNTMxMzZ9.6sXI_un5_zPkC6rFfwy7ZOYdl6Nr81TzFl3EMJ9Hkaw'   
+              }
+          });  
+          const leaveType = result.data.data
+          setLeaveType(leaveType);  
+          console.log("GET API Leave type respone=====",result.data.data.leaveName)
+      
+        }; 
+      
+        GetLeave();  
+      }, []); 
+
+    // create api
     const applyLeaves = async (event) => {
         event.preventDefault()
         const cflag = validation();
@@ -83,26 +103,27 @@ const LeaveAdd = (props) => {
             setReason('')
             setStartDate()
             setEndDate()
-            setLeaveType('')
             setDisable(true)
             setMin(false)
             setMax(false)
         }
         const applyLeave = {
-            empId,
-            startDate,
-            leaveType,
-            ltId,
-            numberOfDays,
-            status,
-            endDate,
-            viewLeavePopup,
-            year
+            empId: 'DSI000035',
+            startDate:'2020-08-23',
+            leaveTypeId:1,
+            leaveType:'general',
+            ltId: 0,
+            numberOfDays: 0,
+            reason,
+            status:0,
+            endDate:'2020-08-25',
+            viewLeavePopup:0,
+            year:'2020'
         }
         axios.post('http://humine.theretailinsights.co/leave_transaction/create', applyLeave, {
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk3OTM4OTA1LCJpYXQiOjE1OTc5MDI5MDV9.aU8KYr5LsY49TuhsbF7oa0zxZ5ZFZHfwVbPqvOmbTHY'
+                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk4MTg5MTM2LCJpYXQiOjE1OTgxNTMxMzZ9.6sXI_un5_zPkC6rFfwy7ZOYdl6Nr81TzFl3EMJ9Hkaw'
             }
         })
             .then((result) => {
@@ -125,11 +146,13 @@ const LeaveAdd = (props) => {
                             <Form.Group as={Row} >
                                 <Form.Label column sm="3" className="padding-right">Leave Type:</Form.Label>
                                 <Col sm="9" className="padding-left">
-                                    <Form.Control as="select" size="sm"
-                                        onChange={(e) => setLeaveType(e.target.value)} required>
-                                        <option value="planned" >General Leaves</option>
-                                        <option value="unplanned">Maternity Leaves</option>
-                                        <option value="unplanned">Paternity Leaves</option>
+                                    <Form.Control as="select" size="sm" required>
+                                        {leaveType.length>0 && leaveType.map((item, i) => {
+                                            return(
+                                                <option key={item.leaveTypeId} value={item.leaveName}>{item.leaveName}</option>
+                                            )
+                                        })
+                                        }
                                     </Form.Control>
                                 </Col>
                             </Form.Group>
@@ -137,9 +160,8 @@ const LeaveAdd = (props) => {
                                 <Form.Label column sm="3" className="padding-right">From Date:</Form.Label>
                                 <Col sm="3" className="padding-left">
                                     <DatePicker selected={startDate} onChange={(e) => fromDateHandler(e)}
-                                        className="input_date"
-                                        dateFormat="MM/dd/yyyy"
-                                        placeholderText="From Date" required />
+                                        className="input_date" dateFormat="yyyy-MM-dd"
+                                        placeholderText="From Date"/>
                                 </Col>
                                 {disable &&
                                     <React.Fragment>
@@ -147,8 +169,7 @@ const LeaveAdd = (props) => {
                                             style={{ display: 'flex', justifyContent: 'center' }}>To Date:</Form.Label>
                                         <Col sm="3" className="padding-left">
                                             <DatePicker selected={endDate} onChange={(date) => setEndDate(date)}
-                                                className="input_date"
-                                                dateFormat="MM/dd/yyyy"
+                                                className="input_date" dateFormat="yyyy-MM-dd"
                                                 /*  maxDate={maxToDate} */
                                                 placeholderText="To Date" disabled={true} />
                                         </Col>
@@ -160,8 +181,7 @@ const LeaveAdd = (props) => {
                                             style={{ display: 'flex', justifyContent: 'center' }}>To Date:</Form.Label>
                                         <Col sm="3" className="padding-left">
                                             <DatePicker selected={endDate} onChange={(e) => toDateHandler(e)}
-                                                className="input_date"
-                                                dateFormat="MM/dd/yyyy"
+                                                className="input_date" dateFormat="yyyy-MM-dd"
                                                 minDate={startDate}
                                                 placeholderText="To Date" />
                                         </Col>
@@ -174,55 +194,13 @@ const LeaveAdd = (props) => {
                                      style={{ display: 'flex', justifyContent: 'center' }}>To Date:</Form.Label>
                                  <Col sm="3" className="padding-left">
                                      <DatePicker selected={endDate} onChange={(e) => toDateHandler(e)}
-                                         className="input_date"
-                                         dateFormat="MM/dd/yyyy"
+                                         className="input_date" dateFormat="yyyy-MM-dd"
                                          maxDate={today}
                                          placeholderText="To Date" />
                                  </Col>
                              </React.Fragment>}
                                 
                             </Form.Group>
-
-                            {/* {leaveType == 'unplanned' ?
-                                <Form.Group as={Row}>
-                                    <Form.Label column sm="3" className="padding-right">From Date:</Form.Label>
-                                    <Col sm="3" className="padding-left">
-                                        <DatePicker selected={startDate} onChange={(date) => setStartDate(date)}
-                                            className="input_date"
-                                            dateFormat="MM/dd/yyyy"  maxDate={maxFromDate}
-                                            placeholderText="MM/dd/yyy" required />
-                                    </Col>
-                                    <Form.Label column sm="3" className="padding-right"
-                                        style={{ display: 'flex', justifyContent: 'center' }}>To Date:</Form.Label>
-                                    <Col sm="3" className="padding-left">
-                                        <DatePicker selected={endDate} onChange={(date) => setEndDate(date)}
-                                            className="input_date"
-                                            dateFormat="MM/dd/yyyy"
-                                            maxDate={maxToDate}
-                                            placeholderText="MM/dd/yyy" required />
-                                    </Col>
-                                </Form.Group>
-                                :
-                                <Form.Group as={Row}>
-                                    <Form.Label column sm="3" className="padding-right">From Date:</Form.Label>
-                                    <Col sm="3" className="padding-left">
-                                        <DatePicker selected={startDate} onChange={(date) => setStartDate(date)}
-                                            className="input_date"
-                                            dateFormat="MM/dd/yyyy" minDate={today}
-                                            placeholderText="MM/dd/yyy" required />
-                                    </Col>
-                                    <Form.Label column sm="3" className="padding-right"
-                                        style={{ display: 'flex', justifyContent: 'center' }}>To Date:</Form.Label>
-                                    <Col sm="3" className="padding-left">
-                                        <DatePicker selected={endDate} onChange={(date) => setEndDate(date)}
-                                            className="input_date"
-                                            dateFormat="MM/dd/yyyy" 
-                                            minDate={startDate}
-                                            placeholderText="MM/dd/yyy" required />
-                                    </Col>
-                                </Form.Group>
-                            }
- */}
 
                             <Form.Group as={Row}>
                                 <Col sm="3"></Col>

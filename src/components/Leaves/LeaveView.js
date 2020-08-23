@@ -9,54 +9,55 @@ import './Leaves.css'
 
 const LeaveView = () => {
     const [modal, setModal] = useState(false);
+    const [viewList, setViewList] = useState([]);
 
     const handleClose = () => setModal(false)
     const handleShow = () => setModal(true)
 
-  /*  useEffect(() => {
-    fetch('http://humine.theretailinsights.co/leave_transaction/view',{
-        method: 'get',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk3ODg5MTcyLCJpYXQiOjE1OTc4NTMxNzJ9.h0AhfPcd65AyoG-KOaQotvB-xSDL4XY99AM2JFpQ5xk'   
-        }
-    }).then((result) => {
-        result.json().then((response) => {
-            console.log("api response",response.message)
-        })
-    })
-   }, []) */
+    /*  useEffect(() => {
+      fetch('http://humine.theretailinsights.co/leave_transaction/view',{
+          method: 'get',
+          headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk3ODg5MTcyLCJpYXQiOjE1OTc4NTMxNzJ9.h0AhfPcd65AyoG-KOaQotvB-xSDL4XY99AM2JFpQ5xk'   
+          }
+      }).then((result) => {
+          result.json().then((response) => {
+              console.log("api response",response.message)
+          })
+      })
+     }, []) */
 
-   /* useEffect(() => {
-    axios('http://humine.theretailinsights.co/leave_transaction/view',{
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk3Nzg4Njk2LCJpYXQiOjE1OTc3NTI2OTZ9.drYvc0vOPLQJkzKvYXJZHyGZYJFukyiYITEYItn15_A'   
-        }
-    }).then((response) => {
-        console.log("API response=====",response)
-    })
-   }, [])  */
-    
-useEffect(() => {  
+    /* useEffect(() => {
+     axios('http://humine.theretailinsights.co/leave_transaction/view',{
+         method: 'GET',
+         headers: {
+             'Content-Type': 'application/json',
+             Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk3Nzg4Njk2LCJpYXQiOjE1OTc3NTI2OTZ9.drYvc0vOPLQJkzKvYXJZHyGZYJFukyiYITEYItn15_A'   
+         }
+     }).then((response) => {
+         console.log("API response=====",response)
+     })
+    }, [])  */
 
-  const GetData = async () => {  
+    useEffect(() => {
 
-    const result = await axios('http://humine.theretailinsights.co/leave_transaction/view',{
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk3OTM4OTA1LCJpYXQiOjE1OTc5MDI5MDV9.aU8KYr5LsY49TuhsbF7oa0zxZ5ZFZHfwVbPqvOmbTHY'   
-        }
-    });  
+        const GetData = async () => {
 
-    /* setData(result.data);   */
-    console.log("API respone=====",result.data.message)
+            const result = await axios('http://humine.theretailinsights.co/leave_transaction/view', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk4MTg5MTM2LCJpYXQiOjE1OTgxNTMxMzZ9.6sXI_un5_zPkC6rFfwy7ZOYdl6Nr81TzFl3EMJ9Hkaw'
+                }
+            });
+            const viewList = result.data.data
+            setViewList(viewList);
+            console.log("API respone=====", viewList)
 
-  }; 
+        };
 
-  GetData();  
-}, []); 
+        GetData();
+    }, []);
     return (
         <Fragment>
             <Breadcrumb title="Leave View" parent="Leave View" />
@@ -164,30 +165,37 @@ useEffect(() => {
                     <LeaveAdd handleClose={handleClose} modal={modal} />
                 </Row>
                 <Row className="table">
-                    <Table>
-                        <thead>
-                            <tr>
-                                <th>Sr No.</th>
-                                <th>Leave Type</th>
-                                <th>Total No. of Days</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>001</td>
-                                <td>General Leave</td>
-                                <td>1</td>
-                                <td>06-07-2020</td>
-                                <td>07-07-2020</td>
-                                <td><Edit2 /></td>
-                                <td><X /></td>
-                            </tr>
-                        </tbody>
-                    </Table>
+                    {viewList &&
+                        <Table>
+                            <thead>
+                                <tr>
+                                    <th>Sr No.</th>
+                                    <th>Leave Type</th>
+                                    <th>Total No. of Days</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {viewList.map((item, i) => {
+                                    return (
+                                        <tr key={i}>
+                                            <td>{i}</td>
+                                            <td>{item.leaveCategory}</td>
+                                            <td>{item.numberOfDays}</td>
+                                            <td>{item.fromDate}</td>
+                                            <td>{item.toDate}</td>
+                                            <td><Edit2 /></td>
+                                            <td><X /></td>
+                                        </tr>
+                                    )
+                                })}
+
+                            </tbody>
+                        </Table>
+                    }
                 </Row>
             </div>
         </Fragment>
