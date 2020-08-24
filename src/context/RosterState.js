@@ -14,7 +14,7 @@ export const RosterProvider = ({ children }) => {
  const [state, dispatch] = useReducer(RosterReducer,initial_state);
  const headers = {
   'Content-Type': 'application/json',
-  Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk4MTkwMzMyLCJpYXQiOjE1OTgxNTQzMzJ9.iZzxySXdEFMCYWlNGzPz2empeD54sW9voK_xbg2hd6U'
+  Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk4Mjc3Mjk0LCJpYXQiOjE1OTgyNDEyOTR9.bBPKvuWMCcUgmsJ6937t9tcEd7GIhwVwEbmZfovKFCU'
 }
 
 

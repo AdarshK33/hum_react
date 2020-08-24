@@ -5,42 +5,24 @@ import { Card, Row, Col, Table, Button, Modal } from 'react-bootstrap'
 import { X, Edit2 } from 'react-feather'
 import calendarImage from '../../assets/images/calendar-image.png'
 import LeaveAdd from './LeaveAdd'
+import {LeaveContext} from '../../context/LeaveState'
 import './Leaves.css'
 
 const LeaveView = () => {
     const [modal, setModal] = useState(false);
-    const [viewList, setViewList] = useState([]);
+
+    const {leaveList, viewList, deleteList} = useContext(LeaveContext);
 
     const handleClose = () => setModal(false)
     const handleShow = () => setModal(true)
 
-    /*  useEffect(() => {
-      fetch('http://humine.theretailinsights.co/leave_transaction/view',{
-          method: 'get',
-          headers: {
-              'Content-Type': 'application/json',
-              Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk3ODg5MTcyLCJpYXQiOjE1OTc4NTMxNzJ9.h0AhfPcd65AyoG-KOaQotvB-xSDL4XY99AM2JFpQ5xk'   
-          }
-      }).then((result) => {
-          result.json().then((response) => {
-              console.log("api response",response.message)
-          })
-      })
-     }, []) */
+        useEffect(() => {
+            viewList()
+            
+        },[])
 
-    /* useEffect(() => {
-     axios('http://humine.theretailinsights.co/leave_transaction/view',{
-         method: 'GET',
-         headers: {
-             'Content-Type': 'application/json',
-             Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk3Nzg4Njk2LCJpYXQiOjE1OTc3NTI2OTZ9.drYvc0vOPLQJkzKvYXJZHyGZYJFukyiYITEYItn15_A'   
-         }
-     }).then((response) => {
-         console.log("API response=====",response)
-     })
-    }, [])  */
-
-    useEffect(() => {
+   
+  /*   useEffect(() => {
 
         const GetData = async () => {
 
@@ -57,7 +39,7 @@ const LeaveView = () => {
         };
 
         GetData();
-    }, []);
+    }, []); */
     return (
         <Fragment>
             <Breadcrumb title="Leave View" parent="Leave View" />
@@ -165,7 +147,6 @@ const LeaveView = () => {
                     <LeaveAdd handleClose={handleClose} modal={modal} />
                 </Row>
                 <Row className="table">
-                    {viewList &&
                         <Table>
                             <thead>
                                 <tr>
@@ -178,24 +159,24 @@ const LeaveView = () => {
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                {viewList.map((item, i) => {
+                            
+                                {leaveList.length > 0 && 
+                                    leaveList.map((item, i) => {
                                     return (
-                                        <tr key={i}>
-                                            <td>{i}</td>
+                                        <tbody>
+                                        <tr key={i+1}>
+                                            <td>{i+1}</td>
                                             <td>{item.leaveCategory}</td>
                                             <td>{item.numberOfDays}</td>
                                             <td>{item.fromDate}</td>
                                             <td>{item.toDate}</td>
                                             <td><Edit2 /></td>
-                                            <td><X /></td>
+                                            <td><X onClick={() => deleteList(item.ltId)} /></td>
                                         </tr>
+                                        </tbody>
                                     )
                                 })}
-
-                            </tbody>
                         </Table>
-                    }
                 </Row>
             </div>
         </Fragment>

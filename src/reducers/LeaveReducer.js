@@ -1,12 +1,21 @@
 
-export default (state, action) => {
+const LeaveReducer = (state, action) => {
     switch(action.type){
-        case 'APPLY_LEAVE':
-            console.log("leave reducer")
-        return {
-            ...state,
-            leave: action.payload
-        };
+        case 'FETCH_LEAVE_LIST':
+            return{...state, leaveList: action.payload}
+
+        case 'FETCH_LEAVE_TYPE':
+            return({...state, leaveType: action.payload})
+
+            
+        case 'DELETE_LEAVE':
+            return {
+                ...state,
+                leaveList: state.leaveList.filter(leaveList => leaveList.leaveId !== action.payload)
+            };
+
         default: return state;
     }
 }
+
+export default LeaveReducer

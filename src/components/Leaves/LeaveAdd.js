@@ -5,17 +5,21 @@ import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import {LeaveContext} from '../../context/LeaveState'
 import {format} from 'date-fns'
 import moment from 'moment'
 
 const LeaveAdd = (props) => {
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState()
-    const [leaveType, setLeaveType] = useState([])
     const [reason, setReason] = useState('')
     const [disable, setDisable] = useState(true)
     const [min, setMin] = useState(false)
     const [max, setMax] = useState(false)
+
+    const {addLeave, getLeave, leaveType} = useContext(LeaveContext);
+    
+
 const today = new Date()
 /* 
     const tomorrow = new Date();
@@ -72,32 +76,21 @@ const today = new Date()
         return flag;
     }
     //get api for leave type
-    useEffect(() => {  
-
-        const GetLeave = async () => {  
-      
-          const result = await axios('http://humine.theretailinsights.co/leave_type/view',{
-              headers: {
-                  'Content-Type': 'application/json',
-                  Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk4MTg5MTM2LCJpYXQiOjE1OTgxNTMxMzZ9.6sXI_un5_zPkC6rFfwy7ZOYdl6Nr81TzFl3EMJ9Hkaw'   
-              }
-          });  
-          const leaveType = result.data.data
-          setLeaveType(leaveType);  
-          console.log("GET API Leave type respone=====",result.data.data.leaveName)
-      
-        }; 
-      
-        GetLeave();  
+    useEffect(() => { 
+        getLeave();  
       }, []); 
 
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk4Mjc3Mjk0LCJpYXQiOjE1OTgyNDEyOTR9.bBPKvuWMCcUgmsJ6937t9tcEd7GIhwVwEbmZfovKFCU'
+      }
+      const baseUrl = "http://humine.theretailinsights.co/";
     // create api
     const applyLeaves = async (event) => {
         event.preventDefault()
         const cflag = validation();
 
         if (cflag) {
-            toast.info("Leave applied successfully")
             const setModal = props.handleClose;
             setModal()
             setReason('')
@@ -107,28 +100,29 @@ const today = new Date()
             setMin(false)
             setMax(false)
         }
-        const applyLeave = {
+        const newLeave = {
             empId: 'DSI000035',
-            startDate:'2020-08-23',
+            startDate: moment(startDate).format("YYYY-MM-DD"),
             leaveTypeId:1,
-            leaveType:'general',
+            leaveType,
             ltId: 0,
             numberOfDays: 0,
             reason,
             status:0,
-            endDate:'2020-08-25',
+            endDate: moment(endDate).format("YYYY-MM-DD"),
             viewLeavePopup:0,
             year:'2020'
         }
-        axios.post('http://humine.theretailinsights.co/leave_transaction/create', applyLeave, {
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk4MTg5MTM2LCJpYXQiOjE1OTgxNTMxMzZ9.6sXI_un5_zPkC6rFfwy7ZOYdl6Nr81TzFl3EMJ9Hkaw'
-            }
+        const result = axios.post(baseUrl+'leave_transaction/create', newLeave, {
+              headers: headers
+            })
+        .then((response) => {
+            console.log("create api message", response.data.message)
+            toast.info("Leave added successfully")
         })
-            .then((result) => {
-                console.log("Create API response======", result)
-            });
+        .catch((error) => {
+            console.log(error)
+        })
     }
 
     return (
