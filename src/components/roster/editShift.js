@@ -1,4 +1,4 @@
-import React, { Fragment, useState,useContext } from 'react';
+import React, { Fragment, useState,useContext, useEffect } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import DatePicker from "react-datepicker";
 import Dropdown from "../common/dropDown";
@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import {RosterContext} from "../../context/RosterState";
 
 
-const EditShift = () => {
+const EditShift = (props) => {
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
   const [workingHours, setWorkingHour] = useState('');
@@ -19,7 +19,14 @@ const EditShift = () => {
   const [successMsg, setSuccessMsg] = useState("");
   const [breakDuationMsg, setBreakDurationMsg] = useState(false);
   const [shiftButton, setShiftButton] = useState(false);
+  const [shiftMasterId, setShiftMasterId] = useState(null);
   const { updateShift,shiftResult,shiftList} = useContext(RosterContext);
+
+  useEffect(() => {
+    console.log(props);
+    const { id } = props.location.data;
+    setShiftMasterId(id);
+  }, [])
 
   const setClear = () => {
     setStartTime('')
@@ -70,11 +77,11 @@ const EditShift = () => {
       endTime: moment(endTime, ["h:mm A"]).format("HH:mm:ss"),
       shiftName,
       contractType,
-      shiftMasterId: 0,
+      shiftMasterId,
       productTarget: parseInt(productTarget),
       workingHours: parseInt(workingHours),
       breakStartTime: moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
-      breakEndTime: moment(breakStartTime).add(1,'hours').format('HH:mm:ss'),
+      breakEndTime: moment(breakEndTime, ["h:mm A"]).format("HH:mm:ss"),
       status:0
     }
     setSuccessMsg(true);
@@ -88,8 +95,10 @@ const EditShift = () => {
      .catch((error) => {
        alert(" In error catch ",error);
      })
-      console.log(result, "in competent");
+      
+   
   }
+  // console.log(shiftList, "in editshit screen");
   // console.log("edit shift screen "+JSON.stringify(shiftList));
   // console.log(shiftList.shiftName);
   return (
@@ -191,8 +200,24 @@ const EditShift = () => {
                               <div className="form-group">
                                 <label htmlFor="exampleFormControlInput1">End Break Time</label>
                                 <br />
-
-                                <input type="text" className="form-control"  placeholder={moment(breakStartTime).add(1,'hours').format('HH:mm A')} /> 
+                                <DatePicker
+                                  selected={breakEndTime}
+                                  className="form-control"
+                                  required
+                                  onChange={date => setEndBreakTIme(date)}
+                                  showTimeSelect
+                                  showTimeSelectOnly
+                                  timeFormat="HH:mm"
+                                  timeIntervals={30}
+                                  timeCaption="Time"
+                                  onCalendarClose={() => { calcBreaktime() }}
+                                  minTime={startTime}
+                                  maxTime={endTime}
+                                  dateFormat="HH:mm aa"
+                                  placeholderText="Select end time"
+                                />
+                              
+                              {/* <input type="number" className="form-control" placeholder={moment(shiftList.breakStartTime).add(1,'hours').format('HH:mm A')} />    */}
                               
                             
                               </div>

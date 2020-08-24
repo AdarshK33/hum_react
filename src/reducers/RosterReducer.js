@@ -5,7 +5,7 @@ const RosterReducer = (state, action) => {
             return { ...state, shiftList: action.payload };
 
 
-        case 'REMOVE_EMPLOYEE':
+        case 'DELETE_SHIFT':
             return {
                 ...state,
                 shiftList: state.shiftList.filter(shiftList => shiftList.shiftMasterId !== action.payload)
@@ -13,12 +13,7 @@ const RosterReducer = (state, action) => {
 
         case 'EDIT_SHIFT_LIST':
             return { ...state, shiftList: action.payload };
-
-
-      
-          
-
-
+            
         default: return state;
     }
 }

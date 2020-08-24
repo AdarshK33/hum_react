@@ -10,6 +10,8 @@ function ViewShift() {
   }, [])
 
   const {shiftList,deleteShift,viewShift,editShift} = useContext(RosterContext);
+
+  console.log(shiftList, "in viewShift");
     return (
       <Fragment>
       <Breadcrumb title="View Shift" parent="View Shift" />
@@ -45,7 +47,7 @@ function ViewShift() {
                               <td>{e.breakStartTime}-{e.breakEndTime}</td>
                               <td>{e.productTarget}</td>
                               <td>{e.contractType}</td>
-                              <td>  <Link to={`EditShift/${e.shiftMasterId}`}><Edit2 onClick={()=>editShift(e.shiftMasterId)}  /></Link></td>
+                              <td>  <Link to={{pathname: `EditShift/${e.shiftMasterId}`, data: {id: e.shiftMasterId}}}><Edit2 onClick={()=>editShift(e.shiftMasterId)}  /></Link></td>
                               <td><Delete onClick={()=>deleteShift(e.shiftMasterId)}   /></td>
 
                             </tr>
