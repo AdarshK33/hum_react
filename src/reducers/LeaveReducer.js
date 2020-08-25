@@ -4,6 +4,12 @@ const LeaveReducer = (state, action) => {
         case 'FETCH_LEAVE_LIST':
             return{...state, leaveList: action.payload}
 
+        case 'ADD_NEW_LEAVE':
+            return {...state, leaveType: action.payload}
+
+        case 'EDIT_LEAVE':
+            return {...state, leaveType: action.payload}
+
         case 'FETCH_LEAVE_TYPE':
             return({...state, leaveType: action.payload})
 

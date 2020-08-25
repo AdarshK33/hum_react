@@ -14,7 +14,7 @@ export const RosterProvider = ({ children }) => {
  const [state, dispatch] = useReducer(RosterReducer,initial_state);
  const headers = {
   'Content-Type': 'application/json',
-  Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk4Mjc3Mjk0LCJpYXQiOjE1OTgyNDEyOTR9.bBPKvuWMCcUgmsJ6937t9tcEd7GIhwVwEbmZfovKFCU'
+  Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk4MjkyOTQwLCJpYXQiOjE1OTgyNTY5NDB9.rhipcOeNcPnX3WKpzgLAe0CX_pCmJi0xcqm62j2vRuo'
 }
 
 
@@ -53,14 +53,7 @@ function editShift(shiftMasterId){
 function updateShift(newEditShift) {
   return axios.put(baseUrl+"shift/update", newEditShift, {
     headers: headers
-  }).then(function (response) {
-  console.log("data==>" + JSON.stringify(response));
-   state.shiftList=response.data.data;
-   return dispatch({ type: 'EDIT_SHIFT_LIST', payload: state.shiftList });
   })
-  .catch(function (error) {
-    console.log(error);
-  });
 }
 
 
@@ -83,9 +76,7 @@ function updateShift(newEditShift) {
       headers: headers
     }).then(function (response) {
       console.log("data==>" + JSON.stringify(response));
-     // let myresult = response.data.data.shiftMasterId;
-     
-
+     // let myresult = response.data.data.shiftMasterId;   
     return dispatch({ type: 'DELETE_SHIFT', payload:shiftMasterId });
     
     })

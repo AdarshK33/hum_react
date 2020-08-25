@@ -10,21 +10,19 @@ import {LeaveContext} from '../../context/LeaveState'
 import {format} from 'date-fns'
 import moment from 'moment'
 
-const LeaveAdd = (props) => {
-    const [startDate, setStartDate] = useState();
-    const [endDate, setEndDate] = useState()
-    const [leave, setLeave] = useState('')
-    const [reason, setReason] = useState('')
+const EditLeave = (props) => {
+    const [startDate, setStartDate] = useState(new Date(props.fromdate));
+    const [endDate, setEndDate] = useState(new Date(props.todate))
+    const [leave, setLeave] = useState(props.leavecategory)
+    const [reason, setReason] = useState(props.reason)
     const [disable, setDisable] = useState(true)
-    const [disablePara, setDisablePara] = useState(false)
     const [min, setMin] = useState(false)
     const [max, setMax] = useState(false)
     let history = useHistory();
    
 
-    const {addLeave, getLeave, leaveType, leaveList, message} = useContext(LeaveContext);
+    const {getLeave, leaveType, leaveList, editList, viewList, message} = useContext(LeaveContext);
     
-  
 const today = new Date()
 
     const fromDateHandler = (date) => {
@@ -49,50 +47,22 @@ const today = new Date()
     const toDateHandler = (date) => {
         let value1 = date
         setEndDate(value1);
-        setDisablePara(true)
-    }
-    const handleSelectChenge = (e) => {
-        setLeave(e.target.value)
-    }
-    // Fields validation
-    const validation = (event) => {
-        let flag = true
-
-        if (reason == '') {
-            toast.info("Reason is mandatory")
-            flag = false;
-            return;
-        }
-        return flag;
     }
     //get api for leave type
     useEffect(() => { 
         getLeave();  
       }, []); 
-
       
     // create api
     const onSubmit =  e => {
         e.preventDefault()
-        const cflag = validation();
-
-        if (cflag) {
-            const setModal = props.handleClose;
-            setModal()
-            setReason('')
-            setStartDate()
-            setEndDate()
-            setDisable(true)
-            setMin(false)
-            setMax(false)
-        }
         
-        const newLeave = {
+        const editLeave = {
             empId: 'DSI000035',
             fromDate: moment(startDate).format("YYYY-MM-DD"),
             leaveCategory: leave,
             leaveTypeId: 1,
-            ltId: 0,
+            ltId: props.leaveid,
             numberOfDays: 0,
             reason: reason,
             status:0,
@@ -100,28 +70,46 @@ const today = new Date()
             viewLeavePopup:1,
             year:'2020'
         }
-         addLeave(newLeave)
+         editList(editLeave)
+         console.log("editList for edit api", editLeave)
          history.push("/Leaves/LeaveView");
-       
-    }
 
+        
+         const setModal = props.handleEditClose;
+         setModal()
+         setLeave(leave)
+         setReason(reason)
+         setStartDate(startDate)
+         setEndDate(endDate)
+         setDisable(true)
+         setMin(false)
+         setMax(false)
+        
+    }
     return (
         <React.Fragment>
             <ToastContainer />
-            <Modal show={props.modal} onHide={props.handleClose} centered>
+            <Modal show={props.modal} onHide={props.handleEditClose} centered>
                 <Container style={{ paddingBottom: '1rem' }}>
                     <Modal.Header closeButton>
                         <Modal.Title >
-                            <h5 className="modal-heading">Apply For Leave</h5>
+                            <h5 className="modal-heading">Edit Leave</h5>
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Form onSubmit={onSubmit}>
+                        <Form.Group as={Row}>
+                                <Form.Label column sm="3" className="padding-right">Leave Id:</Form.Label>
+                                <Col sm="9" className="padding-left">
+                                    <Form.Control type="text"  size="sm" name="leave_id" 
+                                        disabled defaultValue={props.leaveid} />
+                                </Col>
+                            </Form.Group>
                             <Form.Group as={Row} >
                                 <Form.Label column sm="3" className="padding-right">Leave Type:</Form.Label>
                                 <Col sm="9" className="padding-left">
-                                    <Form.Control as="select" size="sm" required value={leave}
-                                    onChange={handleSelectChenge}>
+                                    <Form.Control as="select" size="sm" required defaultValue={props.leavecategory} value={leave}
+                                    onChange={(e) => setLeave(e.target.value)}>
                                         {leaveType.length>0 && leaveType.map((item, i) => {
                                             return(
                                                 <option key={item.leaveTypeId} value={item.leaveName}>{item.leaveName}</option>
@@ -136,7 +124,7 @@ const today = new Date()
                                 <Col sm="3" className="padding-left">
                                     <DatePicker selected={startDate} onChange={(e) => fromDateHandler(e)}
                                         className="input_date" dateFormat="yyyy-MM-dd"
-                                        placeholderText="From Date"/>
+                                          />
                                 </Col>
                                 {disable &&
                                     <React.Fragment>
@@ -146,7 +134,7 @@ const today = new Date()
                                             <DatePicker selected={endDate} onChange={(date) => setEndDate(date)}
                                                 className="input_date" dateFormat="yyyy-MM-dd"
                                                 /*  maxDate={maxToDate} */
-                                                placeholderText="To Date" disabled={true} />
+                                                 disabled={true} />
                                         </Col>
                                     </React.Fragment>
                                 }
@@ -158,7 +146,7 @@ const today = new Date()
                                             <DatePicker selected={endDate} onChange={(e) => toDateHandler(e)}
                                                 className="input_date" dateFormat="yyyy-MM-dd"
                                                 minDate={startDate}
-                                                placeholderText="To Date" />
+                                                />
                                         </Col>
                                     </React.Fragment>
 
@@ -168,30 +156,19 @@ const today = new Date()
                                  <Form.Label column sm="3" className="padding-right"
                                      style={{ display: 'flex', justifyContent: 'center' }}>To Date:</Form.Label>
                                  <Col sm="3" className="padding-left">
-                                     <DatePicker selected={endDate} onChange={(e) => toDateHandler(e)}
+                                     <DatePicker selected={endDate}  onChange={(e) => toDateHandler(e)}
                                          className="input_date" dateFormat="yyyy-MM-dd"
-                                         maxDate={today}
-                                         placeholderText="To Date" />
+                                         maxDate={today} />
                                  </Col>
                              </React.Fragment>}
                                 
                             </Form.Group>
-
-                            {disablePara && 
-                            <Form.Group as={Row}>
-                            <Col sm="3"></Col>
-                            <Col sm="9" className="padding-left">
-                               {leaveList>0 &&
-                               leaveList.filter(list => list.numberOfDays)
-                               }
-                                
-                            </Col>
-                        </Form.Group>}
+        
                             <Form.Group as={Row}>
                                 <Form.Label column sm="3" className="padding-right">Reason:</Form.Label>
                                 <Col sm="9" className="padding-left">
-                                    <Form.Control as="textarea" rows="3" size="sm" name="reason" value={reason}
-                                        onChange={(event) => setReason(event.target.value)} />
+                                    <Form.Control as="textarea" rows="3" size="sm" name="reason" defaultValue={props.reason}
+                                      value={reason}  onChange={(event) => setReason(event.target.value)} />
                                 </Col>
                             </Form.Group>
                             <Button type="submit" className="submit-button" size="sm">Submit</Button>
@@ -204,4 +181,4 @@ const today = new Date()
     );
 };
 
-export default LeaveAdd;
+export default EditLeave;

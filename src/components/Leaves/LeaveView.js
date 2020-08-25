@@ -1,45 +1,31 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
-import axios from 'axios'
+import {Link} from 'react-router-dom'
 import Breadcrumb from '../common/breadcrumb';
 import { Card, Row, Col, Table, Button, Modal } from 'react-bootstrap'
 import { X, Edit2 } from 'react-feather'
 import calendarImage from '../../assets/images/calendar-image.png'
 import LeaveAdd from './LeaveAdd'
+import EditLeave from './EditLeave'
 import {LeaveContext} from '../../context/LeaveState'
 import './Leaves.css'
 
 const LeaveView = () => {
-    const [modal, setModal] = useState(false);
 
-    const {leaveList, viewList, deleteList} = useContext(LeaveContext);
+    const [modal, setModal] = useState(false);
+    const [editModal, setEditModal] = useState(false)
+
+    const {leaveList, viewList, deleteList, editList} = useContext(LeaveContext);
 
     const handleClose = () => setModal(false)
     const handleShow = () => setModal(true)
 
+    const handleEditClose = () => setEditModal(false)
+    const handleEditShow = () => setEditModal(true)
+
         useEffect(() => {
             viewList()
-            
-        },[])
+        }, [])
 
-   
-  /*   useEffect(() => {
-
-        const GetData = async () => {
-
-            const result = await axios('http://humine.theretailinsights.co/leave_transaction/view', {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk4MTg5MTM2LCJpYXQiOjE1OTgxNTMxMzZ9.6sXI_un5_zPkC6rFfwy7ZOYdl6Nr81TzFl3EMJ9Hkaw'
-                }
-            });
-            const viewList = result.data.data
-            setViewList(viewList);
-            console.log("API respone=====", viewList)
-
-        };
-
-        GetData();
-    }, []); */
     return (
         <Fragment>
             <Breadcrumb title="Leave View" parent="Leave View" />
@@ -50,13 +36,14 @@ const LeaveView = () => {
                     </div>
                 </div>
                 <Row className="row">
-                    <Col className="col-12 col-md-3">
-                        <Card>
+                <Col className="col-12 col-md-2"></Col>
+                    <Col className="col-12 col-md-3" style={{marginBottom:'3rem'}}>
+                        <Card className="h-100">
                             <Card.Body>
                                 <Row className="text-center">
                                     <h6 style={{ fontWeight: 'bold' }}>General Leaves</h6>
                                 </Row>
-                                <Row className="text-center" style={{ margin: '15px 0' }}>
+                                <Row className="text-center" style={{ margin: '15px 0 30px 0' }}>
                                     <img src={calendarImage} alt="calendar-image" width='50px' />
                                 </Row>
                                 <Row>
@@ -72,20 +59,17 @@ const LeaveView = () => {
                             </Card.Body>
                         </Card>
                     </Col>
-                    <Col className="col-12 col-md-3">
-                        <Card>
+                    <Col className="col-12 col-md-3" style={{marginBottom:'3rem'}}>
+                        <Card className="h-100">
                             <Card.Body>
                                 <Row className="text-center">
-                                    <h6 style={{ fontWeight: 'bold', color: 'red' }}>Unplanned Leaves</h6>
+                                    <h6 style={{ fontWeight: 'bold', color: 'red' }}>LOP</h6>
                                 </Row>
-                                <Row className="text-center" style={{ margin: '15px 0' }}>
+                                <Row className="text-center" style={{ margin: '15px 0 30px 0' }}>
                                     <img src={calendarImage} alt="calendar-image" width='50px' />
                                 </Row>
                                 <Row>
                                     <Col>
-                                        <Row className="text-center">
-                                            <Card.Text>Available:6</Card.Text>
-                                        </Row>
                                         <Row className="text-center">
                                             <Card.Text>Taken:2</Card.Text>
                                         </Row>
@@ -94,20 +78,17 @@ const LeaveView = () => {
                             </Card.Body>
                         </Card>
                     </Col>
-                    <Col className="col-12 col-md-3">
-                        <Card>
+                    <Col className="col-12 col-md-3" style={{marginBottom:'3rem'}}>
+                        <Card className="h-100">
                             <Card.Body>
                                 <Row className="text-center">
-                                    <h6 style={{ fontWeight: 'bold', color: 'green' }}>Planned Leaves</h6>
+                                    <h6 style={{ fontWeight: 'bold', color: 'green' }}>Other Leaves</h6>
                                 </Row>
-                                <Row className="text-center" style={{ margin: '15px 0' }}>
+                                <Row className="text-center" style={{ margin: '15px 0 30px 0' }}>
                                     <img src={calendarImage} alt="calendar-image" width='50px' />
                                 </Row>
                                 <Row>
                                     <Col>
-                                        <Row className="text-center">
-                                            <Card.Text>Available:10</Card.Text>
-                                        </Row>
                                         <Row className="text-center">
                                             <Card.Text>Taken:5</Card.Text>
                                         </Row>
@@ -116,28 +97,7 @@ const LeaveView = () => {
                             </Card.Body>
                         </Card>
                     </Col>
-                    <Col className="col-12 col-md-3">
-                        <Card>
-                            <Card.Body>
-                                <Row className="text-center">
-                                    <h6 style={{ fontWeight: 'bold', color: 'blue' }}>Others Leaves</h6>
-                                </Row>
-                                <Row className="text-center" style={{ margin: '15px 0' }}>
-                                    <img src={calendarImage} alt="calendar-image" width='50px' />
-                                </Row>
-                                <Row>
-                                    <Col>
-                                        <Row className="text-center">
-                                            <Card.Text>Available:3</Card.Text>
-                                        </Row>
-                                        <Row className="text-center">
-                                            <Card.Text>Taken:1</Card.Text>
-                                        </Row>
-                                    </Col>
-                                </Row>
-                            </Card.Body>
-                        </Card>
-                    </Col>
+                    <Col className="col-12 col-md-1"></Col>
                 </Row>
                 <Row className="apply-button-row">
                     <Col className="leaveApplications">Leave Applications</Col>
@@ -163,14 +123,19 @@ const LeaveView = () => {
                                 {leaveList.length > 0 && 
                                     leaveList.map((item, i) => {
                                     return (
-                                        <tbody>
-                                        <tr key={i+1}>
+                                        <tbody key={i+1}>
+                                        <tr>
                                             <td>{i+1}</td>
                                             <td>{item.leaveCategory}</td>
                                             <td>{item.numberOfDays}</td>
                                             <td>{item.fromDate}</td>
                                             <td>{item.toDate}</td>
-                                            <td><Edit2 /></td>
+                                            <td><Edit2 onClick={handleEditShow} />
+                                            </td>
+                                            {/* <td><Edit2 onClick={handleEditShow} /></td> */}
+                                            <EditLeave handleEditClose={handleEditClose} modal={editModal} 
+                                            leaveid={item.ltId} leavecategory={item.leaveCategory} fromdate={item.fromDate}
+                                             todate={item.toDate} reason={item.reason} />
                                             <td><X onClick={() => deleteList(item.ltId)} /></td>
                                         </tr>
                                         </tbody>
