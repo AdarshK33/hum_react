@@ -30,6 +30,7 @@
     "react-chartjs-2": "^2.8.0",
     "react-ckeditor-component": "^1.1.0",
     "react-clock": "^2.4.0",
+    "react-confirm-bootstrap": "^5.3.1",
     "react-copy-to-clipboard": "^5.0.2",
     "react-countdown-now": "^2.1.2",
     "react-countup": "^4.2.2",

@@ -1,12 +1,13 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Breadcrumb from '../common/breadcrumb';
 import { Card, Row, Col, Table, Button, Modal } from 'react-bootstrap'
-import { X, Edit2 } from 'react-feather'
+import { X, Edit2, Trash2 } from 'react-feather'
 import calendarImage from '../../assets/images/calendar-image.png'
 import LeaveAdd from './LeaveAdd'
 import EditLeave from './EditLeave'
-import {LeaveContext} from '../../context/LeaveState'
+import Confirm from 'react-confirm-bootstrap'
+import { LeaveContext } from '../../context/LeaveState'
 import './Leaves.css'
 
 const LeaveView = () => {
@@ -14,17 +15,23 @@ const LeaveView = () => {
     const [modal, setModal] = useState(false);
     const [editModal, setEditModal] = useState(false)
 
-    const {leaveList, viewList, deleteList, editList} = useContext(LeaveContext);
+    const { leaveList, viewList, deleteList, editList, viewLeaveData, leaveDataList } = useContext(LeaveContext);
 
+  
     const handleClose = () => setModal(false)
     const handleShow = () => setModal(true)
 
     const handleEditClose = () => setEditModal(false)
     const handleEditShow = () => setEditModal(true)
 
-        useEffect(() => {
-            viewList()
-        }, [])
+    useEffect(() => {
+        viewList()
+    }, [])
+
+    useEffect(() => {
+        viewLeaveData()
+      
+    }, [])
 
     return (
         <Fragment>
@@ -36,8 +43,8 @@ const LeaveView = () => {
                     </div>
                 </div>
                 <Row className="row">
-                <Col className="col-12 col-md-2"></Col>
-                    <Col className="col-12 col-md-3" style={{marginBottom:'3rem'}}>
+                    <Col className="col-12 col-md-2"></Col>
+                    <Col className="col-12 col-md-3" style={{ marginBottom: '3rem' }}>
                         <Card className="h-100">
                             <Card.Body>
                                 <Row className="text-center">
@@ -49,17 +56,17 @@ const LeaveView = () => {
                                 <Row>
                                     <Col>
                                         <Row className="text-center">
-                                            <Card.Text>Available:5</Card.Text>
+                                            <Card.Text>Available: 50</Card.Text>
                                         </Row>
                                         <Row className="text-center">
-                                            <Card.Text>Taken:4</Card.Text>
+                                            <Card.Text>Taken: 8</Card.Text>
                                         </Row>
                                     </Col>
                                 </Row>
                             </Card.Body>
                         </Card>
                     </Col>
-                    <Col className="col-12 col-md-3" style={{marginBottom:'3rem'}}>
+                    <Col className="col-12 col-md-3" style={{ marginBottom: '3rem' }}>
                         <Card className="h-100">
                             <Card.Body>
                                 <Row className="text-center">
@@ -78,7 +85,7 @@ const LeaveView = () => {
                             </Card.Body>
                         </Card>
                     </Col>
-                    <Col className="col-12 col-md-3" style={{marginBottom:'3rem'}}>
+                    <Col className="col-12 col-md-3" style={{ marginBottom: '3rem' }}>
                         <Card className="h-100">
                             <Card.Body>
                                 <Row className="text-center">
@@ -106,26 +113,27 @@ const LeaveView = () => {
                     </Col>
                     <LeaveAdd handleClose={handleClose} modal={modal} />
                 </Row>
-                <Row className="table">
-                        <Table>
-                            <thead>
-                                <tr>
-                                    <th>Sr No.</th>
-                                    <th>Leave Type</th>
-                                    <th>Total No. of Days</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            
-                                {leaveList.length > 0 && 
-                                    leaveList.map((item, i) => {
-                                    return (
-                                        <tbody key={i+1}>
+            
+                            <Row className="table">
+                    <Table>
+                        <thead>
+                            <tr>
+                                <th>Sr No.</th>
+                                <th>Leave Type</th>
+                                <th>Total No. of Days</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        {leaveList.length > 0 &&
+                            leaveList.map((item, i) => {
+                                return (
+                                    <tbody key={i + 1}>
                                         <tr>
-                                            <td>{i+1}</td>
+                                            <td>{i + 1}</td>
                                             <td>{item.leaveCategory}</td>
                                             <td>{item.numberOfDays}</td>
                                             <td>{item.fromDate}</td>
@@ -133,15 +141,23 @@ const LeaveView = () => {
                                             <td><Edit2 onClick={handleEditShow} />
                                             </td>
                                             {/* <td><Edit2 onClick={handleEditShow} /></td> */}
-                                            <EditLeave handleEditClose={handleEditClose} modal={editModal} 
-                                            leaveid={item.ltId} leavecategory={item.leaveCategory} fromdate={item.fromDate}
-                                             todate={item.toDate} reason={item.reason} />
-                                            <td><X onClick={() => deleteList(item.ltId)} /></td>
+                                            <EditLeave handleEditClose={handleEditClose} modal={editModal}
+                                             leaveltId={item.ltId}   leaveId={item.leaveTypeId} leavecategory={item.leaveCategory} fromdate={item.fromDate}
+                                                todate={item.toDate} reason={item.reason} />
+                                            <td><Trash2 onClick={() => deleteList(item.ltId)} />
+                                            </td>
+                                            {/* <Confirm
+                                                onConfirm={() => deleteList(item.ltId)}
+                                                body="You are about to delete your leave application, Do you want to delete it ?"
+                                                confirmText="Yes"
+                                                >
+                                                <td><X /></td>
+                                            </Confirm> */}
                                         </tr>
-                                        </tbody>
-                                    )
-                                })}
-                        </Table>
+                                    </tbody>
+                                )
+                            })}
+                    </Table>
                 </Row>
             </div>
         </Fragment>
