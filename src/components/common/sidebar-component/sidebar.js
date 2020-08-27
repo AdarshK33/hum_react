@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import logo from '../../../assets/images/endless-logo.png';
+import logo from '../../../assets/images/humineLogo.png';
 import logo_compact from '../../../assets/images/logo/compact-logo.png';
 import { MENUITEMS } from '../../../constant/menu';
 import { Link } from 'react-router-dom';

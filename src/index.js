@@ -15,11 +15,13 @@ import Project from './components/dashboard/project/project';
 // sample page
 import Samplepage from './components/sample/samplepage';
 import Roster from './components/roster/roster';
-import CreateShift from "./components/roster/createShift";
 import EditShift from "./components/roster/editShift";
 import ViewShift from  "./components/roster/viewShift"
 //Leave Page
-import LeaveView from './components/Leaves/LeaveView'
+import LeaveView from './components/Leaves/LeaveView';
+
+//Cluster
+import ViewCluster from "./components/cluster/viewCluster"
 // Added by Ranjith 31 july 2020
 import { GlobalCustomThemeProvider } from './context/GlobalState';
 import {RosterProvider} from './context/RosterState';
@@ -34,9 +36,9 @@ function Root() {
     return (
         <div className="App">
          {/* <Provider store={store}>  */}
-         <GlobalCustomThemeProvider>
-             <RosterProvider>
-                <LeaveProvider>
+         {/* <GlobalCustomThemeProvider> */}
+             <RosterProvider>   
+                 <LeaveProvider>
                 <BrowserRouter basename={'/'}>
                     <ScrollContext>
                         <Switch>
@@ -56,10 +58,12 @@ function Root() {
                                     
                                     {/* Roaster */}
                                     <Route path={`${process.env.PUBLIC_URL}/roster/roster`} component={Roster} />
-                                    <Route path={`${process.env.PUBLIC_URL}/roster/createShift`} component={CreateShift} />
-                                    <Route path={`${process.env.PUBLIC_URL}/roster/editShift`} component={EditShift} />
+                                   
+                                      <Route path={`${process.env.PUBLIC_URL}/roster/editShift`} component={EditShift} /> 
                                      <Route path={`${process.env.PUBLIC_URL}/roster/viewShift`} component={ViewShift} /> 
-                                    
+                                    {/* Cluster */}
+                                  
+                                    <Route path={`${process.env.PUBLIC_URL}/cluster/viewCluster`} component={ViewCluster} /> 
                                 </App>
                             </Fragment>
                         </Switch>
@@ -68,7 +72,7 @@ function Root() {
              {/* </Provider>  */}
              </LeaveProvider>
              </RosterProvider>
-             </GlobalCustomThemeProvider>
+             {/* </GlobalCustomThemeProvider> */}
         </div>
     );
 }

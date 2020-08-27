@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import man from '../../../assets/images/dashboard/user.png';
+import man from '../../../assets/images/dashboard/userImage.png';
 import { User, Mail, Lock, Settings, LogOut } from 'react-feather';
 
 

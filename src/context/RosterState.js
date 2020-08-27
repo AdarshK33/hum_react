@@ -1,90 +1,128 @@
-import React, { createContext, useReducer} from 'react';
+import React, { createContext, useReducer, useState } from 'react';
 import axios from 'axios';
 import environmentVariables from '../components/common/environment';
 
 import RosterReducer from '../reducers/RosterReducer';
 const baseUrl = "http://humine.theretailinsights.co/";
+
+
 const initial_state = {
-  shiftList:[]
+  shiftList: [],
+  shiftListNames: [],
+  shiftContractNames: [],
+  shiftMasterId: null
 }
 
 
 export const RosterContext = createContext();
 export const RosterProvider = ({ children }) => {
- const [state, dispatch] = useReducer(RosterReducer,initial_state);
- const headers = {
-  'Content-Type': 'application/json',
-  Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk4MjkyOTQwLCJpYXQiOjE1OTgyNTY5NDB9.rhipcOeNcPnX3WKpzgLAe0CX_pCmJi0xcqm62j2vRuo'
-}
+  const [state, dispatch] = useReducer(RosterReducer, initial_state);
+  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk4NTYwNzgxLCJpYXQiOjE1OTg1MjQ3ODF9._mjD53WdVwPFBoA6eC2JYqTF5VOuMF4zYAQ3W-oFabE'
+  }
+
+  // VIEWSHIFT
+
+  function viewShift() {
+    axios.get(baseUrl + 'shift/view', {
+      headers: headers
+    }).then(function (response) {
+      // console.log("data==>" + JSON.stringify(response));
+      state.shiftList = response.data.data;
+      return dispatch({ type: 'FETCH_SHIFT_LIST', payload: state.shiftList });
+    })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 
 
-// VIEWSHIFT
+  // VIEW SHIFT TYPE LIST
 
-function viewShift(){
-  axios.get(baseUrl+'shift/view',{
-    headers: headers
-  }).then(function (response) {
- // console.log("data==>" + JSON.stringify(response));
-  state.shiftList=response.data.data;
-  return dispatch({ type: 'FETCH_SHIFT_LIST', payload: state.shiftList });
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-}
+  function viewShiftTypes() {
+    axios.get(baseUrl + 'shift/types', {
+      headers: headers
+    }).then(function (response) {
+      // console.log("data==>" + JSON.stringify(response));
+      state.shiftListNames = response.data.data;
+      return dispatch({ type: 'FETCH_SHIFT_LIST_NAMES', payload: state.shiftListNames });
+    })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+//VIEW CONTRACT TYPE LIST
+
+  function viewContractTypes() {
+    axios.get(baseUrl + 'contract_type/view', {
+      headers: headers
+    }).then(function (response) {
+      //console.log("data==>" + JSON.stringify(response));
+      state.shiftContractNames = response.data.data;
+      return dispatch({ type: 'FETCH_CONTRACT_LIST_NAMES', payload: state.shiftContractNames });
+    })
+      .catch(function (error) {
+        console.log(error);
+
+      });
+  }
+
+
+
 
 //EDIT SHIFT
 
-
-function editShift(shiftMasterId){
-  alert(shiftMasterId);
-  axios.get(baseUrl+'shift/view/'+shiftMasterId,{
-    headers: headers
-  }).then(function (response) {
-  console.log("data==>" + JSON.stringify(response));
-   state.shiftList=response.data.data;
-   return dispatch({ type: 'EDIT_SHIFT_LIST', payload: state.shiftList });
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-}
-
-function updateShift(newEditShift) {
-  return axios.put(baseUrl+"shift/update", newEditShift, {
-    headers: headers
-  })
-}
+  function editShift(shiftMasterId) {
+ //   alert(shiftMasterId);
+    axios.get(baseUrl + 'shift/view/' + shiftMasterId, {
+      headers: headers
+    }).then(function (response) {
+      console.log("data==>" + JSON.stringify(response));
+      state.shiftList = response.data.data;
+      return dispatch({ type: 'EDIT_SHIFT_LIST', payload: state.shiftList });
+    })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 
 
-
-
-
-// ADD SHIFT
-
-  function addShift(newShift) {
-    return axios.post(baseUrl+"shift/create", newShift, {
+//UPDATE
+  function updateShift(newEditShift) {
+    return axios.put(baseUrl + "shift/update", newEditShift, {
       headers: headers
     })
   }
 
+  // ADD SHIFT
 
-// DELETE SHIFT
+  function addShift(newShift) {
+    return axios.post(baseUrl + "shift/create", newShift, {
+      headers: headers
+    })
+
+  }
+
+
+  // DELETE SHIFT
 
   function deleteShift(shiftMasterId) {
-    axios.delete(baseUrl+'shift/delete'+"?shiftId="+ shiftMasterId,{
+    alert("delete" + shiftMasterId)
+    axios.delete(baseUrl + 'shift/delete' + "?shiftId=" + shiftMasterId, {
       headers: headers
     }).then(function (response) {
       console.log("data==>" + JSON.stringify(response));
-     // let myresult = response.data.data.shiftMasterId;   
-    return dispatch({ type: 'DELETE_SHIFT', payload:shiftMasterId });
-    
+      // let myresult = response.data.data.shiftMasterId;   
+      return dispatch({ type: 'DELETE_SHIFT', payload: shiftMasterId });
+
     })
-    .catch(function (error) {
-      console.log(error);
-    });
+      .catch(function (error) {
+        console.log(error);
+      });
     viewShift();
-};
+  };
 
 
 
@@ -94,8 +132,13 @@ function updateShift(newEditShift) {
     viewShift,
     deleteShift,
     editShift,
+    viewShiftTypes,
     updateShift,
-   shiftList:state.shiftList
+    viewContractTypes,
+    shiftList: state.shiftList,
+    shiftMasterId: state.shiftMasterId,
+    shiftListNames: state.shiftListNames,
+    shiftContractNames: state.shiftContractNames
   }}>
     {children}
   </RosterContext.Provider>);
