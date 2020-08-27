@@ -66,9 +66,9 @@ function ViewShift() {
                             <td>{i + 1}</td>
                             <td>{e.shiftName}</td>
                             <td>{moment(e.startTime, ["h:mm A"]).format("HH:mm")}-{moment(e.endTime, ["h:mm A"]).format("HH:mm")}</td>
+                            <td>{moment(e.breakStartTime, ["h:mm A"]).format("HH:mm")}-{moment(e.breakEndTime, ["h:mm A"]).format("HH:mm")}</td>
                             <td>{e.workingHours}</td>
                             <td>{e.productTarget}</td>
-                            <td>{moment(e.breakStartTime, ["h:mm A"]).format("HH:mm")}-{moment(e.breakEndTime, ["h:mm A"]).format("HH:mm")}</td>
                             <td>{e.contractType}</td>
                             <td>{e.status === 0 ? "Active" : "Inactive"} </td>
                             
