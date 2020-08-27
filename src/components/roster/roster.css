@@ -1,0 +1,8 @@
+.title_bar{
+    background: royalblue;
+    font-weight: bold;
+    color: white;
+    line-height: 3rem;
+    font-weight: bold;
+    text-align: right;
+}

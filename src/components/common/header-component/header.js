@@ -76,9 +76,9 @@ const Header = () => {
           </div>
           <div className="nav-right col p-0">
             <ul className={`nav-menus ${headerbar ? '' : 'open'}`}>
-              <li>
+              {/* <li>
                 <SearchHeader />
-              </li>
+              </li> */}
               <li>
                 <a onClick={goFull} className="text-dark" href="#!">
                   <Maximize />

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Dropdown = ({value, data, placeholder, styleClass, onChange}) => {
+const Dropdown2 = ({value, data, placeholder, styleClass, onChange}) => {
 
     const handleChange = (event) => {
         const {value} = event.target;
@@ -16,7 +16,7 @@ const Dropdown = ({value, data, placeholder, styleClass, onChange}) => {
                 onChange={handleChange}>
                 <option value="">{placeholder}</option>
                 {data.map((item, key) => (
-                    <option value={item.value}>
+                    <option key={key} value={item.value}>
                         {item.value}
                     </option>
                 ))}
@@ -28,4 +28,4 @@ const Dropdown = ({value, data, placeholder, styleClass, onChange}) => {
 
 
 
-export default Dropdown;
+export default Dropdown2;
