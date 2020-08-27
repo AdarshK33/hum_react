@@ -1,16 +1,37 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom'
 import Breadcrumb from '../common/breadcrumb';
 import { Card, Row, Col, Table, Button, Modal } from 'react-bootstrap'
-import { X, Edit2 } from 'react-feather'
+import { X, Edit2, Trash2 } from 'react-feather'
 import calendarImage from '../../assets/images/calendar-image.png'
 import LeaveAdd from './LeaveAdd'
+import EditLeave from './EditLeave'
+import Confirm from 'react-confirm-bootstrap'
+import { LeaveContext } from '../../context/LeaveState'
 import './Leaves.css'
 
 const LeaveView = () => {
-    const [modal, setModal] = useState(false)
 
+    const [modal, setModal] = useState(false);
+    const [editModal, setEditModal] = useState(false)
+
+    const { leaveList, viewList, deleteList, editList, viewLeaveData, leaveDataList } = useContext(LeaveContext);
+
+  
     const handleClose = () => setModal(false)
     const handleShow = () => setModal(true)
+
+    const handleEditClose = () => setEditModal(false)
+    const handleEditShow = () => setEditModal(true)
+
+    useEffect(() => {
+        viewList()
+    }, [])
+
+    useEffect(() => {
+        viewLeaveData()
+      
+    }, [])
 
     return (
         <Fragment>
@@ -22,42 +43,40 @@ const LeaveView = () => {
                     </div>
                 </div>
                 <Row className="row">
-                    <Col className="col-12 col-md-3">
-                        <Card>
+                    <Col className="col-12 col-md-2"></Col>
+                    <Col className="col-12 col-md-3" style={{ marginBottom: '3rem' }}>
+                        <Card className="h-100">
                             <Card.Body>
                                 <Row className="text-center">
                                     <h6 style={{ fontWeight: 'bold' }}>General Leaves</h6>
                                 </Row>
-                                <Row className="text-center" style={{ margin: '15px 0' }}>
+                                <Row className="text-center" style={{ margin: '15px 0 30px 0' }}>
                                     <img src={calendarImage} alt="calendar-image" width='50px' />
                                 </Row>
                                 <Row>
                                     <Col>
                                         <Row className="text-center">
-                                            <Card.Text>Available:5</Card.Text>
+                                            <Card.Text>Available: 50</Card.Text>
                                         </Row>
                                         <Row className="text-center">
-                                            <Card.Text>Taken:4</Card.Text>
+                                            <Card.Text>Taken: 8</Card.Text>
                                         </Row>
                                     </Col>
                                 </Row>
                             </Card.Body>
                         </Card>
                     </Col>
-                    <Col className="col-12 col-md-3">
-                        <Card>
+                    <Col className="col-12 col-md-3" style={{ marginBottom: '3rem' }}>
+                        <Card className="h-100">
                             <Card.Body>
                                 <Row className="text-center">
-                                    <h6 style={{ fontWeight: 'bold', color: 'red' }}>Unplanned Leaves</h6>
+                                    <h6 style={{ fontWeight: 'bold', color: 'red' }}>LOP</h6>
                                 </Row>
-                                <Row className="text-center" style={{ margin: '15px 0' }}>
+                                <Row className="text-center" style={{ margin: '15px 0 30px 0' }}>
                                     <img src={calendarImage} alt="calendar-image" width='50px' />
                                 </Row>
                                 <Row>
                                     <Col>
-                                        <Row className="text-center">
-                                            <Card.Text>Available:6</Card.Text>
-                                        </Row>
                                         <Row className="text-center">
                                             <Card.Text>Taken:2</Card.Text>
                                         </Row>
@@ -66,20 +85,17 @@ const LeaveView = () => {
                             </Card.Body>
                         </Card>
                     </Col>
-                    <Col className="col-12 col-md-3">
-                        <Card>
+                    <Col className="col-12 col-md-3" style={{ marginBottom: '3rem' }}>
+                        <Card className="h-100">
                             <Card.Body>
                                 <Row className="text-center">
-                                    <h6 style={{ fontWeight: 'bold', color: 'green' }}>Planned Leaves</h6>
+                                    <h6 style={{ fontWeight: 'bold', color: 'green' }}>Other Leaves</h6>
                                 </Row>
-                                <Row className="text-center" style={{ margin: '15px 0' }}>
+                                <Row className="text-center" style={{ margin: '15px 0 30px 0' }}>
                                     <img src={calendarImage} alt="calendar-image" width='50px' />
                                 </Row>
                                 <Row>
                                     <Col>
-                                        <Row className="text-center">
-                                            <Card.Text>Available:10</Card.Text>
-                                        </Row>
                                         <Row className="text-center">
                                             <Card.Text>Taken:5</Card.Text>
                                         </Row>
@@ -88,28 +104,7 @@ const LeaveView = () => {
                             </Card.Body>
                         </Card>
                     </Col>
-                    <Col className="col-12 col-md-3">
-                        <Card>
-                            <Card.Body>
-                                <Row className="text-center">
-                                    <h6 style={{ fontWeight: 'bold', color: 'blue' }}>Others Leaves</h6>
-                                </Row>
-                                <Row className="text-center" style={{ margin: '15px 0' }}>
-                                    <img src={calendarImage} alt="calendar-image" width='50px' />
-                                </Row>
-                                <Row>
-                                    <Col>
-                                        <Row className="text-center">
-                                            <Card.Text>Available:3</Card.Text>
-                                        </Row>
-                                        <Row className="text-center">
-                                            <Card.Text>Taken:1</Card.Text>
-                                        </Row>
-                                    </Col>
-                                </Row>
-                            </Card.Body>
-                        </Card>
-                    </Col>
+                    <Col className="col-12 col-md-1"></Col>
                 </Row>
                 <Row className="apply-button-row">
                     <Col className="leaveApplications">Leave Applications</Col>
@@ -118,7 +113,8 @@ const LeaveView = () => {
                     </Col>
                     <LeaveAdd handleClose={handleClose} modal={modal} />
                 </Row>
-                <Row className="table">
+            
+                            <Row className="table">
                     <Table>
                         <thead>
                             <tr>
@@ -131,17 +127,36 @@ const LeaveView = () => {
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>001</td>
-                                <td>General Leave</td>
-                                <td>1</td>
-                                <td>06-07-2020</td>
-                                <td>07-07-2020</td>
-                                <td><Edit2 /></td>
-                                <td><X /></td>
-                            </tr>
-                        </tbody>
+
+                        {leaveList.length > 0 &&
+                            leaveList.map((item, i) => {
+                                return (
+                                    <tbody key={i + 1}>
+                                        <tr>
+                                            <td>{i + 1}</td>
+                                            <td>{item.leaveCategory}</td>
+                                            <td>{item.numberOfDays}</td>
+                                            <td>{item.fromDate}</td>
+                                            <td>{item.toDate}</td>
+                                            <td><Edit2 onClick={handleEditShow} />
+                                            </td>
+                                            {/* <td><Edit2 onClick={handleEditShow} /></td> */}
+                                            <EditLeave handleEditClose={handleEditClose} modal={editModal}
+                                             leaveltId={item.ltId}   leaveId={item.leaveTypeId} leavecategory={item.leaveCategory} fromdate={item.fromDate}
+                                                todate={item.toDate} reason={item.reason} />
+                                            <td><Trash2 onClick={() => deleteList(item.ltId)} />
+                                            </td>
+                                            {/* <Confirm
+                                                onConfirm={() => deleteList(item.ltId)}
+                                                body="You are about to delete your leave application, Do you want to delete it ?"
+                                                confirmText="Yes"
+                                                >
+                                                <td><X /></td>
+                                            </Confirm> */}
+                                        </tr>
+                                    </tbody>
+                                )
+                            })}
                     </Table>
                 </Row>
             </div>

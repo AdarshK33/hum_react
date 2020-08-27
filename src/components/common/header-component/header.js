@@ -1,8 +1,6 @@
 import React, { useState ,Fragment } from 'react';
 import logo from '../../../assets/images/endless-logo.png';
-import Language from './language';
 import UserMenu from './userMenu';
-import Notification from './notification';
 import SearchHeader from './searchHeader';
 import { Link } from 'react-router-dom';
 import { AlignLeft, Maximize, Bell, MessageCircle, MoreHorizontal } from 'react-feather';
@@ -24,15 +22,15 @@ const Header = () => {
     }
   }
 
-  function showRightSidebar() {
-    if (rightSidebar) {
-      setRightSidebar(!rightSidebar)
-      document.querySelector(".right-sidebar").classList.add('show');
-    } else {
-      setRightSidebar(!rightSidebar)
-      document.querySelector(".right-sidebar").classList.remove('show');
-    }
-  }
+  // function showRightSidebar() {
+  //   if (rightSidebar) {
+  //     setRightSidebar(!rightSidebar)
+  //     document.querySelector(".right-sidebar").classList.add('show');
+  //   } else {
+  //     setRightSidebar(!rightSidebar)
+  //     document.querySelector(".right-sidebar").classList.remove('show');
+  //   }
+  // }
 
   //full screen function
   function goFull() {
@@ -78,31 +76,22 @@ const Header = () => {
           </div>
           <div className="nav-right col p-0">
             <ul className={`nav-menus ${headerbar ? '' : 'open'}`}>
-              <li>
+              {/* <li>
                 <SearchHeader />
-              </li>
+              </li> */}
               <li>
                 <a onClick={goFull} className="text-dark" href="#!">
                   <Maximize />
                 </a>
               </li>
-              <li className="onhover-dropdown">
-                <a className="txt-dark" href="#javascript">
-                  <h6>EN</h6></a>
-                <Language />
-              </li>
-              <li className="onhover-dropdown">
-                <Notification />
-                <Bell />
-                <span className="dot"></span>
-                <Notification />
-              </li>
-              <li>
+            
+             
+              {/* <li>
                 <a href="#javascript" onClick={showRightSidebar}>
                   <MessageCircle />
                   <span className="dot"></span>
                 </a>
-              </li>
+              </li> */}
               <UserMenu />
             </ul>
             <div className="d-lg-none mobile-toggle pull-right" onClick={() => setHeaderbar(!headerbar)}><MoreHorizontal/></div>
