@@ -19,7 +19,7 @@ export const RosterProvider = ({ children }) => {
   const [state, dispatch] = useReducer(RosterReducer, initial_state);
   const headers = {
     'Content-Type': 'application/json',
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk4NTYwNzgxLCJpYXQiOjE1OTg1MjQ3ODF9._mjD53WdVwPFBoA6eC2JYqTF5VOuMF4zYAQ3W-oFabE'
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk4NjIzMzMxLCJpYXQiOjE1OTg1ODczMzF9.HuIUm3IzT_o1vU7U9XLMBKDBtVotEcLB7iYk7nPxKL8'
   }
 
   // VIEWSHIFT
