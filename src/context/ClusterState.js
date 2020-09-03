@@ -18,7 +18,7 @@ export const ClusterProvider = ({ children }) => {
   const headers = {
     'Content-Type': 'application/json',
 
-    Authorization: 'Bearer  eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk5MTcyMzE5LCJpYXQiOjE1OTkxMzYzMTl9.aWe2mllnjt3SsCA5FXBM1Y9xZdJb06RbpVEbOgZXSqU'
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk5MTg0NzkyLCJpYXQiOjE1OTkxNDg3OTJ9.Ov55oarWwuTPkuijfpzlO3lBeqN8Nq3d0zzW7lGBBqY'
   }
  // ADD SHIFT
 
