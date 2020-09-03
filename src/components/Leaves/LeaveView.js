@@ -14,25 +14,36 @@ const LeaveView = () => {
 
     const [modal, setModal] = useState(false);
     const [editModal, setEditModal] = useState(false)
+    const [leaveCategory, setLeaveCategory] = useState()
+    const [fromDate, setFromDate] = useState(new Date())
+    const [toDate, setToDate] = useState(new Date())
+    const [ltId, setltId] = useState()
+    const [reason, setReason] = useState()
 
-    const { leaveList, viewList, deleteList, editList, viewLeaveData, leaveDataList } = useContext(LeaveContext);
+    console.log("setFromDate fromDate++++++++", new Date(fromDate))
+    const { leaveList, viewList, deleteList, editList, viewLeaveData, leaveDataList, viewGrantLeave, grantLeave }
+     = useContext(LeaveContext);
 
-  
+    
     const handleClose = () => setModal(false)
     const handleShow = () => setModal(true)
 
     const handleEditClose = () => setEditModal(false)
     const handleEditShow = () => setEditModal(true)
 
+
     useEffect(() => {
         viewList()
-    }, [])
-
-    useEffect(() => {
         viewLeaveData()
-      
-    }, [])
+        viewGrantLeave()
 
+    }, [])
+    /* const setFromDateHandler = (date) => {
+        var newDate = new Date(date)
+        setFromDate(newDate)
+        console.log("from date in leave view", newDate)
+        console.log("from date in leave view", fromDate)
+    } */
     return (
         <Fragment>
             <Breadcrumb title="Leave View" parent="Leave View" />
@@ -56,10 +67,12 @@ const LeaveView = () => {
                                 <Row>
                                     <Col>
                                         <Row className="text-center">
-                                            <Card.Text>Available: 50</Card.Text>
+                                            <p>Available:{leaveDataList.eligibleLeave ? leaveDataList.eligibleLeave.General :
+                                                ''}</p>
                                         </Row>
                                         <Row className="text-center">
-                                            <Card.Text>Taken: 8</Card.Text>
+                                            <p>Taken:{leaveDataList.leaveApplied ? leaveDataList.leaveApplied.General :
+                                                '0'}</p>
                                         </Row>
                                     </Col>
                                 </Row>
@@ -78,7 +91,8 @@ const LeaveView = () => {
                                 <Row>
                                     <Col>
                                         <Row className="text-center">
-                                            <Card.Text>Taken:2</Card.Text>
+                                            <p>Taken:{leaveDataList.leaveApplied ? leaveDataList.leaveApplied.LOP :
+                                                <span>0</span>}</p>
                                         </Row>
                                     </Col>
                                 </Row>
@@ -97,7 +111,8 @@ const LeaveView = () => {
                                 <Row>
                                     <Col>
                                         <Row className="text-center">
-                                            <Card.Text>Taken:5</Card.Text>
+                                             <p>Taken: {grantLeave}</p>
+                                               
                                         </Row>
                                     </Col>
                                 </Row>
@@ -113,8 +128,8 @@ const LeaveView = () => {
                     </Col>
                     <LeaveAdd handleClose={handleClose} modal={modal} />
                 </Row>
-            
-                            <Row className="table">
+
+                <Row className="table">
                     <Table>
                         <thead>
                             <tr>
@@ -138,12 +153,14 @@ const LeaveView = () => {
                                             <td>{item.numberOfDays}</td>
                                             <td>{item.fromDate}</td>
                                             <td>{item.toDate}</td>
-                                            <td><Edit2 onClick={handleEditShow} />
+                                            <td><Edit2 onClick={() => {
+                                                setEditModal(true); setLeaveCategory(item.leaveCategory);
+                                                setFromDate(item.fromDate); setToDate(item.toDate); setReason(item.reason)
+                                                setltId(item.ltId)
+                                            }} />
                                             </td>
-                                            {/* <td><Edit2 onClick={handleEditShow} /></td> */}
-                                            <EditLeave handleEditClose={handleEditClose} modal={editModal}
-                                             leaveltId={item.ltId}   leaveId={item.leaveTypeId} leavecategory={item.leaveCategory} fromdate={item.fromDate}
-                                                todate={item.toDate} reason={item.reason} />
+
+
                                             <td><Trash2 onClick={() => deleteList(item.ltId)} />
                                             </td>
                                             {/* <Confirm
@@ -158,6 +175,9 @@ const LeaveView = () => {
                                 )
                             })}
                     </Table>
+                    <EditLeave handleEditClose={handleEditClose} modal={editModal}
+                        leaveCategory={leaveCategory} fromDate={fromDate} toDate={toDate}
+                        reason={reason} ltId={ltId} />
                 </Row>
             </div>
         </Fragment>
