@@ -85,7 +85,7 @@ export const RosterProvider = ({ children }) => {
     axios.get(baseUrl + 'shift/' + shiftMasterId, {
       headers: headers
     }).then(function (response) {
-      console.log("single shift list" + JSON.stringify(response));
+      //console.log("single shift list" + JSON.stringify(response));
       state.singleShiftList = response.data.data;
       return dispatch({ type: 'EDIT_SHIFT_LIST', payload: state.singleShiftList });
     })
