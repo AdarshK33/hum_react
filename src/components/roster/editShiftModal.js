@@ -22,7 +22,7 @@ const EditShiftModal = (props) => {
   const [breakStartTime, setStartBreakTime] = useState(null);
   const [breakEndTime, setEndBreakTIme] = useState(null);
   const [successMsg, setSuccessMsg] = useState("");
-  const [shiftType,setShiftType] = useState('')
+ 
   const [breakDuationMsg, setBreakDurationMsg] = useState(false);
   const [shiftButton, setShiftButton] = useState(false);
   const [showText, setShowText] = useState(false);
@@ -33,6 +33,9 @@ const EditShiftModal = (props) => {
   const [errormsg, setErrorMsg] = useState(false);
   const { addShift, updateShift,viewShift, shiftListNames, singleShiftList,viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
 
+  const [shiftType,setShiftType] = useState(singleShiftList.shiftType);
+console.log("in begin"+shiftType);
+console.log("===="+singleShiftList);
   const setClear = () => {
     setStartTime('')
     setEndTime('')
@@ -89,7 +92,7 @@ const EditShiftModal = (props) => {
   const handleSelectChange = event => {
     const value = event.target.value;
     setShiftType(value);
-   
+    alert("handle select ",value);
   };
 
 
@@ -288,14 +291,28 @@ const EditShiftModal = (props) => {
                     <h6>{breakDuationMsg && <div className="text-danger pl-3">Break Should be one hour</div>}</h6>
                   </div>
                   <h6>Shift Type</h6> 
-                  <div className="row">
+                  {/* <div className="row">
                  
                    <div className="col-sm-6">
-                   <input type="radio" checked={singleShiftList.shiftType === 'Captain'}   onChange={event => handleSelectChange(event)} value="Captain" /> Captain
+                   <input type="radio" checked="Captain"   value="Captain" /> Captain
                    </div>
                    <div className="col-sm-6">
-                   <input type="radio" checked={singleShiftList.shiftType === 'Onduty'}  onChange={event => handleSelectChange(event)} value="Onduty" /> Onduty
+                   <input type="radio" checked={shiftType === 'Onduty'}  onChange={event => handleSelectChange(event)}  value="Onduty" /> Onduty
                      </div>
+                 </div> */}
+
+
+
+                 <div className="row">
+                 
+                   <div className="col-sm-6">
+                   <input type="radio"  checked={singleShiftList.shiftType ==='Captain'}  onChange={event => handleSelectChange(event)}   /> Captain
+                   </div>
+                  
+                
+                   <div className="col-sm-6">
+                   <input type="radio" checked={singleShiftList.shiftType ==='Onduty'}  onChange={event => handleSelectChange(event)}  /> Onduty
+                     </div> 
                  </div>
                   
                   <div className="row">
