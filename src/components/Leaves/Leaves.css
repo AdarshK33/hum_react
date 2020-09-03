@@ -37,9 +37,6 @@ button.apply-button.btn.btn-primary{
     padding-right: 0;
 }
 button.submit-button.btn.btn-primary{
-    color: black;
-    background-color: whitesmoke !important;
-    border-color: lightgray !important;
     float: right;
 }
 h5.modal-heading{

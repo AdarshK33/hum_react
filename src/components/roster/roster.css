@@ -6,3 +6,23 @@
     font-weight: bold;
     text-align: right;
 }
+nav.nav.nav-tabs a {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: black
+}
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+    color: #495057;
+    background-color: #c7c7c7;
+    border-color: #c7c7c7 #c7c7c7 #fff;
+}
+select.form-control.form-control-sm.darkBackground {
+    background-color: #c7c7c7;
+}
+button.assign-button.btn.btn-secondary.btn-block.btn-sm {
+    background-color: #615158 !important;
+    border-color: #615158 !important;
+}
+small.form-text.text-muted{
+    text-align: center;
+}
