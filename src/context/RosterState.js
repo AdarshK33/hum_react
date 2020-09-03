@@ -1,6 +1,7 @@
 import React, { createContext, useReducer, useState } from 'react';
 import axios from 'axios';
 import environmentVariables from '../components/common/environment';
+import { ToastContainer, toast } from "react-toastify";
 
 import RosterReducer from '../reducers/RosterReducer';
 const baseUrl = "http://humine.theretailinsights.co/";
@@ -11,6 +12,8 @@ const initial_state = {
   shiftListNames: [],
   shiftContractNames: [],
   shiftMasterId: null,
+  weekDays:[],
+  weekOffDataList:[],
   singleShiftList:[]
 }
 
@@ -20,9 +23,7 @@ export const RosterProvider = ({ children }) => {
   const [state, dispatch] = useReducer(RosterReducer, initial_state);
   const headers = {
     'Content-Type': 'application/json',
-
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk5MTcyMzE5LCJpYXQiOjE1OTkxMzYzMTl9.aWe2mllnjt3SsCA5FXBM1Y9xZdJb06RbpVEbOgZXSqU'
-
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk5MTQzMDU1LCJpYXQiOjE1OTkxMDcwNTV9.WloJyJVj1b8GoNFsRJ5l2UzW77KTa-hLx4RS8B32D9U'
   }
 
   // VIEWSHIFT
@@ -129,8 +130,59 @@ export const RosterProvider = ({ children }) => {
     viewShift();
   };
 
+// Get View WeekOff Weeks according to days
+const weekOffDays = (weekId) => {
+  console.log("weelId", weekId)
+  axios.get(baseUrl + 'weekoff/weeks/days' + '?weekId=' + weekId, {
+    headers: headers
+  })
+    .then((response) => {
+      state.weekDays = response.data.data
+      console.log("=====GET Weeks Off API respone=====", state.weekDays)
+      return dispatch({ type: 'WEEKOFF_WEEK_DAYS', payload: state.weekDays})
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+}
 
 
+// view Week Off Data according to the emp id
+
+const weekOffDataEmp = () => {
+  let empId = 'DSI001282'
+  axios.get(baseUrl + 'weekoff/employee/view' + '?employeeId=' + empId, {
+    headers: headers
+  })
+    .then((response) => {
+      state.weekOffDataList = response.data.data
+      console.log("=====GET Weeks Off API respone=====", state.weekOffDataList)
+      return dispatch({ type: 'WEEKOFF_WEEK_DATA_LIST', payload: state.weekOffDataList})
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+}
+
+//Add week off Data according to the emp id
+const addWeekOff = (newWeekOff) => {
+    console.log("++++create weekOff api response+++++", newWeekOff)
+    return axios.post(baseUrl + 'weekoff/employee/create', newWeekOff, {
+      headers: headers
+    })
+      .then((response) => {
+        state.message = response.data.message
+        toast.info(state.message)
+        weekOffDataEmp()
+        console.log("new create list response===>", response.data.data)
+        console.log("new create list message===>", state.message)
+        return dispatch({ type: 'ADD_NEW_WEEKOFF_DATA', payload: state.weekOffDataList })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+      
+  }
 
   return (<RosterContext.Provider value={{
     addShift,
@@ -140,10 +192,15 @@ export const RosterProvider = ({ children }) => {
     viewShiftTypes,
     updateShift,
     viewContractTypes,
+    weekOffDays,
+    weekOffDataEmp,
+    addWeekOff,
     shiftList: state.shiftList,
     shiftMasterId: state.shiftMasterId,
     shiftListNames: state.shiftListNames,
     shiftContractNames: state.shiftContractNames,
+    weekDays: state.weekDays,
+    weekOffDataList: state.weekOffDataList,
     singleShiftList:state.singleShiftList,
   }}>
     {children}
