@@ -13,7 +13,8 @@ const initial_state = {
   shiftContractNames: [],
   shiftMasterId: null,
   weekDays:[],
-  weekOffDataList:[]
+  weekOffDataList:[],
+  singleShiftList:[]
 }
 
 
@@ -28,10 +29,11 @@ export const RosterProvider = ({ children }) => {
   // VIEWSHIFT
 
   function viewShift() {
+  
     axios.get(baseUrl + 'shift/view', {
       headers: headers
     }).then(function (response) {
-      // console.log("data==>" + JSON.stringify(response));
+       console.log("data==>" + JSON.stringify(response));
       state.shiftList = response.data.data;
       return dispatch({ type: 'FETCH_SHIFT_LIST', payload: state.shiftList });
     })
@@ -47,7 +49,7 @@ export const RosterProvider = ({ children }) => {
     axios.get(baseUrl + 'shift/types', {
       headers: headers
     }).then(function (response) {
-      // console.log("data==>" + JSON.stringify(response));
+       console.log("data==>" + JSON.stringify(response));
       state.shiftListNames = response.data.data;
       return dispatch({ type: 'FETCH_SHIFT_LIST_NAMES', payload: state.shiftListNames });
     })
@@ -64,6 +66,7 @@ export const RosterProvider = ({ children }) => {
     }).then(function (response) {
       //console.log("data==>" + JSON.stringify(response));
       state.shiftContractNames = response.data.data;
+    
       return dispatch({ type: 'FETCH_CONTRACT_LIST_NAMES', payload: state.shiftContractNames });
     })
       .catch(function (error) {
@@ -78,13 +81,13 @@ export const RosterProvider = ({ children }) => {
 //EDIT SHIFT
 
   function editShift(shiftMasterId) {
- //   alert(shiftMasterId);
-    axios.get(baseUrl + 'shift/view/' + shiftMasterId, {
+    alert(shiftMasterId);
+    axios.get(baseUrl + 'shift/' + shiftMasterId, {
       headers: headers
     }).then(function (response) {
-      console.log("data==>" + JSON.stringify(response));
-      state.shiftList = response.data.data;
-      return dispatch({ type: 'EDIT_SHIFT_LIST', payload: state.shiftList });
+      console.log("single shift list" + JSON.stringify(response));
+      state.singleShiftList = response.data.data;
+      return dispatch({ type: 'EDIT_SHIFT_LIST', payload: state.singleShiftList });
     })
       .catch(function (error) {
         console.log(error);
@@ -197,7 +200,8 @@ const addWeekOff = (newWeekOff) => {
     shiftListNames: state.shiftListNames,
     shiftContractNames: state.shiftContractNames,
     weekDays: state.weekDays,
-    weekOffDataList: state.weekOffDataList
+    weekOffDataList: state.weekOffDataList,
+    singleShiftList:state.singleShiftList,
   }}>
     {children}
   </RosterContext.Provider>);

@@ -11,7 +11,7 @@ const Project = () => {
                     <div className="col-sm-12">
                     <div className="card">
                    
-                    hi
+                  
             </div>
                     </div>
                 </div>

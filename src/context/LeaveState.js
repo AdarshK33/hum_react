@@ -100,6 +100,7 @@ export const LeaveProvider = ({ children }) => {
         state.leavesData = response.data.data
         alert(state.message + "=>" + JSON.stringify(state.leavesData))
         console.log("Pop upresponse===>", state.leavesData)
+        console.log("Pop up message===>", state.message)
         return dispatch({ type: 'ADD_POPUP_LEAVE', payload: state.leavesData })
       })
       .catch((error) => {

@@ -1,22 +1,32 @@
 import React, { useEffect, Fragment, useContext, useState } from 'react'
-import { Link } from 'react-router-dom';
-import moment from 'moment';
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import Breadcrumb from "../common/breadcrumb";
 import CreateClusterModal from "./createClusterModal";
-import { Card, Row, Col, Table, Button, Modal } from 'react-bootstrap'
+import EditClusterModal from "./editClusterModal";
+import { Button } from 'react-bootstrap'
 import { RosterContext } from "../../context/RosterState";
-import { Delete, Edit2 } from 'react-feather'
+import { Edit2 } from 'react-feather'
+import { ClusterContext } from "../../context/ClusterState";
 
 function ViewCluster() {
+
+  useEffect(() => {
+    viewCluster()
+  }, [])
 
   const [modal, setModal] = useState(false);
   const handleClose = () => setModal(false)
   const handleShow = () => setModal(true)
 
+  const [editModal, setEditModal] = useState(false)
+  const handleEditClose = () => setEditModal(false)
+  const handleEditShow = () => setEditModal(true)
 
 
+  //variable
+  const { clusterList,viewCluster,getCluster} = useContext(ClusterContext);
 
+
+//console.log("&&&&&&"+clusterList);
 
 
 
@@ -31,6 +41,7 @@ function ViewCluster() {
 
               <div className="title_bar">
                 <Button className="btn btn-light mr-2" onClick={handleShow}>create</Button>
+                {/* <Button className="btn btn-light mr-2" onClick={handleEditShow}>edit</Button> */}
                
               </div>
               <CreateClusterModal handleClose={handleClose} modal={modal} />
@@ -39,36 +50,51 @@ function ViewCluster() {
                   <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                     <tr>
                       <th>No</th>
-                      <th scope="col">Shift Name</th>
-                      <th scope="col">Shift Timeings</th>
-                      <th scope="col">Break Time</th>
-                      <th scope="col">Working Hours</th>
+                     
+                      <th scope="col">Cluster Name</th>
+                      <th scope="col">Cluster Details</th>
+                      <th scope="col">Cluster Leader</th>
                       <th scope="col">Product Target</th>
-                      <th scope="col">Contract Type</th>
+                      <th scope="col">Team Count</th>
+                      <th scope="col">Create Date</th>                    
                       <th scope="col">Status</th>
                       <th scope="col">Edit</th>
                     </tr>
                   </thead>
-                  {/* {shiftList.length > 0 &&
-                    shiftList.map((e, i) => {
+                  {clusterList.length > 0 &&
+                    clusterList.map((e, i) => {
                       return (
                         <tbody key={i + 1}>
                           <tr>
                             <td>{i + 1}</td>
-                            <td>{e.shiftName}</td>
-                            <td>{moment(e.startTime, ["h:mm A"]).format("HH:mm")}-{moment(e.endTime, ["h:mm A"]).format("HH:mm")}</td>
-                            <td>{e.workingHours}</td>
+                         
+                            <td>{e.clusterName}</td>
+                            <td>{e.description}</td>
+                            <td>{e.clusterLeaderName}</td>
                             <td>{e.productTarget}</td>
-                            <td>{moment(e.breakStartTime, ["h:mm A"]).format("HH:mm")}-{moment(e.breakEndTime, ["h:mm A"]).format("HH:mm")}</td>
-                            <td>{e.contractType}</td>
+                            <td>{e.teamCount}</td>
+                            <td>{e.createdDate}</td>
                             <td>{e.status === 0 ? "active" : "inactive"} </td>
-                            <td>  <Link to={{ pathname: `EditShift/${e.shiftMasterId}`, data: { id: e.shiftMasterId } }}><Edit2 onClick={() => editShift(e.shiftMasterId)} /></Link></td>
+                            <td><Edit2 onClick={() => {
+                                                setEditModal(true);
+                                           
+                                                getCluster(e.clusterId);
+                                               
+                                            }} />
+                                            </td>
+                           
                           </tr>
 
                         </tbody>
                       );
-                    })} */}
+                    })}
+           
                 </table>
+                <EditClusterModal handleEditClose={handleEditClose}
+                
+               
+                modal={editModal}
+              /> 
               </div>
 
             </div>
@@ -83,4 +109,3 @@ function ViewCluster() {
 }
 
 export default ViewCluster
-

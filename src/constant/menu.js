@@ -10,7 +10,7 @@ export const MENUITEMS = [
         title: 'Dashboard', icon: Home, type: 'sub', badgeType: 'primary', active: false, children: [
             { path: '/dashboard/default', title: 'Default', type: 'link' },
             { path: '/dashboard/ecommerce', title: 'E-Commerce', type: 'link' },
-            { path: '/dashboard/university', title: 'University', type: 'link' },
+            { path: '/dashboard/project/project', title: 'projrct', type: 'link' },
          
         ]
     },

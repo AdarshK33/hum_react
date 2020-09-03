@@ -12,7 +12,7 @@ const RosterReducer = (state, action) => {
             };
 
             case 'EDIT_SHIFT_LIST':
-                return { ...state, shiftList: action.payload };
+                return { ...state, singleShiftList: action.payload };
     
 
         case 'FETCH_SHIFT_LIST_NAMES':

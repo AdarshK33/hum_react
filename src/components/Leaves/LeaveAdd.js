@@ -171,7 +171,6 @@ const LeaveAdd = (props) => {
             viewLeavePopup: 0,
             year: '2020'
         }
-
         if (leave == 'Maternity') {
             addPopup(newPopup1)
         }
@@ -206,7 +205,6 @@ const LeaveAdd = (props) => {
                                             )
                                         })
                                         }
-
                                     </Form.Control>
                                 </Col>
                             </Form.Group>
@@ -288,7 +286,6 @@ const LeaveAdd = (props) => {
                                         onChange={(event) => setReason(event.target.value)} />
                                 </Col>
                             </Form.Group>
-
                             <Button type="submit" className="submit-button" size="sm">Submit</Button>
                         </Form>
 
