@@ -15,7 +15,7 @@ import Project from './components/dashboard/project/project';
 // sample page
 import Samplepage from './components/sample/samplepage';
 import Roster from './components/roster/roster';
-import EditShift from "./components/roster/editShift";
+// import EditShift from "./components/roster/editShift";
 import ViewShift from  "./components/roster/viewShift"
 //Leave Page
 import LeaveView from './components/Leaves/LeaveView';
@@ -26,6 +26,7 @@ import ViewCluster from "./components/cluster/viewCluster"
 import { GlobalCustomThemeProvider } from './context/GlobalState';
 import {RosterProvider} from './context/RosterState';
 import {LeaveProvider} from './context/LeaveState'
+import {ClusterProvider} from './context/ClusterState';
 
 //firebase Auth
 function Root() {
@@ -39,6 +40,7 @@ function Root() {
          {/* <GlobalCustomThemeProvider> */}
              <RosterProvider>   
                  <LeaveProvider>
+                 <ClusterProvider>
                 <BrowserRouter basename={'/'}>
                     <ScrollContext>
                         <Switch>
@@ -59,7 +61,7 @@ function Root() {
                                     {/* Roaster */}
                                     <Route path={`${process.env.PUBLIC_URL}/roster/roster`} component={Roster} />
                                    
-                                      <Route path={`${process.env.PUBLIC_URL}/roster/editShift`} component={EditShift} /> 
+                                      {/* <Route path={`${process.env.PUBLIC_URL}/roster/editShift`} component={EditShift} />  */}
                                      <Route path={`${process.env.PUBLIC_URL}/roster/viewShift`} component={ViewShift} /> 
                                     {/* Cluster */}
                                   
@@ -70,6 +72,7 @@ function Root() {
                     </ScrollContext>
                 </BrowserRouter>
              {/* </Provider>  */}
+             </ClusterProvider>
              </LeaveProvider>
              </RosterProvider>
              {/* </GlobalCustomThemeProvider> */}

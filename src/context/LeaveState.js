@@ -9,7 +9,8 @@ const initialState = {
   leaveType: [],
   message: '',
   leavesData: [],
-  leaveDataList:{}
+  leaveDataList: {},
+  grantLeave:[]
 }
 
 export const LeaveContext = createContext();
@@ -19,9 +20,9 @@ export const LeaveProvider = ({ children }) => {
 
   const headers = {
     'Content-Type': 'application/json',
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk4NjIzMzMxLCJpYXQiOjE1OTg1ODczMzF9.HuIUm3IzT_o1vU7U9XLMBKDBtVotEcLB7iYk7nPxKL8'
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk5MTQzMDU1LCJpYXQiOjE1OTkxMDcwNTV9.WloJyJVj1b8GoNFsRJ5l2UzW77KTa-hLx4RS8B32D9U'
   }
-  //View Leave
+    //View Leave
 
   const viewList = () => {
     axios.get(baseUrl + 'leave_transaction/view', {
@@ -29,6 +30,7 @@ export const LeaveProvider = ({ children }) => {
     })
       .then((response) => {
         state.leaveList = response.data.data
+        getLeave();
         console.log("=====GET API respone=====", state.leaveList)
         return dispatch({ type: 'FETCH_LEAVE_LIST', payload: state.leaveList })
       })
@@ -41,14 +43,30 @@ export const LeaveProvider = ({ children }) => {
   const viewLeaveData = () => {
     
     let empId1="DSI000035"
-    axios.get(baseUrl + 'leave_transaction/view/{empId}?empId='+empId1, {
+    axios.get(baseUrl + 'leave_transaction/view/'+ empId1, {
       headers: headers
     })
       .then((response) => {
         state.leaveDataList = response.data.data
-        console.log("=====GET Leave Data API respone=====", response.data.data)
         console.log("=====GET Leave Data API respone=====", state.leaveDataList)
-        return dispatch({ type: 'FETCH_LEAVE_DATA_LIST', payload: state.leaveDataList })
+        return dispatch({ type: 'FETCH_LEAVE_DATA_LIST', payload: state.leaveDataList})
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+  //view Grant Leave
+  const viewGrantLeave = () => {
+    
+    let empId1="DSI000035"
+    let year = '2020'
+    axios.get(baseUrl + 'grant_leave/view/'+ empId1 + '/' + year, {
+      headers: headers
+    })
+      .then((response) => {
+        state.grantLeave = response.data.data[0].numOfDays
+        console.log("=====GET Grant Leave  API respone=====", response.data.data[0].numOfDays)
+        return dispatch({ type: 'FETCH_GRANT_LEAVE', payload: state.grantLeave})
       })
       .catch((error) => {
         console.log(error)
@@ -74,7 +92,6 @@ export const LeaveProvider = ({ children }) => {
   // Add new Leave 
   const addPopup = (newPopup) => {
 
-    console.log("++++pop up response+++++", newPopup)
     return axios.post(baseUrl + 'leave_transaction/create', newPopup, {
       headers: headers
     })
@@ -100,9 +117,7 @@ export const LeaveProvider = ({ children }) => {
         .then((response) => {
           state.message = response.data.message
           toast.info(state.message)
-          if (state.message) {
-            viewList()
-          }
+          viewList()
           console.log("new create list response===>", response.data.data)
           console.log("new create list message===>", state.message)
           return dispatch({ type: 'ADD_NEW_LEAVE', payload: state.leaveList })
@@ -111,7 +126,9 @@ export const LeaveProvider = ({ children }) => {
         .catch((error) => {
           console.log(error)
         })
+        
     }
+    viewList()
   }
 
 
@@ -126,9 +143,7 @@ export const LeaveProvider = ({ children }) => {
       .then((response) => {
         state.message = response.data.message
         toast.info(state.message)
-        if (state.message) {
-          viewList()
-        }
+        viewList()
         console.log("??????new edit list response????????", response.data.data)
         console.log("??????new edit list message????????", state.message)
         return dispatch({ type: 'EDIT_LEAVE', payload: state.leaveList })
@@ -173,11 +188,13 @@ export const LeaveProvider = ({ children }) => {
       editList,
       deleteList,
       viewLeaveData,
+      viewGrantLeave,
       leaveList: state.leaveList,
       leaveType: state.leaveType,
       message: state.message,
       leavesData: state.leavesData,
-      leaveDataList: state.leaveDataList
+      leaveDataList: state.leaveDataList,
+      grantLeave: state.grantLeave
     }}>
       {children}
     </LeaveContext.Provider>

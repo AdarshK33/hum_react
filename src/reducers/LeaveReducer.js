@@ -19,6 +19,9 @@ const LeaveReducer = (state, action) => {
         case 'FETCH_LEAVE_TYPE':
             return ({ ...state, leaveType: action.payload })
 
+        case 'FETCH_GRANT_LEAVE':
+            return ({ ...state, grantLeave: action.payload })
+
 
         case 'DELETE_LEAVE':
             return {
