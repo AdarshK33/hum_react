@@ -2,32 +2,35 @@ import React, { Fragment, useState, useContext, useEffect } from 'react';
 import DatePicker from "react-datepicker";
 import moment from 'moment';
 import "react-datepicker/dist/react-datepicker.css";
-import { Card, Row, Col, Table, Button, Modal,Form } from 'react-bootstrap'
+import {  Button, Modal } from 'react-bootstrap'
 import { RosterContext } from "../../context/RosterState";
 
 
-const CreateShiftModal = (props) => {
+const EditShiftModal = (props) => {
 
   useEffect(() => {
     viewShiftTypes()
     viewContractTypes()
   }, [])
 
+ 
+
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
   const [workingHours, setWorkingHour] = useState('');
   const [contractType, setContractType] = useState('');
   const [breakStartTime, setStartBreakTime] = useState(null);
-  const [shiftType,setShiftType] = useState('')
   const [breakEndTime, setEndBreakTIme] = useState(null);
   const [successMsg, setSuccessMsg] = useState("");
+  const [shiftType,setShiftType] = useState('')
   const [breakDuationMsg, setBreakDurationMsg] = useState(false);
   const [shiftButton, setShiftButton] = useState(false);
   const [showText, setShowText] = useState(false);
   const[invalidText,setInvalidText]= useState(false)
+  const[shiftMasterId,setShiftMasterId] = useState();
  // const [workingHoursText, setWorkingHoursText] = useState(false);
   const [errormsg, setErrorMsg] = useState(false);
-  const { addShift, viewShift, shiftListNames, viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
+  const { addShift, updateShift,viewShift, shiftListNames, singleShiftList,viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
 
   const setClear = () => {
     setStartTime('')
@@ -64,40 +67,19 @@ const CreateShiftModal = (props) => {
 
     setWorkingHour(workingHours);
    
-    
-
-    // if(parseInt(workingHours) >9)
-    // {
-    //   setWorkingHour(true)
-    //   setShiftButton(true)
-    // }
-    // else{
-    //   setWorkingHour(false)
-    //  setWorkingHoursText(false)
-    //   setShiftButton(false)
-    // }
+   
   }
   const callShowMethod = () => {
     setShowText(true);
     setInvalidText(true)
+    
   }
 
   const handleSelectChange = event => {
     const value = event.target.value;
     setShiftType(value);
-    setShiftButton(false)
-  };
-
-
-  const onContractType = event => {
-    setContractType(event.target.value);
-     if (shiftType ===  "") {
-      setShiftButton(true)
-      setErrorMsg(false)
-    }
    
   };
-
 
 
   const onSubmit = e => {
@@ -113,15 +95,15 @@ const CreateShiftModal = (props) => {
         startTime: moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
         endTime: moment(endTime, ["h:mm A"]).format("HH:mm:ss"),
         contractType,
-        shiftMasterId: 0,
         shiftType,
+        shiftMasterId: singleShiftList.shiftMasterId,
         workingHours: parseInt(workingHours),
         breakStartTime: 0,
         breakEndTime: 0,
         status: 0
       }
       setSuccessMsg(true);
-      const result = addShift(newShift)
+      const result = updateShift(newShift)
         .then((result) => {
           console.log("api response===", result.data.message);
           console.log("api response===", result.data);
@@ -143,15 +125,15 @@ const CreateShiftModal = (props) => {
         startTime: moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
         endTime: moment(endTime, ["h:mm A"]).format("HH:mm:ss"),
         contractType,
-        shiftMasterId: 0,
         shiftType,
+        shiftMasterId:singleShiftList.shiftMasterId,
         workingHours: parseInt(workingHours),
         breakStartTime: moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
         breakEndTime: moment(breakStartTime).add(1, 'hours').format('HH:mm:ss'),
         status: 0
       }
       setSuccessMsg(true);
-      const result = addShift(newShift)
+      const result = updateShift(newShift)
         .then((result) => {
           console.log("api response===", result.data.message);
           console.log("api response===", result.data);
@@ -166,28 +148,31 @@ const CreateShiftModal = (props) => {
       console.log(result, "in competent");
     }
   }
-  console.log("shift list names " + shiftListNames)
-  console.log("======== contract  names" + shiftContractNames)
+  //console.log("shift list names " + shiftListNames)
+  console.log("======== " + shiftContractNames)
   return (
-    <Modal show={props.modal} onHide={props.handleClose} centered>
+    <Modal show={props.modal} onHide={props.handleEditClose} centered>
       <Fragment>
         <Modal.Header closeButton>
-          <Modal.Title>Apply For Shift</Modal.Title>
+          <Modal.Title>Apply For edit</Modal.Title>
         </Modal.Header>
         <div className="row">
           <div className="col-sm-12">
             <div className="card">
               <div className="card-body">
                 <form onSubmit={onSubmit}>
-             
                   <div className="row">
                     <div className="col-sm-6">
-                      <div className="form-group">
-                        <label htmlFor="exampleFormControlInput1">Start Time</label>
+                        <div className="form-group">
+                        {/* <h1>{moment(singleShiftList.startTime,["HH:mm"]).format("h:mm A")}</h1>
+                        <h1>{singleShiftList.shiftMasterId}</h1> */}
+                        {/* {moment(e.startTime, ["h:mm A"]).format("HH:mm")} */}
+                        <label htmlFor="exampleFormControlInput1">From Time</label>
                         <br />
                         <DatePicker
                           className="form-control"
                           selected={startTime}
+                        //  selected={moment(singleShiftList.startTime,["HH:mm"]).format("h:mm A")}
                           onChange={date => setStartTime(date)}
                           showTimeSelect
                           showTimeSelectOnly
@@ -195,15 +180,15 @@ const CreateShiftModal = (props) => {
                           timeIntervals={30}
                           timeCaption="Time"
                           dateFormat="HH:mm aa"
-                          placeholderText="Select start time"
+                          placeholderText={singleShiftList.startTime}
                           required
                         />
                       </div>
                     </div>
                     <div className="col-sm-6">
                       <div className="form-group">
-                      <label htmlFor="exampleFormControlInput1">EndTime</label>
-                        <br />
+                        <label htmlFor="exampleFormControlInput1">End Time</label>
+                       
                         <DatePicker
                           selected={endTime}
                           className="form-control"
@@ -216,15 +201,16 @@ const CreateShiftModal = (props) => {
                           timeIntervals={30}
                           timeCaption="Time"
                           dateFormat="HH:mm aa"
-                          placeholderText="Select end time"
+                          placeholderText={singleShiftList.endTime}
                         />
                       </div>
                     </div>
                     <h6 style={{ color: "red", marginLeft: "20px" }}>{errormsg}</h6>
                   </div>
              
-                       Total Working Hours 9 Hours 
-     
+                        <h6> Total Working Hours 9 Hours </h6>
+                       
+                
                   <div className="row">
                     <div className="col-sm-12">
                       {parseFloat(workingHours) > 5 ?
@@ -247,12 +233,13 @@ const CreateShiftModal = (props) => {
                                   maxTime={endTime}
                                   dateFormat="HH:mm aa"
                                   onCalendarClose={() => { callShowMethod() }}
-                                  placeholderText="Select start time"
+                                  placeholderText={singleShiftList.breakStartTime}
                                   required
                                 />
                               </div>
                             </div>
-                                                
+                         
+                          
                             {invalidText &&
                               <div className="col-sm-6">
                               <div className="form-group">
@@ -262,7 +249,14 @@ const CreateShiftModal = (props) => {
                             </div>
 
                           }
+
+
+
                           </div>
+                          <br/>
+                        
+
+
                           {showText &&
                             <div className="row">
                               <div className="col-sm-12">
@@ -278,21 +272,17 @@ const CreateShiftModal = (props) => {
                      
                     <h6>{breakDuationMsg && <div className="text-danger pl-3">Break Should be one hour</div>}</h6>
                   </div>
-
-                         
                   <h6>Shift Type</h6> 
                   <div className="row">
                  
                    <div className="col-sm-6">
-                   <input type="radio"  checked={shiftType === 'Captain'}  onChange={event => handleSelectChange(event)} defaultValue="Captain" required="required" /> Captain
+                   <input type="radio" checked={singleShiftList.shiftType === 'Captain'}   onChange={event => handleSelectChange(event)} value="Captain" /> Captain
                    </div>
-                  
-                
                    <div className="col-sm-6">
-                   <input type="radio" checked={shiftType === 'Onduty'}  onChange={event => handleSelectChange(event)} defaultValue="Onduty" /> Onduty
-                     </div> 
+                   <input type="radio" checked={singleShiftList.shiftType === 'Onduty'}  onChange={event => handleSelectChange(event)} value="Onduty" /> Onduty
+                     </div>
                  </div>
-                 <br/>
+                  
                   <div className="row">
                     <div className="col-sm-12">
                       <div className="form-group">
@@ -300,13 +290,13 @@ const CreateShiftModal = (props) => {
                         <select
                           className="form-control"
                           required
-                          value={contractType}
-                          defaultValue={shiftContractNames.contractType}
-                          onChange={onContractType}>
-
-                          <option value="">Select Contract Type</option>
+                          onChange={(e) => setContractType(e.target.value)} 
+                          value={contractType}>
+                            
+                            <option value="" disabled selected hidden>{singleShiftList.contractType}</option>   
                           {shiftContractNames.map((e, i) => {
                             return (
+                             
                               <option key={e.typeId} value={e.contractType}>
                                 {e.contractType}
                               </option>
@@ -317,9 +307,11 @@ const CreateShiftModal = (props) => {
                     </div>
                   </div>
                   <button className="btn btn-primary mb-2 mr-2" type="submit" disabled={shiftButton} value="Submit">Save</button>
+                  <Button className="btn btn-primary mb-2 ml-2" onClick={props.handleEditClose}>Close
+                  </Button>
                   {/* <button className="btn btn-primary mb-2 ml-2" value="reset" onClick={setClear}>Clear</button> */}
-                  <Button className="btn btn-primary mb-2 ml-2" onClick={props.handleClose}>Close
-          </Button>
+                  {/* <Button className="btn btn-primary mb-2 ml-2" onClick={props.handleClose}>Close
+          </Button> */}
                 </form>
                 <h5>{successMsg.length !== 0 && <div className="text-success">{successMsg}</div>}</h5>
               </div>
@@ -330,4 +322,4 @@ const CreateShiftModal = (props) => {
     </Modal>
   );
 };
-export default CreateShiftModal;
+export default EditShiftModal;

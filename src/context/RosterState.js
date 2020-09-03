@@ -10,7 +10,8 @@ const initial_state = {
   shiftList: [],
   shiftListNames: [],
   shiftContractNames: [],
-  shiftMasterId: null
+  shiftMasterId: null,
+  singleShiftList:[]
 }
 
 
@@ -19,16 +20,19 @@ export const RosterProvider = ({ children }) => {
   const [state, dispatch] = useReducer(RosterReducer, initial_state);
   const headers = {
     'Content-Type': 'application/json',
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk4NTYwNzgxLCJpYXQiOjE1OTg1MjQ3ODF9._mjD53WdVwPFBoA6eC2JYqTF5VOuMF4zYAQ3W-oFabE'
+
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk5MTM1NTE3LCJpYXQiOjE1OTkwOTk1MTd9.9yk27V2rObYE059i80vM__JWns7RkxcySIMeMc9FB8E'
+
   }
 
   // VIEWSHIFT
 
   function viewShift() {
+  
     axios.get(baseUrl + 'shift/view', {
       headers: headers
     }).then(function (response) {
-      // console.log("data==>" + JSON.stringify(response));
+       console.log("data==>" + JSON.stringify(response));
       state.shiftList = response.data.data;
       return dispatch({ type: 'FETCH_SHIFT_LIST', payload: state.shiftList });
     })
@@ -44,7 +48,7 @@ export const RosterProvider = ({ children }) => {
     axios.get(baseUrl + 'shift/types', {
       headers: headers
     }).then(function (response) {
-      // console.log("data==>" + JSON.stringify(response));
+       console.log("data==>" + JSON.stringify(response));
       state.shiftListNames = response.data.data;
       return dispatch({ type: 'FETCH_SHIFT_LIST_NAMES', payload: state.shiftListNames });
     })
@@ -61,6 +65,7 @@ export const RosterProvider = ({ children }) => {
     }).then(function (response) {
       //console.log("data==>" + JSON.stringify(response));
       state.shiftContractNames = response.data.data;
+    
       return dispatch({ type: 'FETCH_CONTRACT_LIST_NAMES', payload: state.shiftContractNames });
     })
       .catch(function (error) {
@@ -75,13 +80,13 @@ export const RosterProvider = ({ children }) => {
 //EDIT SHIFT
 
   function editShift(shiftMasterId) {
- //   alert(shiftMasterId);
-    axios.get(baseUrl + 'shift/view/' + shiftMasterId, {
+    alert(shiftMasterId);
+    axios.get(baseUrl + 'shift/' + shiftMasterId, {
       headers: headers
     }).then(function (response) {
-      console.log("data==>" + JSON.stringify(response));
-      state.shiftList = response.data.data;
-      return dispatch({ type: 'EDIT_SHIFT_LIST', payload: state.shiftList });
+      console.log("single shift list" + JSON.stringify(response));
+      state.singleShiftList = response.data.data;
+      return dispatch({ type: 'EDIT_SHIFT_LIST', payload: state.singleShiftList });
     })
       .catch(function (error) {
         console.log(error);
@@ -138,7 +143,8 @@ export const RosterProvider = ({ children }) => {
     shiftList: state.shiftList,
     shiftMasterId: state.shiftMasterId,
     shiftListNames: state.shiftListNames,
-    shiftContractNames: state.shiftContractNames
+    shiftContractNames: state.shiftContractNames,
+    singleShiftList:state.singleShiftList,
   }}>
     {children}
   </RosterContext.Provider>);
