@@ -21,7 +21,7 @@ export const RosterProvider = ({ children }) => {
   const headers = {
     'Content-Type': 'application/json',
 
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk5MTM1NTE3LCJpYXQiOjE1OTkwOTk1MTd9.9yk27V2rObYE059i80vM__JWns7RkxcySIMeMc9FB8E'
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk5MTcyMzE5LCJpYXQiOjE1OTkxMzYzMTl9.aWe2mllnjt3SsCA5FXBM1Y9xZdJb06RbpVEbOgZXSqU'
 
   }
 

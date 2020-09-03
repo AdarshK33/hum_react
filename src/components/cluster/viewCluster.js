@@ -1,13 +1,10 @@
 import React, { useEffect, Fragment, useContext, useState } from 'react'
-import { Link } from 'react-router-dom';
-import moment from 'moment';
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import Breadcrumb from "../common/breadcrumb";
 import CreateClusterModal from "./createClusterModal";
 import EditClusterModal from "./editClusterModal";
-import { Card, Row, Col, Table, Button, Modal } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import { RosterContext } from "../../context/RosterState";
-import { Delete, Edit2 } from 'react-feather'
+import { Edit2 } from 'react-feather'
 import { ClusterContext } from "../../context/ClusterState";
 
 function ViewCluster() {
@@ -53,7 +50,7 @@ function ViewCluster() {
                   <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                     <tr>
                       <th>No</th>
-                      <th scope="col">Sports Id</th>
+                     
                       <th scope="col">Cluster Name</th>
                       <th scope="col">Cluster Details</th>
                       <th scope="col">Cluster Leader</th>
@@ -70,7 +67,7 @@ function ViewCluster() {
                         <tbody key={i + 1}>
                           <tr>
                             <td>{i + 1}</td>
-                           <td>{e.sportName}</td>
+                         
                             <td>{e.clusterName}</td>
                             <td>{e.description}</td>
                             <td>{e.clusterLeaderName}</td>

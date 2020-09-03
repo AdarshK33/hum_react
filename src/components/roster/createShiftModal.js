@@ -2,7 +2,7 @@ import React, { Fragment, useState, useContext, useEffect } from 'react';
 import DatePicker from "react-datepicker";
 import moment from 'moment';
 import "react-datepicker/dist/react-datepicker.css";
-import { Card, Row, Col, Table, Button, Modal,Form } from 'react-bootstrap'
+import {  Button, Modal } from 'react-bootstrap'
 import { RosterContext } from "../../context/RosterState";
 
 
@@ -25,6 +25,7 @@ const CreateShiftModal = (props) => {
   const [shiftButton, setShiftButton] = useState(false);
   const [showText, setShowText] = useState(false);
   const[invalidText,setInvalidText]= useState(false)
+  const[warnMsg,setWrnMsg] = useState(false);
  // const [workingHoursText, setWorkingHoursText] = useState(false);
   const [errormsg, setErrorMsg] = useState(false);
   const { addShift, viewShift, shiftListNames, viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
@@ -41,7 +42,7 @@ const CreateShiftModal = (props) => {
   const calcTime = () => {
     const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
     const etime = moment(endTime, ["h:mm A"]).format("HH:mm");
-
+  
     var ctime = stime.replace(/:/g, ".");
     var dtime = etime.replace(/:/g, ".");
     //  alert(ctime+ " "+dtime);
@@ -54,15 +55,25 @@ const CreateShiftModal = (props) => {
       setShiftButton(false)
       setErrorMsg(false)
     }
-
-
-
-
-
     const result = moment.utc(moment(etime, "HH:mm:ss").diff(moment(stime, "HH:mm:ss"))).format("HH:mm:ss")
     var workingHours = result.replace(/:/g, ".");
-
     setWorkingHour(workingHours);
+    checkTimeValidation();
+
+    function checkTimeValidation(){
+     
+          if(parseFloat(workingHours)>9)
+          {
+            setShiftButton(true)
+            setWrnMsg("Shift shoule be 9 hours")
+          }
+          else
+          {
+            setWrnMsg(false)
+            
+          }
+    }
+
    
     
 
@@ -101,10 +112,10 @@ const CreateShiftModal = (props) => {
 
 
   const onSubmit = e => {
-    // const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
-    // const etime = moment(endTime, ["h:mm A"]).format("HH:mm");
-    // const workingHours = moment.utc(moment(etime, "HH:mm:ss").diff(moment(stime, "HH:mm:ss"))).format("HH:mm:ss");
-    // alert(workingHours);
+     const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
+     const etime = moment(endTime, ["h:mm A"]).format("HH:mm");
+     const workingHours = moment.utc(moment(etime, "HH:mm:ss").diff(moment(stime, "HH:mm:ss"))).format("HH:mm:ss");
+     alert(workingHours);
     var result = parseInt(workingHours);
     if (result <= 5) {
       // alert("less than 5");
@@ -220,11 +231,11 @@ const CreateShiftModal = (props) => {
                         />
                       </div>
                     </div>
-                    <h6 style={{ color: "red", marginLeft: "20px" }}>{errormsg}</h6>
+                    <h6 style={{ color: "red",  }}>{errormsg}</h6>
                   </div>
-             
-                       Total Working Hours 9 Hours 
-     
+                  <h6 style={{ color: "black", }}> Total Working Hours {workingHours}</h6>
+                      
+                       <h6 style={{ color: "red"}}>{warnMsg}</h6>
                   <div className="row">
                     <div className="col-sm-12">
                       {parseFloat(workingHours) > 5 ?

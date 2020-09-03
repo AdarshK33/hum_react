@@ -29,6 +29,7 @@ const EditShiftModal = (props) => {
   const[invalidText,setInvalidText]= useState(false)
   const[shiftMasterId,setShiftMasterId] = useState();
  // const [workingHoursText, setWorkingHoursText] = useState(false);
+ const[warnMsg,setWrnMsg] = useState(false);
   const [errormsg, setErrorMsg] = useState(false);
   const { addShift, updateShift,viewShift, shiftListNames, singleShiftList,viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
 
@@ -58,15 +59,25 @@ const EditShiftModal = (props) => {
       setErrorMsg(false)
     }
 
-
-
-
-
     const result = moment.utc(moment(etime, "HH:mm:ss").diff(moment(stime, "HH:mm:ss"))).format("HH:mm:ss")
     var workingHours = result.replace(/:/g, ".");
 
     setWorkingHour(workingHours);
-   
+    checkTimeValidation();
+
+    function checkTimeValidation(){
+     
+          if(parseFloat(workingHours)>9)
+          {
+            setShiftButton(true)
+            setWrnMsg("Shift shoule be 9 hours")
+          }
+          else
+          {
+            setWrnMsg(false)
+            
+          }
+    }
    
   }
   const callShowMethod = () => {
@@ -205,10 +216,14 @@ const EditShiftModal = (props) => {
                         />
                       </div>
                     </div>
-                    <h6 style={{ color: "red", marginLeft: "20px" }}>{errormsg}</h6>
+                    
                   </div>
              
-                        <h6> Total Working Hours 9 Hours </h6>
+                  <h6 style={{ color: "red",  }}>{errormsg}</h6>
+             
+                  <h6 style={{ color: "black", }}> Total Working Hours {workingHours}</h6>
+                      
+                       <h6 style={{ color: "red"}}>{warnMsg}</h6>
                        
                 
                   <div className="row">

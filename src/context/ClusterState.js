@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useState } from 'react';
+import React, { createContext, useReducer } from 'react';
 import axios from 'axios';
 import ClusterReducer from '../reducers/ClusterReducer';
 const baseUrl = "http://humine.theretailinsights.co/";
@@ -18,7 +18,7 @@ export const ClusterProvider = ({ children }) => {
   const headers = {
     'Content-Type': 'application/json',
 
-    Authorization: 'Bearer  eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk5MTM1NTE3LCJpYXQiOjE1OTkwOTk1MTd9.9yk27V2rObYE059i80vM__JWns7RkxcySIMeMc9FB8E'
+    Authorization: 'Bearer  eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk5MTcyMzE5LCJpYXQiOjE1OTkxMzYzMTl9.aWe2mllnjt3SsCA5FXBM1Y9xZdJb06RbpVEbOgZXSqU'
   }
  // ADD SHIFT
 
