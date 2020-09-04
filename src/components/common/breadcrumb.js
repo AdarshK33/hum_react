@@ -22,7 +22,7 @@ const Breadcrumb = props => {
                                         </Link>
                                     </li>
                                     <li className="breadcrumb-item">{breadcrumb.parent}</li>
-                                    <li className="breadcrumb-item active">{breadcrumb.title}</li>
+                                    {/* <li className="breadcrumb-item active">{breadcrumb.title}</li> */}
                                 </ol>
                             </div>
                         </div>

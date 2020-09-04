@@ -8,7 +8,8 @@ const initial_state = {
   sportsNames:[],
   clusterLeaderNames:[],
   clusterList:[],
-  getSingleCluster:[]
+  getSingleCluster:[],
+ 
 }
 
 
@@ -17,8 +18,7 @@ export const ClusterProvider = ({ children }) => {
   const [state, dispatch] = useReducer(ClusterReducer, initial_state);
   const headers = {
     'Content-Type': 'application/json',
-
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk5MTg0NzkyLCJpYXQiOjE1OTkxNDg3OTJ9.Ov55oarWwuTPkuijfpzlO3lBeqN8Nq3d0zzW7lGBBqY'
+    Authorization: 'Bearer  eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk5MjUxOTQ2LCJpYXQiOjE1OTkyMTU5NDZ9.Aopf44MAwc5rGRsIIpTPj4zniti_seLB8DWQ1BVu-ZA'
   }
  // ADD SHIFT
 
@@ -40,8 +40,10 @@ export const ClusterProvider = ({ children }) => {
     axios.get(baseUrl + 'cluster/view', {
       headers: headers
     }).then(function (response) {
-     //  console.log("data==>" + JSON.stringify(response));
+    //  console.log("data==>" + JSON.stringify(response));
       state.clusterList = response.data.data;
+   
+    
       return dispatch({ type: 'FETCH_ClUSTER_LIST', payload: state.clusterList });
     })
       .catch(function (error) {
@@ -74,7 +76,8 @@ export const ClusterProvider = ({ children }) => {
  
 
   function getCluster(id) {
-    alert("cluster" + id)
+   
+   // alert("cluster" + id)
     axios.get(baseUrl + 'cluster/'+id, {
       headers: headers
     }).then(function (response) {

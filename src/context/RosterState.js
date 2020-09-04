@@ -81,7 +81,7 @@ export const RosterProvider = ({ children }) => {
 //EDIT SHIFT
 
   function editShift(shiftMasterId) {
-    alert(shiftMasterId);
+   // alert(shiftMasterId);
     axios.get(baseUrl + 'shift/' + shiftMasterId, {
       headers: headers
     }).then(function (response) {

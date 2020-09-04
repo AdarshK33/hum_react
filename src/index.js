@@ -47,10 +47,9 @@ function Root() {
                             <Fragment>
                                 <App>
                                     {/* dashboard menu */}
-                                    <Route exact path={`${process.env.PUBLIC_URL}/`} component={Default} />
                                     <Route exact path={`${process.env.PUBLIC_URL}/dashboard/default`} component={Default} />
-                                    <Route path={`${process.env.PUBLIC_URL}/dashboard/crypto`} component={CryptoComponent} />
-                                    <Route path={`${process.env.PUBLIC_URL}/dashboard/project`} component={Project} />
+                                    {/* <Route exact path={`${process.env.PUBLIC_URL}/dashboard/default`} component={Default} /> */}
+                              
 
                                     {/* Sample page */}
                                     <Route path={`${process.env.PUBLIC_URL}/sample/samplepage`} component={Samplepage} />
