@@ -21,13 +21,7 @@ const CreateClusterModal = (props) => {
 
   const { addCluster, viewCluster, viewSports, sportsNames, clusterLeaderNames, selectClusterLeader } = useContext(ClusterContext);
 
-
-
-
   const onSubmit = (event) => {
-
-
-
     event.preventDefault();
     const newCluster = {
       clusterId: 0,
@@ -97,8 +91,7 @@ const CreateClusterModal = (props) => {
 
 
   const handleMultiChange = (option) => {
-    alert("jo");
-    setClusterButton(false)
+     setClusterButton(false)
     setMultiValue(option)
     setErrorMsg(false)
   }

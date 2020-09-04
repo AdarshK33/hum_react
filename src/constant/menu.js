@@ -7,12 +7,12 @@ import {
 
 export const MENUITEMS = [
     {
-        title: 'Dashboard', icon: Home, type: 'sub', badgeType: 'primary', active: false, children: [
-            { path: '/dashboard/default', title: 'Default', type: 'link' },
-            { path: '/dashboard/ecommerce', title: 'E-Commerce', type: 'link' },
-            { path: '/dashboard/project/project', title: 'projrct', type: 'link' },
+        path: '/dashboard/default', title: 'Dashboard', icon: Home, type: 'link', active: false
+        // title: 'Dashboard', icon: Home, type: 'sub', badgeType: 'primary', active: false, children: [
+        //     { path: '/dashboard/default', title: 'Default', type: 'link' },
          
-        ]
+         
+        // ]
     },
     {
         title: 'Roster', icon: Calendar, type: 'link', path: '/roster/roster', active: false,children:[

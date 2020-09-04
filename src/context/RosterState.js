@@ -23,7 +23,7 @@ export const RosterProvider = ({ children }) => {
   const [state, dispatch] = useReducer(RosterReducer, initial_state);
   const headers = {
     'Content-Type': 'application/json',
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk5MTg0NzkyLCJpYXQiOjE1OTkxNDg3OTJ9.Ov55oarWwuTPkuijfpzlO3lBeqN8Nq3d0zzW7lGBBqY'
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk5MjUxOTQ2LCJpYXQiOjE1OTkyMTU5NDZ9.Aopf44MAwc5rGRsIIpTPj4zniti_seLB8DWQ1BVu-ZA'
   }
 
   // VIEWSHIFT
@@ -81,7 +81,7 @@ export const RosterProvider = ({ children }) => {
 //EDIT SHIFT
 
   function editShift(shiftMasterId) {
-    alert(shiftMasterId);
+   // alert(shiftMasterId);
     axios.get(baseUrl + 'shift/' + shiftMasterId, {
       headers: headers
     }).then(function (response) {
