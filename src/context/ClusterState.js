@@ -18,7 +18,7 @@ export const ClusterProvider = ({ children }) => {
   const headers = {
     'Content-Type': 'application/json',
 
-    Authorization: 'Bearer  eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk5MTcyMzE5LCJpYXQiOjE1OTkxMzYzMTl9.aWe2mllnjt3SsCA5FXBM1Y9xZdJb06RbpVEbOgZXSqU'
+    Authorization: 'Bearer  eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk5MjI2NDk0LCJpYXQiOjE1OTkxOTA0OTR9.uvqmtnl8jfQH2Ht12FaJL6v9pJKIZA-fUsROm8qqw74'
   }
  // ADD SHIFT
 
@@ -74,7 +74,8 @@ export const ClusterProvider = ({ children }) => {
  
 
   function getCluster(id) {
-    alert("cluster" + id)
+   
+   // alert("cluster" + id)
     axios.get(baseUrl + 'cluster/'+id, {
       headers: headers
     }).then(function (response) {

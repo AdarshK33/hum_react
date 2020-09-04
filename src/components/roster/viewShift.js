@@ -22,19 +22,7 @@ function ViewShift() {
   const handleEditShow = () => setEditModal(true)
 
   // variables
-
-  const [contractType, setContractType] = useState('');
-  const[shiftMasterId,setShiftMasterId] = useState();
-  const [startTime, setStartTime] = useState();
-  const [endTime, setEndTime] = useState(null);
-
-  
-
-
  const { shiftList,editShift, viewShift, } = useContext(RosterContext);
-
-
-
   console.log(shiftList, "in viewShift");
   return (
     <Fragment>
@@ -43,9 +31,7 @@ function ViewShift() {
         <div className="row">
           <div className="col-sm-12">
             <div className="card" style={{ overflowX: "auto" }}>
-
-
-              <div className="title_bar">
+              <div className="title_bar" >
                 <Button className="btn btn-light mr-2" onClick={handleShow}>Create</Button>
                 <ReactHTMLTableToExcel
                   className="btn btn-light mr-2"
@@ -85,13 +71,8 @@ function ViewShift() {
                             <td><Edit2 onClick={() => {
                                                 setEditModal(true);
                                                 editShift(e.shiftMasterId);
-                                                // setContractType(e.contractType)
-                                                // setShiftMasterId(e.shiftMasterId)
-                                                // setStartTime(e.startTime)
-                                              //  setEndTime(e.endTime)
-                                            }} />
-                                            </td>
-                           
+                                        }} />
+                                            </td>             
                          
                             {/* <td>  <Link to={{ pathname: `EditShift/${e.shiftMasterId}`, data: { id: e.shiftMasterId } }}><Edit2 onClick={() => editShift(e.shiftMasterId)} /></Link></td> */}
                           </tr>
@@ -101,10 +82,7 @@ function ViewShift() {
                     })}
                 </table>
                 <EditShiftModal handleEditClose={handleEditClose} 
-                // contractType={contractType}
-                // shiftMasterId={shiftMasterId}
-                // startTime={startTime}
-              //  endTime={endTime}
+
                 modal={editModal} /> 
               </div>
 

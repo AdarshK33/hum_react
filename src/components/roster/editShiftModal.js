@@ -22,21 +22,17 @@ const EditShiftModal = (props) => {
   const [breakStartTime, setStartBreakTime] = useState(null);
   const [breakEndTime, setEndBreakTIme] = useState(null);
   const [successMsg, setSuccessMsg] = useState("");
- 
+  const [shiftType,setShiftType] = useState('');
   const [breakDuationMsg, setBreakDurationMsg] = useState(false);
   const [shiftButton, setShiftButton] = useState(false);
   const [showText, setShowText] = useState(false);
   const[invalidText,setInvalidText]= useState(false)
-  const[shiftMasterId,setShiftMasterId] = useState();
  // const [workingHoursText, setWorkingHoursText] = useState(false);
  const[warnMsg,setWrnMsg] = useState(false);
   const [errormsg, setErrorMsg] = useState(false);
-  const { addShift, updateShift,viewShift, shiftListNames, singleShiftList,viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
-
-  const [shiftType,setShiftType] = useState(singleShiftList.shiftType);
-console.log("in begin"+shiftType);
-console.log("===="+singleShiftList);
+  const {updateShift,viewShift, singleShiftList,viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const setClear = () => {
+   setShiftType('')
     setStartTime('')
     setEndTime('')
     setWorkingHour('')
@@ -89,13 +85,13 @@ console.log("===="+singleShiftList);
     
   }
 
-  const handleSelectChange = event => {
-    const value = event.target.value;
-    setShiftType(value);
-    alert("handle select ",value);
-  };
+  const callTimer =()=>{
 
-
+    const setEditModal = props.handleEditClose;
+    setClear()
+    setEditModal()
+  }
+ 
   const onSubmit = e => {
     // const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
     // const etime = moment(endTime, ["h:mm A"]).format("HH:mm");
@@ -124,8 +120,11 @@ console.log("===="+singleShiftList);
           console.log("api response===", result.data.status);
           console.log("api response===", result.data.length);
           setSuccessMsg(result.data.message);
-          viewShift();
-        })
+          setTimeout(() => {
+            callTimer();
+           }, 3000);
+           viewShift();
+         })
         .catch((error) => {
           alert(" In error catch ", error);
         })
@@ -154,8 +153,13 @@ console.log("===="+singleShiftList);
           console.log("api response===", result.data.status);
           console.log("api response===", result.data.length);
           setSuccessMsg(result.data.message);
-          viewShift();
-        })
+       
+          setTimeout(() => {
+            callTimer();
+           }, 3000);
+           viewShift();
+         })
+       
         .catch((error) => {
           alert(" In error catch ", error);
         })
@@ -163,7 +167,7 @@ console.log("===="+singleShiftList);
     }
   }
   //console.log("shift list names " + shiftListNames)
-  console.log("======== " + shiftContractNames)
+  // console.log("======== " + shiftContractNames)
   return (
     <Modal show={props.modal} onHide={props.handleEditClose} centered>
       <Fragment>
@@ -290,20 +294,26 @@ console.log("===="+singleShiftList);
                      
                     <h6>{breakDuationMsg && <div className="text-danger pl-3">Break Should be one hour</div>}</h6>
                   </div>
-                  <h6>Shift Type</h6> 
-                  {/* <div className="row">
-                 
-                   <div className="col-sm-6">
-                   <input type="radio" checked="Captain"   value="Captain" /> Captain
-                   </div>
-                   <div className="col-sm-6">
-                   <input type="radio" checked={shiftType === 'Onduty'}  onChange={event => handleSelectChange(event)}  value="Onduty" /> Onduty
-                     </div>
-                 </div> */}
+                  <div className="row">
+                    <div className="col-sm-12">
+                      <div className="form-group">
+                        <label htmlFor="exampleFormControlInput1"> Shift Type</label>
+                        <select
+                          className="form-control"
+                          value={shiftType}                      
+                          onChange={(e)=>setShiftType(e.target.value)}>
+                          <option value="" disabled selected hidden>{singleShiftList.shiftType}</option>
+                          <option value="">Select Shift Type</option>
+                                  <option>Captain</option>
+                                  <option>Onduty</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
 
 
 
-                 <div className="row">
+                 {/* <div className="row">
                  
                    <div className="col-sm-6">
                    <input type="radio"  checked={singleShiftList.shiftType ==='Captain'}  onChange={event => handleSelectChange(event)}   /> Captain
@@ -313,7 +323,7 @@ console.log("===="+singleShiftList);
                    <div className="col-sm-6">
                    <input type="radio" checked={singleShiftList.shiftType ==='Onduty'}  onChange={event => handleSelectChange(event)}  /> Onduty
                      </div> 
-                 </div>
+                 </div> */}
                   
                   <div className="row">
                     <div className="col-sm-12">

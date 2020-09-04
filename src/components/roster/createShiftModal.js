@@ -34,6 +34,7 @@ const CreateShiftModal = (props) => {
     setStartTime('')
     setEndTime('')
     setWorkingHour('')
+    setShiftButton('')
     setContractType('')
     setStartBreakTime('')
     setEndBreakTIme('');
@@ -100,22 +101,27 @@ const CreateShiftModal = (props) => {
   };
 
 
-  const onContractType = event => {
-    setContractType(event.target.value);
-     if (shiftType ===  "") {
-      setShiftButton(true)
-      setErrorMsg(false)
-    }
+  // const onContractType = event => {
+  //   setContractType(event.target.value);
+  //    if (shiftType ===  "") {
+  //     setShiftButton(true)
+  //     setErrorMsg(false)
+  //   }
    
-  };
+  // };
 
+const callTimer =()=>{
 
+  const setModal = props.handleClose;
+    setClear()
+  setModal()
+}
 
   const onSubmit = e => {
      const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
      const etime = moment(endTime, ["h:mm A"]).format("HH:mm");
      const workingHours = moment.utc(moment(etime, "HH:mm:ss").diff(moment(stime, "HH:mm:ss"))).format("HH:mm:ss");
-     alert(workingHours);
+   //  alert(workingHours);
     var result = parseInt(workingHours);
     if (result <= 5) {
       // alert("less than 5");
@@ -139,6 +145,9 @@ const CreateShiftModal = (props) => {
           console.log("api response===", result.data.status);
           console.log("api response===", result.data.length);
           setSuccessMsg(result.data.message);
+          setTimeout(() => {
+           callTimer();
+          }, 4000);
           viewShift();
         })
         .catch((error) => {
@@ -169,8 +178,12 @@ const CreateShiftModal = (props) => {
           console.log("api response===", result.data.status);
           console.log("api response===", result.data.length);
           setSuccessMsg(result.data.message);
-          viewShift();
-        })
+          setTimeout(() => {
+            callTimer();
+           }, 4000);
+           viewShift();
+         })
+     
         .catch((error) => {
           alert(" In error catch ", error);
         })
@@ -291,20 +304,23 @@ const CreateShiftModal = (props) => {
                   </div>
 
                          
-                  <h6>Shift Type</h6> 
-                  <div className="row">
-                 
-                   <div className="col-sm-6">
-                   <input type="radio"  checked={shiftType === 'Captain'}  onChange={event => handleSelectChange(event)} defaultValue="Captain" required="required" /> Captain
-                   </div>
-                  
-                
-                   <div className="col-sm-6">
-                   <input type="radio" checked={shiftType === 'Onduty'}  onChange={event => handleSelectChange(event)} defaultValue="Onduty" /> Onduty
-                     </div> 
-                 </div>
-                 <br/>
-                  <div className="row">
+                   <div className="row">
+                    <div className="col-sm-12">
+                      <div className="form-group">
+                        <label htmlFor="exampleFormControlInput1"> Shift Type</label>
+                        <select
+                          className="form-control"
+                          value={shiftType}                      
+                          onChange={(e)=>setShiftType(e.target.value)}>
+
+                          <option value="">Select Shift Type</option>
+                                  <option>Captain</option>
+                                  <option>Onduty</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                   <div className="row">
                     <div className="col-sm-12">
                       <div className="form-group">
                         <label htmlFor="exampleFormControlInput1"> Select Contract Type</label>
@@ -313,7 +329,7 @@ const CreateShiftModal = (props) => {
                           required
                           value={contractType}
                           defaultValue={shiftContractNames.contractType}
-                          onChange={onContractType}>
+                          onChange={(e)=>setContractType(e.target.value)}>
 
                           <option value="">Select Contract Type</option>
                           {shiftContractNames.map((e, i) => {
