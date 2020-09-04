@@ -8,7 +8,8 @@ const initial_state = {
   sportsNames:[],
   clusterLeaderNames:[],
   clusterList:[],
-  getSingleCluster:[]
+  getSingleCluster:[],
+ 
 }
 
 
@@ -39,8 +40,10 @@ export const ClusterProvider = ({ children }) => {
     axios.get(baseUrl + 'cluster/view', {
       headers: headers
     }).then(function (response) {
-     //  console.log("data==>" + JSON.stringify(response));
+    //  console.log("data==>" + JSON.stringify(response));
       state.clusterList = response.data.data;
+   
+    
       return dispatch({ type: 'FETCH_ClUSTER_LIST', payload: state.clusterList });
     })
       .catch(function (error) {

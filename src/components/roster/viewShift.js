@@ -50,7 +50,7 @@ function ViewShift() {
                       <th scope="col">Break Time</th>
                       <th scope="col">Working Hours</th>
                       <th scope="col">Contract Type</th>
-                      <th scope="col">ShiftType</th>
+                      <th scope="col">Shift Type</th>
                       <th scope="col">Status</th>
                       <th scope="col">Edit</th>
                     </tr>
@@ -65,8 +65,7 @@ function ViewShift() {
                             <td>{moment(e.breakStartTime, ["h:mm A"]).format("HH:mm")}-{moment(e.breakEndTime, ["h:mm A"]).format("HH:mm")}</td>
                             <td>{e.workingHours}</td>
                             <td>{e.contractType}</td>
-                            <td>{e.shiftType}</td>
-                           
+                            <td>{e.shiftType}</td>                        
                             <td>{e.status === 0 ? "Active" : "Inactive"} </td>
                             <td><Edit2 onClick={() => {
                                                 setEditModal(true);

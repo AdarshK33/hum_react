@@ -23,12 +23,12 @@ function ViewCluster() {
 
 
   //variable
-  const { clusterList,viewCluster,getCluster} = useContext(ClusterContext);
+  const { clusterList, viewCluster, getCluster } = useContext(ClusterContext);
 
 
-//console.log("&&&&&&"+clusterList);
+  //alert("&&&&&&"+JSON.stringify(clusterList.sports.));
 
-
+  //console("&&&&&&"+JSON.stringify(clusterList.sport[0].sportName));
 
   return (
     <Fragment>
@@ -40,9 +40,9 @@ function ViewCluster() {
 
 
               <div className="title_bar">
-                <Button className="btn btn-light mr-2" onClick={handleShow}>create</Button>
+                <Button className="btn btn-light mr-2" onClick={handleShow}>Create</Button>
                 {/* <Button className="btn btn-light mr-2" onClick={handleEditShow}>edit</Button> */}
-               
+
               </div>
               <CreateClusterModal handleClose={handleClose} modal={modal} />
               <div className="table-responsive">
@@ -50,13 +50,12 @@ function ViewCluster() {
                   <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                     <tr>
                       <th>No</th>
-                     
-                      <th scope="col">Cluster Name</th>
+
+                      <th scope="col">Sports Name</th>
                       <th scope="col">Cluster Details</th>
                       <th scope="col">Cluster Leader</th>
-                      <th scope="col">Product Target</th>
                       <th scope="col">Team Count</th>
-                      <th scope="col">Create Date</th>                    
+                      <th scope="col">Create Date</th>
                       <th scope="col">Status</th>
                       <th scope="col">Edit</th>
                     </tr>
@@ -67,34 +66,36 @@ function ViewCluster() {
                         <tbody key={i + 1}>
                           <tr>
                             <td>{i + 1}</td>
-                         
-                            <td>{e.clusterName}</td>
+                            {e.sports.map(f => {
+                              return (<div>
+                                <td style={{ marginLeft:"10px",fontSize:"10px",paddingTop:"5px",paddingBottom:"5px"}}>{f.sportName}</td>
+                              </div>)
+                            })}
                             <td>{e.description}</td>
                             <td>{e.clusterLeaderName}</td>
-                            <td>{e.productTarget}</td>
                             <td>{e.teamCount}</td>
                             <td>{e.createdDate}</td>
                             <td>{e.status === 0 ? "active" : "inactive"} </td>
                             <td><Edit2 onClick={() => {
-                                                setEditModal(true);
-                                           
-                                                getCluster(e.clusterId);
-                                               
-                                            }} />
-                                            </td>
-                           
+                              setEditModal(true);
+
+                              getCluster(e.clusterId);
+
+                            }} />
+                            </td>
+
                           </tr>
 
                         </tbody>
                       );
                     })}
-           
+
                 </table>
                 <EditClusterModal handleEditClose={handleEditClose}
-                
-               
-                modal={editModal}
-              /> 
+
+
+                  modal={editModal}
+                />
               </div>
 
             </div>
