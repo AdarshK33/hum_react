@@ -20,7 +20,7 @@ export const LeaveProvider = ({ children }) => {
 
   const headers = {
     'Content-Type': 'application/json',
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk5MTg0NzkyLCJpYXQiOjE1OTkxNDg3OTJ9.Ov55oarWwuTPkuijfpzlO3lBeqN8Nq3d0zzW7lGBBqY'
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJQUkFKVkFMIFBBVUwgUkFZIiwiZXhwIjoxNTk5MjY5MjQzLCJpYXQiOjE1OTkyMzMyNDN9.KrhIcmzJO-TE3RF9AK0w_ur5WUGK3J6k8Uk92OO6QUA'
   }
     //View Leave
 
