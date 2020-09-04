@@ -66,7 +66,7 @@ const CreateShiftModal = (props) => {
           if(parseFloat(workingHours)>9)
           {
             setShiftButton(true)
-            setWrnMsg("Shift shoule be 9 hours")
+            setWrnMsg("Shift should be only for 9 hours")
           }
           else
           {
@@ -196,7 +196,7 @@ const callTimer =()=>{
     <Modal show={props.modal} onHide={props.handleClose} centered>
       <Fragment>
         <Modal.Header closeButton>
-          <Modal.Title>Apply For Shift</Modal.Title>
+          <Modal.Title>Create Shift</Modal.Title>
         </Modal.Header>
         <div className="row">
           <div className="col-sm-12">
@@ -246,7 +246,7 @@ const callTimer =()=>{
                     </div>
                     <h6 style={{ color: "red",  }}>{errormsg}</h6>
                   </div>
-                  <h6 style={{ color: "black", }}> Total Working Hours {workingHours}</h6>
+                  <h6 style={{ color: "black", }}> Total working hours {workingHours}</h6>
                       
                        <h6 style={{ color: "red"}}>{warnMsg}</h6>
                   <div className="row">
@@ -310,12 +310,14 @@ const callTimer =()=>{
                         <label htmlFor="exampleFormControlInput1"> Shift Type</label>
                         <select
                           className="form-control"
+                          required
                           value={shiftType}                      
                           onChange={(e)=>setShiftType(e.target.value)}>
 
                           <option value="">Select Shift Type</option>
                                   <option>Captain</option>
                                   <option>Onduty</option>
+                                  <option>Genral</option>
                         </select>
                       </div>
                     </div>

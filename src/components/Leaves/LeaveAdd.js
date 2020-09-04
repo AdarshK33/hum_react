@@ -25,8 +25,9 @@ const LeaveAdd = (props) => {
     let history = useHistory();
 
 
-    const { addLeave, addPopup, leavesData, getLeave, leaveType, leaveList, message } = useContext(LeaveContext);
-
+    const { addLeave, addPopup, leavesData, getLeave, leaveType, leaveList, message, viewLeaveData, leaveDataList }
+     = useContext(LeaveContext);
+ 
     const today = new Date()
 
     const fromDateHandler = (date) => {
@@ -87,7 +88,8 @@ const LeaveAdd = (props) => {
     }
     //get api for leave type
     useEffect(() => {
-        getLeave();
+        getLeave()
+        viewLeaveData()
     }, []);
 
 
@@ -180,6 +182,8 @@ const LeaveAdd = (props) => {
 
         history.push("/Leaves/LeaveView");
     }
+
+
     console.log("leave", leave)
     return (
         <React.Fragment>
@@ -199,9 +203,13 @@ const LeaveAdd = (props) => {
                                     <Form.Control as="select" size="sm" required value={leave}
                                         onChange={(e) => setLeaveHandler(e)}>
                                             <option value="">Select</option>
+                                            
                                         {leaveType.length > 0 && leaveType.map((item, i) => {
+                                            console.log(item,"loop")
                                             return (
-                                                <option key={item.leaveTypeId} value={item.leaveName}>{item.leaveName}</option>
+                                                <option key={item.leaveTypeId} value={item.leaveName}
+                                                disabled={(item.paternity === 1 ? true : false) || (item.maternity === 1 ? true : false)} >
+                                                {item.leaveName}</option>
                                             )
                                         })
                                         }

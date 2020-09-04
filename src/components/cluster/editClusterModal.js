@@ -11,22 +11,38 @@ const EditClusterModal = (props) => {
   }, [])
   const [clusterName, setClusterName] = useState("");
   const [description, setDescription] = useState("");
-  const [productTarget, setProductTarget] = useState('');
   const [clusterLeader, setClusterLeader] = useState('');
   const [clusterId,setClusterId] = useState('');
   const [successMsg, setSuccessMsg] = useState("");
   const [selectedSportsId,setSelectedSportsId] = useState();
   const [employee, setEmployee] = useState([])
+  const [errormsg, setErrorMsg] = useState(false);
+  const [multiValue, setMultiValue] = useState([])
+  const [clustertButton, setClusterButton] = useState(false);
 
 
-  const { updateCluster,addCluster, getSingleCluster,viewSports, sportsNames, clusterLeaderNames, selectClusterLeader } = useContext(ClusterContext);
+
+
+  const setClear = () => {
+    setClusterName('')
+    setDescription('')
+    setClusterLeader('')
+    setClusterButton('')
+    setErrorMsg('')
+    setSuccessMsg('')
+    setMultiValue('');
+    setSuccessMsg('');
+    setEmployee('')
+  }
+
+
+  const { updateCluster,viewCluster, getSingleCluster,viewSports, sportsNames, clusterLeaderNames, selectClusterLeader } = useContext(ClusterContext);
 
 
   useEffect(() => {
     setClusterName(getSingleCluster.clusterName)
     setSelectedSportsId(getSingleCluster.selectedSportsId)
     setDescription(getSingleCluster.description)
-    setProductTarget(getSingleCluster.productTarget)
     setClusterLeader(getSingleCluster.clusterLeader)
   
 
@@ -49,7 +65,6 @@ console.log("===="+JSON.stringify(getSingleCluster));
       clusterLeader,
       clusterName,
       description,
-      productTarget: parseInt(productTarget),
       storeId: "IN1056",
       sportId:parseInt(selectedSportsId),
       employeeIds: employee.map((e, i) => employee[i].value)
@@ -60,6 +75,10 @@ console.log("===="+JSON.stringify(getSingleCluster));
         console.log("api response===", result.data.message);
 
         setSuccessMsg(result.data.message);
+        setTimeout(() => {
+          callTimer();
+         }, 4000);
+         viewCluster();
       })
       .catch((error) => {
         alert(" In error catch ", error);
@@ -67,12 +86,62 @@ console.log("===="+JSON.stringify(getSingleCluster));
     console.log(result, "in competent");
   }
 
- 
 
-  const handleMultiChange1 = (options) => {
-    setEmployee(options)
-  }
 
+  const clusterLeaderSelect = event => {
+    setClusterLeader(event.target.value);
+    if (employee.length === 0) {
+      setClusterButton(true)
+      setErrorMsg("Provide all input");
+    }
+    else {
+      setClusterButton(false)
+
+    }
+  };
+
+  const onChangeHandler = event => {
+    setClusterName(event.target.value);
+    if (multiValue.length === 0) {
+      setClusterButton(true)
+      setErrorMsg("Provide all input");
+    }
+    else {
+      setClusterButton(false)
+      setErrorMsg(false)
+    }
+  };
+  const onDescprtion = event => {
+    setDescription(event.target.value);
+    if (multiValue.length > 0) {
+      setClusterButton(false)
+      setErrorMsg(false)
+    }
+    else {
+      setClusterButton(true)
+
+    }
+  };
+
+
+  const handleMultiChange = (option) => {
+    setClusterButton(false)
+   setMultiValue(option)
+   setErrorMsg(false)
+ }
+
+ const handleMultiChange1 = (options) => {
+  setEmployee(options)
+  setClusterButton(false)
+  setErrorMsg(false)
+}
+
+//Timer to close modal 
+const callTimer =()=>{
+  const setModal = props.handleClose;
+  setClear()
+  setModal()
+}
   return (
     <Fragment>
        <Modal show={props.modal} onHide={props.handleEditClose} centered>
@@ -89,76 +158,48 @@ console.log("===="+JSON.stringify(getSingleCluster));
 
                {/* <h1>{getSingleCluster.sports.sportNames}</h1>    */}
                   
-                  <select
-                    className="form-control"
-                    required
-                    onChange={(e) => setSelectedSportsId(e.target.value)}
-                    defaultValue={getSingleCluster.sportName}
-                    >
-                       
-                    {sportsNames.map((e, i) => {
-                      return (
-                         
-                        <option key={e.sportId} value={e.sportId}>
-                          {e.sportName}
-                        </option> 
-                      );
-                    })}
-                  </select>
+               <Select
+                   name="filters"
+                   placeholder="Filters"
+                   value={multiValue}
+                   options={sportsNames.map(e => ({ label: e.sportName, value: e.sportId }))}
+                   onChange={handleMultiChange}
+                   isMulti
+                  />
                 </div>
               </div>
             </div>
+
             <div className="row">
               <div className="col-sm-12">
                 <div className="form-group">
                   <label htmlFor="exampleFormControlInput1">Cluster Name</label>
 
-                  <input type="text" className="form-control"  placeholder="cluster name" required defaultValue={getSingleCluster.clusterName}  onChange={(e) => setClusterName(e.target.value)} />
+                  <input type="text" className="form-control"  required value={clusterName}  defaultValue={getSingleCluster.clusterName} onChange={onChangeHandler} />
+
                 </div>
               </div>
             </div>
+
+            <h6 style={{ color: "red", marginLeft: "20px" }}>{errormsg}</h6>
+           
+          
             <div className="row">
               <div className="col-sm-12">
                 <div className="form-group">
                   <label htmlFor="exampleFormControlInput1">Cluster Desc</label>
 
-                  <input type="text" className="form-control digit" placeholder="Desc" required defaultValue={getSingleCluster.description} onChange={(e) => setDescription(e.target.value)} />
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-sm-12">
-                <div className="form-group">
-                  <label htmlFor="exampleFormControlInput1"> Cluster Leader</label>
-                 <select
-                    className="form-control"
-                    required
-                    onChange={(e) => setClusterLeader(e.target.value)}>
-                   <option value="" disabled selected hidden>{getSingleCluster.clusterLeaderName}</option>
-                    {clusterLeaderNames.map((e, i) => {
-                      return (
-                         
-                        <option key={e.employeeId} value={e.employeeId}>
-                          {e.firstName}{e.lastName}
-                        </option> 
-                      );
-                    })}
-                  </select>
+                  <input type="text" className="form-control digit" placeholder="Desc" defaultValue={getSingleCluster.description} required value={description} onChange={onDescprtion} />
                 </div>
               </div>
             </div>
 
-            <div className="row">
-              <div className="col-sm-12">
-                <div className="form-group">
-                  <label htmlFor="exampleFormControlInput1">Product Target</label>
-               
-                  <input type="number" className="form-control digit" required 
-                  defaultValue={getSingleCluster.productTarget}
-                  onChange={(e) => setProductTarget(e.target.value)} />
-                </div>
-              </div>
-            </div>
+
+
+
+
+
+            <h3>{getSingleCluster.employeeIds}</h3>
 
             <div className="row">
               <div className="col-sm-12">
@@ -177,8 +218,37 @@ console.log("===="+JSON.stringify(getSingleCluster));
                 </div>
               </div>
             </div>
-                  <h3>{getSingleCluster.employeeIds}</h3>
-            <button className="btn btn-primary mb-2 mr-2" type="submit" value="Submit">Save</button>
+
+            <div className="row">
+              <div className="col-sm-12">
+                <div className="form-group">
+                  <label htmlFor="exampleFormControlInput1"> Cluster Leader</label>
+                 <select
+                    className="form-control"
+                    required
+                    onChange={clusterLeaderSelect}>
+                   <option value="" disabled selected hidden>{getSingleCluster.clusterLeaderName}</option>
+                    {clusterLeaderNames.map((e, i) => {
+                      return (
+                         
+                        <option key={e.employeeId} value={e.employeeId}>
+                          {e.firstName}{e.lastName}
+                        </option> 
+                      );
+                    })}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+
+                
+            <button className="btn btn-primary mb-2 mr-2" type="submit" disabled={clustertButton} value="Submit">Save</button>
+            <button className="btn btn-primary mb-2 mr-2" onClick={props.handleClose}>Close</button>
             <h5>{successMsg.length !== 0 && <div className="text-success">{successMsg}</div>}</h5>
           </form>
         </Modal.Body>

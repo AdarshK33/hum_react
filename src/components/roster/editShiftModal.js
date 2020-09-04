@@ -27,6 +27,7 @@ const EditShiftModal = (props) => {
   const [shiftButton, setShiftButton] = useState(false);
   const [showText, setShowText] = useState(false);
   const[invalidText,setInvalidText]= useState(false)
+  const[showBreakDuration,setShowBreakDuration]= useState(true)
  // const [workingHoursText, setWorkingHoursText] = useState(false);
  const[warnMsg,setWrnMsg] = useState(false);
   const [errormsg, setErrorMsg] = useState(false);
@@ -69,7 +70,7 @@ const EditShiftModal = (props) => {
           if(parseFloat(workingHours)>9)
           {
             setShiftButton(true)
-            setWrnMsg("Shift shoule be 9 hours")
+            setWrnMsg("Shift should be only for 9 hours")
           }
           else
           {
@@ -77,7 +78,8 @@ const EditShiftModal = (props) => {
             
           }
     }
-   
+   // break duation 
+   setShowBreakDuration(false)
   }
   const callShowMethod = () => {
     setShowText(true);
@@ -172,7 +174,7 @@ const EditShiftModal = (props) => {
     <Modal show={props.modal} onHide={props.handleEditClose} centered>
       <Fragment>
         <Modal.Header closeButton>
-          <Modal.Title>Apply For edit</Modal.Title>
+          <Modal.Title>Edit Shift</Modal.Title>
         </Modal.Header>
         <div className="row">
           <div className="col-sm-12">
@@ -228,10 +230,32 @@ const EditShiftModal = (props) => {
              
                   <h6 style={{ color: "red",  }}>{errormsg}</h6>
              
-                  <h6 style={{ color: "black", }}> Total Working Hours {workingHours}</h6>
+                  <h6 style={{ color: "black", }}> Total working hours {workingHours}</h6>
                       
                        <h6 style={{ color: "red"}}>{warnMsg}</h6>
+
+
+
+
+                     
+
+                          
+                      {showBreakDuration &&
+                      <div className="row">
+                        <div className="col-sm-4">
+                        <h6 style={{ color: "text-secondary",fontSize:"15px"  }}>Working Hours :{singleShiftList.workingHours}</h6>
+                        </div>
+                        <div className="col-sm-8">
+                        <h6 style={{ color: "text-secondary",fontSize:"15px" }}>Break duration :{singleShiftList.breakStartTime}-{singleShiftList.breakEndTime}</h6>
+                          <br/>
+                        </div>  
                        
+                          </div>
+                          }
+
+
+
+
                 
                   <div className="row">
                     <div className="col-sm-12">
@@ -300,12 +324,14 @@ const EditShiftModal = (props) => {
                         <label htmlFor="exampleFormControlInput1"> Shift Type</label>
                         <select
                           className="form-control"
+                          required
                           value={shiftType}                      
                           onChange={(e)=>setShiftType(e.target.value)}>
                           <option value="" disabled selected hidden>{singleShiftList.shiftType}</option>
                           <option value="">Select Shift Type</option>
                                   <option>Captain</option>
                                   <option>Onduty</option>
+                                  <option>Genral</option>
                         </select>
                       </div>
                     </div>

@@ -9,6 +9,7 @@ button.apply-button.btn.btn-primary{
     margin: 7px 0;
     height: 2.2em;
     float: right;
+    border-radius: 12.25rem;
 }
 .row.apply-button-row{
     background-color: #006EBB;
