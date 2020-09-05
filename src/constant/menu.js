@@ -29,6 +29,9 @@ export const MENUITEMS = [
     {
         path: '/cluster/viewCluster', title: 'Cluster View', icon: File, type: 'link', active: false
     },
+    {
+        path: '/Holiday/HolidayList', title: 'Holiday View', icon: File, type: 'link', active: false
+    },
 
     
     
