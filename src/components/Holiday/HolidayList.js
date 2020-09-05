@@ -2,6 +2,7 @@ import React, { Fragment ,useEffect,useContext} from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import { Card, Row, Col, Table, Button, Modal } from 'react-bootstrap'
 import { LeaveContext } from '../../context/LeaveState';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import '../Leaves/Leaves.css'
 const HolidayList = () => {
  
@@ -20,13 +21,15 @@ const HolidayList = () => {
           <div className="col-sm-12">
             <div className="card" style={{ overflowX: "auto" }}>
 
-            <Row className="apply-button-row">
-                    {/* <Col className="leaveApplications">Leave Applications</Col> */}
-                    <Col>
-                        <Button className="apply-button" >Upload</Button>
-                    </Col>
-                    {/* <LeaveAdd handleClose={handleClose} modal={modal} /> */}
-                </Row>
+            <div className="title_bar" >
+                <Button className="btn btn-light mr-2" >Create</Button>
+                <ReactHTMLTableToExcel
+                  className="btn btn-light mr-2"
+                  table="table-to-xls"
+                  filename="holidaylist"
+                  sheet="Sheet"
+                  buttonText="Export excel" />
+              </div>
  
               <div className="table-responsive">
                 <table id="table-to-xls" className="table table-hover">
