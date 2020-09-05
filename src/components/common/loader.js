@@ -10,7 +10,7 @@ const Loader = () => {
     },[show]);
     return (
         <Fragment>
-            <div className={`loader-wrapper ${show ? '' : 'loderhide'}`} >
+            <div className={`loader-wrapper`} >
                 <div className="loader bg-white">
                     <div className="whirly-loader"> </div>
                 </div>
