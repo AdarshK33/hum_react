@@ -27,6 +27,7 @@ import { GlobalCustomThemeProvider } from './context/GlobalState';
 import {RosterProvider} from './context/RosterState';
 import {LeaveProvider} from './context/LeaveState'
 import {ClusterProvider} from './context/ClusterState';
+import HolidayList from './components/Holiday/HolidayList';
 
 //firebase Auth
 function Root() {
@@ -64,7 +65,8 @@ function Root() {
                                      <Route path={`${process.env.PUBLIC_URL}/roster/viewShift`} component={ViewShift} /> 
                                     {/* Cluster */}
                                   
-                                    <Route path={`${process.env.PUBLIC_URL}/cluster/viewCluster`} component={ViewCluster} /> 
+                                    <Route path={`${process.env.PUBLIC_URL}/cluster/viewCluster`} component={ViewCluster} />
+                                    <Route path={`${process.env.PUBLIC_URL}/Holiday/HolidayList`} component={HolidayList} /> 
                                 </App>
                             </Fragment>
                         </Switch>
