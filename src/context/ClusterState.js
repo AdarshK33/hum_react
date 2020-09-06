@@ -18,7 +18,7 @@ export const ClusterProvider = ({ children }) => {
   const [state, dispatch] = useReducer(ClusterReducer, initial_state);
   const headers = {
     'Content-Type': 'application/json',
-    Authorization: 'Bearer  eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk5MzMxMjkyLCJpYXQiOjE1OTkyOTUyOTJ9.IYBMKAtpakrJj7R1hwbXKYu2Q7F_CMbwmyS6sAOcJZ0'
+    Authorization: 'Bearer  eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk5NDEzMzU1LCJpYXQiOjE1OTkzNzczNTV9.J4zsob2Rt4n94VeP_b6tXDnwE-CDMlUh6_F5GsQPi88'
   }
  // ADD SHIFT
 
