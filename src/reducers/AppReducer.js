@@ -69,6 +69,7 @@ const data = action.payload;
         app: {
           ...state.app,
           loaded: true,
+          isLoggedin: true,
           data,
         },
       };

@@ -1,5 +1,5 @@
 import React, { createContext, useReducer } from 'react';
-import axios from 'axios';
+import {client} from 'axios';
 import HolidayReducer from '../reducers/HoildayReducer'
 const baseUrl = "http://humine.theretailinsights.co/";
 
@@ -20,7 +20,7 @@ export const HolidayrProvider = ({ children }) => {
   
   const getHoliday = () => {
     // const [state, updateStae] =uss
-     axios.get(baseUrl + 'holiday/view', {
+     client.get('holiday/view', {
       headers: headers
     }).then(function (response) {
       console.log(response)

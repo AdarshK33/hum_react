@@ -20,7 +20,13 @@ const Signin = ({ location, history }) => {
 
   useEffect(() => {
       console.log('state inside appstate changed', state)
+      checkIsloggedIn(state)
   }, [state]);
+
+  const checkIsloggedIn = (state) => {
+    const {app: {isLoggedin} } = state
+    if(isLoggedin) history.push('/roster/roster')
+  }
 
   const getAccessToken = () => {
     const { search } = location;
