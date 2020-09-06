@@ -127,26 +127,29 @@ const weekOffDays = (weekId) => {
 }
 
 
-// view Week Off Data according to the emp id
+// view Week Off Data in roster table
 
-const weekOffDataEmp = () => {
-  let empId = 'DSI001282'
-  client.get('weekoff/employee/view' + '?employeeId=' + empId)
-    .then((response) => {
-      state.weekOffDataList = response.data.data
-      console.log("=====GET Weeks Off API respone=====", state.weekOffDataList)
-      return dispatch({ type: 'WEEKOFF_WEEK_DATA_LIST', payload: state.weekOffDataList})
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-}
+const weekOffDataEmp = (endDate, startDate) => {
+  const empId = 'DSI000035'
+    client.get('roster/employee/view' + '?employeeId=' + empId + 
+    '&' + 'endDate=' + endDate + '&' + 'startDate=' + startDate)
+      .then((response) => {
+        state.weekOffDataList =  response.data.data
+        console.log("=====GET weekOff Data API respone=====", state.weekOffDataList)
+        
+        return dispatch({ type: 'WEEKOFF_WEEK_DATA_LIST', payload: state.weekOffDataList })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
 
 //Add week off Data according to the emp id
 const addWeekOff = (newWeekOff) => {
     console.log("++++create weekOff api response+++++", newWeekOff)
     return client.post('weekoff/employee/create', newWeekOff)
       .then((response) => {
+        state.weekOffDataList =  response.data.data
         state.message = response.data.message
         toast.info(state.message)
         weekOffDataEmp()

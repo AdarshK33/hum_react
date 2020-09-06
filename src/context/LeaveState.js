@@ -2,6 +2,8 @@ import React, { createContext, useReducer, useEffect } from 'react';
 import {client} from '../utils/axios';
 import { ToastContainer, toast } from "react-toastify";
 import LeaveReducer from '../reducers/LeaveReducer'
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 const baseUrl = "http://humine.theretailinsights.co/";
 const initialState = {
@@ -18,14 +20,21 @@ export const LeaveContext = createContext();
 
 export const LeaveProvider = ({ children }) => {
   const [state, dispatch] = useReducer(LeaveReducer, initialState);
+
+ /*  const headers = {
+    'Content-Type': 'application/json',
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJQUkFKVkFMIFBBVUwgUkFZIiwiZXhwIjoxNTk5NDI2MTY0LCJpYXQiOjE1OTkzOTAxNjR9.glS3NIr7zI6421NxXKeiJfCVTh6PElI5HCVe1g802ww'
+  }
+    //View Leave */
   //View Leave
 
   const viewList = () => {
     client.get('leave_transaction/view')
       .then((response) => {
-        state.leaveList = response.data.data
+        state.leaveList =  response.data.data
         getLeave();
         console.log("=====GET API respone=====", state.leaveList)
+        
         return dispatch({ type: 'FETCH_LEAVE_LIST', payload: state.leaveList })
       })
       .catch((error) => {
@@ -84,7 +93,8 @@ export const LeaveProvider = ({ children }) => {
       .then((response) => {
         state.message = response.data.message
         state.leavesData = response.data.data
-        alert(state.message + "=>" + JSON.stringify(state.leavesData))
+        alert(state.message + " " + ' ' + (state.leavesData !== null ? JSON.stringify(state.leavesData):''))
+        console.log("Pop upresponse===>", JSON.stringify(state.leavesData))
         console.log("Pop upresponse===>", state.leavesData)
         console.log("Pop up message===>", state.message)
         return dispatch({ type: 'ADD_POPUP_LEAVE', payload: state.leavesData })
@@ -97,11 +107,12 @@ export const LeaveProvider = ({ children }) => {
   const addLeave = (newLeave) => {
     if (newLeave) {
       console.log("++++create api response+++++", newLeave)
-      return client.post('leave_transaction/create')
+      return client.post('leave_transaction/create',newLeave)
         .then((response) => {
           state.message = response.data.message
           toast.info(state.message)
-          viewList()
+          viewList();
+          viewLeaveData();
           console.log("new create list response===>", response.data.data)
           console.log("new create list message===>", state.message)
           return dispatch({ type: 'ADD_NEW_LEAVE', payload: state.leaveList })
@@ -126,6 +137,7 @@ export const LeaveProvider = ({ children }) => {
         state.message = response.data.message
         toast.info(state.message)
         viewList()
+        viewLeaveData();
         console.log("??????new edit list response????????", response.data.data)
         console.log("??????new edit list message????????", state.message)
         return dispatch({ type: 'EDIT_LEAVE', payload: state.leaveList })
@@ -140,12 +152,16 @@ export const LeaveProvider = ({ children }) => {
 
   // Delete Leave
 
-  const deleteList = (leaveId) => {
+  const deleteList = (leaveId, leaveCategory) => {
     if (window.confirm('Are you sure to delete the item')) {
+      if(leaveCategory == 'Maternity'){
+        alert("Sent request for delete the maternity Leave")
+     console.log("leaveCategory", leaveCategory)
       client.delete('leave_transaction/delete' + '?ltId=' + leaveId)
         .then((response) => {
           toast.info(response.data.message)
-
+          viewList()
+          viewLeaveData();
           console.log("-----delete data-----", response)
           return dispatch({ type: 'DELETE_LEAVE', payload: leaveId });
 
@@ -154,10 +170,29 @@ export const LeaveProvider = ({ children }) => {
         .catch((error) => {
           console.log(error)
         })
-      viewList()
+       
     }
-    viewList()
+    else{
+      client.delete('leave_transaction/delete' + '?ltId=' + leaveId)
+      .then((response) => {
+        toast.info(response.data.message)
+        viewList()
+        viewLeaveData();
+        console.log("-----delete data-----", response)
+        return dispatch({ type: 'DELETE_LEAVE', payload: leaveId });
+
+
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+     
+    }
+  
   }
+  }
+
+
   const getHoliday = () => {
     // const [state, updateStae] =uss
      client.get('holiday/view').then(function (response) {
@@ -184,6 +219,7 @@ export const LeaveProvider = ({ children }) => {
       })
   }
   
+
 
 
   return (

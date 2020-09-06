@@ -34,10 +34,12 @@ const ShiftModal = (props) => {
         e.preventDefault();
         setSelectedWeeks(1)
         setWeekDay('')
+        const setModal = props.handleClose
+        setModal()
 
         const newWeekOff = {
           dates: [weekDay],
-          employeeId: 'DSI001282'
+          employeeId: 'DSI000035'
         }
 
         addWeekOff(newWeekOff)

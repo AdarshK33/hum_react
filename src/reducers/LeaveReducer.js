@@ -14,7 +14,7 @@ const LeaveReducer = (state, action) => {
             return { ...state, leavesData: action.payload }
 
         case 'EDIT_LEAVE':
-            return { ...state, leaveType: action.payload }
+            return { ...state, leaveList: action.payload }
 
         case 'FETCH_LEAVE_TYPE':
             return ({ ...state, leaveType: action.payload })
