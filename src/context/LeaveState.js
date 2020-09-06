@@ -2,6 +2,8 @@ import React, { createContext, useReducer, useEffect } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import LeaveReducer from '../reducers/LeaveReducer'
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 const baseUrl = "http://humine.theretailinsights.co/";
 const initialState = {
@@ -20,7 +22,7 @@ export const LeaveProvider = ({ children }) => {
 
   const headers = {
     'Content-Type': 'application/json',
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJQUkFKVkFMIFBBVUwgUkFZIiwiZXhwIjoxNTk5MjY5MjQzLCJpYXQiOjE1OTkyMzMyNDN9.KrhIcmzJO-TE3RF9AK0w_ur5WUGK3J6k8Uk92OO6QUA'
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJQUkFKVkFMIFBBVUwgUkFZIiwiZXhwIjoxNTk5NDI2MTY0LCJpYXQiOjE1OTkzOTAxNjR9.glS3NIr7zI6421NxXKeiJfCVTh6PElI5HCVe1g802ww'
   }
     //View Leave
 
@@ -29,9 +31,11 @@ export const LeaveProvider = ({ children }) => {
       headers: headers
     })
       .then((response) => {
-        state.leaveList = response.data.data
+        let resData =  response.data.data.reverse();
+        state.leaveList = resData.sort((a,b) => new Date(a) > new Date(b))
         getLeave();
         console.log("=====GET API respone=====", state.leaveList)
+        
         return dispatch({ type: 'FETCH_LEAVE_LIST', payload: state.leaveList })
       })
       .catch((error) => {
@@ -98,7 +102,8 @@ export const LeaveProvider = ({ children }) => {
       .then((response) => {
         state.message = response.data.message
         state.leavesData = response.data.data
-        alert(state.message + "=>" + JSON.stringify(state.leavesData))
+        alert(state.message + " " + ' ' + (state.leavesData !== null ? JSON.stringify(state.leavesData):''))
+        console.log("Pop upresponse===>", JSON.stringify(state.leavesData))
         console.log("Pop upresponse===>", state.leavesData)
         console.log("Pop up message===>", state.message)
         return dispatch({ type: 'ADD_POPUP_LEAVE', payload: state.leavesData })
@@ -117,7 +122,8 @@ export const LeaveProvider = ({ children }) => {
         .then((response) => {
           state.message = response.data.message
           toast.info(state.message)
-          viewList()
+          viewList();
+          viewLeaveData();
           console.log("new create list response===>", response.data.data)
           console.log("new create list message===>", state.message)
           return dispatch({ type: 'ADD_NEW_LEAVE', payload: state.leaveList })
@@ -144,6 +150,7 @@ export const LeaveProvider = ({ children }) => {
         state.message = response.data.message
         toast.info(state.message)
         viewList()
+        viewLeaveData();
         console.log("??????new edit list response????????", response.data.data)
         console.log("??????new edit list message????????", state.message)
         return dispatch({ type: 'EDIT_LEAVE', payload: state.leaveList })
@@ -175,9 +182,12 @@ export const LeaveProvider = ({ children }) => {
           console.log(error)
         })
         viewList()
+        viewLeaveData();
     }
     viewList()
+    viewLeaveData();
   }
+
 
   return (
     <LeaveContext.Provider value={{

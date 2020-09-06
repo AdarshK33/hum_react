@@ -29,7 +29,6 @@ const EditLeave = (props) => {
     const { getLeave, leaveType, leaveList, editList, viewList, message } = useContext(LeaveContext);
 
     const today = new Date()
-    console.log("fromDate", new Date(props.fromDate))
 
     useEffect(() => {
         setStartDate(new Date(props.fromDate))
@@ -247,7 +246,7 @@ const EditLeave = (props) => {
 
                                 </Form.Group>
                             }
-                            <Form.Group as={Row}>
+                            <Form.Group as={Row} style={{display:'none'}}>
                                 <Form.Label column sm="3" className="padding-right">Reason:</Form.Label>
                                 <Col sm="9" className="padding-left">
                                     <Form.Control as="textarea" rows="3" size="sm" name="reason"

@@ -102,6 +102,7 @@ const LeaveAdd = (props) => {
             const setModal = props.handleClose;
             setModal()
             setReason('')
+            setLeave('')
             setStartDate()
             setEndDate()
             setDisable(true)
@@ -183,8 +184,6 @@ const LeaveAdd = (props) => {
         history.push("/Leaves/LeaveView");
     }
 
-
-    console.log("leave", leave)
     return (
         <React.Fragment>
             <ToastContainer />
@@ -205,7 +204,6 @@ const LeaveAdd = (props) => {
                                             <option value="">Select</option>
                                             
                                         {leaveType.length > 0 && leaveType.map((item, i) => {
-                                            console.log(item,"loop")
                                             return (
                                                 <option key={item.leaveTypeId} value={item.leaveName}
                                                 disabled={(item.paternity === 1 ? true : false) || (item.maternity === 1 ? true : false)} >

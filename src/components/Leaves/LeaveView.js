@@ -6,7 +6,8 @@ import { X, Edit2, Trash2 } from 'react-feather'
 import calendarImage from '../../assets/images/calendar-image.png'
 import LeaveAdd from './LeaveAdd'
 import EditLeave from './EditLeave'
-import Confirm from 'react-confirm-bootstrap'
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import { LeaveContext } from '../../context/LeaveState'
 import './Leaves.css'
 
@@ -20,11 +21,10 @@ const LeaveView = () => {
     const [ltId, setltId] = useState()
     const [reason, setReason] = useState()
 
-    console.log("setFromDate fromDate++++++++", new Date(fromDate))
     const { leaveList, viewList, deleteList, editList, viewLeaveData, leaveDataList, viewGrantLeave, grantLeave }
-     = useContext(LeaveContext);
+        = useContext(LeaveContext);
 
-    
+
     const handleClose = () => setModal(false)
     const handleShow = () => setModal(true)
 
@@ -67,13 +67,13 @@ const LeaveView = () => {
                                 <Row>
                                     <Col>
                                         <Row className="text-center">
-                                            <p>Available:{leaveDataList.eligibleLeave ? (leaveDataList.eligibleLeave.General &&  
-                                            ((leaveDataList.eligibleLeave.General - leaveDataList.leaveApplied.General) <= 0 ? '0' : (leaveDataList.eligibleLeave.General - leaveDataList.leaveApplied.General) )) :
-                                                ''}</p>
+                                            <p>Available:{leaveDataList.eligibleLeave ? (leaveDataList.eligibleLeave.General &&
+                                                ((leaveDataList.eligibleLeave.General - leaveDataList.leaveApplied.General) <= 0 ? '0' : (leaveDataList.eligibleLeave.General - leaveDataList.leaveApplied.General))) :
+                                               10 }</p>
                                         </Row>
                                         <Row className="text-center">
-                                            <p>Taken:{leaveDataList.leaveApplied ? (leaveDataList.leaveApplied.General === null ? '0' : leaveDataList.leaveApplied.General) :
-                                                ' '}</p>
+                                            <p>Taken:{leaveDataList.leaveApplied ? (leaveDataList.leaveApplied.General === null ? '0' :  leaveDataList.leaveApplied.General) :
+                                                0}</p>
                                         </Row>
                                     </Col>
                                 </Row>
@@ -92,7 +92,7 @@ const LeaveView = () => {
                                 <Row>
                                     <Col>
                                         <Row className="text-center">
-                                            <p>Taken:{leaveDataList.leaveApplied ? (leaveDataList.leaveApplied.LOP == null && '0') :
+                                            <p>Taken:{leaveDataList.leaveApplied ? (leaveDataList.leaveApplied.LOP == null ? '0' : leaveDataList.leaveApplied.LOP) :
                                                 ''}</p>
                                         </Row>
                                     </Col>
@@ -112,8 +112,8 @@ const LeaveView = () => {
                                 <Row>
                                     <Col>
                                         <Row className="text-center">
-                                             <p>Taken: {grantLeave}</p>
-                                               
+                                            <p>Taken: {grantLeave}</p>
+
                                         </Row>
                                     </Col>
                                 </Row>
@@ -164,13 +164,7 @@ const LeaveView = () => {
 
                                             <td><Trash2 onClick={() => deleteList(item.ltId)} />
                                             </td>
-                                            {/* <Confirm
-                                                onConfirm={() => deleteList(item.ltId)}
-                                                body="You are about to delete your leave application, Do you want to delete it ?"
-                                                confirmText="Yes"
-                                                >
-                                                <td><X /></td>
-                                            </Confirm> */}
+                                           
                                         </tr>
                                     </tbody>
                                 )

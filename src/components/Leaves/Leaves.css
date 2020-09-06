@@ -46,3 +46,6 @@ h5.modal-heading{
 .react-datepicker__input-container  input[type="text"].input_date{
     width: 102px;
 }
+option:disabled {
+    background-color: lightgrey !important;
+}
