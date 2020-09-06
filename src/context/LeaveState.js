@@ -194,12 +194,28 @@ export const LeaveProvider = ({ children }) => {
         console.log(error);
       });
   }
+  const uploadFile = (file) => {
+    const formData = new FormData();
+    formData.append('file',file)
+
+    return axios.post(baseUrl + 'holiday/upload',formData, {
+      headers: headers
+    })
+      .then((response) => {
+        console.log(response,"res")
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+  
 
 
   return (
     <LeaveContext.Provider value={{
       viewList,
       getHoliday,
+      uploadFile,
       addLeave,
       addPopup,
       getLeave,
