@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useState } from 'react';
-import axios from 'axios';
+import {client} from '../utils/axios';
 import environmentVariables from '../components/common/environment';
 import { ToastContainer, toast } from "react-toastify";
 
@@ -21,18 +21,12 @@ const initial_state = {
 export const RosterContext = createContext();
 export const RosterProvider = ({ children }) => {
   const [state, dispatch] = useReducer(RosterReducer, initial_state);
-  const headers = {
-    'Content-Type': 'application/json',
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk5NDEzMzU1LCJpYXQiOjE1OTkzNzczNTV9.J4zsob2Rt4n94VeP_b6tXDnwE-CDMlUh6_F5GsQPi88'
-  }
 
   // VIEWSHIFT
 
   function viewShift() {
   
-    axios.get(baseUrl + 'shift/view', {
-      headers: headers
-    }).then(function (response) {
+    client.get('shift/view').then(function (response) {
        console.log("data==>" + JSON.stringify(response));
       state.shiftList = response.data.data;
       return dispatch({ type: 'FETCH_SHIFT_LIST', payload: state.shiftList });
@@ -46,9 +40,7 @@ export const RosterProvider = ({ children }) => {
   // VIEW SHIFT TYPE LIST
 
   function viewShiftTypes() {
-    axios.get(baseUrl + 'shift/types', {
-      headers: headers
-    }).then(function (response) {
+    client.get('shift/types').then(function (response) {
        console.log("data==>" + JSON.stringify(response));
       state.shiftListNames = response.data.data;
       return dispatch({ type: 'FETCH_SHIFT_LIST_NAMES', payload: state.shiftListNames });
@@ -61,9 +53,7 @@ export const RosterProvider = ({ children }) => {
 //VIEW CONTRACT TYPE LIST
 
   function viewContractTypes() {
-    axios.get(baseUrl + 'contract_type/view', {
-      headers: headers
-    }).then(function (response) {
+    client.get('contract_type/view').then(function (response) {
       //console.log("data==>" + JSON.stringify(response));
       state.shiftContractNames = response.data.data;
     
@@ -82,9 +72,7 @@ export const RosterProvider = ({ children }) => {
 
   function editShift(shiftMasterId) {
    // alert(shiftMasterId);
-    axios.get(baseUrl + 'shift/' + shiftMasterId, {
-      headers: headers
-    }).then(function (response) {
+    client.get('shift/' + shiftMasterId).then(function (response) {
       //console.log("single shift list" + JSON.stringify(response));
       state.singleShiftList = response.data.data;
       return dispatch({ type: 'EDIT_SHIFT_LIST', payload: state.singleShiftList });
@@ -97,17 +85,13 @@ export const RosterProvider = ({ children }) => {
 
 //UPDATE
   function updateShift(newEditShift) {
-    return axios.put(baseUrl + "shift/update", newEditShift, {
-      headers: headers
-    })
+    return client.put("shift/update")
   }
 
   // ADD SHIFT
 
   function addShift(newShift) {
-    return axios.post(baseUrl + "shift/create", newShift, {
-      headers: headers
-    })
+    return client.post("shift/create")
 
   }
 
@@ -116,9 +100,7 @@ export const RosterProvider = ({ children }) => {
 
   function deleteShift(shiftMasterId) {
     alert("delete" + shiftMasterId)
-    axios.delete(baseUrl + 'shift/delete' + "?shiftId=" + shiftMasterId, {
-      headers: headers
-    }).then(function (response) {
+    client.delete('shift/delete' + "?shiftId=" + shiftMasterId).then(function (response) {
       console.log("data==>" + JSON.stringify(response));
       // let myresult = response.data.data.shiftMasterId;   
       return dispatch({ type: 'DELETE_SHIFT', payload: shiftMasterId });
@@ -133,9 +115,7 @@ export const RosterProvider = ({ children }) => {
 // Get View WeekOff Weeks according to days
 const weekOffDays = (weekId) => {
   console.log("weelId", weekId)
-  axios.get(baseUrl + 'weekoff/weeks/days' + '?weekId=' + weekId, {
-    headers: headers
-  })
+  client.get('weekoff/weeks/days' + '?weekId=' + weekId)
     .then((response) => {
       state.weekDays = response.data.data
       console.log("=====GET Weeks Off API respone=====", state.weekDays)
@@ -151,9 +131,7 @@ const weekOffDays = (weekId) => {
 
 const weekOffDataEmp = () => {
   let empId = 'DSI001282'
-  axios.get(baseUrl + 'weekoff/employee/view' + '?employeeId=' + empId, {
-    headers: headers
-  })
+  client.get('weekoff/employee/view' + '?employeeId=' + empId)
     .then((response) => {
       state.weekOffDataList = response.data.data
       console.log("=====GET Weeks Off API respone=====", state.weekOffDataList)
@@ -167,9 +145,7 @@ const weekOffDataEmp = () => {
 //Add week off Data according to the emp id
 const addWeekOff = (newWeekOff) => {
     console.log("++++create weekOff api response+++++", newWeekOff)
-    return axios.post(baseUrl + 'weekoff/employee/create', newWeekOff, {
-      headers: headers
-    })
+    return client.post('weekoff/employee/create', newWeekOff)
       .then((response) => {
         state.message = response.data.message
         toast.info(state.message)

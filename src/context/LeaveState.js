@@ -1,5 +1,5 @@
 import React, { createContext, useReducer, useEffect } from 'react';
-import axios from 'axios';
+import {client} from '../utils/axios';
 import { ToastContainer, toast } from "react-toastify";
 import LeaveReducer from '../reducers/LeaveReducer'
 
@@ -18,17 +18,10 @@ export const LeaveContext = createContext();
 
 export const LeaveProvider = ({ children }) => {
   const [state, dispatch] = useReducer(LeaveReducer, initialState);
-
-  const headers = {
-    'Content-Type': 'application/json',
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk5NDEzMzU1LCJpYXQiOjE1OTkzNzczNTV9.J4zsob2Rt4n94VeP_b6tXDnwE-CDMlUh6_F5GsQPi88'
-  }
   //View Leave
 
   const viewList = () => {
-    axios.get(baseUrl + 'leave_transaction/view', {
-      headers: headers
-    })
+    client.get('leave_transaction/view')
       .then((response) => {
         state.leaveList = response.data.data
         getLeave();
@@ -44,9 +37,7 @@ export const LeaveProvider = ({ children }) => {
   const viewLeaveData = () => {
 
     let empId1 = "DSI000035"
-    axios.get(baseUrl + 'leave_transaction/view/' + empId1, {
-      headers: headers
-    })
+    client.get('leave_transaction/view/' + empId1)
       .then((response) => {
         state.leaveDataList = response.data.data
         console.log("=====GET Leave Data API respone=====", state.leaveDataList)
@@ -61,9 +52,7 @@ export const LeaveProvider = ({ children }) => {
 
     let empId1 = "DSI000035"
     let year = '2020'
-    axios.get(baseUrl + 'grant_leave/view/' + empId1 + '/' + year, {
-      headers: headers
-    })
+    client.get('grant_leave/view/' + empId1 + '/' + year)
       .then((response) => {
         state.grantLeave = response.data.data[0].numOfDays
         console.log("=====GET Grant Leave  API respone=====", response.data.data[0].numOfDays)
@@ -77,9 +66,7 @@ export const LeaveProvider = ({ children }) => {
   // Get Leave Type
 
   const getLeave = () => {
-    axios.get(baseUrl + 'leave_type/view', {
-      headers: headers
-    })
+    client.get('leave_type/view')
       .then((response) => {
         state.leaveType = response.data.data
         console.log("get leave type", state.leaveType)
@@ -93,9 +80,7 @@ export const LeaveProvider = ({ children }) => {
   // Add new Leave 
   const addPopup = (newPopup) => {
 
-    return axios.post(baseUrl + 'leave_transaction/create', newPopup, {
-      headers: headers
-    })
+    return client.post('leave_transaction/create', newPopup)
       .then((response) => {
         state.message = response.data.message
         state.leavesData = response.data.data
@@ -112,9 +97,7 @@ export const LeaveProvider = ({ children }) => {
   const addLeave = (newLeave) => {
     if (newLeave) {
       console.log("++++create api response+++++", newLeave)
-      return axios.post(baseUrl + 'leave_transaction/create', newLeave, {
-        headers: headers
-      })
+      return client.post('leave_transaction/create')
         .then((response) => {
           state.message = response.data.message
           toast.info(state.message)
@@ -138,9 +121,7 @@ export const LeaveProvider = ({ children }) => {
 
   const editList = (editLeave) => {
     console.log("??????????????????edit api id response???????????????/", editLeave)
-    return axios.put(baseUrl + 'leave_transaction/update', editLeave, {
-      headers: headers
-    })
+    return client.put('leave_transaction/update', editLeave)
       .then((response) => {
         state.message = response.data.message
         toast.info(state.message)
@@ -148,7 +129,7 @@ export const LeaveProvider = ({ children }) => {
         console.log("??????new edit list response????????", response.data.data)
         console.log("??????new edit list message????????", state.message)
         return dispatch({ type: 'EDIT_LEAVE', payload: state.leaveList })
-        return (<ToastContainer />)
+        // return (<ToastContainer />)
       })
       .catch((error) => {
         console.log(error)
@@ -161,9 +142,7 @@ export const LeaveProvider = ({ children }) => {
 
   const deleteList = (leaveId) => {
     if (window.confirm('Are you sure to delete the item')) {
-      axios.delete(baseUrl + 'leave_transaction/delete' + '?ltId=' + leaveId, {
-        headers: headers
-      })
+      client.delete('leave_transaction/delete' + '?ltId=' + leaveId)
         .then((response) => {
           toast.info(response.data.message)
 
@@ -181,9 +160,7 @@ export const LeaveProvider = ({ children }) => {
   }
   const getHoliday = () => {
     // const [state, updateStae] =uss
-     axios.get(baseUrl + 'holiday/view', {
-      headers: headers
-    }).then(function (response) {
+     client.get('holiday/view').then(function (response) {
        console.log(response)
       state.holidayDataList = response.data.data
      
@@ -198,9 +175,7 @@ export const LeaveProvider = ({ children }) => {
     const formData = new FormData();
     formData.append('file',file)
 
-    return axios.post(baseUrl + 'holiday/upload',formData, {
-      headers: headers
-    })
+    return client.post('holiday/upload', formData)
       .then((response) => {
         console.log(response,"res")
       })
