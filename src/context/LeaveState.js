@@ -18,11 +18,6 @@ export const LeaveContext = createContext();
 
 export const LeaveProvider = ({ children }) => {
   const [state, dispatch] = useReducer(LeaveReducer, initialState);
-
-  const headers = {
-    'Content-Type': 'application/json',
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk5MzMxMjkyLCJpYXQiOjE1OTkyOTUyOTJ9.IYBMKAtpakrJj7R1hwbXKYu2Q7F_CMbwmyS6sAOcJZ0'
-  }
   //View Leave
 
   const viewList = () => {
@@ -176,12 +171,26 @@ export const LeaveProvider = ({ children }) => {
         console.log(error);
       });
   }
+  const uploadFile = (file) => {
+    const formData = new FormData();
+    formData.append('file',file)
+
+    return client.post('holiday/upload', formData)
+      .then((response) => {
+        console.log(response,"res")
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+  
 
 
   return (
     <LeaveContext.Provider value={{
       viewList,
       getHoliday,
+      uploadFile,
       addLeave,
       addPopup,
       getLeave,

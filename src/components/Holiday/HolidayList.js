@@ -6,13 +6,17 @@ import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import '../Leaves/Leaves.css'
 const HolidayList = () => {
  
-   const {getHoliday,holidayDataList}   = useContext(LeaveContext);
+   const {getHoliday,holidayDataList,uploadFile}   = useContext(LeaveContext);
   
   useEffect(() => {
       getHoliday()  
   }, [])
   console.log("holida",holidayDataList)
-  
+  const changeHandler = (event)=>{
+    let fileObj = event.target.files[0];
+    console.log("clicked",fileObj)
+    uploadFile(fileObj)
+  }
     return (
       <Fragment>
       <Breadcrumb title="Hoilday List" parent="Holiday List" />
@@ -22,7 +26,14 @@ const HolidayList = () => {
             <div className="card" style={{ overflowX: "auto" }}>
 
             <div className="title_bar" >
-                <Button className="btn btn-light mr-2" >Create</Button>
+                {/* <Button className="btn btn-light mr-2" >Create</Button> */}
+                <input
+                    className="btn"
+                    type="file"
+                    accept=".xlsx, .xls, .csv"
+                    onChange={changeHandler}
+                    style={{ padding: "10px" }}
+                  />
                 <ReactHTMLTableToExcel
                   className="btn btn-light mr-2"
                   table="table-to-xls"
