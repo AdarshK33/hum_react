@@ -17,6 +17,7 @@
     "feather-icons": "^4.24.1",
     "firebase": "^7.6.0",
     "google-maps-react": "^2.0.2",
+    "js-cookie": "^2.2.1",
     "json-loader": "^0.5.7",
     "knob": "^1.1.0",
     "leaflet": "^1.5.1",

@@ -289,7 +289,7 @@ const LeaveAdd = (props) => {
                                 <Form.Label column sm="3" className="padding-right">Reason:</Form.Label>
                                 <Col sm="9" className="padding-left">
                                     <Form.Control as="textarea" rows="3" size="sm" name="reason" value={reason}
-                                        onChange={(event) => setReason(event.target.value)} />
+                                        onChange={(event) => setReason(event.target.value)} required />
                                 </Col>
                             </Form.Group>
                             <Button type="submit" className="submit-button" size="sm">Submit</Button>

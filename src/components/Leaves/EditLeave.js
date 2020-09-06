@@ -127,6 +127,7 @@ const EditLeave = (props) => {
             year: '2020'
         }
         if (leave == 'Maternity') {
+            alert("Sent request to admin for edit the maternity leave")
             editList(editLeave)
         }
         else {

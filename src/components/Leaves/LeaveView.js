@@ -162,7 +162,7 @@ const LeaveView = () => {
                                             </td>
 
 
-                                            <td><Trash2 onClick={() => deleteList(item.ltId)} />
+                                            <td><Trash2 onClick={() => deleteList(item.ltId, item.leaveCategory)} />
                                             </td>
                                            
                                         </tr>

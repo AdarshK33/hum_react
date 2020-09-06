@@ -21,7 +21,8 @@ const LeaveReducer = (state, action) => {
 
         case 'FETCH_GRANT_LEAVE':
             return ({ ...state, grantLeave: action.payload })
-
+        case 'FETCH_HOLIDAY_LIST':
+                return { ...state, holiday: action.payload };
 
         case 'DELETE_LEAVE':
             return {
