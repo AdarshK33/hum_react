@@ -69,7 +69,7 @@ const CreateClusterModal = (props) => {
     setClusterName(event.target.value);
     if (multiValue.length === 0) {
       setClusterButton(true)
-      setErrorMsg("Provide all input");
+      setErrorMsg("Please fill the required fields");
     }
     else {
       setClusterButton(false)
@@ -92,7 +92,7 @@ const CreateClusterModal = (props) => {
     setClusterLeader(event.target.value);
     if (employee.length === 0) {
       setClusterButton(true)
-      setErrorMsg("Provide all input");
+      setErrorMsg("Please fill the required fields");
     }
     else {
       setClusterButton(false)
@@ -108,6 +108,7 @@ const CreateClusterModal = (props) => {
 
   const handleMultiChange1 = (options) => {
     setEmployee(options)
+  
     setClusterButton(false)
     setErrorMsg(false)
   }
@@ -118,7 +119,10 @@ const CreateClusterModal = (props) => {
     setClear()
     setModal()
   }
-
+  const clearAndClose=()=>{
+    setClear();
+    props.handleClose();
+  }
   return (
     <Fragment>
       <Modal show={props.modal} onHide={props.handleClose} centered>
@@ -153,13 +157,13 @@ const CreateClusterModal = (props) => {
                 </div>
               </div>
             </div>
-            <h6 style={{ color: "red", marginLeft: "20px" }}>{errormsg}</h6>
+            <h6 style={{ color: "red",fontSize:"15px"}}>{errormsg}</h6>
             <div className="row">
               <div className="col-sm-12">
                 <div className="form-group">
-                  <label htmlFor="exampleFormControlInput1">Cluster Desc</label>
+                  <label htmlFor="exampleFormControlInput1">Cluster Description</label>
 
-                  <input type="text" className="form-control digit" placeholder="Desc" required value={description} onChange={onDescprtion} />
+                  <input type="text" className="form-control digit" placeholder="Cluster Description" required value={description} onChange={onDescprtion} />
                 </div>
               </div>
             </div>
@@ -173,8 +177,8 @@ const CreateClusterModal = (props) => {
                   <Select
                     name="filters"
                     placeholder="Filters"
-                    value={employee}
-                    options={clusterLeaderNames.map(e => ({ label: e.firstName, value: e.employeeId }))}
+                    value={employee}            
+                    options={clusterLeaderNames.map(e => ({ label: e.firstName +" "+e.employeeId, value: e.employeeId }))}
                     onChange={handleMultiChange1}
                     isMulti
                   />
@@ -214,9 +218,9 @@ const CreateClusterModal = (props) => {
             
 
             <button className="btn btn-primary mb-2 mr-2" type="submit" disabled={clustertButton} value="Submit">Save</button>
-            <button className="btn btn-primary mb-2 mr-2" onClick={props.handleClose}>
-              close
-          </button>
+            <button className="btn btn-primary mb-2 ml-2" onClick={()=>{clearAndClose()}}>Close</button>
+            
+       
             <h5>{successMsg.length !== 0 && <div className="text-success">{successMsg}</div>}</h5>
           </form>
         </Modal.Body>

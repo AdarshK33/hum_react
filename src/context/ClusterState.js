@@ -8,7 +8,7 @@ const initial_state = {
   clusterLeaderNames:[],
   clusterList:[],
   getSingleCluster:[],
- 
+  getSingleCluster1:[],
 }
 
 
@@ -31,7 +31,7 @@ export const ClusterProvider = ({ children }) => {
     client.get('cluster/view').then(function (response) {
     //  console.log("data==>" + JSON.stringify(response));
       state.clusterList = response.data.data;
-   
+      console.log(JSON.stringify(state.clusterList))
     
       return dispatch({ type: 'FETCH_ClUSTER_LIST', payload: state.clusterList });
     })
@@ -67,8 +67,11 @@ export const ClusterProvider = ({ children }) => {
    // alert("cluster" + id)
     client.get('cluster/'+id).then(function (response) {
     //  console.log("data==Clusteer>" + JSON.stringify(response));
-       let getSingleCluster = response.data.data;   
-      return dispatch({ type: 'GET_SINGLE_CLUSTER', payload: getSingleCluster });
+       state.getSingleCluster = response.data.data; 
+       console.log(JSON.stringify(state.getSingleCluster));
+       state.getSingleCluster1 = response.data.data.sports  
+      //  alert(JSON.stringify(state.getSingleCluster1));
+      return dispatch({ type: 'GET_SINGLE_CLUSTER', payload: state.getSingleCluster });
 
     })
       .catch(function (error) {
@@ -104,6 +107,7 @@ export const ClusterProvider = ({ children }) => {
     viewCluster,  
     getCluster, 
     updateCluster,
+    getSingleCluster1:state.getSingleCluster1,
     clusterList:state.clusterList, 
     clusterLeaderNames:state.clusterLeaderNames,
     sportsNames: state.sportsNames,
