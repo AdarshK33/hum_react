@@ -44,6 +44,10 @@ const EditLeave = (props) => {
     }, [props.leaveCategory])
 
     useEffect(() => {
+        setReason(props.reason)
+    }, [props.reason])
+
+    useEffect(() => {
         setltId(props.ltId)
     }, [props.ltId])
 
@@ -139,10 +143,10 @@ const EditLeave = (props) => {
 
         const setModal = props.handleEditClose;
         setModal()
-        setLeave(leave)
+        /* setLeave(leave)
         setReason(reason)
         setStartDate(startDate)
-        setEndDate(endDate)
+        setEndDate(endDate) */
         setDisable(true)
         setMin(false)
         setMax(false)
@@ -247,11 +251,11 @@ const EditLeave = (props) => {
 
                                 </Form.Group>
                             }
-                            <Form.Group as={Row} style={{display:'none'}}>
+                            <Form.Group as={Row}>
                                 <Form.Label column sm="3" className="padding-right">Reason:</Form.Label>
                                 <Col sm="9" className="padding-left">
                                     <Form.Control as="textarea" rows="3" size="sm" name="reason"
-                                        defaultValue={props.reason} onChange={(event) => setReason(event.target.value)} />
+                                        value={reason} onChange={(event) => setReason(event.target.value)} />
                                 </Col>
                             </Form.Group>
                             <Button type="submit" className="submit-button" size="sm">Submit</Button>
