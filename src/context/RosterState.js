@@ -14,7 +14,8 @@ const initial_state = {
   shiftMasterId: null,
   weekDays:[],
   weekOffDataList:[],
-  singleShiftList:[]
+  singleShiftList:[],
+  availableShiftData:[]
 }
 
 
@@ -162,9 +163,35 @@ const addWeekOff = (newWeekOff) => {
       })
       
   }
+  const availableShifts = () => {
+    
+    client.get('shift/view/INSEZONO/active')
+      .then((response) => {
+        console.log(response,"ava")
+        state.availableShiftData = response.data.data
+        console.log("=====GET ava=====", state.availableShiftData)
+        return dispatch({ type: 'AVAILABLE_SHIFTS', payload: state.availableShiftData})
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+  const assignShift = (assignData) => {
+   
+    return client.post('shift/assign/employee', assignData)
+      .then((response) => {
+        console.log(response,"cre")
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+      
+  }
 
   return (<RosterContext.Provider value={{
     addShift,
+    assignShift,
+    availableShifts,
     viewShift,
     deleteShift,
     editShift,
@@ -181,6 +208,7 @@ const addWeekOff = (newWeekOff) => {
     weekDays: state.weekDays,
     weekOffDataList: state.weekOffDataList,
     singleShiftList:state.singleShiftList,
+    availableShiftData:state.availableShiftData
   }}>
     {children}
   </RosterContext.Provider>);
