@@ -23,11 +23,7 @@ export const LeaveProvider = ({ children }) => {
 
  /*  const headers = {
     'Content-Type': 'application/json',
-<<<<<<< HEAD
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk5MzQ1NTU2LCJpYXQiOjE1OTkzMDk1NTZ9.XahxYE-AaDeeVijikSN9wjM3htCe_F_p1ofKXmsrBt8'
-=======
     Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJQUkFKVkFMIFBBVUwgUkFZIiwiZXhwIjoxNTk5NDI2MTY0LCJpYXQiOjE1OTkzOTAxNjR9.glS3NIr7zI6421NxXKeiJfCVTh6PElI5HCVe1g802ww'
->>>>>>> e7e400c2f8b8447e9c71386bc305321fd63b5d4a
   }
     //View Leave */
   //View Leave

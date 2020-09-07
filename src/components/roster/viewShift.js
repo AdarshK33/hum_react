@@ -21,6 +21,8 @@ function ViewShift() {
   const handleEditClose = () => setEditModal(false)
   const handleEditShow = () => setEditModal(true)
 
+  const [contractType, setContractType] = useState('');
+  const [shiftType,setShiftType] = useState('');
   // variables
  const { shiftList,editShift, viewShift, } = useContext(RosterContext);
   //console.log(shiftList, "in viewShift");
@@ -70,6 +72,8 @@ function ViewShift() {
                             <td><Edit2 onClick={() => {
                                                 setEditModal(true);
                                                 editShift(e.shiftMasterId);
+                                                setShiftType(e.shiftType);
+                                                setContractType(e.contractType);
                                         }} />
                                             </td>             
                          
@@ -81,7 +85,8 @@ function ViewShift() {
                     })}
                 </table>
                 <EditShiftModal handleEditClose={handleEditClose} 
-
+                shiftType={shiftType}
+                contractType={contractType}
                 modal={editModal} /> 
               </div>
 

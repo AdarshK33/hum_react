@@ -141,12 +141,12 @@ const callTimer =()=>{
   setModal()
 }
 
-const result  = getSingleCluster1.map(e=>{
-  return(<div>
+// const result  = getSingleCluster1.map(e=>{
+//   return(<div>
 
-  <h1>{e.sportName}</h1>  
-  </div>)
-})
+//   <h1>{e.sportName}</h1>  
+//   </div>)
+// })
 
 
 
@@ -156,7 +156,7 @@ const result  = getSingleCluster1.map(e=>{
        <Modal show={props.modal} onHide={props.handleEditClose} centered>
 
         <Modal.Header closeButton>
-          <Modal.Title>Create Cluster</Modal.Title>
+          <Modal.Title>Edit Cluster</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={onSubmit}>
@@ -164,7 +164,7 @@ const result  = getSingleCluster1.map(e=>{
               <div className="col-sm-12">
                 <div className="form-group">
                   <label htmlFor="exampleFormControlInput1"> Select Sports</label>
-  <h6>{result}</h6>
+  {/* <h6>{result}</h6> */}
             
                <Select
                    value={multiValue}
@@ -193,7 +193,7 @@ const result  = getSingleCluster1.map(e=>{
             <div className="row">
               <div className="col-sm-12">
                 <div className="form-group">
-                  <label htmlFor="exampleFormControlInput1">Cluster Desc</label>
+                  <label htmlFor="exampleFormControlInput1">Cluster Description</label>
 
                   <input type="text" className="form-control digit" placeholder="Desc" defaultValue={getSingleCluster.description} required value={description} onChange={onDescprtion} />
                 </div>

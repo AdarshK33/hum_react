@@ -86,16 +86,18 @@ export const RosterProvider = ({ children }) => {
 
 //UPDATE
   function updateShift(newEditShift) {
-    return client.put("shift/update")
+    return client.put("shift/update",newEditShift)
   }
 
   // ADD SHIFT
 
   function addShift(newShift) {
-    return client.post("shift/create")
+ //   alert(JSON.stringify(newShift) );
+  
+    return client.post("shift/create",newShift)
 
   }
-
+ 
 
   // DELETE SHIFT
 

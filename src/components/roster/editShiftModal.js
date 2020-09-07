@@ -3,6 +3,7 @@ import DatePicker from "react-datepicker";
 import moment from 'moment';
 import "react-datepicker/dist/react-datepicker.css";
 import {  Button, Modal } from 'react-bootstrap'
+import { Container, Row, Col, Form } from 'react-bootstrap'
 import { RosterContext } from "../../context/RosterState";
 
 
@@ -13,7 +14,7 @@ const EditShiftModal = (props) => {
     viewContractTypes()
   }, [])
 
- 
+
 
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
@@ -28,9 +29,14 @@ const EditShiftModal = (props) => {
   const [showText, setShowText] = useState(false);
   const[invalidText,setInvalidText]= useState(false)
   const[showBreakDuration,setShowBreakDuration]= useState(true)
- // const [workingHoursText, setWorkingHoursText] = useState(false);
  const[warnMsg,setWrnMsg] = useState(false);
   const [errormsg, setErrorMsg] = useState(false);
+  const[status,setStatus] = useState(0)
+
+  useEffect(() => {
+    setContractType(props.contractType)
+}, [props.contractType])
+
   const {updateShift,viewShift, singleShiftList,viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const setClear = () => {
    setShiftType('')
@@ -42,6 +48,7 @@ const EditShiftModal = (props) => {
     setEndBreakTIme('');
     setSuccessMsg('');
   }
+
   const calcTime = () => {
     const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
     const etime = moment(endTime, ["h:mm A"]).format("HH:mm");
@@ -112,7 +119,7 @@ const EditShiftModal = (props) => {
         workingHours: parseInt(workingHours),
         breakStartTime: 0,
         breakEndTime: 0,
-        status: 0
+        status: status
       }
       setSuccessMsg(true);
       const result = updateShift(newShift)
@@ -145,7 +152,7 @@ const EditShiftModal = (props) => {
         workingHours: parseInt(workingHours),
         breakStartTime: moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
         breakEndTime: moment(breakStartTime).add(1, 'hours').format('HH:mm:ss'),
-        status: 0
+        status: status
       }
       setSuccessMsg(true);
       const result = updateShift(newShift)
@@ -184,14 +191,14 @@ const EditShiftModal = (props) => {
                   <div className="row">
                     <div className="col-sm-6">
                         <div className="form-group">
-                        {/* <h1>{moment(singleShiftList.startTime,["HH:mm"]).format("h:mm A")}</h1>
-                        <h1>{singleShiftList.shiftMasterId}</h1> */}
-                        {/* {moment(e.startTime, ["h:mm A"]).format("HH:mm")} */}
+                       {/* <h1>{moment(singleShiftList.startTime,["HH:mm:ss"]).format("HH:mm A")}</h1>  */}
+          
                         <label htmlFor="exampleFormControlInput1">From Time</label>
                         <br />
                         <DatePicker
                           className="form-control"
                           selected={startTime}
+                        //  selected={moment(singleShiftList.startTime,["HH:mm:ss"]).format("HH:mm A")}
                         //  selected={moment(singleShiftList.startTime,["HH:mm"]).format("h:mm A")}
                           onChange={date => setStartTime(date)}
                           showTimeSelect
@@ -234,29 +241,20 @@ const EditShiftModal = (props) => {
                       
                        <h6 style={{ color: "red"}}>{warnMsg}</h6>
 
-
-
-
-                     
-
                           
                       {showBreakDuration &&
                       <div className="row">
                         <div className="col-sm-4">
-                        <h6 style={{ color: "text-secondary",fontSize:"15px"  }}>Working Hours :{singleShiftList.workingHours}</h6>
+                        <h6 style={{ color: "text-secondary",fontSize:"13px"  }}>Working Hours :{singleShiftList.workingHours}</h6>
                         </div>
                         <div className="col-sm-8">
-                        <h6 style={{ color: "text-secondary",fontSize:"15px" }}>Break duration :{singleShiftList.breakStartTime}-{singleShiftList.breakEndTime}</h6>
+                        <h6 style={{ color: "text-secondary",fontSize:"13px" }}>Break duration :{singleShiftList.breakStartTime}-{singleShiftList.breakEndTime}</h6>
                           <br/>
                         </div>  
                        
                           </div>
                           }
 
-
-
-
-                
                   <div className="row">
                     <div className="col-sm-12">
                       {parseFloat(workingHours) > 5 ?
@@ -318,6 +316,13 @@ const EditShiftModal = (props) => {
                      
                     <h6>{breakDuationMsg && <div className="text-danger pl-3">Break Should be one hour</div>}</h6>
                   </div>
+
+               
+
+
+
+
+
                   <div className="row">
                     <div className="col-sm-12">
                       <div className="form-group">
@@ -330,7 +335,7 @@ const EditShiftModal = (props) => {
                           <option value="" disabled selected hidden>{singleShiftList.shiftType}</option>
                           <option value="">Select Shift Type</option>
                                   <option>Captain</option>
-                                  <option>Onduty</option>
+                                  <option>On duty</option>
                                   <option>General</option>
                         </select>
                       </div>
@@ -339,19 +344,8 @@ const EditShiftModal = (props) => {
 
 
 
-                 {/* <div className="row">
-                 
-                   <div className="col-sm-6">
-                   <input type="radio"  checked={singleShiftList.shiftType ==='Captain'}  onChange={event => handleSelectChange(event)}   /> Captain
-                   </div>
-                  
-                
-                   <div className="col-sm-6">
-                   <input type="radio" checked={singleShiftList.shiftType ==='Onduty'}  onChange={event => handleSelectChange(event)}  /> Onduty
-                     </div> 
-                 </div> */}
-                  
-                  <div className="row">
+                                  
+                <div className="row">
                     <div className="col-sm-12">
                       <div className="form-group">
                         <label htmlFor="exampleFormControlInput1"> Select Contract Type</label>
@@ -361,8 +355,7 @@ const EditShiftModal = (props) => {
                           onChange={(e) => setContractType(e.target.value)} 
                           value={contractType}>
                             
-                            <option value="" disabled selected hidden>{singleShiftList.contractType}</option>   
-                          {shiftContractNames.map((e, i) => {
+                           {shiftContractNames.map((e, i) => {
                             return (
                              
                               <option key={e.typeId} value={e.contractType}>
@@ -370,6 +363,26 @@ const EditShiftModal = (props) => {
                               </option>
                             );
                           })}
+                        </select>
+                      </div>
+                    </div>
+                  </div> 
+
+             
+
+
+
+                  <div className="row">
+                    <div className="col-sm-12">
+                      <div className="form-group">
+                        <label htmlFor="exampleFormControlInput1"> Shift Status</label>
+                        <select
+                          className="form-control"                       
+                          value={status}                      
+                          onChange={(e)=>setStatus(e.target.value)}>
+                          <option value="0">Active</option>
+                                  <option value="1">Inactive</option>
+                                 
                         </select>
                       </div>
                     </div>
