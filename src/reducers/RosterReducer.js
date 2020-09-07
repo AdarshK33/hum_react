@@ -30,6 +30,8 @@ const RosterReducer = (state, action) => {
 
         case 'ADD_NEW_WEEKOFF_DATA':
             return { ...state, weekOffDataList: action.payload };
+        case 'AVAILABLE_SHIFTS':
+                return { ...state, weekOffDataList: action.payload };
 
         default: return state;
     }
