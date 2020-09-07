@@ -23,7 +23,7 @@ function ViewShift() {
 
   // variables
  const { shiftList,editShift, viewShift, } = useContext(RosterContext);
-  console.log(shiftList, "in viewShift");
+  //console.log(shiftList, "in viewShift");
   return (
     <Fragment>
       <Breadcrumb title="View Shift" parent="View Shift" />

@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect } from 'react';
+import React, { createContext, useReducer } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from "react-toastify";
 import LeaveReducer from '../reducers/LeaveReducer'
@@ -20,7 +20,7 @@ export const LeaveProvider = ({ children }) => {
 
   const headers = {
     'Content-Type': 'application/json',
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk5MjUxOTQ2LCJpYXQiOjE1OTkyMTU5NDZ9.Aopf44MAwc5rGRsIIpTPj4zniti_seLB8DWQ1BVu-ZA'
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk5MzQ1NTU2LCJpYXQiOjE1OTkzMDk1NTZ9.XahxYE-AaDeeVijikSN9wjM3htCe_F_p1ofKXmsrBt8'
   }
     //View Leave
 

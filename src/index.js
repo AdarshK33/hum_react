@@ -10,12 +10,9 @@ import App from "./components/app";
 // Import custom Components 
 
 import Default from './components/dashboard/defaultCompo/default';
-import CryptoComponent from './components/dashboard/crypto/cryptoComponent';
-import Project from './components/dashboard/project/project';
 // sample page
 import Samplepage from './components/sample/samplepage';
 import Roster from './components/roster/roster';
-// import EditShift from "./components/roster/editShift";
 import ViewShift from  "./components/roster/viewShift"
 //Leave Page
 import LeaveView from './components/Leaves/LeaveView';

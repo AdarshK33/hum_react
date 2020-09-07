@@ -3,7 +3,6 @@ import Breadcrumb from "../common/breadcrumb";
 import CreateClusterModal from "./createClusterModal";
 import EditClusterModal from "./editClusterModal";
 import { Button } from 'react-bootstrap'
-import { RosterContext } from "../../context/RosterState";
 import { Edit2 } from 'react-feather'
 import { ClusterContext } from "../../context/ClusterState";
 

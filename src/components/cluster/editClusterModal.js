@@ -2,7 +2,6 @@ import React, { Fragment, useState, useContext, useEffect } from 'react';
 import { Modal } from 'react-bootstrap';
 import { ClusterContext } from "../../context/ClusterState";
 import Select from 'react-select';
-import { Check } from 'react-feather';
 const EditClusterModal = (props) => {
 
   useEffect(() => {
@@ -36,8 +35,7 @@ const EditClusterModal = (props) => {
   }
 
 
-  const { updateCluster,viewCluster, getSingleCluster,viewSports, sportsNames, clusterLeaderNames, selectClusterLeader } = useContext(ClusterContext);
-
+  const { updateCluster,viewCluster,getSingleCluster1, getSingleCluster,viewSports, sportsNames, clusterLeaderNames, selectClusterLeader } = useContext(ClusterContext);
 
   useEffect(() => {
     setClusterName(getSingleCluster.clusterName)
@@ -46,8 +44,8 @@ const EditClusterModal = (props) => {
     setClusterLeader(getSingleCluster.clusterLeader)
   
 
-   console.log("1---->"+getSingleCluster.employeeIds);
-   console.log("2---->"+JSON.stringify(clusterLeaderNames));
+  // console.log("1---->"+getSingleCluster.employeeIds);
+  // console.log("2---->"+JSON.stringify(clusterLeaderNames));
    }, [props])
 
   useEffect(() => {
@@ -56,7 +54,7 @@ const EditClusterModal = (props) => {
 
 
 console.log("===="+JSON.stringify(getSingleCluster));
-
+//alert("------->"+getSingleCluster1)
   const onSubmit = (event) => {
 
     event.preventDefault();
@@ -142,6 +140,17 @@ const callTimer =()=>{
   setClear()
   setModal()
 }
+
+const result  = getSingleCluster1.map(e=>{
+  return(<div>
+
+  <h1>{e.sportName}</h1>  
+  </div>)
+})
+
+
+
+
   return (
     <Fragment>
        <Modal show={props.modal} onHide={props.handleEditClose} centered>
@@ -155,16 +164,13 @@ const callTimer =()=>{
               <div className="col-sm-12">
                 <div className="form-group">
                   <label htmlFor="exampleFormControlInput1"> Select Sports</label>
-
-               {/* <h1>{getSingleCluster.sports.sportNames}</h1>    */}
-                  
+  <h6>{result}</h6>
+            
                <Select
-                   name="filters"
-                   placeholder="Filters"
                    value={multiValue}
                    options={sportsNames.map(e => ({ label: e.sportName, value: e.sportId }))}
                    onChange={handleMultiChange}
-                   isMulti
+                  isMulti
                   />
                 </div>
               </div>

@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useState } from 'react';
+import React, { createContext, useReducer } from 'react';
 import axios from 'axios';
 import environmentVariables from '../components/common/environment';
 import { ToastContainer, toast } from "react-toastify";
@@ -23,7 +23,7 @@ export const RosterProvider = ({ children }) => {
   const [state, dispatch] = useReducer(RosterReducer, initial_state);
   const headers = {
     'Content-Type': 'application/json',
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk5MjUxOTQ2LCJpYXQiOjE1OTkyMTU5NDZ9.Aopf44MAwc5rGRsIIpTPj4zniti_seLB8DWQ1BVu-ZA'
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk5MzQ1NTU2LCJpYXQiOjE1OTkzMDk1NTZ9.XahxYE-AaDeeVijikSN9wjM3htCe_F_p1ofKXmsrBt8'
   }
 
   // VIEWSHIFT
@@ -33,7 +33,7 @@ export const RosterProvider = ({ children }) => {
     axios.get(baseUrl + 'shift/view', {
       headers: headers
     }).then(function (response) {
-       console.log("data==>" + JSON.stringify(response));
+    //   console.log("data==>" + JSON.stringify(response));
       state.shiftList = response.data.data;
       return dispatch({ type: 'FETCH_SHIFT_LIST', payload: state.shiftList });
     })
@@ -49,7 +49,7 @@ export const RosterProvider = ({ children }) => {
     axios.get(baseUrl + 'shift/types', {
       headers: headers
     }).then(function (response) {
-       console.log("data==>" + JSON.stringify(response));
+    //   console.log("data==>" + JSON.stringify(response));
       state.shiftListNames = response.data.data;
       return dispatch({ type: 'FETCH_SHIFT_LIST_NAMES', payload: state.shiftListNames });
     })
@@ -119,7 +119,7 @@ export const RosterProvider = ({ children }) => {
     axios.delete(baseUrl + 'shift/delete' + "?shiftId=" + shiftMasterId, {
       headers: headers
     }).then(function (response) {
-      console.log("data==>" + JSON.stringify(response));
+   //   console.log("data==>" + JSON.stringify(response));
       // let myresult = response.data.data.shiftMasterId;   
       return dispatch({ type: 'DELETE_SHIFT', payload: shiftMasterId });
 
@@ -138,7 +138,7 @@ const weekOffDays = (weekId) => {
   })
     .then((response) => {
       state.weekDays = response.data.data
-      console.log("=====GET Weeks Off API respone=====", state.weekDays)
+    //  console.log("=====GET Weeks Off API respone=====", state.weekDays)
       return dispatch({ type: 'WEEKOFF_WEEK_DAYS', payload: state.weekDays})
     })
     .catch((error) => {
