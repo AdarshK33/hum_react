@@ -317,7 +317,7 @@ const callTimer =()=>{
                           <option value="">Select Shift Type</option>
                                   <option>Captain</option>
                                   <option>Onduty</option>
-                                  <option>Genral</option>
+                                  <option>General</option>
                         </select>
                       </div>
                     </div>
