@@ -52,6 +52,7 @@ function ViewCluster() {
                       <th>No</th>
 
                       <th scope="col">Sports Name</th>
+                      <th scope="col">Cluster Name</th>
                       <th scope="col">Cluster Details</th>
                       <th scope="col">Cluster Leader</th>
                       <th scope="col">Team Count</th>
@@ -71,6 +72,7 @@ function ViewCluster() {
                                 <td style={{ marginLeft:"10px",fontSize:"10px",paddingTop:"5px",paddingBottom:"5px"}}>{f.sportName}</td>
                               </div>)
                             })}
+                            <td>{e.clusterName}</td>
                             <td>{e.description}</td>
                             <td>{e.clusterLeaderName}</td>
                             <td>{e.teamCount}</td>
