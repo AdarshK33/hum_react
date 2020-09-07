@@ -86,16 +86,18 @@ export const RosterProvider = ({ children }) => {
 
 //UPDATE
   function updateShift(newEditShift) {
-    return client.put("shift/update")
+    return client.put("shift/update",newEditShift)
   }
 
   // ADD SHIFT
 
   function addShift(newShift) {
-    return client.post("shift/create")
+ //   alert(JSON.stringify(newShift) );
+  
+    return client.post("shift/create",newShift)
 
   }
-
+ 
 
   // DELETE SHIFT
 
@@ -119,7 +121,7 @@ const weekOffDays = (weekId) => {
   client.get('weekoff/weeks/days' + '?weekId=' + weekId)
     .then((response) => {
       state.weekDays = response.data.data
-      console.log("=====GET Weeks Off API respone=====", state.weekDays)
+    //  console.log("=====GET Weeks Off API respone=====", state.weekDays)
       return dispatch({ type: 'WEEKOFF_WEEK_DAYS', payload: state.weekDays})
     })
     .catch((error) => {

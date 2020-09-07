@@ -140,10 +140,10 @@ const callTimer =()=>{
       setSuccessMsg(true);
       const result = addShift(newShift)
         .then((result) => {
-          console.log("api response===", result.data.message);
-          console.log("api response===", result.data);
-          console.log("api response===", result.data.status);
-          console.log("api response===", result.data.length);
+       //   console.log("api response===", result.data.message);
+        //  console.log("api response===", result.data);
+        //  console.log("api response===", result.data.status);
+          //console.log("api response===", result.data.length);
           setSuccessMsg(result.data.message);
           setTimeout(() => {
            callTimer();
@@ -173,10 +173,10 @@ const callTimer =()=>{
       setSuccessMsg(true);
       const result = addShift(newShift)
         .then((result) => {
-          console.log("api response===", result.data.message);
-          console.log("api response===", result.data);
-          console.log("api response===", result.data.status);
-          console.log("api response===", result.data.length);
+         // console.log("api response===", result.data.message);
+         // console.log("api response===", result.data);
+         // console.log("api response===", result.data.status);
+        //  console.log("api response===", result.data.length);
           setSuccessMsg(result.data.message);
           setTimeout(() => {
             callTimer();
@@ -190,8 +190,8 @@ const callTimer =()=>{
       console.log(result, "in competent");
     }
   }
-  console.log("shift list names " + shiftListNames)
-  console.log("======== contract  names" + shiftContractNames)
+//  console.log("shift list names " + shiftListNames)
+  //console.log("======== contract  names" + shiftContractNames)
   return (
     <Modal show={props.modal} onHide={props.handleClose} centered>
       <Fragment>
@@ -316,7 +316,7 @@ const callTimer =()=>{
 
                           <option value="">Select Shift Type</option>
                                   <option>Captain</option>
-                                  <option>Onduty</option>
+                                  <option>On duty</option>
                                   <option>General</option>
                         </select>
                       </div>
