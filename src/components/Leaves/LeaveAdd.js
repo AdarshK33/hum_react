@@ -182,7 +182,8 @@ const LeaveAdd = (props) => {
         }
 
         history.push("/Leaves/LeaveView");
-    }
+       
+    } 
 
     return (
         <React.Fragment>
@@ -223,7 +224,7 @@ const LeaveAdd = (props) => {
                                                 className="input_date" dateFormat="yyyy-MM-dd" selectsStart startDate={startMaternityDate}
                                                 endDate={d3}
                                                 minDate={startMaternityDate}
-                                                placeholderText="From Date" />
+                                                placeholderText="From Date" required />
                                         </Col>
 
                                         <Form.Label column sm="3" className="padding-right"
@@ -243,7 +244,7 @@ const LeaveAdd = (props) => {
                                     <Col sm="3" className="padding-left">
                                         <DatePicker selected={startDate} onChange={(e) => fromDateHandler(e)}
                                             className="input_date" dateFormat="yyyy-MM-dd"
-                                            placeholderText="From Date" />
+                                            placeholderText="From Date" required/>
                                     </Col>
                                     {disable &&
                                         <React.Fragment>
@@ -266,7 +267,7 @@ const LeaveAdd = (props) => {
                                                 <DatePicker selected={endDate} onChange={(e) => toDateHandler(e)}
                                                     className="input_date" dateFormat="yyyy-MM-dd"
                                                     minDate={startDate}
-                                                    placeholderText="To Date" />
+                                                    placeholderText="To Date" required/>
                                             </Col>
                                         </React.Fragment>
 

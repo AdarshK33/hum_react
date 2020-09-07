@@ -15,6 +15,7 @@ const LeaveView = () => {
 
     const [modal, setModal] = useState(false);
     const [editModal, setEditModal] = useState(false)
+    const [deleteModal, setDeleteModal] = useState(false)
     const [leaveCategory, setLeaveCategory] = useState()
     const [fromDate, setFromDate] = useState(new Date())
     const [toDate, setToDate] = useState(new Date())
@@ -31,6 +32,9 @@ const LeaveView = () => {
     const handleEditClose = () => setEditModal(false)
     const handleEditShow = () => setEditModal(true)
 
+    const handleDeleteClose = () => setDeleteModal(false)
+    const handleDeleteShow = () => setDeleteModal(true)
+
 
     useEffect(() => {
         viewList()
@@ -38,6 +42,7 @@ const LeaveView = () => {
         viewGrantLeave()
 
     }, [])
+    const newLeaveList = leaveList.sort((a, b) => b.fromDate - a.fromDate)
     /* const setFromDateHandler = (date) => {
         var newDate = new Date(date)
         setFromDate(newDate)
@@ -69,10 +74,10 @@ const LeaveView = () => {
                                         <Row className="text-center">
                                             <p>Available:{leaveDataList.eligibleLeave ? (leaveDataList.eligibleLeave.General &&
                                                 ((leaveDataList.eligibleLeave.General - leaveDataList.leaveApplied.General) <= 0 ? '0' : (leaveDataList.eligibleLeave.General - leaveDataList.leaveApplied.General))) :
-                                               10 }</p>
+                                                10}</p>
                                         </Row>
                                         <Row className="text-center">
-                                            <p>Taken:{leaveDataList.leaveApplied ? (leaveDataList.leaveApplied.General === null ? '0' :  leaveDataList.leaveApplied.General) :
+                                            <p>Taken:{leaveDataList.leaveApplied ? (leaveDataList.leaveApplied.General === null ? '0' : leaveDataList.leaveApplied.General) :
                                                 0}</p>
                                         </Row>
                                     </Col>
@@ -144,8 +149,8 @@ const LeaveView = () => {
                             </tr>
                         </thead>
 
-                        {leaveList.length > 0 &&
-                            leaveList.map((item, i) => {
+                        {newLeaveList.length > 0 &&
+                            newLeaveList.map((item, i) => {
                                 return (
                                     <tbody key={i + 1}>
                                         <tr>
@@ -162,9 +167,18 @@ const LeaveView = () => {
                                             </td>
 
 
-                                            <td><Trash2 onClick={() => deleteList(item.ltId, item.leaveCategory)} />
+                                            <td><Trash2 onClick={() =>deleteList(item.ltId)} />
                                             </td>
-                                           
+                                            {/* <Modal show={deleteModal} onHide={handleDeleteClose} centered>
+                                                <Modal.Body>
+                                                    <p>Are you sure to delete the item ?</p>
+                                                </Modal.Body>
+                                                <Modal.Footer>
+                                                    <Button variant="secondary" onClick={() => handleDeleteClose}>No</Button>
+                                                    <Button variant="primary" onClick={() => deleteList(item.ltId)}>Yes</Button>
+                                                </Modal.Footer>
+                                            </Modal> */}
+
                                         </tr>
                                     </tbody>
                                 )
@@ -174,6 +188,7 @@ const LeaveView = () => {
                         leaveCategory={leaveCategory} fromDate={fromDate} toDate={toDate}
                         reason={reason} ltId={ltId} />
                 </Row>
+               
             </div>
         </Fragment>
     );

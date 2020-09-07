@@ -2,15 +2,13 @@ import React, { createContext, useReducer, useEffect } from 'react';
 import {client} from '../utils/axios';
 import { ToastContainer, toast } from "react-toastify";
 import LeaveReducer from '../reducers/LeaveReducer'
-import { confirmAlert } from 'react-confirm-alert';
-import 'react-confirm-alert/src/react-confirm-alert.css';
 
 const baseUrl = "http://humine.theretailinsights.co/";
 const initialState = {
   leaveList: [],
   leaveType: [],
   message: '',
-  leavesData: [],
+  leavesData: {},
   leaveDataList: {},
   holidayDataList:{},
   grantLeave: []
@@ -21,11 +19,7 @@ export const LeaveContext = createContext();
 export const LeaveProvider = ({ children }) => {
   const [state, dispatch] = useReducer(LeaveReducer, initialState);
 
- /*  const headers = {
-    'Content-Type': 'application/json',
-    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJQUkFKVkFMIFBBVUwgUkFZIiwiZXhwIjoxNTk5NDI2MTY0LCJpYXQiOjE1OTkzOTAxNjR9.glS3NIr7zI6421NxXKeiJfCVTh6PElI5HCVe1g802ww'
-  }
-    //View Leave */
+  
   //View Leave
 
   const viewList = () => {
@@ -93,11 +87,12 @@ export const LeaveProvider = ({ children }) => {
       .then((response) => {
         state.message = response.data.message
         state.leavesData = response.data.data
-        alert(state.message + " " + ' ' + (state.leavesData !== null ? JSON.stringify(state.leavesData):''))
+       /*  toast.info(state.message + " " + ' ' + (state.leavesData !== null ? JSON.stringify(state.leavesData) :'')) */
         console.log("Pop upresponse===>", JSON.stringify(state.leavesData))
         console.log("Pop upresponse===>", state.leavesData)
         console.log("Pop up message===>", state.message)
         return dispatch({ type: 'ADD_POPUP_LEAVE', payload: state.leavesData })
+        
       })
       .catch((error) => {
         console.log(error)
@@ -152,27 +147,9 @@ export const LeaveProvider = ({ children }) => {
 
   // Delete Leave
 
-  const deleteList = (leaveId, leaveCategory) => {
+  const deleteList = (leaveId, deleteModal) => {
     if (window.confirm('Are you sure to delete the item')) {
-      if(leaveCategory == 'Maternity'){
-        alert("Sent request for delete the maternity Leave")
-     console.log("leaveCategory", leaveCategory)
-      client.delete('leave_transaction/delete' + '?ltId=' + leaveId)
-        .then((response) => {
-          toast.info(response.data.message)
-          viewList()
-          viewLeaveData();
-          console.log("-----delete data-----", response)
-          return dispatch({ type: 'DELETE_LEAVE', payload: leaveId });
-
-
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-       
-    }
-    else{
+      /* if(deleteModal == true){ */
       client.delete('leave_transaction/delete' + '?ltId=' + leaveId)
       .then((response) => {
         toast.info(response.data.message)
@@ -188,8 +165,7 @@ export const LeaveProvider = ({ children }) => {
       })
      
     }
-  
-  }
+
   }
 
 
