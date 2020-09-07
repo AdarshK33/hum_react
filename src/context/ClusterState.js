@@ -1,7 +1,6 @@
 import React, { createContext, useReducer } from 'react';
-import axios from 'axios';
+import { client } from '../utils/axios';
 import ClusterReducer from '../reducers/ClusterReducer';
-const baseUrl = "http://humine.theretailinsights.co/";
 
 
 const initial_state = {
@@ -16,30 +15,20 @@ const initial_state = {
 export const ClusterContext = createContext();
 export const ClusterProvider = ({ children }) => {
   const [state, dispatch] = useReducer(ClusterReducer, initial_state);
-  const headers = {
-    'Content-Type': 'application/json',
-    Authorization: 'Bearer  eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbmlzdHJhdG9yIiwiZXhwIjoxNTk5Mzk1ODU1LCJpYXQiOjE1OTkzNTk4NTV9.o5uoyF4LAaDLTewBjoPma7tI3uGexynaP1_D1nOxtJA'
-  }
  // ADD SHIFT
 
  function addCluster(addCluster) {
-    return axios.post(baseUrl + "cluster/create", addCluster, {
-      headers: headers
-    })
+    return client.post("cluster/create", addCluster)
 
   }
 
   function updateCluster(updateCluter) {
-    return axios.put(baseUrl + "cluster/update", updateCluter, {
-      headers: headers
-    })
+    return client.put("cluster/update", updateCluter)
   }
 
   function viewCluster() {
    // alert("called");
-    axios.get(baseUrl + 'cluster/view', {
-      headers: headers
-    }).then(function (response) {
+    client.get('cluster/view').then(function (response) {
     //  console.log("data==>" + JSON.stringify(response));
       state.clusterList = response.data.data;
       console.log(JSON.stringify(state.clusterList))
@@ -59,9 +48,7 @@ export const ClusterProvider = ({ children }) => {
 
   const viewSports=()=> {
       
-    axios.get(baseUrl + 'sport/view', {
-      headers: headers
-    }).then(function (response) {
+    client.get('sport/view').then(function (response) {
       // console.log("data==>" + JSON.stringify(response));
       state.sportsNames = response.data.data;
 
@@ -77,10 +64,8 @@ export const ClusterProvider = ({ children }) => {
 
   function getCluster(id) {
    
-    alert("cluster" + id)
-    axios.get(baseUrl + 'cluster/'+id, {
-      headers: headers
-    }).then(function (response) {
+   // alert("cluster" + id)
+    client.get('cluster/'+id).then(function (response) {
     //  console.log("data==Clusteer>" + JSON.stringify(response));
        state.getSingleCluster = response.data.data; 
        console.log(JSON.stringify(state.getSingleCluster));
@@ -100,9 +85,7 @@ export const ClusterProvider = ({ children }) => {
 
 
   function selectClusterLeader() {        
-    axios.get(baseUrl + 'employee/view/IN1055', {
-      headers: headers
-  }).then(function (response) {
+    client.get('employee/view/IN1055').then(function (response) {
     // alert("Leaderes" + JSON.stringify(response));
     state.clusterLeaderNames = response.data.data;
     return dispatch({ type: 'FETCH_LEADERS_NAME', payload: state.clusterLeaderNames });

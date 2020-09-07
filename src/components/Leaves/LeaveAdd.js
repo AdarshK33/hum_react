@@ -25,8 +25,9 @@ const LeaveAdd = (props) => {
     let history = useHistory();
 
 
-    const { addLeave, addPopup, leavesData, getLeave, leaveType, leaveList, message } = useContext(LeaveContext);
-
+    const { addLeave, addPopup, leavesData, getLeave, leaveType, leaveList, message, viewLeaveData, leaveDataList }
+     = useContext(LeaveContext);
+ 
     const today = new Date()
 
     const fromDateHandler = (date) => {
@@ -87,7 +88,8 @@ const LeaveAdd = (props) => {
     }
     //get api for leave type
     useEffect(() => {
-        getLeave();
+        getLeave()
+        viewLeaveData()
     }, []);
 
 
@@ -100,6 +102,7 @@ const LeaveAdd = (props) => {
             const setModal = props.handleClose;
             setModal()
             setReason('')
+            setLeave('')
             setStartDate()
             setEndDate()
             setDisable(true)
@@ -180,7 +183,7 @@ const LeaveAdd = (props) => {
 
         history.push("/Leaves/LeaveView");
     }
-    console.log("leave", leave)
+
     return (
         <React.Fragment>
             <ToastContainer />
@@ -199,9 +202,12 @@ const LeaveAdd = (props) => {
                                     <Form.Control as="select" size="sm" required value={leave}
                                         onChange={(e) => setLeaveHandler(e)}>
                                             <option value="">Select</option>
+                                            
                                         {leaveType.length > 0 && leaveType.map((item, i) => {
                                             return (
-                                                <option key={item.leaveTypeId} value={item.leaveName}>{item.leaveName}</option>
+                                                <option key={item.leaveTypeId} value={item.leaveName}
+                                                disabled={(item.paternity === 1 ? true : false) || (item.maternity === 1 ? true : false)} >
+                                                {item.leaveName}</option>
                                             )
                                         })
                                         }
@@ -283,7 +289,7 @@ const LeaveAdd = (props) => {
                                 <Form.Label column sm="3" className="padding-right">Reason:</Form.Label>
                                 <Col sm="9" className="padding-left">
                                     <Form.Control as="textarea" rows="3" size="sm" name="reason" value={reason}
-                                        onChange={(event) => setReason(event.target.value)} />
+                                        onChange={(event) => setReason(event.target.value)} required />
                                 </Col>
                             </Form.Group>
                             <Button type="submit" className="submit-button" size="sm">Submit</Button>

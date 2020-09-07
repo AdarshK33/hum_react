@@ -14,14 +14,15 @@ const LeaveReducer = (state, action) => {
             return { ...state, leavesData: action.payload }
 
         case 'EDIT_LEAVE':
-            return { ...state, leaveType: action.payload }
+            return { ...state, leaveList: action.payload }
 
         case 'FETCH_LEAVE_TYPE':
             return ({ ...state, leaveType: action.payload })
 
         case 'FETCH_GRANT_LEAVE':
             return ({ ...state, grantLeave: action.payload })
-
+        case 'FETCH_HOLIDAY_LIST':
+                return { ...state, holiday: action.payload };
 
         case 'DELETE_LEAVE':
             return {

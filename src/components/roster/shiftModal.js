@@ -21,11 +21,14 @@ const ShiftModal = (props) => {
  
   const [selectedWeeks, setSelectedWeeks] = useState(1)
   const [weekDay, setWeekDay] = useState()
+  const [value ,setValue] = useState()
   let history = useHistory();
 
-  const {weekDays, weekOffDays, addWeekOff} = useContext(RosterContext)
-  
-
+  const {weekDays, weekOffDays, addWeekOff,availableShifts,availableShiftData,assignShift} = useContext(RosterContext)
+  console.log(availableShiftData,"data")
+  useEffect(()=>{
+    availableShifts()
+  },[])
   useEffect(() => {
     weekOffDays(parseInt(selectedWeeks))
   },[selectedWeeks])
@@ -34,22 +37,42 @@ const ShiftModal = (props) => {
         e.preventDefault();
         setSelectedWeeks(1)
         setWeekDay('')
+        const setModal = props.handleClose
+        setModal()
 
         const newWeekOff = {
           dates: [weekDay],
-          employeeId: 'DSI001282'
+          employeeId: 'DSI000035'
         }
 
         addWeekOff(newWeekOff)
         console.log("newWeekOff data", newWeekOff)
         history.push("/roster/roster");
   }
-  
+ const handleChange = (event,valu) =>{
+    // this.setState({value: event.target.value});
+    setValue(52)
+    // console.log(event.target,value)
+ }
 const handleWeeksChange = (e) => {
 /*   setSelectedWeeks(Array.isArray(e) ? e.map(x => x.value) : []) */
 let newValue  = e.target.value
 console.log("newValue", newValue)
 setSelectedWeeks(newValue) 
+
+}
+const submitAssignShift = (event) =>{
+  event.preventDefault()
+  const assindata = 
+  {
+    "date": "2020-10-05",
+    "employeeId": "DSI000035",
+    "shiftId": 0
+  }
+   
+  assignShift(assindata)
+  console.log("Submit")
+  
 }
 console.log("selected value",selectedWeeks )
 
@@ -58,6 +81,7 @@ const setWeekDayHandler = (e) => {
   setWeekDay(newDay)
   console.log("new Day", newDay)
 }
+
   return (
     <Fragment>
       <Modal show={props.modal} onHide={props.handleClose} centered>
@@ -78,14 +102,23 @@ const setWeekDayHandler = (e) => {
                   <div className="col-sm-5 px-2 font-weight-bold">Available Shifts :</div>
                   <div className="col-sm-7 ">
                     <div className="form-group">
-                      <select className="form-control" value="exampleFormControlSelect1">
-                        <option>8:00 AM- 5:00 PM(Genral Shifts )</option>
+                      <select className="form-control"  onChange={(e,value)=>{handleChange(e,value)}}>
+                     {
+                       availableShiftData.length > 1 ?
+                       <>{availableShiftData.map((item,i) => {
+                        return(
+                          <option key={item.value} value={item.value}>{item.startTime +'-'+item.endTime}</option>
+                        )
+                      })}</>:null
+                     }
                       </select>
                     </div>
                   </div>
                 </div>
                 <div className="note text-primary text-center">
-                 <button type="button" className="btn btn-square btn-primary btn-cm pl-5 pr-5">Assign</button>
+                 <button type="button" className="btn btn-square btn-primary btn-cm pl-5 pr-5"
+                 onClick={submitAssignShift}
+                 >Assign</button>
               </div>
               <h6 className="note text-secondary text-center">Note: Weekly off is mandatory to assign shift</h6> 
               </Tab>

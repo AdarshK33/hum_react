@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import man from '../../../assets/images/dashboard/userImage.png';
 import { User, Mail, Lock, Settings, LogOut } from 'react-feather';
 
+const loginUrl = `https://preprod.idpdecathlon.oxylane.com/as/authorization.oauth2?response_type=code&client_id=${process.env.REACT_APP_FEDID_CLIENTID}&scope=openid%20profile&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}`;
 
 const UserMenu = () => {
     return (
@@ -19,7 +20,8 @@ const UserMenu = () => {
                     <li><a href="#javascript"><Mail />Inbox</a></li>
                     <li><a href="#javascript"><Lock />Lock Screen</a></li>
                     <li><a href="#javascript"><Settings />Settings</a></li>
-                    <li><a href="#javascript"><LogOut /> Log out</a></li>
+                    {/* <li><a href="#javascript"><LogOut /> Log out</a></li> */}
+                    <li><a href={loginUrl}><LogOut />Log In</a></li>
                 </ul>
             </li>
         </Fragment>
