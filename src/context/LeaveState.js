@@ -147,9 +147,7 @@ export const LeaveProvider = ({ children }) => {
 
   // Delete Leave
 
-  const deleteList = (leaveId, deleteModal) => {
-    if (window.confirm('Are you sure to delete the item')) {
-      /* if(deleteModal == true){ */
+  const deleteList = (leaveId) => {
       client.delete('leave_transaction/delete' + '?ltId=' + leaveId)
       .then((response) => {
         toast.info(response.data.message)
@@ -158,16 +156,15 @@ export const LeaveProvider = ({ children }) => {
         console.log("-----delete data-----", response)
         return dispatch({ type: 'DELETE_LEAVE', payload: leaveId });
 
-
       })
       .catch((error) => {
         console.log(error)
       })
      
     }
+  
 
-  }
-
+ 
 
   const getHoliday = () => {
     // const [state, updateStae] =uss

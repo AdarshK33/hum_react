@@ -22,9 +22,8 @@ const LeaveView = () => {
     const [ltId, setltId] = useState()
     const [reason, setReason] = useState()
 
-    const { leaveList, viewList, deleteList, editList, viewLeaveData, leaveDataList, viewGrantLeave, grantLeave }
+    const { leaveList, viewList, deleteList, editList, viewLeaveData, leaveDataList, viewGrantLeave, grantLeave, deleteData }
         = useContext(LeaveContext);
-
 
     const handleClose = () => setModal(false)
     const handleShow = () => setModal(true)
@@ -40,15 +39,19 @@ const LeaveView = () => {
         viewList()
         viewLeaveData()
         viewGrantLeave()
-
+    
     }, [])
-    const newLeaveList = leaveList.sort((a, b) => b.fromDate - a.fromDate)
+   /*  const newLeaveList = leaveList.sort((a, b) => b.fromDate - a.fromDate) */
     /* const setFromDateHandler = (date) => {
         var newDate = new Date(date)
         setFromDate(newDate)
         console.log("from date in leave view", newDate)
         console.log("from date in leave view", fromDate)
     } */
+   const deleteListcheck = (id) =>{
+    deleteList(id)
+    setDeleteModal(false)
+    }
     return (
         <Fragment>
             <Breadcrumb title="Leave View" parent="Leave View" />
@@ -117,7 +120,7 @@ const LeaveView = () => {
                                 <Row>
                                     <Col>
                                         <Row className="text-center">
-                                            <p>Taken: {grantLeave}</p>
+                                            <p>Available: {grantLeave}</p>
 
                                         </Row>
                                     </Col>
@@ -149,8 +152,8 @@ const LeaveView = () => {
                             </tr>
                         </thead>
 
-                        {newLeaveList.length > 0 &&
-                            newLeaveList.map((item, i) => {
+                        {leaveList.length > 0 &&
+                            leaveList.map((item, i) => {
                                 return (
                                     <tbody key={i + 1}>
                                         <tr>
@@ -165,19 +168,21 @@ const LeaveView = () => {
                                                 setltId(item.ltId)
                                             }} />
                                             </td>
-
-
-                                            <td><Trash2 onClick={() =>deleteList(item.ltId)} />
+                                            <td><Trash2 onClick={() =>{
+                                                 setDeleteModal(true) }  }/>
                                             </td>
-                                            {/* <Modal show={deleteModal} onHide={handleDeleteClose} centered>
-                                                <Modal.Body>
-                                                    <p>Are you sure to delete the item ?</p>
+                                            
+                                            <Modal show={deleteModal} onHide={handleDeleteClose} centered>
+                                                <Modal.Body style={{marginTop:'1rem'}}>
+                                                    <h5>Are you sure to delete the item ?</h5>
                                                 </Modal.Body>
                                                 <Modal.Footer>
-                                                    <Button variant="secondary" onClick={() => handleDeleteClose}>No</Button>
-                                                    <Button variant="primary" onClick={() => deleteList(item.ltId)}>Yes</Button>
+                                                    <Button variant="secondary" className="deleteNoButton"
+                                                     onClick={() => handleDeleteClose()}>No</Button>
+                                                    <Button variant="primary" className="deleteYesButton"
+                                                     onClick={() => deleteListcheck(item.ltId)}>Yes</Button>
                                                 </Modal.Footer>
-                                            </Modal> */}
+                                            </Modal>
 
                                         </tr>
                                     </tbody>
