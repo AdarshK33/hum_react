@@ -7,6 +7,7 @@ const CreateClusterModal = (props) => {
   useEffect(() => {
     viewSports()
     selectClusterLeader()
+    selectEmployeeForCluster()
   }, [])
   const [clusterName, setClusterName] = useState("");
   const [description, setDescription] = useState("");
@@ -29,11 +30,13 @@ const CreateClusterModal = (props) => {
     setMultiValue('');
     setSuccessMsg('');
     setEmployee('')
+    selectClusterLeader()
+    selectEmployeeForCluster()
   }
 
 
 
-  const { addCluster, viewCluster, viewSports, sportsNames, clusterLeaderNames, selectClusterLeader } = useContext(ClusterContext);
+  const { addCluster, viewCluster, viewSports, sportsNames, clusterLeaderNames, selectClusterLeader,selectEmployeeForCluster,getClusterEmployees } = useContext(ClusterContext);
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -178,7 +181,7 @@ const CreateClusterModal = (props) => {
                     name="filters"
                     placeholder="Filters"
                     value={employee}            
-                    options={clusterLeaderNames.map(e => ({ label: e.firstName +" "+e.employeeId, value: e.employeeId }))}
+                    options={getClusterEmployees.map(e => ({ label: e.firstName +" "+e.employeeId, value: e.employeeId }))}
                     onChange={handleMultiChange1}
                     isMulti
                   />
