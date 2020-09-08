@@ -49,3 +49,7 @@ h5.modal-heading{
 option:disabled {
     background-color: lightgrey !important;
 }
+button.deleteNoButton.btn.btn-secondary {
+    background-color: grey !important;
+    border-color: grey !important;
+}
