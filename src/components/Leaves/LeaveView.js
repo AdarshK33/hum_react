@@ -75,12 +75,14 @@ const LeaveView = () => {
                                 <Row>
                                     <Col>
                                         <Row className="text-center">
-                                            <p>Available:{leaveDataList.eligibleLeave ? (leaveDataList.eligibleLeave.General &&
-                                                ((leaveDataList.eligibleLeave.General - leaveDataList.leaveApplied.General) <= 0 ? '0' : (leaveDataList.eligibleLeave.General - leaveDataList.leaveApplied.General))) :
-                                                10}</p>
+                                            <p>Available:{leaveDataList.eligibleLeave ? 
+                                                (leaveDataList.leaveApplied.General == null ? leaveDataList.eligibleLeave.General :
+                                                    ((leaveDataList.eligibleLeave.General - leaveDataList.leaveApplied.General) <= 0 ? '0' : 
+                                                    (leaveDataList.eligibleLeave.General - leaveDataList.leaveApplied.General)) ):
+                                                ''}</p>
                                         </Row>
                                         <Row className="text-center">
-                                            <p>Taken:{leaveDataList.leaveApplied ? (leaveDataList.leaveApplied.General === null ? '0' : leaveDataList.leaveApplied.General) :
+                                            <p>Taken:{leaveDataList.leaveApplied ? (leaveDataList.leaveApplied.General == null ? '0' : leaveDataList.leaveApplied.General) :
                                                 0}</p>
                                         </Row>
                                     </Col>

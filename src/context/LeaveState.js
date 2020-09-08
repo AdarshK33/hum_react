@@ -87,7 +87,7 @@ export const LeaveProvider = ({ children }) => {
       .then((response) => {
         state.message = response.data.message
         state.leavesData = response.data.data
-       /*  toast.info(state.message + " " + ' ' + (state.leavesData !== null ? JSON.stringify(state.leavesData) :'')) */
+        /* toast.info(state.message + " " + ' ' + (state.leavesData !== null ? JSON.stringify(state.leavesData) :'')) */
         console.log("Pop upresponse===>", JSON.stringify(state.leavesData))
         console.log("Pop upresponse===>", state.leavesData)
         console.log("Pop up message===>", state.message)
