@@ -1,6 +1,5 @@
 import React, { Fragment ,useEffect,useContext} from 'react';
 import Breadcrumb from '../common/breadcrumb';
-import { Card, Row, Col, Table, Button, Modal } from 'react-bootstrap'
 import { LeaveContext } from '../../context/LeaveState';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import '../Leaves/Leaves.css'
@@ -9,8 +8,9 @@ const HolidayList = () => {
    const {getHoliday,holidayDataList,uploadFile}   = useContext(LeaveContext);
   
   useEffect(() => {
-      getHoliday()  
-  }, [])
+      getHoliday()
+       }, [])
+
   console.log("holida",holidayDataList)
   const changeHandler = (event)=>{
     let fileObj = event.target.files[0];

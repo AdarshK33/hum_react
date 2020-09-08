@@ -10,6 +10,7 @@ const initial_state = {
   getSingleCluster:[],
   getSingleCluster1:[],
   getClusterEmployees:[],
+  salaryList:[],
 }
 
 
@@ -109,7 +110,20 @@ export const ClusterProvider = ({ children }) => {
     });
 }
 
+// SALARY INPUT
+function viewSalary(month,year) {
+  console.log(" in cluster"+month+ " "+year)
 
+   client.get('salary/view?month='+month+'&year='+year).then(function (response) {
+     console.log("data==>" + JSON.stringify(response));
+     state.salaryList = response.data.data;
+  
+     return dispatch({ type: 'FETCH_SALARY_LIST', payload: state.salaryList });
+   })
+     .catch(function (error) {
+       console.log(error);
+     });
+ }
 
 
 
@@ -122,12 +136,14 @@ export const ClusterProvider = ({ children }) => {
     getCluster, 
     updateCluster,
     selectEmployeeForCluster,
+    viewSalary,
     getSingleCluster1:state.getSingleCluster1,
     clusterList:state.clusterList, 
     clusterLeaderNames:state.clusterLeaderNames,
     sportsNames: state.sportsNames,
     getSingleCluster:state.getSingleCluster,
-    getClusterEmployees:state.getClusterEmployees
+    getClusterEmployees:state.getClusterEmployees,
+    salaryList:state.salaryList,
   }}>
     {children}
   </ClusterContext.Provider>);

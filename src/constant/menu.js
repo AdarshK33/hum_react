@@ -1,8 +1,8 @@
 import {
     Home,
     File,
-    Calendar
-
+    Calendar,
+    Package
 } from 'react-feather';
 
 export const MENUITEMS = [
@@ -31,6 +31,12 @@ export const MENUITEMS = [
     },
     {
         path: '/Holiday/HolidayList', title: 'Holiday View', icon: File, type: 'link', active: false
+    },
+    {
+        path: '/salary/salaryView', title: 'Salary Inputs', icon: Package, type: 'link', active: false
+    },
+    {
+        path: '/admin/GrantLeaveView', title: 'Grant Leave View', icon: File, type: 'link', active: false
     },
 
     

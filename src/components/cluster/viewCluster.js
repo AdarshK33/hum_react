@@ -10,6 +10,7 @@ function ViewCluster() {
 
   useEffect(() => {
     viewCluster()
+    viewSalary()
   }, [])
 
   const [modal, setModal] = useState(false);
@@ -22,7 +23,7 @@ function ViewCluster() {
 
 
   //variable
-  const { clusterList, viewCluster, getCluster } = useContext(ClusterContext);
+  const { clusterList, viewCluster, getCluster,viewSalary } = useContext(ClusterContext);
 
 
   //alert("&&&&&&"+JSON.stringify(clusterList.sports.));

@@ -5,8 +5,8 @@ const baseUrl = "http://humine.theretailinsights.co/";
 
 
 const initial_state = {
-  holidayList: []
-
+  holidayList: [],
+ 
 }
 
 
@@ -26,9 +26,18 @@ export const HolidayrProvider = ({ children }) => {
       });
   }
 
+
+
+  
+
+
   return (<HolidayContext.Provider value={{
-    getHoliday
+    getHoliday,
+ 
   }}>
     {children}
   </HolidayContext.Provider>);
 }
+
+
+
