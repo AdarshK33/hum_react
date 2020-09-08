@@ -3,8 +3,8 @@ import DatePicker from "react-datepicker";
 import moment from 'moment';
 import "react-datepicker/dist/react-datepicker.css";
 import {  Button, Modal } from 'react-bootstrap'
-import { Container, Row, Col, Form } from 'react-bootstrap'
 import { RosterContext } from "../../context/RosterState";
+import { startOfDay } from 'date-fns/esm';
 
 
 const EditShiftModal = (props) => {
@@ -36,6 +36,14 @@ const EditShiftModal = (props) => {
   useEffect(() => {
     setContractType(props.contractType)
 }, [props.contractType])
+
+useEffect(() => {
+  setShiftType(props.shiftType)
+}, [props.shiftType])
+
+
+
+
 
   const {updateShift,viewShift, singleShiftList,viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const setClear = () => {
@@ -194,7 +202,7 @@ const EditShiftModal = (props) => {
                        {/* <h1>{moment(singleShiftList.startTime,["HH:mm:ss"]).format("HH:mm A")}</h1>  */}
           
                         <label htmlFor="exampleFormControlInput1">From Time</label>
-                        <br />
+                        <br />                 
                         <DatePicker
                           className="form-control"
                           selected={startTime}
@@ -332,7 +340,7 @@ const EditShiftModal = (props) => {
                           required
                           value={shiftType}                      
                           onChange={(e)=>setShiftType(e.target.value)}>
-                          <option value="" disabled selected hidden>{singleShiftList.shiftType}</option>
+                          {/* <option value="" disabled selected hidden>{singleShiftList.shiftType}</option> */}
                           <option value="">Select Shift Type</option>
                                   <option>Captain</option>
                                   <option>On duty</option>

@@ -23,6 +23,7 @@ function ViewShift() {
 
   const [contractType, setContractType] = useState('');
   const [shiftType,setShiftType] = useState('');
+  const [startTime,setStartTime] = useState('');
   // variables
  const { shiftList,editShift, viewShift, } = useContext(RosterContext);
   //console.log(shiftList, "in viewShift");
@@ -63,7 +64,8 @@ function ViewShift() {
                         <tbody key={i + 1}>
                           <tr>
                             <td>{i + 1}</td>
-                            <td> {moment(e.startTime, ["h:mm A"]).format("HH:mm")}-{moment(e.endTime, ["h:mm A"]).format("HH:mm")}</td>
+         
+                             <td> {moment(e.startTime, ["h:mm A"]).format("HH:mm")}-{moment(e.endTime, ["h:mm A"]).format("HH:mm")}</td> 
                             <td>{moment(e.breakStartTime, ["h:mm A"]).format("HH:mm")}-{moment(e.breakEndTime, ["h:mm A"]).format("HH:mm")}</td>
                             <td>{e.workingHours}</td>
                             <td>{e.contractType}</td>
@@ -71,9 +73,11 @@ function ViewShift() {
                             <td>{e.status === 0 ? "Active" : "Inactive"} </td>
                             <td><Edit2 onClick={() => {
                                                 setEditModal(true);
+                                              
                                                 editShift(e.shiftMasterId);
                                                 setShiftType(e.shiftType);
                                                 setContractType(e.contractType);
+                                                setStartTime(e.startTime)
                                         }} />
                                             </td>             
                          
