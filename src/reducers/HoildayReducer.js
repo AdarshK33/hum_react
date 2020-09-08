@@ -3,6 +3,11 @@ const HolidayReducer = (state, action) => {
 
         case 'FETCH_HOLIDAY_LIST':
             return { ...state, holiday: action.payload };
+
+        
+            case 'FETCH_SALARY_LIST':
+                return { ...state, salaryList: action.payload };
+
         default: return state;
     }
 }

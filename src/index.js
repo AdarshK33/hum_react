@@ -28,7 +28,12 @@ import { RosterProvider } from "./context/RosterState";
 import { LeaveProvider } from "./context/LeaveState";
 import { ClusterProvider } from "./context/ClusterState";
 import { AppProvider } from "./context/AppState";
+import { AdminProvider } from "./context/AdminState";
 import HolidayList from "./components/Holiday/HolidayList";
+import SalaryView from "./components/salary/salaryView";
+
+//Grant Leave Page
+import GrantLeaveView from './components/admin/GrantLeaveView';
 
 //firebase Auth
 function Root() {
@@ -44,6 +49,7 @@ function Root() {
         <RosterProvider>
           <LeaveProvider>
             <ClusterProvider>
+            <AdminProvider>
               <BrowserRouter basename={"/"}>
                 <ScrollContext>
                   <Switch>
@@ -94,12 +100,23 @@ function Root() {
                           path={`${process.env.PUBLIC_URL}/Holiday/HolidayList`}
                           component={HolidayList}
                         />
+                          <Route
+                          path={`${process.env.PUBLIC_URL}/salary/salaryView`}
+                          component={SalaryView}
+                        />
+                         <Route
+                          path={`${process.env.PUBLIC_URL}/admin/GrantLeaveView`}
+                          component={GrantLeaveView}
+                        />
+
+
                       </App>
                     </Fragment>
                   </Switch>
                 </ScrollContext>
               </BrowserRouter>
               {/* </Provider>  */}
+              </AdminProvider>
             </ClusterProvider>
           </LeaveProvider>
         </RosterProvider>
