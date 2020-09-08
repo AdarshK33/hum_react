@@ -9,6 +9,7 @@ const initial_state = {
   clusterList:[],
   getSingleCluster:[],
   getSingleCluster1:[],
+  getClusterEmployees:[],
 }
 
 
@@ -41,6 +42,19 @@ export const ClusterProvider = ({ children }) => {
   }
 
 
+  function selectEmployeeForCluster(){
+ client.get('employee/view/IN1055/cluster_employees').then(function (response) {
+    console.log("data==****>" + JSON.stringify(response));
+    state.getClusterEmployees = response.data.data;
+    console.log(JSON.stringify(state.getClusterEmployees))
+  
+    return dispatch({ type: 'FETCH_EMPLOYEE_FOR_CLUSTER', payload: state.getClusterEmployees });
+  })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  }
 
 
 
@@ -85,8 +99,8 @@ export const ClusterProvider = ({ children }) => {
 
 
   function selectClusterLeader() {        
-    client.get('employee/view/IN1055').then(function (response) {
-    // alert("Leaderes" + JSON.stringify(response));
+    client.get('employee/view/IN1055/cluster_leader').then(function (response) {
+ //    alert("Leaderes" + JSON.stringify(response));
     state.clusterLeaderNames = response.data.data;
     return dispatch({ type: 'FETCH_LEADERS_NAME', payload: state.clusterLeaderNames });
   })
@@ -107,11 +121,13 @@ export const ClusterProvider = ({ children }) => {
     viewCluster,  
     getCluster, 
     updateCluster,
+    selectEmployeeForCluster,
     getSingleCluster1:state.getSingleCluster1,
     clusterList:state.clusterList, 
     clusterLeaderNames:state.clusterLeaderNames,
     sportsNames: state.sportsNames,
-    getSingleCluster:state.getSingleCluster
+    getSingleCluster:state.getSingleCluster,
+    getClusterEmployees:state.getClusterEmployees
   }}>
     {children}
   </ClusterContext.Provider>);
