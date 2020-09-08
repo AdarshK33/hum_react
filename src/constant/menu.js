@@ -38,6 +38,9 @@ export const MENUITEMS = [
     {
         path: '/admin/GrantLeaveView', title: 'Grant Leave View', icon: File, type: 'link', active: false
     },
+    {
+        path: '/AdminLeaves/AdminLeaveView', title: 'Admin Leave View', icon: Calendar, type: 'link', active: false
+    },
 
     
     

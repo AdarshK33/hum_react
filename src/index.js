@@ -19,7 +19,7 @@ import Roster from "./components/roster/roster";
 import ViewShift from "./components/roster/viewShift";
 //Leave Page
 import LeaveView from "./components/Leaves/LeaveView";
-
+import AdminLeaveView from './components/AdminLeave/AdminLeaveView';
 //Cluster
 import ViewCluster from "./components/cluster/viewCluster";
 // Added by Ranjith 31 july 2020
@@ -77,6 +77,11 @@ function Root() {
                         <Route
                           path={`${process.env.PUBLIC_URL}/Leaves/LeaveView`}
                           component={LeaveView}
+                        />
+                         {/*Admin Leaves Page */}
+                         <Route
+                          path={`${process.env.PUBLIC_URL}/AdminLeaves/AdminLeaveView`}
+                          component={AdminLeaveView}
                         />
 
                         {/* Roaster */}
