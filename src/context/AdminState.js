@@ -8,7 +8,9 @@ import AdminReducer from '../reducers/AdminReducer';
 const initial_state = {
  leaveAdminList:[],
  costCenterList:[],
- employeeIdList:[]
+ employeeIdList:[],
+ getEmployeesName:[],
+ grantLeaveView:[],
 }
 
 
@@ -60,10 +62,32 @@ const employeeIdData = (costData) => {
   })
 }
 
+
+function viewGrantLeave() {
+  client.get('grant_leave/view', {
+  }).then(function (response) {
+      console.log("data==>" + JSON.stringify(response));
+    state.grantLeaveView = response.data.data;
+    return dispatch({ type: 'VIEW_GRANT_LEAVE', payload: state.grantLeaveView });
+  })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
+function createGrantLeave(addGrantLeave) {
+  return client.post("grant_leave/create", addGrantLeave, {
+  })
+}
+
+
   return (<AdminContext.Provider value={{
     viewAdminList,
     CostCenter,
     employeeIdData,
+    viewGrantLeave,
+    createGrantLeave,
+    grantLeaveView:state.grantLeaveView,
+    getEmployeesName:state.getEmployeesName,
     leaveAdminList: state.leaveAdminList,
     costCenterList: state.costCenterList,
     employeeIdList: state.employeeIdList

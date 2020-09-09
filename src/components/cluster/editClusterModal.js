@@ -18,6 +18,7 @@ const EditClusterModal = (props) => {
   const [errormsg, setErrorMsg] = useState(false);
   const [multiValue, setMultiValue] = useState([])
   const [clustertButton, setClusterButton] = useState(false);
+  const [selectedOption,setSelectedOption] = useState(null);
 
 
 
@@ -141,14 +142,6 @@ const callTimer =()=>{
   setModal()
 }
 
-// const result  = getSingleCluster1.map(e=>{
-//   return(<div>
-
-//   <h1>{e.sportName}</h1>  
-//   </div>)
-// })
-
-
 
 
   return (
@@ -165,13 +158,15 @@ const callTimer =()=>{
                 <div className="form-group">
                   <label htmlFor="exampleFormControlInput1"> Select Sports</label>
   {/* <h6>{result}</h6> */}
-            
-               <Select
+           
+  <Select
                    value={multiValue}
                    options={sportsNames.map(e => ({ label: e.sportName, value: e.sportId }))}
                    onChange={handleMultiChange}
                   isMulti
                   />
+
+
                 </div>
               </div>
             </div>
