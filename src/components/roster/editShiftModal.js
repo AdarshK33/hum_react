@@ -208,7 +208,7 @@ useEffect(() => {
                   <div className="row">
                     <div className="col-sm-6">
                         <div className="form-group">
-                        <h1>{moment(props.startTime,["HH:mm:ss"]).format("HH:mm A")}</h1>  
+                       
 
                         <label htmlFor="exampleFormControlInput1">From Time</label>
                         <br />   
