@@ -26,7 +26,7 @@ export const LeaveProvider = ({ children }) => {
     client.get('leave_transaction/view')
       .then((response) => {
         state.leaveList =  response.data.data
-        getLeave();
+       /*  getLeave(); */
         console.log("=====GET API respone=====", state.leaveList)
         
         return dispatch({ type: 'FETCH_LEAVE_LIST', payload: state.leaveList })

@@ -6,10 +6,11 @@ import AdminReducer from '../reducers/AdminReducer';
 
 
 const initial_state = {
+ leaveAdminList:[],
+ costCenterList:[],
+ employeeIdList:[],
  getEmployeesName:[],
  grantLeaveView:[],
- costCenterList:[],
- employeeIdList:[]
 }
 
 
@@ -18,49 +19,22 @@ export const AdminProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AdminReducer, initial_state);
 
 
-  function createGrantLeave(addGrantLeave) {
-    return client.post("grant_leave/create", addGrantLeave, {
+ // view Leaves for Admin
+
+ const viewAdminList = () => {
+  client.get('employee/view/leave_view')
+    .then((response) => {
+      state.leaveAdminList =  response.data.data
+      console.log("=====GET Admin Leave API respone=====", state.leaveAdminList)
+      
+      return dispatch({ type: 'FETCH_ADMIN_LEAVE_LIST', payload: state.leaveAdminList })
     })
-  }
-
-  function selectEmployeeForLeave(costCenterId) {        
-   // alert("state"+JSON.stringify(costCenterId));
-    client.get('employee/view/leave_view', {  
-  }).then(function (response) {
-     console.log("Leaderes..." + JSON.stringify(response));
-    state.getEmployeesName = response.data.data;
-    return dispatch({ type: 'FETCH_EMPLOYEES_NAMES', payload: state.getEmployeesName });
-  })
-    .catch(function (error) {
-      console.log(error);
-    });
+    .catch((error) => {
+      console.log(error)
+    })
 }
 
-function viewGrantLeave() {
-  client.get('grant_leave/view', {
-  }).then(function (response) {
-      console.log("data==>" + JSON.stringify(response));
-    state.grantLeaveView = response.data.data;
-    return dispatch({ type: 'VIEW_GRANT_LEAVE', payload: state.grantLeaveView });
-  })
-    .catch(function (error) {
-      console.log(error);
-    });
-}
-
-
-const employeeIdData = (costData) => {
-  console.log("costData========", costData)
-  client.get('employee/view/leave_view/{costCentre}' + '?costCentre=' + costData)
-  .then((response) => {
-    state.employeeIdList = response.data.data
-    console.log("employee id data", state.employeeId)
-    return dispatch({type: 'EMPLOYEE_ID_DATA', payload: state.employeeIdList})
-  })
-  .catch((error) => {
-    console.log(error)
-  })
-}
+// Cost Center List
 const CostCenter = () => {
   client.get('cost_centre/view')
   .then((response) => {
@@ -73,20 +47,50 @@ const CostCenter = () => {
   })
 }
 
+//employee id according to cost center
+
+const employeeIdData = (costData) => {
+  console.log("costData========", costData)
+  client.get('employee/view/leave_view/{costCentre}' + '?costCentre=' + costData)
+  .then((response) => {
+    state.employeeIdList = response.data.data
+    console.log("employee id data", state.employeeIdList)
+    return dispatch({type: 'EMPLOYEE_ID_DATA', payload: state.employeeIdList})
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+}
 
 
+function viewGrantLeave() {
+  client.get('grant_leave/view', {
+  }).then(function (response) {
+      console.log("data==>" + JSON.stringify(response));
+    state.grantLeaveView = response.data.data;
+    return dispatch({ type: 'VIEW_GRANT_LEAVE', payload: state.grantLeaveView });
+  })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
+function createGrantLeave(addGrantLeave) {
+  return client.post("grant_leave/create", addGrantLeave, {
+  })
+}
 
 
   return (<AdminContext.Provider value={{
-    createGrantLeave,
-    selectEmployeeForLeave,
-    viewGrantLeave,
-    employeeIdData,
+    viewAdminList,
     CostCenter,
+    employeeIdData,
+    viewGrantLeave,
+    createGrantLeave,
     grantLeaveView:state.grantLeaveView,
     getEmployeesName:state.getEmployeesName,
-    costCenterList:state.costCenterList,
-    employeeIdList:state.employeeIdList
+    leaveAdminList: state.leaveAdminList,
+    costCenterList: state.costCenterList,
+    employeeIdList: state.employeeIdList
   }}>
     {children}
   </AdminContext.Provider>);
