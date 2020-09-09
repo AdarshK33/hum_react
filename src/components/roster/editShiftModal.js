@@ -44,6 +44,9 @@ useEffect(() => {
 
 
 
+  
+
+
 
   const {updateShift,viewShift, singleShiftList,viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const setClear = () => {
@@ -109,6 +112,12 @@ useEffect(() => {
     setEditModal()
   }
  
+  const setFirstStarTime=(startTime)=>{
+    alert("hi");
+     var result = (moment(startTime,["HH:mm:ss"]).format("HH:mm a"));
+     
+     alert(result)
+  }
   const onSubmit = e => {
     // const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
     // const etime = moment(endTime, ["h:mm A"]).format("HH:mm");
@@ -199,23 +208,24 @@ useEffect(() => {
                   <div className="row">
                     <div className="col-sm-6">
                         <div className="form-group">
-                       {/* <h1>{moment(singleShiftList.startTime,["HH:mm:ss"]).format("HH:mm A")}</h1>  */}
-          
+                        <h1>{moment(props.startTime,["HH:mm:ss"]).format("HH:mm A")}</h1>  
+
                         <label htmlFor="exampleFormControlInput1">From Time</label>
-                        <br />                 
+                        <br />   
+
                         <DatePicker
                           className="form-control"
-                          selected={startTime}
+                          selected = {startTime}
                         //  selected={moment(singleShiftList.startTime,["HH:mm:ss"]).format("HH:mm A")}
                         //  selected={moment(singleShiftList.startTime,["HH:mm"]).format("h:mm A")}
-                          onChange={date => setStartTime(date)}
+                          onChange={(date)=>{setFirstStarTime(date)}}
                           showTimeSelect
                           showTimeSelectOnly
                           timeFormat="HH:mm"
                           timeIntervals={30}
                           timeCaption="Time"
-                          dateFormat="HH:mm aa"
-                          placeholderText={singleShiftList.startTime}
+                          dateFormat="HH:mm"
+                          value={props.startTime}
                           required
                         />
                       </div>

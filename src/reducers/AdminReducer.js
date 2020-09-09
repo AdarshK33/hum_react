@@ -8,7 +8,13 @@ const AdminReducer = (state, action) => {
             return { ...state, grantLeaveView: action.payload };
 
 
-          
+            case 'EMPLOYEE_ID_DATA':
+                return { ...state, employeeIdList: action.payload };
+
+                case 'COST_CENTER_DATA':
+                    return { ...state, costCenterList: action.payload };
+
+                
                
         default: return state;
     }
