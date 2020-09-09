@@ -141,7 +141,7 @@ const LeaveView = () => {
                 </Row>
 
                 <Row className="table">
-                    <Table>
+                    <Table hover>
                         <thead>
                             <tr>
                                 <th>Sr No.</th>

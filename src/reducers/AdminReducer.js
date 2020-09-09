@@ -9,6 +9,12 @@ const AdminReducer = (state, action) => {
 
         case 'FETCH_ADMIN_LEAVE_LIST':
             return { ...state, leaveAdminList: action.payload }
+
+        case 'COST_CENTER_DATA':
+            return { ...state, costCenterList: action.payload }
+
+        case 'EMPLOYEE_ID_DATA':
+            return { ...state, employeeIdList: action.payload }
           
                
         default: return state;
