@@ -93,7 +93,7 @@ const GrantLeaveAdd = (props) => {
                     <form onSubmit={onSubmit}>
                         <div className="row">
                             <div className="col-sm-12">
-                            <label htmlFor="exampleFormControlInput1"> Select Cost Center</label>
+                            <label htmlFor="exampleFormControlInput1"> Select cost center</label>
 
                             <select
                                         className="form-control"
