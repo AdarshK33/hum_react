@@ -15,6 +15,7 @@ const initial_state = {
   singleShiftList:[],
   availableShiftData:[],
   weeksInYear:[],
+  selectedRosterRange: {}
 }
 
 
@@ -136,10 +137,14 @@ const weekOffDataEmp = (endDate, startDate) => {
     client.get('roster/employee/view' + '?employeeId=' + empId + 
     '&' + 'endDate=' + endDate + '&' + 'startDate=' + startDate)
       .then((response) => {
-        state.weekOffDataList =  response.data.data
+        const weekOffDataList =  response.data.data
+        const selectedRosterRange  = {endDate, startDate}
         console.log("=====GET weekOff Data API respone=====", state.weekOffDataList)
         
-        return dispatch({ type: 'WEEKOFF_WEEK_DATA_LIST', payload: state.weekOffDataList })
+        return dispatch({ type: 'WEEKOFF_WEEK_DATA_LIST', payload: {
+          weekOffDataList,
+          selectedRosterRange
+        } })
       })
       .catch((error) => {
         console.log(error)
@@ -149,19 +154,22 @@ const weekOffDataEmp = (endDate, startDate) => {
 //Add week off Data according to the emp id
 const addWeekOff = (newWeekOff) => {
     console.log("++++create weekOff api response+++++", newWeekOff)
-    return client.post('weekoff/employee/create', newWeekOff)
+    return client.post("weekoff/employee/create", newWeekOff)
       .then((response) => {
-        state.weekOffDataList =  response.data.data
-        state.message = response.data.message
-        toast.info(state.message)
-        weekOffDataEmp()
-        console.log("new create list response===>", response.data.data)
-        console.log("new create list message===>", state.message)
-        return dispatch({ type: 'ADD_NEW_WEEKOFF_DATA', payload: state.weekOffDataList })
+        const {
+          selectedRosterRange: { endDate, startDate },
+        } = state;
+        state.weekOffDataList = response.data.data;
+        state.message = response.data.message;
+        toast.info(state.message);
+        weekOffDataEmp(endDate, startDate);
+        console.log("new create list response===>", response.data.data);
+        console.log("new create list message===>", state.message);
+        // return dispatch({ type: 'ADD_NEW_WEEKOFF_DATA', payload: state.weekOffDataList })
       })
       .catch((error) => {
-        console.log(error)
-      })
+        console.log(error);
+      });
       
   }
   const availableShifts = () => {
@@ -181,8 +189,12 @@ const addWeekOff = (newWeekOff) => {
    
     return client.post('shift/assign/employee', assignData)
       .then((response) => {
+        const {
+          selectedRosterRange: { endDate, startDate },
+        } = state;
         toast.info(response.data.message)
         console.log(response,"cre")
+        weekOffDataEmp(endDate, startDate);
       })
       .catch((error) => {
         console.log(error)
@@ -224,7 +236,8 @@ const addWeekOff = (newWeekOff) => {
     weekOffDataList: state.weekOffDataList,
     singleShiftList:state.singleShiftList,
     availableShiftData:state.availableShiftData,
-    weeksInYear:state.weeksInYear
+    weeksInYear:state.weeksInYear,
+    selectedRosterRange: state.selectedRosterRange
   }}>
     {children}
   </RosterContext.Provider>);

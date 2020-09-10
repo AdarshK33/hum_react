@@ -26,7 +26,7 @@ const RosterReducer = (state, action) => {
 
 
         case 'WEEKOFF_WEEK_DATA_LIST':
-            return { ...state, weekOffDataList: action.payload };
+            return { ...state, ...action.payload };
 
         case 'ADD_NEW_WEEKOFF_DATA':
             return { ...state, weekOffDataList: action.payload };

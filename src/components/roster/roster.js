@@ -8,47 +8,43 @@ import DateFromEnd from "./dateFromEnd";
 import moment from 'moment'
 
 const Roster = () => {
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(moment());
+  const [endDate, setEndDate] = useState(moment().add('30', 'd'));
 
   const [modal, setModal] = useState(false)
   const [shiftDate, setshiftDate] = useState(false)
+  const { weekOffDataEmp, weekOffDataList } = useContext(RosterContext)
+
   const handleClose = () => setModal(false)
   const handleShow = (item) => {
-    console.log(item, "ite")
+    console.log(item, "item onclick")
     setshiftDate(item)
     setModal(true)
   }
 
-  const { weekOffDataEmp, weekOffDataList } = useContext(RosterContext)
-
-  let newStartDate = moment(startDate).format("YYYY-MM-DD");
-  let newEndDate = moment(endDate).format("YYYY-MM-DD")
-
   useEffect(() => {
-    weekOffDataEmp(newStartDate, newEndDate)
+    weekOffDataEmp(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD") )
   }, [])
-  console.log(weekOffDataList, "dasuua")
 
   const submitDate = (e) => {
     e.preventDefault();
-    weekOffDataEmp(newEndDate, newStartDate)
-    console.log("weekOff Data", newStartDate)
+    weekOffDataEmp(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"))
+    console.log("weekOff Data", startDate)
   }
   const checkCondition = (item) => {
     console.log(item, "che")
     if (item.roster == null) {
-      return <button className="btn btn-square btn-primary btn-sm pl-5 pr-5" onClick={() => handleShow(item)}>+</button>
+      return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item)}>+</button>
     } else if (item.roster.holiday != "" && item.roster.holiday != null) {
-      return <button className="btn btn-square btn-warning btn-sm" type="button">{item.roster.holiday}</button>
+      return <button className="btn btn-square btn-warning btn-sm" disabled type="button">{item.roster.holiday}</button>
     } else if (item.roster.leave != "" && item.roster.leave != null) {
-      return <button className="btn btn-square btn-danger btn-sm" type="button">Leave</button>
+      return <button className="btn btn-square btn-danger btn-sm" onClick={() => handleShow(item)} type="button">Leave</button>
     } else if (item.roster.weekOff) {
-      return <button className="btn btn-square btn-info btn-sm" type="button">Week Off</button>
+      return <button className="btn btn-square btn-info btn-sm" onClick={() => handleShow(item)} type="button">Week Off</button>
     } else if (item.roster.shiftName != "" && item.roster.shiftName != null) {
-      return <button className="btn btn-square btn-danger btn-sm" type="button">{item.roster.shiftName}</button>
+      return <button className="btn btn-square btn-success  btn-sm" type="button">{item.roster.shiftName}</button>
     } else {
-      return <button className="btn btn-square btn-primary btn-sm pl-5 pr-5" onClick={() => handleShow(item)}>+</button>
+      return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item)}>+</button>
     }
   }
   return (
@@ -67,7 +63,7 @@ const Roster = () => {
                         <label className="name f-w-600">From Date &nbsp;</label>
                         <DatePicker
                           className="form-control"
-                          selected={startDate}
+                          selected={startDate.toDate()}
                           required
                           onChange={(date) => setStartDate(date)}
                         />
@@ -78,7 +74,7 @@ const Roster = () => {
                         <label className="name f-w-600">To Date&nbsp; </label>
                         <DatePicker
                           className="form-control"
-                          selected={endDate}
+                          selected={endDate.toDate()}
                           required
                           onChange={(date) => setEndDate(date)}
                         />
@@ -155,7 +151,7 @@ const Roster = () => {
             </div>
           </div>
         </div>
-        <ShiftModal handleClose={handleClose} modal={modal} shiftDate={shiftDate.date} />
+        {modal && <ShiftModal handleClose={handleClose} modal={modal} shiftDate={shiftDate.date} />}
       </div>
 
     </Fragment>
