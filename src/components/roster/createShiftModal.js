@@ -28,7 +28,7 @@ const CreateShiftModal = (props) => {
   const[warnMsg,setWrnMsg] = useState(false);
  // const [workingHoursText, setWorkingHoursText] = useState(false);
   const [errormsg, setErrorMsg] = useState(false);
-  const { addShift, viewShift, shiftListNames, viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
+  const { addShift, viewShift, viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
 
   const setClear = () => {
     setStartTime('')
@@ -94,22 +94,7 @@ const CreateShiftModal = (props) => {
     setInvalidText(true)
   }
 
-  const handleSelectChange = event => {
-    const value = event.target.value;
-    setShiftType(value);
-    setShiftButton(false)
-  };
-
-
-  // const onContractType = event => {
-  //   setContractType(event.target.value);
-  //    if (shiftType ===  "") {
-  //     setShiftButton(true)
-  //     setErrorMsg(false)
-  //   }
-   
-  // };
-
+ 
 const callTimer =()=>{
 
   const setModal = props.handleClose;
@@ -219,6 +204,7 @@ const callTimer =()=>{
                           timeIntervals={30}
                           timeCaption="Time"
                           dateFormat="HH:mm aa"
+                       
                           placeholderText="Select start time"
                           required
                         />
@@ -240,6 +226,7 @@ const callTimer =()=>{
                           timeIntervals={30}
                           timeCaption="Time"
                           dateFormat="HH:mm aa"
+                       
                           placeholderText="Select end time"
                         />
                       </div>
@@ -270,6 +257,7 @@ const callTimer =()=>{
                                   minTime={startTime}
                                   maxTime={endTime}
                                   dateFormat="HH:mm aa"
+                                
                                   onCalendarClose={() => { callShowMethod() }}
                                   placeholderText="Select start time"
                                   required
@@ -311,6 +299,7 @@ const callTimer =()=>{
                         <select
                           className="form-control"
                           required
+                        
                           value={shiftType}                      
                           onChange={(e)=>setShiftType(e.target.value)}>
 
@@ -330,6 +319,7 @@ const callTimer =()=>{
                           className="form-control"
                           required
                           value={contractType}
+                     
                           defaultValue={shiftContractNames.contractType}
                           onChange={(e)=>setContractType(e.target.value)}>
 
@@ -347,8 +337,7 @@ const callTimer =()=>{
                   </div>
                   <button className="btn btn-primary mb-2 mr-2" type="submit" disabled={shiftButton} value="Submit">Save</button>
                   {/* <button className="btn btn-primary mb-2 ml-2" value="reset" onClick={setClear}>Clear</button> */}
-                  <Button className="btn btn-primary mb-2 ml-2" onClick={props.handleClose}>Close
-          </Button>
+                  <Button className="btn btn-primary mb-2 ml-2" onClick={props.handleClose}>Close</Button>
                 </form>
                 <h5>{successMsg.length !== 0 && <div className="text-success">{successMsg}</div>}</h5>
               </div>

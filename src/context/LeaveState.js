@@ -1,9 +1,9 @@
-import React, { createContext, useReducer, useEffect } from 'react';
+import React, { createContext, useReducer } from 'react';
 import {client} from '../utils/axios';
 import { ToastContainer, toast } from "react-toastify";
 import LeaveReducer from '../reducers/LeaveReducer'
 
-const baseUrl = "http://humine.theretailinsights.co/";
+
 const initialState = {
   leaveList: [],
   leaveType: [],

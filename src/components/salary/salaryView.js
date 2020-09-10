@@ -1,11 +1,12 @@
 import React, { useEffect, Fragment, useContext, useState } from 'react'
 import Breadcrumb from "../common/breadcrumb";
 import moment from 'moment';
+import "./salary.css";
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { ClusterContext } from "../../context/ClusterState";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { subDays,addDays } from 'date-fns';
+import { subDays } from 'date-fns';
 function ViewShift() {
   useEffect(() => {
     viewSalary()
@@ -15,7 +16,25 @@ function ViewShift() {
   //alert(stime);
   // variables
   const { viewSalary, salaryList } = useContext(ClusterContext);
-
+  const styles = {
+    myButton: {
+      color: "green",
+      margin: {
+        // jss-expand gives more readable syntax
+        top: 5, // jss-default-unit makes this 5px
+        right: 0,
+        bottom: 0,
+        left: "1rem"
+      },
+      "& span": {
+        // jss-nested applies this to a child span
+        fontWeight: "bold" // jss-camel-case turns this into 'font-weight'
+      }
+    },
+    myLabel: {
+      fontStyle: "italic"
+    }
+  };
 
   const onSubmit = e => {
     e.preventDefault();
@@ -49,7 +68,6 @@ const getMonthForSalaryInput=(date)=>{
                   placeholderText="Select Month and Year"
                   showMonthYearPicker
                 /> */}
-
                  <DatePicker
                   selected={getMonth}
                   className="form-control"
@@ -67,15 +85,16 @@ const getMonthForSalaryInput=(date)=>{
 
 
             <div className="col-sm-3 mt-4">
-              <button className="btn btn-primary mb-2 mt-3" type="submit"  disabled={shiftButton} value="Submit">Submit</button>
+              <button className="btn btn-primary.btn-primary.dec mb-2 mt-3" style={{background:"#006EBB",color:"#FFF"}} type="submit"  disabled={shiftButton} value="Submit">Submit</button>
               
             </div>
             <div className="col-sm-3" style={{marginTop:"39px"}}>
             <ReactHTMLTableToExcel
-                  className="btn btn-primary"
+                  className="myclass"
                   table="table-to-xls1"
                   filename="salaryFile"
                   sheet="Sheet"
+                 
                   buttonText="Export excel" />
           </div>
             </div>
@@ -88,15 +107,13 @@ const getMonthForSalaryInput=(date)=>{
             <div className="card" style={{ overflowX: "auto" }}>
                 <div className="table-responsive">
                 <table id="table-to-xls1" className="table table-hover">
-                  <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
+                <thead style={{ background: '#006EBB', color: 'white' }}>
                     <tr>
                       <th>No</th>
                      <th scope="col">Employee Id</th>
                      <th scope="col">Employee Name</th>                   
                       <th scope="col">Number Of Hours</th>
-                      <th scope="col">Contract Type</th>
-                      <th scope="col">Month</th>
-                      <th scope="col">Year</th>
+                     
                       <th scope="col">Lop</th>
                       <th scope="col">Other Allowance</th>
                       <th scope="col">Per Hour Cost</th>
@@ -112,9 +129,7 @@ const getMonthForSalaryInput=(date)=>{
                             <td>{item.employeeId}</td>
                             <td>{item.firstName} {item.lastName}</td>
                             <td>{item.numberOfHours}</td>
-                            <td>{item.contractType}</td>
-                            <td>{item.month}</td>
-                            <td>{item.year}</td>
+                       
                             <td>{item.lop}</td>
                             <td>{item.otherAllowance}</td>
                             <td>{item.perHourCost}</td>

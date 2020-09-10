@@ -1,8 +1,6 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import Breadcrumb from "../common/breadcrumb";
-import { Card, Row, Col, Table, Button, Modal } from 'react-bootstrap'
 import { RosterContext } from "../../context/RosterState";
-import { X, Edit2, Trash2 } from 'react-feather'
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ShiftModal from "./shiftModal";
@@ -86,8 +84,8 @@ const Roster = () => {
                         />
                       </div>
                     </div>
-                    <div className="col-sm-4 pt-4">
-                      <button className="btn btn-primary mb-2" type="button" onClick={(e) => submitDate(e)}>Submit</button>
+                    <div className="col-sm-4">
+                      <button className="myclass" style={{marginTop:"20px"}}type="button" onClick={(e) => submitDate(e)}>Submit</button>
                     </div>
                   </div>
 
