@@ -54,7 +54,7 @@ const getMonthForSalaryInput=(date)=>{
                   selected={getMonth}
                   className="form-control"
                   onChange={(date)=>{getMonthForSalaryInput(date)}}
-                  minDate={subDays(new Date(),8)}
+                  minDate={subDays(new Date(),9)}
                   dateFormat="MM YYY"
                   placeholderText="Select Month and Year"
                   showMonthYearPicker

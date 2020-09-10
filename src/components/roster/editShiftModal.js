@@ -215,20 +215,20 @@ useEffect(() => {
 
                         <DatePicker
                           className="form-control"
-                          selected = {startTime}
-                        //  selected={moment(singleShiftList.startTime,["HH:mm:ss"]).format("HH:mm A")}
+                          selected={startTime}
                         //  selected={moment(singleShiftList.startTime,["HH:mm"]).format("h:mm A")}
-                          onChange={(date)=>{setFirstStarTime(date)}}
+                          onChange={date => setStartTime(date)}
                           showTimeSelect
                           showTimeSelectOnly
                           timeFormat="HH:mm"
                           timeIntervals={30}
                           timeCaption="Time"
-                          dateFormat="HH:mm"
-                          value={props.startTime}
+                          dateFormat="HH:mm aa"
+                          placeholderText={singleShiftList.startTime}
                           required
                         />
                       </div>
+                    
                     </div>
                     <div className="col-sm-6">
                       <div className="form-group">

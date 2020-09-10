@@ -33,6 +33,8 @@ const GrantLeaveView = () => {
                             <tr>
                                 <th scope="col">Sr No.</th>
                                 <th scope="col">Employee Id</th>
+                                <th scope="col">Employee Name</th>
+                                <th scope="col">Cost Centre Id</th>
                                 
                                 <th scope="col">No of Days</th>
                                 <th scope="col">Year</th>
@@ -44,7 +46,8 @@ const GrantLeaveView = () => {
                           <tr>
                             <td>{i + 1}</td>
                             <td>{item.empId}</td>
-                           
+                            <td>{item.empName}</td>
+                            <td>{item.costCentre}</td>
                             <td>{item.numOfDays}</td>
                             <td>{item.year}</td>
                           </tr>
