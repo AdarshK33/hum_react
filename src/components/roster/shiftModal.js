@@ -45,13 +45,13 @@ const ShiftModal = (props) => {
     setModal()
 
     const newWeekOff = {
-      dates: [weekDay],
+      date: weekDay,
       employeeId: 'DSI000035'
     }
 
     addWeekOff(newWeekOff)
     console.log("newWeekOff data", newWeekOff)
-    history.push("/roster/roster");
+    // history.push("/roster/roster");
     setSelectedWeeks(1)
     setWeekDay('')
     setShowDay(false)

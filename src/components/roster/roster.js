@@ -8,8 +8,8 @@ import DateFromEnd from "./dateFromEnd";
 import moment from 'moment'
 
 const Roster = () => {
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [startDate, setStartDate] = useState(moment());
+  const [endDate, setEndDate] = useState(moment().add('30', 'd'));
 
   const [modal, setModal] = useState(false)
   const [shiftDate, setshiftDate] = useState(false)
@@ -22,18 +22,18 @@ const Roster = () => {
 
   const { weekOffDataEmp, weekOffDataList } = useContext(RosterContext)
 
-  let newStartDate = moment(startDate).format("YYYY-MM-DD");
-  let newEndDate = moment(endDate).format("YYYY-MM-DD")
+  // let newStartDate = ;
+  // let endDate = ;
 
   useEffect(() => {
-    weekOffDataEmp(newStartDate, newEndDate)
+    weekOffDataEmp(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD") )
   }, [])
   console.log(weekOffDataList, "dasuua")
 
   const submitDate = (e) => {
     e.preventDefault();
-    weekOffDataEmp(newEndDate, newStartDate)
-    console.log("weekOff Data", newStartDate)
+    weekOffDataEmp(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"))
+    console.log("weekOff Data", startDate)
   }
   const checkCondition = (item) => {
     console.log(item, "che")
@@ -67,7 +67,7 @@ const Roster = () => {
                         <label className="name f-w-600">From Date &nbsp;</label>
                         <DatePicker
                           className="form-control"
-                          selected={startDate}
+                          selected={startDate.toDate()}
                           required
                           onChange={(date) => setStartDate(date)}
                         />
@@ -78,7 +78,7 @@ const Roster = () => {
                         <label className="name f-w-600">To Date&nbsp; </label>
                         <DatePicker
                           className="form-control"
-                          selected={endDate}
+                          selected={endDate.toDate()}
                           required
                           onChange={(date) => setEndDate(date)}
                         />
