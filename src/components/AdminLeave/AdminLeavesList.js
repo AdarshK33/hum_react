@@ -39,7 +39,7 @@ const AdminLeavesList = (props) => {
         {console.log("empId", empId)}
     return (
         <Fragment>
-            <Breadcrumb title="Admin Leave" parent="Admin Leave" />
+            <Breadcrumb title="Admin " parent="Admin Leave" />
             <Container>
                 <Row className="heading-row">
                     <h4>Admin Leaves</h4>
@@ -54,8 +54,8 @@ const AdminLeavesList = (props) => {
                                 <th>Total No. of Days</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
-                                <th></th>
-                                <th></th>
+                                <th>Edit</th>
+                                <th>Delete</th>
                             </tr>
                         </thead>
 

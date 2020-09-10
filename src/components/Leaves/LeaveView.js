@@ -22,7 +22,7 @@ const LeaveView = () => {
     const [ltId, setltId] = useState()
     const [reason, setReason] = useState()
 
-    const { leaveList, viewList, deleteList, editList, viewLeaveData, leaveDataList, viewGrantLeave, grantLeave, deleteData }
+    const { leaveList, viewList, deleteList, editList, viewLeaveData, leaveDataList, deleteData }
         = useContext(LeaveContext);
 
     const handleClose = () => setModal(false)
@@ -38,19 +38,12 @@ const LeaveView = () => {
     useEffect(() => {
         viewList()
         viewLeaveData()
-        viewGrantLeave()
-    
+
     }, [])
-   /*  const newLeaveList = leaveList.sort((a, b) => b.fromDate - a.fromDate) */
-    /* const setFromDateHandler = (date) => {
-        var newDate = new Date(date)
-        setFromDate(newDate)
-        console.log("from date in leave view", newDate)
-        console.log("from date in leave view", fromDate)
-    } */
-   const deleteListcheck = (id) =>{
-    deleteList(id)
-    setDeleteModal(false)
+  
+    const deleteListcheck = (id) => {
+        deleteList(id)
+        setDeleteModal(false)
     }
     return (
         <Fragment>
@@ -75,10 +68,10 @@ const LeaveView = () => {
                                 <Row>
                                     <Col>
                                         <Row className="text-center">
-                                            <p>Available:{leaveDataList.eligibleLeave ? 
+                                            <p>Available:{leaveDataList.eligibleLeave ?
                                                 (leaveDataList.leaveApplied.General == null ? leaveDataList.eligibleLeave.General :
-                                                    ((leaveDataList.eligibleLeave.General - leaveDataList.leaveApplied.General) <= 0 ? '0' : 
-                                                    (leaveDataList.eligibleLeave.General - leaveDataList.leaveApplied.General)) ):
+                                                    ((leaveDataList.eligibleLeave.General - leaveDataList.leaveApplied.General) <= 0 ? '0' :
+                                                        (leaveDataList.eligibleLeave.General - leaveDataList.leaveApplied.General))) :
                                                 ''}</p>
                                         </Row>
                                         <Row className="text-center">
@@ -122,8 +115,14 @@ const LeaveView = () => {
                                 <Row>
                                     <Col>
                                         <Row className="text-center">
-                                            <p>Available: {grantLeave}</p>
-
+                                        <p>Available:{leaveDataList.eligibleLeave ?
+                                                (leaveDataList.leaveApplied.GrantLeave == null ? leaveDataList.eligibleLeave.GrantLeave :
+                                                        (leaveDataList.eligibleLeave.GrantLeave - leaveDataList.leaveApplied.GrantLeave)) :
+                                                ''}</p>
+                                        </Row>
+                                        <Row className="text-center">
+                                            <p>Taken: {leaveDataList.leaveApplied ? (leaveDataList.leaveApplied.GrantLeave == null ? '0' : leaveDataList.leaveApplied.GrantLeave) :
+                                                ''}</p>
                                         </Row>
                                     </Col>
                                 </Row>
@@ -132,6 +131,12 @@ const LeaveView = () => {
                     </Col>
                     <Col className="col-12 col-md-1"></Col>
                 </Row>
+                {/*   <div className="title_bar">
+                <Button className="apply-button btn mr-2" onClick={handleShow}>Apply</Button>
+
+              </div>
+              <LeaveAdd handleClose={handleClose} modal={modal} /> */}
+
                 <Row className="apply-button-row">
                     <Col className="leaveApplications">Leave Applications</Col>
                     <Col>
@@ -140,17 +145,17 @@ const LeaveView = () => {
                     <LeaveAdd handleClose={handleClose} modal={modal} />
                 </Row>
 
-                <Row className="table">
-                    <Table hover>
-                        <thead>
+                <div className="table-responsive">
+                    <Table id="table-to-xls" className="table table-hover">
+                        <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                             <tr>
                                 <th>Sr No.</th>
                                 <th>Leave Type</th>
                                 <th>Total No. of Days</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
-                                <th></th>
-                                <th></th>
+                                <th>Edit</th>
+                                <th>Delete</th>
                             </tr>
                         </thead>
 
@@ -170,19 +175,20 @@ const LeaveView = () => {
                                                 setltId(item.ltId)
                                             }} />
                                             </td>
-                                            <td><Trash2 onClick={() =>{
-                                                 setDeleteModal(true) }  }/>
+                                            <td><Trash2 onClick={() => {
+                                                setDeleteModal(true)
+                                            }} />
                                             </td>
-                                            
+
                                             <Modal show={deleteModal} onHide={handleDeleteClose} centered>
-                                                <Modal.Body style={{marginTop:'1rem'}}>
+                                                <Modal.Body style={{ marginTop: '1rem' }}>
                                                     <h5>Are you sure to delete the item ?</h5>
                                                 </Modal.Body>
                                                 <Modal.Footer>
                                                     <Button variant="secondary" className="deleteNoButton"
-                                                     onClick={() => handleDeleteClose()}>No</Button>
+                                                        onClick={() => handleDeleteClose()}>No</Button>
                                                     <Button variant="primary" className="deleteYesButton"
-                                                     onClick={() => deleteListcheck(item.ltId)}>Yes</Button>
+                                                        onClick={() => deleteListcheck(item.ltId)}>Yes</Button>
                                                 </Modal.Footer>
                                             </Modal>
 
@@ -194,8 +200,8 @@ const LeaveView = () => {
                     <EditLeave handleEditClose={handleEditClose} modal={editModal}
                         leaveCategory={leaveCategory} fromDate={fromDate} toDate={toDate}
                         reason={reason} ltId={ltId} />
-                </Row>
-               
+                </div>
+
             </div>
         </Fragment>
     );

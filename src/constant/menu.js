@@ -42,6 +42,8 @@ export const MENUITEMS = [
     {
         title: 'Admin', icon: Calendar, type: 'link', path: '/AdminLeaves/AdminLeaveView', active: false,children:[
             { path: '/AdminLeaves/AdminLeavesList', title: 'Admin Leave', type: 'link' },
+            { path: '/AdminLeaves/AdminMasterLeave', title: 'Leave Master', type: 'link' },
+            { path: '/AdminLeaves/AdminLeaveApproval', title: 'Leave Approval', type: 'link' },
         ]
     },
   

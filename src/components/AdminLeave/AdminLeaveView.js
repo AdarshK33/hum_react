@@ -1,6 +1,6 @@
-import React, {useState, useEffect, useContext, Fragment} from 'react';
-import {Container, Row, Col, Button, Table} from 'react-bootstrap';
-import {AdminContext} from '../../context/AdminState';
+import React, { useState, useEffect, useContext, Fragment } from 'react';
+import { Container, Row, Col, Button, Table } from 'react-bootstrap';
+import { AdminContext } from '../../context/AdminState';
 import Breadcrumb from '../common/breadcrumb';
 import AdminLeaveAdd from './AdminLeaveAdd'
 import '../Leaves/Leaves.css'
@@ -12,14 +12,14 @@ const AdminLeaveView = (props) => {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
 
-    const {viewAdminList, leaveAdminList} = useContext(AdminContext)
+    const { viewAdminList, leaveAdminList } = useContext(AdminContext)
 
     const handleClose = () => setModal(false)
     const handleShow = () => setModal(true)
 
     useEffect(() => {
         viewAdminList()
-    },[])
+    }, [])
 
     return (
         <Fragment>
@@ -35,9 +35,9 @@ const AdminLeaveView = (props) => {
                     </Col>
                     <AdminLeaveAdd handleClose={handleClose} modal={modal} />
                 </Row>
-                <Row className="table">
-                    <Table >
-                        <thead>
+                <div className="table-responsive">
+                    <Table id="table-to-xls" className="table table-hover">
+                        <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                             <tr>
                                 <th>Sr.</th>
                                 <th>Employee Id</th>
@@ -46,20 +46,20 @@ const AdminLeaveView = (props) => {
                             </tr>
                         </thead>
                         {leaveAdminList.length > 0 &&
-                        leaveAdminList.map((item,i) => {
-                            return(
-                                <tbody key={i}>
-                                    <tr>
-                                        <th>{i+1}</th>
-                                        <th>{item.employeeId}</th>
-                                        <th>{item.firstName} {item.lastName}</th>
-                                        <th>{item.gender}</th>
-                                    </tr>
-                                </tbody>
-                            )
-                        })}
+                            leaveAdminList.map((item, i) => {
+                                return (
+                                    <tbody key={i}>
+                                        <tr>
+                                            <th>{i + 1}</th>
+                                            <th>{item.employeeId}</th>
+                                            <th>{item.firstName} {item.lastName}</th>
+                                            <th>{item.gender}</th>
+                                        </tr>
+                                    </tbody>
+                                )
+                            })}
                     </Table>
-                </Row>
+                </div>
             </Container>
         </Fragment>
     );
