@@ -10,8 +10,6 @@ import App from "./components/app";
 // Import custom Components
 import Signin from "./auth/signin";
 import Default from "./components/dashboard/defaultCompo/default";
-import CryptoComponent from "./components/dashboard/crypto/cryptoComponent";
-import Project from "./components/dashboard/project/project";
 // sample page
 import Samplepage from "./components/sample/samplepage";
 import Roster from "./components/roster/roster";

@@ -1,10 +1,8 @@
-import React, { createContext, useReducer, useState } from 'react';
+import React, { createContext, useReducer } from 'react';
 import {client} from '../utils/axios';
-import environmentVariables from '../components/common/environment';
-import { ToastContainer, toast } from "react-toastify";
-
+import { toast } from "react-toastify";
 import RosterReducer from '../reducers/RosterReducer';
-const baseUrl = "http://humine.theretailinsights.co/";
+
 
 
 const initial_state = {
@@ -15,7 +13,8 @@ const initial_state = {
   weekDays:[],
   weekOffDataList:[],
   singleShiftList:[],
-  availableShiftData:[]
+  availableShiftData:[],
+  weeksInYear:[],
 }
 
 
@@ -182,6 +181,7 @@ const addWeekOff = (newWeekOff) => {
    
     return client.post('shift/assign/employee', assignData)
       .then((response) => {
+        toast.info(response.data.message)
         console.log(response,"cre")
       })
       .catch((error) => {
@@ -190,6 +190,18 @@ const addWeekOff = (newWeekOff) => {
       
   }
 
+  const getallWeeks = () => {
+    
+    client.get('weekoff/weeks?year=2020')
+      .then((response) => {
+         state.weeksInYear = response.data.data
+         console.log("=====GET Weeks=====", state.weeksInYear)
+         return dispatch({ type: 'AVAILABLE_WEEKS', payload: state.weeksInYear})
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
   return (<RosterContext.Provider value={{
     addShift,
     assignShift,
@@ -203,6 +215,7 @@ const addWeekOff = (newWeekOff) => {
     weekOffDays,
     weekOffDataEmp,
     addWeekOff,
+    getallWeeks,
     shiftList: state.shiftList,
     shiftMasterId: state.shiftMasterId,
     shiftListNames: state.shiftListNames,
@@ -210,7 +223,8 @@ const addWeekOff = (newWeekOff) => {
     weekDays: state.weekDays,
     weekOffDataList: state.weekOffDataList,
     singleShiftList:state.singleShiftList,
-    availableShiftData:state.availableShiftData
+    availableShiftData:state.availableShiftData,
+    weeksInYear:state.weeksInYear
   }}>
     {children}
   </RosterContext.Provider>);
