@@ -26,10 +26,13 @@ export const LeaveProvider = ({ children }) => {
     client.get('leave_transaction/view')
       .then((response) => {
         state.leaveList =  response.data.data
-       /*  getLeave(); */
+        getLeave();
         console.log("=====GET API respone=====", state.leaveList)
-        
-        return dispatch({ type: 'FETCH_LEAVE_LIST', payload: state.leaveList })
+        return (
+          dispatch({ type: 'FETCH_LEAVE_LIST', payload: state.leaveList })
+         /*  dispatch({ type: 'FETCH_LEAVE_TYPE', payload: state.leaveType }),
+          dispatch({ type: 'FETCH_GRANT_LEAVE', payload: state.grantLeave }) */
+        )
       })
       .catch((error) => {
         console.log(error)
@@ -108,9 +111,15 @@ export const LeaveProvider = ({ children }) => {
           toast.info(state.message)
           viewList();
           viewLeaveData();
+          getLeave()
           console.log("new create list response===>", response.data.data)
           console.log("new create list message===>", state.message)
-          return dispatch({ type: 'ADD_NEW_LEAVE', payload: state.leaveList })
+          return (
+          dispatch({ type: 'ADD_NEW_LEAVE', payload: state.leaveList })
+         /*  dispatch({ type: 'FETCH_LEAVE_LIST', payload: state.leaveList }),
+          dispatch({ type: 'FETCH_LEAVE_TYPE', payload: state.leaveType }),
+          dispatch({ type: 'FETCH_GRANT_LEAVE', payload: state.grantLeave }) */
+          )
           return (<ToastContainer />)
         })
         .catch((error) => {
@@ -133,9 +142,15 @@ export const LeaveProvider = ({ children }) => {
         toast.info(state.message)
         viewList()
         viewLeaveData();
+        getLeave()
         console.log("??????new edit list response????????", response.data.data)
         console.log("??????new edit list message????????", state.message)
-        return dispatch({ type: 'EDIT_LEAVE', payload: state.leaveList })
+        return ( 
+        dispatch({ type: 'EDIT_LEAVE', payload: state.leaveList })
+      /*   dispatch({ type: 'FETCH_LEAVE_LIST', payload: state.leaveList }),
+        dispatch({ type: 'FETCH_LEAVE_TYPE', payload: state.leaveType }),
+        dispatch({ type: 'FETCH_GRANT_LEAVE', payload: state.grantLeave }) */
+        )
         // return (<ToastContainer />)
       })
       .catch((error) => {
@@ -154,7 +169,13 @@ export const LeaveProvider = ({ children }) => {
         viewList()
         viewLeaveData();
         console.log("-----delete data-----", response)
-        return dispatch({ type: 'DELETE_LEAVE', payload: leaveId });
+        return (
+          dispatch({ type: 'DELETE_LEAVE', payload: leaveId })
+      /*     dispatch({ type: 'FETCH_LEAVE_LIST', payload: state.leaveList }),
+          dispatch({ type: 'FETCH_LEAVE_TYPE', payload: state.leaveType }),
+          dispatch({ type: 'FETCH_GRANT_LEAVE', payload: state.grantLeave }) */
+
+        )
 
       })
       .catch((error) => {
@@ -165,6 +186,7 @@ export const LeaveProvider = ({ children }) => {
   
 
  
+//Holiday List
 
   const getHoliday = () => {
     // const [state, updateStae] =uss
@@ -194,7 +216,6 @@ export const LeaveProvider = ({ children }) => {
   
 
 
-
   return (
     <LeaveContext.Provider value={{
       viewList,
@@ -214,6 +235,7 @@ export const LeaveProvider = ({ children }) => {
       leaveDataList: state.leaveDataList,
       holidayDataList:state.holidayDataList,
       grantLeave: state.grantLeave
+     
     }}>
       {children}
     </LeaveContext.Provider>

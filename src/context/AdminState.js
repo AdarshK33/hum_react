@@ -1,8 +1,7 @@
-
-
 import React, { createContext, useReducer } from 'react';
 import { client } from '../utils/axios';
 import AdminReducer from '../reducers/AdminReducer';
+import { ToastContainer, toast } from "react-toastify";
 
 
 const initial_state = {
@@ -11,6 +10,8 @@ const initial_state = {
  employeeIdList:[],
  getEmployeesName:[],
  grantLeaveView:[],
+ leaveMasterList:[],
+ ApprovalLeaveList:[]
 }
 
 
@@ -22,7 +23,7 @@ export const AdminProvider = ({ children }) => {
  // view Leaves for Admin
 
  const viewAdminList = () => {
-  client.get('employee/view/leave_view')
+  client.get('employee/view/leave_view/{costCentre}')
     .then((response) => {
       state.leaveAdminList =  response.data.data
       console.log("=====GET Admin Leave API respone=====", state.leaveAdminList)
@@ -80,17 +81,62 @@ function createGrantLeave(addGrantLeave) {
 }
 
 
+//view leave master 
+const leaveMasterView = () => {
+  client.get('leave_master/view')
+  .then((response) => {
+    state.leaveMasterList = response.data.data
+    console.log("leave master view", state.leaveMasterList)
+    return dispatch({type: 'LEAVE_MASTER_VIEW', payload: state.leaveMasterList })
+  })
+}
+
+//Upload leave file
+const uploadFile = (file) => {
+  const formData = new FormData();
+  formData.append('file',file)
+
+  return client.post('leave_master/upload', formData)
+    .then((response) => {
+      console.log(response.data,"leave upload response")
+      leaveMasterView();
+      toast.info(response.message)
+      return dispatch({type: 'LEAVE_MASTER_UPLOAD', payload: state.leaveMasterList })
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+}
+
+// Leave Approval List
+
+const ApprovalView = () => {
+  client.get('leave_transaction/approval_view')
+  .then((response) => {
+    state.ApprovalLeaveList = response.data.data
+    console.log("Approval List data", state.ApprovalLeaveList)
+    return dispatch({type: 'APPRROVAL_LEAVE_LIST', payload: state.ApprovalLeaveList})
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+}
   return (<AdminContext.Provider value={{
     viewAdminList,
     CostCenter,
     employeeIdData,
     viewGrantLeave,
     createGrantLeave,
+    leaveMasterView,
+    uploadFile,
+    ApprovalView,
     grantLeaveView:state.grantLeaveView,
     getEmployeesName:state.getEmployeesName,
     leaveAdminList: state.leaveAdminList,
     costCenterList: state.costCenterList,
-    employeeIdList: state.employeeIdList
+    employeeIdList: state.employeeIdList,
+    leaveMasterList: state.leaveMasterList,
+    ApprovalLeaveList: state.ApprovalLeaveList
   }}>
     {children}
   </AdminContext.Provider>);
