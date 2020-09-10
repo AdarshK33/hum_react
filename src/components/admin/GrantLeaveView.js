@@ -1,75 +1,61 @@
-import React, { Fragment, useState, useContext, useEffect, useReducer } from 'react';
+import React, { Fragment, useState, useContext,useEffect } from 'react';
 import Breadcrumb from '../common/breadcrumb';
-import { Card, Row, Col, Table, Button, Modal } from 'react-bootstrap'
-// import GrantLeaveAdd from './GrandLeaveAdd';
+import GrantLeaveAdd from './GrantLeaveAdd';
 import { AdminContext } from "../../context/AdminState";
 const GrantLeaveView = () => {
 
-    const initial_state = {}
-    const { state, viewGrantLeave, grantLeaveView } = useContext(AdminContext);
+
+    const { viewGrantLeave, grantLeaveView } = useContext(AdminContext);
 
     const [modal, setModal] = useState(false);
-    // const { state } = useContext(ClusterContext);
     const handleClose = () => setModal(false)
     const handleShow = () => setModal(true)
-    // useEffect(() => {
-    console.log(state)
-    // }, [state]);
+   
 
-    // useEffect(() => {
-    //     viewGrantLeave()
-    // }, [])
-    // alert(grantLeaveView)
+    useEffect(() => {
+        viewGrantLeave()
+    }, [])
+    
 
     return (
         <Fragment>
             <Breadcrumb title="Grant Leave " parent=" Grant Leave " />
             <div className="container-fluid">
-                <div className="row">
-                    <div className="col-sm-12 main-heading-row">
-                        <h4 className="main-heading"> Grant Leaves</h4>
-                    </div>
-                </div>
+            <div className="title_bar" style={{background:"#006EBB"}} >
+               
+            <button className="btn btn-light mr-2" onClick={handleShow}>Create</button>
+              </div>
+              <GrantLeaveAdd handleClose={handleClose} modal={modal} />
+               
 
-                <Row className="apply-button-row">
-                    <Col className="leaveApplications">Leave Applications</Col>
-                    <Col>
-                        <Button className="apply-button" onClick={handleShow}>Apply</Button>
-                    </Col>
-                    {/* <GrantLeaveAdd handleClose={handleClose} modal={modal} /> */}
-                </Row>
-
-
-                <Row className="table">
-                    <Table>
-                        <thead>
+                <table id="table-to-xls" className="table table-hover">
+                  <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>          
                             <tr>
-                                <th>Sr No.</th>
-                                <th>Employee Id</th>
-                                <th>Grant Leave Id</th>
-                                <th>No of Days</th>
-                                <th>Year</th>
+                                <th scope="col">Sr No.</th>
+                                <th scope="col">Employee Id</th>
+                                <th scope="col">Employee Name</th>
+                                <th scope="col">Cost Centre Id</th>
+                                
+                                <th scope="col">No of Days</th>
+                                <th scope="col">Year</th>
                             </tr>
-
-                        </thead>
-                        {/* {grantLeaveView.length > 0 &&
-                            grantLeaveView.map((e, i) => {
-                                return (
-                                    <tbody key={i + 1}>
-                                        <tr>
-                                            <td>{i + 1}</td>
-                                            <td>
-                                                {e.empId}
-                                            </td>
-
-                                           
-                                        </tr>
-
-                                    </tbody>
-                                );
-                            })} */}
-                    </Table>
-                </Row>
+                        </thead>                     
+                      {grantLeaveView.map((item, i) => {
+                      return (
+                        <tbody key={i + 1}>
+                          <tr>
+                            <td>{i + 1}</td>
+                            <td>{item.empId}</td>
+                            <td>{item.empName}</td>
+                            <td>{item.costCentre}</td>
+                            <td>{item.numOfDays}</td>
+                            <td>{item.year}</td>
+                          </tr>
+                        </tbody>
+                      
+                      )
+                    })}  
+               </table>
             </div>
         </Fragment>
     )
