@@ -10,8 +10,8 @@ const initialState = {
   message: '',
   leavesData: {},
   leaveDataList: {},
-  holidayDataList:{},
-  grantLeave: []
+  holidayDataList:{}
+ 
 }
 
 export const LeaveContext = createContext();
@@ -54,7 +54,7 @@ export const LeaveProvider = ({ children }) => {
       })
   }
   //view Grant Leave
-  const viewGrantLeave = () => {
+ /*  const viewGrantLeave = () => {
 
     let empId1 = "DSI000035"
     let year = '2020'
@@ -67,7 +67,7 @@ export const LeaveProvider = ({ children }) => {
       .catch((error) => {
         console.log(error)
       })
-  }
+  } */
 
   // Get Leave Type
 
@@ -227,14 +227,12 @@ export const LeaveProvider = ({ children }) => {
       editList,
       deleteList,
       viewLeaveData,
-      viewGrantLeave,
       leaveList: state.leaveList,
       leaveType: state.leaveType,
       message: state.message,
       leavesData: state.leavesData,
       leaveDataList: state.leaveDataList,
-      holidayDataList:state.holidayDataList,
-      grantLeave: state.grantLeave
+      holidayDataList:state.holidayDataList
      
     }}>
       {children}
