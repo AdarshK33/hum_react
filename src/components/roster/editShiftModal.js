@@ -4,7 +4,6 @@ import moment from 'moment';
 import "react-datepicker/dist/react-datepicker.css";
 import {  Button, Modal } from 'react-bootstrap'
 import { RosterContext } from "../../context/RosterState";
-import { startOfDay } from 'date-fns/esm';
 
 
 const EditShiftModal = (props) => {
@@ -14,7 +13,14 @@ const EditShiftModal = (props) => {
     viewContractTypes()
   }, [])
 
+ 
+  useEffect(() => {
+    setShiftType(props.shiftType)
+}, [props.shiftType])
 
+useEffect(() => {
+    setContractType(props.contractType)
+}, [props.contractType])
 
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
@@ -29,26 +35,14 @@ const EditShiftModal = (props) => {
   const [showText, setShowText] = useState(false);
   const[invalidText,setInvalidText]= useState(false)
   const[showBreakDuration,setShowBreakDuration]= useState(true)
+ // const [workingHoursText, setWorkingHoursText] = useState(false);
  const[warnMsg,setWrnMsg] = useState(false);
   const [errormsg, setErrorMsg] = useState(false);
   const[status,setStatus] = useState(0)
 
-  useEffect(() => {
-    setContractType(props.contractType)
-}, [props.contractType])
-
-useEffect(() => {
-  setShiftType(props.shiftType)
-}, [props.shiftType])
 
 
-
-
-  
-
-
-
-  const {updateShift,viewShift, singleShiftList,viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
+ const {updateShift,viewShift, singleShiftList,viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const setClear = () => {
    setShiftType('')
     setStartTime('')
@@ -112,12 +106,6 @@ useEffect(() => {
     setEditModal()
   }
  
-  const setFirstStarTime=(startTime)=>{
-    alert("hi");
-     var result = (moment(startTime,["HH:mm:ss"]).format("HH:mm a"));
-     
-     alert(result)
-  }
   const onSubmit = e => {
     // const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
     // const etime = moment(endTime, ["h:mm A"]).format("HH:mm");
@@ -208,14 +196,14 @@ useEffect(() => {
                   <div className="row">
                     <div className="col-sm-6">
                         <div className="form-group">
-                       
-
+                       {/* <h1>{moment(singleShiftList.startTime,["HH:mm:ss"]).format("HH:mm A")}</h1>  */}
+          
                         <label htmlFor="exampleFormControlInput1">From Time</label>
-                        <br />   
-
+                        <br />
                         <DatePicker
                           className="form-control"
                           selected={startTime}
+                        //  selected={moment(singleShiftList.startTime,["HH:mm:ss"]).format("HH:mm A")}
                         //  selected={moment(singleShiftList.startTime,["HH:mm"]).format("h:mm A")}
                           onChange={date => setStartTime(date)}
                           showTimeSelect
@@ -224,11 +212,11 @@ useEffect(() => {
                           timeIntervals={30}
                           timeCaption="Time"
                           dateFormat="HH:mm aa"
+                          value={startTime}
                           placeholderText={singleShiftList.startTime}
                           required
                         />
                       </div>
-                    
                     </div>
                     <div className="col-sm-6">
                       <div className="form-group">
@@ -258,21 +246,20 @@ useEffect(() => {
                   <h6 style={{ color: "black", }}> Total working hours {workingHours}</h6>
                       
                        <h6 style={{ color: "red"}}>{warnMsg}</h6>
-
-                          
+                
                       {showBreakDuration &&
                       <div className="row">
                         <div className="col-sm-4">
-                        <h6 style={{ color: "text-secondary",fontSize:"13px"  }}>Working Hours :{singleShiftList.workingHours}</h6>
+                        <h6 style={{ color: "text-secondary",fontSize:"15px"  }}>Working Hours :{singleShiftList.workingHours}</h6>
                         </div>
                         <div className="col-sm-8">
-                        <h6 style={{ color: "text-secondary",fontSize:"13px" }}>Break duration :{singleShiftList.breakStartTime}-{singleShiftList.breakEndTime}</h6>
+                        <h6 style={{ color: "text-secondary",fontSize:"15px" }}>Break duration :{singleShiftList.breakStartTime}-{singleShiftList.breakEndTime}</h6>
                           <br/>
                         </div>  
                        
                           </div>
                           }
-
+    
                   <div className="row">
                     <div className="col-sm-12">
                       {parseFloat(workingHours) > 5 ?
@@ -350,10 +337,10 @@ useEffect(() => {
                           required
                           value={shiftType}                      
                           onChange={(e)=>setShiftType(e.target.value)}>
-                          {/* <option value="" disabled selected hidden>{singleShiftList.shiftType}</option> */}
+                          <option value="" disabled selected hidden>{singleShiftList.shiftType}</option>
                           <option value="">Select Shift Type</option>
                                   <option>Captain</option>
-                                  <option>On duty</option>
+                                  <option>Onduty</option>
                                   <option>General</option>
                         </select>
                       </div>
@@ -362,8 +349,9 @@ useEffect(() => {
 
 
 
-                                  
-                <div className="row">
+               
+                  
+                  <div className="row">
                     <div className="col-sm-12">
                       <div className="form-group">
                         <label htmlFor="exampleFormControlInput1"> Select Contract Type</label>
@@ -373,7 +361,8 @@ useEffect(() => {
                           onChange={(e) => setContractType(e.target.value)} 
                           value={contractType}>
                             
-                           {shiftContractNames.map((e, i) => {
+                            <option value="" disabled selected hidden>{singleShiftList.contractType}</option>   
+                          {shiftContractNames.map((e, i) => {
                             return (
                              
                               <option key={e.typeId} value={e.contractType}>
@@ -384,10 +373,7 @@ useEffect(() => {
                         </select>
                       </div>
                     </div>
-                  </div> 
-
-             
-
+                  </div>
 
 
                   <div className="row">

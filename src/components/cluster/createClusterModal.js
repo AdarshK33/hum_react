@@ -143,6 +143,7 @@ const CreateClusterModal = (props) => {
                     name="filters"
                     placeholder="Filters"
                     value={multiValue}
+                    style={{fontSize:"0.8rem"}}
                     options={sportsNames.map(e => ({ label: e.sportName, value: e.sportId }))}
                     onChange={handleMultiChange}
                     isMulti
@@ -155,7 +156,7 @@ const CreateClusterModal = (props) => {
                 <div className="form-group">
                   <label htmlFor="exampleFormControlInput1">Cluster Name</label>
 
-                  <input type="text" className="form-control" placeholder="Cluster Name" required value={clusterName} onChange={onChangeHandler} />
+                  <input type="text"      style={{fontSize:"0.8rem"}} className="form-control" placeholder="Cluster Name" required value={clusterName} onChange={onChangeHandler} />
 
                 </div>
               </div>
@@ -166,7 +167,7 @@ const CreateClusterModal = (props) => {
                 <div className="form-group">
                   <label htmlFor="exampleFormControlInput1">Cluster Description</label>
 
-                  <input type="text" className="form-control digit" placeholder="Cluster Description" required value={description} onChange={onDescprtion} />
+                  <input type="text"      style={{fontSize:"0.8rem"}} className="form-control digit" placeholder="Cluster Description" required value={description} onChange={onDescprtion} />
                 </div>
               </div>
             </div>
@@ -180,7 +181,8 @@ const CreateClusterModal = (props) => {
                   <Select
                     name="filters"
                     placeholder="Filters"
-                    value={employee}            
+                    value={employee}   
+                    style={{fontSize:"0.8rem"}}         
                     options={getClusterEmployees.map(e => ({ label: e.firstName +" "+e.employeeId, value: e.employeeId }))}
                     onChange={handleMultiChange1}
                     isMulti
@@ -198,6 +200,7 @@ const CreateClusterModal = (props) => {
                   <select
                     className="form-control"
                     required
+                    style={{fontSize:"0.8rem"}}
                     onChange={clusterLeaderSelect}>
                     <option value="">Select Cluster Leader</option>
                     {clusterLeaderNames.map((e, i) => {

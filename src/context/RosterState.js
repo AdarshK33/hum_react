@@ -1,10 +1,8 @@
-import React, { createContext, useReducer, useState } from 'react';
+import React, { createContext, useReducer } from 'react';
 import {client} from '../utils/axios';
-import environmentVariables from '../components/common/environment';
-import { ToastContainer, toast } from "react-toastify";
-import moment from 'moment'
+import { toast } from "react-toastify";
 import RosterReducer from '../reducers/RosterReducer';
-const baseUrl = "http://humine.theretailinsights.co/";
+
 
 
 const initial_state = {

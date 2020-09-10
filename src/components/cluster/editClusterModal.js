@@ -18,7 +18,6 @@ const EditClusterModal = (props) => {
   const [errormsg, setErrorMsg] = useState(false);
   const [multiValue, setMultiValue] = useState([])
   const [clustertButton, setClusterButton] = useState(false);
-  const [selectedOption,setSelectedOption] = useState(null);
 
 
 
@@ -36,7 +35,7 @@ const EditClusterModal = (props) => {
   }
 
 
-  const { updateCluster,viewCluster,getSingleCluster1, getSingleCluster,viewSports, sportsNames, clusterLeaderNames, selectClusterLeader } = useContext(ClusterContext);
+  const { updateCluster,viewCluster, getSingleCluster,viewSports, sportsNames, clusterLeaderNames, selectClusterLeader } = useContext(ClusterContext);
 
   useEffect(() => {
     setClusterName(getSingleCluster.clusterName)
