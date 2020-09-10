@@ -15,6 +15,15 @@ const AdminReducer = (state, action) => {
 
         case 'EMPLOYEE_ID_DATA':
             return { ...state, employeeIdList: action.payload }
+
+        case 'LEAVE_MASTER_VIEW':
+            return { ...state, leaveMasterList: action.payload }
+
+        case 'LEAVE_MASTER_UPLOAD':
+            return { ...state, leaveMasterList: action.payload }
+
+        case 'APPRROVAL_LEAVE_LIST':
+            return { ...state, ApprovalLeaveList: action.payload }
           
                
         default: return state;

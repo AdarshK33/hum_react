@@ -17,6 +17,8 @@ const AdminLeaveAdd = (props) => {
     const [employeeCostCenter, setEmployeeCostCenter] = useState('')
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState()
+    const [startMaternityDate, setStartMaternityDate] = useState(new Date())
+    const [endMaternityDate, setEndMaternityDate] = useState()
     const [leave, setLeave] = useState('')
     const [leaveTypeId, setLeaveTypeId] = useState(null)
     const [leaveName, setLeaveName] = useState('')
@@ -92,6 +94,11 @@ const AdminLeaveAdd = (props) => {
         console.log("test1 as leave name", test1)
         console.log("test2 as leave id", test2)
     }
+    //Maternity Date validation
+    let d1 = new Date(startMaternityDate);
+    let d2 = new Date(d1)
+    let d3 = d2.setDate(d2.getDate() + 179)
+
     // Fields validation
     const validation = (event) => {
         let flag = true
@@ -144,8 +151,25 @@ const AdminLeaveAdd = (props) => {
             viewLeavePopup: 1,
             year: '2020'
         }
-       
+        const newLeave1 = {
+            empId: employeeCostCenter,
+            fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
+            leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName,
+            leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
+            ltId: 0,
+            numberOfDays: 0,
+            reason: reason,
+            status: 1,
+            toDate: moment(d3).format("YYYY-MM-DD"),
+            viewLeavePopup: 1,
+            year: '2020'
+        }
+        if (leave == 'Maternity') {
+            addLeave(newLeave1)
+        }else{
             addLeave(newLeave)
+        }
+            
         history.push("/AdminLeaves/AdminLeavesList");
 
 
@@ -162,8 +186,26 @@ const AdminLeaveAdd = (props) => {
             viewLeavePopup: 0,
             year: '2020'
         }
+        const newPopup1 = {
+            empId: employeeCostCenter,
+            fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
+            leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName,
+            leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
+            ltId: 0,
+            numberOfDays: 0,
+            reason: reason,
+            status: 1,
+            toDate: moment(d3).format("YYYY-MM-DD"),
+            viewLeavePopup: 0,
+            year: '2020'
+        }
      
+        if (leave == 'Maternity') {
+            addPopup(newPopup1)
+        }else{
             addPopup(newPopup)
+        }
+            
         history.push("/AdminLeaves/AdminLeavesList");
        
     } 
@@ -231,6 +273,29 @@ const AdminLeaveAdd = (props) => {
                                     </Form.Control>
                                 </Col>
                             </Form.Group>
+                            {leave == 'Maternity' ?
+                                <React.Fragment>
+                                    <Form.Group as={Row}>
+                                        <Form.Label column sm="3" className="padding-right">From Date:</Form.Label>
+                                        <Col sm="3" className="padding-left">
+                                            <DatePicker selected={startMaternityDate} onChange={(date) => setStartMaternityDate(date)}
+                                                className="input_date" dateFormat="yyyy-MM-dd" selectsStart startDate={startMaternityDate}
+                                                endDate={d3}
+                                                minDate={startMaternityDate}
+                                                placeholderText="From Date" required />
+                                        </Col>
+
+                                        <Form.Label column sm="3" className="padding-right"
+                                            style={{ display: 'flex', justifyContent: 'center' }}>To Date:</Form.Label>
+                                        <Col sm="3" className="padding-left">
+                                            <DatePicker selected={d3} selectsEnd startDate={startMaternityDate} readOnly
+                                                endDate={d3} onChange={(date) => setEndMaternityDate(date)}
+                                                className="input_date" dateFormat="yyyy-MM-dd"
+                                                minDate={startMaternityDate}
+                                                placeholderText="To Date" />
+                                        </Col>
+                                    </Form.Group>
+                                </React.Fragment> :
 
                                 <Form.Group as={Row}>
                                     <Form.Label column sm="3" className="padding-right">From Date:</Form.Label>
@@ -277,7 +342,7 @@ const AdminLeaveAdd = (props) => {
                                         </React.Fragment>}
 
                                 </Form.Group>
-                            
+                                }
                             <Form.Group as={Row}>
                                 <Form.Label column sm="3" className="padding-right">Reason:</Form.Label>
                                 <Col sm="9" className="padding-left">
