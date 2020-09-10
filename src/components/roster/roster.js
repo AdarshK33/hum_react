@@ -13,22 +13,18 @@ const Roster = () => {
 
   const [modal, setModal] = useState(false)
   const [shiftDate, setshiftDate] = useState(false)
+  const { weekOffDataEmp, weekOffDataList } = useContext(RosterContext)
+
   const handleClose = () => setModal(false)
   const handleShow = (item) => {
-    console.log(item, "ite")
+    console.log(item, "item onclick")
     setshiftDate(item)
     setModal(true)
   }
 
-  const { weekOffDataEmp, weekOffDataList } = useContext(RosterContext)
-
-  // let newStartDate = ;
-  // let endDate = ;
-
   useEffect(() => {
     weekOffDataEmp(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD") )
   }, [])
-  console.log(weekOffDataList, "dasuua")
 
   const submitDate = (e) => {
     e.preventDefault();
@@ -38,17 +34,17 @@ const Roster = () => {
   const checkCondition = (item) => {
     console.log(item, "che")
     if (item.roster == null) {
-      return <button className="btn btn-square btn-primary btn-sm pl-5 pr-5" onClick={() => handleShow(item)}>+</button>
+      return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item)}>+</button>
     } else if (item.roster.holiday != "" && item.roster.holiday != null) {
-      return <button className="btn btn-square btn-warning btn-sm" type="button">{item.roster.holiday}</button>
+      return <button className="btn btn-square btn-warning btn-sm" disabled type="button">{item.roster.holiday}</button>
     } else if (item.roster.leave != "" && item.roster.leave != null) {
-      return <button className="btn btn-square btn-danger btn-sm" type="button">Leave</button>
+      return <button className="btn btn-square btn-danger btn-sm" onClick={() => handleShow(item)} type="button">Leave</button>
     } else if (item.roster.weekOff) {
-      return <button className="btn btn-square btn-info btn-sm" type="button">Week Off</button>
+      return <button className="btn btn-square btn-info btn-sm" onClick={() => handleShow(item)} type="button">Week Off</button>
     } else if (item.roster.shiftName != "" && item.roster.shiftName != null) {
-      return <button className="btn btn-square btn-danger btn-sm" type="button">{item.roster.shiftName}</button>
+      return <button className="btn btn-square btn-success  btn-sm" type="button">{item.roster.shiftName}</button>
     } else {
-      return <button className="btn btn-square btn-primary btn-sm pl-5 pr-5" onClick={() => handleShow(item)}>+</button>
+      return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item)}>+</button>
     }
   }
   return (
@@ -155,7 +151,7 @@ const Roster = () => {
             </div>
           </div>
         </div>
-        <ShiftModal handleClose={handleClose} modal={modal} shiftDate={shiftDate.date} />
+        {modal && <ShiftModal handleClose={handleClose} modal={modal} shiftDate={shiftDate.date} />}
       </div>
 
     </Fragment>

@@ -189,8 +189,12 @@ const addWeekOff = (newWeekOff) => {
    
     return client.post('shift/assign/employee', assignData)
       .then((response) => {
+        const {
+          selectedRosterRange: { endDate, startDate },
+        } = state;
         toast.info(response.data.message)
         console.log(response,"cre")
+        weekOffDataEmp(endDate, startDate);
       })
       .catch((error) => {
         console.log(error)

@@ -5,6 +5,8 @@ import { RosterContext } from "../../context/RosterState";
 import './roster.css'
 import { useHistory } from "react-router-dom";
 
+import moment from 'moment'
+
 const weeksOption = [
   { value: 1, label: 'Week1' }, { value: 2, label: 'Week2' }, { value: 3, label: 'Week3' }, { value: 4, label: 'Week4' }, { value: 5, label: 'Week5' }, { value: 6, label: 'Week6' }, { value: 7, label: 'Week7' }, { value: 8, label: 'Week8' },
   { value: 9, label: 'Week9' }, { value: 10, label: 'Week10' }, { value: 11, label: 'Week11' }, { value: 12, label: 'Week12' }, { value: 13, label: 'Week13' }, { value: 14, label: 'Week14' }, { value: 15, label: 'Week15' }, { value: 16, label: 'Week16' },
@@ -19,10 +21,14 @@ const ShiftModal = (props) => {
   console.log(props)
   const [key, setKey] = useState('shift')
 
-  const [selectedWeeks, setSelectedWeeks] = useState(1)
+  const shiftDateWeek = moment(props.shiftDate, 'YYYY-MM-DD').week() + 1
+  const [selectedWeeks, setSelectedWeeks] = useState()
   const [weekDay, setWeekDay] = useState()
   const [value, setValue] = useState()
   const [showDay, setShowDay] = useState(false)
+  const [weekDayList, setWeekDayList] = useState([])
+  const [dayList, setDayList] = useState([])
+
   let history = useHistory();
 
   const { weekDays, weekOffDays, addWeekOff, availableShifts, availableShiftData, assignShift, getallWeeks, weeksInYear } = useContext(RosterContext)
@@ -31,12 +37,31 @@ const ShiftModal = (props) => {
   useEffect(() => {
     availableShifts()
     getallWeeks()
-
-
   }, [])
   useEffect(() => {
-    weekOffDays(parseInt(selectedWeeks))
+    weekOffDays(shiftDateWeek)
   }, [selectedWeeks])
+
+  useEffect(() => {
+
+    let {shiftDate} = props
+    const weeks = weeksInYear.map(arr => {
+      return {
+        ...arr,
+        selected: arr.weekId === shiftDateWeek
+      }
+    })
+    const days = weekDays.map(arr => {
+      return {
+        ...arr,
+        selected: arr.date === shiftDate
+      }
+    })
+    setWeekDayList(weeks)
+    setDayList(days)
+    console.log(weeks, 'Shift year');
+    console.log(days, 'Shift day');
+  }, [props.shiftDate, weekDays])
 
   const submitForm = (e) => {
     e.preventDefault();
@@ -85,7 +110,6 @@ const ShiftModal = (props) => {
     console.log("Submit")
 
   }
-  console.log("selected value", selectedWeeks)
 
   const setWeekDayHandler = (e) => {
     let newDay = e.target.value
@@ -127,7 +151,7 @@ const ShiftModal = (props) => {
                     </div>
                   </div>
                 </div>
-                <div className="note text-primary text-center">
+                <div className="note text-primary text-center py-2">
                   <button type="button" className="btn btn-square btn-primary btn-cm pl-5 pr-5"
                     onClick={submitAssignShift}
                   >Assign</button>
@@ -151,30 +175,30 @@ const ShiftModal = (props) => {
                      />
                      <div><b>Selected Value: </b> {JSON.stringify(selectedWeeks, null, 2)}</div> */}
                       <Form.Control as='select' size="sm" value={selectedWeeks} className="darkBackground"
-                        onChange={(e) => handleWeeksChange(e)}  >
-                        {weeksInYear.map((item, i) => {
+                        onChange={(e) => handleWeeksChange(e)}>
+                        {weekDayList.map((item, i) => {
                           return (
-                            <option key={item.weekId} value={item.weekId}>{item.weekName + "-" + item.year}</option>
+                            <option key={item.weekId} selected={item.selected} value={item.weekId}>{item.weekName + " - " + item.year}</option>
                           )
                         })}
                       </Form.Control>
                     </Col>
                   </Form.Group>
-                  {showDay ? <Form.Group as={Row}>
+                  <Form.Group as={Row}>
                     <Form.Label column sm="4" className="padding-right">Select Day:</Form.Label>
                     <Col sm="8" className="padding-left">
                       <Form.Control as="select" size="sm" value={weekDay} className="darkBackground"
                         onChange={(e) => setWeekDayHandler(e)}>
-                        {weekDays.length > 0 && weekDays.map((item, i) => {
+                        {dayList.map((item, i) => {
                           return (
-                            <option key={item.date} value={item.date}>{item.day}</option>
+                          <option key={item.date} selected={item.selected} value={item.date}>{item.day}{item.selected}</option>
                           )
                         })
                         }
 
                       </Form.Control>
                     </Col>
-                  </Form.Group> : null}
+                  </Form.Group>
                   <Button variant="secondary" className="assign-button" size="sm" block type="submit">
                     Assign</Button>
                   <Form.Text muted>
