@@ -5,19 +5,19 @@ import { AdminContext } from "../../context/AdminState";
 const GrantLeaveAdd = (props) => {
 
 
-  
+
     const [employeeId, setEmployeeId] = useState('');
     const [numOfDays, setNumOfDays] = useState('');
     const [year, setYear] = useState('');
     const [successMsg, setSuccessMsg] = useState("");
     const [costCenter, setCostCenter] = useState()
     const [employeeCostCenter, setEmployeeCostCenter] = useState('')
-    const { viewGrantLeave, createGrantLeave, selectEmployeeForLeave, getEmployeesName,CostCenter,costCenterList, employeeIdData, employeeIdList } = useContext(AdminContext);
+    const { viewGrantLeave, createGrantLeave, selectEmployeeForLeave, getEmployeesName, CostCenter, costCenterList, employeeIdData, employeeIdList } = useContext(AdminContext);
 
     const setCostCenterHandler = (e) => {
         let data1 = e.target.value
-       setCostCenter(data1)
-       console.log("data1", data1)
+        setCostCenter(data1)
+        console.log("data1", data1)
     }
     const setEmployeeCostCenterHandler = (e) => {
         let data2 = e.target.value
@@ -29,7 +29,7 @@ const GrantLeaveAdd = (props) => {
     }, [])
     useEffect(() => {
         employeeIdData(costCenter)
-    },[costCenter])
+    }, [costCenter])
 
 
 
@@ -51,12 +51,12 @@ const GrantLeaveAdd = (props) => {
     const onSubmit = (event) => {
         event.preventDefault();
 
-        alert(JSON.stringify(employeeId) + numOfDays + year);
+
         const addGrantLeave = {
             leaveId: 1,
             grantLeaveId: 0,
             numOfDays,
-            empId: employeeId,
+            empId: employeeCostCenter,
             year
         }
         const result = createGrantLeave(addGrantLeave)
@@ -76,7 +76,7 @@ const GrantLeaveAdd = (props) => {
         console.log(result, "in competent");
     }
 
-  
+
     return (
         <Fragment>
             <Modal show={props.modal} onHide={props.handleClose} centered>
@@ -85,72 +85,67 @@ const GrantLeaveAdd = (props) => {
                     <Modal.Title>Grant Leave</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  
-
-
-
-
                     <form onSubmit={onSubmit}>
                         <div className="row">
                             <div className="col-sm-12">
-                            <label htmlFor="exampleFormControlInput1"> Select cost center</label>
-
-                            <select
-                                        className="form-control"
-                                        required
-                                        value={costCenter}
-                                        onChange={(e) => setCostCenterHandler(e)} >
-                                            <option>Select Cost Center</option>
-                                        {costCenterList.map((item,i) => {
-                                           return (
-                                            <option key={item.costCenterId} value={item.costCentreName}>
-                                            {item.costCentreName}</option>
-
-                                            );
-                                        })}
-                                    </select>
-
-
-                                <div className="form-group">
-                                    <label htmlFor="exampleFormControlInput1"> Select Employee</label>
-
-                                    <select
-                                        className="form-control"
-                                        required
-                                        onChange={(e) => setEmployeeCostCenterHandler(e)}>
-                                        <option value="">Select Employee</option>
-                                        {employeeIdList.map((item, i) => {
-                                            return (
-                                                <option key={item.employeeId} value={item.employeeId}>
-                                                {item.firstName}-{item.employeeId}</option>
-
-                                            );
-                                        })}
-                                    </select>
-                                </div>
-                                <br />
                                 <div className="row">
                                     <div className="col-sm-12">
                                         <div className="form-group">
-                                            <label htmlFor="exampleFormControlInput1">Number of days</label>
+                                            <label htmlFor="exampleFormControlInput1"> Select Cost Center</label>
+                                            <select
+                                                className="form-control"
+                                                required
+                                                onChange={(e) => setCostCenterHandler(e)} >
+                                                <option value="">Select Cost Center</option>
+                                                {costCenterList.map((item, i) => {
+                                                    return (
+                                                        <option key={item.costCenterId} value={item.costCentreName}>
+                                                            {item.costCentreName}</option>
 
-                                            <input type="number" className="form-control digit" required onChange={(e) => setNumOfDays(e.target.value)} value={numOfDays} />
+                                                    );
+                                                })}
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
 
+                                <div className="row">
+                                    <div className="col-sm-12">
+                                        <div className="form-group">
+                                            <label htmlFor="exampleFormControlInput1"> Select Employee</label>
 
+                                            <select
+                                                className="form-control"
+                                                required
+                                                onChange={(e) => setEmployeeCostCenterHandler(e)}>
+                                                <option value="">Select Employee</option>
+                                                {employeeIdList.map((item, i) => {
+                                                    return (
+                                                        <option key={item.employeeId} value={item.employeeId}>
+                                                            {item.firstName}-{item.employeeId}</option>
+                                                    );
+                                                })}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-sm-12">
+                                        <div className="form-group">
+                                            <label htmlFor="exampleFormControlInput1">Number Of Days</label>
 
+                                            <input type="number" className="form-control digit" placeholder="Number Of Days" required onChange={(e) => setNumOfDays(e.target.value)} value={numOfDays} />
+                                        </div>
+                                    </div>
+                                </div>
                                 <div className="row">
                                     <div className="col-sm-12">
                                         <div className="form-group">
                                             <label htmlFor="exampleFormControlInput1">Year</label>
-
                                             <input type="number" placeholder="YYYY" min="2019" max="2021" className="form-control digit" required onChange={(e) => setYear(e.target.value)} value={year} />
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                         <button className="btn btn-primary mb-2 mr-2" type="submit" value="Submit">Save</button>
