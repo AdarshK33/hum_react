@@ -24,6 +24,8 @@ function ViewShift() {
   const [contractType, setContractType] = useState('');
   const [shiftType,setShiftType] = useState('');
   const [startTime,setStartTime] = useState(new Date());
+  const [endTime,setEndTime] = useState(new Date());
+  const [breakStartTime, setStartBreakTime] = useState(null);
   // variables
  const { shiftList,editShift, viewShift, } = useContext(RosterContext);
   //console.log(shiftList, "in viewShift");
@@ -77,6 +79,8 @@ function ViewShift() {
                                                 setShiftType(e.shiftType);
                                                 setContractType(e.contractType);
                                                 setStartTime(e.startTime)
+                                                setEndTime(e.endTime)
+                                                
                                         }} />
                                             </td>             
                          
@@ -90,6 +94,7 @@ function ViewShift() {
                 <EditShiftModal handleEditClose={handleEditClose} 
                 shiftType={shiftType}
                 startTime={startTime}
+                endTime={endTime}
                 contractType={contractType}
                 modal={editModal} /> 
               </div>

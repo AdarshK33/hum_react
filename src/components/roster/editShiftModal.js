@@ -14,16 +14,10 @@ const EditShiftModal = (props) => {
   }, [])
 
  
-  useEffect(() => {
-    setShiftType(props.shiftType)
-}, [props.shiftType])
 
-useEffect(() => {
-    setContractType(props.contractType)
-}, [props.contractType])
 
-  const [startTime, setStartTime] = useState(null);
-  const [endTime, setEndTime] = useState(null);
+  const [startTime, setStartTime] = useState(new Date());
+  const [endTime, setEndTime] = useState(new Date());
   const [workingHours, setWorkingHour] = useState('');
   const [contractType, setContractType] = useState('');
   const [breakStartTime, setStartBreakTime] = useState(null);
@@ -41,6 +35,25 @@ useEffect(() => {
   const[status,setStatus] = useState(0)
 
 
+  useEffect(() => {
+    setShiftType(props.shiftType)
+}, [props.shiftType])
+
+useEffect(() => {
+    setContractType(props.contractType)
+}, [props.contractType])
+
+useEffect(() => {
+  setStartTime(props.startTime)
+}, [props.startTime])
+
+useEffect(() => {
+  setEndTime(props.endTime)
+}, [props.endTime])
+
+useEffect(() => {
+  setStartBreakTime(props.breakStartTime)
+}, [props.breakStartTime])
 
  const {updateShift,viewShift, singleShiftList,viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const setClear = () => {
@@ -106,6 +119,8 @@ useEffect(() => {
     setEditModal()
   }
  
+
+
   const onSubmit = e => {
     // const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
     // const etime = moment(endTime, ["h:mm A"]).format("HH:mm");
@@ -202,7 +217,7 @@ useEffect(() => {
                         <br />
                         <DatePicker
                           className="form-control"
-                          selected={startTime}
+                         // selected={startTime}
                         //  selected={moment(singleShiftList.startTime,["HH:mm:ss"]).format("HH:mm A")}
                         //  selected={moment(singleShiftList.startTime,["HH:mm"]).format("h:mm A")}
                           onChange={date => setStartTime(date)}
@@ -212,10 +227,14 @@ useEffect(() => {
                           timeIntervals={30}
                           timeCaption="Time"
                           dateFormat="HH:mm aa"
-                          value={startTime}
-                          placeholderText={singleShiftList.startTime}
-                          required
+                          value={moment(startTime,["HH:mm:ss"]).format("HH:mm A")}
+                          placeholderText={moment(startTime,["HH:mm:ss"]).format("HH:mm A")}
+                          
                         />
+                             {/* <DatePicker selected={startDate}
+                                            onChange={(e) => fromDateHandler(e)}
+                                            className="input_date" dateFormat="yyyy-MM-dd"
+                                        /> */}
                       </div>
                     </div>
                     <div className="col-sm-6">
@@ -223,7 +242,7 @@ useEffect(() => {
                         <label htmlFor="exampleFormControlInput1">End Time</label>
                        
                         <DatePicker
-                          selected={endTime}
+                          //selected={endTime}
                           className="form-control"
                           required
                           onChange={date => setEndTime(date)}
@@ -233,9 +252,10 @@ useEffect(() => {
                           timeFormat="HH:mm"
                           timeIntervals={30}
                           timeCaption="Time"
+                          value={moment(endTime,["HH:mm:ss"]).format("HH:mm A")}
+                          placeholderText={moment(endTime,["HH:mm:ss"]).format("HH:mm A")}
                           dateFormat="HH:mm aa"
-                          placeholderText={singleShiftList.endTime}
-                        />
+                                                />
                       </div>
                     </div>
                     
@@ -271,7 +291,7 @@ useEffect(() => {
                                 <br />
                                 <DatePicker
                                   className="form-control"
-                                  selected={breakStartTime}
+                                 // selected={breakStartTime}
                                   onChange={date => setStartBreakTime(date)}
                                   showTimeSelect
                                   showTimeSelectOnly
@@ -282,7 +302,8 @@ useEffect(() => {
                                   maxTime={endTime}
                                   dateFormat="HH:mm aa"
                                   onCalendarClose={() => { callShowMethod() }}
-                                  placeholderText={singleShiftList.breakStartTime}
+                                  value={moment(endTime,["HH:mm:ss"]).format("HH:mm A")}
+                                  placeholderText={moment(endTime,["HH:mm:ss"]).format("HH:mm A")}
                                   required
                                 />
                               </div>
@@ -391,9 +412,9 @@ useEffect(() => {
                       </div>
                     </div>
                   </div>
-                  <button className="myclass mb-2 mr-2" type="submit" disabled={shiftButton} value="Submit">Save</button>
-                  <button className="myclass mb-2 mr-2" onClick={props.handleEditClose}>Close
-                  </button>
+                  <button className="btn btn-primary mb-2 mr-2" type="submit" disabled={shiftButton} value="Submit">Save</button>
+                  <Button className="btn btn-primary mb-2 ml-2" onClick={props.handleEditClose}>Close
+                  </Button>
                   {/* <button className="btn btn-primary mb-2 ml-2" value="reset" onClick={setClear}>Clear</button> */}
                   {/* <Button className="btn btn-primary mb-2 ml-2" onClick={props.handleClose}>Close
           </Button> */}
