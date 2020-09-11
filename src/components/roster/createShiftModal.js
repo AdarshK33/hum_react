@@ -335,9 +335,9 @@ const callTimer =()=>{
                       </div>
                     </div>
                   </div>
-                  <button className="btn btn-primary mb-2 mr-2" type="submit" disabled={shiftButton} value="Submit">Save</button>
+                  <button className="myclass mb-2 mr-2" type="submit" disabled={shiftButton} value="Submit">Save</button>
                   {/* <button className="btn btn-primary mb-2 ml-2" value="reset" onClick={setClear}>Clear</button> */}
-                  <Button className="btn btn-primary mb-2 ml-2" onClick={props.handleClose}>Close</Button>
+                  <button className="myclass mb-2 ml-2" onClick={props.handleClose}>Close</button>
                 </form>
                 <h5>{successMsg.length !== 0 && <div className="text-success">{successMsg}</div>}</h5>
               </div>

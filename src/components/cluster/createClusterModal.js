@@ -223,8 +223,8 @@ const CreateClusterModal = (props) => {
 
             
 
-            <button className="btn btn-primary mb-2 mr-2" type="submit" disabled={clustertButton} value="Submit">Save</button>
-            <button className="btn btn-primary mb-2 ml-2" onClick={()=>{clearAndClose()}}>Close</button>
+            <button className="myclass mb-2 mr-2" type="submit" disabled={clustertButton} value="Submit">Save</button>
+            <button className="myclass mb-2 mr-2" onClick={()=>{clearAndClose()}}>Close</button>
             
        
             <h5>{successMsg.length !== 0 && <div className="text-success">{successMsg}</div>}</h5>
