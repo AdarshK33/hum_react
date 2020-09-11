@@ -65,7 +65,7 @@ const Roster = () => {
                           className="form-control"
                           selected={startDate.toDate()}
                           required
-                          onChange={(date) => setStartDate(date)}
+                          onChange={(date) => setStartDate(moment(date, 'YYYY-MM-DD'))}
                         />
                       </div>
                     </div>
@@ -76,7 +76,7 @@ const Roster = () => {
                           className="form-control"
                           selected={endDate.toDate()}
                           required
-                          onChange={(date) => setEndDate(date)}
+                          onChange={(date) => setEndDate(moment(date, 'YYYY-MM-DD'))}
                         />
                       </div>
                     </div>

@@ -21,7 +21,7 @@ const ShiftModal = (props) => {
   console.log(props)
   const [key, setKey] = useState('shift')
 
-  const shiftDateWeek = moment(props.shiftDate, 'YYYY-MM-DD').week() + 1
+  const shiftDateWeek = moment(props.shiftDate, 'YYYY-MM-DD').isoWeek() + 1
   const [selectedWeeks, setSelectedWeeks] = useState()
   const [weekDay, setWeekDay] = useState()
   const [value, setValue] = useState()
@@ -39,6 +39,8 @@ const ShiftModal = (props) => {
     getallWeeks()
   }, [])
   useEffect(() => {
+    console.log('shiftDateWeek', shiftDateWeek)
+    console.log('props.shiftDate', props.shiftDate)
     weekOffDays(shiftDateWeek)
   }, [selectedWeeks])
 
@@ -59,13 +61,14 @@ const ShiftModal = (props) => {
     })
     setWeekDayList(weeks)
     setDayList(days)
+    setWeekDay(shiftDate)
     console.log(weeks, 'Shift year');
     console.log(days, 'Shift day');
   }, [props.shiftDate, weekDays])
 
   const submitForm = (e) => {
     e.preventDefault();
-
+    // console.log('Submit form', e.target.value);
     const setModal = props.handleClose
     setModal()
 
@@ -199,8 +202,10 @@ const ShiftModal = (props) => {
                       </Form.Control>
                     </Col>
                   </Form.Group>
-                  <Button variant="secondary" className="assign-button" size="sm" block type="submit">
-                    Assign</Button>
+                  <div className="justify-content-center d-flex">
+                    <Button className="btn-primary btn-cm pl-5 pr-5" size="sm" type="submit">
+                      Assign</Button>
+                  </div>
                   <Form.Text muted>
                     Note: Only same contract employees can be selected
                   </Form.Text>
