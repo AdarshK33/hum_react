@@ -64,6 +64,7 @@ const Roster = () => {
                         <DatePicker
                           className="form-control"
                           selected={startDate.toDate()}
+                          dateFormat="yyyy-MM-dd"
                           required
                           onChange={(date) => setStartDate(moment(date, 'YYYY-MM-DD'))}
                         />
@@ -75,6 +76,7 @@ const Roster = () => {
                         <DatePicker
                           className="form-control"
                           selected={endDate.toDate()}
+                          dateFormat="yyyy-MM-dd"
                           required
                           onChange={(date) => setEndDate(moment(date, 'YYYY-MM-DD'))}
                         />
@@ -91,19 +93,19 @@ const Roster = () => {
                 </form>
 
               </div>
-              <div>
+              <div className="table-responsive">
                 <table className="table">
 
-                  <thead >
+                  <thead style={{ background: '#006EBB', color: 'white' }}>
                     <tr>
 
-                      <th scope="col"><br /> <span style={{ color: 'deepskyblue' }}>Mon</span></th>
-                      <th scope="col"><br /><span style={{ color: 'deepskyblue' }}> Tue</span></th>
-                      <th scope="col"><br /><span style={{ color: 'deepskyblue' }}> Wed</span></th>
-                      <th scope="col"><br /> <span style={{ color: 'deepskyblue' }}>Thr</span></th>
-                      <th scope="col"><br /> <span style={{ color: 'deepskyblue' }}>Fri</span></th>
-                      <th scope="col"><br /> <span style={{ color: 'deepskyblue' }}>Sat</span></th>
-                      <th scope="col"><br /> <span style={{ color: 'deepskyblue' }}>Sun</span></th>
+                      <th scope="col"><br />Monday</th>
+                      <th scope="col"><br /> Tuesday</th>
+                      <th scope="col"><br /> Wednesday</th>
+                      <th scope="col"><br /> Thursday</th>
+                      <th scope="col"><br /> Friday</th>
+                      <th scope="col"><br /> Saturday</th>
+                      <th scope="col"><br /> Sunday</th>
 
                     </tr>
                   </thead>

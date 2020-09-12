@@ -123,6 +123,9 @@ const ShiftModal = (props) => {
   return (
     <Fragment>
       <Modal show={props.modal} onHide={props.handleClose} centered>
+      <Modal.Header closeButton>
+          <Modal.Title>Roster</Modal.Title>
+        </Modal.Header>
         <Container>
 
           <Modal.Body>
@@ -133,11 +136,11 @@ const ShiftModal = (props) => {
             >
               <Tab eventKey='shift' title="Assign Shift">
                 <div className="row py-2 pt-4">
-                  <div className="col-sm-6 px-2 font-weight-bold">Pavithra Anand - DSC100023</div>
-                  <div className="col-sm-6 px-4 text-danger font-weight-bold">Legal Partner Coach</div>
+                <div className="col-sm-6 px-2">Employee Name:</div>
+                  <div className="col-sm-6 px-2">Pavithra Anand - DSC100023</div>
                 </div>
                 <div className="row py-2">
-                  <div className="col-sm-5 px-2 font-weight-bold">Available Shifts :</div>
+                  <div className="col-sm-5 px-2">Available Shifts :</div>
                   <div className="col-sm-7 ">
                     <div className="form-group">
                       <select className="form-control" onChange={handleChange}>
@@ -154,11 +157,12 @@ const ShiftModal = (props) => {
                     </div>
                   </div>
                 </div>
-                <div className="note text-primary text-center py-2">
+                <div className="note text-primary text-center py-1">
                   <button type="button" className="btn btn-square btn-primary btn-cm pl-5 pr-5"
                     onClick={submitAssignShift}
                   >Assign</button>
                 </div>
+                <br/>
                 <h6 className="note text-secondary text-center">Note: Weekly off is mandatory to assign shift</h6>
               </Tab>
               <Tab eventKey="weekoff" title="Assign Week Off">
@@ -177,7 +181,7 @@ const ShiftModal = (props) => {
                       isClearable
                      />
                      <div><b>Selected Value: </b> {JSON.stringify(selectedWeeks, null, 2)}</div> */}
-                      <Form.Control as='select' size="sm" value={selectedWeeks} className="darkBackground"
+                      <Form.Control as='select' size="sm" value={selectedWeeks} 
                         onChange={(e) => handleWeeksChange(e)}>
                         {weekDayList.map((item, i) => {
                           return (
@@ -190,7 +194,7 @@ const ShiftModal = (props) => {
                   <Form.Group as={Row}>
                     <Form.Label column sm="4" className="padding-right">Select Day:</Form.Label>
                     <Col sm="8" className="padding-left">
-                      <Form.Control as="select" size="sm" value={weekDay} className="darkBackground"
+                      <Form.Control as="select" size="sm" value={weekDay}
                         onChange={(e) => setWeekDayHandler(e)}>
                         {dayList.map((item, i) => {
                           return (
@@ -206,9 +210,8 @@ const ShiftModal = (props) => {
                     <Button className="btn-primary btn-cm pl-5 pr-5" size="sm" type="submit">
                       Assign</Button>
                   </div>
-                  <Form.Text muted>
-                    Note: Only same contract employees can be selected
-                  </Form.Text>
+                          <br/>
+                  <h6 className="note text-secondary text-center pb-2"> Note: Only same contract employees can be selected</h6>
                 </Form>
               </Tab>
             </Tabs>

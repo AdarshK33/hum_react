@@ -2,7 +2,8 @@ import {
     Home,
     File,
     Calendar,
-    Package
+    Package,
+    Men,
 } from 'react-feather';
 
 export const MENUITEMS = [
@@ -47,7 +48,9 @@ export const MENUITEMS = [
         ]
     },
   
-
+    {
+        path: '/roster/adminRoster', title: 'AdminRoster', icon: File, type: 'link', active: false
+    },
     
     
     
