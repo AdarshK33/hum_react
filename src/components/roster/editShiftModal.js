@@ -14,13 +14,6 @@ const EditShiftModal = (props) => {
   }, [])
 
  
-  useEffect(() => {
-    setShiftType(props.shiftType)
-}, [props.shiftType])
-
-useEffect(() => {
-    setContractType(props.contractType)
-}, [props.contractType])
 
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
@@ -42,7 +35,8 @@ useEffect(() => {
 
 
 
- const {updateShift,viewShift, singleShiftList,viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
+  const [updateNewTime,setupdateNewTime] = useState(null)
+  const {updateShift,viewShift, singleShiftList,viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const setClear = () => {
    setShiftType('')
     setStartTime('')
@@ -212,7 +206,6 @@ useEffect(() => {
                           timeIntervals={30}
                           timeCaption="Time"
                           dateFormat="HH:mm aa"
-                          value={startTime}
                           placeholderText={singleShiftList.startTime}
                           required
                         />
@@ -246,7 +239,13 @@ useEffect(() => {
                   <h6 style={{ color: "black", }}> Total working hours {workingHours}</h6>
                       
                        <h6 style={{ color: "red"}}>{warnMsg}</h6>
-                
+
+
+
+
+                     
+
+                          
                       {showBreakDuration &&
                       <div className="row">
                         <div className="col-sm-4">
@@ -259,7 +258,11 @@ useEffect(() => {
                        
                           </div>
                           }
-    
+
+
+
+
+                
                   <div className="row">
                     <div className="col-sm-12">
                       {parseFloat(workingHours) > 5 ?
@@ -385,7 +388,7 @@ useEffect(() => {
                           value={status}                      
                           onChange={(e)=>setStatus(e.target.value)}>
                           <option value="0">Active</option>
-                                  <option value="1">Inactive</option>
+                                  <option value="1">Deactive</option>
                                  
                         </select>
                       </div>

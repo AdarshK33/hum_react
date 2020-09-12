@@ -32,7 +32,7 @@ import { AppProvider } from "./context/AppState";
 import { AdminProvider } from "./context/AdminState";
 import HolidayList from "./components/Holiday/HolidayList";
 import SalaryView from "./components/salary/salaryView";
-
+import AdminRoster from "./components/roster/adminRoster";
 //Grant Leave Page
 import GrantLeaveView from './components/admin/GrantLeaveView';
 
@@ -130,6 +130,12 @@ function Root() {
                           <Route
                             path={`${process.env.PUBLIC_URL}/admin/GrantLeaveView`}
                             component={GrantLeaveView}
+                          />
+
+                         
+                            <Route
+                            path={`${process.env.PUBLIC_URL}/roster/adminRoster`}
+                            component={AdminRoster}
                           />
 
 

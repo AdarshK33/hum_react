@@ -24,6 +24,10 @@ function ViewShift() {
   const [contractType, setContractType] = useState('');
   const [shiftType,setShiftType] = useState('');
   const [startTime,setStartTime] = useState(new Date());
+  const [endTime,setEndTime] = useState(new Date());
+  const [breakStartTime, setStartBreakTime] = useState(new Date());
+  const [breakEndTime,setBreakEndTime] = useState();
+  const [workingHours, setWorkingHour] = useState();
   // variables
  const { shiftList,editShift, viewShift, } = useContext(RosterContext);
   //console.log(shiftList, "in viewShift");
@@ -72,11 +76,17 @@ function ViewShift() {
                             <td>{e.shiftType}</td>                        
                             <td>{e.status === 0 ? "Active" : "Inactive"} </td>
                             <td><Edit2 onClick={() => {
+                                                viewShift()
                                                 setEditModal(true); 
                                                 editShift(e.shiftMasterId);
                                                 setShiftType(e.shiftType);
                                                 setContractType(e.contractType);
                                                 setStartTime(e.startTime)
+                                                setEndTime(e.endTime)
+                                                setStartBreakTime(e.breakStartTime)
+                                                setBreakEndTime(e.breakEndTime)
+                                                setWorkingHour(e.workingHours)
+                                                
                                         }} />
                                             </td>             
                          
@@ -89,8 +99,12 @@ function ViewShift() {
                 </table>
                 <EditShiftModal handleEditClose={handleEditClose} 
                 shiftType={shiftType}
-                startTime={startTime}
                 contractType={contractType}
+                startTime={startTime}
+                endTime={endTime}
+                breakStartTime={breakStartTime}
+                breakEndTime={breakEndTime} 
+                workingHours={workingHours}
                 modal={editModal} /> 
               </div>
 
