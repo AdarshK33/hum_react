@@ -21,12 +21,22 @@ const LeaveAdd = (props) => {
     const [disable, setDisable] = useState(true)
     const [min, setMin] = useState(false)
     const [max, setMax] = useState(false)
+    const {modal, setModal} = useState(false)
+    const [gender, setGender] = useState();
+    const [maritalStatus, setMaritalStatus] = useState()
     let history = useHistory();
 
 
-    const { addLeave, addPopup, leavesData, getLeave, leaveType, leaveList, message, viewLeaveData, leaveDataList }
-     = useContext(LeaveContext);
- 
+    const { addLeave, addPopup, leavesData, getLeave, leaveType, leaveList,
+         message, viewLeaveData, leaveDataList, viewEmpData, empData }
+        = useContext(LeaveContext);
+
+    useEffect(() => {
+        viewEmpData()
+    },[])
+
+    const handleClosePopup = () => setModal(false)
+    const handleShowPopup = () => setModal(true)
     const today = new Date()
 
     const fromDateHandler = (date) => {
@@ -179,10 +189,9 @@ const LeaveAdd = (props) => {
         else {
             addPopup(newPopup)
         }
-
         history.push("/Leaves/LeaveView");
-       
-    } 
+
+    }
 
     return (
         <React.Fragment>
@@ -196,18 +205,23 @@ const LeaveAdd = (props) => {
                     </Modal.Header>
                     <Modal.Body>
                         <Form onSubmit={onSubmit}>
+                       {/*  {empData.length>0 && empData.map((item,i) => {
+                                return(
+                                    <p key={i}>{item.gender} {item.maritalStatus}</p>
+                                )
+                            })} */}
                             <Form.Group as={Row} >
                                 <Form.Label column sm="3" className="padding-right">Leave Type:</Form.Label>
                                 <Col sm="9" className="padding-left">
                                     <Form.Control as="select" size="sm" required value={leave}
                                         onChange={(e) => setLeaveHandler(e)}>
-                                            <option value="">Select</option>
-                                            
+                                        <option value="">Select</option>
+
                                         {leaveType.length > 0 && leaveType.map((item, i) => {
                                             return (
                                                 <option key={item.leaveTypeId} value={item.leaveName}
-                                                disabled={(item.paternity === 1 ? true : false) || (item.maternity === 1 ? true : false)} >
-                                                {item.leaveName}</option>
+                                                    disabled={(item.paternity === 1 ? true : false) || (item.maternity === 1 ? true : false)} >
+                                                    {item.leaveName}</option>
                                             )
                                         })
                                         }
@@ -222,7 +236,7 @@ const LeaveAdd = (props) => {
                                             <DatePicker selected={startMaternityDate} onChange={(date) => setStartMaternityDate(date)}
                                                 className="input_date" dateFormat="yyyy-MM-dd" selectsStart startDate={startMaternityDate}
                                                 endDate={d3}
-                                                minDate={startMaternityDate}
+                                                minDate={new Date()}
                                                 placeholderText="From Date" required />
                                         </Col>
 
@@ -243,7 +257,7 @@ const LeaveAdd = (props) => {
                                     <Col sm="3" className="padding-left">
                                         <DatePicker selected={startDate} onChange={(e) => fromDateHandler(e)}
                                             className="input_date" dateFormat="yyyy-MM-dd"
-                                            placeholderText="From Date" required/>
+                                            placeholderText="From Date" required />
                                     </Col>
                                     {disable &&
                                         <React.Fragment>
@@ -266,7 +280,7 @@ const LeaveAdd = (props) => {
                                                 <DatePicker selected={endDate} onChange={(e) => toDateHandler(e)}
                                                     className="input_date" dateFormat="yyyy-MM-dd"
                                                     minDate={startDate}
-                                                    placeholderText="To Date" required/>
+                                                    placeholderText="To Date" required />
                                             </Col>
                                         </React.Fragment>
 
@@ -298,6 +312,7 @@ const LeaveAdd = (props) => {
                     </Modal.Body>
                 </Container>
             </Modal>
+           
         </React.Fragment>
     );
 };
