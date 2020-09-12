@@ -132,11 +132,7 @@ function Root() {
                             component={GrantLeaveView}
                           />
 
-                            <Route
-                            path={`${process.env.PUBLIC_URL}/admin/GrantLeaveView`}
-                            component={GrantLeaveView}
-                          />
-
+                         
                             <Route
                             path={`${process.env.PUBLIC_URL}/roster/adminRoster`}
                             component={AdminRoster}
