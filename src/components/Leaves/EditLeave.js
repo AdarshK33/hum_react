@@ -189,7 +189,7 @@ const EditLeave = (props) => {
                                             <DatePicker selected={startMaternityDate} onChange={(date) => setStartMaternityDate(date)}
                                                 className="input_date" dateFormat="yyyy-MM-dd" selectsStart startDate={startMaternityDate}
                                                 endDate={d3}
-                                                minDate={startMaternityDate}
+                                                minDate={new Date()}
                                                 placeholderText="From Date" />
                                         </Col>
 

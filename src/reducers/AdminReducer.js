@@ -24,6 +24,15 @@ const AdminReducer = (state, action) => {
 
         case 'APPRROVAL_LEAVE_LIST':
             return { ...state, ApprovalLeaveList: action.payload }
+
+        case 'UPDATED_APPRROVAL_LEAVE_LIST':
+            return { ...state, ApprovalLeaveList: action.payload }
+
+        case 'CANCEL_ADMIN_LEAVE':
+            return {
+                ...state,
+                ApprovalLeaveList: state.ApprovalLeaveList.filter(ApprovalLeaveList => ApprovalLeaveList.ltId !== action.payload)
+            };
           
                
         default: return state;
