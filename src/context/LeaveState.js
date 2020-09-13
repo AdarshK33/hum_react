@@ -91,8 +91,7 @@ export const LeaveProvider = ({ children }) => {
     return client.post('leave_transaction/create', newPopup)
       .then((response) => {
         state.message = response.data.message
-        state.leavesData = response.data.data
-        alert(state.message + " " + ' ' + (state.leavesData !== null ? JSON.stringify(state.leavesData) :''))        
+        state.leavesData = response.data.data 
         console.log("Pop upresponse===>", JSON.stringify(state.leavesData))
         console.log("Pop upresponse===>", state.leavesData)
         console.log("Pop up message===>", state.message)
@@ -107,7 +106,7 @@ export const LeaveProvider = ({ children }) => {
 
 
   const addLeave = (newLeave) => {
-    if (newLeave) {
+  /*   if (newLeave) { */
       console.log("++++create api response+++++", newLeave)
       return client.post('leave_transaction/create',newLeave)
         .then((response) => {
@@ -130,8 +129,6 @@ export const LeaveProvider = ({ children }) => {
           console.log(error)
         })
 
-    }
-    viewList()
   }
 
 
