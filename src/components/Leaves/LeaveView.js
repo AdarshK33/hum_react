@@ -21,7 +21,7 @@ const LeaveView = () => {
     const [ltId, setltId] = useState()
     const [reason, setReason] = useState()
 
-    const { leaveList, viewList, deleteList, editList, viewLeaveData, leaveDataList, deleteData }
+    const { leaveList, viewList, deleteList, editList, viewLeaveData, leaveDataList, deleteData, viewEmpData, empData  }
         = useContext(LeaveContext);
 
     const handleClose = () => setModal(false)
@@ -37,6 +37,7 @@ const LeaveView = () => {
     useEffect(() => {
         viewList()
         viewLeaveData()
+        
 
     }, [])
   
@@ -130,18 +131,14 @@ const LeaveView = () => {
                     </Col>
                     <Col className="col-12 col-md-1"></Col>
                 </Row>
-                {/*   <div className="title_bar">
-                <Button className="apply-button btn mr-2" onClick={handleShow}>Apply</Button>
-
-              </div>
-              <LeaveAdd handleClose={handleClose} modal={modal} /> */}
 
                 <Row className="apply-button-row">
                     <Col className="leaveApplications">Leave Applications</Col>
                     <Col>
-                        <Button className="apply-button" onClick={handleShow}>Apply</Button>
+                        <Button className="apply-button btn btn-light" 
+                        onClick={() => {setModal(true); viewEmpData() }}>Apply</Button>
                     </Col>
-                    <LeaveAdd handleClose={handleClose} modal={modal} />
+                    <LeaveAdd handleClose={handleClose} modal={modal} empData={empData}/>
                 </Row>
 
                 <div className="table-responsive">
@@ -153,8 +150,8 @@ const LeaveView = () => {
                                 <th>Total No. of Days</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
+                                <th></th>
+                                <th></th>
                             </tr>
                         </thead>
 
