@@ -26,12 +26,12 @@ const AdminLeaveView = (props) => {
             <Breadcrumb title="Admin" parent="Admin" />
             <Container>
                 <Row className="heading-row">
-                    <h4>Employee Listing</h4>
+                    <h4 className="main-heading">Employee Listing</h4>
                 </Row>
                 <Row className="apply-button-row">
                     <Col className="leaveApplications">Employees </Col>
                     <Col>
-                        <Button className="apply-button" onClick={handleShow}>Apply</Button>
+                        <Button className="apply-button btn btn-light" onClick={handleShow}>Apply</Button>
                     </Col>
                     <AdminLeaveAdd handleClose={handleClose} modal={modal} />
                 </Row>
@@ -50,10 +50,10 @@ const AdminLeaveView = (props) => {
                                 return (
                                     <tbody key={i}>
                                         <tr>
-                                            <th>{i + 1}</th>
-                                            <th>{item.employeeId}</th>
-                                            <th>{item.firstName} {item.lastName}</th>
-                                            <th>{item.gender}</th>
+                                            <td>{i + 1}</td>
+                                            <td>{item.employeeId}</td>
+                                            <td>{item.firstName} {item.lastName}</td>
+                                            <td>{item.gender}</td>
                                         </tr>
                                     </tbody>
                                 )

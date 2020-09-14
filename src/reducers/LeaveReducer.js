@@ -21,6 +21,7 @@ const LeaveReducer = (state, action) => {
 
         case 'FETCH_GRANT_LEAVE':
             return ({ ...state, grantLeave: action.payload })
+
         case 'FETCH_HOLIDAY_LIST':
                 return { ...state, holiday: action.payload };
 
@@ -29,6 +30,9 @@ const LeaveReducer = (state, action) => {
                 ...state,
                 leaveList: state.leaveList.filter(leaveList => leaveList.leaveId !== action.payload)
             };
+
+        case 'FETCH_EMP_DATA':
+            return ({ ...state, empData: action.payload })
 
         default: return state;
     }

@@ -42,7 +42,7 @@ const AdminLeavesList = (props) => {
             <Breadcrumb title="Admin " parent="Admin Leave" />
             <Container>
                 <Row className="heading-row">
-                    <h4>Admin Leaves</h4>
+                    <h4 className="main-heading">Admin Leaves</h4>
                 </Row>
                 <Row>
                     <Table className="adminTable">
@@ -54,8 +54,8 @@ const AdminLeavesList = (props) => {
                                 <th>Total No. of Days</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
+                                <th></th>
+                                <th></th>
                             </tr>
                         </thead>
 
@@ -65,7 +65,7 @@ const AdminLeavesList = (props) => {
                                     <tbody key={i + 1}>
                                         <tr>
                                             <td>{i + 1}</td>
-                                            <th>{item.empId}</th>
+                                            <td>{item.empId}</td>
                                             <td>{item.leaveCategory}</td>
                                             <td>{item.numberOfDays}</td>
                                             <td>{item.fromDate}</td>

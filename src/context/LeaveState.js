@@ -2,6 +2,7 @@ import React, { createContext, useReducer } from 'react';
 import {client} from '../utils/axios';
 import { ToastContainer, toast } from "react-toastify";
 import LeaveReducer from '../reducers/LeaveReducer'
+import { Modal } from 'react-bootstrap';
 
 
 const initialState = {
@@ -10,7 +11,8 @@ const initialState = {
   message: '',
   leavesData: {},
   leaveDataList: {},
-  holidayDataList:{}
+  holidayDataList:{},
+  empData:[]
  
 }
 
@@ -89,21 +91,22 @@ export const LeaveProvider = ({ children }) => {
     return client.post('leave_transaction/create', newPopup)
       .then((response) => {
         state.message = response.data.message
-        state.leavesData = response.data.data
-        /* toast.info(state.message + " " + ' ' + (state.leavesData !== null ? JSON.stringify(state.leavesData) :'')) */
+        state.leavesData = response.data.data 
         console.log("Pop upresponse===>", JSON.stringify(state.leavesData))
         console.log("Pop upresponse===>", state.leavesData)
         console.log("Pop up message===>", state.message)
-        return dispatch({ type: 'ADD_POPUP_LEAVE', payload: state.leavesData })
-        
+        return (
+        dispatch({ type: 'ADD_POPUP_LEAVE', payload: state.leavesData })
+        )
       })
       .catch((error) => {
         console.log(error)
       })
   }
 
+
   const addLeave = (newLeave) => {
-    if (newLeave) {
+  /*   if (newLeave) { */
       console.log("++++create api response+++++", newLeave)
       return client.post('leave_transaction/create',newLeave)
         .then((response) => {
@@ -126,8 +129,6 @@ export const LeaveProvider = ({ children }) => {
           console.log(error)
         })
 
-    }
-    viewList()
   }
 
 
@@ -214,7 +215,20 @@ export const LeaveProvider = ({ children }) => {
       })
   }
   
+// Emp data according to their EmpId
+const viewEmpData = () => {
 
+  let empId1 = "DSI000035"
+  client.get('employee/view/{empId}' + '?empId='  + empId1)
+    .then((response) => {
+      state.empData = response.data.data
+      console.log("=====GET Emp Data API respone=====", state.empData)
+      return dispatch({ type: 'FETCH_EMP_DATA', payload: state.empData })
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+}
 
   return (
     <LeaveContext.Provider value={{
@@ -227,12 +241,14 @@ export const LeaveProvider = ({ children }) => {
       editList,
       deleteList,
       viewLeaveData,
+      viewEmpData,
       leaveList: state.leaveList,
       leaveType: state.leaveType,
       message: state.message,
       leavesData: state.leavesData,
       leaveDataList: state.leaveDataList,
-      holidayDataList:state.holidayDataList
+      holidayDataList:state.holidayDataList,
+      empData: state.empData
      
     }}>
       {children}

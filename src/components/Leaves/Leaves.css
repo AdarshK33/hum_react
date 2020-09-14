@@ -5,14 +5,19 @@
   button{
       border-radius: 12.25rem !important;
   }
+  .btn.btn-sm.btn-primary {
+    background-color: #006EBB !important;
+    border-color: #006EBB !important;
+}
 button.apply-button.btn.btn-primary{
     color: black;
     background-color: white !important;
     font-weight: bold;
     margin: 7px 0;
-    height: 2.2em;
     float: right;
     border-radius: 12.25rem;
+   /*  padding: 6px 30px;
+    font-size: 1rem; */
 }
 .row.apply-button-row{
     background-color: #006EBB;
@@ -22,6 +27,7 @@ button.apply-button.btn.btn-primary{
     color: white;
     font-weight: bold;
     line-height: 3em;
+    font-size: 1rem;
 }
 .col-sm-12.main-heading-row {
     display: flex;
@@ -39,25 +45,19 @@ button.apply-button.btn.btn-primary{
     background-color: #e9ecef;
     border-color: #dee2e6;
 }
-.padding-left{
-    padding-left: 0;
-}
-.padding-right{
-    padding-right: 0;
-}
-button.submit-button.btn.btn-primary{
-    float: right;
-}
-h5.modal-heading{
-    margin-left: 9rem;
-}
-.react-datepicker__input-container  input[type="text"].input_date{
-    width: 102px;
-}
+
 option:disabled {
     background-color: lightgrey !important;
 }
 button.deleteNoButton.btn.btn-secondary {
     background-color: grey !important;
     border-color: grey !important;
+}
+h4.main-heading {
+    font-weight: 600;
+    text-decoration: underline;
+    text-transform: uppercase;
+}
+.form-control{
+    font-size: 0.8rem;
 }

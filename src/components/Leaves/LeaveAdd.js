@@ -21,12 +21,23 @@ const LeaveAdd = (props) => {
     const [disable, setDisable] = useState(true)
     const [min, setMin] = useState(false)
     const [max, setMax] = useState(false)
+    const [modal, setModal] = useState(false)
+   const [gender, setGender] = useState(props.empData)
+console.log("props empData gender", props.empData.gender)
+console.log("props empData maritalStatus", props.empData.maritalStatus)
     let history = useHistory();
 
 
-    const { addLeave, addPopup, leavesData, getLeave, leaveType, leaveList, message, viewLeaveData, leaveDataList }
-     = useContext(LeaveContext);
- 
+    const { addLeave, addPopup, leavesData, getLeave, leaveType, leaveList,
+        message, viewLeaveData, leaveDataList, viewEmpData, empData }
+        = useContext(LeaveContext);
+
+    useEffect(() => {
+        viewEmpData()
+    }, [])
+
+    const handleClosePopup = () => setModal(false)
+    const handleShowPopup = () => setModal(true)
     const today = new Date()
 
     const fromDateHandler = (date) => {
@@ -51,8 +62,42 @@ const LeaveAdd = (props) => {
     const toDateHandler = (date) => {
         let value1 = date
         setEndDate(value1);
+
+        const newPopup = {
+            empId: 'DSI000035',
+            fromDate: moment(startDate).format("YYYY-MM-DD"),
+            leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName,
+            leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
+            ltId: 0,
+            numberOfDays: 0,
+            reason: 'string',
+            status: 1,
+            toDate: moment(endDate).format("YYYY-MM-DD"),
+            viewLeavePopup: 0,
+            year: '2020'
+        }
+        addPopup(newPopup)
     }
 
+    const setStartMaternityDateHandler = (date) => {
+        let value2 = date
+        setStartMaternityDate(value2)
+
+        const newPopup1 = {
+            empId: 'DSI000035',
+            fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
+            leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName,
+            leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
+            ltId: 0,
+            numberOfDays: 0,
+            reason: reason,
+            status: 1,
+            toDate: moment(d3).format("YYYY-MM-DD"),
+            viewLeavePopup: 0,
+            year: '2020'
+        }
+        addPopup(newPopup1)
+    }
     //Maternity Date validation
     let d1 = new Date(startMaternityDate);
     let d2 = new Date(d1)
@@ -145,45 +190,8 @@ const LeaveAdd = (props) => {
         }
         history.push("/Leaves/LeaveView");
 
-
-        const newPopup1 = {
-            empId: 'DSI000035',
-            fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
-            leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName,
-            leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
-            ltId: 0,
-            numberOfDays: 0,
-            reason: reason,
-            status: 1,
-            toDate: moment(d3).format("YYYY-MM-DD"),
-            viewLeavePopup: 0,
-            year: '2020'
-        }
-
-        const newPopup = {
-            empId: 'DSI000035',
-            fromDate: moment(startDate).format("YYYY-MM-DD"),
-            leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName,
-            leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
-            ltId: 0,
-            numberOfDays: 0,
-            reason: reason,
-            status: 1,
-            toDate: moment(endDate).format("YYYY-MM-DD"),
-            viewLeavePopup: 0,
-            year: '2020'
-        }
-        if (leave == 'Maternity') {
-            addPopup(newPopup1)
-        }
-        else {
-            addPopup(newPopup)
-        }
-
-        history.push("/Leaves/LeaveView");
-       
-    } 
-
+    }
+console.log("props.empData", props.empData)
     return (
         <React.Fragment>
             <ToastContainer />
@@ -191,113 +199,126 @@ const LeaveAdd = (props) => {
                 <Container style={{ paddingBottom: '1rem' }}>
                     <Modal.Header closeButton>
                         <Modal.Title >
-                            <h5 className="modal-heading">Apply For Leave</h5>
+                            <h4>Apply For Leave</h4>
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Form onSubmit={onSubmit}>
-                            <Form.Group as={Row} >
-                                <Form.Label column sm="3" className="padding-right">Leave Type:</Form.Label>
-                                <Col sm="9" className="padding-left">
-                                    <Form.Control as="select" size="sm" required value={leave}
-                                        onChange={(e) => setLeaveHandler(e)}>
+                           
+                            <Row>
+                                <div className="col-sm-12">
+                                    <Form.Group>
+                                        <Form.Label>Leave Type:</Form.Label>
+                                        <Form.Control as="select" required value={leave}
+                                            onChange={(e) => setLeaveHandler(e)}>
                                             <option value="">Select</option>
-                                            
-                                        {leaveType.length > 0 && leaveType.map((item, i) => {
-                                            return (
-                                                <option key={item.leaveTypeId} value={item.leaveName}
-                                                disabled={(item.paternity === 1 ? true : false) || (item.maternity === 1 ? true : false)} >
-                                                {item.leaveName}</option>
-                                            )
-                                        })
-                                        }
-                                    </Form.Control>
-                                </Col>
-                            </Form.Group>
-                            {leave == 'Maternity' ?
-                                <React.Fragment>
-                                    <Form.Group as={Row}>
-                                        <Form.Label column sm="3" className="padding-right">From Date:</Form.Label>
-                                        <Col sm="3" className="padding-left">
-                                            <DatePicker selected={startMaternityDate} onChange={(date) => setStartMaternityDate(date)}
-                                                className="input_date" dateFormat="yyyy-MM-dd" selectsStart startDate={startMaternityDate}
-                                                endDate={d3}
-                                                minDate={startMaternityDate}
-                                                placeholderText="From Date" required />
-                                        </Col>
 
-                                        <Form.Label column sm="3" className="padding-right"
-                                            style={{ display: 'flex', justifyContent: 'center' }}>To Date:</Form.Label>
-                                        <Col sm="3" className="padding-left">
-                                            <DatePicker selected={d3} selectsEnd startDate={startMaternityDate} readOnly
-                                                endDate={d3} onChange={(date) => setEndMaternityDate(date)}
-                                                className="input_date" dateFormat="yyyy-MM-dd"
-                                                minDate={startMaternityDate}
-                                                placeholderText="To Date" />
-                                        </Col>
+                                            {leaveType.length > 0 && leaveType.map((item, i) => {
+                                                 if(props.empData.gender === 'MALE' && props.empData.maritalStatus === 'Married'){
+                                                return (
+                                                        <option key={item.leaveTypeId} value={item.leaveName}
+                                                        disabled={(item.paternity === 1 ? true : false) || (item.maternity === 1 ? true : false)} >
+                                                        {item.leaveName}</option>
+                                                    
+                                                )
+                                                 }
+                                            })
+                                            }
+                                        </Form.Control>
                                     </Form.Group>
-                                </React.Fragment> :
+                                </div>
+                            </Row>
+                            {leave == 'Maternity' ?
+                                    <Row style={{margin:'0'}}>
+                                        <div classNmae="col-sm-6">
+                                            <Form.Group>
+                                            <div><Form.Label >From Date:</Form.Label></div>
+                                            <div><DatePicker selected={startMaternityDate} onChange={(date) => setStartMaternityDateHandler(date)}
+                                                    className="input_date" dateFormat="yyyy-MM-dd" selectsStart startDate={startMaternityDate}
+                                                    endDate={d3}
+                                                    minDate={new Date()}
+                                                    placeholderText="From Date" required /></div>
+                                            </Form.Group>
+                                        </div>
+                                        <div className="col-sm-6" >
+                                            <Form.Group>
+                                            <div><Form.Label >To Date:</Form.Label></div>
+                                            <div>  <DatePicker selected={d3} selectsEnd startDate={startMaternityDate} readOnly
+                                                    endDate={d3} onChange={(date) => setEndMaternityDate(date)}
+                                                    className="input_date" dateFormat="yyyy-MM-dd"
+                                                    minDate={startMaternityDate}
+                                                    placeholderText="To Date" /></div>
+                                            </Form.Group>
+                                        </div>
+                                    </Row> :
 
-                                <Form.Group as={Row}>
-                                    <Form.Label column sm="3" className="padding-right">From Date:</Form.Label>
-                                    <Col sm="3" className="padding-left">
-                                        <DatePicker selected={startDate} onChange={(e) => fromDateHandler(e)}
-                                            className="input_date" dateFormat="yyyy-MM-dd"
-                                            placeholderText="From Date" required/>
-                                    </Col>
+                                <Row>
+                                    <div className="col-sm-6">
+                                        <Form.Group>
+                                            <div><Form.Label>From Date:</Form.Label></div>
+                                            <div>
+                                            <DatePicker selected={startDate} onChange={(e) => fromDateHandler(e)}
+                                                className="input_date" dateFormat="yyyy-MM-dd"
+                                                placeholderText="From Date" required />
+                                                </div>
+                                        </Form.Group>
+                                    </div>
                                     {disable &&
-                                        <React.Fragment>
-                                            <Form.Label column sm="3" className="padding-right"
-                                                style={{ display: 'flex', justifyContent: 'center' }}>To Date:</Form.Label>
-                                            <Col sm="3" className="padding-left">
-                                                <DatePicker selected={endDate} onChange={(date) => setEndDate(date)}
-                                                    className="input_date" dateFormat="yyyy-MM-dd"
-                                                    /*  maxDate={maxToDate} */
-                                                    placeholderText="To Date" disabled={true} />
-                                            </Col>
-                                        </React.Fragment>
+                                        <div className="col-sm-6">
+                                            <div><Form.Label>To Date:</Form.Label></div>
+                                            <div><DatePicker selected={endDate} onChange={(date) => setEndDate(date)}
+                                                className="input_date" dateFormat="yyyy-MM-dd"
+                                                /*  maxDate={maxToDate} */
+                                                placeholderText="To Date" disabled={true} />
+                                                </div>
+                                        </div>
                                     }
-
                                     {min &&
-                                        <React.Fragment>
-                                            <Form.Label column sm="3" className="padding-right"
-                                                style={{ display: 'flex', justifyContent: 'center' }}>To Date:</Form.Label>
-                                            <Col sm="3" className="padding-left">
-                                                <DatePicker selected={endDate} onChange={(e) => toDateHandler(e)}
-                                                    className="input_date" dateFormat="yyyy-MM-dd"
-                                                    minDate={startDate}
-                                                    placeholderText="To Date" required/>
-                                            </Col>
-                                        </React.Fragment>
-
+                                        <div className="col-sm-6">
+                                            <div><Form.Label>To Date:</Form.Label></div>
+                                            <div><DatePicker selected={endDate} onChange={(date) => toDateHandler(date)}
+                                                className="input_date" dateFormat="yyyy-MM-dd"
+                                                minDate={startDate}
+                                                placeholderText="To Date" required /></div>
+                                        </div>
                                     }
                                     {max &&
-                                        <React.Fragment>
-                                            <Form.Label column sm="3" className="padding-right"
-                                                style={{ display: 'flex', justifyContent: 'center' }}>To Date:</Form.Label>
-                                            <Col sm="3" className="padding-left">
-                                                <DatePicker selected={endDate} onChange={(e) => toDateHandler(e)}
+
+                                        <div className="col-sm-6">
+                                           <div><Form.Label>To Date:</Form.Label></div>
+                                            <div><DatePicker selected={endDate} onChange={(date) => toDateHandler(date)}
                                                     className="input_date" dateFormat="yyyy-MM-dd"
                                                     maxDate={today}
-                                                    placeholderText="To Date" />
-                                            </Col>
-                                        </React.Fragment>}
+                                                    placeholderText="To Date" /></div>
+                                        </div>
+                                        }
 
-                                </Form.Group>
+                                </Row>
+                             
                             }
-                            <Form.Group as={Row}>
-                                <Form.Label column sm="3" className="padding-right">Reason:</Form.Label>
-                                <Col sm="9" className="padding-left">
-                                    <Form.Control as="textarea" rows="3" size="sm" name="reason" value={reason}
+                            <Row>
+                                <div className="col-sm-12">
+                                    <p className="leavesMsg">{leavesData ? leavesData.Leave : ''}</p>
+                                </div>
+                            </Row>
+
+                            <Row>
+                                <div className="col-sm-12">
+                                    <Form.Group>
+                                    <Form.Label>Reason:</Form.Label>
+                                    <Form.Control as="textarea" rows="3" name="reason" value={reason}
                                         onChange={(event) => setReason(event.target.value)} required />
-                                </Col>
-                            </Form.Group>
-                            <Button type="submit" className="submit-button" size="sm">Submit</Button>
+                                    </Form.Group>
+                                </div>
+                            </Row>
+
+                            <Button type="submit" /* className="submit-button" size="sm" */>Submit</Button>
                         </Form>
 
                     </Modal.Body>
                 </Container>
             </Modal>
+
         </React.Fragment>
     );
 };

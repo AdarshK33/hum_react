@@ -4,13 +4,11 @@ import { RosterContext } from "../../context/RosterState";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ShiftModal from "./shiftModal";
-import DateFromEnd from "./dateFromEnd";
 import moment from 'moment'
 
 const Roster = () => {
   const [startDate, setStartDate] = useState(moment());
   const [endDate, setEndDate] = useState(moment().add('30', 'd'));
-
   const [modal, setModal] = useState(false)
   const [shiftDate, setshiftDate] = useState(false)
   const { weekOffDataEmp, weekOffDataList } = useContext(RosterContext)
@@ -122,8 +120,8 @@ const Roster = () => {
                                   console.log(newData.getDay(), "day")
                                   return (
                                     <>
-                                      {Array.from(Array(newData.getDay() - 1)).map(() => <td></td>)}
-                                      <td>{item.weekName}<br />{data.date}<br />{checkCondition(data)}</td>
+                                     {/*  {Array.from(Array(newData.getDay() - 1)).map(() => <td></td>)}
+                                      <td>{item.weekName}<br />{data.date}<br />{checkCondition(data)}</td> */}
                                     </>
                                   )
                                 } else {

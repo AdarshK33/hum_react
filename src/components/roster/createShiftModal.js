@@ -30,6 +30,24 @@ const CreateShiftModal = (props) => {
   const [errormsg, setErrorMsg] = useState(false);
   const { addShift, viewShift, viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
 
+
+
+  useEffect(() => {
+    setShiftType(props.shiftType)
+  }, [props.shiftType])
+  
+  useEffect(() => {
+    setContractType(props.contractType)
+  }, [props.contractType])
+  
+  useEffect(() => {
+  setStartTime(props.startTime)
+  }, [props.startTime])
+  
+  useEffect(() => {
+  setEndTime(props.endTime)
+  }, [props.endTime])
+  
   const setClear = () => {
     setStartTime('')
     setEndTime('')
@@ -93,14 +111,14 @@ const CreateShiftModal = (props) => {
     setShowText(true);
     setInvalidText(true)
   }
-
  
 const callTimer =()=>{
-
   const setModal = props.handleClose;
     setClear()
   setModal()
 }
+
+
 
   const onSubmit = e => {
      const stime = moment(startTime, ["h:mm A"]).format("HH:mm");

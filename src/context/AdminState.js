@@ -11,7 +11,8 @@ const initial_state = {
  getEmployeesName:[],
  grantLeaveView:[],
  leaveMasterList:[],
- ApprovalLeaveList:[]
+ ApprovalLeaveList:[],
+ message: '',
 }
 
 
@@ -121,6 +122,43 @@ const ApprovalView = () => {
     console.log(error)
   })
 }
+
+//Approved update List
+const approvedUpdate = (approvalData) => {
+    console.log("++++update approval api response+++++", approvalData)
+    return client.put('leave_transaction/approve',approvalData)
+      .then((response) => {
+        state.message = response.data.message
+        toast.info(state.message)
+        console.log("new update approval list response===>", response.data.data)
+        console.log("new update approval list message===>", state.message)
+        return (
+        dispatch({ type: 'UPDATED_APPRROVAL_LEAVE_LIST', payload: state.ApprovalLeaveList })
+        )
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+}
+
+// Delete Leave
+
+const cancelLeaveList = (ltId) => {
+  console.log("itid", ltId)
+  client.put('leave_transaction/reject/' + ltId)
+  .then((response) => {
+    toast.info(response.data.message)
+    console.log("-----delete data-----", response)
+    return (
+      dispatch({ type: 'CANCEL_ADMIN_LEAVE', payload: ltId })
+    )
+
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+ 
+}
   return (<AdminContext.Provider value={{
     viewAdminList,
     CostCenter,
@@ -130,6 +168,8 @@ const ApprovalView = () => {
     leaveMasterView,
     uploadFile,
     ApprovalView,
+    cancelLeaveList,
+    approvedUpdate,
     grantLeaveView:state.grantLeaveView,
     getEmployeesName:state.getEmployeesName,
     leaveAdminList: state.leaveAdminList,
