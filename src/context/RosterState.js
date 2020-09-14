@@ -15,7 +15,8 @@ const initial_state = {
   singleShiftList:[],
   availableShiftData:[],
   weeksInYear:[],
-  selectedRosterRange: {}
+  selectedRosterRange: {},
+  adminWeekOffDataList:[]
 }
 
 
@@ -133,6 +134,7 @@ const weekOffDays = (weekId) => {
 // view Week Off Data in roster table
 
 const weekOffDataEmp = (endDate, startDate) => {
+
   const empId = 'DSI000035'
     client.get('roster/employee/view' + '?employeeId=' + empId + 
     '&' + 'endDate=' + endDate + '&' + 'startDate=' + startDate)
@@ -214,6 +216,33 @@ const addWeekOff = (newWeekOff) => {
         console.log(error)
       })
   }
+
+
+// ADMIN ROSTER
+
+const adminWeekOffDataEmp = (endDate, startDate) => {
+
+  const adminId = 'IN1055'
+    client.get('roster/view' + '?storeId=' + adminId + 
+    '&' + 'endDate=' + endDate + '&' + 'startDate=' + startDate)
+      .then((response) => {
+        const adminWeekOffDataList =  response.data.data
+        const adminSelectedRosterRange  = {endDate, startDate}
+        console.log("=====GET weekOff Data API respone=====", state.adminWeekOffDataList)
+        
+        return dispatch({ type: 'ADMIN_WEEKOFF_WEEK_DATA_LIST', payload: {
+          adminWeekOffDataList,
+          adminSelectedRosterRange
+        } })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+
+
+
   return (<RosterContext.Provider value={{
     addShift,
     assignShift,
@@ -228,6 +257,7 @@ const addWeekOff = (newWeekOff) => {
     weekOffDataEmp,
     addWeekOff,
     getallWeeks,
+    adminWeekOffDataEmp,
     shiftList: state.shiftList,
     shiftMasterId: state.shiftMasterId,
     shiftListNames: state.shiftListNames,
@@ -237,7 +267,8 @@ const addWeekOff = (newWeekOff) => {
     singleShiftList:state.singleShiftList,
     availableShiftData:state.availableShiftData,
     weeksInYear:state.weeksInYear,
-    selectedRosterRange: state.selectedRosterRange
+    selectedRosterRange: state.selectedRosterRange,
+    adminWeekOffDataList:state.adminWeekOffDataList,
   }}>
     {children}
   </RosterContext.Provider>);

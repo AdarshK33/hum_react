@@ -11,8 +11,15 @@ const AdminRoster = () => {
     const [endDate, setEndDate] = useState(moment().add('30', 'd'));
     const [modal, setModal] = useState(false)
     const [shiftDate, setshiftDate] = useState(false)
-    const { weekOffDataEmp, weekOffDataList } = useContext(RosterContext)
+    const [contractType,setContractType] = useState('');
+    const [getWeek,setgetWeek] = useState('');
+    useEffect(() => {
+        getallWeeks()
+        viewContractTypes()
+      }, [])
 
+
+    const { adminWeekOffDataEmp,viewContractTypes,shiftContractNames,getallWeeks,weeksInYear } = useContext(RosterContext);
     const handleClose = () => setModal(false)
     const handleShow = (item) => {
         console.log(item, "item onclick")
@@ -21,12 +28,13 @@ const AdminRoster = () => {
     }
 
     useEffect(() => {
-        weekOffDataEmp(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"))
+        adminWeekOffDataEmp(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"))
+       
     }, [])
 
     const submitDate = (e) => {
         e.preventDefault();
-        weekOffDataEmp(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"))
+        adminWeekOffDataEmp(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"))
         console.log("weekOff Data", startDate)
     }
     const checkCondition = (item) => {
@@ -57,7 +65,7 @@ const AdminRoster = () => {
                                 <form className="form-inline">
                                     <div className="row">
                                         <div className="col-sm-4">
-                                            <div className="form-group mb-2">
+                                            <div className="form-group mb-1">
                                                 <label className="name f-w-600">From Date &nbsp;</label>
                                                 <DatePicker
                                                     className="form-control"
@@ -69,7 +77,7 @@ const AdminRoster = () => {
                                             </div>
                                         </div>
                                         <div className="col-sm-4 pl-3">
-                                            <div className="form-group mb-2">
+                                            <div className="form-group mb-1">
                                                 <label className="name f-w-600">To Date&nbsp; </label>
                                                 <DatePicker
                                                     className="form-control"
@@ -84,12 +92,8 @@ const AdminRoster = () => {
                                             <button className="myclass" style={{ marginTop: "20px" }} type="button" onClick={(e) => submitDate(e)}>Submit</button>
                                         </div>
                                     </div>
-
-
-
-
                                 </form>
-<br/>
+                                <br />
                                 <div className="row">
                                     <div className="col-sm-3">
 
@@ -98,44 +102,41 @@ const AdminRoster = () => {
                                             <select
                                                 className="form-control"
                                                 required
-
-                                                style={{ width: "220px" }}
-                                            >
-
-                                                <option value="">Select Contract Type</option>
-                                                {/* {shiftContractNames.map((e, i) => {
-                            return (
-                              <option key={e.typeId} value={e.contractType}>
-                                {e.contractType}
-                              </option>
-                            );
-                          })} */}
+                                                style={{ width: "220px"}}
+                                                value={getWeek}                                           
+                                                onChange={(e) => setgetWeek(e.target.value)}>
+                                                <option value="">Select Week Type</option>
+                                                {weeksInYear.map((item, i) => {
+                                                    return (
+                                                        <option key={item.weekId} selected={item.selected} value={item.weekId}>{item.weekName + " - " + item.year}</option>
+                                                    );
+                                                })}
                                             </select>
 
                                         </div>
                                     </div>
 
                                     <div className="col-sm-3">
-
+                                   
                                         <div className="form-group">
                                             <label className="name f-w-600">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Select Employee Type </label>
+                                           
                                             <select
                                                 className="form-control"
                                                 required
-
                                                 style={{ width: "220px", marginLeft: "30px" }}
-                                            >
+                                                value={contractType}
+                                                onChange={(e) => setContractType(e.target.value)}>
 
-                                                <option value="">Select Contract Type</option>
-                                                {/* {shiftContractNames.map((e, i) => {
-                        return (
-                          <option key={e.typeId} value={e.contractType}>
-                            {e.contractType}
-                          </option>
-                        );
-                      })} */}
+                                                <option value="">Select Employee Type</option>
+                                                {shiftContractNames.map((e, i) => {
+                                                    return (
+                                                        <option key={e.typeId} value={e.contractType}>
+                                                            {e.contractType}
+                                                        </option>
+                                                    );
+                                                })}
                                             </select>
-
                                         </div>
                                     </div>
 
@@ -143,11 +144,11 @@ const AdminRoster = () => {
 
                             </div>
                             <div className="table-responsive">
-                                {/* <table className="table">
+                                <table className="table">
 
                                     <thead style={{ background: '#006EBB', color: 'white' }}>
                                         <tr>
-
+                                            <th scope="col"><br />Employee</th>
                                             <th scope="col"><br />Monday</th>
                                             <th scope="col"><br /> Tuesday</th>
                                             <th scope="col"><br /> Wednesday</th>
@@ -158,8 +159,33 @@ const AdminRoster = () => {
 
                                         </tr>
                                     </thead>
-
                                     <tbody>
+              <tr>
+                <td>
+                  <div className="row">
+                    <div className="col-sm-3">
+                      <i
+                        class="fa fa-user-circle fa-4x py-2"
+                        aria-hidden="true"
+                      ></i>
+                    </div>
+                    <div className="col-sm-9">
+                      <h6>Pavithra Anand</h6>
+                      <span className="text-danger font-weight-bold">DSCI00174</span>{" "}
+                      <span className="text-primary">Permanent</span>
+                      <h6>Legal Partner Coach</h6>
+                    </div>
+                  </div>
+                </td>
+             
+                
+              
+               
+               
+              </tr>
+              
+            </tbody>
+                                    {/* <tbody>
                                         {weekOffDataList.length > 0 &&
                                             weekOffDataList.map((item, i) => {
                                                 if (i == 0) {
@@ -195,9 +221,9 @@ const AdminRoster = () => {
                                                     )
                                                 }
                                             })}
-                                    </tbody>
+                                    </tbody> */}
 
-                                </table> */}
+                                </table>
                             </div>
                         </div>
                     </div>
