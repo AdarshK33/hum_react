@@ -26,7 +26,7 @@ function ViewShift() {
   const [startTime,setStartTime] = useState(new Date());
   const [endTime,setEndTime] = useState(new Date());
   const [breakStartTime, setStartBreakTime] = useState(new Date());
-  const [breakEndTime,setBreakEndTime] = useState();
+  const [breakEndTime,setBreakEndTime] = useState(new Date());
   const [workingHours, setWorkingHour] = useState();
   // variables
  const { shiftList,editShift, viewShift, } = useContext(RosterContext);
