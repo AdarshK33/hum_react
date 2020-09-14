@@ -87,7 +87,7 @@ const EditLeave = (props) => {
             numberOfDays: 0,
             reason: 'string',
             status: 1,
-            toDate: moment(endDate).format("YYYY-MM-DD"),
+            toDate: moment(value1).format("YYYY-MM-DD"),
             viewLeavePopup: 0,
             year: '2020'
         }

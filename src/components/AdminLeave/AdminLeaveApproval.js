@@ -92,7 +92,7 @@ const AdminLeaveApproval = () => {
                                             <td>{item.isApproved === 0 ? "Approved" : (item.isApproved === 1 ? 'Pending' : 
                                              (item.isApproved === 2 ? 'Rejected' : ''))  }</td>
 
-                                            {item.isApproved === 0 ? '' : 
+                                            {item.isApproved === 0 ? <h1></h1> : 
                                             <td><Button size="sm" style={{backgroundColor:'#006EBB'}} 
                                             onClick={(e) => 
                                                 approvedButton(item.empId, item.fromDate,
@@ -102,7 +102,7 @@ const AdminLeaveApproval = () => {
                                             
                                                 }>Approved</Button></td> }
 
-                                            {item.isApproved === 2 ? '' : 
+                                            {item.isApproved === 2 ? <h1></h1> : 
                                             <td><Button variant="danger" size="sm" onClick={() => {
                                                 setDeleteModal(true)
                                             }}>Cancel</Button></td> }

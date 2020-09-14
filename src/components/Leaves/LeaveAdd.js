@@ -31,10 +31,18 @@ console.log("props empData maritalStatus", props.empData.maritalStatus)
     const { addLeave, addPopup, leavesData, getLeave, leaveType, leaveList,
         message, viewLeaveData, leaveDataList, viewEmpData, empData }
         = useContext(LeaveContext);
+    useEffect(() => {
+        viewLeaveData()
+    },[])
 
     useEffect(() => {
-        viewEmpData()
+      
+        var filteredData = leaveType.filter((e) => e.props.empData.gender === 'Male' && e.props.empData.maritalStatus === 'Married')
+        console.log("filteredData", filteredData)
+        setLeave(filteredData)
+       
     }, [])
+    
 
     const handleClosePopup = () => setModal(false)
     const handleShowPopup = () => setModal(true)
@@ -42,6 +50,7 @@ console.log("props empData maritalStatus", props.empData.maritalStatus)
 
     const fromDateHandler = (date) => {
         let value = date
+        console.log("fromDate", value)
         setStartDate(value);
 
         //For disable the To Date initially
@@ -61,6 +70,7 @@ console.log("props empData maritalStatus", props.empData.maritalStatus)
 
     const toDateHandler = (date) => {
         let value1 = date
+        console.log("toDate", value1)
         setEndDate(value1);
 
         const newPopup = {
@@ -72,7 +82,7 @@ console.log("props empData maritalStatus", props.empData.maritalStatus)
             numberOfDays: 0,
             reason: 'string',
             status: 1,
-            toDate: moment(endDate).format("YYYY-MM-DD"),
+            toDate: moment(value1).format("YYYY-MM-DD"),
             viewLeavePopup: 0,
             year: '2020'
         }
@@ -191,7 +201,7 @@ console.log("props empData maritalStatus", props.empData.maritalStatus)
         history.push("/Leaves/LeaveView");
 
     }
-console.log("props.empData", props.empData)
+
     return (
         <React.Fragment>
             <ToastContainer />
@@ -233,7 +243,7 @@ console.log("props.empData", props.empData)
                                         <div classNmae="col-sm-6">
                                             <Form.Group>
                                             <div><Form.Label >From Date:</Form.Label></div>
-                                            <div><DatePicker selected={startMaternityDate} onChange={(date) => setStartMaternityDateHandler(date)}
+                                            <div><DatePicker selected={startMaternityDate} onChange={(e) => setStartMaternityDateHandler(e)}
                                                     className="input_date" dateFormat="yyyy-MM-dd" selectsStart startDate={startMaternityDate}
                                                     endDate={d3}
                                                     minDate={new Date()}
@@ -276,7 +286,7 @@ console.log("props.empData", props.empData)
                                     {min &&
                                         <div className="col-sm-6">
                                             <div><Form.Label>To Date:</Form.Label></div>
-                                            <div><DatePicker selected={endDate} onChange={(date) => toDateHandler(date)}
+                                            <div><DatePicker selected={endDate} onChange={(e) => toDateHandler(e)}
                                                 className="input_date" dateFormat="yyyy-MM-dd"
                                                 minDate={startDate}
                                                 placeholderText="To Date" required /></div>
@@ -286,7 +296,7 @@ console.log("props.empData", props.empData)
 
                                         <div className="col-sm-6">
                                            <div><Form.Label>To Date:</Form.Label></div>
-                                            <div><DatePicker selected={endDate} onChange={(date) => toDateHandler(date)}
+                                            <div><DatePicker selected={endDate} onChange={(e) => toDateHandler(e)}
                                                     className="input_date" dateFormat="yyyy-MM-dd"
                                                     maxDate={today}
                                                     placeholderText="To Date" /></div>
