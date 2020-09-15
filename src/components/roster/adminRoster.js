@@ -24,7 +24,7 @@ const AdminRoster = () => {
     const handleClose = () => setAdminModal(false)
     const handleShow = (item) => {
        
-        console.log(item, "item onclick")
+       // console.log(item, "item onclick")
         setshiftDate(item)
         setAdminModal(true)
     }
