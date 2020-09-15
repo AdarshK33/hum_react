@@ -4,7 +4,7 @@ import ConfigDB from '../data/customizer/config';
 
 export const GlobalContextTheme = createContext();
 export const GlobalCustomThemeProvider = ({ children }) => {
-    const [state,dispatch] = useReducer(AppReducer);
+    const [dispatch] = useReducer(AppReducer);
 
     const primary_color = localStorage.getItem('primary_color');
     const secondary_color = localStorage.getItem('secondary_color');

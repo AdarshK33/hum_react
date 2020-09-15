@@ -1,12 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap'
+import { Container, Row,  Button, Form, Modal } from 'react-bootstrap'
 import { useHistory } from "react-router-dom";
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { LeaveContext } from '../../context/LeaveState'
-import { format } from 'date-fns'
 import moment from 'moment'
 
 const LeaveAdd = (props) => {
@@ -15,14 +14,11 @@ const LeaveAdd = (props) => {
     const [startMaternityDate, setStartMaternityDate] = useState(new Date())
     const [endMaternityDate, setEndMaternityDate] = useState()
     const [leave, setLeave] = useState('')
-    const [leaveTypeId, setLeaveTypeId] = useState(null)
-    const [leaveName, setLeaveName] = useState('')
     const [reason, setReason] = useState('')
     const [disable, setDisable] = useState(true)
     const [min, setMin] = useState(false)
     const [max, setMax] = useState(false)
     const [modal, setModal] = useState(false)
-   const [gender, setGender] = useState(props.empData)
 console.log("props empData gender", props.empData.gender)
 console.log("props empData maritalStatus", props.empData.maritalStatus)
     let history = useHistory();

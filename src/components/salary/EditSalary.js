@@ -1,14 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
-import axios from 'axios';
 import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap'
 import { useHistory } from "react-router-dom";
-import DatePicker from 'react-datepicker'
+
 import "react-datepicker/dist/react-datepicker.css";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer,  } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ClusterContext } from '../../context/ClusterState'
-import { format } from 'date-fns'
-import moment from 'moment'
 
 const EditSalary = (props) => {
     const [employeeId, setEmployeeId] = useState()
@@ -28,7 +25,7 @@ const EditSalary = (props) => {
 
     let history = useHistory();
 
-    const { viewSalaryData, salaryEdit } = useContext(ClusterContext);
+    const {salaryEdit } = useContext(ClusterContext);
 
     useEffect(() => {
         setEmployeeId(props.employeeId)

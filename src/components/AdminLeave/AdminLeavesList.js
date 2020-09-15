@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext, Fragment } from 'react';
-import { Container, Row, Col, Button, Table, Modal } from 'react-bootstrap';
+import { Container, Row,  Button, Table, Modal } from 'react-bootstrap';
 import { LeaveContext } from '../../context/LeaveState';
 import AdminLeaveEdit from './AdminLeaveEdit'
 import Breadcrumb from '../common/breadcrumb';
 import './AdminLeaves.css'
-import { X, Edit2, Trash2 } from 'react-feather'
+import { Edit2, Trash2 } from 'react-feather'
 
 const AdminLeavesList = (props) => {
     const [modal, setModal] = useState(false);
