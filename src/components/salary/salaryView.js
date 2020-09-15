@@ -4,17 +4,17 @@ import moment from 'moment';
 import "./salary.css";
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { ClusterContext } from "../../context/ClusterState";
-import DatePicker from "react-datepicker";
+
 import EditSalary from './EditSalary'
 import "react-datepicker/dist/react-datepicker.css";
-import { X, Edit2, Trash2 } from 'react-feather'
+import { Edit2, } from 'react-feather'
 function ViewShift() {
   useEffect(() => {
     viewSalary()
   }, [])
-  const [shiftButton, setShiftButton] = useState(false);
+  const [shiftButton] = useState(false);
   const [getM, setGetM] = useState();
-  const { viewSalary, salaryList, viewSalaryData } = useContext(ClusterContext);
+  const { viewSalary, salaryList } = useContext(ClusterContext);
   const [editModal, setEditModal] = useState(false)
   const [employeeId, setEmployeeId] = useState()
   const [firstName, setFirstName] = useState()
@@ -31,7 +31,6 @@ function ViewShift() {
   const [totalHours, setTotalHours] = useState()
   const [year, setYear] = useState()
 
-  const handleEditShow = () => setEditModal(true)
   const handleEditClose = () => setEditModal(false)
 
 

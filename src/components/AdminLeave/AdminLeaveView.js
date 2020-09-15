@@ -8,9 +8,9 @@ import './AdminLeaves.css'
 
 const AdminLeaveView = (props) => {
     const [modal, setModal] = useState(false)
-    const [employeeId, setEmployeeId] = useState()
-    const [firstName, setFirstName] = useState('')
-    const [lastName, setLastName] = useState('')
+    // const [employeeId, setEmployeeId] = useState()
+    // const [firstName, setFirstName] = useState('')
+    // const [lastName, setLastName] = useState('')
 
     const { viewAdminList, leaveAdminList } = useContext(AdminContext)
 

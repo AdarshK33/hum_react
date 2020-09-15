@@ -236,7 +236,7 @@ const addWeekOff = (newWeekOff) => {
 //ADMIN ROSTER
 
 const adminWeekOffDataEmp = (endDate, startDate,contract) => {
-  alert(endDate+ " "+startDate+contract)
+
     const empId = 'IN1055'
       client.get('roster/view' + '?contractType='+ contract+ '&' + 'endDate=' + endDate + '&' + 'startDate=' + startDate+ '&' + 'storeId=' + empId+ '&' + 'weekId='+0)
         .then((response) => {

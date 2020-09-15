@@ -67,7 +67,7 @@ function ViewCluster() {
                         <tbody key={i + 1}>
                           <tr>
                             <td>{i + 1}</td>
-                            {e.sports.map(f => {
+                            {e.sports.map((f,j) => {
                               return (<div>
                                 <td style={{ marginLeft:"10px",fontSize:"10px",paddingTop:"5px",paddingBottom:"5px"}}>{f.sportName}</td>
                               </div>)

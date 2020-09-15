@@ -35,13 +35,13 @@ const Roster = () => {
     console.log(item, "che")
     if (item.roster == null) {
       return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item)}>+</button>
-    } else if (item.roster.holiday != "" && item.roster.holiday != null) {
+    } else if (item.roster.holiday !== "" && item.roster.holiday !== null) {
       return <button className="btn btn-square btn-warning btn-sm" disabled type="button">{item.roster.holiday}</button>
-    } else if (item.roster.leave != "" && item.roster.leave != null) {
+    } else if (item.roster.leave !== "" && item.roster.leave !== null) {
       return <button className="btn btn-square btn-danger btn-sm" onClick={() => handleShow(item)} type="button">Leave</button>
     } else if (item.roster.weekOff) {
       return <button className="btn btn-square btn-info btn-sm" onClick={() => handleShow(item)} type="button">Week Off</button>
-    } else if (item.roster.shiftName != "" && item.roster.shiftName != null) {
+    } else if (item.roster.shiftName !== "" && item.roster.shiftName !== null) {
       return <button className="btn btn-square btn-success  btn-sm" type="button">{item.roster.shiftName}</button>
     } else {
       return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item)}>+</button>

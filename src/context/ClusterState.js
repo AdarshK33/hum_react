@@ -1,7 +1,7 @@
 import React, { createContext, useReducer } from 'react';
 import { client } from '../utils/axios';
 import ClusterReducer from '../reducers/ClusterReducer';
-import { ToastContainer, toast } from "react-toastify";
+import {  toast } from "react-toastify";
 
 
 const initial_state = {
