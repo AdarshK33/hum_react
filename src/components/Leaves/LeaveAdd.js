@@ -14,30 +14,36 @@ const LeaveAdd = (props) => {
     const [startMaternityDate, setStartMaternityDate] = useState(new Date())
     const [endMaternityDate, setEndMaternityDate] = useState()
     const [leave, setLeave] = useState('')
+   /*  const [leaveName, setLeaveName] = useState('')
+    const [leaveTypeId, setLeaveTypeId] = useState(null) */
     const [reason, setReason] = useState('')
     const [disable, setDisable] = useState(true)
     const [min, setMin] = useState(false)
     const [max, setMax] = useState(false)
     const [modal, setModal] = useState(false)
-console.log("props empData gender", props.empData.gender)
-console.log("props empData maritalStatus", props.empData.maritalStatus)
+    
     let history = useHistory();
 
 
     const { addLeave, addPopup, leavesData, getLeave, leaveType, leaveList,
         message, viewLeaveData, leaveDataList, viewEmpData, empData }
         = useContext(LeaveContext);
-
+    
     useEffect(() => {
+        viewLeaveData()
         viewEmpData()
-    }, [])
+    },[])
 
-    const handleClosePopup = () => setModal(false)
-    const handleShowPopup = () => setModal(true)
+   /*  const handleClosePopup = () => setModal(false)
+    const handleShowPopup = () => setModal(true) */
+
     const today = new Date()
-
+    const currentYear = new Date('2020-01-01')
+    console.log("currentYear", currentYear)
+    
     const fromDateHandler = (date) => {
         let value = date
+        console.log("fromDate", value)
         setStartDate(value);
 
         //For disable the To Date initially
@@ -57,6 +63,7 @@ console.log("props empData maritalStatus", props.empData.maritalStatus)
 
     const toDateHandler = (date) => {
         let value1 = date
+        console.log("toDate", value1)
         setEndDate(value1);
 
         const newPopup = {
@@ -68,7 +75,7 @@ console.log("props empData maritalStatus", props.empData.maritalStatus)
             numberOfDays: 0,
             reason: 'string',
             status: 1,
-            toDate: moment(endDate).format("YYYY-MM-DD"),
+            toDate: moment(value1).format("YYYY-MM-DD"),
             viewLeavePopup: 0,
             year: '2020'
         }
@@ -132,11 +139,24 @@ console.log("props empData maritalStatus", props.empData.maritalStatus)
         viewLeaveData()
     }, []);
 
-
     // create api
     const onSubmit = e => {
         e.preventDefault()
         const cflag = validation();
+        const resetValue = {
+            empId: 'DSI000035',
+            fromDate: '',
+            leaveCategory: '',
+            leaveTypeId: 0,
+            ltId: 0,
+            numberOfDays: 0,
+            reason: 'string',
+            status: 0,
+            toDate: '',
+            viewLeavePopup: 0,
+            year: ''
+        }
+      
 
         if (cflag) {
             const setModal = props.handleClose;
@@ -148,6 +168,8 @@ console.log("props empData maritalStatus", props.empData.maritalStatus)
             setDisable(true)
             setMin(false)
             setMax(false)
+            addPopup(resetValue)
+         
         }
 
         const newLeave1 = {
@@ -187,16 +209,44 @@ console.log("props empData maritalStatus", props.empData.maritalStatus)
         history.push("/Leaves/LeaveView");
 
     }
-console.log("props.empData", props.empData)
+const onCloseModal = () => {
+    const resetValue = {
+        empId: 'DSI000035',
+        fromDate: '',
+        leaveCategory: '',
+        leaveTypeId: 0,
+        ltId: 0,
+        numberOfDays: 0,
+        reason: 'string',
+        status: 0,
+        toDate: '',
+        viewLeavePopup: 0,
+        year: ''
+    }
+    const setModal = props.handleClose;
+    setModal()
+    setReason('')
+    setLeave('')
+    setStartDate()
+    setEndDate()
+    setDisable(true)
+    setMin(false)
+    setMax(false)
+    addPopup(resetValue)
+}
     return (
         <React.Fragment>
             <ToastContainer />
             <Modal show={props.modal} onHide={props.handleClose} centered>
                 <Container style={{ paddingBottom: '1rem' }}>
-                    <Modal.Header closeButton>
+                    <Modal.Header >
                         <Modal.Title >
                             <h4>Apply For Leave</h4>
                         </Modal.Title>
+                        <button type="button" className="close" data-dismiss="modal" aria-label="Close" 
+                        onClick={onCloseModal}>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </Modal.Header>
                     <Modal.Body>
                         <Form onSubmit={onSubmit}>
@@ -210,14 +260,12 @@ console.log("props.empData", props.empData)
                                             <option value="">Select</option>
 
                                             {leaveType.length > 0 && leaveType.map((item, i) => {
-                                                 if(props.empData.gender === 'MALE' && props.empData.maritalStatus === 'Married'){
                                                 return (
                                                         <option key={item.leaveTypeId} value={item.leaveName}
                                                         disabled={(item.paternity === 1 ? true : false) || (item.maternity === 1 ? true : false)} >
                                                         {item.leaveName}</option>
                                                     
                                                 )
-                                                 }
                                             })
                                             }
                                         </Form.Control>
@@ -229,7 +277,7 @@ console.log("props.empData", props.empData)
                                         <div classNmae="col-sm-6">
                                             <Form.Group>
                                             <div><Form.Label >From Date:</Form.Label></div>
-                                            <div><DatePicker selected={startMaternityDate} onChange={(date) => setStartMaternityDateHandler(date)}
+                                            <div><DatePicker selected={startMaternityDate} onChange={(e) => setStartMaternityDateHandler(e)}
                                                     className="input_date" dateFormat="yyyy-MM-dd" selectsStart startDate={startMaternityDate}
                                                     endDate={d3}
                                                     minDate={new Date()}
@@ -255,6 +303,7 @@ console.log("props.empData", props.empData)
                                             <div>
                                             <DatePicker selected={startDate} onChange={(e) => fromDateHandler(e)}
                                                 className="input_date" dateFormat="yyyy-MM-dd"
+                                                minDate={currentYear}
                                                 placeholderText="From Date" required />
                                                 </div>
                                         </Form.Group>
@@ -272,7 +321,7 @@ console.log("props.empData", props.empData)
                                     {min &&
                                         <div className="col-sm-6">
                                             <div><Form.Label>To Date:</Form.Label></div>
-                                            <div><DatePicker selected={endDate} onChange={(date) => toDateHandler(date)}
+                                            <div><DatePicker selected={endDate} onChange={(e) => toDateHandler(e)}
                                                 className="input_date" dateFormat="yyyy-MM-dd"
                                                 minDate={startDate}
                                                 placeholderText="To Date" required /></div>
@@ -282,9 +331,10 @@ console.log("props.empData", props.empData)
 
                                         <div className="col-sm-6">
                                            <div><Form.Label>To Date:</Form.Label></div>
-                                            <div><DatePicker selected={endDate} onChange={(date) => toDateHandler(date)}
+                                            <div><DatePicker selected={endDate} onChange={(e) => toDateHandler(e)}
                                                     className="input_date" dateFormat="yyyy-MM-dd"
                                                     maxDate={today}
+                                                    minDate={currentYear}
                                                     placeholderText="To Date" /></div>
                                         </div>
                                         }
@@ -294,7 +344,9 @@ console.log("props.empData", props.empData)
                             }
                             <Row>
                                 <div className="col-sm-12">
-                                    <p className="leavesMsg">{leavesData ? leavesData.Leave : ''}</p>
+                                   {/*  <p className="leavesMsg">{leavesData ? leavesData.Leave : ''}</p> */}
+                                    {leavesData ? 
+                                    <p className="leavesMsg">{leavesData.Leave}</p> : ''}
                                 </div>
                             </Row>
 

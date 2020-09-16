@@ -18,6 +18,12 @@ const ClusterReducer = (state, action) => {
                     
          case 'FETCH_SALARY_LIST':
                return { ...state, salaryList: action.payload };
+
+        case 'FETCH_SALARY_STORE_LIST':
+               return { ...state, salaryStoreList: action.payload };
+
+        case 'SALARY_APPRROVAL_LIST':
+            return { ...state, salaryStoreList: action.payload };
                
         default: return state;
     }

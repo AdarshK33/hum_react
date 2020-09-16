@@ -92,7 +92,7 @@ const AdminLeaveAdd = (props) => {
             numberOfDays: 0,
             reason: 'string',
             status: 1,
-            toDate: moment(endDate).format("YYYY-MM-DD"),
+            toDate: moment(value1).format("YYYY-MM-DD"),
             viewLeavePopup: 0,
             year: '2020'
         }
@@ -159,7 +159,20 @@ const AdminLeaveAdd = (props) => {
     const onSubmit = e => {
         e.preventDefault()
         const cflag = validation();
-
+        const resetValue = {
+            empId: 'DSI000035',
+            fromDate: '',
+            leaveCategory: '',
+            leaveTypeId: 0,
+            ltId: 0,
+            numberOfDays: 0,
+            reason: 'string',
+            status: 0,
+            toDate: '',
+            viewLeavePopup: 0,
+            year: ''
+        }
+      
         if (cflag) {
             const setModal = props.handleClose;
             setModal()
@@ -170,6 +183,9 @@ const AdminLeaveAdd = (props) => {
             setDisable(true)
             setMin(false)
             setMax(false)
+            setEmployeeCostCenter('')
+            setCostCenter('')
+            addPopup(resetValue)
         }
 
         const newLeave = {
@@ -244,15 +260,45 @@ const AdminLeaveAdd = (props) => {
        
     } 
 
-
+    const onCloseModal = () => {
+        const resetValue = {
+            empId: 'DSI000035',
+            fromDate: '',
+            leaveCategory: '',
+            leaveTypeId: 0,
+            ltId: 0,
+            numberOfDays: 0,
+            reason: 'string',
+            status: 0,
+            toDate: '',
+            viewLeavePopup: 0,
+            year: ''
+        }
+        const setModal = props.handleClose;
+        setModal()
+        setReason('')
+        setLeave('')
+        setStartDate()
+        setEndDate()
+        setDisable(true)
+        setMin(false)
+        setMax(false)
+        addPopup(resetValue)
+        setEmployeeCostCenter('')
+        setCostCenter('')
+    }
     return (
         <Fragment>
             <Modal show={props.modal} onHide={props.handleClose} centered>
             <Container style={{ paddingBottom: '1rem' }}>
-                    <Modal.Header closeButton>
+                    <Modal.Header >
                         <Modal.Title >
                             <h5 className="modal-heading">Apply For Leave</h5>
                         </Modal.Title>
+                        <button type="button" className="close" data-dismiss="modal" aria-label="Close" 
+                        onClick={onCloseModal}>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </Modal.Header>
                     <Modal.Body>
                         <Form onSubmit={onSubmit}>

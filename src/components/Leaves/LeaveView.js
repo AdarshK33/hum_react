@@ -1,10 +1,11 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
 import Breadcrumb from '../common/breadcrumb';
-import { Card, Row, Col, Table, Button, Modal } from 'react-bootstrap'
+import { Card, Row, Col, Table, Button, Modal, Container } from 'react-bootstrap'
 import { Edit2, Trash2 } from 'react-feather'
 import calendarImage from '../../assets/images/calendar-image.png'
 import LeaveAdd from './LeaveAdd'
 import EditLeave from './EditLeave'
+import DeleteLeave from './DeleteLeave'
 
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { LeaveContext } from '../../context/LeaveState'
@@ -35,16 +36,14 @@ const LeaveView = () => {
 
 
     useEffect(() => {
-        viewList()
-        viewLeaveData()
-        
-
+        viewList()   
     }, [])
   
-    const deleteListcheck = (id) => {
+    /* const deleteListcheck = (id) => {
+        console.log("delete id", id)
         deleteList(id)
         setDeleteModal(false)
-    }
+    } */
     return (
         <Fragment>
             <Breadcrumb title="Leave View" parent="Leave View" />
@@ -136,9 +135,9 @@ const LeaveView = () => {
                     <Col className="leaveApplications">Leave Applications</Col>
                     <Col>
                         <Button className="apply-button btn btn-light" 
-                        onClick={() => {setModal(true); viewEmpData() }}>Apply</Button>
+                        onClick={() => {setModal(true) }}>Apply</Button>
                     </Col>
-                    <LeaveAdd handleClose={handleClose} modal={modal} empData={empData}/>
+                    <LeaveAdd handleClose={handleClose} modal={modal} />
                 </Row>
 
                 <div className="table-responsive">
@@ -172,27 +171,18 @@ const LeaveView = () => {
                                             }} />
                                             </td>
                                             <td><Trash2 onClick={() => {
-                                                setDeleteModal(true)
+                                                setDeleteModal(true);  setltId(item.ltId)
                                             }} />
+                                           
                                             </td>
 
-                                            <Modal show={deleteModal} onHide={handleDeleteClose} centered>
-                                                <Modal.Body style={{ marginTop: '1rem' }}>
-                                                    <h5>Are you sure to delete the item ?</h5>
-                                                </Modal.Body>
-                                                <Modal.Footer>
-                                                    <Button variant="secondary" className="deleteNoButton"
-                                                        onClick={() => handleDeleteClose()}>No</Button>
-                                                    <Button variant="primary" className="deleteYesButton"
-                                                        onClick={() => deleteListcheck(item.ltId)}>Yes</Button>
-                                                </Modal.Footer>
-                                            </Modal>
 
                                         </tr>
                                     </tbody>
                                 )
                             })}
                     </Table>
+                    <DeleteLeave handleDeleteClose={handleDeleteClose} modal={deleteModal} ltId={ltId} />
                     <EditLeave handleEditClose={handleEditClose} modal={editModal}
                         leaveCategory={leaveCategory} fromDate={fromDate} toDate={toDate}
                         reason={reason} ltId={ltId} />

@@ -96,6 +96,7 @@ function ViewShift() {
 
                       <th scope="col">LOP</th>
                       <th scope="col">Contract Type</th>
+                      <th scope="col">Status</th>
                       <th scope="col">Edit</th>
                     </tr>
                   </thead>
@@ -112,6 +113,7 @@ function ViewShift() {
 
                           <td>{item.lop}</td>
                           <td>{item.contractType}</td>
+                          <td>{item.statusDesc}</td>
                           <td><Edit2 onClick={() => {
                             setEditModal(true); setEmployeeId(item.employeeId);
                             setFirstName(item.firstName); setLastName(item.lastName); setNumberOfHours(item.numberOfHours)
