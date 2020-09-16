@@ -2,7 +2,7 @@ import React, { Fragment, useState, useContext, useEffect } from 'react';
 import DatePicker from "react-datepicker";
 import moment from 'moment';
 import "react-datepicker/dist/react-datepicker.css";
-import {  Button, Modal } from 'react-bootstrap'
+import {   Modal } from 'react-bootstrap'
 import { RosterContext } from "../../context/RosterState";
 
 

@@ -8,16 +8,16 @@ import './AdminLeaves.css'
 
 const AdminLeaveApproval = () => {
     const [deleteModal, setDeleteModal] = useState(false)
-    const [empId, setEmpId] = useState('')
-    const [startDate, setStartDate] = useState(new Date())
-    const [endDate, setEndDate] = useState(new Date())
-    const [leaveCategory, setLeaveCategory] = useState('')
-    const [leaveTypeId, setLeaveTypeId] = useState(null)
-    const [ltId, setltId] = useState(null)
-    const [numberOfDays, setNumberOfDays] = useState(null)
-    const [reason, setReason] = useState('')
-    const [status, setStatus] = useState(null)
-    const [year, setYear] = useState('')
+    // const [empId, setEmpId] = useState('')
+    // const [startDate, setStartDate] = useState(new Date())
+    // const [endDate, setEndDate] = useState(new Date())
+    // const [leaveCategory, setLeaveCategory] = useState('')
+    // const [leaveTypeId, setLeaveTypeId] = useState(null)
+    // const [ltId, setltId] = useState(null)
+    // const [numberOfDays, setNumberOfDays] = useState(null)
+    // const [reason, setReason] = useState('')
+    // const [status, setStatus] = useState(null)
+    // const [year, setYear] = useState('')
     let history = useHistory();
 
 

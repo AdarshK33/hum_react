@@ -1,13 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react';
-import axios from 'axios';
-import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap'
+
+import { Container, Row, Button, Form, Modal } from 'react-bootstrap'
 import { useHistory } from "react-router-dom";
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer,  } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { LeaveContext } from '../../context/LeaveState'
-import { format } from 'date-fns'
+
 import moment from 'moment'
 
 const EditLeave = (props) => {

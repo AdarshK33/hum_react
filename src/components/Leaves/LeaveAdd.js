@@ -1,12 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap'
+import { Container, Row,  Button, Form, Modal } from 'react-bootstrap'
 import { useHistory } from "react-router-dom";
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { LeaveContext } from '../../context/LeaveState'
-import { format } from 'date-fns'
 import moment from 'moment'
 
 const LeaveAdd = (props) => {
@@ -15,25 +14,23 @@ const LeaveAdd = (props) => {
     const [startMaternityDate, setStartMaternityDate] = useState(new Date())
     const [endMaternityDate, setEndMaternityDate] = useState()
     const [leave, setLeave] = useState('')
-    const [leaveTypeId, setLeaveTypeId] = useState(null)
-    const [leaveName, setLeaveName] = useState('')
     const [reason, setReason] = useState('')
     const [disable, setDisable] = useState(true)
     const [min, setMin] = useState(false)
     const [max, setMax] = useState(false)
     const [modal, setModal] = useState(false)
-
     let history = useHistory();
 
 
     const { addLeave, addPopup, leavesData, getLeave, leaveType, leaveList,
         message, viewLeaveData, leaveDataList, viewEmpData, empData }
         = useContext(LeaveContext);
+        const [temp, setLeavesData] = useState({})
     useEffect(() => {
         viewLeaveData()
         viewEmpData()
     },[])
-    console.log("employe data", empData)
+    console.log("leave Data", leaveType)
     /* useEffect(() => {
       console.log("----", empData.gender )
      
@@ -149,11 +146,24 @@ const LeaveAdd = (props) => {
         viewLeaveData()
     }, []);
 
-
     // create api
     const onSubmit = e => {
         e.preventDefault()
         const cflag = validation();
+        const resetValue = {
+            empId: 'DSI000035',
+            fromDate: '',
+            leaveCategory: '',
+            leaveTypeId: 0,
+            ltId: 0,
+            numberOfDays: 0,
+            reason: 'string',
+            status: 0,
+            toDate: '',
+            viewLeavePopup: 0,
+            year: ''
+        }
+      
 
         if (cflag) {
             const setModal = props.handleClose;
@@ -165,6 +175,8 @@ const LeaveAdd = (props) => {
             setDisable(true)
             setMin(false)
             setMax(false)
+            addPopup(resetValue)
+         
         }
 
         const newLeave1 = {
@@ -227,14 +239,12 @@ const LeaveAdd = (props) => {
                                             <option value="">Select</option>
 
                                             {leaveType.length > 0 && leaveType.map((item, i) => {
-                                                 if(empData.gender === 'MALE' ){
                                                 return (
                                                         <option key={item.leaveTypeId} value={item.leaveName}
                                                         disabled={(item.paternity === 1 ? true : false) || (item.maternity === 1 ? true : false)} >
                                                         {item.leaveName}</option>
                                                     
                                                 )
-                                                 }
                                             })
                                             }
                                         </Form.Control>
@@ -311,7 +321,9 @@ const LeaveAdd = (props) => {
                             }
                             <Row>
                                 <div className="col-sm-12">
-                                    <p className="leavesMsg">{leavesData ? leavesData.Leave : ''}</p>
+                                   {/*  <p className="leavesMsg">{leavesData ? leavesData.Leave : ''}</p> */}
+                                    {leavesData ? 
+                                    <p className="leavesMsg">{leavesData.Leave}</p> : ''}
                                 </div>
                             </Row>
 

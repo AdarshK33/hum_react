@@ -3,7 +3,7 @@ import {
     File,
     Calendar,
     Package,
-    Men,
+    
 } from 'react-feather';
 
 export const MENUITEMS = [

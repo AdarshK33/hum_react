@@ -3,15 +3,13 @@ import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap'
 import { useHistory } from "react-router-dom";
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { LeaveContext } from '../../context/LeaveState'
-import { format } from 'date-fns'
 import moment from 'moment'
 
 const AdminLeaveEdit = (props) => {
     const [empId, setEmpId] = useState()
-    const [name, setName] = useState('')
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date())
     const [startMaternityDate, setStartMaternityDate] = useState(new Date())
@@ -26,7 +24,7 @@ const AdminLeaveEdit = (props) => {
     const [max, setMax] = useState(false)
     let history = useHistory();
 
-    const { getLeave, leaveType, leaveList, editList, viewList, message } = useContext(LeaveContext);
+    const { getLeave, leaveType, editList,  } = useContext(LeaveContext);
 
     const today = new Date()
 

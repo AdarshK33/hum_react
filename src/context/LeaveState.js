@@ -2,7 +2,6 @@ import React, { createContext, useReducer } from 'react';
 import {client} from '../utils/axios';
 import { ToastContainer, toast } from "react-toastify";
 import LeaveReducer from '../reducers/LeaveReducer'
-import { Modal } from 'react-bootstrap';
 
 
 const initialState = {
@@ -74,7 +73,10 @@ export const LeaveProvider = ({ children }) => {
   // Get Leave Type
 
   const getLeave = () => {
-    client.get('leave_type/view')
+    
+    let empId1 = "DSI000035"
+    client.get('leave_type/view/' + empId1)
+  
       .then((response) => {
         state.leaveType = response.data.data
         console.log("get leave type", state.leaveType)

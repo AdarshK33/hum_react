@@ -158,7 +158,7 @@ const callTimer =()=>{
                   <label htmlFor="exampleFormControlInput1"> Select Sports</label>
   {/* <h6>{result}</h6> */}
            
-  <Select
+                  <Select
                    value={multiValue}
                    options={sportsNames.map(e => ({ label: e.sportName, value: e.sportId }))}
                    onChange={handleMultiChange}
@@ -208,8 +208,9 @@ const callTimer =()=>{
                   <Select
                     name="filters"
                     placeholder="Filters"
+                   // defaultValue=({lablel: '', value: '', id :""})
                     value={employee}
-                    options={clusterLeaderNames.map(e => ({ label: e.firstName, value: e.employeeId }))}
+                    options={clusterLeaderNames.map(e => ({ label: e.firstName, value: e.employeeId, id: e.id }))}
                     onChange={handleMultiChange1}
                     placeholder ={getSingleCluster.employeeIds}
                     isMulti

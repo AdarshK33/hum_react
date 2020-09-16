@@ -20,10 +20,10 @@ const EditShiftModal = (props) => {
   const [workingHours, setWorkingHour] = useState('');
   const [contractType, setContractType] = useState('');
   const [breakStartTime, setStartBreakTime] = useState(null);
-  const [breakEndTime, setEndBreakTIme] = useState(null);
+  const [ setEndBreakTIme] = useState(null);
   const [successMsg, setSuccessMsg] = useState("");
   const [shiftType,setShiftType] = useState('');
-  const [breakDuationMsg, setBreakDurationMsg] = useState(false);
+  const [breakDuationMsg, ] = useState(false);
   const [shiftButton, setShiftButton] = useState(false);
   const [showText, setShowText] = useState(false);
   const[invalidText,setInvalidText]= useState(false)

@@ -1,11 +1,11 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import { Card, Row, Col, Table, Button, Modal } from 'react-bootstrap'
-import { X, Edit2, Trash2 } from 'react-feather'
+import { Edit2, Trash2 } from 'react-feather'
 import calendarImage from '../../assets/images/calendar-image.png'
 import LeaveAdd from './LeaveAdd'
 import EditLeave from './EditLeave'
-import { confirmAlert } from 'react-confirm-alert';
+
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { LeaveContext } from '../../context/LeaveState'
 import './Leaves.css'
@@ -21,7 +21,7 @@ const LeaveView = () => {
     const [ltId, setltId] = useState()
     const [reason, setReason] = useState()
 
-    const { leaveList, viewList, deleteList, editList, viewLeaveData, leaveDataList, deleteData, viewEmpData, empData  }
+    const { leaveList, viewList, deleteList,  viewLeaveData, leaveDataList,  viewEmpData, empData  }
         = useContext(LeaveContext);
 
     const handleClose = () => setModal(false)

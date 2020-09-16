@@ -16,7 +16,9 @@ const initial_state = {
   availableShiftData:[],
   weeksInYear:[],
   selectedRosterRange: {},
-  adminWeekOffDataList:[]
+  adminWeekOffDataList:[],
+  adminWeekOffDataListHeader:[],
+  adminWeeksInYear:[],
 }
 
 
@@ -209,7 +211,7 @@ const addWeekOff = (newWeekOff) => {
     client.get('weekoff/weeks?year=2020')
       .then((response) => {
          state.weeksInYear = response.data.data
-         console.log("=====GET Weeks=====", state.weeksInYear)
+       //  console.log("=====GET Weeks=====", state.weeksInYear)
          return dispatch({ type: 'AVAILABLE_WEEKS', payload: state.weeksInYear})
       })
       .catch((error) => {
@@ -217,28 +219,40 @@ const addWeekOff = (newWeekOff) => {
       })
   }
 
-
-// ADMIN ROSTER
-
-const adminWeekOffDataEmp = (endDate, startDate) => {
-
-  const adminId = 'IN1055'
-    client.get('roster/view' + '?storeId=' + adminId + 
-    '&' + 'endDate=' + endDate + '&' + 'startDate=' + startDate)
+  //ADMIN GET ALL WEEKS
+  const adminGetAllWeeks = () => {
+    let year = new Date().getFullYear()
+    client.get('/weekoff/weeks/'+year)
       .then((response) => {
-        const adminWeekOffDataList =  response.data.data
-        const adminSelectedRosterRange  = {endDate, startDate}
-        console.log("=====GET weekOff Data API respone=====", state.adminWeekOffDataList)
-        
-        return dispatch({ type: 'ADMIN_WEEKOFF_WEEK_DATA_LIST', payload: {
-          adminWeekOffDataList,
-          adminSelectedRosterRange
-        } })
+         state.adminWeeksInYear = response.data.data;
+         console.log("=====GET Weeks ADMIN =====", state.adminWeeksInYear)
+         return dispatch({ type: 'ADMIN_AVAILABLE_WEEKS', payload: state.adminWeeksInYear})
       })
       .catch((error) => {
         console.log(error)
       })
   }
+
+//ADMIN ROSTER
+
+const adminWeekOffDataEmp = (endDate, startDate,contract) => {
+
+    const empId = 'IN1055'
+      client.get('roster/view' + '?contractType='+ contract+ '&' + 'endDate=' + endDate + '&' + 'startDate=' + startDate+ '&' + 'storeId=' + empId+ '&' + 'weekId='+0)
+        .then((response) => {
+          const adminWeekOffDataListHeader =  response.data.data.rosterDates;
+          const adminWeekOffDataList =  response.data.data.rosterResponses;
+          console.log("=====  table header =", state.adminWeekOffDataListHeader)
+          console.log("=====  table body data =", state.adminWeekOffDataList)
+          return dispatch({ type: 'ADMIN_WEEKOFF_WEEK_DATA_LIST', payload: {
+            adminWeekOffDataListHeader,
+            adminWeekOffDataList
+          }})
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
 
 
 
@@ -257,6 +271,7 @@ const adminWeekOffDataEmp = (endDate, startDate) => {
     weekOffDataEmp,
     addWeekOff,
     getallWeeks,
+    adminGetAllWeeks,
     adminWeekOffDataEmp,
     shiftList: state.shiftList,
     shiftMasterId: state.shiftMasterId,
@@ -269,7 +284,10 @@ const adminWeekOffDataEmp = (endDate, startDate) => {
     weeksInYear:state.weeksInYear,
     selectedRosterRange: state.selectedRosterRange,
     adminWeekOffDataList:state.adminWeekOffDataList,
+    adminWeekOffDataListHeader:state.adminWeekOffDataListHeader,
+    adminWeeksInYear:state.adminWeeksInYear
   }}>
     {children}
   </RosterContext.Provider>);
 }
+// /roster/view?contractType=Permanent&endDate=2020-09-10&startDate=2020-08-10&storeId=IN1055&weekId=0

@@ -1,4 +1,5 @@
 const RosterReducer = (state, action) => {
+   
     switch (action.type) {
 
         case 'FETCH_SHIFT_LIST':
@@ -37,8 +38,11 @@ const RosterReducer = (state, action) => {
         case 'AVAILABLE_WEEKS':
                 return { ...state, weeksInYear: action.payload };
 
+       case 'ADMIN_AVAILABLE_WEEKS':
+              return { ...state, ...action.payload };
+
        case 'ADMIN_WEEKOFF_WEEK_DATA_LIST':
-                    return { ...state, ...action.payload };
+                    return { ...state, ...action.payload  };
                     
         default: return state;
     }
