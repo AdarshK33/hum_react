@@ -21,6 +21,7 @@ import AdminLeaveView from './components/AdminLeave/AdminLeaveView';
 import AdminLeavesList from './components/AdminLeave/AdminLeavesList';
 import AdminMasterLeave from './components/AdminLeave/AdminMasterLeave';
 import AdminLeaveApproval from './components/AdminLeave/AdminLeaveApproval';
+import AdminSalaryModule from './components/AdminLeave/AdminSalaryModule';
 //Cluster
 import ViewCluster from "./components/cluster/viewCluster";
 // Added by Ranjith 31 july 2020
@@ -100,6 +101,11 @@ function Root() {
                           <Route
                             path={`${process.env.PUBLIC_URL}/AdminLeaves/AdminLeaveApproval`}
                             component={AdminLeaveApproval}
+                          />
+                           {/*Admin Salary Approval Page */}
+                           <Route
+                            path={`${process.env.PUBLIC_URL}/AdminLeaves/AdminSalaryModule`}
+                            component={AdminSalaryModule}
                           />
 
                           {/* Roaster */}
