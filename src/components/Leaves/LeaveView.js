@@ -35,10 +35,7 @@ const LeaveView = () => {
 
 
     useEffect(() => {
-        viewList()
-        viewLeaveData()
-        
-
+        viewList()   
     }, [])
   
     const deleteListcheck = (id) => {
@@ -136,9 +133,9 @@ const LeaveView = () => {
                     <Col className="leaveApplications">Leave Applications</Col>
                     <Col>
                         <Button className="apply-button btn btn-light" 
-                        onClick={() => {setModal(true); viewEmpData() }}>Apply</Button>
+                        onClick={() => {setModal(true) }}>Apply</Button>
                     </Col>
-                    <LeaveAdd handleClose={handleClose} modal={modal} empData={empData}/>
+                    <LeaveAdd handleClose={handleClose} modal={modal} />
                 </Row>
 
                 <div className="table-responsive">

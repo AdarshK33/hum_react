@@ -75,7 +75,7 @@ export const LeaveProvider = ({ children }) => {
   const getLeave = () => {
     
     let empId1 = "DSI000035"
-    client.get('leave_type/view/'+empId1)
+    client.get('leave_type/view/' + empId1)
   
       .then((response) => {
         state.leaveType = response.data.data
@@ -89,7 +89,7 @@ export const LeaveProvider = ({ children }) => {
 
   // Add new Leave 
   const addPopup = (newPopup) => {
-
+    console.log("newPopup data", newPopup)
     return client.post('leave_transaction/create', newPopup)
       .then((response) => {
         state.message = response.data.message
