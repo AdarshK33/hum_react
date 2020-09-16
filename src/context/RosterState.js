@@ -16,9 +16,15 @@ const initial_state = {
   availableShiftData:[],
   weeksInYear:[],
   selectedRosterRange: {},
+  adminSelectedRosterRange:{},
   adminWeekOffDataList:[],
   adminWeekOffDataListHeader:[],
   adminWeeksInYear:[],
+  adminCalculateWeekResult:[],
+  EmployeeListForAdminRosterWeekOff:[],
+  adminRosterWeekOffDataList:[],
+  adminRosterAvailableShiftList:[]
+  
 }
 
 
@@ -120,7 +126,6 @@ export const RosterProvider = ({ children }) => {
 
 // Get View WeekOff Weeks according to days
 const weekOffDays = (weekId) => {
-  console.log("weelId", weekId)
   client.get('weekoff/weeks/days' + '?weekId=' + weekId)
     .then((response) => {
       state.weekDays = response.data.data
@@ -207,8 +212,8 @@ const addWeekOff = (newWeekOff) => {
   }
 
   const getallWeeks = () => {
-    
-    client.get('weekoff/weeks?year=2020')
+    let year = new Date().getFullYear()
+    client.get('/weekoff/weeks/'+year)
       .then((response) => {
          state.weeksInYear = response.data.data
        //  console.log("=====GET Weeks=====", state.weeksInYear)
@@ -219,40 +224,117 @@ const addWeekOff = (newWeekOff) => {
       })
   }
 
-  //ADMIN GET ALL WEEKS
-  const adminGetAllWeeks = () => {
-    let year = new Date().getFullYear()
-    client.get('/weekoff/weeks/'+year)
-      .then((response) => {
-         state.adminWeeksInYear = response.data.data;
-         console.log("=====GET Weeks ADMIN =====", state.adminWeeksInYear)
-         return dispatch({ type: 'ADMIN_AVAILABLE_WEEKS', payload: state.adminWeeksInYear})
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }
+
 
 //ADMIN ROSTER
 
-const adminWeekOffDataEmp = (endDate, startDate,contract) => {
-
+const adminWeekOffDataEmp = (endDate, startDate,contract,weekid) => {
+ 
     const empId = 'IN1055'
-      client.get('roster/view' + '?contractType='+ contract+ '&' + 'endDate=' + endDate + '&' + 'startDate=' + startDate+ '&' + 'storeId=' + empId+ '&' + 'weekId='+0)
+      client.get('roster/view' + '?contractType='+ contract+ '&' + 'endDate=' + endDate + '&' + 'startDate=' + startDate+ '&' + 'storeId=' + empId+ '&' + 'weekId='+weekid)
         .then((response) => {
           const adminWeekOffDataListHeader =  response.data.data.rosterDates;
           const adminWeekOffDataList =  response.data.data.rosterResponses;
+          const adminSelectedRosterRange  = {endDate, startDate,contract,weekid}
+
           console.log("=====  table header =", state.adminWeekOffDataListHeader)
           console.log("=====  table body data =", state.adminWeekOffDataList)
           return dispatch({ type: 'ADMIN_WEEKOFF_WEEK_DATA_LIST', payload: {
             adminWeekOffDataListHeader,
-            adminWeekOffDataList
+            adminWeekOffDataList,
+            adminSelectedRosterRange
           }})
         })
         .catch((error) => {
           console.log(error)
         })
     }
+
+  //ADMIN GET ALL WEEKS
+  const adminCalculateWeek = (endDate,startDate) => {
+  //  alert(endDate,endDate);
+    client.get('roster/view/weeks?'+ 'endDate=' + endDate + '&' + 'startDate=' + startDate)
+      .then((response) => {
+         state.adminCalculateWeekResult = response.data.data;
+         console.log("admin calculate week ", state.adminCalculateWeekResult)
+         return dispatch({ type: 'ADMIN_CALCULATE_AVAILABLE_WEEKS', payload: state.adminCalculateWeekResult})
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  //ADMIN EMPLOYEE LIST FOR ROSTER WEEKOFF
+  const getEmployeeListForAdminRosterWeekOff = (type) => {
+  //  alert(type);
+    client.get('employee/view?contract_type=Permanent&storeId=IN1055')
+      .then((response) => {
+         state.EmployeeListForAdminRosterWeekOff = response.data.data;
+         console.log("admin calculate week ", state.EmployeeListForAdminRosterWeekOff)
+         return dispatch({ type: 'GET_ADMIN_EMPLOYEE_ROSTER_WEEK_OFF', payload: state.EmployeeListForAdminRosterWeekOff})
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  const adminAddWeekOff = (newWeekOff) => {
+  //  alert(newWeekOff);
+    console.log("++++create weekOff api response+++++", newWeekOff)
+    return client.post("weekoff/manager/create", newWeekOff)
+      .then((response) => {
+        const {
+          adminSelectedRosterRange: { endDate, startDate,contract,weekid },
+        } = state;
+        state.adminRosterWeekOffDataList = response.data.data;
+        state.message = response.data.message;
+        toast.info(state.message);
+        adminWeekOffDataEmp(endDate,startDate,contract,weekid);
+        console.log("new create list response===>", response.data.data);
+        console.log("new create list message===>", state.message);
+        // return dispatch({ type: 'ADD_NEW_WEEKOFF_DATA', payload: state.weekOffDataList })
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+      
+  }
+
+  
+  //  ADMIN ROSTER AVAILABLE SHIFT
+
+  const adminRosterAvailableShift = () => {
+    alert("hi");
+    client.get('shift/view/IN1055/active')
+      .then((response) => {
+         state.adminRosterAvailableShiftList = response.data.data;
+         console.log("admin calculate week ", state.adminRosterAvailableShiftList)
+         alert(state.adminRosterAvailableShiftList);
+         return dispatch({ type: 'ADMIN_ROSTER_AVAILABLE_SHIFT', payload: state.adminRosterAvailableShiftList})
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  const assignAdminShift = (assignData) => {
+   
+    return client.post('shift/assign/employee', assignData)
+      .then((response) => {
+        const {
+          adminSelectedRosterRange: { endDate, startDate,contract,weekid },
+        } = state;
+        toast.info(response.data.message)
+        console.log(response,"cre")
+        adminWeekOffDataEmp(endDate,startDate,contract,weekid);
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+      
+  }
+
+
 
 
 
@@ -271,8 +353,12 @@ const adminWeekOffDataEmp = (endDate, startDate,contract) => {
     weekOffDataEmp,
     addWeekOff,
     getallWeeks,
-    adminGetAllWeeks,
     adminWeekOffDataEmp,
+    adminCalculateWeek,
+    getEmployeeListForAdminRosterWeekOff,
+    adminAddWeekOff,
+    adminRosterAvailableShift,
+    assignAdminShift,
     shiftList: state.shiftList,
     shiftMasterId: state.shiftMasterId,
     shiftListNames: state.shiftListNames,
@@ -285,7 +371,10 @@ const adminWeekOffDataEmp = (endDate, startDate,contract) => {
     selectedRosterRange: state.selectedRosterRange,
     adminWeekOffDataList:state.adminWeekOffDataList,
     adminWeekOffDataListHeader:state.adminWeekOffDataListHeader,
-    adminWeeksInYear:state.adminWeeksInYear
+    adminWeeksInYear:state.adminWeeksInYear,
+    adminCalculateWeekResult:state.adminCalculateWeekResult,
+    adminRosterAvailableShiftList:state.adminRosterAvailableShiftList,
+    EmployeeListForAdminRosterWeekOff:state.EmployeeListForAdminRosterWeekOff
   }}>
     {children}
   </RosterContext.Provider>);
