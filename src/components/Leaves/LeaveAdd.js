@@ -22,9 +22,7 @@ const LeaveAdd = (props) => {
     const [min, setMin] = useState(false)
     const [max, setMax] = useState(false)
     const [modal, setModal] = useState(false)
-   const [gender, setGender] = useState(props.empData)
-console.log("props empData gender", props.empData.gender)
-console.log("props empData maritalStatus", props.empData.maritalStatus)
+
     let history = useHistory();
 
 
@@ -33,15 +31,20 @@ console.log("props empData maritalStatus", props.empData.maritalStatus)
         = useContext(LeaveContext);
     useEffect(() => {
         viewLeaveData()
+        viewEmpData()
     },[])
-
-    useEffect(() => {
-      
-        var filteredData = leaveType.filter((e) => e.props.empData.gender === 'Male' && e.props.empData.maritalStatus === 'Married')
+    console.log("employe data", empData)
+    /* useEffect(() => {
+      console.log("----", empData.gender )
+     
+        var filteredData = leaveType.filter(e => e.empData.gender === 'Male' )
         console.log("filteredData", filteredData)
-        setLeave(filteredData)
+        return(
+            setLeave(filteredData)
+        )
+      
        
-    }, [])
+    }, [empData]) */
     
 
     const handleClosePopup = () => setModal(false)
@@ -224,7 +227,7 @@ console.log("props empData maritalStatus", props.empData.maritalStatus)
                                             <option value="">Select</option>
 
                                             {leaveType.length > 0 && leaveType.map((item, i) => {
-                                                 if(props.empData.gender === 'MALE' && props.empData.maritalStatus === 'Married'){
+                                                 if(empData.gender === 'MALE' ){
                                                 return (
                                                         <option key={item.leaveTypeId} value={item.leaveName}
                                                         disabled={(item.paternity === 1 ? true : false) || (item.maternity === 1 ? true : false)} >
