@@ -178,7 +178,7 @@ const AdminShiftModal = (props) => {
                     <div className="col-sm-7 ">
                       <div className="form-group">
 
-
+{/* slect shifi list  */}
                         {/* <select
                           className="form-control"
                           style={{ fontSize: "0.8rem" }}
