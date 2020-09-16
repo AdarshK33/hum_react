@@ -1,5 +1,5 @@
 const RosterReducer = (state, action) => {
-   
+
     switch (action.type) {
 
         case 'FETCH_SHIFT_LIST':
@@ -12,9 +12,9 @@ const RosterReducer = (state, action) => {
                 shiftList: state.shiftList.filter(shiftList => shiftList.shiftMasterId !== action.payload)
             };
 
-            case 'EDIT_SHIFT_LIST':
-                return { ...state, singleShiftList: action.payload };
-    
+        case 'EDIT_SHIFT_LIST':
+            return { ...state, singleShiftList: action.payload };
+
 
         case 'FETCH_SHIFT_LIST_NAMES':
             return { ...state, shiftListNames: action.payload };
@@ -34,16 +34,30 @@ const RosterReducer = (state, action) => {
 
         case 'AVAILABLE_SHIFTS':
             return { ...state, availableShiftData: action.payload };
-            
+
         case 'AVAILABLE_WEEKS':
-                return { ...state, weeksInYear: action.payload };
+            return { ...state, weeksInYear: action.payload };
 
-       case 'ADMIN_AVAILABLE_WEEKS':
-              return { ...state, ...action.payload };
+        case 'ADMIN_AVAILABLE_WEEKS':
+            return { ...state, ...action.payload };
 
-       case 'ADMIN_WEEKOFF_WEEK_DATA_LIST':
-                    return { ...state, ...action.payload  };
-                    
+        case 'ADMIN_WEEKOFF_WEEK_DATA_LIST':
+            return { ...state, ...action.payload };
+
+        case 'ADMIN_CALCULATE_AVAILABLE_WEEKS':
+            return { ...state, adminCalculateWeekResult: action.payload };
+
+        case 'GET_ADMIN_EMPLOYEE_ROSTER_WEEK_OFF':
+            return { ...state, EmployeeListForAdminRosterWeekOff: action.payload };
+
+        case 'ADMIN_ROSTER_AVAILABLE_SHIFT':
+            return { ...state, adminRosterAvailableShiftList: action.payload };
+
+
+
+
+
+
         default: return state;
     }
 }

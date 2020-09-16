@@ -20,7 +20,7 @@ const EditShiftModal = (props) => {
   const [workingHours, setWorkingHour] = useState('');
   const [contractType, setContractType] = useState('');
   const [breakStartTime, setStartBreakTime] = useState(null);
-  const [ setEndBreakTIme] = useState(null);
+  const [ breakEndTime, setEndBreakTIme] = useState(null);
   const [successMsg, setSuccessMsg] = useState("");
   const [shiftType,setShiftType] = useState('');
   const [breakDuationMsg, ] = useState(false);
@@ -34,9 +34,7 @@ const EditShiftModal = (props) => {
   const[status,setStatus] = useState(0)
 
 
-
-  const [updateNewTime,setupdateNewTime] = useState(null)
-  const {updateShift,viewShift, singleShiftList,viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
+   const {updateShift,viewShift, singleShiftList,viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const setClear = () => {
    setShiftType('')
     setStartTime('')
