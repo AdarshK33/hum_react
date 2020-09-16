@@ -166,6 +166,7 @@ export const LeaveProvider = ({ children }) => {
   // Delete Leave
 
   const deleteList = (leaveId) => {
+    console.log("delete id------", leaveId)
       client.delete('leave_transaction/delete' + '?ltId=' + leaveId)
       .then((response) => {
         toast.info(response.data.message)

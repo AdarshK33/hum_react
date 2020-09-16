@@ -177,10 +177,6 @@ const EditLeave = (props) => {
 
         const setModal = props.handleEditClose;
         setModal()
-        /* setLeave(leave)
-        setReason(reason)
-        setStartDate(startDate)
-        setEndDate(endDate) */
         setDisable(true)
         setMin(false)
         setMax(false)

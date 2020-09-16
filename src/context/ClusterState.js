@@ -12,7 +12,8 @@ const initial_state = {
   getSingleCluster1: [],
   getClusterEmployees: [],
   salaryList: [],
-  viewSalaryData: []
+  viewSalaryData: [],
+  salaryStoreList:[]
 
 }
 
@@ -168,8 +169,42 @@ export const ClusterProvider = ({ children }) => {
 
   }
 
+// View Admin Salary Input 
 
+const viewStoreSalary = (month, year) => {
+  console.log(" in cluster" + month + " " + year)
+  let storeId = 'IN1055'
 
+  client.get('salary/view?month=' + month + '&year=' + year)
+  client.get('salary/view/store?month=' + month + '&storeId=' + storeId + '&year=' + year)
+  .then((response) => {
+    console.log("slary data on store id", response);
+    state.salaryStoreList = response.data.data;
+
+    return dispatch({ type: 'FETCH_SALARY_STORE_LIST', payload: state.salaryStoreList });
+  })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+//Approval salary input from admin
+
+const salaryApproval = (salaryData) => {
+  console.log("++++update salary approval api response+++++", salaryData)
+  return client.put('salary/approve',salaryData)
+    .then((response) => {
+      state.message = response.data.message
+      toast.info(state.message)
+      console.log("salary approval list response===>", response.data.data)
+      console.log("salary approval list message===>", state.message)
+      return (
+      dispatch({ type: 'SALARY_APPRROVAL_LIST', payload: state.salaryStoreList })
+      )
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+}
 
   return (<ClusterContext.Provider value={{
     addCluster,
@@ -182,6 +217,8 @@ export const ClusterProvider = ({ children }) => {
     viewSalary,
     viewSalaryData,
     salaryEdit,
+    viewStoreSalary,
+    salaryApproval,
     getSingleCluster1: state.getSingleCluster1,
     clusterList: state.clusterList,
     clusterLeaderNames: state.clusterLeaderNames,
@@ -189,7 +226,8 @@ export const ClusterProvider = ({ children }) => {
     getSingleCluster: state.getSingleCluster,
     getClusterEmployees: state.getClusterEmployees,
     salaryList: state.salaryList,
-    viewSalaryData: state.viewSalaryData
+    viewSalaryData: state.viewSalaryData,
+    salaryStoreList: state.salaryStoreList
   }}>
     {children}
   </ClusterContext.Provider>);

@@ -45,6 +45,7 @@ export const MENUITEMS = [
             { path: '/AdminLeaves/AdminLeavesList', title: 'Admin Leave', type: 'link' },
             { path: '/AdminLeaves/AdminMasterLeave', title: 'Leave Master', type: 'link' },
             { path: '/AdminLeaves/AdminLeaveApproval', title: 'Leave Approval', type: 'link' },
+            { path: '/AdminLeaves/AdminSalaryModule', title: 'Salary Approval', type: 'link' },
         ]
     },
   

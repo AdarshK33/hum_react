@@ -14,40 +14,33 @@ const LeaveAdd = (props) => {
     const [startMaternityDate, setStartMaternityDate] = useState(new Date())
     const [endMaternityDate, setEndMaternityDate] = useState()
     const [leave, setLeave] = useState('')
+   /*  const [leaveName, setLeaveName] = useState('')
+    const [leaveTypeId, setLeaveTypeId] = useState(null) */
     const [reason, setReason] = useState('')
     const [disable, setDisable] = useState(true)
     const [min, setMin] = useState(false)
     const [max, setMax] = useState(false)
     const [modal, setModal] = useState(false)
+    
     let history = useHistory();
 
 
     const { addLeave, addPopup, leavesData, getLeave, leaveType, leaveList,
         message, viewLeaveData, leaveDataList, viewEmpData, empData }
         = useContext(LeaveContext);
-        const [temp, setLeavesData] = useState({})
+    
     useEffect(() => {
         viewLeaveData()
         viewEmpData()
     },[])
-    console.log("leave Data", leaveType)
-    /* useEffect(() => {
-      console.log("----", empData.gender )
-     
-        var filteredData = leaveType.filter(e => e.empData.gender === 'Male' )
-        console.log("filteredData", filteredData)
-        return(
-            setLeave(filteredData)
-        )
-      
-       
-    }, [empData]) */
-    
 
-    const handleClosePopup = () => setModal(false)
-    const handleShowPopup = () => setModal(true)
+   /*  const handleClosePopup = () => setModal(false)
+    const handleShowPopup = () => setModal(true) */
+
     const today = new Date()
-
+    const currentYear = new Date('2020-01-01')
+    console.log("currentYear", currentYear)
+    
     const fromDateHandler = (date) => {
         let value = date
         console.log("fromDate", value)
@@ -216,16 +209,44 @@ const LeaveAdd = (props) => {
         history.push("/Leaves/LeaveView");
 
     }
-
+const onCloseModal = () => {
+    const resetValue = {
+        empId: 'DSI000035',
+        fromDate: '',
+        leaveCategory: '',
+        leaveTypeId: 0,
+        ltId: 0,
+        numberOfDays: 0,
+        reason: 'string',
+        status: 0,
+        toDate: '',
+        viewLeavePopup: 0,
+        year: ''
+    }
+    const setModal = props.handleClose;
+    setModal()
+    setReason('')
+    setLeave('')
+    setStartDate()
+    setEndDate()
+    setDisable(true)
+    setMin(false)
+    setMax(false)
+    addPopup(resetValue)
+}
     return (
         <React.Fragment>
             <ToastContainer />
             <Modal show={props.modal} onHide={props.handleClose} centered>
                 <Container style={{ paddingBottom: '1rem' }}>
-                    <Modal.Header closeButton>
+                    <Modal.Header >
                         <Modal.Title >
                             <h4>Apply For Leave</h4>
                         </Modal.Title>
+                        <button type="button" className="close" data-dismiss="modal" aria-label="Close" 
+                        onClick={onCloseModal}>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </Modal.Header>
                     <Modal.Body>
                         <Form onSubmit={onSubmit}>
@@ -282,6 +303,7 @@ const LeaveAdd = (props) => {
                                             <div>
                                             <DatePicker selected={startDate} onChange={(e) => fromDateHandler(e)}
                                                 className="input_date" dateFormat="yyyy-MM-dd"
+                                                minDate={currentYear}
                                                 placeholderText="From Date" required />
                                                 </div>
                                         </Form.Group>
@@ -312,6 +334,7 @@ const LeaveAdd = (props) => {
                                             <div><DatePicker selected={endDate} onChange={(e) => toDateHandler(e)}
                                                     className="input_date" dateFormat="yyyy-MM-dd"
                                                     maxDate={today}
+                                                    minDate={currentYear}
                                                     placeholderText="To Date" /></div>
                                         </div>
                                         }
