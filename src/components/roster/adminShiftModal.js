@@ -8,13 +8,11 @@ import moment from 'moment'
 
 
 const AdminShiftModal = (props) => {
-  //console.log(props)
   const [key, setKey] = useState('shift')
   const shiftDateWeek = moment(props.shiftDate, 'YYYY-MM-DD').isoWeek() + 1
   const [selectedWeeks, setSelectedWeeks] = useState()
   const [weekDay, setWeekDay] = useState()
   const [value, setValue] = useState()
-  const [adminShiftList, setAdminShiftList] = useState([])
   const [firstName, setFirstName] = useState('')
   const [showDay, setShowDay] = useState(false)
   const [weekDayList, setWeekDayList] = useState([])
@@ -24,7 +22,7 @@ const AdminShiftModal = (props) => {
   const [assignShiftButton, setAShiftButton] = useState(true);
   const [contractType, setContractType] = useState([])
 
-  const { weekDays, weekOffDays, addWeekOff, availableShifts, availableShiftData, adminRosterAvailableShiftList, adminRosterAvailableShift,
+  const { weekDays, weekOffDays,  availableShifts, availableShiftData, adminRosterAvailableShiftList, adminRosterAvailableShift,
     assignAdminShift, getallWeeks, weeksInYear, getEmployeeListForAdminRosterWeekOff, EmployeeListForAdminRosterWeekOff, adminAddWeekOff } = useContext(RosterContext)
 
 
@@ -83,7 +81,6 @@ const AdminShiftModal = (props) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    // console.log('Submit form', e.target.value);
     const setModal = props.handleClose
     setModal()
 
@@ -129,21 +126,7 @@ const AdminShiftModal = (props) => {
 
   }
 
-  // const submitAssignShift = (event) => {
-  //   event.preventDefault()
-  //   const assindata =
-  //   {
-  //     "date": props.shiftDate,
-  //     "employeeId": "DSI000035",
-  //     "shiftId": value
-  //   }
-  //   console.log(assindata)
-  //   assignShift(assindata)
-  //   props.handleClose()
-  //   console.log("Submit")
-
-  // }
-
+ 
 
   const onSubmit1 = (event) => {
      event.preventDefault()
@@ -160,10 +143,6 @@ const AdminShiftModal = (props) => {
    
   }
 
-
-
-
-  
 
   return (
     <Fragment>
