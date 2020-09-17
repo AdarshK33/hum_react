@@ -213,7 +213,7 @@ const addWeekOff = (newWeekOff) => {
 
   const getallWeeks = () => {
     let year = new Date().getFullYear()
-    client.get('/weekoff/weeks/'+year)
+    client.get('/weekoff/weeks?year='+year)
       .then((response) => {
          state.weeksInYear = response.data.data
        //  console.log("=====GET Weeks=====", state.weeksInYear)
@@ -229,8 +229,17 @@ const addWeekOff = (newWeekOff) => {
 //ADMIN ROSTER
 
 const adminWeekOffDataEmp = (endDate, startDate,contract,weekid) => {
- 
+  if(contract==="")
+  {
+    contract="permanent"
+  }
+  if(weekid===undefined)
+  {
+    weekid=0
+  }
+
     const empId = 'IN1055'
+      // eslint-disable-next-line no-useless-concat
       client.get('roster/view' + '?contractType='+ contract+ '&' + 'endDate=' + endDate + '&' + 'startDate=' + startDate+ '&' + 'storeId=' + empId+ '&' + 'weekId='+weekid)
         .then((response) => {
           const adminWeekOffDataListHeader =  response.data.data.rosterDates;
@@ -304,12 +313,12 @@ const adminWeekOffDataEmp = (endDate, startDate,contract,weekid) => {
   //  ADMIN ROSTER AVAILABLE SHIFT
 
   const adminRosterAvailableShift = () => {
-    alert("hi");
+
     client.get('shift/view/IN1055/active')
       .then((response) => {
          state.adminRosterAvailableShiftList = response.data.data;
          console.log("admin calculate week ", state.adminRosterAvailableShiftList)
-         alert(state.adminRosterAvailableShiftList);
+      //   alert(state.adminRosterAvailableShiftList);
          return dispatch({ type: 'ADMIN_ROSTER_AVAILABLE_SHIFT', payload: state.adminRosterAvailableShiftList})
       })
       .catch((error) => {
@@ -318,8 +327,7 @@ const adminWeekOffDataEmp = (endDate, startDate,contract,weekid) => {
   }
 
   const assignAdminShift = (assignData) => {
-   
-    return client.post('shift/assign/employee', assignData)
+    return client.post('shift/assign', assignData)
       .then((response) => {
         const {
           adminSelectedRosterRange: { endDate, startDate,contract,weekid },
@@ -329,13 +337,14 @@ const adminWeekOffDataEmp = (endDate, startDate,contract,weekid) => {
         adminWeekOffDataEmp(endDate,startDate,contract,weekid);
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error) 
       })
       
   }
 
 
-
+ 
+  
 
 
 
