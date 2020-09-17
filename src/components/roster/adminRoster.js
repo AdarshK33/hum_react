@@ -12,7 +12,7 @@ const AdminRoster = () => {
     const [adminModal, setAdminModal] = useState(false)
     const [shiftDate, setshiftDate] = useState(false)
     const [contractType, setContractType] = useState('');
-    const [contract] = useState('Permanent');
+    const [contract] = useState('permanent');
     const [weekid]= useState(0);
     const [singleWeek, getSingleWeek] = useState()
     const [firstName,setFirstName] = useState('');
@@ -124,6 +124,7 @@ const AdminRoster = () => {
                                             <select
                                                 className="form-control"
                                                 style={{ width: "400px" }}
+                                                value={singleWeek}
                                                 onChange={(e) => setWeekCalc(e)}>
                                                 <option value="">Select Weeks</option>
                                                 {adminCalculateWeekResult.map((e, i) => {
