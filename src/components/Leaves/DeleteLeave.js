@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
-import { Card, Row, Col, Table, Button, Modal, Container } from 'react-bootstrap'
+import { Button, Modal } from 'react-bootstrap'
 import { LeaveContext } from '../../context/LeaveState'
 
 const DeleteLeave = (props) => {

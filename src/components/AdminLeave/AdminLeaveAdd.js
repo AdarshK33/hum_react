@@ -1,13 +1,13 @@
 import React, {useState, useEffect, useContext, Fragment} from 'react';
-import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap'
+import { Container, Row, Button, Form, Modal } from 'react-bootstrap'
 import { useHistory } from "react-router-dom";
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
-import { ToastContainer, toast } from "react-toastify";
+import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { LeaveContext } from '../../context/LeaveState'
 import { AdminContext } from '../../context/AdminState'
-import { format } from 'date-fns'
+/* import { format } from 'date-fns' */
 import moment from 'moment'
 
 const AdminLeaveAdd = (props) => {
@@ -28,7 +28,7 @@ const AdminLeaveAdd = (props) => {
     const [max, setMax] = useState(false)
     let history = useHistory();
 
-    const { addLeave, addPopup, leavesData, getLeave, leaveType, leaveList, message }
+    const { addLeave, addPopup, leavesData, getLeave, leaveType }
      = useContext(LeaveContext);
 
      const {CostCenter,costCenterList, employeeIdData, employeeIdList } = useContext(AdminContext)
@@ -136,13 +136,13 @@ const AdminLeaveAdd = (props) => {
     // Fields validation
     const validation = (event) => {
         let flag = true
-        if (leave == '') {
+        if (leave === '') {
             toast.info("Select Leave Type")
             flag = false;
             return;
         }
 
-        if (reason == '') {
+        if (reason === '') {
             toast.info("Reason is mandatory")
             flag = false;
             return;
@@ -214,7 +214,7 @@ const AdminLeaveAdd = (props) => {
             viewLeavePopup: 1,
             year: '2020'
         }
-        if (leave == 'Maternity') {
+        if (leave === 'Maternity') {
             addLeave(newLeave1)
         }else{
             addLeave(newLeave)
@@ -250,7 +250,7 @@ const AdminLeaveAdd = (props) => {
             year: '2020'
         }
      
-        if (leave == 'Maternity') {
+        if (leave === 'Maternity') {
             addPopup(newPopup1)
         }else{
             addPopup(newPopup)
@@ -361,7 +361,7 @@ const AdminLeaveAdd = (props) => {
                                     </Form.Group>
                                 </div>
                              </Row>
-                             {leave == 'Maternity' ?
+                             {leave === 'Maternity' ?
                                     <Row style={{margin:'0'}}>
                                         <div classNmae="col-sm-6">
                                             <Form.Group>

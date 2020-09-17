@@ -1,74 +1,97 @@
-import React, { useEffect, Fragment, useContext, useState } from 'react'
+import React, { useEffect, Fragment, useContext, useState } from "react";
 import Breadcrumb from "../common/breadcrumb";
-import moment from 'moment';
+import moment from "moment";
 import "../salary/salary.css";
-import '../Leaves/Leaves.css'
-import './AdminLeaves.css'
-import { Button, Table, Modal } from 'react-bootstrap'
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import "../Leaves/Leaves.css";
+import "./AdminLeaves.css";
+import { Button, Modal } from "react-bootstrap";
+import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import { ClusterContext } from "../../context/ClusterState";
 import "react-datepicker/dist/react-datepicker.css";
 import { useHistory } from "react-router-dom";
 
 const AdminSalaryModule = () => {
-
-  const [shiftButton, setShiftButton] = useState(false);
+  const [shiftButton] = useState(false);
   const [getM, setGetM] = useState();
-  const [deleteModal, setDeleteModal] = useState(false)
-  /*   const [editModal, setEditModal] = useState(false)
-    const [employeeId, setEmployeeId] = useState()
-    const [firstName, setFirstName] = useState()
-    const [lastName, setLastName] = useState()
-    const [numberOfHours, setNumberOfHours] = useState()
-    const [lop, setLop] = useState()
-    const [contractType, setContractType] = useState()
-    const [extraHours, setExtraHours] = useState()
-    const [reason, setReason] = useState()
-    const [month, setMonth] = useState()
-    const [salaryId, setSalaryId] = useState()
-    const [status, setStatus] = useState()
-    const [statusDesc, setStatusDesc] = useState()
-    const [totalHours, setTotalHours] = useState()
-    const [year, setYear] = useState() */
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [checked, setChecked] = useState([]);
+
   let history = useHistory();
 
+  const {
+    salaryStoreList,
+    viewStoreSalary,
+    salaryApproval,
+  } = useContext(ClusterContext);
 
-  const { salaryStoreList, viewStoreSalary, viewSalaryData, salaryApproval } = useContext(ClusterContext);
-
-  const handleDeleteClose = () => setDeleteModal(false)
-
-  const cancelLeave = (salaryId) => {
-    const cancelData = {
-      salaryIds: [salaryId],
-      status: 2
-    }
-    salaryApproval(cancelData)
-    setDeleteModal(false)
-    history.push("/AdminLeaves/AdminSalaryModule");
-  }
+  const handleDeleteClose = () => setDeleteModal(false);
 
   useEffect(() => {
-    viewStoreSalary()
-  }, [])
+    viewStoreSalary();
+  }, []);
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     const month = moment(getM, ["YYYY-MM"]).format("M");
-    const year = moment(getM, ["MMM Do YY"]).format('YYYY');
+    const year = moment(getM, ["MMM Do YY"]).format("YYYY");
     // alert(month, year)
-    viewStoreSalary(month, year)
-  }
-  const approvedButton = (salaryId) => {
+    viewStoreSalary(month, year);
+  };
 
+  const approvedButton = () => {
     const approvalData = {
-      salaryIds: [salaryId],
-      status: 1
-    }
-    console.log("approval data=====", approvalData)
-    salaryApproval(approvalData)
+      salaryIds: checked,
+      status: 1,
+    };
+    console.log("approval data=====", approvalData);
+    salaryApproval(approvalData);
+    setChecked([])
+    salaryStoreList.map((i,e) => {
+      return(
+        <div>
+        <p>{i.month} {i.year}</p>
+        {viewStoreSalary(i.month, i.year)}
+        </div>
+       
+      )
+    })
     history.push("/AdminLeaves/AdminSalaryModule");
+  };
 
-  }
+  const cancelLeave = () => {
+    const cancelData = {
+      salaryIds: checked,
+      status: 2,
+    };
+    salaryApproval(cancelData);
+    setDeleteModal(false);
+    setChecked([])
+    salaryStoreList.map((i,e) => {
+      return(
+        <div>
+        <p>{i.month} {i.year}</p>
+        {viewStoreSalary(i.month, i.year)}
+        </div>
+       
+      )
+    })
+    history.push("/AdminLeaves/AdminSalaryModule");
+  };
+
+  const checkboxHandler = (salaryId) => {
+    console.log("salary Id in checkbox", salaryId);
+    setChecked((checked) => {
+      const indexOfSalaryId = checked.indexOf(salaryId);
+      if (indexOfSalaryId < 0) {
+        return [...checked, salaryId];
+      } else {
+        return [
+          ...checked.slice(0, indexOfSalaryId),
+          ...checked.slice(indexOfSalaryId + 1),
+        ];
+      }
+    });
+  };
   return (
     <Fragment>
       <Breadcrumb title="Salary" parent="Admin" />
@@ -77,21 +100,35 @@ const AdminSalaryModule = () => {
           <div className="row">
             <div className="col-sm-6">
               <div className="form-group">
-                <label htmlFor="exampleFormControlInput1">Select Month and Year</label>
+                <label htmlFor="exampleFormControlInput1">
+                  Select Month and Year
+                </label>
                 <br />
                 <br />
 
-                <input type="month" style={{ fontSize: "0.8rem" }} className="form-control digit" min="2020-08"
+                <input
+                  type="month"
+                  style={{ fontSize: "0.8rem" }}
+                  className="form-control digit"
+                  min="2020-08"
                   placeholder="Number Of Days"
-                  required onChange={(e) => setGetM(e.target.value)} value={getM} />
-
+                  required
+                  onChange={(e) => setGetM(e.target.value)}
+                  value={getM}
+                />
               </div>
-
             </div>
 
             <div className="col-sm-3 mt-4">
-              <button className="btn btn-primary.btn-primary.dec mb-2 mt-3" style={{ background: "#006EBB", color: "#FFF" }} type="submit" disabled={shiftButton} value="Submit">Submit</button>
-
+              <button
+                className="btn btn-primary.btn-primary.dec mb-2 mt-3"
+                style={{ background: "#006EBB", color: "#FFF" }}
+                type="submit"
+                disabled={shiftButton}
+                value="Submit"
+              >
+                Submit
+              </button>
             </div>
             <div className="col-sm-3" style={{ marginTop: "39px" }}>
               <ReactHTMLTableToExcel
@@ -99,20 +136,59 @@ const AdminSalaryModule = () => {
                 table="table-to-xls1"
                 filename="salaryFile"
                 sheet="Sheet"
-
-                buttonText="Export excel" />
+                buttonText="Export excel"
+              />
             </div>
           </div>
-
         </form>
         {/* Table */}
         <br />
         <div className="row">
           <div className="col-sm-12">
+            <div className="title_bar">
+            <Button
+                className="btn btn-light mr-2"
+                onClick={approvedButton}
+              >
+                Approved
+              </Button>
+              <Button 
+                variant="danger"
+                onClick={() => {
+                  setDeleteModal(true);
+                }}
+              >Cancel </Button>
+            </div>
+
+            <Modal show={deleteModal} onHide={handleDeleteClose} centered>
+              <Modal.Body style={{ marginTop: "1rem" }}>
+                <h5>Are you sure to cancel the item ?</h5>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button
+                  variant="secondary"
+                  className="deleteNoButton"
+                  onClick={() => handleDeleteClose()}
+                >
+                  No
+                </Button>
+                <Button
+                  variant="primary"
+                  className="deleteYesButton"
+                  onClick={() => cancelLeave()}
+                >
+                  Yes
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-12">
             <div className="card" style={{ overflowX: "auto" }}>
               <div className="table-responsive">
                 <table id="table-to-xls1" className="table table-hover">
-                  <thead style={{ background: '#006EBB', color: 'white' }}>
+                  <thead>
                     <tr>
                       <th>No</th>
                       <th scope="col">Employee Id</th>
@@ -126,8 +202,7 @@ const AdminSalaryModule = () => {
                       <th scope="col">Extra Hours</th>
                       <th scope="col">Total Hours</th>
                       <th scope="col">Status</th>
-                      <th></th>
-                      <th></th>
+                      <th>Select</th>
                     </tr>
                   </thead>
 
@@ -138,7 +213,9 @@ const AdminSalaryModule = () => {
                           <td>{i + 1}</td>
 
                           <td>{item.employeeId}</td>
-                          <td>{item.firstName} {item.lastName}</td>
+                          <td>
+                            {item.firstName} {item.lastName}
+                          </td>
                           <td>{item.numberOfHours}</td>
 
                           <td>{item.lop}</td>
@@ -148,7 +225,21 @@ const AdminSalaryModule = () => {
                           <td>{item.extraHours}</td>
                           <td>{item.totalHours}</td>
                           <td>{item.statusDesc}</td>
-                          <td><Button size="sm" style={{ backgroundColor: '#006EBB' }}
+
+                          <td>
+                            {" "}
+                            {item.statusDesc === "Pending" ? (
+                              <input
+                                type="checkbox"
+                                checked={checked.indexOf(item.salaryId) >= 0}
+                                onChange={() => checkboxHandler(item.salaryId)}
+                                name="selectCheckbox"
+                              />
+                            ) : (
+                              <input type="checkbox" disabled />
+                            )}{" "}
+                          </td>
+                          {/*   <td><Button size="sm" style={{ backgroundColor: '#006EBB' }}
                             onClick={(e) =>
                               approvedButton(item.salaryId)
 
@@ -167,29 +258,23 @@ const AdminSalaryModule = () => {
                               <Button variant="primary" className="deleteYesButton"
                                 onClick={() => cancelLeave(item.salaryId)}>Yes</Button>
                             </Modal.Footer>
-                          </Modal>
-
-
+                          </Modal> */}
                         </tr>
-
                       </tbody>
-
-                    )
+                    );
                   })}
                 </table>
-                {(salaryStoreList.length <= 0) ? <p style={{ textAlign: "center" }}>Select Month and Year</p> : null}
+                {salaryStoreList.length <= 0 ? (
+                  <p style={{ textAlign: "center" }}>Select Month and Year</p>
+                ) : null}
                 {/* {salaryList.length>0 ?<p>No data found</p>:null} */}
               </div>
             </div>
           </div>
         </div>
-
-
       </div>
     </Fragment>
+  );
+};
 
-  )
-}
-
-export default AdminSalaryModule
-
+export default AdminSalaryModule;

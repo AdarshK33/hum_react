@@ -20,13 +20,12 @@ const LeaveAdd = (props) => {
     const [disable, setDisable] = useState(true)
     const [min, setMin] = useState(false)
     const [max, setMax] = useState(false)
-    const [modal, setModal] = useState(false)
+   /*  const [modal, setModal] = useState(false) */
     
     let history = useHistory();
 
 
-    const { addLeave, addPopup, leavesData, getLeave, leaveType, leaveList,
-        message, viewLeaveData, leaveDataList, viewEmpData, empData }
+    const { addLeave, addPopup, leavesData, getLeave, leaveType, viewLeaveData, viewEmpData }
         = useContext(LeaveContext);
     
     useEffect(() => {
@@ -120,13 +119,13 @@ const LeaveAdd = (props) => {
     // Fields validation
     const validation = (event) => {
         let flag = true
-        if (leave == '') {
+        if (leave === '') {
             toast.info("Select Leave Type")
             flag = false;
             return;
         }
 
-        if (reason == '') {
+        if (reason === '') {
             toast.info("Reason is mandatory")
             flag = false;
             return;
@@ -200,7 +199,7 @@ const LeaveAdd = (props) => {
             year: '2020'
         }
 
-        if (leave == 'Maternity') {
+        if (leave === 'Maternity') {
             addLeave(newLeave1)
         }
         else {
@@ -272,7 +271,7 @@ const onCloseModal = () => {
                                     </Form.Group>
                                 </div>
                             </Row>
-                            {leave == 'Maternity' ?
+                            {leave === 'Maternity' ?
                                     <Row style={{margin:'0'}}>
                                         <div classNmae="col-sm-6">
                                             <Form.Group>

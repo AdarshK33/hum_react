@@ -91,21 +91,26 @@ const AdminLeaveApproval = () => {
                                             <td>{item.toDate}</td>
                                             <td>{item.isApproved === 0 ? "Approved" : (item.isApproved === 1 ? 'Pending' : 
                                              (item.isApproved === 2 ? 'Rejected' : ''))  }</td>
-
-                                            {item.isApproved === 0 ? <h1></h1> : 
-                                            <td><Button size="sm" style={{backgroundColor:'#006EBB'}} 
+  
+                                            <td>{item.isApproved === 0 ?
+                                             <Button size="sm" style={{backgroundColor:'lightGrey'}} disabled>
+                                                 Approved</Button> :
+                                                <Button size="sm" style={{backgroundColor:'#006EBB'}} 
                                             onClick={(e) => 
                                                 approvedButton(item.empId, item.fromDate,
                                                     item.toDate, item.leaveCategory, item.leaveTypeId,
                                                     item.ltId, item.numberOfDays, item.reason, item.status,
                                                     item.year)
                                             
-                                                }>Approved</Button></td> }
+                                                }>Approved</Button> }</td> 
 
-                                            {item.isApproved === 2 ? <h1></h1> : 
-                                            <td><Button variant="danger" size="sm" onClick={() => {
+                                             
+                                            <td>{item.isApproved === 2 ? 
+                                             <Button size="sm" style={{backgroundColor:'lightGrey'}} disabled>
+                                             Cancel</Button> :
+                                                <Button variant="danger" size="sm" onClick={() => {
                                                 setDeleteModal(true)
-                                            }}>Cancel</Button></td> }
+                                                }}>Cancel</Button>}</td>
                                             
 
                                             <Modal show={deleteModal} onHide={handleDeleteClose} centered>

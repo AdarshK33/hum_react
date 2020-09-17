@@ -136,8 +136,8 @@ const AdminLeaveEdit = (props) => {
             viewLeavePopup: 1,
             year: '2020'
         }
-        if (leave == 'Maternity') {
-              editList(editLeave)
+        if (leave === 'Maternity') {
+              editList(editLeave1)
           }
           else {
               editList(editLeave)
@@ -195,7 +195,7 @@ const AdminLeaveEdit = (props) => {
                                     </Form.Control>
                                 </Col>
                             </Form.Group>
-                            {leave == 'Maternity' ?
+                            {leave === 'Maternity' ?
                                 <React.Fragment>
                                     <Form.Group as={Row}>
                                         <Form.Label column sm="3" className="padding-right">From Date:</Form.Label>

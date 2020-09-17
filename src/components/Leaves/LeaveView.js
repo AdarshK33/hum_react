@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
 import Breadcrumb from '../common/breadcrumb';
-import { Card, Row, Col, Table, Button, Modal, Container } from 'react-bootstrap'
+import { Card, Row, Col, Table, Button } from 'react-bootstrap'
 import { Edit2, Trash2 } from 'react-feather'
 import calendarImage from '../../assets/images/calendar-image.png'
 import LeaveAdd from './LeaveAdd'
@@ -22,17 +22,14 @@ const LeaveView = () => {
     const [ltId, setltId] = useState()
     const [reason, setReason] = useState()
 
-    const { leaveList, viewList, deleteList,  viewLeaveData, leaveDataList,  viewEmpData, empData  }
+    const { leaveList, viewList, leaveDataList  }
         = useContext(LeaveContext);
 
     const handleClose = () => setModal(false)
-    const handleShow = () => setModal(true)
 
     const handleEditClose = () => setEditModal(false)
-    const handleEditShow = () => setEditModal(true)
 
     const handleDeleteClose = () => setDeleteModal(false)
-    const handleDeleteShow = () => setDeleteModal(true)
 
 
     useEffect(() => {
@@ -62,7 +59,7 @@ const LeaveView = () => {
                                     <h6 style={{ fontWeight: 'bold' }}>General Leaves</h6>
                                 </Row>
                                 <Row className="text-center" style={{ margin: '15px 0 30px 0' }}>
-                                    <img src={calendarImage} alt="calendar-image" width='50px' />
+                                    <img src={calendarImage} alt="calendar" width='50px' />
                                 </Row>
                                 <Row>
                                     <Col>

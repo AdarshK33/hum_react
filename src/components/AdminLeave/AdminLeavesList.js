@@ -19,14 +19,14 @@ const AdminLeavesList = (props) => {
 
     const { viewList, leaveList, deleteList } = useContext(LeaveContext)
 
-    const handleClose = () => setModal(false)
-    const handleShow = () => setModal(true)
+    /* const handleClose = () => setModal(false)
+    const handleShow = () => setModal(true) */
 
     const handleEditClose = () => setEditModal(false)
-    const handleEditShow = () => setEditModal(true)
+   /*  const handleEditShow = () => setEditModal(true) */
 
     const handleDeleteClose = () => setDeleteModal(false)
-    const handleDeleteShow = () => setDeleteModal(true)
+  /*   const handleDeleteShow = () => setDeleteModal(true) */
 
     useEffect(() => {
         viewList()

@@ -1,7 +1,7 @@
 import React, { createContext, useReducer } from 'react';
 import { client } from '../utils/axios';
 import AdminReducer from '../reducers/AdminReducer';
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 
 const initial_state = {
@@ -24,7 +24,7 @@ export const AdminProvider = ({ children }) => {
  // view Leaves for Admin
 
  const viewAdminList = () => {
-  client.get('employee/view/leave_view/{costCentre}')
+  client.get('employee/view/leave_view/')
     .then((response) => {
       state.leaveAdminList =  response.data.data
       console.log("=====GET Admin Leave API respone=====", state.leaveAdminList)
@@ -53,7 +53,7 @@ const CostCenter = () => {
 
 const employeeIdData = (costData) => {
   console.log("costData========", costData)
-  client.get('employee/view/leave_view/{costCentre}' + '?costCentre=' + costData)
+  client.get('employee/view/leave_view/' + '?costCentre=' + costData)
   .then((response) => {
     state.employeeIdList = response.data.data
     console.log("employee id data", state.employeeIdList)
