@@ -175,7 +175,6 @@ const viewStoreSalary = (month, year) => {
   console.log(" in cluster" + month + " " + year)
   let storeId = 'IN1055'
 
-  client.get('salary/view?month=' + month + '&year=' + year)
   client.get('salary/view/store?month=' + month + '&storeId=' + storeId + '&year=' + year)
   .then((response) => {
     console.log("slary data on store id", response);
