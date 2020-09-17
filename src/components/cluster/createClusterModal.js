@@ -141,7 +141,7 @@ const CreateClusterModal = (props) => {
                   <label htmlFor="exampleFormControlInput1"> Select Sports</label>
                   <Select
                     name="filters"
-                    placeholder="Filters"
+                    placeholder="Select Sports"
                     value={multiValue}
                     style={{fontSize:"0.8rem"}}
                     options={sportsNames.map(e => ({ label: e.sportName, value: e.sportId }))}
@@ -180,7 +180,7 @@ const CreateClusterModal = (props) => {
                   <label htmlFor="exampleFormControlInput1"> Select Employee</label>
                   <Select
                     name="filters"
-                    placeholder="Filters"
+                    placeholder="Select Employee"
                     value={employee}   
                     style={{fontSize:"0.8rem"}}         
                     options={getClusterEmployees.map(e => ({ label: e.firstName +" "+e.employeeId, value: e.employeeId }))}

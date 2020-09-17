@@ -221,8 +221,7 @@ const callTimer =()=>{
                           timeFormat="HH:mm"
                           timeIntervals={30}
                           timeCaption="Time"
-                          dateFormat="HH:mm aa"
-                       
+                          dateFormat="HH:mm aa"                     
                           placeholderText="Select start time"
                           required
                         />
@@ -249,11 +248,11 @@ const callTimer =()=>{
                         />
                       </div>
                     </div>
-                    <h6 style={{ color: "red",  }}>{errormsg}</h6>
+                    <h6 style={{ color: "red",fontFamily:"work-Sans, sans-serif",fontSize:"14px",marginLeft:"16px"    }}>{errormsg}</h6>
                   </div>
-                  <h6 style={{ color: "black", }}> Total working hours {workingHours}</h6>
+                  <h6 style={{ color: "black",fontFamily:"work-Sans, sans-serif",fontSize:"14px"   }}> Total working hours {workingHours}</h6>
                       
-                       <h6 style={{ color: "red"}}>{warnMsg}</h6>
+                       <h6 style={{color: "red",fontFamily:"work-Sans, sans-serif",fontSize:"14px"}}>{warnMsg}</h6>
                   <div className="row">
                     <div className="col-sm-12">
                       {parseFloat(workingHours) > 5 ?
@@ -306,7 +305,7 @@ const callTimer =()=>{
                       }
                     </div>
                      
-                    <h6>{breakDuationMsg && <div className="text-danger pl-3">Break Should be one hour</div>}</h6>
+                    <h6 style={{fontFamily:"work-Sans, sans-serif",fontSize:"14px"  }}>{breakDuationMsg && <div className="text-danger pl-3">Break Should be one hour</div>}</h6>
                   </div>
 
                          
@@ -323,7 +322,7 @@ const callTimer =()=>{
 
                           <option value="">Select Shift Type</option>
                                   <option>Captain</option>
-                                  <option>On duty</option>
+                                  <option>On Duty</option>
                                   <option>General</option>
                         </select>
                       </div>

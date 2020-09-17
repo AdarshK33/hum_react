@@ -20,6 +20,7 @@ const AdminShiftModal = (props) => {
   const [employee, setEmployee] = useState([])
   const [days, setDays] = useState([])
   const [assignShiftButton, setAShiftButton] = useState(true);
+  const [assignWeekOffButton, setAssignWeekOffButton] = useState(true);
   const [contractType, setContractType] = useState([])
 
   const { weekDays, weekOffDays,  availableShifts, availableShiftData, adminRosterAvailableShiftList, adminRosterAvailableShift,
@@ -107,6 +108,7 @@ const AdminShiftModal = (props) => {
 
   const handleEmployeeList = (options) => {
     setEmployee(options)
+    setAssignWeekOffButton(false)
   }
 
   const handleDayList = (options) => {
@@ -300,7 +302,7 @@ const AdminShiftModal = (props) => {
                     </div>
                   </div>
                   <div className="justify-content-center d-flex">
-                    <button className="btn btn-primary mb-2 mr-2" type="submit" value="Submit">Assign</button>
+                    <button className="btn btn-primary mb-2 mr-2"    disabled={assignWeekOffButton}  type="submit" value="Submit">Assign</button>
                 
                   </div>
 
