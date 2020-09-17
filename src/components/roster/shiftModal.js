@@ -7,7 +7,7 @@ import moment from 'moment'
 
 
 const ShiftModal = (props) => {
-  console.log(props)
+ // console.log(props)
   const [key, setKey] = useState('shift')
 
   const shiftDateWeek = moment(props.shiftDate, 'YYYY-MM-DD').isoWeek() + 1
@@ -20,14 +20,14 @@ const ShiftModal = (props) => {
 
 
   const { weekDays, weekOffDays, addWeekOff, availableShifts, availableShiftData, assignShift, getallWeeks, weeksInYear } = useContext(RosterContext)
-  console.log(availableShiftData, "data")
-  console.log(weeksInYear, "weeks")
+  //console.log(availableShiftData, "data")
+  //console.log(weeksInYear, "weeks")
   useEffect(() => {
     availableShifts()
     getallWeeks()
   }, [])
   useEffect(() => {
-    console.log('shiftDateWeek', shiftDateWeek)
+   // console.log('shiftDateWeek', shiftDateWeek)
     console.log('props.shiftDate', props.shiftDate)
     weekOffDays(shiftDateWeek)
   }, [selectedWeeks])
@@ -50,8 +50,8 @@ const ShiftModal = (props) => {
     setWeekDayList(weeks)
     setDayList(days)
     setWeekDay(shiftDate)
-    console.log(weeks, 'Shift year');
-    console.log(days, 'Shift day');
+   // console.log(weeks, 'Shift year');
+  //  console.log(days, 'Shift day');
   }, [props.shiftDate, weekDays])
 
   const submitForm = (e) => {
@@ -66,14 +66,14 @@ const ShiftModal = (props) => {
     }
 
     addWeekOff(newWeekOff)
-    console.log("newWeekOff data", newWeekOff)
+  //  console.log("newWeekOff data", newWeekOff)
     // history.push("/roster/roster");
     setSelectedWeeks(1)
     setWeekDay('')
     setShowDay(false)
   }
   const handleChange = (event) => {
-    console.log(event.target.value)
+   // console.log(event.target.value)
     setValue(event.target.value)
 
 
@@ -95,17 +95,17 @@ const ShiftModal = (props) => {
       "employeeId": "DSI000035",
       "shiftId": value
     }
-    console.log(assindata)
+   // console.log(assindata)
     assignShift(assindata)
     props.handleClose()
-    console.log("Submit")
+   // console.log("Submit")
 
   }
 
   const setWeekDayHandler = (e) => {
     let newDay = e.target.value
     setWeekDay(newDay)
-    console.log("new Day", newDay)
+  //  console.log("new Day", newDay)
   }
 
   return (

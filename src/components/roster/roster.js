@@ -11,7 +11,7 @@ const Roster = () => {
   const [endDate, setEndDate] = useState(moment().add('30', 'd'));
   const [modal, setModal] = useState(false)
   const [shiftDate, setshiftDate] = useState(false)
-  const { weekOffDataEmp, weekOffDataList } = useContext(RosterContext)
+  const { weekOffDataEmp, weekOffDataList,availableShifts } = useContext(RosterContext)
 
   const handleClose = () => setModal(false)
   const handleShow = (item) => {
@@ -19,6 +19,7 @@ const Roster = () => {
     console.log(item, "item onclick")
     setshiftDate(item)
     setModal(true)
+    availableShifts();
   }
 
   useEffect(() => {
@@ -32,7 +33,7 @@ const Roster = () => {
     console.log("weekOff Data", startDate)
   }
   const checkCondition = (item) => {
-    console.log(item, "che")
+    //console.log(item, "che")
     if (item.roster == null) {
       return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item)}>+</button>
     } else if (item.roster.holiday !== "" && item.roster.holiday !== null) {
@@ -122,8 +123,7 @@ const Roster = () => {
                                   console.log(newData.getDay(), "day")
                                   return (
                                     <>
-                                     {/*  {Array.from(Array(newData.getDay() - 1)).map(() => <td></td>)}
-                                      <td>{item.weekName}<br />{data.date}<br />{checkCondition(data)}</td> */}
+                                    
                                     </>
                                   )
                                 } else {
@@ -139,7 +139,7 @@ const Roster = () => {
                             <tr>
                               {item.employeeRosters.map(data => {
                                 let newData = new Date(data.date)
-                                console.log(newData.getDay(), "day")
+                                //console.log(newData.getDay(), "day")
                                 return <td>{item.weekName}<br />{data.date}<br />{checkCondition(data)}</td>
                               })}
                             </tr>

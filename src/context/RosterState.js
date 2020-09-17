@@ -112,7 +112,9 @@ export const RosterProvider = ({ children }) => {
 
   function deleteShift(shiftMasterId) {
     alert("delete" + shiftMasterId)
+    // eslint-disable-next-line no-useless-concat
     client.delete('shift/delete' + "?shiftId=" + shiftMasterId).then(function (response) {
+     
       console.log("data==>" + JSON.stringify(response));
       // let myresult = response.data.data.shiftMasterId;   
       return dispatch({ type: 'DELETE_SHIFT', payload: shiftMasterId });
@@ -148,7 +150,7 @@ const weekOffDataEmp = (endDate, startDate) => {
       .then((response) => {
         const weekOffDataList =  response.data.data
         const selectedRosterRange  = {endDate, startDate}
-        console.log("=====GET weekOff Data API respone=====", state.weekOffDataList)
+      //  console.log("=====GET weekOff Data API respone=====", state.weekOffDataList)
         
         return dispatch({ type: 'WEEKOFF_WEEK_DATA_LIST', payload: {
           weekOffDataList,
@@ -182,11 +184,12 @@ const addWeekOff = (newWeekOff) => {
       
   }
   const availableShifts = () => {
-    
+   
     client.get('shift/view/INSEZONO/active')
       .then((response) => {
-        console.log(response,"ava")
+       // console.log(response,"ava")
         state.availableShiftData = response.data.data
+     
         console.log("=====GET ava=====", state.availableShiftData)
         return dispatch({ type: 'AVAILABLE_SHIFTS', payload: state.availableShiftData})
       })
@@ -262,6 +265,7 @@ const adminWeekOffDataEmp = (endDate, startDate,contract,weekid) => {
   //ADMIN GET ALL WEEKS
   const adminCalculateWeek = (endDate,startDate) => {
   //  alert(endDate,endDate);
+    // eslint-disable-next-line no-useless-concat
     client.get('roster/view/weeks?'+ 'endDate=' + endDate + '&' + 'startDate=' + startDate)
       .then((response) => {
          state.adminCalculateWeekResult = response.data.data;

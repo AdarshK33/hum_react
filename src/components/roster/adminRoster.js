@@ -22,14 +22,15 @@ const AdminRoster = () => {
     }, [])
 
 
-    const { adminWeekOffDataEmp, viewContractTypes, shiftContractNames,adminWeekOffDataListHeader, adminWeekOffDataList,adminCalculateWeek,adminCalculateWeekResult } = useContext(RosterContext);
+    const { adminWeekOffDataEmp, viewContractTypes, shiftContractNames,adminWeekOffDataListHeader, adminWeekOffDataList,adminCalculateWeek,adminCalculateWeekResult,adminRosterAvailableShift,getallWeeks} = useContext(RosterContext);
     const handleClose = () => setAdminModal(false)
     const handleShow = (item,name,ctype) => {         
         setshiftDate(item)
         setAdminModal(true)
         setFirstName(name);
         setContractType(ctype)
-
+        adminRosterAvailableShift()
+        getallWeeks()
     }
 
 
@@ -141,12 +142,12 @@ const AdminRoster = () => {
                                     <div className="col-sm-4">
 
                                         <div className="form-group">
-                                            <label className="name f-w-600">&nbsp;Select Employee Type </label>
+                                            <label className="name f-w-600">&nbsp;&nbsp;Select Employee Type </label>
 
                                             <select
                                                 className="form-control"
                                                 required
-                                                style={{ marginLeft:"10px",width: "185px" }}
+                                                style={{ marginLeft:"5px",width: "185px" }}
                                                 value={contractType}
                                                 onChange={(e) => setContractType(e.target.value)}>
 
@@ -170,7 +171,7 @@ const AdminRoster = () => {
 
                                     <thead style={{ background: '#006EBB', color: 'white' }}>
                                         <tr>
-                                            <h6 style={{ fontWeight: "bold", paddingLeft: "60px", paddingTop: "20px", paddingRight: "70px" }}>Employee</h6>
+                                            <th style={{ fontWeight: "bold", paddingLeft: "70px", paddingTop: "10px", paddingRight: "70px" }}>Employee</th>
                                             {adminWeekOffDataListHeader.map((e,i) => {
                                                 return (
                                                     <th scope="col" key={e.date}>{e.date}<br />{e.weekName} </th>
