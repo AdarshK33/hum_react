@@ -12,36 +12,56 @@ const AdminRoster = () => {
     const [adminModal, setAdminModal] = useState(false)
     const [shiftDate, setshiftDate] = useState(false)
     const [contractType, setContractType] = useState('');
-    const [contract,setContract] = useState('Permanent')
-    const [adminweekDayList, setAdminWeekDayList] = useState('')
+    const [contract] = useState('permanent');
+    const [weekid]= useState(0);
+    const [singleWeek, getSingleWeek] = useState()
+    const [firstName,setFirstName] = useState('');
+  
     useEffect(() => {
-        adminGetAllWeeks()
         viewContractTypes()
     }, [])
 
 
-    const { adminWeekOffDataEmp, viewContractTypes, shiftContractNames, adminGetAllWeeks, adminWeeksInYear, adminWeekOffDataListHeader, adminWeekOffDataList } = useContext(RosterContext);
+    const { adminWeekOffDataEmp, viewContractTypes, shiftContractNames,adminWeekOffDataListHeader, adminWeekOffDataList,adminCalculateWeek,adminCalculateWeekResult,adminRosterAvailableShift,getallWeeks} = useContext(RosterContext);
     const handleClose = () => setAdminModal(false)
-    const handleShow = (item) => {
-       
-       // console.log(item, "item onclick")
+    const handleShow = (item,name,ctype) => {         
         setshiftDate(item)
         setAdminModal(true)
+        setFirstName(name);
+        setContractType(ctype)
+        adminRosterAvailableShift()
+        getallWeeks()
+    }
+
+
+
+    const setWeekCalc = (e) => {
+        let data1 = e.target.value
+        getSingleWeek(data1)
+    
     }
     useEffect(() => {
-        adminWeekOffDataEmp(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"),contract)
+        adminWeekOffDataEmp(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"),contract,weekid)
     }, [])
 
 
     const submitDate = (e) => {
         e.preventDefault();
-        adminWeekOffDataEmp(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"),contractType)
-
+        adminWeekOffDataEmp(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"),contractType,singleWeek)
+     
     }
-    const checkCondition = (item) => {
+
+        const calcWeek =()=>{
+            adminCalculateWeek(endDate.format("YYYY-MM-DD"),startDate.format("YYYY-MM-DD"))
+        }
+
+
+
+    const checkCondition = (item,name,ctype) => {
+         
 
         if (item.roster == null) {
-            return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item)}>+</button>
+            return <button  className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item,name,ctype)}>+</button>
         } else if (item.roster.holiday !== "" && item.roster.holiday !== null) {
             return <button className="btn btn-square btn-warning btn-sm" disabled type="button">{item.roster.holiday}</button>
         } else if (item.roster.leave !== "" && item.roster.leave !== null) {
@@ -51,7 +71,7 @@ const AdminRoster = () => {
         } else if (item.roster.shiftName !== "" && item.roster.shiftName !== null) {
             return <button className="btn btn-square btn-success  btn-sm" type="button">{item.roster.shiftName}</button>
         } else {
-            return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item)}>+</button>
+            return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item,name)}>+</button>
         }
     }
     return (
@@ -62,7 +82,7 @@ const AdminRoster = () => {
                     <div className="col-sm-12">
                         <div className="card h-100" >
                             <div className="card-header">
-                                {/* <DateFromEnd sendDate={sendDate}/> */}
+                              
                                 <form className="form-inline">
                                     <div className="row">
                                         <div className="col-sm-4">
@@ -77,34 +97,38 @@ const AdminRoster = () => {
                                                 />
                                             </div>
                                         </div>
-                                        <div className="col-sm-4 pl-3">
-                                        
+                                        <div className="col-sm-4">
+                                        <div className="form-group mb-1">
                                                 <label className="name f-w-600">To Date&nbsp; </label>
                                                 <DatePicker
                                                     className="form-control"
                                                     selected={endDate.toDate()}
                                                     dateFormat="yyyy-MM-dd"
                                                     required
+                                                    onCalendarClose={() => { calcWeek() }}
                                                     onChange={(date) => setEndDate(moment(date, 'YYYY-MM-DD'))}
                                                 />
                                            
+                                        </div>
                                         </div>
                                         <div className="col-sm-4">
                                             <button className="myclass" style={{ marginTop: "20px" }} type="button" onClick={(e) => submitDate(e)}>Submit</button>
                                         </div>
                                     </div>
                                
-                                <br />
+                                <br/>
+                                <br/>
                                 <div className="row">
                                     <div className="col-sm-3">
                                         <div className="form-group">
                                             <label className="name f-w-600">Select Week&nbsp; </label>
                                             <select
                                                 className="form-control"
-                                                style={{ width: "320px" }}
-                                                onChange={(e) => setAdminWeekDayList(e)}>
+                                                style={{ width: "400px" }}
+                                                value={singleWeek}
+                                                onChange={(e) => setWeekCalc(e)}>
                                                 <option value="">Select Weeks</option>
-                                                {adminWeeksInYear.map((e, i) => {
+                                                {adminCalculateWeekResult.map((e, i) => {
                                                     return (
                                                         <option key={e.weekId} value={e.weekId}>
                                                             {e.weekName}
@@ -118,12 +142,12 @@ const AdminRoster = () => {
                                     <div className="col-sm-4">
 
                                         <div className="form-group">
-                                            <label className="name f-w-600">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Select Employee Type </label>
+                                            <label className="name f-w-600">&nbsp;&nbsp;Select Employee Type </label>
 
                                             <select
                                                 className="form-control"
                                                 required
-                                                style={{ width: "185px" }}
+                                                style={{ marginLeft:"5px",width: "185px" }}
                                                 value={contractType}
                                                 onChange={(e) => setContractType(e.target.value)}>
 
@@ -147,7 +171,7 @@ const AdminRoster = () => {
 
                                     <thead style={{ background: '#006EBB', color: 'white' }}>
                                         <tr>
-                                            <h6 style={{ fontWeight: "bold", paddingLeft: "60px", paddingTop: "20px", paddingRight: "70px" }}>Employeee</h6>
+                                            <th style={{ fontWeight: "bold", paddingLeft: "70px", paddingTop: "10px", paddingRight: "70px" }}>Employee</th>
                                             {adminWeekOffDataListHeader.map((e,i) => {
                                                 return (
                                                     <th scope="col" key={e.date}>{e.date}<br />{e.weekName} </th>
@@ -198,12 +222,9 @@ const AdminRoster = () => {
 
 
 
-                                    <tbody>
-                                        {adminWeekOffDataList.length > 0 &&
-                                            adminWeekOffDataList.map((item, i) => {
-
-                                               
-
+                         <tbody>
+                                {adminWeekOffDataList.length > 0 &&
+                                        adminWeekOffDataList.map((item, i) => {
                                                 return (
                                                     <tr>
                                                         <td>
@@ -217,19 +238,22 @@ const AdminRoster = () => {
                                                                 <div className="col-sm-9" >
                                                                     <p>{item.firstName}&nbsp;{item.lastName}</p>
                                                                     <p style={{ lineHeight: "0.8", color: "red" }}>{item.employeeId}</p>
-                                                                    <p style={{ lineHeight: "0.8", color: "blue" }}>{item.contractType}</p>
-
+                                                                    <p style={{ lineHeight: "0.8", color: "blue" }}>{item.contractType}</p>  
+                                                                        
                                                                 </div>
+                                                                
                                                             </div>
                                                         </td>
-                                                        {item.employeeRosters.map(data => {
+                                                        {item.employeeRosters.map((data,index,empArr) => {
                                                             let newData = new Date(data.date)
-                                                        //   console.log(newData.getDay(), "day")
-                                                            return <td>{item.weekName}<br />{data.date}<br />{checkCondition(data)}</td>
+                                                          
+                                                        //  console.log(newData.getDay(), "day")
+                                                    
+                                                        return <td>{item.weekName}<br />{data.date}<br /> {checkCondition(data,item.firstName,item.contractType)}</td>
                                                         })}
                                                     </tr>
                                                 )
-                                                // }
+                                            
                                             })}
                                     </tbody>
                                 </table>
@@ -237,7 +261,14 @@ const AdminRoster = () => {
                         </div>
                     </div>
                 </div>
-                {adminModal && <AdminShiftModal handleClose={handleClose} modal={adminModal} shiftDate={shiftDate.date} />}
+                {adminModal && 
+                <AdminShiftModal 
+                 handleClose={handleClose}
+                 contractType={contractType}
+                 firstName={firstName}
+                 modal={adminModal} 
+                 shiftDate={shiftDate.date} />}
+               
             </div>
 
         </Fragment>

@@ -20,7 +20,7 @@ const EditShiftModal = (props) => {
   const [workingHours, setWorkingHour] = useState('');
   const [contractType, setContractType] = useState('');
   const [breakStartTime, setStartBreakTime] = useState(null);
-  const [ setEndBreakTIme] = useState(null);
+  const [ breakEndTime, setEndBreakTIme] = useState(null);
   const [successMsg, setSuccessMsg] = useState("");
   const [shiftType,setShiftType] = useState('');
   const [breakDuationMsg, ] = useState(false);
@@ -34,9 +34,7 @@ const EditShiftModal = (props) => {
   const[status,setStatus] = useState(0)
 
 
-
-  const [updateNewTime,setupdateNewTime] = useState(null)
-  const {updateShift,viewShift, singleShiftList,viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
+   const {updateShift,viewShift, singleShiftList,viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const setClear = () => {
    setShiftType('')
     setStartTime('')
@@ -99,7 +97,19 @@ const EditShiftModal = (props) => {
     setClear()
     setEditModal()
   }
- 
+  useEffect(() => {
+    setStatus(props.status)
+  }, [props.status])
+
+  useEffect(() => {
+    setContractType(props.contractType)
+  }, [props.contractType])
+
+
+  useEffect(() => {
+    setShiftType(props.shiftType)
+  }, [props.shiftType])
+  
   const onSubmit = e => {
     // const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
     // const etime = moment(endTime, ["h:mm A"]).format("HH:mm");
@@ -234,25 +244,19 @@ const EditShiftModal = (props) => {
                     
                   </div>
              
-                  <h6 style={{ color: "red",  }}>{errormsg}</h6>
+                  <h6 style={{ color: "red",fontFamily:"work-Sans, sans-serif",fontSize:"14px"   }}>{errormsg}</h6>
              
-                  <h6 style={{ color: "black", }}> Total working hours {workingHours}</h6>
+                  <h6 style={{ color: "black",fontFamily:"work-Sans, sans-serif",fontSize:"14px" }}> Total working hours {workingHours}</h6>
                       
-                       <h6 style={{ color: "red"}}>{warnMsg}</h6>
+                       <h6 style={{ color: "red",fontFamily:"work-Sans, sans-serif",fontSize:"14px" }}>{warnMsg}</h6>
 
-
-
-
-                     
-
-                          
                       {showBreakDuration &&
                       <div className="row">
                         <div className="col-sm-4">
-                        <h6 style={{ color: "text-secondary",fontSize:"15px"  }}>Working Hours :{singleShiftList.workingHours}</h6>
+                        <h6 style={{ color: "text-secondary",fontFamily:"work-Sans, sans-serif",fontSize:"14px" }}>Working Hours :{singleShiftList.workingHours}</h6>
                         </div>
                         <div className="col-sm-8">
-                        <h6 style={{ color: "text-secondary",fontSize:"15px" }}>Break duration :{singleShiftList.breakStartTime}-{singleShiftList.breakEndTime}</h6>
+                        <h6 style={{ color: "text-secondary",fontFamily:"work-Sans, sans-serif",fontSize:"14px"}}>Break duration :{singleShiftList.breakStartTime}-{singleShiftList.breakEndTime}</h6>
                           <br/>
                         </div>  
                        
@@ -340,10 +344,9 @@ const EditShiftModal = (props) => {
                           required
                           value={shiftType}                      
                           onChange={(e)=>setShiftType(e.target.value)}>
-                          <option value="" disabled selected hidden>{singleShiftList.shiftType}</option>
                           <option value="">Select Shift Type</option>
                                   <option>Captain</option>
-                                  <option>Onduty</option>
+                                  <option>On Duty</option>
                                   <option>General</option>
                         </select>
                       </div>
@@ -364,7 +367,7 @@ const EditShiftModal = (props) => {
                           onChange={(e) => setContractType(e.target.value)} 
                           value={contractType}>
                             
-                            <option value="" disabled selected hidden>{singleShiftList.contractType}</option>   
+                          
                           {shiftContractNames.map((e, i) => {
                             return (
                              
@@ -388,7 +391,7 @@ const EditShiftModal = (props) => {
                           value={status}                      
                           onChange={(e)=>setStatus(e.target.value)}>
                           <option value="0">Active</option>
-                                  <option value="1">Deactive</option>
+                                  <option value="1">Inactive</option>
                                  
                         </select>
                       </div>

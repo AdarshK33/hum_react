@@ -28,6 +28,7 @@ function ViewShift() {
   const [breakStartTime, setStartBreakTime] = useState(new Date());
   const [breakEndTime,setBreakEndTime] = useState(new Date());
   const [workingHours, setWorkingHour] = useState();
+  const[status,setStatus] = useState('')
   // variables
  const { shiftList,editShift, viewShift, } = useContext(RosterContext);
   //console.log(shiftList, "in viewShift");
@@ -86,7 +87,7 @@ function ViewShift() {
                                                 setStartBreakTime(e.breakStartTime)
                                                 setBreakEndTime(e.breakEndTime)
                                                 setWorkingHour(e.workingHours)
-                                                
+                                                setStatus(e.status)
                                         }} />
                                             </td>             
                          
@@ -105,6 +106,7 @@ function ViewShift() {
                 breakStartTime={breakStartTime}
                 breakEndTime={breakEndTime} 
                 workingHours={workingHours}
+                status={status}
                 modal={editModal} /> 
               </div>
 
