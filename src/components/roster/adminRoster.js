@@ -174,7 +174,7 @@ const AdminRoster = () => {
                                             <th style={{ fontWeight: "bold", paddingLeft: "70px", paddingTop: "10px", paddingRight: "70px" }}>Employee</th>
                                             {adminWeekOffDataListHeader.map((e,i) => {
                                                 return (
-                                                    <th scope="col" key={e.date}>{e.date}<br />{e.weekName} </th>
+                                                    <th scope="col" key={e.date}>{e.day}<br />{e.weekName} </th>
                                                 )
                                             })}
                                         </tr>

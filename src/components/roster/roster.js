@@ -114,11 +114,11 @@ const Roster = () => {
                   <tbody>
                     {weekOffDataList.length > 0 &&
                       weekOffDataList.map((item, i) => {
-                        if (i == 0) {
+                        if (i === 0) {
                           return (
                             <tr>
                               {item.employeeRosters.map((data, ind) => {
-                                if (ind == 0) {
+                                if (ind === 0) {
                                   let newData = new Date(data.date)
                                   console.log(newData.getDay(), "day")
                                   return (
