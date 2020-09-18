@@ -24,7 +24,7 @@ const AdminLeaveEdit = (props) => {
     const [max, setMax] = useState(false)
     let history = useHistory();
 
-    const { getLeave, leaveType, editList,  } = useContext(LeaveContext);
+    const { getLeave, leaveType, editList,leavesData, addPopup  } = useContext(LeaveContext);
 
     const today = new Date()
 
@@ -65,6 +65,21 @@ const AdminLeaveEdit = (props) => {
         console.log("fromDateHandler value", value)
 
         setStartDate(value);
+        
+        const newPopup = {
+            empId: 'DSI000035',
+            fromDate: moment(value).format("YYYY-MM-DD"),
+            leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName,
+            leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
+            ltId: 0,
+            numberOfDays: 0,
+            reason: 'string',
+            status: 1,
+            toDate: moment(endDate).format("YYYY-MM-DD"),
+            viewLeavePopup: 0,
+            year: '2020'
+        }
+        addPopup(newPopup)
 
         //For disable the To Date initially
         setDisable(false)
@@ -85,8 +100,41 @@ const AdminLeaveEdit = (props) => {
         let value1 = date
         console.log("toDateHandler value", value1)
         setEndDate(value1);
+        const newPopup = {
+            empId: 'DSI000035',
+            fromDate: moment(startDate).format("YYYY-MM-DD"),
+            leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName,
+            leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
+            ltId: 0,
+            numberOfDays: 0,
+            reason: 'string',
+            status: 1,
+            toDate: moment(value1).format("YYYY-MM-DD"),
+            viewLeavePopup: 0,
+            year: '2020'
+        }
+        addPopup(newPopup)
     }
 
+    const setStartMaternityDateHandler = (date) => {
+        let value2 = date
+        setStartMaternityDate(value2)
+
+        const newPopup1 = {
+            empId: 'DSI000035',
+            fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
+            leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName,
+            leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
+            ltId: 0,
+            numberOfDays: 0,
+            reason: reason,
+            status: 1,
+            toDate: moment(d3).format("YYYY-MM-DD"),
+            viewLeavePopup: 0,
+            year: '2020'
+        }
+        addPopup(newPopup1)
+    }
     const setLeaveHandler = (e) => {
         const leave1 = e.target.value
         setLeave(leave1)
@@ -147,14 +195,41 @@ const AdminLeaveEdit = (props) => {
 
         const setModal = props.handleEditClose;
         setModal()
-        /* setLeave(leave)
-        setReason(reason)
-        setStartDate(startDate)
-        setEndDate(endDate) */
         setDisable(true)
         setMin(false)
         setMax(false)
+        setEndDate(new Date(props.toDate))
+        setStartDate(new Date(props.fromDate))
+        setLeave(props.leaveCategory)
+        setReason(props.reason)
+        setStartMaternityDate(new Date(props.fromDate))
 
+    }
+    const onCloseModal = () => {
+        const resetValue = {
+            empId: 'DSI000035',
+            fromDate: '',
+            leaveCategory: '',
+            leaveTypeId: 0,
+            ltId: 0,
+            numberOfDays: 0,
+            reason: 'string',
+            status: 0,
+            toDate: '',
+            viewLeavePopup: 0,
+            year: ''
+        }
+        const setModal = props.handleEditClose;
+        setModal()
+        setDisable(true)
+        setMin(false)
+        setMax(false)
+        setEndDate(new Date(props.toDate))
+        setStartDate(new Date(props.fromDate))
+        setLeave(props.leaveCategory)
+        setReason(props.reason)
+        setStartMaternityDate(new Date(props.fromDate))
+        addPopup(resetValue)
     }
     return (
         <React.Fragment>
@@ -168,24 +243,25 @@ const AdminLeaveEdit = (props) => {
                     </Modal.Header>
                     <Modal.Body>
                         <Form onSubmit={onSubmit}>
-                        <Form.Group as={Row}>
-                                <Form.Label column sm="3" className="padding-right">Employee Id:</Form.Label>
-                                <Col sm="9" className="padding-left">
+                            <Row>
+                                <div className="col-sm-12">
+                                    <Form.Label>Employee Id:</Form.Label>
                                     <Form.Control size="sm" type="text" value={empId} readOnly
                                      onChange={(e) => setEmpId(e)} />
-                                </Col>
-                            </Form.Group>
+                                </div>
+                            </Row>
                             {/* <Form.Group as={Row}>
                                 <Form.Label column sm="3" className="padding-right">Employee Name</Form.Label>
                                 <Col sm="9" className="padding-left">
                                     <Form.Control size="sm" type="text" value={name} onChange={(e) => setName(e)} />
                                 </Col>
                             </Form.Group> */}
-                            <Form.Group as={Row} >
-                                <Form.Label column sm="3" className="padding-right">Leave Type:</Form.Label>
-                                <Col sm="9" className="padding-left">
+                            <Row>
+                                <div className="col-sm-12">
+                                    <Form.Label>Leave Type:</Form.Label>
                                     <Form.Control as="select" size="sm"  value={leave}
                                         onChange={(e) => setLeaveHandler(e)} required>
+                                            <option value="">Select</option>
                                         {leaveType.length > 0 && leaveType.map((item, i) => {
                                             return (
                                                 <option key={item.leaveTypeId} value={item.leaveName} >{item.leaveName}</option>
@@ -193,86 +269,95 @@ const AdminLeaveEdit = (props) => {
                                         })
                                         }
                                     </Form.Control>
-                                </Col>
-                            </Form.Group>
+                                </div>
+                            </Row>
                             {leave === 'Maternity' ?
-                                <React.Fragment>
-                                    <Form.Group as={Row}>
-                                        <Form.Label column sm="3" className="padding-right">From Date:</Form.Label>
-                                        <Col sm="3" className="padding-left">
-                                            <DatePicker selected={startMaternityDate} onChange={(date) => setStartMaternityDate(date)}
-                                                className="input_date" dateFormat="yyyy-MM-dd" selectsStart startDate={startMaternityDate}
-                                                endDate={d3}
-                                                minDate={startMaternityDate}
-                                                placeholderText="From Date" />
-                                        </Col>
-
-                                        <Form.Label column sm="3" className="padding-right"
-                                            style={{ display: 'flex', justifyContent: 'center' }}>To Date:</Form.Label>
-                                        <Col sm="3" className="padding-left">
-                                            <DatePicker  /* {...props.toDate} selected={new Date(props.toDate)} */
-                                                selected={d3} readOnly selectsEnd startDate={startMaternityDate}
-                                                endDate={d3} onChange={(date) => setEndMaternityDate(date)}
-                                                className="input_date" dateFormat="yyyy-MM-dd"
-                                                minDate={startMaternityDate}
-                                                placeholderText="To Date" />
-                                        </Col>
-                                    </Form.Group>
-                                </React.Fragment> :
-                                <Form.Group as={Row}>
-                                    <Form.Label column sm="3" className="padding-right">From Date:</Form.Label>
-                                    <Col sm="3" className="padding-left">
-                                        <DatePicker selected={startDate}
-                                            onChange={(e) => fromDateHandler(e)}
-                                            className="input_date" dateFormat="yyyy-MM-dd"
-                                        />
-                                    </Col>
-                                    {disable &&
-                                        <React.Fragment>
-                                            <Form.Label column sm="3" className="padding-right"
-                                                style={{ display: 'flex', justifyContent: 'center' }}>To Date:</Form.Label>
-                                            <Col sm="3" className="padding-left">
-                                                <DatePicker selected={endDate} onChange={(date) => setEndDate(date)}
+                                    <Row /* style={{margin:'0'}} */>
+                                        <div classNmae="col-sm-6">
+                                            <Form.Group>
+                                                <div><Form.Label >From Date:</Form.Label></div>
+                                                <div><DatePicker selected={startMaternityDate} onChange={(date) => setStartMaternityDateHandler(date)}
+                                                    className="input_date" dateFormat="yyyy-MM-dd" selectsStart startDate={startMaternityDate}
+                                                    endDate={d3}
+                                                    minDate={new Date()}
+                                                    placeholderText="From Date" required /></div>
+                                            </Form.Group>
+                                        </div>
+                                        <div className="col-sm-6">
+                                            <Form.Group>
+                                            <div> <Form.Label >To Date:</Form.Label></div>
+                                                <div><DatePicker selected={d3} selectsEnd startDate={startMaternityDate} readOnly
+                                                    endDate={d3} onChange={(date) => setEndMaternityDate(date)}
                                                     className="input_date" dateFormat="yyyy-MM-dd"
-                                                    /*  maxDate={maxToDate} */
-                                                    disabled={true} />
-                                            </Col>
-                                        </React.Fragment>
+                                                    minDate={startMaternityDate}
+                                                    placeholderText="To Date" /></div>
+                                            </Form.Group>
+                                        </div>
+                                    </Row>:
+
+                                <Row>
+                                    <div className="col-sm-6">
+                                        <Form.Group>
+                                            <div><Form.Label>From Date:</Form.Label></div>
+                                            <div>
+                                            <DatePicker selected={startDate} onChange={(e) => fromDateHandler(e)}
+                                                className="input_date" dateFormat="yyyy-MM-dd"
+                                                placeholderText="From Date" required />
+                                                </div>
+                                        </Form.Group>
+                                    </div>
+                                    {disable &&
+                                        <div className="col-sm-6">
+                                            <div><Form.Label>To Date:</Form.Label></div>
+                                            <div><DatePicker selected={endDate} onChange={(date) => setEndDate(date)}
+                                                className="input_date" dateFormat="yyyy-MM-dd"
+                                                /*  maxDate={maxToDate} */
+                                                placeholderText="To Date" disabled={true} />
+                                                </div>
+                                        </div>
                                     }
                                     {min &&
-                                        <React.Fragment>
-                                            <Form.Label column sm="3" className="padding-right"
-                                                style={{ display: 'flex', justifyContent: 'center' }}>To Date:</Form.Label>
-                                            <Col sm="3" className="padding-left">
-                                                <DatePicker selected={endDate} onChange={(e) => toDateHandler(e)}
-                                                    className="input_date" dateFormat="yyyy-MM-dd"
-                                                    minDate={startDate}
-                                                />
-                                            </Col>
-                                        </React.Fragment>
-
+                                        <div className="col-sm-6">
+                                            <div><Form.Label>To Date:</Form.Label></div>
+                                            <div><DatePicker selected={endDate} onChange={(date) => toDateHandler(date)}
+                                                className="input_date" dateFormat="yyyy-MM-dd"
+                                                minDate={startDate}
+                                                placeholderText="To Date" required /></div>
+                                        </div>
                                     }
                                     {max &&
-                                        <React.Fragment>
-                                            <Form.Label column sm="3" className="padding-right"
-                                                style={{ display: 'flex', justifyContent: 'center' }}>To Date:</Form.Label>
-                                            <Col sm="3" className="padding-left">
-                                                <DatePicker selected={endDate} onChange={(e) => toDateHandler(e)}
-                                                    className="input_date" dateFormat="yyyy-MM-dd"
-                                                    maxDate={today} />
-                                            </Col>
-                                        </React.Fragment>}
 
-                                </Form.Group>
-                                }
-                            <Form.Group as={Row}>
-                                <Form.Label column sm="3" className="padding-right">Reason:</Form.Label>
-                                <Col sm="9" className="padding-left">
-                                    <Form.Control as="textarea" rows="3" size="sm" name="reason"
-                                        value={reason} onChange={(event) => setReason(event.target.value)} />
-                                </Col>
-                            </Form.Group>
-                            <Button type="submit" className="submit-button" size="sm">Submit</Button>
+                                        <div className="col-sm-6">
+                                           <div><Form.Label>To Date:</Form.Label></div>
+                                            <div><DatePicker selected={endDate} onChange={(date) => toDateHandler(date)}
+                                                    className="input_date" dateFormat="yyyy-MM-dd"
+                                                    maxDate={today}
+                                                    placeholderText="To Date" /></div>
+                                        </div>
+                                        }
+
+                                </Row>
+                             
+                            }
+                            <Row>
+                                <div className="col-sm-12">
+                                   {/*  <p className="leavesMsg">{leavesData ? leavesData.Leave : ''}</p> */}
+                                    {leavesData ? 
+                                    <p className="leavesMsg">{leavesData.Leave}</p> : ''}
+                                </div>
+                            </Row>
+
+                            <Row>
+                                <div className="col-sm-12">
+                                    <Form.Group>
+                                    <Form.Label>Reason:</Form.Label>
+                                    <Form.Control as="textarea" rows="3" name="reason" value={reason}
+                                        onChange={(event) => setReason(event.target.value)} required />
+                                    </Form.Group>
+                                </div>
+                            </Row>
+
+                            <Button type="submit" /* className="submit-button" size="sm" */>Submit</Button>
                         </Form>
 
                     </Modal.Body>

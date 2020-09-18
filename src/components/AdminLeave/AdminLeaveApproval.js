@@ -93,7 +93,7 @@ const AdminLeaveApproval = () => {
                                              (item.isApproved === 2 ? 'Rejected' : ''))  }</td>
   
                                             <td>{item.isApproved === 0 ?
-                                             <Button size="sm" style={{backgroundColor:'lightGrey'}} disabled>
+                                             <Button size="sm" className="disable-button" disabled>
                                                  Approved</Button> :
                                                 <Button size="sm" style={{backgroundColor:'#006EBB'}} 
                                             onClick={(e) => 
@@ -106,7 +106,7 @@ const AdminLeaveApproval = () => {
 
                                              
                                             <td>{item.isApproved === 2 ? 
-                                             <Button size="sm" style={{backgroundColor:'lightGrey'}} disabled>
+                                             <Button size="sm" className="disable-button" disabled>
                                              Cancel</Button> :
                                                 <Button variant="danger" size="sm" onClick={() => {
                                                 setDeleteModal(true)

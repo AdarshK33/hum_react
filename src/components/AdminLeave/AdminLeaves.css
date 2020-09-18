@@ -6,7 +6,7 @@
 .table th, .table td{
     text-align: center;
 }
-button.btn.btn-sm:disabled {
+button.btn.btn-sm.disable-button:disabled {
     background-color: lightgrey !important;
     border-color: lightgrey !important;
     color: black
