@@ -96,6 +96,8 @@ function ViewShift() {
 
                       <th scope="col">LOP</th>
                       <th scope="col">Contract Type</th>
+                      <th scope="col">Extra Hours</th>
+                      <th scope="col">Total Hours</th>
                       <th scope="col">Status</th>
                       <th scope="col">Edit</th>
                     </tr>
@@ -113,15 +115,20 @@ function ViewShift() {
 
                           <td>{item.lop}</td>
                           <td>{item.contractType}</td>
+                          <td>{item.extraHours}</td>
+                          <td>{item.totalHours}</td>
                           <td>{item.statusDesc}</td>
-                          <td><Edit2 onClick={() => {
+                          <td>{item.statusDesc === 'Pending' ? 
+                            <Edit2 onClick={() => {
                             setEditModal(true); setEmployeeId(item.employeeId);
                             setFirstName(item.firstName); setLastName(item.lastName); setNumberOfHours(item.numberOfHours)
                             setLop(item.lop); setContractType(item.contractType); setExtraHours(item.extraHours);
                             setReason(item.reason); setMonth(item.month); setSalaryId(item.salaryId);
                             setStatus(item.status); setStatusDesc(item.statusDesc);
                             setTotalHours(item.totalHours); setYear(item.year);
-                          }} /></td>
+                          }} /> : 
+                          <Edit2 disabled style={{color:'lightgrey'}} />}
+                          </td>
 
 
                         </tr>
