@@ -1,5 +1,8 @@
 import React, { Fragment } from 'react';
 import Breadcrumb from '../../common/breadcrumb';
+import { Row, Col } from 'react-bootstrap';
+import './default.css';
+import Dashboard from '../dashboard';
 
 const Default = () => {
 
@@ -11,7 +14,8 @@ const Default = () => {
                     <div className="col-sm-12">
                         <div className="card">
                             <div className="card-header">
-                                <h5>Dashboard</h5><span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
+                                {/* <h5>Dashboard</h5><span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span> */}
+                                <Dashboard />
                             </div>
                             
                         </div>
