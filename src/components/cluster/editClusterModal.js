@@ -44,7 +44,7 @@ const EditClusterModal = (props) => {
     setClusterLeader(getSingleCluster.clusterLeader)
   
 
-  // console.log("1---->"+getSingleCluster.employeeIds);
+   //console.log("1---->"+getSingleCluster.employeeIds);
   // console.log("2---->"+JSON.stringify(clusterLeaderNames));
    }, [props])
 
@@ -54,7 +54,7 @@ const EditClusterModal = (props) => {
 
 
 
-console.log("===="+JSON.stringify(getSingleCluster));
+console.log("===="+JSON.stringify(getSingleCluster.employeeIds));
 //alert("------->"+getSingleCluster1)
   const onSubmit = (event) => {
 
@@ -142,7 +142,7 @@ const callTimer =()=>{
   setModal()
 }
 
-
+// edit api need to integrate 
 
   return (
     <Fragment>
@@ -157,9 +157,10 @@ const callTimer =()=>{
               <div className="col-sm-12">
                 <div className="form-group">
                   <label htmlFor="exampleFormControlInput1"> Select Sports</label>
-  {/* <h6>{result}</h6> */}
+                  
            
                   <Select
+                   placeholder="Select Sports"
                    value={multiValue}
                    options={sportsNames.map(e => ({ label: e.sportName, value: e.sportId }))}
                    onChange={handleMultiChange}
@@ -208,12 +209,12 @@ const callTimer =()=>{
                   <label htmlFor="exampleFormControlInput1"> Select Employee</label>
                   <Select
                     name="filters"
-                    placeholder="Filters"
-                   // defaultValue=({lablel: '', value: '', id :""})
+                    placeholder="select Employees"
+                    defaultValue={[getSingleCluster.employeeIds]}
                     value={employee}
                     options={clusterLeaderNames.map(e => ({ label: e.firstName, value: e.employeeId, id: e.id }))}
                     onChange={handleMultiChange1}
-                    placeholder ={getSingleCluster.employeeIds}
+                   // placeholder ={getSingleCluster.employeeIds}
                     isMulti
                   />
 
