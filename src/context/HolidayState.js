@@ -1,7 +1,6 @@
 import React, { createContext, useReducer } from 'react';
 import {client} from 'axios';
 import HolidayReducer from '../reducers/HoildayReducer'
-const baseUrl = "http://humine.theretailinsights.co/";
 
 
 const initial_state = {
