@@ -42,7 +42,7 @@ class Graph extends Component {
 	render() {
 		const options = {
 			title:{
-				text: "Cluster - Daily Qty vs No. of hours Planned",
+				text: this.props.name,
 				// fontColor: "red",
 				 fontSize: 20,
 				//  horizontalAlign: "left",

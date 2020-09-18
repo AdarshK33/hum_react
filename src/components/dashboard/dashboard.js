@@ -143,11 +143,11 @@ function Dashboard () {
                         </table>
                     </Row>
                     <Row style ={{margin: '7% 0%'}}>                        
-                        <Col><Graph/></Col>
+                        <Col><Graph name = "Cluster - Daily Qty vs No. of hours Planned"/></Col>
                         
                     </Row>
                     <Row style ={{margin: '7% 0%', textAlign: "center"}}>                        
-                        <Col><Graph/></Col>
+                        <Col><Graph name = "Store - Daily Qty vs No. of hours Planned"/></Col>
                         
                     </Row>
                     <Row>
