@@ -79,34 +79,34 @@ function Root() {
 
                             {/* Leaves Page */}
                             <Route
-                              path={`${process.env.PUBLIC_URL}/Leaves/LeaveView`}
+                              path={`${process.env.PUBLIC_URL}/leaves/leaveView`}
                               component={LeaveView}
                             />
                             {/*Admin Leaves Page */}
                             <Route
-                              path={`${process.env.PUBLIC_URL}/AdminLeaves/AdminLeaveView`}
+                              path={`${process.env.PUBLIC_URL}/adminLeaves/adminLeaveView`}
                               component={AdminLeaveView}
                             />
                             {/*Admin Leaves Page */}
                             <Route
-                              path={`${process.env.PUBLIC_URL}/AdminLeaves/AdminLeavesList`}
+                              path={`${process.env.PUBLIC_URL}/adminLeaves/adminLeavesList`}
                               component={AdminLeavesList}
                             />
 
                             {/*Admin Leaves Mater Page */}
                             <Route
-                              path={`${process.env.PUBLIC_URL}/AdminLeaves/AdminMasterLeave`}
+                              path={`${process.env.PUBLIC_URL}/adminLeaves/adminMasterLeave`}
                               component={AdminMasterLeave}
                             />
                             
                             {/*Admin Leaves Approval Page */}
                             <Route
-                              path={`${process.env.PUBLIC_URL}/AdminLeaves/AdminLeaveApproval`}
+                              path={`${process.env.PUBLIC_URL}/adminLeaves/adminLeaveApproval`}
                               component={AdminLeaveApproval}
                             />
                             {/*Admin Salary Approval Page */}
                             <Route
-                              path={`${process.env.PUBLIC_URL}/AdminLeaves/AdminSalaryModule`}
+                              path={`${process.env.PUBLIC_URL}/adminLeaves/adminSalaryModule`}
                               component={AdminSalaryModule}
                             />
 
@@ -128,7 +128,7 @@ function Root() {
                               component={ViewCluster}
                             />
                             <Route
-                              path={`${process.env.PUBLIC_URL}/Holiday/HolidayList`}
+                              path={`${process.env.PUBLIC_URL}/holiday/holidayList`}
                               component={HolidayList}
                             />
                             <Route

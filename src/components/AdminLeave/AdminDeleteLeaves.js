@@ -2,7 +2,7 @@ import React, { Fragment, useState, useContext, useEffect } from 'react';
 import { Button, Modal } from 'react-bootstrap'
 import { LeaveContext } from '../../context/LeaveState'
 
-const DeleteLeave = (props) => {
+const AdminDeleteLeaves = (props) => {
     const [ltId, setltId] = useState()
     
     const { deleteList  }  = useContext(LeaveContext);
@@ -22,7 +22,7 @@ const DeleteLeave = (props) => {
         <Fragment>
             <Modal show={props.modal} onHide={props.handleDeleteClose} centered>
                 <Modal.Body style={{ marginTop: '1rem' }}>
-                    <h5>Are you sure you want to delete leave ?</h5>
+                    <h5>Are you sure to delete the Leave ?</h5>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" className="deleteNoButton"
@@ -35,4 +35,4 @@ const DeleteLeave = (props) => {
     );
 };
 
-export default DeleteLeave;
+export default AdminDeleteLeaves;

@@ -64,12 +64,21 @@ const LeaveAdd = (props) => {
         let value1 = date
         console.log("toDate", value1)
         setEndDate(value1);
+        var newData
+        if(startDate > new Date()){
+             newData = 'Planned'
+        }
+        else{
+             newData = 'Unplanned'
+        }
 
         const newPopup = {
             empId: 'DSI000035',
             fromDate: moment(startDate).format("YYYY-MM-DD"),
-            leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName,
-            leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
+           /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
+           leaveCategory: newData,
+            /* leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
+           leaveTypeId: leave,
             ltId: 0,
             numberOfDays: 0,
             reason: 'string',
@@ -88,8 +97,10 @@ const LeaveAdd = (props) => {
         const newPopup1 = {
             empId: 'DSI000035',
             fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
-            leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName,
-            leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
+           /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
+           leaveCategory: 'Planned',
+           /*  leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
+           leaveTypeId: leave,
             ltId: 0,
             numberOfDays: 0,
             reason: reason,
@@ -110,10 +121,10 @@ const LeaveAdd = (props) => {
         const leave1 = e.target.value
         setLeave(leave1)
 
-        const test1 = leaveType.filter(qa => qa.leaveName === leave1)[0].leaveName
+       /*  const test1 = leaveType.filter(qa => qa.leaveName === leave1)[0].leaveName
         const test2 = leaveType.filter(qa => qa.leaveName === leave1)[0].leaveTypeId
         console.log("test1 as leave name", test1)
-        console.log("test2 as leave id", test2)
+        console.log("test2 as leave id", test2) */
     }
 
     // Fields validation
@@ -174,8 +185,10 @@ const LeaveAdd = (props) => {
         const newLeave1 = {
             empId: 'DSI000035',
             fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
-            leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName,
-            leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
+           /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
+           leaveCategory: 'Planned',
+            /* leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
+           leaveTypeId: leave,
             ltId: 0,
             numberOfDays: 0,
             reason: reason,
@@ -184,12 +197,21 @@ const LeaveAdd = (props) => {
             viewLeavePopup: 1,
             year: '2020'
         }
+        var newData
+        if(startDate > new Date()){
+             newData = 'Planned'
+        }
+        else{
+             newData = 'Unplanned'
+        }
 
         const newLeave = {
             empId: 'DSI000035',
             fromDate: moment(startDate).format("YYYY-MM-DD"),
-            leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName,
-            leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
+            /* leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
+            leaveCategory: newData,
+            /* leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
+           leaveTypeId: leave,
             ltId: 0,
             numberOfDays: 0,
             reason: reason,
@@ -203,6 +225,7 @@ const LeaveAdd = (props) => {
             addLeave(newLeave1)
         }
         else {
+            console.log("newLeave---------", newLeave)
             addLeave(newLeave)
         }
         history.push("/Leaves/LeaveView");
@@ -260,7 +283,7 @@ const onCloseModal = () => {
 
                                             {leaveType.length > 0 && leaveType.map((item, i) => {
                                                 return (
-                                                        <option key={item.leaveTypeId} value={item.leaveName}
+                                                        <option key={item.leaveTypeId} value={item.leaveTypeId}
                                                         disabled={(item.paternity === 1 ? true : false) || (item.maternity === 1 ? true : false)} >
                                                         {item.leaveName}</option>
                                                     
@@ -333,7 +356,7 @@ const onCloseModal = () => {
                                             <div><DatePicker selected={endDate} onChange={(e) => toDateHandler(e)}
                                                     className="input_date" dateFormat="yyyy-MM-dd"
                                                     maxDate={today}
-                                                    minDate={currentYear}
+                                                    minDate={startDate}
                                                     placeholderText="To Date" /></div>
                                         </div>
                                         }

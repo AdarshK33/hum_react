@@ -24,14 +24,14 @@ export const MENUITEMS = [
     },
   
     {
-        path: '/Leaves/LeaveView', title: 'Leave View', icon: Calendar, type: 'link', active: false
+        path: '/leaves/leaveView', title: 'Leave View', icon: Calendar, type: 'link', active: false
     },
 
     {
         path: '/cluster/viewCluster', title: 'Cluster View', icon: File, type: 'link', active: false
     },
     {
-        path: '/Holiday/HolidayList', title: 'Holiday View', icon: File, type: 'link', active: false
+        path: '/holiday/holidayList', title: 'Holiday View', icon: File, type: 'link', active: false
     },
     {
         path: '/salary/salaryView', title: 'Salary Inputs', icon: Package, type: 'link', active: false
@@ -41,11 +41,11 @@ export const MENUITEMS = [
     },
    
     {
-        title: 'Admin', icon: Calendar, type: 'link', path: '/AdminLeaves/AdminLeaveView', active: false,children:[
-            { path: '/AdminLeaves/AdminLeavesList', title: 'Admin Leave', type: 'link' },
-            { path: '/AdminLeaves/AdminMasterLeave', title: 'Leave Master', type: 'link' },
-            { path: '/AdminLeaves/AdminLeaveApproval', title: 'Leave Approval', type: 'link' },
-            { path: '/AdminLeaves/AdminSalaryModule', title: 'Salary Approval', type: 'link' },
+        title: 'Admin', icon: Calendar, type: 'link', path: '/adminLeaves/adminLeaveView', active: false,children:[
+            { path: '/adminLeaves/adminLeavesList', title: 'Admin Leave', type: 'link' },
+            { path: '/adminLeaves/adminMasterLeave', title: 'Leave Master', type: 'link' },
+            { path: '/adminLeaves/adminLeaveApproval', title: 'Leave Approval', type: 'link' },
+            { path: '/adminLeaves/adminSalaryModule', title: 'Salary Approval', type: 'link' },
         ]
     },
   

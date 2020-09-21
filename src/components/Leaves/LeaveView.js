@@ -16,7 +16,7 @@ const LeaveView = () => {
     const [modal, setModal] = useState(false);
     const [editModal, setEditModal] = useState(false)
     const [deleteModal, setDeleteModal] = useState(false)
-    const [leaveCategory, setLeaveCategory] = useState()
+    let [leaveTypeId, setLeaveTypeId] = useState()
     const [fromDate, setFromDate] = useState(new Date())
     const [toDate, setToDate] = useState(new Date())
     const [ltId, setltId] = useState()
@@ -35,11 +35,11 @@ const LeaveView = () => {
     useEffect(() => {
         viewList()   
     }, [])
-  
-    /* const deleteListcheck = (id) => {
-        console.log("delete id", id)
-        deleteList(id)
-        setDeleteModal(false)
+  /* 
+    if(leaveTypeId === 0 || leaveTypeId === 1){
+        var newLeaveTypeId = 1
+       setLeaveTypeId(newLeaveTypeId)
+       console.log("newLeaveTypeId", newLeaveTypeId)
     } */
     return (
         <Fragment>
@@ -157,12 +157,15 @@ const LeaveView = () => {
                                     <tbody key={i + 1}>
                                         <tr>
                                             <td>{i + 1}</td>
-                                            <td>{item.leaveCategory}</td>
+                                            {/* <td>{item.leaveCategory}</td> */}
+                                            <td>{item.leaveTypeId === 1 ? 'General' : (item.leaveTypeId === 2 ? 'Paternity' : (item.leaveTypeId === 3 ? 'Maternity' : 
+                                            (item.leaveTypeId === 0 ? 'LOP' : '')))}
+                                            </td>
                                             <td>{item.numberOfDays}</td>
                                             <td>{item.fromDate}</td>
                                             <td>{item.toDate}</td>
                                             <td><Edit2 onClick={() => {
-                                                setEditModal(true); setLeaveCategory(item.leaveCategory);
+                                                setEditModal(true); setLeaveTypeId(item.leaveTypeId);
                                                 setFromDate(item.fromDate); setToDate(item.toDate); setReason(item.reason)
                                                 setltId(item.ltId)
                                             }} />
@@ -181,7 +184,8 @@ const LeaveView = () => {
                     </Table>
                     <DeleteLeave handleDeleteClose={handleDeleteClose} modal={deleteModal} ltId={ltId} />
                     <EditLeave handleEditClose={handleEditClose} modal={editModal}
-                        leaveCategory={leaveCategory} fromDate={fromDate} toDate={toDate}
+                        leaveTypeId={leaveTypeId === 0 || leaveTypeId === 1 ? (leaveTypeId = 1) : (leaveTypeId === 2 ? (leaveTypeId = 2) :
+                            leaveTypeId === 3 ? (leaveTypeId = 3):'')} fromDate={fromDate} toDate={toDate}
                         reason={reason} ltId={ltId} />
                 </div>
 

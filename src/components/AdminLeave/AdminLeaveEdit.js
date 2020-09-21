@@ -65,11 +65,18 @@ const AdminLeaveEdit = (props) => {
         console.log("fromDateHandler value", value)
 
         setStartDate(value);
-        
+        var newData
+        if(startDate > new Date()){
+             newData = 'Planned'
+        }
+        else{
+             newData = 'Unplanned'
+        }
         const newPopup = {
             empId: 'DSI000035',
             fromDate: moment(value).format("YYYY-MM-DD"),
-            leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName,
+           /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
+           leaveCategory: newData,
             leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
             ltId: 0,
             numberOfDays: 0,
@@ -100,10 +107,18 @@ const AdminLeaveEdit = (props) => {
         let value1 = date
         console.log("toDateHandler value", value1)
         setEndDate(value1);
+        var newData
+        if(startDate > new Date()){
+             newData = 'Planned'
+        }
+        else{
+             newData = 'Unplanned'
+        }
         const newPopup = {
             empId: 'DSI000035',
             fromDate: moment(startDate).format("YYYY-MM-DD"),
-            leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName,
+            /* leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
+            leaveCategory: newData,
             leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
             ltId: 0,
             numberOfDays: 0,
@@ -123,7 +138,8 @@ const AdminLeaveEdit = (props) => {
         const newPopup1 = {
             empId: 'DSI000035',
             fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
-            leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName,
+            /* leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
+            leaveCategory: 'Planned',
             leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
             ltId: 0,
             numberOfDays: 0,
@@ -158,10 +174,18 @@ const AdminLeaveEdit = (props) => {
     const onSubmit = e => {
         e.preventDefault()
 
+        var newData
+        if(startDate > new Date()){
+             newData = 'Planned'
+        }
+        else{
+             newData = 'Unplanned'
+        }
         const editLeave = {
             empId: empId,
             fromDate: moment(startDate).format("YYYY-MM-DD"),
-            leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName,
+          /*   leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
+          leaveCategory: newData,
             leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
             ltId: ltId,
             numberOfDays: 0,
@@ -174,7 +198,8 @@ const AdminLeaveEdit = (props) => {
         const editLeave1 = {
             empId: empId,
             fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
-            leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName,
+           /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
+           leaveCategory: 'Planned',
             leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
             ltId: ltId,
             numberOfDays: 0,
