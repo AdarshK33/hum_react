@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext, Fragment } from 'react';
 import { Container, Row,  Button, Table, Modal } from 'react-bootstrap';
 import { LeaveContext } from '../../context/LeaveState';
 import AdminLeaveEdit from './AdminLeaveEdit'
+import AdminDeleteLeaves from './AdminDeleteLeaves'
 import Breadcrumb from '../common/breadcrumb';
 import './AdminLeaves.css'
 import { Edit2, Trash2 } from 'react-feather'
@@ -32,11 +33,11 @@ const AdminLeavesList = (props) => {
         viewList()
     }, [])
 
-    const deleteListcheck = (id) =>{
+   /*  const deleteListcheck = (id) =>{
         deleteList(id)
         setDeleteModal(false)
         }
-        {console.log("empId", empId)}
+        {console.log("empId", empId)} */
     return (
         <Fragment>
             <Breadcrumb title="Admin " parent="Admin Leave" />
@@ -78,26 +79,15 @@ const AdminLeavesList = (props) => {
                                             }} />
                                             </td>
                                             <td><Trash2 onClick={() => {
-                                                setDeleteModal(true)
+                                                setDeleteModal(true);  setltId(item.ltId)
                                             }} />
                                             </td>
-
-                                            <Modal show={deleteModal} onHide={handleDeleteClose} centered>
-                                                <Modal.Body style={{ marginTop: '1rem' }}>
-                                                    <h5>Are you sure to delete the item ?</h5>
-                                                </Modal.Body>
-                                                <Modal.Footer>
-                                                    <Button variant="secondary" className="deleteNoButton"
-                                                        onClick={() => handleDeleteClose()}>No</Button>
-                                                    <Button variant="primary" className="deleteYesButton"
-                                                        onClick={() => deleteListcheck(item.ltId)}>Yes</Button>
-                                                </Modal.Footer>
-                                            </Modal>
                                         </tr>
                                     </tbody>
                                 )
                             })}
                     </Table>
+                     <AdminDeleteLeaves handleDeleteClose={handleDeleteClose} modal={deleteModal} ltId={ltId} />
                     <AdminLeaveEdit handleEditClose={handleEditClose} modal={editModal}
                         leaveCategory={leaveCategory} fromDate={fromDate} toDate={toDate}
                         reason={reason} ltId={ltId} empId={empId} />

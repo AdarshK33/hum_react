@@ -83,10 +83,18 @@ const AdminLeaveAdd = (props) => {
      const toDateHandler = (date) => {
          let value1 = date
          setEndDate(value1);
+         var newData
+         if(startDate > new Date()){
+              newData = 'Planned'
+         }
+         else{
+              newData = 'Unplanned'
+         }
          const newPopup = {
             empId: 'DSI000035',
             fromDate: moment(startDate).format("YYYY-MM-DD"),
-            leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName,
+           /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
+           leaveCategory: newData,
             leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
             ltId: 0,
             numberOfDays: 0,
@@ -106,7 +114,8 @@ const AdminLeaveAdd = (props) => {
         const newPopup1 = {
             empId: 'DSI000035',
             fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
-            leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName,
+           /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
+           leaveCategory: 'Planned',
             leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
             ltId: 0,
             numberOfDays: 0,
@@ -187,11 +196,18 @@ const AdminLeaveAdd = (props) => {
             setCostCenter('')
             addPopup(resetValue)
         }
-
+        var newData
+        if(startDate > new Date()){
+             newData = 'Planned'
+        }
+        else{
+             newData = 'Unplanned'
+        }
         const newLeave = {
             empId: employeeCostCenter,
             fromDate: moment(startDate).format("YYYY-MM-DD"),
-            leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName,
+           /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
+           leaveCategory: newData,
             leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
             ltId: 0,
             numberOfDays: 0,
@@ -204,7 +220,8 @@ const AdminLeaveAdd = (props) => {
         const newLeave1 = {
             empId: employeeCostCenter,
             fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
-            leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName,
+           /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
+           leaveCategory: 'Planned',
             leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
             ltId: 0,
             numberOfDays: 0,
@@ -222,44 +239,7 @@ const AdminLeaveAdd = (props) => {
             
         history.push("/AdminLeaves/AdminLeavesList");
 
-
-        const newPopup = {
-            empId: employeeCostCenter,
-            fromDate: moment(startDate).format("YYYY-MM-DD"),
-            leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName,
-            leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
-            ltId: 0,
-            numberOfDays: 0,
-            reason: reason,
-            status: 1,
-            toDate: moment(endDate).format("YYYY-MM-DD"),
-            viewLeavePopup: 0,
-            year: '2020'
-        }
-        const newPopup1 = {
-            empId: employeeCostCenter,
-            fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
-            leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName,
-            leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
-            ltId: 0,
-            numberOfDays: 0,
-            reason: reason,
-            status: 1,
-            toDate: moment(d3).format("YYYY-MM-DD"),
-            viewLeavePopup: 0,
-            year: '2020'
-        }
-     
-        if (leave === 'Maternity') {
-            addPopup(newPopup1)
-        }else{
-            addPopup(newPopup)
-        }
-            
-        history.push("/AdminLeaves/AdminLeavesList");
-       
-    } 
-
+    }
     const onCloseModal = () => {
         const resetValue = {
             empId: 'DSI000035',

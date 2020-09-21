@@ -16,9 +16,9 @@ const EditLeave = (props) => {
     const [endDate, setEndDate] = useState(new Date())
     const [startMaternityDate, setStartMaternityDate] = useState(new Date())
     const [endMaternityDate, setEndMaternityDate] = useState(new Date())
-    const [leave, setLeave] = useState('')
-    const [leaveTypeId] = useState(null)
-    const [leaveName] = useState('')
+    const [leave, setLeave] = useState()
+   /*  const [leaveTypeId] = useState(null)
+    const [leaveName] = useState('') */
     const [ltId, setltId] = useState()
     const [reason, setReason] = useState()
     const [disable, setDisable] = useState(true)
@@ -40,8 +40,8 @@ const EditLeave = (props) => {
     }, [props.toDate])
 
     useEffect(() => {
-        setLeave(props.leaveCategory)
-    }, [props.leaveCategory])
+        setLeave(props.leaveTypeId)
+    }, [props.leaveTypeId])
 
     useEffect(() => {
         setReason(props.reason)
@@ -51,6 +51,7 @@ const EditLeave = (props) => {
         setltId(props.ltId)
     }, [props.ltId])
 
+    console.log("props.leaveTypeId", props.leaveTypeId)
 
     const fromDateHandler = (date) => {
 
@@ -58,11 +59,20 @@ const EditLeave = (props) => {
         console.log("fromDateHandler value", value)
 
         setStartDate(value);
+        var newData
+        if(startDate > new Date()){
+             newData = 'Planned'
+        }
+        else{
+             newData = 'Unplanned'
+        }
         const newPopup = {
             empId: 'DSI000035',
             fromDate: moment(value).format("YYYY-MM-DD"),
-            leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName,
-            leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
+           /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
+           leaveCategory: newData,
+           /*  leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
+           leaveTypeId: leave,
             ltId: 0,
             numberOfDays: 0,
             reason: 'string',
@@ -92,11 +102,20 @@ const EditLeave = (props) => {
         let value1 = date
         console.log("toDateHandler value", value1)
         setEndDate(value1);
+        var newData
+        if(startDate > new Date()){
+             newData = 'Planned'
+        }
+        else{
+             newData = 'Unplanned'
+        }
         const newPopup = {
             empId: 'DSI000035',
             fromDate: moment(startDate).format("YYYY-MM-DD"),
-            leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName,
-            leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
+           /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
+           leaveCategory: newData,
+            /* leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
+            leaveTypeId: leave,
             ltId: 0,
             numberOfDays: 0,
             reason: 'string',
@@ -115,8 +134,10 @@ const EditLeave = (props) => {
         const newPopup1 = {
             empId: 'DSI000035',
             fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
-            leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName,
-            leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
+           /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
+           leaveCategory:'Planned',
+           /*  leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
+           leaveTypeId: leave,
             ltId: 0,
             numberOfDays: 0,
             reason: reason,
@@ -131,11 +152,12 @@ const EditLeave = (props) => {
     const setLeaveHandler = (e) => {
         const leave1 = e.target.value
         setLeave(leave1)
-
+        console.log("leave1++++++", leave1)
+/* 
         const test1 = leaveType.filter(qa => qa.leaveName === leave1)[0].leaveName
         const test2 = leaveType.filter(qa => qa.leaveName === leave1)[0].leaveTypeId
         console.log("test1 as leave name", test1)
-        console.log("test2 as leave id", test2)
+        console.log("test2 as leave id", test2) */
     }
     //Maternity Date validation
     let d1 = new Date(startMaternityDate);
@@ -155,8 +177,9 @@ const EditLeave = (props) => {
         const editLeave = {
             empId: 'DSI000035',
             fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
-            leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName,
-            leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
+            leaveCategory: 'Planned',
+            /* leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
+            leaveTypeId: leave,
             ltId: ltId,
             numberOfDays: 0,
             reason: reason,
@@ -165,11 +188,20 @@ const EditLeave = (props) => {
             viewLeavePopup: 1,
             year: '2020'
         }
+        var newData
+        if(startDate > new Date()){
+             newData = 'Planned'
+        }
+        else{
+             newData = 'Unplanned'
+        }
         const editLeave1 = {
             empId: 'DSI000035',
             fromDate: moment(startDate).format("YYYY-MM-DD"),
-            leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName,
-            leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
+           /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
+           leaveCategory: newData,
+           /*  leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
+            leaveTypeId: leave,
             ltId: ltId,
             numberOfDays: 0,
             reason: reason,
@@ -196,7 +228,7 @@ const EditLeave = (props) => {
         setMax(false)
         setEndDate(new Date(props.toDate))
         setStartDate(new Date(props.fromDate))
-        setLeave(props.leaveCategory)
+        setLeave(props.leaveTypeId)
         setReason(props.reason)
         setStartMaternityDate(new Date(props.fromDate))
 
@@ -222,7 +254,7 @@ const EditLeave = (props) => {
         setMax(false)
         setEndDate(new Date(props.toDate))
         setStartDate(new Date(props.fromDate))
-        setLeave(props.leaveCategory)
+        setLeave(props.leaveTypeId)
         setReason(props.reason)
         setStartMaternityDate(new Date(props.fromDate))
         addPopup(resetValue)
@@ -256,7 +288,7 @@ const EditLeave = (props) => {
 
                                             {leaveType.length > 0 && leaveType.map((item, i) => {
                                                 return (
-                                                    <option key={item.leaveTypeId} value={item.leaveName}
+                                                    <option key={item.leaveTypeId} value={item.leaveTypeId}
                                                         disabled={(item.paternity === 1 ? true : false) || (item.maternity === 1 ? true : false)} >
                                                         {item.leaveName}</option>
                                                 )
