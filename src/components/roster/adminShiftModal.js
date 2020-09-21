@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react'
-import { Container, Button, Modal, Tabs, Tab } from 'react-bootstrap'
+import { Container, Modal, Tabs, Tab } from 'react-bootstrap'
 import Select from 'react-select';
 import { RosterContext } from "../../context/RosterState";
 import './roster.css'

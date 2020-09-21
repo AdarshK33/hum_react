@@ -123,8 +123,10 @@ const Roster = () => {
                                   console.log(newData.getDay(), "day")
                                   return (
                                     <>
-                                    
+                                      {Array.from(Array(newData.getDay() - 1)).map(() => <td></td>)}
+                                      <td>{item.weekName}<br />{data.date}<br />{checkCondition(data)}</td>
                                     </>
+                                    // Need to check
                                   )
                                 } else {
                                   return <td>{item.weekName}<br />{data.date}<br />{checkCondition(data)}</td>

@@ -37,12 +37,13 @@ export const AppProvider = ({ children, history }) => {
     };
     let config = {
       method: "post",
-      url: "https://preprod.idpdecathlon.oxylane.com/as/token.oauth2",
+      url: process.env.REACT_APP_FEDIDURL,
       headers: {
         "cache-control": "no-cache",
         "Content-Type": "application/x-www-form-urlencoded",
       },
       data: data,
+     
     };
     client(config)
       .then((resp) => {
