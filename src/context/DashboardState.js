@@ -5,7 +5,8 @@ import DashboardReducer from '../reducers/DashboardReducer';
 
 
 const initial_state = {
-    cosCentreList: []
+    cosCentreList: [],
+    graphData:[]
   
   }
 
@@ -15,12 +16,19 @@ const initial_state = {
   export const DashboardProvider = ({ children }) => {
     const [state, dispatch] = useReducer(DashboardReducer, initial_state);
 
+    function convert(str) {
+      var date = new Date(str),
+        mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+        day = ("0" + date.getDate()).slice(-2);
+      return [date.getFullYear(), mnth, day].join("-");
+    }
+
     function viewCostCentre() {
-        // alert("called");
+       
         client.get('/cost_centre/view').then(function (response) {
-        //   console.log("data==>" + response);
+         console.log(response);
           state.cosCentreList = response.data.data;
-          console.log(JSON.stringify(state.cosCentreList))
+          
     
           return dispatch({ type: 'FETCH_COSTCENTRE_LIST', payload: state.cosCentreList });
         })
@@ -29,24 +37,26 @@ const initial_state = {
           });
       }
 
-    //   function viewData(month, year) {
-    //     // console.log(" in cluster" + month + " " + year)
+      function viewData(date,store,clusterId) {
+        
+        let dateValue = convert(date);
+
+        client.get('/dashboard/view/' + dateValue + '/' + store + '/' + clusterId).then(function (response) {
+          
+          state.graphData = response.data.data;
     
-    //     client.get('salary/view?month=' + month + '&year=' + year).then(function (response) {
-    //     //   console.log("data==>" + JSON.stringify(response));
-    //     //   console.log("data==>1", response);
-    //       state.graphData = response.data.data;
-    
-    //       return dispatch({ type: 'FETCH_SALARY_LIST', payload: state.salaryList });
-    //     })
-    //       .catch(function (error) {
-    //         console.log(error);
-    //       });
-    //   }
+          return dispatch({ type: 'FETCH_GRAPHDATA_LIST', payload: state.graphData });
+        })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
 
       return (<DashboardContext.Provider value={{        
-        viewCostCentre,        
-        cosCentreList: state.cosCentreList,        
+        viewCostCentre, 
+        viewData,       
+        cosCentreList: state.cosCentreList, 
+        graphData: state.graphData       
       }}>
         {children}
       </DashboardContext.Provider>);
