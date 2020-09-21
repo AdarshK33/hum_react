@@ -35,14 +35,15 @@ const EditClusterModal = (props) => {
   }
 
 
-  const { updateCluster,viewCluster, getSingleCluster,viewSports, sportsNames, clusterLeaderNames, selectClusterLeader } = useContext(ClusterContext);
+  const { updateCluster,viewCluster, getSingleCluster,viewSports, sportsNames, clusterLeaderNames, getSingleCluster1,selectClusterLeader } = useContext(ClusterContext);
 
   useEffect(() => {
     setClusterName(getSingleCluster.clusterName)
     setSelectedSportsId(getSingleCluster.selectedSportsId)
     setDescription(getSingleCluster.description)
     setClusterLeader(getSingleCluster.clusterLeader)
-  
+    setEmployee(getSingleCluster.employeeId)
+    setMultiValue(getSingleCluster1.sportId)  
 
    //console.log("1---->"+getSingleCluster.employeeIds);
   // console.log("2---->"+JSON.stringify(clusterLeaderNames));
@@ -53,8 +54,15 @@ const EditClusterModal = (props) => {
    }, [props.clusterId])
 
 
+   const results = getSingleCluster1.map(e=>{
+     return(<div>
+       {e.sportName}
+     </div>)
+   })
+console.log("in edit cluster Modal employee ids"+JSON.stringify(getSingleCluster.employeeIds));
+console.log("in edit cluster Modal employee ids"+JSON.stringify(getSingleCluster.sportsNames));
 
-console.log("===="+JSON.stringify(getSingleCluster.employeeIds));
+ 
 //alert("------->"+getSingleCluster1)
   const onSubmit = (event) => {
 
@@ -68,6 +76,7 @@ console.log("===="+JSON.stringify(getSingleCluster.employeeIds));
       sportId:parseInt(selectedSportsId),
       employeeIds: employee.map((e, i) => employee[i].value)
     }
+
     console.log("^^^^" + JSON.stringify(editCluster));
     const result = updateCluster(editCluster)
       .then((result) => {
@@ -124,6 +133,7 @@ console.log("===="+JSON.stringify(getSingleCluster.employeeIds));
 
 
   const handleMultiChange = (option) => {
+    alert("hi");
     setClusterButton(false)
    setMultiValue(option)
    setErrorMsg(false)
@@ -158,15 +168,14 @@ const callTimer =()=>{
                 <div className="form-group">
                   <label htmlFor="exampleFormControlInput1"> Select Sports</label>
                   
-           
+                <h5>{results}</h5>
                   <Select
-                   placeholder="Select Sports"
-                   value={multiValue}
+                   style={{fontSize:"0.8rem"}}
+                  value={getSingleCluster1.map(f=>({ label: f.sportName, value: f.sportId }))}
                    options={sportsNames.map(e => ({ label: e.sportName, value: e.sportId }))}
                    onChange={handleMultiChange}
                   isMulti
                   />
-
 
                 </div>
               </div>
@@ -209,12 +218,12 @@ const callTimer =()=>{
                   <label htmlFor="exampleFormControlInput1"> Select Employee</label>
                   <Select
                     name="filters"
-                    placeholder="select Employees"
+                   // placeholder="select Employees"
                     defaultValue={[getSingleCluster.employeeIds]}
                     value={employee}
                     options={clusterLeaderNames.map(e => ({ label: e.firstName, value: e.employeeId, id: e.id }))}
                     onChange={handleMultiChange1}
-                   // placeholder ={getSingleCluster.employeeIds}
+                    placeholder ={getSingleCluster.employeeIds}
                     isMulti
                   />
 
@@ -229,9 +238,9 @@ const callTimer =()=>{
                  <select
                     className="form-control"
                     required
+                    defaultValue={getSingleCluster.employeeId}
                     onChange={clusterLeaderSelect}>
-                   <option value="" disabled selected hidden>{getSingleCluster.clusterLeaderName}</option>
-                    {clusterLeaderNames.map((e, i) => {
+                   {clusterLeaderNames.map((e, i) => {
                       return (
                          
                         <option key={e.employeeId} value={e.employeeId}>

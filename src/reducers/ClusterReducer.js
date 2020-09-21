@@ -11,7 +11,7 @@ const ClusterReducer = (state, action) => {
                 return { ...state, clusterList: action.payload };
 
            case 'GET_SINGLE_CLUSTER':
-                    return { ...state, getSingleCluster: action.payload };
+            return { ...state, ...action.payload };
 
           case 'FETCH_EMPLOYEE_FOR_CLUSTER':
                         return { ...state, getClusterEmployees: action.payload };          
