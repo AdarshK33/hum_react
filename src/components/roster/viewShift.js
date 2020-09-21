@@ -30,7 +30,7 @@ function ViewShift() {
   const [workingHours, setWorkingHour] = useState();
   const[status,setStatus] = useState('')
   // variables
- const { shiftList,editShift, viewShift, } = useContext(RosterContext);
+ const { shiftList,editShift, viewShift,viewShiftTypes,viewContractTypes} = useContext(RosterContext);
   //console.log(shiftList, "in viewShift");
   return (
     <Fragment>
@@ -88,6 +88,8 @@ function ViewShift() {
                                                 setBreakEndTime(e.breakEndTime)
                                                 setWorkingHour(e.workingHours)
                                                 setStatus(e.status)
+                                                viewShiftTypes()
+                                                viewContractTypes()
                                         }} />
                                             </td>             
                          

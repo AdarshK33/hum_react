@@ -2,7 +2,7 @@ import React, { Fragment, useState, useContext, useEffect } from 'react';
 import DatePicker from "react-datepicker";
 import moment from 'moment';
 import "react-datepicker/dist/react-datepicker.css";
-import {  Button, Modal } from 'react-bootstrap'
+import {   Modal } from 'react-bootstrap'
 import { RosterContext } from "../../context/RosterState";
 
 
@@ -32,7 +32,7 @@ const EditShiftModal = (props) => {
  const[warnMsg,setWrnMsg] = useState(false);
   const [errormsg, setErrorMsg] = useState(false);
   const[status,setStatus] = useState(0)
-
+  const[breakDurationErrrorMsg,setBreakDurationErrrorMsg] = useState(false);
 
    const {updateShift,viewShift, singleShiftList,viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const setClear = () => {
@@ -45,6 +45,24 @@ const EditShiftModal = (props) => {
     setEndBreakTIme('');
     setSuccessMsg('');
   }
+
+
+  useEffect(() => {
+ setStartTime(singleShiftList.startTime)
+ setEndTime(singleShiftList.endTime)
+ setShiftType(singleShiftList.shiftType)
+ setContractType(singleShiftList.contractType)
+ setWorkingHour(singleShiftList.workingHours)
+ setEndBreakTIme(singleShiftList.breakEndTime)
+ setStartBreakTime(singleShiftList.breakStartTime)
+ setStatus(singleShiftList.status)
+
+   //console.log("1---->"+getSingleCluster.employeeIds);
+  // console.log("2---->"+JSON.stringify(clusterLeaderNames));
+   }, [props])
+
+
+
 
   const calcTime = () => {
     const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
@@ -75,6 +93,7 @@ const EditShiftModal = (props) => {
           {
             setShiftButton(true)
             setWrnMsg("Shift should be only for 9 hours")
+           
           }
           else
           {
@@ -97,24 +116,43 @@ const EditShiftModal = (props) => {
     setClear()
     setEditModal()
   }
-  useEffect(() => {
-    setStatus(props.status)
-  }, [props.status])
 
-  useEffect(() => {
-    setContractType(props.contractType)
-  }, [props.contractType])
-
-
-  useEffect(() => {
-    setShiftType(props.shiftType)
-  }, [props.shiftType])
   
+ 
+const calcBreakDuration=()=>{
+
+
+// if(breakEndTime>breakStartTime)
+//     {
+//     //  alert("true");
+//      setShiftButton(false)
+//      setBreakDurationErrrorMsg(false)
+//     }
+//     else if(breakStartTime>breakEndTime)
+//     {
+//       //  alert("false");
+//         setShiftButton(true)
+//         setBreakDurationErrrorMsg("Enter valid input")
+//     }
+}
+
+
+
+
+
+
+
   const onSubmit = e => {
     // const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
     // const etime = moment(endTime, ["h:mm A"]).format("HH:mm");
     // const workingHours = moment.utc(moment(etime, "HH:mm:ss").diff(moment(stime, "HH:mm:ss"))).format("HH:mm:ss");
     // alert(workingHours);
+
+
+    
+
+
+
     var result = parseInt(workingHours);
     if (result <= 5) {
       // alert("less than 5");
@@ -134,9 +172,7 @@ const EditShiftModal = (props) => {
       const result = updateShift(newShift)
         .then((result) => {
           console.log("api response===", result.data.message);
-          console.log("api response===", result.data);
-          console.log("api response===", result.data.status);
-          console.log("api response===", result.data.length);
+        
           setSuccessMsg(result.data.message);
           setTimeout(() => {
             callTimer();
@@ -160,22 +196,22 @@ const EditShiftModal = (props) => {
         shiftMasterId:singleShiftList.shiftMasterId,
         workingHours: parseInt(workingHours),
         breakStartTime: moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
-        breakEndTime: moment(breakStartTime).add(1, 'hours').format('HH:mm:ss'),
+        breakEndTime: moment(breakEndTime, ["h:mm A"]).format("HH:mm:ss"),
         status: status
       }
+     // alert(JSON.stringify(newShift));
       setSuccessMsg(true);
       const result = updateShift(newShift)
         .then((result) => {
           console.log("api response===", result.data.message);
-          console.log("api response===", result.data);
-          console.log("api response===", result.data.status);
-          console.log("api response===", result.data.length);
+        
           setSuccessMsg(result.data.message);
        
           setTimeout(() => {
             callTimer();
-           }, 3000);
+           }, 4000);
            viewShift();
+         
          })
        
         .catch((error) => {
@@ -206,9 +242,8 @@ const EditShiftModal = (props) => {
                         <br />
                         <DatePicker
                           className="form-control"
-                          selected={startTime}
-                        //  selected={moment(singleShiftList.startTime,["HH:mm:ss"]).format("HH:mm A")}
-                        //  selected={moment(singleShiftList.startTime,["HH:mm"]).format("h:mm A")}
+                         // selected={startTime}
+                        
                           onChange={date => setStartTime(date)}
                           showTimeSelect
                           showTimeSelectOnly
@@ -216,8 +251,9 @@ const EditShiftModal = (props) => {
                           timeIntervals={30}
                           timeCaption="Time"
                           dateFormat="HH:mm aa"
-                          placeholderText={singleShiftList.startTime}
-                          required
+                          value={moment(startTime,["HH:mm:ss"]).format("HH:mm A")}
+                      
+                         defaultValue={moment(singleShiftList.startTime,["HH:mm:ss"]).format("HH:mm A")}
                         />
                       </div>
                     </div>
@@ -226,7 +262,7 @@ const EditShiftModal = (props) => {
                         <label htmlFor="exampleFormControlInput1">End Time</label>
                        
                         <DatePicker
-                          selected={endTime}
+                         // selected={endTime}
                           className="form-control"
                           required
                           onChange={date => setEndTime(date)}
@@ -237,7 +273,8 @@ const EditShiftModal = (props) => {
                           timeIntervals={30}
                           timeCaption="Time"
                           dateFormat="HH:mm aa"
-                          placeholderText={singleShiftList.endTime}
+                          value={moment(endTime,["HH:mm:ss"]).format("HH:mm A")}
+                          defaultValue={moment(singleShiftList.endTime,["HH:mm:ss"]).format("HH:mm A")}
                         />
                       </div>
                     </div>
@@ -278,8 +315,8 @@ const EditShiftModal = (props) => {
                                 <br />
                                 <DatePicker
                                   className="form-control"
-                                  selected={breakStartTime}
-                                  onChange={date => setStartBreakTime(date)}
+                                 // selected={breakStartTime}
+                                 onChange={date => setStartBreakTime(date)}
                                   showTimeSelect
                                   showTimeSelectOnly
                                   timeFormat="HH:mm"
@@ -288,31 +325,52 @@ const EditShiftModal = (props) => {
                                   minTime={startTime}
                                   maxTime={endTime}
                                   dateFormat="HH:mm aa"
-                                  onCalendarClose={() => { callShowMethod() }}
-                                  placeholderText={singleShiftList.breakStartTime}
-                                  required
-                                />
+                                //  onCalendarClose={() => { callShowMethod() }}
+                                  defaultValue={moment(singleShiftList.breakStartTime,["HH:mm:ss"]).format("HH:mm A")}
+                                  value={moment(breakStartTime,["HH:mm:ss"]).format("HH:mm A")}
+                              
+                                />  
                               </div>
                             </div>
-                         
+                            <div className="col-sm-6 mt-2">
+                              <div className="form-group">
+                            
+                                <br />
+                                <DatePicker
+                                  className="form-control"
+                                 // selected={breakStartTime}
+                                  onChange={date => setEndBreakTIme(date)}
+                                  showTimeSelect
+                                  showTimeSelectOnly
+                                  timeFormat="HH:mm"
+                                  timeIntervals={30}
+                                  timeCaption="Time"
+                                  minTime={startTime}
+                                  maxTime={endTime}
+                                  dateFormat="HH:mm aa"
+                                  onCalendarClose={() => { calcBreakDuration() }}
+                                  value={moment(breakEndTime,["HH:mm:ss"]).format("HH:mm A")}
+                                  defaultValue={moment(singleShiftList.breakEndTime,["HH:mm:ss"]).format("HH:mm A")}                             
+                                />  
+                                <h6 style={{ color: "red",fontFamily:"work-Sans, sans-serif",fontSize:"14px"   }}>{breakDurationErrrorMsg}</h6>
+                              </div>
+                            </div>
                           
-                            {invalidText &&
+                             {/* {invalidText && 
                               <div className="col-sm-6">
                               <div className="form-group">
                                 <label htmlFor="exampleFormControlInput1"></label>
-                                <input type="text" style={{marginTop:"7px"}} className="form-control" placeholder={moment(breakStartTime).add(1, 'hours').format('HH:mm A')} />
-                              </div>
+                                <input type="text" style={{marginTop:"7px"}} className="form-control"  defaultValue={singleShiftList.breakEndTime}   value={moment(breakStartTime).add(1, 'hours').format('HH:mm A')} />
+                              </div> 
+                              
                             </div>
 
-                          }
+                            }  */}
 
 
 
                           </div>
-                          <br/>
-                        
-
-
+                      
                           {showText &&
                             <div className="row">
                               <div className="col-sm-12">
@@ -341,10 +399,9 @@ const EditShiftModal = (props) => {
                         <label htmlFor="exampleFormControlInput1"> Shift Type</label>
                         <select
                           className="form-control"
-                          required
-                          value={shiftType}                      
-                          onChange={(e)=>setShiftType(e.target.value)}>
-                          <option value="">Select Shift Type</option>
+                          defaultValue={singleShiftList.shiftType}                 
+                          onChange={(e)=>setShiftType(e.target.value)}
+                           value={shiftType}>
                                   <option>Captain</option>
                                   <option>On Duty</option>
                                   <option>General</option>
@@ -363,7 +420,7 @@ const EditShiftModal = (props) => {
                         <label htmlFor="exampleFormControlInput1"> Select Contract Type</label>
                         <select
                           className="form-control"
-                          required
+                          defaultValue={singleShiftList.contractType}   
                           onChange={(e) => setContractType(e.target.value)} 
                           value={contractType}>
                             
@@ -388,7 +445,8 @@ const EditShiftModal = (props) => {
                         <label htmlFor="exampleFormControlInput1"> Shift Status</label>
                         <select
                           className="form-control"                       
-                          value={status}                      
+                          value={status}
+                          defaultValue={singleShiftList.status}                      
                           onChange={(e)=>setStatus(e.target.value)}>
                           <option value="0">Active</option>
                                   <option value="1">Inactive</option>
@@ -397,12 +455,11 @@ const EditShiftModal = (props) => {
                       </div>
                     </div>
                   </div>
-                  <button className="btn btn-primary mb-2 mr-2" type="submit" disabled={shiftButton} value="Submit">Save</button>
-                  <Button className="btn btn-primary mb-2 ml-2" onClick={props.handleEditClose}>Close
-                  </Button>
-                  {/* <button className="btn btn-primary mb-2 ml-2" value="reset" onClick={setClear}>Clear</button> */}
-                  {/* <Button className="btn btn-primary mb-2 ml-2" onClick={props.handleClose}>Close
-          </Button> */}
+                  <button className="myclass mb-2 mr-2" type="submit" disabled={shiftButton} value="Submit">Save</button>
+                
+                  <button className="myclass mb-2 mr-2" onClick={props.handleEditClose}>Close
+                  </button>
+         
                 </form>
                 <h5>{successMsg.length !== 0 && <div className="text-success">{successMsg}</div>}</h5>
               </div>

@@ -13,8 +13,8 @@ const initial_state = {
   getClusterEmployees: [],
   salaryList: [],
   viewSalaryData: [],
-  salaryStoreList:[]
-
+  salaryStoreList:[],
+  getSingleCluster1:[]
 }
 
 
@@ -37,7 +37,7 @@ export const ClusterProvider = ({ children }) => {
     client.get('cluster/view').then(function (response) {
       //  console.log("data==>" + JSON.stringify(response));
       state.clusterList = response.data.data;
-      console.log(JSON.stringify(state.clusterList))
+    //  console.log(JSON.stringify(state.clusterList))
 
       return dispatch({ type: 'FETCH_ClUSTER_LIST', payload: state.clusterList });
     })
@@ -86,11 +86,18 @@ export const ClusterProvider = ({ children }) => {
     // alert("cluster" + id)
     client.get('cluster/' + id).then(function (response) {
       //  console.log("data==Clusteer>" + JSON.stringify(response));
-      state.getSingleCluster = response.data.data;
+      const getSingleCluster = response.data.data;
+        const getSingleCluster1 = response.data.data.sports;
+       // alert(getSingleCluster1);
       console.log(JSON.stringify(state.getSingleCluster));
-      state.getSingleCluster1 = response.data.data.sports
-      //  alert(JSON.stringify(state.getSingleCluster1));
-      return dispatch({ type: 'GET_SINGLE_CLUSTER', payload: state.getSingleCluster });
+      console.log("^^^^"+JSON.stringify(state.getSingleCluster1));
+     
+   //  alert(JSON.stringify(getSingleCluster1));
+          
+        return dispatch({ type: 'GET_SINGLE_CLUSTER', payload: {
+         getSingleCluster1,
+         getSingleCluster
+        }})
 
     })
       .catch(function (error) {
@@ -226,7 +233,8 @@ const salaryApproval = (salaryData) => {
     getClusterEmployees: state.getClusterEmployees,
     salaryList: state.salaryList,
     viewSalaryData: state.viewSalaryData,
-    salaryStoreList: state.salaryStoreList
+    salaryStoreList: state.salaryStoreList,
+    getSingleCluster1:state.getSingleCluster1,
   }}>
     {children}
   </ClusterContext.Provider>);
