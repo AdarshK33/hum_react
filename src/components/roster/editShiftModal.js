@@ -355,7 +355,7 @@ const calcBreakDuration=()=>{
                                 <h6 style={{ color: "red",fontFamily:"work-Sans, sans-serif",fontSize:"14px"   }}>{breakDurationErrrorMsg}</h6>
                               </div>
                             </div>
-                          
+                          {/* break duration msg */}
                              {/* {invalidText && 
                               <div className="col-sm-6">
                               <div className="form-group">
