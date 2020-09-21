@@ -11,11 +11,13 @@ class Graph extends Component {
 		super();
 		this.createPareto = this.createPareto.bind(this);
 	}
-	shouldComponentUpdate() {
-		return false;
-	  }
+	// shouldComponentUpdate() {
+	// 	return false;
+	//   }
 	componentDidMount(){
 		this.createPareto();
+		let Alink = document.getElementsByClassName('canvasjs-chart-credit')
+		Alink[0].parentNode.removeChild(Alink[0]);
 	}
 	createPareto(){
 		var dps = [];
@@ -26,11 +28,11 @@ class Graph extends Component {
 		// dps.push({ y: 0});
 		for(var i = 0; i < chart.data[0].dataPoints.length; i++)
 			yTotal += chart.data[0].dataPoints[i].y;
-		for(var i = 0; i < chart.data[0].dataPoints.length; i++){
-			yValue = chart.data[0].dataPoints[i].y;
-			yPercent += (yValue / yTotal * 50);
-			dps.push({label: chart.data[0].dataPoints[i].label, y: yPercent});
-		}
+		// for(var i = 0; i < chart.data[0].dataPoints.length; i++){
+		// 	yValue = chart.data[0].dataPoints[i].y;
+		// 	yPercent += (yValue / yTotal * 50);
+		// 	dps.push({label: chart.data[0].dataPoints[i].label, y: yPercent});
+		// }
 		chart.creditText = "";
 		chart.addTo("data",{type:"line",showInLegend: true, name: "Planned Hours", yValueFormatString: "0.##"%"", lineDashType: "dash", dataPoints: this.props.Qty});
 		chart.data[1].set("axisYType", "secondary", false);

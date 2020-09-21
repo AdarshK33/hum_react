@@ -226,7 +226,7 @@ function Dashboard () {
                             </tr>
                         </table>
                     </Row>
-                    {graphData[0] != undefined?                    
+                    {/* {graphData[0] != undefined?                     */}
                         <div>
                             <Row style ={{margin: '7% 0%'}}>                        
                             <Col><Graph name = "Cluster - Daily Qty vs No. of hours Planned" hours = {dpshoursCluster} Qty={dpsQtyCluster}/></Col>
@@ -237,7 +237,7 @@ function Dashboard () {
                                 
                             </Row>
                         </div>
-                     : ""}
+                     {/* : ""} */}
                    
                     <Row>
                         <Col></Col>
