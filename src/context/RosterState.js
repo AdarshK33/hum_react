@@ -37,7 +37,7 @@ export const RosterProvider = ({ children }) => {
   function viewShift() {
   
     client.get('shift/view').then(function (response) {
-       console.log("data==>" + JSON.stringify(response));
+      // console.log("data==>" + JSON.stringify(response));
       state.shiftList = response.data.data;
       return dispatch({ type: 'FETCH_SHIFT_LIST', payload: state.shiftList });
     })
@@ -51,7 +51,7 @@ export const RosterProvider = ({ children }) => {
 
   function viewShiftTypes() {
     client.get('shift/types').then(function (response) {
-       console.log("data==>" + JSON.stringify(response));
+      // console.log("data==>" + JSON.stringify(response));
       state.shiftListNames = response.data.data;
       return dispatch({ type: 'FETCH_SHIFT_LIST_NAMES', payload: state.shiftListNames });
     })

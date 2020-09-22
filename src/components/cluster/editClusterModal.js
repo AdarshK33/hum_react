@@ -144,7 +144,6 @@ const EditClusterModal = (props) => {
   setClusterButton(false)
   setErrorMsg(false)
 }
-
 //Timer to close modal 
 const callTimer =()=>{
   const setModal = props.handleClose;
