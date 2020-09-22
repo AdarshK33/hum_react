@@ -2,6 +2,7 @@ import React, { Fragment, useState, useContext, useEffect } from 'react';
 import DatePicker from "react-datepicker";
 import moment from 'moment';
 import "react-datepicker/dist/react-datepicker.css";
+import {addHours} from 'date-fns'
 import {   Modal } from 'react-bootstrap'
 import { RosterContext } from "../../context/RosterState";
 
@@ -20,7 +21,7 @@ const EditShiftModal = (props) => {
   const [workingHours, setWorkingHour] = useState('');
   const [contractType, setContractType] = useState('');
   const [breakStartTime, setStartBreakTime] = useState(null);
-  const [ breakEndTime, setEndBreakTIme] = useState(null);
+  const [breakEndTime, setEndBreakTIme] = useState(null);
   const [successMsg, setSuccessMsg] = useState("");
   const [shiftType,setShiftType] = useState('');
   const [breakDuationMsg, ] = useState(false);
@@ -163,7 +164,8 @@ const calcBreakDuration=()=>{
         contractType,
         shiftType,
         shiftMasterId: singleShiftList.shiftMasterId,
-        workingHours: parseInt(workingHours),
+        workingHours: 0,
+        storeId:"IN1055",
         breakStartTime: 0,
         breakEndTime: 0,
         status: status
@@ -194,7 +196,8 @@ const calcBreakDuration=()=>{
         contractType,
         shiftType,
         shiftMasterId:singleShiftList.shiftMasterId,
-        workingHours: parseInt(workingHours),
+        workingHours: 0,
+        storeId:"IN1055",
         breakStartTime: moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
         breakEndTime: moment(breakEndTime, ["h:mm A"]).format("HH:mm:ss"),
         status: status
@@ -325,7 +328,7 @@ const calcBreakDuration=()=>{
                                   minTime={startTime}
                                   maxTime={endTime}
                                   dateFormat="HH:mm aa"
-                                //  onCalendarClose={() => { callShowMethod() }}
+                                  onCalendarClose={() => { callShowMethod() }}
                                   defaultValue={moment(singleShiftList.breakStartTime,["HH:mm:ss"]).format("HH:mm A")}
                                   value={moment(breakStartTime,["HH:mm:ss"]).format("HH:mm A")}
                               
@@ -371,14 +374,14 @@ const calcBreakDuration=()=>{
 
                           </div>
                       
-                          {showText &&
+                          {/* {showText &&
                             <div className="row">
                               <div className="col-sm-12">
                                 Break Hour: &nbsp;&nbsp;{moment(breakStartTime, ["h:mm A"]).format("HH:mm")}--
                             {moment(breakStartTime).add(1, 'hours').format('HH:mm')}
                               </div>
                             </div>
-                          }
+                          } */}
                         </div> :
                         null
                       }

@@ -43,7 +43,7 @@ const EditClusterModal = (props) => {
     setDescription(getSingleCluster.description)
     setClusterLeader(getSingleCluster.clusterLeader)
     setEmployee(getSingleCluster.employeeId)
-    setMultiValue(getSingleCluster1.sportId)  
+    setMultiValue(getSingleCluster.sportId)  
 
    //console.log("1---->"+getSingleCluster.employeeIds);
   // console.log("2---->"+JSON.stringify(clusterLeaderNames));
@@ -59,8 +59,8 @@ const EditClusterModal = (props) => {
        {e.sportName}
      </div>)
    })
-console.log("in edit cluster Modal employee ids"+JSON.stringify(getSingleCluster.employeeIds));
-console.log("in edit cluster Modal employee ids"+JSON.stringify(getSingleCluster.sportsNames));
+// console.log("in edit cluster Modal employee ids"+JSON.stringify(getSingleCluster.employeeIds));
+// console.log("in edit cluster Modal employee ids"+JSON.stringify(getSingleCluster.sportsNames));
 
  
 //alert("------->"+getSingleCluster1)
@@ -73,7 +73,7 @@ console.log("in edit cluster Modal employee ids"+JSON.stringify(getSingleCluster
       clusterName,
       description,
       storeId: "IN1056",
-      sportId:parseInt(selectedSportsId),
+      sportIds:getSingleCluster.map((e, i) => getSingleCluster[i].value),
       employeeIds: employee.map((e, i) => employee[i].value)
     }
 
@@ -171,7 +171,7 @@ const callTimer =()=>{
                 <h5>{results}</h5>
                   <Select
                    style={{fontSize:"0.8rem"}}
-                  value={getSingleCluster1.map(f=>({ label: f.sportName, value: f.sportId }))}
+                   value={getSingleCluster1.map(f=>({ label: f.sportName, value: f.sportId }))}
                    options={sportsNames.map(e => ({ label: e.sportName, value: e.sportId }))}
                    onChange={handleMultiChange}
                   isMulti
@@ -238,7 +238,7 @@ const callTimer =()=>{
                  <select
                     className="form-control"
                     required
-                    defaultValue={getSingleCluster.employeeId}
+                   // defaultValue={getSingleCluster.employeeId}
                     onChange={clusterLeaderSelect}>
                    {clusterLeaderNames.map((e, i) => {
                       return (
