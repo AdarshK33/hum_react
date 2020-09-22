@@ -75,7 +75,9 @@ const CreateShiftModal = (props) => {
       setErrorMsg(false)
     }
     const result = moment.utc(moment(etime, "HH:mm:ss").diff(moment(stime, "HH:mm:ss"))).format("HH:mm:ss")
+    console.log("FIRST"+result);
     var workingHours = result.replace(/:/g, ".");
+  console.log("SECOND"+workingHours);
     setWorkingHour(workingHours);
     checkTimeValidation();
 
@@ -124,7 +126,7 @@ const callTimer =()=>{
      const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
      const etime = moment(endTime, ["h:mm A"]).format("HH:mm");
      const workingHours = moment.utc(moment(etime, "HH:mm:ss").diff(moment(stime, "HH:mm:ss"))).format("HH:mm:ss");
-   //  alert(workingHours);
+    // alert(workingHours);
     var result = parseInt(workingHours);
     if (result <= 5) {
       // alert("less than 5");
@@ -135,7 +137,8 @@ const callTimer =()=>{
         contractType,
         shiftMasterId: 0,
         shiftType,
-        workingHours: parseInt(workingHours),
+        workingHours: 0,
+        storeId:"IN1055",
         breakStartTime: 0,
         breakEndTime: 0,
         status: 0
@@ -168,7 +171,8 @@ const callTimer =()=>{
         contractType,
         shiftMasterId: 0,
         shiftType,
-        workingHours: parseInt(workingHours),
+        workingHours: 0,
+        storeId:"IN1055",
         breakStartTime: moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
         breakEndTime: moment(breakStartTime).add(1, 'hours').format('HH:mm:ss'),
         status: 0
