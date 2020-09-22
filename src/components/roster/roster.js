@@ -15,7 +15,6 @@ const Roster = () => {
 
   const handleClose = () => setModal(false)
   const handleShow = (item) => {
-   
     console.log(item, "item onclick")
     setshiftDate(item)
     setModal(true)
@@ -100,14 +99,14 @@ const Roster = () => {
                   <thead style={{ background: '#006EBB', color: 'white' }}>
                     <tr>
 
+                   
+                      <th scope="col"><br /> Sunday</th>
                       <th scope="col"><br />Monday</th>
                       <th scope="col"><br /> Tuesday</th>
                       <th scope="col"><br /> Wednesday</th>
                       <th scope="col"><br /> Thursday</th>
                       <th scope="col"><br /> Friday</th>
                       <th scope="col"><br /> Saturday</th>
-                      <th scope="col"><br /> Sunday</th>
-
                     </tr>
                   </thead>
 
@@ -121,13 +120,24 @@ const Roster = () => {
                                 if (ind === 0) {
                                   let newData = new Date(data.date)
                                   console.log(newData.getDay(), "day")
-                                  return (
-                                    <>
-                                      {Array.from(Array(newData.getDay() - 1)).map(() => <td></td>)}
-                                      <td>{item.weekName}<br />{data.date}<br />{checkCondition(data)}</td>
-                                    </>
-                                    // Need to check
-                                  )
+                                  if(newData.getDay() == 0){
+                                    return (
+                                      <>
+                                        {/* {Array.from(Array(newData.getDay() - 1)).map(() => <td></td>)} */}
+                                        <td>{item.weekName}<br />{data.date}<br />{checkCondition(data)}</td>
+                                      </>
+                                      // Need to check
+                                    )
+                                  }else{
+                                    return (
+                                      <>
+                                        {Array.from(Array(newData.getDay())).map(() => <td></td>)}
+                                        <td>{item.weekName}<br />{data.date}<br />{checkCondition(data)}</td>
+                                      </>
+                                      // Need to check
+                                    )
+                                  }
+                                  
                                 } else {
                                   return <td>{item.weekName}<br />{data.date}<br />{checkCondition(data)}</td>
                                 }

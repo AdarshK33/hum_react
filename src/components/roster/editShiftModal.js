@@ -1,8 +1,8 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
 import DatePicker from "react-datepicker";
 import moment from 'moment';
+import { parseISO, format } from 'date-fns';
 import "react-datepicker/dist/react-datepicker.css";
-import {addHours} from 'date-fns'
 import {   Modal } from 'react-bootstrap'
 import { RosterContext } from "../../context/RosterState";
 
@@ -34,7 +34,8 @@ const EditShiftModal = (props) => {
   const [errormsg, setErrorMsg] = useState(false);
   const[status,setStatus] = useState(0)
   const[breakDurationErrrorMsg,setBreakDurationErrrorMsg] = useState(false);
-
+  const [showBreakDuration1,setshowBreakDuration1] = useState(false)
+  const [showBreakDuration2,setshowBreakDuration2] = useState(true)
    const {updateShift,viewShift, singleShiftList,viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const setClear = () => {
    setShiftType('')
@@ -104,6 +105,9 @@ const EditShiftModal = (props) => {
     }
    // break duation 
    setShowBreakDuration(false)
+   setshowBreakDuration1(true)
+   setshowBreakDuration2(false)
+
   }
   const callShowMethod = () => {
     setShowText(true);
@@ -120,22 +124,27 @@ const EditShiftModal = (props) => {
 
   
  
-const calcBreakDuration=()=>{
-// time duration
 
-// if(breakEndTime>breakStartTime)
-//     {
-//     //  alert("true");
-//      setShiftButton(false)
-//      setBreakDurationErrrorMsg(false)
-//     }
-//     else if(breakStartTime>breakEndTime)
-//     {
-//       //  alert("false");
-//         setShiftButton(true)
-//         setBreakDurationErrrorMsg("Enter valid input")
-//     }
-}
+  const calcBreakDuration = (date) => {
+    let value2 = date
+  // alert("hi");
+    setEndBreakTIme(value2)
+    if(breakEndTime>breakStartTime|| breakEndTime===breakStartTime)
+    {
+      // alert(breakStartTime+ " "+breakEndTime)
+      // alert("false");
+      setBreakDurationErrrorMsg("Enter valid input")
+      setShiftButton(true)
+     }
+    else 
+    {
+     // alert("true")
+          setShiftButton(false)
+          setBreakDurationErrrorMsg(false) 
+    }
+  }
+
+
 
 
 
@@ -149,7 +158,7 @@ const calcBreakDuration=()=>{
     // const workingHours = moment.utc(moment(etime, "HH:mm:ss").diff(moment(stime, "HH:mm:ss"))).format("HH:mm:ss");
     // alert(workingHours);
 
-
+   
     
 
 
@@ -199,7 +208,7 @@ const calcBreakDuration=()=>{
         workingHours: 0,
         storeId:"IN1055",
         breakStartTime: moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
-        breakEndTime: moment(breakEndTime, ["h:mm A"]).format("HH:mm:ss"),
+        breakEndTime:moment(breakStartTime).add(1, 'hours').format('HH:mm:ss'),
         status: status
       }
      // alert(JSON.stringify(newShift));
@@ -286,16 +295,16 @@ const calcBreakDuration=()=>{
              
                   <h6 style={{ color: "red",fontFamily:"work-Sans, sans-serif",fontSize:"14px"   }}>{errormsg}</h6>
              
-                  <h6 style={{ color: "black",fontFamily:"work-Sans, sans-serif",fontSize:"14px" }}> Total working hours {workingHours}</h6>
+                  <h6 style={{ color: "black",fontFamily:"work-Sans, sans-serif",fontSize:"14px" }}> Total working hours: {workingHours}&nbsp;Hrs</h6>
                       
                        <h6 style={{ color: "red",fontFamily:"work-Sans, sans-serif",fontSize:"14px" }}>{warnMsg}</h6>
 
                       {showBreakDuration &&
                       <div className="row">
-                        <div className="col-sm-4">
-                        <h6 style={{ color: "text-secondary",fontFamily:"work-Sans, sans-serif",fontSize:"14px" }}>Working Hours :{singleShiftList.workingHours}</h6>
+                        <div className="col-sm-5">
+                        <h6 style={{ color: "text-secondary",fontFamily:"work-Sans, sans-serif",fontSize:"14px" }}>Working Hours :{singleShiftList.workingHours}&nbsp;Hrs</h6>
                         </div>
-                        <div className="col-sm-8">
+                        <div className="col-sm-7">
                         <h6 style={{ color: "text-secondary",fontFamily:"work-Sans, sans-serif",fontSize:"14px"}}>Break duration :{singleShiftList.breakStartTime}-{singleShiftList.breakEndTime}</h6>
                           <br/>
                         </div>  
@@ -304,9 +313,64 @@ const calcBreakDuration=()=>{
                           }
 
 
+                            {showBreakDuration1&&
+                            <div className="row">
+                                <div className="col-sm-12">
+                      {parseFloat(workingHours) > 5 ?
+                        <div>
+                          <div className="row">
+                            <div className="col-sm-6">
+                              <div className="form-group">
+                                <label htmlFor="exampleFormControlInput1">Break Duration</label>
+                                <br />
+                                <DatePicker
+                                  className="form-control"
+                                 // selected={breakStartTime}
+                                 onChange={date => setStartBreakTime(date)}
+                                  showTimeSelect
+                                  showTimeSelectOnly
+                                  timeFormat="HH:mm"
+                                  timeIntervals={30}
+                                  timeCaption="Time"
+                                   minTime={startTime}
+                                   maxTime={endTime}
+                                  dateFormat="HH:mm aa"
+                                  onCalendarClose={() => { callShowMethod() }}
+                                  defaultValue={moment(singleShiftList.breakStartTime,["HH:mm:ss"]).format("HH:mm A")}
+                                  value={moment(breakStartTime,["HH:mm:ss"]).format("HH:mm A")}
+                              
+                                />  
+                              </div>
+                            </div>
+                   
+                      
+                              {invalidText && 
+                              <div className="col-sm-6">
+                              <div className="form-group">
+                                <label htmlFor="exampleFormControlInput1"></label>
+                                <input type="text" style={{marginTop:"7px"}} className="form-control"    value={moment(breakStartTime).add(1, 'hours').format('HH:mm A')} />
+                              </div> 
+                              
+                            </div>
+
+                            }  
 
 
-                
+
+                          </div>
+                      
+                        
+                        </div> :
+                        null
+                      }
+                    </div>
+                               
+                            </div>
+                            }
+                   
+
+
+                   {showBreakDuration2&&
                   <div className="row">
                     <div className="col-sm-12">
                       {parseFloat(workingHours) > 5 ?
@@ -325,10 +389,10 @@ const calcBreakDuration=()=>{
                                   timeFormat="HH:mm"
                                   timeIntervals={30}
                                   timeCaption="Time"
-                                  minTime={startTime}
-                                  maxTime={endTime}
+                                  // minTime={startTime}
+                                  // maxTime={endTime}
                                   dateFormat="HH:mm aa"
-                                  onCalendarClose={() => { callShowMethod() }}
+                                  // onCalendarClose={() => { callShowMethod() }}
                                   defaultValue={moment(singleShiftList.breakStartTime,["HH:mm:ss"]).format("HH:mm A")}
                                   value={moment(breakStartTime,["HH:mm:ss"]).format("HH:mm A")}
                               
@@ -342,16 +406,15 @@ const calcBreakDuration=()=>{
                                 <DatePicker
                                   className="form-control"
                                  // selected={breakStartTime}
-                                  onChange={date => setEndBreakTIme(date)}
+                                 onChange={date => calcBreakDuration(date)}
                                   showTimeSelect
                                   showTimeSelectOnly
                                   timeFormat="HH:mm"
                                   timeIntervals={30}
                                   timeCaption="Time"
-                                  minTime={startTime}
-                                  maxTime={endTime}
+                                  // minTime={startTime}
+                                  // maxTime={endTime}
                                   dateFormat="HH:mm aa"
-                                  onCalendarClose={() => { calcBreakDuration() }}
                                   value={moment(breakEndTime,["HH:mm:ss"]).format("HH:mm A")}
                                   defaultValue={moment(singleShiftList.breakEndTime,["HH:mm:ss"]).format("HH:mm A")}                             
                                 />  
@@ -389,6 +452,7 @@ const calcBreakDuration=()=>{
                      
                     <h6>{breakDuationMsg && <div className="text-danger pl-3">Break Should be one hour</div>}</h6>
                   </div>
+}
 
                
 
