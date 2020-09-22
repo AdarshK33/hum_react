@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import './dashboard.css';
 import { ClusterContext } from "../../context/ClusterState";
 import { DashboardContext } from "../../context/DashboardState";
+import {  toast } from "react-toastify";
 
 
 function Dashboard () {
@@ -13,6 +14,7 @@ function Dashboard () {
     const [startDate, setStartDate] = useState();
     const [StoreType, setStoreType] = useState('');
     const [ClusterType, setClusterType] = useState('');
+    const [ClusterName, setClusterName] = useState('');
     const [clusterFT, setclusterFT] = useState(0);
     const [clusterPPT, setclusterPPT] = useState(0);
     const [clusterTPT, setclusterTPT] = useState(0);
@@ -26,6 +28,12 @@ function Dashboard () {
         setStartDate(e);        
         if(StoreType !== "" && ClusterType !== "" ){
             viewData(e,StoreType,ClusterType)
+        }else if(StoreType !== "" && ClusterType == ""  ){
+            toast.info("Cluster is required")
+        }else if(StoreType == "" && ClusterType == ""  ){
+            toast.info("Store and Cluster is required")
+        }else{
+            toast.info("Store is required ")
         }
         
 
@@ -35,14 +43,34 @@ function Dashboard () {
         setStoreType(e);
         if(startDate !== undefined && ClusterType !== "" ){
             viewData(startDate,e,ClusterType)
+        }else if(startDate !== undefined && ClusterType == ""  ){
+            toast.info("Cluster is required")
+        }else if(startDate == undefined && ClusterType == ""  ){
+            toast.info("Date and Cluster is required")
+        }else{
+            toast.info("Date is required ")
         }
         
 
     }
     const fromClusterHandler = (e) => {
-        setClusterType(e);
+        setClusterType(e.target.value);
+        let idx = e.target.selectedIndex;
+              
+        if(e.target.options[idx].innerHTML !== "Select"){
+            setClusterName(e.target.options[idx].innerHTML);
+        }else{
+            setClusterName("");
+        }
         if(startDate !== undefined && StoreType !== "" ){
-            viewData(startDate,StoreType,e)
+            viewData(startDate,StoreType,e.target.value);
+           
+        }else if(startDate !== undefined && StoreType == ""  ){
+            toast.info("Store is required")
+        }else if(startDate == undefined && StoreType == ""  ){
+            toast.info("Date and Store is required")
+        }else{
+            toast.info("Date is required ")
         }
         
 
@@ -63,12 +91,12 @@ function Dashboard () {
         let dpshoursStore = [];
 
         
-        if(graphData[0] != undefined){
+        if(graphData != null && graphData[0] != undefined){
 
             for(let i = 1; i<=24; i++){
                 for(let x in graphData[0].graphData){
                     if(i == graphData[0].graphData[x].id){
-                        dpsQtyStore.push({label: x, y: graphData[0].graphData[x].qtyStore,id : graphData[0].graphData[x].id});
+                        dpsQtyStore.push({label: x, y: graphData[0].graphData[x].qtyStore});
                         dpsQtyCluster.push({label: x, y: graphData[0].graphData[x].qtyCluster});
                         dpshoursStore.push({label: x, y: graphData[0].graphData[x].hoursStore});
                         dpshoursCluster.push({label: x, y: graphData[0].graphData[x].hoursCluster});
@@ -105,6 +133,11 @@ function Dashboard () {
                 }
                                
             }
+        }else{
+            dpsQtyStore.splice(0, dpsQtyStore.length);
+            dpsQtyCluster.splice(0, dpsQtyCluster.length);
+            dpshoursStore.splice(0, dpshoursStore.length);
+            dpshoursCluster.splice(0, dpshoursCluster.length);
         }
            
         
@@ -117,7 +150,7 @@ function Dashboard () {
                             <Row>
                                 <div className="col-sm-4">
                                     <div className="form-group">
-                                        <label className="name f-w-600">Select Date &nbsp;</label>
+                                        <label className="name f-w-600">Select Date<span style = {{color:'red'}}>*</span> &nbsp;</label>
                                         <DatePicker
                                         className="form-control Value"
                                         selected={startDate}
@@ -129,15 +162,15 @@ function Dashboard () {
                                 </div>
                                 <div className="col-sm-4">
                                     <div className="form-group">
-                                        <label className="name f-w-600" >Select Cluster&nbsp; </label>
+                                        <label className="name f-w-600" >Select Cluster<span style = {{color:'red'}}>*</span>&nbsp; </label>
                                         <select
                                             className="form-control Value"
-                                            onChange={(e)=>fromClusterHandler(e.target.value)}
+                                            onChange={(e)=>fromClusterHandler(e)}
                                             >
                                                 <option value ="">Select</option>
                                                 { clusterList.map((e, i) => {
                                                     return(
-                                                    <option key={i + 1} value={e.clusterId}>{e.clusterName}</option>)
+                                                    <option key={i + 1} value={e.clusterId} >{e.clusterName}</option>)
                                                 })}
                                            
                                             
@@ -146,7 +179,7 @@ function Dashboard () {
                                 </div>
                                 <div className="col-sm-4">
                                     <div className="form-group">
-                                        <label className="name f-w-600" >Select Store&nbsp; </label>
+                                        <label className="name f-w-600" >Select Store<span style = {{color:'red'}}>*</span>&nbsp; </label>
                                         <select
                                             className="form-control Value"
                                             onChange={(e)=>fromStoreHandler(e.target.value)}
@@ -163,26 +196,26 @@ function Dashboard () {
                             </Row>
                         </Col>
                     </Row>
-                    <Row className="Row3" > Cluster : Racket </Row>
+                    <Row className="Row3" > Cluster : {ClusterName} </Row>
                     <Row className="container-fluid">
-                        <table style ={{width:'100%',textAlign:'left',margin: '0 2%',borderBottom:'1px solid #dee2e6' }} className="table">
-                            <tr >
-                                <td className="Tdwidth">Target productivity of cluster</td>
-                                <td className="Tdwidth">{graphData[0] != undefined ? graphData[0].hoursData[0].clusterProductivityTarget: "0"}</td>
-                                <td className="Tdwidth">Target productivity of store</td>
-                                <td className="Tdwidth">{graphData[0] != undefined ? graphData[0].hoursData[0].storeProductivityTarget: "0"}</td>
+                        <table style ={{width:'100%',textAlign:'left',margin: '0 2%',borderBottom:'1px solid #dee2e6' }} className="table table-borderless">
+                            <tr className = "Border">
+                                <td className="Tdwidth Border">Target productivity of cluster</td>
+                                <td className="Tdwidth Border">{graphData != null && graphData[0] != undefined ? graphData[0].hoursData[0].clusterProductivityTarget: "0"}</td>
+                                <td className="Tdwidth Border">Target productivity of store</td>
+                                <td className="Tdwidth Border">{graphData != null && graphData[0] != undefined ? graphData[0].hoursData[0].storeProductivityTarget: "0"}</td>
                             </tr>
                             <tr >
                                 <td className="Tdwidth">Quality Target of cluster</td>
-                                <td className="Tdwidth">{graphData[0] != undefined ? graphData[0].hoursData[0].clusterQtyTarget: "0"}</td>
+                                <td className="Tdwidth">{graphData != null && graphData[0] != undefined ? graphData[0].hoursData[0].clusterQtyTarget: "0"}</td>
                                 <td className="Tdwidth">Quality Piloted of store</td>
-                                <td className="Tdwidth">{graphData[0] != undefined ? (graphData[0].hoursData[0].storeQtyPiloted).toFixed(2): "0"}</td>
+                                <td className="Tdwidth">{graphData != null && graphData[0] != undefined ? (graphData[0].hoursData[0].storeQtyPiloted).toFixed(2): "0"}</td>
                             </tr>
                             <tr >
                                 <td className="Tdwidth">Planned Hours of cluster</td>
-                                <td className="Tdwidth">{graphData[0] != undefined ? graphData[0].hoursData[0].clusterPlannedHours: "0"}</td>
+                                <td className="Tdwidth">{graphData != null && graphData[0] != undefined ? graphData[0].hoursData[0].clusterPlannedHours: "0"}</td>
                                 <td className="Tdwidth">Quality Target of store</td>
-                                <td className="Tdwidth">{graphData[0] != undefined ? graphData[0].hoursData[0].storeQtYTarget: "0"}</td>
+                                <td className="Tdwidth">{graphData != null && graphData[0] != undefined ? graphData[0].hoursData[0].storeQtYTarget: "0"}</td>
                             </tr>
                         </table>
                     </Row>
@@ -192,8 +225,8 @@ function Dashboard () {
                         <table className="table" style ={{width:'100%',textAlign:'left',backgroundColor:'rgba(214, 242, 253, 1)',margin:'3% 0%'}}>
                         <tr >
                                 
-                                <td className="Tdwidth">Gap</td>
-                                <td className="Tdwidth">{graphData[0] != undefined ? (graphData[0].hoursData[0].storeQtYTarget - graphData[0].hoursData[0].storeQtyPiloted).toFixed(2) : "0"}</td>
+                                <td className="Tdwidth Border">Gap</td>
+                                <td className="Tdwidth Border">{graphData != null && graphData[0] != undefined ? (graphData[0].hoursData[0].storeQtYTarget - graphData[0].hoursData[0].storeQtyPiloted).toFixed(2) : "0"}</td>
                             </tr>
                             </table>
                         </Col>
@@ -204,7 +237,7 @@ function Dashboard () {
                                 <td className="Tdwidth">Planned Hours FT</td>
                                 <td className="Tdwidth">{clusterFT}</td>
                                 <td className="Tdwidth">Planned Hours Store</td>
-                                <td className="Tdwidth">{graphData[0] != undefined ? graphData[0].hoursData[0].storePlannedHours: "0"}</td>
+                                <td className="Tdwidth">{graphData != null && graphData[0] != undefined ? graphData[0].hoursData[0].storePlannedHours: "0"}</td>
                             </tr>
                             <tr >
                                 <td className="Tdwidth">Planned Hours PPT</td>
@@ -226,7 +259,7 @@ function Dashboard () {
                             </tr>
                         </table>
                     </Row>
-                    {/* {graphData[0] != undefined?                     */}
+                    {graphData != null && graphData[0] != undefined?                     
                         <div>
                             <Row style ={{margin: '7% 0%'}}>                        
                             <Col><Graph name = "Cluster - Daily Qty vs No. of hours Planned" hours = {dpshoursCluster} Qty={dpsQtyCluster}/></Col>
@@ -237,7 +270,7 @@ function Dashboard () {
                                 
                             </Row>
                         </div>
-                     {/* : ""} */}
+                     : ""} 
                    
                     <Row>
                         <Col></Col>

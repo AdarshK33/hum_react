@@ -11,9 +11,7 @@ class Graph extends Component {
 		super();
 		this.createPareto = this.createPareto.bind(this);
 	}
-	// shouldComponentUpdate() {
-	// 	return false;
-	//   }
+	
 	componentDidMount(){
 		this.createPareto();
 		let Alink = document.getElementsByClassName('canvasjs-chart-credit')
@@ -69,7 +67,7 @@ class Graph extends Component {
 			},
 			axisY2: {
 				title: "Quality Targets",
-				// suffix: "%",
+				suffix: "%",
 				lineColor: "#C0504E",
 				tickColor: "#C0504E",
 				labelFontColor: "#C0504E"

@@ -31,3 +31,7 @@
     width:25%;
     text-align: left !important;
 }
+
+.Border{
+    border-top: none !important;
+}
