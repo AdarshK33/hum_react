@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import CanvasJSReact from './canvasjs.react';
 
 
-const CanvasJS = CanvasJSReact.CanvasJS;
+// const CanvasJS = CanvasJSReact.CanvasJS;
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 
@@ -18,11 +18,11 @@ class Graph extends Component {
 		Alink[0].parentNode.removeChild(Alink[0]);
 	}
 	createPareto(){
-		var dps = [];
+		// var dps = [];
 		var chart = this.chart;
 		
 		console.log(chart);
-		var yValue, yTotal = 0, yPercent = 0;
+		var  yTotal = 0;
 		// dps.push({ y: 0});
 		for(var i = 0; i < chart.data[0].dataPoints.length; i++)
 			yTotal += chart.data[0].dataPoints[i].y;
@@ -34,8 +34,8 @@ class Graph extends Component {
 		chart.creditText = "";
 		chart.addTo("data",{type:"line",showInLegend: true, name: "Planned Hours", yValueFormatString: "0.##"%"", lineDashType: "dash", dataPoints: this.props.Qty});
 		chart.data[1].set("axisYType", "secondary", false);
-		chart.axisY[0].set("maximum", Math.round(yTotal / 20) * 5);
-		chart.axisY2[0].set("maximum", 100);
+		chart.axisY[0].set("maximum", Math.round(yTotal / 10) * 5);
+		chart.axisY2[0].set("maximum", 200);
 		
 		
 		
