@@ -151,7 +151,7 @@ const EditShiftModal = (props) => {
     // const etime = moment(endTime, ["h:mm A"]).format("HH:mm");
     // const workingHours = moment.utc(moment(etime, "HH:mm:ss").diff(moment(stime, "HH:mm:ss"))).format("HH:mm:ss");
     // alert(workingHours);
-
+//edit shift
 
 
 
