@@ -23,7 +23,8 @@ const initial_state = {
   adminCalculateWeekResult:[],
   EmployeeListForAdminRosterWeekOff:[],
   adminRosterWeekOffDataList:[],
-  adminRosterAvailableShiftList:[]
+  adminRosterAvailableShiftList:[],
+  costCenterList:[]
   
 }
 
@@ -37,7 +38,7 @@ export const RosterProvider = ({ children }) => {
   function viewShift() {
   
     client.get('shift/view').then(function (response) {
-       console.log("data==>" + JSON.stringify(response));
+      // console.log("data==>" + JSON.stringify(response));
       state.shiftList = response.data.data;
       return dispatch({ type: 'FETCH_SHIFT_LIST', payload: state.shiftList });
     })
@@ -51,7 +52,7 @@ export const RosterProvider = ({ children }) => {
 
   function viewShiftTypes() {
     client.get('shift/types').then(function (response) {
-       console.log("data==>" + JSON.stringify(response));
+      // console.log("data==>" + JSON.stringify(response));
       state.shiftListNames = response.data.data;
       return dispatch({ type: 'FETCH_SHIFT_LIST_NAMES', payload: state.shiftListNames });
     })
@@ -111,7 +112,7 @@ export const RosterProvider = ({ children }) => {
   // DELETE SHIFT
 
   function deleteShift(shiftMasterId) {
-    alert("delete" + shiftMasterId)
+   // alert("delete" + shiftMasterId)
     // eslint-disable-next-line no-useless-concat
     client.delete('shift/delete' + "?shiftId=" + shiftMasterId).then(function (response) {
      
@@ -128,6 +129,7 @@ export const RosterProvider = ({ children }) => {
 
 // Get View WeekOff Weeks according to days
 const weekOffDays = (weekId) => {
+ // alert("week"+weekId);
   client.get('weekoff/weeks/days' + '?weekId=' + weekId)
     .then((response) => {
       state.weekDays = response.data.data
@@ -219,7 +221,7 @@ const addWeekOff = (newWeekOff) => {
     client.get('/weekoff/weeks?year='+year)
       .then((response) => {
          state.weeksInYear = response.data.data
-       //  console.log("=====GET Weeks=====", state.weeksInYear)
+        console.log("=====GET Weeks=====", JSON.stringify(state.weeksInYear))
          return dispatch({ type: 'AVAILABLE_WEEKS', payload: state.weeksInYear})
       })
       .catch((error) => {
@@ -231,7 +233,8 @@ const addWeekOff = (newWeekOff) => {
 
 //ADMIN ROSTER
 
-const adminWeekOffDataEmp = (endDate, startDate,contract,weekid) => {
+const adminWeekOffDataEmp = (endDate, startDate,contract,weekid,empId) => {
+  // alert("in admin week off "+empId);
   if(contract==="")
   {
     contract="permanent"
@@ -241,7 +244,7 @@ const adminWeekOffDataEmp = (endDate, startDate,contract,weekid) => {
     weekid=0
   }
 
-    const empId = 'IN1055'
+   
       // eslint-disable-next-line no-useless-concat
       client.get('roster/view' + '?contractType='+ contract+ '&' + 'endDate=' + endDate + '&' + 'startDate=' + startDate+ '&' + 'storeId=' + empId+ '&' + 'weekId='+weekid)
         .then((response) => {
@@ -346,7 +349,18 @@ const adminWeekOffDataEmp = (endDate, startDate,contract,weekid) => {
       
   }
 
-
+ //Cost Center List
+const costCenter = () => {
+  client.get('cost_centre/view')
+  .then((response) => {
+    state.costCenterList = response.data.data
+    console.log("cost center data", state.costCenterList)
+    return dispatch({type: 'COST_CENTER_DATA', payload: state.costCenterList})
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+}
  
   
 
@@ -372,6 +386,8 @@ const adminWeekOffDataEmp = (endDate, startDate,contract,weekid) => {
     adminAddWeekOff,
     adminRosterAvailableShift,
     assignAdminShift,
+    costCenter,
+    costCenterList:state.costCenterList,
     shiftList: state.shiftList,
     shiftMasterId: state.shiftMasterId,
     shiftListNames: state.shiftListNames,

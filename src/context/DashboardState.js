@@ -1,6 +1,7 @@
 import React, { createContext, useReducer } from 'react';
 import { client } from '../utils/axios';
 import DashboardReducer from '../reducers/DashboardReducer';
+import {  toast } from "react-toastify";
 
 
 
@@ -27,8 +28,7 @@ const initial_state = {
        
         client.get('/cost_centre/view').then(function (response) {
          console.log(response);
-          state.cosCentreList = response.data.data;
-          
+          state.cosCentreList = response.data.data;          
     
           return dispatch({ type: 'FETCH_COSTCENTRE_LIST', payload: state.cosCentreList });
         })
@@ -41,9 +41,14 @@ const initial_state = {
         
         let dateValue = convert(date);
 
-        client.get('/dashboard/view/' + dateValue + '/' + store + '/' + clusterId).then(function (response) {
-          
-          state.graphData = response.data.data;
+        client.get('/dashboard/view/'+dateValue+'/'+store+'/'+clusterId).then(function (response) {
+
+          if(response.data.data != null){
+            state.graphData = response.data.data;
+          }else{
+            toast.info(response.data.message);
+            state.graphData = null;
+          }          
     
           return dispatch({ type: 'FETCH_GRAPHDATA_LIST', payload: state.graphData });
         })

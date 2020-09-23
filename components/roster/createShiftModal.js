@@ -4,8 +4,8 @@ import moment from 'moment';
 import "react-datepicker/dist/react-datepicker.css";
 import {   Modal } from 'react-bootstrap'
 import { RosterContext } from "../../context/RosterState";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
+
 const CreateShiftModal = (props) => {
 
   useEffect(() => {
@@ -153,10 +153,10 @@ const clearAndClose=()=>{
         //  console.log("api response===", result.data);
         //  console.log("api response===", result.data.status);
           //console.log("api response===", result.data.length);
-          toast.info(result.data.message);
+          setSuccessMsg(result.data.message);
           setTimeout(() => {
            callTimer();
-          }, 1000);
+          }, 4000);
           viewShift();
         })
         .catch((error) => {
@@ -187,10 +187,10 @@ const clearAndClose=()=>{
          // console.log("api response===", result.data);
          // console.log("api response===", result.data.status);
         //  console.log("api response===", result.data.length);
-          toast.info(result.data.message);
+          setSuccessMsg(result.data.message);
           setTimeout(() => {
             callTimer();
-           }, 1000);
+           }, 4000);
            viewShift();
          })
      

@@ -4,8 +4,7 @@ import moment from 'moment';
 import "react-datepicker/dist/react-datepicker.css";
 import { Modal } from 'react-bootstrap'
 import { RosterContext } from "../../context/RosterState";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 
 const EditShiftModal = (props) => {
 
@@ -34,8 +33,8 @@ const EditShiftModal = (props) => {
   const [errormsg, setErrorMsg] = useState(false);
   const [status, setStatus] = useState(0)
   const [breakDurationErrrorMsg, setBreakDurationErrrorMsg] = useState(false);
-  const [breakNumber, setBreakNumber] = useState()
-
+  // const [showBreakDuration1, setshowBreakDuration1] = useState(false)
+  // const [showBreakDuration2, setshowBreakDuration2] = useState(true)
   const { updateShift, viewShift, singleShiftList, viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const setClear = () => {
     setShiftType('')
@@ -109,7 +108,7 @@ const EditShiftModal = (props) => {
   const callShowMethod = () => {
     setShowText(true);
     setInvalidText(true)
-    setBreakNumber(1)
+
   }
 
   const callTimer = () => {
@@ -122,22 +121,22 @@ const EditShiftModal = (props) => {
 
 
 
-  // const calcBreakDuration = (date) => {
-  //   let value2 = date
-  //   // alert("hi");
-  //   setEndBreakTIme(value2)
-  //   if (breakEndTime < breakStartTime || breakEndTime === breakStartTime) {
-  //     // alert(breakStartTime+ " "+breakEndTime)
-  //     // alert("false");
-  //     setBreakDurationErrrorMsg("Enter valid input")
-  //     setShiftButton(true)
-  //   }
-  //   else {
-  //     // alert("true")
-  //     setShiftButton(false)
-  //     setBreakDurationErrrorMsg(false)
-  //   }
-  // }
+  const calcBreakDuration = (date) => {
+    let value2 = date
+    // alert("hi");
+    setEndBreakTIme(value2)
+    if (breakEndTime < breakStartTime || breakEndTime === breakStartTime) {
+      // alert(breakStartTime+ " "+breakEndTime)
+      // alert("false");
+      setBreakDurationErrrorMsg("Enter valid input")
+      setShiftButton(true)
+    }
+    else {
+      // alert("true")
+      setShiftButton(false)
+      setBreakDurationErrrorMsg(false)
+    }
+  }
 
 
 
@@ -160,6 +159,7 @@ const EditShiftModal = (props) => {
 
     var result = parseInt(workingHours);
     if (result <= 5) {
+      // alert("less than 5");
       e.preventDefault();
       const newShift = {
         startTime: moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
@@ -178,10 +178,10 @@ const EditShiftModal = (props) => {
         .then((result) => {
           console.log("api response===", result.data.message);
 
-          toast.info(result.data.message);
+          setSuccessMsg(result.data.message);
           setTimeout(() => {
             callTimer();
-          }, 1000);
+          }, 3000);
           viewShift();
         })
         .catch((error) => {
@@ -190,82 +190,41 @@ const EditShiftModal = (props) => {
       console.log(result, "in competent");
     }
     else {
-      //==========
-      if (breakNumber === 1) {
-        console.log("out side break end time")
-        e.preventDefault();
-        const newShift = {
-          startTime: moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
-          endTime: moment(endTime, ["h:mm A"]).format("HH:mm:ss"),
-          contractType,
-          shiftType,
-          shiftMasterId: singleShiftList.shiftMasterId,
-          workingHours: 0,
-          storeId: "IN1055",
-          breakStartTime: moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
-          breakEndTime: moment(breakStartTime).add(1, 'hours').format('HH:mm:ss'),
-          status: status
-        }
-        // alert(JSON.stringify(newShift));
-        setSuccessMsg(true);
-        const result = updateShift(newShift)
-          .then((result) => {
-            //console.log("api response===", result.data.message);
-            setInvalidText(false)
-            toast.info(result.data.message);
 
-            setTimeout(() => {
-              callTimer();
-            }, 1000);
-            viewShift();
 
-          })
-
-          .catch((error) => {
-            alert(" In error catch ", error);
-          })
-        console.log(result, "in competent");
-
-        // ======================
+      e.preventDefault();
+      const newShift = {
+        startTime: moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
+        endTime: moment(endTime, ["h:mm A"]).format("HH:mm:ss"),
+        contractType,
+        shiftType,
+        shiftMasterId: singleShiftList.shiftMasterId,
+        workingHours: 0,
+        storeId: "IN1055",
+        breakStartTime: moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
+        breakEndTime:moment(breakEndTime, ["h:mm A"]).format("HH:mm:ss"),
+        status: status
       }
-      else {
-        console.log("inside break end time")
-        e.preventDefault();
-        const newShift = {
-          startTime: moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
-          endTime: moment(endTime, ["h:mm A"]).format("HH:mm:ss"),
-          contractType,
-          shiftType,
-          shiftMasterId: singleShiftList.shiftMasterId,
-          workingHours: 0,
-          storeId: "IN1055",
-          breakStartTime: moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
-          breakEndTime: moment(breakEndTime, ["h:mm A"]).format("HH:mm:ss"),
-          status: status
-        }
-        // alert(JSON.stringify(newShift));
-        setSuccessMsg(true);
-        const result = updateShift(newShift)
-          .then((result) => {
-            //console.log("api response===", result.data.message);
+      // alert(JSON.stringify(newShift));
+      setSuccessMsg(true);
+      const result = updateShift(newShift)
+        .then((result) => {
+          console.log("api response===", result.data.message);
 
-            toast.info(result.data.message);
+          setSuccessMsg(result.data.message);
 
-            setTimeout(() => {
-              callTimer();
-            }, 1000);
-            viewShift();
+          setTimeout(() => {
+            callTimer();
+          }, 4000);
+          viewShift();
 
-          })
+        })
 
-          .catch((error) => {
-            alert(" In error catch ", error);
-          })
-        console.log(result, "in competent");
-      }
+        .catch((error) => {
+          alert(" In error catch ", error);
+        })
+      console.log(result, "in competent");
     }
-
-
   }
   //console.log("shift list names " + shiftListNames)
   // console.log("======== " + shiftContractNames)
@@ -348,13 +307,9 @@ const EditShiftModal = (props) => {
                   }
 
 
-
-
-
-
-                  {/* {showBreakDuration2 && */}
-                  <div className="row">
-                    <div className="col-sm-12">
+                  {/* {showBreakDuration1&&
+                            <div className="row">
+                                <div className="col-sm-12">
                       {parseFloat(workingHours) > 5 ?
                         <div>
                           <div className="row">
@@ -364,59 +319,119 @@ const EditShiftModal = (props) => {
                                 <br />
                                 <DatePicker
                                   className="form-control"
-                                  // selected={breakStartTime}
-                                  onChange={date => setStartBreakTime(date)}
+                                 // selected={breakStartTime}
+                                 onChange={date => setStartBreakTime(date)}
                                   showTimeSelect
                                   showTimeSelectOnly
                                   timeFormat="HH:mm"
                                   timeIntervals={30}
                                   timeCaption="Time"
-                                  // minTime={startTime}
-                                  // maxTime={endTime}
+                                   minTime={startTime}
+                                   maxTime={endTime}
                                   dateFormat="HH:mm aa"
                                   onCalendarClose={() => { callShowMethod() }}
-                                  defaultValue={moment(singleShiftList.breakStartTime, ["HH:mm:ss"]).format("HH:mm A")}
-                                  value={moment(breakStartTime, ["HH:mm:ss"]).format("HH:mm A")}
-
-                                />
+                                  defaultValue={moment(singleShiftList.breakStartTime,["HH:mm:ss"]).format("HH:mm A")}
+                                  value={moment(breakStartTime,["HH:mm:ss"]).format("HH:mm A")}
+                              
+                                />  
                               </div>
                             </div>
-                            {/* <div className="col-sm-6 mt-2">
+                   
+                      
+                              {invalidText && 
+                              <div className="col-sm-6">
+                              <div className="form-group">
+                                <label htmlFor="exampleFormControlInput1"></label>
+                                <input type="text" style={{marginTop:"7px"}} className="form-control"    value={moment(breakStartTime).add(1, 'hours').format('HH:mm A')} />
+                              </div> 
+                              
+                            </div>
+
+                            }  
+
+
+
+                          </div>
+                      
+                        
+                        </div> :
+                        null
+                      }
+                    </div>
+                               
+                            </div>
+                            } */}
+
+
+
+                  {/* {showBreakDuration2 && */}
+                    <div className="row">
+                      <div className="col-sm-12">
+                        {parseFloat(workingHours) > 5 ?
+                          <div>
+                            <div className="row">
+                              <div className="col-sm-6">
+                                <div className="form-group">
+                                  <label htmlFor="exampleFormControlInput1">Break Duration</label>
+                                  <br />
+                                  <DatePicker
+                                    className="form-control"
+                                    // selected={breakStartTime}
+                                    onChange={date => setStartBreakTime(date)}
+                                    showTimeSelect
+                                    showTimeSelectOnly
+                                    timeFormat="HH:mm"
+                                    timeIntervals={30}
+                                    timeCaption="Time"
+                                    // minTime={startTime}
+                                    // maxTime={endTime}
+                                    dateFormat="HH:mm aa"
+                                    // onCalendarClose={() => { callShowMethod() }}
+                                    defaultValue={moment(singleShiftList.breakStartTime, ["HH:mm:ss"]).format("HH:mm A")}
+                                    value={moment(breakStartTime, ["HH:mm:ss"]).format("HH:mm A")}
+
+                                  />
+                                </div>
+                              </div>
+                              <div className="col-sm-6 mt-2">
                                 <div className="form-group">
 
                                   <br />
                                   <DatePicker
                                     className="form-control"
+                                    // selected={breakStartTime}
                                     onChange={date => calcBreakDuration(date)}
                                     showTimeSelect
                                     showTimeSelectOnly
                                     timeFormat="HH:mm"
                                     timeIntervals={30}
                                     timeCaption="Time"
+                                    // minTime={startTime}
+                                    // maxTime={endTime}
                                     dateFormat="HH:mm aa"
                                     value={moment(breakEndTime, ["HH:mm:ss"]).format("HH:mm A")}
                                     defaultValue={moment(singleShiftList.breakEndTime, ["HH:mm:ss"]).format("HH:mm A")}
                                   />
                                   <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px" }}>{breakDurationErrrorMsg}</h6>
                                 </div>
-                              </div>  */}
-
-                            {invalidText &&
-                              <div className="col-sm-6">
-                                <div className="form-group">
-                                  <label htmlFor="exampleFormControlInput1"></label>
-                                  <input type="text" style={{ marginTop: "7px" }} className="form-control" placeholder={breakEndTime}  defaultValue={singleShiftList.breakEndTime} value={moment(breakStartTime).add(1, 'hours').format('HH:mm A')} />
-                                </div>
-
                               </div>
+                              {/* break duration msg */}
+                              {/* {invalidText && 
+                              <div className="col-sm-6">
+                              <div className="form-group">
+                                <label htmlFor="exampleFormControlInput1"></label>
+                                <input type="text" style={{marginTop:"7px"}} className="form-control"  defaultValue={singleShiftList.breakEndTime}   value={moment(breakStartTime).add(1, 'hours').format('HH:mm A')} />
+                              </div> 
+                              
+                            </div>
 
-                            }
+                            }  */}
 
 
 
-                          </div>
+                            </div>
 
-                          {/* {showText &&
+                            {/* {showText &&
                             <div className="row">
                               <div className="col-sm-12">
                                 Break Hour: &nbsp;&nbsp;{moment(breakStartTime, ["h:mm A"]).format("HH:mm")}--
@@ -424,14 +439,14 @@ const EditShiftModal = (props) => {
                               </div>
                             </div>
                           } */}
-                        </div> :
-                        null
-                      }
+                          </div> :
+                          null
+                        }
+                      </div>
+
+                      <h6>{breakDuationMsg && <div className="text-danger pl-3">Break Should be one hour</div>}</h6>
                     </div>
-
-                    <h6>{breakDuationMsg && <div className="text-danger pl-3">Break Should be one hour</div>}</h6>
-                  </div>
-
+            
 
 
 

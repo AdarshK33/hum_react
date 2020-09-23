@@ -52,9 +52,10 @@ const RosterReducer = (state, action) => {
 
         case 'ADMIN_ROSTER_AVAILABLE_SHIFT':
             return { ...state, adminRosterAvailableShiftList: action.payload };
+            
 
-
-
+            case 'COST_CENTER_DATA':
+                return { ...state, costCenterList: action.payload };
 
 
 
