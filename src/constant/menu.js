@@ -52,6 +52,11 @@ export const MENUITEMS = [
     {
         path: '/roster/adminRoster', title: 'AdminRoster', icon: File, type: 'link', active: false
     },
+    {
+        title: 'Manager Report', icon: File, type: 'link', path: '/report/managerReport', active: false,children:[
+            { path: '/report/adminReport', title: 'Admin Report', type: 'link' }
+        ]
+    },
     
     
     

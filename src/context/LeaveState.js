@@ -11,7 +11,9 @@ const initialState = {
   leavesData: {},
   leaveDataList: {},
   holidayDataList:{},
-  empData:[]
+  empData:[],
+  reportList:[],
+  employeeList:[]
  
 }
 
@@ -233,6 +235,41 @@ const viewEmpData = () => {
     })
 }
 
+//Report Leave api
+const reportLeave = (reportData) => {
+      console.log("++++report api response+++++", reportData)
+      return client.post('leave_transaction/view/report',reportData)
+        .then((response) => {
+          state.message = response.data.message
+          state.reportList = response.data.data
+          toast.info(state.message)
+          getLeave()
+          console.log("new report list response===>", response.data.data)
+          console.log("new report list message===>", state.message)
+          return dispatch({ type: 'REPORT_LEAVE', payload: state.reportList })
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+
+  }
+
+  //api for employee dropdown
+
+  const employeeType = () => {
+    client.get('employee/view/leave/employee')
+  
+      .then((response) => {
+        state.employeeList = response.data.data
+        console.log("employee type", state.employeeList)
+        return dispatch({ type: 'FETCH_EMPLOYEE_TYPE', payload: state.employeeList })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+
   return (
     <LeaveContext.Provider value={{
       viewList,
@@ -245,13 +282,17 @@ const viewEmpData = () => {
       deleteList,
       viewLeaveData,
       viewEmpData,
+      reportLeave,
+      employeeType,
       leaveList: state.leaveList,
       leaveType: state.leaveType,
       message: state.message,
       leavesData: state.leavesData,
       leaveDataList: state.leaveDataList,
       holidayDataList:state.holidayDataList,
-      empData: state.empData
+      empData: state.empData,
+      reportList: state.reportList,
+      employeeList: state.employeeList
      
     }}>
       {children}
