@@ -28,8 +28,7 @@ const initial_state = {
        
         client.get('/cost_centre/view').then(function (response) {
          console.log(response);
-          state.cosCentreList = response.data.data;
-          
+          state.cosCentreList = response.data.data;          
     
           return dispatch({ type: 'FETCH_COSTCENTRE_LIST', payload: state.cosCentreList });
         })

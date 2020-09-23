@@ -34,8 +34,8 @@ class Graph extends Component {
 		chart.creditText = "";
 		chart.addTo("data",{type:"line",showInLegend: true, name: "Planned Hours", yValueFormatString: "0.##"%"", lineDashType: "dash", dataPoints: this.props.Qty});
 		chart.data[1].set("axisYType", "secondary", false);
-		chart.axisY[0].set("maximum", Math.round(yTotal / 20) * 5);
-		chart.axisY2[0].set("maximum", 100);
+		chart.axisY[0].set("maximum", Math.round(yTotal / 10) * 5);
+		chart.axisY2[0].set("maximum", 200);
 		
 		
 		
