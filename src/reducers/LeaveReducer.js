@@ -34,6 +34,12 @@ const LeaveReducer = (state, action) => {
         case 'FETCH_EMP_DATA':
             return ({ ...state, empData: action.payload })
 
+        case 'REPORT_LEAVE':
+            return { ...state, reportList: action.payload }
+
+        case 'FETCH_EMPLOYEE_TYPE':
+            return { ...state, employeeList: action.payload }
+
         default: return state;
     }
 }

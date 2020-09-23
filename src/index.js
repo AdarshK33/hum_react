@@ -37,6 +37,9 @@ import SalaryView from "./components/salary/salaryView";
 import AdminRoster from "./components/roster/adminRoster";
 //Grant Leave Page
 import GrantLeaveView from './components/admin/GrantLeaveView';
+import ManagerReportForm from './components/Report/ManagerReportForm'
+import AdminReportForm from './components/Report/AdminReportForm'
+
 
 //firebase Auth
 function Root() {
@@ -145,7 +148,16 @@ function Root() {
                               path={`${process.env.PUBLIC_URL}/roster/adminRoster`}
                               component={AdminRoster}
                             />
-
+                               {/*Manager Report Page */}
+                            <Route
+                              path={`${process.env.PUBLIC_URL}/report/managerReport`}
+                              component={ManagerReportForm}
+                            />
+                             {/*Admin Report Page */}
+                             <Route
+                              path={`${process.env.PUBLIC_URL}/report/adminReport`}
+                              component={AdminReportForm}
+                            />
 
                           </App>
                         </Fragment>
