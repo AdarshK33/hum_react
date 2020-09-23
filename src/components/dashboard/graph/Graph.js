@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import CanvasJSReact from './canvasjs.react';
 
 
-const CanvasJS = CanvasJSReact.CanvasJS;
+// const CanvasJS = CanvasJSReact.CanvasJS;
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 
@@ -18,11 +18,11 @@ class Graph extends Component {
 		Alink[0].parentNode.removeChild(Alink[0]);
 	}
 	createPareto(){
-		var dps = [];
+		// var dps = [];
 		var chart = this.chart;
 		
 		console.log(chart);
-		var yValue, yTotal = 0, yPercent = 0;
+		var  yTotal = 0;
 		// dps.push({ y: 0});
 		for(var i = 0; i < chart.data[0].dataPoints.length; i++)
 			yTotal += chart.data[0].dataPoints[i].y;

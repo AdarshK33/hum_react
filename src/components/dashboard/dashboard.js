@@ -28,9 +28,9 @@ function Dashboard () {
         setStartDate(e);        
         if(StoreType !== "" && ClusterType !== "" ){
             viewData(e,StoreType,ClusterType)
-        }else if(StoreType !== "" && ClusterType == ""  ){
+        }else if(StoreType !== "" && ClusterType === ""  ){
             toast.info("Cluster is required")
-        }else if(StoreType == "" && ClusterType == ""  ){
+        }else if(StoreType === "" && ClusterType === ""  ){
             toast.info("Store and Cluster is required")
         }else{
             toast.info("Store is required ")
@@ -43,9 +43,9 @@ function Dashboard () {
         setStoreType(e);
         if(startDate !== undefined && ClusterType !== "" ){
             viewData(startDate,e,ClusterType)
-        }else if(startDate !== undefined && ClusterType == ""  ){
+        }else if(startDate !== undefined && ClusterType === ""  ){
             toast.info("Cluster is required")
-        }else if(startDate == undefined && ClusterType == ""  ){
+        }else if(startDate === undefined && ClusterType === ""  ){
             toast.info("Date and Cluster is required")
         }else{
             toast.info("Date is required ")
@@ -65,9 +65,9 @@ function Dashboard () {
         if(startDate !== undefined && StoreType !== "" ){
             viewData(startDate,StoreType,e.target.value);
            
-        }else if(startDate !== undefined && StoreType == ""  ){
+        }else if(startDate !== undefined && StoreType === ""  ){
             toast.info("Store is required")
-        }else if(startDate == undefined && StoreType == ""  ){
+        }else if(startDate === undefined && StoreType === ""  ){
             toast.info("Date and Store is required")
         }else{
             toast.info("Date is required ")
@@ -91,11 +91,11 @@ function Dashboard () {
         let dpshoursStore = [];
 
         
-        if(graphData != null && graphData[0] != undefined){
+        if(graphData !== null && graphData[0] !== undefined){
 
             for(let i = 1; i<=24; i++){
                 for(let x in graphData[0].graphData){
-                    if(i == graphData[0].graphData[x].id){
+                    if(i === graphData[0].graphData[x].id){
                         dpsQtyStore.push({label: x, y: graphData[0].graphData[x].qtyStore});
                         dpsQtyCluster.push({label: x, y: graphData[0].graphData[x].qtyCluster});
                         dpshoursStore.push({label: x, y: graphData[0].graphData[x].hoursStore});
@@ -107,28 +107,28 @@ function Dashboard () {
             }
                      
             for (let item in graphData[0].rosterCluster){
-                if(graphData[0].rosterCluster[item].contractType == "permanent"){
+                if(graphData[0].rosterCluster[item].contractType === "permanent"){
                     setclusterFT(clusterFT + graphData[0].rosterCluster[item].workingHours);
                 }
-                if(graphData[0].rosterCluster[item].contractType == "parttime"){
+                if(graphData[0].rosterCluster[item].contractType === "parttime"){
                     setclusterPPT(clusterPPT + graphData[0].rosterCluster[item].workingHours);
                 }
-                if(graphData[0].rosterCluster[item].contractType == "internship"){
+                if(graphData[0].rosterCluster[item].contractType === "internship"){
                     setclusterINT(clusterINT + graphData[0].rosterCluster[item].workingHours);
                 }
-                if(graphData[0].rosterCluster[item].contractType == "temporary"){
+                if(graphData[0].rosterCluster[item].contractType === "temporary"){
                     setclusterTPT(clusterTPT + graphData[0].rosterCluster[item].workingHours);
                 }
 
             }
             for (let item in graphData[0].rosterStore){
-                if(graphData[0].rosterStore[item].contractType == "permanent"){
+                if(graphData[0].rosterStore[item].contractType === "permanent"){
                     setstoreFT(storeFT + graphData[0].rosterStore[item].workingHours);
                 }
-                if(graphData[0].rosterStore[item].contractType == "parttime"){
+                if(graphData[0].rosterStore[item].contractType === "parttime"){
                     setstorePPT(storePPT + graphData[0].rosterStore[item].workingHours);
                 }
-                if(graphData[0].rosterStore[item].contractType == "internship"){
+                if(graphData[0].rosterStore[item].contractType === "internship"){
                     setstoreINT(storeINT + graphData[0].rosterStore[item].workingHours);
                 }
                                
@@ -198,68 +198,75 @@ function Dashboard () {
                     </Row>
                     <Row className="Row3" > Cluster : {ClusterName} </Row>
                     <Row className="container-fluid">
-                        <table style ={{width:'100%',textAlign:'left',margin: '0 2%',borderBottom:'1px solid #dee2e6' }} className="table table-borderless">
-                            <tr className = "Border">
-                                <td className="Tdwidth Border">Target productivity of cluster</td>
-                                <td className="Tdwidth Border">{graphData != null && graphData[0] != undefined ? graphData[0].hoursData[0].clusterProductivityTarget: "0"}</td>
-                                <td className="Tdwidth Border">Target productivity of store</td>
-                                <td className="Tdwidth Border">{graphData != null && graphData[0] != undefined ? graphData[0].hoursData[0].storeProductivityTarget: "0"}</td>
-                            </tr>
-                            <tr >
-                                <td className="Tdwidth">Quality Target of cluster</td>
-                                <td className="Tdwidth">{graphData != null && graphData[0] != undefined ? graphData[0].hoursData[0].clusterQtyTarget: "0"}</td>
-                                <td className="Tdwidth">Quality Piloted of store</td>
-                                <td className="Tdwidth">{graphData != null && graphData[0] != undefined ? (graphData[0].hoursData[0].storeQtyPiloted).toFixed(2): "0"}</td>
-                            </tr>
-                            <tr >
-                                <td className="Tdwidth">Planned Hours of cluster</td>
-                                <td className="Tdwidth">{graphData != null && graphData[0] != undefined ? graphData[0].hoursData[0].clusterPlannedHours: "0"}</td>
-                                <td className="Tdwidth">Quality Target of store</td>
-                                <td className="Tdwidth">{graphData != null && graphData[0] != undefined ? graphData[0].hoursData[0].storeQtYTarget: "0"}</td>
-                            </tr>
+                        <table style ={{width:'100%',textAlign:'left',margin: '0 2%',borderBottom:'1px solid #dee2e6' }} className="table">
+                            <tbody>
+                                <tr className = "Border">
+                                    <td className="Tdwidth Border">Target productivity of cluster</td>
+                                    <td className="Tdwidth Border">{graphData !== null && graphData[0] !== undefined ? graphData[0].hoursData[0].clusterProductivityTarget: "0"}</td>
+                                    <td className="Tdwidth Border">Target productivity of store</td>
+                                    <td className="Tdwidth Border">{graphData !== null && graphData[0] !== undefined ? graphData[0].hoursData[0].storeProductivityTarget: "0"}</td>
+                                </tr>
+                                <tr >
+                                    <td className="Tdwidth">Quality Target of cluster</td>
+                                    <td className="Tdwidth">{graphData !== null && graphData[0] !== undefined ? graphData[0].hoursData[0].clusterQtyTarget: "0"}</td>
+                                    <td className="Tdwidth">Quality Piloted of store</td>
+                                    <td className="Tdwidth">{graphData !== null && graphData[0] !== undefined ? (graphData[0].hoursData[0].storeQtyPiloted).toFixed(2): "0"}</td>
+                                </tr>
+                                <tr >
+                                    <td className="Tdwidth">Planned Hours of cluster</td>
+                                    <td className="Tdwidth">{graphData !== null && graphData[0] !== undefined ? graphData[0].hoursData[0].clusterPlannedHours: "0"}</td>
+                                    <td className="Tdwidth">Quality Target of store</td>
+                                    <td className="Tdwidth">{graphData !== null && graphData[0] !== undefined ? graphData[0].hoursData[0].storeQtYTarget: "0"}</td>
+                                </tr>
+                            </tbody>
+                            
                         </table>
                     </Row>
                     <Row className="container-fluid">
                         <Col></Col>
                         <Col xs={6}>
                         <table className="table" style ={{width:'100%',textAlign:'left',backgroundColor:'rgba(214, 242, 253, 1)',margin:'3% 0%'}}>
-                        <tr >
-                                
-                                <td className="Tdwidth Border">Gap</td>
-                                <td className="Tdwidth Border">{graphData != null && graphData[0] != undefined ? (graphData[0].hoursData[0].storeQtYTarget - graphData[0].hoursData[0].storeQtyPiloted).toFixed(2) : "0"}</td>
-                            </tr>
+                            <tbody>
+                                <tr >
+                                    
+                                    <td className="Tdwidth Border">Gap</td>
+                                    <td className="Tdwidth Border">{graphData !== null && graphData[0] !== undefined ? (graphData[0].hoursData[0].storeQtYTarget - graphData[0].hoursData[0].storeQtyPiloted).toFixed(2) : "0"}</td>
+                                </tr>
+                            </tbody>
                             </table>
                         </Col>
                     </Row>
                     <Row className="container-fluid">
                         <table style ={{width:'100%',textAlign:'left',margin: '0 2%',borderBottom:'1px solid #dee2e6' }} className = "table">
-                            <tr >
-                                <td className="Tdwidth">Planned Hours FT</td>
-                                <td className="Tdwidth">{clusterFT}</td>
-                                <td className="Tdwidth">Planned Hours Store</td>
-                                <td className="Tdwidth">{graphData != null && graphData[0] != undefined ? graphData[0].hoursData[0].storePlannedHours: "0"}</td>
-                            </tr>
-                            <tr >
-                                <td className="Tdwidth">Planned Hours PPT</td>
-                                <td className="Tdwidth">{clusterPPT}</td>
-                                <td className="Tdwidth">Planned Hours FT</td>
-                                <td className="Tdwidth">{storeFT}</td>
-                            </tr>
-                            <tr >
-                                <td className="Tdwidth">Planned Hours TPT</td>
-                                <td className="Tdwidth">{clusterTPT}</td>
-                                <td className="Tdwidth">Planned Hours PPT</td>
-                                <td className="Tdwidth">{storePPT}</td>
-                            </tr>
-                            <tr >
-                                <td className="Tdwidth">Planned Hours INT</td>
-                                <td className="Tdwidth">{clusterINT}</td>
-                                <td className="Tdwidth">Planned Hours INT</td>
-                                <td className="Tdwidth">{storeINT}</td>
-                            </tr>
+                            <tbody>
+                                <tr >
+                                    <td className="Tdwidth">Planned Hours FT</td>
+                                    <td className="Tdwidth">{clusterFT}</td>
+                                    <td className="Tdwidth">Planned Hours Store</td>
+                                    <td className="Tdwidth">{graphData !== null && graphData[0] !== undefined ? graphData[0].hoursData[0].storePlannedHours: "0"}</td>
+                                </tr>
+                                <tr >
+                                    <td className="Tdwidth">Planned Hours PPT</td>
+                                    <td className="Tdwidth">{clusterPPT}</td>
+                                    <td className="Tdwidth">Planned Hours FT</td>
+                                    <td className="Tdwidth">{storeFT}</td>
+                                </tr>
+                                <tr >
+                                    <td className="Tdwidth">Planned Hours TPT</td>
+                                    <td className="Tdwidth">{clusterTPT}</td>
+                                    <td className="Tdwidth">Planned Hours PPT</td>
+                                    <td className="Tdwidth">{storePPT}</td>
+                                </tr>
+                                <tr >
+                                    <td className="Tdwidth">Planned Hours INT</td>
+                                    <td className="Tdwidth">{clusterINT}</td>
+                                    <td className="Tdwidth">Planned Hours INT</td>
+                                    <td className="Tdwidth">{storeINT}</td>
+                                </tr>
+                            </tbody>
                         </table>
                     </Row>
-                    {graphData != null && graphData[0] != undefined?                     
+                    {graphData !== null && graphData[0] !== undefined?                     
                         <div>
                             <Row style ={{margin: '7% 0%'}}>                        
                             <Col><Graph name = "Cluster - Daily Qty vs No. of hours Planned" hours = {dpshoursCluster} Qty={dpsQtyCluster}/></Col>
@@ -276,19 +283,25 @@ function Dashboard () {
                         <Col></Col>
                         <Col xs={8}>
                             <table className="table table-bordered">
-                                <th></th>
-                                <th>This Year</th>
-                                <th>Last Year</th>
-                                <tr>
-                                    <td>Planned Hours</td>
-                                    <td>232</td>
-                                    <td>280</td>
-                                </tr>
-                                <tr>
-                                    <td>Target Quantity</td>
-                                    <td>3248</td>
-                                    <td>3916</td>
-                                </tr>
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>This Year</th>
+                                        <th>Last Year</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Planned Hours</td>
+                                        <td>232</td>
+                                        <td>280</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Target Quantity</td>
+                                        <td>3248</td>
+                                        <td>3916</td>
+                                    </tr>
+                                </tbody>
                             </table>
                         </Col>
                         <Col></Col>
