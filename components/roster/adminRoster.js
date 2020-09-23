@@ -12,21 +12,17 @@ const AdminRoster = () => {
     const [adminModal, setAdminModal] = useState(false)
     const [shiftDate, setshiftDate] = useState(false)
     const [contractType, setContractType] = useState('');
-    // const [contract] = useState('permanent');
-    // const [weekid] = useState(0);
+    const [contract] = useState('permanent');
+    const [weekid] = useState(0);
     const [singleWeek, getSingleWeek] = useState()
     const [firstName, setFirstName] = useState('');
-    const [costCenter1, setCostCenter1] = useState();
-    const [tableShow,setTableShow] = useState(false);
-    const [adminRosterButton, setadminRosterButton] = useState(true);
 
     useEffect(() => {
         viewContractTypes()
-        costCenter()
     }, [])
 
 
-    const { adminWeekOffDataEmp, viewContractTypes, shiftContractNames, costCenterList, adminWeekOffDataListHeader, adminWeekOffDataList, adminCalculateWeek, adminCalculateWeekResult, adminRosterAvailableShift, getallWeeks, costCenter } = useContext(RosterContext);
+    const { adminWeekOffDataEmp, viewContractTypes, shiftContractNames, adminWeekOffDataListHeader, adminWeekOffDataList, adminCalculateWeek, adminCalculateWeekResult, adminRosterAvailableShift, getallWeeks } = useContext(RosterContext);
     const handleClose = () => setAdminModal(false)
     const handleShow = (item, name, ctype) => {
         setshiftDate(item)
@@ -44,28 +40,17 @@ const AdminRoster = () => {
         getSingleWeek(data1)
 
     }
-
-    const handleCostCenter = (e) => {
-        let data2 = e.target.value
-        setCostCenter1(data2)
-        setadminRosterButton(false)
-    }
-
-
+    useEffect(() => {
+        adminWeekOffDataEmp(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"), contract, weekid)
+    }, [])
 
 
     const submitDate = (e) => {
         e.preventDefault();
-        adminWeekOffDataEmp(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"), contractType, singleWeek, costCenter1)
-        checkAdminListLength()
+        adminWeekOffDataEmp(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"), contractType, singleWeek)
+
     }
-    const checkAdminListLength=()=>{
-      
-            if(checkAdminListLength.length===0)
-            {
-                setTableShow(true)
-            }
-    }
+
     const calcWeek = () => {
         adminCalculateWeek(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"))
     }
@@ -128,40 +113,15 @@ const AdminRoster = () => {
                                         </div>
 
 
-
                                         <div className="col-sm-3">
 
-                                            <div className="form-group">
-                                                <label className="name f-w-600"> Select Cost Center</label>
+<div className="form-group">
+    <label className="name f-w-600">&nbsp;Select Week </label>
 
-                                                <select
-                                                    className="form-control"
-                                                    style={{ fontSize: "0.8rem", height: "34px" }}
-                                                    value={costCenter1}
-                                                    required
-                                                    onChange={(e) => handleCostCenter(e)}>
-                                                    <option value="">Select Cost Center</option>
-                                                    {costCenterList.map((item, i) => {
-                                                        return (
-                                                            <option key={item.costCenterId} value={item.costCentreName}>
-                                                                {item.costCentreName}</option>
-
-                                                        );
-                                                    })}
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br/>
-                                    <div className="row">
-                                    <div className="col-sm-3">
-                                        <div className="form-group">
-                                            <label className="name f-w-600">&nbsp;Select Week </label>
-
-                                            <select
+    <select
                                                 className="form-control"
                                                 value={singleWeek}
-                                                style={{ height: "34px" }}
+                                                style={{height:"34px"}}
                                                 onChange={(e) => setWeekCalc(e)}>
                                                 <option value="">Select Week &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
@@ -173,50 +133,46 @@ const AdminRoster = () => {
                                                     );
                                                 })}
                                             </select>
+</div>
+</div>
+
+
+
+                                        <div className="col-sm-3">
+
+                                            <div className="form-group">
+                                                <label className="name f-w-600">&nbsp;Select Employee Type </label>
+
+                                                <select
+                                                    className="form-control"
+                                                    required
+                                                    style={{height:"34px"}}
+                                                    value={contractType}
+                                                    onChange={(e) => setContractType(e.target.value)}>
+
+                                                    <option value="">Select Employee Type</option>
+                                                    {shiftContractNames.map((e, i) => {
+                                                        return (
+                                                            <option key={e.typeId} value={e.contractType}>
+                                                                {e.contractType}
+                                                            </option>
+                                                        );
+                                                    })}
+                                                </select>
+                                            </div>
                                         </div>
-
-                                    </div>
-
-
-                                    <div className="col-sm-3">
-
-                                        <div className="form-group">
-                                            <label className="name f-w-600">&nbsp;Select Employee Type </label>
-
-                                            <select
-                                                className="form-control"
-                                                required
-                                                style={{ height: "34px" }}
-                                                value={contractType}
-                                                onChange={(e) => setContractType(e.target.value)}>
-
-                                                <option value="">Select Employee Type</option>
-                                                {shiftContractNames.map((e, i) => {
-                                                    return (
-                                                        <option key={e.typeId} value={e.contractType}>
-                                                            {e.contractType}
-                                                        </option>
-                                                    );
-                                                })}
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div className="col-sm-3">
-                                        <div class="align-self-center mx-auto">
-                                            <button className="myclass" style={{ marginTop: "20px",marginLeft:"20px" ,paddingLeft: "40px", paddingRight: "40px", fontWeight: "bold" }} 
-                                            disabled={adminRosterButton}
-                                            type="button" onClick={(e) => submitDate(e)}>Submit</button>
-                                        </div>
-                                    </div>
-
+                                     
+                                
+        <div class="align-self-center mx-auto"> 
+        <button className="myclass" style={{ marginTop: "20px",paddingLeft:"40px",paddingRight:"40px",fontWeight: "bold"}} type="button" onClick={(e) => submitDate(e)}>Submit</button>
+            </div> 
                                     </div>
                                 </form>
                             </div>
-                            {tableShow&&
                             <div className="table-responsive">
                                 <table className="table table-fixed">
 
-                                    <thead style={{ background: '#006EBB', color: 'white', position: "sticky", top: 0 }}>
+                                    <thead style={{ background: '#006EBB', color: 'white',position:"sticky",top:0}}>
                                         <tr>
                                             <th style={{ fontWeight: "bold", paddingLeft: "70px", paddingTop: "10px", paddingRight: "70px" }}>Employee</th>
                                             {adminWeekOffDataListHeader.map((e, i) => {
@@ -226,6 +182,9 @@ const AdminRoster = () => {
                                             })}
                                         </tr>
                                     </thead>
+
+
+
 
 
                                     <tbody>
@@ -264,7 +223,6 @@ const AdminRoster = () => {
                                     </tbody>
                                 </table>
                             </div>
-}
                         </div>
                     </div>
                 </div>

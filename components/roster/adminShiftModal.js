@@ -55,7 +55,7 @@ const AdminShiftModal = (props) => {
 
 
 
-      console.log("i am here"+JSON.stringify(weekDayList));
+
 
   useEffect(() => {
 
@@ -202,7 +202,6 @@ const AdminShiftModal = (props) => {
                       </div>
                     </div>
                   </div>
-              
                   <div className="row py-2">
                     <div className="col-sm-5 px-2">Select Week :</div>
                     <div className="col-sm-7 ">
@@ -211,7 +210,6 @@ const AdminShiftModal = (props) => {
                         required
                         value={selectedWeeks} onChange={handleWeeksChange}>
                           <option value="" >Select Week</option>
-                         
                           {weekDayList.map((item, i) => {
                             return (
                               <option key={item.weekId} selected={item.selected} value={item.weekId}>{item.weekName + " - " + item.year}</option>
