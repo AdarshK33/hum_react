@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react'
-import { Container, Row, Col, Button, Form, Modal, Tabs, Tab } from 'react-bootstrap'
+import { Container, Button, Modal, Tabs, Tab } from 'react-bootstrap'
 import { RosterContext } from "../../context/RosterState";
 import './roster.css'
 import moment from 'moment'
@@ -7,7 +7,7 @@ import moment from 'moment'
 
 
 const ShiftModal = (props) => {
- // console.log(props)
+  // console.log(props)
   const [key, setKey] = useState('shift')
 
   const shiftDateWeek = moment(props.shiftDate, 'YYYY-MM-DD').isoWeek() + 1
@@ -155,44 +155,53 @@ const ShiftModal = (props) => {
                 <h6 className="note text-secondary text-center">Note: Weekly off is mandatory to assign shift</h6>
               </Tab>
               <Tab eventKey="weekoff" title="Assign Week Off">
-                <Form className="mt-3" onSubmit={submitForm}>
-
-                  <Form.Group as={Row}>
-                    <Form.Label column sm="4" className="padding-right">Select Week</Form.Label>
-                    <Col sm="8" className="padding-left">
-                 
-                      <Form.Control as='select' size="sm" value={selectedWeeks} 
-                        onChange={(e) => handleWeeksChange(e)}>
-                        {weekDayList.map((item, i) => {
-                          return (
-                            <option key={item.weekId} selected={item.selected} value={item.weekId}>{item.weekName + " - " + item.year}</option>
-                          )
-                        })}
-                      </Form.Control>
-                    </Col>
-                  </Form.Group>
-                  <Form.Group as={Row}>
-                    <Form.Label column sm="4" className="padding-right">Select Day:</Form.Label>
-                    <Col sm="8" className="padding-left">
-                      <Form.Control as="select" size="sm" value={weekDay}
-                        onChange={(e) => setWeekDayHandler(e)}>
-                        {dayList.map((item, i) => {
+              
+                <form onSubmit={submitForm}>
+                <div className="row py-2">
+                    <div className="col-sm-5 px-2">Select Week :</div>
+                    <div className="col-sm-7 ">
+                      <div className="form-group">
+                        <select className="form-control"
+                        required
+                        value={selectedWeeks} onChange={handleWeeksChange}>
+                          <option value="" >Select Week</option>
+                         
+                          {weekDayList.map((item, i) => {
+                            return (
+                              <option key={item.weekId} selected={item.selected} value={item.weekId}>{item.weekName + " - " + item.year}</option>
+                            )
+                          })}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row py-2">
+                    <div className="col-sm-5 px-2">Select Day:</div>
+                    <div className="col-sm-7 ">
+                      <div className="form-group">
+                        <select className="form-control"
+                        required
+                        value={weekDay} onChange={(e) => setWeekDayHandler(e)}>
+                          <option value="" >Select Week</option>
+                         
+                          {dayList.map((item, i) => {
                           return (
                           <option key={item.date} selected={item.selected} value={item.date}>{item.day}{item.selected}</option>
                           )
                         })
                         }
-
-                      </Form.Control>
-                    </Col>
-                  </Form.Group>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                 
                   <div className="justify-content-center d-flex">
                     <Button className="btn-primary btn-cm pl-5 pr-5" size="sm" type="submit">
                       Assign</Button>
                   </div>
                           <br/>
                   <h6 className="note text-secondary text-center pb-2"> Note: Only same contract employees can be selected</h6>
-                </Form>
+                </form>
               </Tab>
             </Tabs>
           </Modal.Body>
