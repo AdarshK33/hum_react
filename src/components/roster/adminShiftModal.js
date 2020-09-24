@@ -8,6 +8,7 @@ import moment from 'moment'
 
 
 const AdminShiftModal = (props) => {
+  console.log("MY PROPS "+  JSON.stringify(props));
   const [key, setKey] = useState('shift')
   const shiftDateWeek = moment(props.shiftDate, 'YYYY-MM-DD').isoWeek() + 1
   const [selectedWeeks, setSelectedWeeks] = useState()
@@ -21,6 +22,7 @@ const AdminShiftModal = (props) => {
   const [days, setDays] = useState([])
   const [assignShiftButton, setAShiftButton] = useState(true);
   const [assignWeekOffButton, setAssignWeekOffButton] = useState(true);
+  const [storecostCenterName,setstorecostCenterName]=useState(''); 
   const [contractType, setContractType] = useState([])
 
   const { weekDays, weekOffDays,  availableShifts, availableShiftData, adminRosterAvailableShiftList, adminRosterAvailableShift,
@@ -39,8 +41,11 @@ const AdminShiftModal = (props) => {
     setContractType(props.contractType)
   }, [props.contractType])
 
+     
+
+
   useEffect(() => {
-    getEmployeeListForAdminRosterWeekOff(props.contractType)
+    getEmployeeListForAdminRosterWeekOff(props.mystoreId)
     availableShifts()
     getallWeeks()
     adminRosterAvailableShift()
@@ -49,6 +54,7 @@ const AdminShiftModal = (props) => {
 
   useEffect(() => {
     // console.log('shiftDateWeek', shiftDateWeek)
+    console.log("props my store ID " ,props.mystoreId)
     console.log('props.shiftDate', props.shiftDate)
     weekOffDays(shiftDateWeek)
   }, [selectedWeeks])
@@ -167,6 +173,7 @@ const AdminShiftModal = (props) => {
                     {/* Name :<h1>{firstName}{contractType}</h1> */}
                     <div className="col-sm-7 ">
                       <div className="form-group">
+                     <h1>{storecostCenterName}</h1>
                         <select
                           className="form-control"
                           style={{ fontSize: "0.8rem" }}

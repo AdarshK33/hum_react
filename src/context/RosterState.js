@@ -250,7 +250,7 @@ const adminWeekOffDataEmp = (endDate, startDate,contract,weekid,empId) => {
         .then((response) => {
           const adminWeekOffDataListHeader =  response.data.data.rosterDates;
           const adminWeekOffDataList =  response.data.data.rosterResponses;
-          const adminSelectedRosterRange  = {endDate, startDate,contract,weekid}
+          const adminSelectedRosterRange  = {endDate, startDate,contract,weekid,empId}
 
           console.log("=====  table header =", state.adminWeekOffDataListHeader)
           console.log("=====  table body data =", state.adminWeekOffDataList)
@@ -281,12 +281,12 @@ const adminWeekOffDataEmp = (endDate, startDate,contract,weekid,empId) => {
   }
 
   //ADMIN EMPLOYEE LIST FOR ROSTER WEEKOFF
-  const getEmployeeListForAdminRosterWeekOff = (type) => {
-  //  alert(type);
-    client.get('employee/view?contract_type=Permanent&storeId=IN1055')
+  const getEmployeeListForAdminRosterWeekOff = (storeId) => {
+    alert(storeId);
+    client.get('employee/view?contract_type=Permanent&storeId='+storeId)
       .then((response) => {
          state.EmployeeListForAdminRosterWeekOff = response.data.data;
-         console.log("admin calculate week ", state.EmployeeListForAdminRosterWeekOff)
+         console.log("admin calculate week for store id  ", state.EmployeeListForAdminRosterWeekOff)
          return dispatch({ type: 'GET_ADMIN_EMPLOYEE_ROSTER_WEEK_OFF', payload: state.EmployeeListForAdminRosterWeekOff})
       })
       .catch((error) => {
@@ -300,12 +300,12 @@ const adminWeekOffDataEmp = (endDate, startDate,contract,weekid,empId) => {
     return client.post("weekoff/manager/create", newWeekOff)
       .then((response) => {
         const {
-          adminSelectedRosterRange: { endDate, startDate,contract,weekid },
+          adminSelectedRosterRange: { endDate, startDate,contract,weekid,empId },
         } = state;
         state.adminRosterWeekOffDataList = response.data.data;
         state.message = response.data.message;
         toast.info(state.message);
-        adminWeekOffDataEmp(endDate,startDate,contract,weekid);
+        adminWeekOffDataEmp(endDate,startDate,contract,weekid,empId);
         console.log("new create list response===>", response.data.data);
         console.log("new create list message===>", state.message);
         // return dispatch({ type: 'ADD_NEW_WEEKOFF_DATA', payload: state.weekOffDataList })
@@ -337,11 +337,11 @@ const adminWeekOffDataEmp = (endDate, startDate,contract,weekid,empId) => {
     return client.post('shift/assign', assignData)
       .then((response) => {
         const {
-          adminSelectedRosterRange: { endDate, startDate,contract,weekid },
+          adminSelectedRosterRange: { endDate, startDate,contract,weekid,empId },
         } = state;
         toast.info(response.data.message)
         console.log(response,"cre")
-        adminWeekOffDataEmp(endDate,startDate,contract,weekid);
+        adminWeekOffDataEmp(endDate,startDate,contract,weekid,empId);
       })
       .catch((error) => {
         console.log(error) 
