@@ -184,7 +184,6 @@ const AdminRoster = () => {
 
                                             <select
                                                 className="form-control"
-                                                required
                                                 style={{ height: "34px" }}
                                                 value={contractType}
                                                 onChange={(e) => setContractType(e.target.value)}>

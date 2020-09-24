@@ -10,7 +10,7 @@ import moment from 'moment'
 const AdminShiftModal = (props) => {
   console.log("MY PROPS "+  JSON.stringify(props));
   const [key, setKey] = useState('shift')
-  const shiftDateWeek = moment(props.shiftDate, 'YYYY-MM-DD').isoWeek() + 1
+  const shiftDateWeek = moment(props.shiftDate, 'YYYY-MM-DD').week();
   const [selectedWeeks, setSelectedWeeks] = useState()
   const [weekDay, setWeekDay] = useState()
   const [value, setValue] = useState()
@@ -41,7 +41,6 @@ const AdminShiftModal = (props) => {
     setContractType(props.contractType)
   }, [props.contractType])
 
-     
 
 
   useEffect(() => {
@@ -56,35 +55,36 @@ const AdminShiftModal = (props) => {
     // console.log('shiftDateWeek', shiftDateWeek)
     console.log("props my store ID " ,props.mystoreId)
     console.log('props.shiftDate', props.shiftDate)
-    weekOffDays(shiftDateWeek)
+    weekOffDays(shiftDateWeek+1)
   }, [selectedWeeks])
 
 
 
-      console.log("i am here"+JSON.stringify(weekDayList));
+    //  console.log("i am here"+JSON.stringify(weekDayList));
 
-  useEffect(() => {
+      useEffect(() => {
 
-    let { shiftDate } = props
-    const weeks = weeksInYear.map(arr => {
-      return {
-        ...arr,
-        selected: arr.weekId === shiftDateWeek
-      }
-    })
-    const days = weekDays.map(arr => {
-      return {
-        ...arr,
-        selected: arr.date === shiftDate
-      }
-    })
-    setWeekDayList(weeks)
-    setDayList(days)
-    setWeekDay(shiftDate)
-    //  console.log(weeks, 'Shift year');
-    //  console.log(days, 'Shift day');
-  }, [props.shiftDate, weekDays])
-
+        let {shiftDate} = props
+        const weeks = weeksInYear.map(arr => {
+          let weekNumber = arr.weekName.split('Week')[1].trim();
+          return {
+            ...arr,
+            selected: parseInt(weekNumber) === shiftDateWeek
+          }
+        })
+        const days = weekDays.map(arr => {
+          console.log({arr}, shiftDate);
+          return {
+            ...arr,
+            selected: arr.date === shiftDate
+          }
+        })
+        setWeekDayList(weeks)
+        setDayList(days)
+        setWeekDay(shiftDate)
+       // console.log(weeks, 'Shift year');
+      //  console.log(days, 'Shift day');
+      }, [props.shiftDate, weekDays])
 
   const onSubmit = (e) => {
     e.preventDefault();

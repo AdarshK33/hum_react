@@ -57,6 +57,7 @@ const CreateShiftModal = (props) => {
     setStartBreakTime('')
     setEndBreakTIme('');
     setSuccessMsg('');
+    setErrorMsg('')
   }
   const calcTime = () => {
     const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
