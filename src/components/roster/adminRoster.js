@@ -16,10 +16,10 @@ const AdminRoster = () => {
     // const [weekid] = useState(0);
     const [singleWeek, getSingleWeek] = useState()
     const [firstName, setFirstName] = useState('');
-    const [costCenter1, setCostCenter1] = useState();
+    const [costCenter1, setCostCenter1] = useState('');
     const [tableShow,setTableShow] = useState(false);
     const [adminRosterButton, setadminRosterButton] = useState(true);
-
+    const [storecostCenterName,setstorecostCenterName]=useState(''); 
     useEffect(() => {
         viewContractTypes()
         costCenter()
@@ -48,6 +48,7 @@ const AdminRoster = () => {
     const handleCostCenter = (e) => {
         let data2 = e.target.value
         setCostCenter1(data2)
+        setstorecostCenterName(data2)
         setadminRosterButton(false)
     }
 
@@ -72,11 +73,11 @@ const AdminRoster = () => {
 
 
 
-    const checkCondition = (item, name, ctype) => {
+    const checkCondition = (item, name, ctype,costCentreName) => {
 
 
         if (item.roster == null) {
-            return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item, name, ctype)}>+</button>
+            return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item, name, ctype,costCentreName)}>+</button>
         } else if (item.roster.holiday !== "" && item.roster.holiday !== null) {
             return <button className="btn btn-square btn-warning btn-sm" disabled type="button">{item.roster.holiday}</button>
         } else if (item.roster.leave !== "" && item.roster.leave !== null) {
@@ -127,12 +128,10 @@ const AdminRoster = () => {
                                             </div>
                                         </div>
 
-
-
                                         <div className="col-sm-3">
 
                                             <div className="form-group">
-                                                <label className="name f-w-600"> Select Cost Center</label>
+                                            <label className="name f-w-600">Select Cost Center<span style = {{color:'red',fontSize:"20px"}}> &nbsp;*</span> &nbsp;</label>
 
                                                 <select
                                                     className="form-control"
@@ -255,7 +254,7 @@ const AdminRoster = () => {
 
                                                             //  console.log(newData.getDay(), "day")
 
-                                                            return <td>{item.weekName}<br />{data.date}<br /> {checkCondition(data, item.firstName, item.contractType)}</td>
+                                                            return <td>{item.weekName}<br />{data.date}<br /> {checkCondition(data, item.firstName, item.contractType,item.costCentreName)}</td>
                                                         })}
                                                     </tr>
                                                 )
@@ -274,8 +273,10 @@ const AdminRoster = () => {
                         contractType={contractType}
                         firstName={firstName}
                         modal={adminModal}
-                        shiftDate={shiftDate.date} />}
-
+                        shiftDate={shiftDate.date}
+                        mystoreId = {storecostCenterName}
+                        
+                        />}
             </div>
 
         </Fragment>
