@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-concat */
 import React, { createContext, useReducer } from 'react';
 import {client} from '../utils/axios';
 import { toast } from "react-toastify";
@@ -129,11 +130,12 @@ export const RosterProvider = ({ children }) => {
 
 // Get View WeekOff Weeks according to days
 const weekOffDays = (weekId) => {
- // alert("week"+weekId);
+
+  // eslint-disable-next-line no-useless-concat
   client.get('weekoff/weeks/days' + '?weekId=' + weekId)
     .then((response) => {
       state.weekDays = response.data.data
-    //  console.log("=====GET Weeks Off API respone=====", state.weekDays)
+      console.log("SELECT WEEK ========== ",weekId, JSON.stringify(state.weekDays))
       return dispatch({ type: 'WEEKOFF_WEEK_DAYS', payload: state.weekDays})
     })
     .catch((error) => {
@@ -192,7 +194,7 @@ const addWeekOff = (newWeekOff) => {
        // console.log(response,"ava")
         state.availableShiftData = response.data.data
      
-        console.log("=====GET ava=====", state.availableShiftData)
+     //   console.log("=====GET ava=====", state.availableShiftData)
         return dispatch({ type: 'AVAILABLE_SHIFTS', payload: state.availableShiftData})
       })
       .catch((error) => {
@@ -221,7 +223,7 @@ const addWeekOff = (newWeekOff) => {
     client.get('/weekoff/weeks?year='+year)
       .then((response) => {
          state.weeksInYear = response.data.data
-        console.log("=====GET Weeks=====", JSON.stringify(state.weeksInYear))
+        console.log("=====GET ALL WEEK =====", JSON.stringify(state.weeksInYear))
          return dispatch({ type: 'AVAILABLE_WEEKS', payload: state.weeksInYear})
       })
       .catch((error) => {
@@ -282,7 +284,6 @@ const adminWeekOffDataEmp = (endDate, startDate,contract,weekid,empId) => {
 
   //ADMIN EMPLOYEE LIST FOR ROSTER WEEKOFF
   const getEmployeeListForAdminRosterWeekOff = (storeId) => {
-    alert(storeId);
     client.get('employee/view?contract_type=Permanent&storeId='+storeId)
       .then((response) => {
          state.EmployeeListForAdminRosterWeekOff = response.data.data;

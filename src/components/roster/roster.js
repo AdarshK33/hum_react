@@ -119,14 +119,14 @@ const Roster = () => {
                               {item.employeeRosters.map((data, ind) => {
                                 if (ind === 0) {
                                   let newData = new Date(data.date)
-                                  console.log(newData.getDay(), "day")
-                                  if(newData.getDay() == 0){
+                                 // console.log(newData.getDay(), "day")
+                                  if(newData.getDay() === 0){
                                     return (
                                       <>
                                         {/* {Array.from(Array(newData.getDay() - 1)).map(() => <td></td>)} */}
                                         <td>{item.weekName}<br />{data.date}<br />{checkCondition(data)}</td>
                                       </>
-                                      // Need to check
+                                      
                                     )
                                   }else{
                                     return (
@@ -134,7 +134,7 @@ const Roster = () => {
                                         {Array.from(Array(newData.getDay())).map(() => <td></td>)}
                                         <td>{item.weekName}<br />{data.date}<br />{checkCondition(data)}</td>
                                       </>
-                                      // Need to check
+                                    
                                     )
                                   }
                                   

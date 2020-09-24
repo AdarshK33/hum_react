@@ -49,11 +49,8 @@ export const ClusterProvider = ({ children }) => {
 
   function selectEmployeeForCluster() {
     client.get('employee/view/IN1055/cluster_employees').then(function (response) {
-      console.log("data==****>" + JSON.stringify(response));
       state.getClusterEmployees = response.data.data;
-      console.log(JSON.stringify(state.getClusterEmployees))
-
-      return dispatch({ type: 'FETCH_EMPLOYEE_FOR_CLUSTER', payload: state.getClusterEmployees });
+     return dispatch({ type: 'FETCH_EMPLOYEE_FOR_CLUSTER', payload: state.getClusterEmployees });
     })
       .catch(function (error) {
         console.log(error);
@@ -86,14 +83,12 @@ export const ClusterProvider = ({ children }) => {
     // alert("cluster" + id)
     client.get('cluster/' + id).then(function (response) {
       //  console.log("data==Clusteer>" + JSON.stringify(response));
+      //  if(response && response.data && response.data.data)
       const getSingleCluster = response.data.data;
-        const getSingleCluster1 = response.data.data.sports;
+      const getSingleCluster1 = response.data.data.sports;
        // alert(getSingleCluster1);
-      console.log(JSON.stringify(state.getSingleCluster));
-      console.log("^^^^"+JSON.stringify(state.getSingleCluster1));
-     
-   //  alert(JSON.stringify(getSingleCluster1));
-          
+      console.log("get single cluster "+JSON.stringify(state.getSingleCluster));
+     // console.log("^^^^"+JSON.stringify(state.getSingleCluster1));
         return dispatch({ type: 'GET_SINGLE_CLUSTER', payload: {
          getSingleCluster1,
          getSingleCluster

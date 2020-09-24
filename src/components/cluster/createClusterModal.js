@@ -15,7 +15,7 @@ const CreateClusterModal = (props) => {
   const [clustertButton, setClusterButton] = useState(false);
   const [errormsg, setErrorMsg] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
-  const [multiValue, setMultiValue] = useState([])
+  const [sportsList, setSportsList] = useState([])
   const [employee, setEmployee] = useState([])
 
 
@@ -27,7 +27,7 @@ const CreateClusterModal = (props) => {
     setClusterButton('')
     setErrorMsg('')
     setSuccessMsg('')
-    setMultiValue('');
+    setSportsList('');
     setSuccessMsg('');
     setEmployee('')
     selectClusterLeader()
@@ -46,7 +46,7 @@ const CreateClusterModal = (props) => {
       clusterName,
       description,
       storeId: "IN1055",
-      sportIds: multiValue.map((e, i) => multiValue[i].value),
+      sportIds: sportsList.map((e, i) => sportsList[i].value),
       employeeIds: employee.map((e, i) => employee[i].value)
     }
 
@@ -70,7 +70,7 @@ const CreateClusterModal = (props) => {
 
   const onChangeHandler = event => {
     setClusterName(event.target.value);
-    if (multiValue.length === 0) {
+    if (sportsList.length === 0) {
       setClusterButton(true)
       setErrorMsg("Please fill the required fields");
     }
@@ -82,7 +82,7 @@ const CreateClusterModal = (props) => {
 
   const onDescprtion = event => {
     setDescription(event.target.value);
-    if (multiValue.length > 0) {
+    if (sportsList.length > 0) {
       setClusterButton(false)
       setErrorMsg(false)
     }
@@ -105,7 +105,7 @@ const CreateClusterModal = (props) => {
 
   const handleMultiChange = (option) => {
      setClusterButton(false)
-    setMultiValue(option)
+     setSportsList(option)
     setErrorMsg(false)
   }
 
@@ -142,7 +142,7 @@ const CreateClusterModal = (props) => {
                   <Select
                     name="filters"
                     placeholder="Select Sports"
-                    value={multiValue}
+                    value={sportsList}
                     style={{fontSize:"0.8rem"}}
                     options={sportsNames.map(e => ({ label: e.sportName, value: e.sportId }))}
                     onChange={handleMultiChange}
