@@ -4,14 +4,14 @@ import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import '../Leaves/Leaves.css'
 
 
-const ReportView = (props) => {
-    const reportList = props.reportList
+const ProductivityReportView = (props) => {
+    const productivityList = props.productivityList
     return (
         <Fragment>
             <Container>
-                {reportList.length > 0 &&
+                {productivityList &&
                 <Row style={{ marginTop: '2rem' }}>
-                    <div className="col-sm-12">
+                    <div className="col-sm-12" style={{padding:'0'}}>
                         <div className="card" style={{ overflowX: "auto" }}>
 
                             <div className="title_bar" >
@@ -29,33 +29,23 @@ const ReportView = (props) => {
                                         <tr>
                                             <th>Sr No.</th>
                                             <th>Employee Id</th>
-                                            <th>Employee Name</th>
-                                            <th>Cost Center</th>
-                                            <th>Work Location</th>
-                                            <th>Leave Eligible</th>
-                                            <th>Planned Leaves</th>
-                                            <th>Unplanned Leaves</th>
-                                            <th>Leaves Remaining</th>
-                                            <th>Leave Type</th>
-                                            <th>LOP</th>
+                                            <th>Sports</th>
+                                            <th>Cluster</th>
+                                            <th>Type of Contract</th>
+                                            <th>Month</th>
                                         </tr>
                                     </thead>
                                     {
-                                        reportList.map((item, i) => {
+                                        productivityList.map((item, i) => {
                                             return (
                                                 <tbody key={i + 1}>
                                                     <tr>
                                                         <td>{i + 1}</td>
                                                         <td>{item.employeeId}</td>
-                                                        <td>{item.username}</td>
-                                                        <td>{item.costCentre}</td>
-                                                        <td>{item.workLocation}</td>
-                                                        <td>{item.stateLeaveEligible}</td>
-                                                        <td>{item.planned}</td>
-                                                        <td>{item.unPlanned}</td>
-                                                        <td>{item.leaveremaining}</td>
-                                                        <td>{item.leaveType}</td>
-                                                        <td>{item.lop}</td>
+                                                        <td>{item.sports}</td>
+                                                        <td>{item.clusterName}</td>
+                                                        <td>{item.contractType}</td>
+                                                        <td>{item.duration}</td>
                                                     </tr>
                                                 </tbody>
                                             )
@@ -72,4 +62,4 @@ const ReportView = (props) => {
     );
 };
 
-export default ReportView;
+export default ProductivityReportView;

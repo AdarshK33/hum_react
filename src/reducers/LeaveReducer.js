@@ -40,6 +40,9 @@ const LeaveReducer = (state, action) => {
         case 'FETCH_EMPLOYEE_TYPE':
             return { ...state, employeeList: action.payload }
 
+        case 'PRODUCTIVITY_REPORT':
+            return { ...state, productivityList: action.payload }
+
         default: return state;
     }
 }

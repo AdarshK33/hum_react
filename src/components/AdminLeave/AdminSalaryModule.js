@@ -190,7 +190,8 @@ const AdminSalaryModule = () => {
                 <table id="table-to-xls1" className="table table-hover">
                   <thead>
                     <tr>
-                      <th>No</th>
+                      <th>Select</th>
+                      <th>Sr No.</th>
                       <th scope="col">Employee Id</th>
                       <th scope="col">Employee Name</th>
                       <th scope="col">Number Of Hours</th>
@@ -202,7 +203,7 @@ const AdminSalaryModule = () => {
                       <th scope="col">Extra Hours</th>
                       <th scope="col">Total Hours</th>
                       <th scope="col">Status</th>
-                      <th>Select</th>
+                      
                     </tr>
                   </thead>
 
@@ -210,6 +211,19 @@ const AdminSalaryModule = () => {
                     return (
                       <tbody key={i + 1}>
                         <tr>
+                        <td>
+                            {" "}
+                            {item.statusDesc === "Pending" ? (
+                              <input
+                                type="checkbox"
+                                checked={checked.indexOf(item.salaryId) >= 0}
+                                onChange={() => checkboxHandler(item.salaryId)}
+                                name="selectCheckbox"
+                              />
+                            ) : (
+                              <input type="checkbox" disabled />
+                            )}{" "}
+                          </td>
                           <td>{i + 1}</td>
 
                           <td>{item.employeeId}</td>
@@ -225,40 +239,6 @@ const AdminSalaryModule = () => {
                           <td>{item.extraHours}</td>
                           <td>{item.totalHours}</td>
                           <td>{item.statusDesc}</td>
-
-                          <td>
-                            {" "}
-                            {item.statusDesc === "Pending" ? (
-                              <input
-                                type="checkbox"
-                                checked={checked.indexOf(item.salaryId) >= 0}
-                                onChange={() => checkboxHandler(item.salaryId)}
-                                name="selectCheckbox"
-                              />
-                            ) : (
-                              <input type="checkbox" disabled />
-                            )}{" "}
-                          </td>
-                          {/*   <td><Button size="sm" style={{ backgroundColor: '#006EBB' }}
-                            onClick={(e) =>
-                              approvedButton(item.salaryId)
-
-                            }>Approved</Button></td>
-                          <td><Button variant="danger" size="sm" onClick={() => {
-                            setDeleteModal(true)
-                          }}>Cancel</Button></td>
-
-                          <Modal show={deleteModal} onHide={handleDeleteClose} centered>
-                            <Modal.Body style={{ marginTop: '1rem' }}>
-                              <h5>Are you sure to cancel the item ?</h5>
-                            </Modal.Body>
-                            <Modal.Footer>
-                              <Button variant="secondary" className="deleteNoButton"
-                                onClick={() => handleDeleteClose()}>No</Button>
-                              <Button variant="primary" className="deleteYesButton"
-                                onClick={() => cancelLeave(item.salaryId)}>Yes</Button>
-                            </Modal.Footer>
-                          </Modal> */}
                         </tr>
                       </tbody>
                     );
