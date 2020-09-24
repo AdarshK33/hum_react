@@ -58,7 +58,15 @@ export const MENUITEMS = [
         ]
     },
     
-    
+     // product target path    
+     {
+        title: 'Product Target', icon: File, type: 'link', path: '/productTarget/ProductTargetView', active: false,children:[
+            { path: '/productTarget/adminClusterTarget', title: 'Admin Cluster Target', type: 'link' },
+            { path: '/productTarget/leaderClusterTarget', title: 'Leader Cluster Target', type: 'link' },
+            { path: '/productTarget/adminStoreTarget', title: 'Admin Store Target', type: 'link' },           
+            { path: '/productTarget/leaderStoreTarget', title: 'Leader Store Target', type: 'link' },
+        ]
+    }
     
 
     
