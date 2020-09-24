@@ -14,7 +14,8 @@ const initial_state = {
   salaryList: [],
   viewSalaryData: [],
   salaryStoreList:[],
-  getSingleCluster1:[]
+  getSingleCluster1:[],
+  clusterCostCenterList:[]
 }
 
 
@@ -211,7 +212,19 @@ const salaryApproval = (salaryData) => {
       console.log(error)
     })
 }
-
+//view cluster by coster center
+const viewClusterCostCenter = (costCenter) => {
+  return client.get('cluster/view/'+ costCenter)
+  .then((response) => {
+      state.clusterCostCenterList = response.data.data
+      console.log("cluster based on cost center list", state.clusterCostCenterList)
+      console.log("cluster based on cost center message", response.data.message)
+      return dispatch({ type: 'CLUSTER_COST_CENTER', payload: state.clusterCostCenterList})
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+}
   return (<ClusterContext.Provider value={{
     addCluster,
     viewSports,
@@ -225,6 +238,7 @@ const salaryApproval = (salaryData) => {
     salaryEdit,
     viewStoreSalary,
     salaryApproval,
+    viewClusterCostCenter,
     getSingleCluster1: state.getSingleCluster1,
     clusterList: state.clusterList,
     clusterLeaderNames: state.clusterLeaderNames,
@@ -232,9 +246,9 @@ const salaryApproval = (salaryData) => {
     getSingleCluster: state.getSingleCluster,
     getClusterEmployees: state.getClusterEmployees,
     salaryList: state.salaryList,
-    viewSalaryData: state.viewSalaryData,
     salaryStoreList: state.salaryStoreList,
     getSingleCluster1:state.getSingleCluster1,
+    clusterCostCenterList: state.clusterCostCenterList
   }}>
     {children}
   </ClusterContext.Provider>);

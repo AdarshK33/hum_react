@@ -24,6 +24,9 @@ const ClusterReducer = (state, action) => {
 
         case 'SALARY_APPRROVAL_LIST':
             return { ...state, salaryStoreList: action.payload };
+
+        case 'CLUSTER_COST_CENTER':
+            return { ...state, clusterCostCenterList: action.payload };
                
         default: return state;
     }

@@ -269,7 +269,26 @@ const reportLeave = (reportData) => {
       })
   }
 
-
+//productivity report api
+const productivityReport = (month, storeId, year ) => {
+  console.log("month storeId year",month, storeId, year)
+  const clusterId = 0;
+ /*  const contractType = null; */
+ /*  const employeeId = 0; */
+  const sportId = 0;
+  return client.get('report/productivity' + '?clusterId=' + clusterId +  /* '&contractType=' + contractType + 
+   + '&employeeId=' + employeeId +*/ '&month=' + month + '&sportId=' + sportId + '&storeId=' + storeId + '&year=' + year)
+  
+  .then((response) => {
+    state.productivityList = response.data.data
+    console.log("productivity list api", state.productivityList)
+    console.log("productivity list api message", response.data.message)
+    return dispatch({type: 'PRODUCTIVITY_REPORT', payload: state.productivityList})
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+}
   return (
     <LeaveContext.Provider value={{
       viewList,
@@ -284,6 +303,7 @@ const reportLeave = (reportData) => {
       viewEmpData,
       reportLeave,
       employeeType,
+      productivityReport,
       leaveList: state.leaveList,
       leaveType: state.leaveType,
       message: state.message,
@@ -292,7 +312,8 @@ const reportLeave = (reportData) => {
       holidayDataList:state.holidayDataList,
       empData: state.empData,
       reportList: state.reportList,
-      employeeList: state.employeeList
+      employeeList: state.employeeList,
+      productivityList: state.productivityList
      
     }}>
       {children}

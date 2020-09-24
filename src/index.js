@@ -39,6 +39,7 @@ import AdminRoster from "./components/roster/adminRoster";
 import GrantLeaveView from './components/admin/GrantLeaveView';
 import ManagerReportForm from './components/Report/ManagerReportForm'
 import AdminReportForm from './components/Report/AdminReportForm'
+import ProductivityReportForm from './components/Report/ProductivityReportForm'
 
 
 //firebase Auth
@@ -157,6 +158,12 @@ function Root() {
                              <Route
                               path={`${process.env.PUBLIC_URL}/report/adminReport`}
                               component={AdminReportForm}
+                            />
+
+                              {/*Admin Report Page */}
+                              <Route
+                              path={`${process.env.PUBLIC_URL}/report/productivityAdminReport`}
+                              component={ProductivityReportForm}
                             />
 
                           </App>
