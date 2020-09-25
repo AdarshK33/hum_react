@@ -5,20 +5,24 @@ import DatePicker from "react-datepicker";
 import './dashboard.css';
 import { ClusterContext } from "../../context/ClusterState";
 import { DashboardContext } from "../../context/DashboardState";
+import { RosterContext } from '../../context/RosterState';
 // import {  toast } from "react-toastify";
 
 
 function Dashboard () {
     const { cosCentreList,viewCostCentre,viewData,graphData } = useContext(DashboardContext);
+    const { weekOffDataEmp} = useContext(RosterContext);
 
     const [startDate, setStartDate] = useState();
     const [StoreType, setStoreType] = useState('');
     const [ClusterType, setClusterType] = useState('');
     const [ClusterName, setClusterName] = useState('');
-  
+    var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
     const fromDateHandler = (e) => {        
-        setStartDate(e);        
+        setStartDate(e); 
+       
+        
         if(StoreType !== "" && ClusterType !== "" ){
             viewData(e,StoreType,ClusterType)
         }
@@ -32,6 +36,20 @@ function Dashboard () {
         
 
     }
+    function week_no(dt) 
+  {
+     var tdt = new Date(dt.valueOf());
+     var dayn = (dt.getDay() + 6) % 7;
+     tdt.setDate(tdt.getDate() - dayn + 3);
+     var firstThursday = tdt.valueOf();
+     tdt.setMonth(0, 1);
+     if (tdt.getDay() !== 4) 
+       {
+      tdt.setMonth(0, 1 + ((4 - tdt.getDay()) + 7) % 7);
+        }
+     return 1 + Math.ceil((firstThursday - tdt) / 604800000);
+        }
+        
    
     const fromStoreHandler = (e) => {
         setStoreType(e);
@@ -162,7 +180,21 @@ function Dashboard () {
 		
                return( <div>
                     <Row className="Row2" >                                
-                        <Col></Col>
+                        <Col>
+                        <Row>
+                            <div className="col-sm-4">
+                                <div className="form-group" style={{paddingTop: "35px"}}>
+                                    Week no : {startDate !== undefined ? week_no(startDate) : 0}                                    
+                                    </div>
+                                </div>
+                                <div className="col-sm-4">
+                                <div className="form-group" style={{paddingTop: "35px"}}>                                  
+                                    Day :  {startDate !== undefined ? days[startDate.getDay()]: 0} 
+                                    </div>
+                                </div>
+                        </Row>
+                        
+                        </Col>
                         <Col xs={6}>
                             <Row>
                                 <div className="col-sm-4">
@@ -242,7 +274,7 @@ function Dashboard () {
                     <Row className="container-fluid">
                         <Col></Col>
                         <Col xs={6}>
-                        <table className="table" style ={{width:'100%',textAlign:'left',backgroundColor:'rgba(214, 242, 253, 1)',margin:'3% 0%'}}>
+                        <table className="table" style ={{width:'100%',textAlign:'left',backgroundColor:'#376ebb',color : 'white',margin:'3% 0%'}}>
                             <tbody>
                                 <tr >
                                     
@@ -283,7 +315,7 @@ function Dashboard () {
                             </tbody>
                         </table>
                     </Row>
-                    {graphData !== null && graphData[0] !== undefined?                     
+                    {/* {graphData !== null && graphData[0] !== undefined?                      */}
                         <div>
                             <Row style ={{margin: '7% 0%'}}>                        
                             <Col><Graph name = "Cluster - Daily Qty vs No. of hours Planned" hours = {dpshoursCluster} Qty={dpsQtyCluster}/></Col>
@@ -294,7 +326,7 @@ function Dashboard () {
                                 
                             </Row>
                         </div>
-                     : ""} 
+                     {/* : ""}  */}
                    
                     <Row>
                         <Col></Col>
