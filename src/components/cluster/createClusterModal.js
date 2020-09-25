@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
 import { Modal } from 'react-bootstrap';
 import { ClusterContext } from "../../context/ClusterState";
+import { Multiselect } from 'multiselect-react-dropdown';
 import Select from 'react-select';
 const CreateClusterModal = (props) => {
 
@@ -139,12 +140,9 @@ const CreateClusterModal = (props) => {
               <div className="col-sm-12">
                 <div className="form-group">
                   <label htmlFor="exampleFormControlInput1"> Select Sports</label>
-                  <Select
-                    name="filters"
-                    placeholder="Select Sports"
-                    value={sportsList}
-                    style={{fontSize:"0.8rem"}}
-                    options={sportsNames.map(e => ({ label: e.sportName, value: e.sportId }))}
+                  <Multiselect
+                    options={sportsNames}
+                    displayValue="sportName"
                     onChange={handleMultiChange}
                     isMulti
                   />
