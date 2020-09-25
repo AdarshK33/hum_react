@@ -1,7 +1,8 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
 import { Modal } from 'react-bootstrap';
 import { ClusterContext } from "../../context/ClusterState";
-import Select from 'react-select';
+// import Select from 'react-select';
+import { Multiselect } from 'multiselect-react-dropdown';
 const EditClusterModal = (props) => {
 
   useEffect(() => {
@@ -18,8 +19,8 @@ const EditClusterModal = (props) => {
   const [errormsg, setErrorMsg] = useState(false);
   const [sportsList, setSportsList] = useState([])
   const [clustertButton, setClusterButton] = useState(false);
-  const [defaultClusterSports, setDefaultClusterSports] = useState([])
-  
+  //const [defaultClusterSports, setDefaultClusterSports] = useState([])
+
 
 
   const setClear = () => {
@@ -53,30 +54,30 @@ const EditClusterModal = (props) => {
     setClusterId(props.clusterId)
   }, [props.clusterId])
 
-  useEffect(() => {
-    let editSportsList = getSingleCluster1.map(arr => {
-      return {
-        label: arr.sportName, value: arr.sportId
-      }
-    })
-    console.log("Edit sports list", editSportsList);
-    console.log('Options for edit sports',sportsNames )
-    setDefaultClusterSports(editSportsList)
-  }, [getSingleCluster1])
+  // useEffect(() => {
+  //   let editSportsList = getSingleCluster1.map(arr => {
+  //     return {
+  //       label: arr.sportName, value: arr.sportId
+  //     }
+  //   })
+  //   console.log("Edit sports list", editSportsList);
+  //   console.log('Options for edit sports', sportsNames)
+  //   setDefaultClusterSports(editSportsList)
+  // }, [getSingleCluster1])
 
 
 
 
-  useEffect(() => {
-    let editSportsList = getSingleCluster1.map(arr => {
-      return {
-        label: arr.sportName, value: arr.sportId
-      }
-    })
-    console.log("Edit sports list", editSportsList);
-    console.log('Options for edit sports',sportsNames )
-    setDefaultClusterSports(editSportsList)
-  }, [getSingleCluster1])
+  // useEffect(() => {
+  //   let editSportsList = getSingleCluster1.map(arr => {
+  //     return {
+  //       label: arr.sportName, value: arr.sportId
+  //     }
+  //   })
+  //   console.log("Edit sports list", editSportsList);
+  //   console.log('Options for edit sports', sportsNames)
+  //   setDefaultClusterSports(editSportsList)
+  // }, [getSingleCluster1])
 
 
 
@@ -190,13 +191,18 @@ const EditClusterModal = (props) => {
                   <label htmlFor="exampleFormControlInput1"> Select Sports</label>
 
                   {/* <h5>{results}</h5> */}
-                  <Select
+                  {/* <Select
                     style={{ fontSize: "0.8rem" }}
                     value={defaultClusterSports}
                     options={sportsNames.map(e => ({ label: e.sportName, value: e.sportId }))}
                     onChange={handleMultiChange}
                     isMulti
-                  />
+                  /> */}
+                  <Multiselect
+                   options={sportsNames}
+                   displayValue="sportName"
+                   selectedValues={getSingleCluster1}
+            />  
 
                 </div>
               </div>
@@ -237,7 +243,7 @@ const EditClusterModal = (props) => {
               <div className="col-sm-12">
                 <div className="form-group">
                   <label htmlFor="exampleFormControlInput1"> Select Employee</label>
-                  <Select
+                  {/* <Select
                     name="filters"
                     // placeholder="select Employees"
                     defaultValue={[getSingleCluster.employeeIds]}
@@ -246,7 +252,7 @@ const EditClusterModal = (props) => {
                     onChange={handleMultiChange1}
                     placeholder={getSingleCluster.employeeIds}
                     isMulti
-                  />
+                  /> */}
 
                 </div>
               </div>
