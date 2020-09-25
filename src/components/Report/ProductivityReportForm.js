@@ -113,7 +113,7 @@ const ProductivityReportForm = () => {
                         <div className="col-sm-4">
                             <Form.Group>
                                 <Form.Label>Employee Id</Form.Label>
-                                <Form.Control as="select" required value={employeeCostCenter}
+                                <Form.Control as="select" value={employeeCostCenter}
                                     onChange={(e) => setEmployeeCostCenterHandler(e)}>
                                     <option value="">Select Employee</option>
 
