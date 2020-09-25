@@ -47,7 +47,7 @@ const AdminShiftModal = (props) => {
     getEmployeeListForAdminRosterWeekOff(props.mystoreId)
     availableShifts()
     getallWeeks()
-    adminRosterAvailableShift()
+    adminRosterAvailableShift(props.mystoreId)
   }, [])
 
 
