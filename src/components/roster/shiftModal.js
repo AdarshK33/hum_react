@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react'
-import { Container, Button,Form,Col,Modal, Tabs,Tab,Row } from 'react-bootstrap'
+import { Container, Button, Form, Modal, Tabs, Tab, } from 'react-bootstrap'
 import { RosterContext } from "../../context/RosterState";
 import './roster.css'
 import moment from 'moment'
@@ -25,7 +25,7 @@ const ShiftModal = (props) => {
   useEffect(() => {
     availableShifts()
     getallWeeks()
-    
+
   }, [])
   useEffect(() => {
     console.log('shiftDateWeek', shiftDateWeek)
@@ -34,7 +34,7 @@ const ShiftModal = (props) => {
 
   useEffect(() => {
 
-    let {shiftDate} = props
+    let { shiftDate } = props
     const weeks = weeksInYear.map(arr => {
       let weekNumber = arr.weekName.split('Week')[1].trim();
       return {
@@ -43,7 +43,7 @@ const ShiftModal = (props) => {
       }
     })
     const days = weekDays.map(arr => {
-      console.log({arr}, shiftDate);
+      console.log({ arr }, shiftDate);
       return {
         ...arr,
         selected: arr.date === shiftDate
@@ -52,8 +52,8 @@ const ShiftModal = (props) => {
     setWeekDayList(weeks)
     setDayList(days)
     setWeekDay(shiftDate)
-   // console.log(weeks, 'Shift year');
-  //  console.log(days, 'Shift day');
+    // console.log(weeks, 'Shift year');
+    //  console.log(days, 'Shift day');
   }, [props.shiftDate, weekDays])
 
   const submitForm = (e) => {
@@ -68,14 +68,14 @@ const ShiftModal = (props) => {
     }
 
     addWeekOff(newWeekOff)
-  //  console.log("newWeekOff data", newWeekOff)
+    //  console.log("newWeekOff data", newWeekOff)
     // history.push("/roster/roster");
     setSelectedWeeks(1)
     setWeekDay('')
     setShowDay(false)
   }
   const handleChange = (event) => {
-   // console.log(event.target.value)
+    // console.log(event.target.value)
     setValue(event.target.value)
 
 
@@ -97,28 +97,28 @@ const ShiftModal = (props) => {
       "employeeId": "DSI000035",
       "shiftId": value
     }
-   // console.log(assindata)
+    // console.log(assindata)
     assignShift(assindata)
     props.handleClose()
-   // console.log("Submit")
+    // console.log("Submit")
 
   }
 
   const setWeekDayHandler = (e) => {
     let newDay = e.target.value
     setWeekDay(newDay)
-  //  console.log("new Day", newDay)
+    //  console.log("new Day", newDay)
   }
 
   return (
     <Fragment>
       <Modal show={props.modal} onHide={props.handleClose} centered>
-      <Modal.Header closeButton>
+        <Modal.Header closeButton>
           <Modal.Title>Roster</Modal.Title>
         </Modal.Header>
         <Container>
 
-        <Modal.Body>
+          <Modal.Body>
             <Tabs
               value="controlled-tab-example"
               activeKey={key}
@@ -126,7 +126,7 @@ const ShiftModal = (props) => {
             >
               <Tab eventKey='shift' title="Assign Shift">
                 <div className="row py-2 pt-4">
-                <div className="col-sm-6 px-2">Employee Name:</div>
+                  <div className="col-sm-6 px-2">Employee Name:</div>
                   <div className="col-sm-6 px-2">Pavithra Anand - DSC100023</div>
                 </div>
                 <div className="row py-2">
@@ -152,46 +152,61 @@ const ShiftModal = (props) => {
                     onClick={submitAssignShift}
                   >Assign</button>
                 </div>
-                <br/>
+                <br />
                 <h6 className="note text-secondary text-center">Note: Weekly off is mandatory to assign shift</h6>
               </Tab>
               <Tab eventKey="weekoff" title="Assign Week Off">
                 <Form className="mt-3" onSubmit={submitForm}>
 
-                  <Form.Group as={Row}>
-                    <Form.Label column sm="4" className="padding-right">Select Week</Form.Label>
-                    <Col sm="8" className="padding-left">
-                 
-                      <Form.Control as='select' size="sm" value={selectedWeeks} 
-                        onChange={(e) => handleWeeksChange(e)}>
-                        {weekDayList.map((item, i) => {
+                <div className="row py-2">
+                    <div className="col-sm-5 px-2">Select Week :</div>
+                    <div className="col-sm-7 ">
+                      <div className="form-group">
+                        <select className="form-control"
+                        required
+                        value={selectedWeeks} onChange={(e) => handleWeeksChange(e)}>
+                          <option value="" >Select Week</option>
+                         
+                          {weekDayList.map((item, i) => {
+                            return (
+                              <option key={item.weekId} selected={item.selected} value={item.weekId}>{item.weekName + " - " + item.year}</option>
+                            )
+                          })}
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div className="row py-2">
+                    <div className="col-sm-5 px-2">Select day :</div>
+                    <div className="col-sm-7 ">
+                      <div className="form-group">
+                        <select className="form-control"
+                        required
+                        value={selectedWeeks}  onChange={(e) => setWeekDayHandler(e)}>
+                          <option value="" >Select Week</option>
+                         
+                          {dayList.map((item, i) => {
                           return (
-                            <option key={item.weekId} selected={item.selected} value={item.weekId}>{item.weekName + " - " + item.year}</option>
-                          )
-                        })}
-                      </Form.Control>
-                    </Col>
-                  </Form.Group>
-                  <Form.Group as={Row}>
-                    <Form.Label column sm="4" className="padding-right">Select Day:</Form.Label>
-                    <Col sm="8" className="padding-left">
-                      <Form.Control as="select" size="sm" value={weekDay}
-                        onChange={(e) => setWeekDayHandler(e)}>
-                        {dayList.map((item, i) => {
-                          return (
-                          <option key={item.date} selected={item.selected} value={item.date}>{item.day}{item.selected}</option>
+                            <option key={item.date} selected={item.selected} value={item.date}>{item.day}{item.selected}</option>
                           )
                         })
                         }
+                        </select>
+                      </div>
+                    </div>
+                  </div>
 
-                      </Form.Control>
-                    </Col>
-                  </Form.Group>
+
+
+
+              
                   <div className="justify-content-center d-flex">
                     <Button className="btn-primary btn-cm pl-5 pr-5" size="sm" type="submit">
                       Assign</Button>
                   </div>
-                          <br/>
+                  <br />
                   <h6 className="note text-secondary text-center pb-2"> Note: Only same contract employees can be selected</h6>
                 </Form>
               </Tab>

@@ -11,7 +11,7 @@ import { DashboardContext } from "../../../context/DashboardState";
 import { StoreProductContext } from "../../../context/StoreProductState";
 import moment from 'moment'
 
-const AddTarget = (props) => {
+const EditTarget = (props) => {
     let history = useHistory();
     // const [startDate, setStartDate] = useState();
     const [StoreType, setStoreType] = useState('');
@@ -24,16 +24,36 @@ const AddTarget = (props) => {
     
     // let history = useHistory();
     const { cosCentreList,viewCostCentre } = useContext(DashboardContext);
-    const { StateData,getStateData,addTarget,NewTarget } = useContext(StoreProductContext);
+    const { StateData,getStateData,UpdateTarget,updateTargetList } = useContext(StoreProductContext);
 
     // const { addLeave, addPopup, leavesData, getLeave, leaveType, viewLeaveData, viewEmpData }
     //     = useContext(LeaveContext);
     
     
      useEffect(() => {
-        
+        setStoreType(props.editData.costCenter);    
+        getStateData(props.editData.costCenter);   
         viewCostCentre()
-    }, []);
+    }, [props.editData.costCenter]);
+
+    useEffect(() => {        
+        setGetM(props.editData.year+"-"+monthsNumber[props.editData.month]);            
+       
+    }, [props.editData.month, props.editData.year]);
+
+    useEffect(() => {
+        setWeekdaysTarget(props.editData.weekday);
+    }, [props.editData.weekday]);
+
+    useEffect(() => {        
+        setWeekendsTarget(props.editData.weekend);
+    }, [props.editData.weekend]);
+
+    useEffect(() => {      
+        setGrowthPercentage(props.editData.growth);
+    }, [props.editData.growth]);
+
+    
 
     const fromStoreHandler = (e) => {
         setStoreType(e);
@@ -52,8 +72,7 @@ const AddTarget = (props) => {
 
     }
     const fromGrowthHandler = (e) => {
-        setGrowthPercentage(e);
-       
+        setGrowthPercentage(e);       
     }
     var months = new Array();
     months[1] = "Jan";
@@ -68,6 +87,21 @@ const AddTarget = (props) => {
     months[10] = "Oct";
     months[11] = "Nov";
     months[12] = "Dec";
+
+    var monthsNumber = new Array();
+    monthsNumber["Jan"] = "01";
+    monthsNumber["Feb"] = '02';
+    monthsNumber["Mar"] = '03';
+    monthsNumber["Apr"] = '04';
+    monthsNumber["May"] = '05' ;
+    monthsNumber["Jun"] = '06' ;
+    monthsNumber["Jul"] = '07' ;
+    monthsNumber["Aug"] = '08' ;
+    monthsNumber["Sep"] = '09' ;
+    monthsNumber["Oct"] = '10' ;
+    monthsNumber["Nov"] = '11' ;
+    monthsNumber["Dec"] = '12' ;
+    // "2023-12"
     const onSubmit = e => {
         e.preventDefault();
         const month = moment(getM, ["YYYY-MM"]).format("M");
@@ -79,35 +113,38 @@ const AddTarget = (props) => {
             month: MonthData,
             monthName: "",
             stateName: "",
-            targetId: 0,
+            targetId: props.editData.targetId,
             weekday: WeekdaysTarget,
             weekend: WeekendsTarget,
             year: year
            }
-        
-        addTarget(Values);
+    
+        UpdateTarget(Values);
         history.push("/productTarget/adminStoreTarget");
-        const setModal = props.handleClose;
+        const setModal = props.handleEditClose;
         setModal();
-        setStoreType("");
-        setGetM();
-        setWeekdaysTarget('');
-        setWeekendsTarget('');
-        setGrowthPercentage('');
-        StateData.stateName = ""
+        // setStoreType("");
+        // setGetM();
+        // setWeekdaysTarget('');
+        // setWeekendsTarget('');
+        // setGrowthPercentage('');
+        // getStateData('');
         
       }
-      
+
+     
+        
       const onCloseModal = () => {
-        const setModal = props.handleClose;
+        const setModal = props.handleEditClose;
         setModal();
-        setGetM();
-        setWeekdaysTarget('');
-        setWeekendsTarget('');
-        setGrowthPercentage('');
-        StateData.stateName = ""
+        setStoreType(props.editData.costCenter);
+        setGetM(props.editData.year+"-"+monthsNumber[props.editData.month]);
+        setWeekdaysTarget(props.editData.weekday);
+        setWeekendsTarget(props.editData.weekend);
+        setGrowthPercentage(props.editData.growth);
+        getStateData(props.editData.costCenter);
         }
-   
+    console.log(props);
    
    
     return (
@@ -134,7 +171,7 @@ const AddTarget = (props) => {
                                         <Form.Control as="select" 
                                             onChange={(e)=>fromStoreHandler(e.target.value)}
                                             >
-                                            <option value="">Select</option>
+                                            <option value={StoreType}>{StoreType}</option>
 
                                             <option value="">Select</option>
                                             { cosCentreList.map((e, i) => {
@@ -159,6 +196,8 @@ const AddTarget = (props) => {
                                     <Form.Group>
                                         <Form.Label>Select Month and Year :</Form.Label>
                                         <Form.Control type="month" className="digit" min="2020-08"
+                                            // value ={props.editData.year+"-"+monthsNumber[props.editData.month]}
+                                            value = {getM}
                                             onChange={(e) => setGetM(e.target.value)}
                                             >
                                         </Form.Control>
@@ -172,7 +211,7 @@ const AddTarget = (props) => {
                                     <Form.Group>
                                         <Form.Label>Product Target for Weekdays :</Form.Label>
                                         <Form.Control size="lg" type="text" 
-                                            onChange={(e) => fromWeekdaysHandler(e.target.value)}
+                                            onChange={(e) => fromWeekdaysHandler(e.target.value)} value= {WeekdaysTarget}
                                             >
                                             
                                         </Form.Control>
@@ -187,6 +226,7 @@ const AddTarget = (props) => {
                                         <Form.Label>Product Target for Weekends :</Form.Label>
                                         <Form.Control size="lg" type="text" 
                                             onChange={(e) => fromWeekendHandler(e.target.value)}
+                                            value= {WeekendsTarget}
                                             >
                                             
                                         </Form.Control>
@@ -200,6 +240,7 @@ const AddTarget = (props) => {
                                         <Form.Label>Growth Percentage :</Form.Label>
                                         <Form.Control size="lg" type="text" 
                                             onChange={(e) => fromGrowthHandler(e.target.value)}
+                                            value= {Percentage}
                                             >
                                            
                                         </Form.Control>
@@ -230,4 +271,4 @@ const AddTarget = (props) => {
     );
 };
 
-export default AddTarget;
+export default EditTarget;

@@ -1,8 +1,10 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
 import { Modal } from 'react-bootstrap';
 import { ClusterContext } from "../../context/ClusterState";
-import { Multiselect } from 'multiselect-react-dropdown';
 import Select from 'react-select';
+import { Multiselect } from 'multiselect-react-dropdown';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const CreateClusterModal = (props) => {
 
   useEffect(() => {
@@ -18,7 +20,7 @@ const CreateClusterModal = (props) => {
   const [successMsg, setSuccessMsg] = useState("");
   const [sportsList, setSportsList] = useState([])
   const [employee, setEmployee] = useState([])
-
+  const [res,setRes] = useState([])
 
 
   const setClear = () => {
@@ -46,9 +48,9 @@ const CreateClusterModal = (props) => {
       clusterLeader,
       clusterName,
       description,
-      storeId: "IN1055",
-      sportIds: sportsList.map((e, i) => sportsList[i].value),
-      employeeIds: employee.map((e, i) => employee[i].value)
+      storeId: "IN1055",  
+      sportIds:sportsList.map((e)=> e.sportId),
+      employeeIds: employee.map((e) => e.employeeId)
     }
 
     // console.log("^^^^" + JSON.stringify(newCluster));
@@ -56,10 +58,10 @@ const CreateClusterModal = (props) => {
       .then((result) => {
         console.log("api response===", result.data.message);
 
-        setSuccessMsg(result.data.message);
+        toast.info(result.data.message);
         setTimeout(() => {
           callTimer();
-         }, 4000);
+         }, 1000);
         viewCluster();
       })
       .catch((error) => {
@@ -94,7 +96,7 @@ const CreateClusterModal = (props) => {
   };
   const clusterLeaderSelect = event => {
     setClusterLeader(event.target.value);
-    if (employee.length === 0) {
+    if (sportsList.length === 0) {
       setClusterButton(true)
       setErrorMsg("Please fill the required fields");
     }
@@ -104,15 +106,21 @@ const CreateClusterModal = (props) => {
     }
   };
 
+
+  
   const handleMultiChange = (option) => {
      setClusterButton(false)
      setSportsList(option)
+    console.log(JSON.stringify(sportsList));
+   
+ 
+  console.log(res);
     setErrorMsg(false)
   }
+  
 
   const handleMultiChange1 = (options) => {
     setEmployee(options)
-  
     setClusterButton(false)
     setErrorMsg(false)
   }
@@ -140,13 +148,26 @@ const CreateClusterModal = (props) => {
               <div className="col-sm-12">
                 <div className="form-group">
                   <label htmlFor="exampleFormControlInput1"> Select Sports</label>
-                  <Multiselect
-                    options={sportsNames}
-                    displayValue="sportName"
+                  {/* <Select
+                    name="filters"
+                  
+                    value={multiValue}
+                    style={{fontSize:"0.8rem"}}
+                    options={sportsNames.map(e => ({ label: e.sportName, value: e.sportId }))}
                     onChange={handleMultiChange}
                     isMulti
-                  />
-                </div>
+                  /> */}
+
+                 <Multiselect
+                 required
+                 placeholder="Select Sports"
+                 options={sportsNames}
+                 value={sportsList}
+                 displayValue="sportName"
+                 onSelect={handleMultiChange}
+                 isMulti
+                 />
+                                </div>
               </div>
             </div>
             <div className="row">
@@ -176,7 +197,7 @@ const CreateClusterModal = (props) => {
               <div className="col-sm-12">
                 <div className="form-group">
                   <label htmlFor="exampleFormControlInput1"> Select Employee</label>
-                  <Select
+                  {/* <Select
                     name="filters"
                     placeholder="Select Employee"
                     value={employee}   
@@ -184,7 +205,19 @@ const CreateClusterModal = (props) => {
                     options={getClusterEmployees.map(e => ({ label: e.firstName +" "+e.employeeId, value: e.employeeId }))}
                     onChange={handleMultiChange1}
                     isMulti
-                  />
+                  /> */}
+
+
+                  
+                 <Multiselect
+                 required
+                 placeholder="Select Employee"
+                 options={getClusterEmployees}
+                 value={employee}
+                 displayValue="firstName"
+                 onSelect={handleMultiChange1}
+                 isMulti
+                 />
 
                 </div>
               </div>
@@ -235,3 +268,8 @@ const CreateClusterModal = (props) => {
 }
 
 export default CreateClusterModal
+
+
+
+
+

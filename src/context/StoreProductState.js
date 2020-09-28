@@ -8,7 +8,9 @@ import {  toast } from "react-toastify";
 const initial_state = {
     storeProductList: [],
     StateData:[],
-    NewTarget:[]
+    NewTarget:[],
+    editTarget:[],
+    updateTargetList:[]
   
   }
 
@@ -51,6 +53,18 @@ const initial_state = {
           });
       }
 
+      function editTargetHandler(id) {
+        client.get('/store/'+id).then(function (response) {
+
+          state.editTarget = response.data.data;
+         
+          return dispatch({ type: 'FETCH_VIEWTARGET_LIST', payload: state.editTarget });
+        })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+
       const addTarget = (values) => {
         
             return client.post('/store/create',values)
@@ -68,26 +82,34 @@ const initial_state = {
       
         }
 
-    //   function getStateData(store) {
-             
-    //     client.get('/cost_centre/view/'+store).then(function (response) {
+     const UpdateTarget = (Target) => {
+    // console.log("??????????????????edit api id response???????????????/", editLeave)
+    return client.put('/store/update', Target)
+      .then((response) => {
+        toast.info(response.data.message);
+        viewStoreProduct();
+        return ( 
+        dispatch({ type: 'EDIT_TARGET', payload: state.updateTargetList }))
+      
+      })
+      .catch((error) => {
+        console.log(error)
+      })
 
-    //       state.NewTarget = response.data.data;
-         
-    //       return dispatch({ type: 'ADD_NEW_TARGET', payload: state.NewTarget });
-    //     })
-    //       .catch(function (error) {
-    //         console.log(error);
-    //       });
-    //   }
+
+  }
 
       return (<StoreProductContext.Provider value={{        
         viewStoreProduct, 
          getStateData,  
-         addTarget,     
+         addTarget,  
+         editTargetHandler,
+         UpdateTarget,   
         storeProductList: state.storeProductList, 
         StateData: state.StateData, 
-        NewTarget: state.NewTarget      
+        NewTarget: state.NewTarget ,
+        editTarget:state.editTarget,
+        updateTargetList:state.updateTargetList     
       }}>
         {children}
       </StoreProductContext.Provider>);

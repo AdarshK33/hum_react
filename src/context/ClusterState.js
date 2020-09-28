@@ -15,7 +15,9 @@ const initial_state = {
   viewSalaryData: [],
   salaryStoreList:[],
   getSingleCluster1:[],
-  clusterCostCenterList:[]
+  clusterCostCenterList:[],
+  clusterAllLeaderNames:[],
+  getEmployeesNames:[]
 }
 
 
@@ -87,12 +89,14 @@ export const ClusterProvider = ({ children }) => {
       //  if(response && response.data && response.data.data)
       const getSingleCluster = response.data.data;
       const getSingleCluster1 = response.data.data.sports;
-       // alert(getSingleCluster1);
+      const getEmployeesNames = response.data.data.employees;
+     alert(JSON.stringify(getSingleCluster1));
       console.log("get single cluster "+JSON.stringify(state.getSingleCluster));
      // console.log("^^^^"+JSON.stringify(state.getSingleCluster1));
         return dispatch({ type: 'GET_SINGLE_CLUSTER', payload: {
          getSingleCluster1,
-         getSingleCluster
+         getSingleCluster,
+         getEmployeesNames
         }})
 
     })
@@ -116,6 +120,21 @@ export const ClusterProvider = ({ children }) => {
         console.log(error);
       });
   }
+
+// EDIT CLUSTER LEADER NAMES
+
+  function selectAllClusterLeaderForEdit() {
+    client.get('employee/view/IN1055').then(function (response) {
+      state.clusterAllLeaderNames = response.data.data;
+      return dispatch({ type: 'FETCH_ALL_LEADERS_NAME', payload: state.clusterAllLeaderNames });
+    })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+
+
 
   // SALARY INPUT
   function viewSalary(month, year) {
@@ -234,7 +253,7 @@ const viewClusterCostCenter = (costCenter) => {
     viewStoreSalary,
     salaryApproval,
     viewClusterCostCenter,
-    getSingleCluster1: state.getSingleCluster1,
+    selectAllClusterLeaderForEdit,
     clusterList: state.clusterList,
     clusterLeaderNames: state.clusterLeaderNames,
     sportsNames: state.sportsNames,
@@ -243,7 +262,9 @@ const viewClusterCostCenter = (costCenter) => {
     salaryList: state.salaryList,
     salaryStoreList: state.salaryStoreList,
     getSingleCluster1:state.getSingleCluster1,
-    clusterCostCenterList: state.clusterCostCenterList
+    clusterCostCenterList: state.clusterCostCenterList,
+    clusterAllLeaderNames:state.clusterAllLeaderNames,
+    getEmployeesNames:state.getEmployeesNames,
   }}>
     {children}
   </ClusterContext.Provider>);
