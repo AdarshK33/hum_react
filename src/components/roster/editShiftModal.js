@@ -104,7 +104,7 @@ const EditShiftModal = (props) => {
     setShowBreakDuration(false)
     // setshowBreakDuration1(true)
     // setshowBreakDuration2(false)
-
+    setBreakNumber(0)
   }
   const callShowMethod = () => {
     setShowText(true);
