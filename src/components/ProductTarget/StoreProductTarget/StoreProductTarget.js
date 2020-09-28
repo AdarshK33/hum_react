@@ -2,14 +2,14 @@ import React, { Fragment, useState, useContext, useEffect } from 'react';
 import Breadcrumb from '../../common/breadcrumb';
 import { Card, Row, Col, Table, Button } from 'react-bootstrap'
 import { Edit2, Trash2 } from 'react-feather'
-// import EditLeave from './EditLeave'
+import EditTarget from './EditTarget';
 import AddTarget from './AddTarget';
 import { StoreProductContext } from "../../../context/StoreProductState";
 
 const StoreProductTarget = () => {
     const [modal, setModal] = useState(false);
     const [editModal, setEditModal] = useState(false);
-    const { storeProductList,viewStoreProduct } = useContext(StoreProductContext);
+    const { storeProductList,viewStoreProduct,editTargetHandler,editTarget } = useContext(StoreProductContext);
 
     const handleClose = () => {
         viewStoreProduct();
@@ -18,6 +18,13 @@ const StoreProductTarget = () => {
     useEffect(() => {       
         viewStoreProduct()
     }, []);
+
+    const targetEditHandler = (id) => {
+       
+        editTargetHandler(id);
+        
+       
+    }
 
     const handleEditClose = () => setEditModal(false);
     return(
@@ -43,10 +50,11 @@ const StoreProductTarget = () => {
                                 {/* <th>Store Name</th> */}
                                 <th>State</th>
                                 <th>Month</th>
+                                <th>Year</th>
                                 <th>Weekday Target</th>
                                 <th>Weekend Target</th>
                                 <th></th>
-                                <th></th>
+                                {/* <th></th> */}
                             </tr>
                         </thead>
 
@@ -62,23 +70,18 @@ const StoreProductTarget = () => {
                                             </td> */}
                                             <td>{item.stateName}</td>
                                             <td>{item.monthName}</td>
+                                            <td>{item.year}</td>
                                             <td>{item.weekday}</td>
                                             <td>{item.weekend}</td>
                                             <td><Edit2 
-                                            // onClick={() => {
-                                            //     setEditModal(true); setLeaveTypeId(item.leaveTypeId);
-                                            //     setFromDate(item.fromDate); setToDate(item.toDate); setReason(item.reason)
-                                            //     setltId(item.ltId)
-                                            // }}
+                                            onClick={() => {
+                                                setEditModal(true);
+                                            targetEditHandler(item.targetId) 
+                                             }}
+                                            
                                              />
                                             </td>
-                                            <td><Trash2 
-                                            // onClick={() => {
-                                            //     setDeleteModal(true);  setltId(item.ltId)
-                                            // }} 
-                                            />
-                                           
-                                            </td>
+                                            
 
 
                                         </tr>
@@ -86,13 +89,12 @@ const StoreProductTarget = () => {
                                  )
                             })} 
                     </Table>
-                    {/* <DeleteLeave handleDeleteClose={handleDeleteClose} modal={deleteModal} ltId={ltId} /> */}
-                    {/* <EditLeave handleEditClose={handleEditClose}
-                    //  modal={editModal}
-                        // leaveTypeId={leaveTypeId === 0 || leaveTypeId === 1 ? (leaveTypeId = 1) : (leaveTypeId === 2 ? (leaveTypeId = 2) :
-                        //     leaveTypeId === 3 ? (leaveTypeId = 3):'')} fromDate={fromDate} toDate={toDate}
-                        // reason={reason} ltId={ltId}
-                         /> */}
+                   
+                    {editTarget.length !== 0 ? <EditTarget handleEditClose={handleEditClose}
+                     modal={editModal}
+                     editData = {editTarget}
+                         /> : ""}
+                         
                 </div>
 
             </div>
