@@ -19,6 +19,9 @@ const AddTarget = (props) => {
     const [WeekdaysTarget, setWeekdaysTarget] = useState();
     const [WeekendsTarget, setWeekendsTarget] = useState();
     const [Percentage, setGrowthPercentage] = useState();
+    const [TodayDate, setTodayDate] = useState();
+    const [month, setMonth] = useState();
+    const [Year, setYear] = useState();
     // const [State, SetStateDate] = useState();
    
     
@@ -31,7 +34,18 @@ const AddTarget = (props) => {
     
     
      useEffect(() => {
+        let date = new Date(); 
+        var dd = String(date.getDate()).padStart(2, '0');
+        var mm = String(date.getMonth() + 1).padStart(2, '0')
+        if(dd > 20){
+             mm++;
+        }
         
+        
+        var yyyy = date.getFullYear();
+        setTodayDate(dd);
+        setMonth(mm);
+        setYear(yyyy);
         viewCostCentre()
     }, []);
 
@@ -68,11 +82,26 @@ const AddTarget = (props) => {
     months[10] = "Oct";
     months[11] = "Nov";
     months[12] = "Dec";
+
+    var monthsNumber = new Array();
+    monthsNumber["Jan"] = "01";
+    monthsNumber["Feb"] = '02';
+    monthsNumber["Mar"] = '03';
+    monthsNumber["Apr"] = '04';
+    monthsNumber["May"] = '05' ;
+    monthsNumber["Jun"] = '06' ;
+    monthsNumber["Jul"] = '07' ;
+    monthsNumber["Aug"] = '08' ;
+    monthsNumber["Sep"] = '09' ;
+    monthsNumber["Oct"] = '10' ;
+    monthsNumber["Nov"] = '11' ;
+    monthsNumber["Dec"] = '12' ;
     const onSubmit = e => {
         e.preventDefault();
         const month = moment(getM, ["YYYY-MM"]).format("M");
         var MonthData = months[month];
         const year = moment(getM, ["MMM Do YY"]).format('YYYY');
+        const validate = validation();
         const Values = {
             costCenter: StoreType,
             growth: Percentage,
@@ -84,8 +113,10 @@ const AddTarget = (props) => {
             weekend: WeekendsTarget,
             year: year
            }
-        
-        addTarget(Values);
+        if(validate){
+            addTarget(Values);
+        }
+        // addTarget(Values);
         history.push("/productTarget/adminStoreTarget");
         const setModal = props.handleClose;
         setModal();
@@ -97,6 +128,31 @@ const AddTarget = (props) => {
         StateData.stateName = ""
         
       }
+      const validation = () => {
+        let flag = true
+        if (StoreType === '') {
+            toast.info("Select StoreType Type")
+            flag = false;
+            return;
+        }
+
+        if (WeekdaysTarget === '') {
+            toast.info("WeekdaysTarget is mandatory")
+            flag = false;
+            return;
+        }
+        if (Percentage === '') {
+            toast.info("Growth Percentage is mandatory")
+            flag = false;
+            return;
+        }
+        if (WeekendsTarget === '') {
+            toast.info("WeekendsTarget is mandatory")
+            flag = false;
+            return;
+        }
+        return flag;
+    }
       
       const onCloseModal = () => {
         const setModal = props.handleClose;
@@ -131,7 +187,7 @@ const AddTarget = (props) => {
                                 <div className="col-sm-12">
                                     <Form.Group>
                                         <Form.Label>Select Cost Center :</Form.Label>
-                                        <Form.Control as="select" 
+                                        <Form.Control as="select" required
                                             onChange={(e)=>fromStoreHandler(e.target.value)}
                                             >
                                             <option value="">Select</option>
@@ -150,7 +206,7 @@ const AddTarget = (props) => {
                                 <div className="col-sm-12">
                                     <Form.Group>
                                         <Form.Label>State :</Form.Label>
-                                        <Form.Control as="input" value = {StateData.stateName}/>                                           
+                                        <Form.Control as="input" required value = {StateData.stateName}/>                                           
                                     </Form.Group>
                                 </div>
                             </Row>
@@ -158,10 +214,20 @@ const AddTarget = (props) => {
                                 <div className="col-sm-12">
                                     <Form.Group>
                                         <Form.Label>Select Month and Year :</Form.Label>
-                                        <Form.Control type="month" className="digit" min="2020-08"
-                                            onChange={(e) => setGetM(e.target.value)}
+                                        {/* {TodayDate > 20 ?  */}
+                                        <Form.Control type="month" className="digit" min={Year + "-" + month}
+                                            onChange={(e) => setGetM(e.target.value)} required
                                             >
-                                        </Form.Control>
+                                        </Form.Control> 
+                                        {/* : 
+                                        <Form.Control type="month" className="digit" min={Year + "-" + (month-1)}
+                                        onChange={(e) => setGetM(e.target.value)} required
+                                        > */}
+                                    {/* </Form.Control>} */}
+                                        {/* <Form.Control type="month" className="digit" min="2020-08"
+                                            onChange={(e) => setGetM(e.target.value)} required
+                                            >
+                                        </Form.Control> */}
                                     </Form.Group>
                                 </div>
                             </Row>
@@ -171,7 +237,7 @@ const AddTarget = (props) => {
                                 {/* <div className="col-sm-12"> */}
                                     <Form.Group>
                                         <Form.Label>Product Target for Weekdays :</Form.Label>
-                                        <Form.Control size="lg" type="text" 
+                                        <Form.Control size="lg" type="text" required
                                             onChange={(e) => fromWeekdaysHandler(e.target.value)}
                                             >
                                             
@@ -185,7 +251,7 @@ const AddTarget = (props) => {
                                 {/* <div className="col-sm-12"> */}
                                     <Form.Group>
                                         <Form.Label>Product Target for Weekends :</Form.Label>
-                                        <Form.Control size="lg" type="text" 
+                                        <Form.Control size="lg" type="text" required
                                             onChange={(e) => fromWeekendHandler(e.target.value)}
                                             >
                                             
@@ -198,7 +264,7 @@ const AddTarget = (props) => {
                                 <div className="col-sm-12">
                                     <Form.Group>
                                         <Form.Label>Growth Percentage :</Form.Label>
-                                        <Form.Control size="lg" type="text" 
+                                        <Form.Control size="lg" type="text" required
                                             onChange={(e) => fromGrowthHandler(e.target.value)}
                                             >
                                            

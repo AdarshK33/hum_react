@@ -19,6 +19,9 @@ const EditTarget = (props) => {
     const [WeekdaysTarget, setWeekdaysTarget] = useState();
     const [WeekendsTarget, setWeekendsTarget] = useState();
     const [Percentage, setGrowthPercentage] = useState();
+    const [TodayDate, setTodayDate] = useState();
+    const [month, setMonth] = useState();
+    const [Year, setYear] = useState();
     // const [State, SetStateDate] = useState();
    
     
@@ -32,7 +35,19 @@ const EditTarget = (props) => {
     
      useEffect(() => {
         setStoreType(props.editData.costCenter);    
-        getStateData(props.editData.costCenter);   
+        getStateData(props.editData.costCenter);  
+        let date = new Date(); 
+        var dd = String(date.getDate()).padStart(2, '0');
+        var mm = String(date.getMonth() + 1).padStart(2, '0')
+        if(dd > 20){
+             mm++;
+        }
+        
+        
+        var yyyy = date.getFullYear();
+        setTodayDate(dd);
+        setMonth(mm);
+        setYear(yyyy); 
         viewCostCentre()
     }, [props.editData.costCenter]);
 
@@ -169,7 +184,7 @@ const EditTarget = (props) => {
                                     <Form.Group>
                                         <Form.Label>Select Cost Center :</Form.Label>
                                         <Form.Control as="select" 
-                                            onChange={(e)=>fromStoreHandler(e.target.value)}
+                                            onChange={(e)=>fromStoreHandler(e.target.value)} required
                                             >
                                             <option value={StoreType}>{StoreType}</option>
 
@@ -187,7 +202,7 @@ const EditTarget = (props) => {
                                 <div className="col-sm-12">
                                     <Form.Group>
                                         <Form.Label>State :</Form.Label>
-                                        <Form.Control as="input" value = {StateData.stateName}/>                                           
+                                        <Form.Control as="input" required value = {StateData.stateName}/>                                           
                                     </Form.Group>
                                 </div>
                             </Row>
@@ -195,7 +210,7 @@ const EditTarget = (props) => {
                                 <div className="col-sm-12">
                                     <Form.Group>
                                         <Form.Label>Select Month and Year :</Form.Label>
-                                        <Form.Control type="month" className="digit" min="2020-08"
+                                        <Form.Control type="month" className="digit" min={Year + "-" + month} required
                                             // value ={props.editData.year+"-"+monthsNumber[props.editData.month]}
                                             value = {getM}
                                             onChange={(e) => setGetM(e.target.value)}
@@ -210,7 +225,7 @@ const EditTarget = (props) => {
                                 {/* <div className="col-sm-12"> */}
                                     <Form.Group>
                                         <Form.Label>Product Target for Weekdays :</Form.Label>
-                                        <Form.Control size="lg" type="text" 
+                                        <Form.Control size="lg" type="text" required
                                             onChange={(e) => fromWeekdaysHandler(e.target.value)} value= {WeekdaysTarget}
                                             >
                                             
@@ -224,7 +239,7 @@ const EditTarget = (props) => {
                                 {/* <div className="col-sm-12"> */}
                                     <Form.Group>
                                         <Form.Label>Product Target for Weekends :</Form.Label>
-                                        <Form.Control size="lg" type="text" 
+                                        <Form.Control size="lg" type="text" required
                                             onChange={(e) => fromWeekendHandler(e.target.value)}
                                             value= {WeekendsTarget}
                                             >
@@ -238,7 +253,7 @@ const EditTarget = (props) => {
                                 <div className="col-sm-12">
                                     <Form.Group>
                                         <Form.Label>Growth Percentage :</Form.Label>
-                                        <Form.Control size="lg" type="text" 
+                                        <Form.Control size="lg" type="text" required
                                             onChange={(e) => fromGrowthHandler(e.target.value)}
                                             value= {Percentage}
                                             >
