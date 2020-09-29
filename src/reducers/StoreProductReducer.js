@@ -16,6 +16,9 @@ const StoreProductReducer = (state, action) => {
         case 'EDIT_TARGET':
             return { ...state, updateTargetList: action.payload }
 
+        case 'FETCH_STORELEADERPRODUCTTARGET_LIST' :
+            return { ...state, storeLeaderProductList: action.payload }
+
         default: return state;
     }
 }

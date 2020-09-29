@@ -10,7 +10,8 @@ const initial_state = {
     StateData:[],
     NewTarget:[],
     editTarget:[],
-    updateTargetList:[]
+    updateTargetList:[],
+    storeLeaderProductList:[]
   
   }
 
@@ -30,7 +31,7 @@ const initial_state = {
     function viewStoreProduct() {
        
         client.get('/store/view').then(function (response) {
-         console.log(response);
+        //  console.log(response);
           state.storeProductList = response.data.data;          
     
           return dispatch({ type: 'FETCH_STOREPRODUCTTARGET_LIST', payload: state.storeProductList });
@@ -72,6 +73,7 @@ const initial_state = {
                 // state.message = response.data.message
                 toast.info(response.data.message);
                 viewStoreProduct();
+                LeaderTargetList(values.costCenter);
                 return (
                 dispatch({ type: 'ADD_NEW_TARGET', payload: state.NewTarget })
                 )
@@ -88,6 +90,7 @@ const initial_state = {
       .then((response) => {
         toast.info(response.data.message);
         viewStoreProduct();
+        LeaderTargetList(Target.costCenter);
         return ( 
         dispatch({ type: 'EDIT_TARGET', payload: state.updateTargetList }))
       
@@ -99,17 +102,33 @@ const initial_state = {
 
   }
 
+
+  const LeaderTargetList = (storeId) => {
+    // console.log("??????????????????edit api id response???????????????/", editLeave)
+    return client.get('/store/view/'+ storeId)
+      .then((response) => {
+        state.storeLeaderProductList = response.data.data;          
+    
+          return dispatch({ type: 'FETCH_STORELEADERPRODUCTTARGET_LIST', payload: state.storeLeaderProductList });
+        })
+          .catch(function (error) {
+            console.log(error);
+          });
+  }
+
       return (<StoreProductContext.Provider value={{        
         viewStoreProduct, 
          getStateData,  
          addTarget,  
          editTargetHandler,
-         UpdateTarget,   
+         UpdateTarget,
+         LeaderTargetList,   
         storeProductList: state.storeProductList, 
         StateData: state.StateData, 
         NewTarget: state.NewTarget ,
         editTarget:state.editTarget,
-        updateTargetList:state.updateTargetList     
+        updateTargetList:state.updateTargetList,
+        storeLeaderProductList: state.storeLeaderProductList    
       }}>
         {children}
       </StoreProductContext.Provider>);
