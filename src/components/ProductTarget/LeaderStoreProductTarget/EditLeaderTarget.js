@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap'
-// import { useHistory } from "react-router-dom";
+
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import { useHistory } from "react-router-dom";
@@ -12,8 +12,7 @@ import { StoreProductContext } from "../../../context/StoreProductState";
 import moment from 'moment'
 
 const EditLeaderTarget = (props) => {
-    let history = useHistory();
-    // const [startDate, setStartDate] = useState();
+      
     const [StoreType, setStoreType] = useState('');
     const [getM, setGetM] = useState();
     const [WeekdaysTarget, setWeekdaysTarget] = useState();
@@ -22,15 +21,14 @@ const EditLeaderTarget = (props) => {
     const [TodayDate, setTodayDate] = useState();
     const [month, setMonth] = useState();
     const [Year, setYear] = useState();
-    // const [State, SetStateDate] = useState();
+    
    
     
-    // let history = useHistory();
+    
     const { cosCentreList,viewCostCentre } = useContext(DashboardContext);
     const { StateData,getStateData,UpdateTarget,updateTargetList } = useContext(StoreProductContext);
 
-    // const { addLeave, addPopup, leavesData, getLeave, leaveType, viewLeaveData, viewEmpData }
-    //     = useContext(LeaveContext);
+    
     
     
      useEffect(() => {
@@ -135,15 +133,10 @@ const EditLeaderTarget = (props) => {
            }
     
         UpdateTarget(Values);
-        // history.push("/productTarget/leaderStoreTarget");
+        
         const setModal = props.handleEditClose;
         setModal();
-        // setStoreType("");
-        // setGetM();
-        // setWeekdaysTarget('');
-        // setWeekendsTarget('');
-        // setGrowthPercentage('');
-        // getStateData('');
+        
         
       }
 
@@ -183,17 +176,7 @@ const EditLeaderTarget = (props) => {
                                 <div className="col-sm-12">
                                     <Form.Group>
                                         <Form.Label>Store :</Form.Label>
-                                        <Form.Control as="input" required value = {StoreType} readOnly
-                                            // onChange={(e)=>fromStoreHandler(e.target.value)} required
-                                            >
-                                            {/* <option value={StoreType}>{StoreType}</option>
-
-                                            <option value="">Select</option>
-                                            { cosCentreList.map((e, i) => {
-                                                    return(
-                                                    <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
-                                                })} */}
-                                        </Form.Control>
+                                        <Form.Control as="input" required value = {StoreType} readOnly />
                                     </Form.Group>
                                 </div>
                             </Row>
@@ -202,7 +185,7 @@ const EditLeaderTarget = (props) => {
                                 <div className="col-sm-12">
                                     <Form.Group>
                                         <Form.Label>State :</Form.Label>
-                                        <Form.Control as="input" required value = {StateData.stateName}/>                                           
+                                        <Form.Control as="input" readOnly required value = {StateData.stateName}/>                                           
                                     </Form.Group>
                                 </div>
                             </Row>
@@ -211,7 +194,6 @@ const EditLeaderTarget = (props) => {
                                     <Form.Group>
                                         <Form.Label>Select Month and Year :</Form.Label>
                                         <Form.Control type="month" className="digit" min={Year + "-" + month} required
-                                            // value ={props.editData.year+"-"+monthsNumber[props.editData.month]}
                                             value = {getM}
                                             onChange={(e) => setGetM(e.target.value)}
                                             >
@@ -222,7 +204,7 @@ const EditLeaderTarget = (props) => {
                             
                             <Row>
                                 <Col>
-                                {/* <div className="col-sm-12"> */}
+                               
                                     <Form.Group>
                                         <Form.Label>Product Target for Weekdays :</Form.Label>
                                         <Form.Control size="lg" type="text" required
@@ -231,12 +213,10 @@ const EditLeaderTarget = (props) => {
                                             
                                         </Form.Control>
                                     </Form.Group>
-                                {/* </div> */}
+                               
                                 </Col>
                                 <Col>
-                            {/* </Row>
-                            <Row> */}
-                                {/* <div className="col-sm-12"> */}
+                            
                                     <Form.Group>
                                         <Form.Label>Product Target for Weekends :</Form.Label>
                                         <Form.Control size="lg" type="text" required
@@ -246,7 +226,7 @@ const EditLeaderTarget = (props) => {
                                             
                                         </Form.Control>
                                     </Form.Group>
-                                {/* </div> */}
+                                
                                 </Col>
                             </Row>
                             <Row>
@@ -265,17 +245,9 @@ const EditLeaderTarget = (props) => {
                             
                            
 
-                            {/* <Row>
-                                <div className="col-sm-12">
-                                    <Form.Group>
-                                    <Form.Label>Reason:</Form.Label>
-                                    <Form.Control as="textarea" rows="3" name="reason" value={reason}
-                                        onChange={(event) => setReason(event.target.value)} required />
-                                    </Form.Group>
-                                </div>
-                            </Row> */}
+                            
 
-                            <Button type="submit" /* className="submit-button" size="sm" */>Submit</Button>
+                            <Button type="submit" >Submit</Button>
                         </Form>
 
                     </Modal.Body>

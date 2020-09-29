@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap'
-// import { useHistory } from "react-router-dom";
-import DatePicker from 'react-datepicker'
+
 import "react-datepicker/dist/react-datepicker.css";
 import { useHistory } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -13,7 +12,7 @@ import moment from 'moment'
 
 const EditTarget = (props) => {
     let history = useHistory();
-    // const [startDate, setStartDate] = useState();
+    
     const [StoreType, setStoreType] = useState('');
     const [getM, setGetM] = useState();
     const [WeekdaysTarget, setWeekdaysTarget] = useState();
@@ -22,17 +21,11 @@ const EditTarget = (props) => {
     const [TodayDate, setTodayDate] = useState();
     const [month, setMonth] = useState();
     const [Year, setYear] = useState();
-    // const [State, SetStateDate] = useState();
-   
-    
-    // let history = useHistory();
+ 
     const { cosCentreList,viewCostCentre } = useContext(DashboardContext);
     const { StateData,getStateData,UpdateTarget,updateTargetList } = useContext(StoreProductContext);
 
-    // const { addLeave, addPopup, leavesData, getLeave, leaveType, viewLeaveData, viewEmpData }
-    //     = useContext(LeaveContext);
-    
-    
+   
      useEffect(() => {
         setStoreType(props.editData.costCenter);    
         getStateData(props.editData.costCenter);  
@@ -116,7 +109,7 @@ const EditTarget = (props) => {
     monthsNumber["Oct"] = '10' ;
     monthsNumber["Nov"] = '11' ;
     monthsNumber["Dec"] = '12' ;
-    // "2023-12"
+    
     const onSubmit = e => {
         e.preventDefault();
         const month = moment(getM, ["YYYY-MM"]).format("M");
@@ -138,12 +131,7 @@ const EditTarget = (props) => {
         history.push("/productTarget/adminStoreTarget");
         const setModal = props.handleEditClose;
         setModal();
-        // setStoreType("");
-        // setGetM();
-        // setWeekdaysTarget('');
-        // setWeekendsTarget('');
-        // setGrowthPercentage('');
-        // getStateData('');
+       
         
       }
 
@@ -211,7 +199,7 @@ const EditTarget = (props) => {
                                     <Form.Group>
                                         <Form.Label>Select Month and Year :</Form.Label>
                                         <Form.Control type="month" className="digit" min={Year + "-" + month} required
-                                            // value ={props.editData.year+"-"+monthsNumber[props.editData.month]}
+                                           
                                             value = {getM}
                                             onChange={(e) => setGetM(e.target.value)}
                                             >
@@ -222,7 +210,7 @@ const EditTarget = (props) => {
                             
                             <Row>
                                 <Col>
-                                {/* <div className="col-sm-12"> */}
+                                
                                     <Form.Group>
                                         <Form.Label>Product Target for Weekdays :</Form.Label>
                                         <Form.Control size="lg" type="text" required
@@ -231,12 +219,10 @@ const EditTarget = (props) => {
                                             
                                         </Form.Control>
                                     </Form.Group>
-                                {/* </div> */}
+                                
                                 </Col>
                                 <Col>
-                            {/* </Row>
-                            <Row> */}
-                                {/* <div className="col-sm-12"> */}
+                           
                                     <Form.Group>
                                         <Form.Label>Product Target for Weekends :</Form.Label>
                                         <Form.Control size="lg" type="text" required
@@ -246,7 +232,7 @@ const EditTarget = (props) => {
                                             
                                         </Form.Control>
                                     </Form.Group>
-                                {/* </div> */}
+                               
                                 </Col>
                             </Row>
                             <Row>
@@ -265,17 +251,9 @@ const EditTarget = (props) => {
                             
                            
 
-                            {/* <Row>
-                                <div className="col-sm-12">
-                                    <Form.Group>
-                                    <Form.Label>Reason:</Form.Label>
-                                    <Form.Control as="textarea" rows="3" name="reason" value={reason}
-                                        onChange={(event) => setReason(event.target.value)} required />
-                                    </Form.Group>
-                                </div>
-                            </Row> */}
+                           
 
-                            <Button type="submit" /* className="submit-button" size="sm" */>Submit</Button>
+                            <Button type="submit" >Submit</Button>
                         </Form>
 
                     </Modal.Body>

@@ -69,7 +69,7 @@ const LeaderStoreProductTarget = () => {
                     <Table id="table-to-xls" className="table table-hover">
                         <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                             <tr>
-                                <th></th>
+                                <th>S.No.</th>
                                 <th>Store ID</th>
                                 
                                 <th>State</th>
@@ -94,7 +94,7 @@ const LeaderStoreProductTarget = () => {
                                             <td>{item.year}</td>
                                             <td>{item.weekday}</td>
                                             <td>{item.weekend}</td>
-                                            {Year > item.year  ?<td><Slash/></td> : Year == item.year && monthsNumber[item.month] <= month  ?<td><Slash/></td> :Year == item.year && monthsNumber[item.month] <= month && TodayDate > 20 ? <td><Slash/></td> : 
+                                            {Year > item.year  ?<td><Edit2 disabled style={{color:'lightgrey'}} /></td> : Year == item.year && monthsNumber[item.month] <= month  ?<td><Edit2 disabled style={{color:'lightgrey'}} /></td> :Year == item.year && monthsNumber[item.month] <= month && TodayDate > 20 ? <td><Edit2 disabled style={{color:'lightgrey'}} /></td> : 
                                             <td><Edit2 
                                             onClick={() => {
                                                 setEditModal(true);
