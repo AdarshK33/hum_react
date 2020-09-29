@@ -33,9 +33,9 @@ const LeaveView = () => {
 
 
     useEffect(() => {
-        viewList()   
+        viewList()
     }, [])
-  /* 
+  /*
     if(leaveTypeId === 0 || leaveTypeId === 1){
         var newLeaveTypeId = 1
        setLeaveTypeId(newLeaveTypeId)
@@ -131,7 +131,7 @@ const LeaveView = () => {
                 <Row className="apply-button-row">
                     <Col className="leaveApplications">Leave Applications</Col>
                     <Col>
-                        <Button className="apply-button btn btn-light" 
+                        <Button className="apply-button btn btn-light"
                         onClick={() => {setModal(true) }}>Apply</Button>
                     </Col>
                     <LeaveAdd handleClose={handleClose} modal={modal} />
@@ -158,7 +158,7 @@ const LeaveView = () => {
                                         <tr>
                                             <td>{i + 1}</td>
                                             {/* <td>{item.leaveCategory}</td> */}
-                                            <td>{item.leaveTypeId === 1 ? 'General' : (item.leaveTypeId === 2 ? 'Paternity' : (item.leaveTypeId === 3 ? 'Maternity' : 
+                                            <td>{item.leaveTypeId === 1 ? 'General' : (item.leaveTypeId === 2 ? 'Paternity' : (item.leaveTypeId === 3 ? 'Maternity' :
                                             (item.leaveTypeId === 0 ? 'LOP' : '')))}
                                             </td>
                                             <td>{item.numberOfDays}</td>
@@ -173,7 +173,7 @@ const LeaveView = () => {
                                             <td><Trash2 onClick={() => {
                                                 setDeleteModal(true);  setltId(item.ltId)
                                             }} />
-                                           
+
                                             </td>
 
 
