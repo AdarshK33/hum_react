@@ -22,7 +22,7 @@ function ViewCluster() {
 
 
   //variable
-  const { clusterList, viewCluster, getCluster} = useContext(ClusterContext);
+  const { clusterList, viewCluster, getCluster,getSingleCluster1,getEmployeesNames} = useContext(ClusterContext);
 
   return (
     <Fragment>
@@ -89,7 +89,8 @@ function ViewCluster() {
                 </table>
                 <EditClusterModal handleEditClose={handleEditClose}
 
-
+                    clusterData  = {getSingleCluster1}
+                    clusterData1 = {getEmployeesNames}
                   modal={editModal}
                 />
               </div>

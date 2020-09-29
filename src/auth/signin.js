@@ -25,7 +25,7 @@ const Signin = ({ location, history }) => {
 
   const checkIsloggedIn = (state) => {
     const {app: {isLoggedin} } = state
-    if(isLoggedin) history.push('/roster/roster')
+    if(isLoggedin) history.push('/')
   }
 
   const getAccessToken = () => {
@@ -33,6 +33,7 @@ const Signin = ({ location, history }) => {
     const [, code] = search.split("?code=");
 
     accessToken(code)
+   console.log(accessToken);
   }
 
   return (
