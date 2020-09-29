@@ -42,6 +42,7 @@ import ManagerReportForm from './components/Report/ManagerReportForm'
 import AdminReportForm from './components/Report/AdminReportForm'
 import ProductivityReportForm from './components/Report/ProductivityReportForm'
 import StoreProductTarget from "./components/ProductTarget/StoreProductTarget/StoreProductTarget";
+import LeaderStoreProductTarget from "./components/ProductTarget/LeaderStoreProductTarget/LeaderStoreProductTarget";
 
 
 //firebase Auth
@@ -169,10 +170,16 @@ function Root() {
                                 component={ProductivityReportForm}
                               />
 
-                              {/*Admin Product target Page */}
+                              {/*Admin Store Product target Page */}
                               <Route
                                   path={`${process.env.PUBLIC_URL}/productTarget/adminStoreTarget`}
                                   component={StoreProductTarget}
+                                />
+
+                                 {/*Leader Store Product target Page */}
+                              <Route
+                                  path={`${process.env.PUBLIC_URL}/productTarget/leaderStoreTarget`}
+                                  component={LeaderStoreProductTarget}
                                 />
 
                             </App>

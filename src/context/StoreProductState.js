@@ -10,7 +10,8 @@ const initial_state = {
     StateData:[],
     NewTarget:[],
     editTarget:[],
-    updateTargetList:[]
+    updateTargetList:[],
+    storeLeaderProductList:[]
   
   }
 
@@ -20,17 +21,12 @@ const initial_state = {
   export const StoreProductProvider = ({ children }) => {
     const [state, dispatch] = useReducer(StoreProductReducer, initial_state);
 
-    // function convert(str) {
-    //   var date = new Date(str),
-    //     mnth = ("0" + (date.getMonth() + 1)).slice(-2),
-    //     day = ("0" + date.getDate()).slice(-2);
-    //   return [date.getFullYear(), mnth, day].join("-");
-    // }
+    
 
     function viewStoreProduct() {
        
         client.get('/store/view').then(function (response) {
-         console.log(response);
+        
           state.storeProductList = response.data.data;          
     
           return dispatch({ type: 'FETCH_STOREPRODUCTTARGET_LIST', payload: state.storeProductList });
@@ -69,9 +65,10 @@ const initial_state = {
         
             return client.post('/store/create',values)
               .then((response) => {
-                // state.message = response.data.message
+                
                 toast.info(response.data.message);
                 viewStoreProduct();
+                LeaderTargetList(values.costCenter);
                 return (
                 dispatch({ type: 'ADD_NEW_TARGET', payload: state.NewTarget })
                 )
@@ -83,20 +80,35 @@ const initial_state = {
         }
 
      const UpdateTarget = (Target) => {
-    // console.log("??????????????????edit api id response???????????????/", editLeave)
-    return client.put('/store/update', Target)
+    
+      return client.put('/store/update', Target)
+        .then((response) => {
+          toast.info(response.data.message);
+          viewStoreProduct();
+          LeaderTargetList(Target.costCenter);
+          return ( 
+          dispatch({ type: 'EDIT_TARGET', payload: state.updateTargetList }))
+        
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+
+
+    }
+
+
+  const LeaderTargetList = (storeId) => {
+    
+    return client.get('/store/view/'+ storeId)
       .then((response) => {
-        toast.info(response.data.message);
-        viewStoreProduct();
-        return ( 
-        dispatch({ type: 'EDIT_TARGET', payload: state.updateTargetList }))
-      
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-
-
+        state.storeLeaderProductList = response.data.data;          
+    
+          return dispatch({ type: 'FETCH_STORELEADERPRODUCTTARGET_LIST', payload: state.storeLeaderProductList });
+        })
+          .catch(function (error) {
+            console.log(error);
+          });
   }
 
       return (<StoreProductContext.Provider value={{        
@@ -104,12 +116,14 @@ const initial_state = {
          getStateData,  
          addTarget,  
          editTargetHandler,
-         UpdateTarget,   
+         UpdateTarget,
+         LeaderTargetList,   
         storeProductList: state.storeProductList, 
         StateData: state.StateData, 
         NewTarget: state.NewTarget ,
         editTarget:state.editTarget,
-        updateTargetList:state.updateTargetList     
+        updateTargetList:state.updateTargetList,
+        storeLeaderProductList: state.storeLeaderProductList    
       }}>
         {children}
       </StoreProductContext.Provider>);

@@ -2,20 +2,20 @@ import React, { Fragment, useState, useContext, useEffect } from 'react';
 import Breadcrumb from '../../common/breadcrumb';
 import { Card, Row, Col, Table, Button } from 'react-bootstrap'
 import { Edit2, Slash, Trash2 } from 'react-feather'
-import EditTarget from './EditTarget';
-import AddTarget from './AddTarget';
+import EditLeaderTarget from './EditLeaderTarget';
+import AddLeaderTarget from './AddLeaderTarget';
 import { StoreProductContext } from "../../../context/StoreProductState";
 
-const StoreProductTarget = () => {
+const LeaderStoreProductTarget = () => {
     const [modal, setModal] = useState(false);
     const [TodayDate, setTodayDate] = useState();
     const [month, setMonth] = useState();
     const [Year, setYear] = useState();
     const [editModal, setEditModal] = useState(false);
-    const { storeProductList,viewStoreProduct,editTargetHandler,editTarget } = useContext(StoreProductContext);
+    const { storeLeaderProductList,LeaderTargetList,editTargetHandler,editTarget } = useContext(StoreProductContext);
 
     const handleClose = () => {
-        viewStoreProduct();
+        LeaderTargetList('IN1055');
         setModal(false);
     }
     useEffect(() => { 
@@ -26,7 +26,7 @@ const StoreProductTarget = () => {
         setTodayDate(dd);
         setMonth(mm);
         setYear(yyyy);
-        viewStoreProduct()
+        LeaderTargetList('IN1055')
     }, []);
 
     const targetEditHandler = (id) => {
@@ -53,16 +53,16 @@ const StoreProductTarget = () => {
     const handleEditClose = () => setEditModal(false);
     return(
     <Fragment>
-            <Breadcrumb title="Store Product Target" parent="Store Product Target" />
+            <Breadcrumb title="Store Leader Product Target" parent="Store Leader Product Target" />
             <div className="container-fluid">
                 
                 <Row className="apply-button-row">
-                    <Col className="leaveApplications">Store Product Target</Col>
+                    <Col className="leaveApplications">Store Leader Product Target</Col>
                     <Col>
                         <Button className="apply-button btn btn-light" 
                         onClick={() => {setModal(true) }}>Add Target</Button>
                     </Col>
-                    <AddTarget handleClose={handleClose} modal={modal} /> 
+                    <AddLeaderTarget handleClose={handleClose} modal={modal} /> 
                 </Row>
 
                 <div className="table-responsive">
@@ -70,21 +70,20 @@ const StoreProductTarget = () => {
                         <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                             <tr>
                                 <th>S.No.</th>
-                                <th>Cost Center ID</th>
+                                <th>Store ID</th>
                                 
                                 <th>State</th>
                                 <th>Month</th>
                                 <th>Year</th>
                                 <th>Weekday Target</th>
                                 <th>Weekend Target</th>
-                                <th>Growth Percentage</th>
                                 <th></th>
                                 
                             </tr>
                         </thead>
 
-                        {storeProductList.length > 0 &&
-                            storeProductList.map((item, i) => {
+                        {storeLeaderProductList.length > 0 &&
+                            storeLeaderProductList.map((item, i) => {
                                 return (
                                    <tbody key={i + 1}>
                                         <tr>
@@ -95,7 +94,6 @@ const StoreProductTarget = () => {
                                             <td>{item.year}</td>
                                             <td>{item.weekday}</td>
                                             <td>{item.weekend}</td>
-                                            <td>{item.growth}</td>
                                             {Year > item.year  ?<td><Edit2 disabled style={{color:'lightgrey'}} /></td> : Year == item.year && monthsNumber[item.month] <= month  ?<td><Edit2 disabled style={{color:'lightgrey'}} /></td> :Year == item.year && monthsNumber[item.month] <= month && TodayDate > 20 ? <td><Edit2 disabled style={{color:'lightgrey'}} /></td> : 
                                             <td><Edit2 
                                             onClick={() => {
@@ -115,7 +113,7 @@ const StoreProductTarget = () => {
                             })} 
                     </Table>
                    
-                    {editTarget.length !== 0 ? <EditTarget handleEditClose={handleEditClose}
+                    {editTarget.length !== 0 ? <EditLeaderTarget handleEditClose={handleEditClose}
                      modal={editModal}
                      editData = {editTarget}
                          /> : ""}
@@ -129,4 +127,4 @@ const StoreProductTarget = () => {
 }
 
 
-export default StoreProductTarget;
+export default LeaderStoreProductTarget;

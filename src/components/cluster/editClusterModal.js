@@ -38,22 +38,28 @@ const EditClusterModal = (props) => {
   }
 
 
-  const { updateCluster,viewCluster, getSingleCluster,viewSports, sportsNames, clusterLeaderNames,getClusterEmployees, getSingleCluster1,selectClusterLeader,selectAllClusterLeaderForEdit,clusterAllLeaderNames,getEmployeesNames } = useContext(ClusterContext);
+  const { updateCluster,viewCluster, getSingleCluster,viewSports, sportsNames,
+    getSingleCluster1,selectClusterLeader,selectAllClusterLeaderForEdit,clusterAllLeaderNames,getEmployeesNames } = useContext(ClusterContext);
 
   useEffect(() => {
     setClusterName(getSingleCluster.clusterName)
-   // setSelectedSportsId(getSingleCluster.selectedSportsId)
     setDescription(getSingleCluster.description)
     setClusterLeader(getSingleCluster.clusterLeader)
-    setEmployee(getSingleCluster.employeeId)
-    setSportsList(getSingleCluster1.map((e)=> e.sportId))  
-    setStatus(getSingleCluster.status)
+ 
    }, [props])
 
   useEffect(() => {
     setClusterId(props.clusterId)
    }, [props.clusterId])
 
+   useEffect(() => {
+    setSportsList(props.clusterData)
+   }, [props.clusterData])
+
+
+   useEffect(() => {
+    setEmployee(props.clusterData1)
+   }, [props.clusterData1])
 
 
   const onSubmit = (event) => {
@@ -64,8 +70,8 @@ const EditClusterModal = (props) => {
       clusterName,
       description,
       storeId: "IN1055",
-      sportId:sportsList.map((e)=> e.sportId),
-      employeeIds:getEmployeesNames.map((e)=>e.employeeId)
+      sportIds:sportsList.map((e)=> e.sportId),
+      employeeIds:employee.map((e)=>e.employeeId)
     }
 
     console.log("^^^^" + JSON.stringify(editCluster));
@@ -85,18 +91,16 @@ const EditClusterModal = (props) => {
     console.log(result, "in competent");
   }
 
-
-
   const clusterLeaderSelect = event => {
     setClusterLeader(event.target.value);
-    if (employee.length === 0) {
-      setClusterButton(true)
-      setErrorMsg("Provide all input");
-    }
-    else {
-      setClusterButton(false)
+    // if (employee.length === 0) {
+    //   setClusterButton(true)
+    //   setErrorMsg("Provide all input");
+    // }
+    // else {
+    //   setClusterButton(false)
 
-    }
+    // }
   };
 
   const onChangeHandler = event => {
@@ -162,14 +166,13 @@ const callTimer =()=>{
           <form onSubmit={onSubmit}>
             <div className="row">
               <div className="col-sm-12">
-                <div className="form-group">
+                <div className="form-group" >
                   <label htmlFor="exampleFormControlInput1"> Select Sports</label>
             
                 <Multiselect
-                 placeholder="Select Sports"
-                 style={{overflow:"scroll"}}
                  options={sportsNames}
                  value={sportsList}
+                 defaultValue={getSingleCluster.sportId}
                  selectedValues={getSingleCluster1}
                  displayValue="sportName"
                  onRemove={onRemove}
@@ -207,28 +210,16 @@ const callTimer =()=>{
               <div className="col-sm-12">
                 <div className="form-group">
                   <label htmlFor="exampleFormControlInput1"> Select Employee</label>
-                  {/* <Select
-                    name="filters"
-                   // placeholder="select Employees"
-                    defaultValue={[getSingleCluster.employeeIds]}
-                    value={employee}
-                    options={clusterLeaderNames.map(e => ({ label: e.firstName, value: e.employeeId, id: e.id }))}
-                    onChange={handleMultiChange1}
-                    placeholder ={getSingleCluster.employeeIds}
-                    isMulti
-                  /> */}
+
                 <Multiselect
                  placeholder="Select Employee"
-                 options={getClusterEmployees}
+                 options={clusterAllLeaderNames}
                  value={employee}
                  selectedValues={getEmployeesNames}
                  displayValue="firstName"
-                 onSelect={handleMultiChange1}
+                 onChange={handleMultiChange1}
                  isMulti
                  />
-
-
-
 
 
 
