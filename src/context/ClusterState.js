@@ -14,7 +14,6 @@ const initial_state = {
   salaryList: [],
   viewSalaryData: [],
   salaryStoreList:[],
-  getSingleCluster1:[],
   clusterCostCenterList:[],
   clusterAllLeaderNames:[],
   getEmployeesNames:[]
@@ -53,6 +52,7 @@ export const ClusterProvider = ({ children }) => {
   function selectEmployeeForCluster() {
     client.get('employee/view/IN1055/cluster_employees').then(function (response) {
       state.getClusterEmployees = response.data.data;
+      
      return dispatch({ type: 'FETCH_EMPLOYEE_FOR_CLUSTER', payload: state.getClusterEmployees });
     })
       .catch(function (error) {
@@ -90,7 +90,6 @@ export const ClusterProvider = ({ children }) => {
       const getSingleCluster = response.data.data;
       const getSingleCluster1 = response.data.data.sports;
       const getEmployeesNames = response.data.data.employees;
-     alert(JSON.stringify(getSingleCluster1));
       console.log("get single cluster "+JSON.stringify(state.getSingleCluster));
      // console.log("^^^^"+JSON.stringify(state.getSingleCluster1));
         return dispatch({ type: 'GET_SINGLE_CLUSTER', payload: {

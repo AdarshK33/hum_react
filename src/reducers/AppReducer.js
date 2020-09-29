@@ -1,3 +1,4 @@
+import { app } from "firebase";
 import {
   ADD_COSTOMIZER,
   ADD_LAYOUT,
@@ -6,7 +7,8 @@ import {
   ADD_COLOR,
   ADD_MIXlAYOUT,
   SET_ACCESS_TOKEN_SUCCESS,
-  SET_ACCESS_TOKEN_FAIL
+  SET_ACCESS_TOKEN_FAIL,
+  AUTHENTICATE_USER
 } from "../constant/actionTypes";
 import ConfigDB from "../data/customizer/config";
 
@@ -19,12 +21,12 @@ const initial_state = {
   color: {},
   mix_layout: "",
   app: {
-    loaded: false
+    loaded: false,
+    isLoggedin:false
   },
 };
 
-export default (state = initial_state, action) => {
-    
+export default (state = initial_state, action) => {  
 const data = action.payload;
 
   switch (action.type) {
@@ -83,6 +85,17 @@ const data = action.payload;
           data,
         },
       };
+
+      case AUTHENTICATE_USER:
+        return {
+          ...state,
+          app: {
+            ...state.app,
+            isLoggedin:action.payload
+          },
+        };
+
+
 
     default:
       return { ...state };
