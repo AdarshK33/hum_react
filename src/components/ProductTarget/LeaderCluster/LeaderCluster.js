@@ -6,40 +6,33 @@ import AddTarget from './AddTarget';
 import EditTarget from './EditTarget';
 import { ClusterProductContext } from "../../../context/ClusterProductState";
 
-function ClusterProductTarget(){
+function LeaderCluster(){
+    
+    const [modal, setModal] = useState(false);
+    const [editModal, setEditModal] = useState(false);
+    const [TodayDate, setTodayDate] = useState();
+    const [month, setMonth] = useState();
+    const [Year, setYear] = useState();
 
-  const { clusterProductList,singleClusterTarget, viewClusterTarget, viewSingleClusterTarget } = useContext(ClusterProductContext);
+    const { clusterProductList,singleClusterTarget, viewClusterTarget, viewSingleClusterTarget } = useContext(ClusterProductContext);
+    
+    const handleClose = () => {
+        viewClusterTarget();
+        setModal(false);
+    }
 
-  const [modal, setModal] = useState(false);
-  const [editModal, setEditModal] = useState(false);
-  const [TodayDate, setTodayDate] = useState();
-  const [month, setMonth] = useState();
-  const [Year, setYear] = useState();
-//   const [costCenter, setCostCenter] = useState()
-//   const [cluster, setCluster] = useState()
-//   const [date, setDate] = useState(new Date());
-//   const [targetWeekdays, setTargetWeekdays] = useState()
-//   const [targetWeekend, setTargetWeekend] = useState()
-//   const [target, setTarget] = useState()
+    useEffect(() => {
+        let date = new Date(); 
+        var dd = String(date.getDate()).padStart(2, '0');
+        var mm = String(date.getMonth() + 1).padStart(2, '0');
+        var yyyy = date.getFullYear();
+        setTodayDate(dd);
+        setMonth(mm);
+        setYear(yyyy);
+        viewClusterTarget();
+    }, []);
 
-
-  const handleClose = () => {
-      viewClusterTarget();
-      setModal(false);
-  }
-  useEffect(() => {
-    let date = new Date();
-    var dd = String(date.getDate()).padStart(2, '0');
-    var mm = String(date.getMonth() + 1).padStart(2, '0');
-    var yyyy = date.getFullYear();
-    setTodayDate(dd);
-    setMonth(mm);
-    setYear(yyyy);
-    viewClusterTarget();
-  }, []);
-
-
-  var monthsNumber = new Array();
+    var monthsNumber = new Array();
     monthsNumber["Jan"] = "01";
     monthsNumber["Feb"] = '02';
     monthsNumber["Mar"] = '03';
@@ -52,11 +45,12 @@ function ClusterProductTarget(){
     monthsNumber["Oct"] = '10' ;
     monthsNumber["Nov"] = '11' ;
     monthsNumber["Dec"] = '12' ;
-
-  const handleEditClose = () => setEditModal(false);
-
-  return(
-    <Fragment>
+    
+    const handleEditClose = () => setEditModal(false);
+    
+    return(
+        <div>
+            <Fragment>
             <Breadcrumb title="View Cluster" parent="View Cluster" />
             <div className="container-fluid">
 
@@ -64,7 +58,8 @@ function ClusterProductTarget(){
                     <Col className="leaveApplications">Cluster Target</Col>
                     <Col>
                         <Button className="apply-button btn btn-light"
-                        onClick={() => {setModal(true) }}>Add Target</Button>
+                        onClick={() => {setModal(true) }}
+                        >Add Target</Button>
                     </Col>
                     <AddTarget handleClose={handleClose} modal={modal} />
                 </Row>
@@ -73,8 +68,7 @@ function ClusterProductTarget(){
                     <Table id="table-to-xls" className="table table-hover">
                         <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                             <tr>
-                                <th>S. No</th>
-                                <th>Cost Center ID</th>
+                                <th>S. No</th>                                
                                 <th>Store Name</th>
                                 <th>Cluster Name</th>
                                 <th>Month</th>
@@ -85,68 +79,64 @@ function ClusterProductTarget(){
                                 <th></th>
                             </tr>
                         </thead>
-
                         {clusterProductList.length > 0 &&
                             clusterProductList.map((item, i) => {
                                 return (
                                    <tbody key={i + 1}>
                                         <tr>
-                                            <td>{i + 1}</td>
-                                            <td>{item.storeName}</td>
-                                            <td>{item.storeName}</td>
+                                            <td>{i + 1}</td>                                            
+                                            <td>IN1055</td>
                                             <td>{item.clusterName}</td>
                                             <td>{item.monthName}</td>
                                             <td>{item.year}</td>
                                             <td>{item.productTarget}</td>
-
                                             {Year > item.year?
                                             <td><Edit2 disabled style={{color:'lightgrey'}} /></td>
-                                             :
-                                             Year == item.year && monthsNumber[item.month] <= month
+                                             : 
+                                             Year == item.year && monthsNumber[item.month] <= month  
                                              ?
-                                             <td><Edit2 disabled style={{color:'lightgrey'}} /></td>
+                                             <td><Edit2 disabled style={{color:'lightgrey'}} /></td> 
                                              :
-                                             Year == item.year && monthsNumber[item.month] <= month && TodayDate > 20
+                                             Year == item.year && monthsNumber[item.month] <= month && TodayDate > 20 
                                              ?
-                                             <Edit2 disabled style={{color:'lightgrey'}} /> :
-                                            <td><Edit2
+                                             <Edit2 disabled style={{color:'lightgrey'}} /> : 
+                                            <td><Edit2 
                                             onClick={() => {
                                                 setEditModal(true);
-                                                viewSingleClusterTarget(item.targetId)
-                                             }}
-
+                                                viewSingleClusterTarget(item.targetId) 
+                                             }} 
+                                            
                                              />
                                             </td> }
 
                                             <td></td>
-
+                                           
+                                    
+                                            
                                             {/* <td><Edit2 onClick={() => {
-                                                setEditModal(true);
+                                                setEditModal(true); 
                                                 viewSingleClusterTarget(item.targetId);
-                                                // setCostCenter(item.storeName);
-                                                // setCluster(item.clusterName);
-                                                // setDate(item.monthName);
-                                                // setTargetWeekdays(item.weekDayTarget)
-                                                // setTargetWeekend(item.weekEndTarget)
-
-                                            }} /></td>                                                                                      */}
-
+                                                                                           
+                                            }} /> </td>                                                                                      */}
+                                            
                                         </tr>
                                     </tbody>
                                  )
                             })}
-                    </Table>
+                        
+                    </Table> 
 
                     <EditTarget
                      handleEditClose={handleEditClose}
                      modal={editModal}
-                     singleClusterTarget = {singleClusterTarget}
+                     singleClusterTarget = {singleClusterTarget}                
                      />
 
                 </div>
             </div>
         </Fragment>
-  )
+        </div>
+    )
 }
 
-export default ClusterProductTarget;
+export default LeaderCluster;
