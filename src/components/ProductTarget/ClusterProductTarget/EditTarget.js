@@ -57,6 +57,10 @@ const EditTarget = (props) => {
     }, [props.singleClusterTarget.clusterName]);
 
     useEffect(() => {
+        setCluster(props.singleClusterTarget.clusterId);
+    }, [props.singleClusterTarget.clusterId]);
+
+    useEffect(() => {
         setTarget(props.singleClusterTarget.productTarget);
     }, [props.singleClusterTarget.productTarget]);
 
