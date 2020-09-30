@@ -48,6 +48,7 @@ import StoreProductTarget from "./components/ProductTarget/StoreProductTarget/St
 import LeaderStoreProductTarget from "./components/ProductTarget/LeaderStoreProductTarget/LeaderStoreProductTarget";
 import ClusterProductTarget from './components/ProductTarget/ClusterProductTarget/ClusterProductTarget';
 import LeaderCluster from './components/ProductTarget/LeaderCluster/LeaderCluster';
+import RoleManagemenetList from './components/RoleManagement/RoleManagementList';
 
 //firebase Auth
 function Root() {
@@ -203,6 +204,12 @@ function Root() {
                                   <Route
                                       path={`${process.env.PUBLIC_URL}/productTarget/leaderClusterTarget`}
                                       component={LeaderCluster}
+                                    />
+
+                                  {/*Role Management Page */}
+                                  <Route
+                                      path={`${process.env.PUBLIC_URL}/roleManagement`}
+                                      component={RoleManagemenetList}
                                     />
 
                               </App>
