@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import RosterReducer from '../reducers/RosterReducer';
 
 
-
+ 
 const initial_state = {
   shiftList: [],
   shiftListNames: [],
@@ -26,6 +26,7 @@ const initial_state = {
   adminRosterWeekOffDataList:[],
   adminRosterAvailableShiftList:[],
   costCenterList:[]
+  // pendingRosterList:[]
   
 }
 
@@ -74,6 +75,23 @@ export const RosterProvider = ({ children }) => {
       .catch(function (error) {
         console.log(error);
 
+      });
+  }
+
+
+
+  //VIEW PENDING ROSTER(Navaneetha)
+
+  function viewPendingRosterList() {
+    client.get('roster/view/pending').then(function (response) {
+
+      console.log(response.data.data);
+      state.pendingRosterList = response.data.data;
+    
+      return dispatch({ type: 'FETCH_PENDING_ROSTER_LIST', payload: state.pendingRosterList });
+    })
+      .catch(function (error) {
+        console.log(error);
       });
   }
 
@@ -388,6 +406,7 @@ const costCenter = () => {
     adminRosterAvailableShift,
     assignAdminShift,
     costCenter,
+    viewPendingRosterList,
     costCenterList:state.costCenterList,
     shiftList: state.shiftList,
     shiftMasterId: state.shiftMasterId,
@@ -404,7 +423,8 @@ const costCenter = () => {
     adminWeeksInYear:state.adminWeeksInYear,
     adminCalculateWeekResult:state.adminCalculateWeekResult,
     adminRosterAvailableShiftList:state.adminRosterAvailableShiftList,
-    EmployeeListForAdminRosterWeekOff:state.EmployeeListForAdminRosterWeekOff
+    EmployeeListForAdminRosterWeekOff:state.EmployeeListForAdminRosterWeekOff,
+    pendingRosterList: state.pendingRosterList
   }}>
     {children}
   </RosterContext.Provider>);
