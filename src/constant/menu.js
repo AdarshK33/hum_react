@@ -55,7 +55,8 @@ export const MENUITEMS = [
     {
         title: 'Manager Report', icon: File, type: 'link', path: '/report/managerReport', active: false,children:[
             { path: '/report/adminReport', title: 'Admin Report', type: 'link' },
-            { path: '/report/productivityAdminReport', title: 'Productivity Admin Report', type: 'link' }
+            { path: '/report/productivityAdminReport', title: 'Productivity Admin Report', type: 'link' },
+            { path: '/report/productivityManagerReport', title: 'Productivity Manager Report', type: 'link' },
         ]
     },
     

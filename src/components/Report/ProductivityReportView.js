@@ -24,14 +24,18 @@ const ProductivityReportView = (props) => {
                             </div>
 
                             <div className="table-responsive">
-                                <Table id="table-to-xls" className="table table-hover">
+                                <Table id="table-to-xls" className="table table-hover" style={{tableLayout:'fixed'}}>
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
                                             <th>Sr No.</th>
+                                            <th>Cost Center</th>
                                             <th>Employee Id</th>
-                                            <th>Sports</th>
+                                            <th>Name</th>
                                             <th>Cluster</th>
+                                            <th>Sports</th>
+                                            <th>Payment Type</th>
                                             <th>Type of Contract</th>
+                                            <th>Hours for the month</th>
                                             <th>Month</th>
                                         </tr>
                                     </thead>
@@ -41,10 +45,14 @@ const ProductivityReportView = (props) => {
                                                 <tbody key={i + 1}>
                                                     <tr>
                                                         <td>{i + 1}</td>
+                                                        <td>{item.costCentre}</td>
                                                         <td>{item.employeeId}</td>
-                                                        <td>{item.sports}</td>
+                                                        <td>{item.firstName} {item.lastName}</td>
                                                         <td>{item.clusterName}</td>
+                                                        <td>{item.sports}</td>
+                                                        <td>{item.paymentType}</td>
                                                         <td>{item.contractType}</td>
+                                                        <td>{item.workingHours}</td>
                                                         <td>{item.duration}</td>
                                                     </tr>
                                                 </tbody>

@@ -5,7 +5,7 @@ import { LeaveContext } from '../../context/LeaveState'
 const DeleteLeave = (props) => {
     const [ltId, setltId] = useState()
     
-    const { deleteList  }  = useContext(LeaveContext);
+    const { deleteEmpList  }  = useContext(LeaveContext);
 
     useEffect(() => {
         setltId(props.ltId)
@@ -15,7 +15,7 @@ const DeleteLeave = (props) => {
   
     const deleteListcheck = (id) => {
         console.log("delete id", id)
-        deleteList(id)
+        deleteEmpList(id)
         deleteModal()
     }
     return (

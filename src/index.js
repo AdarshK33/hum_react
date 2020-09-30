@@ -43,6 +43,7 @@ import GrantLeaveView from './components/admin/GrantLeaveView';
 import ManagerReportForm from './components/Report/ManagerReportForm'
 import AdminReportForm from './components/Report/AdminReportForm'
 import ProductivityReportForm from './components/Report/ProductivityReportForm'
+import ProductivityReportManager from './components/Report/ProductivityReportManager'
 import StoreProductTarget from "./components/ProductTarget/StoreProductTarget/StoreProductTarget";
 import LeaderStoreProductTarget from "./components/ProductTarget/LeaderStoreProductTarget/LeaderStoreProductTarget";
 import ClusterProductTarget from './components/ProductTarget/ClusterProductTarget/ClusterProductTarget';
@@ -168,11 +169,17 @@ function Root() {
                                   component={AdminReportForm}
                                 />
 
-                                  {/*Admin Report Page */}
+                                  {/*Productivity  Admin Report Page */}
                                   <Route
                                   path={`${process.env.PUBLIC_URL}/report/productivityAdminReport`}
                                   component={ProductivityReportForm}
                                 />
+                                
+                                 {/*Productivity Manager Report Page */}
+                                 <Route
+                                path={`${process.env.PUBLIC_URL}/report/productivityManagerReport`}
+                                component={ProductivityReportManager}
+                              />
 
                                 {/*Admin Store Product target Page */}
                                 <Route

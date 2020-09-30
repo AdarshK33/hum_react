@@ -34,6 +34,8 @@ const AdminLeaveAdd = (props) => {
      const {CostCenter,costCenterList, employeeIdData, employeeIdList } = useContext(AdminContext)
 
      const today = new Date()
+     const currentYear = new Date('2020-01-01')
+    const nextYear = new Date('2020-12-31')
 
      useEffect(() => {
          CostCenter()
@@ -95,7 +97,8 @@ const AdminLeaveAdd = (props) => {
             fromDate: moment(startDate).format("YYYY-MM-DD"),
            /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
            leaveCategory: newData,
-            leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
+            /* leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
+            leaveTypeId: leave,
             ltId: 0,
             numberOfDays: 0,
             reason: 'string',
@@ -116,7 +119,8 @@ const AdminLeaveAdd = (props) => {
             fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
            /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
            leaveCategory: 'Planned',
-            leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
+           /*  leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
+           leaveTypeId: leave,
             ltId: 0,
             numberOfDays: 0,
             reason: reason,
@@ -132,10 +136,6 @@ const AdminLeaveAdd = (props) => {
         const leave1 = e.target.value
         setLeave(leave1)
 
-        const test1 = leaveType.filter(qa => qa.leaveName === leave1)[0].leaveName
-        const test2 = leaveType.filter(qa => qa.leaveName === leave1)[0].leaveTypeId
-        console.log("test1 as leave name", test1)
-        console.log("test2 as leave id", test2)
     }
     //Maternity Date validation
     let d1 = new Date(startMaternityDate);
@@ -208,7 +208,8 @@ const AdminLeaveAdd = (props) => {
             fromDate: moment(startDate).format("YYYY-MM-DD"),
            /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
            leaveCategory: newData,
-            leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
+            /* leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
+            leaveTypeId: leave,
             ltId: 0,
             numberOfDays: 0,
             reason: reason,
@@ -222,7 +223,8 @@ const AdminLeaveAdd = (props) => {
             fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
            /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
            leaveCategory: 'Planned',
-            leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId,
+           /*  leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
+           leaveTypeId: leave,
             ltId: 0,
             numberOfDays: 0,
             reason: reason,
@@ -332,7 +334,8 @@ const AdminLeaveAdd = (props) => {
                                             
                                         {leaveType.length > 0 && leaveType.map((item, i) => {
                                             return (
-                                                <option key={item.leaveTypeId} value={item.leaveName}>
+                                                <option key={item.leaveTypeId} value={item.leaveTypeId}
+                                                disabled={(item.paternity === 1 ? true : false) || (item.maternity === 1 ? true : false)}>
                                                 {item.leaveName}</option>
                                             )
                                         })
@@ -372,6 +375,7 @@ const AdminLeaveAdd = (props) => {
                                             <div>
                                             <DatePicker selected={startDate} onChange={(e) => fromDateHandler(e)}
                                                 className="input_date" dateFormat="yyyy-MM-dd"
+                                                minDate={currentYear} maxDate={nextYear}
                                                 placeholderText="From Date" required />
                                                 </div>
                                         </Form.Group>
@@ -391,7 +395,7 @@ const AdminLeaveAdd = (props) => {
                                             <div><Form.Label>To Date</Form.Label></div>
                                             <div><DatePicker selected={endDate} onChange={(date) => toDateHandler(date)}
                                                 className="input_date" dateFormat="yyyy-MM-dd"
-                                                minDate={startDate}
+                                                minDate={startDate} maxDate={nextYear}
                                                 placeholderText="To Date" required /></div>
                                         </div>
                                     }
@@ -402,6 +406,7 @@ const AdminLeaveAdd = (props) => {
                                             <div><DatePicker selected={endDate} onChange={(date) => toDateHandler(date)}
                                                     className="input_date" dateFormat="yyyy-MM-dd"
                                                     maxDate={today}
+                                                    minDate={startDate}
                                                     placeholderText="To Date" /></div>
                                         </div>
                                         }

@@ -4,8 +4,8 @@ import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import '../Leaves/Leaves.css'
 
 
-const ManagerReportView = (props) => {
-    const reportList = props.ManagerReportList
+const AdminReportView = (props) => {
+    const reportList = props.AdminReportList
     return (
         <Fragment>
             <Container>
@@ -32,11 +32,13 @@ const ManagerReportView = (props) => {
                                             <th>Employee Name</th>
                                             <th>Cost Center</th>
                                             <th>Work Location</th>
-                                            <th>Leave Eligible</th>
+                                            <th>Eligible Leaves</th>
                                             <th>Planned Leaves</th>
                                             <th>Unplanned Leaves</th>
                                             <th>Leaves Remaining</th>
                                             <th>Leave Type</th>
+                                            <th>Grant Leaves</th>
+                                            <th>State Eligible Leaves</th>
                                             <th>LOP</th>
                                         </tr>
                                     </thead>
@@ -55,6 +57,8 @@ const ManagerReportView = (props) => {
                                                         <td>{item.unPlanned}</td>
                                                         <td>{item.leaveremaining}</td>
                                                         <td>{item.leaveName}</td>
+                                                        <td>{item.grantLeave}</td>
+                                                        <td>{item.stateLeaveEligible}</td>
                                                         <td>{item.lop}</td>
                                                     </tr>
                                                 </tbody>
@@ -72,4 +76,4 @@ const ManagerReportView = (props) => {
     );
 };
 
-export default ManagerReportView;
+export default AdminReportView;

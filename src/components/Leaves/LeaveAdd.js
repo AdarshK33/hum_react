@@ -25,7 +25,7 @@ const LeaveAdd = (props) => {
     let history = useHistory();
 
 
-    const { addLeave, addPopup, leavesData, getLeave, leaveType, viewLeaveData, viewEmpData }
+    const { addEmpLeave, addPopup, leavesData, getLeave, leaveType, viewLeaveData, viewEmpData }
         = useContext(LeaveContext);
     
     useEffect(() => {
@@ -38,7 +38,7 @@ const LeaveAdd = (props) => {
 
     const today = new Date()
     const currentYear = new Date('2020-01-01')
-    console.log("currentYear", currentYear)
+    const nextYear = new Date('2020-12-31')
     
     const fromDateHandler = (date) => {
         let value = date
@@ -222,11 +222,11 @@ const LeaveAdd = (props) => {
         }
 
         if (leave === 'Maternity') {
-            addLeave(newLeave1)
+            addEmpLeave(newLeave1)
         }
         else {
             console.log("newLeave---------", newLeave)
-            addLeave(newLeave)
+            addEmpLeave(newLeave)
         }
         history.push("/Leaves/LeaveView");
 
@@ -325,7 +325,7 @@ const onCloseModal = () => {
                                             <div>
                                             <DatePicker selected={startDate} onChange={(e) => fromDateHandler(e)}
                                                 className="input_date" dateFormat="yyyy-MM-dd"
-                                                minDate={currentYear}
+                                                minDate={currentYear} maxDate={nextYear}
                                                 placeholderText="From Date" required />
                                                 </div>
                                         </Form.Group>
@@ -345,7 +345,7 @@ const onCloseModal = () => {
                                             <div><Form.Label>To Date:</Form.Label></div>
                                             <div><DatePicker selected={endDate} onChange={(e) => toDateHandler(e)}
                                                 className="input_date" dateFormat="yyyy-MM-dd"
-                                                minDate={startDate}
+                                                minDate={startDate} maxDate={nextYear}
                                                 placeholderText="To Date" required /></div>
                                         </div>
                                     }
