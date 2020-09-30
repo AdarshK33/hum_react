@@ -13,7 +13,8 @@ const initialState = {
   holidayDataList:{},
   empData:[],
   reportList:[],
-  employeeList:[]
+  employeeList:[],
+  leaveEmpList:[]
  
 }
 
@@ -33,8 +34,6 @@ export const LeaveProvider = ({ children }) => {
         console.log("=====GET API respone=====", state.leaveList)
         return (
           dispatch({ type: 'FETCH_LEAVE_LIST', payload: state.leaveList })
-         /*  dispatch({ type: 'FETCH_LEAVE_TYPE', payload: state.leaveType }),
-          dispatch({ type: 'FETCH_GRANT_LEAVE', payload: state.grantLeave }) */
         )
       })
       .catch((error) => {
@@ -56,21 +55,20 @@ export const LeaveProvider = ({ children }) => {
         console.log(error)
       })
   }
-  //view Grant Leave
- /*  const viewGrantLeave = () => {
+  // View Leave Data
+  const viewEmpLeaveData = () => {
 
     let empId1 = "DSI000035"
-    let year = '2020'
-    client.get('grant_leave/view/' + empId1 + '/' + year)
+    client.get('leave_transaction/view/' + empId1)
       .then((response) => {
-        state.grantLeave = response.data.data[0].numOfDays
-        console.log("=====GET Grant Leave  API respone=====", response.data.data[0].numOfDays)
-        return dispatch({ type: 'FETCH_GRANT_LEAVE', payload: state.grantLeave })
+        state.leaveEmpList = response.data.data.leaveTransactions
+        console.log("=====GET Leave Data API respone=====", state.leaveEmpList)
+        return dispatch({ type: 'FETCH_EMP_LEAVE_DATA_LIST', payload: state.leaveEmpList })
       })
       .catch((error) => {
         console.log(error)
       })
-  } */
+  }
 
   // Get Leave Type
 
@@ -114,19 +112,14 @@ export const LeaveProvider = ({ children }) => {
       console.log("++++create api response+++++", newLeave)
       return client.post('leave_transaction/create',newLeave)
         .then((response) => {
-          state.message = response.data.message
+          state.message = response.data.message;
           toast.info(state.message)
           viewList();
           viewLeaveData();
           getLeave()
           console.log("new create list response===>", response.data.data)
           console.log("new create list message===>", state.message)
-          return (
-          dispatch({ type: 'ADD_NEW_LEAVE', payload: state.leaveList })
-         /*  dispatch({ type: 'FETCH_LEAVE_LIST', payload: state.leaveList }),
-          dispatch({ type: 'FETCH_LEAVE_TYPE', payload: state.leaveType }),
-          dispatch({ type: 'FETCH_GRANT_LEAVE', payload: state.grantLeave }) */
-          )
+          return  dispatch({ type: 'ADD_NEW_LEAVE', payload: state.leaveList })
           return (<ToastContainer />)
         })
         .catch((error) => {
@@ -134,6 +127,27 @@ export const LeaveProvider = ({ children }) => {
         })
 
   }
+
+  const addEmpLeave = (newLeave) => {
+    /*   if (newLeave) { */
+        console.log("++++create api response+++++", newLeave)
+        return client.post('leave_transaction/create',newLeave)
+          .then((response) => {
+            state.message = response.data.message;
+            toast.info(state.message)
+            viewEmpLeaveData()
+            viewLeaveData();
+            getLeave()
+            console.log("new create list response===>", response.data.data)
+            console.log("new create list message===>", state.message)
+            return  dispatch({ type: 'ADD_EMP_NEW_LEAVE', payload: state.leaveEmpList })
+            return (<ToastContainer />)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+  
+    }
 
 
 
@@ -150,13 +164,26 @@ export const LeaveProvider = ({ children }) => {
         getLeave()
         console.log("??????new edit list response????????", response.data.data)
         console.log("??????new edit list message????????", state.message)
-        return ( 
-        dispatch({ type: 'EDIT_LEAVE', payload: state.leaveList })
-      /*   dispatch({ type: 'FETCH_LEAVE_LIST', payload: state.leaveList }),
-        dispatch({ type: 'FETCH_LEAVE_TYPE', payload: state.leaveType }),
-        dispatch({ type: 'FETCH_GRANT_LEAVE', payload: state.grantLeave }) */
-        )
-        // return (<ToastContainer />)
+        return  dispatch({ type: 'EDIT_LEAVE', payload: state.leaveList })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+
+
+  }
+  const editEmpList = (editLeave) => {
+    console.log("??????????????????edit api id response???????????????/", editLeave)
+    return client.put('leave_transaction/update', editLeave)
+      .then((response) => {
+        state.message = response.data.message
+        toast.info(state.message)
+        viewEmpLeaveData()
+        viewLeaveData();
+        getLeave()
+        console.log("??????new edit list response????????", response.data.data)
+        console.log("??????new edit list message????????", state.message)
+        return  dispatch({ type: 'EDIT_EMP_LEAVE', payload: state.leaveEmpList })
       })
       .catch((error) => {
         console.log(error)
@@ -175,20 +202,28 @@ export const LeaveProvider = ({ children }) => {
         viewList()
         viewLeaveData();
         console.log("-----delete data-----", response)
-        return (
-          dispatch({ type: 'DELETE_LEAVE', payload: leaveId })
-      /*     dispatch({ type: 'FETCH_LEAVE_LIST', payload: state.leaveList }),
-          dispatch({ type: 'FETCH_LEAVE_TYPE', payload: state.leaveType }),
-          dispatch({ type: 'FETCH_GRANT_LEAVE', payload: state.grantLeave }) */
-
-        )
-
+        return  dispatch({ type: 'DELETE_LEAVE', payload: leaveId })
       })
       .catch((error) => {
         console.log(error)
       })
      
     }
+    const deleteEmpList = (leaveId) => {
+      console.log("delete id------", leaveId)
+        client.delete('leave_transaction/delete' + '?ltId=' + leaveId)
+        .then((response) => {
+          toast.info(response.data.message)
+          viewEmpLeaveData()
+          viewLeaveData();
+          console.log("-----delete data-----", response)
+          return  dispatch({ type: 'DELETE_EMP_LEAVE', payload: leaveId })
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+       
+      }
   
 
  
@@ -270,24 +305,36 @@ const reportLeave = (reportData) => {
   }
 
 //productivity report api
-const productivityReport = (month, storeId, year ) => {
-  console.log("month storeId year",month, storeId, year)
-  const clusterId = 0;
- /*  const contractType = null; */
- /*  const employeeId = 0; */
-  const sportId = 0;
-  return client.get('report/productivity' + '?clusterId=' + clusterId +  /* '&contractType=' + contractType + 
-   + '&employeeId=' + employeeId +*/ '&month=' + month + '&sportId=' + sportId + '&storeId=' + storeId + '&year=' + year)
+const productivityReport = (clusterId, contractType, employeeId, month, sportId, storeId, year ) => {
+  console.log("month storeId year",clusterId, contractType, employeeId, month, sportId, storeId, year)
+
+  if(clusterId !== null && employeeId !== null && sportId !== null && contractType !== '' ){
+  return client.get('report/productivity?' + 'clusterId=' + clusterId +  '&contractType=' + contractType + 
+   '&employeeId=' + employeeId + '&month=' + month + '&sportId=' + sportId + '&storeId=' + storeId + '&year=' + year)
   
   .then((response) => {
     state.productivityList = response.data.data
-    console.log("productivity list api", state.productivityList)
+    console.log("productivity list api++++++", state.productivityList)
     console.log("productivity list api message", response.data.message)
     return dispatch({type: 'PRODUCTIVITY_REPORT', payload: state.productivityList})
   })
   .catch((error) => {
     console.log(error)
   })
+}
+else {
+  return client.get('report/productivity?' +  '&month=' + month + '&storeId=' + storeId + '&year=' + year)
+ 
+ .then((response) => {
+   state.productivityList = response.data.data
+   console.log("productivity list api-------", state.productivityList)
+   console.log("productivity list api message", response.data.message)
+   return dispatch({type: 'PRODUCTIVITY_REPORT', payload: state.productivityList})
+ })
+ .catch((error) => {
+   console.log(error)
+ })
+}
 }
   return (
     <LeaveContext.Provider value={{
@@ -304,6 +351,10 @@ const productivityReport = (month, storeId, year ) => {
       reportLeave,
       employeeType,
       productivityReport,
+      addEmpLeave,
+      editEmpList,
+      deleteEmpList,
+      viewEmpLeaveData,
       leaveList: state.leaveList,
       leaveType: state.leaveType,
       message: state.message,
@@ -313,7 +364,8 @@ const productivityReport = (month, storeId, year ) => {
       empData: state.empData,
       reportList: state.reportList,
       employeeList: state.employeeList,
-      productivityList: state.productivityList
+      productivityList: state.productivityList,
+      leaveEmpList: state.leaveEmpList
      
     }}>
       {children}

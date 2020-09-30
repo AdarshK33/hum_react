@@ -22,7 +22,7 @@ const LeaveView = () => {
     const [ltId, setltId] = useState()
     const [reason, setReason] = useState()
 
-    const { leaveList, viewList, leaveDataList  }
+    const { leaveList, viewList, leaveDataList, viewLeaveData, viewEmpLeaveData, leaveEmpList  }
         = useContext(LeaveContext);
 
     const handleClose = () => setModal(false)
@@ -31,9 +31,11 @@ const LeaveView = () => {
 
     const handleDeleteClose = () => setDeleteModal(false)
 
-
+console.log("leave data list", leaveDataList.leaveTransactions)
     useEffect(() => {
         viewList()   
+        viewLeaveData()
+        viewEmpLeaveData()
     }, [])
   /* 
     if(leaveTypeId === 0 || leaveTypeId === 1){
@@ -151,8 +153,8 @@ const LeaveView = () => {
                             </tr>
                         </thead>
 
-                        {leaveList.length > 0 &&
-                            leaveList.map((item, i) => {
+                        {leaveEmpList.length > 0 && 
+                            leaveEmpList.map((item, i) => {
                                 return (
                                     <tbody key={i + 1}>
                                         <tr>

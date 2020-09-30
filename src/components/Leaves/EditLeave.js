@@ -26,9 +26,11 @@ const EditLeave = (props) => {
     const [max, setMax] = useState(false)
     let history = useHistory();
 
-    const { getLeave, leaveType, leavesData, addPopup, editList } = useContext(LeaveContext);
+    const { getLeave, leaveType, leavesData, addPopup, editEmpList } = useContext(LeaveContext);
 
     const today = new Date()
+    const currentYear = new Date('2020-01-01')
+    const nextYear = new Date('2020-12-31')
 
     useEffect(() => {
         setStartDate(new Date(props.fromDate))
@@ -212,10 +214,10 @@ const EditLeave = (props) => {
         }
         if (leave === 'Maternity') {
           /*   alert("Sent request to admin for edit the maternity leave") */
-            editList(editLeave)
+          editEmpList(editLeave)
         }
         else {
-            editList(editLeave1)
+            editEmpList(editLeave1)
         }
 
         history.push("/Leaves/LeaveView");
@@ -329,6 +331,7 @@ const EditLeave = (props) => {
                                             <div>
                                             <DatePicker selected={startDate} onChange={(e) => fromDateHandler(e)}
                                                 className="input_date" dateFormat="yyyy-MM-dd"
+                                                minDate={currentYear} maxDate={nextYear}
                                                 placeholderText="From Date" required />
                                                 </div>
                                         </Form.Group>
@@ -348,7 +351,7 @@ const EditLeave = (props) => {
                                             <div><Form.Label>To Date:</Form.Label></div>
                                             <div><DatePicker selected={endDate} onChange={(date) => toDateHandler(date)}
                                                 className="input_date" dateFormat="yyyy-MM-dd"
-                                                minDate={startDate}
+                                                minDate={startDate} maxDate={nextYear}
                                                 placeholderText="To Date" required /></div>
                                         </div>
                                     }
@@ -359,6 +362,7 @@ const EditLeave = (props) => {
                                             <div><DatePicker selected={endDate} onChange={(date) => toDateHandler(date)}
                                                     className="input_date" dateFormat="yyyy-MM-dd"
                                                     maxDate={today}
+                                                    minDate={startDate}
                                                     placeholderText="To Date" /></div>
                                         </div>
                                         }

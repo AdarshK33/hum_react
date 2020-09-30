@@ -7,14 +7,23 @@ const LeaveReducer = (state, action) => {
         case 'FETCH_LEAVE_DATA_LIST':
             return { ...state, leaveDataList: action.payload }
 
+        case 'FETCH_EMP_LEAVE_DATA_LIST':
+                return { ...state, leaveEmpList: action.payload }
+
         case 'ADD_NEW_LEAVE':
-            return { ...state, leaveType: action.payload }
+            return { ...state, leaveList: action.payload }
+
+        case 'ADD_EMP_NEW_LEAVE':
+            return { ...state, leaveEmpList: action.payload }
 
         case 'ADD_POPUP_LEAVE':
             return { ...state, leavesData: action.payload }
 
         case 'EDIT_LEAVE':
             return { ...state, leaveList: action.payload }
+
+        case 'EDIT_EMP_LEAVE':
+            return { ...state, leaveEmpList: action.payload }
 
         case 'FETCH_LEAVE_TYPE':
             return ({ ...state, leaveType: action.payload })
@@ -29,6 +38,11 @@ const LeaveReducer = (state, action) => {
             return {
                 ...state,
                 leaveList: state.leaveList.filter(leaveList => leaveList.leaveId !== action.payload)
+            };
+        case 'DELETE_EMP_LEAVE':
+            return {
+                ...state,
+                leaveEmpList: state.leaveEmpList.filter(leaveEmpList => leaveEmpList.leaveId !== action.payload)
             };
 
         case 'FETCH_EMP_DATA':

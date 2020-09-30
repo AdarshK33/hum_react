@@ -8,12 +8,11 @@ import { LeaveContext } from '../../context/LeaveState'
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment'
-import ProductivityReportView from './ProductivityReportView'
+import ProductivityReportManagerView from './ProductivityReportManagerView'
 import Select from 'react-select';
 
-const ProductivityReportForm = () => {
+const ProductivityReportManager = () => {
     const [reportType, setReportType] = useState('')
-    const [costCenter, setCostCenter] = useState('')
     const [employeeCostCenter, setEmployeeCostCenter] = useState(null)
     const [sports, setSports] = useState(null)
     const [cluster, setCluster] = useState(null)
@@ -22,28 +21,23 @@ const ProductivityReportForm = () => {
     /* const [startYear, setStartYear] = useState() */
 
     const reportTypeList = [{ reportTypeData: 'Monthly', id: 1 }, { reportTypeData: 'Yearly', id: 2 }]
-    const { CostCenter, costCenterList, employeeIdData, employeeIdList } = useContext(AdminContext)
+    const {  employeeIdData, employeeIdList } = useContext(AdminContext)
     const { viewSports, sportsNames, clusterCostCenterList, viewClusterCostCenter } = useContext(ClusterContext)
     const { viewContractTypes, shiftContractNames } = useContext(RosterContext)
     const { productivityReport, productivityList } = useContext(LeaveContext)
 
     useEffect(() => {
-        CostCenter()
         viewSports()
         viewContractTypes()
         
     }, []);
-
+    
+    const costCenter = 'IN1055'
     useEffect(() => {
         employeeIdData(costCenter)
         viewClusterCostCenter(costCenter)
     }, [costCenter])
 
-    const setCostCenterHandler = (e) => {
-        let data1 = e.target.value
-        setCostCenter(data1)
-        console.log("data1", data1)
-    }
     const setEmployeeCostCenterHandler = (e) => {
         let data2 = e.target.value
         setEmployeeCostCenter(data2)
@@ -78,11 +72,10 @@ const ProductivityReportForm = () => {
         const sportId = sports;
         const storeId = costCenter;
         const year = moment(getM, ["MMM Do YY"]).format('YYYY');
-        console.log("productivity data", clusterId, contractType, employeeId, month, storeId, year )
-        productivityReport(clusterId, contractType, employeeId, month ,sportId, storeId, year )
+        console.log("productivity data", month, storeId, year )
+        productivityReport(clusterId, contractType, employeeId, month ,sportId,storeId, year )
 
         setReportType('')
-        setCostCenter('')
         setEmployeeCostCenter('')
         setSports('')
         setCluster('')
@@ -92,10 +85,16 @@ const ProductivityReportForm = () => {
     }
     return (
         <Fragment>
-            <Breadcrumb title="Report" parent="Productivity Admin Report" />
+            <Breadcrumb title="Report" parent="Productivity Manager Report" />
             <Container>
                 <Form onSubmit={submitData}>
                     <Row>
+                        <div className="col-sm-4">
+                            <Form.Group>
+                                <Form.Label>Cost Center Id</Form.Label>
+                                <Form.Control type="text" disabled value='IN1055' />
+                            </Form.Group>
+                        </div>
                         <div className="col-sm-4">
                             <Form.Group>
                                 <Form.Label>Type of report</Form.Label>
@@ -107,22 +106,6 @@ const ProductivityReportForm = () => {
                                             <option key={item.id} value={item.reportTypeData}>{item.reportTypeData}</option>
                                         )
                                     })}
-                                </Form.Control>
-                            </Form.Group>
-                        </div>
-                        <div className="col-sm-4">
-                            <Form.Group>
-                                <Form.Label>Cost Center</Form.Label>
-                                <Form.Control as="select" required value={costCenter}
-                                    onChange={(e) => setCostCenterHandler(e)}>
-                                    <option>Select Cost Center</option>
-                                    {costCenterList.length > 0 && costCenterList.map((item, i) => {
-                                        return (
-                                            <option key={item.costCenterId} value={item.costCentreName}>
-                                                {item.costCentreName}</option>
-                                        )
-                                    })
-                                    }
                                 </Form.Control>
                             </Form.Group>
                         </div>
@@ -220,10 +203,10 @@ const ProductivityReportForm = () => {
                     } */}
                     <Button type="submit">Submit</Button>
                 </Form>
-                <ProductivityReportView productivityList={productivityList} />
+                <ProductivityReportManagerView productivityList={productivityList} />
             </Container>
         </Fragment>
     );
 };
 
-export default ProductivityReportForm;
+export default ProductivityReportManager;
