@@ -46,6 +46,8 @@ export const MENUITEMS = [
             { path: '/adminLeaves/adminMasterLeave', title: 'Leave Master', type: 'link' },
             { path: '/adminLeaves/adminLeaveApproval', title: 'Leave Approval', type: 'link' },
             { path: '/adminLeaves/adminSalaryModule', title: 'Salary Approval', type: 'link' },
+            //Added by Navaneetha
+            { path: '/adminLeaves/adminRosterModule', title: 'Roster Approval', type: 'link' },
         ]
     },
   
@@ -68,6 +70,12 @@ export const MENUITEMS = [
             { path: '/productTarget/adminStoreTarget', title: 'Admin Store Target', type: 'link' },           
             { path: '/productTarget/leaderStoreTarget', title: 'Leader Store Target', type: 'link' },
         ]
+    },
+
+    // Role Management Path   
+    {
+        path: '/roleManagement', title: 'Role Management', icon: File, type: 'link', active: false
+        
     }
     
 
