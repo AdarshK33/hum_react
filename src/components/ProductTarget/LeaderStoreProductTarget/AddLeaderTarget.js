@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap'
+
 import "react-datepicker/dist/react-datepicker.css";
 import { useHistory } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -9,9 +10,9 @@ import { DashboardContext } from "../../../context/DashboardState";
 import { StoreProductContext } from "../../../context/StoreProductState";
 import moment from 'moment'
 
-const AddTarget = (props) => {
+const AddLeaderTarget = (props) => {
     let history = useHistory();
- 
+   
     const [StoreType, setStoreType] = useState('');
     const [getM, setGetM] = useState();
     const [WeekdaysTarget, setWeekdaysTarget] = useState();
@@ -20,11 +21,11 @@ const AddTarget = (props) => {
     const [TodayDate, setTodayDate] = useState();
     const [month, setMonth] = useState();
     const [Year, setYear] = useState();
-
+    
     const { cosCentreList,viewCostCentre } = useContext(DashboardContext);
     const { StateData,getStateData,addTarget,NewTarget } = useContext(StoreProductContext);
 
-    
+  
     
      useEffect(() => {
         let date = new Date(); 
@@ -39,7 +40,9 @@ const AddTarget = (props) => {
         setTodayDate(dd);
         setMonth(mm);
         setYear(yyyy);
-        viewCostCentre()
+        setStoreType('IN1055');
+        getStateData('IN1055') ;
+        
     }, []);
 
     const fromStoreHandler = (e) => {
@@ -109,8 +112,7 @@ const AddTarget = (props) => {
         if(validate){
             addTarget(Values);
         }
-       
-        history.push("/productTarget/adminStoreTarget");
+      
         const setModal = props.handleClose;
         setModal();
         setStoreType("");
@@ -154,7 +156,7 @@ const AddTarget = (props) => {
         setWeekdaysTarget('');
         setWeekendsTarget('');
         setGrowthPercentage('');
-        StateData.stateName = ""
+        
         }
    
    
@@ -179,18 +181,8 @@ const AddTarget = (props) => {
                             <Row>
                                 <div className="col-sm-12">
                                     <Form.Group>
-                                        <Form.Label>Select Cost Center :</Form.Label>
-                                        <Form.Control as="select" required
-                                            onChange={(e)=>fromStoreHandler(e.target.value)}
-                                            >
-                                            <option value="">Select</option>
-
-                                            <option value="">Select</option>
-                                            { cosCentreList.map((e, i) => {
-                                                    return(
-                                                    <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
-                                                })}
-                                        </Form.Control>
+                                        <Form.Label>Store : </Form.Label>
+                                        <Form.Control as="input" required value = "IN1055" readOnly />
                                     </Form.Group>
                                 </div>
                             </Row>
@@ -199,7 +191,7 @@ const AddTarget = (props) => {
                                 <div className="col-sm-12">
                                     <Form.Group>
                                         <Form.Label>State :</Form.Label>
-                                        <Form.Control as="input" required value = {StateData.stateName}/>                                           
+                                        <Form.Control as="input" readOnly required value = {StateData.stateName}/>                                           
                                     </Form.Group>
                                 </div>
                             </Row>
@@ -207,7 +199,7 @@ const AddTarget = (props) => {
                                 <div className="col-sm-12">
                                     <Form.Group>
                                         <Form.Label>Select Month and Year :</Form.Label>
-                                      
+                                        
                                         <Form.Control type="month" className="digit" min={Year + "-" + month}
                                             onChange={(e) => setGetM(e.target.value)} required
                                             >
@@ -228,7 +220,7 @@ const AddTarget = (props) => {
                                             
                                         </Form.Control>
                                     </Form.Group>
-                                
+                               
                                 </Col>
                                 <Col>
                            
@@ -271,4 +263,4 @@ const AddTarget = (props) => {
     );
 };
 
-export default AddTarget;
+export default AddLeaderTarget;

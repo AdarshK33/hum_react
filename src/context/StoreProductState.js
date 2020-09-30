@@ -8,7 +8,10 @@ import {  toast } from "react-toastify";
 const initial_state = {
     storeProductList: [],
     StateData:[],
-    NewTarget:[]
+    NewTarget:[],
+    editTarget:[],
+    updateTargetList:[],
+    storeLeaderProductList:[]
   
   }
 
@@ -18,17 +21,12 @@ const initial_state = {
   export const StoreProductProvider = ({ children }) => {
     const [state, dispatch] = useReducer(StoreProductReducer, initial_state);
 
-    // function convert(str) {
-    //   var date = new Date(str),
-    //     mnth = ("0" + (date.getMonth() + 1)).slice(-2),
-    //     day = ("0" + date.getDate()).slice(-2);
-    //   return [date.getFullYear(), mnth, day].join("-");
-    // }
+    
 
     function viewStoreProduct() {
        
         client.get('/store/view').then(function (response) {
-         console.log(response);
+        
           state.storeProductList = response.data.data;          
     
           return dispatch({ type: 'FETCH_STOREPRODUCTTARGET_LIST', payload: state.storeProductList });
@@ -51,13 +49,26 @@ const initial_state = {
           });
       }
 
+      function editTargetHandler(id) {
+        client.get('/store/'+id).then(function (response) {
+
+          state.editTarget = response.data.data;
+         
+          return dispatch({ type: 'FETCH_VIEWTARGET_LIST', payload: state.editTarget });
+        })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+
       const addTarget = (values) => {
         
             return client.post('/store/create',values)
               .then((response) => {
-                // state.message = response.data.message
+                
                 toast.info(response.data.message);
                 viewStoreProduct();
+                LeaderTargetList(values.costCenter);
                 return (
                 dispatch({ type: 'ADD_NEW_TARGET', payload: state.NewTarget })
                 )
@@ -68,26 +79,51 @@ const initial_state = {
       
         }
 
-    //   function getStateData(store) {
-             
-    //     client.get('/cost_centre/view/'+store).then(function (response) {
+     const UpdateTarget = (Target) => {
+    
+      return client.put('/store/update', Target)
+        .then((response) => {
+          toast.info(response.data.message);
+          viewStoreProduct();
+          LeaderTargetList(Target.costCenter);
+          return ( 
+          dispatch({ type: 'EDIT_TARGET', payload: state.updateTargetList }))
+        
+        })
+        .catch((error) => {
+          console.log(error)
+        })
 
-    //       state.NewTarget = response.data.data;
-         
-    //       return dispatch({ type: 'ADD_NEW_TARGET', payload: state.NewTarget });
-    //     })
-    //       .catch(function (error) {
-    //         console.log(error);
-    //       });
-    //   }
+
+    }
+
+
+  const LeaderTargetList = (storeId) => {
+    
+    return client.get('/store/view/'+ storeId)
+      .then((response) => {
+        state.storeLeaderProductList = response.data.data;          
+    
+          return dispatch({ type: 'FETCH_STORELEADERPRODUCTTARGET_LIST', payload: state.storeLeaderProductList });
+        })
+          .catch(function (error) {
+            console.log(error);
+          });
+  }
 
       return (<StoreProductContext.Provider value={{        
         viewStoreProduct, 
          getStateData,  
-         addTarget,     
+         addTarget,  
+         editTargetHandler,
+         UpdateTarget,
+         LeaderTargetList,   
         storeProductList: state.storeProductList, 
         StateData: state.StateData, 
-        NewTarget: state.NewTarget      
+        NewTarget: state.NewTarget ,
+        editTarget:state.editTarget,
+        updateTargetList:state.updateTargetList,
+        storeLeaderProductList: state.storeLeaderProductList    
       }}>
         {children}
       </StoreProductContext.Provider>);

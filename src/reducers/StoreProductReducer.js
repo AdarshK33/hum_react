@@ -9,7 +9,16 @@ const StoreProductReducer = (state, action) => {
 
         case 'ADD_NEW_TARGET':
             return { ...state, NewTarget: action.payload }
-               
+            
+        case 'FETCH_VIEWTARGET_LIST':
+                return { ...state, editTarget: action.payload }
+
+        case 'EDIT_TARGET':
+            return { ...state, updateTargetList: action.payload }
+
+        case 'FETCH_STORELEADERPRODUCTTARGET_LIST' :
+            return { ...state, storeLeaderProductList: action.payload }
+
         default: return state;
     }
 }

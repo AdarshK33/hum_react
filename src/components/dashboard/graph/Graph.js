@@ -17,6 +17,12 @@ class Graph extends Component {
 		let Alink = document.getElementsByClassName('canvasjs-chart-credit')
 		Alink[0].parentNode.removeChild(Alink[0]);
 	}
+
+	componentDidUpdate(){
+		this.createPareto();
+		let Alink = document.getElementsByClassName('canvasjs-chart-credit')
+		Alink[0].parentNode.removeChild(Alink[0]);
+	}
 	createPareto(){
 		// var dps = [];
 		var chart = this.chart;
@@ -36,6 +42,7 @@ class Graph extends Component {
 		chart.data[1].set("axisYType", "secondary", false);
 		chart.axisY[0].set("maximum", Math.round(yTotal / 10) * 5);
 		chart.axisY2[0].set("maximum", 200);
+		chart.axisY2[0].set("minimum", 0);
 		
 		
 		

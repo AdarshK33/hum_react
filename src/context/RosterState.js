@@ -320,9 +320,9 @@ const adminWeekOffDataEmp = (endDate, startDate,contract,weekid,empId) => {
   
   //  ADMIN ROSTER AVAILABLE SHIFT
 
-  const adminRosterAvailableShift = () => {
+  const adminRosterAvailableShift = (shiftId) => {
 
-    client.get('shift/view/IN1055/active')
+    client.get('shift/view/',shiftId+'/active')
       .then((response) => {
          state.adminRosterAvailableShiftList = response.data.data;
          console.log("admin calculate week ", state.adminRosterAvailableShiftList)

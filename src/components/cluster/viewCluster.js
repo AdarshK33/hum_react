@@ -10,7 +10,6 @@ function ViewCluster() {
 
   useEffect(() => {
     viewCluster()
-    viewSalary()
   }, [])
 
   const [modal, setModal] = useState(false);
@@ -23,12 +22,7 @@ function ViewCluster() {
 
 
   //variable
-  const { clusterList, viewCluster, getCluster,viewSalary } = useContext(ClusterContext);
-
-
-  //alert("&&&&&&"+JSON.stringify(clusterList.sports.));
-
-  //console("&&&&&&"+JSON.stringify(clusterList.sport[0].sportName));
+  const { clusterList, viewCluster, getCluster,getSingleCluster1,getEmployeesNames} = useContext(ClusterContext);
 
   return (
     <Fragment>
@@ -66,12 +60,12 @@ function ViewCluster() {
                       return (
                         <tbody key={i + 1}>
                           <tr>
-                            <td>{i + 1}</td>
+                           <td>{i + 1}</td>
                             {e.sports.map((f,j) => {
                               return (<div key={j+1}>
                                 <td  style={{ marginLeft:"10px",fontSize:"10px",paddingTop:"5px",paddingBottom:"5px"}}>{f.sportName}</td>
                               </div>)
-                            })}
+                            })} 
                             <td>{e.clusterName}</td>
                             <td>{e.description}</td>
                             <td>{e.clusterLeaderName}</td>
@@ -95,7 +89,8 @@ function ViewCluster() {
                 </table>
                 <EditClusterModal handleEditClose={handleEditClose}
 
-
+                    clusterData  = {getSingleCluster1}
+                    clusterData1 = {getEmployeesNames}
                   modal={editModal}
                 />
               </div>
