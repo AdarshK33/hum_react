@@ -179,7 +179,7 @@ const ManagerReportForm = () => {
                     <Button type="submit">Submit</Button>
                 </Form>
             </Container>
-            <ManagerReportView reportList={reportList} />
+            <ManagerReportView ManagerReportList={reportList} />
         </Fragment >
     );
 };

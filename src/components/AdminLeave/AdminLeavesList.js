@@ -11,7 +11,7 @@ const AdminLeavesList = (props) => {
     const [modal, setModal] = useState(false);
     const [editModal, setEditModal] = useState(false)
     const [deleteModal, setDeleteModal] = useState(false)
-    const [leaveCategory, setLeaveCategory] = useState()
+    let [leaveTypeId, setLeaveTypeId] = useState()
     const [fromDate, setFromDate] = useState(new Date())
     const [toDate, setToDate] = useState(new Date())
     const [ltId, setltId] = useState()
@@ -67,12 +67,15 @@ const AdminLeavesList = (props) => {
                                         <tr>
                                             <td>{i + 1}</td>
                                             <td>{item.empId}</td>
-                                            <td>{item.leaveCategory}</td>
+                                            {/* <td>{item.leaveCategory}</td> */}
+                                            <td>{item.leaveTypeId === 1 ? 'General' : (item.leaveTypeId === 2 ? 'Paternity' : (item.leaveTypeId === 3 ? 'Maternity' : 
+                                            (item.leaveTypeId === 0 ? 'LOP' : '')))}
+                                            </td>
                                             <td>{item.numberOfDays}</td>
                                             <td>{item.fromDate}</td>
                                             <td>{item.toDate}</td>
                                              <td><Edit2 onClick={() => {
-                                                setEditModal(true); setLeaveCategory(item.leaveCategory);
+                                                setEditModal(true); setLeaveTypeId(item.leaveTypeId);
                                                 setFromDate(item.fromDate); setToDate(item.toDate); setReason(item.reason)
                                                 setltId(item.ltId); setEmpId(item.empId)
                                                 
@@ -89,7 +92,8 @@ const AdminLeavesList = (props) => {
                     </Table>
                      <AdminDeleteLeaves handleDeleteClose={handleDeleteClose} modal={deleteModal} ltId={ltId} />
                     <AdminLeaveEdit handleEditClose={handleEditClose} modal={editModal}
-                        leaveCategory={leaveCategory} fromDate={fromDate} toDate={toDate}
+                        leaveTypeId={leaveTypeId === 0 || leaveTypeId === 1 ? (leaveTypeId = 1) : (leaveTypeId === 2 ? (leaveTypeId = 2) :
+                            leaveTypeId === 3 ? (leaveTypeId = 3):'')} fromDate={fromDate} toDate={toDate}
                         reason={reason} ltId={ltId} empId={empId} />
                 </Row>
             </Container>

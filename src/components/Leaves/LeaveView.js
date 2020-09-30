@@ -22,7 +22,7 @@ const LeaveView = () => {
     const [ltId, setltId] = useState()
     const [reason, setReason] = useState()
 
-    const { leaveList, viewList, leaveDataList  }
+    const { leaveList, viewList, leaveDataList, viewLeaveData, viewEmpLeaveData, leaveEmpList  }
         = useContext(LeaveContext);
 
     const handleClose = () => setModal(false)
@@ -31,11 +31,13 @@ const LeaveView = () => {
 
     const handleDeleteClose = () => setDeleteModal(false)
 
-
+console.log("leave data list", leaveDataList.leaveTransactions)
     useEffect(() => {
         viewList()   
+        viewLeaveData()
+        viewEmpLeaveData()
     }, [])
-  /* 
+  /*
     if(leaveTypeId === 0 || leaveTypeId === 1){
         var newLeaveTypeId = 1
        setLeaveTypeId(newLeaveTypeId)
@@ -131,7 +133,7 @@ const LeaveView = () => {
                 <Row className="apply-button-row">
                     <Col className="leaveApplications">Leave Applications</Col>
                     <Col>
-                        <Button className="apply-button btn btn-light" 
+                        <Button className="apply-button btn btn-light"
                         onClick={() => {setModal(true) }}>Apply</Button>
                     </Col>
                     <LeaveAdd handleClose={handleClose} modal={modal} />
@@ -151,14 +153,14 @@ const LeaveView = () => {
                             </tr>
                         </thead>
 
-                        {leaveList.length > 0 &&
-                            leaveList.map((item, i) => {
+                        {leaveEmpList.length > 0 && 
+                            leaveEmpList.map((item, i) => {
                                 return (
                                     <tbody key={i + 1}>
                                         <tr>
                                             <td>{i + 1}</td>
                                             {/* <td>{item.leaveCategory}</td> */}
-                                            <td>{item.leaveTypeId === 1 ? 'General' : (item.leaveTypeId === 2 ? 'Paternity' : (item.leaveTypeId === 3 ? 'Maternity' : 
+                                            <td>{item.leaveTypeId === 1 ? 'General' : (item.leaveTypeId === 2 ? 'Paternity' : (item.leaveTypeId === 3 ? 'Maternity' :
                                             (item.leaveTypeId === 0 ? 'LOP' : '')))}
                                             </td>
                                             <td>{item.numberOfDays}</td>
@@ -173,7 +175,7 @@ const LeaveView = () => {
                                             <td><Trash2 onClick={() => {
                                                 setDeleteModal(true);  setltId(item.ltId)
                                             }} />
-                                           
+
                                             </td>
 
 

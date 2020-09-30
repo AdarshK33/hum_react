@@ -31,7 +31,7 @@ const HolidayList = () => {
                     className="btn"
                     type="file"
                     accept=".xlsx, .xls, .csv"
-                    onChange={changeHandler}
+                    onChange={(e) => changeHandler(e)}
                     style={{ padding: "10px" }}
                   />
                 <ReactHTMLTableToExcel

@@ -6,7 +6,7 @@ import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment'
 import { AdminContext } from '../../context/AdminState'
-import ManagerReportView from './ManagerReportView'
+import AdminReportView from './AdminReportView'
 import Select from 'react-select';
 
 const AdminReportForm = () => {
@@ -203,7 +203,7 @@ const AdminReportForm = () => {
                     <Button type="submit">Submit</Button>
                 </Form>
             </Container>
-            <ManagerReportView reportList={reportList} />
+            <AdminReportView AdminReportList={reportList} />
         </Fragment>
     );
 };

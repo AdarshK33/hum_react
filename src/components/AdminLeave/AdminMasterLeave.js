@@ -1,4 +1,5 @@
 import React, { Fragment,  useEffect, useContext } from 'react';
+import {Button} from 'react-bootstrap'
 import Breadcrumb from '../common/breadcrumb';
 import { AdminContext } from '../../context/AdminState';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
@@ -30,9 +31,10 @@ const AdminMasterLeave = () => {
                                     className="btn"
                                     type="file"
                                     accept=".xlsx, .xls, .csv"
-                                    onChange={changeHandler}
+                                    onChange={(e) => changeHandler(e)}
                                     style={{ padding: "10px" }}
                                 />
+                                {/* <Button type='submit' onClick={uploadClick}>Upload</Button> */}
                                 <ReactHTMLTableToExcel
                                     className="btn btn-light mr-2"
                                     table="table-to-xls"
