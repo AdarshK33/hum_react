@@ -31,7 +31,8 @@ const EditTarget = (props) => {
 
       useEffect(() => {
         setCostCenter(props.singleClusterTarget.storeName); 
-        setCluster(props.singleClusterTarget.clusterName);   
+        setCluster(props.singleClusterTarget.clusterId);   
+        setClusterName(props.singleClusterTarget.clusterName);
         viewClusterList(props.singleClusterTarget.storeName);   
         viewCostCentre()
         let date = new Date(); 
@@ -55,6 +56,10 @@ const EditTarget = (props) => {
     useEffect(() => {
         setClusterName(props.singleClusterTarget.clusterName);
     }, [props.singleClusterTarget.clusterName]);
+
+    useEffect(() => {
+        setCluster(props.singleClusterTarget.clusterId);
+    }, [props.singleClusterTarget.clusterId]);
 
     useEffect(() => {
         setTarget(props.singleClusterTarget.productTarget);
@@ -132,7 +137,7 @@ const EditTarget = (props) => {
 
         const Values = {
             clusterId: cluster,
-            clusterName: "",
+            clusterName: clusterName,
             month: MonthData,
             monthName: "",
             productTarget: target,
@@ -208,7 +213,7 @@ const EditTarget = (props) => {
 
                                                 <option value={cluster}>{clusterName}</option>
                                                 { 
-                                                clusterList !== undefined ? 
+                                                clusterList !== null ? 
                                                 clusterList.map((e, i) => {
                                                     return(
                                                         // console.log(e.clusterId)
@@ -272,7 +277,7 @@ const EditTarget = (props) => {
                                 </div>
                             </Row>
 
-                            <Button type="submit" /* className="submit-button" size="sm" */>Submit</Button>
+                            <Button type="submit">Submit</Button>
 
                         </Form>
 

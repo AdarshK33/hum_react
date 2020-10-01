@@ -17,13 +17,14 @@ const AddTarget = (props) => {
     const [StoreType, setStoreType] = useState('');
     const [getM, setGetM] = useState();
     const [cluster, setCluster] = useState("");
+    const [clusterName, setClusterName] = useState();
     const [target, setTarget] = useState();
     // const [WeekdaysTarget, setWeekdaysTarget] = useState();
     // const [WeekendsTarget, setWeekendsTarget] = useState();
     const [TodayDate, setTodayDate] = useState();
     const [month, setMonth] = useState();
     const [Year, setYear] = useState();
-    const [costCenterID, setCostCenterID] = useState("");
+    // const [costCenterID, setCostCenterID] = useState("");
 
 
     const { cosCentreList,viewCostCentre } = useContext(DashboardContext);
@@ -43,7 +44,7 @@ const AddTarget = (props) => {
         setMonth(mm);
         setYear(yyyy);
         viewCostCentre()
-        viewClusterList()
+        // viewClusterList()
     }, []);
 
     //  useEffect(() => {
@@ -112,20 +113,18 @@ const AddTarget = (props) => {
         const month = moment(getM, ["YYYY-MM"]).format("M");
         var MonthData = months[month];
         const year = moment(getM, ["MMM Do YY"]).format('YYYY');
-        const validate = validation();
+        const validate = true;
         const Values = {
             clusterId: cluster,
             clusterName: "",
             month: MonthData,
             monthName: "",
             productTarget: target,
-            storeName: costCenterID,
+            storeName: StoreType,
             targetId: 0,           
             year: year
             }
-            if(validate){
-                addTarget(Values);
-            }
+             addTarget(Values);
         
 
         const setModal = props.handleClose;
@@ -136,31 +135,7 @@ const AddTarget = (props) => {
         setTarget('');
         // setWeekdaysTarget('');
         // setWeekendsTarget('');
-      }
-
-      const validation = () => {
-        let flag = true
-        if (StoreType === '') {
-            toast.info("Select StoreType Type")
-            flag = false;
-            return;
-        }
-
-        if (cluster === '') {
-            toast.info("Select Cluster Type")
-            flag = false;
-            return;
-        }
-
-        if (target === '') {
-            toast.info("Productivity Target is mandatory")
-            flag = false;
-            return;
-        }
-        
-        return flag;
-    }
-
+      } 
 
       const onCloseModal = () => {
         const setModal = props.handleClose;
@@ -196,6 +171,7 @@ const AddTarget = (props) => {
                                             <Form.Label>Select Cost Center :</Form.Label>
                                             <Form.Control as="select"
                                                 onChange={(e)=>fromStoreHandler(e.target.value)}
+                                                required
                                                 >
 
                                                 <option value="">Select</option>
@@ -213,12 +189,14 @@ const AddTarget = (props) => {
                                         <Form.Group>
                                             <Form.Label>Select Cluster :</Form.Label>
                                             <Form.Control as="select"
-                                                onChange={(e)=>fromClusterHandler(e.target.value)}
+                                                onChange={(e)=>
+                                                    fromClusterHandler(e.target.value)}
+                                                    required
                                                 >
                                                 <option value="">Select</option>
 
                                                 <option value="">Select</option>
-                                                { clusterList !== undefined ? clusterList.map((e, i) => {
+                                                { clusterList !== null ? clusterList.map((e, i) => {
                                                     console.log(e);
                                                     return(
                                                     <option key={i + 1} value={e.clusterId}>{e.clusterName}</option>)
@@ -235,6 +213,7 @@ const AddTarget = (props) => {
                                             <Form.Label>Select Month and Year :</Form.Label>
                                             <Form.Control type="month" className="digit" min={Year + "-" + month}
                                                 onChange={(e) => setGetM(e.target.value)}
+                                                required
                                                 >
                                             </Form.Control>
                                         </Form.Group>
@@ -270,6 +249,7 @@ const AddTarget = (props) => {
                                         <Form.Label>Productivity Target</Form.Label>
                                         <Form.Control size="lg" type="text" 
                                             onChange={(e) => fromTargetHandler(e.target.value)}
+                                            required
                                             >
                                            
                                         </Form.Control>

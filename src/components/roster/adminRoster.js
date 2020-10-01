@@ -23,7 +23,10 @@ const AdminRoster = () => {
     useEffect(() => {
         viewContractTypes()
         costCenter()
+        calcWeek()
     }, [])
+
+    
 
 
     const { adminWeekOffDataEmp, viewContractTypes, shiftContractNames, costCenterList, adminWeekOffDataListHeader, adminWeekOffDataList, adminCalculateWeek, adminCalculateWeekResult, adminRosterAvailableShift, getallWeeks, costCenter } = useContext(RosterContext);
@@ -33,7 +36,7 @@ const AdminRoster = () => {
         setAdminModal(true)
         setFirstName(name);
         setContractType(ctype)
-        adminRosterAvailableShift()
+        adminRosterAvailableShift(costCenter1)
         getallWeeks()
     }
 
@@ -108,7 +111,7 @@ const AdminRoster = () => {
                                                     className="form-control"
                                                     selected={startDate.toDate()}
                                                     dateFormat="yyyy-MM-dd"
-                                                    required
+                                                    required                                                    
                                                     onChange={(date) => setStartDate(moment(date, 'YYYY-MM-DD'))}
                                                 />
                                             </div>
@@ -126,13 +129,11 @@ const AdminRoster = () => {
                                                 />
 
                                             </div>
-                                        </div>
+                                        </div>                                    
 
                                         <div className="col-sm-3">
-
                                             <div className="form-group">
-                                            <label className="name f-w-600">Select Cost Center<span style = {{color:'red',fontSize:"20px"}}> &nbsp;*</span> &nbsp;</label>
-
+                                            <label className="name f-w-600">Select Cost Center&nbsp;</label>
                                                 <select
                                                     className="form-control"
                                                     style={{ fontSize: "0.8rem", height: "34px" }}

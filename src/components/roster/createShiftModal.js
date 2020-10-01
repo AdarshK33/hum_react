@@ -227,7 +227,7 @@ const clearAndClose=()=>{
                           showTimeSelect
                           showTimeSelectOnly
                           timeFormat="HH:mm"
-                          timeIntervals={30}
+                          timeIntervals={60}
                           timeCaption="Time"
                           dateFormat="HH:mm aa"                     
                           placeholderText="Select start time"
@@ -248,7 +248,7 @@ const clearAndClose=()=>{
                           showTimeSelect
                           showTimeSelectOnly
                           timeFormat="HH:mm"
-                          timeIntervals={30}
+                          timeIntervals={60}
                           timeCaption="Time"
                           dateFormat="HH:mm aa"
                        
