@@ -1,9 +1,9 @@
 import React, { createContext, useReducer } from "react";
-import {client, setDefaultHeader} from "../utils/axios";
+import { client, setDefaultHeader } from "../utils/axios";
 import AppReducer from "../reducers/AppReducer";
 import { toast } from "react-toastify";
 
-import { SET_ACCESS_TOKEN_FAIL, SET_ACCESS_TOKEN_SUCCESS,AUTHENTICATE_USER } from "../constant/actionTypes";
+import { SET_ACCESS_TOKEN_FAIL, SET_ACCESS_TOKEN_SUCCESS, AUTHENTICATE_USER } from "../constant/actionTypes";
 
 // utils
 import Cookies from '../utils/cookies';
@@ -13,10 +13,12 @@ const initialState = {
   clusterLeaderNames: [],
   clusterList: [],
   getSingleCluster: [],
+  userInfoDetails: [],
   app: {
     loaded: false,
     isLoggedin: false
   },
+  user: {}
 };
 
 export const AppContext = createContext();
@@ -24,10 +26,10 @@ export const AppContext = createContext();
 export const AppProvider = ({ children, history }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
-const authenticateUser=(result)=>{
-  console.log("IN AUTHENTICATE USER "+result)
-  return dispatch({ type: AUTHENTICATE_USER, payload: result });
-}
+  const authenticateUser = (result) => {
+    console.log("IN AUTHENTICATE USER " + result)
+    return dispatch({ type: AUTHENTICATE_USER, payload: result });
+  }
 
   const accessToken = (code) => {
 
@@ -39,7 +41,7 @@ const authenticateUser=(result)=>{
     };
     let config = {
       method: "get",
-      url: "http://humine.theretailinsights.co/auth/token?code="+code,
+      url: "http://humine.theretailinsights.co/auth/token?code=" + code,
       headers: {
         "cache-control": "no-cache",
         "Content-Type": "application/x-www-form-urlencoded",
@@ -48,13 +50,13 @@ const authenticateUser=(result)=>{
     };
     client(config)
       .then((resp) => {
-        console.log("1 "+resp.data.data.access_token);
-        console.log("2 "+resp.data.data.refresh_token);
+        console.log("1 " + resp.data.data.access_token);
+        console.log("2 " + resp.data.data.refresh_token);
         console.log({ resp });
         if (resp && resp.status === 200) {
-             Cookies.set('APPAT',resp.data.data.access_token) 
-             Cookies.set('APPRT',resp.data.data.refresh_token)
-          const { data, data: {refresh_token, access_token} } = resp;
+          Cookies.set('APPAT', resp.data.data.access_token)
+          Cookies.set('APPRT', resp.data.data.refresh_token)
+          const { data, data: { refresh_token, access_token } } = resp;
 
           // Cookies.set('APPSID', {refresh_token, access_token});
           setDefaultHeader(resp.data.data.access_token)
@@ -71,11 +73,31 @@ const authenticateUser=(result)=>{
       });
   };
 
+  //GET USER INFO
+
+  const getUserInfo = () => {
+    client.get('/employee/profile')
+      .then((response) => {
+        state.user = response.data.data
+        console.log("=====GET API respone=====", state.user)
+        console.log("=====GET API respone=====", state.user.firstName)
+        return dispatch({ type: 'FETCH_USER_INFO', payload: state.user });
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+
+
+
   return (
     <AppContext.Provider
       value={{
         accessToken,
         authenticateUser,
+        getUserInfo,
+        user: state.user,
         state,
       }}
     >
