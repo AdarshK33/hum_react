@@ -9,9 +9,9 @@ import EditSalary from './EditSalary'
 import "react-datepicker/dist/react-datepicker.css";
 import { Edit2, } from 'react-feather'
 function ViewShift() {
-  useEffect(() => {
-    viewSalary()
-  }, [])
+  // useEffect(() => {
+  //   viewSalary()
+  // }, [])
   const [shiftButton] = useState(false);
   const [getM, setGetM] = useState();
   const { viewSalary, salaryList } = useContext(ClusterContext);

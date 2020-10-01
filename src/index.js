@@ -22,9 +22,6 @@ import AdminLeavesList from './components/AdminLeave/AdminLeavesList';
 import AdminMasterLeave from './components/AdminLeave/AdminMasterLeave';
 import AdminLeaveApproval from './components/AdminLeave/AdminLeaveApproval';
 import AdminSalaryModule from './components/AdminLeave/AdminSalaryModule';
-import AdminRosterModule from './components/AdminLeave/AdminRosterModule';
-//Navaneetha - 30/09
-import {PendingRosterProvider} from "./context/PendingRosterState";
 //Cluster
 import ViewCluster from "./components/cluster/viewCluster";
 // Added by Ranjith 31 july 2020
@@ -51,7 +48,6 @@ import StoreProductTarget from "./components/ProductTarget/StoreProductTarget/St
 import LeaderStoreProductTarget from "./components/ProductTarget/LeaderStoreProductTarget/LeaderStoreProductTarget";
 import ClusterProductTarget from './components/ProductTarget/ClusterProductTarget/ClusterProductTarget';
 import LeaderCluster from './components/ProductTarget/LeaderCluster/LeaderCluster';
-import RoleManagemenetList from './components/RoleManagement/RoleManagementList';
 
 //firebase Auth
 function Root() {
@@ -68,170 +64,156 @@ function Root() {
           <LeaveProvider>
             <ClusterProvider>
               <ClusterProductProvider>
-                <PendingRosterProvider>
-                  <DashboardProvider>
-                    <StoreProductProvider>
-                      <AdminProvider>
-                        <BrowserRouter basename={"/"}>
-                          <ScrollContext>
-                            <Switch>
-                              <Route
-                                path={`${process.env.PUBLIC_URL}/signin`}
-                                component={Signin}
-                              />
-                              <Fragment>
-                                <App>
-                                  {/* dashboard menu */}
-                                  <Route
-                                    exact
-                                    path={`${process.env.PUBLIC_URL}/dashboard/default`}
-                                    component={Default}
-                                  />
-                                  {/* <Route exact path={`${process.env.PUBLIC_URL}/dashboard/default`} component={Default} /> */}
+                <DashboardProvider>
+                  <StoreProductProvider>
+                    <AdminProvider>
+                      <BrowserRouter basename={"/"}>
+                        <ScrollContext>
+                          <Switch>
+                            <Route
+                              path={`${process.env.PUBLIC_URL}/signin`}
+                              component={Signin}
+                            />
+                            <Fragment>
+                              <App>
+                                {/* dashboard menu */}
+                                <Route
+                                  exact
+                                  path={`${process.env.PUBLIC_URL}/dashboard/default`}
+                                  component={Default}
+                                />
+                                {/* <Route exact path={`${process.env.PUBLIC_URL}/dashboard/default`} component={Default} /> */}
 
-                                  {/* Sample page */}
-                                  <Route
-                                    path={`${process.env.PUBLIC_URL}/sample/samplepage`}
-                                    component={Samplepage}
-                                  />
-
-                                  {/* Leaves Page */}
-                                  <Route
-                                    path={`${process.env.PUBLIC_URL}/leaves/leaveView`}
-                                    component={LeaveView}
-                                  />
-                                  {/*Admin Leaves Page */}
-                                  <Route
-                                    path={`${process.env.PUBLIC_URL}/adminLeaves/adminLeaveView`}
-                                    component={AdminLeaveView}
-                                  />
-                                  {/*Admin Leaves Page */}
-                                  <Route
-                                    path={`${process.env.PUBLIC_URL}/adminLeaves/adminLeavesList`}
-                                    component={AdminLeavesList}
-                                  />
-
-                                  {/*Admin Leaves Mater Page */}
-                                  <Route
-                                    path={`${process.env.PUBLIC_URL}/adminLeaves/adminMasterLeave`}
-                                    component={AdminMasterLeave}
-                                  />
-
-                                  {/*Admin Leaves Approval Page */}
-                                  <Route
-                                    path={`${process.env.PUBLIC_URL}/adminLeaves/adminLeaveApproval`}
-                                    component={AdminLeaveApproval}
-                                  />
-                                  {/*Admin Salary Approval Page */}
-                                  <Route
-                                    path={`${process.env.PUBLIC_URL}/adminLeaves/adminSalaryModule`}
-                                    component={AdminSalaryModule}
-                                  />
-
-                                  {/*Admin Roster Approval Page */}
-                                  <Route
-                                    path={`${process.env.PUBLIC_URL}/adminLeaves/adminRosterModule`}
-                                    component={AdminRosterModule}
-                                  />
-
-                                  {/* Roaster */}
-                                  <Route
-                                    path={`${process.env.PUBLIC_URL}/roster/roster`}
-                                    component={Roster}
-                                  />
-
-                                  {/* <Route path={`${process.env.PUBLIC_URL}/roster/editShift`} component={EditShift} />  */}
-                                  <Route
-                                    path={`${process.env.PUBLIC_URL}/roster/viewShift`}
-                                    component={ViewShift}
-                                  />
-                                  {/* Cluster */}
-
-                                  <Route
-                                    path={`${process.env.PUBLIC_URL}/cluster/viewCluster`}
-                                    component={ViewCluster}
-                                  />
-                                  <Route
-                                    path={`${process.env.PUBLIC_URL}/holiday/holidayList`}
-                                    component={HolidayList}
-                                  />
-                                  <Route
-                                    path={`${process.env.PUBLIC_URL}/salary/salaryView`}
-                                    component={SalaryView}
-                                  />
-                                  <Route
-                                    path={`${process.env.PUBLIC_URL}/admin/GrantLeaveView`}
-                                    component={GrantLeaveView}
-                                  />
-
-
-                                    <Route
-                                    path={`${process.env.PUBLIC_URL}/roster/adminRoster`}
-                                    component={AdminRoster}
-                                  />
-                                    {/*Manager Report Page */}
-                                  <Route
-                                    path={`${process.env.PUBLIC_URL}/report/managerReport`}
-                                    component={ManagerReportForm}
-                                  />
-                                  {/*Admin Report Page */}
-                                  <Route
-                                    path={`${process.env.PUBLIC_URL}/report/adminReport`}
-                                    component={AdminReportForm}
-                                  />
-
-                                    {/*Productivity  Admin Report Page */}
-                                    <Route
-                                    path={`${process.env.PUBLIC_URL}/report/productivityAdminReport`}
-                                    component={ProductivityReportForm}
-                                  />
-                                  
-                                  {/*Productivity Manager Report Page */}
-                                  <Route
-                                  path={`${process.env.PUBLIC_URL}/report/productivityManagerReport`}
-                                  component={ProductivityReportManager}
+                                {/* Sample page */}
+                                <Route
+                                  path={`${process.env.PUBLIC_URL}/sample/samplepage`}
+                                  component={Samplepage}
                                 />
 
-                                  {/*Admin Store Product target Page */}
+                                {/* Leaves Page */}
+                                <Route
+                                  path={`${process.env.PUBLIC_URL}/leaves/leaveView`}
+                                  component={LeaveView}
+                                />
+                                {/*Admin Leaves Page */}
+                                <Route
+                                  path={`${process.env.PUBLIC_URL}/adminLeaves/adminLeaveView`}
+                                  component={AdminLeaveView}
+                                />
+                                {/*Admin Leaves Page */}
+                                <Route
+                                  path={`${process.env.PUBLIC_URL}/adminLeaves/adminLeavesList`}
+                                  component={AdminLeavesList}
+                                />
+
+                                {/*Admin Leaves Mater Page */}
+                                <Route
+                                  path={`${process.env.PUBLIC_URL}/adminLeaves/adminMasterLeave`}
+                                  component={AdminMasterLeave}
+                                />
+
+                                {/*Admin Leaves Approval Page */}
+                                <Route
+                                  path={`${process.env.PUBLIC_URL}/adminLeaves/adminLeaveApproval`}
+                                  component={AdminLeaveApproval}
+                                />
+                                {/*Admin Salary Approval Page */}
+                                <Route
+                                  path={`${process.env.PUBLIC_URL}/adminLeaves/adminSalaryModule`}
+                                  component={AdminSalaryModule}
+                                />
+
+                                {/* Roaster */}
+                                <Route
+                                  path={`${process.env.PUBLIC_URL}/roster/roster`}
+                                  component={Roster}
+                                />
+
+                                {/* <Route path={`${process.env.PUBLIC_URL}/roster/editShift`} component={EditShift} />  */}
+                                <Route
+                                  path={`${process.env.PUBLIC_URL}/roster/viewShift`}
+                                  component={ViewShift}
+                                />
+                                {/* Cluster */}
+
+                                <Route
+                                  path={`${process.env.PUBLIC_URL}/cluster/viewCluster`}
+                                  component={ViewCluster}
+                                />
+                                <Route
+                                  path={`${process.env.PUBLIC_URL}/holiday/holidayList`}
+                                  component={HolidayList}
+                                />
+                                <Route
+                                  path={`${process.env.PUBLIC_URL}/salary/salaryView`}
+                                  component={SalaryView}
+                                />
+                                <Route
+                                  path={`${process.env.PUBLIC_URL}/admin/grantLeaveView`}
+                                  component={GrantLeaveView}
+                                />
+
+
                                   <Route
-                                      path={`${process.env.PUBLIC_URL}/productTarget/adminStoreTarget`}
-                                      component={StoreProductTarget}
+                                  path={`${process.env.PUBLIC_URL}/roster/adminRoster`}
+                                  component={AdminRoster}
+                                />
+                                  {/*Manager Report Page */}
+                                <Route
+                                  path={`${process.env.PUBLIC_URL}/report/managerReport`}
+                                  component={ManagerReportForm}
+                                />
+                                {/*Admin Report Page */}
+                                <Route
+                                  path={`${process.env.PUBLIC_URL}/report/adminReport`}
+                                  component={AdminReportForm}
+                                />
+
+                                  {/*Productivity  Admin Report Page */}
+                                  <Route
+                                  path={`${process.env.PUBLIC_URL}/report/productivityAdminReport`}
+                                  component={ProductivityReportForm}
+                                />
+                                
+                                 {/*Productivity Manager Report Page */}
+                                 <Route
+                                path={`${process.env.PUBLIC_URL}/report/productivityManagerReport`}
+                                component={ProductivityReportManager}
+                              />
+
+                                {/*Admin Store Product target Page */}
+                                <Route
+                                    path={`${process.env.PUBLIC_URL}/productTarget/adminStoreTarget`}
+                                    component={StoreProductTarget}
+                                  />
+
+                                   {/*Leader Store Product target Page */}
+                                <Route
+                                    path={`${process.env.PUBLIC_URL}/productTarget/leaderStoreTarget`}
+                                    component={LeaderStoreProductTarget}
+                                  />
+
+                                  {/*Admin Cluster Product target Page */}
+                                  <Route
+                                      path={`${process.env.PUBLIC_URL}/productTarget/adminClusterTarget`}
+                                      component={ClusterProductTarget}
                                     />
 
-                                    {/*Leader Store Product target Page */}
+                                     {/*Leader Cluster Product target Page */}
                                   <Route
-                                      path={`${process.env.PUBLIC_URL}/productTarget/leaderStoreTarget`}
-                                      component={LeaderStoreProductTarget}
+                                      path={`${process.env.PUBLIC_URL}/productTarget/leaderClusterTarget`}
+                                      component={LeaderCluster}
                                     />
 
-                                    {/*Admin Cluster Product target Page */}
-                                    <Route
-                                        path={`${process.env.PUBLIC_URL}/productTarget/adminClusterTarget`}
-                                        component={ClusterProductTarget}
-                                      />
-
-                                      {/*Leader Cluster Product target Page */}
-                                    <Route
-                                        path={`${process.env.PUBLIC_URL}/productTarget/leaderClusterTarget`}
-                                        component={LeaderCluster}
-                                      />
-
-                                    {/*Role Management Page */}
-                                    <Route
-                                        path={`${process.env.PUBLIC_URL}/roleManagement`}
-                                        component={RoleManagemenetList}
-                                      />
-
-                                </App>
-                              </Fragment>
-                            </Switch>
-                          </ScrollContext>
-                        </BrowserRouter>
-                        {/* </Provider>  */}
-                      </AdminProvider>
-                    </StoreProductProvider>
-                  </DashboardProvider>
-                </PendingRosterProvider>
+                              </App>
+                            </Fragment>
+                          </Switch>
+                        </ScrollContext>
+                      </BrowserRouter>
+                      {/* </Provider>  */}
+                    </AdminProvider>
+                  </StoreProductProvider>
+                </DashboardProvider>
               </ClusterProductProvider>
             </ClusterProvider>
           </LeaveProvider>

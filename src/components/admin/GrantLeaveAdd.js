@@ -17,6 +17,7 @@ const GrantLeaveAdd = (props) => {
         let data1 = e.target.value
         setCostCenter(data1)
         console.log("data1", data1)
+        employeeIdData(costCenter)
     }
     const setEmployeeCostCenterHandler = (e) => {
         let data2 = e.target.value
@@ -27,9 +28,9 @@ const GrantLeaveAdd = (props) => {
         CostCenter()
     }, [])
     
-    useEffect(() => {
-        employeeIdData(costCenter)
-    }, [costCenter])
+    // useEffect(() => {
+      
+    // }, [costCenter])
 
 
 

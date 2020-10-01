@@ -54,11 +54,8 @@ const RosterReducer = (state, action) => {
             return { ...state, adminRosterAvailableShiftList: action.payload };
             
 
-        case 'COST_CENTER_DATA':
-            return { ...state, costCenterList: action.payload };
-
-        case 'FETCH_PENDING_ROSTER_LIST':
-            return {...state, pendingRosterList:action.payload}
+            case 'COST_CENTER_DATA':
+                return { ...state, costCenterList: action.payload };
 
 
 
