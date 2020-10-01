@@ -184,8 +184,6 @@ const AddTarget = (props) => {
                                             onChange={(e)=>fromStoreHandler(e.target.value)}
                                             >
                                             <option value="">Select</option>
-
-                                            <option value="">Select</option>
                                             { cosCentreList.map((e, i) => {
                                                     return(
                                                     <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
@@ -199,7 +197,7 @@ const AddTarget = (props) => {
                                 <div className="col-sm-12">
                                     <Form.Group>
                                         <Form.Label>State :</Form.Label>
-                                        <Form.Control as="input" required defaultValue = {StateData.stateName}/>                                           
+                                        <Form.Control as="input" required defaultValue = {StateData !== null ? StateData.stateName: ""}/>                                           
                                     </Form.Group>
                                 </div>
                             </Row>
