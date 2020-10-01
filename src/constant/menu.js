@@ -37,7 +37,7 @@ export const MENUITEMS = [
         path: '/salary/salaryView', title: 'Salary Inputs', icon: Package, type: 'link', active: false
     },
     {
-        path: '/admin/GrantLeaveView', title: 'Grant Leave View', icon: File, type: 'link', active: false
+        path: '/admin/grantLeaveView', title: 'Grant Leave View', icon: File, type: 'link', active: false
     },
    
     {

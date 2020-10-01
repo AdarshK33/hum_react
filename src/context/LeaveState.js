@@ -1,5 +1,5 @@
 import React, { createContext, useReducer } from 'react';
-import {client} from '../utils/axios';
+import { client } from '../utils/axios';
 import { ToastContainer, toast } from "react-toastify";
 import LeaveReducer from '../reducers/LeaveReducer'
 
