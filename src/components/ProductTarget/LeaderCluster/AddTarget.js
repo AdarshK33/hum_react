@@ -169,7 +169,7 @@ const AddTarget = (props) => {
                                     <div className="col-sm-12">
                                         <Form.Group>
                                             <Form.Label>Select Cluster :</Form.Label>
-                                            <Form.Control as="select"
+                                            <Form.Control as="select" required
                                                 onChange={(e)=>fromClusterHandler(e.target.value)}
                                                 >
                                                 <option value="">Select</option>
@@ -191,7 +191,7 @@ const AddTarget = (props) => {
                                         <Form.Group>
                                             <Form.Label>Select Month and Year :</Form.Label>
                                             <Form.Control type="month" className="digit" min={Year + "-" + month}
-                                                onChange={(e) => setGetM(e.target.value)}
+                                                onChange={(e) => setGetM(e.target.value)} required
                                                 >
                                             </Form.Control>
                                         </Form.Group>
@@ -227,6 +227,7 @@ const AddTarget = (props) => {
                                         <Form.Label>Productivity Target</Form.Label>
                                         <Form.Control size="lg" type="text" 
                                             onChange={(e) => fromTargetHandler(e.target.value)}
+                                            required
                                             >
                                            
                                         </Form.Control>

@@ -31,7 +31,8 @@ const EditTarget = (props) => {
 
       useEffect(() => {
         setCostCenter(props.singleClusterTarget.storeName);
-        setCluster(props.singleClusterTarget.clusterName);     
+        setCluster(props.singleClusterTarget.clusterId);   
+        setClusterName(props.singleClusterTarget.clusterName);  
         viewClusterList(props.singleClusterTarget.storeName);   
         viewCostCentre()
         let date = new Date(); 
@@ -55,6 +56,10 @@ const EditTarget = (props) => {
     useEffect(() => {
         setClusterName(props.singleClusterTarget.clusterName);
     }, [props.singleClusterTarget.clusterName]);
+
+    useEffect(() => {
+        setCluster(props.singleClusterTarget.clusterId);
+    }, [props.singleClusterTarget.clusterId]);
 
 
     useEffect(() => {
@@ -133,7 +138,7 @@ const EditTarget = (props) => {
 
         const Values = {
             clusterId: cluster,
-            clusterName: "",
+            clusterName: clusterName,
             month: MonthData,
             monthName: "",
             productTarget: target,

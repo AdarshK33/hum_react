@@ -103,7 +103,7 @@ function ViewShift() {
                     </tr>
                   </thead>
 
-                  {salaryList.map((item, i) => {
+                  { salaryList.length > 0 && salaryList.map((item, i) => {
                     return (
                       <tbody key={i + 1}>
                         <tr>
