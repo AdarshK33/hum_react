@@ -41,9 +41,9 @@ const AdminLeaveAdd = (props) => {
          CostCenter()
      },[])
 
-     useEffect(() => {
+    /*  useEffect(() => {
         employeeIdData(costCenter)
-    },[costCenter])
+    },[costCenter]) */
 
      useEffect(() => {
         setEmployeeId(props.employeeId)
@@ -56,7 +56,9 @@ const AdminLeaveAdd = (props) => {
      const setCostCenterHandler = (e) => {
          let data1 = e.target.value
         setCostCenter(data1)
+        employeeIdData(data1)
         console.log("data1", data1)
+        console.log("costCenter", data1)
      }
      const setEmployeeCostCenterHandler = (e) => {
          let data2 = e.target.value

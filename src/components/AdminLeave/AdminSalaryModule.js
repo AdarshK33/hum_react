@@ -26,9 +26,9 @@ const AdminSalaryModule = () => {
 
   const handleDeleteClose = () => setDeleteModal(false);
 
-  useEffect(() => {
+ /*  useEffect(() => {
     viewStoreSalary();
-  }, []);
+  }, []); */
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -207,7 +207,8 @@ const AdminSalaryModule = () => {
                     </tr>
                   </thead>
 
-                  {salaryStoreList.map((item, i) => {
+                  {
+                  salaryStoreList.map((item, i) => {
                     return (
                       <tbody key={i + 1}>
                         <tr>

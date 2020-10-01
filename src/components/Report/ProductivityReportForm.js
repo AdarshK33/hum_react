@@ -34,14 +34,16 @@ const ProductivityReportForm = () => {
         
     }, []);
 
-    useEffect(() => {
+  /*   useEffect(() => {
         employeeIdData(costCenter)
         viewClusterCostCenter(costCenter)
-    }, [costCenter])
+    }, [costCenter]) */
 
     const setCostCenterHandler = (e) => {
         let data1 = e.target.value
         setCostCenter(data1)
+        employeeIdData(data1)
+        viewClusterCostCenter(data1)
         console.log("data1", data1)
     }
     const setEmployeeCostCenterHandler = (e) => {
