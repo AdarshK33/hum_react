@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useHistory } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { AppContext } from "../../../context/AppState";
 import { DashboardContext } from "../../../context/DashboardState";
 import { StoreProductContext } from "../../../context/StoreProductState";
 import moment from 'moment'
@@ -21,6 +21,7 @@ const AddLeaderTarget = (props) => {
     const [TodayDate, setTodayDate] = useState();
     const [month, setMonth] = useState();
     const [Year, setYear] = useState();
+    const { user } = useContext(AppContext);
     
     const { cosCentreList,viewCostCentre } = useContext(DashboardContext);
     const { StateData,getStateData,addTarget,NewTarget } = useContext(StoreProductContext);
@@ -40,8 +41,8 @@ const AddLeaderTarget = (props) => {
         setTodayDate(dd);
         setMonth(mm);
         setYear(yyyy);
-        setStoreType('IN1055');
-        getStateData('IN1055') ;
+        setStoreType(user.costCentre);
+        getStateData(user.costCentre) ;
         
     }, []);
 
@@ -182,7 +183,7 @@ const AddLeaderTarget = (props) => {
                                 <div className="col-sm-12">
                                     <Form.Group>
                                         <Form.Label>Store : </Form.Label>
-                                        <Form.Control as="input" required value = "IN1055" readOnly />
+                                        <Form.Control as="input" required value = {user.costCentre} readOnly />
                                     </Form.Group>
                                 </div>
                             </Row>
@@ -191,7 +192,7 @@ const AddLeaderTarget = (props) => {
                                 <div className="col-sm-12">
                                     <Form.Group>
                                         <Form.Label>State :</Form.Label>
-                                        <Form.Control as="input" readOnly required value = {StateData.stateName}/>                                           
+                                        <Form.Control as="input" readOnly required value = {StateData !== null ? StateData.stateName: ""} />                                           
                                     </Form.Group>
                                 </div>
                             </Row>

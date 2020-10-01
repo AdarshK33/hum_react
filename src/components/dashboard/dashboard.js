@@ -217,7 +217,9 @@ function Dashboard () {
                                             onChange={(e)=>fromClusterHandler(e)}
                                             >
                                                 <option value ="">Select</option>
-                                                { clusterList.map((e, i) => {
+                                                
+                                                {clusterList !== null &&
+                                                  clusterList.map((e, i) => {
                                                     return(
                                                     <option key={i + 1} value={e.clusterId} >{e.clusterName}</option>)
                                                 })}
