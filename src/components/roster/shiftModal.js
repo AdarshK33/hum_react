@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react'
 import { Container, Button, Form, Modal, Tabs, Tab, } from 'react-bootstrap'
 import { RosterContext } from "../../context/RosterState";
+import { AppContext } from "../../context/AppState";
 import './roster.css'
 import moment from 'moment'
 
@@ -20,6 +21,7 @@ const ShiftModal = (props) => {
 
 
   const { weekDays, weekOffDays, addWeekOff, availableShifts, availableShiftData, assignShift, getallWeeks, weeksInYear } = useContext(RosterContext)
+  const { user } = useContext(AppContext)
   //console.log(availableShiftData, "data")
   //console.log(weeksInYear, "weeks")
   useEffect(() => {
@@ -110,6 +112,12 @@ const ShiftModal = (props) => {
     //  console.log("new Day", newDay)
   }
 
+  const click = () =>{
+    console.log(user)
+  }
+
+  
+
   return (
     <Fragment>
       <Modal show={props.modal} onHide={props.handleClose} centered>
@@ -127,7 +135,7 @@ const ShiftModal = (props) => {
               <Tab eventKey='shift' title="Assign Shift">
                 <div className="row py-2 pt-4">
                   <div className="col-sm-6 px-2">Employee Name:</div>
-                  <div className="col-sm-6 px-2">Pavithra Anand - DSC100023</div>
+                  <div className="col-sm-6 px-2">{user.firstName}</div>
                 </div>
                 <div className="row py-2">
                   <div className="col-sm-5 px-2">Available Shifts :</div>

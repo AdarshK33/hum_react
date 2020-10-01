@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { DashboardContext } from "../../../context/DashboardState";
 import { ClusterProductContext } from "../../../context/ClusterProductState";
+import { AppContext } from "../../../context/AppState";
 import moment from 'moment';
 
 
@@ -27,7 +28,8 @@ const AddTarget = (props) => {
 
 
     const { cosCentreList,viewCostCentre } = useContext(DashboardContext);
-    const { clusterList,clusterProductList, viewClusterList,addTarget, leaderClusterList, viewLeaderClusterList} = useContext(ClusterProductContext);
+    const { user } = useContext(AppContext)
+    const { clusterList,clusterProductList, viewClusterList,addTarget,viewClusterTarget} = useContext(ClusterProductContext);
 
 
      useEffect(() => {
@@ -43,8 +45,8 @@ const AddTarget = (props) => {
         setMonth(mm);
         setYear(yyyy);
        viewCostCentre()
-       viewClusterList()
-       viewLeaderClusterList()
+       viewClusterList(user.costCentre)
+       
     }, []);
 
 
@@ -149,7 +151,7 @@ const AddTarget = (props) => {
                                     <div className="col-sm-12">
                                         <Form.Group>
                                             <Form.Label>Select Cost Center :</Form.Label>
-                                            <Form.Control value="IN1055" readOnly />
+                                            <Form.Control value={user.costCentre} readOnly />
                                             
                                             {/* <Form.Control as="select"
                                                 onChange={(e)=>fromStoreHandler(e.target.value)}
@@ -175,7 +177,7 @@ const AddTarget = (props) => {
                                                 <option value="">Select</option>
 
                                                 <option value="">Select</option>
-                                                { leaderClusterList !== undefined ? leaderClusterList.map((e, i) => {
+                                                { clusterList !== null ? clusterList.map((e, i) => {
                                                     console.log(e);
                                                     return(
                                                     <option key={i + 1} value={e.clusterId}>{e.clusterName}</option>)

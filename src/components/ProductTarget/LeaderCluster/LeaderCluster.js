@@ -5,6 +5,7 @@ import { Edit2, Trash2, Slash } from 'react-feather';
 import AddTarget from './AddTarget';
 import EditTarget from './EditTarget';
 import { ClusterProductContext } from "../../../context/ClusterProductState";
+import { AppContext } from "../../../context/AppState";
 
 function LeaderCluster(){
     
@@ -15,7 +16,8 @@ function LeaderCluster(){
     const [Year, setYear] = useState();
 
     const { clusterProductList,singleClusterTarget, viewClusterTarget, viewSingleClusterTarget } = useContext(ClusterProductContext);
-    
+    const { user } = useContext(AppContext);
+
     const handleClose = () => {
         viewClusterTarget();
         setModal(false);
@@ -57,6 +59,7 @@ function LeaderCluster(){
                 <Row className="apply-button-row">
                     <Col className="leaveApplications">Cluster Target</Col>
                     <Col>
+                    
                         <Button className="apply-button btn btn-light"
                         onClick={() => {setModal(true) }}
                         >Add Target</Button>
@@ -85,7 +88,7 @@ function LeaderCluster(){
                                    <tbody key={i + 1}>
                                         <tr>
                                             <td>{i + 1}</td>                                            
-                                            <td>IN1055</td>
+                                            <td>{user.costCentre}</td>
                                             <td>{item.clusterName}</td>
                                             <td>{item.monthName}</td>
                                             <td>{item.year}</td>
