@@ -9,8 +9,8 @@ const initial_state = {
     clusterProductList: [],
     clusterList: [],
     NewTarget: [],
-    singleClusterTarget: [],
-    leaderClusterList: []
+    singleClusterTarget: []
+    
   }
 
 
@@ -35,23 +35,7 @@ const initial_state = {
       }
 
 
-      //==========Leader Cluster Target================================
-      const viewLeaderClusterList = () => {
-
-        client.get('/cluster/view/IN1055').then( (response) => {
-        console.log("==========List of Clusters for IN1055==============");
-        console.log(response.data.data);
-        console.log("==========List of Clusters for IN1055==============");
-        state.leaderClusterList = response.data.data;
-
-        return dispatch({ type: 'FETCH_LEADER_CLUSTER_LIST', payload: state.leaderClusterList });
-      })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
-      //==========Leader Cluster Target================================
-
+      
 
       function viewClusterTarget() {
 
@@ -120,11 +104,11 @@ const initial_state = {
         addTarget,
         editTarget,
         viewSingleClusterTarget,
-        viewLeaderClusterList,
+        
         singleClusterTarget : state.singleClusterTarget,
         clusterList: state.clusterList,
-        clusterProductList: state.clusterProductList,
-        leaderClusterList : state.leaderClusterList
+        clusterProductList: state.clusterProductList
+        
       }}>
         {children}
       </ClusterProductContext.Provider>);

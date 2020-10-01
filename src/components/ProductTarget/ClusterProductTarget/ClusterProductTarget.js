@@ -70,7 +70,7 @@ function ClusterProductTarget(){
                 </Row>
 
                 <div className="table-responsive">
-                    <Table id="table-to-xls" className="table table-hover">
+                     <Table id="table-to-xls" className="table table-hover">
                         <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                             <tr>
                                 <th>S. No</th>
@@ -131,11 +131,11 @@ function ClusterProductTarget(){
 
                                             }} /></td>                                                                                      */}
 
-                                        </tr>
+                                         </tr>
                                     </tbody>
                                  )
                             })}
-                    </Table>
+                    </Table> 
 
                     <EditTarget
                      handleEditClose={handleEditClose}
