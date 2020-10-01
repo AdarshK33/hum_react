@@ -39,9 +39,9 @@ const initial_state = {
       const viewLeaderClusterList = () => {
 
         client.get('/cluster/view/IN1055').then( (response) => {
-        console.log("==========List of Clusters==============");
+        console.log("==========List of Clusters for IN1055==============");
         console.log(response.data.data);
-        console.log("==========List of Clusters==============");
+        console.log("==========List of Clusters for IN1055==============");
         state.leaderClusterList = response.data.data;
 
         return dispatch({ type: 'FETCH_LEADER_CLUSTER_LIST', payload: state.leaderClusterList });
@@ -100,6 +100,7 @@ const initial_state = {
             
             return client.put('/cluster/product_target/update', values)
               .then((response) => {
+                // console.log(values)
                 console.log(response)
                 toast.info(response.data.message)
                 viewClusterTarget();

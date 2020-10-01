@@ -199,7 +199,7 @@ const AddTarget = (props) => {
                                 <div className="col-sm-12">
                                     <Form.Group>
                                         <Form.Label>State :</Form.Label>
-                                        <Form.Control as="input" required value = {StateData.stateName}/>                                           
+                                        <Form.Control as="input" required defaultValue = {StateData.stateName}/>                                           
                                     </Form.Group>
                                 </div>
                             </Row>

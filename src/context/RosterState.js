@@ -189,7 +189,7 @@ const addWeekOff = (newWeekOff) => {
   }
   const availableShifts = () => {
    
-    client.get('shift/view/INSEZONO/active')
+    client.get('/shift/view/employee')
       .then((response) => {
        // console.log(response,"ava")
         state.availableShiftData = response.data.data
@@ -320,10 +320,11 @@ const adminWeekOffDataEmp = (endDate, startDate,contract,weekid,empId) => {
   
   //  ADMIN ROSTER AVAILABLE SHIFT
 
-  const adminRosterAvailableShift = (shiftId) => {
+  const adminRosterAvailableShift = (costCenter1) => {
 
-    client.get('shift/view/',shiftId+'/active')
+    client.get('shift/view/'+ costCenter1)
       .then((response) => {
+        
          state.adminRosterAvailableShiftList = response.data.data;
          console.log("admin calculate week ", state.adminRosterAvailableShiftList)
       //   alert(state.adminRosterAvailableShiftList);
@@ -341,6 +342,7 @@ const adminWeekOffDataEmp = (endDate, startDate,contract,weekid,empId) => {
           adminSelectedRosterRange: { endDate, startDate,contract,weekid,empId },
         } = state;
         toast.info(response.data.message)
+        console.log("==========NAVANEETHA===================")
         console.log(response,"cre")
         adminWeekOffDataEmp(endDate,startDate,contract,weekid,empId);
       })

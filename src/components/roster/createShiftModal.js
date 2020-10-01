@@ -2,8 +2,9 @@ import React, { Fragment, useState, useContext, useEffect } from 'react';
 import DatePicker from "react-datepicker";
 import moment from 'moment';
 import "react-datepicker/dist/react-datepicker.css";
-import {   Modal } from 'react-bootstrap'
+import { Modal } from 'react-bootstrap'
 import { RosterContext } from "../../context/RosterState";
+import { AppContext } from "../../context/AppState";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const CreateShiftModal = (props) => {
@@ -18,36 +19,36 @@ const CreateShiftModal = (props) => {
   const [workingHours, setWorkingHour] = useState('');
   const [contractType, setContractType] = useState('');
   const [breakStartTime, setStartBreakTime] = useState(null);
-  const [shiftType,setShiftType] = useState('')
+  const [shiftType, setShiftType] = useState('')
   const [breakEndTime, setEndBreakTIme] = useState(null);
   const [successMsg, setSuccessMsg] = useState("");
   const [breakDuationMsg, setBreakDurationMsg] = useState(false);
   const [shiftButton, setShiftButton] = useState(false);
   const [showText, setShowText] = useState(false);
-  const[invalidText,setInvalidText]= useState(false)
-  const[warnMsg,setWrnMsg] = useState(false);
- // const [workingHoursText, setWorkingHoursText] = useState(false);
+  const [invalidText, setInvalidText] = useState(false)
+  const [warnMsg, setWrnMsg] = useState(false);
+  // const [workingHoursText, setWorkingHoursText] = useState(false);
   const [errormsg, setErrorMsg] = useState(false);
   const { addShift, viewShift, viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
 
-
+  const { user } = useContext(AppContext);
 
   useEffect(() => {
     setShiftType(props.shiftType)
   }, [props.shiftType])
-  
+
   useEffect(() => {
     setContractType(props.contractType)
   }, [props.contractType])
-  
+
   useEffect(() => {
-  setStartTime(props.startTime)
+    setStartTime(props.startTime)
   }, [props.startTime])
-  
+
   useEffect(() => {
-  setEndTime(props.endTime)
+    setEndTime(props.endTime)
   }, [props.endTime])
-  
+
   const setClear = () => {
     setStartTime('')
     setEndTime('')
@@ -62,42 +63,39 @@ const CreateShiftModal = (props) => {
   const calcTime = () => {
     const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
     const etime = moment(endTime, ["h:mm A"]).format("HH:mm");
-  
+
     var ctime = stime.replace(/:/g, ".");
     var dtime = etime.replace(/:/g, ".");
     //  alert(ctime+ " "+dtime);
-    if (stime === etime||dtime < ctime) {
+    if (stime === etime || dtime < ctime) {
       setErrorMsg("Invalid input");
       setShiftButton(true)
     }
-    else 
-    {
+    else {
       setShiftButton(false)
       setErrorMsg(false)
     }
     const result = moment.utc(moment(etime, "HH:mm:ss").diff(moment(stime, "HH:mm:ss"))).format("HH:mm:ss")
-    console.log("FIRST"+result);
+    console.log("FIRST" + result);
     var workingHours = result.replace(/:/g, ".");
-  console.log("SECOND"+workingHours);
+    console.log("SECOND" + workingHours);
     setWorkingHour(workingHours);
     checkTimeValidation();
 
-    function checkTimeValidation(){
-     
-          if(parseFloat(workingHours)>9)
-          {
-            setShiftButton(true)
-            setWrnMsg("Shift should be only for 9 hours")
-          }
-          else
-          {
-            setWrnMsg(false)
-            
-          }
+    function checkTimeValidation() {
+
+      if (parseFloat(workingHours) > 9) {
+        setShiftButton(true)
+        setWrnMsg("Shift should be only for 9 hours")
+      }
+      else {
+        setWrnMsg(false)
+
+      }
     }
 
-   
-    
+
+
 
     // if(parseInt(workingHours) >9)
     // {
@@ -114,22 +112,22 @@ const CreateShiftModal = (props) => {
     setShowText(true);
     setInvalidText(true)
   }
- 
-const callTimer =()=>{
-  const setModal = props.handleClose;
-    setClear()
-  setModal()
-}
 
-const clearAndClose=()=>{
-  setClear();
-  props.handleClose();
-}
+  const callTimer = () => {
+    const setModal = props.handleClose;
+    setClear()
+    setModal()
+  }
+
+  const clearAndClose = () => {
+    setClear();
+    props.handleClose();
+  }
 
   const onSubmit = e => {
-     const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
-     const etime = moment(endTime, ["h:mm A"]).format("HH:mm");
-     const workingHours = moment.utc(moment(etime, "HH:mm:ss").diff(moment(stime, "HH:mm:ss"))).format("HH:mm:ss");
+    const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
+    const etime = moment(endTime, ["h:mm A"]).format("HH:mm");
+    const workingHours = moment.utc(moment(etime, "HH:mm:ss").diff(moment(stime, "HH:mm:ss"))).format("HH:mm:ss");
     // alert(workingHours);
     var result = parseInt(workingHours);
     if (result <= 5) {
@@ -142,7 +140,7 @@ const clearAndClose=()=>{
         shiftMasterId: 0,
         shiftType,
         workingHours: 0,
-        storeId:"IN1055",
+        storeId: user.costCentre,
         breakStartTime: 0,
         breakEndTime: 0,
         status: 0
@@ -150,13 +148,13 @@ const clearAndClose=()=>{
       setSuccessMsg(true);
       const result = addShift(newShift)
         .then((result) => {
-       //   console.log("api response===", result.data.message);
-        //  console.log("api response===", result.data);
-        //  console.log("api response===", result.data.status);
+          //   console.log("api response===", result.data.message);
+          //  console.log("api response===", result.data);
+          //  console.log("api response===", result.data.status);
           //console.log("api response===", result.data.length);
           toast.info(result.data.message);
           setTimeout(() => {
-           callTimer();
+            callTimer();
           }, 1000);
           viewShift();
         })
@@ -176,7 +174,7 @@ const clearAndClose=()=>{
         shiftMasterId: 0,
         shiftType,
         workingHours: 0,
-        storeId:"IN1055",
+        storeId: user.costCentre,
         breakStartTime: moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
         breakEndTime: moment(breakStartTime).add(1, 'hours').format('HH:mm:ss'),
         status: 0
@@ -184,24 +182,24 @@ const clearAndClose=()=>{
       setSuccessMsg(true);
       const result = addShift(newShift)
         .then((result) => {
-         // console.log("api response===", result.data.message);
-         // console.log("api response===", result.data);
-         // console.log("api response===", result.data.status);
-        //  console.log("api response===", result.data.length);
+          // console.log("api response===", result.data.message);
+          // console.log("api response===", result.data);
+          // console.log("api response===", result.data.status);
+          //  console.log("api response===", result.data.length);
           toast.info(result.data.message);
           setTimeout(() => {
             callTimer();
-           }, 1000);
-           viewShift();
-         })
-     
+          }, 1000);
+          viewShift();
+        })
+
         .catch((error) => {
           alert(" In error catch ", error);
         })
       console.log(result, "in competent");
     }
   }
-//  console.log("shift list names " + shiftListNames)
+  //  console.log("shift list names " + shiftListNames)
   //console.log("======== contract  names" + shiftContractNames)
   return (
     <Modal show={props.modal} onHide={props.handleClose} centered>
@@ -214,7 +212,7 @@ const clearAndClose=()=>{
             <div className="card">
               <div className="card-body">
                 <form onSubmit={onSubmit}>
-             
+
                   <div className="row">
                     <div className="col-sm-6">
                       <div className="form-group">
@@ -227,9 +225,9 @@ const clearAndClose=()=>{
                           showTimeSelect
                           showTimeSelectOnly
                           timeFormat="HH:mm"
-                          timeIntervals={30}
+                          timeIntervals={60}
                           timeCaption="Time"
-                          dateFormat="HH:mm aa"                     
+                          dateFormat="HH:mm aa"
                           placeholderText="Select start time"
                           required
                         />
@@ -237,7 +235,7 @@ const clearAndClose=()=>{
                     </div>
                     <div className="col-sm-6">
                       <div className="form-group">
-                      <label htmlFor="exampleFormControlInput1">EndTime</label>
+                        <label htmlFor="exampleFormControlInput1">EndTime</label>
                         <br />
                         <DatePicker
                           selected={endTime}
@@ -248,19 +246,19 @@ const clearAndClose=()=>{
                           showTimeSelect
                           showTimeSelectOnly
                           timeFormat="HH:mm"
-                          timeIntervals={30}
+                          timeIntervals={60}
                           timeCaption="Time"
                           dateFormat="HH:mm aa"
-                       
+
                           placeholderText="Select end time"
                         />
                       </div>
                     </div>
-                    <h6 style={{ color: "red",fontFamily:"work-Sans, sans-serif",fontSize:"14px",marginLeft:"16px"    }}>{errormsg}</h6>
+                    <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px", marginLeft: "16px" }}>{errormsg}</h6>
                   </div>
-                  <h6 style={{ color: "black",fontFamily:"work-Sans, sans-serif",fontSize:"14px"   }}> Total working hours {workingHours}</h6>
-                      
-                       <h6 style={{color: "red",fontFamily:"work-Sans, sans-serif",fontSize:"14px"}}>{warnMsg}</h6>
+                  <h6 style={{ color: "black", fontFamily: "work-Sans, sans-serif", fontSize: "14px" }}> Total working hours {workingHours}</h6>
+
+                  <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px" }}>{warnMsg}</h6>
                   <div className="row">
                     <div className="col-sm-12">
                       {parseFloat(workingHours) > 5 ?
@@ -288,16 +286,16 @@ const clearAndClose=()=>{
                                 />
                               </div>
                             </div>
-                                                
+
                             {invalidText &&
                               <div className="col-sm-6">
-                              <div className="form-group">
-                                <label htmlFor="exampleFormControlInput1"></label>
-                                <input type="text" style={{marginTop:"7px"}} className="form-control" placeholder={moment(breakStartTime).add(1, 'hours').format('HH:mm A')} />
+                                <div className="form-group">
+                                  <label htmlFor="exampleFormControlInput1"></label>
+                                  <input type="text" style={{ marginTop: "7px" }} className="form-control" placeholder={moment(breakStartTime).add(1, 'hours').format('HH:mm A')} />
+                                </div>
                               </div>
-                            </div>
 
-                          }
+                            }
                           </div>
                           {showText &&
                             <div className="row">
@@ -311,31 +309,31 @@ const clearAndClose=()=>{
                         null
                       }
                     </div>
-                     
-                    <h6 style={{fontFamily:"work-Sans, sans-serif",fontSize:"14px"  }}>{breakDuationMsg && <div className="text-danger pl-3">Break Should be one hour</div>}</h6>
+
+                    <h6 style={{ fontFamily: "work-Sans, sans-serif", fontSize: "14px" }}>{breakDuationMsg && <div className="text-danger pl-3">Break Should be one hour</div>}</h6>
                   </div>
 
-                         
-                   <div className="row">
+
+                  <div className="row">
                     <div className="col-sm-12">
                       <div className="form-group">
                         <label htmlFor="exampleFormControlInput1"> Shift Type</label>
                         <select
                           className="form-control"
                           required
-                        
-                          value={shiftType}                      
-                          onChange={(e)=>setShiftType(e.target.value)}>
+
+                          value={shiftType}
+                          onChange={(e) => setShiftType(e.target.value)}>
 
                           <option value="">Select Shift Type</option>
-                                  <option>Captain</option>
-                                  <option>On Duty</option>
-                                  <option>General</option>
+                          <option>Captain</option>
+                          <option>On Duty</option>
+                          <option>General</option>
                         </select>
                       </div>
                     </div>
                   </div>
-                   <div className="row">
+                  <div className="row">
                     <div className="col-sm-12">
                       <div className="form-group">
                         <label htmlFor="exampleFormControlInput1"> Select Contract Type</label>
@@ -343,9 +341,9 @@ const clearAndClose=()=>{
                           className="form-control"
                           required
                           value={contractType}
-                     
+
                           defaultValue={shiftContractNames.contractType}
-                          onChange={(e)=>setContractType(e.target.value)}>
+                          onChange={(e) => setContractType(e.target.value)}>
 
                           <option value="">Select Contract Type</option>
                           {shiftContractNames.map((e, i) => {
@@ -361,7 +359,7 @@ const clearAndClose=()=>{
                   </div>
                   <button className="myclass mb-2 mr-2" type="submit" disabled={shiftButton} value="Submit">Save</button>
                   {/* <button className="btn btn-primary mb-2 ml-2" value="reset" onClick={setClear}>Clear</button> */}
-                  <button className="myclass mb-2 ml-2" onClick={()=>{clearAndClose()}}>Close</button>
+                  <button className="myclass mb-2 ml-2" onClick={() => { clearAndClose() }}>Close</button>
                 </form>
                 <h5>{successMsg.length !== 0 && <div className="text-success">{successMsg}</div>}</h5>
               </div>

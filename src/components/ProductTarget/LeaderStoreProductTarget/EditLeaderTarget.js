@@ -194,7 +194,7 @@ const EditLeaderTarget = (props) => {
                                     <Form.Group>
                                         <Form.Label>Select Month and Year :</Form.Label>
                                         <Form.Control type="month" className="digit" min={Year + "-" + month} required
-                                            value = {getM}
+                                            defaultValue = {getM}
                                             onChange={(e) => setGetM(e.target.value)}
                                             >
                                         </Form.Control>
@@ -208,7 +208,7 @@ const EditLeaderTarget = (props) => {
                                     <Form.Group>
                                         <Form.Label>Product Target for Weekdays :</Form.Label>
                                         <Form.Control size="lg" type="text" required
-                                            onChange={(e) => fromWeekdaysHandler(e.target.value)} value= {WeekdaysTarget}
+                                            onChange={(e) => fromWeekdaysHandler(e.target.value)} defaultValue= {WeekdaysTarget}
                                             >
                                             
                                         </Form.Control>
@@ -221,7 +221,7 @@ const EditLeaderTarget = (props) => {
                                         <Form.Label>Product Target for Weekends :</Form.Label>
                                         <Form.Control size="lg" type="text" required
                                             onChange={(e) => fromWeekendHandler(e.target.value)}
-                                            value= {WeekendsTarget}
+                                            defaultValue= {WeekendsTarget}
                                             >
                                             
                                         </Form.Control>
@@ -235,7 +235,7 @@ const EditLeaderTarget = (props) => {
                                         <Form.Label>Growth Percentage :</Form.Label>
                                         <Form.Control size="lg" type="text" required
                                             onChange={(e) => fromGrowthHandler(e.target.value)}
-                                            value= {props.editData.growth}
+                                            defaultValue= {props.editData.growth}
                                             >
                                            
                                         </Form.Control>
