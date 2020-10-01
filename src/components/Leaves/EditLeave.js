@@ -291,13 +291,13 @@ const EditLeave = (props) => {
                                             onChange={(e) => setLeaveHandler(e)}>
                                             <option value="">Select</option>
 
-                                            {leaveType.length > 0 && leaveType.map((item, i) => {
+                                            {leaveType!==undefined? leaveType.map((item, i) => {
                                                 return (
                                                     <option key={item.leaveTypeId} value={item.leaveTypeId}
                                                         disabled={(item.paternity === 1 ? true : false) || (item.maternity === 1 ? true : false)} >
                                                         {item.leaveName}</option>
                                                 )
-                                            })
+                                            }) : ""
                                             }
                                         </Form.Control>
                                     </Form.Group>
