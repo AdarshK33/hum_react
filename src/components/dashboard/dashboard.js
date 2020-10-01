@@ -330,7 +330,7 @@ function Dashboard () {
                         </div>
                      {/* : ""}  */}
                    
-                    <Row>
+                    {/* <Row>
                         <Col></Col>
                         <Col xs={8}>
                             <table className="table table-bordered">
@@ -356,7 +356,7 @@ function Dashboard () {
                             </table>
                         </Col>
                         <Col></Col>
-                    </Row>
+                    </Row> */}
                 </div>
                );
 }
