@@ -149,7 +149,7 @@ function Root() {
                                   component={SalaryView}
                                 />
                                 <Route
-                                  path={`${process.env.PUBLIC_URL}/admin/GrantLeaveView`}
+                                  path={`${process.env.PUBLIC_URL}/admin/grantLeaveView`}
                                   component={GrantLeaveView}
                                 />
 
