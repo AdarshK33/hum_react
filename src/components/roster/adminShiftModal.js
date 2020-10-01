@@ -143,7 +143,7 @@ const AdminShiftModal = (props) => {
       dates: days.map((e, i) => days[i].value),
       employeeIds: employee.map((e, i) => employee[i].value),
       shiftId: parseInt(value) ,
-      storeId:"IN1055"
+      storeId:props.mystoreId
     }
    // alert(JSON.stringify(adminAssignShift));
     assignAdminShift(adminAssignShift)

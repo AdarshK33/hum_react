@@ -235,7 +235,7 @@ const EditLeaderTarget = (props) => {
                                         <Form.Label>Growth Percentage :</Form.Label>
                                         <Form.Control size="lg" type="text" required
                                             onChange={(e) => fromGrowthHandler(e.target.value)}
-                                            value= {Percentage}
+                                            value= {props.editData.growth}
                                             >
                                            
                                         </Form.Control>
