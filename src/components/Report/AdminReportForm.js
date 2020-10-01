@@ -28,13 +28,14 @@ const AdminReportForm = () => {
         CostCenter()
     }, []);
 
-    useEffect(() => {
+   /*  useEffect(() => {
         employeeIdData(costCenter)
-    },[costCenter])
+    },[costCenter]) */
 
     const setCostCenterHandler = (e) => {
         let data1 = e.target.value
        setCostCenter(data1)
+       employeeIdData(data1)
        console.log("data1", data1)
     }
     const setEmployeeCostCenterHandler = (options) => {
