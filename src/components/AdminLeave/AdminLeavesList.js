@@ -18,7 +18,8 @@ const AdminLeavesList = (props) => {
     const [empId, setEmpId] = useState()
     const [reason, setReason] = useState()
 
-    const { viewList, leaveList, deleteList } = useContext(LeaveContext)
+    const { viewList, leaveList } = useContext(LeaveContext)
+
 
     /* const handleClose = () => setModal(false)
     const handleShow = () => setModal(true) */

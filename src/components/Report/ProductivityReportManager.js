@@ -5,11 +5,10 @@ import { AdminContext } from '../../context/AdminState'
 import { ClusterContext } from '../../context/ClusterState'
 import { RosterContext } from '../../context/RosterState'
 import { LeaveContext } from '../../context/LeaveState'
-import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment'
 import ProductivityReportManagerView from './ProductivityReportManagerView'
-import Select from 'react-select';
+import { AppContext } from "../../context/AppState";
 
 const ProductivityReportManager = () => {
     const [reportType, setReportType] = useState('')
@@ -26,13 +25,15 @@ const ProductivityReportManager = () => {
     const { viewContractTypes, shiftContractNames } = useContext(RosterContext)
     const { productivityReport, productivityList } = useContext(LeaveContext)
 
+    const { user } = useContext(AppContext);
+
     useEffect(() => {
         viewSports()
         viewContractTypes()
         
     }, []);
     
-    const costCenter = 'IN1055'
+    const costCenter = user.costCenter
     useEffect(() => {
         employeeIdData(costCenter)
         viewClusterCostCenter(costCenter)

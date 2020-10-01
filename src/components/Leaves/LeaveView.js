@@ -10,6 +10,7 @@ import DeleteLeave from './DeleteLeave'
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { LeaveContext } from '../../context/LeaveState'
 import './Leaves.css'
+import { AppContext } from "../../context/AppState";
 
 const LeaveView = () => {
 
@@ -25,18 +26,25 @@ const LeaveView = () => {
     const { leaveList, viewList, leaveDataList, viewLeaveData, viewEmpLeaveData, leaveEmpList  }
         = useContext(LeaveContext);
 
+    const { user } = useContext(AppContext);
+
     const handleClose = () => setModal(false)
 
     const handleEditClose = () => setEditModal(false)
 
     const handleDeleteClose = () => setDeleteModal(false)
 
-console.log("leave data list", leaveDataList.leaveTransactions)
+
     useEffect(() => {
-        viewList()   
-        viewLeaveData()
-        viewEmpLeaveData()
+        viewList() 
     }, [])
+    useEffect(() => {
+        viewLeaveData()
+    }, [])
+    useEffect(() => {
+        viewEmpLeaveData(user.employeeId)
+    }, [user.employeeId])
+
   /*
     if(leaveTypeId === 0 || leaveTypeId === 1){
         var newLeaveTypeId = 1

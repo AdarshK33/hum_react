@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { LeaveContext } from '../../context/LeaveState'
+import { AppContext } from "../../context/AppState";
 import moment from 'moment'
 
 const LeaveAdd = (props) => {
@@ -27,9 +28,10 @@ const LeaveAdd = (props) => {
 
     const { addEmpLeave, addPopup, leavesData, getLeave, leaveType, viewLeaveData, viewEmpData }
         = useContext(LeaveContext);
+
+    const { user } = useContext(AppContext);
     
     useEffect(() => {
-        viewLeaveData()
         viewEmpData()
     },[])
 
@@ -73,7 +75,7 @@ const LeaveAdd = (props) => {
         }
 
         const newPopup = {
-            empId: 'DSI000035',
+            empId: user.employeeId,
             fromDate: moment(startDate).format("YYYY-MM-DD"),
            /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
            leaveCategory: newData,
@@ -95,7 +97,7 @@ const LeaveAdd = (props) => {
         setStartMaternityDate(value2)
 
         const newPopup1 = {
-            empId: 'DSI000035',
+            empId: user.employeeId,
             fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
            /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
            leaveCategory: 'Planned',
@@ -145,16 +147,18 @@ const LeaveAdd = (props) => {
     }
     //get api for leave type
     useEffect(() => {
-        getLeave()
         viewLeaveData()
     }, []);
+    useEffect(() => {
+        getLeave(user.employeeId)
+    }, [user.employeeId]);
 
     // create api
     const onSubmit = e => {
         e.preventDefault()
         const cflag = validation();
         const resetValue = {
-            empId: 'DSI000035',
+            empId: user.employeeId,
             fromDate: '',
             leaveCategory: '',
             leaveTypeId: 0,
@@ -183,7 +187,7 @@ const LeaveAdd = (props) => {
         }
 
         const newLeave1 = {
-            empId: 'DSI000035',
+            empId: user.employeeId,
             fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
            /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
            leaveCategory: 'Planned',
@@ -206,7 +210,7 @@ const LeaveAdd = (props) => {
         }
 
         const newLeave = {
-            empId: 'DSI000035',
+            empId: user.employeeId,
             fromDate: moment(startDate).format("YYYY-MM-DD"),
             /* leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
             leaveCategory: newData,
@@ -233,7 +237,7 @@ const LeaveAdd = (props) => {
     }
 const onCloseModal = () => {
     const resetValue = {
-        empId: 'DSI000035',
+        empId: user.employeeId,
         fromDate: '',
         leaveCategory: '',
         leaveTypeId: 0,
