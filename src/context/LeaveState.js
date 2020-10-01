@@ -69,8 +69,8 @@ export const LeaveProvider = ({ children }) => {
 
   // Get Leave Type
 
-  const getLeave = () => {
-    let empId1 = 'DSI000035'
+  const getLeave = (empId1) => {
+    // let empId1 = 'DSI000035'
     client.get('leave_type/view/' + empId1)
   
       .then((response) => {
@@ -252,9 +252,9 @@ export const LeaveProvider = ({ children }) => {
   }
   
 // Emp data according to their EmpId
-const viewEmpData = () => {
-  let empId1 = 'DSI000035'
-  client.get('employee/view/{empId}' + '?empId='  + empId1)
+const viewEmpData = (id) => {
+  // let empId1 = 'DSI000035'
+  client.get('employee/view/{empId}' + '?empId='  + id)
     .then((response) => {
       state.empData = response.data.data
       console.log("=====GET Emp Data API respone=====", state.empData)
