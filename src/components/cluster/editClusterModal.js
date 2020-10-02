@@ -41,7 +41,7 @@ const EditClusterModal = (props) => {
 
   useEffect(() => {
     viewSports()
-    selectClusterLeader()
+    selectClusterLeader(user.costCentre)
     selectAllClusterLeaderForEdit(user.costCentre)
   }, [user.costCentre])
 
@@ -242,7 +242,7 @@ const EditClusterModal = (props) => {
                     value={clusterLeader}
                     onChange={clusterLeaderSelect}>
 
-                    {clusterAllLeaderNames.map((e, i) => {
+                    {clusterAllLeaderNames !== null && clusterAllLeaderNames.map((e, i) => {
                       return (
 
                         <option key={e.employeeId} value={e.employeeId}>
@@ -250,6 +250,7 @@ const EditClusterModal = (props) => {
                         </option>
                       );
                     })}
+
                   </select>
                 </div>
               </div>
@@ -285,7 +286,7 @@ const EditClusterModal = (props) => {
         </Modal.Body>
 
       </Modal>
-    </Fragment>
+    </Fragment >
   )
 }
 

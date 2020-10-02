@@ -6,18 +6,19 @@ const GrantLeaveAdd = (props) => {
 
 
 
+    const [employeeId, setEmployeeId] = useState('');
     const [numOfDays, setNumOfDays] = useState('');
     const [year, setYear] = useState('');
     const [successMsg, setSuccessMsg] = useState("");
     const [costCenter, setCostCenter] = useState()
     const [employeeCostCenter, setEmployeeCostCenter] = useState('')
-    const { viewGrantLeave, createGrantLeave, CostCenter, costCenterList, employeeIdData, employeeIdList } = useContext(AdminContext);
+    const { viewGrantLeave, createGrantLeave, selectEmployeeForLeave, getEmployeesName, CostCenter, costCenterList, employeeIdData, employeeIdList } = useContext(AdminContext);
 
     const setCostCenterHandler = (e) => {
         let data1 = e.target.value
         setCostCenter(data1)
+        employeeIdData(data1)
         console.log("data1", data1)
-        employeeIdData(costCenter)
     }
     const setEmployeeCostCenterHandler = (e) => {
         let data2 = e.target.value
@@ -27,14 +28,15 @@ const GrantLeaveAdd = (props) => {
     useEffect(() => {
         CostCenter()
     }, [])
-    
+
     // useEffect(() => {
-      
+    //     employeeIdData(costCenter)
     // }, [costCenter])
 
 
 
     const setClear = () => {
+        setEmployeeId('')
         setNumOfDays('')
         setYear('')
         setSuccessMsg('')
@@ -82,7 +84,7 @@ const GrantLeaveAdd = (props) => {
             <Modal show={props.modal} onHide={props.handleClose} centered>
 
                 <Modal.Header closeButton>
-                    <Modal.Title >Grant Leave</Modal.Title>
+                    <Modal.Title>Grant Leave</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form onSubmit={onSubmit}>
@@ -94,9 +96,8 @@ const GrantLeaveAdd = (props) => {
                                             <label htmlFor="exampleFormControlInput1"> Select Cost Center</label>
                                             <select
                                                 className="form-control"
-                                                style={{fontSize:"0.8rem"}}
                                                 required
-                                                onChange={(e) => setCostCenterHandler(e)}>
+                                                onChange={(e) => setCostCenterHandler(e)} >
                                                 <option value="">Select Cost Center</option>
                                                 {costCenterList.map((item, i) => {
                                                     return (
@@ -118,10 +119,9 @@ const GrantLeaveAdd = (props) => {
                                             <select
                                                 className="form-control"
                                                 required
-                                                style={{fontSize:"0.8rem"}}
                                                 onChange={(e) => setEmployeeCostCenterHandler(e)}>
                                                 <option value="">Select Employee</option>
-                                                {employeeIdList.map((item, i) => {
+                                                {employeeIdList !== null && employeeIdList.map((item, i) => {
                                                     return (
                                                         <option key={item.employeeId} value={item.employeeId}>
                                                             {item.firstName}-{item.employeeId}</option>
@@ -131,12 +131,14 @@ const GrantLeaveAdd = (props) => {
                                         </div>
                                     </div>
                                 </div>
+
+
                                 <div className="row">
                                     <div className="col-sm-12">
                                         <div className="form-group">
-                                            <label htmlFor="exampleFormControlInput1">Number Of Days</label>
+                                            <label htmlFor="exampleFormControlInput1">Number of days</label>
 
-                                            <input type="number" style={{fontSize:"0.8rem"}} className="form-control digit" placeholder="Number Of Days" required onChange={(e) => setNumOfDays(e.target.value)} value={numOfDays} />
+                                            <input type="number" className="form-control digit" required onChange={(e) => setNumOfDays(e.target.value)} value={numOfDays} />
                                         </div>
                                     </div>
                                 </div>
@@ -144,7 +146,7 @@ const GrantLeaveAdd = (props) => {
                                     <div className="col-sm-12">
                                         <div className="form-group">
                                             <label htmlFor="exampleFormControlInput1">Year</label>
-                                            <input type="number"  style={{fontSize:"0.8rem"}} placeholder="YYYY" min="2019" max="2021" className="form-control digit" required onChange={(e) => setYear(e.target.value)} value={year} />
+                                            <input type="number" placeholder="YYYY" min="2019" max="2021" className="form-control digit" required onChange={(e) => setYear(e.target.value)} value={year} />
                                         </div>
                                     </div>
                                 </div>
