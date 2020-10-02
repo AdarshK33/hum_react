@@ -8,7 +8,7 @@ import moment from 'moment'
 
 
 const AdminShiftModal = (props) => {
-  console.log("MY PROPS "+  JSON.stringify(props));
+  console.log("MY PROPS " + JSON.stringify(props));
   const [key, setKey] = useState('shift')
   const shiftDateWeek = moment(props.shiftDate, 'YYYY-MM-DD').week();
   const [selectedWeeks, setSelectedWeeks] = useState()
@@ -22,10 +22,10 @@ const AdminShiftModal = (props) => {
   const [days, setDays] = useState([])
   const [assignShiftButton, setAShiftButton] = useState(true);
   const [assignWeekOffButton, setAssignWeekOffButton] = useState(true);
-  const [storecostCenterName,setstorecostCenterName]=useState(''); 
+  const [storecostCenterName, setstorecostCenterName] = useState('');
   const [contractType, setContractType] = useState([])
 
-  const { weekDays, weekOffDays,  availableShifts, availableShiftData, adminRosterAvailableShiftList, adminRosterAvailableShift,
+  const { weekDays, weekOffDays, availableShifts, availableShiftData, adminRosterAvailableShiftList, adminRosterAvailableShift,
     assignAdminShift, getallWeeks, weeksInYear, getEmployeeListForAdminRosterWeekOff, EmployeeListForAdminRosterWeekOff, adminAddWeekOff } = useContext(RosterContext)
 
 
@@ -53,38 +53,38 @@ const AdminShiftModal = (props) => {
 
   useEffect(() => {
     // console.log('shiftDateWeek', shiftDateWeek)
-    console.log("props my store ID " ,props.mystoreId)
+    console.log("props my store ID ", props.mystoreId)
     console.log('props.shiftDate', props.shiftDate)
-    weekOffDays(shiftDateWeek+1)
+    weekOffDays(shiftDateWeek + 1)
   }, [selectedWeeks])
 
 
 
-    //  console.log("i am here"+JSON.stringify(weekDayList));
+  //  console.log("i am here"+JSON.stringify(weekDayList));
 
-      useEffect(() => {
+  useEffect(() => {
 
-        let {shiftDate} = props
-        const weeks = weeksInYear.map(arr => {
-          let weekNumber = arr.weekName.split('Week')[1].trim();
-          return {
-            ...arr,
-            selected: parseInt(weekNumber) === shiftDateWeek
-          }
-        })
-        const days = weekDays.map(arr => {
-          console.log({arr}, shiftDate);
-          return {
-            ...arr,
-            selected: arr.date === shiftDate
-          }
-        })
-        setWeekDayList(weeks)
-        setDayList(days)
-        setWeekDay(shiftDate)
-       // console.log(weeks, 'Shift year');
-      //  console.log(days, 'Shift day');
-      }, [props.shiftDate, weekDays])
+    let { shiftDate } = props
+    const weeks = weeksInYear.map(arr => {
+      let weekNumber = arr.weekName.split('Week')[1].trim();
+      return {
+        ...arr,
+        selected: parseInt(weekNumber) === shiftDateWeek
+      }
+    })
+    const days = weekDays.map(arr => {
+      console.log({ arr }, shiftDate);
+      return {
+        ...arr,
+        selected: arr.date === shiftDate
+      }
+    })
+    setWeekDayList(weeks)
+    setDayList(days)
+    setWeekDay(shiftDate)
+    // console.log(weeks, 'Shift year');
+    //  console.log(days, 'Shift day');
+  }, [props.shiftDate, weekDays])
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -104,7 +104,7 @@ const AdminShiftModal = (props) => {
     setWeekDay('')
     setShowDay(false)
   }
- 
+
   const handleWeeksChange = (e) => {
     let newValue = e.target.value
     console.log("newValue", newValue)
@@ -134,21 +134,21 @@ const AdminShiftModal = (props) => {
 
   }
 
- 
+
 
   const onSubmit1 = (event) => {
-     event.preventDefault()
+    event.preventDefault()
     const adminAssignShift =
     {
       dates: days.map((e, i) => days[i].value),
       employeeIds: employee.map((e, i) => employee[i].value),
-      shiftId: parseInt(value) ,
-      storeId:props.mystoreId
+      shiftId: parseInt(value),
+      storeId: props.mystoreId
     }
-   // alert(JSON.stringify(adminAssignShift));
+    // alert(JSON.stringify(adminAssignShift));
     assignAdminShift(adminAssignShift)
     props.handleClose()
-   
+
   }
 
 
@@ -173,12 +173,12 @@ const AdminShiftModal = (props) => {
                     {/* Name :<h1>{firstName}{contractType}</h1> */}
                     <div className="col-sm-7 ">
                       <div className="form-group">
-                     <h1>{storecostCenterName}</h1>
+                        <h1>{storecostCenterName}</h1>
                         <select
                           className="form-control"
                           style={{ fontSize: "0.8rem" }}
                           required
-                          
+
                           onChange={setShiftAdminList}>
                           <option value="">Select Shift</option>
                           {adminRosterAvailableShiftList.map((item, i) => {
@@ -209,16 +209,16 @@ const AdminShiftModal = (props) => {
                       </div>
                     </div>
                   </div>
-              
+
                   <div className="row py-2">
                     <div className="col-sm-5 px-2">Select Week :</div>
                     <div className="col-sm-7 ">
                       <div className="form-group">
                         <select className="form-control"
-                        required
-                        value={selectedWeeks} onChange={handleWeeksChange}>
+                          required
+                          value={selectedWeeks} onChange={handleWeeksChange}>
                           <option value="" >Select Week</option>
-                         
+
                           {weekDayList.map((item, i) => {
                             return (
                               <option key={item.weekId} selected={item.selected} value={item.weekId}>{item.weekName + " - " + item.year}</option>
@@ -251,8 +251,8 @@ const AdminShiftModal = (props) => {
 
 
                   <div className="note text-primary text-center py-1">
-                   
-                        <button className="btn btn-primary mb-2 mr-2" disabled={assignShiftButton}  type="submit" value="Submit">Assign</button>
+
+                    <button className="btn btn-primary mb-2 mr-2" disabled={assignShiftButton} type="submit" value="Submit">Assign</button>
                   </div>
                 </form>
 
@@ -311,8 +311,8 @@ const AdminShiftModal = (props) => {
                     </div>
                   </div>
                   <div className="justify-content-center d-flex">
-                    <button className="btn btn-primary mb-2 mr-2"    disabled={assignWeekOffButton}  type="submit" value="Submit">Assign</button>
-                
+                    <button className="btn btn-primary mb-2 mr-2" disabled={assignWeekOffButton} type="submit" value="Submit">Assign</button>
+
                   </div>
 
                 </form>

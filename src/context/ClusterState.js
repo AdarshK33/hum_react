@@ -1,7 +1,7 @@
 import React, { createContext, useReducer } from 'react';
 import { client } from '../utils/axios';
 import ClusterReducer from '../reducers/ClusterReducer';
-import {  toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 
 const initial_state = {
@@ -13,10 +13,10 @@ const initial_state = {
   getClusterEmployees: [],
   salaryList: [],
   viewSalaryData: [],
-  salaryStoreList:[],
-  clusterCostCenterList:[],
-  clusterAllLeaderNames:[],
-  getEmployeesNames:[]
+  salaryStoreList: [],
+  clusterCostCenterList: [],
+  clusterAllLeaderNames: [],
+  getEmployeesNames: []
 }
 
 
@@ -39,7 +39,7 @@ export const ClusterProvider = ({ children }) => {
     client.get('cluster/view').then(function (response) {
       //  console.log("data==>" + JSON.stringify(response));
       state.clusterList = response.data.data;
-    //  console.log(JSON.stringify(state.clusterList))
+      //  console.log(JSON.stringify(state.clusterList))
 
       return dispatch({ type: 'FETCH_ClUSTER_LIST', payload: state.clusterList });
     })
@@ -49,11 +49,11 @@ export const ClusterProvider = ({ children }) => {
   }
 
 
-  function selectEmployeeForCluster() {
-    client.get('employee/view/IN1055/cluster_employees').then(function (response) {
+  function selectEmployeeForCluster(storeId) {
+    client.get('employee/view/' + storeId + '/cluster_employees').then(function (response) {
       state.getClusterEmployees = response.data.data;
-      
-     return dispatch({ type: 'FETCH_EMPLOYEE_FOR_CLUSTER', payload: state.getClusterEmployees });
+
+      return dispatch({ type: 'FETCH_EMPLOYEE_FOR_CLUSTER', payload: state.getClusterEmployees });
     })
       .catch(function (error) {
         console.log(error);
@@ -90,13 +90,15 @@ export const ClusterProvider = ({ children }) => {
       const getSingleCluster = response.data.data;
       const getSingleCluster1 = response.data.data.sports;
       const getEmployeesNames = response.data.data.employees;
-      console.log("get single cluster "+JSON.stringify(state.getSingleCluster));
-     // console.log("^^^^"+JSON.stringify(state.getSingleCluster1));
-        return dispatch({ type: 'GET_SINGLE_CLUSTER', payload: {
-         getSingleCluster1,
-         getSingleCluster,
-         getEmployeesNames
-        }})
+      console.log("get single cluster " + JSON.stringify(state.getSingleCluster));
+      // console.log("^^^^"+JSON.stringify(state.getSingleCluster1));
+      return dispatch({
+        type: 'GET_SINGLE_CLUSTER', payload: {
+          getSingleCluster1,
+          getSingleCluster,
+          getEmployeesNames
+        }
+      })
 
     })
       .catch(function (error) {
@@ -109,8 +111,9 @@ export const ClusterProvider = ({ children }) => {
 
 
 
-  function selectClusterLeader() {
-    client.get('employee/view/IN1055/cluster_leader').then(function (response) {
+  function selectClusterLeader(storeId) {
+    //console.log("in cluster state", storeId)
+    client.get('employee/view/' + storeId + '/cluster_leader').then(function (response) {
       //    alert("Leaderes" + JSON.stringify(response));
       state.clusterLeaderNames = response.data.data;
       return dispatch({ type: 'FETCH_LEADERS_NAME', payload: state.clusterLeaderNames });
@@ -120,10 +123,10 @@ export const ClusterProvider = ({ children }) => {
       });
   }
 
-// EDIT CLUSTER LEADER NAMES
+  // EDIT CLUSTER LEADER NAMES
 
-  function selectAllClusterLeaderForEdit() {
-    client.get('employee/view/IN1055').then(function (response) {
+  function selectAllClusterLeaderForEdit(storeId) {
+    client.get('employee/view/' + storeId).then(function (response) {
       state.clusterAllLeaderNames = response.data.data;
       return dispatch({ type: 'FETCH_ALL_LEADERS_NAME', payload: state.clusterAllLeaderNames });
     })
@@ -190,53 +193,54 @@ export const ClusterProvider = ({ children }) => {
 
   }
 
-// View Admin Salary Input 
+  // View Admin Salary Input 
 
-const viewStoreSalary = (month, year, storeId) => {
-  console.log(" in cluster" + month + " " + year, storeId)
+  const viewStoreSalary = (month, year) => {
+    console.log(" in cluster" + month + " " + year)
+    let storeId = 'IN1055'
 
-  client.get('salary/view/store?month=' + month + '&storeId=' + storeId + '&year=' + year)
-  .then((response) => {
-    console.log("slary data on store id", response);
-    state.salaryStoreList = response.data.data;
+    client.get('salary/view/store?month=' + month + '&storeId=' + storeId + '&year=' + year)
+      .then((response) => {
+        console.log("slary data on store id", response);
+        state.salaryStoreList = response.data.data;
 
-    return dispatch({ type: 'FETCH_SALARY_STORE_LIST', payload: state.salaryStoreList });
-  })
-    .catch((error) => {
-      console.log(error);
-    });
-}
-//Approval salary input from admin
+        return dispatch({ type: 'FETCH_SALARY_STORE_LIST', payload: state.salaryStoreList });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  //Approval salary input from admin
 
-const salaryApproval = (salaryData) => {
-  console.log("++++update salary approval api response+++++", salaryData)
-  return client.put('salary/approve',salaryData)
-    .then((response) => {
-      state.message = response.data.message
-      toast.info(state.message)
-      console.log("salary approval list response===>", response.data.data)
-      console.log("salary approval list message===>", state.message)
-      return (
-      dispatch({ type: 'SALARY_APPRROVAL_LIST', payload: state.salaryStoreList })
-      )
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-}
-//view cluster by coster center
-const viewClusterCostCenter = (costCenter) => {
-  return client.get('cluster/view/'+ costCenter)
-  .then((response) => {
-      state.clusterCostCenterList = response.data.data
-      console.log("cluster based on cost center list", state.clusterCostCenterList)
-      console.log("cluster based on cost center message", response.data.message)
-      return dispatch({ type: 'CLUSTER_COST_CENTER', payload: state.clusterCostCenterList})
-  })
-  .catch((error) => {
-    console.log(error)
-  })
-}
+  const salaryApproval = (salaryData) => {
+    console.log("++++update salary approval api response+++++", salaryData)
+    return client.put('salary/approve', salaryData)
+      .then((response) => {
+        state.message = response.data.message
+        toast.info(state.message)
+        console.log("salary approval list response===>", response.data.data)
+        console.log("salary approval list message===>", state.message)
+        return (
+          dispatch({ type: 'SALARY_APPRROVAL_LIST', payload: state.salaryStoreList })
+        )
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+  //view cluster by coster center
+  const viewClusterCostCenter = (costCenter) => {
+    return client.get('cluster/view/' + costCenter)
+      .then((response) => {
+        state.clusterCostCenterList = response.data.data
+        console.log("cluster based on cost center list", state.clusterCostCenterList)
+        console.log("cluster based on cost center message", response.data.message)
+        return dispatch({ type: 'CLUSTER_COST_CENTER', payload: state.clusterCostCenterList })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
   return (<ClusterContext.Provider value={{
     addCluster,
     viewSports,
@@ -259,10 +263,10 @@ const viewClusterCostCenter = (costCenter) => {
     getClusterEmployees: state.getClusterEmployees,
     salaryList: state.salaryList,
     salaryStoreList: state.salaryStoreList,
-    getSingleCluster1:state.getSingleCluster1,
+    getSingleCluster1: state.getSingleCluster1,
     clusterCostCenterList: state.clusterCostCenterList,
-    clusterAllLeaderNames:state.clusterAllLeaderNames,
-    getEmployeesNames:state.getEmployeesNames,
+    clusterAllLeaderNames: state.clusterAllLeaderNames,
+    getEmployeesNames: state.getEmployeesNames,
   }}>
     {children}
   </ClusterContext.Provider>);

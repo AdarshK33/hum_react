@@ -21,7 +21,7 @@ const ShiftModal = (props) => {
 
 
   const { weekDays, weekOffDays, addWeekOff, availableShifts, availableShiftData, assignShift, getallWeeks, weeksInYear } = useContext(RosterContext)
-  const { user } = useContext(AppContext)
+  const { user } = useContext(AppContext);
   //console.log(availableShiftData, "data")
   //console.log(weeksInYear, "weeks")
   useEffect(() => {
@@ -66,7 +66,7 @@ const ShiftModal = (props) => {
 
     const newWeekOff = {
       date: weekDay,
-      employeeId: 'DSI000035'
+      employeeId: user.employeeId,
     }
 
     addWeekOff(newWeekOff)
@@ -96,7 +96,7 @@ const ShiftModal = (props) => {
     const assindata =
     {
       "date": props.shiftDate,
-      "employeeId": "DSI000035",
+      "employeeId": user.employeeId,
       "shiftId": value
     }
     // console.log(assindata)
@@ -111,12 +111,6 @@ const ShiftModal = (props) => {
     setWeekDay(newDay)
     //  console.log("new Day", newDay)
   }
-
-  const click = () =>{
-    console.log(user)
-  }
-
-  
 
   return (
     <Fragment>
@@ -135,7 +129,7 @@ const ShiftModal = (props) => {
               <Tab eventKey='shift' title="Assign Shift">
                 <div className="row py-2 pt-4">
                   <div className="col-sm-6 px-2">Employee Name:</div>
-                  <div className="col-sm-6 px-2">{user.firstName}</div>
+                  <div className="col-sm-6 px-2">{user.firstName} - {user.employeeId}</div>
                 </div>
                 <div className="row py-2">
                   <div className="col-sm-5 px-2">Available Shifts :</div>
@@ -166,15 +160,15 @@ const ShiftModal = (props) => {
               <Tab eventKey="weekoff" title="Assign Week Off">
                 <Form className="mt-3" onSubmit={submitForm}>
 
-                <div className="row py-2">
+                  <div className="row py-2">
                     <div className="col-sm-5 px-2">Select Week :</div>
                     <div className="col-sm-7 ">
                       <div className="form-group">
                         <select className="form-control"
-                        required
-                        value={selectedWeeks} onChange={(e) => handleWeeksChange(e)}>
+                          required
+                          value={selectedWeeks} onChange={(e) => handleWeeksChange(e)}>
                           <option value="" >Select Week</option>
-                         
+
                           {weekDayList.map((item, i) => {
                             return (
                               <option key={item.weekId} selected={item.selected} value={item.weekId}>{item.weekName + " - " + item.year}</option>
@@ -191,16 +185,16 @@ const ShiftModal = (props) => {
                     <div className="col-sm-7 ">
                       <div className="form-group">
                         <select className="form-control"
-                        required
-                        value={selectedWeeks}  onChange={(e) => setWeekDayHandler(e)}>
+                          required
+                          value={selectedWeeks} onChange={(e) => setWeekDayHandler(e)}>
                           <option value="" >Select Week</option>
-                         
+
                           {dayList.map((item, i) => {
-                          return (
-                            <option key={item.date} selected={item.selected} value={item.date}>{item.day}{item.selected}</option>
-                          )
-                        })
-                        }
+                            return (
+                              <option key={item.date} selected={item.selected} value={item.date}>{item.day}{item.selected}</option>
+                            )
+                          })
+                          }
                         </select>
                       </div>
                     </div>
@@ -209,7 +203,7 @@ const ShiftModal = (props) => {
 
 
 
-              
+
                   <div className="justify-content-center d-flex">
                     <Button className="btn-primary btn-cm pl-5 pr-5" size="sm" type="submit">
                       Assign</Button>
