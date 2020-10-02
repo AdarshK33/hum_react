@@ -286,7 +286,7 @@ const EditClusterModal = (props) => {
         </Modal.Body>
 
       </Modal>
-    </Fragment>
+    </Fragment >
   )
 }
 
