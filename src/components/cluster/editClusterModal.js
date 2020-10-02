@@ -82,7 +82,6 @@ const EditClusterModal = (props) => {
     const result = updateCluster(editCluster)
       .then((result) => {
         console.log("api response===", result.data.message);
-
         toast.info(result.data.message);
         setTimeout(() => {
           callTimer();

@@ -1,7 +1,8 @@
 import React, { useState, useContext, Fragment, useEffect } from 'react'
 import { Modal } from 'react-bootstrap'
 import { AdminContext } from "../../context/AdminState";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const GrantLeaveAdd = (props) => {
 
 
@@ -64,12 +65,11 @@ const GrantLeaveAdd = (props) => {
         const result = createGrantLeave(addGrantLeave)
             .then((result) => {
                 console.log("api response===", result.data.message);
-
-                setSuccessMsg(result.data.message);
+                toast.info(result.data.message);
                 setTimeout(() => {
                     callTimer();
                     setClear();
-                }, 4000);
+                }, 2000);
                 viewGrantLeave();
             })
             .catch((error) => {
@@ -92,7 +92,7 @@ const GrantLeaveAdd = (props) => {
                             <div className="col-sm-12">
                                 <div className="row">
                                     <div className="col-sm-12">
-                                        <div className="form-group">
+                                        <div className="form-group md">
                                             <label htmlFor="exampleFormControlInput1"> Select Cost Center</label>
                                             <select
                                                 className="form-control"
@@ -113,7 +113,7 @@ const GrantLeaveAdd = (props) => {
 
                                 <div className="row">
                                     <div className="col-sm-12">
-                                        <div className="form-group">
+                                        <div className="form-group md">
                                             <label htmlFor="exampleFormControlInput1"> Select Employee</label>
 
                                             <select
