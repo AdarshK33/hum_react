@@ -31,7 +31,7 @@ import { LeaveProvider } from "./context/LeaveState";
 import { ClusterProvider } from "./context/ClusterState";
 import { DashboardProvider } from "./context/DashboardState";
 import { StoreProductProvider } from "./context/StoreProductState";
-
+import { RoleManagementProvider } from "./context/RoleManagementState";
 import { ClusterProductProvider } from "./context/ClusterProductState";
 import { AppProvider } from "./context/AppState";
 import { AdminProvider } from "./context/AdminState";
@@ -48,6 +48,8 @@ import StoreProductTarget from "./components/ProductTarget/StoreProductTarget/St
 import LeaderStoreProductTarget from "./components/ProductTarget/LeaderStoreProductTarget/LeaderStoreProductTarget";
 import ClusterProductTarget from './components/ProductTarget/ClusterProductTarget/ClusterProductTarget';
 import LeaderCluster from './components/ProductTarget/LeaderCluster/LeaderCluster';
+import RoleManagemenetList from './components/RoleManagement/RoleManagementList';
+
 
 //firebase Auth
 function Root() {
@@ -66,6 +68,7 @@ function Root() {
               <ClusterProductProvider>
                 <DashboardProvider>
                   <StoreProductProvider>
+                  <RoleManagementProvider>
                     <AdminProvider>
                       <BrowserRouter basename={"/"}>
                         <ScrollContext>
@@ -205,6 +208,12 @@ function Root() {
                                       component={LeaderCluster}
                                     />
 
+                                    {/*Role Management Page */}
+                                    <Route
+                                          path={`${process.env.PUBLIC_URL}/roleManagement`}
+                                          component={RoleManagemenetList}
+                                    />
+
                               </App>
                             </Fragment>
                           </Switch>
@@ -212,6 +221,7 @@ function Root() {
                       </BrowserRouter>
                       {/* </Provider>  */}
                     </AdminProvider>
+                    </RoleManagementProvider>
                   </StoreProductProvider>
                 </DashboardProvider>
               </ClusterProductProvider>

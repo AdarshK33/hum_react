@@ -7,6 +7,7 @@ import { LeaveContext } from '../../context/LeaveState'
 import ManagerReportView from './ManagerReportView'
 import moment from 'moment'
 import Select from 'react-select';
+import { AppContext } from "../../context/AppState";
 /* import {subYears} from 'date-fns/subYears' */
 
 const ManagerReportForm = () => {
@@ -16,14 +17,15 @@ const ManagerReportForm = () => {
     const [leave, setLeave] = useState('')
     const [employeeId, setEmployeeID] = useState()
     const [reportType, setReportType] = useState('')
+    const { user } = useContext(AppContext);
 
     const reportTypeList = [{reportTypeData:'Monthly', id:1}, {reportTypeData:'Yearly', id:2}]
     const { getLeave, leaveType, reportLeave, reportList, employeeType, employeeList } = useContext(LeaveContext);
 
     useEffect(() => {
-        getLeave()
+        getLeave(user.employeeId)
         employeeType()
-    }, []);
+    }, [user.employeeId]);
 
     const fromDateHandler = (date) => {
         let value = date

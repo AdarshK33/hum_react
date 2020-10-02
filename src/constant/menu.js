@@ -68,9 +68,11 @@ export const MENUITEMS = [
             { path: '/productTarget/adminStoreTarget', title: 'Admin Store Target', type: 'link' },           
             { path: '/productTarget/leaderStoreTarget', title: 'Leader Store Target', type: 'link' },
         ]
-    }
+    },
     
-
+    {
+        path: '/roleManagement', title: 'Role Management', icon: File, type: 'link', active: false
+    }
     
 ]
 

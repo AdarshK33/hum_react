@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { LeaveContext } from '../../context/LeaveState'
+import { AppContext } from "../../context/AppState";
 import moment from 'moment'
 
 const LeaveAdd = (props) => {
@@ -27,18 +28,24 @@ const LeaveAdd = (props) => {
 
     const { addEmpLeave, addPopup, leavesData, getLeave, leaveType, viewLeaveData, viewEmpData }
         = useContext(LeaveContext);
+
+    const { user } = useContext(AppContext);
     
     useEffect(() => {
-        viewLeaveData()
-        viewEmpData()
-    },[])
+        viewEmpData(props.empid)
+        getLeave(props.empid)
+    },[props.empid])
+
+    // useEffect(() => {
+    //     getLeave(user.employeeId)
+    // }, [user.employeeId]);
 
    /*  const handleClosePopup = () => setModal(false)
     const handleShowPopup = () => setModal(true) */
 
     const today = new Date()
     const currentYear = new Date('2020-01-01')
-    const nextYear = new Date('2020-12-31')
+    const nextYear = new Date('2021-12-31')
     
     const fromDateHandler = (date) => {
         let value = date
@@ -73,7 +80,7 @@ const LeaveAdd = (props) => {
         }
 
         const newPopup = {
-            empId: 'DSI000035',
+            empId: user.employeeId,
             fromDate: moment(startDate).format("YYYY-MM-DD"),
            /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
            leaveCategory: newData,
@@ -95,7 +102,7 @@ const LeaveAdd = (props) => {
         setStartMaternityDate(value2)
 
         const newPopup1 = {
-            empId: 'DSI000035',
+            empId: user.employeeId,
             fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
            /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
            leaveCategory: 'Planned',
@@ -145,16 +152,18 @@ const LeaveAdd = (props) => {
     }
     //get api for leave type
     useEffect(() => {
-        getLeave()
-        viewLeaveData()
-    }, []);
+        viewLeaveData(user.employeeId)
+    }, [user.employeeId]);
+    useEffect(() => {
+        getLeave(user.employeeId)
+    }, [user.employeeId]);
 
     // create api
     const onSubmit = e => {
         e.preventDefault()
         const cflag = validation();
         const resetValue = {
-            empId: 'DSI000035',
+            empId: user.employeeId,
             fromDate: '',
             leaveCategory: '',
             leaveTypeId: 0,
@@ -183,7 +192,7 @@ const LeaveAdd = (props) => {
         }
 
         const newLeave1 = {
-            empId: 'DSI000035',
+            empId: user.employeeId,
             fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
            /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
            leaveCategory: 'Planned',
@@ -206,7 +215,7 @@ const LeaveAdd = (props) => {
         }
 
         const newLeave = {
-            empId: 'DSI000035',
+            empId: user.employeeId,
             fromDate: moment(startDate).format("YYYY-MM-DD"),
             /* leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
             leaveCategory: newData,
@@ -233,7 +242,7 @@ const LeaveAdd = (props) => {
     }
 const onCloseModal = () => {
     const resetValue = {
-        empId: 'DSI000035',
+        empId: user.employeeId,
         fromDate: '',
         leaveCategory: '',
         leaveTypeId: 0,
@@ -281,14 +290,14 @@ const onCloseModal = () => {
                                             onChange={(e) => setLeaveHandler(e)}>
                                             <option value="">Select</option>
 
-                                            {leaveType.length > 0 && leaveType.map((item, i) => {
+                                            {leaveType!==undefined? leaveType.map((item, i) => {
                                                 return (
                                                         <option key={item.leaveTypeId} value={item.leaveTypeId}
                                                         disabled={(item.paternity === 1 ? true : false) || (item.maternity === 1 ? true : false)} >
                                                         {item.leaveName}</option>
                                                     
                                                 )
-                                            })
+                                            }): ""
                                             }
                                         </Form.Control>
                                     </Form.Group>

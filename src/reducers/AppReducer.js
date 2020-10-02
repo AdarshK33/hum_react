@@ -8,7 +8,8 @@ import {
   ADD_MIXlAYOUT,
   SET_ACCESS_TOKEN_SUCCESS,
   SET_ACCESS_TOKEN_FAIL,
-  AUTHENTICATE_USER
+  AUTHENTICATE_USER,
+  FETCH_USER_INFO
 } from "../constant/actionTypes";
 import ConfigDB from "../data/customizer/config";
 
@@ -22,12 +23,13 @@ const initial_state = {
   mix_layout: "",
   app: {
     loaded: false,
-    isLoggedin:false
+    isLoggedin: false
   },
 };
 
-export default (state = initial_state, action) => {  
-const data = action.payload;
+export default (state = initial_state, action) => {
+  console.log("IN REDUCER " + JSON.stringify(state.user));
+  const data = action.payload;
 
   switch (action.type) {
     case ADD_COSTOMIZER:
@@ -86,16 +88,20 @@ const data = action.payload;
         },
       };
 
-      case AUTHENTICATE_USER:
-        return {
-          ...state,
-          app: {
-            ...state.app,
-            isLoggedin:action.payload
-          },
-        };
+    case AUTHENTICATE_USER:
+      return {
+        ...state,
+        app: {
+          ...state.app,
+          isLoggedin: action.payload
+        },
+      };
 
-
+    case FETCH_USER_INFO:
+      return {
+        ...state,
+        user: action.payload
+      };
 
     default:
       return { ...state };

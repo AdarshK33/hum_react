@@ -7,6 +7,7 @@ import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { LeaveContext } from '../../context/LeaveState'
 import { AdminContext } from '../../context/AdminState'
+import { AppContext } from "../../context/AppState";
 /* import { format } from 'date-fns' */
 import moment from 'moment'
 
@@ -33,6 +34,8 @@ const AdminLeaveAdd = (props) => {
 
      const {CostCenter,costCenterList, employeeIdData, employeeIdList } = useContext(AdminContext)
 
+     const { user } = useContext(AppContext);
+
      const today = new Date()
      const currentYear = new Date('2020-01-01')
     const nextYear = new Date('2020-12-31')
@@ -41,9 +44,9 @@ const AdminLeaveAdd = (props) => {
          CostCenter()
      },[])
 
-     useEffect(() => {
+    /*  useEffect(() => {
         employeeIdData(costCenter)
-    },[costCenter])
+    },[costCenter]) */
 
      useEffect(() => {
         setEmployeeId(props.employeeId)
@@ -56,10 +59,13 @@ const AdminLeaveAdd = (props) => {
      const setCostCenterHandler = (e) => {
          let data1 = e.target.value
         setCostCenter(data1)
+        employeeIdData(data1)
         console.log("data1", data1)
+        console.log("costCenter", data1)
      }
      const setEmployeeCostCenterHandler = (e) => {
          let data2 = e.target.value
+         getLeave(e.target.value);
          setEmployeeCostCenter(data2)
          console.log("data2", data2)
      }
@@ -93,7 +99,7 @@ const AdminLeaveAdd = (props) => {
               newData = 'Unplanned'
          }
          const newPopup = {
-            empId: 'DSI000035',
+            empId: user.employeeId,
             fromDate: moment(startDate).format("YYYY-MM-DD"),
            /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
            leaveCategory: newData,
@@ -115,7 +121,7 @@ const AdminLeaveAdd = (props) => {
         setStartMaternityDate(value2)
 
         const newPopup1 = {
-            empId: 'DSI000035',
+            empId: user.employeeId,
             fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
            /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
            leaveCategory: 'Planned',
@@ -160,16 +166,19 @@ const AdminLeaveAdd = (props) => {
     }
 
       //get api for leave type
-      useEffect(() => {
-        getLeave()
-    }, []);
+    //   useEffect(() => {
+    //     getLeave()
+    // }, []);
+    useEffect(() => {
+        getLeave(user.employeeId)
+    }, [user.employeeId]);
 
     // create api
     const onSubmit = e => {
         e.preventDefault()
         const cflag = validation();
         const resetValue = {
-            empId: 'DSI000035',
+            empId: user.employeeId,
             fromDate: '',
             leaveCategory: '',
             leaveTypeId: 0,
@@ -244,7 +253,7 @@ const AdminLeaveAdd = (props) => {
     }
     const onCloseModal = () => {
         const resetValue = {
-            empId: 'DSI000035',
+            empId: user.employeeId,
             fromDate: '',
             leaveCategory: '',
             leaveTypeId: 0,
@@ -312,7 +321,7 @@ const AdminLeaveAdd = (props) => {
                                         onChange={(e) => setEmployeeCostCenterHandler(e)}>
                                             <option value="">Select Employee</option>
                                             
-                                        {employeeIdList.length > 0 && employeeIdList.map((item, i) => {
+                                        {employeeIdList !== null && employeeIdList.length > 0 && employeeIdList.map((item, i) => {
                                             return (
                                                 <option key={item.employeeId} value={item.employeeId}>
                                                 {item.firstName}-{item.employeeId}</option>
@@ -332,7 +341,7 @@ const AdminLeaveAdd = (props) => {
                                         onChange={(e) => setLeaveHandler(e)}>
                                             <option value="">Select Leave Type</option>
                                             
-                                        {leaveType.length > 0 && leaveType.map((item, i) => {
+                                        {leaveType !== undefined && leaveType.length > 0 && leaveType.map((item, i) => {
                                             return (
                                                 <option key={item.leaveTypeId} value={item.leaveTypeId}
                                                 disabled={(item.paternity === 1 ? true : false) || (item.maternity === 1 ? true : false)}>

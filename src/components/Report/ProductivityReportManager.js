@@ -5,11 +5,10 @@ import { AdminContext } from '../../context/AdminState'
 import { ClusterContext } from '../../context/ClusterState'
 import { RosterContext } from '../../context/RosterState'
 import { LeaveContext } from '../../context/LeaveState'
-import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment'
 import ProductivityReportManagerView from './ProductivityReportManagerView'
-import Select from 'react-select';
+import { AppContext } from "../../context/AppState";
 
 const ProductivityReportManager = () => {
     const [reportType, setReportType] = useState('')
@@ -26,13 +25,15 @@ const ProductivityReportManager = () => {
     const { viewContractTypes, shiftContractNames } = useContext(RosterContext)
     const { productivityReport, productivityList } = useContext(LeaveContext)
 
+    const { user } = useContext(AppContext);
+
     useEffect(() => {
         viewSports()
         viewContractTypes()
         
     }, []);
     
-    const costCenter = 'IN1055'
+    const costCenter = user.costCenter
     useEffect(() => {
         employeeIdData(costCenter)
         viewClusterCostCenter(costCenter)
@@ -92,7 +93,7 @@ const ProductivityReportManager = () => {
                         <div className="col-sm-4">
                             <Form.Group>
                                 <Form.Label>Cost Center Id</Form.Label>
-                                <Form.Control type="text" disabled value='IN1055' />
+                                <Form.Control type="text" disabled value={user.costCentre} />
                             </Form.Group>
                         </div>
                         <div className="col-sm-4">
@@ -118,7 +119,7 @@ const ProductivityReportManager = () => {
                                     onChange={(e) => setEmployeeCostCenterHandler(e)}>
                                     <option value="">Select Employee</option>
 
-                                    {employeeIdList.length > 0 && employeeIdList.map((item, i) => {
+                                    {employeeIdList !== null && employeeIdList.length > 0 && employeeIdList.map((item, i) => {
                                         return (
                                             <option key={item.employeeId} value={item.employeeId}>
                                                 {item.firstName}-{item.employeeId}</option>
@@ -151,7 +152,8 @@ const ProductivityReportManager = () => {
                                 <Form.Control as="select" onChange={(e) => setClusterHandler(e)}
                                     value={cluster} >
                                     <option value="">Select Cluster Type</option>
-                                    {clusterCostCenterList.map((item, i) => {
+                                    {clusterCostCenterList !== null &&
+                                    clusterCostCenterList.map((item, i) => {
                                         return (
                                             <option key={item.clusterId} value={item.clusterId}>{item.clusterName}</option>
                                         )

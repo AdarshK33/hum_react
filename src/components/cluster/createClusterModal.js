@@ -5,13 +5,10 @@ import Select from 'react-select';
 import { Multiselect } from 'multiselect-react-dropdown';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AppContext } from "../../context/AppState";
 const CreateClusterModal = (props) => {
 
-  useEffect(() => {
-    viewSports()
-    selectClusterLeader()
-    selectEmployeeForCluster()
-  }, [])
+
   const [clusterName, setClusterName] = useState("");
   const [description, setDescription] = useState("");
   const [clusterLeader, setClusterLeader] = useState('');
@@ -41,6 +38,13 @@ const CreateClusterModal = (props) => {
 
   const { addCluster, viewCluster, viewSports, sportsNames, clusterLeaderNames,
     selectClusterLeader, selectEmployeeForCluster, getClusterEmployees } = useContext(ClusterContext);
+  const { user } = useContext(AppContext);
+
+  useEffect(() => {
+    viewSports()
+    selectClusterLeader(user.costCentre)
+    selectEmployeeForCluster(user.costCentre)
+  }, [user.costCentre])
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -49,7 +53,7 @@ const CreateClusterModal = (props) => {
       clusterLeader,
       clusterName,
       description,
-      storeId: "IN1055",
+      storeId: user.costCentre,
       sportIds: sportsList.map((e) => e.sportId),
       employeeIds: employee.map((e) => e.employeeId)
     }
@@ -190,18 +194,6 @@ const CreateClusterModal = (props) => {
               <div className="col-sm-12">
                 <div className="form-group">
                   <label htmlFor="exampleFormControlInput1"> Select Employee</label>
-                  {/* <Select
-                    name="filters"
-                    placeholder="Select Employee"
-                    value={employee}   
-                    style={{fontSize:"0.8rem"}}         
-                    options={getClusterEmployees.map(e => ({ label: e.firstName +" "+e.employeeId, value: e.employeeId }))}
-                    onChange={handleMultiChange1}
-                    isMulti
-                  /> */}
-
-
-
                   <Multiselect
                     required
                     placeholder="Select Employee"
@@ -227,14 +219,15 @@ const CreateClusterModal = (props) => {
                     style={{ fontSize: "0.8rem" }}
                     onChange={clusterLeaderSelect}>
                     <option value="">Select Cluster Leader</option>
-                    {clusterLeaderNames.map((e, i) => {
-                      return (
+                    {clusterLeaderNames !== null
+                      && clusterLeaderNames.map((e, i) => {
+                        return (
 
-                        <option key={e.employeeId} value={e.employeeId}>
-                          {e.firstName}
-                        </option>
-                      );
-                    })}
+                          <option key={e.employeeId} value={e.employeeId}>
+                            {e.firstName}
+                          </option>
+                        );
+                      })}
                   </select>
                 </div>
               </div>

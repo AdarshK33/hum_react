@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Cookies from "js-cookie";
-axios.defaults.baseURL =  process.env.REACT_APP_BASEURL
+axios.defaults.baseURL = process.env.REACT_APP_BASEURL
 axios.defaults.headers.common['Authorization'] = 'Bearer AUTH_TOKEN'
 export const client = axios;
 
@@ -9,15 +9,11 @@ export const setDefaultHeader = AUTH_TOKEN => axios.defaults.headers.common['Aut
 
 const getRefreshToken = () => {
     console.log("INSIDE THE GET_REFRESH_TOKEN")
-    alert("inside get refresh token")
     let refreshToken = Cookies.get('APPRT');
     let config = {
         method: "get",
         url: "http://humine.theretailinsights.co/auth/token/refresh?refresh_token=" + refreshToken,
-        headers: {
-            "cache-control": "no-cache",
-            "Content-Type": "application/x-www-form-urlencoded",
-        }
+
     };
     return client(config)
 }
@@ -49,7 +45,12 @@ client.interceptors.response.use(
         if (status === 401) {
             return getRefreshToken()
                 .then((response) => {
-                    const { access_token, refresh_token } = response.data;
+                    console.log("INSIDE THE INTERSECPECTOR ", response)
+                    const { data: {
+                        data: {
+                            access_token, refresh_token
+                        }
+                    } } = response;
                     Cookies.set("APPAT", access_token);
                     Cookies.set("APPRT", refresh_token, { expires: 0.5 });
                     console.log(axios.defaults);

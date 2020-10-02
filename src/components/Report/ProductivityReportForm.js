@@ -18,7 +18,7 @@ const ProductivityReportForm = () => {
     const [sports, setSports] = useState(null)
     const [cluster, setCluster] = useState(null)
     const [contractTypeData, setContractType] = useState('')
-    const [getM, setGetM] = useState('2020-09')
+    const [getM, setGetM] = useState(new Date())
     /* const [startYear, setStartYear] = useState() */
 
     const reportTypeList = [{ reportTypeData: 'Monthly', id: 1 }, { reportTypeData: 'Yearly', id: 2 }]
@@ -34,14 +34,16 @@ const ProductivityReportForm = () => {
         
     }, []);
 
-    useEffect(() => {
+  /*   useEffect(() => {
         employeeIdData(costCenter)
         viewClusterCostCenter(costCenter)
-    }, [costCenter])
+    }, [costCenter]) */
 
     const setCostCenterHandler = (e) => {
         let data1 = e.target.value
         setCostCenter(data1)
+        employeeIdData(data1)
+        viewClusterCostCenter(data1)
         console.log("data1", data1)
     }
     const setEmployeeCostCenterHandler = (e) => {
@@ -87,7 +89,7 @@ const ProductivityReportForm = () => {
         setSports('')
         setCluster('')
         setContractType('')
-        setGetM('2020-09')
+        setGetM(new Date())
 
     }
     return (
@@ -148,7 +150,7 @@ const ProductivityReportForm = () => {
                         <div className="col-sm-4">
                             <Form.Group>
                             <Form.Label>Select Sports</Form.Label>
-                                <Form.Control as="select" onChange={(e) => setSports(e.target.value)}
+                                <Form.Control as="select" onChange={(e) => setSportsHandler(e)}
                                     value={sports} >
                                     <option value="">Select Sports Type</option>
                                     {sportsNames.map((item, i) => {
