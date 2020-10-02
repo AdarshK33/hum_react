@@ -18,6 +18,7 @@ const getRefreshToken = () => {
     return client(config)
 }
 
+
 // let authTokenRequest;
 
 // const resetAuthTokenRequest = () => {
