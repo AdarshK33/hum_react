@@ -139,10 +139,10 @@ export const ClusterProvider = ({ children }) => {
 
 
   // SALARY INPUT
-  function viewSalary(month, year) {
+  function viewSalary(month, year,id) {
     console.log(" in cluster" + month + " " + year)
 
-    client.get('salary/view?month=' + month + '&year=' + year).then(function (response) {
+    client.get('salary/view?month=' + month + '&year=' + year+ '&storeId='+id).then(function (response) {
       console.log("data==>" + JSON.stringify(response));
       console.log("data==>1", response);
       state.salaryList = response.data.data;
