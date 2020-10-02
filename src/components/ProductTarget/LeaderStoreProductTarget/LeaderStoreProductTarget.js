@@ -5,6 +5,7 @@ import { Edit2, Slash, Trash2 } from 'react-feather'
 import EditLeaderTarget from './EditLeaderTarget';
 import AddLeaderTarget from './AddLeaderTarget';
 import { StoreProductContext } from "../../../context/StoreProductState";
+import { AppContext } from "../../../context/AppState";
 
 const LeaderStoreProductTarget = () => {
     const [modal, setModal] = useState(false);
@@ -13,9 +14,10 @@ const LeaderStoreProductTarget = () => {
     const [Year, setYear] = useState();
     const [editModal, setEditModal] = useState(false);
     const { storeLeaderProductList,LeaderTargetList,editTargetHandler,editTarget } = useContext(StoreProductContext);
-
+    const { user } = useContext(AppContext);
+    
     const handleClose = () => {
-        LeaderTargetList('IN1055');
+        LeaderTargetList(user.costCentre);
         setModal(false);
     }
     useEffect(() => { 
@@ -26,9 +28,9 @@ const LeaderStoreProductTarget = () => {
         setTodayDate(dd);
         setMonth(mm);
         setYear(yyyy);
-        LeaderTargetList('IN1055')
+        LeaderTargetList(user.costCentre)
     }, []);
-
+    console.log(user);
     const targetEditHandler = (id) => {
        
         editTargetHandler(id);
@@ -82,7 +84,7 @@ const LeaderStoreProductTarget = () => {
                             </tr>
                         </thead>
 
-                        {storeLeaderProductList.length > 0 &&
+                        {storeLeaderProductList !== null && storeLeaderProductList.length > 0 &&
                             storeLeaderProductList.map((item, i) => {
                                 return (
                                    <tbody key={i + 1}>

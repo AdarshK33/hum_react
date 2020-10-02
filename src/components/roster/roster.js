@@ -4,6 +4,7 @@ import { RosterContext } from "../../context/RosterState";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ShiftModal from "./shiftModal";
+import { AppContext } from "../../context/AppState";
 import moment from 'moment'
 
 const Roster = () => {
@@ -11,8 +12,8 @@ const Roster = () => {
   const [endDate, setEndDate] = useState(moment().add('30', 'd'));
   const [modal, setModal] = useState(false)
   const [shiftDate, setshiftDate] = useState(false)
-  const { weekOffDataEmp, weekOffDataList,availableShifts } = useContext(RosterContext)
-
+  const { weekOffDataEmp, weekOffDataList, availableShifts } = useContext(RosterContext)
+  const { user } = useContext(AppContext);
   const handleClose = () => setModal(false)
   const handleShow = (item) => {
     console.log(item, "item onclick")
@@ -21,14 +22,17 @@ const Roster = () => {
     availableShifts();
   }
 
+
+
   useEffect(() => {
-    weekOffDataEmp(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD") )
+    console.log(user.employeeId)
+    weekOffDataEmp(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"), user.employeeId)
   }, [])
-//use effect
+  //use effect
   const submitDate = (e) => {
 
     e.preventDefault();
-    weekOffDataEmp(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"))
+    weekOffDataEmp(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"), user.employeeId)
     console.log("weekOff Data", startDate)
   }
   const checkCondition = (item) => {
@@ -83,11 +87,11 @@ const Roster = () => {
                       </div>
                     </div>
                     <div className="col-sm-4">
-                      <button className="myclass" style={{marginTop:"20px"}}type="button" onClick={(e) => submitDate(e)}>Submit</button>
+                      <button className="myclass" style={{ marginTop: "20px" }} type="button" onClick={(e) => submitDate(e)}>Submit</button>
                     </div>
                   </div>
 
-{/* roster changes */}
+                  {/* roster changes */}
 
 
                 </form>
@@ -99,7 +103,7 @@ const Roster = () => {
                   <thead style={{ background: '#006EBB', color: 'white' }}>
                     <tr>
 
-                   
+
                       <th scope="col"><br /> Sunday</th>
                       <th scope="col"><br />Monday</th>
                       <th scope="col"><br /> Tuesday</th>
@@ -119,25 +123,25 @@ const Roster = () => {
                               {item.employeeRosters.map((data, ind) => {
                                 if (ind === 0) {
                                   let newData = new Date(data.date)
-                                 // console.log(newData.getDay(), "day")
-                                  if(newData.getDay() === 0){
+                                  // console.log(newData.getDay(), "day")
+                                  if (newData.getDay() === 0) {
                                     return (
                                       <>
                                         {/* {Array.from(Array(newData.getDay() - 1)).map(() => <td></td>)} */}
                                         <td>{item.weekName}<br />{data.date}<br />{checkCondition(data)}</td>
                                       </>
-                                      
+
                                     )
-                                  }else{
+                                  } else {
                                     return (
                                       <>
                                         {Array.from(Array(newData.getDay())).map(() => <td></td>)}
                                         <td>{item.weekName}<br />{data.date}<br />{checkCondition(data)}</td>
                                       </>
-                                    
+
                                     )
                                   }
-                                  
+
                                 } else {
                                   return <td>{item.weekName}<br />{data.date}<br />{checkCondition(data)}</td>
                                 }

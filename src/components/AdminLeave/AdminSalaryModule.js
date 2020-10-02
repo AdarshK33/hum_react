@@ -9,6 +9,7 @@ import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import { ClusterContext } from "../../context/ClusterState";
 import "react-datepicker/dist/react-datepicker.css";
 import { useHistory } from "react-router-dom";
+import { AppContext } from "../../context/AppState";
 
 const AdminSalaryModule = () => {
   const [shiftButton] = useState(false);
@@ -24,18 +25,21 @@ const AdminSalaryModule = () => {
     salaryApproval,
   } = useContext(ClusterContext);
 
+  const { user } = useContext(AppContext);
+
   const handleDeleteClose = () => setDeleteModal(false);
 
-  useEffect(() => {
+ /*  useEffect(() => {
     viewStoreSalary();
-  }, []);
+  }, []); */
 
   const onSubmit = (e) => {
     e.preventDefault();
     const month = moment(getM, ["YYYY-MM"]).format("M");
     const year = moment(getM, ["MMM Do YY"]).format("YYYY");
+    const storeId = user.costCenter
     // alert(month, year)
-    viewStoreSalary(month, year);
+    viewStoreSalary(month, year, storeId);
   };
 
   const approvedButton = () => {
@@ -207,7 +211,8 @@ const AdminSalaryModule = () => {
                     </tr>
                   </thead>
 
-                  {salaryStoreList.map((item, i) => {
+                  {
+                  salaryStoreList.map((item, i) => {
                     return (
                       <tbody key={i + 1}>
                         <tr>

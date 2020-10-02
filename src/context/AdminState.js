@@ -52,7 +52,7 @@ const CostCenter = () => {
 //employee id according to cost center
 
 const employeeIdData = (costData) => {
-  alert("costData========", costData);
+ /*  alert("costData========", costData); */
   client.get('employee/view/leave_view/' + '?costCentre=' + costData)
   .then((response) => {
     state.employeeIdList = response.data.data

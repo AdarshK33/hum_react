@@ -7,6 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer,  } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { LeaveContext } from '../../context/LeaveState'
+import { AppContext } from "../../context/AppState";
 
 import moment from 'moment'
 
@@ -27,6 +28,8 @@ const EditLeave = (props) => {
     let history = useHistory();
 
     const { getLeave, leaveType, leavesData, addPopup, editEmpList } = useContext(LeaveContext);
+
+    const { user } = useContext(AppContext);
 
     const today = new Date()
     const currentYear = new Date('2020-01-01')
@@ -69,7 +72,7 @@ const EditLeave = (props) => {
              newData = 'Unplanned'
         }
         const newPopup = {
-            empId: 'DSI000035',
+            empId: user.employeeId,
             fromDate: moment(value).format("YYYY-MM-DD"),
            /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
            leaveCategory: newData,
@@ -112,7 +115,7 @@ const EditLeave = (props) => {
              newData = 'Unplanned'
         }
         const newPopup = {
-            empId: 'DSI000035',
+            empId: user.employeeId,
             fromDate: moment(startDate).format("YYYY-MM-DD"),
            /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
            leaveCategory: newData,
@@ -134,7 +137,7 @@ const EditLeave = (props) => {
         setStartMaternityDate(value2)
 
         const newPopup1 = {
-            empId: 'DSI000035',
+            empId: user.employeeId,
             fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
            /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
            leaveCategory:'Planned',
@@ -169,7 +172,7 @@ const EditLeave = (props) => {
 
     //get api for leave type
     useEffect(() => {
-        getLeave();
+        getLeave(user.employeeId);
     }, []);
 
     // create api
@@ -177,7 +180,7 @@ const EditLeave = (props) => {
         e.preventDefault()
 
         const editLeave = {
-            empId: 'DSI000035',
+            empId: user.employeeId,
             fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
             leaveCategory: 'Planned',
             /* leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
@@ -198,7 +201,7 @@ const EditLeave = (props) => {
              newData = 'Unplanned'
         }
         const editLeave1 = {
-            empId: 'DSI000035',
+            empId: user.employeeId,
             fromDate: moment(startDate).format("YYYY-MM-DD"),
            /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
            leaveCategory: newData,
@@ -237,7 +240,7 @@ const EditLeave = (props) => {
     }
     const onCloseModal = () => {
         const resetValue = {
-            empId: 'DSI000035',
+            empId: user.employeeId,
             fromDate: '',
             leaveCategory: '',
             leaveTypeId: 0,
@@ -288,13 +291,13 @@ const EditLeave = (props) => {
                                             onChange={(e) => setLeaveHandler(e)}>
                                             <option value="">Select</option>
 
-                                            {leaveType.length > 0 && leaveType.map((item, i) => {
+                                            {leaveType!==undefined? leaveType.map((item, i) => {
                                                 return (
                                                     <option key={item.leaveTypeId} value={item.leaveTypeId}
                                                         disabled={(item.paternity === 1 ? true : false) || (item.maternity === 1 ? true : false)} >
                                                         {item.leaveName}</option>
                                                 )
-                                            })
+                                            }) : ""
                                             }
                                         </Form.Control>
                                     </Form.Group>

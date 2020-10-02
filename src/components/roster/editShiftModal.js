@@ -4,6 +4,7 @@ import moment from 'moment';
 import "react-datepicker/dist/react-datepicker.css";
 import { Modal } from 'react-bootstrap'
 import { RosterContext } from "../../context/RosterState";
+import { AppContext } from "../../context/AppState";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -37,6 +38,7 @@ const EditShiftModal = (props) => {
   const [breakNumber, setBreakNumber] = useState()
 
   const { updateShift, viewShift, singleShiftList, viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
+  const { user } = useContext(AppContext);
   const setClear = () => {
     setShiftType('')
     setStartTime('')
@@ -168,7 +170,7 @@ const EditShiftModal = (props) => {
         shiftType,
         shiftMasterId: singleShiftList.shiftMasterId,
         workingHours: 0,
-        storeId: "IN1055",
+        storeId: user.costCentre,
         breakStartTime: 0,
         breakEndTime: 0,
         status: status
@@ -201,7 +203,7 @@ const EditShiftModal = (props) => {
           shiftType,
           shiftMasterId: singleShiftList.shiftMasterId,
           workingHours: 0,
-          storeId: "IN1055",
+          storeId: user.costCentre,
           breakStartTime: moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
           breakEndTime: moment(breakStartTime).add(1, 'hours').format('HH:mm:ss'),
           status: status
@@ -238,7 +240,7 @@ const EditShiftModal = (props) => {
           shiftType,
           shiftMasterId: singleShiftList.shiftMasterId,
           workingHours: 0,
-          storeId: "IN1055",
+          storeId: user.costCentre,
           breakStartTime: moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
           breakEndTime: moment(breakEndTime, ["h:mm A"]).format("HH:mm:ss"),
           status: status
@@ -405,7 +407,7 @@ const EditShiftModal = (props) => {
                               <div className="col-sm-6">
                                 <div className="form-group">
                                   <label htmlFor="exampleFormControlInput1"></label>
-                                  <input type="text" style={{ marginTop: "7px" }} className="form-control" placeholder={breakEndTime}  defaultValue={singleShiftList.breakEndTime} value={moment(breakStartTime).add(1, 'hours').format('HH:mm A')} />
+                                  <input type="text" style={{ marginTop: "7px" }} className="form-control" placeholder={breakEndTime} defaultValue={singleShiftList.breakEndTime} value={moment(breakStartTime).add(1, 'hours').format('HH:mm A')} />
                                 </div>
 
                               </div>
