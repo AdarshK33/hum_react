@@ -170,9 +170,12 @@ const AdminLeaveEdit = (props) => {
      let d3 = d2.setDate(d2.getDate() + 179)
 
     //get api for leave type
+    // useEffect(() => {
+    //     getLeave();
+    // }, []);
     useEffect(() => {
-        getLeave();
-    }, []);
+        getLeave(user.employeeId)
+    }, [user.employeeId]);
 
     // create api
     const onSubmit = e => {
@@ -293,7 +296,7 @@ const AdminLeaveEdit = (props) => {
                                     <Form.Control as="select" size="sm"  value={leave}
                                         onChange={(e) => setLeaveHandler(e)} required>
                                             <option value="">Select</option>
-                                        {leaveType.length > 0 && leaveType.map((item, i) => {
+                                        {leaveType !== undefined &&  leaveType !== leaveType.length > 0 && leaveType.map((item, i) => {
                                             return (
                                                 <option key={item.leaveTypeId} value={item.leaveTypeId} 
                                                 disabled={(item.paternity === 1 ? true : false) || (item.maternity === 1 ? true : false)}>

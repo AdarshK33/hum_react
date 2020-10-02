@@ -8,6 +8,7 @@ import moment from 'moment'
 import { AdminContext } from '../../context/AdminState'
 import AdminReportView from './AdminReportView'
 import Select from 'react-select';
+import { AppContext } from "../../context/AppState";
 
 const AdminReportForm = () => {
     const [reportType, setReportType] = useState('')
@@ -17,6 +18,7 @@ const AdminReportForm = () => {
     const [leave, setLeave] = useState([])
     const [costCenter, setCostCenter] = useState()
     const [employeeCostCenter, setEmployeeCostCenter] = useState([])
+    const { user } = useContext(AppContext);
     
     const reportTypeList = [{reportTypeData:'Monthly', id:1}, {reportTypeData:'Yearly', id:2}]
 
@@ -24,9 +26,9 @@ const AdminReportForm = () => {
     const {CostCenter,costCenterList, employeeIdData, employeeIdList } = useContext(AdminContext)
 
     useEffect(() => {
-        getLeave()
+        getLeave(user.employeeId)
         CostCenter()
-    }, []);
+    }, [user.employeeId]);
 
    /*  useEffect(() => {
         employeeIdData(costCenter)

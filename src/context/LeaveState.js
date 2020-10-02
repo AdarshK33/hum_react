@@ -1,7 +1,8 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer,useContext } from 'react';
 import { client } from '../utils/axios';
 import { ToastContainer, toast } from "react-toastify";
 import LeaveReducer from '../reducers/LeaveReducer'
+import { AppContext } from "../context/AppState";
 
 
 const initialState = {
@@ -22,7 +23,7 @@ export const LeaveContext = createContext();
 
 export const LeaveProvider = ({ children }) => {
   const [state, dispatch] = useReducer(LeaveReducer, initialState);
-
+  const { user } = useContext(AppContext);
   
   //View Leave
 
@@ -30,7 +31,7 @@ export const LeaveProvider = ({ children }) => {
     client.get('leave_transaction/view')
       .then((response) => {
         state.leaveList =  response.data.data
-        getLeave();
+        getLeave(user.employeeId);
         console.log("=====GET API respone=====", state.leaveList)
         return (
           dispatch({ type: 'FETCH_LEAVE_LIST', payload: state.leaveList })
@@ -42,9 +43,9 @@ export const LeaveProvider = ({ children }) => {
   }
 
   // View Leave Data
-  const viewLeaveData = () => {
-    let empId1 = 'DSI000035'
-    client.get('leave_transaction/view/' + empId1)
+  const viewLeaveData = (empId1) => {
+    // let empId1 = 'DSI000035'
+    client.get('leave_transaction/view/' + user.employeeId)
       .then((response) => {
         state.leaveDataList = response.data.data
         console.log("=====GET Leave Data API respone=====", state.leaveDataList)
@@ -56,7 +57,7 @@ export const LeaveProvider = ({ children }) => {
   }
   // View Leave Data
   const viewEmpLeaveData = (empId1) => {
-    client.get('leave_transaction/view/' + empId1)
+    client.get('leave_transaction/view/' + user.employeeId)
       .then((response) => {
         state.leaveEmpList = response.data.data.leaveTransactions
         console.log("=====GET Leave Data API respone=====", state.leaveEmpList)
@@ -112,7 +113,7 @@ export const LeaveProvider = ({ children }) => {
           toast.info(state.message)
           viewList();
           viewLeaveData();
-          getLeave()
+          getLeave(user.employeeId)
           console.log("new create list response===>", response.data.data)
           console.log("new create list message===>", state.message)
           return  dispatch({ type: 'ADD_NEW_LEAVE', payload: state.leaveList })
@@ -133,7 +134,7 @@ export const LeaveProvider = ({ children }) => {
             toast.info(state.message)
             viewEmpLeaveData()
             viewLeaveData();
-            getLeave()
+            getLeave(user.employeeId)
             console.log("new create list response===>", response.data.data)
             console.log("new create list message===>", state.message)
             return  dispatch({ type: 'ADD_EMP_NEW_LEAVE', payload: state.leaveEmpList })
@@ -157,7 +158,7 @@ export const LeaveProvider = ({ children }) => {
         toast.info(state.message)
         viewList()
         viewLeaveData();
-        getLeave()
+        getLeave(user.employeeId)
         console.log("??????new edit list response????????", response.data.data)
         console.log("??????new edit list message????????", state.message)
         return  dispatch({ type: 'EDIT_LEAVE', payload: state.leaveList })
@@ -176,7 +177,7 @@ export const LeaveProvider = ({ children }) => {
         toast.info(state.message)
         viewEmpLeaveData()
         viewLeaveData();
-        getLeave()
+        getLeave(user.employeeId)
         console.log("??????new edit list response????????", response.data.data)
         console.log("??????new edit list message????????", state.message)
         return  dispatch({ type: 'EDIT_EMP_LEAVE', payload: state.leaveEmpList })
@@ -254,7 +255,7 @@ export const LeaveProvider = ({ children }) => {
 // Emp data according to their EmpId
 const viewEmpData = (id) => {
   // let empId1 = 'DSI000035'
-  client.get('employee/view/{empId}' + '?empId='  + id)
+  client.get('employee/view/{empId}' + '?empId='  + user.employeeId)
     .then((response) => {
       state.empData = response.data.data
       console.log("=====GET Emp Data API respone=====", state.empData)
@@ -273,7 +274,7 @@ const reportLeave = (reportData) => {
           state.message = response.data.message
           state.reportList = response.data.data
           toast.info(state.message)
-          getLeave()
+          getLeave(user.employeeId)
           console.log("new report list response===>", response.data.data)
           console.log("new report list message===>", state.message)
           return dispatch({ type: 'REPORT_LEAVE', payload: state.reportList })

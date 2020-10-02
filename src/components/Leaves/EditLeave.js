@@ -173,7 +173,7 @@ const EditLeave = (props) => {
     //get api for leave type
     useEffect(() => {
         getLeave(user.employeeId);
-    }, []);
+    }, [user.employeeId]);
 
     // create api
     const onSubmit = e => {

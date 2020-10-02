@@ -65,6 +65,7 @@ const AdminLeaveAdd = (props) => {
      }
      const setEmployeeCostCenterHandler = (e) => {
          let data2 = e.target.value
+         getLeave(e.target.value);
          setEmployeeCostCenter(data2)
          console.log("data2", data2)
      }
@@ -165,9 +166,12 @@ const AdminLeaveAdd = (props) => {
     }
 
       //get api for leave type
-      useEffect(() => {
-        getLeave()
-    }, []);
+    //   useEffect(() => {
+    //     getLeave()
+    // }, []);
+    useEffect(() => {
+        getLeave(user.employeeId)
+    }, [user.employeeId]);
 
     // create api
     const onSubmit = e => {
@@ -317,7 +321,7 @@ const AdminLeaveAdd = (props) => {
                                         onChange={(e) => setEmployeeCostCenterHandler(e)}>
                                             <option value="">Select Employee</option>
                                             
-                                        {employeeIdList.length > 0 && employeeIdList.map((item, i) => {
+                                        {employeeIdList !== null && employeeIdList.length > 0 && employeeIdList.map((item, i) => {
                                             return (
                                                 <option key={item.employeeId} value={item.employeeId}>
                                                 {item.firstName}-{item.employeeId}</option>
@@ -337,7 +341,7 @@ const AdminLeaveAdd = (props) => {
                                         onChange={(e) => setLeaveHandler(e)}>
                                             <option value="">Select Leave Type</option>
                                             
-                                        {leaveType.length > 0 && leaveType.map((item, i) => {
+                                        {leaveType !== undefined && leaveType.length > 0 && leaveType.map((item, i) => {
                                             return (
                                                 <option key={item.leaveTypeId} value={item.leaveTypeId}
                                                 disabled={(item.paternity === 1 ? true : false) || (item.maternity === 1 ? true : false)}>

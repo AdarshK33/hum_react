@@ -78,7 +78,7 @@ const AdminLeaveApproval = () => {
                                 
                             </tr>
                         </thead>
-                        {ApprovalLeaveList.length > 0 &&
+                        {ApprovalLeaveList !== null && ApprovalLeaveList.length > 0 &&
                             ApprovalLeaveList.map((item, i) => {
                                 return (
                                     <tbody key={i}>

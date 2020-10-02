@@ -32,15 +32,20 @@ const LeaveAdd = (props) => {
     const { user } = useContext(AppContext);
     
     useEffect(() => {
-        viewEmpData(user.employeeId)
-    },[])
+        viewEmpData(props.empid)
+        getLeave(props.empid)
+    },[props.empid])
+
+    // useEffect(() => {
+    //     getLeave(user.employeeId)
+    // }, [user.employeeId]);
 
    /*  const handleClosePopup = () => setModal(false)
     const handleShowPopup = () => setModal(true) */
 
     const today = new Date()
     const currentYear = new Date('2020-01-01')
-    const nextYear = new Date('2020-12-31')
+    const nextYear = new Date('2021-12-31')
     
     const fromDateHandler = (date) => {
         let value = date
@@ -147,8 +152,8 @@ const LeaveAdd = (props) => {
     }
     //get api for leave type
     useEffect(() => {
-        viewLeaveData()
-    }, []);
+        viewLeaveData(user.employeeId)
+    }, [user.employeeId]);
     useEffect(() => {
         getLeave(user.employeeId)
     }, [user.employeeId]);

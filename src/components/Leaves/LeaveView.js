@@ -39,8 +39,8 @@ const LeaveView = () => {
         viewList() 
     }, [])
     useEffect(() => {
-        viewLeaveData()
-    }, [])
+        viewLeaveData(user.employeeId)
+    }, [user.employeeId])
     useEffect(() => {
         viewEmpLeaveData(user.employeeId)
     }, [user.employeeId])
@@ -74,14 +74,14 @@ const LeaveView = () => {
                                 <Row>
                                     <Col>
                                         <Row className="text-center">
-                                            <p>Available:{leaveDataList.eligibleLeave ?
+                                            <p>Available:{leaveDataList !== undefined && leaveDataList.eligibleLeave ?
                                                 (leaveDataList.leaveApplied.General == null ? leaveDataList.eligibleLeave.General :
                                                     ((leaveDataList.eligibleLeave.General - leaveDataList.leaveApplied.General) <= 0 ? '0' :
                                                         (leaveDataList.eligibleLeave.General - leaveDataList.leaveApplied.General))) :
                                                 ''}</p>
                                         </Row>
                                         <Row className="text-center">
-                                            <p>Taken:{leaveDataList.leaveApplied ? (leaveDataList.leaveApplied.General == null ? '0' : leaveDataList.leaveApplied.General) :
+                                            <p>Taken:{leaveDataList !== undefined && leaveDataList.leaveApplied ? (leaveDataList.leaveApplied.General == null ? '0' : leaveDataList.leaveApplied.General) :
                                                 0}</p>
                                         </Row>
                                     </Col>
@@ -101,7 +101,7 @@ const LeaveView = () => {
                                 <Row>
                                     <Col>
                                         <Row className="text-center">
-                                            <p>Taken:{leaveDataList.leaveApplied ? (leaveDataList.leaveApplied.LOP == null ? '0' : leaveDataList.leaveApplied.LOP) :
+                                            <p>Taken:{leaveDataList !== undefined && leaveDataList.leaveApplied ? (leaveDataList.leaveApplied.LOP == null ? '0' : leaveDataList.leaveApplied.LOP) :
                                                 ''}</p>
                                         </Row>
                                     </Col>
@@ -121,13 +121,13 @@ const LeaveView = () => {
                                 <Row>
                                     <Col>
                                         <Row className="text-center">
-                                        <p>Available:{leaveDataList.eligibleLeave ?
+                                        <p>Available:{leaveDataList !== undefined && leaveDataList.eligibleLeave ?
                                                 (leaveDataList.leaveApplied.GrantLeave == null ? leaveDataList.eligibleLeave.GrantLeave :
                                                         (leaveDataList.eligibleLeave.GrantLeave - leaveDataList.leaveApplied.GrantLeave)) :
                                                 ''}</p>
                                         </Row>
                                         <Row className="text-center">
-                                            <p>Taken: {leaveDataList.leaveApplied ? (leaveDataList.leaveApplied.GrantLeave == null ? '0' : leaveDataList.leaveApplied.GrantLeave) :
+                                            <p>Taken: {leaveDataList !== undefined && leaveDataList.leaveApplied ? (leaveDataList.leaveApplied.GrantLeave == null ? '0' : leaveDataList.leaveApplied.GrantLeave) :
                                                 ''}</p>
                                         </Row>
                                     </Col>
@@ -144,7 +144,8 @@ const LeaveView = () => {
                         <Button className="apply-button btn btn-light"
                         onClick={() => {setModal(true) }}>Apply</Button>
                     </Col>
-                    <LeaveAdd handleClose={handleClose} modal={modal} />
+                    {user.employeeId !== undefined ?<LeaveAdd handleClose={handleClose} modal={modal} empid = {user.employeeId} /> : ""}
+                    
                 </Row>
 
                 <div className="table-responsive">
@@ -193,10 +194,11 @@ const LeaveView = () => {
                             })}
                     </Table>
                     <DeleteLeave handleDeleteClose={handleDeleteClose} modal={deleteModal} ltId={ltId} />
-                    <EditLeave handleEditClose={handleEditClose} modal={editModal}
+                    {user.employeeId !== undefined ?
+                    <EditLeave handleEditClose={handleEditClose} modal={editModal} empid = {user.employeeId}
                         leaveTypeId={leaveTypeId === 0 || leaveTypeId === 1 ? (leaveTypeId = 1) : (leaveTypeId === 2 ? (leaveTypeId = 2) :
                             leaveTypeId === 3 ? (leaveTypeId = 3):'')} fromDate={fromDate} toDate={toDate}
-                        reason={reason} ltId={ltId} />
+                        reason={reason} ltId={ltId} />:""}
                 </div>
 
             </div>
