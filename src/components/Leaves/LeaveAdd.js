@@ -99,7 +99,13 @@ const LeaveAdd = (props) => {
 
     const setStartMaternityDateHandler = (date) => {
         let value2 = date
+        console.log("MATERNITY=======")
+        console.log(value2)
         setStartMaternityDate(value2)
+
+        var d1 = new Date(startMaternityDate);
+        var d2 = new Date(d1)
+        var d3 = d2.setDate(d2.getDate() + 179)
 
         const newPopup1 = {
             empId: user.employeeId,
@@ -126,6 +132,8 @@ const LeaveAdd = (props) => {
 
     const setLeaveHandler = (e) => {
         const leave1 = e.target.value
+        console.log("LEAVE TYPE===================")
+        console.log(leave1)
         setLeave(leave1)
 
        /*  const test1 = leaveType.filter(qa => qa.leaveName === leave1)[0].leaveName
@@ -303,7 +311,7 @@ const onCloseModal = () => {
                                     </Form.Group>
                                 </div>
                             </Row>
-                            {leave === 'Maternity' ?
+                            {leave === '3' ?
                                     <Row style={{margin:'0'}}>
                                         <div classNmae="col-sm-6">
                                             <Form.Group>
