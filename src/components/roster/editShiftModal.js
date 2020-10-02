@@ -349,11 +349,6 @@ const EditShiftModal = (props) => {
                     </div>
                   }
 
-
-
-
-
-
                   {/* {showBreakDuration2 && */}
                   <div className="row">
                     <div className="col-sm-12">

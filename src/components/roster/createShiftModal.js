@@ -148,7 +148,7 @@ const CreateShiftModal = (props) => {
       setSuccessMsg(true);
       const result = addShift(newShift)
         .then((result) => {
-          //   console.log("api response===", result.data.message);
+          console.log("api response===", result.data.message);
           //  console.log("api response===", result.data);
           //  console.log("api response===", result.data.status);
           //console.log("api response===", result.data.length);
