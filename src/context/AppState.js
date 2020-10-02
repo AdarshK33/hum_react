@@ -50,14 +50,18 @@ export const AppProvider = ({ children, history }) => {
     };
     client(config)
       .then((resp) => {
+        const { status, data: { data: { access_token, refresh_token } } } = resp;
         console.log("1 " + resp.data.data.access_token);
         console.log("2 " + resp.data.data.refresh_token);
         console.log({ resp });
-        if (resp && resp.status === 200) {
-          Cookies.set('APPAT', resp.data.data.access_token)
-          Cookies.set('APPRT', resp.data.data.refresh_token)
-          const { data, data: { refresh_token, access_token } } = resp;
+        if (status === 200) {
+          Cookies.set('APPAT', access_token)
+          Cookies.set('APPRT', refresh_token)
+          // const { data, data: { refresh_token, access_token } } = resp;
 
+          setTimeout(() => { }, 1000)
+          console.log("===" + access_token);
+          console.log("===" + refresh_token);
           // Cookies.set('APPSID', {refresh_token, access_token});
           setDefaultHeader(resp.data.data.access_token)
 
