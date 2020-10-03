@@ -4,7 +4,7 @@ import moment from 'moment';
 import "./salary.css";
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { ClusterContext } from "../../context/ClusterState";
-
+import { DashboardContext } from "../../context/DashboardState";
 import EditSalary from './EditSalary'
 import "react-datepicker/dist/react-datepicker.css";
 import { Edit2, } from 'react-feather'
@@ -12,9 +12,16 @@ function ViewShift() {
   // useEffect(() => {
   //   viewSalary()
   // }, [])
+
+  useEffect(()=>{
+    viewCostCentre()
+  }, [])
   const [shiftButton] = useState(false);
   const [getM, setGetM] = useState();
-  const { viewSalary, salaryList } = useContext(ClusterContext);
+
+  const { cosCentreList,viewCostCentre } = useContext(DashboardContext);
+  const { viewSalary, salaryList } = useContext(ClusterContext); 
+
   const [editModal, setEditModal] = useState(false)
   const [employeeId, setEmployeeId] = useState()
   const [firstName, setFirstName] = useState()
@@ -29,7 +36,9 @@ function ViewShift() {
   const [status, setStatus] = useState()
   const [statusDesc, setStatusDesc] = useState()
   const [totalHours, setTotalHours] = useState()
+  const [additionalHours, setadditionalHours] = useState()
   const [year, setYear] = useState()
+  const [costCenter, setCostCenter] = useState()
 
   const handleEditClose = () => setEditModal(false)
 
@@ -39,7 +48,12 @@ function ViewShift() {
     const month = moment(getM, ["YYYY-MM"]).format("M");
     const year = moment(getM, ["MMM Do YY"]).format('YYYY');
     // alert(month, year)
-    viewSalary(month, year)
+    viewSalary(month, year, costCenter)
+  }
+
+
+  const costCenterHandler = e =>{
+    setCostCenter(e)
   }
 
 
@@ -63,6 +77,22 @@ function ViewShift() {
               </div>
 
             </div>
+            
+              {/* <div className="form-group">
+                <label htmlFor="exampleFormControlInput1" >Select Store<span style = {{color:'red'}}>*</span>&nbsp; </label>
+                  <select
+                    className="form-control Value"
+                    onChange={(e)=>costCenterHandler(e.target.value)}
+                    >
+                    <option value="">Select</option>
+                    { cosCentreList.map((e, i) => {
+                      return(
+                          <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
+                      })}
+                                         
+                      </select>
+              </div> */}
+            
 
             <div className="col-sm-3 mt-4">
               <button className="btn btn-primary.btn-primary.dec mb-2 mt-3" style={{ background: "#006EBB", color: "#FFF" }} type="submit" disabled={shiftButton} value="Submit">Submit</button>
@@ -103,7 +133,7 @@ function ViewShift() {
                     </tr>
                   </thead>
 
-                  { salaryList.length > 0 && salaryList.map((item, i) => {
+                  {salaryList !== null && salaryList.length > 0 && salaryList.map((item, i) => {
                     return (
                       <tbody key={i + 1}>
                         <tr>
@@ -126,6 +156,7 @@ function ViewShift() {
                             setReason(item.reason); setMonth(item.month); setSalaryId(item.salaryId);
                             setStatus(item.status); setStatusDesc(item.statusDesc);
                             setTotalHours(item.totalHours); setYear(item.year);
+                            setadditionalHours(item.additionalHours);
                           }} /> : 
                           <Edit2 disabled style={{color:'lightgrey'}} />}
                           </td>
@@ -138,7 +169,7 @@ function ViewShift() {
                     )
                   })}
                 </table>
-                {(salaryList.length <= 0) ? <p style={{ textAlign: "center" }}>Select Month and Year</p> : null}
+                {(salaryList  !== null && salaryList.length <= 0) ? <p style={{ textAlign: "center" }}>Select Month and Year</p> : null}
                 {/* {salaryList.length>0 ?<p>No data found</p>:null} */}
               </div>
             </div>
@@ -149,6 +180,7 @@ function ViewShift() {
           firstName={firstName} lastName={lastName} numberOfHours={numberOfHours}
           lop={lop} contractType={contractType} extraHours={extraHours} reason={reason}
           month={month} salaryId={salaryId} status={status} statusDesc={statusDesc} totalHours={totalHours} year={year}
+          additionalHours={additionalHours}
         />
 
       </div>

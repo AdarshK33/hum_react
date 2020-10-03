@@ -10,12 +10,14 @@ const initialState = {
   leaveType: [],
   message: '',
   leavesData: {},
+  editLeavesData: {},
   leaveDataList: {},
   holidayDataList:{},
   empData:[],
   reportList:[],
   employeeList:[],
-  leaveEmpList:[]
+  leaveEmpList:[],
+  leaveTypeReport:[]
  
 }
 
@@ -83,6 +85,19 @@ export const LeaveProvider = ({ children }) => {
         console.log(error)
       })
   }
+// get leave for report
+  const getLeaveReport = () => {
+    client.get('leave_type/view/')
+  
+      .then((response) => {
+        state.leaveTypeReport = response.data.data
+        console.log("get leave type", state.leaveTypeReport)
+        return dispatch({ type: 'FETCH_LEAVE_TYPE_REPORT', payload: state.leaveTypeReport })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
 
   // Add new Leave 
   const addPopup = (newPopup) => {
@@ -91,7 +106,7 @@ export const LeaveProvider = ({ children }) => {
       .then((response) => {
         state.message = response.data.message
         state.leavesData = response.data.data 
-        console.log("Pop upresponse===>", JSON.stringify(state.leavesData))
+        console.log("NAV ????????????Pop upresponse===>", JSON.stringify(state.leavesData))
         console.log("Pop upresponse===>", state.leavesData)
         console.log("Pop up message===>", state.message)
         return (
@@ -149,6 +164,23 @@ export const LeaveProvider = ({ children }) => {
 
 
   //Edit Leave
+  const editPopup = (editPopup) => {
+    console.log("edit data", editPopup)
+    return client.put('leave_transaction/update', editPopup)
+      .then((response) => {
+        state.message = response.data.message
+        state.editLeavesData = response.data.data 
+        console.log("edit pop up response===>", JSON.stringify(state.editLeavesData))
+        console.log("edit pop up response===>", state.editLeavesData)
+        console.log("edit pop up response===>", state.message)
+        return (
+        dispatch({ type: 'Edit_POPUP_LEAVE', payload: state.editLeavesData })
+        )
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
 
   const editList = (editLeave) => {
     console.log("??????????????????edit api id response???????????????/", editLeave)
@@ -211,6 +243,7 @@ export const LeaveProvider = ({ children }) => {
         client.delete('leave_transaction/delete' + '?ltId=' + leaveId)
         .then((response) => {
           toast.info(response.data.message)
+          console.log("response message for delete", response.data.message)
           viewEmpLeaveData()
           viewLeaveData();
           console.log("-----delete data-----", response)
@@ -351,6 +384,8 @@ else {
       editEmpList,
       deleteEmpList,
       viewEmpLeaveData,
+      editPopup,
+      getLeaveReport,
       leaveList: state.leaveList,
       leaveType: state.leaveType,
       message: state.message,
@@ -361,7 +396,9 @@ else {
       reportList: state.reportList,
       employeeList: state.employeeList,
       productivityList: state.productivityList,
-      leaveEmpList: state.leaveEmpList
+      leaveEmpList: state.leaveEmpList,
+      editLeavesData: state.editLeavesData,
+      leaveTypeReport: state.leaveTypeReport
      
     }}>
       {children}

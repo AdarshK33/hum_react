@@ -312,12 +312,8 @@ const AdminShiftModal = (props) => {
                   </div>
                   <div className="justify-content-center d-flex">
                     <button className="btn btn-primary mb-2 mr-2" disabled={assignWeekOffButton} type="submit" value="Submit">Assign</button>
-
                   </div>
-
                 </form>
-
-
                 <br />
                 <h6 className="note text-secondary text-center pb-2"> Note: Only same contract employees can be selected</h6>
 

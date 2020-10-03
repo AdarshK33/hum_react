@@ -211,7 +211,7 @@ const AdminSalaryModule = () => {
                     </tr>
                   </thead>
 
-                  {
+                  {salaryStoreList !== null &&
                   salaryStoreList.map((item, i) => {
                     return (
                       <tbody key={i + 1}>
@@ -249,7 +249,7 @@ const AdminSalaryModule = () => {
                     );
                   })}
                 </table>
-                {salaryStoreList.length <= 0 ? (
+                {salaryStoreList !== null && salaryStoreList.length <= 0 ? (
                   <p style={{ textAlign: "center" }}>Select Month and Year</p>
                 ) : null}
                 {/* {salaryList.length>0 ?<p>No data found</p>:null} */}

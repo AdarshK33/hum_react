@@ -19,6 +19,9 @@ const LeaveReducer = (state, action) => {
         case 'ADD_POPUP_LEAVE':
             return { ...state, leavesData: action.payload }
 
+        case 'Edit_POPUP_LEAVE':
+            return { ...state, editLeavesData: action.payload }
+    
         case 'EDIT_LEAVE':
             return { ...state, leaveList: action.payload }
 
@@ -27,6 +30,9 @@ const LeaveReducer = (state, action) => {
 
         case 'FETCH_LEAVE_TYPE':
             return ({ ...state, leaveType: action.payload })
+
+        case 'FETCH_LEAVE_TYPE_REPORT':
+            return ({ ...state, leaveTypeReport: action.payload })
 
         case 'FETCH_GRANT_LEAVE':
             return ({ ...state, grantLeave: action.payload })

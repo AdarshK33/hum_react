@@ -20,12 +20,15 @@ const ManagerReportForm = () => {
     const { user } = useContext(AppContext);
 
     const reportTypeList = [{reportTypeData:'Monthly', id:1}, {reportTypeData:'Yearly', id:2}]
-    const { getLeave, leaveType, reportLeave, reportList, employeeType, employeeList } = useContext(LeaveContext);
+    const { getLeaveReport, leaveTypeReport, reportLeave, reportList, employeeType, employeeList } = useContext(LeaveContext);
 
     useEffect(() => {
-        getLeave(user.employeeId)
         employeeType()
     }, [user.employeeId]);
+
+    useEffect(() => {
+        getLeaveReport()
+    },[])
 
     const fromDateHandler = (date) => {
         let value = date
@@ -127,7 +130,7 @@ const ManagerReportForm = () => {
                                 placeholder="Select Leave Type"
                                 value={leave} 
                                 style={{fontSize:"0.8rem"}}
-                                options={leaveType.map(e => ({label: e.leaveName , value: e.leaveTypeId}))}
+                                options={leaveTypeReport !== undefined && leaveTypeReport.map(e => ({label: e.leaveName , value: e.leaveTypeId}))}
                                 onChange={setLeaveHandler}
                                 isMulti />
                             </Form.Group>

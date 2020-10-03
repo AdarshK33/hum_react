@@ -44,7 +44,7 @@ const CreateClusterModal = (props) => {
     viewSports()
     selectClusterLeader(user.costCentre)
     selectEmployeeForCluster(user.costCentre)
-  }, [user.costCentre])
+  }, [user.costCentre, user.costCentre])
 
   const onSubmit = (event) => {
     event.preventDefault();

@@ -33,11 +33,12 @@ const ProductivityReportManager = () => {
         
     }, []);
     
-    const costCenter = user.costCenter
+    const costCenter = user.costCentre
+
     useEffect(() => {
-        employeeIdData(costCenter)
-        viewClusterCostCenter(costCenter)
-    }, [costCenter])
+        employeeIdData(user.costCentre)
+        viewClusterCostCenter(user.costCentre)
+    }, [user.costCentre])
 
     const setEmployeeCostCenterHandler = (e) => {
         let data2 = e.target.value
@@ -71,7 +72,7 @@ const ProductivityReportManager = () => {
         const employeeId = employeeCostCenter; 
         const month = moment(getM, ["YYYY-MM"]).format("M");
         const sportId = sports;
-        const storeId = costCenter;
+        const storeId = user.costCentre;
         const year = moment(getM, ["MMM Do YY"]).format('YYYY');
         console.log("productivity data", month, storeId, year )
         productivityReport(clusterId, contractType, employeeId, month ,sportId,storeId, year )

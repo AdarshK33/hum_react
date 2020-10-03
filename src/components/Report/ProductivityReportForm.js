@@ -118,7 +118,7 @@ const ProductivityReportForm = () => {
                                 <Form.Control as="select" required value={costCenter}
                                     onChange={(e) => setCostCenterHandler(e)}>
                                     <option>Select Cost Center</option>
-                                    {costCenterList.length > 0 && costCenterList.map((item, i) => {
+                                    { costCenterList.map((item, i) => {
                                         return (
                                             <option key={item.costCenterId} value={item.costCentreName}>
                                                 {item.costCentreName}</option>
@@ -137,7 +137,7 @@ const ProductivityReportForm = () => {
                                     onChange={(e) => setEmployeeCostCenterHandler(e)}>
                                     <option value="">Select Employee</option>
 
-                                    {employeeIdList.length > 0 && employeeIdList.map((item, i) => {
+                                    {employeeIdList !== null && employeeIdList.map((item, i) => {
                                         return (
                                             <option key={item.employeeId} value={item.employeeId}>
                                                 {item.firstName}-{item.employeeId}</option>
@@ -153,7 +153,7 @@ const ProductivityReportForm = () => {
                                 <Form.Control as="select" onChange={(e) => setSportsHandler(e)}
                                     value={sports} >
                                     <option value="">Select Sports Type</option>
-                                    {sportsNames.map((item, i) => {
+                                    {sportsNames !== undefined && sportsNames.map((item, i) => {
                                         return (
                                             <option key={item.sportId} value={item.sportId}>{item.sportName}</option>
                                         )
@@ -170,7 +170,7 @@ const ProductivityReportForm = () => {
                                 <Form.Control as="select" onChange={(e) => setClusterHandler(e)}
                                     value={cluster} >
                                     <option value="">Select Cluster Type</option>
-                                    {clusterCostCenterList.map((item, i) => {
+                                    {clusterCostCenterList !== undefined && clusterCostCenterList.map((item, i) => {
                                         return (
                                             <option key={item.clusterId} value={item.clusterId}>{item.clusterName}</option>
                                         )
@@ -184,7 +184,7 @@ const ProductivityReportForm = () => {
                                 <Form.Control as="select" onChange={(e) => setContractTypeHandler(e)}
                                     value={contractTypeData} >
                                     <option value="">Select Contract Type</option>
-                                    {shiftContractNames.map((item, i) => {
+                                    {shiftContractNames !== undefined && shiftContractNames.map((item, i) => {
                                         return (
                                             <option key={item.typeId} value={item.contractType}>{item.contractType}</option>
                                         )

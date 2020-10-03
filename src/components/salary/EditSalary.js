@@ -21,6 +21,7 @@ const EditSalary = (props) => {
     const [status, setStatus] = useState()
     const [statusDesc, setStatusDesc] = useState()
     const [totalHours, setTotalHours] = useState()
+    const [additionalHours, setadditionalHours] = useState()
     const [year, setYear] = useState()
 
     let history = useHistory();
@@ -83,6 +84,10 @@ const EditSalary = (props) => {
         setYear(props.year)
     }, [props.year])
 
+    useEffect(() => {
+        setadditionalHours(props.additionalHours)
+    }, [props.additionalHours])
+    
 
     //get api for leave type
     // useEffect(() => {
@@ -107,7 +112,8 @@ const EditSalary = (props) => {
             status: status,
             statusDesc: statusDesc,
             totalHours: totalHours,
-            year: year
+            year: year,
+            additionalHours: additionalHours
 
         }
         salaryEdit(EditSalary)
