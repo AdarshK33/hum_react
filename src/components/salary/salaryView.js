@@ -132,7 +132,7 @@ function ViewShift() {
                     </tr>
                   </thead>
 
-                  { salaryList.length > 0 && salaryList.map((item, i) => {
+                  {salaryList !== null && salaryList.length > 0 && salaryList.map((item, i) => {
                     return (
                       <tbody key={i + 1}>
                         <tr>
@@ -167,7 +167,7 @@ function ViewShift() {
                     )
                   })}
                 </table>
-                {(salaryList.length <= 0) ? <p style={{ textAlign: "center" }}>Select Month and Year</p> : null}
+                {(salaryList  !== null && salaryList.length <= 0) ? <p style={{ textAlign: "center" }}>Select Month and Year</p> : null}
                 {/* {salaryList.length>0 ?<p>No data found</p>:null} */}
               </div>
             </div>

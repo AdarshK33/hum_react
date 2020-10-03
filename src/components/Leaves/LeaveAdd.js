@@ -103,13 +103,13 @@ const LeaveAdd = (props) => {
         console.log(value2)
         setStartMaternityDate(value2)
 
-        var d1 = new Date(startMaternityDate);
+        var d1 = new Date(value2);
         var d2 = new Date(d1)
         var d3 = d2.setDate(d2.getDate() + 179)
 
         const newPopup1 = {
             empId: user.employeeId,
-            fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
+            fromDate: moment(value2).format("YYYY-MM-DD"),
            /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
            leaveCategory: 'Planned',
            /*  leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
@@ -128,7 +128,8 @@ const LeaveAdd = (props) => {
     let d1 = new Date(startMaternityDate);
     let d2 = new Date(d1)
     let d3 = d2.setDate(d2.getDate() + 179)
-
+    
+    console.log('d3 value====', moment(d3).format("YYYY-MM-DD"))
 
     const setLeaveHandler = (e) => {
         const leave1 = e.target.value
@@ -162,6 +163,7 @@ const LeaveAdd = (props) => {
     useEffect(() => {
         viewLeaveData(user.employeeId)
     }, [user.employeeId]);
+
     useEffect(() => {
         getLeave(user.employeeId)
     }, [user.employeeId]);
@@ -238,7 +240,7 @@ const LeaveAdd = (props) => {
             year: '2020'
         }
 
-        if (leave === 'Maternity') {
+        if (leave === '3') {
             addEmpLeave(newLeave1)
         }
         else {
@@ -315,7 +317,7 @@ const onCloseModal = () => {
                                     <Row style={{margin:'0'}}>
                                         <div classNmae="col-sm-6">
                                             <Form.Group>
-                                            <div><Form.Label >From Date:</Form.Label></div>
+                                            <div><Form.Label >From m Date:</Form.Label></div>
                                             <div><DatePicker selected={startMaternityDate} onChange={(e) => setStartMaternityDateHandler(e)}
                                                     className="input_date" dateFormat="yyyy-MM-dd" selectsStart startDate={startMaternityDate}
                                                     endDate={d3}
@@ -325,7 +327,7 @@ const onCloseModal = () => {
                                         </div>
                                         <div className="col-sm-6" >
                                             <Form.Group>
-                                            <div><Form.Label >To Date:</Form.Label></div>
+                                            <div><Form.Label >To m Date:</Form.Label></div>
                                             <div>  <DatePicker selected={d3} selectsEnd startDate={startMaternityDate} readOnly
                                                     endDate={d3} onChange={(date) => setEndMaternityDate(date)}
                                                     className="input_date" dateFormat="yyyy-MM-dd"
