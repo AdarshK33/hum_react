@@ -78,7 +78,7 @@ function ViewShift() {
 
             </div>
             
-              <div className="form-group">
+              {/* <div className="form-group">
                 <label htmlFor="exampleFormControlInput1" >Select Store<span style = {{color:'red'}}>*</span>&nbsp; </label>
                   <select
                     className="form-control Value"
@@ -91,7 +91,7 @@ function ViewShift() {
                       })}
                                          
                       </select>
-              </div>
+              </div> */}
             
 
             <div className="col-sm-3 mt-4">
