@@ -16,7 +16,7 @@ const EditLeave = (props) => {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date())
     const [startMaternityDate, setStartMaternityDate] = useState(new Date())
-    const [endMaternityDate, setEndMaternityDate] = useState(new Date())
+    const [endMaternityDate, setEndMaternityDate] = useState()
     const [leave, setLeave] = useState()
    /*  const [leaveTypeId] = useState(null)
     const [leaveName] = useState('') */
@@ -27,7 +27,7 @@ const EditLeave = (props) => {
     const [max, setMax] = useState(false)
     let history = useHistory();
 
-    const { getLeave, leaveType, leavesData, addPopup, editEmpList } = useContext(LeaveContext);
+    const { getLeave, leaveType, leavesData, addPopup, editEmpList, editPopup, editLeavesData} = useContext(LeaveContext);
 
     const { user } = useContext(AppContext);
 
@@ -42,6 +42,7 @@ const EditLeave = (props) => {
 
     useEffect(() => {
         setEndDate(new Date(props.toDate))
+        setEndMaternityDate(new Date(props.toDate))
     }, [props.toDate])
 
     useEffect(() => {
@@ -55,8 +56,6 @@ const EditLeave = (props) => {
     useEffect(() => {
         setltId(props.ltId)
     }, [props.ltId])
-
-    console.log("props.leaveTypeId", props.leaveTypeId)
 
     const fromDateHandler = (date) => {
 
@@ -135,34 +134,35 @@ const EditLeave = (props) => {
     const setStartMaternityDateHandler = (date) => {
         let value2 = date
         setStartMaternityDate(value2)
+console.log("value 2", value2)
+        var d1 = new Date(value2);
+        var d2 = new Date(d1)
+        var d3 = d2.setDate(d2.getDate() + 179)
+        console.log("d3", moment(d3).format("YYYY-MM-DD"))
 
-        const newPopup1 = {
+        const editPopupData = {
             empId: user.employeeId,
-            fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
+            fromDate: moment(value2).format("YYYY-MM-DD"),
            /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
            leaveCategory:'Planned',
            /*  leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
            leaveTypeId: leave,
             ltId: 0,
             numberOfDays: 0,
-            reason: reason,
+            reason: 'string',
             status: 1,
             toDate: moment(d3).format("YYYY-MM-DD"),
             viewLeavePopup: 0,
             year: '2020'
         }
-        addPopup(newPopup1)
+        console.log("editPopupData", editPopupData)
+        editPopup(editPopupData)
     }
 
     const setLeaveHandler = (e) => {
         const leave1 = e.target.value
         setLeave(leave1)
         console.log("leave1++++++", leave1)
-/* 
-        const test1 = leaveType.filter(qa => qa.leaveName === leave1)[0].leaveName
-        const test2 = leaveType.filter(qa => qa.leaveName === leave1)[0].leaveTypeId
-        console.log("test1 as leave name", test1)
-        console.log("test2 as leave id", test2) */
     }
     //Maternity Date validation
     let d1 = new Date(startMaternityDate);
@@ -189,7 +189,7 @@ const EditLeave = (props) => {
             numberOfDays: 0,
             reason: reason,
             status: 1,
-            toDate: moment(endMaternityDate).format("YYYY-MM-DD"),
+            toDate: moment(d3).format("YYYY-MM-DD"),
             viewLeavePopup: 1,
             year: '2020'
         }
@@ -215,7 +215,7 @@ const EditLeave = (props) => {
             viewLeavePopup: 1,
             year: '2020'
         }
-        if (leave === 'Maternity') {
+        if (leave === '3') {
           /*   alert("Sent request to admin for edit the maternity leave") */
           editEmpList(editLeave)
         }
@@ -262,6 +262,7 @@ const EditLeave = (props) => {
         setLeave(props.leaveTypeId)
         setReason(props.reason)
         setStartMaternityDate(new Date(props.fromDate))
+        setEndMaternityDate(new Date(props.toDate))
         addPopup(resetValue)
     }
     return (
@@ -303,11 +304,11 @@ const EditLeave = (props) => {
                                     </Form.Group>
                                 </div>
                             </Row>
-                            {leave === 'Maternity' ?
+                            {leave === 3 ?
                                     <Row style={{margin:'0'}}>
                                         <div classNmae="col-sm-6">
                                             <Form.Group>
-                                                <div><Form.Label >From Date:</Form.Label></div>
+                                                <div><Form.Label >From m Date:</Form.Label></div>
                                                 <div><DatePicker selected={startMaternityDate} onChange={(date) => setStartMaternityDateHandler(date)}
                                                     className="input_date" dateFormat="yyyy-MM-dd" selectsStart startDate={startMaternityDate}
                                                     endDate={d3}
@@ -317,7 +318,7 @@ const EditLeave = (props) => {
                                         </div>
                                         <div className="col-sm-6">
                                             <Form.Group>
-                                            <div> <Form.Label >To Date:</Form.Label></div>
+                                            <div> <Form.Label >To m Date:</Form.Label></div>
                                                 <div><DatePicker selected={d3} selectsEnd startDate={startMaternityDate} readOnly
                                                     endDate={d3} onChange={(date) => setEndMaternityDate(date)}
                                                     className="input_date" dateFormat="yyyy-MM-dd"
@@ -376,8 +377,8 @@ const EditLeave = (props) => {
                             <Row>
                                 <div className="col-sm-12">
                                    {/*  <p className="leavesMsg">{leavesData ? leavesData.Leave : ''}</p> */}
-                                    {leavesData ? 
-                                    <p className="leavesMsg">{leavesData.Leave}</p> : ''}
+                                    {editLeavesData ? 
+                                    <p className="leavesMsg">{editLeavesData.Leave}</p> : ''}
                                 </div>
                             </Row>
 

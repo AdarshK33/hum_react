@@ -22,17 +22,16 @@ const AdminReportForm = () => {
     
     const reportTypeList = [{reportTypeData:'Monthly', id:1}, {reportTypeData:'Yearly', id:2}]
 
-    const { getLeave, leaveType, reportLeave, reportList} = useContext(LeaveContext);
+    const { getLeaveReport, leaveTypeReport, reportLeave, reportList} = useContext(LeaveContext);
     const {CostCenter,costCenterList, employeeIdData, employeeIdList } = useContext(AdminContext)
 
     useEffect(() => {
-        getLeave(user.employeeId)
         CostCenter()
     }, [user.employeeId]);
 
-   /*  useEffect(() => {
-        employeeIdData(costCenter)
-    },[costCenter]) */
+    useEffect(() => {
+        getLeaveReport()
+    },[])
 
     const setCostCenterHandler = (e) => {
         let data1 = e.target.value
@@ -139,7 +138,7 @@ const AdminReportForm = () => {
                                 placeholder="Select Employee Id"
                                 value={employeeCostCenter} 
                                 style={{fontSize:"0.8rem"}}
-                                options={employeeIdList.map(e => ({label: e.firstName + " - " + e.employeeId, value: e.employeeId}))}
+                                options={employeeIdList !== null && employeeIdList.map(e => ({label: e.firstName + " - " + e.employeeId, value: e.employeeId}))}
                                 onChange={setEmployeeCostCenterHandler}
                                 isMulti />
                             </Form.Group>
@@ -152,7 +151,7 @@ const AdminReportForm = () => {
                                 placeholder="Select Leave Type"
                                 value={leave} 
                                 style={{fontSize:"0.8rem"}}
-                                options={leaveType.map(e => ({label: e.leaveName , value: e.leaveTypeId}))}
+                                options={leaveTypeReport !== undefined && leaveTypeReport.map(e => ({label: e.leaveName , value: e.leaveTypeId}))}
                                 onChange={setLeaveHandler}
                                 isMulti />
                             </Form.Group>
