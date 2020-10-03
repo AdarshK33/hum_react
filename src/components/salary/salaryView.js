@@ -36,6 +36,7 @@ function ViewShift() {
   const [status, setStatus] = useState()
   const [statusDesc, setStatusDesc] = useState()
   const [totalHours, setTotalHours] = useState()
+  const [additionalHours, setadditionalHours] = useState()
   const [year, setYear] = useState()
   const [costCenter, setCostCenter] = useState()
 
@@ -155,6 +156,7 @@ function ViewShift() {
                             setReason(item.reason); setMonth(item.month); setSalaryId(item.salaryId);
                             setStatus(item.status); setStatusDesc(item.statusDesc);
                             setTotalHours(item.totalHours); setYear(item.year);
+                            setadditionalHours(item.additionalHours);
                           }} /> : 
                           <Edit2 disabled style={{color:'lightgrey'}} />}
                           </td>
@@ -178,6 +180,7 @@ function ViewShift() {
           firstName={firstName} lastName={lastName} numberOfHours={numberOfHours}
           lop={lop} contractType={contractType} extraHours={extraHours} reason={reason}
           month={month} salaryId={salaryId} status={status} statusDesc={statusDesc} totalHours={totalHours} year={year}
+          additionalHours={additionalHours}
         />
 
       </div>
