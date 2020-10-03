@@ -308,7 +308,7 @@ console.log("value 2", value2)
                                     <Row style={{margin:'0'}}>
                                         <div classNmae="col-sm-6">
                                             <Form.Group>
-                                                <div><Form.Label >From m Date:</Form.Label></div>
+                                                <div><Form.Label >From Date:</Form.Label></div>
                                                 <div><DatePicker selected={startMaternityDate} onChange={(date) => setStartMaternityDateHandler(date)}
                                                     className="input_date" dateFormat="yyyy-MM-dd" selectsStart startDate={startMaternityDate}
                                                     endDate={d3}
@@ -318,7 +318,7 @@ console.log("value 2", value2)
                                         </div>
                                         <div className="col-sm-6">
                                             <Form.Group>
-                                            <div> <Form.Label >To m Date:</Form.Label></div>
+                                            <div> <Form.Label >To Date:</Form.Label></div>
                                                 <div><DatePicker selected={d3} selectsEnd startDate={startMaternityDate} readOnly
                                                     endDate={d3} onChange={(date) => setEndMaternityDate(date)}
                                                     className="input_date" dateFormat="yyyy-MM-dd"
