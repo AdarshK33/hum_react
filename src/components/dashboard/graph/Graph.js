@@ -24,19 +24,14 @@ class Graph extends Component {
 		Alink[0].parentNode.removeChild(Alink[0]);
 	}
 	createPareto(){
-		// var dps = [];
+		
 		var chart = this.chart;
 		
-		console.log(chart);
 		var  yTotal = 0;
-		// dps.push({ y: 0});
+		
 		for(var i = 0; i < chart.data[0].dataPoints.length; i++)
 			yTotal += chart.data[0].dataPoints[i].y;
-		// for(var i = 0; i < chart.data[0].dataPoints.length; i++){
-		// 	yValue = chart.data[0].dataPoints[i].y;
-		// 	yPercent += (yValue / yTotal * 50);
-		// 	dps.push({label: chart.data[0].dataPoints[i].label, y: yPercent});
-		// }
+	
 		chart.creditText = "";
 		chart.addTo("data",{type:"line",showInLegend: true, name: "Planned Hours", yValueFormatString: "0.##"%"", lineDashType: "dash", dataPoints: this.props.Qty});
 		chart.data[1].set("axisYType", "secondary", false);
@@ -51,10 +46,9 @@ class Graph extends Component {
 		const options = {
 			title:{
 				text: this.props.name,
-				// fontColor: "red",
+				
 				 fontSize: 20,
-				//  horizontalAlign: "left",
-				//  fontWeight: "lighte"
+				
 			},
 			axisX : {
 				// labelAngle: 20
@@ -67,8 +61,7 @@ class Graph extends Component {
 				labelFontColor: "#4F81BC"
 			},
 			legend: {
-				// dockInsidePlotArea: true,
-				// verticalAlign: "top",
+				
 				cursor: "pointer",
 				
 			},
