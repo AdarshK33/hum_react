@@ -16,7 +16,7 @@ const ProductivityReportManager = () => {
     const [sports, setSports] = useState(null)
     const [cluster, setCluster] = useState(null)
     const [contractTypeData, setContractType] = useState('')
-    const [getM, setGetM] = useState('2020-09')
+    const [getM, setGetM] = useState(new Date())
     /* const [startYear, setStartYear] = useState() */
 
     const reportTypeList = [{ reportTypeData: 'Monthly', id: 1 }, { reportTypeData: 'Yearly', id: 2 }]
@@ -60,10 +60,10 @@ const ProductivityReportManager = () => {
         setCluster(e.target.value)
         console.log("cluster Id",e.target.value)
     }
-    const setSportsHandler = (e) => {
+   /*  const setSportsHandler = (e) => {
         setSports(e.target.value)
         console.log("sports Id",e.target.value)
-    }
+    } */
     const submitData = (e) => {
         e.preventDefault();
 
@@ -82,7 +82,7 @@ const ProductivityReportManager = () => {
         setSports('')
         setCluster('')
         setContractType('')
-        setGetM('2020-09')
+        setGetM(new Date())
 
     }
     return (
@@ -120,7 +120,8 @@ const ProductivityReportManager = () => {
                                     onChange={(e) => setEmployeeCostCenterHandler(e)}>
                                     <option value="">Select Employee</option>
 
-                                    {employeeIdList !== null && employeeIdList.length > 0 && employeeIdList.map((item, i) => {
+                                    {employeeIdList !== null && employeeIdList !== undefined &&
+                                     employeeIdList.map((item, i) => {
                                         return (
                                             <option key={item.employeeId} value={item.employeeId}>
                                                 {item.firstName}-{item.employeeId}</option>
@@ -136,7 +137,8 @@ const ProductivityReportManager = () => {
                                 <Form.Control as="select" onChange={(e) => setSports(e.target.value)}
                                     value={sports} >
                                     <option value="">Select Sports Type</option>
-                                    {sportsNames.map((item, i) => {
+                                    {sportsNames !== null && sportsNames !== undefined &&
+                                     sportsNames.map((item, i) => {
                                         return (
                                             <option key={item.sportId} value={item.sportId}>{item.sportName}</option>
                                         )
@@ -153,7 +155,7 @@ const ProductivityReportManager = () => {
                                 <Form.Control as="select" onChange={(e) => setClusterHandler(e)}
                                     value={cluster} >
                                     <option value="">Select Cluster Type</option>
-                                    {clusterCostCenterList !== null &&
+                                    {clusterCostCenterList !== null && clusterCostCenterList !== undefined &&
                                     clusterCostCenterList.map((item, i) => {
                                         return (
                                             <option key={item.clusterId} value={item.clusterId}>{item.clusterName}</option>
@@ -168,7 +170,8 @@ const ProductivityReportManager = () => {
                                 <Form.Control as="select" onChange={(e) => setContractTypeHandler(e)}
                                     value={contractTypeData} >
                                     <option value="">Select Contract Type</option>
-                                    {shiftContractNames.map((item, i) => {
+                                    {shiftContractNames !== null && shiftContractNames !== undefined &&
+                                     shiftContractNames.map((item, i) => {
                                         return (
                                             <option key={item.typeId} value={item.contractType}>{item.contractType}</option>
                                         )

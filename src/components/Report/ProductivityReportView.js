@@ -9,7 +9,7 @@ const ProductivityReportView = (props) => {
     return (
         <Fragment>
             <Container>
-                {productivityList &&
+                {productivityList  &&
                 <Row style={{ marginTop: '2rem' }}>
                     <div className="col-sm-12" style={{padding:'0'}}>
                         <div className="card" style={{ overflowX: "auto" }}>
@@ -39,7 +39,7 @@ const ProductivityReportView = (props) => {
                                             <th>Month</th>
                                         </tr>
                                     </thead>
-                                    {
+                                    {productivityList !== null && productivityList !== undefined &&
                                         productivityList.map((item, i) => {
                                             return (
                                                 <tbody key={i + 1}>

@@ -45,7 +45,7 @@ const AdminLeaveView = (props) => {
                                 <th>Gender</th>
                             </tr>
                         </thead>
-                        {leaveAdminList.length > 0 &&
+                        {leaveAdminList !== undefined && leaveAdminList !== null &&
                             leaveAdminList.map((item, i) => {
                                 return (
                                     <tbody key={i}>

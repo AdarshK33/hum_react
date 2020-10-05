@@ -74,7 +74,7 @@ export const LeaveProvider = ({ children }) => {
 
   const getLeave = (empId1) => {
     // let empId1 = 'DSI000035'
-    client.get('leave_type/view/' + empId1)
+    client.get('leave_type/view/' + user.employeeId)
   
       .then((response) => {
         state.leaveType = response.data.data
@@ -307,7 +307,9 @@ const reportLeave = (reportData) => {
         .then((response) => {
           state.message = response.data.message
           state.reportList = response.data.data
-          toast.info(state.message)
+          if(response.data.data === null){
+            toast.info(state.message)
+          }
           getLeave(user.employeeId)
           console.log("new report list response===>", response.data.data)
           console.log("new report list message===>", state.message)
@@ -346,6 +348,9 @@ const productivityReport = (clusterId, contractType, employeeId, month, sportId,
     state.productivityList = response.data.data
     console.log("productivity list api++++++", state.productivityList)
     console.log("productivity list api message", response.data.message)
+    if( response.data.data === null){
+      toast.info("Data" + " " +  response.data.message)
+    }
     return dispatch({type: 'PRODUCTIVITY_REPORT', payload: state.productivityList})
   })
   .catch((error) => {
@@ -359,6 +364,9 @@ else {
    state.productivityList = response.data.data
    console.log("productivity list api-------", state.productivityList)
    console.log("productivity list api message", response.data.message)
+   if( response.data.data === null){
+     toast.info("Data" + " " + response.data.message)
+   }
    return dispatch({type: 'PRODUCTIVITY_REPORT', payload: state.productivityList})
  })
  .catch((error) => {

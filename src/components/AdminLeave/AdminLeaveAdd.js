@@ -29,7 +29,7 @@ const AdminLeaveAdd = (props) => {
     const [max, setMax] = useState(false)
     let history = useHistory();
 
-    const { addLeave, addPopup, leavesData, getLeave, leaveType }
+    const { addLeave, addPopup, leavesData, getLeave, leaveType}
      = useContext(LeaveContext);
 
      const {CostCenter,costCenterList, employeeIdData, employeeIdList } = useContext(AdminContext)
@@ -43,6 +43,11 @@ const AdminLeaveAdd = (props) => {
      useEffect(() => {
          CostCenter()
      },[])
+
+     useEffect(() => {
+        getLeave(user.employeeId)
+    }, [user.employeeId]); 
+
 
     /*  useEffect(() => {
         employeeIdData(costCenter)
@@ -173,9 +178,7 @@ const AdminLeaveAdd = (props) => {
     //   useEffect(() => {
     //     getLeave()
     // }, []);
-    useEffect(() => {
-        getLeave(user.employeeId)
-    }, [user.employeeId]);
+   
 
     // create api
     const onSubmit = e => {
@@ -347,7 +350,7 @@ const AdminLeaveAdd = (props) => {
                                         onChange={(e) => setLeaveHandler(e)}>
                                             <option value="">Select Leave Type</option>
                                             
-                                        {leaveType !== undefined && leaveType.length > 0 && leaveType.map((item, i) => {
+                                        {leaveType !== undefined && leaveType !== null && leaveType.map((item, i) => {
                                             return (
                                                 <option key={item.leaveTypeId} value={item.leaveTypeId}
                                                 disabled={(item.paternity === 1 ? true : false) || (item.maternity === 1 ? true : false)}>
