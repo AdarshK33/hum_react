@@ -321,11 +321,15 @@ export const RosterProvider = ({ children }) => {
 
 
 
-  const adminRosterAvailableShift = (costCenter1) => {
+  const adminRosterAvailableShift = (contractType,costCenter1) => {
+    
+    if (contractType === undefined) {
+      contractType = "Permanent"
+    }
 
-    client.get('shift/view/' + costCenter1)
+
+    client.get('/shift/view/store/active?contract_type='+contractType+'&storeId='+costCenter1)
       .then((response) => {
-
         state.adminRosterAvailableShiftList = response.data.data;
         console.log("admin calculate week ", state.adminRosterAvailableShiftList)
         //   alert(state.adminRosterAvailableShiftList);
@@ -335,6 +339,7 @@ export const RosterProvider = ({ children }) => {
         console.log(error)
       })
   }
+
 
 
 
@@ -360,15 +365,16 @@ export const RosterProvider = ({ children }) => {
 
   //Cost Center List
   const costCenter = () => {
-    client.get('cost_centre/view')
-      .then((response) => {
-        state.costCenterList = response.data.data
-        console.log("cost center data", state.costCenterList)
-        return dispatch({ type: 'COST_CENTER_DATA', payload: state.costCenterList })
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+
+    client.get('/cost_centre/view').then(function (response) {
+      console.log(response);
+      state.costCenterList = response.data.data;
+
+      return dispatch({ type: 'COST_CENTER_DATA', payload: state.costCenterList });
+    })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
 

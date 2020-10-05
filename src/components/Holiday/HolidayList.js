@@ -47,10 +47,11 @@ const HolidayList = () => {
                   <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                     <tr>
                       <th>No</th>
+                      <th scope="col"> Date</th>
                       <th scope="col"> Name</th>
-                      <th scope="col"> Department</th>
-                      <th scope="col">Holiday Date</th>
+                      <th scope="col">Year</th>
                       <th scope="col">State</th>
+                      <th scope="col">Department</th>
                     </tr>
                   </thead>
                   {holidayDataList.length > 0 &&
@@ -59,10 +60,12 @@ const HolidayList = () => {
                                     <tbody key={i + 1}>
                                         <tr>
                                             <td>{i + 1}</td>
-                                            <td>{item.holidayName}</td>
-                                            <td>{item.department}</td>
                                             <td>{item.holidayDate}</td>
+                                            <td>{item.holidayName}</td>
+                                            <td>{item.year}</td>
                                             <td>{item.state}</td>
+                                            <td>{item.department}</td>
+                                            
                                         </tr>
                                     </tbody>
                                 )

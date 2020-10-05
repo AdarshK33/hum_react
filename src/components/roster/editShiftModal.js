@@ -34,7 +34,6 @@ const EditShiftModal = (props) => {
   const [warnMsg, setWrnMsg] = useState(false);
   const [errormsg, setErrorMsg] = useState(false);
   const [status, setStatus] = useState(0)
-  const [breakDurationErrrorMsg, setBreakDurationErrrorMsg] = useState(false);
   const [breakNumber, setBreakNumber] = useState()
 
   const { updateShift, viewShift, singleShiftList, viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
@@ -60,9 +59,6 @@ const EditShiftModal = (props) => {
     setEndBreakTIme(singleShiftList.breakEndTime)
     setStartBreakTime(singleShiftList.breakStartTime)
     setStatus(singleShiftList.status)
-
-    //console.log("1---->"+getSingleCluster.employeeIds);
-    // console.log("2---->"+JSON.stringify(clusterLeaderNames));
   }, [props])
 
 
@@ -178,7 +174,7 @@ const EditShiftModal = (props) => {
       setSuccessMsg(true);
       const result = updateShift(newShift)
         .then((result) => {
-          console.log("api response===", result.data.message);
+          //   console.log("api response===", result.data.message);
 
           toast.info(result.data.message);
           setTimeout(() => {
@@ -189,7 +185,7 @@ const EditShiftModal = (props) => {
         .catch((error) => {
           alert(" In error catch ", error);
         })
-      console.log(result, "in competent");
+      //   console.log(result, "in competent");
     }
     else {
       //==========
@@ -226,12 +222,12 @@ const EditShiftModal = (props) => {
           .catch((error) => {
             alert(" In error catch ", error);
           })
-        console.log(result, "in competent");
+        //   console.log(result, "in competent");
 
         // ======================
       }
       else {
-        console.log("inside break end time")
+        //  console.log("inside break end time")
         e.preventDefault();
         const newShift = {
           startTime: moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
