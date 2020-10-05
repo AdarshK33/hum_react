@@ -61,14 +61,13 @@ const AdminLeavesList = (props) => {
                             </tr>
                         </thead>
 
-                        {leaveList.length > 0 &&
+                        {leaveList !== undefined &&  leaveList !== null &&
                             leaveList.map((item, i) => {
                                 return (
                                     <tbody key={i + 1}>
                                         <tr>
                                             <td>{i + 1}</td>
                                             <td>{item.empId}</td>
-                                            {/* <td>{item.leaveCategory}</td> */}
                                             <td>{item.leaveTypeId === 1 ? 'General' : (item.leaveTypeId === 2 ? 'Paternity' : (item.leaveTypeId === 3 ? 'Maternity' : 
                                             (item.leaveTypeId === 0 ? 'LOP' : '')))}
                                             </td>

@@ -38,7 +38,7 @@ const ProductivityReportManagerView = (props) => {
                                             <th>Month</th>
                                         </tr>
                                     </thead>
-                                    {
+                                    {productivityList !== null && productivityList !== undefined &&
                                         productivityList.map((item, i) => {
                                             return (
                                                 <tbody key={i + 1}>
