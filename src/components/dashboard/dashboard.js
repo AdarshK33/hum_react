@@ -6,7 +6,7 @@ import './dashboard.css';
 import { ClusterContext } from "../../context/ClusterState";
 import { DashboardContext } from "../../context/DashboardState";
 import { RosterContext } from '../../context/RosterState';
-// import {  toast } from "react-toastify";
+
 
 
 function Dashboard () {
@@ -26,13 +26,7 @@ function Dashboard () {
         if(StoreType !== "" && ClusterType !== "" ){
             viewData(e,StoreType,ClusterType)
         }
-        // else if(StoreType !== "" && ClusterType === ""  ){
-        //     toast.info("Cluster is required")
-        // }else if(StoreType === "" && ClusterType === ""  ){
-        //     toast.info("Store and Cluster is required")
-        // }else{
-        //     toast.info("Store is required ")
-        // }
+        
         
 
     }
@@ -56,13 +50,6 @@ function Dashboard () {
         if(startDate !== undefined && ClusterType !== "" ){
             viewData(startDate,e,ClusterType)
         }
-        // else if(startDate !== undefined && ClusterType === ""  ){
-        //     toast.info("Cluster is required")
-        // }else if(startDate === undefined && ClusterType === ""  ){
-        //     toast.info("Date and Cluster is required")
-        // }else{
-        //     toast.info("Date is required ")
-        // }
         
 
     }
@@ -79,14 +66,7 @@ function Dashboard () {
                 viewData(startDate,StoreType,e.target.value);
             
             }
-            // else if(startDate !== undefined && StoreType === ""  ){
-            //     toast.info("Store is required")
-            // }else if(startDate === undefined && StoreType === ""  ){
-            //     toast.info("Date and Store is required")
-            // }else{
-            //     toast.info("Date is required ")
-            // }
-            
+         
 
         }
    
@@ -123,24 +103,16 @@ function Dashboard () {
             
             for (let item in graphData[0].rosterCluster){
                 if(graphData[0].rosterCluster[item].contractType === "permanent"){
-                    // setclusterFT(clusterFT + graphData[0].rosterCluster[item].workingHours);
-                    FTcluster = FTcluster + graphData[0].rosterCluster[item].workingHours;
-                   
+                    FTcluster = FTcluster + graphData[0].rosterCluster[item].workingHours;                   
                 }
-                if(graphData[0].rosterCluster[item].contractType === "parttime"){
-                    // setclusterPPT(clusterPPT + graphData[0].rosterCluster[item].workingHours);
-                    PPTcluster = PPTcluster + graphData[0].rosterCluster[item].workingHours;
-                    
+                if(graphData[0].rosterCluster[item].contractType === "parttime"){                   
+                    PPTcluster = PPTcluster + graphData[0].rosterCluster[item].workingHours;                    
                 }
-                if(graphData[0].rosterCluster[item].contractType === "internship"){
-                    // setclusterINT(clusterINT + graphData[0].rosterCluster[item].workingHours);
-                    INTcluster = INTcluster + graphData[0].rosterCluster[item].workingHours;
-                   
+                if(graphData[0].rosterCluster[item].contractType === "internship"){                    
+                    INTcluster = INTcluster + graphData[0].rosterCluster[item].workingHours;                   
                 }
-                if(graphData[0].rosterCluster[item].contractType === "temporary"){
-                    // setclusterTPT(clusterTPT + graphData[0].rosterCluster[item].workingHours);
-                    TPTcluster = TPTcluster + graphData[0].rosterCluster[item].workingHours;
-                   
+                if(graphData[0].rosterCluster[item].contractType === "temporary"){                   
+                    TPTcluster = TPTcluster + graphData[0].rosterCluster[item].workingHours;                   
                 }
 
             }
@@ -151,16 +123,13 @@ function Dashboard () {
            
 
             for (let item in graphData[0].rosterStore){
-                if(graphData[0].rosterStore[item].contractType === "permanent"){
-                    // setstoreFT(storeFT + graphData[0].rosterStore[item].workingHours);
+                if(graphData[0].rosterStore[item].contractType === "permanent"){                    
                     FTstore = FTstore + graphData[0].rosterStore[item].workingHours;
                 }
-                if(graphData[0].rosterStore[item].contractType === "parttime"){
-                    // setstorePPT(storePPT + graphData[0].rosterStore[item].workingHours);
+                if(graphData[0].rosterStore[item].contractType === "parttime"){                   
                     PPTstore = PPTstore + graphData[0].rosterStore[item].workingHours;
                 }
-                if(graphData[0].rosterStore[item].contractType === "internship"){
-                    // setstoreINT(storeINT + graphData[0].rosterStore[item].workingHours);
+                if(graphData[0].rosterStore[item].contractType === "internship"){                   
                     INTstore = INTstore + graphData[0].rosterStore[item].workingHours;
                 }
                                
@@ -317,7 +286,7 @@ function Dashboard () {
                             </tbody>
                         </table>
                     </Row>
-                    {/* {graphData !== null && graphData[0] !== undefined?                      */}
+                   
                         <div>
                             <Row style ={{margin: '7% 0%'}}>                        
                             <Col><Graph name = "Cluster - Daily Qty vs No. of hours Planned" hours = {dpshoursCluster} Qty={dpsQtyCluster}/></Col>
@@ -328,7 +297,7 @@ function Dashboard () {
                                 
                             </Row>
                         </div>
-                     {/* : ""}  */}
+                   
                    
                     {/* <Row>
                         <Col></Col>
