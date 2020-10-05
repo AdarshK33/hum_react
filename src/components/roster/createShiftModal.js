@@ -29,10 +29,13 @@ const CreateShiftModal = (props) => {
   const [warnMsg, setWrnMsg] = useState(false);
   // const [workingHoursText, setWorkingHoursText] = useState(false);
   const [errormsg, setErrorMsg] = useState(false);
-  const { addShift, viewShift, viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
+  const [costCenterName, setCostCenterName] = useState('')
+  const { addShift, viewShift, viewShiftTypes, viewContractTypes, shiftContractNames, costCenterList, costCenter } = useContext(RosterContext);
 
   const { user } = useContext(AppContext);
-
+  useEffect(() => {
+    costCenter()
+  }, []);
   useEffect(() => {
     setShiftType(props.shiftType)
   }, [props.shiftType])
@@ -76,9 +79,8 @@ const CreateShiftModal = (props) => {
       setErrorMsg(false)
     }
     const result = moment.utc(moment(etime, "HH:mm:ss").diff(moment(stime, "HH:mm:ss"))).format("HH:mm:ss")
-    console.log("FIRST" + result);
+
     var workingHours = result.replace(/:/g, ".");
-    console.log("SECOND" + workingHours);
     setWorkingHour(workingHours);
     checkTimeValidation();
 
@@ -149,9 +151,6 @@ const CreateShiftModal = (props) => {
       const result = addShift(newShift)
         .then((result) => {
           console.log("api response===", result.data.message);
-          //  console.log("api response===", result.data);
-          //  console.log("api response===", result.data.status);
-          //console.log("api response===", result.data.length);
           toast.info(result.data.message);
           setTimeout(() => {
             callTimer();
@@ -161,7 +160,7 @@ const CreateShiftModal = (props) => {
         .catch((error) => {
           alert(" In error catch ", error);
         })
-      console.log(result, "in competent");
+      // console.log(result, "in competent");
     }
     else {
 
@@ -182,10 +181,6 @@ const CreateShiftModal = (props) => {
       setSuccessMsg(true);
       const result = addShift(newShift)
         .then((result) => {
-          // console.log("api response===", result.data.message);
-          // console.log("api response===", result.data);
-          // console.log("api response===", result.data.status);
-          //  console.log("api response===", result.data.length);
           toast.info(result.data.message);
           setTimeout(() => {
             callTimer();
@@ -199,8 +194,6 @@ const CreateShiftModal = (props) => {
       console.log(result, "in competent");
     }
   }
-  //  console.log("shift list names " + shiftListNames)
-  //console.log("======== contract  names" + shiftContractNames)
   return (
     <Modal show={props.modal} onHide={props.handleClose} centered>
       <Fragment>
@@ -357,6 +350,36 @@ const CreateShiftModal = (props) => {
                       </div>
                     </div>
                   </div>
+
+                  {/* {(() => {
+                    if (user.loginType === "1" || user.loginType === "9") {
+                      return (
+                        <div className="row">
+                          <div className="col-sm-12">
+                            <div className="form-group">
+                              <label htmlFor="exampleFormControlInput1">Select cost center</label>
+                              <select
+                                className="form-control"
+                                onChange={(e) => setCostCenterName(e.target.value)}
+                              >
+                                <option value="">Select cost center</option>
+                                {costCenterList.map((e, i) => {
+                                  return (
+                                    <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
+                                })}
+
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      )
+                    }
+                  })()} */}
+
+
+
+
+
                   <button className="myclass mb-2 mr-2" type="submit" disabled={shiftButton} value="Submit">Save</button>
                   {/* <button className="btn btn-primary mb-2 ml-2" value="reset" onClick={setClear}>Clear</button> */}
                   <button className="myclass mb-2 ml-2" onClick={() => { clearAndClose() }}>Close</button>

@@ -360,15 +360,16 @@ export const RosterProvider = ({ children }) => {
 
   //Cost Center List
   const costCenter = () => {
-    client.get('cost_centre/view')
-      .then((response) => {
-        state.costCenterList = response.data.data
-        console.log("cost center data", state.costCenterList)
-        return dispatch({ type: 'COST_CENTER_DATA', payload: state.costCenterList })
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+
+    client.get('/cost_centre/view').then(function (response) {
+      console.log(response);
+      state.costCenterList = response.data.data;
+
+      return dispatch({ type: 'COST_CENTER_DATA', payload: state.costCenterList });
+    })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
 
