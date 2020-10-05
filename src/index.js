@@ -95,34 +95,34 @@ function Root() {
 
                                 {/* Leaves Page */}
                                 <Route
-                                  path={`${process.env.PUBLIC_URL}/leaves/leaveView`}
+                                  path={`${process.env.PUBLIC_URL}/leaves/leaveview`}
                                   component={LeaveView}
                                 />
                                 {/*Admin Leaves Page */}
                                 <Route
-                                  path={`${process.env.PUBLIC_URL}/adminLeaves/adminLeaveView`}
+                                  path={`${process.env.PUBLIC_URL}/adminleaves/adminleaveview`}
                                   component={AdminLeaveView}
                                 />
                                 {/*Admin Leaves Page */}
                                 <Route
-                                  path={`${process.env.PUBLIC_URL}/adminLeaves/adminLeavesList`}
+                                  path={`${process.env.PUBLIC_URL}/adminleaves/adminleaveslist`}
                                   component={AdminLeavesList}
                                 />
 
                                 {/*Admin Leaves Mater Page */}
                                 <Route
-                                  path={`${process.env.PUBLIC_URL}/adminLeaves/adminMasterLeave`}
+                                  path={`${process.env.PUBLIC_URL}/adminleaves/adminmasterleave`}
                                   component={AdminMasterLeave}
                                 />
 
                                 {/*Admin Leaves Approval Page */}
                                 <Route
-                                  path={`${process.env.PUBLIC_URL}/adminLeaves/adminLeaveApproval`}
+                                  path={`${process.env.PUBLIC_URL}/adminleaves/adminleaveapproval`}
                                   component={AdminLeaveApproval}
                                 />
                                 {/*Admin Salary Approval Page */}
                                 <Route
-                                  path={`${process.env.PUBLIC_URL}/adminLeaves/adminSalaryModule`}
+                                  path={`${process.env.PUBLIC_URL}/adminleaves/adminsalarymodule`}
                                   component={AdminSalaryModule}
                                 />
 
@@ -134,83 +134,83 @@ function Root() {
 
                                 {/* <Route path={`${process.env.PUBLIC_URL}/roster/editShift`} component={EditShift} />  */}
                                 <Route
-                                  path={`${process.env.PUBLIC_URL}/roster/viewShift`}
+                                  path={`${process.env.PUBLIC_URL}/roster/viewshift`}
                                   component={ViewShift}
                                 />
                                 {/* Cluster */}
 
                                 <Route
-                                  path={`${process.env.PUBLIC_URL}/cluster/viewCluster`}
+                                  path={`${process.env.PUBLIC_URL}/cluster/viewcluster`}
                                   component={ViewCluster}
                                 />
                                 <Route
-                                  path={`${process.env.PUBLIC_URL}/holiday/holidayList`}
+                                  path={`${process.env.PUBLIC_URL}/holiday/holidaylist`}
                                   component={HolidayList}
                                 />
                                 <Route
-                                  path={`${process.env.PUBLIC_URL}/salary/salaryView`}
+                                  path={`${process.env.PUBLIC_URL}/salary/salaryview`}
                                   component={SalaryView}
                                 />
                                 <Route
-                                  path={`${process.env.PUBLIC_URL}/admin/grantLeaveView`}
+                                  path={`${process.env.PUBLIC_URL}/admin/grantleaveview`}
                                   component={GrantLeaveView}
                                 />
 
 
                                   <Route
-                                  path={`${process.env.PUBLIC_URL}/roster/adminRoster`}
+                                  path={`${process.env.PUBLIC_URL}/roster/adminroster`}
                                   component={AdminRoster}
                                 />
                                   {/*Manager Report Page */}
                                 <Route
-                                  path={`${process.env.PUBLIC_URL}/report/managerReport`}
+                                  path={`${process.env.PUBLIC_URL}/report/manager-report`}
                                   component={ManagerReportForm}
                                 />
                                 {/*Admin Report Page */}
                                 <Route
-                                  path={`${process.env.PUBLIC_URL}/report/adminReport`}
+                                  path={`${process.env.PUBLIC_URL}/report/adminreport`}
                                   component={AdminReportForm}
                                 />
 
                                   {/*Productivity  Admin Report Page */}
                                   <Route
-                                  path={`${process.env.PUBLIC_URL}/report/productivityAdminReport`}
+                                  path={`${process.env.PUBLIC_URL}/report/productivityadminreport`}
                                   component={ProductivityReportForm}
                                 />
                                 
                                  {/*Productivity Manager Report Page */}
                                  <Route
-                                path={`${process.env.PUBLIC_URL}/report/productivityManagerReport`}
+                                path={`${process.env.PUBLIC_URL}/report/productivitymanager-report`}
                                 component={ProductivityReportManager}
                               />
 
                                 {/*Admin Store Product target Page */}
                                 <Route
-                                    path={`${process.env.PUBLIC_URL}/productTarget/adminStoreTarget`}
+                                    path={`${process.env.PUBLIC_URL}/product-target/adminstoretarget`}
                                     component={StoreProductTarget}
                                   />
 
                                    {/*Leader Store Product target Page */}
                                 <Route
-                                    path={`${process.env.PUBLIC_URL}/productTarget/leaderStoreTarget`}
+                                    path={`${process.env.PUBLIC_URL}/product-target/leaderStoretarget`}
                                     component={LeaderStoreProductTarget}
                                   />
 
                                   {/*Admin Cluster Product target Page */}
                                   <Route
-                                      path={`${process.env.PUBLIC_URL}/productTarget/adminClusterTarget`}
+                                      path={`${process.env.PUBLIC_URL}/product-target/adminclustertarget`}
                                       component={ClusterProductTarget}
                                     />
 
                                      {/*Leader Cluster Product target Page */}
                                   <Route
-                                      path={`${process.env.PUBLIC_URL}/productTarget/leaderClusterTarget`}
+                                      path={`${process.env.PUBLIC_URL}/product-target/leaderclustertarget`}
                                       component={LeaderCluster}
                                     />
 
                                     {/*Role Management Page */}
                                     <Route
-                                          path={`${process.env.PUBLIC_URL}/roleManagement`}
+                                          path={`${process.env.PUBLIC_URL}/rolemanagement`}
                                           component={RoleManagemenetList}
                                     />
 

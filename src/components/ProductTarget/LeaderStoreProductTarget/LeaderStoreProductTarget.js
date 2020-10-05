@@ -30,7 +30,7 @@ const LeaderStoreProductTarget = () => {
         setYear(yyyy);
         LeaderTargetList(user.costCentre)
     }, []);
-    console.log(user);
+    
     const targetEditHandler = (id) => {
        
         editTargetHandler(id);

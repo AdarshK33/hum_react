@@ -120,9 +120,13 @@ const AdminLeaveAdd = (props) => {
         let value2 = date
         setStartMaternityDate(value2)
 
+        var d1 = new Date(value2);
+        var d2 = new Date(d1)
+        var d3 = d2.setDate(d2.getDate() + 179)
+
         const newPopup1 = {
             empId: user.employeeId,
-            fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
+            fromDate: moment(value2).format("YYYY-MM-DD"),
            /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
            leaveCategory: 'Planned',
            /*  leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
@@ -242,9 +246,11 @@ const AdminLeaveAdd = (props) => {
             viewLeavePopup: 1,
             year: '2020'
         }
-        if (leave === 'Maternity') {
+        if (leave === '3') {
+            console.log("newLeave maternity---------", newLeave1)
             addLeave(newLeave1)
         }else{
+            console.log("newLeave general---------", newLeave)
             addLeave(newLeave)
         }
             
@@ -353,7 +359,7 @@ const AdminLeaveAdd = (props) => {
                                     </Form.Group>
                                 </div>
                              </Row>
-                             {leave === 'Maternity' ?
+                             {leave === '3' ?
                                     <Row style={{margin:'0'}}>
                                         <div classNmae="col-sm-6">
                                             <Form.Group>

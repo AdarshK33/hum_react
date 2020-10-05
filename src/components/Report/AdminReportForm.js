@@ -138,7 +138,8 @@ const AdminReportForm = () => {
                                 placeholder="Select Employee Id"
                                 value={employeeCostCenter} 
                                 style={{fontSize:"0.8rem"}}
-                                options={employeeIdList !== null && employeeIdList.map(e => ({label: e.firstName + " - " + e.employeeId, value: e.employeeId}))}
+                                options={employeeIdList !== null  ?
+                                 employeeIdList.map(e => ({label: e.firstName + " - " + e.employeeId, value: e.employeeId})):[]}
                                 onChange={setEmployeeCostCenterHandler}
                                 isMulti />
                             </Form.Group>

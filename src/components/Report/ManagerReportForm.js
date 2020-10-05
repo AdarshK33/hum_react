@@ -117,7 +117,7 @@ const ManagerReportForm = () => {
                                 placeholder="Select Employee Id"
                                 value={employeeId} 
                                 style={{fontSize:"0.8rem"}}
-                                options={employeeList.map(e => ({label: e, value: e}))}
+                                options={employeeList !== null ? employeeList.map(e => ({label: e, value: e})) : []}
                                 onChange={employeeChangeHandler}
                                 isMulti />
                             </Form.Group>
