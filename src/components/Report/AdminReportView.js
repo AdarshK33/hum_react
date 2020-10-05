@@ -42,7 +42,7 @@ const AdminReportView = (props) => {
                                             <th>LOP</th>
                                         </tr>
                                     </thead>
-                                    {
+                                    {/* reportList !== undefined && reportList !== null  && */
                                         reportList.map((item, i) => {
                                             return (
                                                 <tbody key={i + 1}>

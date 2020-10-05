@@ -101,7 +101,7 @@ const uploadFile = (file) => {
     .then((response) => {
       console.log(response.data,"leave upload response")
       leaveMasterView();
-      toast.info(response.message)
+      toast.info(response.data.message)
       return dispatch({type: 'LEAVE_MASTER_UPLOAD', payload: state.leaveMasterList })
     })
     .catch((error) => {
@@ -132,6 +132,7 @@ const approvedUpdate = (approvalData) => {
         toast.info(state.message)
         console.log("new update approval list response===>", response.data.data)
         console.log("new update approval list message===>", state.message)
+        ApprovalView()
         return (
         dispatch({ type: 'UPDATED_APPRROVAL_LEAVE_LIST', payload: state.ApprovalLeaveList })
         )
@@ -149,6 +150,7 @@ const cancelLeaveList = (ltId) => {
   .then((response) => {
     toast.info(response.data.message)
     console.log("-----delete data-----", response)
+    ApprovalView()
     return (
       dispatch({ type: 'CANCEL_ADMIN_LEAVE', payload: ltId })
     )
