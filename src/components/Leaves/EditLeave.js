@@ -17,7 +17,7 @@ const EditLeave = (props) => {
     const [endDate, setEndDate] = useState(new Date())
     const [startMaternityDate, setStartMaternityDate] = useState(new Date())
     const [endMaternityDate, setEndMaternityDate] = useState()
-    const [leave, setLeave] = useState()
+    const [leave, setLeave] = useState('')
    /*  const [leaveTypeId] = useState(null)
     const [leaveName] = useState('') */
     const [ltId, setltId] = useState()
@@ -27,7 +27,7 @@ const EditLeave = (props) => {
     const [max, setMax] = useState(false)
     let history = useHistory();
 
-    const { getLeave, leaveType, leavesData, addPopup, editEmpList, editPopup, editLeavesData} = useContext(LeaveContext);
+    const { getLeave, leaveType, addPopup, editEmpList, editPopup, editLeavesData} = useContext(LeaveContext);
 
     const { user } = useContext(AppContext);
 
@@ -85,7 +85,7 @@ const EditLeave = (props) => {
             viewLeavePopup: 0,
             year: '2020'
         }
-        addPopup(newPopup)
+        editPopup(newPopup)
 
         //For disable the To Date initially
         setDisable(false)
@@ -128,7 +128,7 @@ const EditLeave = (props) => {
             viewLeavePopup: 0,
             year: '2020'
         }
-        addPopup(newPopup)
+        editPopup(newPopup)
     }
     
     const setStartMaternityDateHandler = (date) => {
@@ -178,7 +178,8 @@ console.log("value 2", value2)
     // create api
     const onSubmit = e => {
         e.preventDefault()
-
+console.log("startMaternityDate",moment(startMaternityDate).format("YYYY-MM-DD"))
+console.log("d3",moment(d3).format("YYYY-MM-DD"))
         const editLeave = {
             empId: user.employeeId,
             fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
@@ -215,11 +216,12 @@ console.log("value 2", value2)
             viewLeavePopup: 1,
             year: '2020'
         }
-        if (leave === '3') {
-          /*   alert("Sent request to admin for edit the maternity leave") */
+        if (leave === 3) {
+          console.log("edit leave data for maternity----", editLeave)
           editEmpList(editLeave)
         }
         else {
+            console.log("edit leave data for general----", editLeave1)
             editEmpList(editLeave1)
         }
 
@@ -308,7 +310,7 @@ console.log("value 2", value2)
                                     <Row style={{margin:'0'}}>
                                         <div classNmae="col-sm-6">
                                             <Form.Group>
-                                                <div><Form.Label >From Date:</Form.Label></div>
+                                                <div><Form.Label >From m Date:</Form.Label></div>
                                                 <div><DatePicker selected={startMaternityDate} onChange={(date) => setStartMaternityDateHandler(date)}
                                                     className="input_date" dateFormat="yyyy-MM-dd" selectsStart startDate={startMaternityDate}
                                                     endDate={d3}
@@ -318,7 +320,7 @@ console.log("value 2", value2)
                                         </div>
                                         <div className="col-sm-6">
                                             <Form.Group>
-                                            <div> <Form.Label >To Date:</Form.Label></div>
+                                            <div> <Form.Label >To m Date:</Form.Label></div>
                                                 <div><DatePicker selected={d3} selectsEnd startDate={startMaternityDate} readOnly
                                                     endDate={d3} onChange={(date) => setEndMaternityDate(date)}
                                                     className="input_date" dateFormat="yyyy-MM-dd"

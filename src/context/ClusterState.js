@@ -1,7 +1,8 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer, useContext } from 'react';
 import { client } from '../utils/axios';
 import ClusterReducer from '../reducers/ClusterReducer';
 import { toast } from "react-toastify";
+import { AppContext } from "../context/AppState";
 
 
 const initial_state = {
@@ -23,6 +24,7 @@ const initial_state = {
 export const ClusterContext = createContext();
 export const ClusterProvider = ({ children }) => {
   const [state, dispatch] = useReducer(ClusterReducer, initial_state);
+  const { user } = useContext(AppContext);
   // ADD SHIFT
 
   function addCluster(addCluster) {
@@ -142,11 +144,14 @@ export const ClusterProvider = ({ children }) => {
   function viewSalary(month, year,id) {
     console.log(" in cluster" + month + " " + year)
 
-    client.get('salary/view?month=' + month + '&year=' + year+ '&storeId='+id).then(function (response) {
-      console.log("data==>" + JSON.stringify(response));
+    client.get('salary/view?month=' + month + '&year=' + year+ '&storeId='+id)
+    .then(function (response) {
+      console.log("data message==>", response.data.message );
       console.log("data==>1", response);
       state.salaryList = response.data.data;
-
+      if(response.data.data === null){
+        toast.info(response.data.message)
+      }
       return dispatch({ type: 'FETCH_SALARY_LIST', payload: state.salaryList });
     })
       .catch(function (error) {
@@ -197,12 +202,14 @@ export const ClusterProvider = ({ children }) => {
 
   const viewStoreSalary = (month, year) => {
     console.log(" in cluster" + month + " " + year)
-    let storeId = 'IN1055'
 
-    client.get('salary/view/store?month=' + month + '&storeId=' + storeId + '&year=' + year)
+    client.get('salary/view/store?month=' + month + '&storeId=' + user.costCentre + '&year=' + year)
       .then((response) => {
         console.log("slary data on store id", response);
         state.salaryStoreList = response.data.data;
+        if( response.data.data === null){
+          toast.info( response.data.message)
+        }
 
         return dispatch({ type: 'FETCH_SALARY_STORE_LIST', payload: state.salaryStoreList });
       })
