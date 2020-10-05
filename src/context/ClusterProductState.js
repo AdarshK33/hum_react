@@ -22,9 +22,9 @@ const initial_state = {
     const viewClusterList = (id) => {
 
           client.get('/cluster/view/'+id).then( (response) => {
-          console.log("==========List of Clusters==============");
-          console.log(response.data.data);
-          console.log("==========List of Clusters==============");
+          // console.log("==========List of Clusters==============");
+          // console.log(response.data.data);
+          // console.log("==========List of Clusters==============");
           state.clusterList = response.data.data;
 
           return dispatch({ type: 'FETCH_CLUSTER_LIST', payload: state.clusterList });
@@ -52,9 +52,9 @@ const initial_state = {
         function viewSingleClusterTarget(id){
           client.get('/cluster/product_target/'+id).then(function (response) {
 
-            console.log("========Single Cluster==========")
-             console.log(response.data.data)
-             console.log("========Single Cluster==========")
+            // console.log("========Single Cluster==========")
+            //  console.log(response.data.data)
+            //  console.log("========Single Cluster==========")
             
             state.singleClusterTarget = response.data.data;
             return dispatch({ type: 'VIEW_SINGLE_CLUSTER_TARGET', payload: state.singleClusterTarget });
@@ -85,7 +85,7 @@ const initial_state = {
             return client.put('/cluster/product_target/update', values)
               .then((response) => {
                 // console.log(values)
-                console.log(response)
+                // console.log(response)
                 toast.info(response.data.message)
                 viewClusterTarget();
                 return ( 
