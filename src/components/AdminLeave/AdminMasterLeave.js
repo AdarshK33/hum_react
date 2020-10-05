@@ -47,11 +47,10 @@ const AdminMasterLeave = () => {
                                 <table id="table-to-xls" className="table table-hover">
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
-                                            <th>Sr.</th>
-                                            <th>Leave MasterId</th>
-                                            <th>State Name</th>
-                                            <th>Max Leaves</th>
+                                            <th>S.No</th>
+                                            <th>Max Leave</th>
                                             <th>Employment Type</th>
+                                            <th>State Name</th>                                            
                                             <th>Year</th>
                                         </tr>
                                     </thead>
@@ -61,10 +60,9 @@ const AdminMasterLeave = () => {
                                             <tbody key={i}>
                                                 <tr>
                                                     <td>{i+1}</td>
-                                                    <td>{item.leaveMasterId}</td>
-                                                    <td>{item.stateName}</td>
                                                     <td>{item.maxLeaves}</td>
-                                                    <td>{item.employmentType}</td>
+                                                    <td>{item.employmentType}</td>                                                    
+                                                    <td>{item.stateName}</td>
                                                     <td>{item.year}</td>
                                                 </tr>
                                             </tbody>

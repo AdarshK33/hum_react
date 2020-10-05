@@ -101,7 +101,7 @@ const uploadFile = (file) => {
     .then((response) => {
       console.log(response.data,"leave upload response")
       leaveMasterView();
-      toast.info(response.message)
+      toast.info(response.data.message)
       return dispatch({type: 'LEAVE_MASTER_UPLOAD', payload: state.leaveMasterList })
     })
     .catch((error) => {
