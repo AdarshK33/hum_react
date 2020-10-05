@@ -1,7 +1,6 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
 import { Modal } from 'react-bootstrap';
 import { ClusterContext } from "../../context/ClusterState";
-import Select from 'react-select';
 import { Multiselect } from 'multiselect-react-dropdown';
 import { toast } from "react-toastify";
 import { AppContext } from "../../context/AppState";
@@ -49,7 +48,7 @@ const EditClusterModal = (props) => {
     setClusterName(getSingleCluster.clusterName)
     setDescription(getSingleCluster.description)
     setClusterLeader(getSingleCluster.clusterLeader)
-
+    setStatus(getSingleCluster.status)
   }, [props])
 
   useEffect(() => {
@@ -75,7 +74,8 @@ const EditClusterModal = (props) => {
       description,
       storeId: user.costCentre,
       sportIds: sportsList.map((e) => e.sportId),
-      employeeIds: employee.map((e) => e.employeeId)
+      employeeIds: employee.map((e) => e.employeeId),
+      status: status
     }
 
     console.log("^^^^" + JSON.stringify(editCluster));
@@ -85,7 +85,7 @@ const EditClusterModal = (props) => {
         toast.info(result.data.message);
         setTimeout(() => {
           callTimer();
-        }, 1000);
+        }, 2000);
         viewCluster();
       })
       .catch((error) => {
@@ -96,14 +96,14 @@ const EditClusterModal = (props) => {
 
   const clusterLeaderSelect = event => {
     setClusterLeader(event.target.value);
-    // if (employee.length === 0) {
-    //   setClusterButton(true)
-    //   setErrorMsg("Provide all input");
-    // }
-    // else {
-    //   setClusterButton(false)
+    if (employee.length === 0) {
+      setClusterButton(true)
+      setErrorMsg("Provide all input");
+    }
+    else {
+      setClusterButton(false)
 
-    // }
+    }
   };
 
   const onChangeHandler = event => {
