@@ -36,7 +36,7 @@ const AdminRoster = () => {
         setAdminModal(true)
         setFirstName(name);
         setContractType(ctype)
-        adminRosterAvailableShift(costCenter1)
+        adminRosterAvailableShift(contractType, costCenter1)
         getallWeeks()
     }
 
@@ -186,7 +186,12 @@ const AdminRoster = () => {
                                                     className="form-control"
                                                     style={{ height: "34px" }}
                                                     value={contractType}
-                                                    onChange={(e) => setContractType(e.target.value)}>
+                                                    onChange={(e) => {
+                                                        setContractType(e.target.value)
+                                                        console.log("??????????NAV?????/")
+                                                        console.log(contractType)
+                                                    }
+                                                    }> 
 
                                                     <option value="">Select Employee Type</option>
                                                     {shiftContractNames.map((e, i) => {
