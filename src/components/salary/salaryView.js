@@ -81,7 +81,7 @@ function ViewShift() {
               {/* <div className="form-group">
                 <label htmlFor="exampleFormControlInput1" >Select Store<span style = {{color:'red'}}>*</span>&nbsp; </label>
                   <select
-                    className="form-control Value"
+                    className="form-control Value" required
                     onChange={(e)=>costCenterHandler(e.target.value)}
                     >
                     <option value="">Select</option>
@@ -170,7 +170,6 @@ function ViewShift() {
                   })}
                 </table>
                 {(salaryList  !== null && salaryList.length <= 0) ? <p style={{ textAlign: "center" }}>Select Month and Year</p> : null}
-                {/* {salaryList.length>0 ?<p>No data found</p>:null} */}
               </div>
             </div>
           </div>

@@ -25,7 +25,7 @@ const AdminLeaveEdit = (props) => {
     const [max, setMax] = useState(false)
     let history = useHistory();
 
-    const { getLeave, leaveType, editList,leavesData, addPopup  } = useContext(LeaveContext);
+    const { getLeave, leaveType, editList, addPopup, editPopup, editLeavesData  } = useContext(LeaveContext);
 
     const { user } = useContext(AppContext);
 
@@ -92,7 +92,7 @@ const AdminLeaveEdit = (props) => {
             viewLeavePopup: 0,
             year: '2020'
         }
-        addPopup(newPopup)
+        editPopup(newPopup)
 
         //For disable the To Date initially
         setDisable(false)
@@ -135,16 +135,20 @@ const AdminLeaveEdit = (props) => {
             viewLeavePopup: 0,
             year: '2020'
         }
-        addPopup(newPopup)
+        editPopup(newPopup)
     }
 
     const setStartMaternityDateHandler = (date) => {
         let value2 = date
         setStartMaternityDate(value2)
 
-        const newPopup1 = {
+        var d1 = new Date(value2);
+        var d2 = new Date(d1)
+        var d3 = d2.setDate(d2.getDate() + 179)
+
+        const editPopupData = {
             empId: user.employeeId,
-            fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
+            fromDate: moment(value2).format("YYYY-MM-DD"),
             /* leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
             leaveCategory: 'Planned',
             /* leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
@@ -157,7 +161,8 @@ const AdminLeaveEdit = (props) => {
             viewLeavePopup: 0,
             year: '2020'
         }
-        addPopup(newPopup1)
+        console.log("editPopupData", editPopupData)
+        editPopup(editPopupData)
     }
     const setLeaveHandler = (e) => {
         const leave1 = e.target.value
@@ -218,7 +223,7 @@ const AdminLeaveEdit = (props) => {
             viewLeavePopup: 1,
             year: '2020'
         }
-        if (leave === 'Maternity') {
+        if (leave === '3') {
               editList(editLeave1)
           }
           else {
@@ -270,10 +275,14 @@ const AdminLeaveEdit = (props) => {
             <ToastContainer />
             <Modal show={props.modal} onHide={props.handleEditClose} centered>
                 <Container style={{ paddingBottom: '1rem' }}>
-                    <Modal.Header closeButton>
+                    <Modal.Header>
                         <Modal.Title >
                             <h5 className="modal-heading">Edit Leave</h5>
                         </Modal.Title>
+                        <button type="button" className="close" data-dismiss="modal" aria-label="Close" 
+                        onClick={onCloseModal}>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </Modal.Header>
                     <Modal.Body>
                         <Form onSubmit={onSubmit}>
@@ -307,11 +316,11 @@ const AdminLeaveEdit = (props) => {
                                     </Form.Control>
                                 </div>
                             </Row><br/>
-                            {leave === 'Maternity' ?
-                                    <Row /* style={{margin:'0'}} */>
+                            {leave === 3 ?
+                                    <Row style={{margin:'0'}}>
                                         <div classNmae="col-sm-6">
                                             <Form.Group>
-                                                <div><Form.Label >From Date:</Form.Label></div>
+                                                <div><Form.Label >From m Date:</Form.Label></div>
                                                 <div><DatePicker selected={startMaternityDate} onChange={(date) => setStartMaternityDateHandler(date)}
                                                     className="input_date" dateFormat="yyyy-MM-dd" selectsStart startDate={startMaternityDate}
                                                     endDate={d3}
@@ -321,7 +330,7 @@ const AdminLeaveEdit = (props) => {
                                         </div>
                                         <div className="col-sm-6">
                                             <Form.Group>
-                                            <div> <Form.Label >To Date:</Form.Label></div>
+                                            <div> <Form.Label >To m Date:</Form.Label></div>
                                                 <div><DatePicker selected={d3} selectsEnd startDate={startMaternityDate} readOnly
                                                     endDate={d3} onChange={(date) => setEndMaternityDate(date)}
                                                     className="input_date" dateFormat="yyyy-MM-dd"
@@ -380,8 +389,8 @@ const AdminLeaveEdit = (props) => {
                             <Row>
                                 <div className="col-sm-12">
                                    {/*  <p className="leavesMsg">{leavesData ? leavesData.Leave : ''}</p> */}
-                                    {leavesData ? 
-                                    <p className="leavesMsg">{leavesData.Leave}</p> : ''}
+                                    {editLeavesData ? 
+                                    <p className="leavesMsg">{editLeavesData.Leave}</p> : ''}
                                 </div>
                             </Row>
 

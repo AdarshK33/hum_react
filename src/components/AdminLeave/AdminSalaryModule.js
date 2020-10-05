@@ -10,12 +10,14 @@ import { ClusterContext } from "../../context/ClusterState";
 import "react-datepicker/dist/react-datepicker.css";
 import { useHistory } from "react-router-dom";
 import { AppContext } from "../../context/AppState";
+import { DashboardContext } from "../../context/DashboardState";
 
 const AdminSalaryModule = () => {
   const [shiftButton] = useState(false);
   const [getM, setGetM] = useState();
   const [deleteModal, setDeleteModal] = useState(false);
   const [checked, setChecked] = useState([]);
+  const [costCenter, setCostCenter] = useState()
 
   let history = useHistory();
 
@@ -24,6 +26,7 @@ const AdminSalaryModule = () => {
     viewStoreSalary,
     salaryApproval,
   } = useContext(ClusterContext);
+  const { cosCentreList,viewCostCentre } = useContext(DashboardContext);
 
   const { user } = useContext(AppContext);
 
@@ -37,10 +40,13 @@ const AdminSalaryModule = () => {
     e.preventDefault();
     const month = moment(getM, ["YYYY-MM"]).format("M");
     const year = moment(getM, ["MMM Do YY"]).format("YYYY");
-    const storeId = user.costCenter
     // alert(month, year)
-    viewStoreSalary(month, year, storeId);
+    viewStoreSalary(month, year, costCenter);
   };
+ 
+  const costCenterHandler = e =>{
+    setCostCenter(e)
+  }
 
   const approvedButton = () => {
     const approvalData = {
@@ -54,13 +60,14 @@ const AdminSalaryModule = () => {
       return(
         <div>
         <p>{i.month} {i.year}</p>
-        {viewStoreSalary(i.month, i.year)}
+        {viewStoreSalary(i.month, i.year, i.costCenter)}
         </div>
        
       )
     })
     history.push("/AdminLeaves/AdminSalaryModule");
   };
+ 
 
   const cancelLeave = () => {
     const cancelData = {
@@ -74,7 +81,7 @@ const AdminSalaryModule = () => {
       return(
         <div>
         <p>{i.month} {i.year}</p>
-        {viewStoreSalary(i.month, i.year)}
+        {viewStoreSalary(i.month, i.year, i.costCenter)}
         </div>
        
       )
@@ -122,6 +129,20 @@ const AdminSalaryModule = () => {
                 />
               </div>
             </div>
+            <div className="form-group">
+                <label htmlFor="exampleFormControlInput1" >Select Store<span style = {{color:'red'}}>*</span>&nbsp; </label>
+                  <select
+                    className="form-control Value" required
+                    onChange={(e)=>costCenterHandler(e.target.value)}
+                    >
+                    <option value="">Select</option>
+                    { cosCentreList.map((e, i) => {
+                      return(
+                          <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
+                      })}
+                                         
+                      </select>
+              </div>
 
             <div className="col-sm-3 mt-4">
               <button
