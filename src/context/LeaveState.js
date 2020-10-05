@@ -279,6 +279,7 @@ export const LeaveProvider = ({ children }) => {
     return client.post('holiday/upload', formData)
       .then((response) => {
         console.log(response,"res")
+        toast.info(response.data.message)
       })
       .catch((error) => {
         console.log(error)
