@@ -38,7 +38,8 @@ const EditShiftModal = (props) => {
   const [costCenterName, setCostCenterName] = useState('');
 
   const { updateShift, costCenter, viewShift, singleShiftList, viewShiftTypes, viewContractTypes, costCenterList, shiftContractNames } = useContext(RosterContext);
-  const { user } = useContext(AppContext);
+  const { user, getUserInfo } = useContext(AppContext);
+
   const setClear = () => {
     setShiftType('')
     setStartTime('')
@@ -59,17 +60,22 @@ const EditShiftModal = (props) => {
     setWorkingHour(singleShiftList.workingHours)
     setEndBreakTIme(singleShiftList.breakEndTime)
     setStartBreakTime(singleShiftList.breakStartTime)
+    setCostCenterName(props.shiftData.storeId)
     setStatus(singleShiftList.status)
-  }, [props])
+  }, [props.shiftData.storeId])
+
 
   useEffect(() => {
+    getUserInfo()
     costCenter()
-    if (user.loginType === "1") {
+    if (user.loginType !== "1" && user.loginType !== "9") {
       setCostCenterName(user.costCentre)
     }
   }, [user.costCentre, user.loginType]);
 
-
+  const callCostCenter = (e) => {
+    setCostCenterName(e)
+  }
 
   const calcTime = () => {
     const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
@@ -158,11 +164,6 @@ const EditShiftModal = (props) => {
     // const workingHours = moment.utc(moment(etime, "HH:mm:ss").diff(moment(stime, "HH:mm:ss"))).format("HH:mm:ss");
     // alert(workingHours);
 
-
-
-
-
-
     var result = parseInt(workingHours);
     if (result <= 5) {
       e.preventDefault();
@@ -229,9 +230,7 @@ const EditShiftModal = (props) => {
           .catch((error) => {
             alert(" In error catch ", error);
           })
-        //   console.log(result, "in competent");
 
-        // ======================
       }
       else {
         //  console.log("inside break end time")
@@ -248,7 +247,7 @@ const EditShiftModal = (props) => {
           breakEndTime: moment(breakEndTime, ["h:mm A"]).format("HH:mm:ss"),
           status: status
         }
-        // alert(JSON.stringify(newShift));
+        alert(JSON.stringify(newShift));
         setSuccessMsg(true);
         const result = updateShift(newShift)
           .then((result) => {
@@ -485,7 +484,7 @@ const EditShiftModal = (props) => {
                   </div>
 
                   {(() => {
-                    if (user.loginType === "5" || user.loginType === "6") {
+                    if (user.loginType === "1" || user.loginType === "9") {
                       return (
                         <div className="row">
                           <div className="col-sm-12">
@@ -493,10 +492,10 @@ const EditShiftModal = (props) => {
                               <label htmlFor="exampleFormControlInput1">Select cost center</label>
                               <select
                                 className="form-control"
-                                defaultValue={singleShiftList.storeId}
-                                onChange={(e) => setCostCenterName(e.target.value)}
+                                //   onChange={(e) => setCostCenterName(e.target.value)}
+                                onChange={(e) => callCostCenter(e.target.value)}
                               >
-                                <option value="">Select cost center</option>
+                                <option value={costCenterName}>{costCenterName}</option>
                                 {costCenterList.map((e, i) => {
                                   return (
                                     <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)

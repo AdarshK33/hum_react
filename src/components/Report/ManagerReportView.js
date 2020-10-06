@@ -9,7 +9,7 @@ const ManagerReportView = (props) => {
     return (
         <Fragment>
             <Container>
-                {reportList !== undefined && reportList !== null  && reportList.length > 0 &&
+                {reportList !== undefined && reportList !== null && reportList.length > 0 &&
                 <Row style={{ marginTop: '2rem' }}>
                     <div className="col-sm-12">
                         <div className="card" style={{ overflowX: "auto" }}>

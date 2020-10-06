@@ -5,11 +5,11 @@ import { AdminContext } from '../../context/AdminState'
 import { ClusterContext } from '../../context/ClusterState'
 import { RosterContext } from '../../context/RosterState'
 import { LeaveContext } from '../../context/LeaveState'
-import DatePicker from 'react-datepicker'
-import "react-datepicker/dist/react-datepicker.css";
+/* import DatePicker from 'react-datepicker'
+import "react-datepicker/dist/react-datepicker.css"; */
 import moment from 'moment'
 import ProductivityReportView from './ProductivityReportView'
-import Select from 'react-select';
+/* import Select from 'react-select'; */
 
 const ProductivityReportForm = () => {
     const [reportType, setReportType] = useState('')
@@ -73,15 +73,17 @@ const ProductivityReportForm = () => {
     const submitData = (e) => {
         e.preventDefault();
 
-         const clusterId = cluster;
-       const contractType = contractTypeData;
-        const employeeId = employeeCostCenter; 
-        const month = moment(getM, ["YYYY-MM"]).format("M");
-        const sportId = sports;
-        const storeId = costCenter;
-        const year = moment(getM, ["MMM Do YY"]).format('YYYY');
-        console.log("productivity data", clusterId, contractType, employeeId, month, storeId, year )
-        productivityReport(clusterId, contractType, employeeId, month ,sportId, storeId, year )
+            const clusterId = cluster;
+            const contractType = contractTypeData;
+             const employeeId = employeeCostCenter; 
+             const month = moment(getM, ["YYYY-MM"]).format("M");
+             const sportId = sports;
+             const storeId = costCenter;
+             const year = moment(getM, ["MMM Do YY"]).format('YYYY');
+             console.log("productivity data", clusterId, contractType, employeeId, month, storeId, year )
+            productivityReport(clusterId, contractType, employeeId, month ,sportId, storeId, year )
+       
+       
 
         setReportType('')
         setCostCenter('')
@@ -137,7 +139,8 @@ const ProductivityReportForm = () => {
                                     onChange={(e) => setEmployeeCostCenterHandler(e)}>
                                     <option value="">Select Employee</option>
 
-                                    {employeeIdList !== null && employeeIdList.map((item, i) => {
+                                    {employeeIdList !== undefined && employeeIdList !== null &&
+                                     employeeIdList.map((item, i) => {
                                         return (
                                             <option key={item.employeeId} value={item.employeeId}>
                                                 {item.firstName}-{item.employeeId}</option>
@@ -153,7 +156,8 @@ const ProductivityReportForm = () => {
                                 <Form.Control as="select" onChange={(e) => setSportsHandler(e)}
                                     value={sports} >
                                     <option value="">Select Sports Type</option>
-                                    {sportsNames !== undefined && sportsNames.map((item, i) => {
+                                    {sportsNames !== undefined && sportsNames !== null && 
+                                    sportsNames.map((item, i) => {
                                         return (
                                             <option key={item.sportId} value={item.sportId}>{item.sportName}</option>
                                         )
@@ -170,7 +174,8 @@ const ProductivityReportForm = () => {
                                 <Form.Control as="select" onChange={(e) => setClusterHandler(e)}
                                     value={cluster} >
                                     <option value="">Select Cluster Type</option>
-                                    {clusterCostCenterList !== undefined && clusterCostCenterList.map((item, i) => {
+                                    {clusterCostCenterList !== undefined && clusterCostCenterList !== null &&
+                                    clusterCostCenterList.map((item, i) => {
                                         return (
                                             <option key={item.clusterId} value={item.clusterId}>{item.clusterName}</option>
                                         )
@@ -184,7 +189,8 @@ const ProductivityReportForm = () => {
                                 <Form.Control as="select" onChange={(e) => setContractTypeHandler(e)}
                                     value={contractTypeData} >
                                     <option value="">Select Contract Type</option>
-                                    {shiftContractNames !== undefined && shiftContractNames.map((item, i) => {
+                                    {shiftContractNames !== undefined && shiftContractNames !== null &&
+                                    shiftContractNames.map((item, i) => {
                                         return (
                                             <option key={item.typeId} value={item.contractType}>{item.contractType}</option>
                                         )
@@ -205,7 +211,7 @@ const ProductivityReportForm = () => {
                         </div>
                     </Row>
                     }
-                    {/* {reportType === 'Yearly' &&
+                   {/*  {reportType === 'Yearly' &&
                     <Row>
                         <div className="col-sm-4">
                             <Form.Label>Select Year</Form.Label>

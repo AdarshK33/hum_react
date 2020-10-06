@@ -162,7 +162,7 @@ const LeaveView = () => {
                             </tr>
                         </thead>
 
-                        {leaveEmpList.length > 0 && 
+                        {leaveEmpList !== null && leaveEmpList !== undefined && 
                             leaveEmpList.map((item, i) => {
                                 return (
                                     <tbody key={i + 1}>

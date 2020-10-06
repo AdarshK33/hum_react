@@ -5,7 +5,7 @@ import { RosterContext } from "../../context/RosterState";
 import './roster.css'
 import moment from 'moment'
 
-
+ 
 
 const AdminShiftModal = (props) => {
   console.log("MY PROPS " + JSON.stringify(props));
@@ -47,7 +47,7 @@ const AdminShiftModal = (props) => {
     getEmployeeListForAdminRosterWeekOff(props.mystoreId)
     availableShifts()
     getallWeeks()
-    adminRosterAvailableShift(props.mystoreId)
+    adminRosterAvailableShift(props.contractType, props.mystoreId)
   }, [])
 
 
@@ -181,7 +181,7 @@ const AdminShiftModal = (props) => {
 
                           onChange={setShiftAdminList}>
                           <option value="">Select Shift</option>
-                          {adminRosterAvailableShiftList.map((item, i) => {
+                          {adminRosterAvailableShiftList!==null &&adminRosterAvailableShiftList.map((item, i) => {
                             return (
                               <option key={item.value} value={item.shiftMasterId}>{item.startTime + '-' + item.endTime + '(' + item.shiftType + ')'}</option>
                             );

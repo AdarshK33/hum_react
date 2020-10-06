@@ -37,7 +37,7 @@ const CreateShiftModal = (props) => {
   useEffect(() => {
     getUserInfo()
     costCenter()
-    if (user.loginType === "1") {
+    if (user.loginType !== "1" && user.loginType !== "9") {
       setCostCenterName(user.costCentre)
     }
   }, [user.costCentre, user.loginType]);
@@ -358,7 +358,7 @@ const CreateShiftModal = (props) => {
                   </div>
 
                   {(() => {
-                    if (user.loginType === "4" || user.loginType === "7") {
+                    if (user.loginType === "1" || user.loginType === "9") {
                       return (
                         <div className="row">
                           <div className="col-sm-12">

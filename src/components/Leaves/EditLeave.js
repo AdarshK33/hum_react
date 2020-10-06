@@ -20,11 +20,12 @@ const EditLeave = (props) => {
     const [leave, setLeave] = useState('')
    /*  const [leaveTypeId] = useState(null)
     const [leaveName] = useState('') */
-    const [ltId, setltId] = useState()
+    const [ltId, setltId] = useState(null)
     const [reason, setReason] = useState()
     const [disable, setDisable] = useState(true)
     const [min, setMin] = useState(false)
     const [max, setMax] = useState(false)
+    const [editMsg, setEditMsg] = useState(false)
     let history = useHistory();
 
     const { getLeave, leaveType, addPopup, editEmpList, editPopup, editLeavesData} = useContext(LeaveContext);
@@ -77,7 +78,7 @@ const EditLeave = (props) => {
            leaveCategory: newData,
            /*  leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
            leaveTypeId: leave,
-            ltId: 0,
+            ltId: ltId,
             numberOfDays: 0,
             reason: 'string',
             status: 1,
@@ -85,8 +86,9 @@ const EditLeave = (props) => {
             viewLeavePopup: 0,
             year: '2020'
         }
+        setEditMsg(true)
         editPopup(newPopup)
-
+        
         //For disable the To Date initially
         setDisable(false)
 
@@ -99,6 +101,7 @@ const EditLeave = (props) => {
             setMin(true);
             setMax(false);
         }
+       /*  setEditLeavesMsg(true) */
 
     }
 
@@ -120,7 +123,7 @@ const EditLeave = (props) => {
            leaveCategory: newData,
             /* leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
             leaveTypeId: leave,
-            ltId: 0,
+            ltId: ltId,
             numberOfDays: 0,
             reason: 'string',
             status: 1,
@@ -129,6 +132,8 @@ const EditLeave = (props) => {
             year: '2020'
         }
         editPopup(newPopup)
+        setEditMsg(true)
+        /* setEditLeavesMsg(true) */
     }
     
     const setStartMaternityDateHandler = (date) => {
@@ -147,7 +152,7 @@ console.log("value 2", value2)
            leaveCategory:'Planned',
            /*  leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
            leaveTypeId: leave,
-            ltId: 0,
+            ltId: ltId,
             numberOfDays: 0,
             reason: 'string',
             status: 1,
@@ -157,6 +162,8 @@ console.log("value 2", value2)
         }
         console.log("editPopupData", editPopupData)
         editPopup(editPopupData)
+        setEditMsg(true)
+        /* setEditLeavesMsg(true) */
     }
 
     const setLeaveHandler = (e) => {
@@ -180,6 +187,7 @@ console.log("value 2", value2)
         e.preventDefault()
 console.log("startMaternityDate",moment(startMaternityDate).format("YYYY-MM-DD"))
 console.log("d3",moment(d3).format("YYYY-MM-DD"))
+
         const editLeave = {
             empId: user.employeeId,
             fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
@@ -226,6 +234,7 @@ console.log("d3",moment(d3).format("YYYY-MM-DD"))
         }
 
         history.push("/Leaves/LeaveView");
+        setEditMsg(false)
 
 
         const setModal = props.handleEditClose;
@@ -238,6 +247,8 @@ console.log("d3",moment(d3).format("YYYY-MM-DD"))
         setLeave(props.leaveTypeId)
         setReason(props.reason)
         setStartMaternityDate(new Date(props.fromDate))
+        setltId(null)
+        setEditMsg(false)
 
     }
     const onCloseModal = () => {
@@ -246,13 +257,14 @@ console.log("d3",moment(d3).format("YYYY-MM-DD"))
             fromDate: '',
             leaveCategory: '',
             leaveTypeId: 0,
-            ltId: 0,
+            ltId: null,
             numberOfDays: 0,
             reason: 'string',
             status: 0,
             toDate: '',
             viewLeavePopup: 0,
-            year: ''
+            year: '',
+            editMsg: false
         }
         const setModal = props.handleEditClose;
         setModal()
@@ -266,6 +278,8 @@ console.log("d3",moment(d3).format("YYYY-MM-DD"))
         setStartMaternityDate(new Date(props.fromDate))
         setEndMaternityDate(new Date(props.toDate))
         addPopup(resetValue)
+        setltId(null)
+        setEditMsg(false)
     }
     return (
         <React.Fragment>
@@ -310,7 +324,7 @@ console.log("d3",moment(d3).format("YYYY-MM-DD"))
                                     <Row style={{margin:'0'}}>
                                         <div classNmae="col-sm-6">
                                             <Form.Group>
-                                                <div><Form.Label >From m Date:</Form.Label></div>
+                                                <div><Form.Label >From Date:</Form.Label></div>
                                                 <div><DatePicker selected={startMaternityDate} onChange={(date) => setStartMaternityDateHandler(date)}
                                                     className="input_date" dateFormat="yyyy-MM-dd" selectsStart startDate={startMaternityDate}
                                                     endDate={d3}
@@ -320,7 +334,7 @@ console.log("d3",moment(d3).format("YYYY-MM-DD"))
                                         </div>
                                         <div className="col-sm-6">
                                             <Form.Group>
-                                            <div> <Form.Label >To m Date:</Form.Label></div>
+                                            <div> <Form.Label >To Date:</Form.Label></div>
                                                 <div><DatePicker selected={d3} selectsEnd startDate={startMaternityDate} readOnly
                                                     endDate={d3} onChange={(date) => setEndMaternityDate(date)}
                                                     className="input_date" dateFormat="yyyy-MM-dd"
@@ -376,13 +390,15 @@ console.log("d3",moment(d3).format("YYYY-MM-DD"))
                                 </Row>
                              
                             }
+                          {
+                                editMsg === true ? 
                             <Row>
                                 <div className="col-sm-12">
                                    {/*  <p className="leavesMsg">{leavesData ? leavesData.Leave : ''}</p> */}
-                                    {editLeavesData ? 
-                                    <p className="leavesMsg">{editLeavesData.Leave}</p> : ''}
+                                    {editLeavesData ?
+                                    <p className="leavesMsg">{editLeavesData.Leave}</p> :'' }
                                 </div>
-                            </Row>
+                            </Row> : ''}
 
                             <Row>
                                 <div className="col-sm-12">

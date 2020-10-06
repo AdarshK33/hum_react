@@ -135,6 +135,7 @@ export const AdminProvider = ({ children }) => {
         toast.info(state.message)
         console.log("new update approval list response===>", response.data.data)
         console.log("new update approval list message===>", state.message)
+        ApprovalView()
         return (
           dispatch({ type: 'UPDATED_APPRROVAL_LEAVE_LIST', payload: state.ApprovalLeaveList })
         )
@@ -152,6 +153,7 @@ export const AdminProvider = ({ children }) => {
       .then((response) => {
         toast.info(response.data.message)
         console.log("-----delete data-----", response)
+        ApprovalView()
         return (
           dispatch({ type: 'CANCEL_ADMIN_LEAVE', payload: ltId })
         )
