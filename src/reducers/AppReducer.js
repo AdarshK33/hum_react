@@ -28,7 +28,6 @@ const initial_state = {
 };
 
 export default (state = initial_state, action) => {
-  console.log("IN REDUCER " + JSON.stringify(state.user));
   const data = action.payload;
 
   switch (action.type) {

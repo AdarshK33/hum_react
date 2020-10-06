@@ -99,7 +99,7 @@ const GrantLeaveAdd = (props) => {
                                                 required
                                                 onChange={(e) => setCostCenterHandler(e)} >
                                                 <option value="">Select Cost Center</option>
-                                                {costCenterList.map((item, i) => {
+                                                {costCenterList !== null && costCenterList.map((item, i) => {
                                                     return (
                                                         <option key={item.costCenterId} value={item.costCentreName}>
                                                             {item.costCentreName}</option>
@@ -138,7 +138,7 @@ const GrantLeaveAdd = (props) => {
                                         <div className="form-group">
                                             <label htmlFor="exampleFormControlInput1">Number of days</label>
 
-                                            <input type="number" className="form-control digit" required onChange={(e) => setNumOfDays(e.target.value)} value={numOfDays} />
+                                            <input type="number" className="form-control digit" required onChange={(e) => setNumOfDays(e.target.value)} value={numOfDays} placeholder="Number of days" />
                                         </div>
                                     </div>
                                 </div>
@@ -152,8 +152,8 @@ const GrantLeaveAdd = (props) => {
                                 </div>
                             </div>
                         </div>
-                        <button className="btn btn-primary mb-2 mr-2" type="submit" value="Submit">Save</button>
-                        <button className="btn btn-primary mb-2 ml-2" onClick={() => { clearAndClose() }}>Close</button>
+                        <button className="myclass mb-2 mr-2" type="submit" value="Submit">Save</button>
+                        <button className="myclass mb-2 mr-2" onClick={() => { clearAndClose() }}>Close</button>
                         <h5>{successMsg.length !== 0 && <div className="text-success">{successMsg}</div>}</h5>
                     </form>
                 </Modal.Body>
