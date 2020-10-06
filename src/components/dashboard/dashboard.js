@@ -6,13 +6,15 @@ import './dashboard.css';
 import { ClusterContext } from "../../context/ClusterState";
 import { DashboardContext } from "../../context/DashboardState";
 import { RosterContext } from '../../context/RosterState';
+import { AppContext } from "../../context/AppState";
+
 
 
 
 function Dashboard () {
     const { cosCentreList,viewCostCentre,viewData,graphData } = useContext(DashboardContext);
-    const { weekOffDataEmp} = useContext(RosterContext);
-
+   
+    const { user } = useContext(AppContext);
     const [startDate, setStartDate] = useState();
     const [StoreType, setStoreType] = useState('');
     const [ClusterType, setClusterType] = useState('');
@@ -73,9 +75,10 @@ function Dashboard () {
         useEffect(() => {
             viewCluster()
             viewCostCentre()
+            viewClusterCostCenter(user.costCentre)
         }, []);
    
-        const { clusterList,viewCluster } = useContext(ClusterContext);
+        const { clusterList,viewCluster,viewClusterCostCenter,clusterCostCenterList, } = useContext(ClusterContext);
    
         let dpsQtyStore = [];
         let dpsQtyCluster = [];
@@ -165,6 +168,7 @@ function Dashboard () {
                         
                         </Col>
                         <Col xs={6}>
+                           
                             <Row>
                                 <div className="col-sm-4">
                                     <div className="form-group">
@@ -180,7 +184,10 @@ function Dashboard () {
                                 </div>
                                 <div className="col-sm-4">
                                     <div className="form-group">
-                                        <label className="name f-w-600" >Select Cluster<span style = {{color:'red'}}>*</span>&nbsp; </label>
+                                    <label className="name f-w-600" >Select Cluster<span style = {{color:'red'}}>*</span>&nbsp; </label>
+                                        {user.loginType === "1" || user.loginType === "9" ?
+                                        
+                                        
                                         <select
                                             className="form-control Value"
                                             onChange={(e)=>fromClusterHandler(e)}
@@ -194,13 +201,30 @@ function Dashboard () {
                                                 })}
                                            
                                             
-                                        </select>
+                                        </select> :
+                                           
+                                            <select
+                                                className="form-control Value"
+                                                onChange={(e)=>fromClusterHandler(e)}
+                                                >
+                                                    <option value ="">Select</option>
+                                                    
+                                                    {clusterCostCenterList !== null &&
+                                                      clusterCostCenterList.map((e, i) => {
+                                                        return(
+                                                        <option key={i + 1} value={e.clusterId} >{e.clusterName}</option>)
+                                                    })}
+                                               
+                                                
+                                            </select>
+                                        }
                                     </div>
                                 </div>
                                 <div className="col-sm-4">
                                     <div className="form-group">
                                         <label className="name f-w-600" >Select Store<span style = {{color:'red'}}>*</span>&nbsp; </label>
-                                        <select
+                                        {user.loginType === "1" || user.loginType === "9" ?
+                                         <select
                                             className="form-control Value"
                                             onChange={(e)=>fromStoreHandler(e.target.value)}
                                             >
@@ -210,10 +234,14 @@ function Dashboard () {
                                                     <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
                                                 })}
                                             
-                                        </select>
+                                        </select> 
+                                        :
+                                        <input type="text"  className="form-control Value" required readOnly  value={user.costCentre} />
+                                        }
                                     </div>
                                 </div>
-                            </Row>
+                            </Row> 
+                            
                         </Col>
                     </Row>
                     <Row className="Row3" > Cluster : {ClusterName} </Row>

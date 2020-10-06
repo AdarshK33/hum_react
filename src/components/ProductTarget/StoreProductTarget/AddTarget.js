@@ -110,7 +110,7 @@ const AddTarget = (props) => {
             addTarget(Values);
         }
        
-        history.push("/productTarget/adminStoreTarget");
+        // history.push("/productTarget/adminStoreTarget");
         const setModal = props.handleClose;
         setModal();
         setStoreType("");

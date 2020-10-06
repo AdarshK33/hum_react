@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
 import Breadcrumb from '../../common/breadcrumb';
-import { Card, Row, Col, Table, Button } from 'react-bootstrap'
-import { Edit2, Slash, Trash2 } from 'react-feather'
+import { Row, Col, Table, Button } from 'react-bootstrap'
+import { Edit2 } from 'react-feather'
 import EditTarget from './EditTarget';
 import AddTarget from './AddTarget';
 import { StoreProductContext } from "../../../context/StoreProductState";
@@ -96,7 +96,7 @@ const StoreProductTarget = () => {
                                             <td>{item.weekday}</td>
                                             <td>{item.weekend}</td>
                                             <td>{item.growth}</td>
-                                            {Year > item.year  ?<td><Edit2 disabled style={{color:'lightgrey'}} /></td> : Year == item.year && monthsNumber[item.month] <= month  ?<td><Edit2 disabled style={{color:'lightgrey'}} /></td> :Year == item.year && monthsNumber[item.month] <= month && TodayDate > 20 ? <td><Edit2 disabled style={{color:'lightgrey'}} /></td> : 
+                                            {Year > item.year  ?<td><Edit2 disabled style={{color:'lightgrey'}} /></td> : Year === item.year && monthsNumber[item.month] <= month  ?<td><Edit2 disabled style={{color:'lightgrey'}} /></td> :Year === item.year && monthsNumber[item.month] <= month && TodayDate > 20 ? <td><Edit2 disabled style={{color:'lightgrey'}} /></td> : 
                                             <td><Edit2 
                                             onClick={() => {
                                                 setEditModal(true);

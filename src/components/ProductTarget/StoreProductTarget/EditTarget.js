@@ -2,8 +2,8 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap'
 
 import "react-datepicker/dist/react-datepicker.css";
-import { useHistory } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { DashboardContext } from "../../../context/DashboardState";
@@ -11,7 +11,7 @@ import { StoreProductContext } from "../../../context/StoreProductState";
 import moment from 'moment'
 
 const EditTarget = (props) => {
-    let history = useHistory();
+    
     
     const [StoreType, setStoreType] = useState('');
     const [getM, setGetM] = useState();
@@ -128,7 +128,7 @@ const EditTarget = (props) => {
            }
     
         UpdateTarget(Values);
-        history.push("/productTarget/adminStoreTarget");
+       
         const setModal = props.handleEditClose;
         setModal();
        
