@@ -74,11 +74,9 @@ export const AppProvider = ({ children, history }) => {
   const getRefreshToken = () => {
     console.log("INSIDE THE GET_REFRESH_TOKEN")
     let refreshToken = Cookies.get('APPRT');
-    // let config = {
-    //   method: "get",
-    //   url: "http://humine.theretailinsights.co/auth/token/refresh?refresh_token=" + refreshToken,
-    // };
-    let config = client.get('/auth/token/refresh?refresh_token=' + refreshToken)
+    let config = (
+      client.get('auth/token/refresh?refresh_token=' + refreshToken)
+    );
     return client(config)
   }
 
@@ -173,7 +171,7 @@ export const AppProvider = ({ children, history }) => {
         accessToken,
         authenticateUser,
         getUserInfo,
-        getRefreshToken,
+        // getRefreshToken,
         user: state.user,
         state,
       }}

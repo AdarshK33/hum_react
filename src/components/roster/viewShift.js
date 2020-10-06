@@ -65,7 +65,9 @@ function ViewShift() {
 
                     </tr>
                   </thead>
-                  {shiftList.length > 0 &&
+
+
+                  {shiftList !== null &&
                     shiftList.map((e, i) => {
                       return (
                         <tbody key={i + 1}>

@@ -3,6 +3,7 @@ import { Modal } from 'react-bootstrap';
 import { ClusterContext } from "../../context/ClusterState";
 import { Multiselect } from 'multiselect-react-dropdown';
 import { toast } from "react-toastify";
+import { RosterContext } from "../../context/RosterState";
 import { AppContext } from "../../context/AppState";
 import "react-toastify/dist/ReactToastify.css";
 const EditClusterModal = (props) => {
@@ -17,6 +18,7 @@ const EditClusterModal = (props) => {
   const [errormsg, setErrorMsg] = useState(false);
   const [sportsList, setSportsList] = useState([])
   const [clustertButton, setClusterButton] = useState(false);
+  const [costCenterName, setCostCenterName] = useState('');
   const [status, setStatus] = useState(0)
 
 
@@ -36,8 +38,8 @@ const EditClusterModal = (props) => {
 
   const { updateCluster, viewCluster, getSingleCluster, viewSports, sportsNames,
     getSingleCluster1, selectClusterLeader, selectAllClusterLeaderForEdit, clusterAllLeaderNames, getEmployeesNames } = useContext(ClusterContext);
-  const { user } = useContext(AppContext);
-
+  const { user, getUserInfo } = useContext(AppContext);
+  const { costCenter } = useContext(RosterContext);
   useEffect(() => {
     viewSports()
     selectClusterLeader(user.costCentre)
@@ -49,6 +51,7 @@ const EditClusterModal = (props) => {
     setDescription(getSingleCluster.description)
     setClusterLeader(getSingleCluster.clusterLeader)
     setStatus(getSingleCluster.status)
+    setCostCenterName(props.shiftData.storeId)
   }, [props])
 
   useEffect(() => {
@@ -65,6 +68,20 @@ const EditClusterModal = (props) => {
   }, [props.clusterData1])
 
 
+  useEffect(() => {
+    getUserInfo()
+    costCenter()
+    if (user.loginType !== "1" && user.loginType !== "9") {
+      setCostCenterName(user.costCentre)
+    }
+  }, [user.costCentre, user.loginType]);
+
+
+
+
+
+
+
   const onSubmit = (event) => {
     event.preventDefault();
     const editCluster = {
@@ -72,7 +89,7 @@ const EditClusterModal = (props) => {
       clusterLeader,
       clusterName,
       description,
-      storeId: user.costCentre,
+      storeId: costCenterName,
       sportIds: sportsList.map((e) => e.sportId),
       employeeIds: employee.map((e) => e.employeeId),
       status: status
@@ -138,16 +155,24 @@ const EditClusterModal = (props) => {
   }
 
   const onRemove = (option) => {
-    alert(JSON.stringify(option));
     setSportsList(option)
+    console.log(sportsList);
   }
-
 
   const handleMultiChange1 = (options) => {
     setEmployee(options)
+    console.log("--------" + employee);
     setClusterButton(false)
     setErrorMsg(false)
   }
+  const onRemoveEmployee = (options) => {
+
+    setEmployee(options)
+    console.log(employee);
+  }
+
+
+
 
   //Timer to close modal 
   const callTimer = () => {
@@ -190,8 +215,13 @@ const EditClusterModal = (props) => {
             <div className="row">
               <div className="col-sm-12">
                 <div className="form-group">
-                  <label htmlFor="exampleFormControlInput1">Cluster Name</label>
-                  <input type="text" className="form-control" required value={clusterName} defaultValue={getSingleCluster.clusterName} onChange={onChangeHandler} />
+                  <label htmlFor="exampleFormControlInput">Cluster Name</label>
+                  <input type="text"
+                    value={clusterName}
+                    className="form-control"
+                    defaultValue={getSingleCluster.clusterName}
+                    required
+                    onChange={onChangeHandler} />
                 </div>
               </div>
             </div>
@@ -202,7 +232,7 @@ const EditClusterModal = (props) => {
                 <div className="form-group">
                   <label htmlFor="exampleFormControlInput1">Cluster Description</label>
 
-                  <input type="text" className="form-control digit" placeholder="Desc" defaultValue={getSingleCluster.description} required value={description} onChange={onDescprtion} />
+                  <input type="text" className="form-control digit" required placeholder="Desc" defaultValue={getSingleCluster.description} value={description} onChange={onDescprtion} />
                 </div>
               </div>
             </div>
@@ -216,11 +246,12 @@ const EditClusterModal = (props) => {
 
                   <Multiselect
                     placeholder="Select Employee"
-                    options={clusterAllLeaderNames}
+                    options={clusterAllLeaderNames !== null && clusterAllLeaderNames}
                     value={employee}
                     selectedValues={getEmployeesNames}
                     displayValue="firstName"
-                    onChange={handleMultiChange1}
+                    onRemove={onRemoveEmployee}
+                    onSelect={handleMultiChange1}
                     isMulti
                   />
 

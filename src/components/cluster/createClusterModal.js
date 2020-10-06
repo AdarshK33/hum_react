@@ -49,11 +49,10 @@ const CreateClusterModal = (props) => {
   useEffect(() => {
     getUserInfo()
     costCenter()
-    if (user.loginType === "7") {
+    if (user.loginType !== "1" && user.loginType !== "9") {
       setCostCenterName(user.costCentre)
     }
   }, [user.costCentre, user.loginType]);
-
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -70,7 +69,7 @@ const CreateClusterModal = (props) => {
     // console.log("^^^^" + JSON.stringify(newCluster));
     const result = addCluster(newCluster)
       .then((result) => {
-        console.log("api response===", result.data.message);
+        //   console.log("api response===", result.data.message);
 
         toast.info(result.data.message);
         setTimeout(() => {
@@ -125,10 +124,10 @@ const CreateClusterModal = (props) => {
   const handleMultiChange = (option) => {
     setClusterButton(false)
     setSportsList(option)
-    console.log(JSON.stringify(sportsList));
+    // console.log(JSON.stringify(sportsList));
 
 
-    console.log(res);
+    // console.log(res);
     setErrorMsg(false)
   }
 

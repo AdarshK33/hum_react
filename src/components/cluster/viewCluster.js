@@ -22,7 +22,7 @@ function ViewCluster() {
 
 
   //variable
-  const { clusterList, viewCluster, getCluster, getSingleCluster1, getEmployeesNames } = useContext(ClusterContext);
+  const { clusterList, viewCluster, getCluster, getSingleCluster, getSingleCluster1, getEmployeesNames } = useContext(ClusterContext);
 
   return (
     <Fragment>
@@ -40,7 +40,7 @@ function ViewCluster() {
               </div>
               <CreateClusterModal handleClose={handleClose} modal={modal} />
               <div className="table-responsive">
-                <table id="table-to-xls" className="table table-hover">
+                <table id="table" className="table table-hover">
                   <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                     <tr>
                       <th>No</th>
@@ -55,16 +55,16 @@ function ViewCluster() {
                       <th scope="col">Edit</th>
                     </tr>
                   </thead>
-                  {clusterList.length > 0 &&
+                  {clusterList !== null &&
                     clusterList.map((e, i) => {
                       return (
                         <tbody key={i + 1}>
                           <tr>
                             <td>{i + 1}</td>
                             {e.sports.map((f, j) => {
-                              return (<div key={j + 1}>
+                              return (<tr key={j + 1}>
                                 <td style={{ marginLeft: "10px", fontSize: "10px", paddingTop: "5px", paddingBottom: "5px" }}>{f.sportName}</td>
-                              </div>)
+                              </tr>)
                             })}
                             <td>{e.clusterName}</td>
                             <td>{e.description}</td>
@@ -88,7 +88,7 @@ function ViewCluster() {
 
                 </table>
                 <EditClusterModal handleEditClose={handleEditClose}
-
+                  shiftData={getSingleCluster}
                   clusterData={getSingleCluster1}
                   clusterData1={getEmployeesNames}
                   modal={editModal}
