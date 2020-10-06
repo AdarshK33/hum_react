@@ -13,7 +13,7 @@ const GrantLeaveAdd = (props) => {
     const [successMsg, setSuccessMsg] = useState("");
     const [costCenter, setCostCenter] = useState()
     const [employeeCostCenter, setEmployeeCostCenter] = useState('')
-    const { viewGrantLeave, createGrantLeave, selectEmployeeForLeave, getEmployeesName, CostCenter, costCenterList, employeeIdData, employeeIdList } = useContext(AdminContext);
+    const { viewGrantLeave, createGrantLeave, CostCenter, costCenterList, employeeIdData, employeeIdList } = useContext(AdminContext);
 
     const setCostCenterHandler = (e) => {
         let data1 = e.target.value
