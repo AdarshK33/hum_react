@@ -23,7 +23,7 @@ const EditTarget = (props) => {
     const [Year, setYear] = useState();
  
     const { cosCentreList,viewCostCentre } = useContext(DashboardContext);
-    const { StateData,getStateData,UpdateTarget,updateTargetList } = useContext(StoreProductContext);
+    const { StateData,getStateData,UpdateTarget } = useContext(StoreProductContext);
 
    
      useEffect(() => {

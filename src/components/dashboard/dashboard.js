@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import './dashboard.css';
 import { ClusterContext } from "../../context/ClusterState";
 import { DashboardContext } from "../../context/DashboardState";
-import { RosterContext } from '../../context/RosterState';
+
 import { AppContext } from "../../context/AppState";
 
 
@@ -76,7 +76,10 @@ function Dashboard () {
             viewCluster()
             viewCostCentre()
             viewClusterCostCenter(user.costCentre)
-        }, []);
+            if(user.loginType !== '1' && user.loginType !== '9'){
+                setStoreType(user.costCentre)
+            }
+        }, [user.costCentre]);
    
         const { clusterList,viewCluster,viewClusterCostCenter,clusterCostCenterList, } = useContext(ClusterContext);
    
