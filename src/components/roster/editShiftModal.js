@@ -35,8 +35,9 @@ const EditShiftModal = (props) => {
   const [errormsg, setErrorMsg] = useState(false);
   const [status, setStatus] = useState(0)
   const [breakNumber, setBreakNumber] = useState()
+  const [costCenterName, setCostCenterName] = useState('');
 
-  const { updateShift, viewShift, singleShiftList, viewShiftTypes, viewContractTypes, shiftContractNames } = useContext(RosterContext);
+  const { updateShift, costCenter, viewShift, singleShiftList, viewShiftTypes, viewContractTypes, costCenterList, shiftContractNames } = useContext(RosterContext);
   const { user } = useContext(AppContext);
   const setClear = () => {
     setShiftType('')
@@ -61,6 +62,12 @@ const EditShiftModal = (props) => {
     setStatus(singleShiftList.status)
   }, [props])
 
+  useEffect(() => {
+    costCenter()
+    if (user.loginType === "1") {
+      setCostCenterName(user.costCentre)
+    }
+  }, [user.costCentre, user.loginType]);
 
 
 
@@ -166,7 +173,7 @@ const EditShiftModal = (props) => {
         shiftType,
         shiftMasterId: singleShiftList.shiftMasterId,
         workingHours: 0,
-        storeId: user.costCentre,
+        storeId: costCenterName,
         breakStartTime: 0,
         breakEndTime: 0,
         status: status
@@ -199,7 +206,7 @@ const EditShiftModal = (props) => {
           shiftType,
           shiftMasterId: singleShiftList.shiftMasterId,
           workingHours: 0,
-          storeId: user.costCentre,
+          storeId: costCenterName,
           breakStartTime: moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
           breakEndTime: moment(breakStartTime).add(1, 'hours').format('HH:mm:ss'),
           status: status
@@ -236,7 +243,7 @@ const EditShiftModal = (props) => {
           shiftType,
           shiftMasterId: singleShiftList.shiftMasterId,
           workingHours: 0,
-          storeId: user.costCentre,
+          storeId: costCenterName,
           breakStartTime: moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
           breakEndTime: moment(breakEndTime, ["h:mm A"]).format("HH:mm:ss"),
           status: status
@@ -477,6 +484,31 @@ const EditShiftModal = (props) => {
                     </div>
                   </div>
 
+                  {(() => {
+                    if (user.loginType === "5" || user.loginType === "6") {
+                      return (
+                        <div className="row">
+                          <div className="col-sm-12">
+                            <div className="form-group">
+                              <label htmlFor="exampleFormControlInput1">Select cost center</label>
+                              <select
+                                className="form-control"
+                                defaultValue={singleShiftList.storeId}
+                                onChange={(e) => setCostCenterName(e.target.value)}
+                              >
+                                <option value="">Select cost center</option>
+                                {costCenterList.map((e, i) => {
+                                  return (
+                                    <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
+                                })}
+
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                      )
+                    }
+                  })()}
 
                   <div className="row">
                     <div className="col-sm-12">

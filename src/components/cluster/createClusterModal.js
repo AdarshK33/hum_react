@@ -101,7 +101,7 @@ const CreateClusterModal = (props) => {
   };
   const clusterLeaderSelect = event => {
     setClusterLeader(event.target.value);
-    if (sportsList.length === 0) {
+    if (employee.length === 0) {
       setClusterButton(true)
       setErrorMsg("Please fill the required fields");
     }

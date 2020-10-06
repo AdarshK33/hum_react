@@ -29,13 +29,20 @@ const CreateShiftModal = (props) => {
   const [warnMsg, setWrnMsg] = useState(false);
   // const [workingHoursText, setWorkingHoursText] = useState(false);
   const [errormsg, setErrorMsg] = useState(false);
-  const [costCenterName, setCostCenterName] = useState('')
+  const [costCenterName, setCostCenterName] = useState('');
   const { addShift, viewShift, viewShiftTypes, viewContractTypes, shiftContractNames, costCenterList, costCenter } = useContext(RosterContext);
 
-  const { user } = useContext(AppContext);
+  const { user, getUserInfo } = useContext(AppContext);
+
   useEffect(() => {
+    getUserInfo()
     costCenter()
-  }, []);
+    if (user.loginType === "1") {
+      setCostCenterName(user.costCentre)
+    }
+  }, [user.costCentre, user.loginType]);
+
+
   useEffect(() => {
     setShiftType(props.shiftType)
   }, [props.shiftType])
@@ -133,7 +140,6 @@ const CreateShiftModal = (props) => {
     // alert(workingHours);
     var result = parseInt(workingHours);
     if (result <= 5) {
-      // alert("less than 5");
       e.preventDefault();
       const newShift = {
         startTime: moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
@@ -142,7 +148,7 @@ const CreateShiftModal = (props) => {
         shiftMasterId: 0,
         shiftType,
         workingHours: 0,
-        storeId: user.costCentre,
+        storeId: costCenterName,
         breakStartTime: 0,
         breakEndTime: 0,
         status: 0
@@ -173,7 +179,7 @@ const CreateShiftModal = (props) => {
         shiftMasterId: 0,
         shiftType,
         workingHours: 0,
-        storeId: user.costCentre,
+        storeId: costCenterName,
         breakStartTime: moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
         breakEndTime: moment(breakStartTime).add(1, 'hours').format('HH:mm:ss'),
         status: 0
@@ -351,14 +357,15 @@ const CreateShiftModal = (props) => {
                     </div>
                   </div>
 
-                  {/* {(() => {
-                    if (user.loginType === "1" || user.loginType === "9") {
+                  {(() => {
+                    if (user.loginType === "4" || user.loginType === "7") {
                       return (
                         <div className="row">
                           <div className="col-sm-12">
                             <div className="form-group">
                               <label htmlFor="exampleFormControlInput1">Select cost center</label>
                               <select
+                                value={costCenterName}
                                 className="form-control"
                                 onChange={(e) => setCostCenterName(e.target.value)}
                               >
@@ -374,7 +381,7 @@ const CreateShiftModal = (props) => {
                         </div>
                       )
                     }
-                  })()} */}
+                  })()}
 
 
 
