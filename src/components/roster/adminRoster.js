@@ -191,7 +191,7 @@ const AdminRoster = () => {
                                                         console.log("??????????NAV?????/")
                                                         console.log(contractType)
                                                     }
-                                                    }> 
+                                                    }>
 
                                                     <option value="">Select Employee Type</option>
                                                     {shiftContractNames.map((e, i) => {

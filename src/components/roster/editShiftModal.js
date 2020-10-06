@@ -73,9 +73,7 @@ const EditShiftModal = (props) => {
     }
   }, [user.costCentre, user.loginType]);
 
-  const callCostCenter = (e) => {
-    setCostCenterName(e)
-  }
+
 
   const calcTime = () => {
     const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
@@ -483,7 +481,7 @@ const EditShiftModal = (props) => {
                     </div>
                   </div>
 
-                  {(() => {
+                  {/* {(() => {
                     if (user.loginType === "1" || user.loginType === "9") {
                       return (
                         <div className="row">
@@ -507,7 +505,7 @@ const EditShiftModal = (props) => {
                         </div>
                       )
                     }
-                  })()}
+                  })()} */}
 
                   <div className="row">
                     <div className="col-sm-12">

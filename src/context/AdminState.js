@@ -57,9 +57,9 @@ export const AdminProvider = ({ children }) => {
       .then((response) => {
         state.employeeIdList = response.data.data
         console.log("employee id data", state.employeeIdList)
-        if (state.employeeIdList === null) {
-          toast.info("No Employee For Selected Cost Center");
-        }
+        // if (state.employeeIdList === null) {
+        //   toast.info("No Employee For Selected Cost Center");
+        // }
         return dispatch({ type: 'EMPLOYEE_ID_DATA', payload: state.employeeIdList })
       })
       .catch((error) => {
