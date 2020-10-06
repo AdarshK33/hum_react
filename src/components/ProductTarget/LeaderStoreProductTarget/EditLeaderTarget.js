@@ -1,12 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap'
-
-import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
-import { useHistory } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import { DashboardContext } from "../../../context/DashboardState";
 import { StoreProductContext } from "../../../context/StoreProductState";
 import moment from 'moment'
@@ -26,7 +22,7 @@ const EditLeaderTarget = (props) => {
     
     
     const { cosCentreList,viewCostCentre } = useContext(DashboardContext);
-    const { StateData,getStateData,UpdateTarget,updateTargetList } = useContext(StoreProductContext);
+    const { StateData,getStateData,UpdateTarget } = useContext(StoreProductContext);
 
     
     
