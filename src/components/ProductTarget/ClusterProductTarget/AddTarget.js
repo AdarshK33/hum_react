@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap';
-import DatePicker from 'react-datepicker'
+import { Container, Row, Button, Form, Modal } from 'react-bootstrap';
+
 import "react-datepicker/dist/react-datepicker.css";
-import { useHistory } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+// import { useHistory } from "react-router-dom";
+import { ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { DashboardContext } from "../../../context/DashboardState";
 import { ClusterProductContext } from "../../../context/ClusterProductState";
@@ -12,12 +12,12 @@ import moment from 'moment';
 
 const AddTarget = (props) => {
 
-    let history = useHistory();
+    // let history = useHistory();
 
     const [StoreType, setStoreType] = useState('');
     const [getM, setGetM] = useState();
     const [cluster, setCluster] = useState("");
-    const [clusterName, setClusterName] = useState();
+    // const [clusterName, setClusterName] = useState();
     const [target, setTarget] = useState();
     // const [WeekdaysTarget, setWeekdaysTarget] = useState();
     // const [WeekendsTarget, setWeekendsTarget] = useState();
@@ -28,7 +28,7 @@ const AddTarget = (props) => {
 
 
     const { cosCentreList,viewCostCentre } = useContext(DashboardContext);
-    const { clusterList,clusterProductList, viewClusterList,addTarget} = useContext(ClusterProductContext);
+    const { clusterList, viewClusterList,addTarget} = useContext(ClusterProductContext);
 
 
     useEffect(() => {
@@ -113,7 +113,7 @@ const AddTarget = (props) => {
         const month = moment(getM, ["YYYY-MM"]).format("M");
         var MonthData = months[month];
         const year = moment(getM, ["MMM Do YY"]).format('YYYY');
-        const validate = true;
+        // const validate = true;
         const Values = {
             clusterId: cluster,
             clusterName: "",

@@ -184,7 +184,8 @@ const AddTarget = (props) => {
                                             onChange={(e)=>fromStoreHandler(e.target.value)}
                                             >
                                             <option value="">Select</option>
-                                            { cosCentreList.map((e, i) => {
+                                            { cosCentreList !== null && cosCentreList !== undefined && 
+                                                cosCentreList.map((e, i) => {
                                                     return(
                                                     <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
                                                 })}

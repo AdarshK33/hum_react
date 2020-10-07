@@ -169,10 +169,10 @@ const ShiftModal = (props) => {
                       <div className="form-group">
                         <select className="form-control"
                           required
-                          value={selectedWeeks} onChange={(e) => handleWeeksChange(e)}>
+                          value={selectedWeeks} onChange={handleWeeksChange}>
                           <option value="" >Select Week</option>
 
-                          {weekDayList.map((item, i) => {
+                          {weekDayList !== null && weekDayList.map((item, i) => {
                             return (
                               <option key={item.weekId} selected={item.selected} value={item.weekId}>{item.weekName + " - " + item.year}</option>
                             )

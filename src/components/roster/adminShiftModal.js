@@ -5,7 +5,7 @@ import { RosterContext } from "../../context/RosterState";
 import './roster.css'
 import moment from 'moment'
 
- 
+
 
 const AdminShiftModal = (props) => {
   console.log("MY PROPS " + JSON.stringify(props));
@@ -181,7 +181,7 @@ const AdminShiftModal = (props) => {
 
                           onChange={setShiftAdminList}>
                           <option value="">Select Shift</option>
-                          {adminRosterAvailableShiftList!==null &&adminRosterAvailableShiftList.map((item, i) => {
+                          {adminRosterAvailableShiftList !== null && adminRosterAvailableShiftList.map((item, i) => {
                             return (
                               <option key={item.value} value={item.shiftMasterId}>{item.startTime + '-' + item.endTime + '(' + item.shiftType + ')'}</option>
                             );
@@ -219,7 +219,7 @@ const AdminShiftModal = (props) => {
                           value={selectedWeeks} onChange={handleWeeksChange}>
                           <option value="" >Select Week</option>
 
-                          {weekDayList!==null && weekDayList.map((item, i) => {
+                          {weekDayList !== null && weekDayList.map((item, i) => {
                             return (
                               <option key={item.weekId} selected={item.selected} value={item.weekId}>{item.weekName + " - " + item.year}</option>
                             )
@@ -284,7 +284,7 @@ const AdminShiftModal = (props) => {
                       <div className="form-group">
                         <select className="form-control" value={selectedWeeks} onChange={handleWeeksChange}>
                           <option value="" >select Week</option>
-                          {weekDayList!==null && weekDayList.map((item, i) => {
+                          {weekDayList !== null && weekDayList.map((item, i) => {
                             return (
                               <option key={item.weekId} selected={item.selected} value={item.weekId}>{item.weekName + " - " + item.year}</option>
                             )
@@ -300,7 +300,7 @@ const AdminShiftModal = (props) => {
                       <div className="form-group">
                         <select className="form-control" onChange={(e) => setWeekDayHandler(e)}>
                           <option value="" >select shift</option>
-                          {dayList!==null && dayList.map((item, i) => {
+                          {dayList !== null && dayList.map((item, i) => {
                             return (
                               <option key={item.date} selected={item.selected} value={item.date}>{item.day}{item.selected}</option>
                             )

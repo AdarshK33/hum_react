@@ -345,13 +345,14 @@ const CreateShiftModal = (props) => {
                           onChange={(e) => setContractType(e.target.value)}>
 
                           <option value="">Select Contract Type</option>
-                          {shiftContractNames.map((e, i) => {
-                            return (
-                              <option key={e.typeId} value={e.contractType}>
-                                {e.contractType}
-                              </option>
-                            );
-                          })}
+                          {shiftContractNames !== null &&
+                            shiftContractNames.map((e, i) => {
+                              return (
+                                <option key={e.typeId} value={e.contractType}>
+                                  {e.contractType}
+                                </option>
+                              );
+                            })}
                         </select>
                       </div>
                     </div>
@@ -370,10 +371,11 @@ const CreateShiftModal = (props) => {
                                 onChange={(e) => setCostCenterName(e.target.value)}
                               >
                                 <option value="">Select cost center</option>
-                                {costCenterList.map((e, i) => {
-                                  return (
-                                    <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
-                                })}
+                                {costCenterList !== null &&
+                                  costCenterList.map((e, i) => {
+                                    return (
+                                      <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
+                                  })}
 
                               </select>
                             </div>
