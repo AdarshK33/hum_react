@@ -88,7 +88,7 @@ const CreateClusterModal = (props) => {
     setClusterName(event.target.value);
     if (sportsList.length === 0) {
       setClusterButton(true)
-      setErrorMsg("Please fill the required fields");
+      setErrorMsg("All the fields are required");
     }
     else {
       setClusterButton(false)
@@ -111,7 +111,7 @@ const CreateClusterModal = (props) => {
     setClusterLeader(event.target.value);
     if (employee.length === 0) {
       setClusterButton(true)
-      setErrorMsg("Please fill the required fields");
+      setErrorMsg("All the fields are required");
     }
     else {
       setClusterButton(false)
@@ -195,9 +195,7 @@ const CreateClusterModal = (props) => {
                 </div>
               </div>
             </div>
-
-
-            <h6 style={{ color: "red", fontSize: "15px" }}>{errormsg}</h6>
+            <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px", marginLeft: "5px" }}>{errormsg}</h6>
             <div className="row">
               <div className="col-sm-12">
                 <div className="form-group">
@@ -205,7 +203,7 @@ const CreateClusterModal = (props) => {
                   <Multiselect
                     required
                     placeholder="Select Employee"
-                    options={getClusterEmployees !== null && getClusterEmployees}
+                    options={getClusterEmployees}
                     value={employee}
                     displayValue="firstName"
                     onSelect={handleMultiChange1}
