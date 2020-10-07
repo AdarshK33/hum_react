@@ -49,7 +49,7 @@ const AdminShiftModal = (props) => {
     getallWeeks()
     adminRosterAvailableShift(props.contractType, props.mystoreId)
   }, [props.contractType, props.mystoreId])
-
+  //my store id
 
   useEffect(() => {
     // console.log('shiftDateWeek', shiftDateWeek)
