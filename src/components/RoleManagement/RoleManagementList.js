@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
 import Breadcrumb from '../common/breadcrumb';
-import { Card, Row, Col, Table, Button } from 'react-bootstrap'
-import { Edit2, Slash, Trash2 } from 'react-feather'
+import { Row, Col, Table, Button } from 'react-bootstrap'
+import { Edit2 } from 'react-feather'
 import EditRole from './EditRole';
 import AddRole from './AddRole';
 import { RoleManagementContext } from '../../context/RoleManagementState';
@@ -10,7 +10,7 @@ const RoleManagementList = () => {
    
     const [editModal, setEditModal] = useState(false);
     const [modal, setModal] = useState(false);
-    const { viewMenu, EditMenuList, MenuList,viewRoleListData, RoleListData, GetRoleData, GetRolePermission} = useContext(RoleManagementContext);
+    const { viewMenu, EditMenuList,viewRoleListData, RoleListData, GetRoleData, GetRolePermission} = useContext(RoleManagementContext);
     useEffect(() => {
         viewRoleListData()
         viewMenu()

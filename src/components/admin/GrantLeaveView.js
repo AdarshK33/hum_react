@@ -40,21 +40,22 @@ const GrantLeaveView = () => {
               <th scope="col">Year</th>
             </tr>
           </thead>
-          {grantLeaveView.map((item, i) => {
-            return (
-              <tbody key={i + 1}>
-                <tr>
-                  <td>{i + 1}</td>
-                  <td>{item.empId}</td>
-                  <td>{item.empName}</td>
-                  <td>{item.costCentre}</td>
-                  <td>{item.numOfDays}</td>
-                  <td>{item.year}</td>
-                </tr>
-              </tbody>
+          {grantLeaveView !== null &&
+            grantLeaveView.map((item, i) => {
+              return (
+                <tbody key={i + 1}>
+                  <tr>
+                    <td>{i + 1}</td>
+                    <td>{item.empId}</td>
+                    <td>{item.empName}</td>
+                    <td>{item.costCentre}</td>
+                    <td>{item.numOfDays}</td>
+                    <td>{item.year}</td>
+                  </tr>
+                </tbody>
 
-            )
-          })}
+              )
+            })}
         </table>
       </div>
     </Fragment>

@@ -321,14 +321,14 @@ export const RosterProvider = ({ children }) => {
 
 
 
-  const adminRosterAvailableShift = (contractType,costCenter1) => {
-    
+  const adminRosterAvailableShift = (contractType, costCenter1) => {
+
     if (contractType === undefined) {
       contractType = "Permanent"
     }
 
 
-    client.get('/shift/view/store/active?contract_type='+contractType+'&storeId='+costCenter1)
+    client.get('/shift/view/store/active?contract_type=' + contractType + '&storeId=' + costCenter1)
       .then((response) => {
         state.adminRosterAvailableShiftList = response.data.data;
         console.log("admin calculate week ", state.adminRosterAvailableShiftList)

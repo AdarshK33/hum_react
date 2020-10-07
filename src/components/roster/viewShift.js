@@ -5,9 +5,9 @@ import Breadcrumb from "../common/breadcrumb";
 import "./roster.css";
 import CreateShiftModal from "./createShiftModal";
 import EditShiftModal from "./editShiftModal";
-import { Button} from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import { RosterContext } from "../../context/RosterState";
-import {Edit2} from 'react-feather'
+import { Edit2 } from 'react-feather'
 
 function ViewShift() {
   useEffect(() => {
@@ -22,15 +22,15 @@ function ViewShift() {
   const handleEditShow = () => setEditModal(true)
 
   const [contractType, setContractType] = useState('');
-  const [shiftType,setShiftType] = useState('');
-  const [startTime,setStartTime] = useState(new Date());
-  const [endTime,setEndTime] = useState(new Date());
+  const [shiftType, setShiftType] = useState('');
+  const [startTime, setStartTime] = useState(new Date());
+  const [endTime, setEndTime] = useState(new Date());
   const [breakStartTime, setStartBreakTime] = useState(new Date());
-  const [breakEndTime,setBreakEndTime] = useState(new Date());
+  const [breakEndTime, setBreakEndTime] = useState(new Date());
   const [workingHours, setWorkingHour] = useState();
-  const[status,setStatus] = useState('')
+  const [status, setStatus] = useState('')
   // variables
- const { shiftList,editShift, viewShift,viewShiftTypes,viewContractTypes} = useContext(RosterContext);
+  const { shiftList, editShift, viewShift, viewShiftTypes, viewContractTypes, singleShiftList } = useContext(RosterContext);
   //console.log(shiftList, "in viewShift");
   return (
     <Fragment>
@@ -54,6 +54,7 @@ function ViewShift() {
                   <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                     <tr>
                       <th>No</th>
+
                       <th scope="col">Shift Timings</th>
                       <th scope="col">Break Time</th>
                       <th scope="col">Working Hours</th>
@@ -61,38 +62,42 @@ function ViewShift() {
                       <th scope="col">Shift Type</th>
                       <th scope="col">Status</th>
                       <th scope="col">Edit</th>
+
                     </tr>
                   </thead>
-                  {shiftList.length > 0 &&
+
+
+                  {shiftList !== null &&
                     shiftList.map((e, i) => {
                       return (
                         <tbody key={i + 1}>
                           <tr>
                             <td>{i + 1}</td>
-                         
-                             <td> {moment(e.startTime, ["h:mm A"]).format("HH:mm")}-{moment(e.endTime, ["h:mm A"]).format("HH:mm")}</td> 
+
+                            <td> {moment(e.startTime, ["h:mm A"]).format("HH:mm")}-{moment(e.endTime, ["h:mm A"]).format("HH:mm")}</td>
                             <td>{moment(e.breakStartTime, ["h:mm A"]).format("HH:mm")}-{moment(e.breakEndTime, ["h:mm A"]).format("HH:mm")}</td>
                             <td>{e.workingHours}</td>
                             <td>{e.contractType}</td>
-                            <td>{e.shiftType}</td>                        
+                            <td>{e.shiftType}</td>
+
                             <td>{e.status === 0 ? "Active" : "Inactive"} </td>
                             <td><Edit2 onClick={() => {
-                                                viewShift()
-                                                setEditModal(true); 
-                                                editShift(e.shiftMasterId);
-                                                setShiftType(e.shiftType);
-                                                setContractType(e.contractType);
-                                                setStartTime(e.startTime)
-                                                setEndTime(e.endTime)
-                                                setStartBreakTime(e.breakStartTime)
-                                                setBreakEndTime(e.breakEndTime)
-                                                setWorkingHour(e.workingHours)
-                                                setStatus(e.status)
-                                                viewShiftTypes()
-                                                viewContractTypes()
-                                        }} />
-                                            </td>             
-                         
+                              viewShift()
+                              setEditModal(true);
+                              editShift(e.shiftMasterId);
+                              setShiftType(e.shiftType);
+                              setContractType(e.contractType);
+                              setStartTime(e.startTime)
+                              setEndTime(e.endTime)
+                              setStartBreakTime(e.breakStartTime)
+                              setBreakEndTime(e.breakEndTime)
+                              setWorkingHour(e.workingHours)
+                              setStatus(e.status)
+                              viewShiftTypes()
+                              viewContractTypes()
+                            }} />
+                            </td>
+
                             {/* <td>  <Link to={{ pathname: `EditShift/${e.shiftMasterId}`, data: { id: e.shiftMasterId } }}><Edit2 onClick={() => editShift(e.shiftMasterId)} /></Link></td> */}
                           </tr>
 
@@ -100,16 +105,17 @@ function ViewShift() {
                       );
                     })}
                 </table>
-                <EditShiftModal handleEditClose={handleEditClose} 
-                shiftType={shiftType}
-                contractType={contractType}
-                startTime={startTime}
-                endTime={endTime}
-                breakStartTime={breakStartTime}
-                breakEndTime={breakEndTime} 
-                workingHours={workingHours}
-                status={status}
-                modal={editModal} /> 
+                <EditShiftModal handleEditClose={handleEditClose}
+                  shiftType={shiftType}
+                  contractType={contractType}
+                  startTime={startTime}
+                  endTime={endTime}
+                  breakStartTime={breakStartTime}
+                  breakEndTime={breakEndTime}
+                  workingHours={workingHours}
+                  status={status}
+                  shiftData={singleShiftList}
+                  modal={editModal} />
               </div>
 
             </div>

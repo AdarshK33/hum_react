@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import Breadcrumb from "../common/breadcrumb";
 import { RosterContext } from "../../context/RosterState";
+import { AppContext } from "../../context/AppState";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import AdminShiftModal from "./adminShiftModal";
@@ -20,16 +21,25 @@ const AdminRoster = () => {
     const [tableShow, setTableShow] = useState(false);
     const [adminRosterButton, setadminRosterButton] = useState(true);
     const [storecostCenterName, setstorecostCenterName] = useState('');
+
+    const { user, getUserInfo } = useContext(AppContext);
+    
     useEffect(() => {
         viewContractTypes()
         costCenter()
         calcWeek()
-    }, [])
+
+        if (user.loginType!=="1" && user.loginType!=="7" && user.loginType!=="9"){
+            setCostCenter1(user.costCenter)
+            setstorecostCenterName(user.costCenter)
+        }
+    }, [user.costCenter, user.loginType])
 
 
 
 
     const { adminWeekOffDataEmp, viewContractTypes, shiftContractNames, costCenterList, adminWeekOffDataListHeader, adminWeekOffDataList, adminCalculateWeek, adminCalculateWeekResult, adminRosterAvailableShift, getallWeeks, costCenter } = useContext(RosterContext);
+   
     const handleClose = () => setAdminModal(false)
     const handleShow = (item, name, ctype) => {
         setshiftDate(item)
@@ -130,26 +140,34 @@ const AdminRoster = () => {
                                             </div>
                                         </div>
 
-                                        <div className="col-sm-3">
-                                            <div className="form-group">
-                                                <label className="name f-w-600">Select Cost Center&nbsp;</label>
-                                                <select
-                                                    className="form-control"
-                                                    style={{ fontSize: "0.8rem", height: "34px" }}
-                                                    value={costCenter1}
-                                                    required
-                                                    onChange={(e) => handleCostCenter(e)}>
-                                                    <option value="">Select Cost Center</option>
-                                                    {costCenterList.map((item, i) => {
-                                                        return (
-                                                            <option key={item.costCenterId} value={item.costCentreName}>
-                                                                {item.costCentreName}</option>
+                                        {(() => {
+                                            if (user.loginType !== "1" || user.loginType !=="7" || user.loginType !== "9") {
+                                            return (
+                                                <div className="col-sm-3">
+                                                    <div className="form-group">
+                                                        <label className="name f-w-600">Select Cost Center&nbsp;</label>
+                                                        <select
+                                                            className="form-control"
+                                                            style={{ fontSize: "0.8rem", height: "34px" }}
+                                                            value={costCenter1}
+                                                            required
+                                                            onChange={(e) => handleCostCenter(e)}>
+                                                            <option value="">Select Cost Center</option>
+                                                            {costCenterList!==null && costCenterList.map((item, i) => {
+                                                                return (
+                                                                    <option key={item.costCenterId} value={item.costCentreName}>
+                                                                        {item.costCentreName}</option>
 
-                                                        );
-                                                    })}
-                                                </select>
-                                            </div>
-                                        </div>
+                                                                );
+                                                            })}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            )
+                                            }
+                                        })()}
+
+                                        
                                     </div>
                                     <br />
                                     <div className="row">
@@ -164,7 +182,7 @@ const AdminRoster = () => {
                                                     onChange={(e) => setWeekCalc(e)}>
                                                     <option value="">Select Week &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
-                                                    {adminCalculateWeekResult.map((e, i) => {
+                                                    {adminCalculateWeekResult!==null && adminCalculateWeekResult.map((e, i) => {
                                                         return (
                                                             <option key={e.weekId} value={e.weekId}>
                                                                 {e.weekName}
@@ -191,10 +209,10 @@ const AdminRoster = () => {
                                                         console.log("??????????NAV?????/")
                                                         console.log(contractType)
                                                     }
-                                                    }> 
+                                                    }>
 
                                                     <option value="">Select Employee Type</option>
-                                                    {shiftContractNames.map((e, i) => {
+                                                    {shiftContractNames!==null && shiftContractNames.map((e, i) => {
                                                         return (
                                                             <option key={e.typeId} value={e.contractType}>
                                                                 {e.contractType}
@@ -222,7 +240,7 @@ const AdminRoster = () => {
                                         <thead style={{ background: '#006EBB', color: 'white', position: "sticky", top: 0 }}>
                                             <tr>
                                                 <th style={{ fontWeight: "bold", paddingLeft: "70px", paddingTop: "10px", paddingRight: "70px" }}>Employee</th>
-                                                {adminWeekOffDataListHeader.map((e, i) => {
+                                                {adminWeekOffDataListHeader!==null && adminWeekOffDataListHeader.map((e, i) => {
                                                     return (
                                                         <th scope="col" key={e.date}>{e.day}<br />{e.weekName} </th>
                                                     )
