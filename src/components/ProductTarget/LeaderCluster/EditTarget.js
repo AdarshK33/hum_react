@@ -8,7 +8,10 @@ import "react-toastify/dist/ReactToastify.css";
 import { ClusterProductContext } from "../../../context/ClusterProductState";
 import { DashboardContext } from "../../../context/DashboardState";
 
-import moment from 'moment'
+import moment from 'moment';
+import { AppContext } from "../../../context/AppState";
+
+
 
 
 const EditTarget = (props) => {
@@ -27,7 +30,7 @@ const EditTarget = (props) => {
 
     const { viewCostCentre } = useContext(DashboardContext);
     const {  viewClusterList,editTarget, leaderClusterList} = useContext(ClusterProductContext);
-
+    const { user } = useContext(AppContext);
 
       useEffect(() => {
         setCostCenter(props.singleClusterTarget.storeName);
@@ -189,7 +192,7 @@ const EditTarget = (props) => {
                                 <div className="col-sm-12">
                                     <Form.Group>
                                         <Form.Label>Select Cost Center</Form.Label>
-                                        <Form.Control value="IN1055" readOnly />
+                                        <Form.Control value={user.costCentre} readOnly />
                                         {/* <Form.Control as="select"                                             
                                             onChange={(e) => setCosCenterHandler(e.target.value)}>
                                             <option value={costCenter}>{costCenter}</option>
