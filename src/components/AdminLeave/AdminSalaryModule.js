@@ -32,9 +32,9 @@ const AdminSalaryModule = () => {
 
   const handleDeleteClose = () => setDeleteModal(false);
 
-  /*  useEffect(() => {
-     viewStoreSalary();
-   }, []); */
+   useEffect(() => {
+    viewCostCentre();
+   }, []);
 
   const onSubmit = (e) => {
     e.preventDefault();
