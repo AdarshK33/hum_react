@@ -55,7 +55,6 @@ function ViewShift() {
                   <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                     <tr>
                       <th>No</th>
-
                       <th>Shift Timings</th>
                       <th>Break Time</th>
                       <th>Working Hours</th>
@@ -63,7 +62,6 @@ function ViewShift() {
                       <th>Shift Type</th>
                       <th>Status</th>
                       <th>Edit</th>
-
                     </tr>
                   </thead>
 
