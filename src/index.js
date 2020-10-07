@@ -39,11 +39,11 @@ import HolidayList from "./components/Holiday/HolidayList";
 import SalaryView from "./components/salary/salaryView";
 import AdminRoster from "./components/roster/adminRoster";
 //Grant Leave Page
-import GrantLeaveView from './components/admin/GrantLeaveView';
-import ManagerReportForm from './components/Report/ManagerReportForm'
+import GrantLeaveView from './components/admin/GrantLeaveView';/* 
+ */import ManagerReportForm from './components/Report/ManagerReportForm'
 import AdminReportForm from './components/Report/AdminReportForm'
 import ProductivityReportForm from './components/Report/ProductivityReportForm'
-import ProductivityReportManager from './components/Report/ProductivityReportManager'
+/* import ProductivityReportManager from './components/Report/ProductivityReportManager' */
 import StoreProductTarget from "./components/ProductTarget/StoreProductTarget/StoreProductTarget";
 import LeaderStoreProductTarget from "./components/ProductTarget/LeaderStoreProductTarget/LeaderStoreProductTarget";
 import ClusterProductTarget from './components/ProductTarget/ClusterProductTarget/ClusterProductTarget';
@@ -162,27 +162,27 @@ function Root() {
                                   component={AdminRoster}
                                 />
                                   {/*Manager Report Page */}
-                                <Route
+                               {/*  <Route
                                   path={`${process.env.PUBLIC_URL}/report/manager-report`}
                                   component={ManagerReportForm}
-                                />
+                                /> */}
                                 {/*Admin Report Page */}
                                 <Route
-                                  path={`${process.env.PUBLIC_URL}/report/adminreport`}
+                                  path={`${process.env.PUBLIC_URL}/report/leaveReport`}
                                   component={AdminReportForm}
                                 />
 
                                   {/*Productivity  Admin Report Page */}
                                   <Route
-                                  path={`${process.env.PUBLIC_URL}/report/productivityadminreport`}
+                                  path={`${process.env.PUBLIC_URL}/report/productivityReport`}
                                   component={ProductivityReportForm}
                                 />
                                 
                                  {/*Productivity Manager Report Page */}
-                                 <Route
+                                 {/* <Route
                                 path={`${process.env.PUBLIC_URL}/report/productivitymanager-report`}
                                 component={ProductivityReportManager}
-                              />
+                              /> */}
 
                                 {/*Admin Store Product target Page */}
                                 <Route

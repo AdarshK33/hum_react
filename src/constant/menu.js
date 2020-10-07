@@ -53,12 +53,16 @@ export const MENUITEMS = [
     {
         path: '/roster/adminroster', title: 'AdminRoster', icon: File, type: 'link', active: false
     },
-    {
-        title: 'Manager Report', icon: File, type: 'link', path: '/report/manager-report', active: false,children:[
-            { path: '/report/adminreport', title: 'Admin Report', type: 'link' },
-            { path: '/report/productivityadminreport', title: 'Productivity Admin Report', type: 'link' },
-            { path: '/report/productivitymanager-report', title: 'Productivity Manager Report', type: 'link' },
+    /* {
+        title: ' Leave Report', icon: File, path: '/report/leaveReport', title: 'Leave Report', type: 'link', active: false,children:[
+            { path: '/report/productivityReport', title: 'Productivity Report', type: 'link' }
         ]
+    }, */
+    {
+        path: '/report/leaveReport', title: 'Leave Report', icon: File, type: 'link', active: false
+    },
+    {
+        path: '/report/productivityReport', title: 'Productivity Report', icon: File, type: 'link', active: false
     },
     
      // product target path    

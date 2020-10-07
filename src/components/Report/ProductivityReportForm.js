@@ -9,6 +9,7 @@ import { LeaveContext } from '../../context/LeaveState'
 import "react-datepicker/dist/react-datepicker.css"; */
 import moment from 'moment'
 import ProductivityReportView from './ProductivityReportView'
+import { AppContext } from "../../context/AppState";
 /* import Select from 'react-select'; */
 
 const ProductivityReportForm = () => {
@@ -20,6 +21,7 @@ const ProductivityReportForm = () => {
     const [contractTypeData, setContractType] = useState('')
     const [getM, setGetM] = useState(new Date())
     /* const [startYear, setStartYear] = useState() */
+    const { user } = useContext(AppContext);
 
     const reportTypeList = [{ reportTypeData: 'Monthly', id: 1 }, { reportTypeData: 'Yearly', id: 2 }]
     const { CostCenter, costCenterList, employeeIdData, employeeIdList } = useContext(AdminContext)
@@ -28,24 +30,29 @@ const ProductivityReportForm = () => {
     const { productivityReport, productivityList } = useContext(LeaveContext)
 
     useEffect(() => {
-        CostCenter()
         viewSports()
         viewContractTypes()
-        
+        CostCenter()
     }, []);
 
-  /*   useEffect(() => {
-        employeeIdData(costCenter)
-        viewClusterCostCenter(costCenter)
-    }, [costCenter]) */
 
+    useEffect(() => {
+        if (user.loginType !== "1" && user.loginType !== "9") {
+              setCostCenter( user.costCentre)
+              employeeIdData(user.costCentre)
+              viewClusterCostCenter(user.costCentre)
+              console.log("data1", user.costCentre)
+        }
+    },[user.costCentre, user.loginType])
+    
     const setCostCenterHandler = (e) => {
         let data1 = e.target.value
-        setCostCenter(data1)
-        employeeIdData(data1)
-        viewClusterCostCenter(data1)
-        console.log("data1", data1)
-    }
+         setCostCenter( data1)
+         employeeIdData(data1)
+         viewClusterCostCenter(data1)
+         console.log("data1", data1)
+     }
+   
     const setEmployeeCostCenterHandler = (e) => {
         let data2 = e.target.value
         setEmployeeCostCenter(data2)
@@ -86,7 +93,7 @@ const ProductivityReportForm = () => {
        
 
         setReportType('')
-        setCostCenter('')
+        setCostCenter(costCenter)
         setEmployeeCostCenter('')
         setSports('')
         setCluster('')
@@ -96,7 +103,7 @@ const ProductivityReportForm = () => {
     }
     return (
         <Fragment>
-            <Breadcrumb title="Report" parent="Productivity Admin Report" />
+            <Breadcrumb title="Report" parent="Productivity Report" />
             <Container>
                 <Form onSubmit={submitData}>
                     <Row>
@@ -114,6 +121,7 @@ const ProductivityReportForm = () => {
                                 </Form.Control>
                             </Form.Group>
                         </div>
+                        {user.loginType === '1' || user.loginType === '9' ? 
                         <div className="col-sm-4">
                             <Form.Group>
                                 <Form.Label>Cost Center</Form.Label>
@@ -129,7 +137,14 @@ const ProductivityReportForm = () => {
                                     }
                                 </Form.Control>
                             </Form.Group>
-                        </div>
+                        </div>:
+                        <div className="col-sm-4">
+                            <Form.Group>
+                                <Form.Label>Cost Center </Form.Label>
+                                <Form.Control type="text" disabled value={costCenter} 
+                                onChange={(e) => setCostCenter(e.targrt.value)}  />
+                            </Form.Group>
+                        </div>}
                     </Row>
                     <Row>
                         <div className="col-sm-4">

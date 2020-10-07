@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useContext, useState } from 'react';
+/* import React, { Fragment, useEffect, useContext, useState } from 'react';
 import { Form, Container, Row, Button } from 'react-bootstrap'
 import Breadcrumb from '../common/breadcrumb';
 import { AdminContext } from '../../context/AdminState'
@@ -17,7 +17,6 @@ const ProductivityReportManager = () => {
     const [cluster, setCluster] = useState(null)
     const [contractTypeData, setContractType] = useState('')
     const [getM, setGetM] = useState(new Date())
-    /* const [startYear, setStartYear] = useState() */
 
     const reportTypeList = [{ reportTypeData: 'Monthly', id: 1 }, { reportTypeData: 'Yearly', id: 2 }]
     const {  employeeIdData, employeeIdList } = useContext(AdminContext)
@@ -60,10 +59,7 @@ const ProductivityReportManager = () => {
         setCluster(e.target.value)
         console.log("cluster Id",e.target.value)
     }
-   /*  const setSportsHandler = (e) => {
-        setSports(e.target.value)
-        console.log("sports Id",e.target.value)
-    } */
+   
     const submitData = (e) => {
         e.preventDefault();
 
@@ -192,7 +188,7 @@ const ProductivityReportManager = () => {
                         </div>
                     </Row>
                     }
-                    {/* {reportType === 'Yearly' &&
+                    {reportType === 'Yearly' &&
                     <Row>
                         <div className="col-sm-4">
                             <Form.Label>Select Year</Form.Label>
@@ -206,7 +202,7 @@ const ProductivityReportManager = () => {
                             </div>
                         </div>
                     </Row>
-                    } */}
+                    }
                     <Button type="submit">Submit</Button>
                 </Form>
                 <ProductivityReportManagerView productivityList={productivityList} />
@@ -215,4 +211,4 @@ const ProductivityReportManager = () => {
     );
 };
 
-export default ProductivityReportManager;
+export default ProductivityReportManager; */

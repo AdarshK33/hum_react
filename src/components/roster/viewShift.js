@@ -50,18 +50,19 @@ function ViewShift() {
               </div>
               <CreateShiftModal handleClose={handleClose} modal={modal} />
               <div className="table-responsive">
+
                 <table id="table-to-xls" className="table table-hover">
                   <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                     <tr>
                       <th>No</th>
 
-                      <th scope="col">Shift Timings</th>
-                      <th scope="col">Break Time</th>
-                      <th scope="col">Working Hours</th>
-                      <th scope="col">Contract Type</th>
-                      <th scope="col">Shift Type</th>
-                      <th scope="col">Status</th>
-                      <th scope="col">Edit</th>
+                      <th>Shift Timings</th>
+                      <th>Break Time</th>
+                      <th>Working Hours</th>
+                      <th>Contract Type</th>
+                      <th>Shift Type</th>
+                      <th>Status</th>
+                      <th>Edit</th>
 
                     </tr>
                   </thead>
