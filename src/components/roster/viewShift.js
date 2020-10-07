@@ -49,7 +49,7 @@ function ViewShift() {
                   buttonText="Export excel" />
               </div>
               <CreateShiftModal handleClose={handleClose} modal={modal} />
-              <div className="table-responsive">
+              <div className="table-responsive tableFixHead">
 
                 <table id="table-to-xls" className="table table-hover">
                   <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>

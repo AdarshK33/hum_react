@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap';
-import DatePicker from 'react-datepicker'
+import { Container, Row,  Button, Form, Modal } from 'react-bootstrap';
+// import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
-import { useHistory } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+// import { useHistory } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { DashboardContext } from "../../../context/DashboardState";
 import { ClusterProductContext } from "../../../context/ClusterProductState";
@@ -13,7 +13,7 @@ import moment from 'moment';
 
 const AddTarget = (props) => { 
 
-    let history = useHistory();
+    // let history = useHistory();
 
     const [StoreType, setStoreType] = useState("IN1055");
     const [getM, setGetM] = useState();
@@ -27,9 +27,9 @@ const AddTarget = (props) => {
     const [costCenterID, setCostCenterID] = useState("");
 
 
-    const { cosCentreList,viewCostCentre } = useContext(DashboardContext);
+    const { viewCostCentre } = useContext(DashboardContext);
     const { user } = useContext(AppContext)
-    const { clusterList,clusterProductList, viewClusterList,addTarget,viewClusterTarget} = useContext(ClusterProductContext);
+    const { clusterList, viewClusterList,addTarget} = useContext(ClusterProductContext);
 
 
      useEffect(() => {
