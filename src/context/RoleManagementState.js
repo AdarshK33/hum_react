@@ -27,7 +27,11 @@ const initial_state = {
        
         client.get('/menu/view').then(function (response) {
         //  console.log(response);
-          state.MenuList = response.data.data;          
+        if(response.data.data !== null){
+          state.MenuList = response.data.data;
+        }else{
+          state.MenuList = [];
+        }                
     
           return dispatch({ type: 'FETCH_MENU_LIST', payload: state.MenuList });
         })

@@ -59,7 +59,7 @@ const RoleManagementList = () => {
                             </tr>
                         </thead>
 
-                        {RoleListData !== undefined  && RoleListData.length > 0 &&
+                        {RoleListData !== null && RoleListData !== undefined && RoleListData.length > 0 &&
                             RoleListData.map((item, i) => {
                                 return (
                                    <tbody key={i + 1}>
@@ -87,7 +87,8 @@ const RoleManagementList = () => {
                             
                     </Table>
                    
-                     {GetRolePermission.length !== 0 ?  
+                     {GetRolePermission !== null && GetRolePermission !== undefined &&
+                        GetRolePermission.length !== 0 ?  
                     <EditRole handleEditClose={handleEditClose}
                      modal={editModal}
                      MenuList={EditMenuList}
