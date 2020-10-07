@@ -2,16 +2,16 @@ import React, { useEffect, Fragment, useContext, useState } from 'react'
 import Breadcrumb from "../common/breadcrumb";
 import moment from 'moment';
 import "./salary.css";
+import { Form, Table, Row, Button, Container} from 'react-bootstrap'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { ClusterContext } from "../../context/ClusterState";
 import { DashboardContext } from "../../context/DashboardState";
 import EditSalary from './EditSalary'
 import "react-datepicker/dist/react-datepicker.css";
 import { Edit2, } from 'react-feather'
+import { AppContext } from "../../context/AppState";
+
 function ViewShift() {
-  // useEffect(() => {
-  //   viewSalary()
-  // }, [])
 
   useEffect(()=>{
     viewCostCentre()
@@ -38,7 +38,8 @@ function ViewShift() {
   const [totalHours, setTotalHours] = useState()
   const [additionalHours, setadditionalHours] = useState()
   const [year, setYear] = useState()
-  const [costCenter, setCostCenter] = useState()
+
+  const { user } = useContext(AppContext);
 
   const handleEditClose = () => setEditModal(false)
 
@@ -48,76 +49,53 @@ function ViewShift() {
     const month = moment(getM, ["YYYY-MM"]).format("M");
     const year = moment(getM, ["MMM Do YY"]).format('YYYY');
     // alert(month, year)
-    viewSalary(month, year, costCenter)
+    viewSalary(month, year, user.costCentre)
   }
-
-
-  const costCenterHandler = e =>{
-    setCostCenter(e)
-  }
-
-
 
   return (
     <Fragment>
       <Breadcrumb title="Salary" parent="salary" />
-      <div className="container-fluid">
-        <form className="form-inline" onSubmit={onSubmit}>
-          <div className="row">
-            <div className="col-sm-6">
-              <div className="form-group">
-                <label htmlFor="exampleFormControlInput1">Select Month and Year</label>
-                <br />
-                <br />
-
-                <input type="month" style={{ fontSize: "0.8rem" }} className="form-control digit" min="2020-08"
-                  placeholder="Number Of Days"
-                  required onChange={(e) => setGetM(e.target.value)} value={getM} />
-
-              </div>
-
+      <Container>
+        <Form  onSubmit={onSubmit}>
+          <Row>
+            <div className="col-sm-4">
+              <Form.Group>
+                  <Form.Label>Select Month and Year</Form.Label>  
+                    <input type="month" style={{ fontSize: "0.8rem" }} className="form-control digit" min="2020-08"
+                    placeholder="Number Of Days"
+                    required onChange={(e) => setGetM(e.target.value)} value={getM} />
+              </Form.Group>
             </div>
+           
+            <div className="col-sm-4">
+              <Form.Group>
+                <Form.Label>Cost Center</Form.Label>
+                <Form.Control type="text" disabled value={user.costCentre}  />
+              </Form.Group>
+            </div>
+          </Row>
+
+              <Button type="submit" disabled={shiftButton} value="Submit">Submit</Button>
+
             
-              {/* <div className="form-group">
-                <label htmlFor="exampleFormControlInput1" >Select Store<span style = {{color:'red'}}>*</span>&nbsp; </label>
-                  <select
-                    className="form-control Value" required
-                    onChange={(e)=>costCenterHandler(e.target.value)}
-                    >
-                    <option value="">Select</option>
-                    { cosCentreList.map((e, i) => {
-                      return(
-                          <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
-                      })}
-                                         
-                      </select>
-              </div> */}
-            
+        </Form>
 
-            <div className="col-sm-3 mt-4">
-              <button className="btn btn-primary.btn-primary.dec mb-2 mt-3" style={{ background: "#006EBB", color: "#FFF" }} type="submit" disabled={shiftButton} value="Submit">Submit</button>
-
-            </div>
-            <div className="col-sm-3" style={{ marginTop: "39px" }}>
-              <ReactHTMLTableToExcel
-                className="myclass"
-                table="table-to-xls1"
-                filename="salaryFile"
-                sheet="Sheet"
-
-                buttonText="Export excel" />
-            </div>
-          </div>
-
-        </form>
-        {/* Table */}
-        <br />
-        <div className="row">
+        <Row style={{ marginTop: '2rem' }}>
           <div className="col-sm-12">
             <div className="card" style={{ overflowX: "auto" }}>
+              <div className="title_bar" >
+                <ReactHTMLTableToExcel
+                 className="btn btn-light mr-2"
+                  table="table-to-xls1"
+                  filename="salaryFile"
+                  sheet="Sheet"
+
+                  buttonText="Export excel" />
+              </div>
+
               <div className="table-responsive">
-                <table id="table-to-xls1" className="table table-hover">
-                  <thead style={{ background: '#006EBB', color: 'white' }}>
+                <Table id="table-to-xls1" className="table table-hover">
+                  <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                     <tr>
                       <th>No</th>
                       <th scope="col">Employee Id</th>
@@ -168,12 +146,12 @@ function ViewShift() {
 
                     )
                   })}
-                </table>
+                </Table>
                 {(salaryList  !== null && salaryList.length <= 0) ? <p style={{ textAlign: "center" }}>Select Month and Year</p> : null}
               </div>
             </div>
           </div>
-        </div>
+        </Row>
         <EditSalary handleEditClose={handleEditClose} modal={editModal}
           employeeId={employeeId}
           firstName={firstName} lastName={lastName} numberOfHours={numberOfHours}
@@ -182,7 +160,7 @@ function ViewShift() {
           additionalHours={additionalHours}
         />
 
-      </div>
+      </Container>
     </Fragment>
 
   )

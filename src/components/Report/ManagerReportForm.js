@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useContext, useState } from 'react';
+/* import React, { Fragment, useEffect, useContext, useState } from 'react';
 import { Form, Container, Row, Button } from 'react-bootstrap'
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
@@ -8,7 +8,6 @@ import ManagerReportView from './ManagerReportView'
 import moment from 'moment'
 import Select from 'react-select';
 import { AppContext } from "../../context/AppState";
-/* import {subYears} from 'date-fns/subYears' */
 
 const ManagerReportForm = () => {
     const [startDate, setStartDate] = useState();
@@ -41,12 +40,6 @@ const ManagerReportForm = () => {
         console.log("toDate", value1)
         setEndDate(value1);
     }
-
-    /*  const setStartYearHandler = (date) => {
-         let value2 = date
-         setStartYear(value2);
-         console.log("year", value2)
-     } */
 
     const setLeaveHandler = (options) => {
         setLeave(options)
@@ -144,7 +137,6 @@ const ManagerReportForm = () => {
                                 <div>
                                     <DatePicker selected={startDate} onChange={(e) => fromDateHandler(e)}
                                         className="form-control" dateFormat="yyyy-MM-dd"
-                                        /*  minDate={currentYear} */
                                         placeholderText="From Date" required />
                                 </div>
                             </Form.Group>
@@ -172,8 +164,7 @@ const ManagerReportForm = () => {
                                     <DatePicker selected={startYear} onChange={date => setStartYear(date)}
                                         showYearPicker
                                         maxDate={new Date()}
-                                       /*  minDate={subYears(new Date(), 2)} */
-                                        className="input_date" dateFormat="yyyy" /* yearItemNumber={5} */
+                                        className="input_date" dateFormat="yyyy"
                                     placeholderText="Select Year" />
                                 </div>
 
@@ -189,4 +180,4 @@ const ManagerReportForm = () => {
     );
 };
 
-export default ManagerReportForm;
+export default ManagerReportForm; */

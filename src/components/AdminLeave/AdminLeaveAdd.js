@@ -61,6 +61,14 @@ const AdminLeaveAdd = (props) => {
         setName(props.firstName, props.lastName)
      },[props.firstName, props.lastName])
 
+     useEffect(() => {
+        if (user.loginType !== "1" && user.loginType !== "9") {
+              setCostCenter( user.costCentre)
+              employeeIdData(user.costCentre)
+              console.log("disabled costcenter", user.costCentre)
+        }
+    },[user.costCentre, user.loginType])
+
      const setCostCenterHandler = (e) => {
          let data1 = e.target.value
         setCostCenter(data1)
@@ -209,7 +217,12 @@ const AdminLeaveAdd = (props) => {
             setMin(false)
             setMax(false)
             setEmployeeCostCenter('')
-            setCostCenter('')
+            if(user.loginType === '1' || user.loginType === '9'){
+                setCostCenter('')
+            }else{
+                setCostCenter(costCenter)
+            }
+           
             addPopup(resetValue)
         }
         var newData
@@ -285,7 +298,11 @@ const AdminLeaveAdd = (props) => {
         setMax(false)
         addPopup(resetValue)
         setEmployeeCostCenter('')
-        setCostCenter('')
+        if(user.loginType === '1' || user.loginType === '9'){
+            setCostCenter('')
+        }else{
+            setCostCenter(costCenter)
+        }
     }
     return (
         <Fragment>
@@ -306,6 +323,7 @@ const AdminLeaveAdd = (props) => {
                                 <div className="col-sm-12">
                                    <Form.Group>
                                    <Form.Label>Cost Center Id</Form.Label>
+                                   {user.loginType === '1' || user.loginType === '9' ?
                                     <Form.Control as="select" required value={costCenter}
                                         onChange={(e) => setCostCenterHandler(e)}>
                                             <option value="">Select Cost Center</option>
@@ -317,7 +335,10 @@ const AdminLeaveAdd = (props) => {
                                             )
                                         })
                                         }
-                                    </Form.Control>
+                                    </Form.Control>:
+                                     <Form.Control type="text" disabled value={costCenter} 
+                                     onChange={(e) => setCostCenter(e.targrt.value)}  />
+                                    }
                                    </Form.Group>
                                 </div>
                             </Row>
