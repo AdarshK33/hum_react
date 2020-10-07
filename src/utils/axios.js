@@ -10,9 +10,10 @@ export const setDefaultHeader = AUTH_TOKEN => axios.defaults.headers.common['Aut
 const getRefreshToken = () => {
     console.log("INSIDE THE GET_REFRESH_TOKEN")
     let refreshToken = Cookies.get('APPRT');
+
     let config = {
         method: "get",
-        url: "http://humine.theretailinsights.co/auth/token/refresh?refresh_token=" + refreshToken,
+        url: client.defaults.baseURL + "/auth/token/refresh?refresh_token=" + refreshToken,
 
     };
     return client(config)
