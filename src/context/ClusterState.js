@@ -17,7 +17,8 @@ const initial_state = {
   salaryStoreList: [],
   clusterCostCenterList: [],
   clusterAllLeaderNames: [],
-  getEmployeesNames: []
+  getEmployeesNames: [],
+
 }
 
 
@@ -53,8 +54,12 @@ export const ClusterProvider = ({ children }) => {
 
   function selectEmployeeForCluster(storeId) {
     client.get('employee/view/' + storeId + '/cluster_employees').then(function (response) {
-      state.getClusterEmployees = response.data.data;
-
+      if (response.data.data === null) {
+        state.getClusterEmployees = []
+      }
+      else {
+        state.getClusterEmployees = response.data.data;
+      }
       return dispatch({ type: 'FETCH_EMPLOYEE_FOR_CLUSTER', payload: state.getClusterEmployees });
     })
       .catch(function (error) {
@@ -71,8 +76,12 @@ export const ClusterProvider = ({ children }) => {
 
     client.get('sport/view').then(function (response) {
       // console.log("data==>" + JSON.stringify(response));
-      state.sportsNames = response.data.data;
-
+      if (response.data.data === null) {
+        state.sportsNames = []
+      }
+      else {
+        state.sportsNames = response.data.data;
+      }
       // alert("---"+state.sportsNames)
       return dispatch({ type: 'FETCH_SPORTS_NAME', payload: state.sportsNames });
     })
@@ -141,19 +150,19 @@ export const ClusterProvider = ({ children }) => {
 
 
   // SALARY INPUT
-  function viewSalary(month, year,id) {
+  function viewSalary(month, year, id) {
     console.log(" in cluster" + month + " " + year)
 
-    client.get('salary/view?month=' + month + '&year=' + year+ '&storeId='+id)
-    .then(function (response) {
-      console.log("data message==>", response.data.message );
-      console.log("data==>1", response);
-      state.salaryList = response.data.data;
-      if(response.data.data === null){
-        toast.info(response.data.message)
-      }
-      return dispatch({ type: 'FETCH_SALARY_LIST', payload: state.salaryList });
-    })
+    client.get('salary/view?month=' + month + '&year=' + year + '&storeId=' + id)
+      .then(function (response) {
+        console.log("data message==>", response.data.message);
+        console.log("data==>1", response);
+        state.salaryList = response.data.data;
+        if (response.data.data === null) {
+          toast.info(response.data.message)
+        }
+        return dispatch({ type: 'FETCH_SALARY_LIST', payload: state.salaryList });
+      })
       .catch(function (error) {
         console.log(error);
       });
@@ -207,8 +216,8 @@ export const ClusterProvider = ({ children }) => {
       .then((response) => {
         console.log("slary data on store id", response);
         state.salaryStoreList = response.data.data;
-        if( response.data.data === null){
-          toast.info( response.data.message)
+        if (response.data.data === null) {
+          toast.info(response.data.message)
         }
 
         return dispatch({ type: 'FETCH_SALARY_STORE_LIST', payload: state.salaryStoreList });

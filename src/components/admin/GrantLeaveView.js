@@ -31,7 +31,7 @@ const GrantLeaveView = () => {
         <table id="table-to-xls" className="table table-hover">
           <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
             <tr>
-              <th scope="col">Sr No.</th>
+              <th scope="col">S. No</th>
               <th scope="col">Employee Id</th>
               <th scope="col">Employee Name</th>
               <th scope="col">Cost Centre Id</th>

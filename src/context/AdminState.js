@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-concat */
 import React, { createContext, useReducer } from 'react';
 import { client } from '../utils/axios';
 import AdminReducer from '../reducers/AdminReducer';
