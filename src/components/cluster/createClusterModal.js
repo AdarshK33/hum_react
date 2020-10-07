@@ -17,7 +17,6 @@ const CreateClusterModal = (props) => {
   const [successMsg, setSuccessMsg] = useState("");
   const [sportsList, setSportsList] = useState([])
   const [employee, setEmployee] = useState([])
-  const [res, setRes] = useState([])
   const [costCenterName, setCostCenterName] = useState('');
 
   const setClear = () => {
@@ -124,10 +123,6 @@ const CreateClusterModal = (props) => {
   const handleMultiChange = (option) => {
     setClusterButton(false)
     setSportsList(option)
-    // console.log(JSON.stringify(sportsList));
-
-
-    // console.log(res);
     setErrorMsg(false)
   }
 

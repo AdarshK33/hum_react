@@ -54,7 +54,7 @@ function ViewShift() {
                 <table id="table-to-xls" className="table table-hover">
                   <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                     <tr>
-                      <th>No</th>
+                      <th>S. No</th>
                       <th>Shift Timings</th>
                       <th>Break Time</th>
                       <th>Working Hours</th>

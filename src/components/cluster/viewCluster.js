@@ -43,8 +43,7 @@ function ViewCluster() {
                 <table id="table" className="table table-hover">
                   <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                     <tr>
-                      <th>No</th>
-
+                      <th>S. No</th>
                       <th scope="col">Sports Name</th>
                       <th scope="col">Cluster Name</th>
                       <th scope="col">Cluster Details</th>
@@ -74,7 +73,6 @@ function ViewCluster() {
                             <td>{e.status === 0 ? "active" : "inactive"} </td>
                             <td><Edit2 onClick={() => {
                               setEditModal(true);
-
                               getCluster(e.clusterId);
 
                             }} />
