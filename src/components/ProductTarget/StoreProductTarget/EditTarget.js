@@ -177,7 +177,8 @@ const EditTarget = (props) => {
                                             <option value={StoreType}>{StoreType}</option>
 
                                             <option value="">Select</option>
-                                            { cosCentreList.map((e, i) => {
+                                            { cosCentreList !== null && cosCentreList !== undefined && 
+                                                cosCentreList.map((e, i) => {
                                                     return(
                                                     <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
                                                 })}

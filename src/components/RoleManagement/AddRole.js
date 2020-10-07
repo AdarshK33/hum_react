@@ -102,7 +102,8 @@ const AddRole = (props) => {
                                             onChange={(e)=>fromStoreHandler(e.target.value)}
                                             >
                                             <option value="">Select</option>
-                                            { RoleList.map((e, i) => {
+                                            { RoleList !== null && RoleList !== undefined && 
+                                                RoleList.map((e, i) => {
                                                     return(
                                                     <option key={i + 1} value={e.roleName}>{e.roleDesc}</option>)
                                                 })}

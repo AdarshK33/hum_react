@@ -54,6 +54,7 @@ const HolidayList = () => {
                       <th scope="col">Department</th>
                     </tr>
                   </thead>
+
                   {holidayDataList.length > 0 &&
                     holidayDataList.map((item, i) => {
                       return (
@@ -65,7 +66,6 @@ const HolidayList = () => {
                             <td>{item.year}</td>
                             <td>{item.state}</td>
                             <td>{item.department}</td>
-
                           </tr>
                         </tbody>
                       )
