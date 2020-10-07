@@ -27,7 +27,15 @@ const AdminReportForm = () => {
 
     useEffect(() => {
         CostCenter()
-    }, [user.employeeId]);
+    }, []);
+
+    useEffect(() => {
+        if (user.loginType !== "1" && user.loginType !== "9") {
+              setCostCenter( user.costCentre)
+              employeeIdData(user.costCentre)
+              console.log("data1", user.costCentre)
+        }
+    },[user.costCentre, user.loginType])
 
     useEffect(() => {
         getLeaveReport()
@@ -84,7 +92,7 @@ const AdminReportForm = () => {
         }
 
         setReportType('')
-        setCostCenter('')
+        setCostCenter(costCenter)
         setEmployeeCostCenter([])
         setStartDate()
         setEndDate()
@@ -94,7 +102,7 @@ const AdminReportForm = () => {
     }
     return (
         <Fragment>
-            <Breadcrumb title="Report" parent="Admin Leave Report" />
+            <Breadcrumb title="Report" parent="Leave Report" />
             <Container>
                 <Form onSubmit={submitData}>
                     <Row>
@@ -112,6 +120,7 @@ const AdminReportForm = () => {
                                 </Form.Control>
                             </Form.Group>
                         </div>
+                        {user.loginType === '1' || user.loginType === '9' ? 
                         <div className="col-sm-4">
                             <Form.Group>
                                 <Form.Label>Cost Center</Form.Label>
@@ -127,7 +136,14 @@ const AdminReportForm = () => {
                                         }
                                 </Form.Control>
                             </Form.Group>
-                        </div>
+                        </div> : 
+                         <div className="col-sm-4">
+                            <Form.Group>
+                                <Form.Label>Cost Center </Form.Label>
+                                <Form.Control type="text" disabled value={costCenter} 
+                                onChange={(e) => setCostCenter(e.targrt.value)}  />
+                            </Form.Group>
+                        </div>}
                     </Row>
                     <Row>
                         <div className="col-sm-4">

@@ -54,7 +54,8 @@ const AdminMasterLeave = () => {
                                             <th>Year</th>
                                         </tr>
                                     </thead>
-                                    {leaveMasterList.length>0 &&
+                                    {leaveMasterList !== null && leaveMasterList !== undefined &&
+                                     leaveMasterList.length>0 &&
                                     leaveMasterList.map((item,i) => {
                                         return(
                                             <tbody key={i}>
