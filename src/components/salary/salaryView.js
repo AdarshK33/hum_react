@@ -2,7 +2,7 @@ import React, { useEffect, Fragment, useContext, useState } from 'react'
 import Breadcrumb from "../common/breadcrumb";
 import moment from 'moment';
 import "./salary.css";
-import { Form, Table, Row, Button, Container} from 'react-bootstrap'
+import { Form, Table, Row, Button} from 'react-bootstrap'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { ClusterContext } from "../../context/ClusterState";
 import { DashboardContext } from "../../context/DashboardState";
@@ -55,7 +55,7 @@ function ViewShift() {
   return (
     <Fragment>
       <Breadcrumb title="Salary" parent="salary" />
-      <Container>
+      <div className="container-fluid">
         <Form  onSubmit={onSubmit}>
           <Row>
             <div className="col-sm-4">
@@ -97,7 +97,7 @@ function ViewShift() {
                 <Table id="table-to-xls1" className="table table-hover">
                   <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                     <tr>
-                      <th>No</th>
+                      <th>S. No</th>
                       <th scope="col">Employee Id</th>
                       <th scope="col">Employee Name</th>
                       <th scope="col">Number Of Hours</th>
@@ -160,7 +160,7 @@ function ViewShift() {
           additionalHours={additionalHours}
         />
 
-      </Container>
+      </div>
     </Fragment>
 
   )

@@ -152,7 +152,7 @@ const LeaveView = () => {
                     <Table id="table-to-xls" className="table table-hover">
                         <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                             <tr>
-                                <th>Sr No.</th>
+                                <th>S. No</th>
                                 <th>Leave Type</th>
                                 <th>Total No. of Days</th>
                                 <th>Start Date</th>

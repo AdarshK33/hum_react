@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useContext, useState } from 'react';
-import { Form, Container, Row, Button } from 'react-bootstrap'
+import { Form, Row, Button } from 'react-bootstrap'
 import Breadcrumb from '../common/breadcrumb';
 import { AdminContext } from '../../context/AdminState'
 import { ClusterContext } from '../../context/ClusterState'
@@ -104,7 +104,7 @@ const ProductivityReportForm = () => {
     return (
         <Fragment>
             <Breadcrumb title="Report" parent="Productivity Report" />
-            <Container>
+            <div className="container-fluid">
                 <Form onSubmit={submitData}>
                     <Row>
                         <div className="col-sm-4">
@@ -244,7 +244,7 @@ const ProductivityReportForm = () => {
                     <Button type="submit">Submit</Button>
                 </Form>
                 <ProductivityReportView productivityList={productivityList} />
-            </Container>
+            </div>
         </Fragment>
     );
 };

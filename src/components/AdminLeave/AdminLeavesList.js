@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, Fragment } from 'react';
-import { Container, Row,  Button, Table, Modal } from 'react-bootstrap';
+import {  Row,  Button, Table, Modal } from 'react-bootstrap';
 import { LeaveContext } from '../../context/LeaveState';
 import AdminLeaveEdit from './AdminLeaveEdit'
 import AdminDeleteLeaves from './AdminDeleteLeaves'
@@ -42,7 +42,7 @@ const AdminLeavesList = (props) => {
     return (
         <Fragment>
             <Breadcrumb title="Admin " parent="Admin Leave" />
-            <Container>
+            <div className="container-fluid">
                 <Row className="heading-row">
                     <h4 className="main-heading">Admin Leaves</h4>
                 </Row>
@@ -50,7 +50,7 @@ const AdminLeavesList = (props) => {
                     <Table className="adminTable">
                         <thead style={{ background: '#006EBB', color: 'white' }}>
                             <tr>
-                                <th>Sr No.</th>
+                                <th>S. No</th>
                                 <th>Emp Id</th>
                                 <th>Leave Type</th>
                                 <th>Total No. of Days</th>
@@ -96,7 +96,7 @@ const AdminLeavesList = (props) => {
                             leaveTypeId === 3 ? (leaveTypeId = 3):'')} fromDate={fromDate} toDate={toDate}
                         reason={reason} ltId={ltId} empId={empId} />
                 </Row>
-            </Container>
+            </div>
         </Fragment>
     );
 };

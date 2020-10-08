@@ -106,7 +106,7 @@ const AdminSalaryModule = () => {
   return (
     <Fragment>
       <Breadcrumb title="Salary" parent="Admin" />
-      <Container>
+      <div className="container-fluid">
         <Form onSubmit={onSubmit}>
           <Row>
             <div className="col-sm-4">
@@ -194,7 +194,7 @@ const AdminSalaryModule = () => {
                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                       <tr>
                         <th>Select</th>
-                        <th>Sr No.</th>
+                        <th>S. No</th>
                         <th scope="col">Employee Id</th>
                         <th scope="col">Employee Name</th>
                         <th scope="col">Number Of Hours</th>
@@ -256,7 +256,7 @@ const AdminSalaryModule = () => {
               </div>
             </div>
           </Row>
-        </Container>
+        </div>
     </Fragment>
   );
 };
