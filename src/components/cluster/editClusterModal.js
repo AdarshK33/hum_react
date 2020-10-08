@@ -19,7 +19,8 @@ const EditClusterModal = (props) => {
   const [sportsList, setSportsList] = useState([])
   const [clustertButton, setClusterButton] = useState(false);
   const [costCenterName, setCostCenterName] = useState('');
-  const [status, setStatus] = useState(0)
+  const [status, setStatus] = useState(0);
+
 
 
 
@@ -76,9 +77,18 @@ const EditClusterModal = (props) => {
     }
   }, [user.costCentre, user.loginType]);
 
+
+
+
   const onSubmit = (event) => {
+
+
     event.preventDefault();
+    const validate = validation();
+
+
     const editCluster = {
+
       clusterId: getSingleCluster.clusterId,
       clusterLeader,
       clusterName,
@@ -88,22 +98,42 @@ const EditClusterModal = (props) => {
       employeeIds: employee.map((e) => e.employeeId),
       status: status
     }
+    if (validate) {
+      updateCluster(editCluster)
+      props.handleEditClose()
+    }
+    // console.log("^^^^" + JSON.stringify(editCluster));
 
-    console.log("^^^^" + JSON.stringify(editCluster));
-    const result = updateCluster(editCluster)
-      .then((result) => {
-        console.log("api response===", result.data.message);
-        toast.info(result.data.message);
-        setTimeout(() => {
-          callTimer();
-        }, 2000);
-        viewCluster();
-      })
-      .catch((error) => {
-        alert(" In error catch ", error);
-      })
-    console.log(result, "in competent");
+    // const result = updateCluster(editCluster)
+
+
+
   }
+
+  const validation = () => {
+    let flag = true
+    if (employee.length === 0) {
+      toast.info("Select employee is mandatory")
+      flag = false;
+      return;
+    }
+
+    if (sportsList.length === 0) {
+      toast.info("Select sports is mandatory")
+      flag = false;
+      return;
+    }
+
+    return flag;
+  }
+
+
+
+
+
+
+
+
 
   const clusterLeaderSelect = event => {
     setClusterLeader(event.target.value);
