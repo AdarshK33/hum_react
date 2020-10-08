@@ -1,11 +1,28 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Table, Row } from 'react-bootstrap'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import '../Leaves/Leaves.css'
+import '../AdminLeave/AdminLeaves.css'
+import Pagination from 'react-js-pagination'
 
 
 const AdminReportView = (props) => {
     const reportList = props.AdminReportList
+
+     /*-----------------Pagination------------------*/
+     const [currentPage, setCurrentPage] = useState(1);
+     const recordPerPage = 10;
+     const totalRecords = reportList !== null && reportList.length;
+     const pageRange = 10;
+ 
+    const indexOfLastRecord = currentPage * recordPerPage;
+    const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+    const currentRecords = reportList !== null ? reportList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+ 
+    const handlePageChange = pageNumber => {
+     setCurrentPage(pageNumber);
+    }
+    /*-----------------Pagination------------------*/
     return (
         <Fragment>
             <div className="container-fluid">
@@ -41,12 +58,13 @@ const AdminReportView = (props) => {
                                             <th>LOP</th>
                                         </tr>
                                     </thead>
-                                    {reportList !== undefined && reportList !== null && reportList.length > 0 &&
+                                    {currentRecords !== undefined && currentRecords !== null && 
+                                    currentRecords.length > 0 &&
                                         reportList.map((item, i) => {
                                             return (
                                                 <tbody key={i + 1}>
                                                     <tr>
-                                                        <td>{i + 1}</td>
+                                                        <td>{i + 1 + indexOfFirstRecord}</td>
                                                         <td>{item.employeeId}</td>
                                                         <td>{item.username}</td>
                                                         <td>{item.costCentre}</td>
@@ -70,6 +88,17 @@ const AdminReportView = (props) => {
                     </div>
                 </Row>
             </div>
+            {reportList !== null && reportList.length > 10 &&
+                <Pagination
+                    itemClass="page-item" 
+                    linkClass="page-link"
+                    activePage={currentPage}
+                    itemsCountPerPage={recordPerPage}
+                    totalItemsCount={totalRecords}
+                    pageRangeDisplayed={pageRange}
+                    onChange={handlePageChange}
+                />
+                }
         </Fragment>
     );
 };

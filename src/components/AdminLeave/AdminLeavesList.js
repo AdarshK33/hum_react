@@ -5,6 +5,7 @@ import AdminLeaveEdit from './AdminLeaveEdit'
 import AdminDeleteLeaves from './AdminDeleteLeaves'
 import Breadcrumb from '../common/breadcrumb';
 import './AdminLeaves.css'
+import Pagination from 'react-js-pagination'
 import { Edit2, Trash2 } from 'react-feather'
 
 const AdminLeavesList = (props) => {
@@ -20,6 +21,20 @@ const AdminLeavesList = (props) => {
 
     const { viewList, leaveList } = useContext(LeaveContext)
 
+    /*-----------------Pagination------------------*/
+    const [currentPage, setCurrentPage] = useState(1);
+    const recordPerPage = 10;
+    const totalRecords = leaveList !== null && leaveList.length;
+    const pageRange = 10;
+
+   const indexOfLastRecord = currentPage * recordPerPage;
+   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+   const currentRecords = leaveList !== null ? leaveList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+
+   const handlePageChange = pageNumber => {
+    setCurrentPage(pageNumber);
+   }
+   /*-----------------Pagination------------------*/
 
     /* const handleClose = () => setModal(false)
     const handleShow = () => setModal(true) */
@@ -61,12 +76,12 @@ const AdminLeavesList = (props) => {
                             </tr>
                         </thead>
 
-                        {leaveList !== undefined &&  leaveList !== null &&
-                            leaveList.map((item, i) => {
+                        {currentRecords !== undefined &&  currentRecords !== null &&
+                            currentRecords.map((item, i) => {
                                 return (
                                     <tbody key={i + 1}>
                                         <tr>
-                                            <td>{i + 1}</td>
+                                            <td>{i + 1 + indexOfFirstRecord}</td>
                                             <td>{item.empId}</td>
                                             <td>{item.leaveTypeId === 1 ? 'General' : (item.leaveTypeId === 2 ? 'Paternity' : (item.leaveTypeId === 3 ? 'Maternity' : 
                                             (item.leaveTypeId === 0 ? 'LOP' : '')))}
@@ -97,8 +112,19 @@ const AdminLeavesList = (props) => {
                         reason={reason} ltId={ltId} empId={empId} />
                 </Row>
             </div>
+            {leaveList !== null && leaveList.length > 10 &&
+                <Pagination
+                    itemClass="page-item" 
+                    linkClass="page-link"
+                    activePage={currentPage}
+                    itemsCountPerPage={recordPerPage}
+                    totalItemsCount={totalRecords}
+                    pageRangeDisplayed={pageRange}
+                    onChange={handlePageChange}
+                />
+                }
         </Fragment>
     );
 };
 
-export default AdminLeavesList;
+ export default AdminLeavesList;
