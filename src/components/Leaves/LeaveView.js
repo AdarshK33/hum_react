@@ -6,7 +6,8 @@ import calendarImage from '../../assets/images/calendar-image.png'
 import LeaveAdd from './LeaveAdd'
 import EditLeave from './EditLeave'
 import DeleteLeave from './DeleteLeave'
-
+import '../AdminLeave/AdminLeaves.css'
+import Pagination from 'react-js-pagination'
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { LeaveContext } from '../../context/LeaveState'
 import './Leaves.css'
@@ -23,10 +24,25 @@ const LeaveView = () => {
     const [ltId, setltId] = useState()
     const [reason, setReason] = useState()
 
-    const { leaveList, viewList, leaveDataList, viewLeaveData, viewEmpLeaveData, leaveEmpList  }
+    const { leaveList, viewList, leaveDataList, viewLeaveData, viewEmpLeaveData, leaveEmpList }
         = useContext(LeaveContext);
 
     const { user } = useContext(AppContext);
+
+    /*-----------------Pagination------------------*/
+    const [currentPage, setCurrentPage] = useState(1);
+    const recordPerPage = 10;
+    const totalRecords = leaveEmpList !== null && leaveEmpList.length;
+    const pageRange = 10;
+
+    const indexOfLastRecord = currentPage * recordPerPage;
+    const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+    const currentRecords = leaveEmpList !== null ? leaveEmpList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+
+    const handlePageChange = pageNumber => {
+        setCurrentPage(pageNumber);
+    }
+    /*-----------------Pagination------------------*/
 
     const handleClose = () => setModal(false)
 
@@ -36,7 +52,7 @@ const LeaveView = () => {
 
 
     useEffect(() => {
-        viewList() 
+        viewList()
     }, [])
     useEffect(() => {
         viewLeaveData(user.employeeId)
@@ -45,12 +61,12 @@ const LeaveView = () => {
         viewEmpLeaveData(user.employeeId)
     }, [user.employeeId])
 
-  /*
-    if(leaveTypeId === 0 || leaveTypeId === 1){
-        var newLeaveTypeId = 1
-       setLeaveTypeId(newLeaveTypeId)
-       console.log("newLeaveTypeId", newLeaveTypeId)
-    } */
+    /*
+      if(leaveTypeId === 0 || leaveTypeId === 1){
+          var newLeaveTypeId = 1
+         setLeaveTypeId(newLeaveTypeId)
+         console.log("newLeaveTypeId", newLeaveTypeId)
+      } */
     return (
         <Fragment>
             <Breadcrumb title="Leave View" parent="Leave View" />
@@ -121,9 +137,9 @@ const LeaveView = () => {
                                 <Row>
                                     <Col>
                                         <Row className="text-center">
-                                        <p>Available:{leaveDataList !== undefined && leaveDataList.eligibleLeave ?
+                                            <p>Available:{leaveDataList !== undefined && leaveDataList.eligibleLeave ?
                                                 (leaveDataList.leaveApplied.GrantLeave == null ? leaveDataList.eligibleLeave.GrantLeave :
-                                                        (leaveDataList.eligibleLeave.GrantLeave - leaveDataList.leaveApplied.GrantLeave)) :
+                                                    (leaveDataList.eligibleLeave.GrantLeave - leaveDataList.leaveApplied.GrantLeave)) :
                                                 ''}</p>
                                         </Row>
                                         <Row className="text-center">
@@ -142,10 +158,10 @@ const LeaveView = () => {
                     <Col className="leaveApplications">Leave Applications</Col>
                     <Col>
                         <Button className="apply-button btn btn-light"
-                        onClick={() => {setModal(true) }}>Apply</Button>
+                            onClick={() => { setModal(true) }}>Apply</Button>
                     </Col>
-                    {user.employeeId !== undefined ?<LeaveAdd handleClose={handleClose} modal={modal} empid = {user.employeeId} /> : ""}
-                    
+                    {user.employeeId !== undefined ? <LeaveAdd handleClose={handleClose} modal={modal} empid={user.employeeId} /> : ""}
+
                 </Row>
 
                 <div className="table-responsive">
@@ -162,15 +178,15 @@ const LeaveView = () => {
                             </tr>
                         </thead>
 
-                        {leaveEmpList !== null && leaveEmpList !== undefined && 
-                            leaveEmpList.map((item, i) => {
+                        {currentRecords !== null && currentRecords !== undefined &&
+                            currentRecords.map((item, i) => {
                                 return (
                                     <tbody key={i + 1}>
                                         <tr>
-                                            <td>{i + 1}</td>
+                                            <td>{i + 1 + indexOfFirstRecord}</td>
                                             {/* <td>{item.leaveCategory}</td> */}
                                             <td>{item.leaveTypeId === 1 ? 'General' : (item.leaveTypeId === 2 ? 'Paternity' : (item.leaveTypeId === 3 ? 'Maternity' :
-                                            (item.leaveTypeId === 0 ? 'LOP' : '')))}
+                                                (item.leaveTypeId === 0 ? 'LOP' : '')))}
                                             </td>
                                             <td>{item.numberOfDays}</td>
                                             <td>{item.fromDate}</td>
@@ -182,7 +198,7 @@ const LeaveView = () => {
                                             }} />
                                             </td>
                                             <td><Trash2 onClick={() => {
-                                                setDeleteModal(true);  setltId(item.ltId)
+                                                setDeleteModal(true); setltId(item.ltId)
                                             }} />
 
                                             </td>
@@ -195,13 +211,24 @@ const LeaveView = () => {
                     </Table>
                     <DeleteLeave handleDeleteClose={handleDeleteClose} modal={deleteModal} ltId={ltId} />
                     {user.employeeId !== undefined ?
-                    <EditLeave handleEditClose={handleEditClose} modal={editModal} empid = {user.employeeId}
-                        leaveTypeId={leaveTypeId === 0 || leaveTypeId === 1 ? (leaveTypeId = 1) : (leaveTypeId === 2 ? (leaveTypeId = 2) :
-                            leaveTypeId === 3 ? (leaveTypeId = 3):'')} fromDate={fromDate} toDate={toDate}
-                        reason={reason} ltId={ltId} />:""}
+                        <EditLeave handleEditClose={handleEditClose} modal={editModal} empid={user.employeeId}
+                            leaveTypeId={leaveTypeId === 0 || leaveTypeId === 1 ? (leaveTypeId = 1) : (leaveTypeId === 2 ? (leaveTypeId = 2) :
+                                leaveTypeId === 3 ? (leaveTypeId = 3) : '')} fromDate={fromDate} toDate={toDate}
+                            reason={reason} ltId={ltId} /> : ""}
                 </div>
 
             </div>
+            {leaveEmpList !== null && leaveEmpList.length > 10 &&
+                <Pagination
+                    itemClass="page-item"
+                    linkClass="page-link"
+                    activePage={currentPage}
+                    itemsCountPerPage={recordPerPage}
+                    totalItemsCount={totalRecords}
+                    pageRangeDisplayed={pageRange}
+                    onChange={handlePageChange}
+                />
+            }
         </Fragment>
     );
 };

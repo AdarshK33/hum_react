@@ -12,7 +12,7 @@ const initialState = {
   leavesData: {},
   editLeavesData: {},
   leaveDataList: {},
-  holidayDataList:{},
+  holidayDataList:[],
   empData:[],
   reportList:[],
   employeeList:[],

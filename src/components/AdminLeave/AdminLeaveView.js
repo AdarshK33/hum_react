@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, Fragment } from 'react';
-import { Container, Row, Col, Button, Table } from 'react-bootstrap';
+import {  Row, Col, Button, Table } from 'react-bootstrap';
 import { AdminContext } from '../../context/AdminState';
 import Breadcrumb from '../common/breadcrumb';
 import AdminLeaveAdd from './AdminLeaveAdd'
@@ -12,12 +12,29 @@ const AdminLeaveView = (props) => {
 
     const [modal, setModal] = useState(false)
 
+    /*-----------------Pagination------------------*/
+    const [currentPage, setCurrentPage] = useState(1);
+    const recordPerPage = 10;
+    const totalRecords = leaveAdminList !== null && leaveAdminList.length;
+    const pageRange = 10;
+
+   const indexOfLastRecord = currentPage * recordPerPage;
+   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+   const currentRecords = leaveAdminList !== null ? leaveAdminList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+   
+   const handlePageChange = pageNumber => {
+    setCurrentPage(pageNumber);
+}
+
+   /*-----------------Pagination------------------*/
+
     const handleClose = () => setModal(false)
     const handleShow = () => setModal(true)
 
     useEffect(() => {
         viewAdminList()
     }, [])
+
 
     return (
         <Fragment>
@@ -43,12 +60,12 @@ const AdminLeaveView = (props) => {
                                 <th>Gender</th>
                             </tr>
                         </thead>
-                        {leaveAdminList !== undefined && leaveAdminList !== null &&
-                            leaveAdminList.map((item, i) => {
+                        {currentRecords !== undefined && currentRecords !== null &&
+                            currentRecords.map((item, i) => {
                                 return (
-                                    <tbody key={i}>
+                                    <tbody key={i + 1}>
                                         <tr>
-                                            <td>{i + 1}</td>
+                                            <td>{i + 1 + indexOfFirstRecord}</td>
                                             <td>{item.employeeId}</td>
                                             <td>{item.firstName} {item.lastName}</td>
                                             <td>{item.gender}</td>
@@ -58,6 +75,17 @@ const AdminLeaveView = (props) => {
                             })}
                     </Table>
                 </div>
+                {leaveAdminList !== null && leaveAdminList.length > 10 &&
+                <Pagination
+                    itemClass="page-item" 
+                    linkClass="page-link"
+                    activePage={currentPage}
+                    itemsCountPerPage={recordPerPage}
+                    totalItemsCount={totalRecords}
+                    pageRangeDisplayed={pageRange}
+                    onChange={handlePageChange}
+                />
+                }
             </div>
         </Fragment>
     );
