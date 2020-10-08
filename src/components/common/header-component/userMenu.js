@@ -1,6 +1,6 @@
 import React, { Fragment, useContext } from 'react';
 import man from '../../../assets/images/dashboard/userImage.png';
-import { User,  LogOut, Users, UserPlus } from 'react-feather';
+import { User, Mail, Lock, Settings, LogOut, LogIn, Users, UserPlus } from 'react-feather';
 import { AppContext } from "../../../context/AppState";
 
 const loginUrl = `https://preprod.idpdecathlon.oxylane.com/as/authorization.oauth2?response_type=code&client_id=${process.env.REACT_APP_FEDID_CLIENTID}&scope=openid%20profile&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}`;
@@ -18,14 +18,19 @@ const UserMenu = () => {
                     </div>
                 </div>
                 <ul className="profile-dropdown onhover-show-div p-20 profile-dropdown-hover">
-                        <li><a href="#javascript"><User />My Profile</a></li>
-                    {user.loginType === '1' && 
+                    <li><a href="#javascript"><User />Edit Profile</a></li>
+                    <li><a href="#javascript"><Mail />Inbox</a></li>
+                    <li><a href="#javascript"><Lock />Lock Screen</a></li>
+                    <li><a href="#javascript"><Settings />Settings</a></li>
+                    <li><a href="#javascript"><LogOut /> Log out</a></li>
+                    <li><a href="#javascript"><User />My Profile</a></li>
+                    {user.loginType === '1' &&
                         <li><a href="#javascript"><UserPlus />Admin</a></li>
                     }
-                    {user.loginType === '7' || user.loginType === '9' && 
+                    {user.loginType === '7' || user.loginType === '9' &&
                         <li><a href="#javascript"><Users />My Team</a></li>
                     }
-                   {/*  <li><a href="#javascript"><Settings />Settings</a></li> */}
+                    {/*  <li><a href="#javascript"><Settings />Settings</a></li> */}
                     {/* <li><a href="#javascript"><LogOut /> Log out</a></li> */}
                     <li><a href={loginUrl}><LogOut />Log In</a></li>
                 </ul>

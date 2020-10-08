@@ -196,7 +196,7 @@ const CreateClusterModal = (props) => {
                 <div className="form-group">
                   <label htmlFor="exampleFormControlInput1"> Select Employee</label>
                   <Multiselect
-                    required
+
                     placeholder="Select Employee"
                     options={getClusterEmployees}
                     value={employee}
