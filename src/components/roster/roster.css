@@ -44,3 +44,7 @@ thead th {
    overflow: auto;
    height: 500px;
  }
+
+ .pagination{
+     margin-left: 25%;
+ }

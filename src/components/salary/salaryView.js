@@ -10,6 +10,8 @@ import EditSalary from './EditSalary'
 import "react-datepicker/dist/react-datepicker.css";
 import { Edit2, } from 'react-feather'
 import { AppContext } from "../../context/AppState";
+import Pagination from 'react-js-pagination'
+import '../AdminLeave/AdminLeaves.css'
 
 function ViewShift() {
 
@@ -42,6 +44,21 @@ function ViewShift() {
   const { user } = useContext(AppContext);
 
   const handleEditClose = () => setEditModal(false)
+
+  /*-----------------Pagination------------------*/
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordPerPage = 10;
+  const totalRecords = salaryList !== null && salaryList.length;
+  const pageRange = 10;
+
+ const indexOfLastRecord = currentPage * recordPerPage;
+ const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+ const currentRecords = salaryList !== null ? salaryList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+
+ const handlePageChange = pageNumber => {
+  setCurrentPage(pageNumber);
+ }
+ /*-----------------Pagination------------------*/
 
 
   const onSubmit = e => {
@@ -111,11 +128,12 @@ function ViewShift() {
                     </tr>
                   </thead>
 
-                  {salaryList !== null && salaryList.length > 0 && salaryList.map((item, i) => {
+                  {currentRecords !== null && currentRecords.length > 0 && 
+                  currentRecords.map((item, i) => {
                     return (
                       <tbody key={i + 1}>
                         <tr>
-                          <td>{i + 1}</td>
+                          <td>{i + 1 + indexOfFirstRecord}</td>
 
                           <td>{item.employeeId}</td>
                           <td>{item.firstName} {item.lastName}</td>
@@ -161,6 +179,17 @@ function ViewShift() {
         />
 
       </div>
+      {salaryList !== null && salaryList.length > 10 &&
+                <Pagination
+                    itemClass="page-item" 
+                    linkClass="page-link"
+                    activePage={currentPage}
+                    itemsCountPerPage={recordPerPage}
+                    totalItemsCount={totalRecords}
+                    pageRangeDisplayed={pageRange}
+                    onChange={handlePageChange}
+                />
+                }
     </Fragment>
 
   )

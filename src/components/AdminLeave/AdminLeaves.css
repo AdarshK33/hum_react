@@ -11,3 +11,14 @@ button.btn.btn-sm.disable-button:disabled {
     border-color: lightgrey !important;
     color: black
 }
+ul.pagination{
+    justify-content: center;
+    margin: 30px 0;
+}
+.page-item.active .page-link {
+    background-color: #006EBB;
+    border-color: #006EBB;
+}
+.page-link{
+    color: #006EBB;
+}
