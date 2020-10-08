@@ -49,7 +49,6 @@ const AdminMasterLeave = () => {
                                         <tr>
                                             <th>S. No</th>
                                             <th>Max Leave</th>
-                                            <th>Employment Type</th>
                                             <th>State Name</th>                                            
                                             <th>Year</th>
                                         </tr>
@@ -61,8 +60,7 @@ const AdminMasterLeave = () => {
                                             <tbody key={i}>
                                                 <tr>
                                                     <td>{i+1}</td>
-                                                    <td>{item.maxLeaves}</td>
-                                                    <td>{item.employmentType}</td>                                                    
+                                                    <td>{item.maxLeaves}</td>                                                  
                                                     <td>{item.stateName}</td>
                                                     <td>{item.year}</td>
                                                 </tr>
