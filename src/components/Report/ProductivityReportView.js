@@ -1,15 +1,32 @@
-import React, { Fragment } from 'react';
-import { Table, Container, Row } from 'react-bootstrap'
+import React, { Fragment, useState } from 'react';
+import { Table, Row } from 'react-bootstrap'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import '../Leaves/Leaves.css'
+import '../AdminLeave/AdminLeaves.css'
+import Pagination from 'react-js-pagination'
 
 
 const ProductivityReportView = (props) => {
     const productivityList = props.productivityList
+
+     /*-----------------Pagination------------------*/
+     const [currentPage, setCurrentPage] = useState(1);
+     const recordPerPage = 10;
+     const totalRecords = productivityList !== null && productivityList !== undefined && productivityList.length;
+     const pageRange = 10;
+ 
+    const indexOfLastRecord = currentPage * recordPerPage;
+    const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+    const currentRecords = productivityList !== null && productivityList !== undefined ?
+     productivityList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+ 
+    const handlePageChange = pageNumber => {
+     setCurrentPage(pageNumber);
+    }
+    /*-----------------Pagination------------------*/
     return (
         <Fragment>
-            <Container>
-                {productivityList  &&
+            <div className="container-fluid">
                 <Row style={{ marginTop: '2rem' }}>
                     <div className="col-sm-12" style={{padding:'0'}}>
                         <div className="card" style={{ overflowX: "auto" }}>
@@ -27,7 +44,7 @@ const ProductivityReportView = (props) => {
                                 <Table id="table-to-xls" className="table table-hover" style={{tableLayout:'fixed'}}>
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
-                                            <th>Sr No.</th>
+                                            <th>S. No</th>
                                             <th>Cost Center</th>
                                             <th>Employee Id</th>
                                             <th>Name</th>
@@ -39,12 +56,12 @@ const ProductivityReportView = (props) => {
                                             <th>Month</th>
                                         </tr>
                                     </thead>
-                                    {productivityList !== null && productivityList !== undefined &&
-                                        productivityList.map((item, i) => {
+                                    {currentRecords !== null && currentRecords !== undefined &&
+                                        currentRecords.map((item, i) => {
                                             return (
                                                 <tbody key={i + 1}>
                                                     <tr>
-                                                        <td>{i + 1}</td>
+                                                        <td>{i + 1 + indexOfFirstRecord}</td>
                                                         <td>{item.costCentre}</td>
                                                         <td>{item.employeeId}</td>
                                                         <td>{item.firstName} {item.lastName}</td>
@@ -64,8 +81,18 @@ const ProductivityReportView = (props) => {
                         </div>
                     </div>
                 </Row>
+            </div>
+            {productivityList !== null && productivityList !== undefined && productivityList.length > 10 &&
+                <Pagination
+                    itemClass="page-item" 
+                    linkClass="page-link"
+                    activePage={currentPage}
+                    itemsCountPerPage={recordPerPage}
+                    totalItemsCount={totalRecords}
+                    pageRangeDisplayed={pageRange}
+                    onChange={handlePageChange}
+                />
                 }
-            </Container>
         </Fragment>
     );
 };

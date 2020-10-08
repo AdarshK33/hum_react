@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext, Fragment } from 'react';
-import { Container, Row,  Button, Table, Modal } from 'react-bootstrap';
+import {  Row,  Button, Table, Modal } from 'react-bootstrap';
 import { LeaveContext } from '../../context/LeaveState';
 import AdminLeaveEdit from './AdminLeaveEdit'
 import AdminDeleteLeaves from './AdminDeleteLeaves'
 import Breadcrumb from '../common/breadcrumb';
 import './AdminLeaves.css'
+import Pagination from 'react-js-pagination'
 import { Edit2, Trash2 } from 'react-feather'
 
 const AdminLeavesList = (props) => {
@@ -20,6 +21,20 @@ const AdminLeavesList = (props) => {
 
     const { viewList, leaveList } = useContext(LeaveContext)
 
+    /*-----------------Pagination------------------*/
+    const [currentPage, setCurrentPage] = useState(1);
+    const recordPerPage = 10;
+    const totalRecords = leaveList !== null && leaveList.length;
+    const pageRange = 10;
+
+   const indexOfLastRecord = currentPage * recordPerPage;
+   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+   const currentRecords = leaveList !== null ? leaveList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+
+   const handlePageChange = pageNumber => {
+    setCurrentPage(pageNumber);
+   }
+   /*-----------------Pagination------------------*/
 
     /* const handleClose = () => setModal(false)
     const handleShow = () => setModal(true) */
@@ -42,7 +57,7 @@ const AdminLeavesList = (props) => {
     return (
         <Fragment>
             <Breadcrumb title="Admin " parent="Admin Leave" />
-            <Container>
+            <div className="container-fluid">
                 <Row className="heading-row">
                     <h4 className="main-heading">Admin Leaves</h4>
                 </Row>
@@ -50,7 +65,7 @@ const AdminLeavesList = (props) => {
                     <Table className="adminTable">
                         <thead style={{ background: '#006EBB', color: 'white' }}>
                             <tr>
-                                <th>Sr No.</th>
+                                <th>S. No</th>
                                 <th>Emp Id</th>
                                 <th>Leave Type</th>
                                 <th>Total No. of Days</th>
@@ -61,12 +76,12 @@ const AdminLeavesList = (props) => {
                             </tr>
                         </thead>
 
-                        {leaveList !== undefined &&  leaveList !== null &&
-                            leaveList.map((item, i) => {
+                        {currentRecords !== undefined &&  currentRecords !== null &&
+                            currentRecords.map((item, i) => {
                                 return (
                                     <tbody key={i + 1}>
                                         <tr>
-                                            <td>{i + 1}</td>
+                                            <td>{i + 1 + indexOfFirstRecord}</td>
                                             <td>{item.empId}</td>
                                             <td>{item.leaveTypeId === 1 ? 'General' : (item.leaveTypeId === 2 ? 'Paternity' : (item.leaveTypeId === 3 ? 'Maternity' : 
                                             (item.leaveTypeId === 0 ? 'LOP' : '')))}
@@ -96,9 +111,20 @@ const AdminLeavesList = (props) => {
                             leaveTypeId === 3 ? (leaveTypeId = 3):'')} fromDate={fromDate} toDate={toDate}
                         reason={reason} ltId={ltId} empId={empId} />
                 </Row>
-            </Container>
+            </div>
+            {leaveList !== null && leaveList.length > 10 &&
+                <Pagination
+                    itemClass="page-item" 
+                    linkClass="page-link"
+                    activePage={currentPage}
+                    itemsCountPerPage={recordPerPage}
+                    totalItemsCount={totalRecords}
+                    pageRangeDisplayed={pageRange}
+                    onChange={handlePageChange}
+                />
+                }
         </Fragment>
     );
 };
 
-export default AdminLeavesList;
+ export default AdminLeavesList;

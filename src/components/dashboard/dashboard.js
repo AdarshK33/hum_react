@@ -20,6 +20,7 @@ function Dashboard () {
     const [ClusterType, setClusterType] = useState('');
     const [ClusterName, setClusterName] = useState('');
     var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const today = new Date();
 
     const fromDateHandler = (e) => {        
         setStartDate(e); 
@@ -71,17 +72,20 @@ function Dashboard () {
          
 
         }
+
+        const { clusterList,viewCluster,viewClusterCostCenter,clusterCostCenterList, } = useContext(ClusterContext);
    
         useEffect(() => {
             viewCluster()
             viewCostCentre()
             viewClusterCostCenter(user.costCentre)
+            // console.log(clusterList)
             if(user.loginType !== '1' && user.loginType !== '9'){
                 setStoreType(user.costCentre)
             }
         }, [user.costCentre]);
    
-        const { clusterList,viewCluster,viewClusterCostCenter,clusterCostCenterList, } = useContext(ClusterContext);
+        
    
         let dpsQtyStore = [];
         let dpsQtyCluster = [];
@@ -175,14 +179,15 @@ function Dashboard () {
                             <Row>
                                 <div className="col-sm-4">
                                     <div className="form-group">
-                                        <label className="name f-w-600">Select Date<span style = {{color:'red'}}>*</span> &nbsp;</label>
+                                        <label className="name f-w-600"> Date &nbsp;</label>
                                         <DatePicker
                                         className="form-control Value"
-                                        selected={startDate}
+                                        selected={today}
                                         dateFormat="yyyy-MM-dd"
-                                        required
-                                        onChange={(e) => fromDateHandler(e)}
-                                        />
+                                        readOnly
+                                        // required
+                                        // onChange={(e) => fromDateHandler(e)}
+                                        /> 
                                     </div>
                                 </div>
                                 <div className="col-sm-4">
@@ -195,7 +200,7 @@ function Dashboard () {
                                             className="form-control Value"
                                             onChange={(e)=>fromClusterHandler(e)}
                                             >
-                                                <option value ="">Select</option>
+                                                <option value ="">{clusterList[0].clusterName}</option>
                                                 
                                                 {clusterList !== null &&
                                                   clusterList.map((e, i) => {

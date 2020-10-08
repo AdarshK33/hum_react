@@ -1,11 +1,29 @@
-import React, { Fragment, useEffect, useContext } from 'react';
+import React, { Fragment, useEffect, useContext, useState} from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import { LeaveContext } from '../../context/LeaveState';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import '../Leaves/Leaves.css'
+import '../AdminLeave/AdminLeaves.css'
+import Pagination from 'react-js-pagination'
+
 const HolidayList = () => {
 
   const { getHoliday, holidayDataList, uploadFile } = useContext(LeaveContext);
+
+  /*-----------------Pagination------------------*/
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordPerPage = 10;
+  const totalRecords = holidayDataList !== null && holidayDataList.length;
+  const pageRange = 10;
+
+ const indexOfLastRecord = currentPage * recordPerPage;
+ const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+ const currentRecords = holidayDataList !== null ? holidayDataList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+
+ const handlePageChange = pageNumber => {
+  setCurrentPage(pageNumber);
+ }
+ /*-----------------Pagination------------------*/
 
   useEffect(() => {
     getHoliday()
@@ -46,7 +64,7 @@ const HolidayList = () => {
                 <table id="table-to-xls" className="table table-hover">
                   <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                     <tr>
-                      <th>No</th>
+                      <th>S. No</th>
                       <th scope="col"> Date</th>
                       <th scope="col"> Name</th>
                       <th scope="col">Year</th>
@@ -55,12 +73,12 @@ const HolidayList = () => {
                     </tr>
                   </thead>
 
-                  {holidayDataList.length > 0 &&
-                    holidayDataList.map((item, i) => {
+                  {currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 &&
+                    currentRecords.map((item, i) => {
                       return (
                         <tbody key={i + 1}>
                           <tr>
-                            <td>{i + 1}</td>
+                            <td>{i + 1 +indexOfFirstRecord}</td>
                             <td>{item.holidayDate}</td>
                             <td>{item.holidayName}</td>
                             <td>{item.year}</td>
@@ -78,7 +96,17 @@ const HolidayList = () => {
             </div>
           </div>
         </div>
-
+        {holidayDataList !== null && holidayDataList.length > 10 &&
+                <Pagination
+                    itemClass="page-item" 
+                    linkClass="page-link"
+                    activePage={currentPage}
+                    itemsCountPerPage={recordPerPage}
+                    totalItemsCount={totalRecords}
+                    pageRangeDisplayed={pageRange}
+                    onChange={handlePageChange}
+                />
+                }
 
       </div>
     </Fragment>

@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useContext, useState } from 'react';
-import { Form, Container, Row, Button } from 'react-bootstrap'
+import { Form, Row, Button } from 'react-bootstrap'
 import Breadcrumb from '../common/breadcrumb';
 import { LeaveContext } from '../../context/LeaveState'
 import DatePicker from 'react-datepicker'
@@ -103,7 +103,7 @@ const AdminReportForm = () => {
     return (
         <Fragment>
             <Breadcrumb title="Report" parent="Leave Report" />
-            <Container>
+            <div className="container-fluid">
                 <Form onSubmit={submitData}>
                     <Row>
                         <div className="col-sm-4">
@@ -221,7 +221,7 @@ const AdminReportForm = () => {
                     }
                     <Button type="submit">Submit</Button>
                 </Form>
-            </Container>
+            </div>
             <AdminReportView AdminReportList={reportList} />
         </Fragment>
     );

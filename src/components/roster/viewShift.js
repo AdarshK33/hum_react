@@ -93,7 +93,7 @@ function ViewShift() {
                       return (
                         <tbody key={i + 1}>
                           <tr>
-                            <td>{i + 1}</td>
+                            <td>{i + 1 + indexOfFirstRecord}</td>
 
                             <td> {moment(e.startTime, ["h:mm A"]).format("HH:mm")}-{moment(e.endTime, ["h:mm A"]).format("HH:mm")}</td>
                             <td>{moment(e.breakStartTime, ["h:mm A"]).format("HH:mm")}-{moment(e.breakEndTime, ["h:mm A"]).format("HH:mm")}</td>

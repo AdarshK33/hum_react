@@ -49,7 +49,8 @@ export const ClusterProvider = ({ children }) => {
     client.get('cluster/view').then(function (response) {
       //  console.log("data==>" + JSON.stringify(response));
       state.clusterList = response.data.data;
-      //  console.log(JSON.stringify(state.clusterList))
+       console.log(JSON.stringify(state.clusterList))
+       
 
       return dispatch({ type: 'FETCH_ClUSTER_LIST', payload: state.clusterList });
     })

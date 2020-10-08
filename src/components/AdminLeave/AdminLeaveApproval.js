@@ -5,6 +5,7 @@ import { AdminContext } from '../../context/AdminState';
 import { useHistory } from "react-router-dom";
 import '../Leaves/Leaves.css'
 import './AdminLeaves.css'
+import Pagination from 'react-js-pagination'
 
 const AdminLeaveApproval = () => {
     const [deleteModal, setDeleteModal] = useState(false)
@@ -12,6 +13,21 @@ const AdminLeaveApproval = () => {
 
 
     const { ApprovalView, ApprovalLeaveList, cancelLeaveList, approvedUpdate } = useContext(AdminContext)
+
+    /*-----------------Pagination------------------*/
+    const [currentPage, setCurrentPage] = useState(1);
+    const recordPerPage = 10;
+    const totalRecords = ApprovalLeaveList !== null && ApprovalLeaveList.length;
+    const pageRange = 10;
+
+   const indexOfLastRecord = currentPage * recordPerPage;
+   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+   const currentRecords = ApprovalLeaveList !== null ? ApprovalLeaveList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+
+   const handlePageChange = pageNumber => {
+    setCurrentPage(pageNumber);
+   }
+   /*-----------------Pagination------------------*/
 
     const handleDeleteClose = () => setDeleteModal(false)
 
@@ -68,12 +84,12 @@ const AdminLeaveApproval = () => {
                                 
                             </tr>
                         </thead>
-                        {ApprovalLeaveList !== null && ApprovalLeaveList !== undefined &&
-                            ApprovalLeaveList.map((item, i) => {
+                        {currentRecords !== null && currentRecords !== undefined &&
+                            currentRecords.map((item, i) => {
                                 return (
                                     <tbody key={i}>
                                         <tr>
-                                            <td>{i + 1}</td>
+                                            <td>{i + 1 + indexOfFirstRecord}</td>
                                             <td>{item.empId}</td>
                                             <td>{item.leaveCategory}</td>
                                             <td>{item.numberOfDays}</td>
@@ -123,6 +139,17 @@ const AdminLeaveApproval = () => {
                     </Table>
                 </div>
             </div>
+            {ApprovalLeaveList !== null && ApprovalLeaveList.length > 10 &&
+                <Pagination
+                    itemClass="page-item" 
+                    linkClass="page-link"
+                    activePage={currentPage}
+                    itemsCountPerPage={recordPerPage}
+                    totalItemsCount={totalRecords}
+                    pageRangeDisplayed={pageRange}
+                    onChange={handlePageChange}
+                />
+                }
         </Fragment>
     );
 };

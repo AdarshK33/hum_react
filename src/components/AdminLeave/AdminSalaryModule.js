@@ -11,6 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useHistory } from "react-router-dom";
 import { AppContext } from "../../context/AppState";
 import { DashboardContext } from "../../context/DashboardState";
+import Pagination from 'react-js-pagination'
 
 const AdminSalaryModule = () => {
   const [shiftButton] = useState(false);
@@ -35,6 +36,21 @@ const AdminSalaryModule = () => {
    useEffect(() => {
     viewCostCentre();
    }, []);
+
+/*-----------------Pagination------------------*/
+   const [currentPage, setCurrentPage] = useState(1);
+   const recordPerPage = 10;
+   const totalRecords = salaryStoreList !== null && salaryStoreList.length;
+   const pageRange = 10;
+
+  const indexOfLastRecord = currentPage * recordPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+  const currentRecords = salaryStoreList !== null ? salaryStoreList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+
+  const handlePageChange = pageNumber => {
+   setCurrentPage(pageNumber);
+  }
+  /*-----------------Pagination------------------*/
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -106,7 +122,7 @@ const AdminSalaryModule = () => {
   return (
     <Fragment>
       <Breadcrumb title="Salary" parent="Admin" />
-      <Container>
+      <div className="container-fluid">
         <Form onSubmit={onSubmit}>
           <Row>
             <div className="col-sm-4">
@@ -194,7 +210,7 @@ const AdminSalaryModule = () => {
                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                       <tr>
                         <th>Select</th>
-                        <th>Sr No.</th>
+                        <th>S. No</th>
                         <th scope="col">Employee Id</th>
                         <th scope="col">Employee Name</th>
                         <th scope="col">Number Of Hours</th>
@@ -210,8 +226,8 @@ const AdminSalaryModule = () => {
                       </tr>
                     </thead>
 
-                    {salaryStoreList !== null &&
-                      salaryStoreList.map((item, i) => {
+                    {currentRecords !== null &&
+                      currentRecords.map((item, i) => {
                         return (
                           <tbody key={i + 1}>
                             <tr>
@@ -228,7 +244,7 @@ const AdminSalaryModule = () => {
                                     <input type="checkbox" disabled />
                                   )}{" "}
                               </td>
-                              <td>{i + 1}</td>
+                              <td>{i + 1 + indexOfFirstRecord}</td>
 
                               <td>{item.employeeId}</td>
                               <td>
@@ -256,7 +272,18 @@ const AdminSalaryModule = () => {
               </div>
             </div>
           </Row>
-        </Container>
+        </div>
+        {salaryStoreList !== null && salaryStoreList.length > 10 &&
+                <Pagination
+                    itemClass="page-item" 
+                    linkClass="page-link"
+                    activePage={currentPage}
+                    itemsCountPerPage={recordPerPage}
+                    totalItemsCount={totalRecords}
+                    pageRangeDisplayed={pageRange}
+                    onChange={handlePageChange}
+                />
+                }
     </Fragment>
   );
 };

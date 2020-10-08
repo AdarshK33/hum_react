@@ -55,7 +55,7 @@ const GrantLeaveView = () => {
               return (
                 <tbody key={i + 1}>
                   <tr>
-                    <td>{i + 1}</td>
+                    <td>{i + 1 + indexOfFirstRecord}</td>
                     <td>{item.empId}</td>
                     <td>{item.empName}</td>
                     <td>{item.costCentre}</td>
