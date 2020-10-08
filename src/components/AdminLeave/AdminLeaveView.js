@@ -5,6 +5,7 @@ import Breadcrumb from '../common/breadcrumb';
 import AdminLeaveAdd from './AdminLeaveAdd'
 import '../Leaves/Leaves.css'
 import './AdminLeaves.css'
+import Pagination from 'react-js-pagination'
 
 
 const AdminLeaveView = (props) => {
