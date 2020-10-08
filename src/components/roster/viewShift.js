@@ -29,9 +29,51 @@ function ViewShift() {
   const [breakEndTime, setBreakEndTime] = useState(new Date());
   const [workingHours, setWorkingHour] = useState();
   const [status, setStatus] = useState('')
+
   // variables
   const { shiftList, editShift, viewShift, viewShiftTypes, viewContractTypes, singleShiftList } = useContext(RosterContext);
   //console.log(shiftList, "in viewShift");
+
+
+  //=====================Pagination ===================
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(10);
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentShiftList = shiftList.slice(indexOfFirstPost, indexOfLastPost);
+  const paginate = pageNumber => setCurrentPage(pageNumber);
+
+  useEffect(() =>{
+    const indexOfLastPost = currentPage * postsPerPage;
+    const indexOfFirstPost = indexOfLastPost - postsPerPage;
+    const currentShiftList = shiftList.slice(indexOfFirstPost, indexOfLastPost);
+  }, [currentPage])
+
+  const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
+    const pageNumbers = [];
+  
+    for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
+      pageNumbers.push(i);
+    }
+  
+    return (
+      <nav>
+        <ul className='pagination'>
+          {pageNumbers.map(number => (
+            <li key={number} className='page-item'>
+              <a onClick={() => paginate(number)} className='page-link'>
+                {number}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    );
+  };
+
+  //=====================Pagination ===================
+
+
   return (
     <Fragment>
       <Breadcrumb title="View Shift" parent="View Shift" />
@@ -66,12 +108,12 @@ function ViewShift() {
                   </thead>
 
 
-                  {shiftList !== null &&
-                    shiftList.map((e, i) => {
+                  {currentShiftList !== null &&
+                    currentShiftList.map((e, i) => {
                       return (
                         <tbody key={i + 1}>
                           <tr>
-                            <td>{i + 1}</td>
+                            <td>{i + 1 + indexOfFirstPost}</td>
 
                             <td> {moment(e.startTime, ["h:mm A"]).format("HH:mm")}-{moment(e.endTime, ["h:mm A"]).format("HH:mm")}</td>
                             <td>{moment(e.breakStartTime, ["h:mm A"]).format("HH:mm")}-{moment(e.breakEndTime, ["h:mm A"]).format("HH:mm")}</td>
@@ -104,6 +146,8 @@ function ViewShift() {
                       );
                     })}
                 </table>
+                
+
                 <EditShiftModal handleEditClose={handleEditClose}
                   shiftType={shiftType}
                   contractType={contractType}
@@ -116,8 +160,15 @@ function ViewShift() {
                   shiftData={singleShiftList}
                   modal={editModal} />
               </div>
-
             </div>
+            <div className="pagination">
+                 <Pagination
+                    postsPerPage={postsPerPage}
+                    totalPosts={shiftList.length}
+                    paginate={paginate}
+                />
+            </div>
+            
           </div>
         </div>
 
