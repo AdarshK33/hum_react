@@ -5,14 +5,12 @@ import Breadcrumb from '../common/breadcrumb';
 import AdminLeaveAdd from './AdminLeaveAdd'
 import '../Leaves/Leaves.css'
 import './AdminLeaves.css'
+import Pagination from 'react-js-pagination'
 
 const AdminLeaveView = (props) => {
-    const [modal, setModal] = useState(false)
-    // const [employeeId, setEmployeeId] = useState()
-    // const [firstName, setFirstName] = useState('')
-    // const [lastName, setLastName] = useState('')
-
     const { viewAdminList, leaveAdminList } = useContext(AdminContext)
+
+    const [modal, setModal] = useState(false)
 
     const handleClose = () => setModal(false)
     const handleShow = () => setModal(true)
@@ -24,7 +22,7 @@ const AdminLeaveView = (props) => {
     return (
         <Fragment>
             <Breadcrumb title="Admin" parent="Admin" />
-            <Container>
+            <div className="container-fluid">
                 <Row className="heading-row">
                     <h4 className="main-heading">Employee Listing</h4>
                 </Row>
@@ -39,7 +37,7 @@ const AdminLeaveView = (props) => {
                     <Table id="table-to-xls" className="table table-hover">
                         <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                             <tr>
-                                <th>Sr.</th>
+                                <th>S. No</th>
                                 <th>Employee Id</th>
                                 <th>Employee Name</th>
                                 <th>Gender</th>
@@ -60,7 +58,7 @@ const AdminLeaveView = (props) => {
                             })}
                     </Table>
                 </div>
-            </Container>
+            </div>
         </Fragment>
     );
 };
