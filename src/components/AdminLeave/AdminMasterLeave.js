@@ -47,7 +47,7 @@ const AdminMasterLeave = () => {
                                 <table id="table-to-xls" className="table table-hover">
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
-                                            <th>S.No</th>
+                                            <th>S. No</th>
                                             <th>Max Leave</th>
                                             <th>Employment Type</th>
                                             <th>State Name</th>                                            

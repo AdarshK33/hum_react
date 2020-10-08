@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Table, Container, Row } from 'react-bootstrap'
+import { Table, Row } from 'react-bootstrap'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import '../Leaves/Leaves.css'
 
@@ -8,8 +8,7 @@ const AdminReportView = (props) => {
     const reportList = props.AdminReportList
     return (
         <Fragment>
-            <Container>
-                {reportList !== undefined && reportList !== null && reportList.length > 0 &&
+            <div className="container-fluid">
                 <Row style={{ marginTop: '2rem' }}>
                     <div className="col-sm-12">
                         <div className="card" style={{ overflowX: "auto" }}>
@@ -27,7 +26,7 @@ const AdminReportView = (props) => {
                                 <Table id="table-to-xls" className="table table-hover">
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
-                                            <th>Sr No.</th>
+                                            <th>S. No</th>
                                             <th>Employee Id</th>
                                             <th>Employee Name</th>
                                             <th>Cost Center</th>
@@ -42,7 +41,7 @@ const AdminReportView = (props) => {
                                             <th>LOP</th>
                                         </tr>
                                     </thead>
-                                    {/* reportList !== undefined && reportList !== null  && */
+                                    {reportList !== undefined && reportList !== null && reportList.length > 0 &&
                                         reportList.map((item, i) => {
                                             return (
                                                 <tbody key={i + 1}>
@@ -53,8 +52,8 @@ const AdminReportView = (props) => {
                                                         <td>{item.costCentre}</td>
                                                         <td>{item.workLocation}</td>
                                                         <td>{item.leaveEligible}</td>
-                                                        <td>{item.planned}</td>
-                                                        <td>{item.unPlanned}</td>
+                                                        <td>{item.planned === null ? 0 : item.planned}</td>
+                                                        <td>{item.unPlanned === null ? 0 : item.unPlanned}</td>
                                                         <td>{item.leaveremaining}</td>
                                                         <td>{item.leaveName}</td>
                                                         <td>{item.grantLeave}</td>
@@ -70,8 +69,7 @@ const AdminReportView = (props) => {
                         </div>
                     </div>
                 </Row>
-                }
-            </Container>
+            </div>
         </Fragment>
     );
 };

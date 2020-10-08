@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Table, Container, Row } from 'react-bootstrap'
+import { Table, Row } from 'react-bootstrap'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import '../Leaves/Leaves.css'
 
@@ -8,8 +8,7 @@ const ProductivityReportView = (props) => {
     const productivityList = props.productivityList
     return (
         <Fragment>
-            <Container>
-                {productivityList  &&
+            <div className="container-fluid">
                 <Row style={{ marginTop: '2rem' }}>
                     <div className="col-sm-12" style={{padding:'0'}}>
                         <div className="card" style={{ overflowX: "auto" }}>
@@ -27,7 +26,7 @@ const ProductivityReportView = (props) => {
                                 <Table id="table-to-xls" className="table table-hover" style={{tableLayout:'fixed'}}>
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
-                                            <th>Sr No.</th>
+                                            <th>S. No</th>
                                             <th>Cost Center</th>
                                             <th>Employee Id</th>
                                             <th>Name</th>
@@ -64,8 +63,7 @@ const ProductivityReportView = (props) => {
                         </div>
                     </div>
                 </Row>
-                }
-            </Container>
+            </div>
         </Fragment>
     );
 };
