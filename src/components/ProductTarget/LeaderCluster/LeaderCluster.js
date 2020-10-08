@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useContext,useEffect } from 'react';
-import { Card, Row, Col, Table, Button } from 'react-bootstrap'
+import { Row, Col, Table, Button } from 'react-bootstrap'
 import Breadcrumb from '../../common/breadcrumb';
-import { Edit2, Trash2, Slash } from 'react-feather';
+import { Edit2 } from 'react-feather';
 import AddTarget from './AddTarget';
 import EditTarget from './EditTarget';
 import { ClusterProductContext } from "../../../context/ClusterProductState";

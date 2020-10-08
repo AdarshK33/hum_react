@@ -154,7 +154,7 @@ const Roster = () => {
                           return (
                             <tr>
                               {item.employeeRosters.map(data => {
-                                let newData = new Date(data.date)
+                                // let newData = new Date(data.date)
                                 //console.log(newData.getDay(), "day")
                                 return <td>{item.weekName}<br />{data.date}<br />{checkCondition(data)}</td>
                               })}

@@ -84,7 +84,8 @@ const LeaderStoreProductTarget = () => {
                             </tr>
                         </thead>
 
-                        {storeLeaderProductList !== null && storeLeaderProductList.length > 0 &&
+                        {storeLeaderProductList !== null &&storeLeaderProductList !== undefined 
+                             && storeLeaderProductList.length > 0 &&
                             storeLeaderProductList.map((item, i) => {
                                 return (
                                    <tbody key={i + 1}>
@@ -115,7 +116,8 @@ const LeaderStoreProductTarget = () => {
                             })} 
                     </Table>
                    
-                    {editTarget.length !== 0 ? <EditLeaderTarget handleEditClose={handleEditClose}
+                    {editTarget !== null && editTarget !== undefined && 
+                        editTarget.length !== 0 ? <EditLeaderTarget handleEditClose={handleEditClose}
                      modal={editModal}
                      editData = {editTarget}
                          /> : ""}

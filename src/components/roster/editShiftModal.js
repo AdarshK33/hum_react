@@ -468,14 +468,15 @@ const EditShiftModal = (props) => {
                           value={contractType}>
 
 
-                          {shiftContractNames.map((e, i) => {
-                            return (
+                          {shiftContractNames !== null &&
+                            shiftContractNames.map((e, i) => {
+                              return (
 
-                              <option key={e.typeId} value={e.contractType}>
-                                {e.contractType}
-                              </option>
-                            );
-                          })}
+                                <option key={e.typeId} value={e.contractType}>
+                                  {e.contractType}
+                                </option>
+                              );
+                            })}
                         </select>
                       </div>
                     </div>

@@ -83,7 +83,8 @@ const StoreProductTarget = () => {
                             </tr>
                         </thead>
 
-                        {storeProductList.length > 0 &&
+                        {storeProductList !== null && storeProductList !== undefined &&
+                             storeProductList.length > 0 &&
                             storeProductList.map((item, i) => {
                                 return (
                                    <tbody key={i + 1}>
@@ -115,7 +116,8 @@ const StoreProductTarget = () => {
                             })} 
                     </Table>
                    
-                    {editTarget.length !== 0 ? <EditTarget handleEditClose={handleEditClose}
+                    {editTarget !== null && editTarget !== undefined && 
+                        editTarget.length !== 0 ? <EditTarget handleEditClose={handleEditClose}
                      modal={editModal}
                      editData = {editTarget}
                          /> : ""}

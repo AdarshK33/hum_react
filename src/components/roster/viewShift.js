@@ -49,13 +49,12 @@ function ViewShift() {
                   buttonText="Export excel" />
               </div>
               <CreateShiftModal handleClose={handleClose} modal={modal} />
-              <div className="table-responsive">
+              <div className="table-responsive tableFixHead">
 
                 <table id="table-to-xls" className="table table-hover">
                   <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                     <tr>
-                      <th>No</th>
-
+                      <th>S. No</th>
                       <th>Shift Timings</th>
                       <th>Break Time</th>
                       <th>Working Hours</th>
@@ -63,7 +62,6 @@ function ViewShift() {
                       <th>Shift Type</th>
                       <th>Status</th>
                       <th>Edit</th>
-
                     </tr>
                   </thead>
 

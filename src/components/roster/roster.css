@@ -34,3 +34,13 @@ small.form-text.text-muted{
 .note{
     font-size: 13px;
 }
+
+thead th {
+    position: sticky;
+    top: 0; 
+}
+
+.tableFixHead {
+   overflow: auto;
+   height: 500px;
+ }

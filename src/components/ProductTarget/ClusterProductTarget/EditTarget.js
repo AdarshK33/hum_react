@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Container, Row, Button, Form, Modal, Col } from 'react-bootstrap'
-import { useHistory } from "react-router-dom";
-import DatePicker from 'react-datepicker'
+import { Container, Row, Button, Form, Modal } from 'react-bootstrap'
+// import { useHistory } from "react-router-dom";
+// import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer,  } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -26,7 +26,7 @@ const EditTarget = (props) => {
     
 
     const { cosCentreList,viewCostCentre } = useContext(DashboardContext);
-    const { clusterList,viewSingleClusterTarget, viewClusterList,editTarget } = useContext(ClusterProductContext);
+    const { clusterList, viewClusterList,editTarget } = useContext(ClusterProductContext);
 
 
       useEffect(() => {

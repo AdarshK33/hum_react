@@ -1,6 +1,5 @@
 import React, { createContext, useReducer } from "react";
 import { client, setDefaultHeader } from "../utils/axios";
-import axios from 'axios';
 import AppReducer from "../reducers/AppReducer";
 import { toast } from "react-toastify";
 
