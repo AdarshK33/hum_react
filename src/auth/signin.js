@@ -15,17 +15,17 @@ const Signin = ({ location, history }) => {
   const { accessToken, state } = useContext(AppContext);
 
   useEffect(() => {
-      getAccessToken()
+    getAccessToken()
   }, []);
 
   useEffect(() => {
-      console.log('state inside appstate changed', state)
-      checkIsloggedIn(state)
+    console.log('state inside appstate changed', state)
+    checkIsloggedIn(state)
   }, [state]);
 
   const checkIsloggedIn = (state) => {
-    const {app: {isLoggedin} } = state
-    if(isLoggedin) history.push('/')
+    const { app: { isLoggedin } } = state
+    if (isLoggedin) history.push('/dashboard/default')
   }
 
   const getAccessToken = () => {
@@ -33,7 +33,7 @@ const Signin = ({ location, history }) => {
     const [, code] = search.split("?code=");
 
     accessToken(code)
-   console.log(accessToken);
+    console.log(accessToken);
   }
 
   return (
