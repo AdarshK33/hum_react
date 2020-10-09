@@ -8,7 +8,8 @@ import EditShiftModal from "./editShiftModal";
 import Pagination from 'react-js-pagination';
 import { Button } from 'react-bootstrap'
 import { RosterContext } from "../../context/RosterState";
-import { Edit2 } from 'react-feather'
+import { Edit2 } from 'react-feather';
+import Loader from "../common/loader";
 
 function ViewShift() {
   useEffect(() => {
@@ -34,6 +35,7 @@ function ViewShift() {
   //pagenation data
 
   const [currentPage, setCurrentPage] = useState(1);
+  // const [currentRecords, setCurrentRecords] = useState(null)
   const recordPerPage = 10;
   const totalRecords = shiftList.length;
   const pageRange = 10;
@@ -88,7 +90,8 @@ function ViewShift() {
                   </thead>
 
 
-                  {currentRecords !== undefined && currentRecords !== null &&
+                  {currentRecords? 
+                  // currentRecords !== undefined && currentRecords !== null &&
                     currentRecords.map((e, i) => {
                       return (
                         <tbody key={i + 1}>
@@ -124,7 +127,7 @@ function ViewShift() {
 
                         </tbody>
                       );
-                    })}
+                    }) : "Loading"}
                 </table>
                 <EditShiftModal handleEditClose={handleEditClose}
                   shiftType={shiftType}
