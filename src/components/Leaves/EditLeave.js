@@ -297,9 +297,9 @@ console.log("d3",moment(d3).format("YYYY-MM-DD"))
                     </Modal.Header>
                     <Modal.Body>
                         <Form onSubmit={onSubmit}>
-                            <Form.Group as={Row} style={{display:'none'}}>
-                                <Form.Control type="text" value={ltId} onChange={(e) => setltId(e)} />
-                            </Form.Group>
+                            {/* <Form.Group as={Row} style={{display:'none'}}>
+                                <input type="text" value={ltId} onChange={(e) => setltId(e)} />
+                            </Form.Group> */}
                             <Row>
                                 <div className="col-sm-12">
                                     <Form.Group>
