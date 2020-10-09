@@ -29,11 +29,11 @@ export const LeaveProvider = ({ children }) => {
   
   //View Leave
 
-  const viewList = () => {
+  const viewList = (empId1) => {
     client.get('leave_transaction/view')
       .then((response) => {
         state.leaveList =  response.data.data
-        getLeave(user.employeeId);
+        getLeave(empId1);
         console.log("=====GET API respone=====", state.leaveList)
         return (
           dispatch({ type: 'FETCH_LEAVE_LIST', payload: state.leaveList })
@@ -46,8 +46,9 @@ export const LeaveProvider = ({ children }) => {
 
   // View Leave Data
   const viewLeaveData = (empId1) => {
-    // let empId1 = 'DSI000035'
-    client.get('leave_transaction/view/' + user.employeeId)
+    console.log("data list for leave", empId1)
+    if(empId1 !== null && empId1 !== undefined){
+    client.get('leave_transaction/view/' + empId1)
       .then((response) => {
         state.leaveDataList = response.data.data
         console.log("=====GET Leave Data API respone=====", state.leaveDataList)
@@ -56,25 +57,30 @@ export const LeaveProvider = ({ children }) => {
       .catch((error) => {
         console.log(error)
       })
+    }
   }
   // View Leave Data
   const viewEmpLeaveData = (empId1) => {
-    client.get('leave_transaction/view/' + user.employeeId)
+    if(empId1 !== null && empId1 !== undefined){
+    client.get('leave_transaction/view/' + empId1)
       .then((response) => {
         state.leaveEmpList = response.data.data.leaveTransactions
-        console.log("=====GET Leave Data API respone=====", state.leaveEmpList)
+        console.log("=====GET Emp Leave Data API respone=====", state.leaveEmpList)
         return dispatch({ type: 'FETCH_EMP_LEAVE_DATA_LIST', payload: state.leaveEmpList })
       })
       .catch((error) => {
         console.log(error)
       })
+    }
   }
 
   // Get Leave Type
 
   const getLeave = (empId1) => {
     // let empId1 = 'DSI000035'
-    client.get('leave_type/view/' + user.employeeId)
+    console.log("emp id in context", empId1)
+    if(empId1 !== null && empId1 !== undefined){
+    client.get('leave_type/view/' + empId1)
   
       .then((response) => {
         state.leaveType = response.data.data
@@ -84,6 +90,7 @@ export const LeaveProvider = ({ children }) => {
       .catch((error) => {
         console.log(error)
       })
+    }
   }
 // get leave for report
   const getLeaveReport = () => {
@@ -101,6 +108,7 @@ export const LeaveProvider = ({ children }) => {
 
   // Add new Leave 
   const addPopup = (newPopup) => {
+    
     console.log("newPopup data", newPopup)
     return client.post('leave_transaction/create', newPopup)
       .then((response) => {
@@ -120,15 +128,15 @@ export const LeaveProvider = ({ children }) => {
 
 
   const addLeave = (newLeave) => {
-  /*   if (newLeave) { */
+
       console.log("++++create api response+++++", newLeave)
       return client.post('leave_transaction/create',newLeave)
         .then((response) => {
           state.message = response.data.message;
           toast.info(state.message)
           viewList();
-          viewLeaveData();
-          getLeave(user.employeeId)
+          viewLeaveData(newLeave.empId);
+          getLeave(newLeave.empId)
           console.log("new create list response===>", response.data.data)
           console.log("new create list message===>", state.message)
           return  dispatch({ type: 'ADD_NEW_LEAVE', payload: state.leaveList })
@@ -141,15 +149,15 @@ export const LeaveProvider = ({ children }) => {
   }
 
   const addEmpLeave = (newLeave) => {
-    /*   if (newLeave) { */
+    console.log("newLeave emp data++++", newLeave.empId)
         console.log("++++create api response+++++", newLeave)
         return client.post('leave_transaction/create',newLeave)
           .then((response) => {
             state.message = response.data.message;
             toast.info(state.message)
-            viewEmpLeaveData()
-            viewLeaveData();
-            getLeave(user.employeeId)
+            viewEmpLeaveData(newLeave.empId)
+            viewLeaveData(newLeave.empId);
+            getLeave(newLeave.empId)
             console.log("new create list response===>", response.data.data)
             console.log("new create list message===>", state.message)
             return  dispatch({ type: 'ADD_EMP_NEW_LEAVE', payload: state.leaveEmpList })
@@ -189,8 +197,8 @@ export const LeaveProvider = ({ children }) => {
         state.message = response.data.message
         toast.info(state.message)
         viewList()
-        viewLeaveData();
-        getLeave(user.employeeId)
+        viewLeaveData(editLeave.empId);
+        getLeave(editLeave.empId)
         console.log("??????new edit list response????????", response.data.data)
         console.log("??????new edit list message????????", state.message)
         return  dispatch({ type: 'EDIT_LEAVE', payload: state.leaveList })
@@ -207,9 +215,9 @@ export const LeaveProvider = ({ children }) => {
       .then((response) => {
         state.message = response.data.message
         toast.info(state.message)
-        viewEmpLeaveData()
-        viewLeaveData();
-        getLeave(user.employeeId)
+        viewEmpLeaveData(editLeave.empId)
+        viewLeaveData(editLeave.empId);
+        getLeave(editLeave.empId)
         console.log("??????new edit list response????????", response.data.data)
         console.log("??????new edit list message????????", state.message)
         return  dispatch({ type: 'EDIT_EMP_LEAVE', payload: state.leaveEmpList })
@@ -223,13 +231,14 @@ export const LeaveProvider = ({ children }) => {
 
   // Delete Leave
 
-  const deleteList = (leaveId) => {
+  const deleteList = (leaveId, empId) => {
     console.log("delete id------", leaveId)
+    console.log("empId id------", empId)
       client.delete('leave_transaction/delete' + '?ltId=' + leaveId)
       .then((response) => {
         toast.info(response.data.message)
         viewList()
-        viewLeaveData();
+        viewLeaveData(empId);
         console.log("-----delete data-----", response)
         return  dispatch({ type: 'DELETE_LEAVE', payload: leaveId })
       })
@@ -238,14 +247,15 @@ export const LeaveProvider = ({ children }) => {
       })
      
     }
-    const deleteEmpList = (leaveId) => {
+    const deleteEmpList = (leaveId, empId) => {
       console.log("delete id------", leaveId)
+      console.log("empId id------", empId)
         client.delete('leave_transaction/delete' + '?ltId=' + leaveId)
         .then((response) => {
           toast.info(response.data.message)
           console.log("response message for delete", response.data.message)
-          viewEmpLeaveData()
-          viewLeaveData();
+          viewEmpLeaveData(empId)
+          viewLeaveData(empId);
           console.log("-----delete data-----", response)
           return  dispatch({ type: 'DELETE_EMP_LEAVE', payload: leaveId })
         })
@@ -310,7 +320,7 @@ const reportLeave = (reportData) => {
           if(response.data.data === null){
             toast.info(state.message)
           }
-          getLeave(user.employeeId)
+          getLeaveReport()
           console.log("new report list response===>", response.data.data)
           console.log("new report list message===>", state.message)
           return dispatch({ type: 'REPORT_LEAVE', payload: state.reportList })

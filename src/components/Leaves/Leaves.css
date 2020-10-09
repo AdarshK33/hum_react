@@ -61,3 +61,7 @@ h4.main-heading {
 .form-control{
     font-size: 0.8rem;
 }
+button.submitButton.btn.btn-primary {
+    background: #006EBB !important;
+    border-color: #006EBB !important;
+}

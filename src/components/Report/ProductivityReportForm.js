@@ -10,6 +10,7 @@ import "react-datepicker/dist/react-datepicker.css"; */
 import moment from 'moment'
 import ProductivityReportView from './ProductivityReportView'
 import { AppContext } from "../../context/AppState";
+import '../Leaves/Leaves.css'
 /* import Select from 'react-select'; */
 
 const ProductivityReportForm = () => {
@@ -241,7 +242,7 @@ const ProductivityReportForm = () => {
                         </div>
                     </Row>
                     } */}
-                    <Button type="submit">Submit</Button>
+                    <Button type="submit" className="submitButton">Submit</Button>
                 </Form>
                 <ProductivityReportView productivityList={productivityList} />
             </div>

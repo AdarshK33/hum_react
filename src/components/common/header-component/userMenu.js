@@ -18,14 +18,12 @@ const UserMenu = () => {
                     </div>
                 </div>
                 <ul className="profile-dropdown onhover-show-div p-20 profile-dropdown-hover">
-                    <li><a href="#javascript"><User />Edit Profile</a></li>
-                    <li><a href="#javascript"><Mail />Inbox</a></li>
-                    <li><a href="#javascript"><Lock />Lock Screen</a></li>
-                    <li><a href="#javascript"><Settings />Settings</a></li>
-                    <li><a href="#javascript"><LogOut /> Log out</a></li>
                     <li><a href="#javascript"><User />My Profile</a></li>
                     {user.loginType === '1' &&
-                        <li><a href="#javascript"><UserPlus />Admin</a></li>
+                        <Fragment>
+                            <li><a href="#javascript"><UserPlus />Admin</a></li>
+                            <li><a href="#javascript"><Users />My Team</a></li>
+                        </Fragment>
                     }
                     {user.loginType === '7' || user.loginType === '9' &&
                         <li><a href="#javascript"><Users />My Team</a></li>
@@ -33,6 +31,7 @@ const UserMenu = () => {
                     {/*  <li><a href="#javascript"><Settings />Settings</a></li> */}
                     {/* <li><a href="#javascript"><LogOut /> Log out</a></li> */}
                     <li><a href={loginUrl}><LogOut />Log In</a></li>
+                    <li><a href="#javascript"><LogOut /> Log out</a></li>
                 </ul>
             </li>
         </Fragment>

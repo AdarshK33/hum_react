@@ -58,12 +58,13 @@ const AdminLeaveEdit = (props) => {
     useEffect(() => {
         setEmpId(props.empId)
      },[props.empId])
-/* 
+
      useEffect(() => {
-        setName(props.firstName, props.lastName)
-     },[props.firstName, props.lastName]) */
+        getLeave(props.empId)
+    }, [props.empId]);
+   
     
-    console.log("emp in edit", empId)
+    console.log("emp in edit", props.empId)
 
     const fromDateHandler = (date) => {
 
@@ -79,7 +80,7 @@ const AdminLeaveEdit = (props) => {
              newData = 'Unplanned'
         }
         const newPopup = {
-            empId: user.employeeId,
+            empId: empId,
             fromDate: moment(value).format("YYYY-MM-DD"),
            /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
            leaveCategory: newData,
@@ -124,7 +125,7 @@ const AdminLeaveEdit = (props) => {
              newData = 'Unplanned'
         }
         const newPopup = {
-            empId: user.employeeId,
+            empId: empId,
             fromDate: moment(startDate).format("YYYY-MM-DD"),
             /* leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
             leaveCategory: newData,
@@ -151,7 +152,7 @@ const AdminLeaveEdit = (props) => {
         var d3 = d2.setDate(d2.getDate() + 179)
 
         const editPopupData = {
-            empId: user.employeeId,
+            empId: empId,
             fromDate: moment(value2).format("YYYY-MM-DD"),
             /* leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
             leaveCategory: 'Planned',
@@ -179,13 +180,6 @@ const AdminLeaveEdit = (props) => {
      let d2 = new Date(d1)
      let d3 = d2.setDate(d2.getDate() + 179)
 
-    //get api for leave type
-    // useEffect(() => {
-    //     getLeave();
-    // }, []);
-    useEffect(() => {
-        getLeave(user.employeeId)
-    }, [user.employeeId]);
 
     // create api
     const onSubmit = e => {
@@ -248,27 +242,13 @@ const AdminLeaveEdit = (props) => {
         setMax(false)
         setEndDate(new Date(props.toDate))
         setStartDate(new Date(props.fromDate))
-        setLeave(props.leaveCategory)
+        setLeave(props.leaveTypeId)
         setReason(props.reason)
         setStartMaternityDate(new Date(props.fromDate))
         setEditMsg(false)
 
     }
     const onCloseModal = () => {
-        const resetValue = {
-            empId: user.employeeId,
-            fromDate: '',
-            leaveCategory: '',
-            leaveTypeId: 0,
-            ltId: 0,
-            numberOfDays: 0,
-            reason: 'string',
-            status: 0,
-            toDate: '',
-            viewLeavePopup: 0,
-            year: '',
-            editMsg: false
-        }
         const setModal = props.handleEditClose;
         setModal()
         setDisable(true)
@@ -276,10 +256,10 @@ const AdminLeaveEdit = (props) => {
         setMax(false)
         setEndDate(new Date(props.toDate))
         setStartDate(new Date(props.fromDate))
-        setLeave(props.leaveCategory)
+        setLeave(props.leaveTypeId)
         setReason(props.reason)
         setStartMaternityDate(new Date(props.fromDate))
-        addPopup(resetValue)
+       /*  addPopup(resetValue) */
         setEditMsg(false)
     }
     return (
@@ -421,7 +401,7 @@ const AdminLeaveEdit = (props) => {
                                 </div>
                             </Row>
 
-                            <Button type="submit" /* className="submit-button" size="sm" */>Submit</Button>
+                            <Button type="submit" className="submitButton">Submit</Button>
                         </Form>
 
                     </Modal.Body>

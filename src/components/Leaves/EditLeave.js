@@ -252,7 +252,7 @@ console.log("d3",moment(d3).format("YYYY-MM-DD"))
 
     }
     const onCloseModal = () => {
-        const resetValue = {
+       /*  const resetValue = {
             empId: user.employeeId,
             fromDate: '',
             leaveCategory: '',
@@ -265,7 +265,7 @@ console.log("d3",moment(d3).format("YYYY-MM-DD"))
             viewLeavePopup: 0,
             year: '',
             editMsg: false
-        }
+        } */
         const setModal = props.handleEditClose;
         setModal()
         setDisable(true)
@@ -277,7 +277,7 @@ console.log("d3",moment(d3).format("YYYY-MM-DD"))
         setReason(props.reason)
         setStartMaternityDate(new Date(props.fromDate))
         setEndMaternityDate(new Date(props.toDate))
-        addPopup(resetValue)
+       /*  addPopup(resetValue) */
         setltId(null)
         setEditMsg(false)
     }
@@ -410,7 +410,7 @@ console.log("d3",moment(d3).format("YYYY-MM-DD"))
                                 </div>
                             </Row>
 
-                            <Button type="submit" /* className="submit-button" size="sm" */>Submit</Button>
+                            <Button type="submit" className="submitButton">Submit</Button>
                            
                         </Form>
 
