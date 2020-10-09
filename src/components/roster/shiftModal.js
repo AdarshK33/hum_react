@@ -192,11 +192,12 @@ const ShiftModal = (props) => {
                           value={selectedWeeks} onChange={(e) => setWeekDayHandler(e)}>
                           <option value="" >Select Week</option>
 
-                          {dayList.map((item, i) => {
-                            return (
-                              <option key={item.date} selected={item.selected} value={item.date}>{item.day}{item.selected}</option>
-                            )
-                          })
+                          {dayList !== null &&
+                            dayList.map((item, i) => {
+                              return (
+                                <option key={item.date} selected={item.selected} value={item.date}>{item.day}{item.selected}</option>
+                              )
+                            })
                           }
                         </select>
                       </div>

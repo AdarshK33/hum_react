@@ -5,6 +5,7 @@ import Breadcrumb from "../common/breadcrumb";
 import "./roster.css";
 import CreateShiftModal from "./createShiftModal";
 import EditShiftModal from "./editShiftModal";
+import Pagination from 'react-js-pagination';
 import { Button } from 'react-bootstrap'
 import { RosterContext } from "../../context/RosterState";
 import { Edit2 } from 'react-feather'
@@ -29,49 +30,28 @@ function ViewShift() {
   const [breakEndTime, setBreakEndTime] = useState(new Date());
   const [workingHours, setWorkingHour] = useState();
   const [status, setStatus] = useState('')
-
-  // variables
   const { shiftList, editShift, viewShift, viewShiftTypes, viewContractTypes, singleShiftList } = useContext(RosterContext);
-  //console.log(shiftList, "in viewShift");
+  //pagenation data
 
-
-  //=====================Pagination ===================
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage] = useState(10);
-  const indexOfLastPost = currentPage * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentShiftList = shiftList.slice(indexOfFirstPost, indexOfLastPost);
-  const paginate = pageNumber => setCurrentPage(pageNumber);
+  const recordPerPage = 10;
+  const totalRecords = shiftList.length;
+  const pageRange = 10;
 
-  useEffect(() =>{
-    const indexOfLastPost = currentPage * postsPerPage;
-    const indexOfFirstPost = indexOfLastPost - postsPerPage;
-    const currentShiftList = shiftList.slice(indexOfFirstPost, indexOfLastPost);
-  }, [currentPage])
+  const indexOfLastRecord = currentPage * recordPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+  const currentRecords = shiftList.slice(indexOfFirstRecord, indexOfLastRecord);
 
-  const Pagination = ({ postsPerPage, totalPosts, paginate }) => {
-    const pageNumbers = [];
-  
-    for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
-      pageNumbers.push(i);
-    }
-  
-    return (
-      <nav>
-        <ul className='pagination'>
-          {pageNumbers.map(number => (
-            <li key={number} className='page-item'>
-              <a onClick={() => paginate(number)} className='page-link'>
-                {number}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    );
-  };
+  const handlePageChange = pageNumber => {
+    setCurrentPage(pageNumber);
+  }
 
-  //=====================Pagination ===================
+
+  //pagenation data
+
+
+
+
 
 
   return (
@@ -91,7 +71,7 @@ function ViewShift() {
                   buttonText="Export excel" />
               </div>
               <CreateShiftModal handleClose={handleClose} modal={modal} />
-              <div className="table-responsive tableFixHead">
+              <div className="table-responsive">
 
                 <table id="table-to-xls" className="table table-hover">
                   <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
@@ -108,12 +88,12 @@ function ViewShift() {
                   </thead>
 
 
-                  {currentShiftList !== null &&
-                    currentShiftList.map((e, i) => {
+                  {currentRecords !== undefined && currentRecords !== null &&
+                    currentRecords.map((e, i) => {
                       return (
                         <tbody key={i + 1}>
                           <tr>
-                            <td>{i + 1 + indexOfFirstPost}</td>
+                            <td>{i + 1 + indexOfFirstRecord}</td>
 
                             <td> {moment(e.startTime, ["h:mm A"]).format("HH:mm")}-{moment(e.endTime, ["h:mm A"]).format("HH:mm")}</td>
                             <td>{moment(e.breakStartTime, ["h:mm A"]).format("HH:mm")}-{moment(e.breakEndTime, ["h:mm A"]).format("HH:mm")}</td>
@@ -146,8 +126,6 @@ function ViewShift() {
                       );
                     })}
                 </table>
-                
-
                 <EditShiftModal handleEditClose={handleEditClose}
                   shiftType={shiftType}
                   contractType={contractType}
@@ -160,15 +138,25 @@ function ViewShift() {
                   shiftData={singleShiftList}
                   modal={editModal} />
               </div>
+
+              <div>
+                {shiftList !== null && shiftList.length > 0 &&
+                  <Pagination
+                    itemClass="page-item"
+                    linkClass="page-link"
+                    activePage={currentPage}
+                    itemsCountPerPage={recordPerPage}
+                    totalItemsCount={totalRecords}
+                    pageRangeDisplayed={pageRange}
+                    onChange={handlePageChange}
+                  />
+                }
+              </div>
+
+
+
+
             </div>
-            <div className="pagination">
-                 <Pagination
-                    postsPerPage={postsPerPage}
-                    totalPosts={shiftList.length}
-                    paginate={paginate}
-                />
-            </div>
-            
           </div>
         </div>
 

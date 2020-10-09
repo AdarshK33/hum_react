@@ -34,7 +34,14 @@ export const ClusterProvider = ({ children }) => {
   }
 
   function updateCluster(updateCluter) {
-    return client.put("cluster/update", updateCluter)
+    return client.put("cluster/update", updateCluter).then(function (respone) {
+      console.log("api response===", respone.data.message);
+      toast.info(respone.data.message);
+      viewCluster()
+    })
+      .catch((error) => {
+        alert(" In error catch ", error);
+      });
   }
 
   function viewCluster() {
@@ -42,8 +49,8 @@ export const ClusterProvider = ({ children }) => {
     client.get('cluster/view').then(function (response) {
       //  console.log("data==>" + JSON.stringify(response));
       state.clusterList = response.data.data;
+      console.log("====CLUSTER LIST====")
        console.log(JSON.stringify(state.clusterList))
-       
 
       return dispatch({ type: 'FETCH_ClUSTER_LIST', payload: state.clusterList });
     })

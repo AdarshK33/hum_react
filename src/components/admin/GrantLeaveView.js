@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import GrantLeaveAdd from './GrantLeaveAdd';
+import Pagination from 'react-js-pagination'
 import { AdminContext } from "../../context/AdminState";
 const GrantLeaveView = () => {
 
@@ -10,13 +11,22 @@ const GrantLeaveView = () => {
   const [modal, setModal] = useState(false);
   const handleClose = () => setModal(false)
   const handleShow = () => setModal(true)
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordPerPage = 10;
+  const totalRecords = grantLeaveView.length;
+  const pageRange = 10;
 
+  const indexOfLastRecord = currentPage * recordPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+  const currentRecords = grantLeaveView.slice(indexOfFirstRecord, indexOfLastRecord);
 
   useEffect(() => {
     viewGrantLeave()
   }, [])
 
-
+  const handlePageChange = pageNumber => {
+    setCurrentPage(pageNumber);
+  }
   return (
     <Fragment>
       <Breadcrumb title="Grant Leave " parent=" Grant Leave " />
@@ -40,12 +50,12 @@ const GrantLeaveView = () => {
               <th scope="col">Year</th>
             </tr>
           </thead>
-          {grantLeaveView !== null &&
-            grantLeaveView.map((item, i) => {
+          {currentRecords !== undefined && currentRecords !== null &&
+            currentRecords.map((item, i) => {
               return (
                 <tbody key={i + 1}>
                   <tr>
-                    <td>{i + 1}</td>
+                    <td>{i + 1 + indexOfFirstRecord}</td>
                     <td>{item.empId}</td>
                     <td>{item.empName}</td>
                     <td>{item.costCentre}</td>
@@ -57,6 +67,20 @@ const GrantLeaveView = () => {
               )
             })}
         </table>
+        <div>
+          {grantLeaveView !== null && grantLeaveView.length > 0 &&
+            <Pagination
+              itemClass="page-item"
+              linkClass="page-link"
+              activePage={currentPage}
+              itemsCountPerPage={recordPerPage}
+              totalItemsCount={totalRecords}
+              pageRangeDisplayed={pageRange}
+              onChange={handlePageChange}
+            />
+          }
+        </div>
+
       </div>
     </Fragment>
   )

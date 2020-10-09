@@ -4,8 +4,8 @@ import moment from 'moment';
 import "react-datepicker/dist/react-datepicker.css";
 import { Modal } from 'react-bootstrap'
 import { RosterContext } from "../../context/RosterState";
-import { AppContext } from "../../context/AppState";
 import { toast } from "react-toastify";
+import { AppContext } from "../../context/AppState";
 import "react-toastify/dist/ReactToastify.css";
 
 const EditShiftModal = (props) => {
@@ -34,12 +34,11 @@ const EditShiftModal = (props) => {
   const [warnMsg, setWrnMsg] = useState(false);
   const [errormsg, setErrorMsg] = useState(false);
   const [status, setStatus] = useState(0)
-  const [breakNumber, setBreakNumber] = useState()
   const [costCenterName, setCostCenterName] = useState('');
+  const [breakNumber, setBreakNumber] = useState()
 
-  const { updateShift, costCenter, viewShift, singleShiftList, viewShiftTypes, viewContractTypes, costCenterList, shiftContractNames } = useContext(RosterContext);
-  const { user, getUserInfo } = useContext(AppContext);
-
+  const { updateShift, viewShift, singleShiftList, viewShiftTypes, costCenter, viewContractTypes, shiftContractNames } = useContext(RosterContext);
+  const { user } = useContext(AppContext);
   const setClear = () => {
     setShiftType('')
     setStartTime('')
@@ -60,19 +59,20 @@ const EditShiftModal = (props) => {
     setWorkingHour(singleShiftList.workingHours)
     setEndBreakTIme(singleShiftList.breakEndTime)
     setStartBreakTime(singleShiftList.breakStartTime)
-    setCostCenterName(props.shiftData.storeId)
     setStatus(singleShiftList.status)
-  }, [props.shiftData.storeId])
+    setCostCenterName(props.shiftData.storeId)
+
+    //console.log("1---->"+getSingleCluster.employeeIds);
+    // console.log("2---->"+JSON.stringify(clusterLeaderNames));
+  }, [props])
 
 
   useEffect(() => {
-    getUserInfo()
     costCenter()
     if (user.loginType !== "1" && user.loginType !== "9") {
       setCostCenterName(user.costCentre)
     }
   }, [user.costCentre, user.loginType]);
-
 
 
   const calcTime = () => {
@@ -81,7 +81,6 @@ const EditShiftModal = (props) => {
 
     var ctime = stime.replace(/:/g, ".");
     var dtime = etime.replace(/:/g, ".");
-    //  alert(ctime+ " "+dtime);
     if (stime === etime || dtime < ctime) {
       setErrorMsg("Invalid input");
       setShiftButton(true)
@@ -162,6 +161,11 @@ const EditShiftModal = (props) => {
     // const workingHours = moment.utc(moment(etime, "HH:mm:ss").diff(moment(stime, "HH:mm:ss"))).format("HH:mm:ss");
     // alert(workingHours);
 
+
+
+
+
+
     var result = parseInt(workingHours);
     if (result <= 5) {
       e.preventDefault();
@@ -180,7 +184,7 @@ const EditShiftModal = (props) => {
       setSuccessMsg(true);
       const result = updateShift(newShift)
         .then((result) => {
-          //   console.log("api response===", result.data.message);
+          console.log("api response===", result.data.message);
 
           toast.info(result.data.message);
           setTimeout(() => {
@@ -191,7 +195,7 @@ const EditShiftModal = (props) => {
         .catch((error) => {
           alert(" In error catch ", error);
         })
-      //   console.log(result, "in competent");
+      console.log(result, "in competent");
     }
     else {
       //==========
@@ -228,10 +232,12 @@ const EditShiftModal = (props) => {
           .catch((error) => {
             alert(" In error catch ", error);
           })
+        console.log(result, "in competent");
 
+        // ======================
       }
       else {
-        //  console.log("inside break end time")
+        console.log("inside break end time")
         e.preventDefault();
         const newShift = {
           startTime: moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
@@ -245,7 +251,7 @@ const EditShiftModal = (props) => {
           breakEndTime: moment(breakEndTime, ["h:mm A"]).format("HH:mm:ss"),
           status: status
         }
-        alert(JSON.stringify(newShift));
+        // alert(JSON.stringify(newShift));
         setSuccessMsg(true);
         const result = updateShift(newShift)
           .then((result) => {
@@ -348,6 +354,11 @@ const EditShiftModal = (props) => {
 
                     </div>
                   }
+
+
+
+
+
 
                   {/* {showBreakDuration2 && */}
                   <div className="row">
@@ -468,45 +479,19 @@ const EditShiftModal = (props) => {
                           value={contractType}>
 
 
-                          {shiftContractNames !== null &&
-                            shiftContractNames.map((e, i) => {
-                              return (
+                          {shiftContractNames.map((e, i) => {
+                            return (
 
-                                <option key={e.typeId} value={e.contractType}>
-                                  {e.contractType}
-                                </option>
-                              );
-                            })}
+                              <option key={e.typeId} value={e.contractType}>
+                                {e.contractType}
+                              </option>
+                            );
+                          })}
                         </select>
                       </div>
                     </div>
                   </div>
 
-                  {/* {(() => {
-                    if (user.loginType === "1" || user.loginType === "9") {
-                      return (
-                        <div className="row">
-                          <div className="col-sm-12">
-                            <div className="form-group">
-                              <label htmlFor="exampleFormControlInput1">Select cost center</label>
-                              <select
-                                className="form-control"
-                                //   onChange={(e) => setCostCenterName(e.target.value)}
-                                onChange={(e) => callCostCenter(e.target.value)}
-                              >
-                                <option value={costCenterName}>{costCenterName}</option>
-                                {costCenterList.map((e, i) => {
-                                  return (
-                                    <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
-                                })}
-
-                              </select>
-                            </div>
-                          </div>
-                        </div>
-                      )
-                    }
-                  })()} */}
 
                   <div className="row">
                     <div className="col-sm-12">
