@@ -36,7 +36,7 @@ export const RosterProvider = ({ children }) => {
 
   // VIEWSHIFT
 
-  function viewShift() {
+  const viewShift = () => {
 
     client.get('shift/view').then(function (response) {
       // console.log("data==>" + JSON.stringify(response));
@@ -94,10 +94,15 @@ export const RosterProvider = ({ children }) => {
       });
   }
 
-
-  //UPDATE
   function updateShift(newEditShift) {
-    return client.put("shift/update", newEditShift)
+    return client.put("shift/update", newEditShift).then(function (respone) {
+      console.log("api response===", respone.data.message);
+      toast.info(respone.data.message);
+      viewShift()
+    })
+      .catch((error) => {
+        alert(" In error catch ", error);
+      });
   }
 
   // ADD SHIFT

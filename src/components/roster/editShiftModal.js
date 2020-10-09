@@ -182,19 +182,8 @@ const EditShiftModal = (props) => {
         status: status
       }
       setSuccessMsg(true);
-      const result = updateShift(newShift)
-        .then((result) => {
-          console.log("api response===", result.data.message);
-
-          toast.info(result.data.message);
-          setTimeout(() => {
-            callTimer();
-          }, 1000);
-          viewShift();
-        })
-        .catch((error) => {
-          alert(" In error catch ", error);
-        })
+      updateShift(newShift)
+      props.handleEditClose();
       console.log(result, "in competent");
     }
     else {
@@ -216,25 +205,9 @@ const EditShiftModal = (props) => {
         }
         // alert(JSON.stringify(newShift));
         setSuccessMsg(true);
-        const result = updateShift(newShift)
-          .then((result) => {
-            //console.log("api response===", result.data.message);
-            setInvalidText(false)
-            toast.info(result.data.message);
+        updateShift(newShift)
+        props.handleEditClose();
 
-            setTimeout(() => {
-              callTimer();
-            }, 1000);
-            viewShift();
-
-          })
-
-          .catch((error) => {
-            alert(" In error catch ", error);
-          })
-        console.log(result, "in competent");
-
-        // ======================
       }
       else {
         console.log("inside break end time")
@@ -253,22 +226,9 @@ const EditShiftModal = (props) => {
         }
         // alert(JSON.stringify(newShift));
         setSuccessMsg(true);
-        const result = updateShift(newShift)
-          .then((result) => {
-            //console.log("api response===", result.data.message);
+        updateShift(newShift);
+        props.handleEditClose();
 
-            toast.info(result.data.message);
-
-            setTimeout(() => {
-              callTimer();
-            }, 1000);
-            viewShift();
-
-          })
-
-          .catch((error) => {
-            alert(" In error catch ", error);
-          })
         console.log(result, "in competent");
       }
     }
@@ -375,6 +335,7 @@ const EditShiftModal = (props) => {
                                   // selected={breakStartTime}
                                   onChange={date => setStartBreakTime(date)}
                                   showTimeSelect
+                                  required
                                   showTimeSelectOnly
                                   timeFormat="HH:mm"
                                   timeIntervals={30}
@@ -511,8 +472,7 @@ const EditShiftModal = (props) => {
                   </div>
                   <button className="myclass mb-2 mr-2" type="submit" disabled={shiftButton} value="Submit">Save</button>
 
-                  <button className="myclass mb-2 mr-2" onClick={props.handleEditClose}>Close
-                  </button>
+
 
                 </form>
                 <h5>{successMsg.length !== 0 && <div className="text-success">{successMsg}</div>}</h5>
