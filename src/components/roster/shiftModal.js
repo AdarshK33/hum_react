@@ -153,7 +153,7 @@ const ShiftModal = (props) => {
                   </div>
                 </div>
                 <div className="note text-primary text-center py-1">
-                  <button type="button" className="btn btn-square btn-primary btn-cm pl-5 pr-5"
+                  <button type="button" className="myclass mb-2 mr-2"
                     onClick={submitAssignShift}
                   >Assign</button>
                 </div>
@@ -203,13 +203,8 @@ const ShiftModal = (props) => {
                       </div>
                     </div>
                   </div>
-
-
-
-
-
                   <div className="justify-content-center d-flex">
-                    <Button className="btn-primary btn-cm pl-5 pr-5" size="sm" type="submit">
+                    <Button className="myclass mb-2 mr-2" size="sm" type="submit">
                       Assign</Button>
                   </div>
                   <br />

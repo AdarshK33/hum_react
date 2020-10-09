@@ -2,7 +2,7 @@ import React, { useEffect, Fragment, useContext, useState } from 'react'
 import Breadcrumb from "../common/breadcrumb";
 import moment from 'moment';
 import "./salary.css";
-import { Form, Table, Row, Button} from 'react-bootstrap'
+import { Form, Table, Row, Button } from 'react-bootstrap'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { ClusterContext } from "../../context/ClusterState";
 import { DashboardContext } from "../../context/DashboardState";
@@ -15,14 +15,14 @@ import '../AdminLeave/AdminLeaves.css'
 
 function ViewShift() {
 
-  useEffect(()=>{
+  useEffect(() => {
     viewCostCentre()
   }, [])
   const [shiftButton] = useState(false);
   const [getM, setGetM] = useState();
 
-  const { cosCentreList,viewCostCentre } = useContext(DashboardContext);
-  const { viewSalary, salaryList } = useContext(ClusterContext); 
+  const { cosCentreList, viewCostCentre } = useContext(DashboardContext);
+  const { viewSalary, salaryList } = useContext(ClusterContext);
 
   const [editModal, setEditModal] = useState(false)
   const [employeeId, setEmployeeId] = useState()
@@ -51,14 +51,14 @@ function ViewShift() {
   const totalRecords = salaryList !== null && salaryList.length;
   const pageRange = 10;
 
- const indexOfLastRecord = currentPage * recordPerPage;
- const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
- const currentRecords = salaryList !== null ? salaryList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+  const indexOfLastRecord = currentPage * recordPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+  const currentRecords = salaryList !== null ? salaryList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
- const handlePageChange = pageNumber => {
-  setCurrentPage(pageNumber);
- }
- /*-----------------Pagination------------------*/
+  const handlePageChange = pageNumber => {
+    setCurrentPage(pageNumber);
+  }
+  /*-----------------Pagination------------------*/
 
 
   const onSubmit = e => {
@@ -73,28 +73,28 @@ function ViewShift() {
     <Fragment>
       <Breadcrumb title="Salary" parent="salary" />
       <div className="container-fluid">
-        <Form  onSubmit={onSubmit}>
+        <Form onSubmit={onSubmit}>
           <Row>
             <div className="col-sm-4">
               <Form.Group>
-                  <Form.Label>Select Month and Year</Form.Label>  
-                    <input type="month" style={{ fontSize: "0.8rem" }} className="form-control digit" min="2020-08"
-                    placeholder="Number Of Days"
-                    required onChange={(e) => setGetM(e.target.value)} value={getM} />
+                <Form.Label>Select Month and Year</Form.Label>
+                <input type="month" style={{ fontSize: "0.8rem" }} className="form-control digit" min="2020-08"
+                  placeholder="Number Of Days"
+                  required onChange={(e) => setGetM(e.target.value)} value={getM} />
               </Form.Group>
             </div>
-           
+
             <div className="col-sm-4">
               <Form.Group>
                 <Form.Label>Cost Center</Form.Label>
-                <Form.Control type="text" disabled value={user.costCentre}  />
+                <Form.Control type="text" disabled value={user.costCentre} />
               </Form.Group>
             </div>
           </Row>
 
-              <Button type="submit" disabled={shiftButton} value="Submit">Submit</Button>
+          <button type="submit" className="myclass mb-2 mr-2" disabled={shiftButton} value="Submit">Submit</button>
 
-            
+
         </Form>
 
         <Row style={{ marginTop: '2rem' }}>
@@ -102,7 +102,7 @@ function ViewShift() {
             <div className="card" style={{ overflowX: "auto" }}>
               <div className="title_bar" >
                 <ReactHTMLTableToExcel
-                 className="btn btn-light mr-2"
+                  className="btn btn-light mr-2"
                   table="table-to-xls1"
                   filename="salaryFile"
                   sheet="Sheet"
@@ -128,44 +128,44 @@ function ViewShift() {
                     </tr>
                   </thead>
 
-                  {currentRecords !== null && currentRecords.length > 0 && 
-                  currentRecords.map((item, i) => {
-                    return (
-                      <tbody key={i + 1}>
-                        <tr>
-                          <td>{i + 1 + indexOfFirstRecord}</td>
+                  {currentRecords !== null && currentRecords.length > 0 &&
+                    currentRecords.map((item, i) => {
+                      return (
+                        <tbody key={i + 1}>
+                          <tr>
+                            <td>{i + 1 + indexOfFirstRecord}</td>
 
-                          <td>{item.employeeId}</td>
-                          <td>{item.firstName} {item.lastName}</td>
-                          <td>{item.numberOfHours}</td>
+                            <td>{item.employeeId}</td>
+                            <td>{item.firstName} {item.lastName}</td>
+                            <td>{item.numberOfHours}</td>
 
-                          <td>{item.lop}</td>
-                          <td>{item.contractType}</td>
-                          <td>{item.extraHours}</td>
-                          <td>{item.totalHours}</td>
-                          <td>{item.statusDesc}</td>
-                          <td>{item.statusDesc === 'Pending' ? 
-                            <Edit2 onClick={() => {
-                            setEditModal(true); setEmployeeId(item.employeeId);
-                            setFirstName(item.firstName); setLastName(item.lastName); setNumberOfHours(item.numberOfHours)
-                            setLop(item.lop); setContractType(item.contractType); setExtraHours(item.extraHours);
-                            setReason(item.reason); setMonth(item.month); setSalaryId(item.salaryId);
-                            setStatus(item.status); setStatusDesc(item.statusDesc);
-                            setTotalHours(item.totalHours); setYear(item.year);
-                            setadditionalHours(item.additionalHours);
-                          }} /> : 
-                          <Edit2 disabled style={{color:'lightgrey'}} />}
-                          </td>
+                            <td>{item.lop}</td>
+                            <td>{item.contractType}</td>
+                            <td>{item.extraHours}</td>
+                            <td>{item.totalHours}</td>
+                            <td>{item.statusDesc}</td>
+                            <td>{item.statusDesc === 'Pending' ?
+                              <Edit2 onClick={() => {
+                                setEditModal(true); setEmployeeId(item.employeeId);
+                                setFirstName(item.firstName); setLastName(item.lastName); setNumberOfHours(item.numberOfHours)
+                                setLop(item.lop); setContractType(item.contractType); setExtraHours(item.extraHours);
+                                setReason(item.reason); setMonth(item.month); setSalaryId(item.salaryId);
+                                setStatus(item.status); setStatusDesc(item.statusDesc);
+                                setTotalHours(item.totalHours); setYear(item.year);
+                                setadditionalHours(item.additionalHours);
+                              }} /> :
+                              <Edit2 disabled style={{ color: 'lightgrey' }} />}
+                            </td>
 
 
-                        </tr>
+                          </tr>
 
-                      </tbody>
+                        </tbody>
 
-                    )
-                  })}
+                      )
+                    })}
                 </Table>
-                {(salaryList  !== null && salaryList.length <= 0) ? <p style={{ textAlign: "center" }}>Select Month and Year</p> : null}
+                {(salaryList !== null && salaryList.length <= 0) ? <p style={{ textAlign: "center" }}>Select Month and Year</p> : null}
               </div>
             </div>
           </div>
@@ -180,16 +180,16 @@ function ViewShift() {
 
       </div>
       {salaryList !== null && salaryList.length > 10 &&
-                <Pagination
-                    itemClass="page-item" 
-                    linkClass="page-link"
-                    activePage={currentPage}
-                    itemsCountPerPage={recordPerPage}
-                    totalItemsCount={totalRecords}
-                    pageRangeDisplayed={pageRange}
-                    onChange={handlePageChange}
-                />
-                }
+        <Pagination
+          itemClass="page-item"
+          linkClass="page-link"
+          activePage={currentPage}
+          itemsCountPerPage={recordPerPage}
+          totalItemsCount={totalRecords}
+          pageRangeDisplayed={pageRange}
+          onChange={handlePageChange}
+        />
+      }
     </Fragment>
 
   )
