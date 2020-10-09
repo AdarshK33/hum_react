@@ -9,6 +9,7 @@ import { AdminContext } from '../../context/AdminState'
 import AdminReportView from './AdminReportView'
 import Select from 'react-select';
 import { AppContext } from "../../context/AppState";
+import '../Leaves/Leaves.css'
 
 const AdminReportForm = () => {
     const [reportType, setReportType] = useState('')
@@ -219,7 +220,7 @@ const AdminReportForm = () => {
                         </div>
                     </Row>
                     }
-                    <Button type="submit">Submit</Button>
+                    <Button type="submit" className="submitButton">Submit</Button>
                 </Form>
             </div>
             <AdminReportView AdminReportList={reportList} />

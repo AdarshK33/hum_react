@@ -12,10 +12,11 @@ const DeleteLeave = (props) => {
     }, [props.ltId])
 
    const deleteModal = props.handleDeleteClose
-  
-    const deleteListcheck = (id) => {
+  let empId = props.empid
+  console.log("emp id in delete", empId)
+    const deleteListcheck = (id, empId) => {
         console.log("delete id", id)
-        deleteEmpList(id)
+        deleteEmpList(id, empId)
         deleteModal()
     }
     return (
@@ -27,8 +28,8 @@ const DeleteLeave = (props) => {
                 <Modal.Footer>
                     <Button variant="secondary" className="deleteNoButton"
                         onClick={deleteModal}>No</Button>
-                    <Button variant="primary" className="deleteYesButton"
-                        onClick={() => deleteListcheck(ltId)}>Yes</Button>
+                    <Button variant="primary" className="submitButton"
+                        onClick={() => deleteListcheck(ltId, empId)}>Yes</Button>
                 </Modal.Footer>
             </Modal>
         </Fragment>

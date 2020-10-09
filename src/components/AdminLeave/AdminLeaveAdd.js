@@ -27,6 +27,7 @@ const AdminLeaveAdd = (props) => {
     const [disable, setDisable] = useState(true)
     const [min, setMin] = useState(false)
     const [max, setMax] = useState(false)
+    const [editMsg, setEditMsg] = useState(false)
     let history = useHistory();
 
     const { addLeave, addPopup, leavesData, getLeave, leaveType}
@@ -44,9 +45,9 @@ const AdminLeaveAdd = (props) => {
          CostCenter()
      },[])
 
-     useEffect(() => {
+    /*  useEffect(() => {
         getLeave(user.employeeId)
-    }, [user.employeeId]); 
+    }, [user.employeeId]);  */
 
 
     /*  useEffect(() => {
@@ -78,7 +79,7 @@ const AdminLeaveAdd = (props) => {
      }
      const setEmployeeCostCenterHandler = (e) => {
          let data2 = e.target.value
-         getLeave(e.target.value);
+         getLeave(data2);
          setEmployeeCostCenter(data2)
          console.log("data2", data2)
      }
@@ -112,7 +113,7 @@ const AdminLeaveAdd = (props) => {
               newData = 'Unplanned'
          }
          const newPopup = {
-            empId: user.employeeId,
+            empId: employeeCostCenter,
             fromDate: moment(startDate).format("YYYY-MM-DD"),
            /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
            leaveCategory: newData,
@@ -127,6 +128,7 @@ const AdminLeaveAdd = (props) => {
             year: '2020'
         }
         addPopup(newPopup)
+        setEditMsg(true)
      }
 
      const setStartMaternityDateHandler = (date) => {
@@ -138,7 +140,7 @@ const AdminLeaveAdd = (props) => {
         var d3 = d2.setDate(d2.getDate() + 179)
 
         const newPopup1 = {
-            empId: user.employeeId,
+            empId: employeeCostCenter,
             fromDate: moment(value2).format("YYYY-MM-DD"),
            /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
            leaveCategory: 'Planned',
@@ -153,6 +155,7 @@ const AdminLeaveAdd = (props) => {
             year: '2020'
         }
         addPopup(newPopup1)
+        setEditMsg(true)
     }
 
      const setLeaveHandler = (e) => {
@@ -192,19 +195,7 @@ const AdminLeaveAdd = (props) => {
     const onSubmit = e => {
         e.preventDefault()
         const cflag = validation();
-        const resetValue = {
-            empId: user.employeeId,
-            fromDate: '',
-            leaveCategory: '',
-            leaveTypeId: 0,
-            ltId: 0,
-            numberOfDays: 0,
-            reason: 'string',
-            status: 0,
-            toDate: '',
-            viewLeavePopup: 0,
-            year: ''
-        }
+      
       
         if (cflag) {
             const setModal = props.handleClose;
@@ -216,6 +207,7 @@ const AdminLeaveAdd = (props) => {
             setDisable(true)
             setMin(false)
             setMax(false)
+            setEditMsg(false)
             setEmployeeCostCenter('')
             if(user.loginType === '1' || user.loginType === '9'){
                 setCostCenter('')
@@ -223,7 +215,6 @@ const AdminLeaveAdd = (props) => {
                 setCostCenter(costCenter)
             }
            
-            addPopup(resetValue)
         }
         var newData
         if(startDate > new Date()){
@@ -271,22 +262,10 @@ const AdminLeaveAdd = (props) => {
         }
             
         history.push("/AdminLeaves/AdminLeavesList");
+        setEditMsg(false)
 
     }
     const onCloseModal = () => {
-        const resetValue = {
-            empId: user.employeeId,
-            fromDate: '',
-            leaveCategory: '',
-            leaveTypeId: 0,
-            ltId: 0,
-            numberOfDays: 0,
-            reason: 'string',
-            status: 0,
-            toDate: '',
-            viewLeavePopup: 0,
-            year: ''
-        }
         const setModal = props.handleClose;
         setModal()
         setReason('')
@@ -296,7 +275,7 @@ const AdminLeaveAdd = (props) => {
         setDisable(true)
         setMin(false)
         setMax(false)
-        addPopup(resetValue)
+        setEditMsg(false)
         setEmployeeCostCenter('')
         if(user.loginType === '1' || user.loginType === '9'){
             setCostCenter('')
@@ -453,11 +432,13 @@ const AdminLeaveAdd = (props) => {
                                 </Row>
                              
                             }
+                            {editMsg === true ?
                             <Row>
                                 <div className="col-sm-12">
                                     <p className="leavesMsg">{leavesData ? leavesData.Leave : ''}</p>
                                 </div>
                             </Row>
+                            : ''}
 
                             <Row>
                                 <div className="col-sm-12">
@@ -469,7 +450,7 @@ const AdminLeaveAdd = (props) => {
                                 </div>
                             </Row>
 
-                            <Button type="submit" /* className="submit-button" size="sm" */>Submit</Button>
+                            <Button type="submit" className="submitButton">Submit</Button>
                         </Form>
 
                     </Modal.Body>
