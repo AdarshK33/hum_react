@@ -91,7 +91,7 @@ const Header = () => {
                   <span className="dot"></span>
                 </a>
               </li> */}
-              <h6 style={{ fontSize: "16px", fontWeight: "500", color: "#006EBB" }}>Hello, {user.firstName}</h6>
+              <h6 style={{ fontSize: "16px", fontWeight: "500", color: "#006EBB" }}>Hello, {user !== null ? user.firstName : ""}</h6>
               <UserMenu />
             </ul>
             <div className="d-lg-none mobile-toggle pull-right" onClick={() => setHeaderbar(!headerbar)}><MoreHorizontal /></div>
