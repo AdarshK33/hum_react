@@ -10,7 +10,7 @@ import { AppContext } from "../../context/AppState";
 import moment from 'moment'
 
 const AdminLeaveEdit = (props) => {
-    const [empId, setEmpId] = useState()
+    const [empId, setEmpId] = useState('')
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date())
     const [startMaternityDate, setStartMaternityDate] = useState(new Date())
@@ -281,7 +281,7 @@ const AdminLeaveEdit = (props) => {
                             <Row>
                                 <div className="col-sm-12">
                                     <Form.Label>Employee Id:</Form.Label>
-                                    <Form.Control size="sm" type="text" value={empId} readOnly
+                                    <Form.Control size="sm" type="text" value={empId || ''} readOnly
                                      onChange={(e) => setEmpId(e)} />
                                 </div>
                             </Row><br/>
