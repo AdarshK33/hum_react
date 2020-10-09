@@ -36,24 +36,14 @@ const AdminLeavesList = (props) => {
    }
    /*-----------------Pagination------------------*/
 
-    /* const handleClose = () => setModal(false)
-    const handleShow = () => setModal(true) */
-
     const handleEditClose = () => setEditModal(false)
-   /*  const handleEditShow = () => setEditModal(true) */
-
     const handleDeleteClose = () => setDeleteModal(false)
-  /*   const handleDeleteShow = () => setDeleteModal(true) */
 
     useEffect(() => {
         viewList()
     }, [])
+    
 
-   /*  const deleteListcheck = (id) =>{
-        deleteList(id)
-        setDeleteModal(false)
-        }
-        {console.log("empId", empId)} */
     return (
         <Fragment>
             <Breadcrumb title="Admin " parent="Admin Leave" />

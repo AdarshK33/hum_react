@@ -27,7 +27,7 @@ const AdminDeleteLeaves = (props) => {
                 <Modal.Footer>
                     <Button variant="secondary" className="deleteNoButton"
                         onClick={deleteModal}>No</Button>
-                    <Button variant="primary" className="deleteYesButton"
+                    <Button variant="primary" className="submitButton"
                         onClick={() => deleteListcheck(ltId)}>Yes</Button>
                 </Modal.Footer>
             </Modal>

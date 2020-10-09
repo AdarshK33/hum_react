@@ -21,6 +21,7 @@ const LeaveAdd = (props) => {
     const [disable, setDisable] = useState(true)
     const [min, setMin] = useState(false)
     const [max, setMax] = useState(false)
+    const [editMsg, setEditMsg] = useState(false)
    /*  const [modal, setModal] = useState(false) */
     
     let history = useHistory();
@@ -31,10 +32,21 @@ const LeaveAdd = (props) => {
 
     const { user } = useContext(AppContext);
     
-    useEffect(() => {
+   /*  useEffect(() => {
         viewEmpData(props.empid)
         getLeave(props.empid)
     },[props.empid])
+    console.log("props.empid", props.empid) */
+
+      //get api for leave type
+      useEffect(() => {
+        viewLeaveData(user.employeeId)
+        viewEmpData(user.employeeId)
+    }, [user.employeeId]);
+
+    useEffect(() => {
+        getLeave(props.empid)
+    }, [props.empid]);
 
     // useEffect(() => {
     //     getLeave(user.employeeId)
@@ -94,7 +106,9 @@ const LeaveAdd = (props) => {
             viewLeavePopup: 0,
             year: '2020'
         }
+        
         addPopup(newPopup)
+        setEditMsg(true)
     }
 
     const setStartMaternityDateHandler = (date) => {
@@ -123,6 +137,7 @@ const LeaveAdd = (props) => {
             year: '2020'
         }
         addPopup(newPopup1)
+        setEditMsg(true)
     }
     //Maternity Date validation
     let d1 = new Date(startMaternityDate);
@@ -153,20 +168,13 @@ const LeaveAdd = (props) => {
         }
         return flag;
     }
-    //get api for leave type
-    useEffect(() => {
-        viewLeaveData(user.employeeId)
-    }, [user.employeeId]);
-
-    useEffect(() => {
-        getLeave(user.employeeId)
-    }, [user.employeeId]);
+  
 
     // create api
     const onSubmit = e => {
         e.preventDefault()
         const cflag = validation();
-        const resetValue = {
+        /* const resetValue = {
             empId: user.employeeId,
             fromDate: '',
             leaveCategory: '',
@@ -178,7 +186,7 @@ const LeaveAdd = (props) => {
             toDate: '',
             viewLeavePopup: 0,
             year: ''
-        }
+        } */
       
 
         if (cflag) {
@@ -191,7 +199,8 @@ const LeaveAdd = (props) => {
             setDisable(true)
             setMin(false)
             setMax(false)
-            addPopup(resetValue)
+            setEditMsg(false)
+           /*  addPopup(resetValue) */
          
         }
 
@@ -210,6 +219,7 @@ const LeaveAdd = (props) => {
             viewLeavePopup: 1,
             year: '2020'
         }
+       
         var newData
         if(startDate > new Date()){
              newData = 'Planned'
@@ -233,32 +243,23 @@ const LeaveAdd = (props) => {
             viewLeavePopup: 1,
             year: '2020'
         }
-
+        console.log("newLeave empId-----", newLeave.empId)
         if (leave === '3') {
             console.log("newLeave maternity---------", newLeave1)
             addEmpLeave(newLeave1)
         }
         else {
             console.log("newLeave general---------", newLeave)
-            addEmpLeave(newLeave)
+            addEmpLeave(newLeave, newLeave.empId)
         }
         history.push("/Leaves/LeaveView");
+        setEditMsg(false)
 
     }
 const onCloseModal = () => {
-    const resetValue = {
-        empId: user.employeeId,
-        fromDate: '',
-        leaveCategory: '',
-        leaveTypeId: 0,
-        ltId: 0,
-        numberOfDays: 0,
-        reason: 'string',
-        status: 0,
-        toDate: '',
-        viewLeavePopup: 0,
-        year: ''
-    }
+   /*  const resetValue = {
+       
+    } */
     const setModal = props.handleClose;
     setModal()
     setReason('')
@@ -268,7 +269,8 @@ const onCloseModal = () => {
     setDisable(true)
     setMin(false)
     setMax(false)
-    addPopup(resetValue)
+    setEditMsg(false)
+   /*  addPopup(resetValue) */
 }
     return (
         <React.Fragment>
@@ -378,14 +380,16 @@ const onCloseModal = () => {
                                 </Row>
                              
                             }
-                            <Row>
-                                <div className="col-sm-12">
-                                   {/*  <p className="leavesMsg">{leavesData ? leavesData.Leave : ''}</p> */}
-                                    {leavesData ? 
-                                    <p className="leavesMsg">{leavesData.Leave}</p> : ''}
-                                </div>
-                            </Row>
-
+                           
+                        {editMsg === true ?
+                         <Row>
+                         <div className="col-sm-12">
+                            {/*  <p className="leavesMsg">{leavesData ? leavesData.Leave : ''}</p> */}
+                             {leavesData ? 
+                             <p className="leavesMsg">{leavesData.Leave}</p> : ''}
+                         </div>
+                     </Row>
+                        : ''}
                             <Row>
                                 <div className="col-sm-12">
                                     <Form.Group>
@@ -396,7 +400,7 @@ const onCloseModal = () => {
                                 </div>
                             </Row>
 
-                            <Button type="submit" /* className="submit-button" size="sm" */>Submit</Button>
+                            <Button type="submit" className="submitButton" >Submit</Button>
                         </Form>
 
                     </Modal.Body>

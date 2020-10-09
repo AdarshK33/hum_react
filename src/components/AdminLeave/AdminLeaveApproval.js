@@ -101,7 +101,7 @@ const AdminLeaveApproval = () => {
                                             <td>{item.isApproved === 0 ?
                                              <Button size="sm" className="disable-button" disabled>
                                                  Approved</Button> :
-                                                <Button size="sm" style={{backgroundColor:'#006EBB'}} 
+                                                <Button size="sm" style={{backgroundColor:'#006EBB'}} className="submitButton"
                                             onClick={(e) => 
                                                 approvedButton(item.empId, item.fromDate,
                                                     item.toDate, item.leaveCategory, item.leaveTypeId,

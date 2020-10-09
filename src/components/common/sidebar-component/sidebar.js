@@ -13,12 +13,14 @@ const Sidebar = (props) => {
     const [hideRightArrowRTL, setHideRightArrowRTL] = useState(true);
     const [hideRightArrow, setHideRightArrow] = useState(true);
     const [hideLeftArrow, setHideLeftArrow] = useState(true);
-    const [mainmenu, setMainMenu] = useState(MENUITEMS);
+    const [mainmenu, setMainMenu] = useState(props.MENUITEMS);
     const wrapper = configDB.data.settings.sidebar.wrapper;
     const layout = "1tr";
    // const layout = useSelector(content => content.Customizer.layout);
   //  console.log(wrapper+ "*********"+layout)
-
+  useEffect(() => {
+    setMainMenu(props.MENUITEMS);
+}, [props.MENUITEMS]);
     useEffect(() => {
         window.addEventListener('resize', handleResize)
         handleResize();
@@ -26,7 +28,7 @@ const Sidebar = (props) => {
         var currentUrl = window.location.pathname;
 
         // eslint-disable-next-line
-        mainmenu.filter(items => {
+        props.MENUITEMS.filter(items => {
             if (items.path === currentUrl)
                 setNavActive(items)
             if (!items.children) return false
@@ -61,7 +63,7 @@ const Sidebar = (props) => {
             window.addEventListener('resize', handleResize)
         }
         // eslint-disable-next-line
-    }, []);
+    }, [props.MENUITEMS]);
 
     const handleResize = () => {
         setWidth(window.innerWidth - 310);
@@ -69,7 +71,7 @@ const Sidebar = (props) => {
 
     const setNavActive = (item) => {
         // eslint-disable-next-line
-        MENUITEMS.filter(menuItem => {
+        props.MENUITEMS.filter(menuItem => {
             // eslint-disable-next-line
             if (menuItem != item)
                 menuItem.active = false
@@ -86,15 +88,15 @@ const Sidebar = (props) => {
             }
         })
         item.active = !item.active
-        setMainMenu({ mainmenu: MENUITEMS })
+        setMainMenu({ mainmenu: props.MENUITEMS })
 
     }
 
     // Click Toggle menu
     const toggletNavActive = (item) => {
         if (!item.active) {
-            MENUITEMS.forEach(a => {
-                if (MENUITEMS.includes(item))
+            props.MENUITEMS.forEach(a => {
+                if (props.MENUITEMS.includes(item))
                     a.active = false
                 if (!a.children) return false
                 a.children.forEach(b => {
@@ -111,7 +113,7 @@ const Sidebar = (props) => {
             });
         }
         item.active = !item.active
-        setMainMenu({ mainmenu: MENUITEMS })
+        setMainMenu({ mainmenu: props.MENUITEMS })
     }
 
     const scrollToRight = () => {
@@ -189,7 +191,7 @@ const Sidebar = (props) => {
                         <li className={`left-arrow ${layout === 'rtl' ? hideLeftArrowRTL ? 'd-none' : '' : hideLeftArrow ? 'd-none' : ''}`}
                             onClick={(wrapper === 'horizontal_sidebar' && layout === 'rtl') ? scrollToLeftRTL : scrollToLeft}><i className="fa fa-angle-left"></i></li>
                         {
-                            MENUITEMS.map((menuItem, i) =>
+                            props.MENUITEMS.map((menuItem, i) =>
                                 <li className={`${menuItem.active ? 'active' : ''}`} key={i}>
                                     {(menuItem.sidebartitle) ?
                                         <div className="sidebar-title">{menuItem.sidebartitle}</div>
@@ -201,7 +203,7 @@ const Sidebar = (props) => {
                                             <i className="fa fa-angle-right pull-right"></i>
                                         </a>
                                         : ''}
-                                    {(menuItem.type === 'link') ?
+                                    {(menuItem.type === 'link' && menuItem.children === undefined) ?
                                         <Link
                                             to={`${process.env.PUBLIC_URL}${menuItem.path}`}
                                             className={`sidebar-header ${menuItem.active ? 'active' : ''}`}
@@ -212,7 +214,17 @@ const Sidebar = (props) => {
                                             {menuItem.children ?
                                                 <i className="fa fa-angle-right pull-right"></i> : ''}
                                         </Link>
-                                        : ''}
+                                        : (menuItem.type === 'link') ?
+                                         <Link
+                                        // to={`${process.env.PUBLIC_URL}${menuItem.children[0].path}`}
+                                        className={`sidebar-header ${menuItem.active ? 'active' : ''}`}
+
+                                        onClick={() => toggletNavActive(menuItem)}
+                                    >
+                                        <menuItem.icon /><span>{props.t(menuItem.title)}</span>
+                                        {menuItem.children ?
+                                            <i className="fa fa-angle-right pull-right"></i> : ''}
+                                    </Link> : ""}
                                     {menuItem.children ?
                                         <ul
                                             className={`sidebar-submenu ${menuItem.active ? 'menu-open' : ''}`}

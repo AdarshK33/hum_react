@@ -4,6 +4,7 @@ import { Row, Col, Table, Button } from 'react-bootstrap'
 import { Edit2 } from 'react-feather'
 import EditTarget from './EditTarget';
 import AddTarget from './AddTarget';
+import Pagination from 'react-js-pagination';
 import { StoreProductContext } from "../../../context/StoreProductState";
 
 const StoreProductTarget = () => {
@@ -51,6 +52,20 @@ const StoreProductTarget = () => {
     monthsNumber["Dec"] = '12' ;
 
     const handleEditClose = () => setEditModal(false);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const recordPerPage = 10;
+    const totalRecords = storeProductList.length;
+    const pageRange = 10;
+  
+    const indexOfLastRecord = currentPage * recordPerPage;
+    const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+    const currentRecords = storeProductList.slice(indexOfFirstRecord, indexOfLastRecord);
+  
+    const handlePageChange = pageNumber => {
+      setCurrentPage(pageNumber);
+    }
+  
     return(
     <Fragment>
             <Breadcrumb title="Store Product Target" parent="Store Product Target" />
@@ -83,11 +98,13 @@ const StoreProductTarget = () => {
                             </tr>
                         </thead>
 
-                        {storeProductList !== null && storeProductList !== undefined &&
+                        {/* {storeProductList !== null && storeProductList !== undefined &&
                              storeProductList.length > 0 &&
-                            storeProductList.map((item, i) => {
+                            storeProductList.map((item, i) => { */}
+                             {currentRecords !== undefined && currentRecords !== null &&
+                                 currentRecords.map((item, i) => {
                                 return (
-                                   <tbody key={i + 1}>
+                                   <tbody key={i + 1 + indexOfFirstRecord}>
                                         <tr>
                                             <td>{i + 1}</td>
                                             <td>{item.costCenter}</td>
@@ -97,15 +114,22 @@ const StoreProductTarget = () => {
                                             <td>{item.weekday}</td>
                                             <td>{item.weekend}</td>
                                             <td>{item.growth}</td>
-                                            {Year > item.year  ?<td><Edit2 disabled style={{color:'lightgrey'}} /></td> : Year === item.year && monthsNumber[item.month] <= month  ?<td><Edit2 disabled style={{color:'lightgrey'}} /></td> :Year === item.year && monthsNumber[item.month] <= month && TodayDate > 20 ? <td><Edit2 disabled style={{color:'lightgrey'}} /></td> : 
-                                            <td><Edit2 
-                                            onClick={() => {
-                                                setEditModal(true);
-                                            targetEditHandler(item.targetId) 
-                                             }}
-                                            
-                                             />
-                                            </td> }
+                                            {Year > item.year  ?
+                                                <td><Edit2 disabled style={{color:'lightgrey'}} /></td> 
+                                                : Year === item.year && monthsNumber[item.month] <= month  ?
+                                                    <td><Edit2 disabled style={{color:'lightgrey'}} /></td> 
+                                                    :Year === item.year && monthsNumber[item.month] <= month && TodayDate > 20 ?
+                                                        <td><Edit2 disabled style={{color:'lightgrey'}} /></td> 
+                                                        : 
+                                                        <td><Edit2 style={{color:'#376ebb'}} 
+                                                        onClick={() => {
+                                                            setEditModal(true);
+                                                        targetEditHandler(item.targetId) 
+                                                        }}
+                                                        
+                                                        />
+                                                        </td>
+                                             }
                                             
                                             
 
@@ -123,6 +147,20 @@ const StoreProductTarget = () => {
                          /> : ""}
                          
                 </div>
+
+                <div>
+                {storeProductList !== null && storeProductList.length > 0 &&
+                  <Pagination
+                    itemClass="page-item"
+                    linkClass="page-link"
+                    activePage={currentPage}
+                    itemsCountPerPage={recordPerPage}
+                    totalItemsCount={totalRecords}
+                    pageRangeDisplayed={pageRange}
+                    onChange={handlePageChange}
+                  />
+                }
+              </div>
 
             </div>
         </Fragment>

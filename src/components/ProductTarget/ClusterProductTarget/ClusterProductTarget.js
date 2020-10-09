@@ -4,7 +4,9 @@ import Breadcrumb from '../../common/breadcrumb';
 import { Edit2 } from 'react-feather';
 import AddTarget from './AddTarget';
 import EditTarget from './EditTarget';
+import Loader from "../../common/loader";
 import { ClusterProductContext } from "../../../context/ClusterProductState";
+import './styles.css';
 
 function ClusterProductTarget(){
 
@@ -15,12 +17,24 @@ function ClusterProductTarget(){
   const [TodayDate, setTodayDate] = useState();
   const [month, setMonth] = useState();
   const [Year, setYear] = useState();
-//   const [costCenter, setCostCenter] = useState()
-//   const [cluster, setCluster] = useState()
-//   const [date, setDate] = useState(new Date());
-//   const [targetWeekdays, setTargetWeekdays] = useState()
-//   const [targetWeekend, setTargetWeekend] = useState()
-//   const [target, setTarget] = useState()
+
+
+  //pagenation data
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordPerPage = 10;
+  const totalRecords = clusterProductList.length;
+  const pageRange = 10;
+
+  const indexOfLastRecord = currentPage * recordPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+  const currentRecords = clusterProductList.slice(indexOfFirstRecord, indexOfLastRecord);
+
+  const handlePageChange = pageNumber => {
+    setCurrentPage(pageNumber);
+  }
+
+  //pagenation data
 
 
   const handleClose = () => {
@@ -63,7 +77,7 @@ function ClusterProductTarget(){
                 <Row className="apply-button-row">
                     <Col className="leaveApplications">Cluster Target</Col>
                     <Col>
-                        <Button className="apply-button btn btn-light"
+                        <Button className="apply-button btn btn-light" 
                         onClick={() => {setModal(true) }}>Add Target</Button>
                     </Col>
                     <AddTarget handleClose={handleClose} modal={modal} />
@@ -86,7 +100,7 @@ function ClusterProductTarget(){
                             </tr>
                         </thead>
 
-                        {clusterProductList.length > 0 &&
+                        {clusterProductList.length > 0 ?
                             clusterProductList.map((item, i) => {
                                 return (
                                    <tbody key={i + 1}>
@@ -108,8 +122,9 @@ function ClusterProductTarget(){
                                              :
                                              Year === item.year && monthsNumber[item.month] <= month && TodayDate > 20
                                              ?
-                                             <Edit2 disabled style={{color:'lightgrey'}} /> :
+                                             <Edit2 disabled style={{color:'#006EBB'}} /> :
                                             <td><Edit2
+                                            style={{color:'#006EBB'}}
                                             onClick={() => {
                                                 setEditModal(true);
                                                 viewSingleClusterTarget(item.targetId)
@@ -134,7 +149,7 @@ function ClusterProductTarget(){
                                          </tr>
                                     </tbody>
                                  )
-                            })}
+                            }) : <div className="loader"><Loader /></div>}
                     </Table> 
 
                     <EditTarget
