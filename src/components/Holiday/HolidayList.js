@@ -5,10 +5,12 @@ import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import '../Leaves/Leaves.css'
 import '../AdminLeave/AdminLeaves.css'
 import Pagination from 'react-js-pagination'
+import { AppContext } from "../../context/AppState";
 
 const HolidayList = () => {
 
   const { getHoliday, holidayDataList, uploadFile } = useContext(LeaveContext);
+  const { user } = useContext(AppContext);
 
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
@@ -42,23 +44,25 @@ const HolidayList = () => {
         <div className="row">
           <div className="col-sm-12">
             <div className="card" style={{ overflowX: "auto" }}>
-
-              <div className="title_bar" >
-                {/* <Button className="btn btn-light mr-2" >Create</Button> */}
-                <input
-                  className="btn"
-                  type="file"
-                  accept=".xlsx, .xls, .csv"
-                  onChange={(e) => changeHandler(e)}
-                  style={{ padding: "10px" }}
-                />
-                <ReactHTMLTableToExcel
-                  className="btn btn-light mr-2"
-                  table="table-to-xls"
-                  filename="holidaylist"
-                  sheet="Sheet"
-                  buttonText="Export excel" />
-              </div>
+            {
+                  user.loginType==="1" ?
+                  <div className="title_bar" >                   
+                    <input
+                      className="btn"
+                      type="file"
+                      accept=".xlsx, .xls, .csv"
+                      onChange={(e) => changeHandler(e)}
+                      style={{ padding: "10px" }}
+                    />
+                    <ReactHTMLTableToExcel
+                      className="btn btn-light mr-2"
+                      table="table-to-xls"
+                      filename="holidaylist"
+                      sheet="Sheet"
+                      buttonText="Export excel" />
+                  </div> : <div className="title_bar" ></div>
+            }
+              
 
               <div className="table-responsive">
                 <table id="table-to-xls" className="table table-hover">
