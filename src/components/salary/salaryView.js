@@ -92,7 +92,7 @@ function ViewShift() {
             </div>
           </Row>
 
-              <Button type="submit" disabled={shiftButton} value="Submit">Submit</Button>
+              <Button type="submit" disabled={shiftButton} value="Submit" className="submitButton">Submit</Button>
 
             
         </Form>

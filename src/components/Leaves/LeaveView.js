@@ -23,6 +23,7 @@ const LeaveView = () => {
     const [toDate, setToDate] = useState(new Date())
     const [ltId, setltId] = useState()
     const [reason, setReason] = useState()
+    const [empId, setEmpID] = useState('')
 
     const { leaveList, viewList, leaveDataList, viewLeaveData, viewEmpLeaveData, leaveEmpList }
         = useContext(LeaveContext);
@@ -158,9 +159,9 @@ const LeaveView = () => {
                     <Col className="leaveApplications">Leave Applications</Col>
                     <Col>
                         <Button className="apply-button btn btn-light"
-                            onClick={() => { setModal(true) }}>Apply</Button>
+                            onClick={() => { setModal(true); setEmpID(user.employeeId) }}>Apply</Button>
                     </Col>
-                    {user.employeeId !== undefined ? <LeaveAdd handleClose={handleClose} modal={modal} empid={user.employeeId} /> : ""}
+                    {user.employeeId !== undefined ? <LeaveAdd handleClose={handleClose} modal={modal} empid={empId} /> : ""}
 
                 </Row>
 
@@ -209,7 +210,7 @@ const LeaveView = () => {
                                 )
                             })}
                     </Table>
-                    <DeleteLeave handleDeleteClose={handleDeleteClose} modal={deleteModal} ltId={ltId} />
+                    <DeleteLeave handleDeleteClose={handleDeleteClose} modal={deleteModal} ltId={ltId} empid={user.employeeId} />
                     {user.employeeId !== undefined ?
                         <EditLeave handleEditClose={handleEditClose} modal={editModal} empid={user.employeeId}
                             leaveTypeId={leaveTypeId === 0 || leaveTypeId === 1 ? (leaveTypeId = 1) : (leaveTypeId === 2 ? (leaveTypeId = 2) :

@@ -148,7 +148,7 @@ const AdminSalaryModule = () => {
             </div>
           </Row>
 
-          <Button type="submit" disabled={shiftButton} value="Submit">Submit</Button>
+          <Button type="submit" disabled={shiftButton} value="Submit" className="submitButton">Submit</Button>
 
 
         </Form>
@@ -193,7 +193,7 @@ const AdminSalaryModule = () => {
                 </Button>
                   <Button
                     variant="primary"
-                    className="deleteYesButton"
+                    className="submitButton"
                     onClick={() => cancelLeave()}
                   >
                     Yes

@@ -22,3 +22,7 @@ ul.pagination{
 .page-link{
     color: #006EBB;
 }
+button.submitButton.btn.btn-primary {
+    background: #006EBB !important;
+    border-color: #006EBB !important;
+}
