@@ -200,7 +200,7 @@ function Dashboard () {
                                             className="form-control Value"
                                             onChange={(e)=>fromClusterHandler(e)}
                                             >
-                                                <option value ="">{clusterList[0].clusterName}</option>
+                                                <option value ="">Select</option>
                                                 
                                                 {clusterList !== null &&
                                                   clusterList.map((e, i) => {
