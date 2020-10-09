@@ -6,6 +6,7 @@ import EditLeaderTarget from './EditLeaderTarget';
 import AddLeaderTarget from './AddLeaderTarget';
 import { StoreProductContext } from "../../../context/StoreProductState";
 import { AppContext } from "../../../context/AppState";
+import Pagination from 'react-js-pagination';
 
 const LeaderStoreProductTarget = () => {
     const [modal, setModal] = useState(false);
@@ -53,6 +54,20 @@ const LeaderStoreProductTarget = () => {
     monthsNumber["Dec"] = '12' ;
 
     const handleEditClose = () => setEditModal(false);
+    // Pagination
+    const [currentPage, setCurrentPage] = useState(1);
+    const recordPerPage = 10;
+    const totalRecords = storeLeaderProductList.length;
+    const pageRange = 10;
+  
+    const indexOfLastRecord = currentPage * recordPerPage;
+    const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+    const currentRecords = storeLeaderProductList.slice(indexOfFirstRecord, indexOfLastRecord);
+  
+    const handlePageChange = pageNumber => {
+      setCurrentPage(pageNumber);
+    }
+  
     return(
     <Fragment>
             <Breadcrumb title="Store Leader Product Target" parent="Store Leader Product Target" />
@@ -84,11 +99,13 @@ const LeaderStoreProductTarget = () => {
                             </tr>
                         </thead>
 
-                        {storeLeaderProductList !== null &&storeLeaderProductList !== undefined 
+                        {/* {storeLeaderProductList !== null &&storeLeaderProductList !== undefined 
                              && storeLeaderProductList.length > 0 &&
-                            storeLeaderProductList.map((item, i) => {
+                            storeLeaderProductList.map((item, i) => { */}
+                             {currentRecords !== undefined && currentRecords !== null &&
+                                currentRecords.map((item, i) => {
                                 return (
-                                   <tbody key={i + 1}>
+                                   <tbody key={i + 1 + indexOfFirstRecord}>
                                         <tr>
                                             <td>{i + 1}</td>
                                             <td>{item.costCenter}</td>
@@ -97,16 +114,23 @@ const LeaderStoreProductTarget = () => {
                                             <td>{item.year}</td>
                                             <td>{item.weekday}</td>
                                             <td>{item.weekend}</td>
-                                            {Year > item.year  ?<td><Edit2 disabled style={{color:'lightgrey'}} /></td> : Year === item.year && monthsNumber[item.month] <= month  ?<td><Edit2 disabled style={{color:'lightgrey'}} /></td> :Year === item.year && monthsNumber[item.month] <= month && TodayDate > 20 ? <td><Edit2 disabled style={{color:'lightgrey'}} /></td> : 
-                                            <td><Edit2 
-                                            onClick={() => {
-                                                setEditModal(true);
-                                            targetEditHandler(item.targetId) 
-                                             }}
-                                            
-                                             />
-                                            </td> }
-                                            
+                                            {Year > item.year  ?
+                                                <td><Edit2 disabled style={{color:'lightgrey'}} /></td> 
+                                                : Year === item.year && monthsNumber[item.month] <= month  ?
+                                                    <td><Edit2 disabled style={{color:'lightgrey'}} /></td> 
+                                                    :Year === item.year && monthsNumber[item.month] <= month && TodayDate > 20 ? 
+                                                        <td><Edit2 disabled style={{color:'lightgrey'}} /></td> 
+                                                        : 
+                                                        <td><Edit2 style={{color:'#376ebb'}}
+                                                        onClick={() => {
+                                                            setEditModal(true);
+                                                        targetEditHandler(item.targetId) 
+                                                        }}
+                                                        
+                                                        />
+                                                        </td> 
+                                            }
+                                                        
                                             
 
 
@@ -123,6 +147,19 @@ const LeaderStoreProductTarget = () => {
                          /> : ""}
                          
                 </div>
+                <div>
+                {storeLeaderProductList !== null && storeLeaderProductList.length > 0 &&
+                  <Pagination
+                    itemClass="page-item"
+                    linkClass="page-link"
+                    activePage={currentPage}
+                    itemsCountPerPage={recordPerPage}
+                    totalItemsCount={totalRecords}
+                    pageRangeDisplayed={pageRange}
+                    onChange={handlePageChange}
+                  />
+                }
+              </div>
 
             </div>
         </Fragment>
