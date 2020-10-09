@@ -123,17 +123,8 @@ const EditClusterModal = (props) => {
       flag = false;
       return;
     }
-
     return flag;
   }
-
-
-
-
-
-
-
-
 
   const clusterLeaderSelect = event => {
     setClusterLeader(event.target.value);

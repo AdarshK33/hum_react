@@ -30,12 +30,6 @@ const GrantLeaveAdd = (props) => {
         CostCenter()
     }, [])
 
-    // useEffect(() => {
-    //     employeeIdData(costCenter)
-    // }, [costCenter])
-
-
-
     const setClear = () => {
         setEmployeeId('')
         setNumOfDays('')
