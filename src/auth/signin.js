@@ -25,7 +25,7 @@ const Signin = ({ location, history }) => {
 
   const checkIsloggedIn = (state) => {
     const { app: { isLoggedin } } = state
-    if (isLoggedin) history.push('/dashboard/default')
+    if (isLoggedin) history.push('/dashboard/storedashboard')
   }
 
   const getAccessToken = () => {

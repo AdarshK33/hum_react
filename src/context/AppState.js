@@ -7,7 +7,7 @@ import {
   File,
   Calendar,
   Package,
-  
+
 } from 'react-feather';
 import { SET_ACCESS_TOKEN_FAIL, SET_ACCESS_TOKEN_SUCCESS, AUTHENTICATE_USER } from "../constant/actionTypes";
 
@@ -24,9 +24,9 @@ const initialState = {
     loaded: false,
     isLoggedin: false
   },
-  MENUITEMS : [],
+  MENUITEMS: [],
   user: {},
-  flag : 0
+  flag: 0
 };
 
 export const AppContext = createContext();
@@ -35,7 +35,7 @@ export const AppProvider = ({ children, history }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   const authenticateUser = (result) => {
-    
+
     return dispatch({ type: AUTHENTICATE_USER, payload: result });
   }
 
@@ -53,14 +53,14 @@ export const AppProvider = ({ children, history }) => {
       .then((resp) => {
 
         const { status, data: { data: { access_token, refresh_token } } } = resp;
-       
+
         if (status === 200) {
           Cookies.set('APPAT', access_token)
           Cookies.set('APPRT', refresh_token)
           // const { data, data: { refresh_token, access_token } } = resp;
 
           setTimeout(() => { }, 1000)
-        
+
           // Cookies.set('APPSID', {refresh_token, access_token});
           setDefaultHeader(resp.data.data.access_token)
 
@@ -85,8 +85,8 @@ export const AppProvider = ({ children, history }) => {
     client.get('/employee/profile')
       .then((response) => {
         state.user = response.data.data
-       
-      
+
+
         return dispatch({ type: 'FETCH_USER_INFO', payload: state.user });
       })
       .catch((error) => {
@@ -96,25 +96,25 @@ export const AppProvider = ({ children, history }) => {
 
   const getUserMenu = (menus) => {
     state.MENUITEMS = [];
-    
-        if( menus !== null && menus !== undefined ){
-          state.flag = 1;
-              for(let i = 0; i<menus.length; i++){
-                if(menus[i].hasChild === true){
-                  state.MENUITEMS.push({title: menus[i].menuName, icon: File, type: 'link', path: menus[i].menuUrl, active: false,children:[]})
-                  for(let j = 0; j<menus.length; j++){
-                    if(menus[j].child === true && menus[i].menuUrl === menus[j].parentUrl){
-                      state.MENUITEMS[i].children.push({ path: menus[j].menuUrl, title: menus[j].menuName, type: 'link' })
-                    }
 
-                  }
-                }else if(menus[i].child === false){
-                  state.MENUITEMS.push({ path: menus[i].menuUrl, title: menus[i].menuName, icon: File, type: 'link', active: false})
-                }
-              }
+    if (menus !== null && menus !== undefined) {
+      state.flag = 1;
+      for (let i = 0; i < menus.length; i++) {
+        if (menus[i].hasChild === true) {
+          state.MENUITEMS.push({ title: menus[i].menuName, icon: File, type: 'link', path: menus[i].menuUrl, active: false, children: [] })
+          for (let j = 0; j < menus.length; j++) {
+            if (menus[j].child === true && menus[i].menuUrl === menus[j].parentUrl) {
+              state.MENUITEMS[i].children.push({ path: menus[j].menuUrl, title: menus[j].menuName, type: 'link' })
+            }
+
           }
-          console.log("*****************************",state.MENUITEMS);
-       
+        } else if (menus[i].child === false) {
+          state.MENUITEMS.push({ path: menus[i].menuUrl, title: menus[i].menuName, icon: File, type: 'link', active: false })
+        }
+      }
+    }
+    console.log("*****************************", state.MENUITEMS);
+
   }
 
 
@@ -129,8 +129,9 @@ export const AppProvider = ({ children, history }) => {
         getUserMenu,
         user: state.user,
         state,
-        MENUITEMS:  state.MENUITEMS,
-        flag : state.flag
+        MENUITEMS: state.MENUITEMS,
+        flag: state.flag,
+        app: state.app,
       }}
     >
       {children}
