@@ -41,10 +41,13 @@ const AddLeaderTarget = (props) => {
         setTodayDate(dd);
         setMonth(mm);
         setYear(yyyy);
-        setStoreType(user.costCentre);
-        getStateData(user.costCentre) ;
+        if(user.costCentre !== undefined){
+            setStoreType(user.costCentre);
+            getStateData(user.costCentre) ;
+        }
         
-    }, []);
+        
+    }, [user.costCentre]);
 
     const fromStoreHandler = (e) => {
         setStoreType(e);

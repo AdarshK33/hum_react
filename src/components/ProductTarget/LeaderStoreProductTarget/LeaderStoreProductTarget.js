@@ -29,8 +29,11 @@ const LeaderStoreProductTarget = () => {
         setTodayDate(dd);
         setMonth(mm);
         setYear(yyyy);
-        LeaderTargetList(user.costCentre)
-    }, []);
+        if(user.costCentre !== undefined){
+            LeaderTargetList(user.costCentre);
+        }
+        
+    }, [user.costCentre]);
     
     const targetEditHandler = (id) => {
        
@@ -148,7 +151,7 @@ const LeaderStoreProductTarget = () => {
                          
                 </div>
                 <div>
-                {storeLeaderProductList !== null && storeLeaderProductList.length > 0 &&
+                { storeLeaderProductList !== undefined && storeLeaderProductList !== null && storeLeaderProductList.length > 0 &&
                   <Pagination
                     itemClass="page-item"
                     linkClass="page-link"
