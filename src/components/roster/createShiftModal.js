@@ -27,7 +27,6 @@ const CreateShiftModal = (props) => {
   const [showText, setShowText] = useState(false);
   const [invalidText, setInvalidText] = useState(false)
   const [warnMsg, setWrnMsg] = useState(false);
-  // const [workingHoursText, setWorkingHoursText] = useState(false);
   const [errormsg, setErrorMsg] = useState(false);
   const [costCenterName, setCostCenterName] = useState('');
   const { addShift, viewShift, viewShiftTypes, viewContractTypes, shiftContractNames, costCenterList, costCenter } = useContext(RosterContext);
@@ -37,7 +36,8 @@ const CreateShiftModal = (props) => {
   useEffect(() => {
     getUserInfo()
     costCenter()
-    if (user.loginType !== "1" && user.loginType !== "9") {
+    // if (user.loginType !== "1" && user.loginType !== "9") {
+    if (user.loginType === "3") {
       setCostCenterName(user.costCentre)
     }
   }, [user.costCentre, user.loginType]);
@@ -384,13 +384,7 @@ const CreateShiftModal = (props) => {
                       )
                     }
                   })()}
-
-
-
-
-
                   <button className="myclass mb-2 mr-2" type="submit" disabled={shiftButton} value="Submit">Save</button>
-                  {/* <button className="btn btn-primary mb-2 ml-2" value="reset" onClick={setClear}>Clear</button> */}
                   <button className="myclass mb-2 ml-2" onClick={() => { clearAndClose() }}>Close</button>
                 </form>
                 <h5>{successMsg.length !== 0 && <div className="text-success">{successMsg}</div>}</h5>

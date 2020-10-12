@@ -7,6 +7,7 @@ import EditTarget from './EditTarget';
 import Loader from "../../common/loader";
 import { ClusterProductContext } from "../../../context/ClusterProductState";
 import './styles.css';
+import Pagination from 'react-js-pagination';
 
 function ClusterProductTarget(){
 
@@ -100,12 +101,12 @@ function ClusterProductTarget(){
                             </tr>
                         </thead>
 
-                        {clusterProductList.length > 0 ?
-                            clusterProductList.map((item, i) => {
+                        {currentRecords.length > 0 ?
+                            currentRecords.map((item, i) => {
                                 return (
                                    <tbody key={i + 1}>
                                         <tr>
-                                            <td>{i + 1}</td>
+                                            <td>{i + 1+ indexOfFirstRecord}</td>
                                             <td>{item.storeName}</td>
                                             <td>{item.storeName}</td>
                                             <td>{item.clusterName}</td>
@@ -122,7 +123,7 @@ function ClusterProductTarget(){
                                              :
                                              Year === item.year && monthsNumber[item.month] <= month && TodayDate > 20
                                              ?
-                                             <Edit2 disabled style={{color:'#006EBB'}} /> :
+                                             <Edit2 disabled style={{color:'lightgrey'}} /> :
                                             <td><Edit2
                                             style={{color:'#006EBB'}}
                                             onClick={() => {
@@ -159,6 +160,20 @@ function ClusterProductTarget(){
                      />
 
                 </div>
+
+                <div>
+                    {clusterProductList !== null && clusterProductList.length > 0 &&
+                    <Pagination
+                        itemClass="page-item"
+                        linkClass="page-link"
+                        activePage={currentPage}
+                        itemsCountPerPage={recordPerPage}
+                        totalItemsCount={totalRecords}
+                        pageRangeDisplayed={pageRange}
+                        onChange={handlePageChange}
+                    />
+                    }
+              </div>
             </div>
         </Fragment>
   )

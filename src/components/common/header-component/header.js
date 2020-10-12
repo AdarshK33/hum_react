@@ -94,6 +94,7 @@ const Header = () => {
               <h6 style={{ fontSize: "16px", fontWeight: "500", color: "#006EBB" }}>Hello, {user !== null ? user.firstName : ""}</h6>
               <UserMenu />
             </ul>
+            <span style={{ fontSize: "10px", color: "#006EBB", textAlign: "center", }}> {user !== null ? user.position : ""}</span>
             <div className="d-lg-none mobile-toggle pull-right" onClick={() => setHeaderbar(!headerbar)}><MoreHorizontal /></div>
           </div>
           <script id="result-template" type="text/x-handlebars-template">

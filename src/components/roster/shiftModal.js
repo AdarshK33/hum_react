@@ -137,15 +137,12 @@ const ShiftModal = (props) => {
                     <div className="form-group">
                       <select className="form-control" onChange={handleChange}>
                         <option value="" >select shift</option>
-                        {
-                          availableShiftData.length !== null &&
-                          <>{availableShiftData.map((item, i) => {
-                            return (
-                              <option key={item.value} value={item.shiftMasterId}>{item.startTime + '-' + item.endTime + '(' + item.shiftType + ')'}</option>
-                            )
-                          })}</>
-                        }
 
+                        {availableShiftData !== null && availableShiftData.map((item, i) => {
+                          return (
+                            <option key={item.value} value={item.shiftMasterId}>{item.startTime + '-' + item.endTime + '(' + item.shiftType + ')'}</option>
+                          );
+                        })}
 
 
                       </select>

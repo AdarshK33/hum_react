@@ -13,7 +13,7 @@ const StoreProductTarget = () => {
     const [month, setMonth] = useState();
     const [Year, setYear] = useState();
     const [editModal, setEditModal] = useState(false);
-    const { storeProductList,viewStoreProduct,editTargetHandler,editTarget } = useContext(StoreProductContext);
+    const { storeProductList, viewStoreProduct, editTargetHandler, editTarget } = useContext(StoreProductContext);
 
     const handleClose = () => {
         viewStoreProduct();
@@ -149,7 +149,7 @@ const StoreProductTarget = () => {
                 </div>
 
                 <div>
-                {storeProductList !== null && storeProductList.length > 0 &&
+                {storeProductList !== undefined && storeProductList !== null && storeProductList.length > 0 &&
                   <Pagination
                     itemClass="page-item"
                     linkClass="page-link"
