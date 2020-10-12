@@ -6,6 +6,9 @@ import AddTarget from './AddTarget';
 import EditTarget from './EditTarget';
 import { ClusterProductContext } from "../../../context/ClusterProductState";
 import { AppContext } from "../../../context/AppState";
+import Pagination from 'react-js-pagination';
+import Loader from "../../common/loader";
+import '../ClusterProductTarget/styles.css';
 
 function LeaderCluster(){
     
@@ -15,13 +18,18 @@ function LeaderCluster(){
     const [month, setMonth] = useState();
     const [Year, setYear] = useState();
 
-    const { clusterProductList,singleClusterTarget, viewClusterTarget, viewSingleClusterTarget } = useContext(ClusterProductContext);
+    const { leaderClusterProductList,singleClusterTarget,viewLeaderClusterTarget, viewSingleClusterTarget } = useContext(ClusterProductContext);
     const { user } = useContext(AppContext);
 
+    
     const handleClose = () => {
-        viewClusterTarget();
+        // viewLeaderClusterTarget(user.costCentre); 
         setModal(false);
     }
+
+    useEffect(() =>{
+        viewLeaderClusterTarget(user.costCentre);
+    }, [user.costCentre])
 
     useEffect(() => {
         let date = new Date(); 
@@ -31,8 +39,31 @@ function LeaderCluster(){
         setTodayDate(dd);
         setMonth(mm);
         setYear(yyyy);
-        viewClusterTarget();
+        
+        
     }, []);
+
+    
+
+
+
+    //pagenation data
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const recordPerPage = 10;
+    const totalRecords = leaderClusterProductList.length;
+    const pageRange = 10;
+
+    const indexOfLastRecord = currentPage * recordPerPage;
+    const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+    const currentRecords = leaderClusterProductList.slice(indexOfFirstRecord, indexOfLastRecord);
+
+    const handlePageChange = pageNumber => {
+        setCurrentPage(pageNumber);
+    }
+    
+
+    //pagenation data
 
     var monthsNumber = new Array();
     monthsNumber["Jan"] = "01";
@@ -82,12 +113,12 @@ function LeaderCluster(){
                                 <th></th>
                             </tr>
                         </thead>
-                        {clusterProductList.length > 0 &&
-                            clusterProductList.map((item, i) => {
+                        {currentRecords!==null ?
+                            currentRecords.map((item, i) => {
                                 return (
                                    <tbody key={i + 1}>
                                         <tr>
-                                            <td>{i + 1}</td>                                            
+                                            <td>{i + 1 + indexOfFirstRecord}</td>                                            
                                             <td>{user.costCentre}</td>
                                             <td>{item.clusterName}</td>
                                             <td>{item.monthName}</td>
@@ -102,8 +133,9 @@ function LeaderCluster(){
                                              :
                                              Year == item.year && monthsNumber[item.month] <= month && TodayDate > 20 
                                              ?
-                                             <Edit2 disabled style={{color:'lightgrey'}} /> : 
+                                             <Edit2 disabled style={{color:'lightgrey'}} /> :  
                                             <td><Edit2 
+                                            style={{color:'#006EBB'}}
                                             onClick={() => {
                                                 setEditModal(true);
                                                 viewSingleClusterTarget(item.targetId) 
@@ -125,7 +157,9 @@ function LeaderCluster(){
                                         </tr>
                                     </tbody>
                                  )
-                            })}
+                            }) : ""
+                            // <div className="loader"><Loader /></div>
+                        }
                         
                     </Table> 
 
@@ -136,6 +170,22 @@ function LeaderCluster(){
                      />
 
                 </div>
+
+                <div>
+                    {leaderClusterProductList !== null && leaderClusterProductList.length > 0 ?
+                    <Pagination
+                        itemClass="page-item"
+                        linkClass="page-link"
+                        activePage={currentPage}
+                        itemsCountPerPage={recordPerPage}
+                        totalItemsCount={totalRecords}
+                        pageRangeDisplayed={pageRange}
+                        onChange={handlePageChange}
+                    />
+                    :
+                    ""
+                    }
+              </div>
             </div>
         </Fragment>
         </div>
