@@ -245,7 +245,7 @@ const LeaveAdd = (props) => {
             console.log("newLeave general---------", newLeave)
             addEmpLeave(newLeave, newLeave.empId)
         }
-        history.push("/leaves/leaveview");
+        history.push("/leaves/viewleave");
         setEditMsg(false)
 
     }
