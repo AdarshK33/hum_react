@@ -233,7 +233,7 @@ console.log("d3",moment(d3).format("YYYY-MM-DD"))
             editEmpList(editLeave1)
         }
 
-        history.push("/leaves/leaveview");
+        history.push("/leaves/viewleave");
         setEditMsg(false)
 
 
