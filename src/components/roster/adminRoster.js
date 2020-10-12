@@ -178,7 +178,7 @@ const AdminRoster = () => {
                                                 <select
                                                     className="form-control"
                                                     value={singleWeek}
-                                                    style={{ height: "34px" }}
+                                                    style={{ height: "34px", paddingLeft: "5px" }}
                                                     onChange={(e) => setWeekCalc(e)}>
                                                     <option value="">Select Week &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
@@ -202,7 +202,7 @@ const AdminRoster = () => {
 
                                                 <select
                                                     className="form-control"
-                                                    style={{ height: "34px" }}
+                                                    style={{ height: "34px", paddingLeft: "5px", marginLeft: "5px" }}
                                                     value={contractType}
                                                     onChange={(e) => {
                                                         setContractType(e.target.value)
@@ -300,7 +300,7 @@ const AdminRoster = () => {
                     />}
             </div>
 
-        </Fragment>
+        </Fragment >
     );
 };
 

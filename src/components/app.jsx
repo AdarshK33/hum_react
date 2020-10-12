@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import Header from './common/header-component/header';
 import Sidebar from './common/sidebar-component/sidebar';
 import "./common/style.css";
@@ -8,17 +8,23 @@ import { AppContext } from "../context/AppState";
 import Cookies from "js-cookie";
 const AppLayout = ({ children }) => {
 
-    const { authenticateUser, getUserInfo, state } = useContext(AppContext);
+    const { authenticateUser, getUserInfo, state, user , getUserMenu, flag} = useContext(AppContext);
+    const [flagValue, setFlagValue] = useState();
+    const [menuItems, setMenuItems] = useState();
     const loginUrl = `https://preprod.idpdecathlon.oxylane.com/as/authorization.oauth2?response_type=code&client_id=${process.env.REACT_APP_FEDID_CLIENTID}&scope=openid%20profile&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}`;
 
     useEffect(() => {
         checkTokenExists()
         getUserInfo()
+        setFlagValue(flag)
     }, []);
     useEffect(() => {
-        const { app, user } = state
-        console.log("=== ", app)
-        console.log("for user", user)
+        const {  MENUITEMS,flag } = state
+        setMenuItems(MENUITEMS);
+       if(flagValue === 0 && menuItems !== []){
+        setFlagValue(flag)
+        getUserMenu(user.generalUserMenus);
+       }
     })
     const checkTokenExists = () => {
         // console.log("ALL TOKENS "+Cookies.get());
@@ -39,7 +45,9 @@ const AppLayout = ({ children }) => {
             <div className="page-wrapper">
                 <div className="page-body-wrapper">
                     <Header />
-                    <Sidebar />
+                    {menuItems !== null && menuItems !== undefined ? 
+                    <Sidebar  MENUITEMS = {menuItems}/>
+                    :""}
                     <div className="page-body">
                         {children}
 

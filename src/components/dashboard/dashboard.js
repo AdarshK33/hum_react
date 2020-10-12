@@ -80,8 +80,16 @@ function Dashboard () {
             viewCostCentre()
             viewClusterCostCenter(user.costCentre)
             // console.log(clusterList)
-            if(user.loginType !== '1' && user.loginType !== '9'){
+            // if(user.loginType !== '1' && user.loginType !== '9'){
                 setStoreType(user.costCentre)
+            // }
+        }, [user.costCentre]);
+
+        useEffect(() => {
+            setStartDate(today)
+            if(cosCentreList !== undefined && cosCentreList !== null && cosCentreList.length > 0 && clusterList !== null && clusterList !== undefined && clusterList.length > 0){
+                setStartDate(today)
+                viewData(today,cosCentreList[0].costCentreName,clusterList[0].clusterId);
             }
         }, [user.costCentre]);
    
@@ -179,14 +187,14 @@ function Dashboard () {
                             <Row>
                                 <div className="col-sm-4">
                                     <div className="form-group">
-                                        <label className="name f-w-600"> Date &nbsp;</label>
+                                        <label className="name f-w-600"> Date<span style = {{color:'red'}}>*</span> &nbsp;</label>
                                         <DatePicker
                                         className="form-control Value"
-                                        selected={today}
+                                        selected={startDate}
                                         dateFormat="yyyy-MM-dd"
-                                        readOnly
-                                        // required
-                                        // onChange={(e) => fromDateHandler(e)}
+                                        // readOnly
+                                        required
+                                        onChange={(e) => fromDateHandler(e)}
                                         /> 
                                     </div>
                                 </div>
@@ -200,7 +208,7 @@ function Dashboard () {
                                             className="form-control Value"
                                             onChange={(e)=>fromClusterHandler(e)}
                                             >
-                                                <option value ="">Select</option>
+                                                {/* <option value ="">{clusterList !== undefined ?clusterList[0].clusterName : " "}</option> */}
                                                 
                                                 {clusterList !== null &&
                                                   clusterList.map((e, i) => {
@@ -215,13 +223,18 @@ function Dashboard () {
                                                 className="form-control Value"
                                                 onChange={(e)=>fromClusterHandler(e)}
                                                 >
-                                                    <option value ="">Select</option>
+                                                    {clusterCostCenterList == null ?
+                                                       
+                                                       <option value ="">No Options</option> :
+                                                       
+                                                        clusterCostCenterList.map((e, i) => {
+                                                          return(
+                                                          <option key={i + 1} value={e.clusterId} >{e.clusterName}</option>)
+                                                      })
+                                                    }
+                                                   
                                                     
-                                                    {clusterCostCenterList !== null &&
-                                                      clusterCostCenterList.map((e, i) => {
-                                                        return(
-                                                        <option key={i + 1} value={e.clusterId} >{e.clusterName}</option>)
-                                                    })}
+                                                   
                                                
                                                 
                                             </select>
@@ -236,8 +249,8 @@ function Dashboard () {
                                             className="form-control Value"
                                             onChange={(e)=>fromStoreHandler(e.target.value)}
                                             >
-                                            <option value="">Select</option>
-                                            { cosCentreList.map((e, i) => {
+                                            {/* <option value="">Select</option> */}
+                                            {cosCentreList !== null && cosCentreList !== undefined && cosCentreList.map((e, i) => {
                                                     return(
                                                     <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
                                                 })}

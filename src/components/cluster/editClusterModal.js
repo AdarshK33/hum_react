@@ -123,8 +123,11 @@ const EditClusterModal = (props) => {
       flag = false;
       return;
     }
+
     return flag;
   }
+
+
 
   const clusterLeaderSelect = event => {
     setClusterLeader(event.target.value);
@@ -320,12 +323,8 @@ const EditClusterModal = (props) => {
               </div>
             </div>
 
-
-
-
-
             <button className="myclass mb-2 mr-2" type="submit" disabled={clustertButton} value="Submit">Save</button>
-            <button className="myclass mb-2 mr-2" onClick={props.handleClose}>Close</button>
+
             <h5>{successMsg.length !== 0 && <div className="text-success">{successMsg}</div>}</h5>
           </form>
         </Modal.Body>

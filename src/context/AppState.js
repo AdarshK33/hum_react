@@ -2,7 +2,13 @@ import React, { createContext, useReducer } from "react";
 import { client, setDefaultHeader } from "../utils/axios";
 import AppReducer from "../reducers/AppReducer";
 import { toast } from "react-toastify";
-
+import {
+  Home,
+  File,
+  Calendar,
+  Package,
+  
+} from 'react-feather';
 import { SET_ACCESS_TOKEN_FAIL, SET_ACCESS_TOKEN_SUCCESS, AUTHENTICATE_USER } from "../constant/actionTypes";
 
 // utils
@@ -18,7 +24,9 @@ const initialState = {
     loaded: false,
     isLoggedin: false
   },
-  user: {}
+  MENUITEMS : [],
+  user: {},
+  flag : 0
 };
 
 export const AppContext = createContext();
@@ -27,7 +35,7 @@ export const AppProvider = ({ children, history }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   const authenticateUser = (result) => {
-    console.log("IN AUTHENTICATE USER " + result)
+    
     return dispatch({ type: AUTHENTICATE_USER, payload: result });
   }
 
@@ -45,17 +53,14 @@ export const AppProvider = ({ children, history }) => {
       .then((resp) => {
 
         const { status, data: { data: { access_token, refresh_token } } } = resp;
-        console.log("1 " + resp.data.data.access_token);
-        console.log("2 " + resp.data.data.refresh_token);
-        console.log({ resp });
+       
         if (status === 200) {
           Cookies.set('APPAT', access_token)
           Cookies.set('APPRT', refresh_token)
           // const { data, data: { refresh_token, access_token } } = resp;
 
           setTimeout(() => { }, 1000)
-          console.log("===" + access_token);
-          console.log("===" + refresh_token);
+        
           // Cookies.set('APPSID', {refresh_token, access_token});
           setDefaultHeader(resp.data.data.access_token)
 
@@ -63,7 +68,7 @@ export const AppProvider = ({ children, history }) => {
         }
       })
       .catch((err) => {
-        console.log("Something went wrong", err);
+
         setTimeout(() => {
           toast.error("Oppss.. Something went wrong");
         }, 200);
@@ -76,16 +81,40 @@ export const AppProvider = ({ children, history }) => {
   //GET USER INFO
 
   const getUserInfo = () => {
+    // state.MENUITEMS = [];
     client.get('/employee/profile')
       .then((response) => {
         state.user = response.data.data
-        console.log("=====GET API respone=====", state.user)
-        console.log("=====GET API respone=====", state.user.firstName)
+       
+      
         return dispatch({ type: 'FETCH_USER_INFO', payload: state.user });
       })
       .catch((error) => {
         console.log(error)
       })
+  }
+
+  const getUserMenu = (menus) => {
+    state.MENUITEMS = [];
+    
+        if( menus !== null && menus !== undefined ){
+          state.flag = 1;
+              for(let i = 0; i<menus.length; i++){
+                if(menus[i].hasChild === true){
+                  state.MENUITEMS.push({title: menus[i].menuName, icon: File, type: 'link', path: menus[i].menuUrl, active: false,children:[]})
+                  for(let j = 0; j<menus.length; j++){
+                    if(menus[j].child === true && menus[i].menuUrl === menus[j].parentUrl){
+                      state.MENUITEMS[i].children.push({ path: menus[j].menuUrl, title: menus[j].menuName, type: 'link' })
+                    }
+
+                  }
+                }else if(menus[i].child === false){
+                  state.MENUITEMS.push({ path: menus[i].menuUrl, title: menus[i].menuName, icon: File, type: 'link', active: false})
+                }
+              }
+          }
+          console.log("*****************************",state.MENUITEMS);
+       
   }
 
 
@@ -97,8 +126,11 @@ export const AppProvider = ({ children, history }) => {
         accessToken,
         authenticateUser,
         getUserInfo,
+        getUserMenu,
         user: state.user,
         state,
+        MENUITEMS:  state.MENUITEMS,
+        flag : state.flag
       }}
     >
       {children}
