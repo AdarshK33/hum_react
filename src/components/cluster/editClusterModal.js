@@ -102,12 +102,6 @@ const EditClusterModal = (props) => {
       updateCluster(editCluster)
       props.handleEditClose()
     }
-    // console.log("^^^^" + JSON.stringify(editCluster));
-
-    // const result = updateCluster(editCluster)
-
-
-
   }
 
   const validation = () => {

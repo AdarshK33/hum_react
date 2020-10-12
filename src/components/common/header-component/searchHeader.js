@@ -5,15 +5,15 @@ import { Search } from 'react-feather';
 
 const SearchHeader = () => {
     const mainmenu = MENUITEMS;
-    
+
     const [searchValue, setsearchValue] = useState('');
     const [searchOpen, setsearchOpen] = useState(false);
 
     const escFunction = useCallback((event) => {
-        if(event.keyCode === 27) {
-          //Do whatever when esc is pressed
-          setsearchOpen(false)
-          setsearchValue('')
+        if (event.keyCode === 27) {
+            //Do whatever when esc is pressed
+            setsearchOpen(false)
+            setsearchValue('')
         }
     }, []);
 
@@ -75,16 +75,16 @@ const SearchHeader = () => {
     }
 
     const toggleBtn = () => {
-        if(searchOpen){
+        if (searchOpen) {
             setsearchOpen(!searchOpen);
             document.querySelector('.searchIcon').classList.add('open');
-        }else{
+        } else {
             setsearchOpen(!searchOpen);
             document.querySelector('.searchIcon').classList.remove('open');
         }
     }
 
-    
+
     return (
         <Fragment>
             <div>
@@ -111,9 +111,9 @@ const SearchHeader = () => {
                                             </div>
                                             <div className="ProfileCard-details">
                                                 <div className="ProfileCard-realName">
-                                                    <Link 
-                                                        to={`${process.env.PUBLIC_URL}${data.path}`} 
-                                                        className="realname" 
+                                                    <Link
+                                                        to={`${process.env.PUBLIC_URL}${data.path}`}
+                                                        className="realname"
                                                         onClick={removeFix}
                                                     >
                                                         {data.title}
