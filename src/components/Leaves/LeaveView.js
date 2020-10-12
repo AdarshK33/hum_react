@@ -25,7 +25,7 @@ const LeaveView = () => {
     const [reason, setReason] = useState()
     const [empId, setEmpID] = useState('')
 
-    const { leaveList, viewList, leaveDataList, viewLeaveData, viewEmpLeaveData, leaveEmpList }
+    const { leaveDataList, viewLeaveData, viewEmpLeaveData, leaveEmpList }
         = useContext(LeaveContext);
 
     const { user } = useContext(AppContext);
@@ -51,13 +51,10 @@ const LeaveView = () => {
 
     const handleDeleteClose = () => setDeleteModal(false)
 
-
-    useEffect(() => {
-        viewList()
-    }, [])
     useEffect(() => {
         viewLeaveData(user.employeeId)
     }, [user.employeeId])
+    
     useEffect(() => {
         viewEmpLeaveData(user.employeeId)
     }, [user.employeeId])

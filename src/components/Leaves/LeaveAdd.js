@@ -41,19 +41,12 @@ const LeaveAdd = (props) => {
       //get api for leave type
       useEffect(() => {
         viewLeaveData(user.employeeId)
-        viewEmpData(user.employeeId)
+        /* viewEmpData(user.employeeId) */
     }, [user.employeeId]);
 
     useEffect(() => {
         getLeave(props.empid)
     }, [props.empid]);
-
-    // useEffect(() => {
-    //     getLeave(user.employeeId)
-    // }, [user.employeeId]);
-
-   /*  const handleClosePopup = () => setModal(false)
-    const handleShowPopup = () => setModal(true) */
 
     const today = new Date()
     const currentYear = new Date('2020-01-01')
@@ -252,7 +245,7 @@ const LeaveAdd = (props) => {
             console.log("newLeave general---------", newLeave)
             addEmpLeave(newLeave, newLeave.empId)
         }
-        history.push("/Leaves/LeaveView");
+        history.push("/leaves/viewleave");
         setEditMsg(false)
 
     }
