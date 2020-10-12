@@ -297,8 +297,7 @@ export const LeaveProvider = ({ children }) => {
   }
   
 // Emp data according to their EmpId
-const viewEmpData = (id) => {
-  // let empId1 = 'DSI000035'
+/* const viewEmpData = (id) => {
   client.get('employee/view/{empId}' + '?empId='  + user.employeeId)
     .then((response) => {
       state.empData = response.data.data
@@ -308,7 +307,7 @@ const viewEmpData = (id) => {
     .catch((error) => {
       console.log(error)
     })
-}
+} */
 
 //Report Leave api
 const reportLeave = (reportData) => {
@@ -395,7 +394,7 @@ else {
       editList,
       deleteList,
       viewLeaveData,
-      viewEmpData,
+      /* viewEmpData, */
       reportLeave,
       employeeType,
       productivityReport,
