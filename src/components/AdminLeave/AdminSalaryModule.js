@@ -168,7 +168,7 @@ const AdminSalaryModule = () => {
                       className="btn btn-light mr-2"
                       onClick={approvedButton}
                     >
-                      Approved
+                      Approve
                   </Button>
                     <Button
                       variant="danger"
