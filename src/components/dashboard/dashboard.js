@@ -201,7 +201,7 @@ function Dashboard () {
                                 <div className="col-sm-4">
                                     <div className="form-group">
                                     <label className="name f-w-600" >Select Cluster<span style = {{color:'red'}}>*</span>&nbsp; </label>
-                                        {user.loginType === "1" || user.loginType === "9" ?
+                                        {user.loginType === "1" || user.loginType === "9" || user.additionalRole === "1" || user.additionalRole === "9" ?
                                         
                                         
                                         <select

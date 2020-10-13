@@ -119,12 +119,12 @@ const AddLeaderTarget = (props) => {
       
         const setModal = props.handleClose;
         setModal();
-        setStoreType("");
+        // setStoreType("");
         setGetM();
         setWeekdaysTarget('');
         setWeekendsTarget('');
         setGrowthPercentage('');
-        StateData.stateName = ""
+        // StateData.stateName = ""
         
       }
       const validation = () => {
