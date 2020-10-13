@@ -54,8 +54,9 @@ const initial_state = {
         function viewLeaderClusterTarget(id) {
 
           client.get('/cluster/product_target/view/'+id).then(function (response) {
-          //  console.log("============NAV==============");
-          //  console.log(id)
+           console.log("============NAV==============");
+           console.log(id);
+           console.log(response.data.data);
            state.leaderClusterProductList = response.data.data;
            return dispatch({ type: 'FETCH_LEADERCLUSTERPRODUCTTARGET_LIST', payload: state.leaderClusterProductList });
          })
@@ -87,7 +88,7 @@ const initial_state = {
                 .then((response) => {
                   toast.info(response.data.message);
                   viewClusterTarget();
-                  viewLeaderClusterTarget(values.storeName);
+                  // viewLeaderClusterTarget(values.storeName);
                   return (
                   dispatch({ type: 'ADD_NEW_TARGET', payload: state.NewTarget })
                   )

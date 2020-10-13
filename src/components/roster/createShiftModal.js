@@ -37,7 +37,7 @@ const CreateShiftModal = (props) => {
     getUserInfo()
     costCenter()
     // if (user.loginType !== "1" && user.loginType !== "9") {
-    if (user.loginType === "3") {
+    if (user.loginType !== "1" && user.loginType !== "9" && user.additionalRole !== "1" && user.additionalRole !== "9") {
       setCostCenterName(user.costCentre)
     }
   }, [user.costCentre, user.loginType]);
@@ -197,7 +197,7 @@ const CreateShiftModal = (props) => {
         .catch((error) => {
           alert(" In error catch ", error);
         })
-      console.log(result, "in competent");
+      // console.log(result, "in competent");
     }
   }
   return (
@@ -359,7 +359,7 @@ const CreateShiftModal = (props) => {
                   </div>
 
                   {(() => {
-                    if (user.loginType === "1" || user.loginType === "9") {
+                    if (user.loginType === "1" || user.loginType === "9" || user.additionalRole === "1" || user.additionalRole === "9") {
                       return (
                         <div className="row">
                           <div className="col-sm-12">

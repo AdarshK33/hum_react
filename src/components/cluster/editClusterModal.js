@@ -72,7 +72,7 @@ const EditClusterModal = (props) => {
   useEffect(() => {
     getUserInfo()
     costCenter()
-    if (user.loginType !== "1" && user.loginType !== "9") {
+    if (user.loginType !== "1" && user.loginType !== "9" && user.additionalRole !== "1" && user.additionalRole !== "9") {
       setCostCenterName(user.costCentre)
     }
   }, [user.costCentre, user.loginType]);
