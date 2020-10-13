@@ -81,7 +81,7 @@ const AdminSalaryModule = () => {
 
       )
     })
-    history.push("/AdminLeaves/AdminSalaryModule");
+    history.push("/adminleaves/adminsalarymodule");
   };
 
 
@@ -102,7 +102,7 @@ const AdminSalaryModule = () => {
 
       )
     })
-    history.push("/AdminLeaves/AdminSalaryModule");
+    history.push("/adminleaves/adminsalarymodule");
   };
 
   const checkboxHandler = (salaryId) => {

@@ -38,7 +38,8 @@ const ProductivityReportForm = () => {
 
 
     useEffect(() => {
-        if (user.loginType !== "1" && user.loginType !== "9") {
+        if (user.loginType !== "1" && user.loginType !== "9" &&
+        user.additionalRole !== '1' && user.additionalRole !== '9') {
               setCostCenter( user.costCentre)
               employeeIdData(user.costCentre)
               viewClusterCostCenter(user.costCentre)
@@ -122,7 +123,8 @@ const ProductivityReportForm = () => {
                                 </Form.Control>
                             </Form.Group>
                         </div>
-                        {user.loginType === '1' || user.loginType === '9' ? 
+                        {user.loginType === '1' || user.loginType === '9' ||
+                        user.additionalRole === '1' || user.additionalRole === '9' ? 
                         <div className="col-sm-4">
                             <Form.Group>
                                 <Form.Label>Cost Center</Form.Label>
