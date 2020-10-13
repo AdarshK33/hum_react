@@ -23,13 +23,13 @@ function LeaderCluster(){
 
     
     const handleClose = () => {
-        // viewLeaderClusterTarget(user.costCentre); 
+        viewLeaderClusterTarget(user.costCentre); 
         setModal(false);
     }
 
-    useEffect(() =>{
-        viewLeaderClusterTarget(user.costCentre);
-    }, [user.costCentre])
+    // useEffect(() =>{
+    //     viewLeaderClusterTarget(user.costCentre);
+    // }, [user.costCentre])
 
     useEffect(() => {
         let date = new Date(); 
@@ -39,9 +39,11 @@ function LeaderCluster(){
         setTodayDate(dd);
         setMonth(mm);
         setYear(yyyy);
-        
-        
-    }, []);
+        if(user.costCentre !== undefined){
+            viewLeaderClusterTarget(user.costCentre);
+        }
+                 
+    }, [user.costCentre]);
 
     
 
@@ -118,7 +120,7 @@ function LeaderCluster(){
                                 return (
                                    <tbody key={i + 1}>
                                         <tr>
-                                            <td>{i + 1 + indexOfFirstRecord}</td>                                            
+                                            <td>{i + 1 }</td>                                            
                                             <td>{user.costCentre}</td>
                                             <td>{item.clusterName}</td>
                                             <td>{item.monthName}</td>
