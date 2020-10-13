@@ -8,15 +8,11 @@ const UserMenu = () => {
     const { user, getUserMenu } = useContext(AppContext);
 
     const handleMenuListProfile = () => {
-        console.log("profile Page", user.generalUserMenus)
         getUserMenu(user.generalUserMenus);
-
     }
 
     const handleMenuListAdmin = () => {
-        console.log("Admin Page", window.location)
         getUserMenu(user.adminMenus);
-
     }
 
     const handleMenuListTeam = () => {
@@ -33,16 +29,16 @@ const UserMenu = () => {
                     </div>
                 </div>
                 <ul className="profile-dropdown onhover-show-div p-20 profile-dropdown-hover">
-                    <li onClick={handleMenuListProfile}><a href="#javascript"><User />My Profile</a></li>
+                    <li onClick={handleMenuListProfile}><a href="#"><User />My Profile</a></li>
                     {user.adminMenus !== null &&
-                     <li onClick={handleMenuListAdmin}><a href="#javascript"><UserPlus />Admin</a></li>
+                     <li onClick={handleMenuListAdmin}><a href="#"><UserPlus />Admin</a></li>
                         // <Fragment>
                            
                         //     <li onClick={handleMenuListTeam}><a href="#javascript"><Users />My Team</a></li>
                         // </Fragment>
                     }
                     {user.managerMenus !== null &&
-                        <li><a href="#javascript"><Users />My Team</a></li>
+                        <li onClick={handleMenuListTeam}><a href="#"><Users />My Team</a></li>
                     }
                     {/*  <li><a href="#javascript"><Settings />Settings</a></li> */}
                     {/* <li><a href="#javascript"><LogOut /> Log out</a></li> */}
