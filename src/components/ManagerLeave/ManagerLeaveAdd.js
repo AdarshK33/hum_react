@@ -11,7 +11,7 @@ import { AppContext } from "../../context/AppState";
 /* import { format } from 'date-fns' */
 import moment from 'moment'
 
-const AdminLeaveAdd = (props) => {
+const ManagerLeaveAdd = (props) => {
     const [employeeId, setEmployeeId] = useState()
     const [name, setName] = useState('')
     const [costCenter, setCostCenter] = useState()
@@ -33,7 +33,7 @@ const AdminLeaveAdd = (props) => {
     const { addLeave, addPopup, leavesData, getLeave, leaveType}
      = useContext(LeaveContext);
 
-     const {CostCenter,costCenterList, employeeIdData, employeeIdList } = useContext(AdminContext)
+     const {/* CostCenter,costCenterList, */ managerEmployeeId, managerEmployeeIdList } = useContext(AdminContext)
 
      const { user } = useContext(AppContext);
 
@@ -41,18 +41,21 @@ const AdminLeaveAdd = (props) => {
      const currentYear = new Date('2020-01-01')
     const nextYear = new Date('2020-12-31')
 
-     useEffect(() => {
+     /* useEffect(() => {
          CostCenter()
-     },[])
+     },[]) */
 
     /*  useEffect(() => {
         getLeave(user.employeeId)
     }, [user.employeeId]);  */
+console.log("managerEmployeeIdList",managerEmployeeIdList)
 
-
-    /*  useEffect(() => {
-        employeeIdData(costCenter)
-    },[costCenter]) */
+     useEffect(() => {
+        managerEmployeeId()
+    },[])
+    useEffect(() => {
+        setCostCenter(user.costCentre)
+    },[user.costCentre])
 
      useEffect(() => {
         setEmployeeId(props.employeeId)
@@ -62,22 +65,22 @@ const AdminLeaveAdd = (props) => {
         setName(props.firstName, props.lastName)
      },[props.firstName, props.lastName])
 
-     useEffect(() => {
+    /*  useEffect(() => {
         if (user.loginType !== "1" && user.loginType !== "9" && 
         user.additionalRole !== '1' && user.additionalRole !== '9') {
               setCostCenter( user.costCentre)
               employeeIdData(user.costCentre)
               console.log("disabled costcenter", user.costCentre)
         }
-    },[user.costCentre, user.loginType])
-
+    },[user.costCentre, user.loginType]) */
+/* 
      const setCostCenterHandler = (e) => {
          let data1 = e.target.value
         setCostCenter(data1)
         employeeIdData(data1)
         console.log("data1", data1)
         console.log("costCenter", data1)
-     }
+     } */
      const setEmployeeCostCenterHandler = (e) => {
          let data2 = e.target.value
          getLeave(data2);
@@ -210,11 +213,7 @@ const AdminLeaveAdd = (props) => {
             setMax(false)
             setEditMsg(false)
             setEmployeeCostCenter('')
-            if(user.loginType === '1' || user.loginType === '9' || user.additionalRole === '1' || user.additionalRole === '9'){
-                setCostCenter('')
-            }else{
-                setCostCenter(costCenter)
-            }
+            setCostCenter(costCenter)
            
         }
         var newData
@@ -262,7 +261,7 @@ const AdminLeaveAdd = (props) => {
             addLeave(newLeave)
         }
             
-        history.push("/adminleaves/adminleaveslist");
+        history.push("/manager/managerleaves");
         setEditMsg(false)
 
     }
@@ -278,11 +277,7 @@ const AdminLeaveAdd = (props) => {
         setMax(false)
         setEditMsg(false)
         setEmployeeCostCenter('')
-        if(user.loginType === '1' || user.loginType === '9' || user.additionalRole === '1' || user.additionalRole === '9'){
-            setCostCenter('')
-        }else{
-            setCostCenter(costCenter)
-        }
+        setCostCenter(costCenter)
     }
     return (
         <Fragment>
@@ -303,23 +298,9 @@ const AdminLeaveAdd = (props) => {
                                 <div className="col-sm-12">
                                    <Form.Group>
                                    <Form.Label>Cost Center Id</Form.Label>
-                                   {user.loginType === '1' || user.loginType === '9' ||
-                                    user.additionalRole === '1' || user.additionalRole === '9'  ?
-                                    <Form.Control as="select" required value={costCenter}
-                                        onChange={(e) => setCostCenterHandler(e)}>
-                                            <option value="">Select Cost Center</option>
-                                            
-                                        {costCenterList.length > 0 && costCenterList.map((item, i) => {
-                                            return (
-                                                <option key={item.costCenterId} value={item.costCentreName}>
-                                                {item.costCentreName}</option>
-                                            )
-                                        })
-                                        }
-                                    </Form.Control>:
                                      <Form.Control type="text" disabled value={costCenter} 
                                      onChange={(e) => setCostCenter(e.targrt.value)}  />
-                                    }
+                                    
                                    </Form.Group>
                                 </div>
                             </Row>
@@ -332,7 +313,8 @@ const AdminLeaveAdd = (props) => {
                                         onChange={(e) => setEmployeeCostCenterHandler(e)}>
                                             <option value="">Select Employee</option>
                                             
-                                        {employeeIdList !== null && employeeIdList.length > 0 && employeeIdList.map((item, i) => {
+                                        {managerEmployeeIdList !== null && managerEmployeeIdList.length > 0 &&
+                                         managerEmployeeIdList.map((item, i) => {
                                             return (
                                                 <option key={item.employeeId} value={item.employeeId}>
                                                 {item.firstName}-{item.employeeId}</option>
@@ -462,4 +444,4 @@ const AdminLeaveAdd = (props) => {
     );
 };
 
-export default AdminLeaveAdd;
+export default ManagerLeaveAdd;

@@ -37,12 +37,12 @@ const UserMenu = () => {
                         //     <li onClick={handleMenuListTeam}><a href="#javascript"><Users />My Team</a></li>
                         // </Fragment>
                     }
-                    {user.managerMenus !== null &&
+                    {user.managerMenus !== null && 
                         <li onClick={handleMenuListTeam}><a href="#"><Users />My Team</a></li>
                     }
                     {/*  <li><a href="#javascript"><Settings />Settings</a></li> */}
                     {/* <li><a href="#javascript"><LogOut /> Log out</a></li> */}
-                    <li><a href={loginUrl}><LogOut />Log In</a></li>
+                    <li><a href={loginUrl}><LogIn />Log In</a></li>
                     <li><a href="#javascript"><LogOut /> Log out</a></li>
                 </ul>
             </li>

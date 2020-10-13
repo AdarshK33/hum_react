@@ -17,7 +17,8 @@ const initialState = {
   reportList:[],
   employeeList:[],
   leaveEmpList:[],
-  leaveTypeReport:[]
+  leaveTypeReport:[],
+  leaveManagerList:[]
  
 }
 
@@ -26,25 +27,10 @@ export const LeaveContext = createContext();
 export const LeaveProvider = ({ children }) => {
   const [state, dispatch] = useReducer(LeaveReducer, initialState);
   const { user, getUserMenu } = useContext(AppContext);
-  console.log("manager menus in leaveState-------",user.managerMenus)
+ 
   //View Leave
 
   const viewList = (empId1) => {
-    console.log("manager menus-------",user.managerMenus)
-    if(user.managerMenus){
-      client.get('/leave_transaction/view/manager')
-      .then((response) => {
-        state.leaveList =  response.data.data
-        getLeave(empId1);
-        console.log("=====GET API respone for manager=====", state.leaveList)
-        return (
-          dispatch({ type: 'FETCH_LEAVE_LIST', payload: state.leaveList })
-        )
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-    }else{
     client.get('leave_transaction/view')
       .then((response) => {
         state.leaveList =  response.data.data
@@ -57,7 +43,21 @@ export const LeaveProvider = ({ children }) => {
       .catch((error) => {
         console.log(error)
       })
-    }
+  }
+
+  const viewManagerList = (empId1) => {
+      client.get('/leave_transaction/view/manager')
+      .then((response) => {
+        state.leaveManagerList =  response.data.data
+        getLeave(empId1);
+        console.log("=====GET API respone for manager=====", state.leaveManagerList)
+        return (
+          dispatch({ type: 'FETCH_MANAGER_LEAVE_LIST', payload: state.leaveManagerList })
+        )
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   // View Leave Data
@@ -420,6 +420,7 @@ else {
       viewEmpLeaveData,
       editPopup,
       getLeaveReport,
+      viewManagerList,
       leaveList: state.leaveList,
       leaveType: state.leaveType,
       message: state.message,
@@ -432,7 +433,8 @@ else {
       productivityList: state.productivityList,
       leaveEmpList: state.leaveEmpList,
       editLeavesData: state.editLeavesData,
-      leaveTypeReport: state.leaveTypeReport
+      leaveTypeReport: state.leaveTypeReport,
+      leaveManagerList: state.leaveManagerList
      
     }}>
       {children}
