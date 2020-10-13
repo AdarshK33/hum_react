@@ -41,10 +41,13 @@ const AddLeaderTarget = (props) => {
         setTodayDate(dd);
         setMonth(mm);
         setYear(yyyy);
-        setStoreType(user.costCentre);
-        getStateData(user.costCentre) ;
+        if(user.costCentre !== undefined){
+            setStoreType(user.costCentre);
+            getStateData(user.costCentre) ;
+        }
         
-    }, []);
+        
+    }, [user.costCentre]);
 
     const fromStoreHandler = (e) => {
         setStoreType(e);
@@ -116,12 +119,12 @@ const AddLeaderTarget = (props) => {
       
         const setModal = props.handleClose;
         setModal();
-        setStoreType("");
+        // setStoreType("");
         setGetM();
         setWeekdaysTarget('');
         setWeekendsTarget('');
         setGrowthPercentage('');
-        StateData.stateName = ""
+        // StateData.stateName = ""
         
       }
       const validation = () => {

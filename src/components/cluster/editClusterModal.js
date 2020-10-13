@@ -72,7 +72,7 @@ const EditClusterModal = (props) => {
   useEffect(() => {
     getUserInfo()
     costCenter()
-    if (user.loginType !== "1" && user.loginType !== "9") {
+    if (user.loginType !== "1" && user.loginType !== "9" && user.additionalRole !== "1" && user.additionalRole !== "9") {
       setCostCenterName(user.costCentre)
     }
   }, [user.costCentre, user.loginType]);
@@ -102,12 +102,6 @@ const EditClusterModal = (props) => {
       updateCluster(editCluster)
       props.handleEditClose()
     }
-    // console.log("^^^^" + JSON.stringify(editCluster));
-
-    // const result = updateCluster(editCluster)
-
-
-
   }
 
   const validation = () => {

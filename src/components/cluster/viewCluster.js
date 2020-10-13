@@ -21,6 +21,24 @@ function ViewCluster() {
   const handleEditShow = () => setEditModal(true)
 
 
+  //pagenation data
+
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const recordPerPage = 10;
+  // const totalRecords = clusterList.length;
+  // const pageRange = 10;
+
+  // const indexOfLastRecord = currentPage * recordPerPage;
+  // const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+  // const currentRecords = clusterList.slice(indexOfFirstRecord, indexOfLastRecord);
+
+  // const handlePageChange = pageNumber => {
+  //   setCurrentPage(pageNumber);
+  // }
+
+
+  //pagenation data
+
   //variable
   const { clusterList, viewCluster, getCluster, getSingleCluster, getSingleCluster1, getEmployeesNames } = useContext(ClusterContext);
 
@@ -92,7 +110,19 @@ function ViewCluster() {
                   modal={editModal}
                 />
               </div>
-
+              {/* <div>
+                {clusterList !== null && clusterList.length > 10 &&
+                  <Pagination
+                    itemClass="page-item"
+                    linkClass="page-link"
+                    activePage={currentPage}
+                    itemsCountPerPage={recordPerPage}
+                    totalItemsCount={totalRecords}
+                    pageRangeDisplayed={pageRange}
+                    onChange={handlePageChange}
+                  />
+                }
+              </div> */}
             </div>
           </div>
         </div>

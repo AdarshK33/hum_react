@@ -7,6 +7,7 @@ import {  toast } from "react-toastify";
 
 const initial_state = {
     clusterProductList: [],
+    leaderClusterProductList: [],
     clusterList: [],
     NewTarget: [],
     singleClusterTarget: []
@@ -48,6 +49,23 @@ const initial_state = {
               console.log(error);
             });
         }
+ 
+
+        function viewLeaderClusterTarget(id) {
+
+          client.get('/cluster/product_target/view/'+id).then(function (response) {
+           console.log("============NAV==============");
+           console.log(id);
+           console.log(response.data.data);
+           state.leaderClusterProductList = response.data.data;
+           return dispatch({ type: 'FETCH_LEADERCLUSTERPRODUCTTARGET_LIST', payload: state.leaderClusterProductList });
+         })
+           .catch(function (error) {
+             console.log(error);
+           });
+       }
+
+
 
         function viewSingleClusterTarget(id){
           client.get('/cluster/product_target/'+id).then(function (response) {
@@ -70,6 +88,7 @@ const initial_state = {
                 .then((response) => {
                   toast.info(response.data.message);
                   viewClusterTarget();
+                  // viewLeaderClusterTarget(values.storeName);
                   return (
                   dispatch({ type: 'ADD_NEW_TARGET', payload: state.NewTarget })
                   )
@@ -83,11 +102,10 @@ const initial_state = {
           const editTarget = (values) => {
             
             return client.put('/cluster/product_target/update', values)
-              .then((response) => {
-                // console.log(values)
-                // console.log(response)
+              .then((response) => {               
                 toast.info(response.data.message)
-                viewClusterTarget();
+                viewClusterTarget();                
+                viewLeaderClusterTarget(values.storeName);
                 return ( 
                 dispatch({ type: 'EDIT_TARGET', payload: state.clusterList })
               )})
@@ -104,10 +122,12 @@ const initial_state = {
         addTarget,
         editTarget,
         viewSingleClusterTarget,
+        viewLeaderClusterTarget,
         
         singleClusterTarget : state.singleClusterTarget,
         clusterList: state.clusterList,
-        clusterProductList: state.clusterProductList
+        clusterProductList: state.clusterProductList,
+        leaderClusterProductList: state.leaderClusterProductList
         
       }}>
         {children}

@@ -4,7 +4,6 @@ import moment from 'moment';
 import "react-datepicker/dist/react-datepicker.css";
 import { Modal } from 'react-bootstrap'
 import { RosterContext } from "../../context/RosterState";
-import { toast } from "react-toastify";
 import { AppContext } from "../../context/AppState";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -30,14 +29,13 @@ const EditShiftModal = (props) => {
   const [showText, setShowText] = useState(false);
   const [invalidText, setInvalidText] = useState(false)
   const [showBreakDuration, setShowBreakDuration] = useState(true)
-  // const [workingHoursText, setWorkingHoursText] = useState(false);
   const [warnMsg, setWrnMsg] = useState(false);
   const [errormsg, setErrorMsg] = useState(false);
   const [status, setStatus] = useState(0)
   const [costCenterName, setCostCenterName] = useState('');
   const [breakNumber, setBreakNumber] = useState()
 
-  const { updateShift, viewShift, singleShiftList, viewShiftTypes, costCenter, viewContractTypes, shiftContractNames } = useContext(RosterContext);
+  const { updateShift, singleShiftList, viewShiftTypes, costCenter, viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const { user } = useContext(AppContext);
   const setClear = () => {
     setShiftType('')
@@ -61,15 +59,13 @@ const EditShiftModal = (props) => {
     setStartBreakTime(singleShiftList.breakStartTime)
     setStatus(singleShiftList.status)
     setCostCenterName(props.shiftData.storeId)
-
     //console.log("1---->"+getSingleCluster.employeeIds);
-    // console.log("2---->"+JSON.stringify(clusterLeaderNames));
   }, [props])
 
 
   useEffect(() => {
     costCenter()
-    if (user.loginType !== "1" && user.loginType !== "9") {
+    if (user.loginType !== "1" && user.loginType !== "9" && user.additionalRole !== "1" && user.additionalRole !== "9") {
       setCostCenterName(user.costCentre)
     }
   }, [user.costCentre, user.loginType]);
@@ -101,7 +97,6 @@ const EditShiftModal = (props) => {
       if (parseFloat(workingHours) > 9) {
         setShiftButton(true)
         setWrnMsg("Shift should be only for 9 hours")
-
       }
       else {
         setWrnMsg(false)
@@ -119,53 +114,11 @@ const EditShiftModal = (props) => {
     setInvalidText(true)
     setBreakNumber(1)
   }
-
-  const callTimer = () => {
-
-    const setEditModal = props.handleEditClose;
-    setClear()
-    setEditModal()
-  }
-
-
-
-
-  // const calcBreakDuration = (date) => {
-  //   let value2 = date
-  //   // alert("hi");
-  //   setEndBreakTIme(value2)
-  //   if (breakEndTime < breakStartTime || breakEndTime === breakStartTime) {
-  //     // alert(breakStartTime+ " "+breakEndTime)
-  //     // alert("false");
-  //     setBreakDurationErrrorMsg("Enter valid input")
-  //     setShiftButton(true)
-  //   }
-  //   else {
-  //     // alert("true")
-  //     setShiftButton(false)
-  //     setBreakDurationErrrorMsg(false)
-  //   }
-  // }
-
-
-
-
-
-
-
-
-
   const onSubmit = e => {
     // const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
     // const etime = moment(endTime, ["h:mm A"]).format("HH:mm");
     // const workingHours = moment.utc(moment(etime, "HH:mm:ss").diff(moment(stime, "HH:mm:ss"))).format("HH:mm:ss");
     // alert(workingHours);
-
-
-
-
-
-
     var result = parseInt(workingHours);
     if (result <= 5) {
       e.preventDefault();
@@ -232,11 +185,7 @@ const EditShiftModal = (props) => {
         console.log(result, "in competent");
       }
     }
-
-
   }
-  //console.log("shift list names " + shiftListNames)
-  // console.log("======== " + shiftContractNames)
   return (
     <Modal show={props.modal} onHide={props.handleEditClose} centered>
       <Fragment>
@@ -252,13 +201,11 @@ const EditShiftModal = (props) => {
                     <div className="col-sm-6">
                       <div className="form-group">
                         {/* <h1>{moment(singleShiftList.startTime,["HH:mm:ss"]).format("HH:mm A")}</h1>  */}
-
                         <label htmlFor="exampleFormControlInput1">From Time</label>
                         <br />
                         <DatePicker
                           className="form-control"
                           // selected={startTime}
-
                           onChange={date => setStartTime(date)}
                           showTimeSelect
                           showTimeSelectOnly
@@ -272,10 +219,10 @@ const EditShiftModal = (props) => {
                         />
                       </div>
                     </div>
+
                     <div className="col-sm-6">
                       <div className="form-group">
                         <label htmlFor="exampleFormControlInput1">End Time</label>
-
                         <DatePicker
                           // selected={endTime}
                           className="form-control"
@@ -293,13 +240,10 @@ const EditShiftModal = (props) => {
                         />
                       </div>
                     </div>
-
                   </div>
 
                   <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px" }}>{errormsg}</h6>
-
                   <h6 style={{ color: "black", fontFamily: "work-Sans, sans-serif", fontSize: "14px" }}> Total working hours: {workingHours}&nbsp;Hrs</h6>
-
                   <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px" }}>{warnMsg}</h6>
 
                   {showBreakDuration &&
@@ -314,11 +258,6 @@ const EditShiftModal = (props) => {
 
                     </div>
                   }
-
-
-
-
-
 
                   {/* {showBreakDuration2 && */}
                   <div className="row">
@@ -350,25 +289,6 @@ const EditShiftModal = (props) => {
                                 />
                               </div>
                             </div>
-                            {/* <div className="col-sm-6 mt-2">
-                                <div className="form-group">
-
-                                  <br />
-                                  <DatePicker
-                                    className="form-control"
-                                    onChange={date => calcBreakDuration(date)}
-                                    showTimeSelect
-                                    showTimeSelectOnly
-                                    timeFormat="HH:mm"
-                                    timeIntervals={30}
-                                    timeCaption="Time"
-                                    dateFormat="HH:mm aa"
-                                    value={moment(breakEndTime, ["HH:mm:ss"]).format("HH:mm A")}
-                                    defaultValue={moment(singleShiftList.breakEndTime, ["HH:mm:ss"]).format("HH:mm A")}
-                                  />
-                                  <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px" }}>{breakDurationErrrorMsg}</h6>
-                                </div>
-                              </div>  */}
 
                             {invalidText &&
                               <div className="col-sm-6">
@@ -376,13 +296,8 @@ const EditShiftModal = (props) => {
                                   <label htmlFor="exampleFormControlInput1"></label>
                                   <input type="text" style={{ marginTop: "7px" }} className="form-control" placeholder={breakEndTime} defaultValue={singleShiftList.breakEndTime} value={moment(breakStartTime).add(1, 'hours').format('HH:mm A')} />
                                 </div>
-
                               </div>
-
                             }
-
-
-
                           </div>
 
                           {/* {showText &&
@@ -401,13 +316,6 @@ const EditShiftModal = (props) => {
                     <h6>{breakDuationMsg && <div className="text-danger pl-3">Break Should be one hour</div>}</h6>
                   </div>
 
-
-
-
-
-
-
-
                   <div className="row">
                     <div className="col-sm-12">
                       <div className="form-group">
@@ -424,11 +332,6 @@ const EditShiftModal = (props) => {
                       </div>
                     </div>
                   </div>
-
-
-
-
-
                   <div className="row">
                     <div className="col-sm-12">
                       <div className="form-group">
@@ -438,11 +341,8 @@ const EditShiftModal = (props) => {
                           defaultValue={singleShiftList.contractType}
                           onChange={(e) => setContractType(e.target.value)}
                           value={contractType}>
-
-
                           {shiftContractNames.map((e, i) => {
                             return (
-
                               <option key={e.typeId} value={e.contractType}>
                                 {e.contractType}
                               </option>
@@ -465,15 +365,11 @@ const EditShiftModal = (props) => {
                           onChange={(e) => setStatus(e.target.value)}>
                           <option value="0">Active</option>
                           <option value="1">Inactive</option>
-
                         </select>
                       </div>
                     </div>
                   </div>
                   <button className="myclass mb-2 mr-2" type="submit" disabled={shiftButton} value="Submit">Save</button>
-
-
-
                 </form>
                 <h5>{successMsg.length !== 0 && <div className="text-success">{successMsg}</div>}</h5>
               </div>

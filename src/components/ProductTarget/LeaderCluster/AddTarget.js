@@ -178,7 +178,7 @@ const AddTarget = (props) => {
 
                                                 <option value="">Select</option>
                                                 { clusterList !== null ? clusterList.map((e, i) => {
-                                                    console.log(e);
+                                                    
                                                     return(
                                                     <option key={i + 1} value={e.clusterId}>{e.clusterName}</option>)
                                                 }): ""}

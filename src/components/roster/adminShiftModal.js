@@ -22,7 +22,6 @@ const AdminShiftModal = (props) => {
   const [days, setDays] = useState([])
   const [assignShiftButton, setAShiftButton] = useState(true);
   const [assignWeekOffButton, setAssignWeekOffButton] = useState(true);
-  const [storecostCenterName, setstorecostCenterName] = useState('');
   const [contractType, setContractType] = useState([])
 
   const { weekDays, weekOffDays, availableShifts, availableShiftData, adminRosterAvailableShiftList, adminRosterAvailableShift,
@@ -173,7 +172,6 @@ const AdminShiftModal = (props) => {
                     {/* Name :<h1>{firstName}{contractType}</h1> */}
                     <div className="col-sm-7 ">
                       <div className="form-group">
-                        <h1>{storecostCenterName}</h1>
                         <select
                           className="form-control"
                           style={{ fontSize: "0.8rem" }}

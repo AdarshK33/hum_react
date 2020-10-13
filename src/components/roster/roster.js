@@ -27,8 +27,9 @@ const Roster = () => {
   useEffect(() => {
     console.log(user.employeeId)
     weekOffDataEmp(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"), user.employeeId)
-  }, [])
+  }, [user.employeeId])
   //use effect
+
   const submitDate = (e) => {
 
     e.preventDefault();

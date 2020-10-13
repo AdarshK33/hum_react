@@ -29,8 +29,11 @@ const LeaderStoreProductTarget = () => {
         setTodayDate(dd);
         setMonth(mm);
         setYear(yyyy);
-        LeaderTargetList(user.costCentre)
-    }, []);
+        if(user.costCentre !== undefined){
+            LeaderTargetList(user.costCentre);
+        }
+        
+    }, [user.costCentre]);
     
     const targetEditHandler = (id) => {
        
@@ -55,14 +58,27 @@ const LeaderStoreProductTarget = () => {
 
     const handleEditClose = () => setEditModal(false);
     // Pagination
+
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
-    const totalRecords = storeLeaderProductList.length;
+    let totalRecords = 0
     const pageRange = 10;
   
-    const indexOfLastRecord = currentPage * recordPerPage;
-    const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    const currentRecords = storeLeaderProductList.slice(indexOfFirstRecord, indexOfLastRecord);
+    let indexOfLastRecord = 1;
+    let indexOfFirstRecord = 1;
+    let currentRecords = [];
+
+if(storeLeaderProductList !== null){
+    
+   
+     totalRecords = storeLeaderProductList.length;
+    // const pageRange = 10;
+  
+     indexOfLastRecord = currentPage * recordPerPage;
+     indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+     currentRecords = storeLeaderProductList.slice(indexOfFirstRecord, indexOfLastRecord);
+}
+   
   
     const handlePageChange = pageNumber => {
       setCurrentPage(pageNumber);
@@ -148,7 +164,7 @@ const LeaderStoreProductTarget = () => {
                          
                 </div>
                 <div>
-                {storeLeaderProductList !== null && storeLeaderProductList.length > 0 &&
+                { storeLeaderProductList !== undefined && storeLeaderProductList !== null && storeLeaderProductList.length > 0 &&
                   <Pagination
                     itemClass="page-item"
                     linkClass="page-link"

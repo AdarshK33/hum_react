@@ -48,7 +48,7 @@ const CreateClusterModal = (props) => {
   useEffect(() => {
     getUserInfo()
     costCenter()
-    if (user.loginType !== "1" && user.loginType !== "9") {
+    if (user.loginType !== "1" && user.loginType !== "9" && user.additionalRole !== "1" && user.additionalRole !== "9") {
       setCostCenterName(user.costCentre)
     }
   }, [user.costCentre, user.loginType]);
@@ -234,7 +234,7 @@ const CreateClusterModal = (props) => {
               </div>
             </div>
             {(() => {
-              if (user.loginType === "1" || user.loginType === "9") {
+              if (user.loginType === "1" || user.loginType === "9" || user.additionalRole === "1" || user.additionalRole === "9") {
                 return (
                   <div className="row">
                     <div className="col-sm-12">
@@ -259,13 +259,6 @@ const CreateClusterModal = (props) => {
                 )
               }
             })()}
-
-
-
-
-
-
-
             <button className="myclass mb-2 mr-2" type="submit" disabled={clustertButton} value="Submit">Save</button>
             <button className="myclass mb-2 mr-2" onClick={() => { clearAndClose() }}>Close</button>
 
