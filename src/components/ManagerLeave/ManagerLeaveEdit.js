@@ -9,7 +9,7 @@ import { LeaveContext } from '../../context/LeaveState'
 import { AppContext } from "../../context/AppState";
 import moment from 'moment'
 
-const AdminLeaveEdit = (props) => {
+const ManagerLeaveEdit = (props) => {
     const [empId, setEmpId] = useState('')
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date())
@@ -231,7 +231,7 @@ const AdminLeaveEdit = (props) => {
             console.log("edit leave data for general----", editLeave)
               editList(editLeave)
           }
-            history.push("/adminleaves/adminleaveslist");
+            history.push("/manager/managerleaves");
             setEditMsg(false)
 
 
@@ -411,4 +411,4 @@ const AdminLeaveEdit = (props) => {
     );
 };
 
-export default AdminLeaveEdit;
+export default ManagerLeaveEdit;

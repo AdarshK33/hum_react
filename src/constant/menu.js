@@ -49,6 +49,9 @@ export const MENUITEMS = [
             { path: '/adminleaves/adminsalarymodule', title: 'Salary Approval', type: 'link' },
         ]
     },
+    {
+        path: '/manager/managerleaves', title: 'Manager Leaves', icon: File, type: 'link', active: false
+    },
   
     {
         path: '/roster/adminroster', title: 'AdminRoster', icon: File, type: 'link', active: false
