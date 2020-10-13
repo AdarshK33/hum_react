@@ -261,7 +261,7 @@ const AdminLeaveAdd = (props) => {
             addLeave(newLeave)
         }
             
-        history.push("/AdminLeaves/AdminLeavesList");
+        history.push("/adminleaves/adminleaveslist");
         setEditMsg(false)
 
     }

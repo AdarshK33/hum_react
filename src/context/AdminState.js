@@ -1,8 +1,9 @@
 /* eslint-disable no-useless-concat */
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer, useContext } from 'react';
 import { client } from '../utils/axios';
 import AdminReducer from '../reducers/AdminReducer';
 import { toast } from "react-toastify";
+import { AppContext } from "../context/AppState";
 
 
 const initial_state = {
@@ -20,7 +21,7 @@ const initial_state = {
 export const AdminContext = createContext();
 export const AdminProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AdminReducer, initial_state);
-
+  const { user, getUserMenu } = useContext(AppContext);
 
   // view Leaves for Admin
 
@@ -53,19 +54,28 @@ export const AdminProvider = ({ children }) => {
   //employee id according to cost center
 
   const employeeIdData = (costData) => {
-    /*  alert("costData========", costData); */
-    client.get('employee/view/leave_view/' + '?costCentre=' + costData)
+    if(user.managerMenus){
+      client.get('employee/view/leave/manager')
       .then((response) => {
         state.employeeIdList = response.data.data
-        console.log("employee id data", state.employeeIdList)
-        // if (state.employeeIdList === null) {
-        //   toast.info("No Employee For Selected Cost Center");
-        // }
+        console.log("employee id data for manager", state.employeeIdList)
         return dispatch({ type: 'EMPLOYEE_ID_DATA', payload: state.employeeIdList })
       })
       .catch((error) => {
         console.log(error)
       })
+    }else{
+      client.get('employee/view/leave_view/' + '?costCentre=' + costData)
+      .then((response) => {
+        state.employeeIdList = response.data.data
+        console.log("employee id data for admin", state.employeeIdList)
+        return dispatch({ type: 'EMPLOYEE_ID_DATA', payload: state.employeeIdList })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    }
+    
   }
 
 
