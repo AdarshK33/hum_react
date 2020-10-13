@@ -150,7 +150,7 @@ function ClusterProductTarget(){
                                          </tr>
                                     </tbody>
                                  )
-                            }) : <div className="loader"><Loader /></div>}
+                            }) : <div id="loader"><Loader /></div>}
                     </Table> 
 
                     <EditTarget
