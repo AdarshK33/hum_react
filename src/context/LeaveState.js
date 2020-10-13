@@ -25,16 +25,18 @@ export const LeaveContext = createContext();
 
 export const LeaveProvider = ({ children }) => {
   const [state, dispatch] = useReducer(LeaveReducer, initialState);
-  const { user } = useContext(AppContext);
-  
+  const { user, getUserMenu } = useContext(AppContext);
+  console.log("manager menus in leaveState-------",user.managerMenus)
   //View Leave
 
   const viewList = (empId1) => {
-    client.get('leave_transaction/view')
+    console.log("manager menus-------",user.managerMenus)
+    if(user.managerMenus){
+      client.get('/leave_transaction/view/manager')
       .then((response) => {
         state.leaveList =  response.data.data
         getLeave(empId1);
-        console.log("=====GET API respone=====", state.leaveList)
+        console.log("=====GET API respone for manager=====", state.leaveList)
         return (
           dispatch({ type: 'FETCH_LEAVE_LIST', payload: state.leaveList })
         )
@@ -42,6 +44,20 @@ export const LeaveProvider = ({ children }) => {
       .catch((error) => {
         console.log(error)
       })
+    }else{
+    client.get('leave_transaction/view')
+      .then((response) => {
+        state.leaveList =  response.data.data
+        getLeave(empId1);
+        console.log("=====GET API respone for Admin=====", state.leaveList)
+        return (
+          dispatch({ type: 'FETCH_LEAVE_LIST', payload: state.leaveList })
+        )
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    }
   }
 
   // View Leave Data
