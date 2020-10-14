@@ -261,7 +261,7 @@ console.log("managerEmployeeIdList",managerEmployeeIdList)
             addLeave(newLeave)
         }
             
-        history.push("/manager/managerleaves");
+        history.push("/managerleaves");
         setEditMsg(false)
 
     }
