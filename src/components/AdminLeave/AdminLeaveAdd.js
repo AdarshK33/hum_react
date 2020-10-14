@@ -126,7 +126,7 @@ const AdminLeaveAdd = (props) => {
             status: 1,
             toDate: moment(value1).format("YYYY-MM-DD"),
             viewLeavePopup: 0,
-            year: '2020'
+            year: new Date().getFullYear()
         }
         addPopup(newPopup)
         setEditMsg(true)
@@ -153,7 +153,7 @@ const AdminLeaveAdd = (props) => {
             status: 1,
             toDate: moment(d3).format("YYYY-MM-DD"),
             viewLeavePopup: 0,
-            year: '2020'
+            year: new Date().getFullYear()
         }
         addPopup(newPopup1)
         setEditMsg(true)
@@ -237,7 +237,7 @@ const AdminLeaveAdd = (props) => {
             status: 1,
             toDate: moment(endDate).format("YYYY-MM-DD"),
             viewLeavePopup: 1,
-            year: '2020'
+            year: new Date().getFullYear()
         }
         const newLeave1 = {
             empId: employeeCostCenter,
@@ -252,7 +252,7 @@ const AdminLeaveAdd = (props) => {
             status: 1,
             toDate: moment(d3).format("YYYY-MM-DD"),
             viewLeavePopup: 1,
-            year: '2020'
+            year: new Date().getFullYear()
         }
         if (leave === '3') {
             console.log("newLeave maternity---------", newLeave1)
@@ -262,7 +262,7 @@ const AdminLeaveAdd = (props) => {
             addLeave(newLeave)
         }
             
-        history.push("/adminleaves/adminleaveslist");
+        history.push("/adminleave");
         setEditMsg(false)
 
     }

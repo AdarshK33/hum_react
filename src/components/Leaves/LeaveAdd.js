@@ -50,7 +50,12 @@ const LeaveAdd = (props) => {
 
     const today = new Date()
     const currentYear = new Date('2020-01-01')
-    const nextYear = new Date('2021-12-31')
+    const nextYear = new Date('2020-12-31')
+    /* let oneYearFromNow = new Date();
+oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() );
+console.log("oneYearFromNow", oneYearFromNow)
+let tryMonth = new Date().setMonth(new Date().getMonth() + 1)
+console.log("tryMonth", tryMonth) */
     
     const fromDateHandler = (date) => {
         let value = date
@@ -97,7 +102,7 @@ const LeaveAdd = (props) => {
             status: 1,
             toDate: moment(value1).format("YYYY-MM-DD"),
             viewLeavePopup: 0,
-            year: '2020'
+            year: new Date().getFullYear()
         }
         
         addPopup(newPopup)
@@ -127,7 +132,7 @@ const LeaveAdd = (props) => {
             status: 1,
             toDate: moment(d3).format("YYYY-MM-DD"),
             viewLeavePopup: 0,
-            year: '2020'
+            year: new Date().getFullYear()
         }
         addPopup(newPopup1)
         setEditMsg(true)
@@ -210,7 +215,7 @@ const LeaveAdd = (props) => {
             status: 1,
             toDate: moment(d3).format("YYYY-MM-DD"),
             viewLeavePopup: 1,
-            year: '2020'
+            year: new Date().getFullYear()
         }
        
         var newData
@@ -234,7 +239,7 @@ const LeaveAdd = (props) => {
             status: 1,
             toDate: moment(endDate).format("YYYY-MM-DD"),
             viewLeavePopup: 1,
-            year: '2020'
+            year: new Date().getFullYear()
         }
         console.log("newLeave empId-----", newLeave.empId)
         if (leave === '3') {

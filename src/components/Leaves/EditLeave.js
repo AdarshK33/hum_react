@@ -86,7 +86,7 @@ const EditLeave = (props) => {
             status: 1,
             toDate: moment(endDate).format("YYYY-MM-DD"),
             viewLeavePopup: 0,
-            year: '2020'
+            year: new Date().getFullYear()
         }
         setEditMsg(true)
         editPopup(newPopup)
@@ -133,7 +133,7 @@ const EditLeave = (props) => {
             status: 1,
             toDate: moment(value1).format("YYYY-MM-DD"),
             viewLeavePopup: 0,
-            year: '2020'
+            year: new Date().getFullYear()
         }
         editPopup(newPopup)
         setEditMsg(true)
@@ -162,7 +162,7 @@ console.log("value 2", value2)
             status: 1,
             toDate: moment(d3).format("YYYY-MM-DD"),
             viewLeavePopup: 0,
-            year: '2020'
+            year: new Date().getFullYear()
         }
         console.log("editPopupData", editPopupData)
         editPopup(editPopupData)
@@ -204,7 +204,7 @@ console.log("d3",moment(d3).format("YYYY-MM-DD"))
             status: 1,
             toDate: moment(d3).format("YYYY-MM-DD"),
             viewLeavePopup: 1,
-            year: '2020'
+            year: new Date().getFullYear()
         }
         var newData
         if(startDate > new Date()){
@@ -226,7 +226,7 @@ console.log("d3",moment(d3).format("YYYY-MM-DD"))
             status: 1,
             toDate: moment(endDate).format("YYYY-MM-DD"),
             viewLeavePopup: 1,
-            year: '2020'
+            year: new Date().getFullYear()
         }
         if (leave === 3) {
           console.log("edit leave data for maternity----", editLeave)
