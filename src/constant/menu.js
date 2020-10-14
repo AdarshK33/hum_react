@@ -43,14 +43,14 @@ export const MENUITEMS = [
    
     {
         title: 'Admin', icon: Calendar, type: 'link', path: '/adminleaves/adminleaveview', active: false,children:[
-            { path: '/adminleaves/adminleaveslist', title: 'Admin Leave', type: 'link' },
+            { path: '/adminleave', title: 'Admin Leave', type: 'link' },
             { path: '/adminleaves/adminmasterleave', title: 'Leave Master', type: 'link' },
             { path: '/adminleaves/adminleaveapproval', title: 'Leave Approval', type: 'link' },
             { path: '/adminleaves/adminsalarymodule', title: 'Salary Approval', type: 'link' },
         ]
     },
     {
-        path: '/manager/managerleaves', title: 'Manager Leaves', icon: File, type: 'link', active: false
+        path: '/managerleaves', title: 'Manager Leave', icon: File, type: 'link', active: false
     },
   
     {

@@ -50,7 +50,7 @@ const ManagerLeaveList = (props) => {
 
     return (
         <Fragment>
-            <Breadcrumb title="Manager " parent="Manager Leave" />
+            <Breadcrumb title="Manager" parent="Manager Leave" />
             <div className="container-fluid">
                 <Row className="heading-row">
                     <h4 className="main-heading">Manager Leaves</h4>

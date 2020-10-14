@@ -231,7 +231,7 @@ const ManagerLeaveEdit = (props) => {
             console.log("edit leave data for general----", editLeave)
               editList(editLeave)
           }
-            history.push("/manager/managerleaves");
+            history.push("/managerleaves");
             setEditMsg(false)
 
 
