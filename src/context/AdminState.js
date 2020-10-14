@@ -57,6 +57,12 @@ export const AdminProvider = ({ children }) => {
     client.get('employee/view/leave_view/' + '?costCentre=' + costData)
       .then((response) => {
         state.employeeIdList = response.data.data
+        if (response.data.data === null) {
+          state.employeeIdList = []
+        }
+        else {
+          state.employeeIdList = response.data.data;
+        }
         console.log("employee id data", state.employeeIdList)
         // if (state.employeeIdList === null) {
         //   toast.info("No Employee For Selected Cost Center");
