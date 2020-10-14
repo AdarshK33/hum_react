@@ -87,12 +87,12 @@ const RoutePath = () => {
                                 />
                                 {/*Manager Leaves Page */}
                                 <Route
-                                  path={`${process.env.PUBLIC_URL}/manager/managerleaves`}
+                                  path={`${process.env.PUBLIC_URL}/managerleaves`}
                                   component={ManagerLeaveList}
                                 />
                                 {/*Admin Leaves Page */}
                                 <Route
-                                  path={`${process.env.PUBLIC_URL}/adminleaves/adminleaveslist`}
+                                  path={`${process.env.PUBLIC_URL}/adminleave`}
                                   component={AdminLeavesList}
                                 />
 
