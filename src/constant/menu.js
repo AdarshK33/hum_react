@@ -49,14 +49,10 @@ export const MENUITEMS = [
             { path: '/adminleaves/adminsalarymodule', title: 'Salary Approval', type: 'link' },
         ]
     },
-<<<<<<< HEAD
-
-=======
     {
         path: '/manager/managerleaves', title: 'Manager Leaves', icon: File, type: 'link', active: false
     },
-  
->>>>>>> f9577ef8940957c12c063b05912f1b1292cfd67e
+
     {
         path: '/roster/adminroster', title: 'AdminRoster', icon: File, type: 'link', active: false
     },
