@@ -19,7 +19,7 @@ import { ClusterProductProvider } from "./context/ClusterProductState";
 import { AppProvider } from "./context/AppState";
 import { AdminProvider } from "./context/AdminState";
 
-import Route1 from "./Route";
+import RoutePath from "./Route";
 
 
 //firebase Auth
@@ -43,7 +43,7 @@ function Root() {
                     <AdminProvider>
                       <BrowserRouter basename={"/"}>
                         <ScrollContext>
-                          <Route1 />
+                          <RoutePath />
                         </ScrollContext>
                       </BrowserRouter>
                       {/* </Provider>  */}

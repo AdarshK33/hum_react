@@ -16,23 +16,32 @@ const AppLayout = ({ children }) => {
 
     useEffect(() => {
         checkTokenExists()
-        getUserInfo()
         setFlagValue(flag)
     }, []);
     useEffect(() => {
         const { MENUITEMS, flag } = state
         setMenuItems(MENUITEMS);
+        
         if (flagValue === 0 && menuItems !== []) {
             setFlagValue(flag)
-            getUserMenu(user.generalUserMenus);
+            if(window.location.href.includes("team")){
+                getUserMenu(user.managerMenus);
+            }else if (window.location.href.includes("admin")) {
+                getUserMenu(user.adminMenus);
+            }else {
+                getUserMenu(user.generalUserMenus);
+            }
+            
         }
     })
-    console.log("APP RESULT " + app.isLoggedin);
+
     const checkTokenExists = () => {
+        console.log("APP RESULT " + app.isLoggedin);
         // console.log("ALL TOKENS "+Cookies.get());
         let access_token = Cookies.get('APPAT');
         if (access_token) {
             authenticateUser(true)
+            getUserInfo()
             console.log("login valid")
         }
         else {

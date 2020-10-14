@@ -31,6 +31,9 @@ const ClusterReducer = (state, action) => {
         case 'FETCH_ALL_LEADERS_NAME':
             return { ...state, clusterAllLeaderNames: action.payload };
 
+        case 'FETCH_ADMIN_ClUSTER_LIST':
+            return { ...state, adminClusterList: action.payload };
+
         default: return state;
     }
 }

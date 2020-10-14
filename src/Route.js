@@ -38,9 +38,10 @@ import LeaderCluster from './components/ProductTarget/LeaderCluster/LeaderCluste
 import RoleManagemenetList from './components/RoleManagement/RoleManagementList';
 import { AppContext } from "./context/AppState";
 import ManagerLeaveList from './components/ManagerLeave/ManagerLeaveList'
+import AdminCluster from "./components/cluster/admincluster";
 
 
-const Route1 = () => {
+const RoutePath = () => {
     const { user, getUserInfo } = useContext(AppContext);
     const [routPath, setRoutPath] = useState(false);
     // useEffect(() => { 
@@ -152,61 +153,67 @@ const Route1 = () => {
                                   path={`${process.env.PUBLIC_URL}/report/manager-report`}
                                   component={ManagerReportForm}
                                 /> */}
-                                {/*Admin Report Page */}
-                                <Route
-                                  path={`${process.env.PUBLIC_URL}/report/leavereport`}
-                                  component={AdminReportForm}
-                                />
+          {/*Admin Report Page */}
+          <Route
+            path={`${process.env.PUBLIC_URL}/report/leavereport`}
+            component={AdminReportForm}
+          />
 
-                                  {/*Productivity  Admin Report Page */}
-                                  <Route
-                                  path={`${process.env.PUBLIC_URL}/report/productivityreport`}
-                                  component={ProductivityReportForm}
-                                />
-                                
-                                 {/*Productivity Manager Report Page */}
-                                 {/* <Route
+          {/*Productivity  Admin Report Page */}
+          <Route
+            path={`${process.env.PUBLIC_URL}/report/productivityreport`}
+            component={ProductivityReportForm}
+          />
+
+          {/*Productivity Manager Report Page */}
+          {/* <Route
                                 path={`${process.env.PUBLIC_URL}/report/productivitymanager-report`}
                                 component={ProductivityReportManager}
                               /> */}
 
-                                {/*Admin Store Product target Page */}
-                                <Route
-                                    path={`${process.env.PUBLIC_URL}/product-target/adminstoretarget`}
-                                    component={StoreProductTarget}
-                                  />
+          {/*Admin Store Product target Page */}
+          <Route
+            path={`${process.env.PUBLIC_URL}/product-target/adminstoretarget`}
+            component={StoreProductTarget}
+          />
 
-                                   {/*Leader Store Product target Page */}
-                                <Route
-                                    path={`${process.env.PUBLIC_URL}/product-target/leaderStoretarget`}
-                                    component={LeaderStoreProductTarget}
-                                  />
+          {/*Leader Store Product target Page */}
+          <Route
+            path={`${process.env.PUBLIC_URL}/product-target/leaderStoretarget`}
+            component={LeaderStoreProductTarget}
+          />
 
-                                  {/*Admin Cluster Product target Page */}
-                                  <Route
-                                      path={`${process.env.PUBLIC_URL}/product-target/adminclustertarget`}
-                                      component={ClusterProductTarget}
-                                    />
+          {/*Admin Cluster Product target Page */}
+          <Route
+            path={`${process.env.PUBLIC_URL}/product-target/adminclustertarget`}
+            component={ClusterProductTarget}
+          />
 
-                                     {/*Leader Cluster Product target Page */}
-                                  <Route
-                                      path={`${process.env.PUBLIC_URL}/product-target/leaderclustertarget`}
-                                      component={LeaderCluster}
-                                    />
+          {/*Leader Cluster Product target Page */}
+          <Route
+            path={`${process.env.PUBLIC_URL}/product-target/leaderclustertarget`}
+            component={LeaderCluster}
+          />
 
-                                    {/*Role Management Page */}
-                                    <Route
-                                          path={`${process.env.PUBLIC_URL}/rolemanagement`}
-                                          component={RoleManagemenetList}
-                                    />
+          {/*Role Management Page */}
+          <Route
+            path={`${process.env.PUBLIC_URL}/rolemanagement`}
+            component={RoleManagemenetList}
+          />
 
-                              </App>
-                            </Fragment>
-                         
-                      
-                        </Switch>
-    );
+          {/*Role Management Page */}
+          <Route
+            path={`${process.env.PUBLIC_URL}/cluster/admincluster`}
+            component={AdminCluster}
+          />
+
+        </App>
+      </Fragment>
+
+
+    </Switch>
+  );
 }
 
 
-export default Route1;
+export default RoutePath;
