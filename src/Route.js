@@ -40,7 +40,7 @@ import { AppContext } from "./context/AppState";
 import ManagerLeaveList from './components/ManagerLeave/ManagerLeaveList'
 
 
-const Route1 = () => {
+const RoutePath = () => {
     const { user, getUserInfo } = useContext(AppContext);
     const [routPath, setRoutPath] = useState(false);
     // useEffect(() => { 
@@ -209,4 +209,4 @@ const Route1 = () => {
 }
 
 
-export default Route1;
+export default RoutePath;

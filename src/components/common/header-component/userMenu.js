@@ -29,16 +29,16 @@ const UserMenu = () => {
                     </div>
                 </div>
                 <ul className="profile-dropdown onhover-show-div p-20 profile-dropdown-hover">
-                    <li onClick={handleMenuListProfile}><a href="#"><User />My Profile</a></li>
+                    <li onClick={handleMenuListProfile}><a href="#profile"><User />My Profile</a></li>
                     {user.adminMenus !== null &&
-                     <li onClick={handleMenuListAdmin}><a href="#"><UserPlus />Admin</a></li>
+                     <li onClick={handleMenuListAdmin}><a href="#admin"><UserPlus />Admin</a></li>
                         // <Fragment>
                            
                         //     <li onClick={handleMenuListTeam}><a href="#javascript"><Users />My Team</a></li>
                         // </Fragment>
                     }
                     {user.managerMenus !== null && 
-                        <li onClick={handleMenuListTeam}><a href="#"><Users />My Team</a></li>
+                        <li onClick={handleMenuListTeam}><a href="#team"><Users />My Team</a></li>
                     }
                     {/*  <li><a href="#javascript"><Settings />Settings</a></li> */}
                     {/* <li><a href="#javascript"><LogOut /> Log out</a></li> */}

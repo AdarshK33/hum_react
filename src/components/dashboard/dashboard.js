@@ -78,7 +78,10 @@ function Dashboard () {
         useEffect(() => {
             viewCluster()
             viewCostCentre()
-            viewClusterCostCenter(user.costCentre)
+            if(user.costCentre !== undefined){
+                viewClusterCostCenter(user.costCentre)
+            }
+            
             // console.log(clusterList)
             // if(user.loginType !== '1' && user.loginType !== '9'){
                 setStoreType(user.costCentre)
@@ -244,7 +247,7 @@ function Dashboard () {
                                 <div className="col-sm-4">
                                     <div className="form-group">
                                         <label className="name f-w-600" >Select Store<span style = {{color:'red'}}>*</span>&nbsp; </label>
-                                        {user.loginType === "1" || user.loginType === "9" ?
+                                        {user.loginType === "1" || user.loginType === "9" || user.additionalRole === "1" || user.additionalRole === "9" ?
                                          <select
                                             className="form-control Value"
                                             onChange={(e)=>fromStoreHandler(e.target.value)}
