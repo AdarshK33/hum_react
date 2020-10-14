@@ -64,6 +64,7 @@ function ViewCluster() {
                       <th>S. No</th>
                       <th scope="col">Sports Name</th>
                       <th scope="col">Cluster Name</th>
+                      <th scope="col">Cost Center</th>
                       <th scope="col">Cluster Details</th>
                       <th scope="col">Cluster Leader</th>
                       <th scope="col">Team Count</th>
@@ -84,6 +85,7 @@ function ViewCluster() {
                               </tr>)
                             })}
                             <td>{e.clusterName}</td>
+                            <td>{e.storeId}</td>
                             <td>{e.description}</td>
                             <td>{e.clusterLeaderName}</td>
                             <td>{e.teamCount}</td>

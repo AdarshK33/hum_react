@@ -18,7 +18,7 @@ const initial_state = {
   clusterCostCenterList: [],
   clusterAllLeaderNames: [],
   getEmployeesNames: [],
-
+  adminClusterList: []
 }
 
 
@@ -50,7 +50,7 @@ export const ClusterProvider = ({ children }) => {
       //  console.log("data==>" + JSON.stringify(response));
       state.clusterList = response.data.data;
       console.log("====CLUSTER LIST====")
-       console.log(JSON.stringify(state.clusterList))
+      console.log(JSON.stringify(state.clusterList))
 
       return dispatch({ type: 'FETCH_ClUSTER_LIST', payload: state.clusterList });
     })
@@ -102,7 +102,6 @@ export const ClusterProvider = ({ children }) => {
 
   function getCluster(id) {
 
-    // alert("cluster" + id)
     client.get('cluster/' + id).then(function (response) {
       //  console.log("data==Clusteer>" + JSON.stringify(response));
       //  if(response && response.data && response.data.data)
@@ -265,6 +264,21 @@ export const ClusterProvider = ({ children }) => {
         console.log(error)
       })
   }
+
+  const viewClusterForAdmin = (storeId) => {
+    client.get('cluster/view', storeId).then(function (response) {
+      //  console.log("data==>" + JSON.stringify(response));
+      state.adminClusterList = response.data.data;
+      console.log("==== ADMIN_CLUSTER LIST====")
+
+
+      return dispatch({ type: 'FETCH_ADMIN_ClUSTER_LIST', payload: state.adminClusterList });
+    })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   return (<ClusterContext.Provider value={{
     addCluster,
     viewSports,
@@ -280,6 +294,7 @@ export const ClusterProvider = ({ children }) => {
     salaryApproval,
     viewClusterCostCenter,
     selectAllClusterLeaderForEdit,
+    viewClusterForAdmin,
     clusterList: state.clusterList,
     clusterLeaderNames: state.clusterLeaderNames,
     sportsNames: state.sportsNames,
@@ -291,6 +306,7 @@ export const ClusterProvider = ({ children }) => {
     clusterCostCenterList: state.clusterCostCenterList,
     clusterAllLeaderNames: state.clusterAllLeaderNames,
     getEmployeesNames: state.getEmployeesNames,
+    adminClusterList: state.adminClusterList,
   }}>
     {children}
   </ClusterContext.Provider>);
