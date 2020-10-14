@@ -102,18 +102,20 @@ export const AppProvider = ({ children, history }) => {
       for (let i = 0; i < menus.length; i++) {
         if (menus[i].hasChild === true) {
           state.MENUITEMS.push({ title: menus[i].menuName, icon: File, type: 'link', path: menus[i].menuUrl, active: false, children: [] })
-          for (let j = 0; j < menus.length; j++) {
-            if (menus[j].child === true && menus[i].menuUrl === menus[j].parentUrl) {
-              state.MENUITEMS[i].children.push({ path: menus[j].menuUrl, title: menus[j].menuName, type: 'link' })
-            }
-
-          }
+          
         } else if (menus[i].child === false) {
           state.MENUITEMS.push({ path: menus[i].menuUrl, title: menus[i].menuName, icon: File, type: 'link', active: false })
         }
       }
+      for (let i = 0; i < state.MENUITEMS.length; i++) {
+        for (let j = 0; j < menus.length; j++) {
+          if (state.MENUITEMS[i].path === menus[j].parentUrl) {
+            state.MENUITEMS[i].children.push({ path: menus[j].menuUrl, title: menus[j].menuName, type: 'link' })
+          }
+
+        }
+      }
     }
-    console.log("*****************************", state.MENUITEMS);
 
   }
 

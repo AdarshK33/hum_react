@@ -4,6 +4,9 @@ const LeaveReducer = (state, action) => {
         case 'FETCH_LEAVE_LIST':
             return { ...state, leaveList: action.payload }
 
+        case 'FETCH_MANAGER_LEAVE_LIST':
+            return { ...state, leaveManagerList: action.payload }
+
         case 'FETCH_LEAVE_DATA_LIST':
             return { ...state, leaveDataList: action.payload }
 

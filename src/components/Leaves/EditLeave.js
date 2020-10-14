@@ -61,9 +61,11 @@ const EditLeave = (props) => {
     const fromDateHandler = (date) => {
 
         let value = date
-        console.log("fromDateHandler value", value)
-
         setStartDate(value);
+        
+        console.log("fromDateHandler value", value)
+        console.log("endDate value", endDate)
+
         var newData
         if(startDate > new Date()){
              newData = 'Planned'
@@ -107,8 +109,10 @@ const EditLeave = (props) => {
 
     const toDateHandler = (date) => {
         let value1 = date
-        console.log("toDateHandler value", value1)
+        
         setEndDate(value1);
+        console.log("toDateHandler value", value1)
+        console.log("startDate value", startDate)
         var newData
         if(startDate > new Date()){
              newData = 'Planned'

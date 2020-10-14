@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, Fragment } from 'react';
+/* import React, { useState, useEffect, useContext, Fragment } from 'react';
 import {  Row, Col, Button, Table } from 'react-bootstrap';
 import { AdminContext } from '../../context/AdminState';
 import Breadcrumb from '../common/breadcrumb';
@@ -13,7 +13,7 @@ const AdminLeaveView = (props) => {
 
     const [modal, setModal] = useState(false)
 
-    /*-----------------Pagination------------------*/
+   
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
     const totalRecords = leaveAdminList !== null && leaveAdminList.length;
@@ -27,7 +27,7 @@ const AdminLeaveView = (props) => {
     setCurrentPage(pageNumber);
 }
 
-   /*-----------------Pagination------------------*/
+   
 
     const handleClose = () => setModal(false)
     const handleShow = () => setModal(true)
@@ -92,4 +92,4 @@ const AdminLeaveView = (props) => {
     );
 };
 
-export default AdminLeaveView;
+export default AdminLeaveView; */

@@ -25,7 +25,7 @@ const EditSalary = (props) => {
     const [year, setYear] = useState()
 
     let history = useHistory();
-
+ 
     const {salaryEdit } = useContext(ClusterContext);
 
     useEffect(() => {
@@ -118,7 +118,7 @@ const EditSalary = (props) => {
         }
         salaryEdit(EditSalary)
 
-        history.push("/salary/salaryView");
+        // history.push("/salary/salaryView");
         const setModal = props.handleEditClose;
         setModal()
     }

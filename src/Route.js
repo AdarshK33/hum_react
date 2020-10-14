@@ -37,6 +37,7 @@ import ClusterProductTarget from './components/ProductTarget/ClusterProductTarge
 import LeaderCluster from './components/ProductTarget/LeaderCluster/LeaderCluster';
 import RoleManagemenetList from './components/RoleManagement/RoleManagementList';
 import { AppContext } from "./context/AppState";
+import ManagerLeaveList from './components/ManagerLeave/ManagerLeaveList'
 import AdminCluster from "./components/cluster/admincluster";
 
 const Route1 = () => {
@@ -83,10 +84,10 @@ const Route1 = () => {
             path={`${process.env.PUBLIC_URL}/leaves/viewleave`}
             component={LeaveView}
           />
-          {/*Admin Leaves Page */}
+          {/*Manager Leaves Page */}
           <Route
-            path={`${process.env.PUBLIC_URL}/adminleaves/adminleaveview`}
-            component={AdminLeaveView}
+            path={`${process.env.PUBLIC_URL}/manager/managerleaves`}
+            component={ManagerLeaveList}
           />
           {/*Admin Leaves Page */}
           <Route

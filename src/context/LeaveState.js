@@ -17,7 +17,8 @@ const initialState = {
   reportList:[],
   employeeList:[],
   leaveEmpList:[],
-  leaveTypeReport:[]
+  leaveTypeReport:[],
+  leaveManagerList:[]
  
 }
 
@@ -25,8 +26,8 @@ export const LeaveContext = createContext();
 
 export const LeaveProvider = ({ children }) => {
   const [state, dispatch] = useReducer(LeaveReducer, initialState);
-  const { user } = useContext(AppContext);
-  
+  const { user, getUserMenu } = useContext(AppContext);
+ 
   //View Leave
 
   const viewList = (empId1) => {
@@ -34,9 +35,24 @@ export const LeaveProvider = ({ children }) => {
       .then((response) => {
         state.leaveList =  response.data.data
         getLeave(empId1);
-        console.log("=====GET API respone=====", state.leaveList)
+        console.log("=====GET API respone for Admin=====", state.leaveList)
         return (
           dispatch({ type: 'FETCH_LEAVE_LIST', payload: state.leaveList })
+        )
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  const viewManagerList = (empId1) => {
+      client.get('/leave_transaction/view/manager')
+      .then((response) => {
+        state.leaveManagerList =  response.data.data
+        getLeave(empId1);
+        console.log("=====GET API respone for manager=====", state.leaveManagerList)
+        return (
+          dispatch({ type: 'FETCH_MANAGER_LEAVE_LIST', payload: state.leaveManagerList })
         )
       })
       .catch((error) => {
@@ -404,6 +420,7 @@ else {
       viewEmpLeaveData,
       editPopup,
       getLeaveReport,
+      viewManagerList,
       leaveList: state.leaveList,
       leaveType: state.leaveType,
       message: state.message,
@@ -416,7 +433,8 @@ else {
       productivityList: state.productivityList,
       leaveEmpList: state.leaveEmpList,
       editLeavesData: state.editLeavesData,
-      leaveTypeReport: state.leaveTypeReport
+      leaveTypeReport: state.leaveTypeReport,
+      leaveManagerList: state.leaveManagerList
      
     }}>
       {children}

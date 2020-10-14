@@ -81,7 +81,7 @@ const AdminSalaryModule = () => {
 
       )
     })
-    history.push("/AdminLeaves/AdminSalaryModule");
+    history.push("/adminleaves/adminsalarymodule");
   };
 
 
@@ -102,7 +102,7 @@ const AdminSalaryModule = () => {
 
       )
     })
-    history.push("/AdminLeaves/AdminSalaryModule");
+    history.push("/adminleaves/adminsalarymodule");
   };
 
   const checkboxHandler = (salaryId) => {
@@ -168,7 +168,7 @@ const AdminSalaryModule = () => {
                       className="btn btn-light mr-2"
                       onClick={approvedButton}
                     >
-                      Approved
+                      Approve
                   </Button>
                     <Button
                       variant="danger"
