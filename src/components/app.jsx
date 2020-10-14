@@ -16,7 +16,6 @@ const AppLayout = ({ children }) => {
 
     useEffect(() => {
         checkTokenExists()
-        getUserInfo()
         setFlagValue(flag)
     }, []);
     useEffect(() => {
@@ -35,12 +34,14 @@ const AppLayout = ({ children }) => {
             
         }
     })
-    console.log("APP RESULT " + app.isLoggedin);
+
     const checkTokenExists = () => {
+        console.log("APP RESULT " + app.isLoggedin);
         // console.log("ALL TOKENS "+Cookies.get());
         let access_token = Cookies.get('APPAT');
         if (access_token) {
             authenticateUser(true)
+            getUserInfo()
             console.log("login valid")
         }
         else {

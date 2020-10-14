@@ -15,7 +15,7 @@ const initial_state = {
   leaveMasterList: [],
   ApprovalLeaveList: [],
   message: '',
-  managerEmployeeIdList:[]
+  managerEmployeeIdList: []
 }
 
 
@@ -55,20 +55,29 @@ export const AdminProvider = ({ children }) => {
   //employee id according to cost center
 
   const employeeIdData = (costData) => {
-      client.get('employee/view/leave_view/' + '?costCentre=' + costData)
+    client.get('employee/view/leave_view/' + '?costCentre=' + costData)
       .then((response) => {
         state.employeeIdList = response.data.data
-        console.log("employee id data for admin", state.employeeIdList)
+        if (response.data.data === null) {
+          state.employeeIdList = []
+        }
+        else {
+          state.employeeIdList = response.data.data;
+        }
+        console.log("employee id data", state.employeeIdList)
+        // if (state.employeeIdList === null) {
+        //   toast.info("No Employee For Selected Cost Center");
+        // }
         return dispatch({ type: 'EMPLOYEE_ID_DATA', payload: state.employeeIdList })
       })
       .catch((error) => {
         console.log(error)
       })
-    
+
   }
 
   const managerEmployeeId = () => {
-      client.get('employee/view/leave/manager')
+    client.get('employee/view/leave/manager')
       .then((response) => {
         state.managerEmployeeIdList = response.data.data
         console.log("employee id data for manager", state.managerEmployeeIdList)
@@ -77,7 +86,7 @@ export const AdminProvider = ({ children }) => {
       .catch((error) => {
         console.log(error)
       })
-    
+
   }
 
 
