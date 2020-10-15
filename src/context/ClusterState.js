@@ -18,7 +18,8 @@ const initial_state = {
   clusterCostCenterList: [],
   clusterAllLeaderNames: [],
   getEmployeesNames: [],
-  adminClusterList: []
+  adminClusterList: [],
+  costCenterEmpAndMgrList: []
 }
 
 
@@ -45,12 +46,10 @@ export const ClusterProvider = ({ children }) => {
   }
 
   function viewCluster() {
-    // alert("called");
     client.get('cluster/view').then(function (response) {
-      //  console.log("data==>" + JSON.stringify(response));
       state.clusterList = response.data.data;
-      console.log("====CLUSTER LIST====")
-      console.log(JSON.stringify(state.clusterList))
+      // console.log("====CLUSTER LIST====")
+      // console.log(JSON.stringify(state.clusterList))
 
       return dispatch({ type: 'FETCH_ClUSTER_LIST', payload: state.clusterList });
     })
@@ -100,11 +99,8 @@ export const ClusterProvider = ({ children }) => {
 
 
 
-  function getCluster(id) {
-
+  const getCluster = (id) => {
     client.get('cluster/' + id).then(function (response) {
-      //  console.log("data==Clusteer>" + JSON.stringify(response));
-      //  if(response && response.data && response.data.data)
       const getSingleCluster = response.data.data;
       const getSingleCluster1 = response.data.data.sports;
       const getEmployeesNames = response.data.data.employees;
@@ -129,7 +125,7 @@ export const ClusterProvider = ({ children }) => {
 
 
 
-  function selectClusterLeader(storeId) {
+  const selectClusterLeader = (storeId) => {
     //console.log("in cluster state", storeId)
     client.get('employee/view/' + storeId + '/cluster_leader').then(function (response) {
       //    alert("Leaderes" + JSON.stringify(response));
@@ -143,7 +139,7 @@ export const ClusterProvider = ({ children }) => {
 
   // EDIT CLUSTER LEADER NAMES
 
-  function selectAllClusterLeaderForEdit(storeId) {
+  const selectAllClusterLeaderForEdit = (storeId) => {
     client.get('employee/view/' + storeId).then(function (response) {
       state.clusterAllLeaderNames = response.data.data;
       return dispatch({ type: 'FETCH_ALL_LEADERS_NAME', payload: state.clusterAllLeaderNames });
@@ -279,6 +275,31 @@ export const ClusterProvider = ({ children }) => {
       });
   }
 
+
+  const viewCostCenterEmployeeByManger = (storeId, managerId) => {
+    client.get('employee/view/' + storeId + '/' + managerId).then(function (response) {
+      if (response.data.data === null) {
+        state.costCenterEmpAndMgrList = []
+      }
+      else {
+        state.costCenterEmpAndMgrList = response.data.data;
+      }
+
+
+      console.log("VIEW_COST_CENTER_EMPLOYEE_MANGER " + state.costCenterEmpAndMgrList);
+      return dispatch({ type: 'VIEW_COST_CENTER_EMPLOYEE_MANGER', payload: state.costCenterEmpAndMgrList });
+    })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+  }
+
+
+
+
+
+
   return (<ClusterContext.Provider value={{
     addCluster,
     viewSports,
@@ -295,6 +316,7 @@ export const ClusterProvider = ({ children }) => {
     viewClusterCostCenter,
     selectAllClusterLeaderForEdit,
     viewClusterForAdmin,
+    viewCostCenterEmployeeByManger,
     clusterList: state.clusterList,
     clusterLeaderNames: state.clusterLeaderNames,
     sportsNames: state.sportsNames,
@@ -307,6 +329,7 @@ export const ClusterProvider = ({ children }) => {
     clusterAllLeaderNames: state.clusterAllLeaderNames,
     getEmployeesNames: state.getEmployeesNames,
     adminClusterList: state.adminClusterList,
+    costCenterEmpAndMgrList: state.costCenterEmpAndMgrList,
   }}>
     {children}
   </ClusterContext.Provider>);

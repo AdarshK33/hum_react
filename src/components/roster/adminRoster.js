@@ -249,7 +249,8 @@ const AdminRoster = () => {
 
 
                                         <tbody>
-                                            {adminWeekOffDataList.length > 0 &&
+                                            {adminWeekOffDataList !== null &&
+                                                adminWeekOffDataList.length > 0 &&
                                                 adminWeekOffDataList.map((item, i) => {
                                                     return (
                                                         <tr>
