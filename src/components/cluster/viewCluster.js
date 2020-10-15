@@ -3,6 +3,7 @@ import Breadcrumb from "../common/breadcrumb";
 import CreateClusterModal from "./createClusterModal";
 import EditClusterModal from "./editClusterModal";
 import { Button } from 'react-bootstrap'
+import { AppContext } from "../../context/AppState";
 import { Edit2 } from 'react-feather'
 import { ClusterContext } from "../../context/ClusterState";
 
@@ -40,8 +41,9 @@ function ViewCluster() {
   //pagenation data
 
   //variable
-  const { clusterList, viewCluster, getCluster, getSingleCluster, getSingleCluster1, getEmployeesNames } = useContext(ClusterContext);
-
+  const { clusterList, viewCluster, getCluster, viewCostCenterEmployeeByManger,
+    getSingleCluster, getSingleCluster1, getEmployeesNames } = useContext(ClusterContext);
+  const { user } = useContext(AppContext);
   return (
     <Fragment>
       <Breadcrumb title="View Cluster" parent="View Cluster" />
@@ -94,7 +96,7 @@ function ViewCluster() {
                             <td><Edit2 onClick={() => {
                               setEditModal(true);
                               getCluster(e.clusterId);
-
+                              viewCostCenterEmployeeByManger(e.storeId, user.employeeId)
                             }} />
                             </td>
 
