@@ -2,21 +2,26 @@ import React, { Fragment, useContext } from 'react';
 import man from '../../../assets/images/dashboard/userImage.png';
 import { User, Mail, Lock, Settings, LogOut, LogIn, Users, UserPlus } from 'react-feather';
 import { AppContext } from "../../../context/AppState";
+import { useHistory } from "react-router-dom";
 
 const loginUrl = `${process.env.REACT_APP_FEDID_AUTH_URL}?response_type=code&client_id=${process.env.REACT_APP_FEDID_CLIENTID}&scope=openid%20profile&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}`;
 const UserMenu = () => {
     const { user, getUserMenu } = useContext(AppContext);
+    let history = useHistory();
 
     const handleMenuListProfile = () => {
         getUserMenu(user.generalUserMenus);
+        history.push("/dashboard/storedashboard");
     }
 
     const handleMenuListAdmin = () => {
         getUserMenu(user.adminMenus);
+        history.push("/dashboard/storedashboard");
     }
 
     const handleMenuListTeam = () => {
         getUserMenu(user.managerMenus);
+        history.push("/dashboard/storedashboard");
     }
     return (
         <Fragment>
