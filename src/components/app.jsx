@@ -21,9 +21,17 @@ const AppLayout = ({ children }) => {
     useEffect(() => {
         const { MENUITEMS, flag } = state
         setMenuItems(MENUITEMS);
+        
         if (flagValue === 0 && menuItems !== []) {
             setFlagValue(flag)
-            getUserMenu(user.generalUserMenus);
+            if(window.location.href.includes("team")){
+                getUserMenu(user.managerMenus);
+            }else if (window.location.href.includes("admin")) {
+                getUserMenu(user.adminMenus);
+            }else {
+                getUserMenu(user.generalUserMenus);
+            }
+            
         }
     })
 

@@ -153,6 +153,7 @@ export const LeaveProvider = ({ children }) => {
           viewList();
           viewLeaveData(newLeave.empId);
           getLeave(newLeave.empId)
+          viewManagerList()
           console.log("new create list response===>", response.data.data)
           console.log("new create list message===>", state.message)
           return  dispatch({ type: 'ADD_NEW_LEAVE', payload: state.leaveList })
@@ -215,6 +216,7 @@ export const LeaveProvider = ({ children }) => {
         viewList()
         viewLeaveData(editLeave.empId);
         getLeave(editLeave.empId)
+        viewManagerList()
         console.log("??????new edit list response????????", response.data.data)
         console.log("??????new edit list message????????", state.message)
         return  dispatch({ type: 'EDIT_LEAVE', payload: state.leaveList })
@@ -255,6 +257,7 @@ export const LeaveProvider = ({ children }) => {
         toast.info(response.data.message)
         viewList()
         viewLeaveData(empId);
+        viewManagerList()
         console.log("-----delete data-----", response)
         return  dispatch({ type: 'DELETE_LEAVE', payload: leaveId })
       })

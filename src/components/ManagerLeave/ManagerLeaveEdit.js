@@ -92,7 +92,7 @@ const ManagerLeaveEdit = (props) => {
             status: 1,
             toDate: moment(endDate).format("YYYY-MM-DD"),
             viewLeavePopup: 0,
-            year: '2020'
+            year: new Date().getFullYear()
         }
         setEditMsg(true)
         editPopup(newPopup)
@@ -137,7 +137,7 @@ const ManagerLeaveEdit = (props) => {
             status: 1,
             toDate: moment(value1).format("YYYY-MM-DD"),
             viewLeavePopup: 0,
-            year: '2020'
+            year: new Date().getFullYear()
         }
         editPopup(newPopup)
         setEditMsg(true)
@@ -164,7 +164,7 @@ const ManagerLeaveEdit = (props) => {
             status: 1,
             toDate: moment(d3).format("YYYY-MM-DD"),
             viewLeavePopup: 0,
-            year: '2020'
+            year: new Date().getFullYear()
         }
         console.log("editPopupData", editPopupData)
         editPopup(editPopupData)
@@ -206,7 +206,7 @@ const ManagerLeaveEdit = (props) => {
             status: 1,
             toDate: moment(endDate).format("YYYY-MM-DD"),
             viewLeavePopup: 1,
-            year: '2020'
+            year: new Date().getFullYear()
         }
         const editLeave1 = {
             empId: empId,
@@ -221,7 +221,7 @@ const ManagerLeaveEdit = (props) => {
             status: 1,
             toDate: moment(d3).format("YYYY-MM-DD"),
             viewLeavePopup: 1,
-            year: '2020'
+            year: new Date().getFullYear()
         }
         if (leave === 3) {
             console.log("edit leave data for maternity----", editLeave1)
@@ -231,7 +231,7 @@ const ManagerLeaveEdit = (props) => {
             console.log("edit leave data for general----", editLeave)
               editList(editLeave)
           }
-            history.push("/manager/managerleaves");
+            history.push("/managerleaves");
             setEditMsg(false)
 
 

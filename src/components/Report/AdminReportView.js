@@ -12,12 +12,12 @@ const AdminReportView = (props) => {
      /*-----------------Pagination------------------*/
      const [currentPage, setCurrentPage] = useState(1);
      const recordPerPage = 10;
-     const totalRecords = reportList !== null && reportList.length;
+     const totalRecords = reportList !== null && reportList !== undefined && reportList.length;
      const pageRange = 10;
  
     const indexOfLastRecord = currentPage * recordPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    const currentRecords = reportList !== null ? reportList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+    const currentRecords = reportList !== null && reportList !== undefined ? reportList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
  
     const handlePageChange = pageNumber => {
      setCurrentPage(pageNumber);
@@ -88,7 +88,7 @@ const AdminReportView = (props) => {
                     </div>
                 </Row>
             </div>
-            {reportList !== null && reportList.length > 10 &&
+            {reportList !== null && reportList !== undefined &&  reportList.length > 10 &&
                 <Pagination
                     itemClass="page-item" 
                     linkClass="page-link"
