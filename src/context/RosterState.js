@@ -372,7 +372,7 @@ export const RosterProvider = ({ children }) => {
   const costCenter = () => {
 
     client.get('/cost_centre/view').then(function (response) {
-      console.log(response);
+
       state.costCenterList = response.data.data;
 
       return dispatch({ type: 'COST_CENTER_DATA', payload: state.costCenterList });

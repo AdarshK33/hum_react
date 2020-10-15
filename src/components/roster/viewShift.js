@@ -77,6 +77,7 @@ function ViewShift() {
                   <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                     <tr>
                       <th>S. No</th>
+                      <th>Cost Center</th>
                       <th>Shift Timings</th>
                       <th>Break Time</th>
                       <th>Working Hours</th>
@@ -94,10 +95,11 @@ function ViewShift() {
                         <tbody key={i + 1}>
                           <tr>
                             <td>{i + 1 + indexOfFirstRecord}</td>
-
+                            <td>{e.storeId}</td>
                             <td> {moment(e.startTime, ["h:mm A"]).format("HH:mm")}-{moment(e.endTime, ["h:mm A"]).format("HH:mm")}</td>
-                            <td>{moment(e.breakStartTime, ["h:mm A"]).format("HH:mm")}-{moment(e.breakEndTime, ["h:mm A"]).format("HH:mm")}</td>
+
                             <td>{e.workingHours}</td>
+                            <td>{moment(e.breakStartTime, ["h:mm A"]).format("HH:mm")}-{moment(e.breakEndTime, ["h:mm A"]).format("HH:mm")}</td>
                             <td>{e.contractType}</td>
                             <td>{e.shiftType}</td>
 

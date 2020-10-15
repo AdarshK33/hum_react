@@ -132,9 +132,9 @@ if(storeLeaderProductList !== null){
                                             <td>{item.weekend}</td>
                                             {Year > item.year  ?
                                                 <td><Edit2 disabled style={{color:'lightgrey'}} /></td> 
-                                                : Year === item.year && monthsNumber[item.month] <= month  ?
+                                                : Year === item.year && monthsNumber[item.month] < month  ?
                                                     <td><Edit2 disabled style={{color:'lightgrey'}} /></td> 
-                                                    :Year === item.year && monthsNumber[item.month] <= month && TodayDate > 20 ? 
+                                                    :Year === item.year && monthsNumber[item.month] === month && TodayDate > 20 ? 
                                                         <td><Edit2 disabled style={{color:'lightgrey'}} /></td> 
                                                         : 
                                                         <td><Edit2 style={{color:'#376ebb'}}

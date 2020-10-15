@@ -5,6 +5,7 @@ import { Multiselect } from 'multiselect-react-dropdown';
 import { toast } from "react-toastify";
 import { RosterContext } from "../../context/RosterState";
 import { AppContext } from "../../context/AppState";
+import { AdminContext } from "../../context/AdminState";
 import "react-toastify/dist/ReactToastify.css";
 const EditClusterModal = (props) => {
 
@@ -37,15 +38,16 @@ const EditClusterModal = (props) => {
   }
 
 
-  const { updateCluster, viewCluster, getSingleCluster, viewSports, sportsNames,
-    getSingleCluster1, selectClusterLeader, selectAllClusterLeaderForEdit, clusterAllLeaderNames, getEmployeesNames } = useContext(ClusterContext);
-  const { user, getUserInfo } = useContext(AppContext);
-  const { costCenter } = useContext(RosterContext);
+  const { updateCluster, getSingleCluster, viewSports, sportsNames,
+    getSingleCluster1, selectClusterLeader, clusterAllLeaderNames, getEmployeesNames, viewCostCenterEmployeeByManger, costCenterEmpAndMgrList } = useContext(ClusterContext);
+  const { user } = useContext(AppContext);
+  const { costCenter, costCenterList } = useContext(RosterContext);
+  const { employeeIdData, employeeIdList } = useContext(AdminContext);
+
   useEffect(() => {
     viewSports()
-    selectClusterLeader(user.costCentre)
-    selectAllClusterLeaderForEdit(user.costCentre)
-  }, [user.costCentre])
+
+  }, [])
 
   useEffect(() => {
     setClusterName(getSingleCluster.clusterName)
@@ -70,12 +72,21 @@ const EditClusterModal = (props) => {
 
 
   useEffect(() => {
-    getUserInfo()
     costCenter()
-    if (user.loginType !== "1" && user.loginType !== "9" && user.additionalRole !== "1" && user.additionalRole !== "9") {
+    if (user.loginType !== "1" || user.loginType !== "9" || user.loginType !== "3" || user.loginType !== "7" ||
+      user.additionalRole !== "1" || user.additionalRole !== "9" || user.additionalRole !== "3" || user.additionalRole !== "7") {
       setCostCenterName(user.costCentre)
     }
   }, [user.costCentre, user.loginType]);
+
+
+  const getCostCenterName = (e) => {
+    let data1 = e.target.value
+    setCostCenterName(data1)
+    employeeIdData(data1)
+    console.log("data1", data1)
+    //selectClusterLeader(data1)
+  }
 
 
 
@@ -177,8 +188,9 @@ const EditClusterModal = (props) => {
     setClusterButton(false)
     setErrorMsg(false)
   }
-  const onRemoveEmployee = (options) => {
 
+
+  const onRemoveEmployee = (options) => {
     setEmployee(options)
     console.log(employee);
   }
@@ -249,6 +261,35 @@ const EditClusterModal = (props) => {
               </div>
             </div>
 
+
+
+            {(() => {
+              if (user.loginType === "1" || user.loginType === "9" || user.loginType === "3" || user.loginType === "7" || user.additionalRole === "1" || user.additionalRole === "9" || user.additionalRole === "7" || user.additionalRole === "3") {
+                return (
+                  <div className="row">
+                    <div className="col-sm-12">
+                      <div className="form-group">
+                        <label htmlFor="exampleFormControlInput1">Select cost center</label>
+                        <select
+                          value={costCenterName}
+                          className="form-control"
+                          required
+                          defaultValue={props.shiftData.storeId}
+                          onChange={(e) => getCostCenterName(e)}
+                        >
+                          <option value="">Select cost center</option>
+                          {costCenterList.map((e, i) => {
+                            return (
+                              <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
+                          })}
+
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                )
+              }
+            })()}
             {/* <h3>{getSingleCluster.employeeIds}</h3> */}
 
             <div className="row">
@@ -258,7 +299,7 @@ const EditClusterModal = (props) => {
 
                   <Multiselect
                     placeholder="Select Employee"
-                    options={clusterAllLeaderNames !== null && clusterAllLeaderNames}
+                    options={costCenterEmpAndMgrList}
                     value={employee}
                     selectedValues={getEmployeesNames}
                     displayValue="firstName"
@@ -266,9 +307,6 @@ const EditClusterModal = (props) => {
                     onSelect={handleMultiChange1}
                     isMulti
                   />
-
-
-
                 </div>
               </div>
             </div>
@@ -284,7 +322,7 @@ const EditClusterModal = (props) => {
                     value={clusterLeader}
                     onChange={clusterLeaderSelect}>
 
-                    {clusterAllLeaderNames !== null && clusterAllLeaderNames.map((e, i) => {
+                    {costCenterEmpAndMgrList !== null && costCenterEmpAndMgrList.map((e, i) => {
                       return (
 
                         <option key={e.employeeId} value={e.employeeId}>

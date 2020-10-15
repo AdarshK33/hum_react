@@ -68,7 +68,6 @@ const AppLayout = ({ children }) => {
 
                                 </div>
                             </div>
-
                             : <Loader />
                     }
 
