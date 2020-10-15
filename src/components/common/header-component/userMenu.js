@@ -10,7 +10,7 @@ const UserMenu = () => {
     let history = useHistory();
 
     const handleMenuListProfile = () => {
-        getUserMenu(user.generalUserMenus);
+        getUserMenu(user.generalUserMenus , "profile" , user );
         history.push("/dashboard/storedashboard");
     }
 
@@ -21,6 +21,11 @@ const UserMenu = () => {
 
     const handleMenuListTeam = () => {
         getUserMenu(user.managerMenus);
+        history.push("/dashboard/storedashboard");
+    }
+
+    const handleMenuListCluster =()=> {
+        getUserMenu(user.clusterManagerMenus);
         history.push("/dashboard/storedashboard");
     }
     return (
@@ -44,6 +49,9 @@ const UserMenu = () => {
                     }
                     {user.managerMenus !== null &&
                         <li onClick={handleMenuListTeam}><a href="#team"><Users />My Team</a></li>
+                    }
+                    {user.clusterManagerMenus !== null &&
+                        <li onClick={handleMenuListCluster}><a href="#cluster"><Users />Cluster Leader</a></li>
                     }
                     {/*  <li><a href="#javascript"><Settings />Settings</a></li> */}
                     {/* <li><a href="#javascript"><LogOut /> Log out</a></li> */}

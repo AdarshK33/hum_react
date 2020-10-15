@@ -98,18 +98,27 @@ export const AppProvider = ({ children, history }) => {
       })
   }
 
-  const getUserMenu = (menus) => {
+  const getUserMenu = (menus, type , user) => {
     state.MENUITEMS = [];
     state.MenuPermissionsRoute = [];
     if (menus !== null && menus !== undefined) {
       state.flag = 1;
       for (let i = 0; i < menus.length; i++) {
+        if(type === "profile" && user.department !== "Retail"){
+          if (menus[i].hasChild === true && menus[i].menuUrl !== "/leaves/viewleave"  && menus[i].menuUrl !== "/roster/teamroster") {
+            state.MENUITEMS.push({ title: menus[i].menuName, icon: File, type: 'link', path: menus[i].menuUrl, active: false, children: [] })
+            
+          } else if (menus[i].child === false && menus[i].menuUrl !== "/leaves/viewleave" && menus[i].menuUrl !== "/roster/teamroster" ) {
+            state.MENUITEMS.push({ path: menus[i].menuUrl, title: menus[i].menuName, icon: File, type: 'link', active: false })
+          }
+        }else{
         if (menus[i].hasChild === true) {
           state.MENUITEMS.push({ title: menus[i].menuName, icon: File, type: 'link', path: menus[i].menuUrl, active: false, children: [] })
           
         } else if (menus[i].child === false) {
           state.MENUITEMS.push({ path: menus[i].menuUrl, title: menus[i].menuName, icon: File, type: 'link', active: false })
         }
+      }
 
         state.MenuPermissionsRoute.push({path: menus[i].menuUrl});
       }

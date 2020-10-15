@@ -19,7 +19,7 @@ const AppLayout = ({ children }) => {
         setFlagValue(flag)
     }, []);
     useEffect(() => {
-        const { MENUITEMS, flag } = state
+        const { MENUITEMS, flag , user } = state
         setMenuItems(MENUITEMS);
         
         if (flagValue === 0 && menuItems !== []) {
@@ -28,8 +28,10 @@ const AppLayout = ({ children }) => {
                 getUserMenu(user.managerMenus);
             }else if (window.location.href.includes("admin")) {
                 getUserMenu(user.adminMenus);
+            }else if (window.location.href.includes("cluster")) {
+                getUserMenu(user.clusterManagerMenus);
             }else {
-                getUserMenu(user.generalUserMenus);
+                getUserMenu(user.generalUserMenus , "profile" ,user );
             }
             
         }
