@@ -46,7 +46,7 @@ const LeaveReducer = (state, action) => {
         case 'DELETE_LEAVE':
             return {
                 ...state,
-                leaveList: state.leaveList.filter(leaveList => leaveList.leaveId !== action.payload)
+                leaveList: state.leaveList !== null && state.leaveList.filter(leaveList => leaveList.leaveId !== action.payload)
             };
         case 'DELETE_EMP_LEAVE':
             return {
