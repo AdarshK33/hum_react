@@ -53,12 +53,21 @@ function LeaderCluster(){
 
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
-    const totalRecords = leaderClusterProductList.length;
+    let totalRecords = 0
     const pageRange = 10;
 
-    const indexOfLastRecord = currentPage * recordPerPage;
-    const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    const currentRecords = leaderClusterProductList.slice(indexOfFirstRecord, indexOfLastRecord);
+    let indexOfLastRecord = 1;
+    let indexOfFirstRecord = 1;
+    let currentRecords = [];
+
+    if (leaderClusterProductList!== null){
+         totalRecords = leaderClusterProductList.length;
+         indexOfLastRecord = currentPage * recordPerPage;
+         indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+         currentRecords = leaderClusterProductList.slice(indexOfFirstRecord, indexOfLastRecord);
+    }
+
+    
 
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber);
