@@ -116,7 +116,8 @@ const Roster = () => {
                   </thead>
 
                   <tbody>
-                    {weekOffDataList.length > 0 &&
+                    {weekOffDataList !== null &&
+                      weekOffDataList.length > 0 &&
                       weekOffDataList.map((item, i) => {
                         if (i === 0) {
                           return (

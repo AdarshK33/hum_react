@@ -81,11 +81,7 @@ export const MENUITEMS = [
     {
         path: '/rolemanagement', title: 'Role Management', icon: File, type: 'link', active: false
     }
-    ,
 
-    {
-        path: '/cluster/admincluster', title: 'Admin Cluster', icon: File, type: 'link', active: false
-    }
 
 
 

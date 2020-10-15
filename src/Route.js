@@ -38,7 +38,6 @@ import LeaderCluster from './components/ProductTarget/LeaderCluster/LeaderCluste
 import RoleManagemenetList from './components/RoleManagement/RoleManagementList';
 import { AppContext } from "./context/AppState";
 import ManagerLeaveList from './components/ManagerLeave/ManagerLeaveList'
-import AdminCluster from "./components/cluster/admincluster";
 
 const Route1 = () => {
   const { user, getUserInfo } = useContext(AppContext);
@@ -200,11 +199,7 @@ const Route1 = () => {
             component={RoleManagemenetList}
           />
 
-          {/*Role Management Page */}
-          <Route
-            path={`${process.env.PUBLIC_URL}/cluster/admincluster`}
-            component={AdminCluster}
-          />
+
 
         </App>
       </Fragment>

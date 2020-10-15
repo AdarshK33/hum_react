@@ -34,6 +34,9 @@ const ClusterReducer = (state, action) => {
         case 'FETCH_ADMIN_ClUSTER_LIST':
             return { ...state, adminClusterList: action.payload };
 
+        case 'VIEW_COST_CENTER_EMPLOYEE_MANGER':
+            return { ...state, costCenterEmpAndMgrList: action.payload };
+
         default: return state;
     }
 }

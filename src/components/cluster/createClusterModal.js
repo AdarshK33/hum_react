@@ -5,6 +5,7 @@ import { Multiselect } from 'multiselect-react-dropdown';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AppContext } from "../../context/AppState";
+import { AdminContext } from "../../context/AdminState";
 import { RosterContext } from "../../context/RosterState";
 const CreateClusterModal = (props) => {
 
@@ -27,6 +28,7 @@ const CreateClusterModal = (props) => {
     setErrorMsg('')
     setSuccessMsg('')
     setSportsList('');
+    setCostCenterName()
     setSuccessMsg('');
     setEmployee('')
     selectClusterLeader()
@@ -36,22 +38,23 @@ const CreateClusterModal = (props) => {
 
 
   const { addCluster, viewCluster, viewSports, sportsNames, clusterLeaderNames,
-    selectClusterLeader, selectEmployeeForCluster, getClusterEmployees } = useContext(ClusterContext);
-  const { user, getUserInfo } = useContext(AppContext);
+    selectEmployeeForCluster, getClusterEmployees, selectClusterLeader
+  } = useContext(ClusterContext);
+  const { user, } = useContext(AppContext);
+  const { employeeIdData, employeeIdList } = useContext(AdminContext);
   const { costCenter, costCenterList } = useContext(RosterContext);
   useEffect(() => {
     viewSports()
-    selectClusterLeader(user.costCentre)
-    selectEmployeeForCluster(user.costCentre)
-  }, [user.costCentre, user.costCentre])
+
+  }, [])
 
   useEffect(() => {
-    getUserInfo()
     costCenter()
-    if (user.loginType !== "1" && user.loginType !== "9" && user.additionalRole !== "1" && user.additionalRole !== "9") {
+    if (user.loginType !== "1" || user.loginType !== "9" || user.loginType !== "3" || user.loginType !== "7" ||
+      user.additionalRole !== "1" || user.additionalRole !== "9" || user.additionalRole !== "3" || user.additionalRole !== "7") {
       setCostCenterName(user.costCentre)
     }
-  }, [user.costCentre, user.loginType]);
+  }, []);
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -64,8 +67,6 @@ const CreateClusterModal = (props) => {
       sportIds: sportsList.map((e) => e.sportId),
       employeeIds: employee.map((e) => e.employeeId)
     }
-
-    // console.log("^^^^" + JSON.stringify(newCluster));
     const result = addCluster(newCluster)
       .then((result) => {
         //   console.log("api response===", result.data.message);
@@ -117,7 +118,13 @@ const CreateClusterModal = (props) => {
 
     }
   };
-
+  const getCostCenterName = (e) => {
+    let data1 = e.target.value
+    setCostCenterName(data1)
+    employeeIdData(data1)
+    console.log("data1", data1)
+    selectClusterLeader(data1)
+  }
 
 
   const handleMultiChange = (option) => {
@@ -190,6 +197,34 @@ const CreateClusterModal = (props) => {
                 </div>
               </div>
             </div>
+
+
+            {(() => {
+              if (user.loginType === "1" || user.loginType === "9" || user.loginType === "3" || user.loginType === "7" || user.additionalRole === "1" || user.additionalRole === "9" || user.additionalRole === "7" || user.additionalRole === "3") {
+                return (
+                  <div className="row">
+                    <div className="col-sm-12">
+                      <div className="form-group">
+                        <label htmlFor="exampleFormControlInput1">Select cost center</label>
+                        <select
+                          value={costCenterName}
+                          className="form-control"
+                          required
+                          onChange={(e) => getCostCenterName(e)}
+                        >
+                          <option value="">Select cost center</option>
+                          {costCenterList.map((e, i) => {
+                            return (
+                              <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
+                          })}
+
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                )
+              }
+            })()}
             <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px", marginLeft: "5px" }}>{errormsg}</h6>
             <div className="row">
               <div className="col-sm-12">
@@ -198,7 +233,7 @@ const CreateClusterModal = (props) => {
                   <Multiselect
 
                     placeholder="Select Employee"
-                    options={getClusterEmployees}
+                    options={employeeIdList}
                     value={employee}
                     displayValue="firstName"
                     onSelect={handleMultiChange1}
@@ -233,32 +268,7 @@ const CreateClusterModal = (props) => {
                 </div>
               </div>
             </div>
-            {(() => {
-              if (user.loginType === "1" || user.loginType === "9" || user.additionalRole === "1" || user.additionalRole === "9") {
-                return (
-                  <div className="row">
-                    <div className="col-sm-12">
-                      <div className="form-group">
-                        <label htmlFor="exampleFormControlInput1">Select cost center</label>
-                        <select
-                          value={costCenterName}
-                          className="form-control"
-                          required
-                          onChange={(e) => setCostCenterName(e.target.value)}
-                        >
-                          <option value="">Select cost center</option>
-                          {costCenterList.map((e, i) => {
-                            return (
-                              <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
-                          })}
 
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                )
-              }
-            })()}
             <button className="myclass mb-2 mr-2" type="submit" disabled={clustertButton} value="Submit">Save</button>
             <button className="myclass mb-2 mr-2" onClick={() => { clearAndClose() }}>Close</button>
 
