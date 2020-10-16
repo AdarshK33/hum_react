@@ -124,7 +124,7 @@ function ViewShift() {
                       <th scope="col">Extra Hours</th>
                       <th scope="col">Total Hours</th>
                       <th scope="col">Status</th>
-                      <th scope="col">Edit</th>
+                      <th></th>
                     </tr>
                   </thead>
 
@@ -144,6 +144,7 @@ function ViewShift() {
                             <td>{item.extraHours}</td>
                             <td>{item.totalHours}</td>
                             <td>{item.statusDesc}</td>
+                            {user.role !== "MANAGER" &&
                             <td>{item.statusDesc === 'Pending' ?
                               <Edit2 onClick={() => {
                                 setEditModal(true); setEmployeeId(item.employeeId);
@@ -156,7 +157,7 @@ function ViewShift() {
                               }} /> :
                               <Edit2 disabled style={{ color: 'lightgrey' }} />}
                             </td>
-
+                            }
 
                           </tr>
 
