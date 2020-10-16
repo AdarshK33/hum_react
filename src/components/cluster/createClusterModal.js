@@ -31,21 +31,19 @@ const CreateClusterModal = (props) => {
     setCostCenterName()
     setSuccessMsg('');
     setEmployee('')
-    selectClusterLeader()
-    selectEmployeeForCluster()
+
   }
 
 
 
-  const { addCluster, viewCluster, viewSports, sportsNames, clusterLeaderNames,
-    selectEmployeeForCluster, getClusterEmployees, selectClusterLeader
+  const { addCluster, viewSports, sportsNames, viewClusterCostCenter,
+    callClusterLeadersList, callClusterEmployeesList,
+    callClusterEmployees, callClusterLeaders,
   } = useContext(ClusterContext);
   const { user, } = useContext(AppContext);
-  const { employeeIdData, employeeIdList } = useContext(AdminContext);
   const { costCenter, costCenterList } = useContext(RosterContext);
   useEffect(() => {
     viewSports()
-
   }, [])
 
   useEffect(() => {
@@ -75,7 +73,7 @@ const CreateClusterModal = (props) => {
         setTimeout(() => {
           callTimer();
         }, 1000);
-        viewCluster();
+        viewClusterCostCenter(user.costCentre)
       })
       .catch((error) => {
         alert(" In error catch ", error);
@@ -119,11 +117,10 @@ const CreateClusterModal = (props) => {
     }
   };
   const getCostCenterName = (e) => {
-    let data1 = e.target.value
-    setCostCenterName(data1)
-    employeeIdData(data1)
-    console.log("data1", data1)
-    selectClusterLeader(data1)
+    let data = e.target.value
+    setCostCenterName(data)
+    callClusterEmployees(data, user.employeeId)
+    callClusterLeaders(data, user.employeeId)
   }
 
 
@@ -233,7 +230,7 @@ const CreateClusterModal = (props) => {
                   <Multiselect
 
                     placeholder="Select Employee"
-                    options={employeeIdList}
+                    options={callClusterLeadersList}
                     value={employee}
                     displayValue="firstName"
                     onSelect={handleMultiChange1}
@@ -255,8 +252,8 @@ const CreateClusterModal = (props) => {
                     style={{ fontSize: "0.8rem" }}
                     onChange={clusterLeaderSelect}>
                     <option value="">Select Cluster Leader</option>
-                    {clusterLeaderNames !== null
-                      && clusterLeaderNames.map((e, i) => {
+                    {callClusterEmployeesList !== null
+                      && callClusterEmployeesList.map((e, i) => {
                         return (
 
                           <option key={e.employeeId} value={e.employeeId}>

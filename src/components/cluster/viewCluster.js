@@ -9,9 +9,14 @@ import { ClusterContext } from "../../context/ClusterState";
 
 function ViewCluster() {
 
+
+  const { getCluster, viewCostCenterEmployeeByManger, viewClusterCostCenter,
+    getSingleCluster, getSingleCluster1, getEmployeesNames, clusterCostCenterList } = useContext(ClusterContext);
+  const { user } = useContext(AppContext);
+
   useEffect(() => {
-    viewCluster()
-  }, [])
+    viewClusterCostCenter(user.costCentre)
+  }, [user.costCentre])
 
   const [modal, setModal] = useState(false);
   const handleClose = () => setModal(false)
@@ -26,12 +31,12 @@ function ViewCluster() {
 
   // const [currentPage, setCurrentPage] = useState(1);
   // const recordPerPage = 10;
-  // const totalRecords = clusterList.length;
+  // const totalRecords = clusterCostCenterList.length;
   // const pageRange = 10;
 
   // const indexOfLastRecord = currentPage * recordPerPage;
   // const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  // const currentRecords = clusterList.slice(indexOfFirstRecord, indexOfLastRecord);
+  // const currentRecords = clusterCostCenterList.slice(indexOfFirstRecord, indexOfLastRecord);
 
   // const handlePageChange = pageNumber => {
   //   setCurrentPage(pageNumber);
@@ -41,9 +46,7 @@ function ViewCluster() {
   //pagenation data
 
   //variable
-  const { clusterList, viewCluster, getCluster, viewCostCenterEmployeeByManger,
-    getSingleCluster, getSingleCluster1, getEmployeesNames } = useContext(ClusterContext);
-  const { user } = useContext(AppContext);
+
   return (
     <Fragment>
       <Breadcrumb title="View Cluster" parent="View Cluster" />
@@ -75,8 +78,8 @@ function ViewCluster() {
                       <th scope="col">Edit</th>
                     </tr>
                   </thead>
-                  {clusterList !== null &&
-                    clusterList.map((e, i) => {
+                  {clusterCostCenterList !== null &&
+                    clusterCostCenterList.map((e, i) => {
                       return (
                         <tbody key={i + 1}>
                           <tr>
@@ -97,6 +100,7 @@ function ViewCluster() {
                               setEditModal(true);
                               getCluster(e.clusterId);
                               viewCostCenterEmployeeByManger(e.storeId, user.employeeId)
+
                             }} />
                             </td>
 
