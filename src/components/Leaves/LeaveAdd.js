@@ -49,13 +49,12 @@ const LeaveAdd = (props) => {
     }, [props.empid]);
 
     const today = new Date()
-    const currentYear = new Date('2020-01-01')
-    const nextYear = new Date('2020-12-31')
-    /* let oneYearFromNow = new Date();
-oneYearFromNow.setFullYear(oneYearFromNow.getFullYear() );
-console.log("oneYearFromNow", oneYearFromNow)
-let tryMonth = new Date().setMonth(new Date().getMonth() + 1)
-console.log("tryMonth", tryMonth) */
+
+    let nextYear = new Date()
+    nextYear.setFullYear(nextYear.getFullYear(), 11, 31)
+
+    let currentYear = new Date()
+    currentYear.setFullYear(currentYear.getFullYear(), 0, 1)
     
     const fromDateHandler = (date) => {
         let value = date

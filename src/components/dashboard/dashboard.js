@@ -14,7 +14,7 @@ import { AppContext } from "../../context/AppState";
 function Dashboard () {
     const { cosCentreList,viewCostCentre,viewData,graphData } = useContext(DashboardContext);
    
-    const { user } = useContext(AppContext);
+    const { user,getUserInfo  } = useContext(AppContext);
     const [startDate, setStartDate] = useState();
     const [StoreType, setStoreType] = useState('');
     const [ClusterType, setClusterType] = useState('');
@@ -33,6 +33,9 @@ function Dashboard () {
         
 
     }
+    useEffect(() => {
+        getUserInfo()
+    },[])
     function week_no(dt) 
   {
      var tdt = new Date(dt.valueOf());
