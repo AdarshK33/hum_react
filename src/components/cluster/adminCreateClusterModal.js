@@ -5,7 +5,6 @@ import { Multiselect } from 'multiselect-react-dropdown';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AppContext } from "../../context/AppState";
-import { AdminContext } from "../../context/AdminState";
 import { RosterContext } from "../../context/RosterState";
 const AdminCreateClusterModal = (props) => {
 
@@ -16,9 +15,8 @@ const AdminCreateClusterModal = (props) => {
     const [clustertButton, setClusterButton] = useState(false);
     const [errormsg, setErrorMsg] = useState(false);
     const [successMsg, setSuccessMsg] = useState("");
-    const [sportsList, setSportsList] = useState([]);
-    const [employee, setEmployee] = useState([]);
-    const [manager, setManager] = useState([]);
+    const [sportsList, setSportsList] = useState([])
+    const [employee, setEmployee] = useState([])
     const [costCenterName, setCostCenterName] = useState('');
 
     const setClear = () => {
@@ -31,28 +29,26 @@ const AdminCreateClusterModal = (props) => {
         setSportsList('');
         setCostCenterName()
         setSuccessMsg('');
-        setManager('')
         setEmployee('')
-        selectClusterLeader()
-        selectEmployeeForCluster()
+
     }
 
 
 
-    const { addCluster, viewCluster, viewSports, sportsNames, clusterLeaderNames,
-        selectEmployeeForCluster, getClusterEmployees, selectClusterLeader, viewManagerByCostCenter, viewManagerByCostCenterList
+    const { addCluster, viewSports, sportsNames, viewCluster, viewManagerByCostCenterList,
+        callClusterLeadersList, callClusterEmployeesList, viewManagerByCostCenter,
+        callClusterEmployees, callClusterLeaders,
     } = useContext(ClusterContext);
     const { user, } = useContext(AppContext);
-    const { employeeIdData, employeeIdList } = useContext(AdminContext);
     const { costCenter, costCenterList } = useContext(RosterContext);
     useEffect(() => {
         viewSports()
-
     }, [])
 
     useEffect(() => {
         costCenter()
-        if (user.loginType !== "1" || user.additionalRole !== "1") {
+        if (user.loginType !== "1" || user.loginType !== "9" || user.loginType !== "3" || user.loginType !== "7" ||
+            user.additionalRole !== "1" || user.additionalRole !== "9" || user.additionalRole !== "3" || user.additionalRole !== "7") {
             setCostCenterName(user.costCentre)
         }
     }, []);
@@ -76,7 +72,7 @@ const AdminCreateClusterModal = (props) => {
                 setTimeout(() => {
                     callTimer();
                 }, 1000);
-                viewCluster();
+                viewCluster()
             })
             .catch((error) => {
                 alert(" In error catch ", error);
@@ -120,14 +116,20 @@ const AdminCreateClusterModal = (props) => {
         }
     };
 
+
+
+
     const getCostCenterName = (e) => {
-        let data1 = e.target.value
-        setCostCenterName(data1)
-        viewManagerByCostCenter(data1)
-        employeeIdData(data1)
-        //   console.log("data1", data1)
-        selectClusterLeader(data1)
-        console.log("@@@@@@@@@@@@@@@@@@@" + JSON.stringify(viewManagerByCostCenterList));
+        let data = e.target.value
+        setCostCenterName(data)
+        viewManagerByCostCenter(data)
+    }
+
+    const getEmployeeId = (e) => {
+        let data = e.target.value;
+        alert(data);
+        callClusterEmployees(costCenterName, data)
+        callClusterLeaders(costCenterName, data)
     }
 
 
@@ -209,7 +211,6 @@ const AdminCreateClusterModal = (props) => {
                                 <div className="form-group">
                                     <label htmlFor="exampleFormControlInput1">Select cost center</label>
                                     <select
-                                        value={costCenterName}
                                         className="form-control"
                                         required
                                         onChange={(e) => getCostCenterName(e)}
@@ -224,23 +225,22 @@ const AdminCreateClusterModal = (props) => {
                                 </div>
                             </div>
                         </div>
-
-
                         <div className="row">
                             <div className="col-sm-12">
                                 <div className="form-group">
                                     <label htmlFor="exampleFormControlInput1">Select Manager</label>
                                     <select
-                                        value={costCenterName}
                                         className="form-control"
                                         required
-                                        onChange={(e) => getCostCenterName(e)}
+                                        onChange={(e) => getEmployeeId(e)}
                                     >
                                         <option value="">Select Manager</option>
-                                        {viewManagerByCostCenterList.map((e, i) => {
-                                            return (
-                                                <option key={i + 1} value={e.costCentreName}>{e.firstName}&nbsp;&nbsp;{e.employeeId}</option>)
-                                        })}
+
+                                        {viewManagerByCostCenterList !== null
+                                            && viewManagerByCostCenterList.map((e, i) => {
+                                                return (
+                                                    <option key={i + 1} value={e.employeeId}>{e.firstName}</option>)
+                                            })}
 
                                     </select>
                                 </div>
@@ -255,7 +255,7 @@ const AdminCreateClusterModal = (props) => {
                                     <Multiselect
 
                                         placeholder="Select Employee"
-                                        options={employeeIdList}
+                                        options={callClusterEmployeesList}
                                         value={employee}
                                         displayValue="firstName"
                                         onSelect={handleMultiChange1}
@@ -277,8 +277,8 @@ const AdminCreateClusterModal = (props) => {
                                         style={{ fontSize: "0.8rem" }}
                                         onChange={clusterLeaderSelect}>
                                         <option value="">Select Cluster Leader</option>
-                                        {clusterLeaderNames !== null
-                                            && clusterLeaderNames.map((e, i) => {
+                                        {callClusterLeadersList !== null
+                                            && callClusterLeadersList.map((e, i) => {
                                                 return (
 
                                                     <option key={e.employeeId} value={e.employeeId}>
@@ -295,7 +295,7 @@ const AdminCreateClusterModal = (props) => {
                         <button className="myclass mb-2 mr-2" onClick={() => { clearAndClose() }}>Close</button>
 
 
-                        <h5>{successMsg.length !== 0 && <div className="text-success">{successMsg}</div>}</h5>
+
                     </form>
                 </Modal.Body>
 
