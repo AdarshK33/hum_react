@@ -37,6 +37,17 @@ const ClusterReducer = (state, action) => {
         case 'VIEW_COST_CENTER_EMPLOYEE_MANGER':
             return { ...state, costCenterEmpAndMgrList: action.payload };
 
+        case 'VIEW_MANAGER_BY_COST_CENTER':
+            return { ...state, viewManagerByCostCenterList: action.payload };
+
+        case 'CLUSTER_EMP_LIST':
+            return { ...state, callClusterEmployeesList: action.payload };
+
+
+        case 'CLUSTER_LEADERS_LIST':
+            return { ...state, callClusterLeadersList: action.payload };
+
+
         default: return state;
     }
 }

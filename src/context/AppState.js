@@ -26,7 +26,8 @@ const initialState = {
   },
   MENUITEMS: [],
   user: {},
-  flag: 0
+  flag: 0,
+  MenuPermissionsRoute : []
 };
 
 export const AppContext = createContext();
@@ -85,6 +86,9 @@ export const AppProvider = ({ children, history }) => {
     client.get('/employee/profile')
       .then((response) => {
         state.user = response.data.data
+        if(response.data.data === {}){
+          toast.error("User does not exist");
+        }
 
 
         return dispatch({ type: 'FETCH_USER_INFO', payload: state.user });
@@ -94,18 +98,29 @@ export const AppProvider = ({ children, history }) => {
       })
   }
 
-  const getUserMenu = (menus) => {
+  const getUserMenu = (menus, type , user) => {
     state.MENUITEMS = [];
-
+    state.MenuPermissionsRoute = [];
     if (menus !== null && menus !== undefined) {
       state.flag = 1;
       for (let i = 0; i < menus.length; i++) {
+        if(type === "profile" && user.department !== "Retail"){
+          if (menus[i].hasChild === true && menus[i].menuUrl !== "/leaves/viewleave"  && menus[i].menuUrl !== "/roster/teamroster") {
+            state.MENUITEMS.push({ title: menus[i].menuName, icon: File, type: 'link', path: menus[i].menuUrl, active: false, children: [] })
+            
+          } else if (menus[i].child === false && menus[i].menuUrl !== "/leaves/viewleave" && menus[i].menuUrl !== "/roster/teamroster" ) {
+            state.MENUITEMS.push({ path: menus[i].menuUrl, title: menus[i].menuName, icon: File, type: 'link', active: false })
+          }
+        }else{
         if (menus[i].hasChild === true) {
           state.MENUITEMS.push({ title: menus[i].menuName, icon: File, type: 'link', path: menus[i].menuUrl, active: false, children: [] })
           
         } else if (menus[i].child === false) {
           state.MENUITEMS.push({ path: menus[i].menuUrl, title: menus[i].menuName, icon: File, type: 'link', active: false })
         }
+      }
+
+        state.MenuPermissionsRoute.push({path: menus[i].menuUrl});
       }
       for (let i = 0; i < state.MENUITEMS.length; i++) {
         for (let j = 0; j < menus.length; j++) {
@@ -134,6 +149,7 @@ export const AppProvider = ({ children, history }) => {
         MENUITEMS: state.MENUITEMS,
         flag: state.flag,
         app: state.app,
+        MenuPermissionsRoute : state.MenuPermissionsRoute
       }}
     >
       {children}

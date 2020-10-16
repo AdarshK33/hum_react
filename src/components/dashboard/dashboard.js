@@ -173,7 +173,7 @@ function Dashboard () {
 		
                return( 
                 
-                    (user === null ? '' : (user.department==="Finance" || user.department==="Retail" ))? 
+                   
                 
                <div>
                     <Row className="Row2" >                                
@@ -385,7 +385,7 @@ function Dashboard () {
                         </Col>
                         <Col></Col>
                     </Row> */}
-                </div> : <div><h1> 404 Error</h1> <br /> <h4 style={{color:"red"}}> *Sorry, this module is not accessible for your Department*</h4></div>
+                </div>
                 
                );
 }
