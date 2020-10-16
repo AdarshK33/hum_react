@@ -6,6 +6,7 @@ import { Button } from 'react-bootstrap'
 import { AppContext } from "../../context/AppState";
 import { Edit2 } from 'react-feather'
 import { ClusterContext } from "../../context/ClusterState";
+import Pagination from 'react-js-pagination';
 
 function ViewCluster() {
 
@@ -29,18 +30,25 @@ function ViewCluster() {
 
   //pagenation data
 
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const recordPerPage = 10;
-  // const totalRecords = clusterCostCenterList.length;
-  // const pageRange = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordPerPage = 10;
+  let totalRecords=0;
+  let indexOfFirstRecord = 0;
+  let indexOfLastRecord = 0;   
+  const pageRange = 10;
+  let currentRecords = [];
+  
+  if (clusterCostCenterList!==null){
+    totalRecords = clusterCostCenterList.length;
+    indexOfLastRecord = currentPage * recordPerPage;
+    indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+    currentRecords = clusterCostCenterList.slice(indexOfFirstRecord, indexOfLastRecord);
+  }
+  
 
-  // const indexOfLastRecord = currentPage * recordPerPage;
-  // const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  // const currentRecords = clusterCostCenterList.slice(indexOfFirstRecord, indexOfLastRecord);
-
-  // const handlePageChange = pageNumber => {
-  //   setCurrentPage(pageNumber);
-  // }
+  const handlePageChange = pageNumber => {
+    setCurrentPage(pageNumber);
+  }
 
 
   //pagenation data
@@ -78,12 +86,12 @@ function ViewCluster() {
                       <th scope="col">Edit</th>
                     </tr>
                   </thead>
-                  {clusterCostCenterList !== null &&
-                    clusterCostCenterList.map((e, i) => {
+                  {currentRecords  !== null &&
+                    currentRecords.map((e, i) => {
                       return (
                         <tbody key={i + 1}>
                           <tr>
-                            <td>{i + 1}</td>
+                            <td>{i + 1 + indexOfFirstRecord}</td>
                             {e.sports.map((f, j) => {
                               return (<tr key={j + 1}>
                                 <td style={{ marginLeft: "10px", fontSize: "10px", paddingTop: "5px", paddingBottom: "5px" }}>{f.sportName}</td>
@@ -118,19 +126,19 @@ function ViewCluster() {
                   modal={editModal}
                 />
               </div>
-              {/* <div>
-                {clusterList !== null && clusterList.length > 10 &&
-                  <Pagination
-                    itemClass="page-item"
-                    linkClass="page-link"
-                    activePage={currentPage}
-                    itemsCountPerPage={recordPerPage}
-                    totalItemsCount={totalRecords}
-                    pageRangeDisplayed={pageRange}
-                    onChange={handlePageChange}
-                  />
-                }
-              </div> */}
+              <div>
+                    {clusterCostCenterList !== null && clusterCostCenterList.length > 0 &&
+                    <Pagination
+                        itemClass="page-item"
+                        linkClass="page-link"
+                        activePage={currentPage}
+                        itemsCountPerPage={recordPerPage}
+                        totalItemsCount={totalRecords}
+                        pageRangeDisplayed={pageRange}
+                        onChange={handlePageChange}
+                    />
+                    }
+              </div>
             </div>
           </div>
         </div>
