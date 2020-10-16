@@ -112,7 +112,7 @@ const AdminRoster = () => {
                             <div className="card-header">
 
                                 <form className="form-inline">
-                                    <div className="row">
+                                    <div className="row align-items-start">
                                         <div className="col-sm-3">
                                             <div className="form-group">
                                                 <label className="name f-w-600">From Date &nbsp;</label>
@@ -170,7 +170,7 @@ const AdminRoster = () => {
 
                                     </div>
                                     <br />
-                                    <div className="row">
+                                    <div className="row align-items-start">
                                         <div className="col-sm-3">
                                             <div className="form-group">
                                                 <label className="name f-w-600">&nbsp;Select Week </label>

@@ -204,7 +204,7 @@ const CreateClusterModal = (props) => {
                       <div className="form-group">
                         <label htmlFor="exampleFormControlInput1">Select cost center</label>
                         <select
-                          value={costCenterName}
+
                           className="form-control"
                           required
                           onChange={(e) => getCostCenterName(e)}

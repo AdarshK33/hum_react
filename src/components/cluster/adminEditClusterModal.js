@@ -85,7 +85,6 @@ const AdminEditClusterModal = (props) => {
 
     const getEmployeeId = (e) => {
         let data = e.target.value;
-        alert(data);
         callClusterEmployees(costCenterName, data)
         callClusterLeaders(costCenterName, data)
     }
@@ -343,7 +342,7 @@ const AdminEditClusterModal = (props) => {
                                             return (
 
                                                 <option key={e.employeeId} value={e.employeeId}>
-                                                    {e.firstName}{e.lastName}
+                                                    {e.firstName}&nbsp;{e.lastName}
                                                 </option>
                                             );
                                         })}
