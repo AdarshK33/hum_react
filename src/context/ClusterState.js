@@ -216,10 +216,10 @@ export const ClusterProvider = ({ children }) => {
 
   // View Admin Salary Input 
 
-  const viewStoreSalary = (month, year) => {
-    console.log(" in cluster" + month + " " + year)
+  const viewStoreSalary = (month, costCentre, year) => {
+    console.log(" in cluster" + month + " " + costCentre + '' + year)
 
-    client.get('salary/view/store?month=' + month + '&storeId=' + user.costCentre + '&year=' + year)
+    client.get('salary/view/store?month=' + month + '&storeId=' + costCentre + '&year=' + year)
       .then((response) => {
         console.log("slary data on store id", response);
         state.salaryStoreList = response.data.data;
