@@ -32,19 +32,19 @@ function ViewCluster() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const recordPerPage = 10;
-  let totalRecords=0;
+  let totalRecords = 0;
   let indexOfFirstRecord = 0;
-  let indexOfLastRecord = 0;   
+  let indexOfLastRecord = 0;
   const pageRange = 10;
   let currentRecords = [];
-  
-  if (clusterCostCenterList!==null){
+
+  if (clusterCostCenterList !== null) {
     totalRecords = clusterCostCenterList.length;
     indexOfLastRecord = currentPage * recordPerPage;
     indexOfFirstRecord = indexOfLastRecord - recordPerPage;
     currentRecords = clusterCostCenterList.slice(indexOfFirstRecord, indexOfLastRecord);
   }
-  
+
 
   const handlePageChange = pageNumber => {
     setCurrentPage(pageNumber);
@@ -86,7 +86,7 @@ function ViewCluster() {
                       <th scope="col">Edit</th>
                     </tr>
                   </thead>
-                  {currentRecords  !== null &&
+                  {currentRecords !== null &&
                     currentRecords.map((e, i) => {
                       return (
                         <tbody key={i + 1}>
@@ -127,17 +127,17 @@ function ViewCluster() {
                 />
               </div>
               <div>
-                    {clusterCostCenterList !== null && clusterCostCenterList.length > 0 &&
-                    <Pagination
-                        itemClass="page-item"
-                        linkClass="page-link"
-                        activePage={currentPage}
-                        itemsCountPerPage={recordPerPage}
-                        totalItemsCount={totalRecords}
-                        pageRangeDisplayed={pageRange}
-                        onChange={handlePageChange}
-                    />
-                    }
+                {clusterCostCenterList !== null && clusterCostCenterList.length > 10 &&
+                  <Pagination
+                    itemClass="page-item"
+                    linkClass="page-link"
+                    activePage={currentPage}
+                    itemsCountPerPage={recordPerPage}
+                    totalItemsCount={totalRecords}
+                    pageRangeDisplayed={pageRange}
+                    onChange={handlePageChange}
+                  />
+                }
               </div>
             </div>
           </div>
