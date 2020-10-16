@@ -40,7 +40,7 @@ export const ClusterProvider = ({ children }) => {
   function updateCluster(updateCluter) {
     return client.put("cluster/update", updateCluter).then(function (respone) {
       console.log("api response===", respone.data.message);
-      viewClusterCostCenter(user.costCentre)
+      viewCluster()
       toast.info(respone.data.message);
 
     })

@@ -18,12 +18,12 @@ function AdminCluster() {
     const handleEditClose = () => setEditModal(false)
     const handleEditShow = () => setEditModal(true)
 
-    const { viewClusterForAdmin, adminClusterList, getCluster, getSingleCluster, getSingleCluster1, getEmployeesNames } = useContext(ClusterContext);
+    const { viewCluster, clusterList, getCluster, viewCostCenterEmployeeByManger, getSingleCluster, getSingleCluster1, getEmployeesNames } = useContext(ClusterContext);
     const { user, } = useContext(AppContext);
 
     useEffect(() => {
-        viewClusterForAdmin(user.costCentre)
-    }, [user.costCentre])
+        viewCluster()
+    }, [])
 
 
     //pagenation data
@@ -67,6 +67,7 @@ function AdminCluster() {
                                         <tr>
                                             <th>S. No</th>
                                             <th scope="col">Sports Name</th>
+                                            <th scope="col">Cost Center</th>
                                             <th scope="col">Cluster Name</th>
                                             <th scope="col">Cluster Details</th>
                                             <th scope="col">Cluster Leader</th>
@@ -76,8 +77,9 @@ function AdminCluster() {
                                             <th scope="col">Edit</th>
                                         </tr>
                                     </thead>
-                                    {
-                                        adminClusterList.map((e, i) => {
+
+                                    {clusterList !== null &&
+                                        clusterList.map((e, i) => {
                                             return (
                                                 <tbody key={i + 1}>
                                                     <tr>
@@ -87,6 +89,7 @@ function AdminCluster() {
                                                                 <td style={{ marginLeft: "10px", fontSize: "10px", paddingTop: "5px", paddingBottom: "5px" }}>{f.sportName}</td>
                                                             </tr>)
                                                         })}
+                                                        <td>{e.storeId}</td>
                                                         <td>{e.clusterName}</td>
                                                         <td>{e.description}</td>
                                                         <td>{e.clusterLeaderName}</td>
@@ -96,7 +99,7 @@ function AdminCluster() {
                                                         <td><Edit2 onClick={() => {
                                                             setEditModal(true);
                                                             getCluster(e.clusterId);
-
+                                                            viewCostCenterEmployeeByManger(e.storeId, e.managerId)
                                                         }} />
                                                         </td>
 

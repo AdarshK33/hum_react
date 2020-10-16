@@ -5,7 +5,6 @@ import { Multiselect } from 'multiselect-react-dropdown';
 import { toast } from "react-toastify";
 import { RosterContext } from "../../context/RosterState";
 import { AppContext } from "../../context/AppState";
-import { AdminContext } from "../../context/AdminState";
 import "react-toastify/dist/ReactToastify.css";
 const AdminEditClusterModal = (props) => {
 
@@ -21,7 +20,6 @@ const AdminEditClusterModal = (props) => {
     const [clustertButton, setClusterButton] = useState(false);
     const [costCenterName, setCostCenterName] = useState('');
     const [status, setStatus] = useState(0);
-    const [costCenterForAdmin, setCostCenterForAdmin] = useState()
 
 
 
@@ -39,14 +37,15 @@ const AdminEditClusterModal = (props) => {
     }
 
 
-    const { updateCluster, getSingleCluster, viewSports, sportsNames,
-        getSingleCluster1, selectClusterLeader, clusterAllLeaderNames, getEmployeesNames } = useContext(ClusterContext);
-    const { user, getUserInfo } = useContext(AppContext);
+    const { viewCluster, viewManagerByCostCenter, viewManagerByCostCenterList, updateCluster, getSingleCluster, viewSports, costCenterEmpAndMgrList, sportsNames, viewClusterCostCenter, callClusterEmployees, callClusterLeaders
+        , getSingleCluster1, getEmployeesNames } = useContext(ClusterContext);
+    const { user } = useContext(AppContext);
     const { costCenter, costCenterList } = useContext(RosterContext);
-    const { employeeIdData, employeeIdList } = useContext(AdminContext);
+
     useEffect(() => {
         viewSports()
-    }, [user.costCentre])
+
+    }, [])
 
     useEffect(() => {
         setClusterName(getSingleCluster.clusterName)
@@ -55,8 +54,6 @@ const AdminEditClusterModal = (props) => {
         setStatus(getSingleCluster.status)
         setCostCenterName(props.shiftData.storeId)
     }, [props])
-
-
 
     useEffect(() => {
         setClusterId(props.clusterId)
@@ -73,24 +70,27 @@ const AdminEditClusterModal = (props) => {
 
 
     useEffect(() => {
-        getUserInfo()
         costCenter()
-        if (user.loginType !== "1" && user.loginType !== "9" && user.additionalRole !== "1" && user.additionalRole !== "9") {
+        if (user.loginType !== "1" || user.loginType !== "9" || user.loginType !== "3" || user.loginType !== "7" ||
+            user.additionalRole !== "1" || user.additionalRole !== "9" || user.additionalRole !== "3" || user.additionalRole !== "7") {
             setCostCenterName(user.costCentre)
         }
     }, [user.costCentre, user.loginType]);
 
+    const getCostCenterName = (e) => {
+        let data = e.target.value
+        setCostCenterName(data)
+        viewManagerByCostCenter(data)
+    }
 
-    const setCostCenterHandler = (e) => {
-        let data1 = e.target.value
-        setCostCenterForAdmin(data1)
-        employeeIdData(data1)
-        console.log("data1", data1)
-        selectClusterLeader(data1)
+    const getEmployeeId = (e) => {
+        let data = e.target.value;
+        alert(data);
+        callClusterEmployees(costCenterName, data)
+        callClusterLeaders(costCenterName, data)
     }
 
 
-    //alert(JSON.stringify(getSingleCluster));
     const onSubmit = (event) => {
 
 
@@ -111,6 +111,7 @@ const AdminEditClusterModal = (props) => {
         }
         if (validate) {
             updateCluster(editCluster)
+
             props.handleEditClose()
         }
     }
@@ -188,8 +189,9 @@ const AdminEditClusterModal = (props) => {
         setClusterButton(false)
         setErrorMsg(false)
     }
-    const onRemoveEmployee = (options) => {
 
+
+    const onRemoveEmployee = (options) => {
         setEmployee(options)
         console.log(employee);
     }
@@ -261,38 +263,52 @@ const AdminEditClusterModal = (props) => {
                         </div>
 
 
-                        {/* {(() => {
-                            if (user.loginType === "1" || user.loginType === "9" || user.additionalRole === "1" || user.additionalRole === "9") {
-                                return (
-                                    <div className="row">
-                                        <div className="col-sm-12">
-                                            <div className="form-group">
-                                                <label htmlFor="exampleFormControlInput1">Select cost center</label>
-                                                <select
-                                                    value={costCenterName}
-                                                    className="form-control"
-                                                    required
-                                                    onChange={(e) => setCostCenterHandler(e)}
-                                                >
-                                                    <option value="">Select cost center</option>
-                                                    {costCenterList.map((e, i) => {
-                                                        return (
-                                                            <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
-                                                    })}
-
-                                                </select>
 
 
+                        {/* <div className="row">
+                            <div className="col-sm-12">
+                                <div className="form-group">
+                                    <label htmlFor="exampleFormControlInput1">Select cost center</label>
+                                    <select
+                                        value={costCenterName}
+                                        className="form-control"
+                                        required
+                                        defaultValue={props.shiftData.storeId}
+                                        onChange={(e) => getCostCenterName(e)}
+                                    >
+                                        <option value="">Select cost center</option>
+                                        {costCenterList.map((e, i) => {
+                                            return (
+                                                <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
+                                        })}
 
+                                    </select>
+                                </div>
+                            </div>
+                        </div> */}
 
-                                            </div>
-                                        </div>
-                                    </div>
-                                )
-                            }
-                        })()} */}
                         {/* <h3>{getSingleCluster.employeeIds}</h3> */}
-                        {/* 
+                        {/* <div className="row">
+                            <div className="col-sm-12">
+                                <div className="form-group">
+                                    <label htmlFor="exampleFormControlInput1">Select Manager</label>
+                                    <select
+                                        className="form-control"
+                                        required
+                                        onChange={(e) => getEmployeeId(e)}
+                                    >
+                                        <option value="">Select Manager</option>
+
+                                        {viewManagerByCostCenterList !== null
+                                            && viewManagerByCostCenterList.map((e, i) => {
+                                                return (
+                                                    <option key={i + 1} value={e.employeeId}>{e.firstName}</option>)
+                                            })}
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div> */}
                         <div className="row">
                             <div className="col-sm-12">
                                 <div className="form-group">
@@ -300,7 +316,7 @@ const AdminEditClusterModal = (props) => {
 
                                     <Multiselect
                                         placeholder="Select Employee"
-                                        options={employeeIdList}
+                                        options={costCenterEmpAndMgrList}
                                         value={employee}
                                         selectedValues={getEmployeesNames}
                                         displayValue="firstName"
@@ -308,14 +324,10 @@ const AdminEditClusterModal = (props) => {
                                         onSelect={handleMultiChange1}
                                         isMulti
                                     />
-
-
-
                                 </div>
                             </div>
-                        </div> */}
-                        {/* 
-                        <h4>{getSingleCluster.clusterLeader}</h4>
+                        </div>
+
                         <div className="row">
                             <div className="col-sm-12">
                                 <div className="form-group">
@@ -327,7 +339,7 @@ const AdminEditClusterModal = (props) => {
                                         value={clusterLeader}
                                         onChange={clusterLeaderSelect}>
 
-                                        {employeeIdList !== null && employeeIdList.map((e, i) => {
+                                        {costCenterEmpAndMgrList !== null && costCenterEmpAndMgrList.map((e, i) => {
                                             return (
 
                                                 <option key={e.employeeId} value={e.employeeId}>
@@ -339,7 +351,7 @@ const AdminEditClusterModal = (props) => {
                                     </select>
                                 </div>
                             </div>
-                        </div> */}
+                        </div>
 
 
 

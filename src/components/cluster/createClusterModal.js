@@ -230,7 +230,7 @@ const CreateClusterModal = (props) => {
                   <Multiselect
 
                     placeholder="Select Employee"
-                    options={callClusterLeadersList}
+                    options={callClusterEmployeesList}
                     value={employee}
                     displayValue="firstName"
                     onSelect={handleMultiChange1}
@@ -252,8 +252,8 @@ const CreateClusterModal = (props) => {
                     style={{ fontSize: "0.8rem" }}
                     onChange={clusterLeaderSelect}>
                     <option value="">Select Cluster Leader</option>
-                    {callClusterEmployeesList !== null
-                      && callClusterEmployeesList.map((e, i) => {
+                    {callClusterLeadersList !== null
+                      && callClusterLeadersList.map((e, i) => {
                         return (
 
                           <option key={e.employeeId} value={e.employeeId}>
