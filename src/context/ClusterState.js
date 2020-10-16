@@ -19,7 +19,10 @@ const initial_state = {
   clusterAllLeaderNames: [],
   getEmployeesNames: [],
   adminClusterList: [],
-  costCenterEmpAndMgrList: []
+  costCenterEmpAndMgrList: [],
+  viewManagerByCostCenterList: [],
+  callClusterEmployeesList: [],
+  callClusterLeadersList: [],
 }
 
 
@@ -37,8 +40,9 @@ export const ClusterProvider = ({ children }) => {
   function updateCluster(updateCluter) {
     return client.put("cluster/update", updateCluter).then(function (respone) {
       console.log("api response===", respone.data.message);
-      toast.info(respone.data.message);
       viewCluster()
+      toast.info(respone.data.message);
+
     })
       .catch((error) => {
         alert(" In error catch ", error);
@@ -212,10 +216,10 @@ export const ClusterProvider = ({ children }) => {
 
   // View Admin Salary Input 
 
-  const viewStoreSalary = (month, year) => {
-    console.log(" in cluster" + month + " " + year)
+  const viewStoreSalary = (month, costCentre, year) => {
+    console.log(" in cluster" + month + " " + costCentre + '' + year)
 
-    client.get('salary/view/store?month=' + month + '&storeId=' + user.costCentre + '&year=' + year)
+    client.get('salary/view/store?month=' + month + '&storeId=' + costCentre + '&year=' + year)
       .then((response) => {
         console.log("slary data on store id", response);
         state.salaryStoreList = response.data.data;
@@ -249,6 +253,7 @@ export const ClusterProvider = ({ children }) => {
   }
   //view cluster by coster center
   const viewClusterCostCenter = (costCenter) => {
+
     return client.get('cluster/view/' + costCenter)
       .then((response) => {
         state.clusterCostCenterList = response.data.data
@@ -266,8 +271,6 @@ export const ClusterProvider = ({ children }) => {
       //  console.log("data==>" + JSON.stringify(response));
       state.adminClusterList = response.data.data;
       console.log("==== ADMIN_CLUSTER LIST====")
-
-
       return dispatch({ type: 'FETCH_ADMIN_ClUSTER_LIST', payload: state.adminClusterList });
     })
       .catch(function (error) {
@@ -284,16 +287,62 @@ export const ClusterProvider = ({ children }) => {
       else {
         state.costCenterEmpAndMgrList = response.data.data;
       }
-
-
       console.log("VIEW_COST_CENTER_EMPLOYEE_MANGER " + state.costCenterEmpAndMgrList);
       return dispatch({ type: 'VIEW_COST_CENTER_EMPLOYEE_MANGER', payload: state.costCenterEmpAndMgrList });
     })
       .catch(function (error) {
         console.log(error);
       });
-
   }
+
+  const viewManagerByCostCenter = (storeId) => {
+    client.get('employee/manager/' + storeId).then(function (response) {
+      if (response.data.data === null) {
+        state.viewManagerByCostCenterList = []
+      }
+      else {
+        state.viewManagerByCostCenterList = response.data.data;
+      }
+      console.log("VIEW_MANAGER_BY_COST_CENTER" + JSON.stringify(state.viewManagerByCostCenterList));
+      return dispatch({ type: 'VIEW_MANAGER_BY_COST_CENTER', payload: state.viewManagerByCostCenterList });
+    })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  const callClusterEmployees = (storeId, managerId) => {
+    client.get('employee/view/' + storeId + '/' + managerId + '/cluster_employees').then(function (response) {
+      if (response.data.data === null) {
+        state.callClusterEmployeesList = []
+      }
+      else {
+        state.callClusterEmployeesList = response.data.data;
+      }
+      console.log("CLUSTER_EMP_LIST" + state.callClusterEmployeesList);
+      return dispatch({ type: 'CLUSTER_EMP_LIST', payload: state.callClusterEmployeesList });
+    })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+  const callClusterLeaders = (storeId, managerId) => {
+    client.get('employee/view/' + storeId + '/' + managerId + '/cluster_leader').then(function (response) {
+      if (response.data.data === null) {
+        state.callClusterLeadersList = []
+      }
+      else {
+        state.callClusterLeadersList = response.data.data;
+      }
+      console.log("CLUSTER_LEADERS_LIST" + state.callClusterLeadersList);
+      return dispatch({ type: 'CLUSTER_LEADERS_LIST', payload: state.callClusterLeadersList });
+    })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
 
 
 
@@ -317,6 +366,9 @@ export const ClusterProvider = ({ children }) => {
     selectAllClusterLeaderForEdit,
     viewClusterForAdmin,
     viewCostCenterEmployeeByManger,
+    viewManagerByCostCenter,
+    callClusterEmployees,
+    callClusterLeaders,
     clusterList: state.clusterList,
     clusterLeaderNames: state.clusterLeaderNames,
     sportsNames: state.sportsNames,
@@ -330,7 +382,11 @@ export const ClusterProvider = ({ children }) => {
     getEmployeesNames: state.getEmployeesNames,
     adminClusterList: state.adminClusterList,
     costCenterEmpAndMgrList: state.costCenterEmpAndMgrList,
+    viewManagerByCostCenterList: state.viewManagerByCostCenterList,
+    callClusterEmployeesList: state.callClusterEmployeesList,
+    callClusterLeadersList: state.callClusterLeadersList,
   }}>
     {children}
   </ClusterContext.Provider>);
 }
+

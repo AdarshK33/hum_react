@@ -6,12 +6,18 @@ import { Button } from 'react-bootstrap'
 import { AppContext } from "../../context/AppState";
 import { Edit2 } from 'react-feather'
 import { ClusterContext } from "../../context/ClusterState";
+import Pagination from 'react-js-pagination';
 
 function ViewCluster() {
 
+
+  const { getCluster, viewCostCenterEmployeeByManger, viewClusterCostCenter,
+    getSingleCluster, getSingleCluster1, getEmployeesNames, clusterCostCenterList } = useContext(ClusterContext);
+  const { user } = useContext(AppContext);
+
   useEffect(() => {
-    viewCluster()
-  }, [])
+    viewClusterCostCenter(user.costCentre)
+  }, [user.costCentre])
 
   const [modal, setModal] = useState(false);
   const handleClose = () => setModal(false)
@@ -24,26 +30,31 @@ function ViewCluster() {
 
   //pagenation data
 
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const recordPerPage = 10;
-  // const totalRecords = clusterList.length;
-  // const pageRange = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordPerPage = 10;
+  let totalRecords = 0;
+  let indexOfFirstRecord = 0;
+  let indexOfLastRecord = 0;
+  const pageRange = 10;
+  let currentRecords = [];
 
-  // const indexOfLastRecord = currentPage * recordPerPage;
-  // const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  // const currentRecords = clusterList.slice(indexOfFirstRecord, indexOfLastRecord);
+  if (clusterCostCenterList !== null) {
+    totalRecords = clusterCostCenterList.length;
+    indexOfLastRecord = currentPage * recordPerPage;
+    indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+    currentRecords = clusterCostCenterList.slice(indexOfFirstRecord, indexOfLastRecord);
+  }
 
-  // const handlePageChange = pageNumber => {
-  //   setCurrentPage(pageNumber);
-  // }
+
+  const handlePageChange = pageNumber => {
+    setCurrentPage(pageNumber);
+  }
 
 
   //pagenation data
 
   //variable
-  const { clusterList, viewCluster, getCluster, viewCostCenterEmployeeByManger,
-    getSingleCluster, getSingleCluster1, getEmployeesNames } = useContext(ClusterContext);
-  const { user } = useContext(AppContext);
+
   return (
     <Fragment>
       <Breadcrumb title="View Cluster" parent="View Cluster" />
@@ -75,12 +86,12 @@ function ViewCluster() {
                       <th scope="col">Edit</th>
                     </tr>
                   </thead>
-                  {clusterList !== null &&
-                    clusterList.map((e, i) => {
+                  {currentRecords !== null &&
+                    currentRecords.map((e, i) => {
                       return (
                         <tbody key={i + 1}>
                           <tr>
-                            <td>{i + 1}</td>
+                            <td>{i + 1 + indexOfFirstRecord}</td>
                             {e.sports.map((f, j) => {
                               return (<tr key={j + 1}>
                                 <td style={{ marginLeft: "10px", fontSize: "10px", paddingTop: "5px", paddingBottom: "5px" }}>{f.sportName}</td>
@@ -97,6 +108,7 @@ function ViewCluster() {
                               setEditModal(true);
                               getCluster(e.clusterId);
                               viewCostCenterEmployeeByManger(e.storeId, user.employeeId)
+
                             }} />
                             </td>
 
@@ -114,8 +126,8 @@ function ViewCluster() {
                   modal={editModal}
                 />
               </div>
-              {/* <div>
-                {clusterList !== null && clusterList.length > 10 &&
+              <div>
+                {clusterCostCenterList !== null && clusterCostCenterList.length > 10 &&
                   <Pagination
                     itemClass="page-item"
                     linkClass="page-link"
@@ -126,7 +138,7 @@ function ViewCluster() {
                     onChange={handlePageChange}
                   />
                 }
-              </div> */}
+              </div>
             </div>
           </div>
         </div>

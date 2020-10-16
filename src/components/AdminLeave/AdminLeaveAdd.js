@@ -38,8 +38,12 @@ const AdminLeaveAdd = (props) => {
      const { user } = useContext(AppContext);
 
      const today = new Date()
-     const currentYear = new Date('2020-01-01')
-    const nextYear = new Date('2020-12-31')
+     
+     let nextYear = new Date()
+    nextYear.setFullYear(nextYear.getFullYear(), 11, 31)
+
+    let currentYear = new Date()
+    currentYear.setFullYear(currentYear.getFullYear(), 0, 1)
 
      useEffect(() => {
          CostCenter()

@@ -45,7 +45,7 @@ const AdminSalaryModule = () => {
 
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  const currentRecords = salaryStoreList !== null ? salaryStoreList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+  const currentRecords = salaryStoreList !== null && salaryStoreList !== undefined ? salaryStoreList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
   const handlePageChange = pageNumber => {
    setCurrentPage(pageNumber);
@@ -56,12 +56,13 @@ const AdminSalaryModule = () => {
     e.preventDefault();
     const month = moment(getM, ["YYYY-MM"]).format("M");
     const year = moment(getM, ["MMM Do YY"]).format("YYYY");
-    // alert(month, year)
-    viewStoreSalary(month, year, costCenter);
+    console.log("costCenter",costCenter)
+    viewStoreSalary(month, costCenter, year);
   };
 
   const costCenterHandler = e => {
-    setCostCenter(e)
+    setCostCenter(e.target.value)
+    console.log("e.target.value",e.target.value)
   }
 
   const approvedButton = () => {
@@ -76,7 +77,7 @@ const AdminSalaryModule = () => {
       return (
         <div>
           <p>{i.month} {i.year}</p>
-          {viewStoreSalary(i.month, i.year, i.costCenter)}
+          {viewStoreSalary(i.month, i.costCenter, i.year)}
         </div>
 
       )
@@ -97,7 +98,7 @@ const AdminSalaryModule = () => {
       return (
         <div>
           <p>{i.month} {i.year}</p>
-          {viewStoreSalary(i.month, i.year, i.costCenter)}
+          {viewStoreSalary(i.month, i.costCenter, i.year)}
         </div>
 
       )
@@ -136,7 +137,7 @@ const AdminSalaryModule = () => {
             <div className="col-sm-4">
               <Form.Group>
                 <Form.Label>Cost Center</Form.Label><span style = {{color:'red'}}>*</span>
-                <Form.Control as="select" required  onChange={(e) => costCenterHandler(e)}>
+                <Form.Control as="select" required value={costCenter}  onChange={(e) => costCenterHandler(e)}>
                   <option value="">Select</option>
                     {cosCentreList.map((e, i) => {
                       return (

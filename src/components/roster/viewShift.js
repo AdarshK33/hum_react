@@ -33,19 +33,26 @@ function ViewShift() {
   const { shiftList, editShift, viewShift, viewShiftTypes, viewContractTypes, singleShiftList } = useContext(RosterContext);
   //pagenation data
 
+
   const [currentPage, setCurrentPage] = useState(1);
   const recordPerPage = 10;
-  const totalRecords = shiftList.length;
+  let totalRecords = 0;
+  let indexOfFirstRecord = 0;
+  let indexOfLastRecord = 0;
   const pageRange = 10;
+  let currentRecords = [];
 
-  const indexOfLastRecord = currentPage * recordPerPage;
-  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  const currentRecords = shiftList.slice(indexOfFirstRecord, indexOfLastRecord);
+  if (shiftList !== null) {
+    totalRecords = shiftList.length;
+    indexOfLastRecord = currentPage * recordPerPage;
+    indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+    currentRecords = shiftList.slice(indexOfFirstRecord, indexOfLastRecord);
+  }
+
 
   const handlePageChange = pageNumber => {
     setCurrentPage(pageNumber);
   }
-
 
   //pagenation data
 
@@ -142,7 +149,7 @@ function ViewShift() {
               </div>
 
               <div>
-                {shiftList !== null && shiftList.length > 0 &&
+                {shiftList !== null && shiftList.length > 10 &&
                   <Pagination
                     itemClass="page-item"
                     linkClass="page-link"
