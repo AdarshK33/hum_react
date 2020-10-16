@@ -38,11 +38,10 @@ const EditClusterModal = (props) => {
   }
 
 
-  const { updateCluster, getSingleCluster, viewSports, sportsNames,
-    getSingleCluster1, selectClusterLeader, clusterAllLeaderNames, getEmployeesNames, viewCostCenterEmployeeByManger, costCenterEmpAndMgrList } = useContext(ClusterContext);
+  const { updateCluster, getSingleCluster, viewSports, costCenterEmpAndMgrList, sportsNames, viewClusterCostCenter, callClusterEmployees, callClusterLeaders
+    , getSingleCluster1, getEmployeesNames } = useContext(ClusterContext);
   const { user } = useContext(AppContext);
   const { costCenter, costCenterList } = useContext(RosterContext);
-  const { employeeIdData, employeeIdList } = useContext(AdminContext);
 
   useEffect(() => {
     viewSports()
@@ -81,10 +80,10 @@ const EditClusterModal = (props) => {
 
 
   const getCostCenterName = (e) => {
-    let data1 = e.target.value
-    setCostCenterName(data1)
-    employeeIdData(data1)
-    console.log("data1", data1)
+    let data = e.target.value
+    setCostCenterName(data)
+    callClusterEmployees(data, user.employeeId)
+    callClusterLeaders(data, user.employeeId)
     //selectClusterLeader(data1)
   }
 
@@ -111,6 +110,7 @@ const EditClusterModal = (props) => {
     }
     if (validate) {
       updateCluster(editCluster)
+
       props.handleEditClose()
     }
   }

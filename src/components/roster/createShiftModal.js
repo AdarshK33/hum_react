@@ -31,12 +31,10 @@ const CreateShiftModal = (props) => {
   const [costCenterName, setCostCenterName] = useState('');
   const { addShift, viewShift, viewShiftTypes, viewContractTypes, shiftContractNames, costCenterList, costCenter } = useContext(RosterContext);
 
-  const { user, getUserInfo } = useContext(AppContext);
+  const { user } = useContext(AppContext);
 
   useEffect(() => {
-    getUserInfo()
     costCenter()
-    // if (user.loginType !== "1" && user.loginType !== "9") {
     if (user.loginType !== "1" && user.loginType !== "9" && user.additionalRole !== "1" && user.additionalRole !== "9") {
       setCostCenterName(user.costCentre)
     }
