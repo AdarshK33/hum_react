@@ -39,12 +39,14 @@ import RoleManagemenetList from './components/RoleManagement/RoleManagementList'
 import { AppContext } from "./context/AppState";
 import ManagerLeaveList from './components/ManagerLeave/ManagerLeaveList'
 import AdminCluster from "./components/cluster/admincluster";
+import Permissions from "./components/Permissions/Permissions";
 
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
   const [routPath, setRoutPath] = useState(false);
   useEffect(() => {
     setRoutPath(user.loginType);
+    console.log(user);
   }, [user.loginType]);
 
   return (
@@ -216,6 +218,12 @@ const RoutePath = () => {
                                                             <Route
                                                               path={`${process.env.PUBLIC_URL}/cluster/admincluster`}
                                                               component={AdminCluster}
+                                                            />
+                                                            : 
+                                                            e.path === "/permissions" ?
+                                                            <Route
+                                                              path={`${process.env.PUBLIC_URL}/permissions`}
+                                                              component={Permissions}
                                                             />
                                                             : ""
                   //  <Route
