@@ -40,7 +40,10 @@ import { AppContext } from "./context/AppState";
 import ManagerLeaveList from './components/ManagerLeave/ManagerLeaveList'
 import AdminCluster from "./components/cluster/admincluster";
 import Permissions from "./components/Permissions/Permissions";
-// import ProfileEdit from "./components/common/profileEdit";
+import MasterCountry from "./components/MasterTables/MasterCountry";
+import MasterState from "./components/MasterTables/MasterState";
+import MasterWeek from "./components/MasterTables/MasterWeek";
+import MasterWorkLocation from "./components/MasterTables/MasterWorkLocation";
 
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
@@ -232,7 +235,33 @@ const RoutePath = () => {
                                                                 path={`${process.env.PUBLIC_URL}/permissions`}
                                                                 component={Permissions}
                                                               />
-                                                              : ""
+                                                              :
+                                                              e.path === "/master/country" ?
+                                                                <Route
+                                                                  path={`${process.env.PUBLIC_URL}/master/country`}
+                                                                  component={MasterCountry}
+                                                                />
+                                                                :
+                                                                e.path === "/master/state" ?
+                                                                  <Route
+                                                                    path={`${process.env.PUBLIC_URL}/master/state`}
+                                                                    component={MasterState}
+                                                                  />
+                                                                  :
+                                                                  e.path === "/master/week-master" ?
+                                                                    <Route
+                                                                      path={`${process.env.PUBLIC_URL}/master/week-master`}
+                                                                      component={MasterWeek}
+                                                                    />
+                                                                    :
+                                                                    e.path === "/master/work-location" ?
+                                                                      <Route
+                                                                        path={`${process.env.PUBLIC_URL}/master/work-location`}
+                                                                        component={MasterWorkLocation}
+                                                                      />
+                                                                      : ""
+
+
                   //  <Route
                   // path={window.location.href}
                   // component={PageNotFound}
