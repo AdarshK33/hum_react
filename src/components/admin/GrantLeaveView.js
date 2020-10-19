@@ -68,7 +68,7 @@ const GrantLeaveView = () => {
             })}
         </table>
         <div>
-          {grantLeaveView !== null && grantLeaveView.length > 0 &&
+          {grantLeaveView !== null && grantLeaveView.length > 10 &&
             <Pagination
               itemClass="page-item"
               linkClass="page-link"

@@ -23,6 +23,7 @@ const initial_state = {
   viewManagerByCostCenterList: [],
   callClusterEmployeesList: [],
   callClusterLeadersList: [],
+  clusterCostCenter: {},
 }
 
 
@@ -37,7 +38,7 @@ export const ClusterProvider = ({ children }) => {
 
   }
 
-  function updateCluster(updateCluter) {
+  const updateCluster = (updateCluter) => {
     return client.put("cluster/update", updateCluter).then(function (respone) {
       console.log("api response===", respone.data.message);
       viewCluster()
@@ -48,6 +49,26 @@ export const ClusterProvider = ({ children }) => {
         alert(" In error catch ", error);
       });
   }
+
+  const updateAdminEditCluster = (updateCluter) => {
+    return client.put("cluster/update", updateCluter).then(function (respone) {
+      const {
+        clusterCostCenter: { costCenter },
+      } = state;
+      viewClusterCostCenter(costCenter)
+      //  console.log("api response===", respone.data.message);
+      toast.info(respone.data.message);
+
+    })
+      .catch((error) => {
+        alert(" In error catch ", error);
+      });
+  }
+
+
+
+
+
 
   function viewCluster() {
     client.get('cluster/view').then(function (response) {
@@ -256,10 +277,17 @@ export const ClusterProvider = ({ children }) => {
 
     return client.get('cluster/view/' + costCenter)
       .then((response) => {
-        state.clusterCostCenterList = response.data.data
+        const clusterCostCenterList = response.data.data
+        const clusterCostCenter = { costCenter }
         console.log("cluster based on cost center list", state.clusterCostCenterList)
         console.log("cluster based on cost center message", response.data.message)
-        return dispatch({ type: 'CLUSTER_COST_CENTER', payload: state.clusterCostCenterList })
+        return dispatch({
+          type: 'CLUSTER_COST_CENTER', payload: {
+            clusterCostCenterList,
+            clusterCostCenter,
+
+          }
+        })
       })
       .catch((error) => {
         console.log(error)
@@ -303,7 +331,7 @@ export const ClusterProvider = ({ children }) => {
       else {
         state.viewManagerByCostCenterList = response.data.data;
       }
-      console.log("VIEW_MANAGER_BY_COST_CENTER" + JSON.stringify(state.viewManagerByCostCenterList));
+      // console.log("VIEW_MANAGER_BY_COST_CENTER" + JSON.stringify(state.viewManagerByCostCenterList));
       return dispatch({ type: 'VIEW_MANAGER_BY_COST_CENTER', payload: state.viewManagerByCostCenterList });
     })
       .catch(function (error) {
@@ -319,7 +347,7 @@ export const ClusterProvider = ({ children }) => {
       else {
         state.callClusterEmployeesList = response.data.data;
       }
-      console.log("CLUSTER_EMP_LIST" + state.callClusterEmployeesList);
+      //console.log("CLUSTER_EMP_LIST" + state.callClusterEmployeesList);
       return dispatch({ type: 'CLUSTER_EMP_LIST', payload: state.callClusterEmployeesList });
     })
       .catch(function (error) {
@@ -335,7 +363,7 @@ export const ClusterProvider = ({ children }) => {
       else {
         state.callClusterLeadersList = response.data.data;
       }
-      console.log("CLUSTER_LEADERS_LIST" + state.callClusterLeadersList);
+      //console.log("CLUSTER_LEADERS_LIST" + state.callClusterLeadersList);
       return dispatch({ type: 'CLUSTER_LEADERS_LIST', payload: state.callClusterLeadersList });
     })
       .catch(function (error) {
@@ -369,6 +397,7 @@ export const ClusterProvider = ({ children }) => {
     viewManagerByCostCenter,
     callClusterEmployees,
     callClusterLeaders,
+    updateAdminEditCluster,
     clusterList: state.clusterList,
     clusterLeaderNames: state.clusterLeaderNames,
     sportsNames: state.sportsNames,

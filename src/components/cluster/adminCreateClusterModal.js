@@ -19,6 +19,7 @@ const AdminCreateClusterModal = (props) => {
     const [employee, setEmployee] = useState([])
     const [costCenterName, setCostCenterName] = useState('');
 
+
     const setClear = () => {
         setClusterName('')
         setDescription('')
@@ -47,8 +48,7 @@ const AdminCreateClusterModal = (props) => {
 
     useEffect(() => {
         costCenter()
-        if (user.loginType !== "1" || user.loginType !== "9" || user.loginType !== "3" || user.loginType !== "7" ||
-            user.additionalRole !== "1" || user.additionalRole !== "9" || user.additionalRole !== "3" || user.additionalRole !== "7") {
+        if (user.loginType !== "1" || user.additionalRole !== "1") {
             setCostCenterName(user.costCentre)
         }
     }, []);
@@ -127,7 +127,6 @@ const AdminCreateClusterModal = (props) => {
 
     const getEmployeeId = (e) => {
         let data = e.target.value;
-        alert(data);
         callClusterEmployees(costCenterName, data)
         callClusterLeaders(costCenterName, data)
     }
@@ -239,7 +238,7 @@ const AdminCreateClusterModal = (props) => {
                                         {viewManagerByCostCenterList !== null
                                             && viewManagerByCostCenterList.map((e, i) => {
                                                 return (
-                                                    <option key={i + 1} value={e.employeeId}>{e.firstName}</option>)
+                                                    <option key={i + 1} value={e.employeeId}>{e.firstName}&nbsp;{e.employeeId}</option>)
                                             })}
 
                                     </select>
