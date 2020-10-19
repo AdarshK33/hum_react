@@ -75,7 +75,9 @@ const AdminReportForm = () => {
         const monthReportData = {
             employeeIds: employeeCostCenter.map((e,i) => employeeCostCenter[i].value),
             fromDate: moment(startDate).format("YYYY-MM-DD"),
-            leaveTypeIds: leave.map((e,i) => leave[i].value),
+            leaveTypeIds:  leave.map((e,i) => {if(leave[i].value === 1) 
+                {return 0, leave[i].value}
+                else {return leave[i].value}}),
             toDate: moment(endDate).format("YYYY-MM-DD"),
             year: 'string'
         }
@@ -87,6 +89,7 @@ const AdminReportForm = () => {
             year: moment(startYear).format("YYYY")
         }
         if(reportType === 'Monthly'){
+            console.log("leaveTypeIds",monthReportData)
             reportLeave(monthReportData)
         }
         if(reportType === 'Yearly'){
