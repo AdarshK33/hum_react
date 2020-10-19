@@ -26,7 +26,7 @@ const ClusterReducer = (state, action) => {
             return { ...state, salaryStoreList: action.payload };
 
         case 'CLUSTER_COST_CENTER':
-            return { ...state, clusterCostCenterList: action.payload };
+            return { ...state, ...action.payload };
 
         case 'FETCH_ALL_LEADERS_NAME':
             return { ...state, clusterAllLeaderNames: action.payload };

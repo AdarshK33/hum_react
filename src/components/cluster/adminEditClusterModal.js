@@ -13,7 +13,6 @@ const AdminEditClusterModal = (props) => {
     const [description, setDescription] = useState("");
     const [clusterLeader, setClusterLeader] = useState('');
     const [clusterId, setClusterId] = useState('');
-    const [successMsg, setSuccessMsg] = useState("");
     const [employee, setEmployee] = useState([])
     const [errormsg, setErrorMsg] = useState(false);
     const [sportsList, setSportsList] = useState([])
@@ -24,27 +23,27 @@ const AdminEditClusterModal = (props) => {
 
 
 
-    const setClear = () => {
-        setClusterName('')
-        setDescription('')
-        setClusterLeader('')
-        setClusterButton('')
-        setErrorMsg('')
-        setSuccessMsg('')
-        setSportsList('');
-        setSuccessMsg('');
-        setEmployee('')
-    }
+    // const setClear = () => {
+    //     setClusterName('')
+    //     setDescription('')
+    //     setClusterLeader('')
+    //     setClusterButton('')
+    //     setErrorMsg('')
+    //     setSuccessMsg('')
+    //     setSportsList('');
+    //     setSuccessMsg('');
+    //     setEmployee('')
+    // }
 
 
-    const { viewCluster, viewManagerByCostCenter, viewManagerByCostCenterList, updateCluster, getSingleCluster, viewSports, costCenterEmpAndMgrList, sportsNames, viewClusterCostCenter, callClusterEmployees, callClusterLeaders
-        , getSingleCluster1, getEmployeesNames } = useContext(ClusterContext);
+    const { updateCluster, viewCluster, getSingleCluster, viewSports, costCenterEmpAndMgrList, sportsNames,
+        getSingleCluster1, getEmployeesNames
+    } = useContext(ClusterContext);
     const { user } = useContext(AppContext);
-    const { costCenter, costCenterList } = useContext(RosterContext);
+    const { costCenter } = useContext(RosterContext);
 
     useEffect(() => {
         viewSports()
-
     }, [])
 
     useEffect(() => {
@@ -71,23 +70,22 @@ const AdminEditClusterModal = (props) => {
 
     useEffect(() => {
         costCenter()
-        if (user.loginType !== "1" || user.loginType !== "9" || user.loginType !== "3" || user.loginType !== "7" ||
-            user.additionalRole !== "1" || user.additionalRole !== "9" || user.additionalRole !== "3" || user.additionalRole !== "7") {
+        if (user.loginType !== "1" || user.additionalRole !== "1") {
             setCostCenterName(user.costCentre)
         }
     }, [user.costCentre, user.loginType]);
 
-    const getCostCenterName = (e) => {
-        let data = e.target.value
-        setCostCenterName(data)
-        viewManagerByCostCenter(data)
-    }
+    // const getCostCenterName = (e) => {
+    //     let data = e.target.value
+    //     setCostCenterName(data)
+    //     viewManagerByCostCenter(data)
+    // }
 
-    const getEmployeeId = (e) => {
-        let data = e.target.value;
-        callClusterEmployees(costCenterName, data)
-        callClusterLeaders(costCenterName, data)
-    }
+    // const getEmployeeId = (e) => {
+    //     let data = e.target.value;
+    //     callClusterEmployees(costCenterName, data)
+    //     callClusterLeaders(costCenterName, data)
+    // }
 
 
     const onSubmit = (event) => {
@@ -110,7 +108,7 @@ const AdminEditClusterModal = (props) => {
         }
         if (validate) {
             updateCluster(editCluster)
-
+            viewCluster()
             props.handleEditClose()
         }
     }
@@ -198,12 +196,7 @@ const AdminEditClusterModal = (props) => {
 
 
 
-    //Timer to close modal 
-    const callTimer = () => {
-        const setModal = props.handleEditClose;
-        setClear()
-        setModal()
-    }
+
 
     // edit api need to integrate 
 
@@ -373,7 +366,7 @@ const AdminEditClusterModal = (props) => {
 
                         <button className="myclass mb-2 mr-2" type="submit" disabled={clustertButton} value="Submit">Save</button>
 
-                        <h5>{successMsg.length !== 0 && <div className="text-success">{successMsg}</div>}</h5>
+
                     </form>
                 </Modal.Body>
 
