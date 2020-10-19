@@ -38,7 +38,7 @@ const EditClusterModal = (props) => {
   }
 
 
-  const { updateCluster, getSingleCluster, viewSports, costCenterEmpAndMgrList, sportsNames, viewClusterCostCenter, callClusterEmployees, callClusterLeaders
+  const { updateAdminEditCluster, getSingleCluster, viewSports, costCenterEmpAndMgrList, sportsNames, viewClusterCostCenter, callClusterEmployees, callClusterLeaders
     , getSingleCluster1, getEmployeesNames } = useContext(ClusterContext);
   const { user } = useContext(AppContext);
   const { costCenter, costCenterList } = useContext(RosterContext);
@@ -109,7 +109,7 @@ const EditClusterModal = (props) => {
       status: status
     }
     if (validate) {
-      updateCluster(editCluster)
+      updateAdminEditCluster(editCluster)
 
       props.handleEditClose()
     }

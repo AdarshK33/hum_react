@@ -33,11 +33,13 @@ const EditShiftModal = (props) => {
   const [errormsg, setErrorMsg] = useState(false);
   const [status, setStatus] = useState(0)
   const [costCenterName, setCostCenterName] = useState('');
-  const [breakNumber, setBreakNumber] = useState()
+  const [breakNumber, setBreakNumber] = useState();
+  const [timeError, setTimeErrorMsg] = useState(false);
 
   const { updateShift, singleShiftList, viewShiftTypes, costCenter, viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const { user } = useContext(AppContext);
   const setClear = () => {
+    setInvalidText(false)
     setShiftType('')
     setStartTime('')
     setEndTime('')
@@ -113,6 +115,22 @@ const EditShiftModal = (props) => {
     setShowText(true);
     setInvalidText(true)
     setBreakNumber(1)
+
+    var startTime1 = moment(startTime, ["h:mm A"]).format("HH:mm:ss")
+    var endTime1 = moment(endTime, ["h:mm A"]).format("HH:mm:ss")
+    var breakEndTime1 = moment(breakStartTime).add(1, 'hours').format('HH:mm:ss')
+    var breakStartTime1 = moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss")
+
+    if ((breakEndTime1 > endTime1) || (breakStartTime1 > endTime1)) {
+
+      setShiftButton(true)
+      setTimeErrorMsg("Enter Valid Time");
+    }
+    else {
+      setShiftButton(false);
+      setTimeErrorMsg(false);
+    }
+
   }
   const onSubmit = e => {
     // const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
@@ -142,6 +160,7 @@ const EditShiftModal = (props) => {
     else {
       //==========
       if (breakNumber === 1) {
+
         console.log("out side break end time")
         e.preventDefault();
         const newShift = {
@@ -157,9 +176,13 @@ const EditShiftModal = (props) => {
           status: status
         }
         // alert(JSON.stringify(newShift));
+
         setSuccessMsg(true);
         updateShift(newShift)
+        setClear()
         props.handleEditClose();
+
+
 
       }
       else {
@@ -180,12 +203,16 @@ const EditShiftModal = (props) => {
         // alert(JSON.stringify(newShift));
         setSuccessMsg(true);
         updateShift(newShift);
+
         props.handleEditClose();
 
         console.log(result, "in competent");
       }
     }
   }
+
+
+
   return (
     <Modal show={props.modal} onHide={props.handleEditClose} centered>
       <Fragment>
@@ -299,7 +326,7 @@ const EditShiftModal = (props) => {
                               </div>
                             }
                           </div>
-
+                          <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px" }}>{timeError}</h6>
                           {/* {showText &&
                             <div className="row">
                               <div className="col-sm-12">

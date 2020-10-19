@@ -9,7 +9,7 @@ import { AppContext } from "../context/AppState";
 import Cookies from "js-cookie";
 const AppLayout = ({ children }) => {
 
-    const { authenticateUser, getUserInfo, state, user, getUserMenu, flag, app } = useContext(AppContext);
+    const { authenticateUser, getUserInfo, state, getUserMenu, flag, app } = useContext(AppContext);
     const [flagValue, setFlagValue] = useState();
     const [menuItems, setMenuItems] = useState();
     const loginUrl = `${process.env.REACT_APP_FEDID_AUTH_URL}?response_type=code&client_id=${process.env.REACT_APP_FEDID_CLIENTID}&scope=openid%20profile&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}`;
@@ -19,21 +19,21 @@ const AppLayout = ({ children }) => {
         setFlagValue(flag)
     }, []);
     useEffect(() => {
-        const { MENUITEMS, flag , user } = state
+        const { MENUITEMS, flag, user } = state
         setMenuItems(MENUITEMS);
-        
+
         if (flagValue === 0 && menuItems !== []) {
             setFlagValue(flag)
-            if(window.location.href.includes("team")){
+            if (window.location.href.includes("team")) {
                 getUserMenu(user.managerMenus);
-            }else if (window.location.href.includes("admin")) {
+            } else if (window.location.href.includes("admin")) {
                 getUserMenu(user.adminMenus);
-            }else if (window.location.href.includes("cluster")) {
+            } else if (window.location.href.includes("cluster")) {
                 getUserMenu(user.clusterManagerMenus);
-            }else {
-                getUserMenu(user.generalUserMenus , "profile" ,user );
+            } else {
+                getUserMenu(user.generalUserMenus, "profile", user);
             }
-            
+
         }
     })
 
