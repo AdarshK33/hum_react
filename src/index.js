@@ -19,6 +19,9 @@ import { ClusterProductProvider } from "./context/ClusterProductState";
 import { AppProvider } from "./context/AppState";
 import { AdminProvider } from "./context/AdminState";
 
+
+import { PermissionProvider } from "./context/PermissionState";
+
 import RoutePath from "./Route";
 
 
@@ -37,20 +40,22 @@ function Root() {
           <LeaveProvider>
             <ClusterProvider>
               <ClusterProductProvider>
-                <DashboardProvider>
-                  <StoreProductProvider>
-                  <RoleManagementProvider>
-                    <AdminProvider>
-                      <BrowserRouter basename={"/"}>
-                        <ScrollContext>
-                          <RoutePath />
-                        </ScrollContext>
-                      </BrowserRouter>
-                      {/* </Provider>  */}
-                    </AdminProvider>
-                    </RoleManagementProvider>
-                  </StoreProductProvider>
-                </DashboardProvider>
+                <PermissionProvider>
+                  <DashboardProvider>
+                    <StoreProductProvider>
+                    <RoleManagementProvider>
+                      <AdminProvider>
+                        <BrowserRouter basename={"/"}>
+                          <ScrollContext>
+                            <RoutePath />
+                          </ScrollContext>
+                        </BrowserRouter>
+                        {/* </Provider>  */}
+                      </AdminProvider>
+                      </RoleManagementProvider>
+                    </StoreProductProvider>
+                  </DashboardProvider>
+                </PermissionProvider>
               </ClusterProductProvider>
             </ClusterProvider>
           </LeaveProvider>
