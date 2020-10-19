@@ -40,6 +40,7 @@ import { AppContext } from "./context/AppState";
 import ManagerLeaveList from './components/ManagerLeave/ManagerLeaveList'
 import AdminCluster from "./components/cluster/admincluster";
 import Permissions from "./components/Permissions/Permissions";
+// import ProfileEdit from "./components/common/profileEdit";
 
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
@@ -58,6 +59,7 @@ const RoutePath = () => {
 
 
 
+
       <Fragment>
         <App>
           {/* dashboard menu */}
@@ -66,6 +68,11 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/`}
             component={Default}
           />
+
+          {/* <Route
+            path={`${process.env.PUBLIC_URL}/profileEdit`}
+            component={ProfileEdit}
+          /> */}
           <Route
 
             path={`${process.env.PUBLIC_URL}/dashboard/storedashboard`}
