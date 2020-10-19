@@ -219,13 +219,13 @@ const RoutePath = () => {
                                                               path={`${process.env.PUBLIC_URL}/cluster/admincluster`}
                                                               component={AdminCluster}
                                                             />
-                                                            : 
+                                                            :
                                                             e.path === "/permissions" ?
-                                                            <Route
-                                                              path={`${process.env.PUBLIC_URL}/permissions`}
-                                                              component={Permissions}
-                                                            />
-                                                            : ""
+                                                              <Route
+                                                                path={`${process.env.PUBLIC_URL}/permissions`}
+                                                                component={Permissions}
+                                                              />
+                                                              : ""
                   //  <Route
                   // path={window.location.href}
                   // component={PageNotFound}
