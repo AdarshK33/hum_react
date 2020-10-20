@@ -2,28 +2,25 @@ import React, { Fragment, useEffect, useContext, useState} from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import Pagination from 'react-js-pagination'
-import { AppContext } from "../../context/AppState";
 import { MasterFilesContext } from "../../context/MasterFilesState";
 
-const MasterState = () => {
+const MasterDailyQty = () => {
 
-  
-  const { viewStates, stateList, uploadStateFile} = useContext(MasterFilesContext);
+  const {dailyQty, viewDailyQty, uploadDailyQty} = useContext(MasterFilesContext);
 
   useEffect(() =>{
-    viewStates()
-    
+    viewDailyQty()
   }, [])
 
     
   const changeHandler = (event) => {
     let fileObj = event.target.files[0];
     console.log("clicked", fileObj)
-    uploadStateFile(fileObj)
+    uploadDailyQty(fileObj)
   }
   return (
     <Fragment>
-      <Breadcrumb title="Master" parent="State Master" />
+      <Breadcrumb title="Master" parent="Week Master" />
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
@@ -40,7 +37,7 @@ const MasterState = () => {
                     <ReactHTMLTableToExcel
                       className="btn btn-light mr-2"
                       table="table-to-xls"
-                      filename="statelist"
+                      filename="dailyQtyList"
                       sheet="Sheet"
                       buttonText="Export excel" />
                   </div>
@@ -52,25 +49,34 @@ const MasterState = () => {
                   <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                     <tr>
                       <th>S. No</th>
-                      <th scope="col"> State Name</th>
-                      <th scope="col"> State Code</th>                                     
+                      <th scope="col"> Store ID</th>
+                      <th scope="col">  Date</th>
+                      <th scope="col">  Day </th>     
+                      <th scope="col"> Week </th>    
+                      <th scope="col"> Month </th>  
+                      <th scope="col"> To </th>  
+                      <th scope="col"> Quantity </th>             
                     </tr>
-                  </thead>   
+                  </thead>
 
-                  {stateList !== null && stateList !== undefined && stateList.length > 0 &&
-                    stateList.map((item, i) => {
+                  {dailyQty !== null && dailyQty !== undefined && dailyQty.length > 0 &&
+                    dailyQty.map((item, i) => {
                       return (
                         <tbody key={i + 1}>
                           <tr>
                             <td>{i + 1 }</td>
-                            <td>{item.stateName}</td>
-                            <td>{item.stateCode}</td>
-                            
-                            
+                            <td>{item.dqStoreId}</td>
+                            <td>{item.dqDate}</td>
+                            <td>{item.dqDay}</td>
+                            <td>{item.dqWeek}</td>
+                            <td>{item.dqMonth}</td>
+                            <td>{item.dqTo}</td>
+                            <td>{item.dqQty}</td>
                           </tr>
                         </tbody>
                       )
-                    })}            
+                    })}         
+           
 
                 </table>
 
@@ -86,4 +92,4 @@ const MasterState = () => {
 
 };
 
-export default MasterState;
+export default MasterDailyQty;

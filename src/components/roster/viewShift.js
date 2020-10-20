@@ -86,8 +86,8 @@ function ViewShift() {
                       <th>S. No</th>
                       <th>Cost Center</th>
                       <th>Shift Timings</th>
-                      <th>Break Time</th>
                       <th>Working Hours</th>
+                      <th>Break Time</th>                      
                       <th>Contract Type</th>
                       <th>Shift Type</th>
                       <th>Status</th>

@@ -116,13 +116,9 @@ const EditShiftModal = (props) => {
     setInvalidText(true)
     setBreakNumber(1)
 
-    var startTime1 = moment(startTime, ["h:mm A"]).format("HH:mm:ss")
     var endTime1 = moment(endTime, ["h:mm A"]).format("HH:mm:ss")
-    var breakEndTime1 = moment(breakStartTime).add(1, 'hours').format('HH:mm:ss')
     var breakStartTime1 = moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss")
-
-    if ((breakEndTime1 > endTime1) || (breakStartTime1 > endTime1)) {
-
+    if (breakStartTime1 > endTime1) {
       setShiftButton(true)
       setTimeErrorMsg("Enter Valid Time");
     }
@@ -130,7 +126,6 @@ const EditShiftModal = (props) => {
       setShiftButton(false);
       setTimeErrorMsg(false);
     }
-
   }
   const onSubmit = e => {
     // const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
@@ -146,7 +141,7 @@ const EditShiftModal = (props) => {
         contractType,
         shiftType,
         shiftMasterId: singleShiftList.shiftMasterId,
-        workingHours: 0,
+        workingHours: workingHours,
         storeId: costCenterName,
         breakStartTime: 0,
         breakEndTime: 0,
@@ -234,6 +229,7 @@ const EditShiftModal = (props) => {
                           className="form-control"
                           // selected={startTime}
                           onChange={date => setStartTime(date)}
+                          onCalendarClose={() => { calcTime() }}
                           showTimeSelect
                           showTimeSelectOnly
                           timeFormat="HH:mm"
@@ -321,7 +317,7 @@ const EditShiftModal = (props) => {
                               <div className="col-sm-6">
                                 <div className="form-group">
                                   <label htmlFor="exampleFormControlInput1"></label>
-                                  <input type="text" style={{ marginTop: "7px" }} className="form-control" placeholder={breakEndTime} defaultValue={singleShiftList.breakEndTime} value={moment(breakStartTime).add(1, 'hours').format('HH:mm A')} />
+                                  <input type="text" style={{ marginTop: "7px" }} className="form-control" placeholder="Enter break end time" defaultValue={singleShiftList.breakEndTime} value={moment(breakStartTime).add(1, 'hours').format('HH:mm A')} />
                                 </div>
                               </div>
                             }

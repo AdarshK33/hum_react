@@ -2,10 +2,11 @@ import React, { Fragment, useState, useContext, useEffect } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import Pagination from 'react-js-pagination'
 import { PermissionContext } from '../../context/PermissionState'
-const MasterWorkLocation = () => {
+const MasterMonthlyQuantity = () => {
 
 
-    const { locationDetails, locationDetailsList } = useContext(PermissionContext)
+    const { monthlyQtyDetails, monthlyQtyDetailsList } = useContext(PermissionContext)
+
 
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
@@ -15,11 +16,11 @@ const MasterWorkLocation = () => {
     const pageRange = 10;
     let currentRecords = [];
 
-    if (locationDetailsList !== null) {
-        totalRecords = locationDetailsList.length;
+    if (monthlyQtyDetailsList !== null) {
+        totalRecords = monthlyQtyDetailsList.length;
         indexOfLastRecord = currentPage * recordPerPage;
         indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-        currentRecords = locationDetailsList.slice(indexOfFirstRecord, indexOfLastRecord);
+        currentRecords = monthlyQtyDetailsList.slice(indexOfFirstRecord, indexOfLastRecord);
     }
 
 
@@ -28,39 +29,30 @@ const MasterWorkLocation = () => {
     }
 
 
+
     useEffect(() => {
-        locationDetails()
+        monthlyQtyDetails()
     }, [])
-
-
     return (
         <Fragment>
-            <Breadcrumb title="Work Location" parent="Work Location" />
+            <Breadcrumb title="Monthly Quantity" parent="Monthly Quantity" />
             <div className="container-fluid">
                 <div className="title_bar" style={{ background: "#006EBB" }} >
-
-
                 </div>
-
-
                 <div className="table-responsive">
                     <table className="table table-hover">
                         <thead className="thead-light" style={{ background: '#006EBB', color: 'white' }}>
                             <tr>
                                 <th scope="col">S. No</th>
-                                <th scope="col">Location Name</th>
-                                <th scope="col">City</th>
-                                <th scope="col">State</th>
-                                <th scope="col">Zone</th>
+                                <th scope="col">Store ID</th>
+                                <th scope="col">Store</th>
+                                <th scope="col">Year</th>
+                                <th scope="col">Month</th>
 
-                                <th scope="col">Flat/Plot No</th>
-                                <th scope="col">Street</th>
-                                <th scope="col">Locality</th>
-                                <th scope="col">Address Line</th>
-                                <th scope="col">Pin Code</th>
-                                <th scope="col">Phone Number</th>
-                                <th scope="col">Opening Time</th>
-                                <th scope="col">Closing Time</th>
+                                <th scope="col">Hour</th>
+                                <th scope="col">Turnover</th>
+                                <th scope="col">Quantity</th>
+
                             </tr>
                         </thead>
                         {currentRecords !== null &&
@@ -69,21 +61,13 @@ const MasterWorkLocation = () => {
                                     <tbody key={i + 1}>
                                         <tr>
                                             <td>{i + 1 + indexOfFirstRecord}</td>
-                                            <td>{item.locationName}</td>
-                                            <td>{item.cityName}</td>
-                                            <td>{item.stateName}</td>
-                                            <td>{item.zone}</td>
-
-                                            <td>{item.plotNo}</td>
-                                            <td>{item.street}</td>
-                                            <td>{item.locality}</td>
-                                            <td>{item.addressLine}</td>
-                                            <td>{item.pinCode}</td>
-                                            <td>{item.phoneNumber}</td>
-                                            <td>{item.openAt}</td>
-                                            <td>{item.closeAt}</td>
-
-
+                                            <td>{item.storeId}</td>
+                                            <td>{item.store}</td>
+                                            <td>{item.year}</td>
+                                            <td>{item.month}</td>
+                                            <td>{item.hour}</td>
+                                            <td>{item.turnover}</td>
+                                            <td>{item.quantity}</td>
                                         </tr>
                                     </tbody>
 
@@ -92,7 +76,7 @@ const MasterWorkLocation = () => {
                     </table>
                 </div>
                 <div>
-                    {locationDetailsList !== null && locationDetailsList.length > 10 &&
+                    {monthlyQtyDetailsList !== null && monthlyQtyDetailsList.length > 10 &&
                         <Pagination
                             itemClass="page-item"
                             linkClass="page-link"
@@ -110,4 +94,4 @@ const MasterWorkLocation = () => {
     )
 }
 
-export default MasterWorkLocation;
+export default MasterMonthlyQuantity;
