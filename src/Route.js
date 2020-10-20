@@ -44,6 +44,10 @@ import MasterCountry from "./components/MasterTables/MasterCountry";
 import MasterState from "./components/MasterTables/MasterState";
 import MasterWeek from "./components/MasterTables/MasterWeek";
 import MasterWorkLocation from "./components/MasterTables/MasterWorkLocation";
+import MasterSport from "./components/MasterTables/MasterSport";
+import MasterContractType from "./components/MasterTables/MasterContractType";
+import MasterCity from "./components/MasterTables/MasterCity";
+import MasterLeave from "./components/MasterTables/MasterLeave";
 
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
@@ -252,6 +256,30 @@ const RoutePath = () => {
                                                               <Route
                                                                 path={`${process.env.PUBLIC_URL}/master/work-location`}
                                                                 component={MasterWorkLocation}
+                                                              />
+                                                              :
+                                                              e.path === "/master/sport" ?
+                                                              <Route
+                                                                path={`${process.env.PUBLIC_URL}/master/sport`}
+                                                                component={MasterSport}
+                                                              />
+                                                              :
+                                                              e.path === "/master/contract-type" ?
+                                                              <Route
+                                                                path={`${process.env.PUBLIC_URL}/master/contract-type`}
+                                                                component={MasterContractType}
+                                                              />
+                                                              :
+                                                              e.path === "/master/city-master" ?
+                                                              <Route
+                                                                path={`${process.env.PUBLIC_URL}/master/city-master`}
+                                                                component={MasterCity}
+                                                              />
+                                                              :
+                                                              e.path === "/master/leave" ?
+                                                              <Route
+                                                                path={`${process.env.PUBLIC_URL}/master/leave`}
+                                                                component={MasterLeave}
                                                               />
                                                               : ""
 
