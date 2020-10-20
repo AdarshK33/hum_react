@@ -19,6 +19,7 @@ const AdminSalaryModule = () => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [checked, setChecked] = useState([]);
   const [costCenter, setCostCenter] = useState()
+  
 
   let history = useHistory();
 

@@ -60,7 +60,15 @@ const LeaveAdd = (props) => {
         let value = date
         console.log("fromDate", value)
         setStartDate(value);
-
+        setEndDate(null)
+        setEditMsg(false)
+        /* if (endDate === null){
+            setDisable(true)
+            
+            console.log("endDtae in condition", endDate)
+        } */
+       
+    
         //For disable the To Date initially
         setDisable(false)
 
@@ -73,13 +81,15 @@ const LeaveAdd = (props) => {
             setMin(true);
             setMax(false);
         }
-
+        
+        setEditMsg(false)
     }
 
     const toDateHandler = (date) => {
         let value1 = date
         console.log("toDate", value1)
         setEndDate(value1);
+       
         var newData
         if(startDate > new Date()){
              newData = 'Planned'
@@ -370,7 +380,7 @@ const onCloseModal = () => {
                                                     className="input_date" dateFormat="yyyy-MM-dd"
                                                     maxDate={today}
                                                     minDate={startDate}
-                                                    placeholderText="To Date" /></div>
+                                                    placeholderText="To Date" required/></div>
                                         </div>
                                         }
 

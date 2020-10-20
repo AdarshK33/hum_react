@@ -69,8 +69,10 @@ const EditLeave = (props) => {
         
         console.log("fromDateHandler value", value)
         console.log("endDate value", endDate)
+        setEndDate()
+        setEditMsg(false)
 
-        var newData
+     /*    var newData
         if(startDate > new Date()){
              newData = 'Planned'
         }
@@ -80,11 +82,9 @@ const EditLeave = (props) => {
         const newPopup = {
             empId: user.employeeId,
             fromDate: moment(value).format("YYYY-MM-DD"),
-           /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
            leaveCategory: newData,
-           /*  leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
            leaveTypeId: leave,
-            ltId: ltId,
+            ltId: props.ltId,
             numberOfDays: 0,
             reason: 'string',
             status: 1,
@@ -93,7 +93,7 @@ const EditLeave = (props) => {
             year: new Date().getFullYear()
         }
         setEditMsg(true)
-        editPopup(newPopup)
+        editPopup(newPopup) */
         
         //For disable the To Date initially
         setDisable(false)
@@ -107,7 +107,7 @@ const EditLeave = (props) => {
             setMin(true);
             setMax(false);
         }
-       /*  setEditLeavesMsg(true) */
+        setEditMsg(false)
 
     }
 
@@ -131,7 +131,7 @@ const EditLeave = (props) => {
            leaveCategory: newData,
             /* leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
             leaveTypeId: leave,
-            ltId: ltId,
+            ltId: props.ltId,
             numberOfDays: 0,
             reason: 'string',
             status: 1,
@@ -160,7 +160,7 @@ console.log("value 2", value2)
            leaveCategory:'Planned',
            /*  leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
            leaveTypeId: leave,
-            ltId: ltId,
+            ltId: props.ltId,
             numberOfDays: 0,
             reason: 'string',
             status: 1,
@@ -202,8 +202,8 @@ console.log("d3",moment(d3).format("YYYY-MM-DD"))
             leaveCategory: 'Planned',
             /* leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
             leaveTypeId: leave,
-            ltId: ltId,
-            numberOfDays: 0,
+            ltId: props.ltId,
+            numberOfDays: props.numberOfDays,
             reason: reason,
             status: 1,
             toDate: moment(d3).format("YYYY-MM-DD"),
@@ -224,7 +224,7 @@ console.log("d3",moment(d3).format("YYYY-MM-DD"))
            leaveCategory: newData,
            /*  leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
             leaveTypeId: leave,
-            ltId: ltId,
+            ltId: props.ltId,
             numberOfDays: 0,
             reason: reason,
             status: 1,
@@ -391,7 +391,7 @@ console.log("d3",moment(d3).format("YYYY-MM-DD"))
                                                     className="input_date" dateFormat="yyyy-MM-dd"
                                                     maxDate={today}
                                                     minDate={startDate}
-                                                    placeholderText="To Date" /></div>
+                                                    placeholderText="To Date" required /></div>
                                         </div>
                                         }
 

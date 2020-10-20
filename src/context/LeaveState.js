@@ -18,7 +18,8 @@ const initialState = {
   employeeList:[],
   leaveEmpList:[],
   leaveTypeReport:[],
-  leaveManagerList:[]
+  leaveManagerList:[],
+  cityList:[]
  
 }
 
@@ -402,6 +403,31 @@ else {
  })
 }
 }
+//City view Api
+const getCity = () => {
+  client.get('city/view')
+  .then((response) => {
+    console.log('city view api', response)
+   state.cityList = response.data.data
+     return dispatch({ type: 'CITY_LIST', payload: state.cityList });
+ })
+   .catch((error) => {
+     console.log(error);
+   });
+}
+
+const uploadMasterFile = (file) => {
+ const formData = new FormData();
+ formData.append('file',file)
+
+ return client.post('city/upload', formData)
+   .then((response) => {
+     console.log(response,"city upload api")
+   })
+   .catch((error) => {
+     console.log(error)
+   })
+}
   return (
     <LeaveContext.Provider value={{
       viewList,
@@ -424,6 +450,8 @@ else {
       editPopup,
       getLeaveReport,
       viewManagerList,
+      getCity,
+      uploadMasterFile,
       leaveList: state.leaveList,
       leaveType: state.leaveType,
       message: state.message,
@@ -437,7 +465,8 @@ else {
       leaveEmpList: state.leaveEmpList,
       editLeavesData: state.editLeavesData,
       leaveTypeReport: state.leaveTypeReport,
-      leaveManagerList: state.leaveManagerList
+      leaveManagerList: state.leaveManagerList,
+      cityList: state.cityList
      
     }}>
       {children}

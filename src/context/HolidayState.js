@@ -4,7 +4,7 @@ import HolidayReducer from '../reducers/HoildayReducer'
 
 
 const initial_state = {
-  holidayList: [],
+  holidayList: []
  
 }
 
@@ -25,13 +25,16 @@ export const HolidayrProvider = ({ children }) => {
       });
   }
 
+  
+
 
 
   
 
 
   return (<HolidayContext.Provider value={{
-    getHoliday,
+    getHoliday
+   
  
   }}>
     {children}
