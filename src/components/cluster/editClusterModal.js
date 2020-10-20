@@ -91,12 +91,8 @@ const EditClusterModal = (props) => {
 
 
   const onSubmit = (event) => {
-
-
     event.preventDefault();
     const validate = validation();
-
-
     const editCluster = {
 
       clusterId: getSingleCluster.clusterId,
@@ -110,7 +106,6 @@ const EditClusterModal = (props) => {
     }
     if (validate) {
       updateAdminEditCluster(editCluster)
-
       props.handleEditClose()
     }
   }

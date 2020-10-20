@@ -116,13 +116,9 @@ const EditShiftModal = (props) => {
     setInvalidText(true)
     setBreakNumber(1)
 
-    var startTime1 = moment(startTime, ["h:mm A"]).format("HH:mm:ss")
     var endTime1 = moment(endTime, ["h:mm A"]).format("HH:mm:ss")
-    var breakEndTime1 = moment(breakStartTime).add(1, 'hours').format('HH:mm:ss')
     var breakStartTime1 = moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss")
-
-    if ((breakEndTime1 > endTime1) || (breakStartTime1 > endTime1)) {
-
+    if (breakStartTime1 > endTime1) {
       setShiftButton(true)
       setTimeErrorMsg("Enter Valid Time");
     }
@@ -130,7 +126,6 @@ const EditShiftModal = (props) => {
       setShiftButton(false);
       setTimeErrorMsg(false);
     }
-
   }
   const onSubmit = e => {
     // const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
