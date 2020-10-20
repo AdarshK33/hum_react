@@ -238,6 +238,21 @@ export const RosterProvider = ({ children }) => {
   }
 
 
+  const uploadWeeks = (file) => {
+    const formData = new FormData();
+    formData.append('file',file)
+
+    return client.post('/weekoff/weeks/upload', formData)
+      .then((response) => {
+        console.log(response,"res")
+        toast.info(response.data.message)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+
 
   //ADMIN ROSTER
 
@@ -407,6 +422,7 @@ export const RosterProvider = ({ children }) => {
     adminRosterAvailableShift,
     assignAdminShift,
     costCenter,
+    uploadWeeks,
     costCenterList: state.costCenterList,
     shiftList: state.shiftList,
     shiftMasterId: state.shiftMasterId,

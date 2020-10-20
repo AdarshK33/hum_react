@@ -7,7 +7,8 @@ import { toast } from "react-toastify";
 const initial_state = {
     permission: false,
     locationDetailsList: [],
-    monthlyQtyDetailsList: []
+    monthlyQtyDetailsList: [],
+    permissionList: []
 }
 
 export const PermissionContext = createContext();
@@ -76,14 +77,31 @@ export const PermissionProvider = ({ children }) => {
     }
 
 
+    const viewPermission = () =>{
+        return client.get("/email/view")
+            .then((response) => {
+                console.log(response.data.data[0]);
+                state.permissionList = response.data.data[0];
+                return(
+                    dispatch({type:'VIEW_PERMISSION', payload: state.permissionList})
+                )
+            })
+            .catch((error) =>{
+                console.log(error)
+            })
+    }
+
+
 
     return (<PermissionContext.Provider value={{
         editPermission,
         locationDetails,
         monthlyQtyDetails,
+        viewPermission,
         permission: state.permission,
         locationDetailsList: state.locationDetailsList,
         monthlyQtyDetailsList: state.monthlyQtyDetailsList,
+        permissionList: state.permissionList
     }}>
         {children}
     </PermissionContext.Provider>)
