@@ -66,6 +66,9 @@ const LeaveReducer = (state, action) => {
         case 'PRODUCTIVITY_REPORT':
             return { ...state, productivityList: action.payload }
 
+        case 'CITY_LIST':
+            return { ...state, cityList: action.payload };
+
         default: return state;
     }
 }

@@ -10,7 +10,7 @@ const UserMenu = () => {
     let history = useHistory();
 
     const handleMenuListProfile = () => {
-        getUserMenu(user.generalUserMenus , "profile" , user );
+        getUserMenu(user.generalUserMenus, "profile", user);
         history.push("/dashboard/storedashboard");
     }
 
@@ -24,10 +24,17 @@ const UserMenu = () => {
         history.push("/dashboard/storedashboard");
     }
 
-    const handleMenuListCluster =()=> {
+    const handleMenuListCluster = () => {
         getUserMenu(user.clusterManagerMenus);
         history.push("/dashboard/storedashboard");
     }
+
+    // const gotoProfilePage = () => {
+    //     window.location.href = "../profileEdit"
+    // }
+
+
+
     return (
         <Fragment>
             <li className="onhover-dropdown">
@@ -56,6 +63,7 @@ const UserMenu = () => {
                     {/*  <li><a href="#javascript"><Settings />Settings</a></li> */}
                     {/* <li><a href="#javascript"><LogOut /> Log out</a></li> */}
                     <li><a href={loginUrl}><LogIn />Log In</a></li>
+                    {/* <li onClick={gotoProfilePage}><a href="#profile">Profile Edit</a></li> */}
                     <li><a href="#javascript"><LogOut /> Log out</a></li>
                 </ul>
             </li>

@@ -71,11 +71,21 @@ const AdminReportForm = () => {
 
     const submitData = (e) => {
         e.preventDefault();
+        let leaveIds = [];
+        for(let i = 0 ; i < leave.length; i++ ){
+            if(leave[i].value === 1){                
+                leaveIds.push(0);
+                leaveIds.push(leave[i].value);               
+            }else {
+                leaveIds.push(leave[i].value);
+            }
+        }
+        console.log("leaveIds", leaveIds)
 
         const monthReportData = {
             employeeIds: employeeCostCenter.map((e,i) => employeeCostCenter[i].value),
             fromDate: moment(startDate).format("YYYY-MM-DD"),
-            leaveTypeIds: leave.map((e,i) => leave[i].value),
+            leaveTypeIds:  leaveIds,
             toDate: moment(endDate).format("YYYY-MM-DD"),
             year: 'string'
         }
@@ -87,6 +97,7 @@ const AdminReportForm = () => {
             year: moment(startYear).format("YYYY")
         }
         if(reportType === 'Monthly'){
+            console.log("leaveTypeIds",monthReportData)
             reportLeave(monthReportData)
         }
         if(reportType === 'Yearly'){

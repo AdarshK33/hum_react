@@ -24,6 +24,7 @@ const LeaveView = () => {
     const [ltId, setltId] = useState()
     const [reason, setReason] = useState()
     const [empId, setEmpID] = useState('')
+    const [numberOfDays, setNumberOfDays] = useState()
 
     const { leaveDataList, viewLeaveData, viewEmpLeaveData, leaveEmpList }
         = useContext(LeaveContext);
@@ -192,7 +193,7 @@ const LeaveView = () => {
                                             <td><Edit2 onClick={() => {
                                                 setEditModal(true); setLeaveTypeId(item.leaveTypeId);
                                                 setFromDate(item.fromDate); setToDate(item.toDate); setReason(item.reason)
-                                                setltId(item.ltId)
+                                                setltId(item.ltId); setNumberOfDays(item.numberOfDays)
                                             }} />
                                             </td>
                                             <td><Trash2 onClick={() => {
@@ -209,7 +210,7 @@ const LeaveView = () => {
                     </Table>
                     <DeleteLeave handleDeleteClose={handleDeleteClose} modal={deleteModal} ltId={ltId} empid={user.employeeId} />
                     {user.employeeId !== undefined ?
-                        <EditLeave handleEditClose={handleEditClose} modal={editModal} empid={user.employeeId}
+                        <EditLeave handleEditClose={handleEditClose} modal={editModal} empid={user.employeeId} numberOfDays={numberOfDays}
                             leaveTypeId={leaveTypeId === 0 || leaveTypeId === 1 ? (leaveTypeId = 1) : (leaveTypeId === 2 ? (leaveTypeId = 2) :
                                 leaveTypeId === 3 ? (leaveTypeId = 3) : '')} fromDate={fromDate} toDate={toDate}
                             reason={reason} ltId={ltId} /> : ""}
