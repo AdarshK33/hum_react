@@ -347,7 +347,7 @@ export const ClusterProvider = ({ children }) => {
       else {
         state.callClusterEmployeesList = response.data.data;
       }
-      //console.log("CLUSTER_EMP_LIST" + state.callClusterEmployeesList);
+      console.log("CLUSTER_EMP_LIST" + state.callClusterEmployeesList);
       return dispatch({ type: 'CLUSTER_EMP_LIST', payload: state.callClusterEmployeesList });
     })
       .catch(function (error) {

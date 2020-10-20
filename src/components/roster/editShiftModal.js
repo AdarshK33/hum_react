@@ -141,7 +141,7 @@ const EditShiftModal = (props) => {
         contractType,
         shiftType,
         shiftMasterId: singleShiftList.shiftMasterId,
-        workingHours: 0,
+        workingHours: workingHours,
         storeId: costCenterName,
         breakStartTime: 0,
         breakEndTime: 0,
@@ -229,6 +229,7 @@ const EditShiftModal = (props) => {
                           className="form-control"
                           // selected={startTime}
                           onChange={date => setStartTime(date)}
+                          onCalendarClose={() => { calcTime() }}
                           showTimeSelect
                           showTimeSelectOnly
                           timeFormat="HH:mm"
@@ -316,7 +317,7 @@ const EditShiftModal = (props) => {
                               <div className="col-sm-6">
                                 <div className="form-group">
                                   <label htmlFor="exampleFormControlInput1"></label>
-                                  <input type="text" style={{ marginTop: "7px" }} className="form-control" placeholder={breakEndTime} defaultValue={singleShiftList.breakEndTime} value={moment(breakStartTime).add(1, 'hours').format('HH:mm A')} />
+                                  <input type="text" style={{ marginTop: "7px" }} className="form-control" placeholder="Enter break end time" defaultValue={singleShiftList.breakEndTime} value={moment(breakStartTime).add(1, 'hours').format('HH:mm A')} />
                                 </div>
                               </div>
                             }

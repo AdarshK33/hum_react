@@ -62,6 +62,8 @@ const CreateShiftModal = (props) => {
     setEndTime('')
     setWorkingHour('')
     setShiftButton('')
+    setShiftType('')
+    setCostCenterName('')
     setContractType('')
     setStartBreakTime('')
     setEndBreakTIme('');
