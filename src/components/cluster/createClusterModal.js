@@ -44,6 +44,7 @@ const CreateClusterModal = (props) => {
   const { costCenter, costCenterList } = useContext(RosterContext);
   useEffect(() => {
     viewSports()
+    callClusterEmployees()
   }, [])
 
   useEffect(() => {
