@@ -62,6 +62,7 @@ const EditShiftModal = (props) => {
     setStatus(singleShiftList.status)
     setCostCenterName(props.shiftData.storeId)
     //console.log("1---->"+getSingleCluster.employeeIds);
+
   }, [props])
 
 
@@ -133,7 +134,9 @@ const EditShiftModal = (props) => {
     // const workingHours = moment.utc(moment(etime, "HH:mm:ss").diff(moment(stime, "HH:mm:ss"))).format("HH:mm:ss");
     // alert(workingHours);
     var result = parseInt(workingHours);
+
     if (result <= 5) {
+
       e.preventDefault();
       const newShift = {
         startTime: moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
@@ -141,7 +144,7 @@ const EditShiftModal = (props) => {
         contractType,
         shiftType,
         shiftMasterId: singleShiftList.shiftMasterId,
-        workingHours: workingHours,
+        workingHours: 0,
         storeId: costCenterName,
         breakStartTime: 0,
         breakEndTime: 0,
@@ -171,16 +174,16 @@ const EditShiftModal = (props) => {
           status: status
         }
         // alert(JSON.stringify(newShift));
-
+        setBreakNumber(false)
         setSuccessMsg(true);
         updateShift(newShift)
-        setClear()
         props.handleEditClose();
-
+        setInvalidText(false)
 
 
       }
       else {
+
         console.log("inside break end time")
         e.preventDefault();
         const newShift = {
@@ -198,9 +201,7 @@ const EditShiftModal = (props) => {
         // alert(JSON.stringify(newShift));
         setSuccessMsg(true);
         updateShift(newShift);
-
         props.handleEditClose();
-
         console.log(result, "in competent");
       }
     }
