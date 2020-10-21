@@ -47,8 +47,10 @@ export const MasterFilesProvider = ({children}) =>{
     }
 
 
-    const viewDailyQty = () =>{
-        return client.get("/daily/view")
+    const viewDailyQty = (id, date) =>{
+        // console.log(id);
+        // console.log(date);
+        return client.get('/daily/view?'+ '&storeId='+id+'&date='+date)
             .then((response) => {
                 console.log(response.data.data);
                 state.dailyQty = response.data.data;
