@@ -144,7 +144,7 @@ function ViewShift() {
                             <td>{item.extraHours}</td>
                             <td>{item.totalHours}</td>
                             <td>{item.statusDesc}</td>
-                            {user.role !== "MANAGER" &&
+                            {user.role !== "MANAGER" && user.clusterManagerMenus === null &&
                             <td>{item.statusDesc === 'Pending' ?
                               <Edit2 onClick={() => {
                                 setEditModal(true); setEmployeeId(item.employeeId);
