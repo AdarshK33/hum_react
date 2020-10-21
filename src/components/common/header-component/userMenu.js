@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 
 const loginUrl = `${process.env.REACT_APP_FEDID_AUTH_URL}?response_type=code&client_id=${process.env.REACT_APP_FEDID_CLIENTID}&scope=openid%20profile&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}`;
 const UserMenu = () => {
-    const { user, getUserMenu } = useContext(AppContext);
+    const { user, getUserMenu, userLogout } = useContext(AppContext);
     let history = useHistory();
 
     const handleMenuListProfile = () => {
@@ -32,6 +32,10 @@ const UserMenu = () => {
     // const gotoProfilePage = () => {
     //     window.location.href = "../profileEdit"
     // }
+
+
+
+
 
 
 
@@ -64,7 +68,7 @@ const UserMenu = () => {
                     {/* <li><a href="#javascript"><LogOut /> Log out</a></li> */}
                     <li><a href={loginUrl}><LogIn />Log In</a></li>
                     {/* <li onClick={gotoProfilePage}><a href="#profile">Profile Edit</a></li> */}
-                    <li><a href="#javascript"><LogOut /> Log out</a></li>
+                    <li onClick={() => { userLogout() }}><a href="#javascript"><LogOut /> Log out</a></li>
                 </ul>
             </li>
         </Fragment>
