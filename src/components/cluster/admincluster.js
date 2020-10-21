@@ -29,24 +29,19 @@ function AdminCluster() {
 
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
-    let totalRecords = 0;
-    let indexOfFirstRecord = 0;
-    let indexOfLastRecord = 0;
+    const totalRecords = clusterList !== null && clusterList.length;
     const pageRange = 10;
-    let currentRecords = [];
 
-    if (clusterList !== null) {
-        totalRecords = clusterList.length;
-        indexOfLastRecord = currentPage * recordPerPage;
-        indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-        currentRecords = clusterList.slice(indexOfFirstRecord, indexOfLastRecord);
-    }
-
-
+    const indexOfLastRecord = currentPage * recordPerPage;
+    const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+    const currentRecords = clusterList !== null ? clusterList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber);
     }
+
+
+
 
     return (
         <Fragment>
@@ -79,7 +74,7 @@ function AdminCluster() {
                                             <th scope="col">Edit</th>
                                         </tr>
                                     </thead>
-                                    {currentRecords !== null &&
+                                    {currentRecords !== null && currentRecords !== undefined &&
                                         currentRecords.map((e, i) => {
                                             return (
                                                 <tbody key={i + 1}>
@@ -119,7 +114,7 @@ function AdminCluster() {
                                 />
                             </div>
                             <div>
-                                {clusterList !== null && clusterList.length > 0 &&
+                                {clusterList !== null && clusterList.length > 10 &&
                                     <Pagination
                                         itemClass="page-item"
                                         linkClass="page-link"
