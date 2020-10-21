@@ -106,6 +106,7 @@ const EditClusterModal = (props) => {
     }
     if (validate) {
       updateAdminEditCluster(editCluster)
+
       props.handleEditClose()
     }
   }

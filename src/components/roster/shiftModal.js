@@ -18,7 +18,7 @@ const ShiftModal = (props) => {
   const [showDay, setShowDay] = useState(false)
   const [weekDayList, setWeekDayList] = useState([])
   const [dayList, setDayList] = useState([])
-
+  const [assignShiftButton, setAShiftButton] = useState(true);
 
   const { weekDays, weekOffDays, addWeekOff, availableShifts, availableShiftData, assignShift, getallWeeks, weeksInYear } = useContext(RosterContext)
   const { user } = useContext(AppContext);
@@ -79,7 +79,7 @@ const ShiftModal = (props) => {
   const handleChange = (event) => {
     // console.log(event.target.value)
     setValue(event.target.value)
-
+    setAShiftButton(false)
 
   }
   const handleWeeksChange = (e) => {
@@ -132,7 +132,7 @@ const ShiftModal = (props) => {
                   <div className="col-sm-6 px-2">{user.firstName} - {user.employeeId}</div>
                 </div>
                 <div className="row py-2">
-                  <div className="col-sm-5 px-2">Available Shifts :</div>
+                  <div className="col-sm-5 px-2">Available Shifts :<span style={{ color: 'red', fontSize: "20px" }}>*</span> &nbsp;</div>
                   <div className="col-sm-7 ">
                     <div className="form-group">
                       <select className="form-control" onChange={handleChange}>
@@ -150,7 +150,7 @@ const ShiftModal = (props) => {
                   </div>
                 </div>
                 <div className="note text-primary text-center py-1">
-                  <button type="button" className="myclass mb-2 mr-2"
+                  <button type="button" className="btn btn-primary" disabled={assignShiftButton}
                     onClick={submitAssignShift}
                   >Assign</button>
                 </div>
@@ -201,8 +201,8 @@ const ShiftModal = (props) => {
                     </div>
                   </div>
                   <div className="justify-content-center d-flex">
-                    <Button className="myclass mb-2 mr-2" size="sm" type="submit">
-                      Assign</Button>
+                    <button className="btn btn-primary" size="sm" type="submit">
+                      Assign</button>
                   </div>
                   <br />
                   <h6 className="note text-secondary text-center pb-2"> Note: Only same contract employees can be selected</h6>

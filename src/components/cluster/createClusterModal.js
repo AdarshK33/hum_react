@@ -36,7 +36,7 @@ const CreateClusterModal = (props) => {
 
 
 
-  const { addCluster, viewSports, sportsNames, viewClusterCostCenter,
+  const { updateAdminaddCluster, viewSports, sportsNames, viewClusterCostCenter,
     callClusterLeadersList, callClusterEmployeesList,
     callClusterEmployees, callClusterLeaders,
   } = useContext(ClusterContext);
@@ -69,7 +69,7 @@ const CreateClusterModal = (props) => {
     }
 
     if (validate) {
-      addCluster(newCluster)
+      updateAdminaddCluster(newCluster)
       setClear()
       props.handleClose()
     }
