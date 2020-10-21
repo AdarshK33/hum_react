@@ -23,10 +23,11 @@ const EditSalary = (props) => {
     const [totalHours, setTotalHours] = useState()
     const [additionalHours, setadditionalHours] = useState()
     const [year, setYear] = useState()
-    const [values, setValues] = useState({ val: [] });
-    const [values2, setValues2] = useState({ val2: [] });
-    const [extraMonth, setExtraMonth] = useState()
-    const [extraWorkingHrs, setExtraWorkingHrs] = useState(0)
+    const [val, setValues] = useState([]);
+    const [val2, setValues2] = useState([]);
+    const [inputValue, setInputValue] = useState(null)
+    const [inputDate, setInputDate] = useState()
+    
 
     let history = useHistory();
 
@@ -93,14 +94,12 @@ const EditSalary = (props) => {
     }, [props.additionalHours])
 
 
-    useEffect(() => {
-        setExtraMonth(props.month)
-    }, [props.month])
-
     function createInputs() {
-        return values.val.map((el, i) =>
+        return val.map((el, i) =>
             <div key={i}>
-                <input type="text" value={el || ''} onChange={handleChange.bind(i)} />
+                <label>Number of Hours</label>
+                <input type="number" className='input form-control' value={el || ''} onChange={(e) => handleChange(e,i)} 
+                style={{width:'80%', fontSize: "0.8rem" }} required placeholder="Enter Hours" min='0' max='8' /><br/>
             </div>
         );
     }
@@ -110,42 +109,59 @@ const EditSalary = (props) => {
   var firstDay =  new Date(nowDate.getFullYear(), nowDate.getMonth(), 21); 
                       
 var lastDay =  new Date(nowDate.getFullYear(), nowDate.getMonth() + 1, 20); 
-   console.log("firstDay---", firstDay)
-   console.log("lastDay---", lastDay)
-  console.log("getYear---", props.year)
-  console.log("getMonth---", getMonth)
 
         function createDate() {
-            return values2.val2.map((el, i) =>
+            return val2.map((el, i) =>
                 <div key={i}>
-                    <input type="date" style={{ fontSize: "0.8rem" }} className="form-control digit" min="2020-08"
+                    <label>Select Date</label>
+                    <input type="date" style={{ fontSize: "0.8rem" }} className="form-control digit"
                   placeholder="Select Date"
-                  required onChange={setSelectDateHandler.bind(i)} value={el || ''} />
+                  required onChange={(e) => setSelectDateHandler(e,i)} value={el || ''} /><br/>
                 </div>
             )
     }
-function setSelectDateHandler(event) {
-    let vals2 = [...values2.val2];
-    vals2[this] = event.target.value;
-    setValues2({ val2: vals2 });
-    console.log("date select",vals2)
+function setSelectDateHandler(e,i) {
+   /*  let vals2 = [...val2];
+    vals2[this] = e.target.value;
+    setValues2(vals2);
+    console.log("date select",vals2) */
+    setInputDate(e.target.value)
+    let arrDate = [...val2]
+    arrDate[i] = e.target.value
+    setValues2(arrDate)
+    console.log("input arrDate",arrDate)
 }
-function handleChange(event) {
-    let vals = [...values.val];
+function handleChange(e,i) {
+   /*  let vals = [...val];
     vals[this] = event.target.value;
-    setValues({ val: vals });
-    console.log("input select",vals)
+    setValues(vals);
+    console.log("input select",vals) */
+    setInputValue(e.target.value)
+    let arrGroup = [...val]
+    arrGroup[i] = parseInt(e.target.value)
+    setValues(arrGroup)
+    console.log("input arrGroup",arrGroup)
+
+    var total = props.extraHours;//
+    console.log("before total", total)
+    var list = document.getElementsByClassName("input");
+    var item_values = [props.extraHours];
+    console.log("item_values before",item_values)
+    for(var i = 0; i < list.length; ++i) {
+        item_values.push(parseFloat(list[i].value));
+    }
+    
+    console.log("item_values",item_values)
+    total = item_values.reduce(function(previousValue, currentValue, index, array){
+        return previousValue + currentValue;
+    });
+    console.log("total", total)
+    setExtraHours( total);  
 }
 
 const addClick = () => {
-    setValues({ val: [...values.val, ''] })
-    setValues2({ val2: [...values2.val2, ''] })
-}
-const setExtraWorkingHrsHandler = (e) => {
-    let data1 = e.target.value
-    let data2 = values.val * values2.val2
-    setExtraWorkingHrs(data2)
-    console.log("data2", data2)
+    setValues([...val, ''])
+    setValues2([...val2, ''])
 }
 //edit api
 const onSubmit = e => {
@@ -234,18 +250,20 @@ return (
                                 :
                                 <Fragment>
                                     <Col sm='3' className="padding-right">
-                                        <Button onClick={addClick} >+</Button>
+                                        <Button variant='outline-secondary' size='sm'
+                                        onClick={addClick} >+</Button>
                                     </Col>
                                     <Col sm="9" className="padding-left">
                                         <Row>
-                                            <Col>{createDate()}</Col>
-                                            <Col>{createInputs()}</Col>
+                                            <Col sm='6'>{createDate()}</Col>
+                                            <Col sm='6'>{createInputs()}</Col>
                                         </Row>
                                     </Col>
                                     <Form.Label column sm="3" className="padding-right">Extra Hours:</Form.Label>
                                     <Col sm="9" className="padding-left">
-                                        <Form.Control as="input" type="number" size="sm" name="extraWorkingHrs" value={extraWorkingHrs}
-                                            onChange={(e) => setExtraWorkingHrsHandler(e)} />
+                                        <Form.Control as="input" type="number" size="sm" name="extraHours" value={extraHours || ''}
+                                            onChange={(event) => setExtraHours(event.target.value)}  readOnly
+                                            id="total" />
                                     </Col>
 
                                 </Fragment>
