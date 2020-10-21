@@ -52,7 +52,7 @@ export const AppProvider = ({ children, history }) => {
       .then((resp) => {
 
         const { status, data: { data: { access_token, refresh_token, id_token } } } = resp;
-        // console.log('GOt resp', resp)
+        console.log('GOt resp', resp)
         if (status === 200) {
           localStorage.setItem('APPID', id_token)
           Cookies.set('APPAT', access_token)
@@ -90,20 +90,25 @@ export const AppProvider = ({ children, history }) => {
         if (response.data.data === {}) {
           toast.error("User does not exist");
         }
-
-
         return dispatch({ type: 'FETCH_USER_INFO', payload: state.user });
       })
       .catch((error) => {
         console.log(error)
+        toast.error("User does not exist");
+        setTimeout(userLogout, {
+        }, 5000);
+
+        //  window.location.href = loginUrl
+
       })
   }
 
 
   const userLogout = () => {
+    console.log("*********** ", localStorage.getItem('APPID'));
     client.get('/auth/logout?id_token=' + localStorage.getItem('APPID'))
       .then((response) => {
-        // console.log(response)
+        console.log(response)
         if (response.status === 201) {
           Cookies.remove('APPAT')
           Cookies.remove('APPRT')

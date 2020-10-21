@@ -35,17 +35,6 @@ export const ClusterProvider = ({ children }) => {
 
 
 
-  const addCluster = (addCluster) => {
-    return client.post("cluster/create", addCluster).then(function (respone) {
-      console.log("api response===", respone.data.message);
-      viewCluster()
-      toast.info(respone.data.message);
-
-    })
-      .catch((error) => {
-        alert(" In error catch ", error);
-      });
-  }
 
   const updateCluster = (updateCluter) => {
     return client.put("cluster/update", updateCluter).then(function (respone) {
@@ -75,6 +64,34 @@ export const ClusterProvider = ({ children }) => {
   }
 
 
+  const addCluster = (addCluster) => {
+    return client.post("cluster/create", addCluster).then(function (respone) {
+      console.log("api response===", respone.data.message);
+      viewCluster()
+      toast.info(respone.data.message);
+
+    })
+      .catch((error) => {
+        alert(" In error catch ", error);
+      });
+  }
+
+  const updateAdminaddCluster = (addCluster) => {
+
+    return client.post("cluster/create", addCluster).then(function (respone) {
+      const {
+        clusterCostCenter: { costCenter },
+      } = state;
+      viewClusterCostCenter(costCenter)
+
+      console.log("api response===", respone.data.message);
+      toast.info(respone.data.message);
+
+    })
+      .catch((error) => {
+        alert(" In error catch ", error);
+      });
+  }
 
 
 
@@ -283,7 +300,6 @@ export const ClusterProvider = ({ children }) => {
   }
   //view cluster by coster center
   const viewClusterCostCenter = (costCenter) => {
-
     return client.get('cluster/view/' + costCenter)
       .then((response) => {
         const clusterCostCenterList = response.data.data
@@ -407,6 +423,7 @@ export const ClusterProvider = ({ children }) => {
     callClusterEmployees,
     callClusterLeaders,
     updateAdminEditCluster,
+    updateAdminaddCluster,
     clusterList: state.clusterList,
     clusterLeaderNames: state.clusterLeaderNames,
     sportsNames: state.sportsNames,
@@ -423,6 +440,7 @@ export const ClusterProvider = ({ children }) => {
     viewManagerByCostCenterList: state.viewManagerByCostCenterList,
     callClusterEmployeesList: state.callClusterEmployeesList,
     callClusterLeadersList: state.callClusterLeadersList,
+
   }}>
     {children}
   </ClusterContext.Provider>);

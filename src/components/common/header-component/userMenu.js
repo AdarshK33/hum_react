@@ -66,7 +66,7 @@ const UserMenu = () => {
                     }
                     {/*  <li><a href="#javascript"><Settings />Settings</a></li> */}
                     {/* <li><a href="#javascript"><LogOut /> Log out</a></li> */}
-                    <li><a href={loginUrl}><LogIn />Log In</a></li>
+                    {/* <li><a href={loginUrl}><LogIn />Log In</a></li> */}
                     {/* <li onClick={gotoProfilePage}><a href="#profile">Profile Edit</a></li> */}
                     <li onClick={() => { userLogout() }}><a href="#javascript"><LogOut /> Log out</a></li>
                 </ul>
