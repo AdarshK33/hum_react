@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer, } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ClusterContext } from '../../context/ClusterState'
+import moment from 'moment'
 
 const EditSalary = (props) => {
     const [employeeId, setEmployeeId] = useState()
@@ -105,26 +106,27 @@ const EditSalary = (props) => {
     }
   let nowDate = new Date()
   let nowMonth = nowDate.getMonth()+1
- let getMonth = new Date(props.month)
-  var firstDay =  new Date(nowDate.getFullYear(), nowDate.getMonth(), 21); 
+ let getMonth = props.month
+ let getYear = props.year
+  var firstDay =  new Date(getYear, getMonth-2, 21); 
                       
-var lastDay =  new Date(nowDate.getFullYear(), nowDate.getMonth() + 1, 20); 
+var lastDay =  new Date(getYear, getMonth - 1 , 20); 
+var firstDate =  moment(firstDay).format("YYYY-MM-DD")
+var lastDate =  moment(lastDay).format("YYYY-MM-DD")
+console.log("firstDay",firstDate)
+console.log("lastDay",lastDate)
 
         function createDate() {
             return val2.map((el, i) =>
                 <div key={i}>
                     <label>Select Date</label>
                     <input type="date" style={{ fontSize: "0.8rem" }} className="form-control digit"
-                  placeholder="Select Date"
+                  placeholder="Select Date" min={firstDate} max={lastDate}
                   required onChange={(e) => setSelectDateHandler(e,i)} value={el || ''} /><br/>
                 </div>
             )
     }
 function setSelectDateHandler(e,i) {
-   /*  let vals2 = [...val2];
-    vals2[this] = e.target.value;
-    setValues2(vals2);
-    console.log("date select",vals2) */
     setInputDate(e.target.value)
     let arrDate = [...val2]
     arrDate[i] = e.target.value
@@ -132,10 +134,6 @@ function setSelectDateHandler(e,i) {
     console.log("input arrDate",arrDate)
 }
 function handleChange(e,i) {
-   /*  let vals = [...val];
-    vals[this] = event.target.value;
-    setValues(vals);
-    console.log("input select",vals) */
     setInputValue(e.target.value)
     let arrGroup = [...val]
     arrGroup[i] = parseInt(e.target.value)
@@ -168,24 +166,27 @@ const onSubmit = e => {
     e.preventDefault()
 
     const EditSalary = {
+        additionalHours: additionalHours,
+        contractType: contractType,
+        date: val2,
+        dayExtraHour: val,
         employeeId: employeeId,
+        extraHours: extraHours,
         firstName: firstName,
         lastName: lastName,
-        numberOfHours: numberOfHours,
         lop: lop,
-        contractType: contractType,
-        reason: reason,
-        extraHours: extraHours,
         month: month,
+        numberOfHours: numberOfHours,
+        reason: reason,
         salaryId: salaryId,
         status: status,
         statusDesc: statusDesc,
         totalHours: totalHours,
-        year: year,
-        additionalHours: additionalHours
+        year: year
 
     }
-    salaryEdit(EditSalary)
+    console.log("EditSalary request",EditSalary)
+    /* salaryEdit(EditSalary) */
 
     // history.push("/salary/salaryView");
     const setModal = props.handleEditClose;
