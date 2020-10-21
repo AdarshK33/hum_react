@@ -33,9 +33,18 @@ export const ClusterProvider = ({ children }) => {
   const { user } = useContext(AppContext);
   // ADD SHIFT
 
-  function addCluster(addCluster) {
-    return client.post("cluster/create", addCluster)
 
+
+  const addCluster = (addCluster) => {
+    return client.post("cluster/create", addCluster).then(function (respone) {
+      console.log("api response===", respone.data.message);
+      viewCluster()
+      toast.info(respone.data.message);
+
+    })
+      .catch((error) => {
+        alert(" In error catch ", error);
+      });
   }
 
   const updateCluster = (updateCluter) => {
@@ -70,7 +79,7 @@ export const ClusterProvider = ({ children }) => {
 
 
 
-  function viewCluster() {
+  const viewCluster = () => {
     client.get('cluster/view').then(function (response) {
       state.clusterList = response.data.data;
       // console.log("====CLUSTER LIST====")
