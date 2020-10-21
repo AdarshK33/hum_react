@@ -55,6 +55,7 @@ const AdminCreateClusterModal = (props) => {
 
     const onSubmit = (event) => {
         event.preventDefault();
+        const validate = validation();
         const newCluster = {
             clusterId: 0,
             clusterLeader,
@@ -64,21 +65,41 @@ const AdminCreateClusterModal = (props) => {
             sportIds: sportsList.map((e) => e.sportId),
             employeeIds: employee.map((e) => e.employeeId)
         }
-        const result = addCluster(newCluster)
-            .then((result) => {
-                //   console.log("api response===", result.data.message);
 
-                toast.info(result.data.message);
-                setTimeout(() => {
-                    callTimer();
-                }, 1000);
-                viewCluster()
-            })
-            .catch((error) => {
-                alert(" In error catch ", error);
-            })
-        console.log(result, "in competent");
+        if (validate) {
+            addCluster(newCluster)
+            setClear()
+            props.handleClose()
+        }
     }
+
+    const validation = () => {
+        let flag = true
+        if (employee.length === 0) {
+            toast.info("Select employee is mandatory")
+            flag = false;
+            return;
+        }
+
+        if (sportsList.length === 0) {
+            toast.info("Select sports is mandatory")
+            flag = false;
+            return;
+        }
+
+        return flag;
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
     const onChangeHandler = event => {
@@ -145,12 +166,7 @@ const AdminCreateClusterModal = (props) => {
         setErrorMsg(false)
     }
 
-    //Timer to close modal 
-    const callTimer = () => {
-        const setModal = props.handleClose;
-        setClear()
-        setModal()
-    }
+
     const clearAndClose = () => {
         setClear();
         props.handleClose();

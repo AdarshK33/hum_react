@@ -36,11 +36,11 @@ const AppLayout = ({ children }) => {
 
         }
     })
-
     const checkTokenExists = () => {
         console.log("APP RESULT " + app.isLoggedin);
         // console.log("ALL TOKENS "+Cookies.get());
         let access_token = Cookies.get('APPAT');
+
         if (access_token) {
             authenticateUser(true)
             getUserInfo()
