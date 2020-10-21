@@ -21,21 +21,25 @@ const AppLayout = ({ children }) => {
     useEffect(() => {
         const { MENUITEMS, flag, user } = state
         setMenuItems(MENUITEMS);
-
-        if (flagValue === 0 && menuItems !== []) {
+        let type = localStorage.getItem('type')
+        if (flag === 0 && MENUITEMS !== []) {
             setFlagValue(flag)
-            if (window.location.href.includes("team")) {
+            if (type === "team") {
                 getUserMenu(user.managerMenus);
-            } else if (window.location.href.includes("admin")) {
+            } else if (type === "admin") {
                 getUserMenu(user.adminMenus);
-            } else if (window.location.href.includes("cluster")) {
+            } else if (type === "leader") {
                 getUserMenu(user.clusterManagerMenus);
             } else {
                 getUserMenu(user.generalUserMenus, "profile", user);
             }
-
         }
-    })
+    }, [window.location.href, state])
+
+    useEffect(() => {
+        setMenuItems(state.MENUITEMS);
+    }, [state.MENUITEMS]);
+
     const checkTokenExists = () => {
         console.log("APP RESULT " + app.isLoggedin);
         // console.log("ALL TOKENS "+Cookies.get());
