@@ -426,7 +426,7 @@ console.log("managerEmployeeIdList",managerEmployeeIdList)
                             {editMsg === true ?
                             <Row>
                                 <div className="col-sm-12">
-                                    <p className="leavesMsg">{leavesData ? leavesData.Leave : ''}</p>
+                                    <p className="leavesMsg" style={{color:'red', fontWeight:'bold'}}>{leavesData ? leavesData.Leave : ''}</p>
                                 </div>
                             </Row>
                             : ''}
