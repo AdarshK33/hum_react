@@ -8,8 +8,12 @@ import './AdminLeaves.css'
 import Pagination from 'react-js-pagination'
 
 const AdminMasterLeave = () => {
-
+   /*  const [search, setSearch] = useState('') */
+   
     const {leaveMasterView, leaveMasterList, uploadFile} = useContext(AdminContext)
+
+  /*   const [searchResult, setSearchResult] = useState(leaveMasterList) */
+
 
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
@@ -30,6 +34,13 @@ const AdminMasterLeave = () => {
         leaveMasterView()
     },[])
 
+  /*   const setSearchHandler = (e) => {
+        setSearch(e.target.value)
+
+        const result = currentRecords.filter(item => item.stateName.toLowerCase().includes(search.toLowerCase()) )
+        setSearchResult(result)
+    } */
+
     const changeHandler = (event)=>{
       let fileObj = event.target.files[0];
       console.log("clicked",fileObj)
@@ -44,6 +55,8 @@ const AdminMasterLeave = () => {
                         <div className="card" style={{ overflowX: "auto" }}>
 
                             <div className="title_bar" >
+                                {/* <input type='text' value={search} onChange={setSearchHandler}
+                                placeholder='Search...' style={{lineHeight:'26px'}} /> */}
                                 <input
                                     className="btn"
                                     type="file"
@@ -61,30 +74,30 @@ const AdminMasterLeave = () => {
                             </div>
 
                             <div className="table-responsive">
-                                <table id="table-to-xls" className="table table-hover">
-                                    <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
-                                        <tr>
-                                            <th>S. No</th>
-                                            <th>Max Leave</th>
-                                            <th>State Name</th>                                            
-                                            <th>Year</th>
-                                        </tr>
-                                    </thead>
-                                    {currentRecords !== null && currentRecords !== undefined &&
-                                     currentRecords.length>0 &&
-                                     currentRecords.map((item,i) => {
-                                        return(
-                                            <tbody key={i+1}>
-                                                <tr>
-                                                    <td>{i+1+indexOfFirstRecord}</td>
-                                                    <td>{item.maxLeaves}</td>                                                  
-                                                    <td>{item.stateName}</td>
-                                                    <td>{item.year}</td>
-                                                </tr>
-                                            </tbody>
-                                        )
-                                    })}
-                                </table>
+                             <table id="table-to-xls" className="table table-hover">
+                             <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
+                                 <tr>
+                                     <th>S. No</th>
+                                     <th>Max Leave</th>
+                                     <th>State Name</th>                                            
+                                     <th>Year</th>
+                                 </tr>
+                             </thead>
+                             {currentRecords !== null && currentRecords !== undefined &&
+                              currentRecords.length>0 &&
+                              currentRecords.map((item,i) => {
+                                 return(
+                                     <tbody key={i+1}>
+                                         <tr>
+                                             <td>{i+1+indexOfFirstRecord}</td>
+                                             <td>{item.maxLeaves}</td>                                                  
+                                             <td>{item.stateName}</td>
+                                             <td>{item.year}</td>
+                                         </tr>
+                                     </tbody>
+                                 )
+                             })}
+                         </table>
                             </div>
                         </div>
                     </div>

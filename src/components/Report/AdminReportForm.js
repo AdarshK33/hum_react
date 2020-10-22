@@ -30,11 +30,9 @@ const AdminReportForm = () => {
         CostCenter()
     }, []);
 
-    var previousYear = new Date()
-    previousYear.setFullYear(previousYear.getFullYear() - 1)
+    var previousYear = new Date().getFullYear()-1
 
-    var nextYear = new Date()
-    nextYear.setFullYear(nextYear.getFullYear() + 1)
+    var nextYear = new Date().getFullYear()+1
 
     useEffect(() => {
         if (user.loginType !== "1" && user.loginType !== "9" &&
@@ -225,8 +223,8 @@ const AdminReportForm = () => {
                         <div className="col-sm-4">
                         <Form.Group>
                             <Form.Label>Select Year</Form.Label> <span style={{color:'red'}}>*</span> 
-                                <Form.Control type="number" placeholder="YYYY" /* min={previousYear} max={nextYear} */
-                                 className="form-control digit" min='2019' max='2021'
+                                <Form.Control type="number" placeholder="YYYY" min={previousYear} max={nextYear}
+                                 className="form-control digit"
                                 required onChange={(e) => setYearly(e.target.value)} value={yearly || ''} />
                         </Form.Group>
                         </div>
