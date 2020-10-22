@@ -22,4 +22,11 @@
     position: relative;
 }
 
+.search-icon:hover{
+  top: 4px;
+  width: 30px;
+    height: 30px;
+    color: #006EBB !important;
+}
+
   
