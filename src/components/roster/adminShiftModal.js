@@ -168,7 +168,7 @@ const AdminShiftModal = (props) => {
               <Tab eventKey='shift' title="Assign Shift">
                 <form onSubmit={onSubmit1}>
                   <div className="row py-2">
-                    <div className="col-sm-5 px-2">Available Shifts :</div>
+                    <div className="col-sm-5 px-2">Available Shifts :<span style={{ color: 'red' }}>*</span></div>
                     {/* Name :<h1>{firstName}{contractType}</h1> */}
                     <div className="col-sm-7 ">
                       <div className="form-group">
@@ -190,7 +190,7 @@ const AdminShiftModal = (props) => {
                   </div>
                   {/* SELECT EMPLOYEE */}
                   <div className="row py-2">
-                    <div className="col-sm-5 px-2">Select Employees :</div>
+                    <div className="col-sm-5 px-2">Select Employees :<span style={{ color: 'red' }}>*</span></div>
                     <div className="col-sm-7 ">
                       <div className="form-group">
                         <Select
@@ -209,7 +209,7 @@ const AdminShiftModal = (props) => {
                   </div>
 
                   <div className="row py-2">
-                    <div className="col-sm-5 px-2">Select Week :</div>
+                    <div className="col-sm-5 px-2">Select Week :<span style={{ color: 'red' }}>*</span></div>
                     <div className="col-sm-7 ">
                       <div className="form-group">
                         <select className="form-control"
@@ -228,7 +228,7 @@ const AdminShiftModal = (props) => {
                   </div>
 
                   <div className="row py-2">
-                    <div className="col-sm-5 px-2">Select Day :</div>
+                    <div className="col-sm-5 px-2">Select Day :<span style={{ color: 'red' }}>*</span></div>
                     <div className="col-sm-7 ">
                       <div className="form-group">
                         <Select
@@ -260,7 +260,7 @@ const AdminShiftModal = (props) => {
               <Tab eventKey="weekoff" title="Assign Week Off">
                 <form onSubmit={onSubmit}>
                   <div className="row py-2">
-                    <div className="col-sm-5 px-2">Select Employees :</div>
+                    <div className="col-sm-5 px-2">Select Employees :<span style={{ color: 'red' }}>*</span></div>
                     <div className="col-sm-7 ">
                       <div className="form-group">
                         <Select
@@ -277,7 +277,7 @@ const AdminShiftModal = (props) => {
                     </div>
                   </div>
                   <div className="row py-2">
-                    <div className="col-sm-5 px-2">Select Week :</div>
+                    <div className="col-sm-5 px-2">Select Week :<span style={{ color: 'red' }}>*</span></div>
                     <div className="col-sm-7 ">
                       <div className="form-group">
                         <select className="form-control" value={selectedWeeks} onChange={handleWeeksChange}>
@@ -293,7 +293,7 @@ const AdminShiftModal = (props) => {
                   </div>
 
                   <div className="row py-2">
-                    <div className="col-sm-5 px-2">Select Day :</div>
+                    <div className="col-sm-5 px-2">Select Day :<span style={{ color: 'red' }}>*</span></div>
                     <div className="col-sm-7 ">
                       <div className="form-group">
                         <select className="form-control" onChange={(e) => setWeekDayHandler(e)}>

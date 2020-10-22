@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Container, Row,  Button, Form, Modal } from 'react-bootstrap'
+import { Container, Row, Button, Form, Modal } from 'react-bootstrap'
 import { useHistory } from "react-router-dom";
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
@@ -15,15 +15,15 @@ const LeaveAdd = (props) => {
     const [startMaternityDate, setStartMaternityDate] = useState(new Date())
     const [endMaternityDate, setEndMaternityDate] = useState()
     const [leave, setLeave] = useState('')
-   /*  const [leaveName, setLeaveName] = useState('')
-    const [leaveTypeId, setLeaveTypeId] = useState(null) */
+    /*  const [leaveName, setLeaveName] = useState('')
+     const [leaveTypeId, setLeaveTypeId] = useState(null) */
     const [reason, setReason] = useState('')
     const [disable, setDisable] = useState(true)
     const [min, setMin] = useState(false)
     const [max, setMax] = useState(false)
     const [editMsg, setEditMsg] = useState(false)
-   /*  const [modal, setModal] = useState(false) */
-    
+    /*  const [modal, setModal] = useState(false) */
+
     let history = useHistory();
 
 
@@ -31,15 +31,15 @@ const LeaveAdd = (props) => {
         = useContext(LeaveContext);
 
     const { user } = useContext(AppContext);
-    
-   /*  useEffect(() => {
-        viewEmpData(props.empid)
-        getLeave(props.empid)
-    },[props.empid])
-    console.log("props.empid", props.empid) */
 
-      //get api for leave type
-      useEffect(() => {
+    /*  useEffect(() => {
+         viewEmpData(props.empid)
+         getLeave(props.empid)
+     },[props.empid])
+     console.log("props.empid", props.empid) */
+
+    //get api for leave type
+    useEffect(() => {
         viewLeaveData(user.employeeId)
         /* viewEmpData(user.employeeId) */
     }, [user.employeeId]);
@@ -55,7 +55,7 @@ const LeaveAdd = (props) => {
 
     let currentYear = new Date()
     currentYear.setFullYear(currentYear.getFullYear(), 0, 1)
-    
+
     const fromDateHandler = (date) => {
         let value = date
         console.log("fromDate", value)
@@ -67,8 +67,8 @@ const LeaveAdd = (props) => {
             
             console.log("endDtae in condition", endDate)
         } */
-       
-    
+
+
         //For disable the To Date initially
         setDisable(false)
 
@@ -81,7 +81,7 @@ const LeaveAdd = (props) => {
             setMin(true);
             setMax(false);
         }
-        
+
         setEditMsg(false)
     }
 
@@ -89,22 +89,22 @@ const LeaveAdd = (props) => {
         let value1 = date
         console.log("toDate", value1)
         setEndDate(value1);
-       
+
         var newData
-        if(startDate > new Date()){
-             newData = 'Planned'
+        if (startDate > new Date()) {
+            newData = 'Planned'
         }
-        else{
-             newData = 'Unplanned'
+        else {
+            newData = 'Unplanned'
         }
 
         const newPopup = {
             empId: user.employeeId,
             fromDate: moment(startDate).format("YYYY-MM-DD"),
-           /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
-           leaveCategory: newData,
+            /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
+            leaveCategory: newData,
             /* leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
-           leaveTypeId: leave,
+            leaveTypeId: leave,
             ltId: 0,
             numberOfDays: 0,
             reason: 'string',
@@ -113,7 +113,7 @@ const LeaveAdd = (props) => {
             viewLeavePopup: 0,
             year: new Date().getFullYear()
         }
-        
+
         addPopup(newPopup)
         setEditMsg(true)
     }
@@ -131,10 +131,10 @@ const LeaveAdd = (props) => {
         const newPopup1 = {
             empId: user.employeeId,
             fromDate: moment(value2).format("YYYY-MM-DD"),
-           /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
-           leaveCategory: 'Planned',
-           /*  leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
-           leaveTypeId: leave,
+            /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
+            leaveCategory: 'Planned',
+            /*  leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
+            leaveTypeId: leave,
             ltId: 0,
             numberOfDays: 0,
             reason: reason,
@@ -150,7 +150,7 @@ const LeaveAdd = (props) => {
     let d1 = new Date(startMaternityDate);
     let d2 = new Date(d1)
     let d3 = d2.setDate(d2.getDate() + 179)
-  
+
 
     const setLeaveHandler = (e) => {
         const leave1 = e.target.value
@@ -158,7 +158,7 @@ const LeaveAdd = (props) => {
         console.log(leave1)
         setLeave(leave1)
     }
-    console.log("leave data",leave)
+    console.log("leave data", leave)
     // Fields validation
     const validation = (event) => {
         let flag = true
@@ -175,7 +175,7 @@ const LeaveAdd = (props) => {
         }
         return flag;
     }
-  
+
 
     // create api
     const onSubmit = e => {
@@ -194,7 +194,7 @@ const LeaveAdd = (props) => {
             viewLeavePopup: 0,
             year: ''
         } */
-      
+
 
         if (cflag) {
             const setModal = props.handleClose;
@@ -207,17 +207,17 @@ const LeaveAdd = (props) => {
             setMin(false)
             setMax(false)
             setEditMsg(false)
-           /*  addPopup(resetValue) */
-         
+            /*  addPopup(resetValue) */
+
         }
 
         const newLeave1 = {
             empId: user.employeeId,
             fromDate: moment(startMaternityDate).format("YYYY-MM-DD"),
-           /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
-           leaveCategory: 'Planned',
+            /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
+            leaveCategory: 'Planned',
             /* leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
-           leaveTypeId: leave,
+            leaveTypeId: leave,
             ltId: 0,
             numberOfDays: 0,
             reason: reason,
@@ -226,13 +226,13 @@ const LeaveAdd = (props) => {
             viewLeavePopup: 1,
             year: new Date().getFullYear()
         }
-       
+
         var newData
-        if(startDate > new Date()){
-             newData = 'Planned'
+        if (startDate > new Date()) {
+            newData = 'Planned'
         }
-        else{
-             newData = 'Unplanned'
+        else {
+            newData = 'Unplanned'
         }
 
         const newLeave = {
@@ -241,7 +241,7 @@ const LeaveAdd = (props) => {
             /* leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
             leaveCategory: newData,
             /* leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
-           leaveTypeId: leave,
+            leaveTypeId: leave,
             ltId: 0,
             numberOfDays: 0,
             reason: reason,
@@ -263,22 +263,22 @@ const LeaveAdd = (props) => {
         setEditMsg(false)
 
     }
-const onCloseModal = () => {
-   /*  const resetValue = {
-       
-    } */
-    const setModal = props.handleClose;
-    setModal()
-    setReason('')
-    setLeave('')
-    setStartDate()
-    setEndDate()
-    setDisable(true)
-    setMin(false)
-    setMax(false)
-    setEditMsg(false)
-   /*  addPopup(resetValue) */
-}
+    const onCloseModal = () => {
+        /*  const resetValue = {
+            
+         } */
+        const setModal = props.handleClose;
+        setModal()
+        setReason('')
+        setLeave('')
+        setStartDate()
+        setEndDate()
+        setDisable(true)
+        setMin(false)
+        setMax(false)
+        setEditMsg(false)
+        /*  addPopup(resetValue) */
+    }
     return (
         <React.Fragment>
             <ToastContainer />
@@ -288,14 +288,14 @@ const onCloseModal = () => {
                         <Modal.Title >
                             <h4>Apply For Leave</h4>
                         </Modal.Title>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close" 
-                        onClick={onCloseModal}>
+                        <button type="button" className="close" data-dismiss="modal" aria-label="Close"
+                            onClick={onCloseModal}>
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </Modal.Header>
                     <Modal.Body>
                         <Form onSubmit={onSubmit}>
-                           
+
                             <Row>
                                 <div className="col-sm-12">
                                     <Form.Group>
@@ -304,53 +304,53 @@ const onCloseModal = () => {
                                             onChange={(e) => setLeaveHandler(e)}>
                                             <option value="">Select</option>
 
-                                            {leaveType!==undefined? leaveType.map((item, i) => {
+                                            {leaveType !== undefined ? leaveType.map((item, i) => {
                                                 return (
-                                                        <option key={item.leaveTypeId} value={item.leaveTypeId}
+                                                    <option key={item.leaveTypeId} value={item.leaveTypeId}
                                                         disabled={(item.paternity === 1 ? true : false) || (item.maternity === 1 ? true : false)} >
                                                         {item.leaveName}</option>
-                                                    
+
                                                 )
-                                            }): ""
+                                            }) : ""
                                             }
                                         </Form.Control>
                                     </Form.Group>
                                 </div>
                             </Row>
                             {leave === '3' ?
-                                    <Row style={{margin:'0'}}>
-                                        <div classNmae="col-sm-6">
-                                            <Form.Group>
+                                <Row style={{ margin: '0' }}>
+                                    <div classNmae="col-sm-6">
+                                        <Form.Group>
                                             <div><Form.Label >From Date:</Form.Label></div>
                                             <div><DatePicker selected={startMaternityDate} onChange={(e) => setStartMaternityDateHandler(e)}
-                                                    className="input_date" dateFormat="yyyy-MM-dd" selectsStart startDate={startMaternityDate}
-                                                    endDate={d3}
-                                                    minDate={new Date()}
-                                                    placeholderText="From Date" required /></div>
-                                            </Form.Group>
-                                        </div>
-                                        <div className="col-sm-6" >
-                                            <Form.Group>
+                                                className="input_date" dateFormat="yyyy-MM-dd" selectsStart startDate={startMaternityDate}
+                                                endDate={d3}
+                                                minDate={new Date()}
+                                                placeholderText="From Date" required /></div>
+                                        </Form.Group>
+                                    </div>
+                                    <div className="col-sm-6" >
+                                        <Form.Group>
                                             <div><Form.Label >To Date:</Form.Label></div>
                                             <div>  <DatePicker selected={d3} selectsEnd startDate={startMaternityDate} readOnly
-                                                    endDate={d3} onChange={(date) => setEndMaternityDate(date)}
-                                                    className="input_date" dateFormat="yyyy-MM-dd"
-                                                    minDate={startMaternityDate}
-                                                    placeholderText="To Date" /></div>
-                                            </Form.Group>
-                                        </div>
-                                    </Row> :
+                                                endDate={d3} onChange={(date) => setEndMaternityDate(date)}
+                                                className="input_date" dateFormat="yyyy-MM-dd"
+                                                minDate={startMaternityDate}
+                                                placeholderText="To Date" /></div>
+                                        </Form.Group>
+                                    </div>
+                                </Row> :
 
                                 <Row>
                                     <div className="col-sm-6">
                                         <Form.Group>
                                             <div><Form.Label>From Date:</Form.Label></div>
                                             <div>
-                                            <DatePicker selected={startDate} onChange={(e) => fromDateHandler(e)}
-                                                className="input_date" dateFormat="yyyy-MM-dd"
-                                                minDate={currentYear} maxDate={nextYear}
-                                                placeholderText="From Date" required />
-                                                </div>
+                                                <DatePicker selected={startDate} onChange={(e) => fromDateHandler(e)}
+                                                    className="input_date" dateFormat="yyyy-MM-dd"
+                                                    minDate={currentYear} maxDate={nextYear}
+                                                    placeholderText="From Date" required />
+                                            </div>
                                         </Form.Group>
                                     </div>
                                     {disable &&
@@ -360,7 +360,7 @@ const onCloseModal = () => {
                                                 className="input_date" dateFormat="yyyy-MM-dd"
                                                 /*  maxDate={maxToDate} */
                                                 placeholderText="To Date" disabled={true} />
-                                                </div>
+                                            </div>
                                         </div>
                                     }
                                     {min &&
@@ -375,18 +375,30 @@ const onCloseModal = () => {
                                     {max &&
 
                                         <div className="col-sm-6">
-                                           <div><Form.Label>To Date:</Form.Label></div>
+                                            <div><Form.Label>To Date:</Form.Label></div>
                                             <div><DatePicker selected={endDate} onChange={(e) => toDateHandler(e)}
-                                                    className="input_date" dateFormat="yyyy-MM-dd"
-                                                    maxDate={today}
-                                                    minDate={startDate}
-                                                    placeholderText="To Date" required/></div>
+                                                className="input_date" dateFormat="yyyy-MM-dd"
+                                                maxDate={today}
+                                                minDate={startDate}
+                                                placeholderText="To Date" required /></div>
                                         </div>
-                                        }
+                                    }
 
                                 </Row>
-                             
+
                             }
+<<<<<<< HEAD
+
+                            {editMsg === true ?
+                                <Row>
+                                    <div className="col-sm-12">
+                                        {/*  <p className="leavesMsg">{leavesData ? leavesData.Leave : ''}</p> */}
+                                        {leavesData ?
+                                            <p className="leavesMsg">{leavesData.Leave}</p> : ''}
+                                    </div>
+                                </Row>
+                                : ''}
+=======
                            
                         {editMsg === true ?
                          <Row>
@@ -397,12 +409,13 @@ const onCloseModal = () => {
                          </div>
                      </Row>
                         : ''}
+>>>>>>> 697f3bb47124a30e680eefdaf4fc2f7888e06353
                             <Row>
                                 <div className="col-sm-12">
                                     <Form.Group>
-                                    <Form.Label>Reason:</Form.Label>
-                                    <Form.Control as="textarea" rows="3" name="reason" value={reason}
-                                        onChange={(event) => setReason(event.target.value)} required />
+                                        <Form.Label>Reason:</Form.Label>
+                                        <Form.Control as="textarea" rows="3" name="reason" value={reason}
+                                            onChange={(event) => setReason(event.target.value)} required />
                                     </Form.Group>
                                 </div>
                             </Row>

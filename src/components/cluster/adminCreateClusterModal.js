@@ -28,10 +28,10 @@ const AdminCreateClusterModal = (props) => {
         setErrorMsg('')
         setSuccessMsg('')
         setSportsList('');
-        setCostCenterName()
+        setCostCenterName('')
         setSuccessMsg('');
         setEmployee('')
-
+        props.handleClose();
     }
 
 
@@ -90,20 +90,9 @@ const AdminCreateClusterModal = (props) => {
         return flag;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
     const onChangeHandler = event => {
-        setClusterName(event.target.value);
+        setClusterName(event.target.value.trimStart());
+        console.log(clusterName);
         if (sportsList.length === 0) {
             setClusterButton(true)
             setErrorMsg("All the fields are required");
@@ -115,7 +104,7 @@ const AdminCreateClusterModal = (props) => {
     };
 
     const onDescprtion = event => {
-        setDescription(event.target.value);
+        setDescription(event.target.value.trimStart());
         if (sportsList.length > 0) {
             setClusterButton(false)
             setErrorMsg(false)
@@ -175,8 +164,12 @@ const AdminCreateClusterModal = (props) => {
         <Fragment>
             <Modal show={props.modal} onHide={props.handleClose} centered>
 
-                <Modal.Header closeButton>
+                <Modal.Header>
                     <Modal.Title>Create Cluster</Modal.Title>
+                    <button type="button" className="close" data-dismiss="modal" aria-label="Close"
+                        onClick={setClear}>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </Modal.Header>
                 <Modal.Body>
                     <form onSubmit={onSubmit}>
@@ -202,7 +195,6 @@ const AdminCreateClusterModal = (props) => {
                             <div className="col-sm-12">
                                 <div className="form-group">
                                     <label htmlFor="exampleFormControlInput1">Cluster Name</label>
-
                                     <input type="text" style={{ fontSize: "0.8rem" }} className="form-control" placeholder="Cluster Name" required value={clusterName} onChange={onChangeHandler} />
 
                                 </div>
@@ -224,13 +216,13 @@ const AdminCreateClusterModal = (props) => {
                         <div className="row">
                             <div className="col-sm-12">
                                 <div className="form-group">
-                                    <label htmlFor="exampleFormControlInput1">Select cost center</label>
+                                    <label htmlFor="exampleFormControlInput1">Select Cost Center</label>
                                     <select
                                         className="form-control"
                                         required
                                         onChange={(e) => getCostCenterName(e)}
                                     >
-                                        <option value="">Select cost center</option>
+                                        <option value="">Select Cost Center</option>
                                         {costCenterList.map((e, i) => {
                                             return (
                                                 <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
@@ -297,7 +289,7 @@ const AdminCreateClusterModal = (props) => {
                                                 return (
 
                                                     <option key={e.employeeId} value={e.employeeId}>
-                                                        {e.firstName}
+                                                        {e.firstName}&nbsp;{e.lastName}
                                                     </option>
                                                 );
                                             })}
