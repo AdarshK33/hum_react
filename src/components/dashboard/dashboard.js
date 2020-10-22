@@ -33,9 +33,9 @@ function Dashboard() {
 
 
     }
-    useEffect(() => {
-        getUserInfo()
-    }, [])
+    // useEffect(() => {
+    //     getUserInfo()
+    // }, [])
     function week_no(dt) {
         var tdt = new Date(dt.valueOf());
         var dayn = (dt.getDay() + 6) % 7;
