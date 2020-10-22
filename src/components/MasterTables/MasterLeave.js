@@ -64,6 +64,7 @@ const MasterLeave = () => {
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
                                             <th>S. No</th>
+                                            <th>Max Leave</th>
                                             <th>State Name</th>                                            
                                             <th>Year</th>
                                         </tr>
@@ -74,7 +75,8 @@ const MasterLeave = () => {
                                         return(
                                             <tbody key={i+1}>
                                                 <tr>
-                                                    <td>{i+1+indexOfFirstRecord}</td>                                        
+                                                    <td>{i+1+indexOfFirstRecord}</td>  
+                                                    <td>{item.maxLeaves}</td>                                      
                                                     <td>{item.stateName}</td>
                                                     <td>{item.year}</td>
                                                 </tr>
