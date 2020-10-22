@@ -95,7 +95,7 @@ export const AppProvider = ({ children, history }) => {
       .catch((error) => {
         console.log(error)
         setTimeout(function () { userLogout(); }, 4000);
-
+        // 4 seconds
         toast.error("User does not exist");
       })
   }
