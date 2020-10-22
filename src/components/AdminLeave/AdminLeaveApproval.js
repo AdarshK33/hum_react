@@ -6,13 +6,15 @@ import { useHistory } from "react-router-dom";
 import '../Leaves/Leaves.css'
 import './AdminLeaves.css'
 import Pagination from 'react-js-pagination'
+import AdminDeleteApproval from './AdminDeleteApproval'
 
 const AdminLeaveApproval = () => {
     const [deleteModal, setDeleteModal] = useState(false)
+    const [ltId, setltId] = useState()
     let history = useHistory();
 
 
-    const { ApprovalView, ApprovalLeaveList, cancelLeaveList, approvedUpdate } = useContext(AdminContext)
+    const { ApprovalView, ApprovalLeaveList, approvedUpdate } = useContext(AdminContext)
 
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
@@ -35,11 +37,6 @@ const AdminLeaveApproval = () => {
         ApprovalView()
     }, [])
 
-    const cancelLeave = (id) => {
-        console.log("id-----", id)
-        cancelLeaveList(id)
-        setDeleteModal(false)
-    }
 
     const approvedButton = (empId, startDate, endDate, leaveCategory,
         leaveTypeId, ltId, numberOfDays, reason, status, year) => {
@@ -115,22 +112,9 @@ const AdminLeaveApproval = () => {
                                              <Button size="sm" className="disable-button" disabled>
                                              Cancel</Button> :
                                                 <Button variant="danger" size="sm" onClick={() => {
-                                                setDeleteModal(true)
+                                                setDeleteModal(true); setltId(item.ltId)
                                                 }}>Cancel</Button>}</td>
-                                            
-
-                                            <Modal show={deleteModal} onHide={handleDeleteClose} centered>
-                                                <Modal.Body style={{ marginTop: '1rem' }}>
-                                                    <h5>Are you sure to cancel the leave ?</h5>
-                                                </Modal.Body>
-                                                <Modal.Footer>
-                                                    <Button variant="secondary" className="deleteNoButton"
-                                                        onClick={() => handleDeleteClose()}>No</Button>
-                                                    <Button variant="primary" className="deleteYesButton"
-                                                        onClick={() => cancelLeave(item.ltId)}>Yes</Button>
-                                                </Modal.Footer>
-                                            </Modal>
-
+                                          
                                         </tr>
 
                                     </tbody>
@@ -139,6 +123,7 @@ const AdminLeaveApproval = () => {
                     </Table>
                 </div>
             </div>
+            <AdminDeleteApproval handleDeleteClose={handleDeleteClose} modal={deleteModal} ltId={ltId} />
             {ApprovalLeaveList !== null && ApprovalLeaveList.length > 10 &&
                 <Pagination
                     itemClass="page-item" 

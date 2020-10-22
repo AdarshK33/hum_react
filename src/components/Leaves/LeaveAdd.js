@@ -393,7 +393,7 @@ const onCloseModal = () => {
                          <div className="col-sm-12">
                             {/*  <p className="leavesMsg">{leavesData ? leavesData.Leave : ''}</p> */}
                              {leavesData ? 
-                             <p className="leavesMsg">{leavesData.Leave}</p> : ''}
+                             <p className="leavesMsg" style={{color:'red', fontWeight:'bold'}}>{leavesData.Leave}</p> : ''}
                          </div>
                      </Row>
                         : ''}
