@@ -11,21 +11,25 @@ const UserMenu = () => {
 
     const handleMenuListProfile = () => {
         getUserMenu(user.generalUserMenus, "profile", user);
+        localStorage.setItem('type', "profile")
         history.push("/dashboard/storedashboard");
     }
 
     const handleMenuListAdmin = () => {
         getUserMenu(user.adminMenus);
+        localStorage.setItem('type', "admin")
         history.push("/dashboard/storedashboard");
     }
 
     const handleMenuListTeam = () => {
         getUserMenu(user.managerMenus);
+        localStorage.setItem('type', "team")
         history.push("/dashboard/storedashboard");
     }
 
     const handleMenuListCluster = () => {
         getUserMenu(user.clusterManagerMenus);
+        localStorage.setItem('type', "leader")
         history.push("/dashboard/storedashboard");
     }
 
@@ -62,7 +66,7 @@ const UserMenu = () => {
                         <li onClick={handleMenuListTeam}><a href="#team"><Users />My Team</a></li>
                     }
                     {user.clusterManagerMenus !== null &&
-                        <li onClick={handleMenuListCluster}><a href="#cluster"><Users />Cluster Leader</a></li>
+                        <li onClick={handleMenuListCluster}><a href="#leader"><Users />Cluster Leader</a></li>
                     }
                     {/*  <li><a href="#javascript"><Settings />Settings</a></li> */}
                     {/* <li><a href="#javascript"><LogOut /> Log out</a></li> */}

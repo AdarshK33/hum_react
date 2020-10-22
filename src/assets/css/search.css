@@ -1,0 +1,32 @@
+
+  .searchButton {
+    float: right;
+    border-radius: 12.25rem !important;
+  }
+  .job-filter {
+    float: right;
+  text-align: end;
+  padding-top: 8px;
+  border-radius: 552px;
+  }
+
+ .search-icon {
+    position: absolute; 
+    right: 12px;
+    top: 9px;
+    width: 20px;
+    height: 20px;
+}
+
+.faq-form {
+    position: relative;
+}
+
+.search-icon:hover{
+  top: 4px;
+  width: 30px;
+    height: 30px;
+    color: #006EBB !important;
+}
+
+  

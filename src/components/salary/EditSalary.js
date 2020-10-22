@@ -168,8 +168,8 @@ const onSubmit = e => {
     const EditSalary = {
         additionalHours: additionalHours,
         contractType: contractType,
-        date: val2,
-        dayExtraHour: val,
+        dailyExtraHour: val,
+        dates: val2,
         employeeId: employeeId,
         extraHours: extraHours,
         firstName: firstName,
@@ -271,8 +271,8 @@ return (
                             }
                             <Form.Label column sm="3" className="padding-right">Reason:</Form.Label>
                             <Col sm="9" className="padding-left">
-                                <Form.Control as="textarea" rows="3" size="sm" name="reason"
-                                    value={reason} onChange={(event) => setReason(event.target.value)} />
+                                <Form.Control as="textarea" rows="3" size="sm" name="reason" required
+                                    value={reason || ''} onChange={(event) => setReason(event.target.value)} />
                             </Col>
                         </Form.Group>
 

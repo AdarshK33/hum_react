@@ -58,16 +58,15 @@ const MasterMonthlyQuantity = () => {
     
       const dateHandler = (d) =>{
         setDate(d);        
-        setMonth(monthsNumber[moment(date, ["YYYY-MM"]).format("M")]);
-        setYear(moment(date, ["MMM Do YY"]).format("YYYY"));
-        // console.log(d);
-        // console.log(month);
-        // console.log(year);        
+        // setMonth(monthsNumber[moment(date, ["YYYY-MM"]).format("M")]);
+        // setYear(moment(date, ["MMM Do YY"]).format("YYYY"));     
       }
     
       const onSubmit = (e) =>{
         e.preventDefault();
-        monthlyQtyDetails(costCenter, month, year);
+        const mon = monthsNumber[moment(date, ["YYYY-MM"]).format("M")];
+        const y = moment(date, ["MMM Do YY"]).format("YYYY");
+        monthlyQtyDetails(costCenter, mon, y);
       }
 
 

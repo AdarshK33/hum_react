@@ -91,7 +91,9 @@ const AdminLeaveAdd = (props) => {
      const fromDateHandler = (date) => {
          let value = date
          setStartDate(value);
- 
+         setEndDate(null)
+         setEditMsg(false)
+
          //For disable the To Date initially
          setDisable(false)
  
@@ -104,7 +106,7 @@ const AdminLeaveAdd = (props) => {
              setMin(true);
              setMax(false);
          }
- 
+            setEditMsg(false)
      }
  
      const toDateHandler = (date) => {
@@ -431,7 +433,7 @@ const AdminLeaveAdd = (props) => {
                                                     className="input_date" dateFormat="yyyy-MM-dd"
                                                     maxDate={today}
                                                     minDate={startDate}
-                                                    placeholderText="To Date" /></div>
+                                                    placeholderText="To Date" required /></div>
                                         </div>
                                         }
 
@@ -441,7 +443,7 @@ const AdminLeaveAdd = (props) => {
                             {editMsg === true ?
                             <Row>
                                 <div className="col-sm-12">
-                                    <p className="leavesMsg">{leavesData ? leavesData.Leave : ''}</p>
+                                    <p className="leavesMsg" style={{color:'red', fontWeight:'bold'}}>{leavesData ? leavesData.Leave : ''}</p>
                                 </div>
                             </Row>
                             : ''}

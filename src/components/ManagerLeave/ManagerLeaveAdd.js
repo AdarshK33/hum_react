@@ -94,6 +94,8 @@ console.log("managerEmployeeIdList",managerEmployeeIdList)
      const fromDateHandler = (date) => {
          let value = date
          setStartDate(value);
+         setEndDate(null)
+         setEditMsg(false)
  
          //For disable the To Date initially
          setDisable(false)
@@ -107,6 +109,7 @@ console.log("managerEmployeeIdList",managerEmployeeIdList)
              setMin(true);
              setMax(false);
          }
+         setEditMsg(false)
  
      }
  
@@ -413,7 +416,7 @@ console.log("managerEmployeeIdList",managerEmployeeIdList)
                                                     className="input_date" dateFormat="yyyy-MM-dd"
                                                     maxDate={today}
                                                     minDate={startDate}
-                                                    placeholderText="To Date" /></div>
+                                                    placeholderText="To Date" required/></div>
                                         </div>
                                         }
 
@@ -423,7 +426,7 @@ console.log("managerEmployeeIdList",managerEmployeeIdList)
                             {editMsg === true ?
                             <Row>
                                 <div className="col-sm-12">
-                                    <p className="leavesMsg">{leavesData ? leavesData.Leave : ''}</p>
+                                    <p className="leavesMsg" style={{color:'red', fontWeight:'bold'}}>{leavesData ? leavesData.Leave : ''}</p>
                                 </div>
                             </Row>
                             : ''}
