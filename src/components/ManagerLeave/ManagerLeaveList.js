@@ -53,7 +53,7 @@ const ManagerLeaveList = (props) => {
     }, [])
 
     useEffect(() => {
-        if(leaveManagerList !== undefined && leaveManagerList.length > 0){
+        if(leaveManagerList !== undefined && leaveManagerList !== null && leaveManagerList.length > 0){
           setLeaveList(leaveManagerList);
         }        
       }, [leaveManagerList])

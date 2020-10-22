@@ -39,7 +39,7 @@ const HolidayList = () => {
   }
   return (
     <Fragment>
-      <Breadcrumb title="Hoilday List" parent="Holiday List" />
+      <Breadcrumb title="Holiday List" parent="Holiday List" />
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
