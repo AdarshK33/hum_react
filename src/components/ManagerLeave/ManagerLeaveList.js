@@ -5,9 +5,10 @@ import ManagerLeaveEdit from './ManagerLeaveEdit'
 import Breadcrumb from '../common/breadcrumb';
 import '../AdminLeave/AdminLeaves.css'
 import Pagination from 'react-js-pagination'
-import { Edit2, Trash2 } from 'react-feather'
+import { Edit2, Trash2, Search } from 'react-feather'
 import ManagerLeaveAdd from './ManagerLeaveAdd'
 import ManagerDeleteLeaves from './ManagerDeleteLeaves';
+import { SearchContext } from '../../context/SearchState';
 
 const ManagerLeaveList = (props) => {
     const [modal, setModal] = useState(false);
@@ -19,18 +20,22 @@ const ManagerLeaveList = (props) => {
     const [ltId, setltId] = useState()
     const [empId, setEmpId] = useState()
     const [reason, setReason] = useState()
+    const [searchValue, setSearchValue] = useState(false);
+    const [searchLeaveList, setLeaveList] = useState();
+
+    const { searchByEmpIdManager, empIdManagerSearchList } = useContext(SearchContext);
 
     const { viewManagerList, leaveManagerList } = useContext(LeaveContext)
 
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
-    const totalRecords = leaveManagerList !== null && leaveManagerList.length;
+    const totalRecords = searchLeaveList !== undefined && searchLeaveList !== null && searchLeaveList.length;
     const pageRange = 10;
 
    const indexOfLastRecord = currentPage * recordPerPage;
    const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-   const currentRecords = leaveManagerList !== null ? leaveManagerList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+   const currentRecords = searchLeaveList !== undefined && searchLeaveList !== null ? searchLeaveList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
    const handlePageChange = pageNumber => {
     setCurrentPage(pageNumber);
@@ -46,6 +51,32 @@ const ManagerLeaveList = (props) => {
     useEffect(() => {
         viewManagerList()
     }, [])
+
+    useEffect(() => {
+        if(leaveManagerList !== undefined && leaveManagerList.length > 0){
+          setLeaveList(leaveManagerList);
+        }        
+      }, [leaveManagerList])
+
+      const searchHandler = (e) => {
+        setSearchValue(e.target.value)
+        
+      }
+    
+      const searchDataHandler = () => {
+          if(searchValue !== ""){
+            searchByEmpIdManager(searchValue);
+          }else {
+            viewManagerList()
+          }
+        
+      }
+
+      useEffect(() => {
+        if(empIdManagerSearchList !== undefined && empIdManagerSearchList.length > 0){
+          setLeaveList(empIdManagerSearchList);
+        }        
+      }, [empIdManagerSearchList])
     
 
     return (
@@ -59,6 +90,12 @@ const ManagerLeaveList = (props) => {
                     <div className="col-sm-12">
                         <div className="card" style={{ overflowX: "auto" }}>
                             <div className="title_bar" >
+                                <div className="job-filter">
+                                    <div className="faq-form mr-2">
+                                        <input className="form-control searchButton" type="text" placeholder="Search.." onChange = {(e)=>searchHandler(e)} />
+                                        <Search className="search-icon" style = {{color: "#313131"}} onClick={searchDataHandler}/>
+                                    </div>
+                                </div>
                                 <Button className="apply-button btn btn-light mr-2" onClick={handleShow}>Apply</Button>
                             </div>
                             <ManagerLeaveAdd handleClose={handleClose} modal={modal} />

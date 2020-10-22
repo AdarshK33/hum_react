@@ -21,6 +21,7 @@ import { AdminProvider } from "./context/AdminState";
 
 import { MasterFilesProvider } from "./context/MasterFilesState";
 import { PermissionProvider } from "./context/PermissionState";
+import { SearchProvider } from "./context/SearchState";
 
 import RoutePath from "./Route";
 
@@ -45,14 +46,16 @@ function Root() {
                     <DashboardProvider>
                       <StoreProductProvider>
                         <RoleManagementProvider>
-                          <AdminProvider>
-                            <BrowserRouter basename={"/"}>
-                              <ScrollContext>
-                                <RoutePath />
-                              </ScrollContext>
-                            </BrowserRouter>
-                            {/* </Provider>  */}
-                          </AdminProvider>
+                          <SearchProvider>
+                            <AdminProvider>
+                              <BrowserRouter basename={"/"}>
+                                <ScrollContext>
+                                  <RoutePath />
+                                </ScrollContext>
+                              </BrowserRouter>
+                              {/* </Provider>  */}
+                            </AdminProvider>
+                          </SearchProvider>
                         </RoleManagementProvider>
                       </StoreProductProvider>
                     </DashboardProvider>
