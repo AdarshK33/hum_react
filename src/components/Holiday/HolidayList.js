@@ -39,13 +39,13 @@ const HolidayList = () => {
   }
   return (
     <Fragment>
-      <Breadcrumb title="Hoilday List" parent="Holiday List" />
+      <Breadcrumb title="Holiday List" parent="Holiday List" />
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
             <div className="card" style={{ overflowX: "auto" }}>
             {
-                  user.loginType==="1" ?
+                  (user.loginType==="1" || user.additionalRole==="1")?
                   <div className="title_bar" >                   
                     <input
                       className="btn"

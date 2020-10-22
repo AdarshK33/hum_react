@@ -69,6 +69,7 @@ const CreateShiftModal = (props) => {
     setEndBreakTIme('');
     setSuccessMsg('');
     setErrorMsg('')
+    props.handleClose()
   }
   const calcTime = () => {
     const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
@@ -203,8 +204,12 @@ const CreateShiftModal = (props) => {
   return (
     <Modal show={props.modal} onHide={props.handleClose} centered>
       <Fragment>
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>Create Shift</Modal.Title>
+          <button type="button" className="close" data-dismiss="modal" aria-label="Close"
+            onClick={setClear}>
+            <span aria-hidden="true">&times;</span>
+          </button>
         </Modal.Header>
         <div className="row">
           <div className="col-sm-12">
@@ -367,6 +372,7 @@ const CreateShiftModal = (props) => {
                               <label htmlFor="exampleFormControlInput1">Select cost center</label>
                               <select
                                 isSearchable
+                                required
                                 value={costCenterName}
                                 className="form-control"
                                 onChange={(e) => setCostCenterName(e.target.value)}

@@ -29,12 +29,12 @@ function AdminCluster() {
 
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
-    const totalRecords = clusterList !== null && clusterList.length;
+    const totalRecords = clusterList !== null && clusterList !== undefined && clusterList.length;
     const pageRange = 10;
 
     const indexOfLastRecord = currentPage * recordPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    const currentRecords = clusterList !== null ? clusterList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+    const currentRecords = clusterList !== null ? clusterList !== undefined && clusterList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber);

@@ -15,7 +15,7 @@ const AdminReportForm = () => {
     const [reportType, setReportType] = useState('')
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState()
-    const [startYear, setStartYear] = useState()
+    const [yearly, setYearly] = useState()
     const [leave, setLeave] = useState([])
     const [costCenter, setCostCenter] = useState()
     const [employeeCostCenter, setEmployeeCostCenter] = useState([])
@@ -29,6 +29,10 @@ const AdminReportForm = () => {
     useEffect(() => {
         CostCenter()
     }, []);
+
+    var previousYear = new Date().getFullYear()-1
+
+    var nextYear = new Date().getFullYear()+1
 
     useEffect(() => {
         if (user.loginType !== "1" && user.loginType !== "9" &&
@@ -92,9 +96,9 @@ const AdminReportForm = () => {
         const yearReportData = {
             employeeIds: employeeCostCenter.map((e,i) => employeeCostCenter[i].value),
             fromDate: 'string',
-            leaveTypeIds: leave.map((e,i) => leave[i].value),
+            leaveTypeIds: leaveIds,
             toDate: 'string',
-            year: moment(startYear).format("YYYY")
+            year: yearly
         }
         if(reportType === 'Monthly'){
             console.log("leaveTypeIds",monthReportData)
@@ -109,7 +113,6 @@ const AdminReportForm = () => {
         setEmployeeCostCenter([])
         setStartDate()
         setEndDate()
-        setStartYear()
         setLeave([])
 
     }
@@ -137,7 +140,7 @@ const AdminReportForm = () => {
                         user.additionalRole === '1' || user.additionalRole === '9'? 
                         <div className="col-sm-4">
                             <Form.Group>
-                                <Form.Label>Cost Center</Form.Label>
+                                <Form.Label>Cost Center</Form.Label> <span style={{color:'red'}}>*</span> 
                                 <Form.Control as="select" required value={costCenter}
                                  onChange={(e) => setCostCenterHandler(e)} isSearchable >
                                     <option value=''>Select Cost Center</option>
@@ -162,7 +165,7 @@ const AdminReportForm = () => {
                     <Row>
                         <div className="col-sm-4">
                             <Form.Group>
-                                <Form.Label>Employee Id</Form.Label>
+                                <Form.Label>Employee Id</Form.Label> <span style={{color:'red'}}>*</span> 
                                 <Select
                                 name="filters"
                                 placeholder="Select Employee Id"
@@ -176,7 +179,7 @@ const AdminReportForm = () => {
                         </div>
                         <div className="col-sm-4">
                              <Form.Group>
-                                <Form.Label>Leave Category</Form.Label>
+                                <Form.Label>Leave Category</Form.Label> <span style={{color:'red'}}>*</span> 
                                 <Select
                                 name="filters"
                                 placeholder="Select Leave Type"
@@ -192,7 +195,7 @@ const AdminReportForm = () => {
                     <Row>
                         <div className="col-sm-4">
                             <Form.Group>
-                                <Form.Label>From Date</Form.Label>
+                                <Form.Label>From Date</Form.Label> <span style={{color:'red'}}>*</span> 
                                 <div>
                                     <DatePicker selected={startDate} onChange={(e) => fromDateHandler(e)}
                                         className="form-control" dateFormat="yyyy-MM-dd"
@@ -203,7 +206,7 @@ const AdminReportForm = () => {
                         </div>
                         <div className="col-sm-4">
                             <Form.Group>
-                                <Form.Label>To Date</Form.Label>
+                                <Form.Label>To Date</Form.Label> <span style={{color:'red'}}>*</span> 
                                 <div>
                                     <DatePicker selected={endDate} onChange={(e) => toDateHandler(e)}
                                         className="form-control" dateFormat="yyyy-MM-dd"
@@ -218,18 +221,12 @@ const AdminReportForm = () => {
                     {reportType === 'Yearly' &&
                     <Row>
                         <div className="col-sm-4">
-                            <Form.Group>
-                                <Form.Label>Select Year</Form.Label>
-                                <div>
-                                    <DatePicker selected={startYear} onChange={date => setStartYear(date)}
-                                        showYearPicker
-                                        maxDate={new Date()}
-                                       /*  minDate={subYears(new Date(), 2)} */
-                                        className="input_date" dateFormat="yyyy" /* yearItemNumber={5} */
-                                    placeholderText="Select Year" />
-                                </div>
-
-                            </Form.Group>
+                        <Form.Group>
+                            <Form.Label>Select Year</Form.Label> <span style={{color:'red'}}>*</span> 
+                                <Form.Control type="number" placeholder="YYYY" min={previousYear} max={nextYear}
+                                 className="form-control digit"
+                                required onChange={(e) => setYearly(e.target.value)} value={yearly || ''} />
+                        </Form.Group>
                         </div>
                     </Row>
                     }

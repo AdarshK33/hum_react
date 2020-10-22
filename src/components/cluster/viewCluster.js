@@ -28,27 +28,26 @@ function ViewCluster() {
   const handleEditShow = () => setEditModal(true)
 
 
-  //pagenation data
 
+
+
+  /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
   const recordPerPage = 10;
-  let totalRecords = 0;
-  let indexOfFirstRecord = 0;
-  let indexOfLastRecord = 0;
+  const totalRecords = clusterCostCenterList !== null && clusterCostCenterList.length;
   const pageRange = 10;
-  let currentRecords = [];
 
-  if (clusterCostCenterList !== null) {
-    totalRecords = clusterCostCenterList.length;
-    indexOfLastRecord = currentPage * recordPerPage;
-    indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    currentRecords = clusterCostCenterList.slice(indexOfFirstRecord, indexOfLastRecord);
-  }
-
+  const indexOfLastRecord = currentPage * recordPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+  const currentRecords = clusterCostCenterList !== null ? clusterCostCenterList !== undefined && clusterCostCenterList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
   const handlePageChange = pageNumber => {
     setCurrentPage(pageNumber);
   }
+  /*-----------------Pagination------------------*/
+
+
+
 
 
   //pagenation data
@@ -86,7 +85,8 @@ function ViewCluster() {
                       <th scope="col">Edit</th>
                     </tr>
                   </thead>
-                  {currentRecords !== null &&
+
+                  {currentRecords !== null && currentRecords !== undefined &&
                     currentRecords.map((e, i) => {
                       return (
                         <tbody key={i + 1}>
@@ -127,6 +127,7 @@ function ViewCluster() {
                 />
               </div>
               <div>
+
                 {clusterCostCenterList !== null && clusterCostCenterList.length > 10 &&
                   <Pagination
                     itemClass="page-item"

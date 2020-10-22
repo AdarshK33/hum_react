@@ -57,26 +57,26 @@ export const PermissionProvider = ({ children }) => {
 
 
     const monthlyQtyDetails = (id, month, year) => {
-        console.log(id);
-        console.log(month);
-        console.log(year);
+        // console.log(id);
+        // console.log(month);
+        // console.log(year);
 
-        // return client.get('/monthly/view?'+'&month='+month+'&storeId='+id+'&year='+year)
-        //     .then((response) => {
+        return client.get('/monthly/view?'+'&month='+month+'&storeId='+id+'&year='+year)
+            .then((response) => {
 
-        //         if (response.data.data === null) {
-        //             state.monthlyQtyDetailsList = []
-        //         }
-        //         else {
-        //             state.monthlyQtyDetailsList = response.data.data;
-        //         }
-        //         return (
-        //             dispatch({ type: 'MONTHLY_QTY_DETAILS_LIST', payload: state.monthlyQtyDetailsList })
-        //         )
-        //     })
-        //     .catch((error) => {
-        //         console.log(error)
-        //     })
+                if (response.data.data === null) {
+                    state.monthlyQtyDetailsList = []
+                }
+                else {
+                    state.monthlyQtyDetailsList = response.data.data;
+                }
+                return (
+                    dispatch({ type: 'MONTHLY_QTY_DETAILS_LIST', payload: state.monthlyQtyDetailsList })
+                )
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
 

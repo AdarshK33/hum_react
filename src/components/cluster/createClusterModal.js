@@ -21,8 +21,9 @@ const CreateClusterModal = (props) => {
   const [costCenterName, setCostCenterName] = useState('');
 
   const setClear = () => {
-    setClusterName('')
-    setDescription('')
+
+    setClusterName("")
+    setDescription("")
     setClusterLeader('')
     setClusterButton('')
     setErrorMsg('')
@@ -31,7 +32,7 @@ const CreateClusterModal = (props) => {
     setCostCenterName()
     setSuccessMsg('');
     setEmployee('')
-
+    props.handleClose()
   }
 
 
@@ -61,8 +62,8 @@ const CreateClusterModal = (props) => {
     const newCluster = {
       clusterId: 0,
       clusterLeader,
-      clusterName,
-      description,
+      clusterName: clusterName.trim(),
+      description: description.trim(),
       storeId: costCenterName,
       sportIds: sportsList.map((e) => e.sportId),
       employeeIds: employee.map((e) => e.employeeId)
@@ -156,9 +157,14 @@ const CreateClusterModal = (props) => {
     <Fragment>
       <Modal show={props.modal} onHide={props.handleClose} centered>
 
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>Create Cluster</Modal.Title>
+          <button type="button" className="close" data-dismiss="modal" aria-label="Close"
+            onClick={setClear}>
+            <span aria-hidden="true">&times;</span>
+          </button>
         </Modal.Header>
+
         <Modal.Body>
           <form onSubmit={onSubmit}>
             <div className="row">
@@ -207,14 +213,14 @@ const CreateClusterModal = (props) => {
                   <div className="row">
                     <div className="col-sm-12">
                       <div className="form-group">
-                        <label htmlFor="exampleFormControlInput1">Select cost center</label>
+                        <label htmlFor="exampleFormControlInput1">Select Cost Center</label>
                         <select
 
                           className="form-control"
                           required
                           onChange={(e) => getCostCenterName(e)}
                         >
-                          <option value="">Select cost center</option>
+                          <option value="">Select Cost Center</option>
                           {costCenterList.map((e, i) => {
                             return (
                               <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
@@ -262,7 +268,7 @@ const CreateClusterModal = (props) => {
                         return (
 
                           <option key={e.employeeId} value={e.employeeId}>
-                            {e.firstName}
+                            {e.firstName}&nbsp;{e.lastName}
                           </option>
                         );
                       })}

@@ -4,6 +4,7 @@ import { LeaveContext } from '../../context/LeaveState';
 import ManagerLeaveEdit from './ManagerLeaveEdit'
 import Breadcrumb from '../common/breadcrumb';
 import '../AdminLeave/AdminLeaves.css'
+import '../../assets/css/search.css'
 import Pagination from 'react-js-pagination'
 import { Edit2, Trash2, Search } from 'react-feather'
 import ManagerLeaveAdd from './ManagerLeaveAdd'
@@ -53,7 +54,7 @@ const ManagerLeaveList = (props) => {
     }, [])
 
     useEffect(() => {
-        if(leaveManagerList !== undefined && leaveManagerList.length > 0){
+        if(leaveManagerList !== undefined && leaveManagerList !== null && leaveManagerList.length > 0){
           setLeaveList(leaveManagerList);
         }        
       }, [leaveManagerList])
@@ -73,7 +74,7 @@ const ManagerLeaveList = (props) => {
       }
 
       useEffect(() => {
-        if(empIdManagerSearchList !== undefined && empIdManagerSearchList.length > 0){
+        if(empIdManagerSearchList !== undefined && empIdManagerSearchList !== null && empIdManagerSearchList.length > 0){
           setLeaveList(empIdManagerSearchList);
         }        
       }, [empIdManagerSearchList])

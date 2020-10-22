@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useContext, Fragment } from 'react';
-import {  Row,  Button, Table, Modal } from 'react-bootstrap';
+import { Row, Button, Table, Modal } from 'react-bootstrap';
 import { LeaveContext } from '../../context/LeaveState';
 import AdminLeaveEdit from './AdminLeaveEdit'
 import AdminDeleteLeaves from './AdminDeleteLeaves'
 import Breadcrumb from '../common/breadcrumb';
 import './AdminLeaves.css'
+import '../../assets/css/search.css'
 import Pagination from 'react-js-pagination'
 import { Edit2, Trash2, Search } from 'react-feather'
 import AdminLeaveAdd from './AdminLeaveAdd';
@@ -32,17 +33,17 @@ const AdminLeavesList = (props) => {
     const totalRecords = searchLeaveList !== undefined && searchLeaveList !== null && searchLeaveList.length;
     const pageRange = 10;
 
-   const indexOfLastRecord = currentPage * recordPerPage;
-   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-   const currentRecords = searchLeaveList !== undefined && searchLeaveList !== null ? searchLeaveList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+    const indexOfLastRecord = currentPage * recordPerPage;
+    const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+    const currentRecords = searchLeaveList !== undefined && searchLeaveList !== null ? searchLeaveList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
-   const handlePageChange = pageNumber => {
-    setCurrentPage(pageNumber);
-   }
-   /*-----------------Pagination------------------*/
+    const handlePageChange = pageNumber => {
+        setCurrentPage(pageNumber);
+    }
+    /*-----------------Pagination------------------*/
 
-   const handleClose = () => setModal(false)
-   const handleShow = () => setModal(true)
+    const handleClose = () => setModal(false)
+    const handleShow = () => setModal(true)
 
     const handleEditClose = () => setEditModal(false)
     const handleDeleteClose = () => setDeleteModal(false)
@@ -52,32 +53,32 @@ const AdminLeavesList = (props) => {
     }, [])
 
     useEffect(() => {
-        if(leaveList !== undefined && leaveList.length > 0){
-          setLeaveList(leaveList);
+        if (leaveList !== undefined && leaveList.length > 0) {
+            setLeaveList(leaveList);
         }
-        
-      }, [leaveList])
+
+    }, [leaveList])
 
 
-      const searchHandler = (e) => {
+    const searchHandler = (e) => {
         setSearchValue(e.target.value)
-        
-      }
-    
-      const searchDataHandler = () => {
-          if(searchValue !== ""){
-            searchByEmpId(searchValue);
-          }else {
-            viewList()
-          }
-        
-      }
 
-      useEffect(() => {
-        if(empIdSearchList !== undefined && empIdSearchList.length > 0){
-          setLeaveList(empIdSearchList);
-        }        
-      }, [empIdSearchList])
+    }
+
+    const searchDataHandler = () => {
+        if (searchValue !== "") {
+            searchByEmpId(searchValue);
+        } else {
+            viewList()
+        }
+
+    }
+
+    useEffect(() => {
+        if (empIdSearchList !== undefined && empIdSearchList !== null && empIdSearchList.length > 0) {
+            setLeaveList(empIdSearchList);
+        }
+    }, [empIdSearchList])
 
     return (
         <Fragment>
@@ -92,70 +93,70 @@ const AdminLeavesList = (props) => {
                             <div className="title_bar" >
                                 <div className="job-filter">
                                     <div className="faq-form mr-2">
-                                        <input className="form-control searchButton" type="text" placeholder="Search.." onChange = {(e)=>searchHandler(e)} />
-                                        <Search className="search-icon" style = {{color: "#313131"}} onClick={searchDataHandler}/>
+                                        <input className="form-control searchButton" type="text" placeholder="Search.." onChange={(e) => searchHandler(e)} />
+                                        <Search className="search-icon" style={{ color: "#313131" }} onClick={searchDataHandler} />
                                     </div>
                                 </div>
                                 <Button className="apply-button btn btn-light mr-2" onClick={handleShow}>Apply</Button>
                             </div>
                             <AdminLeaveAdd handleClose={handleClose} modal={modal} />
                             <div className="table-responsive">
-                            <Table id="table-to-xls" className="table table-hover">
-                                <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
-                                    <tr>
-                                        <th>S. No</th>
-                                        <th>Emp Id</th>
-                                        <th>Leave Type</th>
-                                        <th>Total No. of Days</th>
-                                        <th>Start Date</th>
-                                        <th>End Date</th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
+                                <Table id="table-to-xls" className="table table-hover">
+                                    <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
+                                        <tr>
+                                            <th>S. No</th>
+                                            <th>Emp Id</th>
+                                            <th>Leave Type</th>
+                                            <th>Total No. of Days</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
 
-                                {currentRecords !== undefined &&  currentRecords !== null &&
-                                    currentRecords.map((item, i) => {
-                                        return (
-                                            <tbody key={i + 1}>
-                                                <tr>
-                                                    <td>{i + 1 + indexOfFirstRecord}</td>
-                                                    <td>{item.empId}</td>
-                                                    <td>{item.leaveTypeId === 1 ? 'General' : (item.leaveTypeId === 2 ? 'Paternity' : (item.leaveTypeId === 3 ? 'Maternity' : 
-                                                    (item.leaveTypeId === 0 ? 'LOP' : '')))}
-                                                    </td>
-                                                    <td>{item.numberOfDays}</td>
-                                                    <td>{item.fromDate}</td>
-                                                    <td>{item.toDate}</td>
-                                                    <td><Edit2 onClick={() => {
-                                                        setEditModal(true); setLeaveTypeId(item.leaveTypeId);
-                                                        setFromDate(item.fromDate); setToDate(item.toDate); setReason(item.reason)
-                                                        setltId(item.ltId); setEmpId(item.empId)
-                                                        
-                                                    }} />
-                                                    </td>
-                                                    <td><Trash2 onClick={() => {
-                                                        setDeleteModal(true);  setltId(item.ltId)
-                                                    }} />
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        )
-                                    })}
-                            </Table>
-                        </div>
+                                    {currentRecords !== undefined && currentRecords !== null &&
+                                        currentRecords.map((item, i) => {
+                                            return (
+                                                <tbody key={i + 1}>
+                                                    <tr>
+                                                        <td>{i + 1 + indexOfFirstRecord}</td>
+                                                        <td>{item.empId}</td>
+                                                        <td>{item.leaveTypeId === 1 ? 'General' : (item.leaveTypeId === 2 ? 'Paternity' : (item.leaveTypeId === 3 ? 'Maternity' :
+                                                            (item.leaveTypeId === 0 ? 'LOP' : '')))}
+                                                        </td>
+                                                        <td>{item.numberOfDays}</td>
+                                                        <td>{item.fromDate}</td>
+                                                        <td>{item.toDate}</td>
+                                                        <td><Edit2 onClick={() => {
+                                                            setEditModal(true); setLeaveTypeId(item.leaveTypeId);
+                                                            setFromDate(item.fromDate); setToDate(item.toDate); setReason(item.reason)
+                                                            setltId(item.ltId); setEmpId(item.empId)
+
+                                                        }} />
+                                                        </td>
+                                                        <td><Trash2 onClick={() => {
+                                                            setDeleteModal(true); setltId(item.ltId)
+                                                        }} />
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            )
+                                        })}
+                                </Table>
+                            </div>
                         </div>
                     </div>
-                     <AdminDeleteLeaves handleDeleteClose={handleDeleteClose} modal={deleteModal} ltId={ltId} />
+                    <AdminDeleteLeaves handleDeleteClose={handleDeleteClose} modal={deleteModal} ltId={ltId} />
                     <AdminLeaveEdit handleEditClose={handleEditClose} modal={editModal}
                         leaveTypeId={leaveTypeId === 0 || leaveTypeId === 1 ? (leaveTypeId = 1) : (leaveTypeId === 2 ? (leaveTypeId = 2) :
-                            leaveTypeId === 3 ? (leaveTypeId = 3):'')} fromDate={fromDate} toDate={toDate}
+                            leaveTypeId === 3 ? (leaveTypeId = 3) : '')} fromDate={fromDate} toDate={toDate}
                         reason={reason} ltId={ltId} empId={empId} />
                 </Row>
             </div>
             {searchLeaveList !== undefined && searchLeaveList !== null && searchLeaveList.length > 10 &&
                 <Pagination
-                    itemClass="page-item" 
+                    itemClass="page-item"
                     linkClass="page-link"
                     activePage={currentPage}
                     itemsCountPerPage={recordPerPage}
@@ -163,9 +164,9 @@ const AdminLeavesList = (props) => {
                     pageRangeDisplayed={pageRange}
                     onChange={handlePageChange}
                 />
-                }
+            }
         </Fragment>
     );
 };
 
- export default AdminLeavesList;
+export default AdminLeavesList;
