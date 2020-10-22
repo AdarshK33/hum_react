@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react'
-import { Container, Button, Form, Modal, Tabs, Tab, } from 'react-bootstrap'
+import { Container, Form, Modal, Tabs, Tab, } from 'react-bootstrap'
 import { RosterContext } from "../../context/RosterState";
 import { AppContext } from "../../context/AppState";
 import './roster.css'
@@ -8,7 +8,6 @@ import moment from 'moment'
 
 
 const ShiftModal = (props) => {
-  // console.log(props)
   const [key, setKey] = useState('shift')
 
   const shiftDateWeek = moment(props.shiftDate, 'YYYY-MM-DD').week();
@@ -186,7 +185,7 @@ const ShiftModal = (props) => {
                       <div className="form-group">
                         <select className="form-control"
                           required
-                          value={selectedWeeks} onChange={(e) => setWeekDayHandler(e)}>
+                          onChange={(e) => setWeekDayHandler(e)}>
                           <option value="" >Select Week</option>
 
                           {dayList !== null &&

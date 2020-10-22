@@ -94,12 +94,9 @@ export const AppProvider = ({ children, history }) => {
       })
       .catch((error) => {
         console.log(error)
+        setTimeout(function () { userLogout(); }, 4000);
+
         toast.error("User does not exist");
-        setTimeout(userLogout, {
-        }, 5000);
-
-        //  window.location.href = loginUrl
-
       })
   }
 
