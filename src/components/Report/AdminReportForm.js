@@ -123,7 +123,7 @@ const AdminReportForm = () => {
                             <Form.Group>
                                 <Form.Label>Type of report</Form.Label>
                                 <Form.Control as="select" onChange={(e) => setReportType(e.target.value)}
-                                value={reportType} >
+                                value={reportType} required >
                                     <option value="">Select Report Type</option>
                                     {reportTypeList.map((item,i) => {
                                         return(
@@ -139,8 +139,8 @@ const AdminReportForm = () => {
                             <Form.Group>
                                 <Form.Label>Cost Center</Form.Label>
                                 <Form.Control as="select" required value={costCenter}
-                                 onChange={(e) => setCostCenterHandler(e)}>
-                                    <option>Select Cost Center</option>
+                                 onChange={(e) => setCostCenterHandler(e)} isSearchable >
+                                    <option value=''>Select Cost Center</option>
                                     {costCenterList.length > 0 && costCenterList.map((item, i) => {
                                             return (
                                                 <option key={item.costCenterId} value={item.costCentreName}>
@@ -171,7 +171,7 @@ const AdminReportForm = () => {
                                 options={employeeIdList !== null  ?
                                  employeeIdList.map(e => ({label: e.firstName + " - " + e.employeeId, value: e.employeeId})):[]}
                                 onChange={setEmployeeCostCenterHandler}
-                                isMulti />
+                                isMulti required isSearchable />
                             </Form.Group>
                         </div>
                         <div className="col-sm-4">
@@ -184,7 +184,7 @@ const AdminReportForm = () => {
                                 style={{fontSize:"0.8rem"}}
                                 options={leaveTypeReport !== undefined && leaveTypeReport.map(e => ({label: e.leaveName , value: e.leaveTypeId}))}
                                 onChange={setLeaveHandler}
-                                isMulti />
+                                isMulti required />
                             </Form.Group>
                         </div>
                     </Row>

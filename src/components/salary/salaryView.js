@@ -80,7 +80,7 @@ function ViewShift() {
                 <Form.Label>Select Month and Year</Form.Label>
                 <input type="month" style={{ fontSize: "0.8rem" }} className="form-control digit" min="2020-08"
                   placeholder="Number Of Days"
-                  required onChange={(e) => setGetM(e.target.value)} value={getM} />
+                  required onChange={(e) => setGetM(e.target.value)} value={getM || ''} />
               </Form.Group>
             </div>
 
