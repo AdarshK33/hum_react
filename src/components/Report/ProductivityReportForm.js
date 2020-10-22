@@ -128,9 +128,9 @@ const ProductivityReportForm = () => {
                         <div className="col-sm-4">
                             <Form.Group>
                                 <Form.Label>Cost Center</Form.Label>
-                                <Form.Control as="select" required value={costCenter}
-                                    onChange={(e) => setCostCenterHandler(e)}>
-                                    <option>Select Cost Center</option>
+                                <Form.Control as="select"  value={costCenter}
+                                    onChange={(e) => setCostCenterHandler(e)} required >
+                                    <option value=''>Select Cost Center</option>
                                     { costCenterList.map((item, i) => {
                                         return (
                                             <option key={item.costCenterId} value={item.costCentreName}>

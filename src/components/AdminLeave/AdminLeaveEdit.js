@@ -76,7 +76,10 @@ const AdminLeaveEdit = (props) => {
         console.log("fromDateHandler value", value)
 
         setStartDate(value);
-        var newData
+        setEndDate()
+        setEditMsg(false)
+
+         /* var newData
         if(startDate > new Date()){
              newData = 'Planned'
         }
@@ -86,9 +89,7 @@ const AdminLeaveEdit = (props) => {
         const newPopup = {
             empId: empId,
             fromDate: moment(value).format("YYYY-MM-DD"),
-           /*  leaveCategory: leaveType.filter(qa => qa.leaveName === leave)[0].leaveName, */
            leaveCategory: newData,
-            /* leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
             leaveTypeId: leave,
             ltId: ltId,
             numberOfDays: 0,
@@ -99,7 +100,7 @@ const AdminLeaveEdit = (props) => {
             year: new Date().getFullYear()
         }
         setEditMsg(true)
-        editPopup(newPopup)
+        editPopup(newPopup)  */
        
 
         //For disable the To Date initially
@@ -114,6 +115,7 @@ const AdminLeaveEdit = (props) => {
             setMin(true);
             setMax(false);
         }
+        setEditMsg(false)
 
     }
 
@@ -135,7 +137,7 @@ const AdminLeaveEdit = (props) => {
             leaveCategory: newData,
            /*  leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
            leaveTypeId: leave,
-            ltId: ltId,
+            ltId: props.ltId,
             numberOfDays: 0,
             reason: 'string',
             status: 1,
@@ -162,7 +164,7 @@ const AdminLeaveEdit = (props) => {
             leaveCategory: 'Planned',
             /* leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
             leaveTypeId: leave,
-            ltId: ltId,
+            ltId: props.ltId,
             numberOfDays: 0,
             reason: reason,
             status: 1,
@@ -204,7 +206,7 @@ const AdminLeaveEdit = (props) => {
           leaveCategory: newData,
            /*  leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
            leaveTypeId: leave,
-            ltId: ltId,
+            ltId: props.ltId,
             numberOfDays: 0,
             reason: reason,
             status: 1,
@@ -219,7 +221,7 @@ const AdminLeaveEdit = (props) => {
            leaveCategory: 'Planned',
             /* leaveTypeId: leaveType.filter(qa => qa.leaveName === leave)[0].leaveTypeId, */
             leaveTypeId: leave,
-            ltId: ltId,
+            ltId: props.ltId,
             numberOfDays: 0,
             reason: reason,
             status: 1,
@@ -376,7 +378,7 @@ const AdminLeaveEdit = (props) => {
                                                     className="input_date" dateFormat="yyyy-MM-dd"
                                                     maxDate={today}
                                                     minDate={startDate}
-                                                    placeholderText="To Date" /></div>
+                                                    placeholderText="To Date" required /></div>
                                         </div>
                                         }
 
