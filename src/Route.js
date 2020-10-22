@@ -72,11 +72,11 @@ const RoutePath = () => {
       <Fragment>
         <App>
           {/* dashboard menu */}
-          <Route
+          {/* <Route
             exact
             path={`${process.env.PUBLIC_URL}/`}
             component={Default}
-          />
+          /> */}
 
           {/* <Route
             path={`${process.env.PUBLIC_URL}/profileEdit`}
@@ -243,64 +243,64 @@ const RoutePath = () => {
                                                               />
                                                               :
                                                               e.path === "/master/week-master" ?
-                                                              <Route
-                                                                path={`${process.env.PUBLIC_URL}/master/week-master`}
-                                                                component={MasterWeek}
-                                                              />
-                                                              :
-                                                              e.path === "/master/work-location" ?
-                                                              <Route
-                                                                path={`${process.env.PUBLIC_URL}/master/work-location`}
-                                                                component={MasterWorkLocation}
-                                                              />
-                                                              :
-                                                              e.path === "/master/sport" ?
-                                                              <Route
-                                                                path={`${process.env.PUBLIC_URL}/master/sport`}
-                                                                component={MasterSport}
-                                                              />
-                                                              :
-                                                              e.path === "/master/contract-type" ?
-                                                              <Route
-                                                                path={`${process.env.PUBLIC_URL}/master/contract-type`}
-                                                                component={MasterContractType}
-                                                              />
-                                                              :
-                                                              e.path === "/master/city-master" ?
-                                                              <Route
-                                                                path={`${process.env.PUBLIC_URL}/master/city-master`}
-                                                                component={MasterCity}
-                                                              />
-                                                              :
-                                                              e.path === "/master/leave" ?
-                                                              <Route
-                                                                path={`${process.env.PUBLIC_URL}/master/leave`}
-                                                                component={MasterLeave}
-                                                              />
-                                                              : 
-                                                              e.path === "/master/country" ?
                                                                 <Route
-                                                                  path={`${process.env.PUBLIC_URL}/master/country`}
-                                                                  component={MasterCountry}
+                                                                  path={`${process.env.PUBLIC_URL}/master/week-master`}
+                                                                  component={MasterWeek}
                                                                 />
                                                                 :
-                                                                e.path === "/master/state" ?
+                                                                e.path === "/master/work-location" ?
                                                                   <Route
-                                                                    path={`${process.env.PUBLIC_URL}/master/state`}
-                                                                    component={MasterState}
+                                                                    path={`${process.env.PUBLIC_URL}/master/work-location`}
+                                                                    component={MasterWorkLocation}
                                                                   />
+                                                                  :
+                                                                  e.path === "/master/sport" ?
+                                                                    <Route
+                                                                      path={`${process.env.PUBLIC_URL}/master/sport`}
+                                                                      component={MasterSport}
+                                                                    />
+                                                                    :
+                                                                    e.path === "/master/contract-type" ?
+                                                                      <Route
+                                                                        path={`${process.env.PUBLIC_URL}/master/contract-type`}
+                                                                        component={MasterContractType}
+                                                                      />
                                                                       :
-                                                                      e.path === "/master/monthly-qty" ?
+                                                                      e.path === "/master/city-master" ?
                                                                         <Route
-                                                                          path={`${process.env.PUBLIC_URL}/master/monthly-qty`}
-                                                                          component={MasterMonthlyQuantity}
+                                                                          path={`${process.env.PUBLIC_URL}/master/city-master`}
+                                                                          component={MasterCity}
                                                                         />
-                                                                        : 
-                                                                        e.path === "/master/daily-qty" ?
-                                                                        <Route
-                                                                          path={`${process.env.PUBLIC_URL}/master/daily-qty`}
-                                                                          component={MasterDailyQty}
-                                                                        /> : ""
+                                                                        :
+                                                                        e.path === "/master/leave" ?
+                                                                          <Route
+                                                                            path={`${process.env.PUBLIC_URL}/master/leave`}
+                                                                            component={MasterLeave}
+                                                                          />
+                                                                          :
+                                                                          e.path === "/master/country" ?
+                                                                            <Route
+                                                                              path={`${process.env.PUBLIC_URL}/master/country`}
+                                                                              component={MasterCountry}
+                                                                            />
+                                                                            :
+                                                                            e.path === "/master/state" ?
+                                                                              <Route
+                                                                                path={`${process.env.PUBLIC_URL}/master/state`}
+                                                                                component={MasterState}
+                                                                              />
+                                                                              :
+                                                                              e.path === "/master/monthly-qty" ?
+                                                                                <Route
+                                                                                  path={`${process.env.PUBLIC_URL}/master/monthly-qty`}
+                                                                                  component={MasterMonthlyQuantity}
+                                                                                />
+                                                                                :
+                                                                                e.path === "/master/daily-qty" ?
+                                                                                  <Route
+                                                                                    path={`${process.env.PUBLIC_URL}/master/daily-qty`}
+                                                                                    component={MasterDailyQty}
+                                                                                  /> : ""
 
 
                   //  <Route

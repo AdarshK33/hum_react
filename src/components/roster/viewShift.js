@@ -34,28 +34,39 @@ function ViewShift() {
   //pagenation data
 
 
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const recordPerPage = 10;
+  // let totalRecords = 0;
+  // let indexOfFirstRecord = 0;
+  // let indexOfLastRecord = 0;
+  // const pageRange = 10;
+  // let currentRecords = [];
+
+  // if (shiftList !== null) {
+  //   totalRecords = shiftList.length;
+  //   indexOfLastRecord = currentPage * recordPerPage;
+  //   indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+  //   currentRecords = shiftList.slice(indexOfFirstRecord, indexOfLastRecord);
+  // }
+
+
+  // const handlePageChange = pageNumber => {
+  //   setCurrentPage(pageNumber);
+  // }
+
+  //pagenation data
   const [currentPage, setCurrentPage] = useState(1);
   const recordPerPage = 10;
-  let totalRecords = 0;
-  let indexOfFirstRecord = 0;
-  let indexOfLastRecord = 0;
+  const totalRecords = shiftList !== null && shiftList.length;
   const pageRange = 10;
-  let currentRecords = [];
 
-  if (shiftList !== null) {
-    totalRecords = shiftList.length;
-    indexOfLastRecord = currentPage * recordPerPage;
-    indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    currentRecords = shiftList.slice(indexOfFirstRecord, indexOfLastRecord);
-  }
-
+  const indexOfLastRecord = currentPage * recordPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+  const currentRecords = shiftList !== null ? shiftList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
   const handlePageChange = pageNumber => {
     setCurrentPage(pageNumber);
   }
-
-  //pagenation data
-
 
 
 
