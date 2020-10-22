@@ -366,6 +366,7 @@ const CreateShiftModal = (props) => {
                             <div className="form-group">
                               <label htmlFor="exampleFormControlInput1">Select cost center</label>
                               <select
+                                isSearchable
                                 value={costCenterName}
                                 className="form-control"
                                 onChange={(e) => setCostCenterName(e.target.value)}

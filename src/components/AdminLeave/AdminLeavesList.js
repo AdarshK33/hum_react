@@ -6,8 +6,9 @@ import AdminDeleteLeaves from './AdminDeleteLeaves'
 import Breadcrumb from '../common/breadcrumb';
 import './AdminLeaves.css'
 import Pagination from 'react-js-pagination'
-import { Edit2, Trash2 } from 'react-feather'
-import AdminLeaveAdd from './AdminLeaveAdd'
+import { Edit2, Trash2, Search } from 'react-feather'
+import AdminLeaveAdd from './AdminLeaveAdd';
+import { SearchContext } from '../../context/SearchState';
 
 const AdminLeavesList = (props) => {
     const [modal, setModal] = useState(false);
@@ -19,18 +20,21 @@ const AdminLeavesList = (props) => {
     const [ltId, setltId] = useState()
     const [empId, setEmpId] = useState()
     const [reason, setReason] = useState()
+    const [searchValue, setSearchValue] = useState(false);
+    const [searchLeaveList, setLeaveList] = useState();
+    const { searchByEmpId, empIdSearchList } = useContext(SearchContext);
 
     const { viewList, leaveList } = useContext(LeaveContext)
 
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
-    const totalRecords = leaveList !== null && leaveList.length;
+    const totalRecords = searchLeaveList !== undefined && searchLeaveList !== null && searchLeaveList.length;
     const pageRange = 10;
 
    const indexOfLastRecord = currentPage * recordPerPage;
    const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-   const currentRecords = leaveList !== null ? leaveList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+   const currentRecords = searchLeaveList !== undefined && searchLeaveList !== null ? searchLeaveList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
    const handlePageChange = pageNumber => {
     setCurrentPage(pageNumber);
@@ -46,7 +50,34 @@ const AdminLeavesList = (props) => {
     useEffect(() => {
         viewList()
     }, [])
+
+    useEffect(() => {
+        if(leaveList !== undefined && leaveList.length > 0){
+          setLeaveList(leaveList);
+        }
+        
+      }, [leaveList])
+
+
+      const searchHandler = (e) => {
+        setSearchValue(e.target.value)
+        
+      }
     
+      const searchDataHandler = () => {
+          if(searchValue !== ""){
+            searchByEmpId(searchValue);
+          }else {
+            viewList()
+          }
+        
+      }
+
+      useEffect(() => {
+        if(empIdSearchList !== undefined && empIdSearchList.length > 0){
+          setLeaveList(empIdSearchList);
+        }        
+      }, [empIdSearchList])
 
     return (
         <Fragment>
@@ -59,6 +90,12 @@ const AdminLeavesList = (props) => {
                     <div className="col-sm-12">
                         <div className="card" style={{ overflowX: "auto" }}>
                             <div className="title_bar" >
+                                <div className="job-filter">
+                                    <div className="faq-form mr-2">
+                                        <input className="form-control searchButton" type="text" placeholder="Search.." onChange = {(e)=>searchHandler(e)} />
+                                        <Search className="search-icon" style = {{color: "#313131"}} onClick={searchDataHandler}/>
+                                    </div>
+                                </div>
                                 <Button className="apply-button btn btn-light mr-2" onClick={handleShow}>Apply</Button>
                             </div>
                             <AdminLeaveAdd handleClose={handleClose} modal={modal} />
@@ -116,7 +153,7 @@ const AdminLeavesList = (props) => {
                         reason={reason} ltId={ltId} empId={empId} />
                 </Row>
             </div>
-            {leaveList !== null && leaveList.length > 10 &&
+            {searchLeaveList !== undefined && searchLeaveList !== null && searchLeaveList.length > 10 &&
                 <Pagination
                     itemClass="page-item" 
                     linkClass="page-link"
