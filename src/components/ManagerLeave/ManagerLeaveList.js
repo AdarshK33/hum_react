@@ -4,6 +4,7 @@ import { LeaveContext } from '../../context/LeaveState';
 import ManagerLeaveEdit from './ManagerLeaveEdit'
 import Breadcrumb from '../common/breadcrumb';
 import '../AdminLeave/AdminLeaves.css'
+import '../../assets/css/search.css'
 import Pagination from 'react-js-pagination'
 import { Edit2, Trash2, Search } from 'react-feather'
 import ManagerLeaveAdd from './ManagerLeaveAdd'

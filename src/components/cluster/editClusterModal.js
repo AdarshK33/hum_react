@@ -265,7 +265,7 @@ const EditClusterModal = (props) => {
                   <div className="row">
                     <div className="col-sm-12">
                       <div className="form-group">
-                        <label htmlFor="exampleFormControlInput1">Select cost center</label>
+                        <label htmlFor="exampleFormControlInput1">Select Cost Center</label>
                         <select
                           value={costCenterName}
                           className="form-control"
@@ -322,7 +322,7 @@ const EditClusterModal = (props) => {
                       return (
 
                         <option key={e.employeeId} value={e.employeeId}>
-                          {e.firstName}{e.lastName}
+                          {e.firstName}&nbsp;{e.lastName}
                         </option>
                       );
                     })}
@@ -337,7 +337,7 @@ const EditClusterModal = (props) => {
             <div className="row">
               <div className="col-sm-12">
                 <div className="form-group">
-                  <label htmlFor="exampleFormControlInput1"> Shift Status</label>
+                  <label htmlFor="exampleFormControlInput1"> Cluster Status</label>
                   <select
                     className="form-control"
                     value={status}
