@@ -21,7 +21,7 @@ const ProductivityReportForm = () => {
     const [cluster, setCluster] = useState(null)
     const [contractTypeData, setContractType] = useState('')
     const [getM, setGetM] = useState(new Date())
-    /* const [startYear, setStartYear] = useState() */
+    const [yearly, setYearly] = useState('')
     const { user } = useContext(AppContext);
 
     const reportTypeList = [{ reportTypeData: 'Monthly', id: 1 }, { reportTypeData: 'Yearly', id: 2 }]
@@ -35,6 +35,14 @@ const ProductivityReportForm = () => {
         viewContractTypes()
         CostCenter()
     }, []);
+
+    var previousYear = new Date()
+    previousYear.setFullYear(previousYear.getFullYear() - 1)
+
+    var nextYear = new Date()
+    nextYear.setFullYear(nextYear.getFullYear() + 1)
+  console.log("previousYear",previousYear)
+  console.log("nextYear",nextYear)
 
 
     useEffect(() => {
@@ -88,7 +96,7 @@ const ProductivityReportForm = () => {
              const month = moment(getM, ["YYYY-MM"]).format("M");
              const sportId = sports;
              const storeId = costCenter;
-             const year = moment(getM, ["MMM Do YY"]).format('YYYY');
+             const year =   reportType === 'Monthly' ? moment(getM, ["MMM Do YY"]).format('YYYY') : yearly ;
              console.log("productivity data", clusterId, contractType, employeeId, month, storeId, year )
             productivityReport(clusterId, contractType, employeeId, month ,sportId, storeId, year )
        
@@ -127,7 +135,7 @@ const ProductivityReportForm = () => {
                         user.additionalRole === '1' || user.additionalRole === '9' ? 
                         <div className="col-sm-4">
                             <Form.Group>
-                                <Form.Label>Cost Center</Form.Label>
+                                <Form.Label>Cost Center </Form.Label> <span style={{color:'red'}}>*</span> 
                                 <Form.Control as="select"  value={costCenter}
                                     onChange={(e) => setCostCenterHandler(e)} required >
                                     <option value=''>Select Cost Center</option>
@@ -143,7 +151,7 @@ const ProductivityReportForm = () => {
                         </div>:
                         <div className="col-sm-4">
                             <Form.Group>
-                                <Form.Label>Cost Center </Form.Label>
+                                <Form.Label>Cost Center</Form.Label>
                                 <Form.Control type="text" disabled value={costCenter} 
                                 onChange={(e) => setCostCenter(e.targrt.value)}  />
                             </Form.Group>
@@ -221,29 +229,26 @@ const ProductivityReportForm = () => {
                     <Row>
                         <div className="col-sm-4">
                             <Form.Group>
-                                <Form.Label>Select Month</Form.Label>
-                                <input type="month" style={{ fontSize: "0.8rem" }} className="form-control digit" min="2020-08"
+                                <Form.Label>Select Month </Form.Label> <span style={{color:'red'}}>*</span>
+                                <Form.Control type="month" style={{ fontSize: "0.8rem" }} className="form-control digit" min="2020-08"
                                     placeholder="Number Of Days"
                                     required onChange={(e) => setGetMHandler(e)} value={getM} />
                             </Form.Group>
                         </div>
                     </Row>
                     }
-                   {/*  {reportType === 'Yearly' &&
+                    {reportType === 'Yearly' &&
                     <Row>
                         <div className="col-sm-4">
-                            <Form.Label>Select Year</Form.Label>
-                            <div>
-                                <DatePicker selected={startYear} onChange={date => setStartYear(date)}
-                                    showYearPicker
-                                    maxDate={new Date()}
-                                     minDate={subYears(new Date(), 2)}
-                                    className="input_date" dateFormat="yyyy" yearItemNumber={5}
-                                    placeholderText="Select Year" />
-                            </div>
+                        <Form.Group>
+                            <Form.Label>Select Year </Form.Label> <span style={{color:'red'}}>*</span>
+                                <Form.Control type="number" placeholder="YYYY" /* min={previousYear} max={nextYear} */
+                                 className="form-control digit" min='2019' max='2021'
+                                required onChange={(e) => setYearly(e.target.value)} value={yearly || ''} />
+                        </Form.Group>
                         </div>
                     </Row>
-                    } */}
+                    }
                     <Button type="submit" className="submitButton">Submit</Button>
                 </Form>
                 <ProductivityReportView productivityList={productivityList} />

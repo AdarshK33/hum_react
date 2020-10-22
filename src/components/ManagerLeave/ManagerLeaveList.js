@@ -73,7 +73,7 @@ const ManagerLeaveList = (props) => {
       }
 
       useEffect(() => {
-        if(empIdManagerSearchList !== undefined && empIdManagerSearchList.length > 0){
+        if(empIdManagerSearchList !== undefined && empIdManagerSearchList !== null && empIdManagerSearchList.length > 0){
           setLeaveList(empIdManagerSearchList);
         }        
       }, [empIdManagerSearchList])

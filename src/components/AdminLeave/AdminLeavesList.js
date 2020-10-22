@@ -74,7 +74,7 @@ const AdminLeavesList = (props) => {
       }
 
       useEffect(() => {
-        if(empIdSearchList !== undefined && empIdSearchList.length > 0){
+        if(empIdSearchList !== undefined && empIdSearchList !== null && empIdSearchList.length > 0){
           setLeaveList(empIdSearchList);
         }        
       }, [empIdSearchList])

@@ -404,7 +404,7 @@ console.log("d3",moment(d3).format("YYYY-MM-DD"))
                                 <div className="col-sm-12">
                                    {/*  <p className="leavesMsg">{leavesData ? leavesData.Leave : ''}</p> */}
                                     {editLeavesData ?
-                                    <p className="leavesMsg">{editLeavesData.Leave}</p> :'' }
+                                    <p className="leavesMsg" style={{color:'red', fontWeight:'bold'}}>{editLeavesData.Leave}</p> :'' }
                                 </div>
                             </Row> : ''}
 
