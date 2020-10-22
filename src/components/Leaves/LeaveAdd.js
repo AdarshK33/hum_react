@@ -387,29 +387,16 @@ const LeaveAdd = (props) => {
                                 </Row>
 
                             }
-<<<<<<< HEAD
 
                             {editMsg === true ?
                                 <Row>
                                     <div className="col-sm-12">
                                         {/*  <p className="leavesMsg">{leavesData ? leavesData.Leave : ''}</p> */}
                                         {leavesData ?
-                                            <p className="leavesMsg">{leavesData.Leave}</p> : ''}
+                                            <p className="leavesMsg" style={{ color: 'red', fontWeight: 'bold' }}>{leavesData.Leave}</p> : ''}
                                     </div>
                                 </Row>
                                 : ''}
-=======
-                           
-                        {editMsg === true ?
-                         <Row>
-                         <div className="col-sm-12">
-                            {/*  <p className="leavesMsg">{leavesData ? leavesData.Leave : ''}</p> */}
-                             {leavesData ? 
-                             <p className="leavesMsg" style={{color:'red', fontWeight:'bold'}}>{leavesData.Leave}</p> : ''}
-                         </div>
-                     </Row>
-                        : ''}
->>>>>>> 697f3bb47124a30e680eefdaf4fc2f7888e06353
                             <Row>
                                 <div className="col-sm-12">
                                     <Form.Group>
