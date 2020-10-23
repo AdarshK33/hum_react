@@ -74,15 +74,19 @@ const AdminSalaryModule = () => {
     console.log("approval data=====", approvalData);
     salaryApproval(approvalData);
     setChecked([])
-    salaryStoreList.map((i, e) => {
+   /*  salaryStoreList.map((i, e) => {
       return (
         <div>
-          <p>{i.month} {i.year}</p>
+          <p>{i.month} {i.costCenter} {i.year}</p>
           {viewStoreSalary(i.month, i.costCenter, i.year)}
         </div>
 
       )
-    })
+    }) */
+    const month = moment(getM, ["YYYY-MM"]).format("M");
+    const year = moment(getM, ["MMM Do YY"]).format("YYYY");
+    console.log("month, costCenter, year",month, costCenter, year)
+    viewStoreSalary(month, costCenter, year)
     history.push("/adminleaves/adminsalarymodule");
   };
 
@@ -95,15 +99,10 @@ const AdminSalaryModule = () => {
     salaryApproval(cancelData);
     setDeleteModal(false);
     setChecked([])
-    salaryStoreList.map((i, e) => {
-      return (
-        <div>
-          <p>{i.month} {i.year}</p>
-          {viewStoreSalary(i.month, i.costCenter, i.year)}
-        </div>
-
-      )
-    })
+    const month = moment(getM, ["YYYY-MM"]).format("M");
+    const year = moment(getM, ["MMM Do YY"]).format("YYYY");
+    console.log("month, costCenter, year",month, costCenter, year)
+    viewStoreSalary(month, costCenter, year)
     history.push("/adminleaves/adminsalarymodule");
   };
 
