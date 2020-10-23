@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react'
-import { Container, Modal, Tabs, Tab } from 'react-bootstrap'
+import { Container, Modal, Tabs, Tab, InputGroup } from 'react-bootstrap'
 import Select from 'react-select';
 import { RosterContext } from "../../context/RosterState";
 import './roster.css'
@@ -104,6 +104,7 @@ const AdminShiftModal = (props) => {
     setShowDay(false)
   }
 
+
   const handleWeeksChange = (e) => {
     let newValue = e.target.value
     console.log("newValue", newValue)
@@ -113,12 +114,26 @@ const AdminShiftModal = (props) => {
 
   const handleEmployeeList = (options) => {
     setEmployee(options)
-    setAssignWeekOffButton(false)
+    if (options !== null) {
+      setAShiftButton(false)
+      setAssignWeekOffButton(false)
+    }
+    else {
+      setAShiftButton(true)
+      setAssignWeekOffButton(true)
+    }
   }
 
   const handleDayList = (options) => {
     setDays(options)
-    setAShiftButton(false)
+    if (options !== null) {
+      setAShiftButton(false)
+    }
+    else {
+      setAShiftButton(true)
+    }
+
+
   }
 
   const setWeekDayHandler = (e) => {
@@ -137,6 +152,7 @@ const AdminShiftModal = (props) => {
 
   const onSubmit1 = (event) => {
     event.preventDefault()
+
     const adminAssignShift =
     {
       dates: days.map((e, i) => days[i].value),
@@ -144,11 +160,19 @@ const AdminShiftModal = (props) => {
       shiftId: parseInt(value),
       storeId: props.mystoreId
     }
-    // alert(JSON.stringify(adminAssignShift));
+
+
     assignAdminShift(adminAssignShift)
     props.handleClose()
 
   }
+
+
+
+
+
+
+
 
 
   return (
@@ -280,7 +304,7 @@ const AdminShiftModal = (props) => {
                     <div className="col-sm-5 px-2">Select Week :<span style={{ color: 'red' }}>*</span></div>
                     <div className="col-sm-7 ">
                       <div className="form-group">
-                        <select className="form-control" value={selectedWeeks} onChange={handleWeeksChange}>
+                        <select className="form-control" value={selectedWeeks} required onChange={handleWeeksChange}>
                           <option value="" >select Week</option>
                           {weekDayList !== null && weekDayList.map((item, i) => {
                             return (
@@ -296,8 +320,9 @@ const AdminShiftModal = (props) => {
                     <div className="col-sm-5 px-2">Select Day :<span style={{ color: 'red' }}>*</span></div>
                     <div className="col-sm-7 ">
                       <div className="form-group">
-                        <select className="form-control" onChange={(e) => setWeekDayHandler(e)}>
-                          <option value="" >select shift</option>
+                        <select className="form-control" required
+                          onChange={(e) => setWeekDayHandler(e)}>
+                          <option value="" >select day</option>
                           {dayList !== null && dayList.map((item, i) => {
                             return (
                               <option key={item.date} selected={item.selected} value={item.date}>{item.day}{item.selected}</option>

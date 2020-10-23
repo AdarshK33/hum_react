@@ -129,23 +129,23 @@ const MasterMonthlyQuantity = () => {
 
 
                 </Form>
-                <div className="title_bar" style={{ background: "#006EBB" }} >
-                </div>
-                {/* <div className="title_bar" >
+                <br />
+                <div className="title_bar" >
+                    {/*
                     <input
                         className="btn"
                         type="file"
                         accept=".xlsx, .xls, .csv"
                         //  onChange={(e) => changeHandler(e)}
                         style={{ padding: "10px" }}
-                    />
+                    />*/}
                     <ReactHTMLTableToExcel
                         className="btn btn-light mr-2"
                         table="table-to-xls"
-                        filename="countrylist"
+                        filename="monthlyQty"
                         sheet="Sheet"
                         buttonText="Export excel" />
-                </div> */}
+                </div>
                 <div className="table-responsive">
                     <table id="table-to-xls" className="table table-hover">
                         <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
@@ -197,7 +197,7 @@ const MasterMonthlyQuantity = () => {
                 </div>
 
             </div>
-        </Fragment>
+        </Fragment >
     )
 }
 
