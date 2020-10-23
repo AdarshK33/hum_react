@@ -35,10 +35,7 @@ const CreateShiftModal = (props) => {
 
   useEffect(() => {
     costCenter()
-    if (user.loginType !== "1" && user.loginType !== "9" && user.additionalRole !== "1" && user.additionalRole !== "9") {
-      setCostCenterName(user.costCentre)
-    }
-  }, [user.costCentre, user.loginType]);
+  }, []);
 
 
   useEffect(() => {
@@ -133,12 +130,15 @@ const CreateShiftModal = (props) => {
     setClear();
     props.handleClose();
   }
-
   const onSubmit = e => {
     const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
     const etime = moment(endTime, ["h:mm A"]).format("HH:mm");
+    let storeId = costCenterName;
     const workingHours = moment.utc(moment(etime, "HH:mm:ss").diff(moment(stime, "HH:mm:ss"))).format("HH:mm:ss");
     // alert(workingHours);
+    if (user.loginType !== "1" && user.loginType !== "9" && user.additionalRole !== "1" && user.additionalRole !== "9") {
+      storeId = user.costCentre;
+    }
     var result = parseInt(workingHours);
     if (result <= 5) {
       e.preventDefault();
@@ -149,7 +149,7 @@ const CreateShiftModal = (props) => {
         shiftMasterId: 0,
         shiftType,
         workingHours: 0,
-        storeId: costCenterName,
+        storeId: storeId,
         breakStartTime: 0,
         breakEndTime: 0,
         status: 0
@@ -180,7 +180,7 @@ const CreateShiftModal = (props) => {
         shiftMasterId: 0,
         shiftType,
         workingHours: 0,
-        storeId: costCenterName,
+        storeId: storeId,
         breakStartTime: moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
         breakEndTime: moment(breakStartTime).add(1, 'hours').format('HH:mm:ss'),
         status: 0
