@@ -1,8 +1,9 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import Pagination from 'react-js-pagination'
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { PermissionContext } from '../../context/PermissionState'
-import { Button, Modal,Form, Table, Row, Container } from "react-bootstrap";
+import { Button, Modal, Form, Table, Row, Container } from "react-bootstrap";
 import { DashboardContext } from "../../context/DashboardState";
 import moment from "moment";
 
@@ -21,14 +22,14 @@ const MasterMonthlyQuantity = () => {
     monthsNumber["02"] = "Feb";
     monthsNumber["03"] = "Mar";
     monthsNumber["04"] = "Apr";
-    monthsNumber["05"] = "May" ;
-    monthsNumber["06"] = "Jun" ;
-    monthsNumber["07"] = "Jul" ;
-    monthsNumber["08"] = "Aug" ;
-    monthsNumber["09"] = "Sep" ;
-    monthsNumber["10"] = "Oct" ;
-    monthsNumber["11"] = "Nov" ;
-    monthsNumber["12"] = "Dec" ;
+    monthsNumber["05"] = "May";
+    monthsNumber["06"] = "Jun";
+    monthsNumber["07"] = "Jul";
+    monthsNumber["08"] = "Aug";
+    monthsNumber["09"] = "Sep";
+    monthsNumber["10"] = "Oct";
+    monthsNumber["11"] = "Nov";
+    monthsNumber["12"] = "Dec";
 
 
     const [currentPage, setCurrentPage] = useState(1);
@@ -54,20 +55,20 @@ const MasterMonthlyQuantity = () => {
     const costCenterHandler = e => {
         // console.log(e.target.value);
         setCostCenter(e.target.value);
-      }
-    
-      const dateHandler = (d) =>{
-        setDate(d);        
+    }
+
+    const dateHandler = (d) => {
+        setDate(d);
         // setMonth(monthsNumber[moment(date, ["YYYY-MM"]).format("M")]);
         // setYear(moment(date, ["MMM Do YY"]).format("YYYY"));     
-      }
-    
-      const onSubmit = (e) =>{
+    }
+
+    const onSubmit = (e) => {
         e.preventDefault();
         const mon = monthsNumber[moment(date, ["YYYY-MM"]).format("M")];
         const y = moment(date, ["MMM Do YY"]).format("YYYY");
         monthlyQtyDetails(costCenter, mon, y);
-      }
+    }
 
 
 
@@ -75,65 +76,79 @@ const MasterMonthlyQuantity = () => {
         viewCostCentre()
     }, [])
 
-    
+
 
 
     return (
         <Fragment>
             <Breadcrumb title="Monthly Quantity" parent="Monthly Quantity" />
             <div className="container-fluid">
-            <Form 
-                onSubmit={onSubmit}
+                <Form
+                    onSubmit={onSubmit}
                 >
-                <Row>
-                    <div className="col-sm-4">
-                    <Form.Group>
-                        <Form.Label>Select Month and Year</Form.Label><span style = {{color:'red'}}>*</span>
-                        <input 
-                        type="month" 
-                        style={{ fontSize: "0.8rem" }} 
-                        className="form-control digit"                   
-                        placeholder="Enter Date"
-                        required 
-                        onChange={(e) => dateHandler(e.target.value)} 
-                        value={date} 
-                        />
-                    </Form.Group>
-                    </div>
-                    <div className="col-sm-4">
-                    <Form.Group>
-                        <Form.Label>Cost Center</Form.Label><span style = {{color:'red'}}>*</span>
-                        <Form.Control as="select" 
-                        required 
-                        value={costCenter}  
-                        onChange={(e) => costCenterHandler(e)}
-                        >
-                        <option value="">Select</option>
-                            {cosCentreList.map((e, i) => {
-                            return (
-                                <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
-                            })}
+                    <Row>
+                        <div className="col-sm-4">
+                            <Form.Group>
+                                <Form.Label>Select Month and Year</Form.Label><span style={{ color: 'red' }}>*</span>
+                                <input
+                                    type="month"
+                                    style={{ fontSize: "0.8rem" }}
+                                    className="form-control digit"
+                                    placeholder="Enter Date"
+                                    required
+                                    onChange={(e) => dateHandler(e.target.value)}
+                                    value={date}
+                                />
+                            </Form.Group>
+                        </div>
+                        <div className="col-sm-4">
+                            <Form.Group>
+                                <Form.Label>Cost Center</Form.Label><span style={{ color: 'red' }}>*</span>
+                                <Form.Control as="select"
+                                    required
+                                    value={costCenter}
+                                    onChange={(e) => costCenterHandler(e)}
+                                >
+                                    <option value="">Select</option>
+                                    {cosCentreList.map((e, i) => {
+                                        return (
+                                            <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
+                                    })}
 
-                        </Form.Control>
-                    </Form.Group>
-                    </div>
-                </Row>
+                                </Form.Control>
+                            </Form.Group>
+                        </div>
+                    </Row>
 
-                <Button 
-                    type="submit"              
-                    className="submitButton"
+                    <Button
+                        type="submit"
+                        className="submitButton"
                     // style={{paddingBottom:"10px"}}            
-                >
-                    Submit</Button>
-          
+                    >
+                        Submit</Button>
 
-        </Form>
+
+                </Form>
                 <div className="title_bar" style={{ background: "#006EBB" }} >
                 </div>
+                {/* <div className="title_bar" >
+                    <input
+                        className="btn"
+                        type="file"
+                        accept=".xlsx, .xls, .csv"
+                        //  onChange={(e) => changeHandler(e)}
+                        style={{ padding: "10px" }}
+                    />
+                    <ReactHTMLTableToExcel
+                        className="btn btn-light mr-2"
+                        table="table-to-xls"
+                        filename="countrylist"
+                        sheet="Sheet"
+                        buttonText="Export excel" />
+                </div> */}
                 <div className="table-responsive">
-                    <br />
-                    <table className="table table-hover">
-                        <thead className="thead-light" style={{ background: '#006EBB', color: 'white' }}>
+                    <table id="table-to-xls" className="table table-hover">
+                        <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                             <tr>
                                 <th scope="col">S. No</th>
                                 <th scope="col">Store ID</th>
