@@ -9,7 +9,7 @@ import { RosterContext } from "../../context/RosterState";
 const AdminCreateClusterModal = (props) => {
 
 
-    const [clusterName, setClusterName] = useState("");
+    const [clusterName, setClusterName] = useState('');
     const [description, setDescription] = useState("");
     const [clusterLeader, setClusterLeader] = useState('');
     const [clustertButton, setClusterButton] = useState(false);
@@ -18,7 +18,6 @@ const AdminCreateClusterModal = (props) => {
     const [sportsList, setSportsList] = useState([])
     const [employee, setEmployee] = useState([])
     const [costCenterName, setCostCenterName] = useState('');
-
 
     const setClear = () => {
         setClusterName('')
@@ -59,8 +58,8 @@ const AdminCreateClusterModal = (props) => {
         const newCluster = {
             clusterId: 0,
             clusterLeader,
-            clusterName,
-            description,
+            clusterName: clusterName.trim(),
+            description: description.trim(),
             storeId: costCenterName,
             sportIds: sportsList.map((e) => e.sportId),
             employeeIds: employee.map((e) => e.employeeId)
@@ -91,7 +90,7 @@ const AdminCreateClusterModal = (props) => {
     }
 
     const onChangeHandler = event => {
-        setClusterName(event.target.value.trimStart());
+        setClusterName(event.target.value);
         console.log(clusterName);
         if (sportsList.length === 0) {
             setClusterButton(true)
@@ -104,7 +103,7 @@ const AdminCreateClusterModal = (props) => {
     };
 
     const onDescprtion = event => {
-        setDescription(event.target.value.trimStart());
+        setDescription(event.target.value);
         if (sportsList.length > 0) {
             setClusterButton(false)
             setErrorMsg(false)

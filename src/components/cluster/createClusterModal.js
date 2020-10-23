@@ -62,8 +62,8 @@ const CreateClusterModal = (props) => {
     const newCluster = {
       clusterId: 0,
       clusterLeader,
-      clusterName,
-      description,
+      clusterName: clusterName.trim(),
+      description: description.trim(),
       storeId: costCenterName,
       sportIds: sportsList.map((e) => e.sportId),
       employeeIds: employee.map((e) => e.employeeId)
@@ -94,7 +94,7 @@ const CreateClusterModal = (props) => {
   }
 
   const onChangeHandler = event => {
-    setClusterName(event.target.value.trimStart());
+    setClusterName(event.target.value);
     if (sportsList.length === 0) {
       setClusterButton(true)
       setErrorMsg("All the fields are required");
@@ -106,7 +106,7 @@ const CreateClusterModal = (props) => {
   };
 
   const onDescprtion = event => {
-    setDescription(event.target.value.trimStart());
+    setDescription(event.target.value);
     if (sportsList.length > 0) {
       setClusterButton(false)
       setErrorMsg(false)
