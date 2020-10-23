@@ -99,8 +99,8 @@ const AdminEditClusterModal = (props) => {
 
             clusterId: getSingleCluster.clusterId,
             clusterLeader,
-            clusterName,
-            description,
+            clusterName: clusterName.trim(),
+            description: description.trim(),
             storeId: costCenterName,
             sportIds: sportsList.map((e) => e.sportId),
             employeeIds: employee.map((e) => e.employeeId),

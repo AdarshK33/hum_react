@@ -381,7 +381,7 @@ export const ClusterProvider = ({ children }) => {
   }
 
   const callClusterLeaders = (storeId, managerId) => {
-    client.get('employee/view/' + storeId + '/' + managerId + '/cluster_leader').then(function (response) {
+    client.get('employee/view/' + storeId + '/' + managerId + '/cluster_employees').then(function (response) {
       if (response.data.data === null) {
         state.callClusterLeadersList = []
       }

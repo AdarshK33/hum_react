@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import Pagination from 'react-js-pagination'
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { PermissionContext } from '../../context/PermissionState'
 const MasterWorkLocation = () => {
 
@@ -39,13 +40,21 @@ const MasterWorkLocation = () => {
             <div className="container-fluid">
                 <div className="title_bar" style={{ background: "#006EBB" }} >
 
+                    <div className="title_bar" >
 
+                        <ReactHTMLTableToExcel
+                            className="btn btn-light mr-2"
+                            table="table-to-xls"
+                            filename="masterWorkLocation"
+                            sheet="Sheet"
+                            buttonText="Export excel" />
+                    </div>
                 </div>
 
 
                 <div className="table-responsive">
-                    <table className="table table-hover">
-                        <thead className="thead-light" style={{ background: '#006EBB', color: 'white' }}>
+                    <table id="table-to-xls" className="table table-hover">
+                        <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                             <tr>
                                 <th scope="col">S. No</th>
                                 <th scope="col">Location Name</th>
