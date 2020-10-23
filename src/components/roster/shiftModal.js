@@ -154,7 +154,7 @@ const ShiftModal = (props) => {
                   >Assign</button>
                 </div>
                 <br />
-                <h6 className="note text-danger text-center">Note: Weekly off is mandatory to assign shift</h6>
+                <h6 className="note text-danger text-center" style={{ fontWeight: "700" }}>* &nbsp;Note: Weekly off is mandatory to assign shift</h6>
               </Tab>
               <Tab eventKey="weekoff" title="Assign Week Off">
                 <Form className="mt-3" onSubmit={submitForm}>
@@ -204,7 +204,7 @@ const ShiftModal = (props) => {
                       Assign</button>
                   </div>
                   <br />
-                  <h6 className="note text-danger text-center pb-2"> Note: Only same contract employees can be selected</h6>
+                  <h6 className="note text-danger text-center pb-2" style={{ fontWeight: "700" }}>*&nbsp; Note: Only same contract employees can be selected</h6>
                 </Form>
               </Tab>
             </Tabs>
