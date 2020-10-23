@@ -259,6 +259,7 @@ export const LeaveProvider = ({ children }) => {
         viewList()
         viewLeaveData(empId);
         viewManagerList()
+        getLeave(empId)
         console.log("-----delete data-----", response)
         return  dispatch({ type: 'DELETE_LEAVE', payload: leaveId })
       })
@@ -276,6 +277,7 @@ export const LeaveProvider = ({ children }) => {
           console.log("response message for delete", response.data.message)
           viewEmpLeaveData(empId)
           viewLeaveData(empId);
+          getLeave(empId)
           console.log("-----delete data-----", response)
           return  dispatch({ type: 'DELETE_EMP_LEAVE', payload: leaveId })
         })
