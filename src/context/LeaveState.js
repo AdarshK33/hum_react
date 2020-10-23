@@ -303,8 +303,9 @@ export const LeaveProvider = ({ children }) => {
       });
   }
   const uploadFile = (file) => {
+    console.log(file);
     const formData = new FormData();
-    formData.append('file',file)
+    formData.append('file',file, file.name)
 
     return client.post('holiday/upload', formData)
       .then((response) => {
@@ -312,6 +313,7 @@ export const LeaveProvider = ({ children }) => {
         toast.info(response.data.message)
       })
       .catch((error) => {
+        toast.info("Please upload a valid file");
         console.log(error)
       })
   }
