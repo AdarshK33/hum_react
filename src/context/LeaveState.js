@@ -259,6 +259,7 @@ export const LeaveProvider = ({ children }) => {
         viewList()
         viewLeaveData(empId);
         viewManagerList()
+        getLeave(empId)
         console.log("-----delete data-----", response)
         return  dispatch({ type: 'DELETE_LEAVE', payload: leaveId })
       })
@@ -276,6 +277,7 @@ export const LeaveProvider = ({ children }) => {
           console.log("response message for delete", response.data.message)
           viewEmpLeaveData(empId)
           viewLeaveData(empId);
+          getLeave(empId)
           console.log("-----delete data-----", response)
           return  dispatch({ type: 'DELETE_EMP_LEAVE', payload: leaveId })
         })
@@ -303,8 +305,9 @@ export const LeaveProvider = ({ children }) => {
       });
   }
   const uploadFile = (file) => {
+    console.log(file);
     const formData = new FormData();
-    formData.append('file',file)
+    formData.append('file',file, file.name)
 
     return client.post('holiday/upload', formData)
       .then((response) => {
@@ -312,6 +315,7 @@ export const LeaveProvider = ({ children }) => {
         toast.info(response.data.message)
       })
       .catch((error) => {
+        toast.info("Please upload a valid file");
         console.log(error)
       })
   }

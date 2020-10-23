@@ -9,11 +9,13 @@ const GrantLeaveAdd = (props) => {
 
     const [employeeId, setEmployeeId] = useState('');
     const [numOfDays, setNumOfDays] = useState('');
-    const [year, setYear] = useState('');
+   /*  const [year, setYear] = useState(''); */
     const [successMsg, setSuccessMsg] = useState("");
     const [costCenter, setCostCenter] = useState()
     const [employeeCostCenter, setEmployeeCostCenter] = useState('')
     const { viewGrantLeave, createGrantLeave, CostCenter, costCenterList, employeeIdData, employeeIdList } = useContext(AdminContext);
+
+    var year = new Date().getFullYear()
 
     const setCostCenterHandler = (e) => {
         let data1 = e.target.value
@@ -33,7 +35,6 @@ const GrantLeaveAdd = (props) => {
     const setClear = () => {
         setEmployeeId('')
         setNumOfDays('')
-        setYear('')
         setSuccessMsg('')
     }
 
@@ -132,7 +133,8 @@ const GrantLeaveAdd = (props) => {
                                         <div className="form-group">
                                             <label htmlFor="exampleFormControlInput1">Number of days</label>
 
-                                            <input type="number" className="form-control digit" required onChange={(e) => setNumOfDays(e.target.value)} value={numOfDays} placeholder="Number of days" />
+                                            <input type="number" className="form-control digit" required min='1'
+                                            onChange={(e) => setNumOfDays(e.target.value)} value={numOfDays} placeholder="Number of days" />
                                         </div>
                                     </div>
                                 </div>
@@ -140,7 +142,8 @@ const GrantLeaveAdd = (props) => {
                                     <div className="col-sm-12">
                                         <div className="form-group">
                                             <label htmlFor="exampleFormControlInput1">Year</label>
-                                            <input type="number" placeholder="YYYY" min="2019" max="2021" className="form-control digit" required onChange={(e) => setYear(e.target.value)} value={year} />
+                                            <input type="number" placeholder="YYYY" className="form-control digit" required /* onChange={(e) => setYear(e.target.value)} */ 
+                                            value={year} />
                                         </div>
                                     </div>
                                 </div>
