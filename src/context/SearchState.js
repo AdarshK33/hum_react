@@ -7,8 +7,8 @@ import {  toast } from "react-toastify";
 
 const initial_state = {
     empIdSearchList: [],
-    empIdManagerSearchList : []
-    
+    empIdManagerSearchList : [],
+    searchShiftList : []
   
   }
 
@@ -43,12 +43,27 @@ const initial_state = {
           });
       }
 
+      function viewSearchSiftList(Id) {
+       
+        client.get('/shift/search?key=' + Id).then(function (response) {
+         console.log(response);
+          state.searchShiftList = response.data.data;          
+    
+          return dispatch({ type: 'FETCH_SHIFT_LIST', payload: state.searchShiftList });
+        })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+
       
       return (<SearchContext.Provider value={{        
         searchByEmpId,  
-        searchByEmpIdManager,     
+        searchByEmpIdManager,    
+        viewSearchSiftList, 
         empIdSearchList: state.empIdSearchList,
-        empIdManagerSearchList : state.empIdManagerSearchList    
+        empIdManagerSearchList : state.empIdManagerSearchList ,
+        searchShiftList : state.searchShiftList   
       }}>
         {children}
       </SearchContext.Provider>);

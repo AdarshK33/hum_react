@@ -6,6 +6,9 @@ const SearchReducer = (state, action) => {
         
         case 'FETCH_EMPIDMANAGER_LIST':
             return { ...state, graphData: action.payload };
+
+        case 'FETCH_SHIFT_LIST':
+            return { ...state, searchShiftList: action.payload };
                
         default: return state;
     }
