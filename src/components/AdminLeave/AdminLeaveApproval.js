@@ -95,7 +95,7 @@ const AdminLeaveApproval = () => {
                                             <td>{item.isApproved === 0 ? "Approved" : (item.isApproved === 1 ? 'Pending' : 
                                              (item.isApproved === 2 ? 'Rejected' : ''))  }</td>
   
-                                            <td>{item.isApproved === 0 ?
+                                            <td>{item.isApproved === 0 || item.isApproved === 2 ?
                                              <Button size="sm" className="disable-button" disabled>
                                                  Approved</Button> :
                                                 <Button size="sm" style={{backgroundColor:'#006EBB'}} className="submitButton"
@@ -108,7 +108,7 @@ const AdminLeaveApproval = () => {
                                                 }>Approved</Button> }</td> 
 
                                              
-                                            <td>{item.isApproved === 2 ? 
+                                            <td>{item.isApproved === 2 || item.isApproved === 0 ? 
                                              <Button size="sm" className="disable-button" disabled>
                                              Cancel</Button> :
                                                 <Button variant="danger" size="sm" onClick={() => {

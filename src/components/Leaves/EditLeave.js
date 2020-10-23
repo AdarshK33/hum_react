@@ -312,7 +312,7 @@ console.log("d3",moment(d3).format("YYYY-MM-DD"))
                                 <div className="col-sm-12">
                                     <Form.Group>
                                         <Form.Label>Leave Type:</Form.Label>
-                                        <Form.Control as="select" required value={leave}
+                                       {/*  <Form.Control as="select" required value={leave}
                                             onChange={(e) => setLeaveHandler(e)}>
                                             <option value="">Select</option>
 
@@ -324,11 +324,13 @@ console.log("d3",moment(d3).format("YYYY-MM-DD"))
                                                 )
                                             }) : ""
                                             }
-                                        </Form.Control>
+                                        </Form.Control> */}
+                                        <Form.Control type='text' value={leave === 1 ? 'General' : (leave === 2 ? 'Paternity' : (leave === 3 && 'Maternity' ))} 
+                                        onChange={(e) => setLeaveHandler(e)} readOnly />
                                     </Form.Group>
                                 </div>
                             </Row>
-                            {leave === 3 ?
+                            {props.leaveTypeId === 3 ?
                                     <Row style={{margin:'0'}}>
                                         <div classNmae="col-sm-6">
                                             <Form.Group>

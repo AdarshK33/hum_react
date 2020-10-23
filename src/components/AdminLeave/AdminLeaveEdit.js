@@ -300,7 +300,7 @@ const AdminLeaveEdit = (props) => {
                             <Row>
                                 <div className="col-sm-12">
                                     <Form.Label>Leave Type:</Form.Label>
-                                    <Form.Control as="select" size="sm"  value={leave}
+                                    {/* <Form.Control as="select" size="sm"  value={leave}
                                         onChange={(e) => setLeaveHandler(e)} required>
                                             <option value="">Select</option>
                                         {leaveType !== undefined &&  leaveType !== null && 
@@ -312,10 +312,12 @@ const AdminLeaveEdit = (props) => {
                                             )
                                         })
                                         }
-                                    </Form.Control>
+                                    </Form.Control> */}
+                                    <Form.Control type='text' value={leave === 1 ? 'General' : (leave === 2 ? 'Paternity' : (leave === 3 && 'Maternity' ))} 
+                                        onChange={(e) => setLeaveHandler(e)} readOnly />
                                 </div>
                             </Row><br/>
-                            {leave === 3 ?
+                            {props.leaveTypeId === 3 ?
                                     <Row style={{margin:'0'}}>
                                         <div classNmae="col-sm-6">
                                             <Form.Group>
