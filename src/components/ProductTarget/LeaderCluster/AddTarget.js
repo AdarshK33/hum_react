@@ -29,7 +29,7 @@ const AddTarget = (props) => {
 
     const { viewCostCentre } = useContext(DashboardContext);
     const { user } = useContext(AppContext)
-    const { clusterList, viewClusterList,addTarget} = useContext(ClusterProductContext);
+    const { leaderClusterList, viewLeaderClusterList,addTarget} = useContext(ClusterProductContext);
 
 
      useEffect(() => {
@@ -45,14 +45,14 @@ const AddTarget = (props) => {
         setMonth(mm);
         setYear(yyyy);
        viewCostCentre()
-       viewClusterList(user.costCentre)
+       viewLeaderClusterList()
        
     }, []);
 
 
     const fromStoreHandler = (e) => {
         // setStoreType(e);
-        viewClusterList(e)
+        viewLeaderClusterList()
     }
 
 
@@ -174,10 +174,10 @@ const AddTarget = (props) => {
                                             <Form.Control as="select" required
                                                 onChange={(e)=>fromClusterHandler(e.target.value)}
                                                 >
-                                                <option value="">Select</option>
+                                                
 
                                                 <option value="">Select</option>
-                                                { clusterList !== null ? clusterList.map((e, i) => {
+                                                { leaderClusterList !== null ? leaderClusterList.map((e, i) => {
                                                     
                                                     return(
                                                     <option key={i + 1} value={e.clusterId}>{e.clusterName}</option>)
