@@ -98,7 +98,7 @@ const StoreProductTarget = () => {
                 </Row>
 
                 <div className="table-responsive">
-                {currentRecords !== undefined && currentRecords !== null ?
+                {currentRecords !== undefined && currentRecords !== null && currentRecords.length > 0  ?
                     <Table id="table-to-xls" className="table table-hover" style={{textAlign:"center"}}>
                    
                         <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
