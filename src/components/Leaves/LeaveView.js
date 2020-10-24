@@ -55,7 +55,7 @@ const LeaveView = () => {
     useEffect(() => {
         viewLeaveData(user.employeeId)
     }, [user.employeeId])
-    
+
     useEffect(() => {
         viewEmpLeaveData(user.employeeId)
     }, [user.employeeId])
@@ -164,50 +164,52 @@ const LeaveView = () => {
                 </Row>
 
                 <div className="table-responsive">
-                    <Table id="table-to-xls" className="table table-hover">
-                        <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
-                            <tr>
-                                <th>S. No</th>
-                                <th>Leave Type</th>
-                                <th>Total No. of Days</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
+                        <Table id="table-to-xls" className="table table-hover">
 
-                        {currentRecords !== null && currentRecords !== undefined &&
-                            currentRecords.map((item, i) => {
-                                return (
-                                    <tbody key={i + 1}>
-                                        <tr>
-                                            <td>{i + 1 + indexOfFirstRecord}</td>
-                                            {/* <td>{item.leaveCategory}</td> */}
-                                            <td>{item.leaveTypeId === 1 ? 'General' : (item.leaveTypeId === 2 ? 'Paternity' : (item.leaveTypeId === 3 ? 'Maternity' :
-                                                (item.leaveTypeId === 0 ? 'LOP' : '')))}
-                                            </td>
-                                            <td>{item.numberOfDays}</td>
-                                            <td>{item.fromDate}</td>
-                                            <td>{item.toDate}</td>
-                                            <td><Edit2 onClick={() => {
-                                                setEditModal(true); setLeaveTypeId(item.leaveTypeId);
-                                                setFromDate(item.fromDate); setToDate(item.toDate); setReason(item.reason)
-                                                setltId(item.ltId); setNumberOfDays(item.numberOfDays)
-                                            }} />
-                                            </td>
-                                            <td><Trash2 onClick={() => {
-                                                setDeleteModal(true); setltId(item.ltId)
-                                            }} />
+                            <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
+                                <tr>
+                                    <th>S. No</th>
+                                    <th>Leave Type</th>
+                                    <th>Total No. of Days</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
 
-                                            </td>
+                            {currentRecords !== null && currentRecords !== undefined &&
+                                currentRecords.map((item, i) => {
+                                    return (
+                                        <tbody key={i + 1}>
+                                            <tr>
+                                                <td>{i + 1 + indexOfFirstRecord}</td>
+                                                {/* <td>{item.leaveCategory}</td> */}
+                                                <td>{item.leaveTypeId === 1 ? 'General' : (item.leaveTypeId === 2 ? 'Paternity' : (item.leaveTypeId === 3 ? 'Maternity' :
+                                                    (item.leaveTypeId === 0 ? 'LOP' : '')))}
+                                                </td>
+                                                <td>{item.numberOfDays}</td>
+                                                <td>{item.fromDate}</td>
+                                                <td>{item.toDate}</td>
+                                                <td><Edit2 onClick={() => {
+                                                    setEditModal(true); setLeaveTypeId(item.leaveTypeId);
+                                                    setFromDate(item.fromDate); setToDate(item.toDate); setReason(item.reason)
+                                                    setltId(item.ltId); setNumberOfDays(item.numberOfDays)
+                                                }} />
+                                                </td>
+                                                <td><Trash2 onClick={() => {
+                                                    setDeleteModal(true); setltId(item.ltId)
+                                                }} />
+
+                                                </td>
 
 
-                                        </tr>
-                                    </tbody>
-                                )
-                            })}
-                    </Table>
+                                            </tr>
+                                        </tbody>
+                                    )
+                                })}
+
+                        </Table>
                     <DeleteLeave handleDeleteClose={handleDeleteClose} modal={deleteModal} ltId={ltId} empid={user.employeeId} />
                     {user.employeeId !== undefined ?
                         <EditLeave handleEditClose={handleEditClose} modal={editModal} empid={user.employeeId} numberOfDays={numberOfDays}

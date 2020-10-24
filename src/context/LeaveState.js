@@ -79,6 +79,7 @@ export const LeaveProvider = ({ children }) => {
   // View Leave Data
   const viewEmpLeaveData = (empId1) => {
     if(empId1 !== null && empId1 !== undefined){
+     
     client.get('leave_transaction/view/' + empId1)
       .then((response) => {
         state.leaveEmpList = response.data.data.leaveTransactions

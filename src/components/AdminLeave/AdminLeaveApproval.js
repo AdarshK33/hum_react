@@ -119,7 +119,7 @@ const AdminLeaveApproval = () => {
 
                                     </tbody>
                                 )
-                            })}
+                            }) }
                     </Table>
                 </div>
             </div>
