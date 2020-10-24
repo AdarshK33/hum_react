@@ -99,6 +99,7 @@ if(storeLeaderProductList !== null){
                 </Row>
 
                 <div className="table-responsive">
+                {currentRecords !== undefined && currentRecords !== null && currentRecords.length > 0  ?
                     <Table id="table-to-xls" className="table table-hover">
                         <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                             <tr>
@@ -155,6 +156,18 @@ if(storeLeaderProductList !== null){
                                  )
                             })} 
                     </Table>
+                     :
+                            
+                     <div className="loader-box loader" style ={{width : "100% !important"}}>
+                         <div className="loader">
+                         <div className="line bg-primary"></div>
+                         <div className="line bg-primary"></div>
+                         <div className="line bg-primary"></div>
+                         <div className="line bg-primary"></div>
+                         </div>
+                     </div>
+             
+             } 
                    
                     {editTarget !== null && editTarget !== undefined && 
                         editTarget.length !== 0 ? <EditLeaderTarget handleEditClose={handleEditClose}

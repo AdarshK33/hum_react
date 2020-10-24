@@ -13,7 +13,7 @@ const GrantLeaveAdd = (props) => {
     const [successMsg, setSuccessMsg] = useState("");
     const [costCenter, setCostCenter] = useState()
     const [employeeCostCenter, setEmployeeCostCenter] = useState('')
-    const { viewGrantLeave, createGrantLeave, CostCenter, costCenterList, employeeIdData, employeeIdList } = useContext(AdminContext);
+    const { viewGrantLeave, grantLeaveView, createLeaveForSameEmp, createGrantLeave, CostCenter, costCenterList, employeeIdData, employeeIdList } = useContext(AdminContext);
 
     var year = new Date().getFullYear()
 
@@ -30,6 +30,7 @@ const GrantLeaveAdd = (props) => {
     }
     useEffect(() => {
         CostCenter()
+        viewGrantLeave()
     }, [])
 
     const setClear = () => {
@@ -46,9 +47,15 @@ const GrantLeaveAdd = (props) => {
         props.handleClose();
     }
 
-    const onSubmit = (event) => {
+    const onSubmit = (event, props) => {
         event.preventDefault();
-
+        let empList = grantLeaveView;
+        let flag = 0;
+        for (let i = 0 ; i<empList.length ; i++){
+            if(empList[i].empId === employeeCostCenter){
+                flag = 1;
+            }
+        }
 
         const addGrantLeave = {
             leaveId: 1,
@@ -57,7 +64,9 @@ const GrantLeaveAdd = (props) => {
             empId: employeeCostCenter,
             year
         }
-        const result = createGrantLeave(addGrantLeave)
+        let result = {};
+        if(flag === 0){
+             result = createGrantLeave(addGrantLeave)
             .then((result) => {
                 console.log("api response===", result.data.message);
                 toast.info(result.data.message);
@@ -70,6 +79,22 @@ const GrantLeaveAdd = (props) => {
             .catch((error) => {
                 alert(" In error catch ", error);
             })
+        }else {
+             result = createLeaveForSameEmp(addGrantLeave)
+            .then((result) => {
+                console.log("api response===", result.data.message);
+                toast.info(result.data.message);
+                setTimeout(() => {
+                    callTimer();
+                    setClear();
+                }, 2000);
+                viewGrantLeave();
+            })
+            .catch((error) => {
+                alert(" In error catch ", error);
+            })
+        }
+        
         console.log(result, "in competent");
     }
 

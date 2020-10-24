@@ -57,13 +57,26 @@ const StoreProductTarget = () => {
     const handleEditClose = () => setEditModal(false);
 
     const [currentPage, setCurrentPage] = useState(1);
+    
     const recordPerPage = 10;
-    const totalRecords = storeProductList.length;
+    let totalRecords = 0
     const pageRange = 10;
   
-    const indexOfLastRecord = currentPage * recordPerPage;
-    const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    const currentRecords = storeProductList.slice(indexOfFirstRecord, indexOfLastRecord);
+    let indexOfLastRecord = 1;
+    let indexOfFirstRecord = 1;
+    let currentRecords = [];
+
+    if(storeProductList !== null){
+    
+   
+        totalRecords = storeProductList.length;
+       // const pageRange = 10;
+     
+        indexOfLastRecord = currentPage * recordPerPage;
+        indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+        currentRecords = storeProductList.slice(indexOfFirstRecord, indexOfLastRecord);
+   }
+    
   
     const handlePageChange = pageNumber => {
       setCurrentPage(pageNumber);
@@ -157,7 +170,7 @@ const StoreProductTarget = () => {
                                     </tbody>
                                  )
                             })} 
-                             </Table>
+                    </Table>
                             :
                             
                                     <div className="loader-box loader" style ={{width : "100% !important"}}>
