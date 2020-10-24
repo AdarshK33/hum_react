@@ -304,8 +304,10 @@ export const RosterProvider = ({ children }) => {
   }
 
   //ADMIN EMPLOYEE LIST FOR ROSTER WEEKOFF
-  const getEmployeeListForAdminRosterWeekOff = (storeId) => {
-    client.get('employee/view?contract_type=Permanent&storeId=' + storeId)
+  const getEmployeeListForAdminRosterWeekOff = (contractType,storeId) => {
+    // const contractType="Parttime";
+    console.log("=============NAV============",contractType)
+    client.get('employee/view?contract_type='+contractType+'&storeId=' + storeId)
       .then((response) => {
         state.EmployeeListForAdminRosterWeekOff = response.data.data;
         console.log("admin calculate week for store id  ", state.EmployeeListForAdminRosterWeekOff)

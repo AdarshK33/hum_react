@@ -33,6 +33,9 @@ const MasterCity = () => {
     let fileObj = event.target.files[0];
     console.log("clicked", fileObj)
     uploadMasterFile(fileObj)
+    setTimeout(()=>{
+      window.location.reload()
+    }, 5000)
   }
   return (
     <Fragment>

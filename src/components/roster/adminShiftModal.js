@@ -43,7 +43,7 @@ const AdminShiftModal = (props) => {
 
 
   useEffect(() => {
-    getEmployeeListForAdminRosterWeekOff(props.mystoreId)
+    getEmployeeListForAdminRosterWeekOff(props.contractType,props.mystoreId)
     availableShifts()
     getallWeeks()
     adminRosterAvailableShift(props.contractType, props.mystoreId)
@@ -224,7 +224,7 @@ const AdminShiftModal = (props) => {
                           defaultValue=""
                           value={employee}
                           style={{ fontSize: "0.8rem" }}
-                          options={EmployeeListForAdminRosterWeekOff.map(e => ({ label: e.firstName + " " + e.employeeId, value: e.employeeId }))}
+                          options={EmployeeListForAdminRosterWeekOff!==null && EmployeeListForAdminRosterWeekOff.map(e => ({ label: e.firstName + " " + e.employeeId, value: e.employeeId }))}
                           onChange={handleEmployeeList}
                           isMulti
                         />
@@ -293,7 +293,7 @@ const AdminShiftModal = (props) => {
                           defaultValue=""
                           value={employee}
                           style={{ fontSize: "0.8rem" }}
-                          options={EmployeeListForAdminRosterWeekOff.map(e => ({ label: e.firstName + " " + e.employeeId, value: e.employeeId }))}
+                          options={EmployeeListForAdminRosterWeekOff!==null && EmployeeListForAdminRosterWeekOff.map(e => ({ label: e.firstName + " " + e.employeeId, value: e.employeeId }))}
                           onChange={handleEmployeeList}
                           isMulti
                         />
