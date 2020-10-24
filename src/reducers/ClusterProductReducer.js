@@ -22,6 +22,9 @@ const ClusterProductReducer = (state, action) => {
         case 'FETCH_LEADERCLUSTERPRODUCTTARGET_LIST' :
             return {...state, leaderClusterProductList: action.payload}
 
+        case 'FETCH_LEADER_CLUSTER_LIST' :
+            return {...state, leaderClusterList : action.payload}
+
         default: return state;
     }
 }

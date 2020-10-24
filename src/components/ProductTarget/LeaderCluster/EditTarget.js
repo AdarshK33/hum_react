@@ -29,14 +29,14 @@ const EditTarget = (props) => {
     
 
     const { viewCostCentre } = useContext(DashboardContext);
-    const {  viewClusterList,editTarget, leaderClusterList} = useContext(ClusterProductContext);
+    const {  viewLeaderClusterList,editTarget, leaderClusterList} = useContext(ClusterProductContext);
     const { user } = useContext(AppContext);
 
       useEffect(() => {
         setCostCenter(props.singleClusterTarget.storeName);
         setCluster(props.singleClusterTarget.clusterId);   
         setClusterName(props.singleClusterTarget.clusterName);  
-        viewClusterList(props.singleClusterTarget.storeName);   
+        viewLeaderClusterList();   
         viewCostCentre()
         let date = new Date(); 
         var dd = String(date.getDate()).padStart(2, '0');
@@ -81,7 +81,7 @@ const EditTarget = (props) => {
 
     const setCosCenterHandler = (e) => {
         setCostCenter(e);
-        viewClusterList(e)
+        viewLeaderClusterList()
     }
 
     const fromClusterHandler = (e) => {
@@ -167,7 +167,7 @@ const EditTarget = (props) => {
         setTarget(props.singleClusterTarget.productTarget)
         // setTargetWeekdays(props.singleClusterTarget.weekDayTarget)
         // setTargetWeekend(props.singleClusterTarget.weekEndTarget)
-        viewClusterList(props.singleClusterTarget.storeName)
+        viewLeaderClusterList()
     }
 
     
@@ -211,7 +211,7 @@ const EditTarget = (props) => {
                                                 >                                               
 
                                                 <option value={cluster}>{clusterName}</option>
-                                                { leaderClusterList !== undefined ? leaderClusterList.map((e, i) => {
+                                                { leaderClusterList !== undefined && leaderClusterList!==null ? leaderClusterList.map((e, i) => {
                                                     return(
                                                     <option key={i + 1} value={e.clusterId}>{e.clusterName}</option>)
                                                 }): ""}

@@ -10,8 +10,8 @@ const initial_state = {
     leaderClusterProductList: [],
     clusterList: [],
     NewTarget: [],
-    singleClusterTarget: []
-    
+    singleClusterTarget: [],
+    leaderClusterList : []
   }
 
 
@@ -23,9 +23,9 @@ const initial_state = {
     const viewClusterList = (id) => {
 
           client.get('/cluster/view/'+id).then( (response) => {
-          // console.log("==========List of Clusters==============");
-          // console.log(response.data.data);
-          // console.log("==========List of Clusters==============");
+          console.log("==========List of Clusters==============");
+          console.log(response.data.data);
+          console.log("==========List of Clusters==============");
           state.clusterList = response.data.data;
 
           return dispatch({ type: 'FETCH_CLUSTER_LIST', payload: state.clusterList });
@@ -34,6 +34,21 @@ const initial_state = {
             console.log(error);
           });
       }
+
+      const viewLeaderClusterList = () => {
+
+        client.get('/cluster/view/').then( (response) => {
+        console.log("==========List of Clusters==============");
+        console.log(response.data.data);
+        console.log("==========List of Clusters==============");
+        state.leaderClusterList = response.data.data;
+
+        return dispatch({ type: 'FETCH_LEADER_CLUSTER_LIST', payload: state.leaderClusterList });
+      })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
 
 
       
@@ -123,11 +138,13 @@ const initial_state = {
         editTarget,
         viewSingleClusterTarget,
         viewLeaderClusterTarget,
+        viewLeaderClusterList,
         
         singleClusterTarget : state.singleClusterTarget,
         clusterList: state.clusterList,
         clusterProductList: state.clusterProductList,
-        leaderClusterProductList: state.leaderClusterProductList
+        leaderClusterProductList: state.leaderClusterProductList,
+        leaderClusterList : state.leaderClusterList
         
       }}>
         {children}
