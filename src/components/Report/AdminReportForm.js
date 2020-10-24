@@ -10,6 +10,7 @@ import AdminReportView from './AdminReportView'
 import Select from 'react-select';
 import { AppContext } from "../../context/AppState";
 import '../Leaves/Leaves.css'
+import MultiSelect from 'react-multi-select-component'
 
 const AdminReportForm = () => {
     const [reportType, setReportType] = useState('')
@@ -144,6 +145,7 @@ const AdminReportForm = () => {
                                 <Form.Control as="select" required value={costCenter}
                                  onChange={(e) => setCostCenterHandler(e)} isSearchable >
                                     <option value=''>Select Cost Center</option>
+                                    {/* <option value='all'>All</option> */}
                                     {costCenterList.length > 0 && costCenterList.map((item, i) => {
                                             return (
                                                 <option key={item.costCenterId} value={item.costCentreName}>
@@ -166,7 +168,7 @@ const AdminReportForm = () => {
                         <div className="col-sm-4">
                             <Form.Group>
                                 <Form.Label>Employee Id</Form.Label> <span style={{color:'red'}}>*</span> 
-                                <Select
+                               {/*  <Select
                                 name="filters"
                                 placeholder="Select Employee Id"
                                 value={employeeCostCenter} 
@@ -174,20 +176,37 @@ const AdminReportForm = () => {
                                 options={employeeIdList !== null  ?
                                  employeeIdList.map(e => ({label: e.firstName + " - " + e.employeeId, value: e.employeeId})):[]}
                                 onChange={setEmployeeCostCenterHandler}
-                                isMulti required isSearchable />
+                                isMulti required isSearchable /> */}
+                                <MultiSelect
+                                options={employeeIdList !== null  ?
+                                    employeeIdList.map(e => ({label: e.firstName + " - " + e.employeeId, value: e.employeeId})):[]}
+                                    value={employeeCostCenter}
+                                    onChange={setEmployeeCostCenterHandler}
+                                    labelledBy={"Select Employee Id"}
+                                    hasSelectAll={true}
+                                    disableSearch={true}
+                                />
                             </Form.Group>
                         </div>
                         <div className="col-sm-4">
                              <Form.Group>
                                 <Form.Label>Leave Category</Form.Label> <span style={{color:'red'}}>*</span> 
-                                <Select
+                               {/*  <Select
                                 name="filters"
                                 placeholder="Select Leave Type"
                                 value={leave} 
                                 style={{fontSize:"0.8rem"}}
                                 options={leaveTypeReport !== undefined && leaveTypeReport.map(e => ({label: e.leaveName , value: e.leaveTypeId}))}
                                 onChange={setLeaveHandler}
-                                isMulti required />
+                                isMulti required /> */}
+                                 <MultiSelect
+                                    options={leaveTypeReport !== undefined && leaveTypeReport.map(e => ({label: e.leaveName , value: e.leaveTypeId}))}
+                                    value={leave}
+                                    onChange={setLeaveHandler}
+                                    labelledBy={"elect Leave Type"}
+                                    hasSelectAll={true}
+                                    disableSearch={true}
+                                />
                             </Form.Group>
                         </div>
                     </Row>
