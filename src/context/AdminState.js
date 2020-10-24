@@ -106,6 +106,11 @@ export const AdminProvider = ({ children }) => {
     })
   }
 
+  function createLeaveForSameEmp(addGrantLeave) {
+    return client.put("grant_leave/update", addGrantLeave, {
+    })
+  }
+
 
   //view leave master 
   const leaveMasterView = () => {
@@ -198,6 +203,7 @@ export const AdminProvider = ({ children }) => {
     cancelLeaveList,
     approvedUpdate,
     managerEmployeeId,
+    createLeaveForSameEmp,
     grantLeaveView: state.grantLeaveView,
     getEmployeesName: state.getEmployeesName,
     leaveAdminList: state.leaveAdminList,

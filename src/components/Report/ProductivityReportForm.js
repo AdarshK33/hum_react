@@ -137,6 +137,7 @@ const ProductivityReportForm = () => {
                                     <Form.Control as="select" value={costCenter}
                                         onChange={(e) => setCostCenterHandler(e)} required >
                                         <option value=''>Select Cost Center</option>
+                                        <option value='all'>All</option>
                                         {costCenterList.map((item, i) => {
                                             return (
                                                 <option key={item.costCenterId} value={item.costCentreName}>

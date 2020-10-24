@@ -3,12 +3,14 @@ import moment from 'moment';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import Breadcrumb from "../common/breadcrumb";
 import "./roster.css";
+import '../../assets/css/search.css'
 import CreateShiftModal from "./createShiftModal";
 import EditShiftModal from "./editShiftModal";
 import Pagination from 'react-js-pagination';
 import { Button } from 'react-bootstrap'
 import { RosterContext } from "../../context/RosterState";
-import { Edit2 } from 'react-feather'
+import { Edit2, Search } from 'react-feather';
+import { SearchContext } from '../../context/SearchState';
 
 function ViewShift() {
   useEffect(() => {
@@ -30,6 +32,10 @@ function ViewShift() {
   const [breakEndTime, setBreakEndTime] = useState(new Date());
   const [workingHours, setWorkingHour] = useState();
   const [status, setStatus] = useState('')
+  const [searchValue, setSearchValue] = useState(false);
+  const [searchShift, setShiftList] = useState();
+
+  const { searchShiftList, viewSearchSiftList } = useContext(SearchContext);
   const { shiftList, editShift, viewShift, viewShiftTypes, viewContractTypes, singleShiftList } = useContext(RosterContext);
   //pagenation data
 
@@ -55,20 +61,44 @@ function ViewShift() {
   // }
 
   //pagenation data
+  useEffect(() => {
+    if(shiftList !== undefined && shiftList !== null && shiftList.length > 0){
+      setShiftList(shiftList);
+    }       
+  }, [shiftList])
+
   const [currentPage, setCurrentPage] = useState(1);
   const recordPerPage = 10;
-  const totalRecords = shiftList !== null && shiftList.length;
+  const totalRecords = searchShift !== undefined && searchShift !== null && searchShift.length;
   const pageRange = 10;
 
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  const currentRecords = shiftList !== null ? shiftList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+  const currentRecords = searchShift !== undefined && searchShift !== null ? searchShift.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
   const handlePageChange = pageNumber => {
     setCurrentPage(pageNumber);
   }
 
+  const searchHandler = (e) => {
+    setSearchValue(e.target.value)
+    
+  }
 
+  const searchDataHandler = () => {
+      if(searchValue !== ""){
+        viewSearchSiftList(searchValue);
+      }else {
+        viewShift()
+      }
+    
+  }
+
+  useEffect(() => {
+    if(searchShiftList !== undefined && searchShiftList !== null && searchShiftList.length > 0){
+      setShiftList(searchShiftList);
+    }         
+  }, [searchShiftList])
 
 
 
@@ -80,6 +110,12 @@ function ViewShift() {
           <div className="col-sm-12">
             <div className="card" style={{ overflowX: "auto" }}>
               <div className="title_bar" >
+                <div className="job-filter">
+                    <div className="faq-form mr-2">
+                        <input className="form-control searchButton" type="text" placeholder="Search.." onChange = {(e)=>searchHandler(e)} />
+                        <Search className="search-icon" style = {{color: "#313131"}} onClick={searchDataHandler}/>
+                    </div>
+                </div>
                 <Button className="btn btn-light mr-2" onClick={handleShow}>Create</Button>
                 <ReactHTMLTableToExcel
                   className="btn btn-light mr-2"

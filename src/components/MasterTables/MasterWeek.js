@@ -19,6 +19,9 @@ const MasterWeek = () => {
     let fileObj = event.target.files[0];
     console.log("clicked", fileObj)
     uploadWeeks(fileObj)
+    setTimeout(()=>{
+      window.location.reload()
+    }, 5000)
   }
   return (
     <Fragment>

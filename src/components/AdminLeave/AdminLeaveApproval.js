@@ -7,10 +7,12 @@ import '../Leaves/Leaves.css'
 import './AdminLeaves.css'
 import Pagination from 'react-js-pagination'
 import AdminDeleteApproval from './AdminDeleteApproval'
+import '../../assets/css/search.css'
 
 const AdminLeaveApproval = () => {
     const [deleteModal, setDeleteModal] = useState(false)
     const [ltId, setltId] = useState()
+    const [loader, setLoader] = useState(false)
     let history = useHistory();
 
 
@@ -95,19 +97,44 @@ const AdminLeaveApproval = () => {
                                             <td>{item.isApproved === 0 ? "Approved" : (item.isApproved === 1 ? 'Pending' : 
                                              (item.isApproved === 2 ? 'Rejected' : ''))  }</td>
   
-                                            <td>{item.isApproved === 0 || item.isApproved === 2 ?
-                                             <Button size="sm" className="disable-button" disabled>
-                                                 Approved</Button> :
-                                                <Button size="sm" style={{backgroundColor:'#006EBB'}} className="submitButton"
-                                            onClick={(e) => 
-                                                approvedButton(item.empId, item.fromDate,
-                                                    item.toDate, item.leaveCategory, item.leaveTypeId,
-                                                    item.ltId, item.numberOfDays, item.reason, item.status,
-                                                    item.year)
-                                            
-                                                }>Approved</Button> }</td> 
-
-                                             
+                                            <td>
+                                                {item.isApproved === 0 || item.isApproved === 2 ?                                              
+                                                    <Button size="sm" className="disable-button" disabled>
+                                                        Approved
+                                                    </Button>                                                                                              
+                                                 :    
+                                                    <>                                             
+                                                        
+                                                        <div>
+                                                            {
+                                                                loader===true?
+                                                                <div className="loader-box loader" style ={{width : "50% !important"}}>
+                                                                    <div className="loader">
+                                                                        <div className="line bg-primary"></div>
+                                                                        <div className="line bg-primary"></div>
+                                                                        <div className="line bg-primary"></div>
+                                                                        <div className="line bg-primary"></div>
+                                                                    </div>
+                                                                </div>
+                                                                :
+                                                                <Button 
+                                                            size="sm" 
+                                                            style={{backgroundColor:'#006EBB'}} 
+                                                            className="submitButton"
+                                                            onClick={(e) =>{
+                                                                setLoader(true)
+                                                                approvedButton(item.empId, item.fromDate,
+                                                                    item.toDate, item.leaveCategory, item.leaveTypeId,
+                                                                    item.ltId, item.numberOfDays, item.reason, item.status,
+                                                                    item.year)
+                                                                }}                                              
+                                                            >Approve
+                                                       </Button>
+                                                            }
+                                                        </div>
+                                                    </>                                           
+                                                }                                               
+                                            </td>                                             
                                             <td>{item.isApproved === 2 || item.isApproved === 0 ? 
                                              <Button size="sm" className="disable-button" disabled>
                                              Cancel</Button> :
@@ -119,7 +146,7 @@ const AdminLeaveApproval = () => {
 
                                     </tbody>
                                 )
-                            })}
+                            }) }
                     </Table>
                 </div>
             </div>

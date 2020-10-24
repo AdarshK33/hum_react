@@ -20,6 +20,9 @@ const MasterState = () => {
     let fileObj = event.target.files[0];
     console.log("clicked", fileObj)
     uploadStateFile(fileObj)
+    setTimeout(()=>{
+      window.location.reload()
+    }, 5000)
   }
   return (
     <Fragment>

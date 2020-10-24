@@ -1,11 +1,14 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
 import Breadcrumb from '../../common/breadcrumb';
 import { Row, Col, Table, Button } from 'react-bootstrap'
-import { Edit2 } from 'react-feather'
+import { Edit2,Search } from 'react-feather'
 import EditTarget from './EditTarget';
 import AddTarget from './AddTarget';
 import Pagination from 'react-js-pagination';
 import { StoreProductContext } from "../../../context/StoreProductState";
+import '../../../assets/css/search.css'
+
+
 
 const StoreProductTarget = () => {
     const [modal, setModal] = useState(false);
@@ -54,13 +57,26 @@ const StoreProductTarget = () => {
     const handleEditClose = () => setEditModal(false);
 
     const [currentPage, setCurrentPage] = useState(1);
+    
     const recordPerPage = 10;
-    const totalRecords = storeProductList.length;
+    let totalRecords = 0
     const pageRange = 10;
   
-    const indexOfLastRecord = currentPage * recordPerPage;
-    const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    const currentRecords = storeProductList.slice(indexOfFirstRecord, indexOfLastRecord);
+    let indexOfLastRecord = 1;
+    let indexOfFirstRecord = 1;
+    let currentRecords = [];
+
+    if(storeProductList !== null){
+    
+   
+        totalRecords = storeProductList.length;
+       // const pageRange = 10;
+     
+        indexOfLastRecord = currentPage * recordPerPage;
+        indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+        currentRecords = storeProductList.slice(indexOfFirstRecord, indexOfLastRecord);
+   }
+    
   
     const handlePageChange = pageNumber => {
       setCurrentPage(pageNumber);
@@ -73,15 +89,31 @@ const StoreProductTarget = () => {
                 
                 <Row className="apply-button-row">
                     <Col className="leaveApplications">Store Product Target</Col>
+                    
                     <Col>
-                        <Button className="apply-button btn btn-light" 
-                        onClick={() => {setModal(true) }}>Add Target</Button>
+                        <Row>
+                            <Col xs={3}></Col>
+                            <Col >
+                                {/* <div className="job-filter">
+                                    <div className="faq-form">
+                                        <input className="form-control searchButton" type="text" placeholder="Search.." />
+                                        <Search className="search-icon"/>
+                                    </div>
+                                </div> */}
+                            </Col>
+                            <Col xs={4}>
+                                <Button className="apply-button btn btn-light" 
+                                onClick={() => {setModal(true) }}>Add Target</Button>
+                            </Col>
+                        </Row>
                     </Col>
                     <AddTarget handleClose={handleClose} modal={modal} /> 
                 </Row>
 
                 <div className="table-responsive">
-                    <Table id="table-to-xls" className="table table-hover">
+                {currentRecords !== undefined && currentRecords !== null && currentRecords.length > 0  ?
+                    <Table id="table-to-xls" className="table table-hover" style={{textAlign:"center"}}>
+                   
                         <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                             <tr>
                                 <th>S.No.</th>
@@ -139,6 +171,19 @@ const StoreProductTarget = () => {
                                  )
                             })} 
                     </Table>
+                            :
+                            
+                                    <div className="loader-box loader" style ={{width : "100% !important"}}>
+                                        <div className="loader">
+                                        <div className="line bg-primary"></div>
+                                        <div className="line bg-primary"></div>
+                                        <div className="line bg-primary"></div>
+                                        <div className="line bg-primary"></div>
+                                        </div>
+                                    </div>
+                            
+                            } 
+                   
                    
                     {editTarget !== null && editTarget !== undefined && 
                         editTarget.length !== 0 ? <EditTarget handleEditClose={handleEditClose}

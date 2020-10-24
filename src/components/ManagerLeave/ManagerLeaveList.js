@@ -128,16 +128,20 @@ const ManagerLeaveList = (props) => {
                                                     <td>{item.numberOfDays}</td>
                                                     <td>{item.fromDate}</td>
                                                     <td>{item.toDate}</td>
-                                                    <td><Edit2 onClick={() => {
+                                                    <td>{item.leaveTypeId ===3 ?
+                                                        <Edit2 disabled style={{color:'lightgray'}} />
+                                                        : <Edit2 onClick={() => {
                                                         setEditModal(true); setLeaveTypeId(item.leaveTypeId);
                                                         setFromDate(item.fromDate); setToDate(item.toDate); setReason(item.reason)
                                                         setltId(item.ltId); setEmpId(item.empId)
                                                         
-                                                    }} />
+                                                        }} /> }
                                                     </td>
-                                                    <td><Trash2 onClick={() => {
+                                                    <td>{item.leaveTypeId ===3 ?
+                                                        <Trash2 disabled style={{color:'lightgray'}} />
+                                                        : <Trash2 onClick={() => {
                                                         setDeleteModal(true);  setltId(item.ltId)
-                                                    }} />
+                                                        }} /> }
                                                     </td>
                                                 </tr>
                                             </tbody>
