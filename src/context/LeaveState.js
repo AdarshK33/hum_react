@@ -313,6 +313,8 @@ export const LeaveProvider = ({ children }) => {
       .then((response) => {
         console.log(response,"res")
         toast.info(response.data.message)
+        getHoliday()
+        
       })
       .catch((error) => {
         toast.info("Please upload a valid file");

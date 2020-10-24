@@ -36,6 +36,10 @@ const HolidayList = () => {
     let fileObj = event.target.files[0];
     console.log("clicked", fileObj)
     uploadFile(fileObj)
+    setTimeout(()=>{
+      window.location.reload()
+    }, 5000)
+   
   }
   return (
     <Fragment>
@@ -51,7 +55,10 @@ const HolidayList = () => {
                       className="btn"
                       type="file"
                       accept=".xlsx, .xls, .csv"
-                      onChange={(e) => changeHandler(e)}
+                      onChange={(e) => {
+                        getHoliday()
+                        changeHandler(e)
+                      }}
                       style={{ padding: "10px" }}
                     />
                     <ReactHTMLTableToExcel

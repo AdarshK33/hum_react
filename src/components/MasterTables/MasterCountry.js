@@ -20,6 +20,9 @@ const MasterCountry = () => {
     let fileObj = event.target.files[0];
     console.log("clicked", fileObj)
     // uploadFile(fileObj)
+    setTimeout(()=>{
+      window.location.reload()
+    }, 5000)
   }
   return (
     <Fragment>
