@@ -26,6 +26,7 @@ const AdminRoster = () => {
 
     useEffect(() => {
         viewContractTypes()
+        setContractType("Permanent")
         costCenter()
         calcWeek()
 
@@ -104,7 +105,7 @@ const AdminRoster = () => {
     }
     return (
         <Fragment>
-            <Breadcrumb title="Admin Roster" parent="Admin Roster" />
+            <Breadcrumb title="Team Roster" parent="Team Roster" />
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-sm-12">
@@ -170,7 +171,7 @@ const AdminRoster = () => {
 
                                     </div>
                                     <br />
-                                    <div className="row align-items-start">
+                                    <div className="row align-items-start mt-lg-4">
                                         <div className="col-sm-3">
                                             <div className="form-group">
                                                 <label className="name f-w-600">&nbsp;Select Week </label>
@@ -203,7 +204,7 @@ const AdminRoster = () => {
                                                 <select
                                                     className="form-control"
                                                     style={{ height: "34px", paddingLeft: "5px", marginLeft: "5px" }}
-                                                    value={contractType}
+                                                    // value={contractType}
                                                     onChange={(e) => {
                                                         setContractType(e.target.value)
                                                         console.log(contractType)
