@@ -95,7 +95,7 @@ function AdminCluster() {
                                                         <td><Edit2 onClick={() => {
                                                             setEditModal(true);
                                                             getCluster(e.clusterId);
-                                                            viewCostCenterEmployeeByManger(e.storeId, e.managerId)
+                                                            viewCostCenterEmployeeByManger(e.storeId)
                                                         }} />
                                                         </td>
 
