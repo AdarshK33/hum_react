@@ -186,7 +186,7 @@ const onSubmit = e => {
 
     }
     console.log("EditSalary request",EditSalary)
-    /* salaryEdit(EditSalary) */
+    salaryEdit(EditSalary)
 
     // history.push("/salary/salaryView");
     const setModal = props.handleEditClose;
@@ -262,7 +262,7 @@ return (
                                     </Col>
                                     <Form.Label column sm="3" className="padding-right">Extra Hours:</Form.Label>
                                     <Col sm="9" className="padding-left">
-                                        <Form.Control as="input" type="number" size="sm" name="extraHours" value={extraHours || ''}
+                                        <Form.Control as="input" type="number" size="sm" name="extraHours" value={extraHours === null ? 0 : extraHours}
                                             onChange={(event) => setExtraHours(event.target.value)}  readOnly
                                             id="total" />
                                     </Col>

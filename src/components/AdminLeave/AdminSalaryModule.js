@@ -24,8 +24,8 @@ const AdminSalaryModule = () => {
   let history = useHistory();
 
   const {
-    salaryStoreList,
-    viewStoreSalary,
+    salaryList,
+    viewSalary,
     salaryApproval,
   } = useContext(ClusterContext);
   const { cosCentreList, viewCostCentre } = useContext(DashboardContext);
@@ -41,12 +41,12 @@ const AdminSalaryModule = () => {
 /*-----------------Pagination------------------*/
    const [currentPage, setCurrentPage] = useState(1);
    const recordPerPage = 10;
-   const totalRecords = salaryStoreList !== null && salaryStoreList.length;
+   const totalRecords = salaryList !== null && salaryList.length;
    const pageRange = 10;
 
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  const currentRecords = salaryStoreList !== null && salaryStoreList !== undefined ? salaryStoreList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+  const currentRecords = salaryList !== null && salaryList !== undefined ? salaryList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
   const handlePageChange = pageNumber => {
    setCurrentPage(pageNumber);
@@ -58,7 +58,7 @@ const AdminSalaryModule = () => {
     const month = moment(getM, ["YYYY-MM"]).format("M");
     const year = moment(getM, ["MMM Do YY"]).format("YYYY");
     console.log("costCenter",costCenter)
-    viewStoreSalary(month, costCenter, year);
+    viewSalary(month,year, costCenter);
   };
 
   const costCenterHandler = e => {
@@ -71,22 +71,15 @@ const AdminSalaryModule = () => {
       salaryIds: checked,
       status: 1,
     };
-    console.log("approval data=====", approvalData);
-    salaryApproval(approvalData);
-    setChecked([])
-   /*  salaryStoreList.map((i, e) => {
-      return (
-        <div>
-          <p>{i.month} {i.costCenter} {i.year}</p>
-          {viewStoreSalary(i.month, i.costCenter, i.year)}
-        </div>
-
-      )
-    }) */
     const month = moment(getM, ["YYYY-MM"]).format("M");
     const year = moment(getM, ["MMM Do YY"]).format("YYYY");
+    console.log("approval data=====", approvalData);
+    salaryApproval(approvalData, month, year, costCenter);
+    setChecked([])
+   
+    /* 
     console.log("month, costCenter, year",month, costCenter, year)
-    viewStoreSalary(month, costCenter, year)
+    viewStoreSalary(month, costCenter, year) */
     history.push("/adminleaves/adminsalarymodule");
   };
 
@@ -96,13 +89,14 @@ const AdminSalaryModule = () => {
       salaryIds: checked,
       status: 2,
     };
-    salaryApproval(cancelData);
-    setDeleteModal(false);
-    setChecked([])
     const month = moment(getM, ["YYYY-MM"]).format("M");
     const year = moment(getM, ["MMM Do YY"]).format("YYYY");
-    console.log("month, costCenter, year",month, costCenter, year)
-    viewStoreSalary(month, costCenter, year)
+    salaryApproval(cancelData, month, year, costCenter);
+    setDeleteModal(false);
+    setChecked([])
+  
+  /*   console.log("month, costCenter, year",month, costCenter, year)
+    viewStoreSalary(month, costCenter, year) */
     history.push("/adminleaves/adminsalarymodule");
   };
 
@@ -265,7 +259,7 @@ const AdminSalaryModule = () => {
                         );
                       })}
                   </Table>
-                  {salaryStoreList !== null && salaryStoreList.length <= 0 ? (
+                  {salaryList !== null && salaryList.length <= 0 ? (
                     <p style={{ textAlign: "center" }}>Select Month and Year</p>
                   ) : null}
                   {/* {salaryList.length>0 ?<p>No data found</p>:null} */}
@@ -274,7 +268,7 @@ const AdminSalaryModule = () => {
             </div>
           </Row>
         </div>
-        {salaryStoreList !== null && salaryStoreList.length > 10 &&
+        {salaryList !== null && salaryList.length > 10 &&
                 <Pagination
                     itemClass="page-item" 
                     linkClass="page-link"

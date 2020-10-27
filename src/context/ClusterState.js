@@ -204,7 +204,7 @@ export const ClusterProvider = ({ children }) => {
 
 
   // SALARY INPUT
-  function viewSalary(month, year, id) {
+  const viewSalary = (month, year, id) => {
     console.log(" in cluster" + month + " " + year)
 
     client.get('salary/view?month=' + month + '&year=' + year + '&storeId=' + id)
@@ -247,7 +247,7 @@ export const ClusterProvider = ({ children }) => {
         state.month = response.data.data.month
         state.year = response.data.data.year
         toast.info(state.message)
-        viewSalary(state.month, state.year)
+        viewSalary(state.month, state.year, user.costCentre)
         console.log("salary edit response", response.data.data)
         console.log("salary edit message", state.message)
         return (
@@ -282,12 +282,14 @@ export const ClusterProvider = ({ children }) => {
   }
   //Approval salary input from admin
 
-  const salaryApproval = (salaryData) => {
+  const salaryApproval = (salaryData, month, year, storeId) => {
     console.log("++++update salary approval api response+++++", salaryData)
     return client.put('salary/approve', salaryData)
       .then((response) => {
         state.message = response.data.message
         toast.info(state.message)
+        viewSalary(month, year, storeId)
+       /*  viewStoreSalary(month, year, storeId) */
         console.log("salary approval list response===>", response.data.data)
         console.log("salary approval list message===>", state.message)
         return (
