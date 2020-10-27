@@ -26,6 +26,7 @@ const AdminRoster = () => {
 
     useEffect(() => {
         viewContractTypes()
+        setContractType("Permanent")
         costCenter()
         calcWeek()
 
@@ -203,7 +204,7 @@ const AdminRoster = () => {
                                                 <select
                                                     className="form-control"
                                                     style={{ height: "34px", paddingLeft: "5px", marginLeft: "5px" }}
-                                                    value={contractType}
+                                                    // value={contractType}
                                                     onChange={(e) => {
                                                         setContractType(e.target.value)
                                                         console.log(contractType)
