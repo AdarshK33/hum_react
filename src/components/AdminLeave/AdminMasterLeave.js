@@ -6,6 +6,9 @@ import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import '../Leaves/Leaves.css'
 import './AdminLeaves.css'
 import Pagination from 'react-js-pagination'
+import {
+    JsonToExcel
+  } from 'react-json-excel';
 
 const AdminMasterLeave = () => {
    /*  const [search, setSearch] = useState('') */
@@ -46,6 +49,26 @@ const AdminMasterLeave = () => {
       console.log("clicked",fileObj)
       uploadFile(fileObj)
     }
+
+
+    const filename = 'leaveMaster';
+    let fields = {
+        "leavesId": "S. No",
+        "maxLeaves": "Max Leave",
+        "stateName": "State Name",
+        "year": "Year"
+    }
+
+  
+  let data = [];
+  for(let i = 0; i < leaveMasterList.length; i++){    
+    data.push({leavesId : i+1, 
+                maxLeaves : leaveMasterList[i].maxLeaves, 
+                stateName : leaveMasterList[i].stateName,
+                year : leaveMasterList[i].year
+                })
+  }
+
     return (
         <Fragment>
             <Breadcrumb title="Admin" parent=" Leave Master " />
@@ -64,13 +87,22 @@ const AdminMasterLeave = () => {
                                     onChange={(e) => changeHandler(e)}
                                     style={{ padding: "10px" }}
                                 />
+                                {data.length > 0 &&
+                                    <JsonToExcel
+                                    data={data}
+                                    className="btn btn-light mr-2"
+                                    filename={filename}
+                                    fields={fields}                                    
+                                    text="Export excel"
+                                    />
+                                }
                                 {/* <Button type='submit' onClick={uploadClick}>Upload</Button> */}
-                                <ReactHTMLTableToExcel
+                                {/* <ReactHTMLTableToExcel
                                     className="btn btn-light mr-2"
                                     table="table-to-xls"
                                     filename="leaveMaster"
                                     sheet="Sheet"
-                                    buttonText="Export excel" />
+                                    buttonText="Export excel" /> */}
                             </div>
 
                             <div className="table-responsive">

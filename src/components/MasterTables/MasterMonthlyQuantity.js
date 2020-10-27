@@ -4,6 +4,10 @@ import Pagination from 'react-js-pagination'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import { PermissionContext } from '../../context/PermissionState'
 import { Button, Modal, Form, Table, Row, Container } from "react-bootstrap";
+import {
+    JsonToExcel
+} from 'react-json-excel';
+import { toast } from "react-toastify";
 import { DashboardContext } from "../../context/DashboardState";
 import moment from "moment";
 
@@ -11,7 +15,7 @@ const MasterMonthlyQuantity = () => {
 
     const { cosCentreList, viewCostCentre } = useContext(DashboardContext);
     const { monthlyQtyDetails, monthlyQtyDetailsList } = useContext(PermissionContext)
-
+    const [fileUpload, setFileUpload] = useState();
     const [date, setDate] = useState();
     const [month, setMonth] = useState();
     const [year, setYear] = useState();
@@ -77,8 +81,39 @@ const MasterMonthlyQuantity = () => {
     }, [])
 
 
+    const filename = 'holidaylist';
+    let fields = {
+        "holidayId": "S. No",
+        "holidayDate": "Date",
+        "holidayName": "Name",
+        "year": "Year",
+        "state": "State",
+        "department": "Department"
+    }
 
+    let data = [];
+    // for (let i = 0; i < holidayDataList.length; i++) {
+    //     console.log(holidayDataList[i].holidayDate)
+    //     data.push({
+    //         holidayId: i + 1,
+    //         holidayDate: holidayDataList[i].holidayDate,
+    //         holidayName: holidayDataList[i].holidayName,
+    //         year: holidayDataList[i].year,
+    //         state: holidayDataList[i].state,
+    //         department: holidayDataList[i].department
+    //     })
+    // }
+    const handleUpload = () => {
+        if (fileUpload !== undefined && fileUpload !== null) {
+            //uploadFile(fileUpload)
+        } else {
+            toast.info("Please select a file to upload")
+        }
 
+        setTimeout(() => {
+            window.location.reload()
+        }, 5000)
+    }
     return (
         <Fragment>
             <Breadcrumb title="Monthly Quantity" parent="Monthly Quantity" />
@@ -139,12 +174,17 @@ const MasterMonthlyQuantity = () => {
                         //  onChange={(e) => changeHandler(e)}
                         style={{ padding: "10px" }}
                     />*/}
-                    <ReactHTMLTableToExcel
+                    <Button className="btn btn-light mr-2" onClick={handleUpload}>Upload File</Button>
+
+                    <JsonToExcel
+                        data={data}
                         className="btn btn-light mr-2"
-                        table="table-to-xls"
-                        filename="monthlyQty"
-                        sheet="Sheet"
-                        buttonText="Export excel" />
+                        filename={filename}
+                        fields={fields}
+
+                        text="Export excel"
+                    />
+
                 </div>
                 <div className="table-responsive">
                     <table id="table-to-xls" className="table table-hover">
