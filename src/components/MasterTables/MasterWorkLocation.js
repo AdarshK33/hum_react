@@ -1,13 +1,17 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import Pagination from 'react-js-pagination'
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import { Button } from 'react-bootstrap';
+import { toast } from "react-toastify";
+import {
+    JsonToExcel
+} from 'react-json-excel';
 import { PermissionContext } from '../../context/PermissionState'
 const MasterWorkLocation = () => {
 
 
     const { locationDetails, locationDetailsList } = useContext(PermissionContext)
-
+    const [fileUpload, setFileUpload] = useState();
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
     let totalRecords = 0;
@@ -27,13 +31,38 @@ const MasterWorkLocation = () => {
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber);
     }
+    let data = [];
+    const filename = 'masterworklocation';
+    let fields = {
+        "holidayId": "S. No",
+        "holidayDate": "Date",
+        "holidayName": "Name",
+        "year": "Year",
+        "state": "State",
+        "department": "Department"
+    }
 
 
     useEffect(() => {
         locationDetails()
     }, [])
 
+    const changeHandler = (event) => {
+        let fileObj = event.target.files[0];
+        console.log("clicked", fileObj)
+        // uploadMasterLocation(fileObj)
+    }
+    const handleUpload = () => {
+        if (fileUpload !== undefined && fileUpload !== null) {
+            // uploadFile(fileUpload)
+        } else {
+            toast.info("Please select a file to upload")
+        }
 
+        setTimeout(() => {
+            window.location.reload()
+        }, 5000)
+    }
     return (
         <Fragment>
             <Breadcrumb title="Work Location" parent="Work Location" />
@@ -41,13 +70,23 @@ const MasterWorkLocation = () => {
                 <div className="title_bar" style={{ background: "#006EBB" }} >
 
                     <div className="title_bar" >
+                        <input
+                            className="btn"
+                            type="file"
+                            accept=".xlsx, .xls, .csv"
+                            onChange={(e) => changeHandler(e)}
+                            style={{ padding: "10px" }}
+                        />
+                        <Button className="btn btn-light mr-2" onClick={handleUpload}>Upload File</Button>
+                        {data.length > 0 &&
+                            <JsonToExcel
+                                data={data}
+                                className="btn btn-light mr-2"
+                                filename={filename}
+                                fields={fields}
 
-                        <ReactHTMLTableToExcel
-                            className="btn btn-light mr-2"
-                            table="table-to-xls"
-                            filename="masterWorkLocation"
-                            sheet="Sheet"
-                            buttonText="Export excel" />
+                                text="Export excel"
+                            />}
                     </div>
                 </div>
 

@@ -22,13 +22,13 @@ const ShiftModal = (props) => {
 
   const { weekDays, weekOffDays, addWeekOff, availableShifts, availableShiftData, assignShift, getallWeeks, weeksInYear } = useContext(RosterContext)
   const { user } = useContext(AppContext);
-  let days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   //console.log(availableShiftData, "data")
   //console.log(weeksInYear, "weeks")
   useEffect(() => {
     availableShifts()
     getallWeeks()
-    if(props.empData !== ""){
+    if (props.empData !== "") {
       setEmpData(props.empData)
     }
     setWeekDay(props.shiftDate)
@@ -69,12 +69,12 @@ const ShiftModal = (props) => {
     let WeekDate = weekDay;
     var loIsDate = new Date(weekDay);
     let day = days[loIsDate.getDay()];
-    for(let i = 0;i<empData.length;i++){
-      if(empData[i].weekName.includes(selectedWeeks - 1)){
-        for(let j =0 ;j<empData[i].employeeRosters.length ; j++ ){
+    for (let i = 0; i < empData.length; i++) {
+      if (empData[i].weekName.includes(selectedWeeks - 1)) {
+        for (let j = 0; j < empData[i].employeeRosters.length; j++) {
           loIsDate = new Date(empData[i].employeeRosters[j].date);
           let changeDay = days[loIsDate.getDay()];
-          if(day === changeDay){
+          if (day === changeDay) {
             // setWeekDay(empData[i].employeeRosters[j].date)
             WeekDate = empData[i].employeeRosters[j].date
           }
@@ -106,7 +106,7 @@ const ShiftModal = (props) => {
     /*   setSelectedWeeks(Array.isArray(e) ? e.map(x => x.value) : []) */
     let newValue = e.target.value
     console.log("newValue", newValue)
-    
+
     setSelectedWeeks(newValue)
     setShowDay(true)
 

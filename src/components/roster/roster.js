@@ -175,7 +175,7 @@ const Roster = () => {
             </div>
           </div>
         </div>
-        {modal && <ShiftModal handleClose={handleClose} modal={modal} shiftDate={shiftDate.date} empData={weekOffDataList}/>}
+        {modal && <ShiftModal handleClose={handleClose} modal={modal} shiftDate={shiftDate.date} empData={weekOffDataList} />}
       </div>
 
     </Fragment>
