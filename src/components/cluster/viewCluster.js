@@ -11,13 +11,13 @@ import Pagination from 'react-js-pagination';
 function ViewCluster() {
 
 
-  const { getCluster, viewCostCenterEmployeeByManger, viewClusterCostCenter,
-    getSingleCluster, getSingleCluster1, getEmployeesNames, clusterCostCenterList } = useContext(ClusterContext);
+  const { viewCluster, clusterList, getCluster, viewCostCenterEmployeeByManger,
+    getSingleCluster, getSingleCluster1, getEmployeesNames, } = useContext(ClusterContext);
   const { user } = useContext(AppContext);
 
   useEffect(() => {
-    viewClusterCostCenter(user.costCentre)
-  }, [user.costCentre])
+    viewCluster()
+  }, [])
 
   const [modal, setModal] = useState(false);
   const handleClose = () => setModal(false)
@@ -34,12 +34,12 @@ function ViewCluster() {
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
   const recordPerPage = 10;
-  const totalRecords = clusterCostCenterList !== null && clusterCostCenterList.length;
+  const totalRecords = clusterList !== null && clusterList.length;
   const pageRange = 10;
 
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  const currentRecords = clusterCostCenterList !== null ? clusterCostCenterList !== undefined && clusterCostCenterList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+  const currentRecords = clusterList !== null ? clusterList !== undefined && clusterList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
   const handlePageChange = pageNumber => {
     setCurrentPage(pageNumber);
@@ -107,8 +107,8 @@ function ViewCluster() {
                             <td><Edit2 onClick={() => {
                               setEditModal(true);
                               getCluster(e.clusterId);
-                              viewCostCenterEmployeeByManger(e.storeId, user.employeeId)
-
+                              viewCostCenterEmployeeByManger(e.storeId)
+                              //store id to call edit
                             }} />
                             </td>
 
@@ -128,7 +128,7 @@ function ViewCluster() {
               </div>
               <div>
 
-                {clusterCostCenterList !== null && clusterCostCenterList.length > 10 &&
+                {clusterList !== null && clusterList.length > 10 &&
                   <Pagination
                     itemClass="page-item"
                     linkClass="page-link"

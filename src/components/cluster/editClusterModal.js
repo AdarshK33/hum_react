@@ -5,7 +5,6 @@ import { Multiselect } from 'multiselect-react-dropdown';
 import { toast } from "react-toastify";
 import { RosterContext } from "../../context/RosterState";
 import { AppContext } from "../../context/AppState";
-import { AdminContext } from "../../context/AdminState";
 import "react-toastify/dist/ReactToastify.css";
 const EditClusterModal = (props) => {
 
@@ -38,14 +37,13 @@ const EditClusterModal = (props) => {
   }
 
 
-  const { updateAdminEditCluster, getSingleCluster, viewSports, costCenterEmpAndMgrList, sportsNames, viewClusterCostCenter, callClusterEmployees, callClusterLeaders
+  const { updateAdminEditCluster, getSingleCluster, viewSports, costCenterEmpAndMgrList, sportsNames, callClusterEmployees, callClusterLeaders
     , getSingleCluster1, getEmployeesNames } = useContext(ClusterContext);
   const { user } = useContext(AppContext);
   const { costCenter, costCenterList } = useContext(RosterContext);
 
   useEffect(() => {
     viewSports()
-
   }, [])
 
   useEffect(() => {

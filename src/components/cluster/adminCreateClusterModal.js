@@ -131,14 +131,15 @@ const AdminCreateClusterModal = (props) => {
     const getCostCenterName = (e) => {
         let data = e.target.value
         setCostCenterName(data)
-        viewManagerByCostCenter(data)
+        callClusterEmployees(costCenterName)
+        callClusterLeaders(costCenterName)
     }
 
-    const getEmployeeId = (e) => {
-        let data = e.target.value;
-        callClusterEmployees(costCenterName, data)
-        callClusterLeaders(costCenterName, data)
-    }
+    // const getEmployeeId = (e) => {
+    //     let data = e.target.value;
+    //     callClusterEmployees(costCenterName, data)
+    //     callClusterLeaders(costCenterName, data)
+    // }
 
 
     const handleMultiChange = (option) => {
@@ -231,7 +232,7 @@ const AdminCreateClusterModal = (props) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="row">
+                        {/* <div className="row">
                             <div className="col-sm-12">
                                 <div className="form-group">
                                     <label htmlFor="exampleFormControlInput1">Select Manager</label>
@@ -251,7 +252,7 @@ const AdminCreateClusterModal = (props) => {
                                     </select>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
 
                         <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px", marginLeft: "5px" }}>{errormsg}</h6>
                         <div className="row">
