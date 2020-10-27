@@ -2,15 +2,21 @@ import React, { Fragment, useEffect, useContext, useState} from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import { LeaveContext } from '../../context/LeaveState';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import {  Button } from 'react-bootstrap';
 import '../Leaves/Leaves.css'
 import '../AdminLeave/AdminLeaves.css'
+import { toast } from "react-toastify";
 import Pagination from 'react-js-pagination'
 import { AppContext } from "../../context/AppState";
+import {
+  JsonToExcel
+} from 'react-json-excel';
 
 const HolidayList = () => {
 
   const { getHoliday, holidayDataList, uploadFile } = useContext(LeaveContext);
   const { user } = useContext(AppContext);
+  const [fileUpload, setFileUpload] = useState();
 
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,16 +37,52 @@ const HolidayList = () => {
     getHoliday()
   }, [])
 
-  console.log("holida", holidayDataList)
+  console.log("holiday", holidayDataList)
   const changeHandler = (event) => {
     let fileObj = event.target.files[0];
     console.log("clicked", fileObj)
-    uploadFile(fileObj)
-    setTimeout(()=>{
-      window.location.reload()
-    }, 5000)
+    setFileUpload(fileObj)
+    // uploadFile(fileObj)
+    // setTimeout(()=>{
+    //   window.location.reload()
+    // }, 5000)
    
   }
+
+  //File export 
+  const filename = 'holidaylist';
+  let fields = {
+    "holidayId": "S. No",
+    "holidayDate": "Date",
+    "holidayName": "Name",
+    "year": "Year",
+    "state": "State",
+    "department" : "Department"
+  }
+
+  let data = [];
+  for(let i = 0; i < holidayDataList.length; i++){
+    console.log(holidayDataList[i].holidayDate)
+    data.push({holidayId : i+1, 
+                holidayDate : holidayDataList[i].holidayDate, 
+                holidayName : holidayDataList[i].holidayName,
+                year : holidayDataList[i].year,
+                state : holidayDataList[i].state,
+                department : holidayDataList[i].department})
+  }
+
+  const handleUpload = () => {
+    if(fileUpload !== undefined && fileUpload !== null){
+      uploadFile(fileUpload)
+    }else{
+      toast.info("Please select a file to upload")
+    }
+    
+    setTimeout(()=>{
+        window.location.reload()
+      }, 5000)
+  }
+  
   return (
     <Fragment>
       <Breadcrumb title="Holiday List" parent="Holiday List" />
@@ -61,13 +103,27 @@ const HolidayList = () => {
                       }}
                       style={{ padding: "10px" }}
                     />
-                    <ReactHTMLTableToExcel
+                    <Button className="btn btn-light mr-2" onClick={handleUpload}>Upload File</Button>
+                    {data.length > 0 &&
+                    <JsonToExcel
+                      data={data}
+                      className="btn btn-light mr-2"
+                      filename={filename}
+                      fields={fields}
+                      
+                      text="Export excel"
+                    />}
+                    
+                    {/* <ReactHTMLTableToExcel
                       className="btn btn-light mr-2"
                       table="table-to-xls"
                       filename="holidaylist"
                       sheet="Sheet"
-                      buttonText="Export excel" />
-                  </div> : <div className="title_bar" ></div>
+                      buttonText="Export excel" /> */}
+                  </div> 
+                  : <div className="title_bar" >
+
+                  </div>
             }
               
 
