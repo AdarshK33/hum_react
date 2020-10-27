@@ -332,8 +332,8 @@ export const ClusterProvider = ({ children }) => {
   }
 
 
-  const viewCostCenterEmployeeByManger = (storeId, managerId) => {
-    client.get('employee/view/' + storeId + '/' + managerId).then(function (response) {
+  const viewCostCenterEmployeeByManger = (storeId) => {
+    client.get('employee/view/' + storeId).then(function (response) {
       if (response.data.data === null) {
         state.costCenterEmpAndMgrList = []
       }
@@ -364,8 +364,8 @@ export const ClusterProvider = ({ children }) => {
       });
   }
 
-  const callClusterEmployees = (storeId, managerId) => {
-    client.get('employee/view/' + storeId + '/' + managerId + '/cluster_employees').then(function (response) {
+  const callClusterEmployees = (storeId) => {
+    client.get('employee/view/' + storeId + '/cluster').then(function (response) {
       if (response.data.data === null) {
         state.callClusterEmployeesList = []
       }
@@ -380,8 +380,8 @@ export const ClusterProvider = ({ children }) => {
       });
   }
 
-  const callClusterLeaders = (storeId, managerId) => {
-    client.get('employee/view/' + storeId + '/' + managerId + '/cluster_employees').then(function (response) {
+  const callClusterLeaders = (storeId) => {
+    client.get('employee/view/' + storeId + '/cluster').then(function (response) {
       if (response.data.data === null) {
         state.callClusterLeadersList = []
       }

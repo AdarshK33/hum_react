@@ -5,7 +5,6 @@ import { Multiselect } from 'multiselect-react-dropdown';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AppContext } from "../../context/AppState";
-import { AdminContext } from "../../context/AdminState";
 import { RosterContext } from "../../context/RosterState";
 const CreateClusterModal = (props) => {
 
@@ -37,7 +36,7 @@ const CreateClusterModal = (props) => {
 
 
 
-  const { updateAdminaddCluster, viewSports, sportsNames, viewClusterCostCenter,
+  const { updateAdminaddCluster, viewSports, sportsNames,
     callClusterLeadersList, callClusterEmployeesList,
     callClusterEmployees, callClusterLeaders,
   } = useContext(ClusterContext);
