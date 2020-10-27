@@ -179,7 +179,7 @@ const AdminShiftModal = (props) => {
     <Fragment>
       <Modal show={props.modal} onHide={props.handleClose} centered>
         <Modal.Header closeButton>
-          <Modal.Title> Admin Roster</Modal.Title>
+          <Modal.Title> Team Roster</Modal.Title>
         </Modal.Header>
         <Container>
 

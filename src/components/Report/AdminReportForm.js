@@ -145,7 +145,7 @@ const AdminReportForm = () => {
                                 <Form.Control as="select" required value={costCenter}
                                  onChange={(e) => setCostCenterHandler(e)} isSearchable >
                                     <option value=''>Select Cost Center</option>
-                                    {/* <option value='all'>All</option> */}
+                                    <option value='all'>All</option>
                                     {costCenterList.length > 0 && costCenterList.map((item, i) => {
                                             return (
                                                 <option key={item.costCenterId} value={item.costCentreName}>
@@ -167,7 +167,7 @@ const AdminReportForm = () => {
                     <Row>
                         <div className="col-sm-4">
                             <Form.Group>
-                                <Form.Label>Employee Id</Form.Label> <span style={{color:'red'}}>*</span> 
+                                <Form.Label>Employee Id</Form.Label> 
                                {/*  <Select
                                 name="filters"
                                 placeholder="Select Employee Id"

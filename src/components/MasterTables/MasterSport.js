@@ -1,8 +1,11 @@
-import React, { Fragment, useEffect, useContext, useState} from 'react';
+import React, { Fragment, useEffect, useContext, useState } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import { LeaveContext } from '../../context/LeaveState';
 import { ClusterContext } from '../../context/ClusterState';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import {
+  JsonToExcel
+} from 'react-json-excel';
 import '../Leaves/Leaves.css'
 import '../AdminLeave/AdminLeaves.css'
 import Pagination from 'react-js-pagination'
@@ -11,7 +14,7 @@ import { AppContext } from "../../context/AppState";
 const MasterSport = () => {
 
   const { uploadFile } = useContext(LeaveContext);
-  const { viewSports, sportsNames} = useContext(ClusterContext)
+  const { viewSports, sportsNames } = useContext(ClusterContext)
   const { user } = useContext(AppContext);
 
   /*-----------------Pagination------------------*/
@@ -20,25 +23,41 @@ const MasterSport = () => {
   const totalRecords = sportsNames !== null && sportsNames.length;
   const pageRange = 10;
 
- const indexOfLastRecord = currentPage * recordPerPage;
- const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
- const currentRecords = sportsNames !== null ? sportsNames.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+  const indexOfLastRecord = currentPage * recordPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+  const currentRecords = sportsNames !== null ? sportsNames.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
- const handlePageChange = pageNumber => {
-  setCurrentPage(pageNumber);
- }
- /*-----------------Pagination------------------*/
+  const handlePageChange = pageNumber => {
+    setCurrentPage(pageNumber);
+  }
+  /*-----------------Pagination------------------*/
 
   useEffect(() => {
     viewSports()
   }, [])
-/* 
-  console.log("holida", holidayDataList)
-  const changeHandler = (event) => {
-    let fileObj = event.target.files[0];
-    console.log("clicked", fileObj)
-    uploadFile(fileObj)
-  } */
+
+  const filename = 'mastersport';
+  let fields = {
+    "sportsId": "S. No",
+    "sportName": "Sport Name",
+
+  }
+
+  let data = [];
+  for (let i = 0; i < sportsNames.length; i++) {
+    data.push({
+      sportsId: i + 1,
+      sportName: sportsNames[i].sportName,
+
+    })
+  }
+  /* 
+    console.log("holida", holidayDataList)
+    const changeHandler = (event) => {
+      let fileObj = event.target.files[0];
+      console.log("clicked", fileObj)
+      uploadFile(fileObj)
+    } */
   return (
     <Fragment>
       <Breadcrumb title="Master" parent="Sports" />
@@ -46,23 +65,26 @@ const MasterSport = () => {
         <div className="row">
           <div className="col-sm-12">
             <div className="card" style={{ overflowX: "auto" }}>
-            
-                  <div className="title_bar" >                   
-                   {/*  <input
+
+              <div className="title_bar" >
+                {/*  <input
                       className="btn"
                       type="file"
                       accept=".xlsx, .xls, .csv"
                       onChange={(e) => changeHandler(e)}
                       style={{ padding: "10px" }}
                     /> */}
-                    <ReactHTMLTableToExcel
-                      className="btn btn-light mr-2"
-                      table="table-to-xls"
-                      filename="masterSport"
-                      sheet="Sheet"
-                      buttonText="Export excel" />
-                  </div> 
-              
+                {data.length > 0 &&
+                  <JsonToExcel
+                    data={data}
+                    className="btn btn-light mr-2"
+                    filename={filename}
+                    fields={fields}
+
+                    text="Export excel"
+                  />}
+              </div>
+
 
               <div className="table-responsive">
                 <table id="table-to-xls" className="table table-hover">
@@ -93,16 +115,16 @@ const MasterSport = () => {
           </div>
         </div>
         {sportsNames !== null && sportsNames.length > 10 &&
-                <Pagination
-                    itemClass="page-item" 
-                    linkClass="page-link"
-                    activePage={currentPage}
-                    itemsCountPerPage={recordPerPage}
-                    totalItemsCount={totalRecords}
-                    pageRangeDisplayed={pageRange}
-                    onChange={handlePageChange}
-                />
-                }
+          <Pagination
+            itemClass="page-item"
+            linkClass="page-link"
+            activePage={currentPage}
+            itemsCountPerPage={recordPerPage}
+            totalItemsCount={totalRecords}
+            pageRangeDisplayed={pageRange}
+            onChange={handlePageChange}
+          />
+        }
 
       </div>
     </Fragment>
