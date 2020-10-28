@@ -46,7 +46,6 @@ const AdminRoster = () => {
         setshiftDate(item)
         setAdminModal(true)
         setFirstName(name);
-        setContractType(ctype)
         adminRosterAvailableShift(contractType, costCenter1)
         getallWeeks()
     }

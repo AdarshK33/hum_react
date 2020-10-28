@@ -4,6 +4,7 @@ import moment from "moment";
 import "../salary/salary.css";
 import "../Leaves/Leaves.css";
 import "./AdminLeaves.css";
+import { Edit2, } from 'react-feather';
 import { Button, Modal,Form, Table, Row, Container } from "react-bootstrap";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import { ClusterContext } from "../../context/ClusterState";
@@ -11,7 +12,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useHistory } from "react-router-dom";
 import { AppContext } from "../../context/AppState";
 import { DashboardContext } from "../../context/DashboardState";
-import Pagination from 'react-js-pagination'
+import Pagination from 'react-js-pagination';
+import AdminSalaryEdit from './AdminSalaryEdit';
 
 const AdminSalaryModule = () => {
   const [shiftButton] = useState(false);
@@ -19,6 +21,24 @@ const AdminSalaryModule = () => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [checked, setChecked] = useState([]);
   const [costCenter, setCostCenter] = useState()
+
+  const [editModal, setEditModal] = useState(false)
+  const [employeeId, setEmployeeId] = useState()
+  const [firstName, setFirstName] = useState()
+  const [lastName, setLastName] = useState()
+  const [numberOfHours, setNumberOfHours] = useState()
+  const [lop, setLop] = useState()
+  const [contractType, setContractType] = useState()
+  const [extraHours, setExtraHours] = useState()
+  const [reason, setReason] = useState()
+  const [month, setMonth] = useState()
+  const [salaryId, setSalaryId] = useState()
+  const [status, setStatus] = useState()
+  const [statusDesc, setStatusDesc] = useState()
+  const [totalHours, setTotalHours] = useState()
+  const [additionalHours, setadditionalHours] = useState()
+  const [year, setYear] = useState()
+ 
   
 
   let history = useHistory();
@@ -32,6 +52,7 @@ const AdminSalaryModule = () => {
 
   const { user } = useContext(AppContext);
 
+  const handleEditClose = () => setEditModal(false)
   const handleDeleteClose = () => setDeleteModal(false);
 
    useEffect(() => {
@@ -217,6 +238,7 @@ const AdminSalaryModule = () => {
                         <th scope="col">Extra Hours</th>
                         <th scope="col">Total Hours</th>
                         <th scope="col">Status</th>
+                        <th></th>
 
                       </tr>
                     </thead>
@@ -254,6 +276,24 @@ const AdminSalaryModule = () => {
                               <td>{item.extraHours}</td>
                               <td>{item.totalHours}</td>
                               <td>{item.statusDesc}</td>
+                              <td>
+                                {
+                                  item.statusDesc === 'Pending' ?
+                                  <Edit2 onClick={() => {
+                                    setEditModal(true); setEmployeeId(item.employeeId);
+                                    setFirstName(item.firstName); setLastName(item.lastName); setNumberOfHours(item.numberOfHours)
+                                    setLop(item.lop); setContractType(item.contractType); setExtraHours(item.extraHours);
+                                    setReason(item.reason); setMonth(item.month); setSalaryId(item.salaryId);
+                                    setStatus(item.status); setStatusDesc(item.statusDesc);
+                                    setTotalHours(item.totalHours); setYear(item.year);
+                                    setadditionalHours(item.additionalHours);
+                                  }} />
+                                  :
+                                  <Edit2 disabled style={{ color: 'lightgrey' }} />
+                                }
+                              </td>
+
+                              
                             </tr>
                           </tbody>
                         );
@@ -267,6 +307,25 @@ const AdminSalaryModule = () => {
               </div>
             </div>
           </Row>
+          <AdminSalaryEdit 
+            handleEditClose={handleEditClose} 
+            modal={editModal}
+            employeeId={employeeId}
+            firstName={firstName} 
+            lastName={lastName} 
+            numberOfHours={numberOfHours}
+            lop={lop} 
+            contractType={contractType} 
+            extraHours={extraHours} 
+            reason={reason}
+            month={month} 
+            salaryId={salaryId} 
+            status={status} 
+            statusDesc={statusDesc} 
+            totalHours={totalHours} 
+            year={year}
+            additionalHours={additionalHours}
+        />
         </div>
         {salaryList !== null && salaryList.length > 10 &&
                 <Pagination

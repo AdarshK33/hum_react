@@ -241,7 +241,7 @@ export const RosterProvider = ({ children }) => {
   const uploadWeeks = (file) => {
     const formData = new FormData();
     formData.append('file',file)
-
+    console.log(formData)
     return client.post('/weekoff/weeks/upload', formData)
       .then((response) => {
         console.log(response,"res")
