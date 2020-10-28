@@ -1,8 +1,7 @@
-import React, { Fragment, useEffect, useContext, useState} from 'react';
+import React, { Fragment, useEffect, useContext, useState } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import { LeaveContext } from '../../context/LeaveState';
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
-import {  Button } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import '../Leaves/Leaves.css'
 import '../AdminLeave/AdminLeaves.css'
 import { toast } from "react-toastify";
@@ -24,14 +23,14 @@ const HolidayList = () => {
   const totalRecords = holidayDataList !== null && holidayDataList.length;
   const pageRange = 10;
 
- const indexOfLastRecord = currentPage * recordPerPage;
- const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
- const currentRecords = holidayDataList !== null ? holidayDataList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+  const indexOfLastRecord = currentPage * recordPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+  const currentRecords = holidayDataList !== null ? holidayDataList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
- const handlePageChange = pageNumber => {
-  setCurrentPage(pageNumber);
- }
- /*-----------------Pagination------------------*/
+  const handlePageChange = pageNumber => {
+    setCurrentPage(pageNumber);
+  }
+  /*-----------------Pagination------------------*/
 
   useEffect(() => {
     getHoliday()
@@ -46,7 +45,7 @@ const HolidayList = () => {
     // setTimeout(()=>{
     //   window.location.reload()
     // }, 5000)
-   
+
   }
 
   //File export 
@@ -57,32 +56,34 @@ const HolidayList = () => {
     "holidayName": "Name",
     "year": "Year",
     "state": "State",
-    "department" : "Department"
+    "department": "Department"
   }
 
   let data = [];
-  for(let i = 0; i < holidayDataList.length; i++){
+  for (let i = 0; i < holidayDataList.length; i++) {
     console.log(holidayDataList[i].holidayDate)
-    data.push({holidayId : i+1, 
-                holidayDate : holidayDataList[i].holidayDate, 
-                holidayName : holidayDataList[i].holidayName,
-                year : holidayDataList[i].year,
-                state : holidayDataList[i].state,
-                department : holidayDataList[i].department})
+    data.push({
+      holidayId: i + 1,
+      holidayDate: holidayDataList[i].holidayDate,
+      holidayName: holidayDataList[i].holidayName,
+      year: holidayDataList[i].year,
+      state: holidayDataList[i].state,
+      department: holidayDataList[i].department
+    })
   }
 
   const handleUpload = () => {
-    if(fileUpload !== undefined && fileUpload !== null){
+    if (fileUpload !== undefined && fileUpload !== null) {
       uploadFile(fileUpload)
-    }else{
+    } else {
       toast.info("Please select a file to upload")
     }
-    
-    setTimeout(()=>{
-        window.location.reload()
-      }, 5000)
+
+    setTimeout(() => {
+      window.location.reload()
+    }, 5000)
   }
-  
+
   return (
     <Fragment>
       <Breadcrumb title="Holiday List" parent="Holiday List" />
@@ -90,9 +91,9 @@ const HolidayList = () => {
         <div className="row">
           <div className="col-sm-12">
             <div className="card" style={{ overflowX: "auto" }}>
-            {
-                  (user.loginType==="1" || user.additionalRole==="1")?
-                  <div className="title_bar" >                   
+              {
+                (user.loginType === "1" || user.additionalRole === "1") ?
+                  <div className="title_bar" >
                     <input
                       className="btn"
                       type="file"
@@ -105,27 +106,27 @@ const HolidayList = () => {
                     />
                     <Button className="btn btn-light mr-2" onClick={handleUpload}>Upload File</Button>
                     {data.length > 0 &&
-                    <JsonToExcel
-                      data={data}
-                      className="btn btn-light mr-2"
-                      filename={filename}
-                      fields={fields}
-                      
-                      text="Export excel"
-                    />}
-                    
+                      <JsonToExcel
+                        data={data}
+                        className="btn btn-light mr-2"
+                        filename={filename}
+                        fields={fields}
+
+                        text="Export excel"
+                      />}
+
                     {/* <ReactHTMLTableToExcel
                       className="btn btn-light mr-2"
                       table="table-to-xls"
                       filename="holidaylist"
                       sheet="Sheet"
                       buttonText="Export excel" /> */}
-                  </div> 
+                  </div>
                   : <div className="title_bar" >
 
                   </div>
-            }
-              
+              }
+
 
               <div className="table-responsive">
                 <table id="table-to-xls" className="table table-hover">
@@ -145,7 +146,7 @@ const HolidayList = () => {
                       return (
                         <tbody key={i + 1}>
                           <tr>
-                            <td>{i + 1 +indexOfFirstRecord}</td>
+                            <td>{i + 1 + indexOfFirstRecord}</td>
                             <td>{item.holidayDate}</td>
                             <td>{item.holidayName}</td>
                             <td>{item.year}</td>
@@ -164,16 +165,16 @@ const HolidayList = () => {
           </div>
         </div>
         {holidayDataList !== null && holidayDataList.length > 10 &&
-                <Pagination
-                    itemClass="page-item" 
-                    linkClass="page-link"
-                    activePage={currentPage}
-                    itemsCountPerPage={recordPerPage}
-                    totalItemsCount={totalRecords}
-                    pageRangeDisplayed={pageRange}
-                    onChange={handlePageChange}
-                />
-                }
+          <Pagination
+            itemClass="page-item"
+            linkClass="page-link"
+            activePage={currentPage}
+            itemsCountPerPage={recordPerPage}
+            totalItemsCount={totalRecords}
+            pageRangeDisplayed={pageRange}
+            onChange={handlePageChange}
+          />
+        }
 
       </div>
     </Fragment>

@@ -35,8 +35,8 @@ const AdminCreateClusterModal = (props) => {
 
 
 
-    const { addCluster, viewSports, sportsNames, viewCluster, viewManagerByCostCenterList,
-        callClusterLeadersList, callClusterEmployeesList, viewManagerByCostCenter,
+    const { addCluster, viewSports, sportsNames,
+        callClusterLeadersList, callClusterEmployeesList,
         callClusterEmployees, callClusterLeaders,
     } = useContext(ClusterContext);
     const { user, } = useContext(AppContext);
@@ -131,8 +131,8 @@ const AdminCreateClusterModal = (props) => {
     const getCostCenterName = (e) => {
         let data = e.target.value
         setCostCenterName(data)
-        callClusterEmployees(costCenterName)
-        callClusterLeaders(costCenterName)
+        callClusterEmployees(data)
+        callClusterLeaders(data)
     }
 
     // const getEmployeeId = (e) => {

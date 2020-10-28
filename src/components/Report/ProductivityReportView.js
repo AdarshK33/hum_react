@@ -1,47 +1,87 @@
 import React, { Fragment, useState } from 'react';
 import { Table, Row } from 'react-bootstrap'
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import '../Leaves/Leaves.css'
 import '../AdminLeave/AdminLeaves.css'
 import Pagination from 'react-js-pagination'
-
+import {
+    JsonToExcel
+} from 'react-json-excel';
 
 const ProductivityReportView = (props) => {
     const productivityList = props.productivityList
 
-     /*-----------------Pagination------------------*/
-     const [currentPage, setCurrentPage] = useState(1);
-     const recordPerPage = 10;
-     const totalRecords = productivityList !== null && productivityList !== undefined && productivityList.length;
-     const pageRange = 10;
- 
+    /*-----------------Pagination------------------*/
+    const [currentPage, setCurrentPage] = useState(1);
+    const recordPerPage = 10;
+    const totalRecords = productivityList !== null && productivityList !== undefined && productivityList.length;
+    const pageRange = 10;
+
     const indexOfLastRecord = currentPage * recordPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
     const currentRecords = productivityList !== null && productivityList !== undefined ?
-     productivityList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
- 
+        productivityList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+
+    console.log("PRODUCTVITY LIST " + productivityList)
+
     const handlePageChange = pageNumber => {
-     setCurrentPage(pageNumber);
+        setCurrentPage(pageNumber);
     }
     /*-----------------Pagination------------------*/
+    // export excel start
+    const filename = 'productvityreport';
+    let fields = {
+        "productId": "S. No",
+        "costCentre": "Cost Center",
+        "employeeId": "Employee Id",
+        "firstName": "Name",
+        "clusterName": "Cluster",
+        "sports": "Sports",
+        "paymentType": "Payment Type",
+        "contractType": "Type of Contract",
+        "workingHours": "Hours for the month",
+        "duration": "Month"
+    }
+
+    let data = [];
+    if (productivityList !== undefined && productivityList !== null) {
+        for (let i = 0; i < productivityList.length; i++) {
+            data.push({
+                productId: i + 1,
+                costCentre: productivityList[i].costCentre,
+                employeeId: productivityList[i].employeeId,
+                firstName: productivityList[i].firstName,
+                clusterName: productivityList[i].clusterName,
+                sports: productivityList[i].sports,
+                paymentType: productivityList[i].paymentType,
+                contractType: productivityList[i].contractType,
+                workingHours: productivityList[i].workingHours,
+                duration: productivityList[i].duration
+            })
+        }
+
+    }
+
     return (
         <Fragment>
             <div className="container-fluid">
                 <Row style={{ marginTop: '2rem' }}>
-                    <div className="col-sm-12" style={{padding:'0'}}>
+                    <div className="col-sm-12" style={{ padding: '0' }}>
                         <div className="card" style={{ overflowX: "auto" }}>
 
                             <div className="title_bar" >
-                                <ReactHTMLTableToExcel
-                                    className="btn btn-light mr-2"
-                                    table="table-to-xls"
-                                    filename="report"
-                                    sheet="Sheet"
-                                    buttonText="Export excel" />
+                                {data.length > 0 &&
+                                    <JsonToExcel
+                                        data={data}
+                                        className="btn btn-light mr-2"
+                                        filename={filename}
+                                        fields={fields}
+                                        text="Export excel"
+
+                                    />}
                             </div>
 
                             <div className="table-responsive">
-                                <Table id="table-to-xls" className="table table-hover" style={{tableLayout:'fixed'}}>
+                                <Table id="table-to-xls" className="table table-hover" style={{ tableLayout: 'fixed' }}>
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
                                             <th>S. No</th>
@@ -84,7 +124,7 @@ const ProductivityReportView = (props) => {
             </div>
             {productivityList !== null && productivityList !== undefined && productivityList.length > 10 &&
                 <Pagination
-                    itemClass="page-item" 
+                    itemClass="page-item"
                     linkClass="page-link"
                     activePage={currentPage}
                     itemsCountPerPage={recordPerPage}
@@ -92,7 +132,7 @@ const ProductivityReportView = (props) => {
                     pageRangeDisplayed={pageRange}
                     onChange={handlePageChange}
                 />
-                }
+            }
         </Fragment>
     );
 };

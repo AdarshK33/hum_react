@@ -40,7 +40,6 @@ const MasterSport = () => {
   let fields = {
     "sportsId": "S. No",
     "sportName": "Sport Name",
-
   }
 
   let data = [];

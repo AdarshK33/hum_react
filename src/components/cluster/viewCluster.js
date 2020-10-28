@@ -64,9 +64,21 @@ function ViewCluster() {
 
 
               <div className="title_bar">
-                <Button className="btn btn-light mr-2" onClick={handleShow}>Create</Button>
-                {/* <Button className="btn btn-light mr-2" onClick={handleEditShow}>edit</Button> */}
+                {(() => {
+                  if (user.isClusterManager === "1") {
+                    return (
+                      <Button className="btn btn-light mr-2" style={{ display: "none" }} onClick={handleShow}>Create</Button>
+                    )
+                  }
+                  else if (user.isClusterManager === null) {
+                    return (
+                      <Button className="btn btn-light mr-2" onClick={handleShow}>Create</Button>
+                    )
+                  }
+                })()}
 
+                {/* <Button className="btn btn-light mr-2" onClick={handleEditShow}>edit</Button> */}
+                {/* <Button className="btn btn-light mr-2" onClick={handleShow}>Create</Button> */}
               </div>
               <CreateClusterModal handleClose={handleClose} modal={modal} />
               <div className="table-responsive">
