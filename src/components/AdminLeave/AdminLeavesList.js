@@ -148,6 +148,8 @@ const AdminLeavesList = (props) => {
                                             )
                                         })}
                                 </Table>
+                                {(leaveList !== null && leaveList.length <= 0) ? 
+                                <p style={{ textAlign: "center" }}>No Data</p> : null}
                             </div>
                         </div>
                     </div>
