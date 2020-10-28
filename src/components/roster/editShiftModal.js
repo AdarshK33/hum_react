@@ -29,7 +29,6 @@ const EditShiftModal = (props) => {
   const [showText, setShowText] = useState(false);
   const [invalidText, setInvalidText] = useState(false)
   const [showBreakDuration, setShowBreakDuration] = useState(true)
-  const [warnMsg, setWrnMsg] = useState(false);
   const [errormsg, setErrorMsg] = useState(false);
   const [status, setStatus] = useState(0)
   const [costCenterName, setCostCenterName] = useState('');
@@ -112,7 +111,7 @@ const EditShiftModal = (props) => {
         }
         else {
           setNineHourWarnMsg(false)
-          setNineHourWarnMsg("Shift should be 9 hours only")
+          setNineHourWarnMsg("* Shift should be 9 hours only")
           setShiftButton(true)
           setOneFiveWarnMsg(true)
           setFiveToEightWarnMsg(true)
@@ -126,7 +125,7 @@ const EditShiftModal = (props) => {
         }
         else {
           setFiveToEightWarnMsg(false)
-          setFiveToEightWarnMsg("Shift should be between 5 to 8 hours only")
+          setFiveToEightWarnMsg("* Shift should be between 5 to 8 hours only")
           setShiftButton(true)
           setNineHourWarnMsg(true)
           setOneFiveWarnMsg(true)
@@ -139,7 +138,7 @@ const EditShiftModal = (props) => {
         }
         else {
           setOneFiveWarnMsg(false)
-          setOneFiveWarnMsg("Shift should be between 1 to 5 hours only")
+          setOneFiveWarnMsg("* Shift should be between 1 to 5 hours only")
           setShiftButton(true)
           setNineHourWarnMsg(true)
           setFiveToEightWarnMsg(true)
@@ -163,7 +162,7 @@ const EditShiftModal = (props) => {
     var breakEndTime1 = moment(breakStartTime).add(1, 'hours').format('HH:mm:ss')
     if ((breakEndTime1 > endTime1) || (breakStartTime1 < startTime1)) {
       setShiftButton(true)
-      setTimeErrorMsg("Invalid Break Time");
+      setTimeErrorMsg("* Invalid Break Time");
     }
     else {
       setShiftButton(false);
@@ -332,19 +331,19 @@ const EditShiftModal = (props) => {
                       </div>
                     </div>
                   </div>
-                  <h6 style={{ color: "black", fontFamily: "work-Sans, sans-serif", fontSize: "14px" }}>Total no. of working hours {workingHours}</h6>
-                  <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px" }}>{nineHourWarnMsg}</h6>
-                  <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px" }}>{fiveToEightWarnMsg}</h6>
-                  <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px" }}>{oneToFiveWarnMsg}</h6>
-                  <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px" }}>{errormsg}</h6>
-                  <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px" }}>{warnMsg}</h6>
+                  <h6 style={{ color: "black", fontFamily: "work-Sans, sans-serif", fontSize: "14px", marginTop: "10px" }}>Total no. of working hours {workingHours}</h6>
+                  <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px", marginTop: "10px" }}>{nineHourWarnMsg}</h6>
+                  <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px", marginTop: "10px" }}>{fiveToEightWarnMsg}</h6>
+                  <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px", marginTop: "10px" }}>{oneToFiveWarnMsg}</h6>
+                  <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px", marginTop: "10px" }}>{errormsg}</h6>
+
 
                   {showBreakDuration &&
                     <div className="row">
-                      <div className="col-sm-5">
+                      <div className="col-sm-5 py-2">
                         <h6 style={{ color: "text-secondary", fontFamily: "work-Sans, sans-serif", fontSize: "14px" }}>Working Hours :{singleShiftList.workingHours}&nbsp;Hrs</h6>
                       </div>
-                      <div className="col-sm-7">
+                      <div className="col-sm-7 py-2">
                         <h6 style={{ color: "text-secondary", fontFamily: "work-Sans, sans-serif", fontSize: "14px" }}>Break duration :{singleShiftList.breakStartTime}-{singleShiftList.breakEndTime}</h6>
                         <br />
                       </div>

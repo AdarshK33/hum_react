@@ -210,6 +210,9 @@ const LeaveView = () => {
                                 })}
 
                         </Table>
+                        {(leaveEmpList !== null && leaveEmpList.length <= 0) ? 
+                                <p style={{ textAlign: "center" }}>No Data</p> : null}
+
                     <DeleteLeave handleDeleteClose={handleDeleteClose} modal={deleteModal} ltId={ltId} empid={user.employeeId} />
                     {user.employeeId !== undefined ?
                         <EditLeave handleEditClose={handleEditClose} modal={editModal} empid={user.employeeId} numberOfDays={numberOfDays}

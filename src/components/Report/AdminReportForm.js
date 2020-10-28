@@ -88,14 +88,14 @@ const AdminReportForm = () => {
         console.log("leaveIds", leaveIds)
 
         const monthReportData = {
-            employeeIds: employeeCostCenter.map((e,i) => employeeCostCenter[i].value),
+            employeeIds: (costCenter === 'all' ? ['string'] : employeeCostCenter.map((e,i) => employeeCostCenter[i].value)),
             fromDate: moment(startDate).format("YYYY-MM-DD"),
             leaveTypeIds:  leaveIds,
             toDate: moment(endDate).format("YYYY-MM-DD"),
             year: 'string'
         }
         const yearReportData = {
-            employeeIds: employeeCostCenter.map((e,i) => employeeCostCenter[i].value),
+            employeeIds: (costCenter === 'all' ? ['string'] : employeeCostCenter.map((e,i) => employeeCostCenter[i].value)),
             fromDate: 'string',
             leaveTypeIds: leaveIds,
             toDate: 'string',
@@ -112,8 +112,8 @@ const AdminReportForm = () => {
         setReportType('')
         setCostCenter(costCenter)
         setEmployeeCostCenter([])
-        setStartDate()
-        setEndDate()
+        /* setStartDate()
+        setEndDate() */
         setLeave([])
 
     }
@@ -203,7 +203,7 @@ const AdminReportForm = () => {
                                     options={leaveTypeReport !== undefined && leaveTypeReport.map(e => ({label: e.leaveName , value: e.leaveTypeId}))}
                                     value={leave}
                                     onChange={setLeaveHandler}
-                                    labelledBy={"elect Leave Type"}
+                                    labelledBy={"Select Leave Type"}
                                     hasSelectAll={true}
                                     disableSearch={true}
                                 />
@@ -252,7 +252,7 @@ const AdminReportForm = () => {
                     <Button type="submit" className="submitButton">Submit</Button>
                 </Form>
             </div>
-            <AdminReportView AdminReportList={reportList} />
+            <AdminReportView AdminReportList={reportList} startDate={startDate} endDate={endDate} />
         </Fragment>
     );
 };

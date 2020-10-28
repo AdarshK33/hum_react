@@ -5,8 +5,15 @@ import Pagination from 'react-js-pagination'
 import { AppContext } from "../../context/AppState";
 import { RosterContext } from "../../context/RosterState";
 import { MasterFilesContext } from "../../context/MasterFilesState";
+import {
+  JsonToExcel
+} from 'react-json-excel';
+import { toast } from "react-toastify";
+import { Button } from 'react-bootstrap';
 
 const MasterWeek = () => {
+
+  const [fileUpload, setFileUpload] = useState();
 
   const {getallWeeks, weeksInYear, uploadWeeks} = useContext(RosterContext);
 
@@ -18,11 +25,42 @@ const MasterWeek = () => {
   const changeHandler = (event) => {
     let fileObj = event.target.files[0];
     console.log("clicked", fileObj)
-    uploadWeeks(fileObj)
-    setTimeout(()=>{
+    setFileUpload(fileObj)
+  }
+
+  //File export 
+  const filename = 'weeklist';
+  let fields = {
+    "weekId": "S. No",
+    "weekName": "Week Name",
+    "startDate": "Start Date",
+    "endDate": "End Date",
+    "year" : "Year"
+  }
+
+  let data = [];
+  for(let i = 0; i < weeksInYear.length; i++){
+    
+    data.push({weekId : i+1, 
+                weekName : weeksInYear[i].weekName, 
+                startDate : weeksInYear[i].startDate,
+                endDate : weeksInYear[i].endDate,
+                year : weeksInYear[i].year
+                })
+  }
+
+  const handleUpload = () => {
+    if(fileUpload !== undefined && fileUpload !== null){
+      uploadWeeks(fileUpload)
+    }else{
+      toast.info("Please select a file to upload")
+    }
+
+    setTimeout(() => {
       window.location.reload()
     }, 5000)
   }
+
   return (
     <Fragment>
       <Breadcrumb title="Master" parent="Week Master" />
@@ -31,8 +69,30 @@ const MasterWeek = () => {
           <div className="col-sm-12">
             <div className="card" style={{ overflowX: "auto" }}>
             {                  
-                  <div className="title_bar" >                   
-                    <input
+                  <div className="title_bar" >  
+
+                  <input
+                    className="btn"
+                    type="file"
+                    accept=".xlsx, .xls, .csv"
+                    onChange={(e) => {
+                      getallWeeks()
+                      changeHandler(e)
+                    }}
+                    style={{ padding: "10px" }}
+                  />
+                  <Button className="btn btn-light mr-2" onClick={handleUpload}>Upload File</Button>
+
+                  {data.length > 0 &&
+                    <JsonToExcel
+                      data={data}
+                      className="btn btn-light mr-2"
+                      filename={filename}
+                      fields={fields}
+                      
+                      text="Export excel"
+                    />}                 
+                    {/* <input
                       className="btn"
                       type="file"
                       accept=".xlsx, .xls, .csv"
@@ -44,7 +104,7 @@ const MasterWeek = () => {
                       table="table-to-xls"
                       filename="weeklist"
                       sheet="Sheet"
-                      buttonText="Export excel" />
+                      buttonText="Export excel" /> */}
                   </div>
             }
               

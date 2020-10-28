@@ -3,7 +3,9 @@ import Breadcrumb from "../common/breadcrumb";
 import moment from 'moment';
 import "./salary.css";
 import { Form, Table, Row, Button, Modal } from 'react-bootstrap'
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import {
+  JsonToExcel
+} from 'react-json-excel';
 import { ClusterContext } from "../../context/ClusterState";
 import { DashboardContext } from "../../context/DashboardState";
 import EditSalary from './EditSalary'
@@ -23,7 +25,7 @@ function ViewShift() {
   const [getM, setGetM] = useState();
 
   const { cosCentreList, viewCostCentre } = useContext(DashboardContext);
-  const { viewSalary, salaryList, salaryApproval} = useContext(ClusterContext);
+  const { viewSalary, salaryList, salaryApproval } = useContext(ClusterContext);
 
   const [editModal, setEditModal] = useState(false)
   const [employeeId, setEmployeeId] = useState()
@@ -85,9 +87,9 @@ function ViewShift() {
     console.log("approval data=====", approvalData);
     salaryApproval(approvalData, month, year, user.costCentre);
     setChecked([])
-   /* 
-    console.log("month, costCenter, year",month, year, user.costCentre)
-    viewSalary(month, year, user.costCentre) */
+    /* 
+     console.log("month, costCenter, year",month, year, user.costCentre)
+     viewSalary(month, year, user.costCentre) */
     history.push("/salary/processsalary");
   };
 
@@ -98,10 +100,10 @@ function ViewShift() {
     };
     const month = moment(getM, ["YYYY-MM"]).format("M");
     const year = moment(getM, ["MMM Do YY"]).format("YYYY");
-    salaryApproval(cancelData,  month, year, user.costCentre);
+    salaryApproval(cancelData, month, year, user.costCentre);
     setDeleteModal(false);
     setChecked([])
-  
+
     /* console.log("month, costCenter, year",month, year, user.costCentre)
     viewSalary(month, year, user.costCentre) */
     history.push("/salary/processsalary");
@@ -121,6 +123,37 @@ function ViewShift() {
       }
     });
   };
+  //File export 
+  const filename = 'salaryList';
+  let fields = {
+    "salaryListId": "S. No",
+    "employeeId": "Employee Id",
+    "firstName": "Employee Name",
+    "numberOfHours": "Number Of Hours",
+    "lop": "LOP",
+    "contractType": "Contract Type",
+    "extraHours": "Extra Hours",
+    "totalHours": "Total Hours",
+    "statusDesc": "Status"
+  }
+
+  let data = [];
+  if (salaryList !== undefined && salaryList !== null) {
+    for (let i = 0; i < salaryList.length; i++) {
+      console.log(salaryList[i].holidayDate)
+      data.push({
+        salaryListId: i + 1,
+        employeeId: salaryList[i].employeeId,
+        firstName: salaryList[i].firstName,
+        numberOfHours: salaryList[i].numberOfHours,
+        lop: salaryList[i].lop,
+        contractType: salaryList[i].contractType,
+        extraHours: salaryList[i].extraHours,
+        totalHours: salaryList[i].totalHours,
+        statusDesc: salaryList[i].statusDesc
+      })
+    }
+  }
 
   return (
     <Fragment>
@@ -152,60 +185,76 @@ function ViewShift() {
 
         <Row style={{ marginTop: '2rem' }}>
           <div className="col-sm-12">
-              <div className="title_bar" >
-                <ReactHTMLTableToExcel
+            <div className="title_bar" >
+              {data.length > 0 &&
+                <JsonToExcel
+                  data={data}
                   className="btn btn-light mr-2"
-                  table="table-to-xls1"
-                  filename="salaryFile"
-                  sheet="Sheet"
+                  filename={filename}
+                  fields={fields}
 
-                  buttonText="Export excel" />
-                  <div className="ml-2" style={{float:'left'}}>
-                    <Button
-                      className="btn btn-light mr-2"
-                      onClick={approvedButton}
-                    >
-                      Approve
+                  text="Export excel"
+                />}
+
+                
+              {
+                (user.loginType==="1" || user.additionalRole==="1" ||
+                user.loginType==="7" || user.additionalRole==="7" ||
+                user.loginType==="9" || user.additionalRole==="9"
+                )?
+                <div className="ml-2" style={{ float: 'left' }}>
+                <Button
+                  className="btn btn-light mr-2"
+                  onClick={approvedButton}
+                >
+                  Approve
                   </Button>
-                    <Button
-                      variant="danger"
-                      onClick={() => {
-                        setDeleteModal(true);
-                      }}
-                    >Cancel </Button> 
-                </div>
+                <Button
+                  variant="danger"
+                  onClick={() => {
+                    setDeleteModal(true);
+                  }}
+                >Cancel </Button>
               </div>
-              <Modal show={deleteModal} onHide={handleDeleteClose} centered>
-                <Modal.Body style={{ marginTop: "1rem" }}>
-                  <h5>Are you sure to cancel the item ?</h5>
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button
-                    variant="secondary"
-                    className="deleteNoButton"
-                    onClick={() => handleDeleteClose()}
-                  >
-                    No
-                </Button>
-                  <Button
-                    variant="primary"
-                    className="submitButton"
-                    onClick={() => cancelLeave()}
-                  >
-                    Yes
-                </Button>
-                </Modal.Footer>
-              </Modal>
+              :
+              <div></div>
+                }
             </div>
-          </Row>
-          <Row>
-            <div className="col-sm-12">
-              <div className="card" style={{ overflowX: "auto" }}>
+            <Modal show={deleteModal} onHide={handleDeleteClose} centered>
+              <Modal.Body style={{ marginTop: "1rem" }}>
+                <h5>Are you sure to cancel the item ?</h5>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button
+                  variant="secondary"
+                  className="deleteNoButton"
+                  onClick={() => handleDeleteClose()}
+                >
+                  No
+                </Button>
+                <Button
+                  variant="primary"
+                  className="submitButton"
+                  onClick={() => cancelLeave()}
+                >
+                  Yes
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          </div>
+        </Row>
+        <Row>
+          <div className="col-sm-12">
+            <div className="card" style={{ overflowX: "auto" }}>
               <div className="table-responsive">
                 <Table id="table-to-xls1" className="table table-hover">
                   <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                     <tr>
-                      <th>Select</th> 
+                      {
+                        (user.loginType==="7" || user.additionalRole==="7" ) ?
+                        <th>Select</th> : <th></th>
+                      }
+                      
                       <th>S. No</th>
                       <th scope="col">Employee Id</th>
                       <th scope="col">Employee Name</th>
@@ -221,23 +270,30 @@ function ViewShift() {
                   </thead>
 
                   {currentRecords !== null && currentRecords.length > 0 &&
+                  (
+                    user.loginType==="7" || user.additionalRole==="7" ||
+                    user.loginType==="3" || user.additionalRole==="3" ||
+                    (user.role !== "MANAGER" && user.isClusterManager === 1)
+                  ) &&
                     currentRecords.map((item, i) => {
                       return (
                         <tbody key={i + 1}>
                           <tr>
-                          <td>
-                                {" "}
-                                {item.statusDesc === "Pending" ? (
-                                  <input
-                                    type="checkbox"
-                                    checked={checked.indexOf(item.salaryId) >= 0}
-                                    onChange={() => checkboxHandler(item.salaryId)}
-                                    name="selectCheckbox"
-                                  />
-                                ) : (
-                                    <input type="checkbox" disabled />
-                                  )}{" "}
-                              </td>
+                            <td>
+                              {" "}
+                              {
+                              (user.loginType==="7" || user.additionalRole==="7") &&
+                              item.statusDesc === "Pending" ? (
+                                <input
+                                  type="checkbox"
+                                  checked={checked.indexOf(item.salaryId) >= 0}
+                                  onChange={() => checkboxHandler(item.salaryId)}
+                                  name="selectCheckbox"
+                                />
+                              ) : (
+                                  <input type="checkbox" disabled />
+                                )}{" "}
+                            </td>
                             <td>{i + 1 + indexOfFirstRecord}</td>
 
                             <td>{item.employeeId}</td>
@@ -249,20 +305,25 @@ function ViewShift() {
                             <td>{item.extraHours}</td>
                             <td>{item.totalHours}</td>
                             <td>{item.statusDesc}</td>
-                            {user.role !== "MANAGER" && user.clusterManagerMenus === null &&
-                            <td>{item.statusDesc === 'Pending' ?
-                              <Edit2 onClick={() => {
-                                setEditModal(true); setEmployeeId(item.employeeId);
-                                setFirstName(item.firstName); setLastName(item.lastName); setNumberOfHours(item.numberOfHours)
-                                setLop(item.lop); setContractType(item.contractType); setExtraHours(item.extraHours);
-                                setReason(item.reason); setMonth(item.month); setSalaryId(item.salaryId);
-                                setStatus(item.status); setStatusDesc(item.statusDesc);
-                                setTotalHours(item.totalHours); setYear(item.year);
-                                setadditionalHours(item.additionalHours);
-                              }} /> :
-                              <Edit2 disabled style={{ color: 'lightgrey' }} />}
-                            </td>
-                            }
+                            
+                              <td>{
+                                (
+                                  (user.loginType==="7" || user.additionalRole==="7" )  &&
+                                  item.statusDesc === 'Pending'
+                                  )
+                                   ?
+                                <Edit2 onClick={() => {
+                                  setEditModal(true); setEmployeeId(item.employeeId);
+                                  setFirstName(item.firstName); setLastName(item.lastName); setNumberOfHours(item.numberOfHours)
+                                  setLop(item.lop); setContractType(item.contractType); setExtraHours(item.extraHours);
+                                  setReason(item.reason); setMonth(item.month); setSalaryId(item.salaryId);
+                                  setStatus(item.status); setStatusDesc(item.statusDesc);
+                                  setTotalHours(item.totalHours); setYear(item.year);
+                                  setadditionalHours(item.additionalHours);
+                                }} /> :
+                                <Edit2 disabled style={{ color: 'lightgrey' }} />}
+                              </td>
+                            
 
                           </tr>
 

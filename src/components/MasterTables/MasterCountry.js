@@ -5,10 +5,16 @@ import Pagination from 'react-js-pagination'
 import { Button } from 'react-bootstrap';
 import { AppContext } from "../../context/AppState";
 import { MasterFilesContext } from "../../context/MasterFilesState";
+import {
+  JsonToExcel
+} from 'react-json-excel';
+import { toast } from "react-toastify";
 
 const MasterCountry = () => {
 
   const { user } = useContext(AppContext);
+  const [fileUpload, setFileUpload] = useState();
+
   const { viewCountries, countryList } = useContext(MasterFilesContext);
 
   useEffect(() => {
@@ -21,20 +27,41 @@ const MasterCountry = () => {
     let fileObj = event.target.files[0];
     console.log("clicked", fileObj)
     // uploadFile(fileObj)
+    setFileUpload(fileObj)
+
+  }
+
+
+  //File export 
+  const filename = 'countrylist';
+  let fields = {
+    "countryId": "S. No",
+    "countryName": "Country Name",
+    "countryCode": "Country Code",
+    "phoneCode": "Phone Code",
+  }
+
+  let data = [];
+  for (let i = 0; i < countryList.length; i++) {
+
+    data.push({
+      countryId: i + 1,
+      countryName: countryList[i].countryName,
+      countryCode: countryList[i].countryCode,
+      phoneCode: countryList[i].phoneCode
+    })
+  }
+
+  const handleUpload = () => {
+    if (fileUpload !== undefined && fileUpload !== null) {
+      // uploadFile(fileUpload)
+    } else {
+      toast.info("Please select a file to upload")
+    }
+
     setTimeout(() => {
       window.location.reload()
     }, 5000)
-  }
-  const handleUpload = () => {
-    // if (fileUpload !== undefined && fileUpload !== null) {
-    //   uploadFile(fileUpload)
-    // } else {
-    //   toast.info("Please select a file to upload")
-    // }
-
-    // setTimeout(() => {
-    //   window.location.reload()
-    // }, 5000)
   }
 
 
@@ -49,20 +76,35 @@ const MasterCountry = () => {
             <div className="card" style={{ overflowX: "auto" }}>
               {
                 <div className="title_bar" >
-                  <input
+                  {/* <input
                     className="btn"
                     type="file"
                     accept=".xlsx, .xls, .csv"
-                    onChange={(e) => changeHandler(e)}
+                    onChange={(e) => {
+                      viewCountries()
+                      changeHandler(e)
+                    }}
                     style={{ padding: "10px" }}
                   />
-                  <Button className="btn btn-light mr-2" onClick={handleUpload}>Upload File</Button>
-                  <ReactHTMLTableToExcel
+                  <Button className="btn btn-light mr-2" onClick={handleUpload}>Upload File</Button> */}
+
+                  {data.length > 0 &&
+                    <JsonToExcel
+                      data={data}
+                      className="btn btn-light mr-2"
+                      filename={filename}
+                      fields={fields}
+
+                      text="Export excel"
+                    />}
+
+
+                  {/* <ReactHTMLTableToExcel
                     className="btn btn-light mr-2"
                     table="table-to-xls"
                     filename="countrylist"
                     sheet="Sheet"
-                    buttonText="Export excel" />
+                    buttonText="Export excel" /> */}
                 </div>
               }
 
