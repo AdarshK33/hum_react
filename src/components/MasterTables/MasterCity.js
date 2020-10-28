@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useContext, useState } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import { LeaveContext } from '../../context/LeaveState';
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import '../Leaves/Leaves.css'
 import { Button } from 'react-bootstrap';
 import '../AdminLeave/AdminLeaves.css'
@@ -33,30 +32,28 @@ const MasterCity = () => {
   useEffect(() => {
     getCity()
   }, [])
-
+  console.log("holiday", cityList)
   const changeHandler = (event) => {
     let fileObj = event.target.files[0];
     console.log("clicked", fileObj)
     setFileUpload(fileObj)
 
   }
-  const filename = 'holidaylist';
+  const filename = 'citylist';
   let fields = {
-    "holidayId": "S. No",
-    "holidayDate": "Date",
-    "holidayName": "Name",
-    "year": "Year",
-    "state": "State",
-    "department": "Department"
+    "cityId": "S. No",
+    "cityName": "City Name",
+    "stateName": "State Name",
+
   }
 
   let data = [];
   for (let i = 0; i < cityList.length; i++) {
     console.log(cityList[i].holidayDate)
     data.push({
-      holidayId: i + 1,
+      cityId: i + 1,
       cityName: cityList[i].cityName,
-      stateId: cityList[i].stateId,
+      stateName: cityList[i].stateName,
 
     })
   }
@@ -110,7 +107,7 @@ const MasterCity = () => {
                     <tr>
                       <th>S. No</th>
                       <th scope="col">City Name</th>
-                      <th scope="col">State Id</th>
+                      <th scope="col">State Name</th>
                     </tr>
                   </thead>
 
@@ -121,7 +118,7 @@ const MasterCity = () => {
                           <tr>
                             <td>{i + 1 + indexOfFirstRecord}</td>
                             <td>{item.cityName}</td>
-                            <td>{item.stateId}</td>
+                            <td>{item.stateName}</td>
                           </tr>
                         </tbody>
                       )

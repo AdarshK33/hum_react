@@ -84,7 +84,7 @@ function ViewShift() {
     }
   }, [searchShiftList])
 
-  const filename = 'shiftlist';
+  const filename = 'Shiftlist';
   let fields = {
     "id": "S. No",
     "storeId": "Cost Center",
@@ -111,7 +111,6 @@ function ViewShift() {
     })
   }
 
-
   return (
     <Fragment>
       <Breadcrumb title="View Shift" parent="View Shift" />
@@ -127,15 +126,15 @@ function ViewShift() {
                   </div>
                 </div>
                 <Button className="btn btn-light mr-2" onClick={handleShow}>Create</Button>
+                {data.length > 0 &&
+                  <JsonToExcel
+                    data={data}
+                    className="btn btn-light mr-2"
+                    filename={filename}
+                    fields={fields}
 
-                <JsonToExcel
-                  data={data}
-                  className="btn btn-light mr-2"
-                  filename={filename}
-                  fields={fields}
-
-                  text="Export excel"
-                />
+                    text="Export excel"
+                  />}
               </div>
               <CreateShiftModal handleClose={handleClose} modal={modal} />
               <div className="table-responsive">

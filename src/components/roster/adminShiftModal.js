@@ -114,7 +114,7 @@ const AdminShiftModal = (props) => {
 
   const handleEmployeeList = (options) => {
     setEmployee(options)
-    if (options !== null) {
+    if (options !== null && days.length !== 0 && days !== null && days !== undefined) {
       setAShiftButton(false)
       setAssignWeekOffButton(false)
     }
@@ -124,9 +124,11 @@ const AdminShiftModal = (props) => {
     }
   }
 
+
   const handleDayList = (options) => {
+
     setDays(options)
-    if (options !== null) {
+    if (options !== null && employee.length !== 0 && employee !== null && employee !== undefined) {
       setAShiftButton(false)
     }
     else {
@@ -134,6 +136,15 @@ const AdminShiftModal = (props) => {
     }
 
 
+  }
+  const handleEmployeeList1 = (options) => {
+    setEmployee(options)
+    if (options !== null) {
+      setAssignWeekOffButton(false)
+    }
+    else {
+      setAssignWeekOffButton(true)
+    }
   }
 
   const setWeekDayHandler = (e) => {
@@ -294,7 +305,7 @@ const AdminShiftModal = (props) => {
                           value={employee}
                           style={{ fontSize: "0.8rem" }}
                           options={EmployeeListForAdminRosterWeekOff !== null && EmployeeListForAdminRosterWeekOff.map(e => ({ label: e.firstName + " " + e.employeeId, value: e.employeeId }))}
-                          onChange={handleEmployeeList}
+                          onChange={handleEmployeeList1}
                           isMulti
                         />
                       </div>
