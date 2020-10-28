@@ -50,10 +50,11 @@ export const ClusterProvider = ({ children }) => {
 
   const updateAdminEditCluster = (updateCluter) => {
     return client.put("cluster/update", updateCluter).then(function (respone) {
-      const {
-        clusterCostCenter: { costCenter },
-      } = state;
-      viewClusterCostCenter(costCenter)
+      // const {
+      //   clusterCostCenter: { costCenter },
+      // } = state;
+      // viewClusterCostCenter(costCenter)
+      viewCluster()
       //  console.log("api response===", respone.data.message);
       toast.info(respone.data.message);
 
@@ -79,10 +80,10 @@ export const ClusterProvider = ({ children }) => {
   const updateAdminaddCluster = (addCluster) => {
 
     return client.post("cluster/create", addCluster).then(function (respone) {
-      const {
-        clusterCostCenter: { costCenter },
-      } = state;
-      viewClusterCostCenter(costCenter)
+      // const {
+      //   clusterCostCenter: { costCenter },
+      // } = state;
+      viewCluster()
 
       console.log("api response===", respone.data.message);
       toast.info(respone.data.message);
@@ -289,7 +290,7 @@ export const ClusterProvider = ({ children }) => {
         state.message = response.data.message
         toast.info(state.message)
         viewSalary(month, year, storeId)
-       /*  viewStoreSalary(month, year, storeId) */
+        /*  viewStoreSalary(month, year, storeId) */
         console.log("salary approval list response===>", response.data.data)
         console.log("salary approval list message===>", state.message)
         return (
@@ -367,6 +368,7 @@ export const ClusterProvider = ({ children }) => {
   }
 
   const callClusterEmployees = (storeId) => {
+    // alert("callClusterEmloyees " + storeId)
     client.get('employee/view/' + storeId + '/cluster').then(function (response) {
       if (response.data.data === null) {
         state.callClusterEmployeesList = []
@@ -383,6 +385,7 @@ export const ClusterProvider = ({ children }) => {
   }
 
   const callClusterLeaders = (storeId) => {
+    // alert("callClusterEmloyees " + storeId)
     client.get('employee/view/' + storeId + '/cluster').then(function (response) {
       if (response.data.data === null) {
         state.callClusterLeadersList = []

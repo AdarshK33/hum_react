@@ -1,6 +1,8 @@
 import React, { useEffect, Fragment, useContext, useState } from 'react'
 import moment from 'moment';
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import {
+  JsonToExcel
+} from 'react-json-excel';
 import Breadcrumb from "../common/breadcrumb";
 import "./roster.css";
 import '../../assets/css/search.css'
@@ -40,31 +42,13 @@ function ViewShift() {
   //pagenation data
 
 
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const recordPerPage = 10;
-  // let totalRecords = 0;
-  // let indexOfFirstRecord = 0;
-  // let indexOfLastRecord = 0;
-  // const pageRange = 10;
-  // let currentRecords = [];
 
-  // if (shiftList !== null) {
-  //   totalRecords = shiftList.length;
-  //   indexOfLastRecord = currentPage * recordPerPage;
-  //   indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  //   currentRecords = shiftList.slice(indexOfFirstRecord, indexOfLastRecord);
-  // }
-
-
-  // const handlePageChange = pageNumber => {
-  //   setCurrentPage(pageNumber);
-  // }
 
   //pagenation data
   useEffect(() => {
-    if(shiftList !== undefined && shiftList !== null && shiftList.length > 0){
+    if (shiftList !== undefined && shiftList !== null && shiftList.length > 0) {
       setShiftList(shiftList);
-    }       
+    }
   }, [shiftList])
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -82,24 +66,50 @@ function ViewShift() {
 
   const searchHandler = (e) => {
     setSearchValue(e.target.value)
-    
+
   }
 
   const searchDataHandler = () => {
-      if(searchValue !== ""){
-        viewSearchSiftList(searchValue);
-      }else {
-        viewShift()
-      }
-    
+    if (searchValue !== "") {
+      viewSearchSiftList(searchValue);
+    } else {
+      viewShift()
+    }
+
   }
 
   useEffect(() => {
-    if(searchShiftList !== undefined && searchShiftList !== null && searchShiftList.length > 0){
+    if (searchShiftList !== undefined && searchShiftList !== null && searchShiftList.length > 0) {
       setShiftList(searchShiftList);
-    }         
+    }
   }, [searchShiftList])
 
+  const filename = 'shiftlist';
+  let fields = {
+    "id": "S. No",
+    "storeId": "Cost Center",
+    "time": "Shift Timings",
+    "workingHours": "Working Hours",
+    "breakTime": "Break Time",
+    "contractType": "Contract Type",
+    "shiftType": "Shift Type",
+    "status": "Status"
+  }
+
+  let data = [];
+  for (let i = 0; i < shiftList.length; i++) {
+
+    data.push({
+      id: i + 1,
+      storeId: shiftList[i].storeId,
+      time: shiftList[i].startTime + "-" + shiftList[i].endTime,
+      workingHours: shiftList[i].workingHours,
+      breakTime: shiftList[i].breakStartTime + "-" + shiftList[i].breakEndTime,
+      contractType: shiftList[i].contractType,
+      shiftType: shiftList[i].shiftType,
+      status: shiftList[i].status
+    })
+  }
 
 
   return (
@@ -111,18 +121,21 @@ function ViewShift() {
             <div className="card" style={{ overflowX: "auto" }}>
               <div className="title_bar" >
                 <div className="job-filter">
-                    <div className="faq-form mr-2">
-                        <input className="form-control searchButton" type="text" placeholder="Search.." onChange = {(e)=>searchHandler(e)} />
-                        <Search className="search-icon" style = {{color: "#313131"}} onClick={searchDataHandler}/>
-                    </div>
+                  <div className="faq-form mr-2">
+                    <input className="form-control searchButton" type="text" placeholder="Search.." onChange={(e) => searchHandler(e)} />
+                    <Search className="search-icon" style={{ color: "#313131" }} onClick={searchDataHandler} />
+                  </div>
                 </div>
                 <Button className="btn btn-light mr-2" onClick={handleShow}>Create</Button>
-                <ReactHTMLTableToExcel
+
+                <JsonToExcel
+                  data={data}
                   className="btn btn-light mr-2"
-                  table="table-to-xls"
-                  filename="viewshift"
-                  sheet="Sheet"
-                  buttonText="Export excel" />
+                  filename={filename}
+                  fields={fields}
+
+                  text="Export excel"
+                />
               </div>
               <CreateShiftModal handleClose={handleClose} modal={modal} />
               <div className="table-responsive">
