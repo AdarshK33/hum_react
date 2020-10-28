@@ -195,7 +195,14 @@ function ViewShift() {
 
                   text="Export excel"
                 />}
-              <div className="ml-2" style={{ float: 'left' }}>
+
+                
+              {
+                (user.loginType==="1" || user.additionalRole==="1" ||
+                user.loginType==="7" || user.additionalRole==="7" ||
+                user.loginType==="9" || user.additionalRole==="9"
+                )?
+                <div className="ml-2" style={{ float: 'left' }}>
                 <Button
                   className="btn btn-light mr-2"
                   onClick={approvedButton}
@@ -209,6 +216,9 @@ function ViewShift() {
                   }}
                 >Cancel </Button>
               </div>
+              :
+              <div></div>
+                }
             </div>
             <Modal show={deleteModal} onHide={handleDeleteClose} centered>
               <Modal.Body style={{ marginTop: "1rem" }}>
@@ -240,7 +250,11 @@ function ViewShift() {
                 <Table id="table-to-xls1" className="table table-hover">
                   <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                     <tr>
-                      <th>Select</th>
+                      {
+                        (user.loginType==="7" || user.additionalRole==="7" ) ?
+                        <th>Select</th> : <th></th>
+                      }
+                      
                       <th>S. No</th>
                       <th scope="col">Employee Id</th>
                       <th scope="col">Employee Name</th>
@@ -256,13 +270,20 @@ function ViewShift() {
                   </thead>
 
                   {currentRecords !== null && currentRecords.length > 0 &&
+                  (
+                    user.loginType==="7" || user.additionalRole==="7" ||
+                    user.loginType==="3" || user.additionalRole==="3" ||
+                    (user.role !== "MANAGER" && user.isClusterManager === 1)
+                  ) &&
                     currentRecords.map((item, i) => {
                       return (
                         <tbody key={i + 1}>
                           <tr>
                             <td>
                               {" "}
-                              {item.statusDesc === "Pending" ? (
+                              {
+                              (user.loginType==="7" || user.additionalRole==="7") &&
+                              item.statusDesc === "Pending" ? (
                                 <input
                                   type="checkbox"
                                   checked={checked.indexOf(item.salaryId) >= 0}
@@ -284,8 +305,13 @@ function ViewShift() {
                             <td>{item.extraHours}</td>
                             <td>{item.totalHours}</td>
                             <td>{item.statusDesc}</td>
-                            {user.role !== "MANAGER" && user.clusterManagerMenus === null &&
-                              <td>{item.statusDesc === 'Pending' ?
+                            
+                              <td>{
+                                (
+                                  (user.loginType==="7" || user.additionalRole==="7" )  &&
+                                  item.statusDesc === 'Pending'
+                                  )
+                                   ?
                                 <Edit2 onClick={() => {
                                   setEditModal(true); setEmployeeId(item.employeeId);
                                   setFirstName(item.firstName); setLastName(item.lastName); setNumberOfHours(item.numberOfHours)
@@ -297,7 +323,7 @@ function ViewShift() {
                                 }} /> :
                                 <Edit2 disabled style={{ color: 'lightgrey' }} />}
                               </td>
-                            }
+                            
 
                           </tr>
 
