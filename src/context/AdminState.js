@@ -124,17 +124,18 @@ export const AdminProvider = ({ children }) => {
 
   //Upload leave file
   const uploadFile = (file) => {
+
     const formData = new FormData();
-    formData.append('file', file)
+    formData.append('file', file, file.name)
 
     return client.post('leave_master/upload', formData)
       .then((response) => {
-        console.log(response.data, "leave upload response")
-        leaveMasterView();
-        toast.info(response.message)
-        return dispatch({ type: 'LEAVE_MASTER_UPLOAD', payload: state.leaveMasterList })
+        console.log(response, "res")
+        toast.info(response.data.message)
+        leaveMasterView()
       })
       .catch((error) => {
+        toast.info("Please upload a valid file");
         console.log(error)
       })
   }

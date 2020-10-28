@@ -28,9 +28,9 @@ const MasterCountry = () => {
     console.log("clicked", fileObj)
     // uploadFile(fileObj)
     setFileUpload(fileObj)
-    
+
   }
-  
+
 
   //File export 
   const filename = 'countrylist';
@@ -42,19 +42,20 @@ const MasterCountry = () => {
   }
 
   let data = [];
-  for(let i = 0; i < countryList.length; i++){
-    
-    data.push({countryId : i+1, 
-                countryName : countryList[i].countryName, 
-                countryCode : countryList[i].countryCode,
-                phoneCode : countryList[i].phoneCode
-                })
+  for (let i = 0; i < countryList.length; i++) {
+
+    data.push({
+      countryId: i + 1,
+      countryName: countryList[i].countryName,
+      countryCode: countryList[i].countryCode,
+      phoneCode: countryList[i].phoneCode
+    })
   }
 
   const handleUpload = () => {
-    if(fileUpload !== undefined && fileUpload !== null){
+    if (fileUpload !== undefined && fileUpload !== null) {
       // uploadFile(fileUpload)
-    }else{
+    } else {
       toast.info("Please select a file to upload")
     }
 
@@ -87,13 +88,13 @@ const MasterCountry = () => {
                   />
                   <Button className="btn btn-light mr-2" onClick={handleUpload}>Upload File</Button> */}
 
-                    {data.length > 0 &&
+                  {data.length > 0 &&
                     <JsonToExcel
                       data={data}
                       className="btn btn-light mr-2"
                       filename={filename}
                       fields={fields}
-                      
+
                       text="Export excel"
                     />}
 
