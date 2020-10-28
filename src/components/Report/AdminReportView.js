@@ -41,6 +41,17 @@ console.log(dates)
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber);
     }
+
+    const getTdData =(data,item)=>{
+        let date = "";
+        for(let i = 0 ; i < item.leaveReportWithDates.length;i++) {
+            
+            if(data === item.leaveReportWithDates[i].leavedate){
+                date = item.leaveReportWithDates[i].leaveType
+            }
+        }
+        return date
+    }
     /*-----------------Pagination------------------*/
     return (
         <Fragment>
@@ -102,17 +113,14 @@ console.log(dates)
                                                         <td>{item.leaveReports.stateLeaveEligible}</td>
                                                         <td>{item.leaveReports.lop}</td>
                                                         {
-                                                            dates.forEach((date,b) => {
-
-                                                                item.leaveReportWithDates.map((e,m) => {
+                                                            dates.map((date,b) => {
                                                                 return (
-                                                                    date === e.leavedate ? 
-                                                                    <td>{e.leaveType}</td>
-                                                                    : <td>blank</td> 
+                                                                    <td>{ getTdData(date,item)                                                                  
+                                                                }</td> 
                                                                 )
                                                             })
                                                        
-                                                    })}
+                                                    }
                                                     </tr>
                                                 </tbody>
                                             )
