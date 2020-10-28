@@ -49,6 +49,7 @@ const GrantLeaveAdd = (props) => {
 
     const onSubmit = (event, props) => {
         event.preventDefault();
+        clearAndClose();
         let empList = grantLeaveView;
         let flag = 0;
         for (let i = 0 ; i<empList.length ; i++){
@@ -96,6 +97,7 @@ const GrantLeaveAdd = (props) => {
         }
         
         console.log(result, "in competent");
+        
     }
 
 
@@ -174,7 +176,7 @@ const GrantLeaveAdd = (props) => {
                                 </div>
                             </div>
                         </div>
-                        <button className="myclass mb-2 mr-2" type="submit" value="Submit">Save</button>
+                        <button className="myclass mb-2 mr-2" type="submit" value="Submit" >Save</button>
                         <button className="myclass mb-2 mr-2" onClick={() => { clearAndClose() }}>Close</button>
                         <h5>{successMsg.length !== 0 && <div className="text-success">{successMsg}</div>}</h5>
                     </form>
