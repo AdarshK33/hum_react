@@ -183,7 +183,7 @@ const CreateShiftModal = (props) => {
         .catch((error) => {
           alert(" In error catch ", error);
         })
-      // console.log(result, "in competent");
+
     }
     else {
 
@@ -214,7 +214,7 @@ const CreateShiftModal = (props) => {
         .catch((error) => {
           alert(" In error catch ", error);
         })
-      // console.log(result, "in competent");
+
     }
   }
   return (

@@ -114,28 +114,27 @@ const AdminShiftModal = (props) => {
 
   const handleEmployeeList = (options) => {
     setEmployee(options)
-    if (options !== null && days.length !== 0 && days !== null && days !== undefined) {
-      setAShiftButton(false)
-      setAssignWeekOffButton(false)
+    if (options !== null && days !== null && days !== undefined) {
+      if (days.length !== 0) {
+        setAShiftButton(false)
+      }
     }
     else {
       setAShiftButton(true)
-      setAssignWeekOffButton(true)
     }
   }
 
 
   const handleDayList = (options) => {
-
     setDays(options)
-    if (options !== null && employee.length !== 0 && employee !== null && employee !== undefined) {
-      setAShiftButton(false)
+    if (options !== null && employee !== null && employee !== undefined) {
+      if (employee.length !== 0) {
+        setAShiftButton(false)
+      }
     }
     else {
       setAShiftButton(true)
     }
-
-
   }
   const handleEmployeeList1 = (options) => {
     setEmployee(options)

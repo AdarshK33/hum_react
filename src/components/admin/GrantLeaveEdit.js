@@ -15,6 +15,7 @@ const GrantLeaveEdit = (props) => {
     const [employeeCostCenter, setEmployeeCostCenter] = useState('')
     const [employeeName, setEmployeeName] = useState('')
     const [grantLeaveId, setGrantLeaveId] = useState('');
+    const [count, setCount] = useState();
     const { viewGrantLeave, grantLeaveView, createLeaveForSameEmp, createGrantLeave, CostCenter, costCenterList, employeeIdData, employeeIdList } = useContext(AdminContext);
 
     var year = new Date().getFullYear()
@@ -25,6 +26,7 @@ const GrantLeaveEdit = (props) => {
         setEmployeeCostCenter(props.editData.empId)
         setEmployeeName(props.editData.empName)
         setNumOfDays(props.editData.numOfDays)
+        setCount(props.editData.numOfDays)
         setGrantLeaveId(props.editData.grantLeaveId)
         // employeeIdData()
     }, [props.editData])
@@ -61,7 +63,7 @@ const GrantLeaveEdit = (props) => {
 
     const onSubmit = (event, props) => {
         event.preventDefault();
-        clearAndClose();
+       
         let empList = grantLeaveView;
         
 
@@ -74,7 +76,11 @@ const GrantLeaveEdit = (props) => {
         }
         let result = {};
         
-           
+           if(numOfDays < 1){
+            toast.info("Number of days should be greater than 0 ");
+           }else if(count > numOfDays){
+            toast.info("Number of days should be greater than " + count); 
+           }else{
              result = createLeaveForSameEmp(addGrantLeave)
             .then((result) => {
                 console.log("api response===", result.data.message);
@@ -88,6 +94,8 @@ const GrantLeaveEdit = (props) => {
             .catch((error) => {
                 alert(" In error catch ", error);
             })
+            clearAndClose();
+        }
       
         
         console.log(result, "in competent");
@@ -154,7 +162,7 @@ const GrantLeaveEdit = (props) => {
                                         <div className="form-group">
                                             <label htmlFor="exampleFormControlInput1">Number of days</label>
 
-                                            <input type="number" className="form-control digit" required min='1' value = {numOfDays}
+                                            <input type="number" className="form-control digit" required min={numOfDays} value = {numOfDays}
                                             onChange={(e) => setNumOfDays(e.target.value)} value={numOfDays} placeholder="Number of days" />
                                         </div>
                                     </div>

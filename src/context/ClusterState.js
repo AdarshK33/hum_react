@@ -336,7 +336,7 @@ export const ClusterProvider = ({ children }) => {
 
 
   const viewCostCenterEmployeeByManger = (storeId) => {
-    client.get('employee/view/' + storeId).then(function (response) {
+    client.get('employee/view/' + storeId + '/cluster_employee').then(function (response) {
       if (response.data.data === null) {
         state.costCenterEmpAndMgrList = []
       }
