@@ -96,7 +96,8 @@ const ProductivityReportView = (props) => {
                                             <th>Month</th>
                                         </tr>
                                     </thead>
-                                    {currentRecords !== null && currentRecords !== undefined &&
+                                    {currentRecords !== null && currentRecords !== undefined 
+                                    && currentRecords.length > 0  ?
                                         currentRecords.map((item, i) => {
                                             return (
                                                 <tbody key={i + 1}>
@@ -114,12 +115,16 @@ const ProductivityReportView = (props) => {
                                                     </tr>
                                                 </tbody>
                                             )
-                                        })}
+                                        }): <tbody>
+                                        <tr>
+                                            <td colspan='10'>No Record Found</td>
+                                        </tr>
+                                    </tbody>}
 
                                 </Table>
-                                {(currentRecords !== null && currentRecords !== undefined &&
+                                {/* {(currentRecords !== null && currentRecords !== undefined &&
                                  currentRecords.length <= 0) ? 
-                                <p style={{ textAlign: "center" }}>No Record Found</p> : null}
+                                <p style={{ textAlign: "center" }}>No Record Found</p> : null} */}
                             </div>
                            
                         </div>

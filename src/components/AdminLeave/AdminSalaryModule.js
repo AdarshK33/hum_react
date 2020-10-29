@@ -243,7 +243,7 @@ const AdminSalaryModule = () => {
                       </tr>
                     </thead>
 
-                    {currentRecords !== null &&
+                    {currentRecords !== null && currentRecords.length > 0 &&
                       currentRecords.map((item, i) => {
                         return (
                           <tbody key={i + 1}>

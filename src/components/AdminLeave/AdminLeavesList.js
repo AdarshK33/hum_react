@@ -53,7 +53,7 @@ const AdminLeavesList = (props) => {
     }, [])
 
     useEffect(() => {
-        if (leaveList !== undefined && leaveList.length > 0) {
+        if (leaveList !== undefined && leaveList !== null && leaveList.length > 0) {
             setLeaveList(leaveList);
         }
 
@@ -116,6 +116,7 @@ const AdminLeavesList = (props) => {
                                     </thead>
 
                                     {currentRecords !== undefined && currentRecords !== null &&
+                                    currentRecords.length > 0 ?
                                         currentRecords.map((item, i) => {
                                             return (
                                                 <tbody key={i + 1}>
@@ -146,10 +147,14 @@ const AdminLeavesList = (props) => {
                                                     </tr>
                                                 </tbody>
                                             )
-                                        })}
+                                        }):  <tbody>
+                                        <tr>
+                                            <td colspan='6'>No Record Found</td>
+                                        </tr>
+                                    </tbody>}
                                 </Table>
-                                {(leaveList !== null && leaveList.length <= 0) ? 
-                                <p style={{ textAlign: "center" }}>No Record Found</p> : null}
+                               {/*  {(leaveList === null ) ? 
+                                <p style={{ textAlign: "center" }}>No Record Found</p> : null} */} 
                             </div>
                         </div>
                     </div>
