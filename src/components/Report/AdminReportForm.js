@@ -7,7 +7,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import moment from 'moment'
 import { AdminContext } from '../../context/AdminState'
 import AdminReportView from './AdminReportView'
-import Select from 'react-select';
 import { AppContext } from "../../context/AppState";
 import '../Leaves/Leaves.css'
 import MultiSelect from 'react-multi-select-component'
