@@ -112,28 +112,7 @@ console.log(dates)
                                                         <td>{item.leaveReports.grantLeave}</td>
                                                         <td>{item.leaveReports.stateLeaveEligible}</td>
                                                         <td>{item.leaveReports.lop}</td>
-<<<<<<< HEAD
-                                                        {/* {
-                                                            dates.map((date,b) => {
-
-                                                                item.leaveReportWithDates.map((e,m) => {
-                                                                return (
-                                                                    date === e.leavedate ? 
-                                                                    <td>{e.leaveType}</td>
-                                                                    : <td>{e.empId}</td> 
-                                                                )
-                                                            })
-                                                       
-                                                    })} */}
-                                                    {item.leaveReportWithDates.map(e => {
-                                                        dates.map(date => {
-                                                            return(
-                                                                e.leaveType === date ? console.log("true") : console.log("false")
-                                                            )
-                                                        })
-                                                    })}
-=======
-                                                        {
+                                                         {
                                                             dates.map((date,b) => {
                                                                 return (
                                                                     <td>{ getTdData(date,item)                                                                  
@@ -142,7 +121,7 @@ console.log(dates)
                                                             })
                                                        
                                                     }
->>>>>>> 9c29f0277b02481e7aabb5e40f0d86485f84c3bf
+
                                                     </tr>
                                                 </tbody>
                                             )
