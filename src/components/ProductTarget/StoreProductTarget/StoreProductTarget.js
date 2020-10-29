@@ -182,7 +182,10 @@ const StoreProductTarget = () => {
                                         </div>
                                     </div>
                             
-                            } 
+                 } 
+                 {currentRecords === undefined && currentRecords === null ? (
+                    <p style={{ textAlign: "center" }}>N0 RECORDS EXIST</p>
+                  ) : null}
                    
                    
                     {editTarget !== null && editTarget !== undefined && 

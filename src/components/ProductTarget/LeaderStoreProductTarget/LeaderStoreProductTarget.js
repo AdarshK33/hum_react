@@ -168,6 +168,9 @@ if(storeLeaderProductList !== null){
                      </div>
              
              } 
+              {currentRecords === undefined && currentRecords === null ? (
+                    <p style={{ textAlign: "center" }}>N0 RECORDS EXIST</p>
+                  ) : null}
                    
                     {editTarget !== null && editTarget !== undefined && 
                         editTarget.length !== 0 ? <EditLeaderTarget handleEditClose={handleEditClose}
@@ -177,7 +180,7 @@ if(storeLeaderProductList !== null){
                          
                 </div>
                 <div>
-                { storeLeaderProductList !== undefined && storeLeaderProductList !== null && storeLeaderProductList.length > 0 &&
+                { storeLeaderProductList !== undefined && storeLeaderProductList !== null && storeLeaderProductList.length > 10 &&
                   <Pagination
                     itemClass="page-item"
                     linkClass="page-link"
