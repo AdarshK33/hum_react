@@ -84,6 +84,7 @@ const AdminLeaveApproval = () => {
                             </tr>
                         </thead>
                         {currentRecords !== null && currentRecords !== undefined &&
+                        currentRecords.length > 0 ?
                             currentRecords.map((item, i) => {
                                 return (
                                     <tbody key={i}>
@@ -146,10 +147,14 @@ const AdminLeaveApproval = () => {
 
                                     </tbody>
                                 )
-                            }) }
+                            }):  <tbody>
+                            <tr>
+                                <td colspan='7'>No Record Found</td>
+                            </tr>
+                        </tbody> }
                     </Table>
-                    {(ApprovalLeaveList !== null && ApprovalLeaveList.length <= 0) ? 
-                                <p style={{ textAlign: "center" }}>No Record Found</p> : null}
+                    {/* {(ApprovalLeaveList === null ) ? 
+                                <p style={{ textAlign: "center" }}>No Record Found</p> : null} */}
                 </div>
             </div>
             <AdminDeleteApproval handleDeleteClose={handleDeleteClose} modal={deleteModal} ltId={ltId} />

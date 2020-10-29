@@ -71,6 +71,14 @@ const AdminReportForm = () => {
 
     const setLeaveHandler = (options) => {
         setLeave(options)
+       
+    }
+
+    const setReportTypeHandler = (e) => {
+        setReportType(e.target.value)
+        setStartDate()
+        setEndDate()
+
     }
 
     const submitData = (e) => {
@@ -125,7 +133,7 @@ const AdminReportForm = () => {
                         <div className="col-sm-4">
                             <Form.Group>
                                 <Form.Label>Type of report</Form.Label>
-                                <Form.Control as="select" onChange={(e) => setReportType(e.target.value)}
+                                <Form.Control as="select" onChange={(e) => setReportTypeHandler(e)}
                                 value={reportType} required >
                                     <option value="">Select Report Type</option>
                                     {reportTypeList.map((item,i) => {

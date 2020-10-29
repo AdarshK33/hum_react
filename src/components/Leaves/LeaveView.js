@@ -179,6 +179,7 @@ const LeaveView = () => {
                             </thead>
 
                             {currentRecords !== null && currentRecords !== undefined &&
+                            currentRecords.length > 0 ?
                                 currentRecords.map((item, i) => {
                                     return (
                                         <tbody key={i + 1}>
@@ -207,11 +208,15 @@ const LeaveView = () => {
                                             </tr>
                                         </tbody>
                                     )
-                                })}
+                                }) :  <tbody>
+                                <tr>
+                                    <td colspan='10'>No Record Found</td>
+                                </tr>
+                            </tbody>}
 
                         </Table>
-                        {(leaveEmpList !== null && leaveEmpList.length <= 0) ? 
-                                <p style={{ textAlign: "center" }}>No Record Found</p> : null}
+                        {/* {(leaveEmpList !== null && leaveEmpList.length <= 0) ? 
+                                <p style={{ textAlign: "center" }}>No Record Found</p> : null} */}
 
                     <DeleteLeave handleDeleteClose={handleDeleteClose} modal={deleteModal} ltId={ltId} empid={user.employeeId} />
                     {user.employeeId !== undefined ?
