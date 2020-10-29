@@ -154,7 +154,6 @@ function ViewShift() {
                     </tr>
                   </thead>
 
-
                   {currentRecords !== undefined && currentRecords !== null &&
                     currentRecords.map((e, i) => {
                       return (
@@ -194,6 +193,9 @@ function ViewShift() {
                       );
                     })}
                 </table>
+                {(shiftList === null) ?
+                  <p style={{ textAlign: "center" }}>No Record Found</p> : null}
+
                 <EditShiftModal handleEditClose={handleEditClose}
                   shiftType={shiftType}
                   contractType={contractType}
@@ -230,7 +232,7 @@ function ViewShift() {
 
 
       </div>
-    </Fragment>
+    </Fragment >
 
   )
 }

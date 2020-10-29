@@ -74,6 +74,7 @@ function AdminCluster() {
                                             <th scope="col">Edit</th>
                                         </tr>
                                     </thead>
+
                                     {currentRecords !== null && currentRecords !== undefined &&
                                         currentRecords.map((e, i) => {
                                             return (
@@ -106,6 +107,10 @@ function AdminCluster() {
                                         })}
 
                                 </table>
+                                {(clusterList === null) ?
+                                    <p style={{ textAlign: "center" }}>No Record Found</p> : null}
+
+
                                 <AdminEditClusterModal handleEditClose={handleEditClose}
                                     shiftData={getSingleCluster}
                                     clusterData={getSingleCluster1}

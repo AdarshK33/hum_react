@@ -125,7 +125,8 @@ const MasterCity = () => {
                     })}
 
                 </table>
-
+                {(cityList === null) ?
+                  <p style={{ textAlign: "center" }}>No Record Found</p> : null}
               </div>
 
             </div>
