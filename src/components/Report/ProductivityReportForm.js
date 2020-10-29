@@ -11,15 +11,16 @@ import moment from 'moment'
 import ProductivityReportView from './ProductivityReportView'
 import { AppContext } from "../../context/AppState";
 import '../Leaves/Leaves.css'
+import Select from 'react-select';
 /* import Select from 'react-select'; */
 
 const ProductivityReportForm = () => {
     const [reportType, setReportType] = useState('')
     const [costCenter, setCostCenter] = useState('')
-    const [employeeCostCenter, setEmployeeCostCenter] = useState(null)
-    const [sports, setSports] = useState(null)
-    const [cluster, setCluster] = useState(null)
-    const [contractTypeData, setContractType] = useState('')
+    const [employeeCostCenter, setEmployeeCostCenter] = useState([])
+    const [sports, setSports] = useState([])
+    const [cluster, setCluster] = useState([])
+    const [contractTypeData, setContractType] = useState([])
     const [getM, setGetM] = useState(new Date())
     const [yearly, setYearly] = useState(new Date())
     const { user } = useContext(AppContext);
@@ -61,15 +62,12 @@ const ProductivityReportForm = () => {
         console.log("data1", data1)
     }
 
-    const setEmployeeCostCenterHandler = (e) => {
-        let data2 = e.target.value
-        setEmployeeCostCenter(data2)
-        console.log("data2", data2)
+    const setEmployeeCostCenterHandler = (options) => {
+        setEmployeeCostCenter(options)
+        console.log("options", options)
     }
-    const setContractTypeHandler = (e) => {
-        let data3 = e.target.value
-        setContractType(data3)
-        console.log("contract type", data3)
+    const setContractTypeHandler = (options) => {
+        setContractType(options)
 
     }
     const setGetMHandler = (e) => {
@@ -77,22 +75,20 @@ const ProductivityReportForm = () => {
         setGetM(data4)
         console.log("month data", data4)
     }
-    const setClusterHandler = (e) => {
-        setCluster(e.target.value)
-        console.log("cluster Id", e.target.value)
+    const setClusterHandler = (options) => {
+        setCluster(options)
     }
-    const setSportsHandler = (e) => {
-        setSports(e.target.value)
-        console.log("sports Id", e.target.value)
+    const setSportsHandler = (options) => {
+        setSports(options)
     }
     const submitData = (e) => {
         e.preventDefault();
 
-        const clusterId = cluster;
-        const contractType = contractTypeData;
-        const employeeId = employeeCostCenter;
+        const clusterId =  cluster.map((e,i) => cluster[i].value);
+        const contractType =  contractTypeData.map((e,i) => contractTypeData[i].value);
+        const employeeId = employeeCostCenter.map((e,i) => employeeCostCenter[i].value) ;
         const month = moment(getM, ["YYYY-MM"]).format("M");
-        const sportId = sports;
+        const sportId = sports.map((e,i) => sports[i].value);
         const storeId = costCenter;
         const year = reportType === 'Monthly' ? moment(getM, ["MMM Do YY"]).format('YYYY') : yearly;
         console.log("productivity data", clusterId, contractType, employeeId, month, storeId, year)
@@ -102,10 +98,10 @@ const ProductivityReportForm = () => {
 
         setReportType('')
         setCostCenter(costCenter)
-        setEmployeeCostCenter('')
-        setSports('')
-        setCluster('')
-        setContractType('')
+        setEmployeeCostCenter([])
+        setSports([])
+        setCluster([])
+        setContractType([])
         setGetM(new Date())
 
     }
@@ -160,25 +156,32 @@ const ProductivityReportForm = () => {
                         <div className="col-sm-4">
                             <Form.Group>
                                 <Form.Label>Employee Id</Form.Label>
-                                <Form.Control as="select" value={employeeCostCenter}
-                                    onChange={(e) => setEmployeeCostCenterHandler(e)}>
-                                    <option value="">Select Employee</option>
-
-                                    {employeeIdList !== undefined && employeeIdList !== null &&
-                                        employeeIdList.map((item, i) => {
-                                            return (
-                                                <option key={item.employeeId} value={item.employeeId}>
-                                                    {item.firstName}-{item.employeeId}</option>
-                                            )
-                                        })
-                                    }
-                                </Form.Control>
+                                <Select
+                                name="filters"
+                                placeholder="Select Employee Id"
+                                value={employeeCostCenter} 
+                                style={{fontSize:"0.8rem"}}
+                                options={employeeIdList !== null  ?
+                                 employeeIdList.map(e => ({label: e.firstName + " - " + e.employeeId, value: e.employeeId})):[]}
+                                onChange={setEmployeeCostCenterHandler}
+                                isMulti required isSearchable />
+                               
                             </Form.Group>
                         </div>
                         <div className="col-sm-4">
                             <Form.Group>
                                 <Form.Label>Select Sports</Form.Label>
-                                <Form.Control as="select" onChange={(e) => setSportsHandler(e)}
+                                <Select
+                                name="filters"
+                                placeholder="Select Sports Type"
+                                value={sports} 
+                                style={{fontSize:"0.8rem"}}
+                                options={sportsNames !== null && sportsNames !== undefined ?
+                                    sportsNames.map(e => ({label: e.sportName, value: e.sportId})):[]}
+                                onChange={setSportsHandler}
+                                isMulti required isSearchable />
+
+                                {/* <Form.Control as="select" onChange={(e) => setSportsHandler(e)}
                                     value={sports} >
                                     <option value="">Select Sports Type</option>
                                     {sportsNames !== undefined && sportsNames !== null &&
@@ -187,7 +190,7 @@ const ProductivityReportForm = () => {
                                                 <option key={item.sportId} value={item.sportId}>{item.sportName}</option>
                                             )
                                         })}
-                                </Form.Control>
+                                </Form.Control> */}
 
                             </Form.Group>
                         </div>
@@ -196,7 +199,17 @@ const ProductivityReportForm = () => {
                         <div className="col-sm-4">
                             <Form.Group>
                                 <Form.Label>Select Cluster</Form.Label>
-                                <Form.Control as="select" onChange={(e) => setClusterHandler(e)}
+                                <Select
+                                name="filters"
+                                placeholder="Select Cluster Type"
+                                value={cluster} 
+                                style={{fontSize:"0.8rem"}}
+                                options={clusterCostCenterList !== null && clusterCostCenterList !== undefined ?
+                                    clusterCostCenterList.map(e => ({label: e.clusterName, value: e.clusterId})):[]}
+                                onChange={setClusterHandler}
+                                isMulti required isSearchable />
+
+                               {/*  <Form.Control as="select" onChange={(e) => setClusterHandler(e)}
                                     value={cluster} >
                                     <option value="">Select Cluster Type</option>
                                     {clusterCostCenterList !== undefined && clusterCostCenterList !== null &&
@@ -205,13 +218,23 @@ const ProductivityReportForm = () => {
                                                 <option key={item.clusterId} value={item.clusterId}>{item.clusterName}</option>
                                             )
                                         })}
-                                </Form.Control>
+                                </Form.Control> */}
                             </Form.Group>
                         </div>
                         <div className="col-sm-4">
                             <Form.Group>
                                 <Form.Label>Select Type of Contract</Form.Label>
-                                <Form.Control as="select" onChange={(e) => setContractTypeHandler(e)}
+                                <Select
+                                name="filters"
+                                placeholder="Select Contract Type"
+                                value={contractTypeData} 
+                                style={{fontSize:"0.8rem"}}
+                                options={shiftContractNames !== null && shiftContractNames !== undefined ?
+                                    shiftContractNames.map(e => ({label: e.contractType, value: e.contractType})):[]}
+                                onChange={setContractTypeHandler}
+                                isMulti required isSearchable />
+
+                               {/*  <Form.Control as="select" onChange={(e) => setContractTypeHandler(e)}
                                     value={contractTypeData} >
                                     <option value="">Select Contract Type</option>
                                     {shiftContractNames !== undefined && shiftContractNames !== null &&
@@ -220,7 +243,7 @@ const ProductivityReportForm = () => {
                                                 <option key={item.typeId} value={item.contractType}>{item.contractType}</option>
                                             )
                                         })}
-                                </Form.Control>
+                                </Form.Control> */}
                             </Form.Group>
                         </div>
                     </Row>

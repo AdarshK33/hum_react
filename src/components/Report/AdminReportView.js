@@ -101,17 +101,24 @@ console.log(dates)
                                                         <td>{item.leaveReports.grantLeave}</td>
                                                         <td>{item.leaveReports.stateLeaveEligible}</td>
                                                         <td>{item.leaveReports.lop}</td>
-                                                        {
-                                                            dates.forEach((date,b) => {
+                                                        {/* {
+                                                            dates.map((date,b) => {
 
                                                                 item.leaveReportWithDates.map((e,m) => {
                                                                 return (
                                                                     date === e.leavedate ? 
                                                                     <td>{e.leaveType}</td>
-                                                                    : <td>blank</td> 
+                                                                    : <td>{e.empId}</td> 
                                                                 )
                                                             })
                                                        
+                                                    })} */}
+                                                    {item.leaveReportWithDates.map(e => {
+                                                        dates.map(date => {
+                                                            return(
+                                                                e.leaveType === date ? console.log("true") : console.log("false")
+                                                            )
+                                                        })
                                                     })}
                                                     </tr>
                                                 </tbody>
