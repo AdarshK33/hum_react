@@ -97,20 +97,21 @@ function ViewShift() {
   }
 
   let data = [];
-  for (let i = 0; i < shiftList.length; i++) {
+  if (shiftList !== null) {
+    for (let i = 0; i < shiftList.length; i++) {
 
-    data.push({
-      id: i + 1,
-      storeId: shiftList[i].storeId,
-      time: shiftList[i].startTime + "-" + shiftList[i].endTime,
-      workingHours: shiftList[i].workingHours,
-      breakTime: shiftList[i].breakStartTime + "-" + shiftList[i].breakEndTime,
-      contractType: shiftList[i].contractType,
-      shiftType: shiftList[i].shiftType,
-      status: shiftList[i].status
-    })
+      data.push({
+        id: i + 1,
+        storeId: shiftList[i].storeId,
+        time: shiftList[i].startTime + "-" + shiftList[i].endTime,
+        workingHours: shiftList[i].workingHours,
+        breakTime: shiftList[i].breakStartTime + "-" + shiftList[i].breakEndTime,
+        contractType: shiftList[i].contractType,
+        shiftType: shiftList[i].shiftType,
+        status: shiftList[i].status
+      })
+    }
   }
-
   return (
     <Fragment>
       <Breadcrumb title="View Shift" parent="View Shift" />
