@@ -87,7 +87,7 @@ const GrantLeaveView = () => {
               )
             })}
         </table>
-        {(empLeave === null) ?
+        {(grantLeaveView === null) ?
           <p style={{ textAlign: "center" }}>No Record Found</p> : null}
 
         {empLeave !== null && empLeave !== undefined &&
