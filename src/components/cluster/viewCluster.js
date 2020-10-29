@@ -65,16 +65,12 @@ function ViewCluster() {
 
               <div className="title_bar">
                 {(() => {
-                  if (user.isClusterManager === "1") {
-                    return (
-                      <Button className="btn btn-light mr-2" style={{ display: "none" }} onClick={handleShow}>Create</Button>
-                    )
-                  }
-                  else if (user.isClusterManager === null) {
+                  if (user.loginType === "1" || user.additionalRole === "1" || user.loginType === "7" || user.additionalRole === "7" || user.loginType === "9" || user.additionalRole === "9") {
                     return (
                       <Button className="btn btn-light mr-2" onClick={handleShow}>Create</Button>
                     )
                   }
+
                 })()}
 
                 {/* <Button className="btn btn-light mr-2" onClick={handleEditShow}>edit</Button> */}
