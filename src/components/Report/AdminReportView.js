@@ -127,7 +127,7 @@ console.log(dates)
                                         })}
 
                                 </Table>
-                                {(reportList !== null && reportList.length <= 0) ? 
+                                {(reportList !== null && reportList !== undefined && reportList.length <= 0) ? 
                                 <p style={{ textAlign: "center" }}>No Record Found</p> : null}
                             </div>
                          
