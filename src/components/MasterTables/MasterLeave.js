@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useContext, useState } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import { AdminContext } from '../../context/AdminState';
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import { Button } from 'react-bootstrap';
 import '../Leaves/Leaves.css'
 import '../AdminLeave/AdminLeaves.css'
 import { toast } from "react-toastify";
@@ -13,7 +13,7 @@ import Pagination from 'react-js-pagination'
 const MasterLeave = () => {
 
     const { leaveMasterView, leaveMasterList, uploadFile } = useContext(AdminContext)
-
+    const [fileUpload, setFileUpload] = useState();
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
@@ -32,6 +32,14 @@ const MasterLeave = () => {
     useEffect(() => {
         leaveMasterView()
     }, [])
+
+    console.log("leave", leaveMasterList)
+    const changeHandler = (event) => {
+        let fileObj = event.target.files[0];
+        console.log("clicked", fileObj)
+        setFileUpload(fileObj)
+    }
+
     const filename = 'masterleave';
     let fields = {
         "masterLeaveId": "S. No",
@@ -56,10 +64,15 @@ const MasterLeave = () => {
 
 
 
-    const changeHandler = (event) => {
-        let fileObj = event.target.files[0];
-        console.log("clicked", fileObj)
-        uploadFile(fileObj)
+
+
+    const handleUpload = () => {
+        if (fileUpload !== undefined && fileUpload !== null) {
+            uploadFile(fileUpload)
+        } else {
+            toast.info("Please select a file to upload")
+        }
+
         setTimeout(() => {
             window.location.reload()
         }, 5000)
@@ -80,13 +93,7 @@ const MasterLeave = () => {
                                     onChange={(e) => changeHandler(e)}
                                     style={{ padding: "10px" }}
                                 />
-                                {/* <Button type='submit' onClick={uploadClick}>Upload</Button> */}
-                                {/* <ReactHTMLTableToExcel
-                                    className="btn btn-light mr-2"
-                                    table="table-to-xls"
-                                    filename="leaveMaster"
-                                    sheet="Sheet"
-                                    buttonText="Export excel" /> */}
+                                <Button className="btn btn-light mr-2" onClick={handleUpload}>Upload File</Button>
                                 {data.length > 0 &&
                                     <JsonToExcel
                                         data={data}
