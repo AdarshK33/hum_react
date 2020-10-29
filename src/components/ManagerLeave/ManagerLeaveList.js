@@ -148,8 +148,8 @@ const ManagerLeaveList = (props) => {
                                         )
                                     })}
                             </Table>
-                            {(leaveManagerList !== null && leaveManagerList.length <= 0) ? 
-                                <p style={{ textAlign: "center" }}>No Data</p> : null}
+                            {(leaveManagerList === null) ? 
+                                <p style={{ textAlign: "center" }}>No Record Found</p> : null}
                         </div>
                         </div>
                     </div>

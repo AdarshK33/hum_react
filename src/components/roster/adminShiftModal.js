@@ -235,7 +235,7 @@ const AdminShiftModal = (props) => {
                           defaultValue=""
                           value={employee}
                           style={{ fontSize: "0.8rem" }}
-                          options={EmployeeListForAdminRosterWeekOff !==null && EmployeeListForAdminRosterWeekOff.map(e => ({ label: e.firstName + " " + e.lastName + " - " + e.employeeId, value: e.employeeId }))}
+                          options={EmployeeListForAdminRosterWeekOff !== null && EmployeeListForAdminRosterWeekOff.map(e => ({ label: e.firstName + " " + e.lastName + " - " + e.employeeId, value: e.employeeId }))}
                           onChange={handleEmployeeList}
                           isMulti
                         />
