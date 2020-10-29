@@ -112,8 +112,8 @@ console.log(dates)
                                                         <td>{item.leaveReports.grantLeave}</td>
                                                         <td>{item.leaveReports.stateLeaveEligible}</td>
                                                         <td>{item.leaveReports.lop}</td>
-                                                         {
-                                                            dates.map((date,b) => {
+                                                        {
+                                                            dates.map((date) => {
                                                                 return (
                                                                     <td>{ getTdData(date,item)                                                                  
                                                                 }</td> 
@@ -121,7 +121,6 @@ console.log(dates)
                                                             })
                                                        
                                                     }
-
                                                     </tr>
                                                 </tbody>
                                             )

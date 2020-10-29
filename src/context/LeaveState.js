@@ -254,7 +254,7 @@ export const LeaveProvider = ({ children }) => {
   const deleteList = (leaveId, empId) => {
     console.log("delete id------", leaveId)
     console.log("empId id------", empId)
-    client.delete('leave_transaction/delete' + '?ltId=' + leaveId)
+    client.get('leave_transaction/delete' + '?ltId=' + leaveId)
       .then((response) => {
         toast.info(response.data.message)
         viewList()
@@ -272,7 +272,7 @@ export const LeaveProvider = ({ children }) => {
   const deleteEmpList = (leaveId, empId) => {
     console.log("delete id------", leaveId)
     console.log("empId id------", empId)
-    client.delete('leave_transaction/delete' + '?ltId=' + leaveId)
+    client.get('leave_transaction/delete' + '?ltId=' + leaveId)
       .then((response) => {
         toast.info(response.data.message)
         console.log("response message for delete", response.data.message)
