@@ -3,12 +3,18 @@ import Breadcrumb from '../common/breadcrumb';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import Pagination from 'react-js-pagination'
 import { AppContext } from "../../context/AppState";
+import { toast } from "react-toastify";
 import { MasterFilesContext } from "../../context/MasterFilesState";
+import {
+  JsonToExcel
+} from 'react-json-excel';
+import { Button } from 'react-bootstrap';
 
 const MasterState = () => {
 
   
   const { viewStates, stateList, uploadStateFile} = useContext(MasterFilesContext);
+  const [fileUpload, setFileUpload] = useState();
 
   useEffect(() =>{
     viewStates()
@@ -19,11 +25,38 @@ const MasterState = () => {
   const changeHandler = (event) => {
     let fileObj = event.target.files[0];
     console.log("clicked", fileObj)
-    uploadStateFile(fileObj)
-    setTimeout(()=>{
+    setFileUpload(fileObj)
+  }
+
+  const filename = 'masterStateList';
+  let fields = {
+    "stateId": "S. No",
+    "stateName": "State Name",
+    "stateCode": "State Code",
+  }
+
+  let data = [];
+  for (let i = 0; i < stateList.length; i++) {
+    
+    data.push({
+      stateId: i + 1,
+      stateName: stateList[i].stateName,
+      stateCode: stateList[i].stateCode
+    })
+  }
+
+  const handleUpload = () => {
+    if (fileUpload !== undefined && fileUpload !== null) {
+      uploadStateFile(fileUpload)
+    } else {
+      toast.info("Please select a file to upload")
+    }
+
+    setTimeout(() => {
       window.location.reload()
     }, 5000)
   }
+
   return (
     <Fragment>
       <Breadcrumb title="Master" parent="State Master" />
@@ -40,12 +73,23 @@ const MasterState = () => {
                       onChange={(e) => changeHandler(e)}
                       style={{ padding: "10px" }}
                     />
-                    <ReactHTMLTableToExcel
+
+                    <Button className="btn btn-light mr-2" onClick={handleUpload}>Upload File</Button>
+                    {data.length > 0 &&
+                      <JsonToExcel
+                        data={data}
+                        className="btn btn-light mr-2"
+                        filename={filename}
+                        fields={fields}
+
+                        text="Export excel"
+                      />}
+                    {/* <ReactHTMLTableToExcel
                       className="btn btn-light mr-2"
                       table="table-to-xls"
                       filename="statelist"
                       sheet="Sheet"
-                      buttonText="Export excel" />
+                      buttonText="Export excel" /> */}
                   </div>
             }
               
