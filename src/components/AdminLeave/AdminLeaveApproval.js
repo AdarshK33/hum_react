@@ -149,7 +149,7 @@ const AdminLeaveApproval = () => {
                             }) }
                     </Table>
                     {(ApprovalLeaveList !== null && ApprovalLeaveList.length <= 0) ? 
-                                <p style={{ textAlign: "center" }}>No Data</p> : null}
+                                <p style={{ textAlign: "center" }}>No Record Found</p> : null}
                 </div>
             </div>
             <AdminDeleteApproval handleDeleteClose={handleDeleteClose} modal={deleteModal} ltId={ltId} />

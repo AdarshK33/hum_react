@@ -279,21 +279,21 @@ function ViewShift() {
                       return (
                         <tbody key={i + 1}>
                           <tr>
+                            {(user.loginType==="7" || user.additionalRole==="7") ? 
                             <td>
                               {" "}
                               {
-                              (user.loginType==="7" || user.additionalRole==="7") &&
-                              item.statusDesc === "Pending" ? (
+                              item.statusDesc === "Pending" ? 
                                 <input
                                   type="checkbox"
                                   checked={checked.indexOf(item.salaryId) >= 0}
                                   onChange={() => checkboxHandler(item.salaryId)}
                                   name="selectCheckbox"
                                 />
-                              ) : (
+                               : 
                                   <input type="checkbox" disabled />
-                                )}{" "}
-                            </td>
+                                }{" "}
+                            </td> : <td></td> }
                             <td>{i + 1 + indexOfFirstRecord}</td>
 
                             <td>{item.employeeId}</td>
@@ -305,13 +305,9 @@ function ViewShift() {
                             <td>{item.extraHours}</td>
                             <td>{item.totalHours}</td>
                             <td>{item.statusDesc}</td>
-                            
-                              <td>{
-                                (
-                                  (user.loginType==="7" || user.additionalRole==="7" )  &&
-                                  item.statusDesc === 'Pending'
-                                  )
-                                   ?
+                            {user.loginType==="7" || user.additionalRole==="7" ?
+                              <td>{ 
+                                  item.statusDesc === 'Pending' ?
                                 <Edit2 onClick={() => {
                                   setEditModal(true); setEmployeeId(item.employeeId);
                                   setFirstName(item.firstName); setLastName(item.lastName); setNumberOfHours(item.numberOfHours)
@@ -321,8 +317,9 @@ function ViewShift() {
                                   setTotalHours(item.totalHours); setYear(item.year);
                                   setadditionalHours(item.additionalHours);
                                 }} /> :
-                                <Edit2 disabled style={{ color: 'lightgrey' }} />}
+                                <Edit2 disabled style={{ color: 'lightgrey' }} /> }
                               </td>
+                              : <td></td> }
                             
 
                           </tr>
