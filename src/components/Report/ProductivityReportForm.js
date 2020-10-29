@@ -11,12 +11,11 @@ import moment from 'moment'
 import ProductivityReportView from './ProductivityReportView'
 import { AppContext } from "../../context/AppState";
 import '../Leaves/Leaves.css'
-import Select from 'react-select';
-/* import Select from 'react-select'; */
+import MultiSelect from 'react-multi-select-component'
 
 const ProductivityReportForm = () => {
     const [reportType, setReportType] = useState('')
-    const [costCenter, setCostCenter] = useState('')
+    const [costCenter, setCostCenter] = useState([])
     const [employeeCostCenter, setEmployeeCostCenter] = useState([])
     const [sports, setSports] = useState([])
     const [cluster, setCluster] = useState([])
@@ -54,12 +53,12 @@ const ProductivityReportForm = () => {
         }
     }, [user.costCentre, user.loginType])
 
-    const setCostCenterHandler = (e) => {
-        let data1 = e.target.value
-        setCostCenter(data1)
+    const setCostCenterHandler = (options) => {
+        let data1 = options !== null ? options.map((e,i) => options[i].value) : []
+        setCostCenter(options)
         employeeIdData(data1)
         viewClusterCostCenter(data1)
-        console.log("data1", data1)
+        console.log("options in cost center", data1)
     }
 
     const setEmployeeCostCenterHandler = (options) => {
@@ -80,29 +79,33 @@ const ProductivityReportForm = () => {
     }
     const setSportsHandler = (options) => {
         setSports(options)
+        console.log("sports",options)
     }
     const submitData = (e) => {
         e.preventDefault();
 
-        const clusterId =  cluster.map((e,i) => cluster[i].value);
-        const contractType =  contractTypeData.map((e,i) => contractTypeData[i].value);
-        const employeeId = employeeCostCenter.map((e,i) => employeeCostCenter[i].value) ;
-        const month = moment(getM, ["YYYY-MM"]).format("M");
-        const sportId = sports.map((e,i) => sports[i].value);
-        const storeId = costCenter;
-        const year = reportType === 'Monthly' ? moment(getM, ["MMM Do YY"]).format('YYYY') : yearly;
-        console.log("productivity data", clusterId, contractType, employeeId, month, storeId, year)
-        productivityReport(clusterId, contractType, employeeId, month, sportId, storeId, year)
+        const reportData = {
+             clusterIds : cluster.length > 0 ?  cluster.map((e,i) => cluster[i].value) : null,
+             contractTypes : contractTypeData.length > 0 ? contractTypeData.map((e,i) => contractTypeData[i].value) : null,
+             employeeIds : employeeCostCenter.length > 0 ? employeeCostCenter.map((e,i) => employeeCostCenter[i].value) : null ,
+             month : reportType === 'Monthly' ? moment(getM, ["YYYY-MM"]).format("M") : 0,
+             sportIds : sports.length > 0 ? sports.map((e,i) => sports[i].value) : null,
+             storeIds : costCenter.length > 0 ? costCenter.map((e,i) => costCenter[i].value) : null,
+             year : reportType === 'Monthly' ? moment(getM, ["MMM Do YY"]).format('YYYY') : yearly,
+        }
+
+        console.log("productivity data", reportData)
+        productivityReport(reportData)
 
 
 
         setReportType('')
-        setCostCenter(costCenter)
+        setCostCenter([])
         setEmployeeCostCenter([])
         setSports([])
         setCluster([])
         setContractType([])
-        setGetM(new Date())
+        setGetM()
 
     }
     return (
@@ -129,19 +132,17 @@ const ProductivityReportForm = () => {
                             user.additionalRole === '1' || user.additionalRole === '9' ?
                             <div className="col-sm-4">
                                 <Form.Group>
-                                    <Form.Label>Cost Center </Form.Label> <span style={{ color: 'red' }}>*</span>
-                                    <Form.Control as="select" value={costCenter}
-                                        onChange={(e) => setCostCenterHandler(e)} required >
-                                        <option value=''>Select Cost Center</option>
-                                        <option value='all'>All</option>
-                                        {costCenterList.map((item, i) => {
-                                            return (
-                                                <option key={item.costCenterId} value={item.costCentreName}>
-                                                    {item.costCentreName}</option>
-                                            )
-                                        })
-                                        }
-                                    </Form.Control>
+                                    <Form.Label>Cost Center </Form.Label>
+                                    <MultiSelect
+                                        options={costCenterList !== null  ?
+                                            costCenterList.map(e => ({label: e.costCentreName, value: e.costCentreName})):[]}
+                                        value={costCenter}
+                                        onChange={setCostCenterHandler}
+                                        labelledBy={"Select"}
+                                        hasSelectAll={true}
+                                        disableSearch={true}
+                                        isSearchable
+                                    />
                                 </Form.Group>
                             </div> :
                             <div className="col-sm-4">
@@ -156,41 +157,29 @@ const ProductivityReportForm = () => {
                         <div className="col-sm-4">
                             <Form.Group>
                                 <Form.Label>Employee Id</Form.Label>
-                                <Select
-                                name="filters"
-                                placeholder="Select Employee Id"
-                                value={employeeCostCenter} 
-                                style={{fontSize:"0.8rem"}}
-                                options={employeeIdList !== null  ?
-                                 employeeIdList.map(e => ({label: e.firstName + " - " + e.employeeId, value: e.employeeId})):[]}
-                                onChange={setEmployeeCostCenterHandler}
-                                isMulti required isSearchable />
-                               
+                                <MultiSelect
+                                    options={employeeIdList !== null  ?
+                                    employeeIdList.map(e => ({label: e.firstName + " - " + e.employeeId, value: e.employeeId})):[]}
+                                    value={employeeCostCenter}
+                                    onChange={setEmployeeCostCenterHandler}
+                                    labelledBy={"Select Employee Id"}
+                                    hasSelectAll={true}
+                                    disableSearch={true}
+                                />
                             </Form.Group>
                         </div>
                         <div className="col-sm-4">
                             <Form.Group>
                                 <Form.Label>Select Sports</Form.Label>
-                                <Select
-                                name="filters"
-                                placeholder="Select Sports Type"
-                                value={sports} 
-                                style={{fontSize:"0.8rem"}}
-                                options={sportsNames !== null && sportsNames !== undefined ?
-                                    sportsNames.map(e => ({label: e.sportName, value: e.sportId})):[]}
-                                onChange={setSportsHandler}
-                                isMulti required isSearchable />
-
-                                {/* <Form.Control as="select" onChange={(e) => setSportsHandler(e)}
-                                    value={sports} >
-                                    <option value="">Select Sports Type</option>
-                                    {sportsNames !== undefined && sportsNames !== null &&
-                                        sportsNames.map((item, i) => {
-                                            return (
-                                                <option key={item.sportId} value={item.sportId}>{item.sportName}</option>
-                                            )
-                                        })}
-                                </Form.Control> */}
+                                <MultiSelect
+                                    options={sportsNames !== null && sportsNames !== undefined  ?
+                                        sportsNames.map(e => ({label: e.sportName, value: e.sportId})):[]}
+                                    value={sports}
+                                    onChange={setSportsHandler}
+                                    labelledBy={"Select sports Id"}
+                                    hasSelectAll={true}
+                                    disableSearch={true}
+                                />
 
                             </Form.Group>
                         </div>
@@ -199,51 +188,29 @@ const ProductivityReportForm = () => {
                         <div className="col-sm-4">
                             <Form.Group>
                                 <Form.Label>Select Cluster</Form.Label>
-                                <Select
-                                name="filters"
-                                placeholder="Select Cluster Type"
-                                value={cluster} 
-                                style={{fontSize:"0.8rem"}}
-                                options={clusterCostCenterList !== null && clusterCostCenterList !== undefined ?
-                                    clusterCostCenterList.map(e => ({label: e.clusterName, value: e.clusterId})):[]}
-                                onChange={setClusterHandler}
-                                isMulti required isSearchable />
-
-                               {/*  <Form.Control as="select" onChange={(e) => setClusterHandler(e)}
-                                    value={cluster} >
-                                    <option value="">Select Cluster Type</option>
-                                    {clusterCostCenterList !== undefined && clusterCostCenterList !== null &&
-                                        clusterCostCenterList.map((item, i) => {
-                                            return (
-                                                <option key={item.clusterId} value={item.clusterId}>{item.clusterName}</option>
-                                            )
-                                        })}
-                                </Form.Control> */}
+                                <MultiSelect
+                                    options={clusterCostCenterList !== null && clusterCostCenterList !== undefined  ?
+                                        clusterCostCenterList.map(e => ({label: e.clusterName, value: e.clusterId})):[]}
+                                    value={cluster}
+                                    onChange={setClusterHandler}
+                                    labelledBy={"Select cluster Id"}
+                                    hasSelectAll={true}
+                                    disableSearch={true}
+                                />
                             </Form.Group>
                         </div>
                         <div className="col-sm-4">
                             <Form.Group>
                                 <Form.Label>Select Type of Contract</Form.Label>
-                                <Select
-                                name="filters"
-                                placeholder="Select Contract Type"
-                                value={contractTypeData} 
-                                style={{fontSize:"0.8rem"}}
-                                options={shiftContractNames !== null && shiftContractNames !== undefined ?
-                                    shiftContractNames.map(e => ({label: e.contractType, value: e.contractType})):[]}
-                                onChange={setContractTypeHandler}
-                                isMulti required isSearchable />
-
-                               {/*  <Form.Control as="select" onChange={(e) => setContractTypeHandler(e)}
-                                    value={contractTypeData} >
-                                    <option value="">Select Contract Type</option>
-                                    {shiftContractNames !== undefined && shiftContractNames !== null &&
-                                        shiftContractNames.map((item, i) => {
-                                            return (
-                                                <option key={item.typeId} value={item.contractType}>{item.contractType}</option>
-                                            )
-                                        })}
-                                </Form.Control> */}
+                                <MultiSelect
+                                    options={shiftContractNames !== null && shiftContractNames !== undefined  ?
+                                        shiftContractNames.map(e => ({label: e.contractType, value: e.contractType})):[]}
+                                    value={contractTypeData}
+                                    onChange={setContractTypeHandler}
+                                    labelledBy={"Select contract type"}
+                                    hasSelectAll={true}
+                                    disableSearch={true}
+                                />
                             </Form.Group>
                         </div>
                     </Row>

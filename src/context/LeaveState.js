@@ -391,7 +391,7 @@ export const LeaveProvider = ({ children }) => {
   }
 
   //productivity report api
-  const productivityReport = (clusterId, contractType, employeeId, month, sportId, storeId, year) => {
+  /* const productivityReport = (clusterId, contractType, employeeId, month, sportId, storeId, year) => {
     console.log("month storeId year", clusterId, contractType, employeeId, month, sportId, storeId, year)
 
     if (clusterId !== null && employeeId !== null && sportId !== null && contractType !== '') {
@@ -427,7 +427,24 @@ export const LeaveProvider = ({ children }) => {
           console.log(error)
         })
     }
-  }
+  } */
+  const productivityReport = (reportData) => {
+    console.log("reportData", reportData)
+
+      return client.post('report/productivity',  reportData)
+        .then((response) => {
+          state.productivityList = response.data.data
+          console.log("productivity list api++++++", state.productivityList)
+          console.log("productivity list api message", response.data.message)
+          if (response.data.data === null) {
+            toast.info("Data" + " " + response.data.message)
+          }
+          return dispatch({ type: 'PRODUCTIVITY_REPORT', payload: state.productivityList })
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
   //City view Api
   const getCity = () => {
     client.get('city/view')
