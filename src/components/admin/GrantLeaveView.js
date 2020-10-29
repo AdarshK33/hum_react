@@ -1,17 +1,23 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import GrantLeaveAdd from './GrantLeaveAdd';
+import GrantLeaveEdit from './GrantLeaveEdit';
+import { Edit2,Search } from 'react-feather'
 import Pagination from 'react-js-pagination'
 import { AdminContext } from "../../context/AdminState";
 const GrantLeaveView = () => {
 
 
   const { viewGrantLeave, grantLeaveView } = useContext(AdminContext);
+  
 
   const [modal, setModal] = useState(false);
   const handleClose = () => setModal(false)
+  const [editModal, setEditModal] = useState(false);
   const handleShow = () => setModal(true)
   const [currentPage, setCurrentPage] = useState(1);
+  const handleEditClose = () => setEditModal(false);
+  const [empLeave, setEmpLeave] = useState();
   const recordPerPage = 10;
   const totalRecords = grantLeaveView.length;
   const pageRange = 10;
@@ -27,6 +33,12 @@ const GrantLeaveView = () => {
   const handlePageChange = pageNumber => {
     setCurrentPage(pageNumber);
   }
+  const editHandler = (item) => {
+       
+    setEmpLeave(item);
+    
+   
+}
   return (
     <Fragment>
       <Breadcrumb title="Grant Leave " parent=" Grant Leave " />
@@ -48,6 +60,7 @@ const GrantLeaveView = () => {
 
               <th scope="col">No of Days</th>
               <th scope="col">Year</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           {currentRecords !== undefined && currentRecords !== null &&
@@ -61,6 +74,13 @@ const GrantLeaveView = () => {
                     <td>{item.costCentre}</td>
                     <td>{item.numOfDays}</td>
                     <td>{item.year}</td>
+                    <td><Edit2 style={{color:'#376ebb'}} 
+                                                        onClick={() => {
+                                                            setEditModal(true);
+                                                        editHandler(item) 
+                                                        }}
+                                                        
+                                                        /></td>
                   </tr>
                 </tbody>
 
@@ -69,6 +89,11 @@ const GrantLeaveView = () => {
         </table>
         {(grantLeaveView !== null) ?
           <p style={{ textAlign: "center" }}>No Record Found</p> : null}
+        {empLeave !== null && empLeave !== undefined && 
+                    empLeave.length !== 0 ? <GrantLeaveEdit handleEditClose={handleEditClose}
+                  modal={editModal}
+                  editData = {empLeave}
+                      /> : ""}
 
         <div>
           {grantLeaveView !== null && grantLeaveView.length > 10 &&

@@ -48,14 +48,16 @@ const MasterCity = () => {
   }
 
   let data = [];
-  for (let i = 0; i < cityList.length; i++) {
-    console.log(cityList[i].holidayDate)
-    data.push({
-      cityId: i + 1,
-      cityName: cityList[i].cityName,
-      stateName: cityList[i].stateName,
+  if (cityList !== null) {
+    for (let i = 0; i < cityList.length; i++) {
+      // console.log(cityList[i].holidayDate)
+      data.push({
+        cityId: i + 1,
+        cityName: cityList[i].cityName,
+        stateName: cityList[i].stateName,
 
-    })
+      })
+    }
   }
 
   const handleUpload = () => {
@@ -95,7 +97,6 @@ const MasterCity = () => {
                     className="btn btn-light mr-2"
                     filename={filename}
                     fields={fields}
-
                     text="Export excel"
                   />}
               </div>

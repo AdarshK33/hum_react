@@ -50,15 +50,18 @@ const MasterLeave = () => {
     }
 
     let data = [];
-    for (let i = 0; i < leaveMasterList.length; i++) {
-        // console.log(leaveMasterList[i].holidayDate)
-        data.push({
-            masterLeaveId: i + 1,
-            maxLeaves: leaveMasterList[i].maxLeaves,
-            stateName: leaveMasterList[i].stateName,
-            year: leaveMasterList[i].year,
+    if (leaveMasterList !== null) {
+        for (let i = 0; i < leaveMasterList.length; i++) {
+            // console.log(leaveMasterList[i].holidayDate)
+            data.push({
+                masterLeaveId: i + 1,
+                maxLeaves: leaveMasterList[i].maxLeaves,
+                stateName: leaveMasterList[i].stateName,
+                year: leaveMasterList[i].year,
 
-        })
+            })
+        }
+
     }
 
 

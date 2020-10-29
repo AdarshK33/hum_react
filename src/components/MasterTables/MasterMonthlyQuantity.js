@@ -22,15 +22,15 @@ const MasterMonthlyQuantity = () => {
     const [costCenter, setCostCenter] = useState();
 
     var monthsNumber = new Array();
-    monthsNumber["01"] = "Jan";
-    monthsNumber["02"] = "Feb";
-    monthsNumber["03"] = "Mar";
-    monthsNumber["04"] = "Apr";
-    monthsNumber["05"] = "May";
-    monthsNumber["06"] = "Jun";
-    monthsNumber["07"] = "Jul";
-    monthsNumber["08"] = "Aug";
-    monthsNumber["09"] = "Sep";
+    monthsNumber["1"] = "Jan";
+    monthsNumber["2"] = "Feb";
+    monthsNumber["3"] = "Mar";
+    monthsNumber["4"] = "Apr";
+    monthsNumber["5"] = "May";
+    monthsNumber["6"] = "Jun";
+    monthsNumber["7"] = "Jul";
+    monthsNumber["8"] = "Aug";
+    monthsNumber["9"] = "Sep";
     monthsNumber["10"] = "Oct";
     monthsNumber["11"] = "Nov";
     monthsNumber["12"] = "Dec";
@@ -80,29 +80,37 @@ const MasterMonthlyQuantity = () => {
         viewCostCentre()
     }, [])
 
+   
 
-    const filename = 'holidaylist';
+
+    const filename = 'MonthlyQuantitylist';
     let fields = {
-        "holidayId": "S. No",
-        "holidayDate": "Date",
-        "holidayName": "Name",
+        "Id": "S. No",
+        "storeId": "Store ID",
+        "store": "Store",
         "year": "Year",
-        "state": "State",
-        "department": "Department"
+        "month": "Month",
+        "hour": "Hour",
+        "turnover": "Turnover",
+        "quantity": "Quantity"
     }
 
     let data = [];
-    // for (let i = 0; i < holidayDataList.length; i++) {
-    //     console.log(holidayDataList[i].holidayDate)
-    //     data.push({
-    //         holidayId: i + 1,
-    //         holidayDate: holidayDataList[i].holidayDate,
-    //         holidayName: holidayDataList[i].holidayName,
-    //         year: holidayDataList[i].year,
-    //         state: holidayDataList[i].state,
-    //         department: holidayDataList[i].department
-    //     })
-    // }
+    if(monthlyQtyDetailsList !== undefined && monthlyQtyDetailsList !== null){
+        for (let i = 0; i < monthlyQtyDetailsList.length; i++) {
+            console.log(monthlyQtyDetailsList[i].holidayDate)
+            data.push({
+                Id: i + 1,
+                storeId: monthlyQtyDetailsList[i].storeId,
+                store: monthlyQtyDetailsList[i].store,
+                year: monthlyQtyDetailsList[i].year,
+                month: monthlyQtyDetailsList[i].month,
+                hour: monthlyQtyDetailsList[i].hour,
+                turnover: monthlyQtyDetailsList[i].turnover,
+                quantity: monthlyQtyDetailsList[i].quantity
+            })
+        }
+    }
     const handleUpload = () => {
         if (fileUpload !== undefined && fileUpload !== null) {
             //uploadFile(fileUpload)
@@ -166,24 +174,35 @@ const MasterMonthlyQuantity = () => {
                 </Form>
                 <br />
                 <div className="title_bar" >
-                    {/*
+                    
                     <input
                         className="btn"
                         type="file"
                         accept=".xlsx, .xls, .csv"
                         //  onChange={(e) => changeHandler(e)}
                         style={{ padding: "10px" }}
-                    />*/}
+                    />
                     <Button className="btn btn-light mr-2" onClick={handleUpload}>Upload File</Button>
 
-                    <JsonToExcel
+                    {data.length > 0 &&
+                      <JsonToExcel
                         data={data}
                         className="btn btn-light mr-2"
                         filename={filename}
                         fields={fields}
 
                         text="Export excel"
-                    />
+                      />
+                    // : 
+                    // <JsonToExcel
+                    //     data=""
+                    //     className="btn btn-light mr-2"
+                    //     filename={filename}
+                    //     fields={fields}
+
+                    //     text="Export excel"
+                    //   />
+                    }
 
                 </div>
                 <div className="table-responsive">
@@ -221,6 +240,11 @@ const MasterMonthlyQuantity = () => {
                                 )
                             })}
                     </table>
+                    {monthlyQtyDetailsList !== null && monthlyQtyDetailsList.length <= 0 ? (
+                    <p style={{ textAlign: "center" }}>Select Month and Cost Center</p>
+                  ) : monthlyQtyDetailsList === null  ? (
+                    <p style={{ textAlign: "center" }}>No Records Found</p>
+                  ) : null}
                 </div>
                 <div>
                     {monthlyQtyDetailsList !== null && monthlyQtyDetailsList.length > 10 &&
