@@ -117,7 +117,11 @@ const ProductivityReportView = (props) => {
                                         })}
 
                                 </Table>
+                                {(currentRecords !== null && currentRecords !== undefined &&
+                                 currentRecords.length <= 0) ? 
+                                <p style={{ textAlign: "center" }}>No Record Found</p> : null}
                             </div>
+                           
                         </div>
                     </div>
                 </Row>
