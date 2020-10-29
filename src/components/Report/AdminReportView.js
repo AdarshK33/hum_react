@@ -87,12 +87,12 @@ console.log(dates)
                                             <th>State Eligible Leaves</th>
                                             <th>LOP</th>
                                             {dates.map((date,key) => 
-                                                <th {...{key}} >{date} </th>
+                                                <th {...{key}} style={{display:'none'}} >{date} </th>
                                             )}
                                         </tr>
                                     </thead>
                                     {currentRecords !== undefined && currentRecords !== null &&
-                                        currentRecords.length > 0 &&
+                                        currentRecords.length > 0 ?
                                         currentRecords.map((item, i) => {
                                             return (
                                                 <tbody key={i + 1}>
@@ -115,7 +115,7 @@ console.log(dates)
                                                         {
                                                             dates.map((date) => {
                                                                 return (
-                                                                    <td>{ getTdData(date,item)                                                                  
+                                                                    <td style={{display:'none'}}>{ getTdData(date,item)                                                                  
                                                                 }</td> 
                                                                 )
                                                             })
@@ -124,11 +124,17 @@ console.log(dates)
                                                     </tr>
                                                 </tbody>
                                             )
-                                        })}
+                                        }) : 
+                                        <tbody>
+                                            <tr>
+                                                <td colspan='12'>No Record Found</td>
+                                            </tr>
+                                        </tbody>
+                                        }
 
                                 </Table>
-                                {(reportList !== null && reportList !== undefined && reportList.length <= 0) ? 
-                                <p style={{ textAlign: "center" }}>No Record Found</p> : null}
+                                {/* {(reportList === null && reportList.length<=0 ) ? 
+                                <p style={{ textAlign: "center" }}>No Record Found</p>: null}  */}
                             </div>
                          
                         </div>

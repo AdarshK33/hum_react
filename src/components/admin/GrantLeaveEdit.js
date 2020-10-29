@@ -3,7 +3,7 @@ import { Modal } from 'react-bootstrap'
 import { AdminContext } from "../../context/AdminState";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const GrantLeaveAdd = (props) => {
+const GrantLeaveEdit = (props) => {
 
 
 
@@ -13,9 +13,21 @@ const GrantLeaveAdd = (props) => {
     const [successMsg, setSuccessMsg] = useState("");
     const [costCenter, setCostCenter] = useState()
     const [employeeCostCenter, setEmployeeCostCenter] = useState('')
+    const [employeeName, setEmployeeName] = useState('')
+    const [grantLeaveId, setGrantLeaveId] = useState('');
     const { viewGrantLeave, grantLeaveView, createLeaveForSameEmp, createGrantLeave, CostCenter, costCenterList, employeeIdData, employeeIdList } = useContext(AdminContext);
 
     var year = new Date().getFullYear()
+    useEffect(() => {
+        CostCenter()
+        // viewGrantLeave()
+        setCostCenter(props.editData.costCentre)
+        setEmployeeCostCenter(props.editData.empId)
+        setEmployeeName(props.editData.empName)
+        setNumOfDays(props.editData.numOfDays)
+        setGrantLeaveId(props.editData.grantLeaveId)
+        // employeeIdData()
+    }, [props.editData])
 
     const setCostCenterHandler = (e) => {
         let data1 = e.target.value
@@ -40,34 +52,30 @@ const GrantLeaveAdd = (props) => {
     }
 
     const callTimer = () => {
-        const setModal = props.handleClose;
+        const setModal = props.handleEditClose;
         setModal()
     }
     const clearAndClose = () => {
-        props.handleClose();
+        props.handleEditClose();
     }
 
     const onSubmit = (event, props) => {
         event.preventDefault();
         clearAndClose();
         let empList = grantLeaveView;
-        // let flag = 0;
-        // for (let i = 0 ; i<empList.length ; i++){
-        //     if(empList[i].empId === employeeCostCenter){
-        //         flag = 1;
-        //     }
-        // }
+        
 
         const addGrantLeave = {
             leaveId: 1,
-            grantLeaveId: 0,
+            grantLeaveId: grantLeaveId,
             numOfDays,
             empId: employeeCostCenter,
             year
         }
         let result = {};
-        // if(flag === 0){
-             result = createGrantLeave(addGrantLeave)
+        
+           
+             result = createLeaveForSameEmp(addGrantLeave)
             .then((result) => {
                 console.log("api response===", result.data.message);
                 toast.info(result.data.message);
@@ -80,21 +88,7 @@ const GrantLeaveAdd = (props) => {
             .catch((error) => {
                 alert(" In error catch ", error);
             })
-        // }else {
-        //      result = createLeaveForSameEmp(addGrantLeave)
-        //     .then((result) => {
-        //         console.log("api response===", result.data.message);
-        //         toast.info(result.data.message);
-        //         setTimeout(() => {
-        //             callTimer();
-        //             setClear();
-        //         }, 2000);
-        //         viewGrantLeave();
-        //     })
-        //     .catch((error) => {
-        //         alert(" In error catch ", error);
-        //     })
-        // }
+      
         
         console.log(result, "in competent");
         
@@ -103,7 +97,7 @@ const GrantLeaveAdd = (props) => {
 
     return (
         <Fragment>
-            <Modal show={props.modal} onHide={props.handleClose} centered>
+            <Modal show={props.modal} onHide={clearAndClose} centered>
 
                 <Modal.Header closeButton>
                     <Modal.Title>Grant Leave</Modal.Title>
@@ -120,7 +114,7 @@ const GrantLeaveAdd = (props) => {
                                                 className="form-control"
                                                 required
                                                 onChange={(e) => setCostCenterHandler(e)} >
-                                                <option value="">Select Cost Center</option>
+                                                <option value={costCenter}>{costCenter}</option>
                                                 {costCenterList !== null && costCenterList.map((item, i) => {
                                                     return (
                                                         <option key={item.costCenterId} value={item.costCentreName}>
@@ -142,7 +136,7 @@ const GrantLeaveAdd = (props) => {
                                                 className="form-control"
                                                 required
                                                 onChange={(e) => setEmployeeCostCenterHandler(e)}>
-                                                <option value="">Select Employee</option>
+                                                <option value={employeeCostCenter}>{employeeName}-{employeeCostCenter}</option>
                                                 {employeeIdList !== null && employeeIdList.map((item, i) => {
                                                     return (
                                                         <option key={item.employeeId} value={item.employeeId}>
@@ -160,7 +154,7 @@ const GrantLeaveAdd = (props) => {
                                         <div className="form-group">
                                             <label htmlFor="exampleFormControlInput1">Number of days</label>
 
-                                            <input type="number" className="form-control digit" required min='1'
+                                            <input type="number" className="form-control digit" required min='1' value = {numOfDays}
                                             onChange={(e) => setNumOfDays(e.target.value)} value={numOfDays} placeholder="Number of days" />
                                         </div>
                                     </div>
@@ -188,4 +182,4 @@ const GrantLeaveAdd = (props) => {
     )
 }
 
-export default GrantLeaveAdd;
+export default GrantLeaveEdit;

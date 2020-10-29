@@ -5,12 +5,19 @@ import Pagination from 'react-js-pagination'
 import { MasterFilesContext } from "../../context/MasterFilesState";
 import { DashboardContext } from "../../context/DashboardState";
 import { Button, Modal,Form, Table, Row, Container } from "react-bootstrap";
+import { toast } from "react-toastify";
+import {
+  JsonToExcel
+} from 'react-json-excel';
+
+
 
 
 const MasterDailyQty = () => {
 
   const {dailyQty, viewDailyQty, uploadDailyQty} = useContext(MasterFilesContext);
   const { cosCentreList, viewCostCentre } = useContext(DashboardContext);
+  const [fileUpload, setFileUpload] = useState();
 
 
   const [date, setDate] = useState();
@@ -24,10 +31,11 @@ const MasterDailyQty = () => {
   const changeHandler = (event) => {
     let fileObj = event.target.files[0];
     console.log("clicked", fileObj)
-    uploadDailyQty(fileObj)
-    setTimeout(()=>{
-      window.location.reload()
-    }, 5000)
+    setFileUpload(fileObj)
+    // uploadDailyQty(fileObj)
+    // setTimeout(()=>{
+    //   window.location.reload()
+    // }, 5000)
   }
 
   const costCenterHandler = e => {
@@ -43,6 +51,49 @@ const MasterDailyQty = () => {
   const onSubmit = (e) =>{
     e.preventDefault();
     viewDailyQty(costCenter, date);
+  }
+  
+
+  const filename = 'DailyQuantitylist';
+  let fields = {
+    "Id": "S. No",
+    "dqStoreId": "Store ID",
+    "dqDate": "Date",
+    "dqDay": "Day",
+    "dqWeek": "Week",
+    "dqMonth": "Month",
+    "dqTo": "To",
+    "dqQty": "Quantity"
+  }
+
+  let data = [];
+  if(dailyQty !== undefined && dailyQty !== null){
+    for (let i = 0; i < dailyQty.length; i++) {
+      console.log(dailyQty[i].holidayDate)
+      data.push({
+        Id: i + 1,
+        dqStoreId: dailyQty[i].dqStoreId,
+        dqDate: dailyQty[i].dqDate,
+        dqDay: dailyQty[i].dqDay,
+        dqWeek: dailyQty[i].dqWeek,
+        dqMonth: dailyQty[i].dqMonth,
+        dqTo: dailyQty[i].dqTo,
+        dqQty: dailyQty[i].dqQty
+      })
+    }
+  }
+  
+
+  const handleUpload = () => {
+    if (fileUpload !== undefined && fileUpload !== null) {
+      uploadDailyQty(fileUpload)
+    } else {
+      toast.info("Please select a file to upload")
+    }
+
+    setTimeout(() => {
+      window.location.reload()
+    }, 5000)
   }
 
   return (
@@ -108,12 +159,32 @@ const MasterDailyQty = () => {
                       onChange={(e) => changeHandler(e)}
                       style={{ padding: "10px" }}
                     />
-                    <ReactHTMLTableToExcel
+                    <Button className="btn btn-light mr-2" onClick={handleUpload}>Upload File</Button>
+                     {data.length > 0 &&
+                      <JsonToExcel
+                        data={data}
+                        className="btn btn-light mr-2"
+                        filename={filename}
+                        fields={fields}
+
+                        text="Export excel"
+                      /> 
+                      // : 
+                      // <JsonToExcel
+                      //   data=""
+                      //   className="btn btn-light mr-2"
+                      //   filename={filename}
+                      //   fields={fields}
+
+                      //   text="Export excel"
+                      // />
+                      }
+                    {/* <ReactHTMLTableToExcel
                       className="btn btn-light mr-2"
                       table="table-to-xls"
                       filename="dailyQtyList"
                       sheet="Sheet"
-                      buttonText="Export excel" />
+                      buttonText="Export excel" /> */}
                   </div>
             }
               
@@ -155,7 +226,11 @@ const MasterDailyQty = () => {
                 </table>
                 {dailyQty !== null && dailyQty.length <= 0 ? (
                     <p style={{ textAlign: "center" }}>Select Date and Cost Center</p>
+                  ) : dailyQty === null  ? (
+                    <p style={{ textAlign: "center" }}>No Records Found</p>
                   ) : null}
+
+                  
 
               </div>
 
