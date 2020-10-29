@@ -131,6 +131,9 @@ function ViewCluster() {
                     })}
 
                 </table>
+                {(clusterList === null) ?
+                  <p style={{ textAlign: "center" }}>No Record Found</p> : null}
+
                 <EditClusterModal handleEditClose={handleEditClose}
                   shiftData={getSingleCluster}
                   clusterData={getSingleCluster1}
