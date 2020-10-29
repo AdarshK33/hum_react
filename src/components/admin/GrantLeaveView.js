@@ -2,14 +2,14 @@ import React, { Fragment, useState, useContext, useEffect } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import GrantLeaveAdd from './GrantLeaveAdd';
 import GrantLeaveEdit from './GrantLeaveEdit';
-import { Edit2,Search } from 'react-feather'
+import { Edit2, Search } from 'react-feather'
 import Pagination from 'react-js-pagination'
 import { AdminContext } from "../../context/AdminState";
 const GrantLeaveView = () => {
 
 
   const { viewGrantLeave, grantLeaveView } = useContext(AdminContext);
-  
+
 
   const [modal, setModal] = useState(false);
   const handleClose = () => setModal(false)
@@ -34,11 +34,11 @@ const GrantLeaveView = () => {
     setCurrentPage(pageNumber);
   }
   const editHandler = (item) => {
-       
+
     setEmpLeave(item);
-    
-   
-}
+
+
+  }
   return (
     <Fragment>
       <Breadcrumb title="Grant Leave " parent=" Grant Leave " />
@@ -74,26 +74,27 @@ const GrantLeaveView = () => {
                     <td>{item.costCentre}</td>
                     <td>{item.numOfDays}</td>
                     <td>{item.year}</td>
-                    <td><Edit2 style={{color:'#376ebb'}} 
-                                                        onClick={() => {
-                                                            setEditModal(true);
-                                                        editHandler(item) 
-                                                        }}
-                                                        
-                                                        /></td>
+                    <td><Edit2 style={{ color: '#376ebb' }}
+                      onClick={() => {
+                        setEditModal(true);
+                        editHandler(item)
+                      }}
+
+                    /></td>
                   </tr>
                 </tbody>
 
               )
             })}
         </table>
-        {(grantLeaveView !== null) ?
+        {(empLeave === null) ?
           <p style={{ textAlign: "center" }}>No Record Found</p> : null}
-        {empLeave !== null && empLeave !== undefined && 
-                    empLeave.length !== 0 ? <GrantLeaveEdit handleEditClose={handleEditClose}
-                  modal={editModal}
-                  editData = {empLeave}
-                      /> : ""}
+
+        {empLeave !== null && empLeave !== undefined &&
+          empLeave.length !== 0 ? <GrantLeaveEdit handleEditClose={handleEditClose}
+            modal={editModal}
+            editData={empLeave}
+          /> : ""}
 
         <div>
           {grantLeaveView !== null && grantLeaveView.length > 10 &&
