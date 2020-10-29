@@ -12,24 +12,28 @@ const UserMenu = () => {
     const handleMenuListProfile = () => {
         getUserMenu(user.generalUserMenus, "profile", user);
         localStorage.setItem('type', "profile")
+        localStorage.setItem('flag', "0")
         history.push("/dashboard/storedashboard");
     }
 
     const handleMenuListAdmin = () => {
         getUserMenu(user.adminMenus);
         localStorage.setItem('type', "admin")
+        localStorage.setItem('flag', "0")
         history.push("/dashboard/storedashboard");
     }
 
     const handleMenuListTeam = () => {
         getUserMenu(user.managerMenus);
         localStorage.setItem('type', "team")
+        localStorage.setItem('flag', "0")
         history.push("/dashboard/storedashboard");
     }
 
     const handleMenuListCluster = () => {
         getUserMenu(user.clusterManagerMenus);
         localStorage.setItem('type', "leader")
+        localStorage.setItem('flag', "1")
         history.push("/dashboard/storedashboard");
     }
 

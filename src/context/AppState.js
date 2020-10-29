@@ -111,6 +111,7 @@ export const AppProvider = ({ children, history }) => {
           Cookies.remove('APPRT')
           localStorage.removeItem('APPID')
           localStorage.removeItem('type')
+          localStorage.removeItem('flag')
           window.location.href = loginUrl
           // window.open(
           //   loginUrl,
