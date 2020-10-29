@@ -45,10 +45,10 @@ const MasterWorkLocation = () => {
         "street": "Street",
         "locality": "Locality",
         // "addressLine": "Address Line",
-        // "pinCode": "Pin Code",
-        // "phoneNumber": "Phone Number",
-        // "openAt": "Opening Time",
-        // "closeAt": "Closing Time"
+        "pinCode": "Pin Code",
+        "phoneNumber": "Phone Number",
+        "openAt": "Opening Time",
+        "closeAt": "Closing Time"
     }
     let data = [];
     for (let i = 0; i < locationDetailsList.length; i++) {
@@ -62,10 +62,10 @@ const MasterWorkLocation = () => {
             street: locationDetailsList[i].street,
             locality: locationDetailsList[i].locality,
             //addressLine: locationDetailsList[i].addressLine,
-            // pinCode: locationDetailsList[i].pinCode,
-            // phoneNumber: locationDetailsList[i].phoneNumber,
-            // openAt: locationDetailsList[i].openAt,
-            // closeAt: locationDetailsList[i].closeAt,
+            pinCode: locationDetailsList[i].pinCode,
+            phoneNumber: locationDetailsList[i].phoneNumber,
+            openAt: locationDetailsList[i].openAt,
+            closeAt: locationDetailsList[i].closeAt,
 
         })
     }
@@ -111,10 +111,10 @@ const MasterWorkLocation = () => {
                                 <th scope="col">Street</th>
                                 <th scope="col">Locality</th>
                                 {/* <th scope="col">Address Line</th> */}
-                                {/*  <th scope="col">Pin Code</th>
-                                  <th scope="col">Phone Number</th>
+                                <th scope="col">Pin Code</th>
+                                <th scope="col">Phone Number</th>
                                 <th scope="col">Opening Time</th>
-                                <th scope="col">Closing Time</th> */}
+                                <th scope="col">Closing Time</th>
                             </tr>
                         </thead>
                         {currentRecords !== null &&
@@ -131,10 +131,10 @@ const MasterWorkLocation = () => {
                                             <td>{item.street}</td>
                                             <td>{item.locality}</td>
                                             {/* <td>{item.addressLine}</td> */}
-                                            {/*  <td>{item.pinCode}</td>
+                                            <td>{item.pinCode}</td>
                                             <td>{item.phoneNumber}</td>
                                             <td>{item.openAt}</td>
-                                            <td>{item.closeAt}</td> */}
+                                            <td>{item.closeAt}</td>
 
 
                                         </tr>

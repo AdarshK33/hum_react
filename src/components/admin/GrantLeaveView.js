@@ -67,6 +67,9 @@ const GrantLeaveView = () => {
               )
             })}
         </table>
+        {(grantLeaveView !== null) ?
+          <p style={{ textAlign: "center" }}>No Record Found</p> : null}
+
         <div>
           {grantLeaveView !== null && grantLeaveView.length > 10 &&
             <Pagination
