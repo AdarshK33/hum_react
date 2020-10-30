@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useContext, useState} from 'react';
+import React, { Fragment, useEffect, useContext, useState } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import Pagination from 'react-js-pagination'
@@ -19,19 +19,19 @@ const MasterWeek = () => {
   const [fileUpload, setFileUpload] = useState();
   const [year, setYear] = useState();
 
-  const {getMasterWeeks, masterWeeks, uploadWeeks} = useContext(RosterContext);
+  const { getMasterWeeks, masterWeeks, uploadWeeks } = useContext(RosterContext);
 
-  useEffect(() =>{
+  useEffect(() => {
     // getMasterWeeks()
   }, [])
 
-  const onSubmit = (e) =>{
+  const onSubmit = (e) => {
     e.preventDefault();
     const y1 = moment(year, ["MMM Do YY"]).format("YYYY");
     getMasterWeeks(y1)
   }
 
-    
+
   const changeHandler = (event) => {
     let fileObj = event.target.files[0];
     console.log("clicked", fileObj)
@@ -45,32 +45,33 @@ const MasterWeek = () => {
     "weekName": "Week Name",
     "startDate": "Start Date",
     "endDate": "End Date",
-    "year" : "Year"
+    "year": "Year"
   }
 
   let data = [];
-  
-  if (masterWeeks!==null && masterWeeks!==undefined ){
 
-    for(let i = 0; i < masterWeeks.length; i++){
-      
-      data.push({weekId : i+1, 
-                  weekName : masterWeeks[i].weekName, 
-                  startDate : masterWeeks[i].startDate,
-                  endDate : masterWeeks[i].endDate,
-                  year : masterWeeks[i].year
-                  })
+  if (masterWeeks !== null && masterWeeks !== undefined) {
+
+    for (let i = 0; i < masterWeeks.length; i++) {
+
+      data.push({
+        weekId: i + 1,
+        weekName: masterWeeks[i].weekName,
+        startDate: masterWeeks[i].startDate,
+        endDate: masterWeeks[i].endDate,
+        year: masterWeeks[i].year
+      })
     }
   }
   // console.log(masterWeeks);
   // console.log("=============", data)
 
   const handleUpload = () => {
-    if(fileUpload !== undefined && fileUpload !== null){
+    if (fileUpload !== undefined && fileUpload !== null) {
       uploadWeeks(fileUpload)
-    }else{
+    } else {
       toast.info("Please select a file to upload")
-    } 
+    }
 
     setTimeout(() => {
       window.location.reload()
@@ -84,26 +85,27 @@ const MasterWeek = () => {
         <div className="row">
           <div className="col-sm-12">
 
-          <Form onSubmit={onSubmit}>          
+            <Form onSubmit={onSubmit}>
               <Form.Group>
                 <Form.Label>Select Year</Form.Label><span style={{ color: 'red' }}>*</span> <br />
                 <DatePicker
                   selected={year}
-                  onChange={y => {                
+                  onChange={y => {
                     console.log(moment(y, ["MMM Do YY"]).format("YYYY"));
-                    setYear(y)}}
+                    setYear(y)
+                  }}
                   showYearPicker
                   dateFormat="yyyy"
-                />            
+                />
               </Form.Group>
 
-            <Button
+              <Button
                 type="submit"
                 className="submitButton"
-                // style={{paddingBottom:"10px"}}            
-            >
-                Submit</Button> 
-        </Form>
+              // style={{paddingBottom:"10px"}}            
+              >
+                Submit</Button>
+            </Form>
 
 
             {/* <label>Select Year</label>
@@ -118,8 +120,8 @@ const MasterWeek = () => {
             <br /> */}
             <br />
             <div className="card" style={{ overflowX: "auto" }}>
-            {                  
-                  <div className="title_bar" >  
+              {
+                <div className="title_bar" >
 
                   <input
                     className="btn"
@@ -139,10 +141,10 @@ const MasterWeek = () => {
                       className="btn btn-light mr-2"
                       filename={filename}
                       fields={fields}
-                      
+
                       text="Export excel"
-                    />}                 
-                    {/* <input
+                    />}
+                  {/* <input
                       className="btn"
                       type="file"
                       accept=".xlsx, .xls, .csv"
@@ -155,9 +157,9 @@ const MasterWeek = () => {
                       filename="weeklist"
                       sheet="Sheet"
                       buttonText="Export excel" /> */}
-                  </div>
-            }
-              
+                </div>
+              }
+
 
               <div className="table-responsive">
                 <table id="table-to-xls" className="table table-hover">
@@ -166,8 +168,8 @@ const MasterWeek = () => {
                       <th>S. No</th>
                       <th scope="col"> Week Name</th>
                       <th scope="col"> Start Date</th>
-                      <th scope="col"> End Date </th>     
-                      <th scope="col"> Year </th>               
+                      <th scope="col"> End Date </th>
+                      <th scope="col"> Year </th>
                     </tr>
                   </thead>
 
@@ -176,7 +178,7 @@ const MasterWeek = () => {
                       return (
                         <tbody key={i + 1}>
                           <tr>
-                            <td>{i + 1 }</td>
+                            <td>{i + 1}</td>
                             <td>{item.weekName}</td>
                             <td>{item.startDate}</td>
                             <td>{item.endDate}</td>
@@ -185,9 +187,9 @@ const MasterWeek = () => {
                         </tbody>
                       )
                     })
-                  :
-                  <p style={{textAlign: "center"}}>Select a year</p>}         
-           
+                    :
+                    <p style={{ textAlign: "center" }}>Select a year</p>}
+
 
                 </table>
 
@@ -196,7 +198,7 @@ const MasterWeek = () => {
             </div>
           </div>
         </div>
-        
+
       </div>
     </Fragment>
   );

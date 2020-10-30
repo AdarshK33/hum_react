@@ -258,11 +258,11 @@ export const RosterProvider = ({ children }) => {
 
   const uploadWeeks = (file) => {
     const formData = new FormData();
-    formData.append('file',file)
+    formData.append('file', file)
     console.log(formData)
     return client.post('/weekoff/weeks/upload', formData)
       .then((response) => {
-        console.log(response,"res")
+        console.log(response, "res")
         toast.info(response.data.message)
       })
       .catch((error) => {
@@ -322,10 +322,10 @@ export const RosterProvider = ({ children }) => {
   }
 
   //ADMIN EMPLOYEE LIST FOR ROSTER WEEKOFF
-  const getEmployeeListForAdminRosterWeekOff = (contractType,storeId) => {
+  const getEmployeeListForAdminRosterWeekOff = (contractType, storeId) => {
     // const contractType="Parttime";
-    console.log("=============NAV============",contractType)
-    client.get('employee/view?contract_type='+contractType+'&storeId=' + storeId)
+    console.log("=============NAV============", contractType)
+    client.get('employee/view?contract_type=' + contractType + '&storeId=' + storeId)
       .then((response) => {
         state.EmployeeListForAdminRosterWeekOff = response.data.data;
         console.log("admin calculate week for store id  ", state.EmployeeListForAdminRosterWeekOff)

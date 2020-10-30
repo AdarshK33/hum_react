@@ -52,24 +52,25 @@ const MasterWorkLocation = () => {
     }
     let data = [];
     for (let i = 0; i < locationDetailsList.length; i++) {
-        data.push({
-            locationId: i + 1,
-            locationName: locationDetailsList[i].locationName,
-            cityName: locationDetailsList[i].cityName,
-            stateName: locationDetailsList[i].stateName,
-            zone: locationDetailsList[i].zone,
-            plotNo: locationDetailsList[i].plotNo,
-            street: locationDetailsList[i].street,
-            locality: locationDetailsList[i].locality,
-            //addressLine: locationDetailsList[i].addressLine,
-            pinCode: locationDetailsList[i].pinCode,
-            phoneNumber: locationDetailsList[i].phoneNumber,
-            openAt: locationDetailsList[i].openAt,
-            closeAt: locationDetailsList[i].closeAt,
+        if (locationDetailsList !== null) {
+            data.push({
+                locationId: i + 1,
+                locationName: locationDetailsList[i].locationName,
+                cityName: locationDetailsList[i].cityName,
+                stateName: locationDetailsList[i].stateName,
+                zone: locationDetailsList[i].zone,
+                plotNo: locationDetailsList[i].plotNo,
+                street: locationDetailsList[i].street,
+                locality: locationDetailsList[i].locality,
+                //addressLine: locationDetailsList[i].addressLine,
+                pinCode: locationDetailsList[i].pinCode,
+                phoneNumber: locationDetailsList[i].phoneNumber,
+                openAt: locationDetailsList[i].openAt,
+                closeAt: locationDetailsList[i].closeAt,
 
-        })
+            })
+        }
     }
-
 
 
 
