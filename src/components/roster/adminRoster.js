@@ -21,7 +21,7 @@ const AdminRoster = () => {
     const [tableShow, setTableShow] = useState(false);
     const [adminRosterButton, setadminRosterButton] = useState(true);
     const [storecostCenterName, setstorecostCenterName] = useState('');
-
+    const [date, setDate] = useState()
     const { user } = useContext(AppContext);
 
     useEffect(() => {
@@ -43,8 +43,9 @@ const AdminRoster = () => {
 
     const handleClose = () => setAdminModal(false)
     const handleShow = (item, name, ctype, weekId) => {
-        setshiftDate(weekId)
+        setshiftDate(item.weekId)
         setAdminModal(true)
+        setDate(item)
         setFirstName(name);
         adminRosterAvailableShift(contractType, costCenter1)
         getallWeeks()
@@ -281,7 +282,7 @@ const AdminRoster = () => {
 
                                                                 //  console.log(newData.getDay(), "day")
 
-                                                                return <td>{item.weekName}<br />{data.date}<br /> {checkCondition(data, item.firstName, item.contractType, item.costCentreName, item.weekId)}</td>
+                                                                return <td>{item.weekName}<br />{data.date}<br /> {checkCondition(data, item.firstName, item.contractType, item.costCentreName)}</td>
                                                             })}
                                                         </tr>
                                                     )
@@ -302,7 +303,8 @@ const AdminRoster = () => {
                         modal={adminModal}
                         shiftDate={shiftDate}
                         mystoreId={storecostCenterName}
-
+                        Date={date.date}
+                        empData={adminWeekOffDataList}
                     />}
             </div>
 

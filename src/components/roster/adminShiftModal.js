@@ -11,9 +11,10 @@ import moment from 'moment'
 
 const AdminShiftModal = (props) => {
   console.log("MY PROPS " + JSON.stringify(props));
-
+  const date = moment(props.Date, 'YYYY-MM-DD').week();
   const [key, setKey] = useState('shift')
   const shiftDateWeek = props.shiftDate;
+  console.log("=====" + shiftDateWeek)
   const [selectedWeeks, setSelectedWeeks] = useState()
   const [weekDay, setWeekDay] = useState()
   const [value, setValue] = useState()
@@ -28,6 +29,8 @@ const AdminShiftModal = (props) => {
   const [contractType, setContractType] = useState([])
   const [msg, setMsg] = useState(false);
   const [msg1, setMsg1] = useState(false);
+  const [empData, setEmpData] = useState();
+  const [weekNameData, setWeekNameData] = useState();
   const { weekDays, weekOffDays, availableShifts, availableShiftData, adminRosterAvailableShiftList, adminRosterAvailableShift,
     assignAdminShift, getallWeeks, weeksInYear, getEmployeeListForAdminRosterWeekOff, EmployeeListForAdminRosterWeekOff, adminAddWeekOff } = useContext(RosterContext)
 
@@ -50,15 +53,18 @@ const AdminShiftModal = (props) => {
     getEmployeeListForAdminRosterWeekOff(props.contractType, props.mystoreId)
     availableShifts()
     getallWeeks()
+    if (props.empData !== "") {
+      setEmpData(props.empData)
+    }
     adminRosterAvailableShift(props.contractType, props.mystoreId)
-  }, [props.contractType, props.mystoreId])
+  }, [props.contractType, props.mystoreId, props.empData])
   //my store id
 
   useEffect(() => {
     // console.log('shiftDateWeek', shiftDateWeek)
     console.log("props my store ID ", props.mystoreId)
     console.log('props.shiftDate', props.shiftDate)
-    weekOffDays(shiftDateWeek + 1)
+    weekOffDays(shiftDateWeek)
   }, [selectedWeeks])
 
 
@@ -67,7 +73,7 @@ const AdminShiftModal = (props) => {
 
   useEffect(() => {
 
-    let { shiftDate } = props
+    let { Date } = props
     const weeks = weeksInYear.map(arr => {
       let weekNumber = arr.weekId
       return {
@@ -76,15 +82,15 @@ const AdminShiftModal = (props) => {
       }
     })
     const days = weekDays.map(arr => {
-      console.log({ arr }, shiftDate);
+      console.log({ arr }, Date);
       return {
         ...arr,
-        selected: arr.date === shiftDate
+        selected: arr.date === Date
       }
     })
     setWeekDayList(weeks)
     setDayList(days)
-    setWeekDay(shiftDate)
+    setWeekDay(Date)
     // console.log(weeks, 'Shift year');
     //  console.log(days, 'Shift day');
   }, [props.shiftDate, weekDays])
@@ -92,7 +98,27 @@ const AdminShiftModal = (props) => {
   const onSubmit = (e) => {
     e.preventDefault();
     const validate = validation();
+    let WeekDate = weekDay;
+    let weekNumber = date
+    if (weekNameData !== undefined) {
+      weekNumber = weekNameData.split(' ')[0].trim();
+      weekNumber = weekNumber.split('Week')[1].trim();
+    }
+    var loIsDate = new Date(weekDay);
+    let day = days[loIsDate.getDay()];
+    for (let i = 0; i < empData.length; i++) {
+      if (empData[i].weekName.includes(weekNumber)) {
+        for (let j = 0; j < empData[i].employeeRosters.length; j++) {
+          loIsDate = new Date(empData[i].employeeRosters[j].date);
+          let changeDay = days[loIsDate.getDay()];
+          if (day === changeDay) {
+            // setWeekDay(empData[i].employeeRosters[j].date)
+            WeekDate = empData[i].employeeRosters[j].date
+          }
+        }
 
+      }
+    }
 
     const newWeekOffAdminRoster = {
       date: weekDay,
