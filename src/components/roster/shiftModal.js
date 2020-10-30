@@ -9,7 +9,7 @@ import moment from 'moment'
 
 const ShiftModal = (props) => {
   const [key, setKey] = useState('shift')
-
+  const date = moment(props.Date, 'YYYY-MM-DD').week();
   const shiftDateWeek = props.shiftDate;
   const [selectedWeeks, setSelectedWeeks] = useState()
   const [weekDay, setWeekDay] = useState()
@@ -19,6 +19,7 @@ const ShiftModal = (props) => {
   const [dayList, setDayList] = useState([])
   const [assignShiftButton, setAShiftButton] = useState(true);
   const [empData, setEmpData] = useState();
+  const [weekNameData, setWeekNameData] = useState();
 
   const { weekDays, weekOffDays, addWeekOff, availableShifts, availableShiftData, assignShift, getallWeeks, weeksInYear } = useContext(RosterContext)
   const { user } = useContext(AppContext);
@@ -27,35 +28,37 @@ const ShiftModal = (props) => {
   //console.log(weeksInYear, "weeks")
   useEffect(() => {
     availableShifts()
-    getallWeeks()
+    getallWeeks(props.Date)
     if (props.empData !== "") {
       setEmpData(props.empData)
     }
-    setWeekDay(props.shiftDate)
+    setWeekDay(props.Date)
 
-  }, [props.empData, props.shiftDate])
+  }, [props.empData, props.Date])
   useEffect(() => {
     console.log('shiftDateWeek', shiftDateWeek)
     weekOffDays(shiftDateWeek)
   }, [selectedWeeks])
 
+  console.log("***" + props.Date)
   useEffect(() => {
 
-    let { shiftDate } = props
+    let { Date } = props
     const weeks = weeksInYear.map(arr => {
       let weekNumber = arr.weekName.split('Week')[1].trim();
       return {
         ...arr,
-        selected: parseInt(weekNumber) === shiftDateWeek
+        selected: parseInt(weekNumber) === date
       }
     })
     const days = weekDays.map(arr => {
-      console.log({ arr }, shiftDate);
+      console.log({ arr }, Date);
       return {
         ...arr,
-        selected: arr.date === shiftDate
+        selected: arr.date === Date
       }
     })
+
     setWeekDayList(weeks)
     setDayList(days)
     // setWeekDay(shiftDate)
@@ -63,57 +66,62 @@ const ShiftModal = (props) => {
     //  console.log(days, 'Shift day');
   }, [props.shiftDate, weekDays])
 
-  // const submitForm = (e) => {
-  //   e.preventDefault();
-  //   // console.log('Submit form', e.target.value);
-  //   let WeekDate = weekDay;
-  //   var loIsDate = new Date(weekDay);
-  //   let day = days[loIsDate.getDay()];
-  //   for (let i = 0; i < empData.length; i++) {
-  //     if (empData[i].weekName.includes(selectedWeeks + 1)) {
-  //       for (let j = 0; j < empData[i].employeeRosters.length; j++) {
-  //         loIsDate = new Date(empData[i].employeeRosters[j].date);
-  //         let changeDay = days[loIsDate.getDay()];
-  //         if (day === changeDay) {
-  //           // setWeekDay(empData[i].employeeRosters[j].date)
-  //           WeekDate = empData[i].employeeRosters[j].date
-  //         }
-  //       }
-
-  //     }
-  //   }
-  //   const setModal = props.handleClose
-  //   setModal()
-
-  //   const newWeekOff = {
-  //     date: WeekDate,
-  //     employeeId: user.employeeId,
-  //   }
-
-  //   addWeekOff(newWeekOff)
-  //   console.log("newWeekOff data", newWeekOff)
-  //   setSelectedWeeks(1)
-  //   setWeekDay('')
-  //   setShowDay(false)
-  // }
   const submitForm = (e) => {
     e.preventDefault();
     // console.log('Submit form', e.target.value);
+    let WeekDate = weekDay;
+    let weekNumber = date
+    if (weekNameData !== undefined) {
+      weekNumber = weekNameData.split(' ')[0].trim();
+      weekNumber = weekNumber.split('Week')[1].trim();
+    }
+    var loIsDate = new Date(weekDay);
+    let day = days[loIsDate.getDay()];
+    for (let i = 0; i < empData.length; i++) {
+      if (empData[i].weekName.includes(weekNumber)) {
+        for (let j = 0; j < empData[i].employeeRosters.length; j++) {
+          loIsDate = new Date(empData[i].employeeRosters[j].date);
+          let changeDay = days[loIsDate.getDay()];
+          if (day === changeDay) {
+            // setWeekDay(empData[i].employeeRosters[j].date)
+            WeekDate = empData[i].employeeRosters[j].date
+          }
+        }
+
+      }
+    }
     const setModal = props.handleClose
     setModal()
 
     const newWeekOff = {
-      date: weekDay,
+      date: WeekDate,
       employeeId: user.employeeId,
     }
 
     addWeekOff(newWeekOff)
-    //  console.log("newWeekOff data", newWeekOff)
-    // history.push("/roster/roster");
+    console.log("newWeekOff data", newWeekOff)
     setSelectedWeeks(1)
     setWeekDay('')
     setShowDay(false)
   }
+  // const submitForm = (e) => {
+  //   e.preventDefault();
+  //   // console.log('Submit form', e.target.value);
+  //   const setModal = props.handleClose
+  //   setModal()
+
+  //   const newWeekOff = {
+  //     date: weekDay,
+  //     employeeId: user.employeeId,
+  //   }
+
+  //   addWeekOff(newWeekOff)
+  //   //  console.log("newWeekOff data", newWeekOff)
+  //   // history.push("/roster/roster");
+  //   setSelectedWeeks(1)
+  //   setWeekDay('')
+  //   setShowDay(false)
+  // }
   const handleChange = (event) => {
     // console.log(event.target.value)
     setValue(event.target.value)
@@ -123,6 +131,12 @@ const ShiftModal = (props) => {
   const handleWeeksChange = (e) => {
     /*   setSelectedWeeks(Array.isArray(e) ? e.map(x => x.value) : []) */
     let newValue = e.target.value
+    let idx = e.target.selectedIndex;
+    if (e.target.options[idx].innerText !== "Select") {
+      setWeekNameData(e.target.options[idx].innerText);
+    } else {
+      setWeekNameData("");
+    }
     console.log("newValue", newValue)
 
     setSelectedWeeks(newValue)
@@ -134,7 +148,7 @@ const ShiftModal = (props) => {
     event.preventDefault()
     const assindata =
     {
-      "date": props.shiftDate,
+      "date": props.Date,
       "employeeId": user.employeeId,
       "shiftId": value
     }
@@ -226,7 +240,7 @@ const ShiftModal = (props) => {
                         <select className="form-control"
                           required
                           onChange={(e) => setWeekDayHandler(e)}>
-                          <option value="" >Select Week</option>
+                          <option value="" >Select Day</option>
 
                           {dayList !== null &&
                             dayList.map((item, i) => {
