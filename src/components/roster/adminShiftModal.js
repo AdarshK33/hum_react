@@ -32,15 +32,16 @@ const AdminShiftModal = (props) => {
   const [empData, setEmpData] = useState();
   const [weekNameData, setWeekNameData] = useState();
   const { weekDays, weekOffDays, availableShifts, availableShiftData, adminRosterAvailableShiftList, adminRosterAvailableShift,
-    assignAdminShift, getallWeeks, weeksInYear, getEmployeeListForAdminRosterWeekOff, EmployeeListForAdminRosterWeekOff, adminAddWeekOff } = useContext(RosterContext)
+    assignAdminShift, getallWeeks, weeksInYear, getEmployeeListForAdminRosterWeekOff, EmployeeListForAdminRosterWeekOff, adminAddWeekOff , adminWeekOffDataListHeader, adminWeekOffDataEmp} = useContext(RosterContext)
 
-
+  let Days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
   console.log(availableShiftData, "data")
   console.log(weeksInYear, "weeks")
 
   useEffect(() => {
     setFirstName(props.firstName)
+    adminWeekOffDataEmp()
   }, [props.firstName])
 
   useEffect(() => {
@@ -105,23 +106,26 @@ const AdminShiftModal = (props) => {
       weekNumber = weekNumber.split('Week')[1].trim();
     }
     var loIsDate = new Date(weekDay);
-    let day = days[loIsDate.getDay()];
-    for (let i = 0; i < empData.length; i++) {
-      if (empData[i].weekName.includes(weekNumber)) {
-        for (let j = 0; j < empData[i].employeeRosters.length; j++) {
-          loIsDate = new Date(empData[i].employeeRosters[j].date);
-          let changeDay = days[loIsDate.getDay()];
-          if (day === changeDay) {
-            // setWeekDay(empData[i].employeeRosters[j].date)
-            WeekDate = empData[i].employeeRosters[j].date
-          }
+    let day = Days[loIsDate.getDay()];
+    if(adminWeekOffDataListHeader !== undefined && adminWeekOffDataListHeader !== null){
+      for (let i = 0; i < adminWeekOffDataListHeader.length; i++) {
+        if (adminWeekOffDataListHeader[i].weekName.includes(weekNumber)) {
+          // for (let j = 0; j < empData[i].employeeRosters.length; j++) {
+          //   loIsDate = new Date(empData[i].employeeRosters[j].date);
+          //   let changeDay = Days[loIsDate.getDay()];
+            if (day === adminWeekOffDataListHeader[i].day) {
+              // setWeekDay(empData[i].employeeRosters[j].date)
+              WeekDate = adminWeekOffDataListHeader[i].date
+            }
+          // }
+  
         }
-
       }
     }
+    
 
     const newWeekOffAdminRoster = {
-      date: weekDay,
+      date: WeekDate,
       employeeIds: employee.map((e, i) => employee[i].value)
     }
 
@@ -149,6 +153,12 @@ const AdminShiftModal = (props) => {
 
   const handleWeeksChange = (e) => {
     let newValue = e.target.value
+    let idx = e.target.selectedIndex;
+    if (e.target.options[idx].innerText !== "Select") {
+      setWeekNameData(e.target.options[idx].innerText);
+    } else {
+      setWeekNameData("");
+    }
     console.log("newValue", newValue)
     setSelectedWeeks(newValue)
     setShowDay(true)
