@@ -14,7 +14,7 @@ import moment from "moment";
 const MasterMonthlyQuantity = () => {
 
     const { cosCentreList, viewCostCentre } = useContext(DashboardContext);
-    const { monthlyQtyDetails, monthlyQtyDetailsList } = useContext(PermissionContext)
+    const { monthlyQtyDetails, monthlyQtyDetailsList, uploadMonthFile } = useContext(PermissionContext)
     const [fileUpload, setFileUpload] = useState();
     const [date, setDate] = useState();
     const [month, setMonth] = useState();
@@ -111,9 +111,19 @@ const MasterMonthlyQuantity = () => {
             })
         }
     }
+    const changeHandler = (event) => {
+        let fileObj = event.target.files[0];
+        console.log("clicked", fileObj)
+        setFileUpload(fileObj)
+        // uploadDailyQty(fileObj)
+        // setTimeout(()=>{
+        //   window.location.reload()
+        // }, 5000)
+      }
+    
     const handleUpload = () => {
         if (fileUpload !== undefined && fileUpload !== null) {
-            //uploadFile(fileUpload)
+            uploadMonthFile(fileUpload)
         } else {
             toast.info("Please select a file to upload")
         }
@@ -179,7 +189,7 @@ const MasterMonthlyQuantity = () => {
                         className="btn"
                         type="file"
                         accept=".xlsx, .xls, .csv"
-                        //  onChange={(e) => changeHandler(e)}
+                        onChange={(e) => changeHandler(e)}
                         style={{ padding: "10px" }}
                     />
                     <Button className="btn btn-light mr-2" onClick={handleUpload}>Upload File</Button>

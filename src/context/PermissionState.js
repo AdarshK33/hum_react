@@ -78,6 +78,19 @@ export const PermissionProvider = ({ children }) => {
                 console.log(error)
             })
     }
+    const uploadMonthFile = (file) => {
+        const formData = new FormData();
+        formData.append('file', file)
+
+        return client.post('/monthly/upload', formData)
+            .then((response) => {
+                console.log(response, "res")
+                toast.info(response.data.message)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
 
 
     const viewPermission = () =>{
@@ -101,6 +114,7 @@ export const PermissionProvider = ({ children }) => {
         locationDetails,
         monthlyQtyDetails,
         viewPermission,
+        uploadMonthFile,
         permission: state.permission,
         locationDetailsList: state.locationDetailsList,
         monthlyQtyDetailsList: state.monthlyQtyDetailsList,

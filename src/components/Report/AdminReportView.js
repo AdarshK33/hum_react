@@ -20,7 +20,8 @@ console.log("endDate", props.endDate)
       {length: diff+1},
       (_,i) => {
         const date = new Date() 
-        date.setDate(d1.getDate()+i) 
+        date.setFullYear(d1.getFullYear(), d1.getMonth(), d1.getDate()+i)
+        // date.setDate(d1.getDate()+i+dateDiff ) 
         const displayDate = moment(date).format("YYYY-MM-DD")
         return displayDate
        

@@ -91,7 +91,7 @@ const AdminCreateClusterModal = (props) => {
 
     const onChangeHandler = event => {
         setClusterName(event.target.value);
-        console.log(clusterName);
+
         if (sportsList.length === 0) {
             setClusterButton(true)
             setErrorMsg("All the fields are required");

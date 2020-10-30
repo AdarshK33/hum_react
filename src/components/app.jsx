@@ -32,6 +32,7 @@ const AppLayout = ({ children }) => {
                 getUserMenu(user.clusterManagerMenus);
             } else {
                 getUserMenu(user.generalUserMenus, "profile", user);
+                localStorage.setItem('flag', "0")
             }
         }
     }, [window.location.href, state])

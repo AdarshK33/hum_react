@@ -264,10 +264,10 @@ export const RosterProvider = ({ children }) => {
     if (weekid === undefined) {
       weekid = 0
     }
-
+    let flag = localStorage.getItem('flag')
 
     // eslint-disable-next-line no-useless-concat
-    client.get('roster/view' + '?contractType=' + contract + '&' + 'endDate=' + endDate + '&' + 'startDate=' + startDate + '&' + 'storeId=' + empId + '&' + 'weekId=' + weekid)
+    client.get('roster/view' + '?contractType=' + contract + '&' + 'endDate=' + endDate + '&' + 'startDate=' + startDate + '&' + 'storeId=' + empId + '&' + 'weekId=' + weekid + '&' + 'flag=' + flag)
       .then((response) => {
         const adminWeekOffDataListHeader = response.data.data.rosterDates;
         const adminWeekOffDataList = response.data.data.rosterResponses;
