@@ -10,7 +10,8 @@ import moment from 'moment'
 const AdminReportView = (props) => {
     const reportList = props.AdminReportList
    
-
+console.log("startDate", props.startDate)
+console.log("endDate", props.endDate)
     const d1 = props.startDate,
     d2 = props.endDate,
     diff = (d2-d1)/864e5,
