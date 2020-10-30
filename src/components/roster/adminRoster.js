@@ -48,7 +48,7 @@ const AdminRoster = () => {
         setDate(item)
         setFirstName(name);
         adminRosterAvailableShift(contractType, costCenter1)
-        getallWeeks()
+        // getallWeeks()
     }
 
 
@@ -91,13 +91,17 @@ const AdminRoster = () => {
 
         if (item.roster == null) {
             return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item, name, ctype, costCentreName, weekId)}>+</button>
-        } else if (item.roster.holiday !== "" && item.roster.holiday !== null) {
-            return <button className="btn btn-square btn-warning btn-sm" onClick={() => handleShow(item, name, ctype, costCentreName, weekId)}>{item.roster.holiday}</button>
-        } else if (item.roster.leave !== "" && item.roster.leave !== null) {
+        }
+        else if (item.roster.leave !== "" && item.roster.leave !== null) {
             return <button className="btn btn-square btn-danger btn-sm" onClick={() => handleShow(item, name, ctype, costCentreName, weekId)} type="button">Leave</button>
-        } else if (item.roster.weekOff) {
+        }
+        else if (item.roster.holiday !== "" && item.roster.holiday !== null) {
+            return <button className="btn btn-square btn-warning btn-sm" onClick={() => handleShow(item, name, ctype, costCentreName, weekId)}>{item.roster.holiday}</button>
+        }
+        else if (item.roster.weekOff) {
             return <button className="btn btn-square btn-info btn-sm" onClick={() => handleShow(item, name, ctype, costCentreName, weekId)} type="button">Week Off</button>
-        } else if (item.roster.shiftName !== "" && item.roster.shiftName !== null) {
+        }
+        else if (item.roster.shiftName !== "" && item.roster.shiftName !== null) {
             return <button className="btn btn-square btn-success  btn-sm" onClick={() => handleShow(item, name, ctype, costCentreName, weekId)} type="button">{item.roster.shiftName}</button>
         } else {
             return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item, name, ctype, costCentreName, weekId)}>+</button>

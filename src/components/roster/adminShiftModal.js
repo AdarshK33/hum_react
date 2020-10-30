@@ -32,7 +32,7 @@ const AdminShiftModal = (props) => {
   const [empData, setEmpData] = useState();
   const [weekNameData, setWeekNameData] = useState();
   const { weekDays, weekOffDays, availableShifts, availableShiftData, adminRosterAvailableShiftList, adminRosterAvailableShift,
-    assignAdminShift, getallWeeks, weeksInYear, getEmployeeListForAdminRosterWeekOff, EmployeeListForAdminRosterWeekOff, adminAddWeekOff , adminWeekOffDataListHeader, adminWeekOffDataEmp} = useContext(RosterContext)
+    assignAdminShift, getallWeeks, weeksInYear, getEmployeeListForAdminRosterWeekOff, EmployeeListForAdminRosterWeekOff, adminAddWeekOff, adminWeekOffDataListHeader, adminWeekOffDataEmp } = useContext(RosterContext)
 
   let Days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -53,7 +53,10 @@ const AdminShiftModal = (props) => {
   useEffect(() => {
     getEmployeeListForAdminRosterWeekOff(props.contractType, props.mystoreId)
     availableShifts()
-    getallWeeks()
+    if (props.Date !== undefined) {
+      getallWeeks(props.Date)
+    }
+
     if (props.empData !== "") {
       setEmpData(props.empData)
     }
@@ -75,13 +78,17 @@ const AdminShiftModal = (props) => {
   useEffect(() => {
 
     let { Date } = props
-    const weeks = weeksInYear.map(arr => {
-      let weekNumber = arr.weekId
-      return {
-        ...arr,
-        selected: parseInt(weekNumber) === shiftDateWeek
-      }
-    })
+    let weeks = [];
+    if (weeksInYear !== null) {
+      weeks = weeksInYear.map(arr => {
+
+        let weekNumber = arr.weekId
+        return {
+          ...arr,
+          selected: parseInt(weekNumber) === shiftDateWeek
+        }
+      })
+    }
     const days = weekDays.map(arr => {
       console.log({ arr }, Date);
       return {
@@ -107,22 +114,22 @@ const AdminShiftModal = (props) => {
     }
     var loIsDate = new Date(weekDay);
     let day = Days[loIsDate.getDay()];
-    if(adminWeekOffDataListHeader !== undefined && adminWeekOffDataListHeader !== null){
+    if (adminWeekOffDataListHeader !== undefined && adminWeekOffDataListHeader !== null) {
       for (let i = 0; i < adminWeekOffDataListHeader.length; i++) {
         if (adminWeekOffDataListHeader[i].weekName.includes(weekNumber)) {
           // for (let j = 0; j < empData[i].employeeRosters.length; j++) {
           //   loIsDate = new Date(empData[i].employeeRosters[j].date);
           //   let changeDay = Days[loIsDate.getDay()];
-            if (day === adminWeekOffDataListHeader[i].day) {
-              // setWeekDay(empData[i].employeeRosters[j].date)
-              WeekDate = adminWeekOffDataListHeader[i].date
-            }
+          if (day === adminWeekOffDataListHeader[i].day) {
+            // setWeekDay(empData[i].employeeRosters[j].date)
+            WeekDate = adminWeekOffDataListHeader[i].date
+          }
           // }
-  
+
         }
       }
     }
-    
+
 
     const newWeekOffAdminRoster = {
       date: WeekDate,
