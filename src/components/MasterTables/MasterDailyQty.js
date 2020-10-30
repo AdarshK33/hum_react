@@ -98,7 +98,7 @@ const MasterDailyQty = () => {
 
   return (
     <Fragment>
-      <Breadcrumb title="Master" parent="Week Master" />
+      <Breadcrumb title="Daily Quantity" parent="Daily Quantity" />
       <div className="container-fluid">
       <Form 
         onSubmit={onSubmit}
