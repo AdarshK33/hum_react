@@ -42,15 +42,18 @@ const MasterCountry = () => {
   }
 
   let data = [];
-  for (let i = 0; i < countryList.length; i++) {
+  if (countryList!== null){
+    for (let i = 0; i < countryList.length; i++) {
 
-    data.push({
-      countryId: i + 1,
-      countryName: countryList[i].countryName,
-      countryCode: countryList[i].countryCode,
-      phoneCode: countryList[i].phoneCode
-    })
+      data.push({
+        countryId: i + 1,
+        countryName: countryList[i].countryName,
+        countryCode: countryList[i].countryCode,
+        phoneCode: countryList[i].phoneCode
+      })
+    }
   }
+  
 
   const handleUpload = () => {
     if (fileUpload !== undefined && fileUpload !== null) {
