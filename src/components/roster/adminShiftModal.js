@@ -1,7 +1,9 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react'
 import { Container, Modal, Tabs, Tab, InputGroup } from 'react-bootstrap'
 import Select from 'react-select';
+import { toast } from "react-toastify";
 import { RosterContext } from "../../context/RosterState";
+import "react-toastify/dist/ReactToastify.css";
 import './roster.css'
 import moment from 'moment'
 
@@ -9,8 +11,9 @@ import moment from 'moment'
 
 const AdminShiftModal = (props) => {
   console.log("MY PROPS " + JSON.stringify(props));
+
   const [key, setKey] = useState('shift')
-  const shiftDateWeek = moment(props.shiftDate, 'YYYY-MM-DD').week();
+  const shiftDateWeek = props.shiftDate;
   const [selectedWeeks, setSelectedWeeks] = useState()
   const [weekDay, setWeekDay] = useState()
   const [value, setValue] = useState()
@@ -23,7 +26,8 @@ const AdminShiftModal = (props) => {
   const [assignShiftButton, setAShiftButton] = useState(true);
   const [assignWeekOffButton, setAssignWeekOffButton] = useState(true);
   const [contractType, setContractType] = useState([])
-
+  const [msg, setMsg] = useState(false);
+  const [msg1, setMsg1] = useState(false);
   const { weekDays, weekOffDays, availableShifts, availableShiftData, adminRosterAvailableShiftList, adminRosterAvailableShift,
     assignAdminShift, getallWeeks, weeksInYear, getEmployeeListForAdminRosterWeekOff, EmployeeListForAdminRosterWeekOff, adminAddWeekOff } = useContext(RosterContext)
 
@@ -65,7 +69,7 @@ const AdminShiftModal = (props) => {
 
     let { shiftDate } = props
     const weeks = weeksInYear.map(arr => {
-      let weekNumber = arr.weekName.split('Week')[1].trim();
+      let weekNumber = arr.weekId
       return {
         ...arr,
         selected: parseInt(weekNumber) === shiftDateWeek
@@ -87,23 +91,35 @@ const AdminShiftModal = (props) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const setModal = props.handleClose
-    setModal()
+    const validate = validation();
+
 
     const newWeekOffAdminRoster = {
       date: weekDay,
       employeeIds: employee.map((e, i) => employee[i].value)
     }
 
+    if (validate) {
+      adminAddWeekOff(newWeekOffAdminRoster)
 
-    adminAddWeekOff(newWeekOffAdminRoster)
-    // console.log("newWeekOff data", newWeekOffAdminRoster)
-    // history.push("/roster/roster");
-    setSelectedWeeks(1)
-    setWeekDay('')
-    setShowDay(false)
+      setSelectedWeeks(1)
+      setWeekDay('')
+      setShowDay(false)
+      props.handleClose()
+    }
   }
+  const validation = () => {
+    let flag = true
+    if (employee.length === 0) {
+      toast.info("Select employee is mandatory")
+      flag = false;
+      return;
+    }
 
+
+
+    return flag;
+  }
 
   const handleWeeksChange = (e) => {
     let newValue = e.target.value
@@ -116,11 +132,15 @@ const AdminShiftModal = (props) => {
     setEmployee(options)
     if (options !== null && days !== null && days !== undefined) {
       if (days.length !== 0) {
+        setMsg(true)
         setAShiftButton(false)
+        setMsg1(false)
       }
     }
     else {
+      setMsg1("* Select Employee Is Required ")
       setAShiftButton(true)
+      setMsg(false)
     }
   }
 
@@ -129,11 +149,15 @@ const AdminShiftModal = (props) => {
     setDays(options)
     if (options !== null && employee !== null && employee !== undefined) {
       if (employee.length !== 0) {
+        setMsg1(true)
         setAShiftButton(false)
+        setMsg(false)
       }
     }
     else {
+      setMsg("* Select Day Is Required ")
       setAShiftButton(true)
+      setMsg1(false)
     }
   }
   const handleEmployeeList1 = (options) => {
@@ -170,20 +194,10 @@ const AdminShiftModal = (props) => {
       shiftId: parseInt(value),
       storeId: props.mystoreId
     }
-
-
     assignAdminShift(adminAssignShift)
     props.handleClose()
 
   }
-
-
-
-
-
-
-
-
 
   return (
     <Fragment>
@@ -240,7 +254,9 @@ const AdminShiftModal = (props) => {
                         />
                       </div>
                     </div>
+                    <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "12px", marginLeft: "5px" }}>{msg1}</h6>
                   </div>
+
 
                   <div className="row py-2">
                     <div className="col-sm-5 px-2">Select Week :<span style={{ color: 'red' }}>*</span></div>
@@ -259,6 +275,7 @@ const AdminShiftModal = (props) => {
                         </select>
                       </div>
                     </div>
+                    <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "12px", marginLeft: "5px" }}>{msg}</h6>
                   </div>
 
                   <div className="row py-2">
@@ -299,6 +316,7 @@ const AdminShiftModal = (props) => {
                       <div className="form-group">
                         <Select
                           name="filters"
+                          required={true}
                           placeholder="Select Employees"
                           defaultValue=""
                           value={employee}

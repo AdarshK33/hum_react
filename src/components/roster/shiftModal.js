@@ -10,7 +10,7 @@ import moment from 'moment'
 const ShiftModal = (props) => {
   const [key, setKey] = useState('shift')
 
-  const shiftDateWeek = moment(props.shiftDate, 'YYYY-MM-DD').week();
+  const shiftDateWeek = props.shiftDate;
   const [selectedWeeks, setSelectedWeeks] = useState()
   const [weekDay, setWeekDay] = useState()
   const [value, setValue] = useState()
@@ -36,7 +36,7 @@ const ShiftModal = (props) => {
   }, [props.empData, props.shiftDate])
   useEffect(() => {
     console.log('shiftDateWeek', shiftDateWeek)
-    weekOffDays(shiftDateWeek + 1)
+    weekOffDays(shiftDateWeek)
   }, [selectedWeeks])
 
   useEffect(() => {
@@ -63,35 +63,53 @@ const ShiftModal = (props) => {
     //  console.log(days, 'Shift day');
   }, [props.shiftDate, weekDays])
 
+  // const submitForm = (e) => {
+  //   e.preventDefault();
+  //   // console.log('Submit form', e.target.value);
+  //   let WeekDate = weekDay;
+  //   var loIsDate = new Date(weekDay);
+  //   let day = days[loIsDate.getDay()];
+  //   for (let i = 0; i < empData.length; i++) {
+  //     if (empData[i].weekName.includes(selectedWeeks + 1)) {
+  //       for (let j = 0; j < empData[i].employeeRosters.length; j++) {
+  //         loIsDate = new Date(empData[i].employeeRosters[j].date);
+  //         let changeDay = days[loIsDate.getDay()];
+  //         if (day === changeDay) {
+  //           // setWeekDay(empData[i].employeeRosters[j].date)
+  //           WeekDate = empData[i].employeeRosters[j].date
+  //         }
+  //       }
+
+  //     }
+  //   }
+  //   const setModal = props.handleClose
+  //   setModal()
+
+  //   const newWeekOff = {
+  //     date: WeekDate,
+  //     employeeId: user.employeeId,
+  //   }
+
+  //   addWeekOff(newWeekOff)
+  //   console.log("newWeekOff data", newWeekOff)
+  //   setSelectedWeeks(1)
+  //   setWeekDay('')
+  //   setShowDay(false)
+  // }
   const submitForm = (e) => {
     e.preventDefault();
     // console.log('Submit form', e.target.value);
-    let WeekDate = weekDay;
-    var loIsDate = new Date(weekDay);
-    let day = days[loIsDate.getDay()];
-    for (let i = 0; i < empData.length; i++) {
-      if (empData[i].weekName.includes(selectedWeeks - 1)) {
-        for (let j = 0; j < empData[i].employeeRosters.length; j++) {
-          loIsDate = new Date(empData[i].employeeRosters[j].date);
-          let changeDay = days[loIsDate.getDay()];
-          if (day === changeDay) {
-            // setWeekDay(empData[i].employeeRosters[j].date)
-            WeekDate = empData[i].employeeRosters[j].date
-          }
-        }
-
-      }
-    }
     const setModal = props.handleClose
     setModal()
 
     const newWeekOff = {
-      date: WeekDate,
+      date: weekDay,
       employeeId: user.employeeId,
     }
 
     addWeekOff(newWeekOff)
-    console.log("newWeekOff data", newWeekOff)
+    //  console.log("newWeekOff data", newWeekOff)
+    // history.push("/roster/roster");
     setSelectedWeeks(1)
     setWeekDay('')
     setShowDay(false)

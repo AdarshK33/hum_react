@@ -208,7 +208,7 @@ export const ClusterProvider = ({ children }) => {
   const viewSalary = (month, year, id) => {
     console.log(" in cluster" + month + " " + year)
 
-    client.get('salary/view?month=' + month + '&year=' + year + '&storeId=' + id)
+    client.get('salary/view/store?month=' + month + '&year=' + year + '&storeId=' + id)
       .then(function (response) {
         console.log("data message==>", response.data.message);
         console.log("data==>1", response);
