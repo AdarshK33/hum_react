@@ -25,7 +25,8 @@ const initial_state = {
   EmployeeListForAdminRosterWeekOff: [],
   adminRosterWeekOffDataList: [],
   adminRosterAvailableShiftList: [],
-  costCenterList: []
+  costCenterList: [],
+  masterWeeks: []
 
 }
 
@@ -238,6 +239,23 @@ export const RosterProvider = ({ children }) => {
   }
 
 
+  const getMasterWeeks = (year) => {  
+    // let year = new Date().getFullYear()  
+    console.log(year);
+    client.get('/weekoff/weeks/'+year)
+      .then((response) => {
+        console.log("===================NAVANEETHA=========");
+        console.log(response.data.data);
+        state.masterWeeks = response.data.data        
+        return dispatch({ type: 'MASTER_WEEKS', payload: state.masterWeeks })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+
+
   const uploadWeeks = (file) => {
     const formData = new FormData();
     formData.append('file', file)
@@ -425,6 +443,8 @@ export const RosterProvider = ({ children }) => {
     assignAdminShift,
     costCenter,
     uploadWeeks,
+    getMasterWeeks,
+    masterWeeks: state.masterWeeks,
     costCenterList: state.costCenterList,
     shiftList: state.shiftList,
     shiftMasterId: state.shiftMasterId,
