@@ -18,12 +18,38 @@ const MasterWeek = () => {
 
   const [fileUpload, setFileUpload] = useState();
   const [year, setYear] = useState();
+  const [data, setData] = useState([]);
 
   const { getMasterWeeks, masterWeeks, uploadWeeks } = useContext(RosterContext);
 
   useEffect(() => {
-    // getMasterWeeks()
-  }, [])
+    console.log("Hello from useEffect");
+    console.log(masterWeeks);
+    let d = [];
+    setData([])
+    if (masterWeeks !== null && masterWeeks !== undefined) {
+
+      for (let i = 0; i < masterWeeks.length; i++) {
+
+        d.push({
+          weekId: i + 1,
+          weekName: masterWeeks[i].weekName,
+          startDate: masterWeeks[i].startDate,
+          endDate: masterWeeks[i].endDate,
+          year: masterWeeks[i].year
+        })
+      }
+      setTimeout(()=>{
+        setData(d);
+      }, 100)
+      
+      console.log(data);
+    }
+  }, [masterWeeks])
+
+  useEffect(()=>{
+    console.log("==========LISTENING============",data)
+  },[data])
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -48,21 +74,7 @@ const MasterWeek = () => {
     "year": "Year"
   }
 
-  let data = [];
-
-  if (masterWeeks !== null && masterWeeks !== undefined) {
-
-    for (let i = 0; i < masterWeeks.length; i++) {
-
-      data.push({
-        weekId: i + 1,
-        weekName: masterWeeks[i].weekName,
-        startDate: masterWeeks[i].startDate,
-        endDate: masterWeeks[i].endDate,
-        year: masterWeeks[i].year
-      })
-    }
-  }
+  
   // console.log(masterWeeks);
   // console.log("=============", data)
 
@@ -135,7 +147,7 @@ const MasterWeek = () => {
                   />
                   <Button className="btn btn-light mr-2" onClick={handleUpload}>Upload File</Button>
 
-                  {data.length > 0 &&
+                  {data.length > 0 ?
                     <JsonToExcel
                       data={data}
                       className="btn btn-light mr-2"
@@ -143,7 +155,9 @@ const MasterWeek = () => {
                       fields={fields}
 
                       text="Export excel"
-                    />}
+                    />:
+                    <Button className="btn btn-light mr-2">Export Excel</Button>
+                    }
                   {/* <input
                       className="btn"
                       type="file"
