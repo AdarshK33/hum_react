@@ -9,7 +9,7 @@ import moment from 'moment'
 
 const ShiftModal = (props) => {
   const [key, setKey] = useState('shift')
-  const date =   moment(props.Date, 'YYYY-MM-DD').week();
+  const date = moment(props.Date, 'YYYY-MM-DD').week();
   const shiftDateWeek = props.shiftDate;
   const [selectedWeeks, setSelectedWeeks] = useState()
   const [weekDay, setWeekDay] = useState()
@@ -69,7 +69,7 @@ const ShiftModal = (props) => {
     // console.log('Submit form', e.target.value);
     let WeekDate = weekDay;
     let weekNumber = date
-    if(weekNameData !== undefined){
+    if (weekNameData !== undefined) {
       weekNumber = weekNameData.split(' ')[0].trim();
       weekNumber = weekNumber.split('Week')[1].trim();
     }
@@ -132,9 +132,9 @@ const ShiftModal = (props) => {
     let idx = e.target.selectedIndex;
     if (e.target.options[idx].innerText !== "Select") {
       setWeekNameData(e.target.options[idx].innerText);
-  } else {
-    setWeekNameData("");
-  }
+    } else {
+      setWeekNameData("");
+    }
     console.log("newValue", newValue)
 
     setSelectedWeeks(newValue)
