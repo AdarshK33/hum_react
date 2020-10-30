@@ -43,12 +43,13 @@ const MasterSport = () => {
   }
 
   let data = [];
-  for (let i = 0; i < sportsNames.length; i++) {
-    data.push({
-      sportsId: i + 1,
-      sportName: sportsNames[i].sportName,
-
-    })
+  if (sportsNames !== null) {
+    for (let i = 0; i < sportsNames.length; i++) {
+      data.push({
+        sportsId: i + 1,
+        sportName: sportsNames[i].sportName,
+      })
+    }
   }
   /* 
     console.log("holida", holidayDataList)
