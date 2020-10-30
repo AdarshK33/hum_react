@@ -11,12 +11,14 @@ const Roster = () => {
   const [startDate, setStartDate] = useState(moment());
   const [endDate, setEndDate] = useState(moment().add('30', 'd'));
   const [modal, setModal] = useState(false)
+  const [date, setDate] = useState()
   const [shiftDate, setshiftDate] = useState(false)
   const { weekOffDataEmp, weekOffDataList, availableShifts } = useContext(RosterContext)
   const { user } = useContext(AppContext);
   const handleClose = () => setModal(false)
   const handleShow = (item, weekId) => {
     console.log(item, "item onclick")
+    setDate(item)
     setshiftDate(weekId)
     setModal(true)
     availableShifts();
@@ -175,7 +177,7 @@ const Roster = () => {
             </div>
           </div>
         </div>
-        {modal && <ShiftModal handleClose={handleClose} modal={modal} shiftDate={shiftDate} empData={weekOffDataList} />}
+        {modal && <ShiftModal handleClose={handleClose} modal={modal} shiftDate={shiftDate} Date={date.date} empData={weekOffDataList} />}
       </div>
 
     </Fragment>
