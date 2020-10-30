@@ -9,17 +9,27 @@ import {
   JsonToExcel
 } from 'react-json-excel';
 import { toast } from "react-toastify";
-import { Button } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
+import DatePicker from 'react-datepicker';
+import moment from "moment";
+
 
 const MasterWeek = () => {
 
   const [fileUpload, setFileUpload] = useState();
+  const [year, setYear] = useState();
 
-  const {getallWeeks, weeksInYear, uploadWeeks} = useContext(RosterContext);
+  const {getMasterWeeks, masterWeeks, uploadWeeks} = useContext(RosterContext);
 
   useEffect(() =>{
-    getallWeeks()
+    // getMasterWeeks()
   }, [])
+
+  const onSubmit = (e) =>{
+    e.preventDefault();
+    const y1 = moment(year, ["MMM Do YY"]).format("YYYY");
+    getMasterWeeks(y1)
+  }
 
     
   const changeHandler = (event) => {
@@ -39,22 +49,28 @@ const MasterWeek = () => {
   }
 
   let data = [];
-  for(let i = 0; i < weeksInYear.length; i++){
-    
-    data.push({weekId : i+1, 
-                weekName : weeksInYear[i].weekName, 
-                startDate : weeksInYear[i].startDate,
-                endDate : weeksInYear[i].endDate,
-                year : weeksInYear[i].year
-                })
+  
+  if (masterWeeks!==null && masterWeeks!==undefined ){
+
+    for(let i = 0; i < masterWeeks.length; i++){
+      
+      data.push({weekId : i+1, 
+                  weekName : masterWeeks[i].weekName, 
+                  startDate : masterWeeks[i].startDate,
+                  endDate : masterWeeks[i].endDate,
+                  year : masterWeeks[i].year
+                  })
+    }
   }
+  // console.log(masterWeeks);
+  // console.log("=============", data)
 
   const handleUpload = () => {
     if(fileUpload !== undefined && fileUpload !== null){
       uploadWeeks(fileUpload)
     }else{
       toast.info("Please select a file to upload")
-    }
+    } 
 
     setTimeout(() => {
       window.location.reload()
@@ -67,6 +83,40 @@ const MasterWeek = () => {
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
+
+          <Form onSubmit={onSubmit}>          
+              <Form.Group>
+                <Form.Label>Select Year</Form.Label><span style={{ color: 'red' }}>*</span> <br />
+                <DatePicker
+                  selected={year}
+                  onChange={y => {                
+                    console.log(moment(y, ["MMM Do YY"]).format("YYYY"));
+                    setYear(y)}}
+                  showYearPicker
+                  dateFormat="yyyy"
+                />            
+              </Form.Group>
+
+            <Button
+                type="submit"
+                className="submitButton"
+                // style={{paddingBottom:"10px"}}            
+            >
+                Submit</Button> 
+        </Form>
+
+
+            {/* <label>Select Year</label>
+            <DatePicker
+              selected={year}
+              onChange={y => {                
+                console.log(moment(y, ["MMM Do YY"]).format("YYYY"));
+                setYear(y)}}
+              showYearPicker
+              dateFormat="yyyy"
+            />
+            <br /> */}
+            <br />
             <div className="card" style={{ overflowX: "auto" }}>
             {                  
                   <div className="title_bar" >  
@@ -76,7 +126,7 @@ const MasterWeek = () => {
                     type="file"
                     accept=".xlsx, .xls, .csv"
                     onChange={(e) => {
-                      getallWeeks()
+                      // getMasterWeeks()
                       changeHandler(e)
                     }}
                     style={{ padding: "10px" }}
@@ -121,8 +171,8 @@ const MasterWeek = () => {
                     </tr>
                   </thead>
 
-                  {weeksInYear !== null && weeksInYear !== undefined && weeksInYear.length > 0 &&
-                    weeksInYear.map((item, i) => {
+                  {masterWeeks !== null && masterWeeks !== undefined && masterWeeks.length > 0 ?
+                    masterWeeks.map((item, i) => {
                       return (
                         <tbody key={i + 1}>
                           <tr>
@@ -134,7 +184,9 @@ const MasterWeek = () => {
                           </tr>
                         </tbody>
                       )
-                    })}         
+                    })
+                  :
+                  <p style={{textAlign: "center"}}>Select a year</p>}         
            
 
                 </table>
