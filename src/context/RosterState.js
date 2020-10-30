@@ -3,7 +3,7 @@ import React, { createContext, useReducer } from 'react';
 import { client } from '../utils/axios';
 import { toast } from "react-toastify";
 import RosterReducer from '../reducers/RosterReducer';
-
+import moment from 'moment'
 
 
 const initial_state = {
@@ -225,8 +225,8 @@ export const RosterProvider = ({ children }) => {
 
   }
 
-  const getallWeeks = () => {
-    let year = new Date().getFullYear()
+  const getallWeeks = (date) => {
+    let year = new Date(date).getFullYear();
     client.get('/weekoff/weeks?year=' + year)
       .then((response) => {
         state.weeksInYear = response.data.data
@@ -239,14 +239,14 @@ export const RosterProvider = ({ children }) => {
   }
 
 
-  const getMasterWeeks = (year) => {  
+  const getMasterWeeks = (year) => {
     // let year = new Date().getFullYear()  
     console.log(year);
-    client.get('/weekoff/weeks/'+year)
+    client.get('/weekoff/weeks/' + year)
       .then((response) => {
         console.log("===================NAVANEETHA=========");
         console.log(response.data.data);
-        state.masterWeeks = response.data.data        
+        state.masterWeeks = response.data.data
         return dispatch({ type: 'MASTER_WEEKS', payload: state.masterWeeks })
       })
       .catch((error) => {

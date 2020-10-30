@@ -28,7 +28,7 @@ const ShiftModal = (props) => {
   //console.log(weeksInYear, "weeks")
   useEffect(() => {
     availableShifts()
-    getallWeeks()
+    getallWeeks(props.Date)
     if (props.empData !== "") {
       setEmpData(props.empData)
     }
@@ -40,6 +40,7 @@ const ShiftModal = (props) => {
     weekOffDays(shiftDateWeek)
   }, [selectedWeeks])
 
+  console.log("***" + props.Date)
   useEffect(() => {
 
     let { Date } = props
@@ -57,6 +58,7 @@ const ShiftModal = (props) => {
         selected: arr.date === Date
       }
     })
+
     setWeekDayList(weeks)
     setDayList(days)
     // setWeekDay(shiftDate)
@@ -146,7 +148,7 @@ const ShiftModal = (props) => {
     event.preventDefault()
     const assindata =
     {
-      "date": props.shiftDate,
+      "date": props.Date,
       "employeeId": user.employeeId,
       "shiftId": value
     }
