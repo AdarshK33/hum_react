@@ -152,11 +152,12 @@ export const ClusterProvider = ({ children }) => {
 
 
   const getCluster = (id) => {
+
     client.get('cluster/' + id).then(function (response) {
       const getSingleCluster = response.data.data;
       const getSingleCluster1 = response.data.data.sports;
       const getEmployeesNames = response.data.data.employees;
-      console.log("get single cluster " + JSON.stringify(state.getSingleCluster));
+      // console.log("get Employee Names)) " + JSON.stringify(state.getEmployeesNames));
       // console.log("^^^^"+JSON.stringify(state.getSingleCluster1));
       return dispatch({
         type: 'GET_SINGLE_CLUSTER', payload: {
@@ -307,8 +308,8 @@ export const ClusterProvider = ({ children }) => {
       .then((response) => {
         const clusterCostCenterList = response.data.data
         const clusterCostCenter = { costCenter }
-        console.log("cluster based on cost center list", state.clusterCostCenterList)
-        console.log("cluster based on cost center message", response.data.message)
+        //  console.log("cluster based on cost center list", state.clusterCostCenterList)
+        //  console.log("cluster based on cost center message", response.data.message)
         return dispatch({
           type: 'CLUSTER_COST_CENTER', payload: {
             clusterCostCenterList,
@@ -343,7 +344,7 @@ export const ClusterProvider = ({ children }) => {
       else {
         state.costCenterEmpAndMgrList = response.data.data;
       }
-      console.log("VIEW_COST_CENTER_EMPLOYEE_MANGER " + state.costCenterEmpAndMgrList);
+      //  console.log("VIEW_COST_CENTER_EMPLOYEE_MANGER==== " + JSON.stringify(state.costCenterEmpAndMgrList));
       return dispatch({ type: 'VIEW_COST_CENTER_EMPLOYEE_MANGER', payload: state.costCenterEmpAndMgrList });
     })
       .catch(function (error) {
