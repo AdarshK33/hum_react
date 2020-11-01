@@ -60,17 +60,20 @@ const HolidayList = () => {
   }
 
   let data = [];
-  for (let i = 0; i < holidayDataList.length; i++) {
-    console.log(holidayDataList[i].holidayDate)
-    data.push({
-      holidayId: i + 1,
-      holidayDate: holidayDataList[i].holidayDate,
-      holidayName: holidayDataList[i].holidayName,
-      year: holidayDataList[i].year,
-      state: holidayDataList[i].state,
-      department: holidayDataList[i].department
-    })
+  if(holidayDataList !== undefined && holidayDataList !== null){
+    for (let i = 0; i < holidayDataList.length; i++) {
+      console.log(holidayDataList[i].holidayDate)
+      data.push({
+        holidayId: i + 1,
+        holidayDate: holidayDataList[i].holidayDate,
+        holidayName: holidayDataList[i].holidayName,
+        year: holidayDataList[i].year,
+        state: holidayDataList[i].state,
+        department: holidayDataList[i].department
+      })
+    }
   }
+  
 
   const handleUpload = () => {
     if (fileUpload !== undefined && fileUpload !== null) {
