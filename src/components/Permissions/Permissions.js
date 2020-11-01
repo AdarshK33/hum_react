@@ -9,10 +9,10 @@ const Permissions = () => {
    
     const [yesFlag , setYesFLag] = useState(false);
     const [noFlag, setNoFlag] = useState(true);
-    const [leaveStatus, setLeaveStatus] = useState(0);
+    const [leaveStatus, setLeaveStatus] = useState();
     const [yesRosterFlag , setYesRosterFLag] = useState(false);
     const [noRosterFlag, setNoRosterFlag] = useState(true);
-    const [rosterStatus, setRosterStatus] = useState(0);
+    const [rosterStatus, setRosterStatus] = useState();
 
     
     const {editPermission, viewPermission, permissionList} = useContext(PermissionContext)
@@ -21,6 +21,28 @@ const Permissions = () => {
     useEffect(()=>{
         viewPermission()
     }, [])
+    useEffect(()=>{
+        if(permissionList !== null){
+            if(permissionList.leaveStatus === 1){
+                setYesFLag(true)
+                setNoFlag(false)
+                
+            }else{
+                setYesFLag(false)
+                setNoFlag(true)
+            }
+            if(permissionList.rosterStatus === 1){
+                setYesRosterFLag(true)
+                setNoRosterFlag(false)
+            }else{
+                setYesRosterFLag(false)
+                setNoRosterFlag(true)
+            }
+            setLeaveStatus(permissionList.leaveStatus);
+            setRosterStatus(permissionList.rosterStatus);
+
+        }
+    }, [permissionList])
 
     const checkYesHandler = () => {
         setYesFLag(!yesFlag)
@@ -102,37 +124,37 @@ const Permissions = () => {
                                         <tr>
                                             <td style = {{textAlign: "left" , fontWeight : "bold"}}>Allow Email Notifications to be triggered for Leave</td>
                                             <td>
-                                            {permissionList!==undefined && permissionList.leaveStatus==="1"?
-                                                <input
-                                                    type="checkbox"
-                                                    checked={noFlag}
-                                                    onChange={() => checkYesHandler()}
-                                                    name="selectCheckbox"
-                                                />
-                                                :
+                                            {/* {permissionList!==undefined && permissionList.leaveStatus==="1"? */}
                                                 <input
                                                     type="checkbox"
                                                     checked={yesFlag}
                                                     onChange={() => checkYesHandler()}
                                                     name="selectCheckbox"
-                                                />}
+                                                />
+                                                {/* :
+                                                <input
+                                                    type="checkbox"
+                                                    checked={yesFlag}
+                                                    onChange={() => checkYesHandler()}
+                                                    name="selectCheckbox"
+                                                />} */}
                                                 
                                             </td>
                                             <td>   
-                                                {permissionList!==undefined && permissionList.leaveStatus==="1"?
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={yesFlag}
-                                                        onChange={() => checkNoHandler()}
-                                                        name="selectCheckbox"
-                                                    />
-                                                    :
+                                                {/* {permissionList!==undefined && permissionList.leaveStatus==="1"? */}
                                                     <input
                                                         type="checkbox"
                                                         checked={noFlag}
                                                         onChange={() => checkNoHandler()}
                                                         name="selectCheckbox"
-                                                    />}                                               
+                                                    />
+                                                    {/* :
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={noFlag}
+                                                        onChange={() => checkNoHandler()}
+                                                        name="selectCheckbox"
+                                                    />}                                                */}
                                                 
                                             </td>
 
@@ -141,13 +163,14 @@ const Permissions = () => {
                                         <tr>
                                             <td style = {{textAlign: "left" , fontWeight : "bold"}}>Allow Email Notifications to be triggered for Roster</td>
                                             <td>
-                                                {permissionList!==undefined && permissionList.rosterStatus=="1"?
+                                                {/* {permissionList!==undefined && permissionList.rosterStatus=="1"? */}
                                                     <input
                                                     type="checkbox"
                                                     checked={yesRosterFlag}
                                                     onChange={() => checkRosterYesHandler()}
                                                     name="selectCheckbox"
-                                                />:
+                                                />
+                                                {/* :
 
                                                 <input
                                                     type="checkbox"
@@ -155,18 +178,19 @@ const Permissions = () => {
                                                     onChange={() => checkRosterYesHandler()}
                                                     name="selectCheckbox"
                                                 />
-                                                }                               
+                                                }                                */}
                                                 
                                                 
                                             </td>
                                             <td>
-                                                {permissionList!==undefined && permissionList.rosterStatus=="1"?
+                                                {/* {permissionList!==undefined && permissionList.rosterStatus=="1"? */}
                                                         <input
                                                         type="checkbox"
                                                         checked={noRosterFlag}
                                                         onChange={() => checkRosterNoHandler()}
                                                         name="selectCheckbox"
-                                                    />:
+                                                    />
+                                                    {/* :
 
                                                     <input
                                                         type="checkbox"
@@ -174,7 +198,7 @@ const Permissions = () => {
                                                         onChange={() => checkRosterNoHandler()}
                                                         name="selectCheckbox"
                                                 />
-                                                    }   
+                                                    }    */}
                                 
                                                 
                                                 
