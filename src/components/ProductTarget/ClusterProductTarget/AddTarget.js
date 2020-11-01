@@ -193,7 +193,7 @@ const AddTarget = (props) => {
                                                     fromClusterHandler(e.target.value)}
                                                     required
                                                 >
-                                                <option value="">Select</option>
+                                               
 
                                                 <option value="">Select</option>
                                                 { clusterList !== null ? clusterList.map((e, i) => {
