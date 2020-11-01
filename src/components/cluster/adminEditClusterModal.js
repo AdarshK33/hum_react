@@ -19,7 +19,7 @@ const AdminEditClusterModal = (props) => {
     const [clustertButton, setClusterButton] = useState(false);
     const [costCenterName, setCostCenterName] = useState('');
     const [status, setStatus] = useState(0);
-
+    const [fullName, setFullName] = useState([]);
 
 
 
@@ -75,6 +75,16 @@ const AdminEditClusterModal = (props) => {
         }
     }, [user.costCentre, user.loginType]);
 
+
+
+    // useEffect(() => {
+    //     if (getEmployeesNames !== null && getEmployeesNames === undefined) {
+
+    //         for (let i = 0; i < getEmployeesNames.length; i++) {
+    //             console.log(" EMP NAMES ", getEmployeesNames);
+    //         }
+    //     }
+    // })
     // const getCostCenterName = (e) => {
     //     let data = e.target.value
     //     setCostCenterName(data)
@@ -257,27 +267,18 @@ const AdminEditClusterModal = (props) => {
 
 
 
-                        {/* <div className="row">
+                        <div className="row">
                             <div className="col-sm-12">
                                 <div className="form-group">
                                     <label htmlFor="exampleFormControlInput1">Select cost center</label>
-                                    <select
-                                        value={costCenterName}
-                                        className="form-control"
-                                        required
+                                    <input type="text"
                                         defaultValue={props.shiftData.storeId}
-                                        onChange={(e) => getCostCenterName(e)}
-                                    >
-                                        <option value="">Select cost center</option>
-                                        {costCenterList.map((e, i) => {
-                                            return (
-                                                <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
-                                        })}
-
-                                    </select>
+                                        className="form-control"
+                                        readOnly
+                                    />
                                 </div>
                             </div>
-                        </div> */}
+                        </div>
 
                         {/* <h3>{getSingleCluster.employeeIds}</h3> */}
                         {/* <div className="row">
@@ -330,7 +331,7 @@ const AdminEditClusterModal = (props) => {
                                         defaultValue={getSingleCluster.employeeId}
                                         value={clusterLeader}
                                         onChange={clusterLeaderSelect}>
-
+                                        <option selected>{getSingleCluster.clusterLeaderName}</option>
                                         {costCenterEmpAndMgrList !== null && costCenterEmpAndMgrList.map((e, i) => {
                                             return (
 
