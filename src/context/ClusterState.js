@@ -207,8 +207,9 @@ export const ClusterProvider = ({ children }) => {
   // SALARY INPUT
   const viewSalary = (month, year, id) => {
     console.log(" in cluster" + month + " " + year)
+    let flag = localStorage.getItem('flag')
 
-    client.get('salary/view/store?month=' + month + '&year=' + year + '&storeId=' + id)
+    client.get('salary/view/store?month=' + month + '&year=' + year + '&storeId=' + id + '&cluster=' + flag)
       .then(function (response) {
         console.log("data message==>", response.data.message);
         console.log("data==>1", response);
