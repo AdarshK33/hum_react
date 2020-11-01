@@ -103,7 +103,7 @@ const initial_state = {
                 .then((response) => {
                   toast.info(response.data.message);
                   viewClusterTarget();
-                  // viewLeaderClusterTarget(values.storeName);
+                  viewLeaderClusterTarget(values.storeName);
                   return (
                   dispatch({ type: 'ADD_NEW_TARGET', payload: state.NewTarget })
                   )
@@ -112,6 +112,7 @@ const initial_state = {
                   console.log(error)
                 })
           }
+          
 
           //Edit target
           const editTarget = (values) => {

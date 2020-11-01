@@ -29,7 +29,7 @@ const AddTarget = (props) => {
 
     const { viewCostCentre } = useContext(DashboardContext);
     const { user } = useContext(AppContext)
-    const { leaderClusterList, viewLeaderClusterList,addTarget} = useContext(ClusterProductContext);
+    const { leaderClusterList, viewLeaderClusterList,addLeaderTarget} = useContext(ClusterProductContext);
 
 
      useEffect(() => {
@@ -106,7 +106,7 @@ const AddTarget = (props) => {
             targetId: 0,
             year: year
           }
-        addTarget(Values);
+          addLeaderTarget(Values);
 
         const setModal = props.handleClose;
 
