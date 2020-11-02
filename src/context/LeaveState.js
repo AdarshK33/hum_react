@@ -19,7 +19,8 @@ const initialState = {
   leaveEmpList: [],
   leaveTypeReport: [],
   leaveManagerList: [],
-  cityList: []
+  cityList: [],
+  loader:false
 
 }
 
@@ -32,11 +33,15 @@ export const LeaveProvider = ({ children }) => {
   //View Leave
 
   const viewList = (empId1) => {
+    state.loader=true
+    console.log("loader value outsie method", state.loader)
     client.get('leave_transaction/view')
       .then((response) => {
         state.leaveList = response.data.data
         getLeave(empId1);
         console.log("=====GET API respone for Admin=====", state.leaveList)
+        state.loader=false
+        console.log("loader value inside method", state.loader)
         return (
           dispatch({ type: 'FETCH_LEAVE_LIST', payload: state.leaveList })
         )
@@ -193,7 +198,7 @@ export const LeaveProvider = ({ children }) => {
   //Edit Leave
   const editPopup = (editPopup) => {
     console.log("edit data", editPopup)
-    return client.put('leave_transaction/update', editPopup)
+    return client.post('leave_transaction/update', editPopup)
       .then((response) => {
         state.message = response.data.message
         state.editLeavesData = response.data.data
@@ -211,7 +216,7 @@ export const LeaveProvider = ({ children }) => {
 
   const editList = (editLeave) => {
     console.log("??????????????????edit api id response???????????????/", editLeave)
-    return client.put('leave_transaction/update', editLeave)
+    return client.post('leave_transaction/update', editLeave)
       .then((response) => {
         state.message = response.data.message
         toast.info(state.message)
@@ -231,7 +236,7 @@ export const LeaveProvider = ({ children }) => {
   }
   const editEmpList = (editLeave) => {
     console.log("??????????????????edit api id response???????????????/", editLeave)
-    return client.put('leave_transaction/update', editLeave)
+    return client.post('leave_transaction/update', editLeave)
       .then((response) => {
         state.message = response.data.message
         toast.info(state.message)
@@ -431,20 +436,20 @@ export const LeaveProvider = ({ children }) => {
   const productivityReport = (reportData) => {
     console.log("reportData", reportData)
 
-      return client.post('report/productivity',  reportData)
-        .then((response) => {
-          state.productivityList = response.data.data
-          console.log("productivity list api++++++", state.productivityList)
-          console.log("productivity list api message", response.data.message)
-          if (response.data.data === null) {
-            toast.info("Data" + " " + response.data.message)
-          }
-          return dispatch({ type: 'PRODUCTIVITY_REPORT', payload: state.productivityList })
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    }
+    return client.post('report/productivity', reportData)
+      .then((response) => {
+        state.productivityList = response.data.data
+        console.log("productivity list api++++++", state.productivityList)
+        console.log("productivity list api message", response.data.message)
+        if (response.data.data === null) {
+          toast.info("Data" + " " + response.data.message)
+        }
+        return dispatch({ type: 'PRODUCTIVITY_REPORT', payload: state.productivityList })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
   //City view Api
   const getCity = () => {
     client.get('city/view')
@@ -521,7 +526,8 @@ export const LeaveProvider = ({ children }) => {
       editLeavesData: state.editLeavesData,
       leaveTypeReport: state.leaveTypeReport,
       leaveManagerList: state.leaveManagerList,
-      cityList: state.cityList
+      cityList: state.cityList,
+      loader: state.loader
 
     }}>
       {children}

@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, Fragment } from 'react';
 import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap'
 import { useHistory } from "react-router-dom";
-import DatePicker from 'react-datepicker'
+/* import DatePicker from 'react-datepicker' */
 import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer, } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -191,18 +191,33 @@ const onSubmit = e => {
     // history.push("/salary/salaryView");
     const setModal = props.handleEditClose;
     setModal()
+    setExtraHours(props.extraHours)
+    setReason(props.reason)
+    setValues([])
+    setValues2([])
 }
-
+const onCloseModal = () => {
+     const setModal = props.handleEditClose;
+    setModal()
+    setExtraHours(props.extraHours)
+    setReason(props.reason)
+    setValues([])
+    setValues2([])
+}
 
 return (
     <React.Fragment>
         <ToastContainer />
         <Modal show={props.modal} onHide={props.handleEditClose} centered>
             <Container style={{ paddingBottom: '1rem' }}>
-                <Modal.Header closeButton>
+                <Modal.Header>
                     <Modal.Title >
                         <h5 className="modal-heading">Edit Salary</h5>
                     </Modal.Title>
+                    <button type="button" className="close" data-dismiss="modal" aria-label="Close"
+                            onClick={onCloseModal}>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                 </Modal.Header>
                 <Modal.Body>
                     <Form onSubmit={onSubmit}>

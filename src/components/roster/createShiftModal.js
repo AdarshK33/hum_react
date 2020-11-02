@@ -27,6 +27,7 @@ const CreateShiftModal = (props) => {
   const [showText, setShowText] = useState(false);
   const [invalidText, setInvalidText] = useState(false)
   const [warnMsg, setWrnMsg] = useState(false);
+  const [timeError, setTimeErrorMsg] = useState(false);
   const [errormsg, setErrorMsg] = useState(false);
   const [nineHourWarnMsg, setNineHourWarnMsg] = useState(false);
   const [fiveToEightWarnMsg, setFiveToEightWarnMsg] = useState(false);
@@ -79,7 +80,8 @@ const CreateShiftModal = (props) => {
     var workingHours = result.replace(/:/g, ".");
     setWorkingHour(workingHours);
     checkTimeValidation();
-
+    setInvalidText(false)
+    setShowText(false)
     function checkTimeValidation() {
 
 
@@ -129,6 +131,18 @@ const CreateShiftModal = (props) => {
   const callShowMethod = () => {
     setShowText(true);
     setInvalidText(true)
+    var endTime1 = moment(endTime, ["h:mm A"]).format("HH:mm:ss")
+    var startTime1 = moment(startTime, ["h:mm A"]).format("HH:mm:ss")
+    var breakStartTime1 = moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss")
+    var breakEndTime1 = moment(breakStartTime).add(1, 'hours').format('HH:mm:ss')
+    if ((breakEndTime1 > endTime1) || (breakStartTime1 < startTime1)) {
+      setShiftButton(true)
+      setTimeErrorMsg("* Invalid Break Time");
+    }
+    else {
+      setShiftButton(false);
+      setTimeErrorMsg(false);
+    }
   }
 
   const callTimer = () => {
@@ -304,7 +318,7 @@ const CreateShiftModal = (props) => {
                     </div>
                     <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px", marginLeft: "16px" }}>{errormsg}</h6>
                   </div>
-                  <h6 style={{ color: "black", fontFamily: "work-Sans, sans-serif", fontSize: "14px", display: "overhidden" }}>Total no. of working hours {workingHours}</h6>
+                  <h6 style={{ color: "black", fontFamily: "work-Sans, sans-serif", fontSize: "14px", display: "overhidden" }}>Total no. of working hours {workingHours.substring(0, workingHours.length - 3).replace(".", ":")}</h6>
                   <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px", marginTop: "10px" }}>{nineHourWarnMsg}</h6>
                   <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px", marginTop: "10px" }}>{fiveToEightWarnMsg}</h6>
                   <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px", marginTop: "10px" }}>{oneToFiveWarnMsg}</h6>
@@ -344,10 +358,9 @@ const CreateShiftModal = (props) => {
                                   <input type="text" style={{ marginTop: "7px" }} className="form-control" placeholder={moment(breakStartTime).add(1, 'hours').format('HH:mm A')} />
                                 </div>
                               </div>
-
                             }
                           </div>
-
+                          <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px" }}>{timeError}</h6>
                           {showText &&
                             <div className="row">
                               <div className="col-sm-12 py-1" >

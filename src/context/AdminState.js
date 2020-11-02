@@ -107,7 +107,7 @@ export const AdminProvider = ({ children }) => {
   }
 
   function createLeaveForSameEmp(addGrantLeave) {
-    return client.put("grant_leave/update", addGrantLeave, {
+    return client.post("grant_leave/update", addGrantLeave, {
     })
   }
 
@@ -157,7 +157,7 @@ export const AdminProvider = ({ children }) => {
   //Approved update List
   const approvedUpdate = (approvalData) => {
     console.log("++++update approval api response+++++", approvalData)
-    return client.put('leave_transaction/approve', approvalData)
+    return client.post('leave_transaction/approve', approvalData)
       .then((response) => {
         state.message = response.data.message
         toast.info(state.message)
@@ -177,7 +177,7 @@ export const AdminProvider = ({ children }) => {
 
   const cancelLeaveList = (ltId) => {
     console.log("itid", ltId)
-    client.put('leave_transaction/reject/' + ltId)
+    client.post('leave_transaction/reject/' + ltId)
       .then((response) => {
         toast.info(response.data.message)
         console.log("-----delete data-----", response)

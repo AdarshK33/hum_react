@@ -25,7 +25,7 @@ const LeaveView = () => {
     const [reason, setReason] = useState()
     const [empId, setEmpID] = useState('')
     const [numberOfDays, setNumberOfDays] = useState()
-
+ 
     const { leaveDataList, viewLeaveData, viewEmpLeaveData, leaveEmpList }
         = useContext(LeaveContext);
 
@@ -59,13 +59,14 @@ const LeaveView = () => {
     useEffect(() => {
         viewEmpLeaveData(user.employeeId)
     }, [user.employeeId])
-
     /*
       if(leaveTypeId === 0 || leaveTypeId === 1){
           var newLeaveTypeId = 1
          setLeaveTypeId(newLeaveTypeId)
          console.log("newLeaveTypeId", newLeaveTypeId)
       } */
+
+
     return (
         <Fragment>
             <Breadcrumb title="Leave View" parent="Leave View" />
@@ -159,7 +160,8 @@ const LeaveView = () => {
                         <Button className="apply-button btn btn-light"
                             onClick={() => { setModal(true); setEmpID(user.employeeId) }}>Apply</Button>
                     </Col>
-                    {user.employeeId !== undefined ? <LeaveAdd handleClose={handleClose} modal={modal} empid={empId} /> : ""}
+                    {user.employeeId !== undefined ? 
+                    <LeaveAdd handleClose={handleClose} modal={modal} empid={empId}  /> : ""}
 
                 </Row>
 
@@ -178,7 +180,7 @@ const LeaveView = () => {
                                 </tr>
                             </thead>
 
-                            {currentRecords !== null && currentRecords !== undefined &&
+                            { currentRecords !== null && currentRecords !== undefined &&
                             currentRecords.length > 0 ?
                                 currentRecords.map((item, i) => {
                                     return (

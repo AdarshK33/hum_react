@@ -96,7 +96,7 @@ export const RosterProvider = ({ children }) => {
   }
 
   function updateShift(newEditShift) {
-    return client.put("shift/update", newEditShift).then(function (respone) {
+    return client.post("shift/update", newEditShift).then(function (respone) {
       console.log("api response===", respone.data.message);
       toast.info(respone.data.message);
       viewShift()
