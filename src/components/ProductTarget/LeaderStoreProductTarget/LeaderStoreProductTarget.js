@@ -156,7 +156,7 @@ if(storeLeaderProductList !== null){
                                  )
                             })} 
                     </Table>
-                     :
+                    : storeLeaderProductList !== undefined && storeLeaderProductList !== null && currentRecords.length === 0 ?
                             
                      <div className="loader-box loader" style ={{width : "100% !important"}}>
                          <div className="loader">
@@ -165,12 +165,13 @@ if(storeLeaderProductList !== null){
                          <div className="line bg-primary"></div>
                          <div className="line bg-primary"></div>
                          </div>
-                     </div>
-             
+                     </div> 
+                    : 
+                        <p style={{ textAlign: "center" }}>N0 RECORDS EXIST</p>
              } 
-              {currentRecords === undefined && currentRecords === null ? (
+              {/* {storeLeaderProductList === undefined && storeLeaderProductList === null ? (
                     <p style={{ textAlign: "center" }}>N0 RECORDS EXIST</p>
-                  ) : null}
+                  ) : null} */}
                    
                     {editTarget !== null && editTarget !== undefined && 
                         editTarget.length !== 0 ? <EditLeaderTarget handleEditClose={handleEditClose}

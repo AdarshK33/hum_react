@@ -1,7 +1,9 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react'
 import { Container, Modal, Tabs, Tab, InputGroup } from 'react-bootstrap'
 import Select from 'react-select';
+import { toast } from "react-toastify";
 import { RosterContext } from "../../context/RosterState";
+import "react-toastify/dist/ReactToastify.css";
 import './roster.css'
 import moment from 'moment'
 
@@ -9,8 +11,10 @@ import moment from 'moment'
 
 const AdminShiftModal = (props) => {
   console.log("MY PROPS " + JSON.stringify(props));
+  const date = moment(props.Date, 'YYYY-MM-DD').week();
   const [key, setKey] = useState('shift')
-  const shiftDateWeek = moment(props.shiftDate, 'YYYY-MM-DD').week();
+  const shiftDateWeek = props.shiftDate;
+  console.log("=====" + shiftDateWeek)
   const [selectedWeeks, setSelectedWeeks] = useState()
   const [weekDay, setWeekDay] = useState()
   const [value, setValue] = useState()
@@ -23,17 +27,21 @@ const AdminShiftModal = (props) => {
   const [assignShiftButton, setAShiftButton] = useState(true);
   const [assignWeekOffButton, setAssignWeekOffButton] = useState(true);
   const [contractType, setContractType] = useState([])
-
+  const [msg, setMsg] = useState(false);
+  const [msg1, setMsg1] = useState(false);
+  const [empData, setEmpData] = useState();
+  const [weekNameData, setWeekNameData] = useState();
   const { weekDays, weekOffDays, availableShifts, availableShiftData, adminRosterAvailableShiftList, adminRosterAvailableShift,
-    assignAdminShift, getallWeeks, weeksInYear, getEmployeeListForAdminRosterWeekOff, EmployeeListForAdminRosterWeekOff, adminAddWeekOff } = useContext(RosterContext)
+    assignAdminShift, getallWeeks, weeksInYear, getEmployeeListForAdminRosterWeekOff, EmployeeListForAdminRosterWeekOff, adminAddWeekOff, adminWeekOffDataListHeader, adminWeekOffDataEmp } = useContext(RosterContext)
 
-
+  let Days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
   console.log(availableShiftData, "data")
   console.log(weeksInYear, "weeks")
 
   useEffect(() => {
     setFirstName(props.firstName)
+    adminWeekOffDataEmp()
   }, [props.firstName])
 
   useEffect(() => {
@@ -45,16 +53,22 @@ const AdminShiftModal = (props) => {
   useEffect(() => {
     getEmployeeListForAdminRosterWeekOff(props.contractType, props.mystoreId)
     availableShifts()
-    getallWeeks()
+    if (props.Date !== undefined) {
+      getallWeeks(props.Date)
+    }
+
+    if (props.empData !== "") {
+      setEmpData(props.empData)
+    }
     adminRosterAvailableShift(props.contractType, props.mystoreId)
-  }, [props.contractType, props.mystoreId])
+  }, [props.contractType, props.mystoreId, props.empData])
   //my store id
 
   useEffect(() => {
     // console.log('shiftDateWeek', shiftDateWeek)
     console.log("props my store ID ", props.mystoreId)
     console.log('props.shiftDate', props.shiftDate)
-    weekOffDays(shiftDateWeek + 1)
+    weekOffDays(shiftDateWeek)
   }, [selectedWeeks])
 
 
@@ -63,50 +77,95 @@ const AdminShiftModal = (props) => {
 
   useEffect(() => {
 
-    let { shiftDate } = props
-    const weeks = weeksInYear.map(arr => {
-      let weekNumber = arr.weekName.split('Week')[1].trim();
-      return {
-        ...arr,
-        selected: parseInt(weekNumber) === shiftDateWeek
-      }
-    })
+    let { Date } = props
+    let weeks = [];
+    if (weeksInYear !== null) {
+      weeks = weeksInYear.map(arr => {
+
+        let weekNumber = arr.weekId
+        return {
+          ...arr,
+          selected: parseInt(weekNumber) === shiftDateWeek
+        }
+      })
+    }
     const days = weekDays.map(arr => {
-      console.log({ arr }, shiftDate);
+      console.log({ arr }, Date);
       return {
         ...arr,
-        selected: arr.date === shiftDate
+        selected: arr.date === Date
       }
     })
     setWeekDayList(weeks)
     setDayList(days)
-    setWeekDay(shiftDate)
+    setWeekDay(Date)
     // console.log(weeks, 'Shift year');
     //  console.log(days, 'Shift day');
   }, [props.shiftDate, weekDays])
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const setModal = props.handleClose
-    setModal()
+    const validate = validation();
+    let WeekDate = weekDay;
+    let weekNumber = date
+    if (weekNameData !== undefined) {
+      weekNumber = weekNameData.split(' ')[0].trim();
+      weekNumber = weekNumber.split('Week')[1].trim();
+    }
+    var loIsDate = new Date(weekDay);
+    let day = Days[loIsDate.getDay()];
+    if (adminWeekOffDataListHeader !== undefined && adminWeekOffDataListHeader !== null) {
+      for (let i = 0; i < adminWeekOffDataListHeader.length; i++) {
+        if (adminWeekOffDataListHeader[i].weekName.includes(weekNumber)) {
+          // for (let j = 0; j < empData[i].employeeRosters.length; j++) {
+          //   loIsDate = new Date(empData[i].employeeRosters[j].date);
+          //   let changeDay = Days[loIsDate.getDay()];
+          if (day === adminWeekOffDataListHeader[i].day) {
+            // setWeekDay(empData[i].employeeRosters[j].date)
+            WeekDate = adminWeekOffDataListHeader[i].date
+          }
+          // }
 
-    const newWeekOffAdminRoster = {
-      date: weekDay,
-      employeeIds: employee.map((e, i) => employee[i].value)
+        }
+      }
     }
 
 
-    adminAddWeekOff(newWeekOffAdminRoster)
-    // console.log("newWeekOff data", newWeekOffAdminRoster)
-    // history.push("/roster/roster");
-    setSelectedWeeks(1)
-    setWeekDay('')
-    setShowDay(false)
-  }
+    const newWeekOffAdminRoster = {
+      date: WeekDate,
+      employeeIds: employee.map((e, i) => employee[i].value)
+    }
 
+    if (validate) {
+      adminAddWeekOff(newWeekOffAdminRoster)
+
+      setSelectedWeeks(1)
+      setWeekDay('')
+      setShowDay(false)
+      props.handleClose()
+    }
+  }
+  const validation = () => {
+    let flag = true
+    if (employee.length === 0) {
+      toast.info("Select employee is mandatory")
+      flag = false;
+      return;
+    }
+
+
+
+    return flag;
+  }
 
   const handleWeeksChange = (e) => {
     let newValue = e.target.value
+    let idx = e.target.selectedIndex;
+    if (e.target.options[idx].innerText !== "Select") {
+      setWeekNameData(e.target.options[idx].innerText);
+    } else {
+      setWeekNameData("");
+    }
     console.log("newValue", newValue)
     setSelectedWeeks(newValue)
     setShowDay(true)
@@ -116,11 +175,15 @@ const AdminShiftModal = (props) => {
     setEmployee(options)
     if (options !== null && days !== null && days !== undefined) {
       if (days.length !== 0) {
+        setMsg(true)
         setAShiftButton(false)
+        setMsg1(false)
       }
     }
     else {
+      setMsg1("* Select Employee Is Required ")
       setAShiftButton(true)
+      setMsg(false)
     }
   }
 
@@ -129,11 +192,15 @@ const AdminShiftModal = (props) => {
     setDays(options)
     if (options !== null && employee !== null && employee !== undefined) {
       if (employee.length !== 0) {
+        setMsg1(true)
         setAShiftButton(false)
+        setMsg(false)
       }
     }
     else {
+      setMsg("* Select Day Is Required ")
       setAShiftButton(true)
+      setMsg1(false)
     }
   }
   const handleEmployeeList1 = (options) => {
@@ -170,20 +237,10 @@ const AdminShiftModal = (props) => {
       shiftId: parseInt(value),
       storeId: props.mystoreId
     }
-
-
     assignAdminShift(adminAssignShift)
     props.handleClose()
 
   }
-
-
-
-
-
-
-
-
 
   return (
     <Fragment>
@@ -240,7 +297,9 @@ const AdminShiftModal = (props) => {
                         />
                       </div>
                     </div>
+                    <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "12px", marginLeft: "5px" }}>{msg1}</h6>
                   </div>
+
 
                   <div className="row py-2">
                     <div className="col-sm-5 px-2">Select Week :<span style={{ color: 'red' }}>*</span></div>
@@ -259,6 +318,7 @@ const AdminShiftModal = (props) => {
                         </select>
                       </div>
                     </div>
+                    <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "12px", marginLeft: "5px" }}>{msg}</h6>
                   </div>
 
                   <div className="row py-2">
@@ -299,6 +359,7 @@ const AdminShiftModal = (props) => {
                       <div className="form-group">
                         <Select
                           name="filters"
+                          required={true}
                           placeholder="Select Employees"
                           defaultValue=""
                           value={employee}

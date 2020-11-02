@@ -21,7 +21,7 @@ const AdminRoster = () => {
     const [tableShow, setTableShow] = useState(false);
     const [adminRosterButton, setadminRosterButton] = useState(true);
     const [storecostCenterName, setstorecostCenterName] = useState('');
-
+    const [date, setDate] = useState()
     const { user } = useContext(AppContext);
 
     useEffect(() => {
@@ -42,12 +42,13 @@ const AdminRoster = () => {
     const { adminWeekOffDataEmp, viewContractTypes, shiftContractNames, costCenterList, adminWeekOffDataListHeader, adminWeekOffDataList, adminCalculateWeek, adminCalculateWeekResult, adminRosterAvailableShift, getallWeeks, costCenter } = useContext(RosterContext);
 
     const handleClose = () => setAdminModal(false)
-    const handleShow = (item, name, ctype) => {
-        setshiftDate(item)
+    const handleShow = (item, name, ctype, weekId) => {
+        setshiftDate(item.weekId)
         setAdminModal(true)
+        setDate(item)
         setFirstName(name);
         adminRosterAvailableShift(contractType, costCenter1)
-        getallWeeks()
+        // getallWeeks()
     }
 
 
@@ -85,21 +86,25 @@ const AdminRoster = () => {
 
 
 
-    const checkCondition = (item, name, ctype, costCentreName) => {
+    const checkCondition = (item, name, ctype, costCentreName, weekId) => {
 
 
         if (item.roster == null) {
-            return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item, name, ctype, costCentreName)}>+</button>
-        } else if (item.roster.holiday !== "" && item.roster.holiday !== null) {
-            return <button className="btn btn-square btn-warning btn-sm" onClick={() => handleShow(item)}>{item.roster.holiday}</button>
-        } else if (item.roster.leave !== "" && item.roster.leave !== null) {
-            return <button className="btn btn-square btn-danger btn-sm" onClick={() => handleShow(item)} type="button">Leave</button>
-        } else if (item.roster.weekOff) {
-            return <button className="btn btn-square btn-info btn-sm" onClick={() => handleShow(item)} type="button">Week Off</button>
-        } else if (item.roster.shiftName !== "" && item.roster.shiftName !== null) {
-            return <button className="btn btn-square btn-success  btn-sm" onClick={() => handleShow(item)} type="button">{item.roster.shiftName}</button>
+            return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item, name, ctype, costCentreName, weekId)}>+</button>
+        }
+        else if (item.roster.leave !== "" && item.roster.leave !== null) {
+            return <button className="btn btn-square btn-danger btn-sm" onClick={() => handleShow(item, name, ctype, costCentreName, weekId)} type="button">Leave</button>
+        }
+        else if (item.roster.holiday !== "" && item.roster.holiday !== null) {
+            return <button className="btn btn-square btn-warning btn-sm" onClick={() => handleShow(item, name, ctype, costCentreName, weekId)}>{item.roster.holiday}</button>
+        }
+        else if (item.roster.weekOff) {
+            return <button className="btn btn-square btn-info btn-sm" onClick={() => handleShow(item, name, ctype, costCentreName, weekId)} type="button">Week Off</button>
+        }
+        else if (item.roster.shiftName !== "" && item.roster.shiftName !== null) {
+            return <button className="btn btn-square btn-success  btn-sm" onClick={() => handleShow(item, name, ctype, costCentreName, weekId)} type="button">{item.roster.shiftName}</button>
         } else {
-            return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item, name)}>+</button>
+            return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item, name, ctype, costCentreName, weekId)}>+</button>
         }
     }
     return (
@@ -249,6 +254,11 @@ const AdminRoster = () => {
 
 
                                         <tbody>
+                                            {adminWeekOffDataListHeader !== null && adminWeekOffDataListHeader.map((e, i) => {
+                                                // return (
+                                                //     <th scope="col" key={e.date}>{e.day}<br />{e.weekName} </th>
+                                                // )
+                                            })}
                                             {adminWeekOffDataList !== null &&
                                                 adminWeekOffDataList.length > 0 &&
                                                 adminWeekOffDataList.map((item, i) => {
@@ -295,9 +305,10 @@ const AdminRoster = () => {
                         contractType={contractType}
                         firstName={firstName}
                         modal={adminModal}
-                        shiftDate={shiftDate.date}
+                        shiftDate={shiftDate}
                         mystoreId={storecostCenterName}
-
+                        Date={date.date}
+                        empData={adminWeekOffDataList}
                     />}
             </div>
 

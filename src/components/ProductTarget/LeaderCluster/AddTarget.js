@@ -106,7 +106,7 @@ const AddTarget = (props) => {
             targetId: 0,
             year: year
           }
-        addTarget(Values);
+          addTarget(Values);
 
         const setModal = props.handleClose;
 

@@ -11,13 +11,15 @@ const Roster = () => {
   const [startDate, setStartDate] = useState(moment());
   const [endDate, setEndDate] = useState(moment().add('30', 'd'));
   const [modal, setModal] = useState(false)
+  const [date, setDate] = useState()
   const [shiftDate, setshiftDate] = useState(false)
   const { weekOffDataEmp, weekOffDataList, availableShifts } = useContext(RosterContext)
   const { user } = useContext(AppContext);
   const handleClose = () => setModal(false)
-  const handleShow = (item) => {
+  const handleShow = (item, weekId) => {
     console.log(item, "item onclick")
-    setshiftDate(item)
+    setDate(item)
+    setshiftDate(weekId)
     setModal(true)
     availableShifts();
   }
@@ -36,24 +38,24 @@ const Roster = () => {
     weekOffDataEmp(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"), user.employeeId)
     console.log("weekOff Data", startDate)
   }
-  const checkCondition = (item) => {
+  const checkCondition = (item, weekId) => {
     //console.log(item, "che")
     if (item.roster == null) {
-      return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item)}>+</button>
+      return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item, weekId)}>+</button>
 
     }
     else if (item.roster.leave !== "" && item.roster.leave !== null) {
-      return <button className="btn btn-square btn-danger btn-sm" onClick={() => handleShow(item)} type="button">Leave</button>
+      return <button className="btn btn-square btn-danger btn-sm" onClick={() => handleShow(item, weekId)} type="button">Leave</button>
     }
     else if (item.roster.holiday !== "" && item.roster.holiday !== null) {
-      return <button className="btn btn-square btn-warning btn-sm" onClick={() => handleShow(item)}>{item.roster.holiday}</button>
+      return <button className="btn btn-square btn-warning btn-sm" onClick={() => handleShow(item, weekId)}>{item.roster.holiday}</button>
     }
     else if (item.roster.weekOff) {
-      return <button className="btn btn-square btn-info btn-sm" onClick={() => handleShow(item)} type="button">Week Off</button>
+      return <button className="btn btn-square btn-info btn-sm" onClick={() => handleShow(item, weekId)} type="button">Week Off</button>
     } else if (item.roster.shiftName !== "" && item.roster.shiftName !== null) {
-      return <button className="btn btn-square btn-success  btn-sm" type="button" onClick={() => handleShow(item)}>{item.roster.shiftName}</button>
+      return <button className="btn btn-square btn-success  btn-sm" type="button" onClick={() => handleShow(item, weekId)}>{item.roster.shiftName}</button>
     } else {
-      return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item)}>+</button>
+      return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item, weekId)}>+</button>
     }
   }
   return (
@@ -134,7 +136,7 @@ const Roster = () => {
                                     return (
                                       <>
                                         {/* {Array.from(Array(newData.getDay() - 1)).map(() => <td></td>)} */}
-                                        <td>{item.weekName}<br />{data.date}<br />{checkCondition(data)}</td>
+                                        <td>{item.weekName}<br />{data.date}<br />{checkCondition(data, item.weekId)}</td>
                                       </>
 
                                     )
@@ -142,14 +144,14 @@ const Roster = () => {
                                     return (
                                       <>
                                         {Array.from(Array(newData.getDay())).map(() => <td></td>)}
-                                        <td>{item.weekName}<br />{data.date}<br />{checkCondition(data)}</td>
+                                        <td>{item.weekName}<br />{data.date}<br />{checkCondition(data, item.weekId)}</td>
                                       </>
 
                                     )
                                   }
 
                                 } else {
-                                  return <td>{item.weekName}<br />{data.date}<br />{checkCondition(data)}</td>
+                                  return <td>{item.weekName}<br />{data.date}<br />{checkCondition(data, item.weekId)}</td>
                                 }
 
                               }
@@ -162,7 +164,7 @@ const Roster = () => {
                               {item.employeeRosters.map(data => {
                                 // let newData = new Date(data.date)
                                 //console.log(newData.getDay(), "day")
-                                return <td>{item.weekName}<br />{data.date}<br />{checkCondition(data)}</td>
+                                return <td>{item.weekName}<br />{data.date}<br />{checkCondition(data, item.weekId)}</td>
                               })}
                             </tr>
                           )
@@ -175,7 +177,7 @@ const Roster = () => {
             </div>
           </div>
         </div>
-        {modal && <ShiftModal handleClose={handleClose} modal={modal} shiftDate={shiftDate.date} empData={weekOffDataList} />}
+        {modal && <ShiftModal handleClose={handleClose} modal={modal} shiftDate={shiftDate} Date={date.date} empData={weekOffDataList} />}
       </div>
 
     </Fragment>

@@ -171,7 +171,7 @@ const StoreProductTarget = () => {
                                  )
                             })} 
                     </Table>
-                            :
+                            : storeProductList !== undefined && storeProductList !== null && currentRecords.length === 0 ?
                             
                                     <div className="loader-box loader" style ={{width : "100% !important"}}>
                                         <div className="loader">
@@ -181,11 +181,12 @@ const StoreProductTarget = () => {
                                         <div className="line bg-primary"></div>
                                         </div>
                                     </div>
-                            
+                            :
+                             <p style={{ textAlign: "center" }}>N0 RECORDS EXIST</p>
                  } 
-                 {currentRecords === undefined && currentRecords === null ? (
+                 {/* {storeProductList === undefined && storeProductList === null ? (
                     <p style={{ textAlign: "center" }}>N0 RECORDS EXIST</p>
-                  ) : null}
+                  ) : null} */}
                    
                    
                     {editTarget !== null && editTarget !== undefined && 

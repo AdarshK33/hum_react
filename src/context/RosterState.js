@@ -3,7 +3,7 @@ import React, { createContext, useReducer } from 'react';
 import { client } from '../utils/axios';
 import { toast } from "react-toastify";
 import RosterReducer from '../reducers/RosterReducer';
-
+import moment from 'moment'
 
 
 const initial_state = {
@@ -25,7 +25,8 @@ const initial_state = {
   EmployeeListForAdminRosterWeekOff: [],
   adminRosterWeekOffDataList: [],
   adminRosterAvailableShiftList: [],
-  costCenterList: []
+  costCenterList: [],
+  masterWeeks: []
 
 }
 
@@ -224,8 +225,8 @@ export const RosterProvider = ({ children }) => {
 
   }
 
-  const getallWeeks = () => {
-    let year = new Date().getFullYear()
+  const getallWeeks = (date) => {
+    let year = new Date(date).getFullYear();
     client.get('/weekoff/weeks?year=' + year)
       .then((response) => {
         state.weeksInYear = response.data.data
@@ -238,13 +239,30 @@ export const RosterProvider = ({ children }) => {
   }
 
 
+  const getMasterWeeks = (year) => {
+    // let year = new Date().getFullYear()  
+    console.log(year);
+    client.get('/weekoff/weeks/' + year)
+      .then((response) => {
+        console.log("===================NAVANEETHA=========");
+        console.log(response.data.data);
+        state.masterWeeks = response.data.data
+        return dispatch({ type: 'MASTER_WEEKS', payload: state.masterWeeks })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+
+
   const uploadWeeks = (file) => {
     const formData = new FormData();
-    formData.append('file',file)
+    formData.append('file', file)
     console.log(formData)
     return client.post('/weekoff/weeks/upload', formData)
       .then((response) => {
-        console.log(response,"res")
+        console.log(response, "res")
         toast.info(response.data.message)
       })
       .catch((error) => {
@@ -304,10 +322,10 @@ export const RosterProvider = ({ children }) => {
   }
 
   //ADMIN EMPLOYEE LIST FOR ROSTER WEEKOFF
-  const getEmployeeListForAdminRosterWeekOff = (contractType,storeId) => {
+  const getEmployeeListForAdminRosterWeekOff = (contractType, storeId) => {
     // const contractType="Parttime";
-    console.log("=============NAV============",contractType)
-    client.get('employee/view?contract_type='+contractType+'&storeId=' + storeId)
+    console.log("=============NAV============", contractType)
+    client.get('employee/view?contract_type=' + contractType + '&storeId=' + storeId)
       .then((response) => {
         state.EmployeeListForAdminRosterWeekOff = response.data.data;
         console.log("admin calculate week for store id  ", state.EmployeeListForAdminRosterWeekOff)
@@ -425,6 +443,8 @@ export const RosterProvider = ({ children }) => {
     assignAdminShift,
     costCenter,
     uploadWeeks,
+    getMasterWeeks,
+    masterWeeks: state.masterWeeks,
     costCenterList: state.costCenterList,
     shiftList: state.shiftList,
     shiftMasterId: state.shiftMasterId,

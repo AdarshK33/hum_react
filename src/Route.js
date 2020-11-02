@@ -50,6 +50,7 @@ import MasterCity from "./components/MasterTables/MasterCity";
 import MasterLeave from "./components/MasterTables/MasterLeave";
 import MasterMonthlyQuantity from "./components/MasterTables/MasterMonthlyQuantity";
 import MasterDailyQty from "./components/MasterTables/MasterDailyQty";
+import MasterCostCenter from "./components/MasterTables/MasterCostCenter";
 
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
@@ -300,7 +301,12 @@ const RoutePath = () => {
                                                                                   <Route
                                                                                     path={`${process.env.PUBLIC_URL}/master/daily-qty`}
                                                                                     component={MasterDailyQty}
-                                                                                  /> : ""
+                                                                                  /> : 
+                                                                                  e.path === "/master/cost-center" ?
+                                                                                  <Route
+                                                                                    path={`${process.env.PUBLIC_URL}/master/cost-center`}
+                                                                                    component={MasterCostCenter}
+                                                                                  />: ""
 
 
                   //  <Route

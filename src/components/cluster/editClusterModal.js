@@ -20,6 +20,7 @@ const EditClusterModal = (props) => {
   const [clustertButton, setClusterButton] = useState(false);
   const [costCenterName, setCostCenterName] = useState('');
   const [status, setStatus] = useState(0);
+  const [clusterLeaderName, setClusterLeaderName] = useState('')
 
 
 
@@ -315,7 +316,7 @@ const EditClusterModal = (props) => {
                     defaultValue={getSingleCluster.employeeId}
                     value={clusterLeader}
                     onChange={clusterLeaderSelect}>
-
+                    <option selected>{getSingleCluster.clusterLeaderName}</option>
                     {costCenterEmpAndMgrList !== null && costCenterEmpAndMgrList.map((e, i) => {
                       return (
 

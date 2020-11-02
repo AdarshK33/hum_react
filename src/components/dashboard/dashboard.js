@@ -284,15 +284,15 @@ function Dashboard() {
                             <td className="Tdwidth Border">{graphData !== null && graphData[0] !== undefined ? graphData[0].hoursData[0].storeProductivityTarget : "0"}</td>
                         </tr>
                         <tr >
-                            <td className="Tdwidth">Quality Target of cluster</td>
+                            <td className="Tdwidth">Quantity Target of cluster</td>
                             <td className="Tdwidth">{graphData !== null && graphData[0] !== undefined ? graphData[0].hoursData[0].clusterQtyTarget : "0"}</td>
-                            <td className="Tdwidth">Quality Piloted of store</td>
+                            <td className="Tdwidth">Quantity Piloted of store</td>
                             <td className="Tdwidth">{graphData !== null && graphData[0] !== undefined ? (graphData[0].hoursData[0].storeQtyPiloted).toFixed(2) : "0"}</td>
                         </tr>
                         <tr >
                             <td className="Tdwidth">Planned Hours of cluster</td>
                             <td className="Tdwidth">{graphData !== null && graphData[0] !== undefined ? graphData[0].hoursData[0].clusterPlannedHours : "0"}</td>
-                            <td className="Tdwidth">Quality Target of store</td>
+                            <td className="Tdwidth">Quantity Target of store</td>
                             <td className="Tdwidth">{graphData !== null && graphData[0] !== undefined ? graphData[0].hoursData[0].storeQtYTarget : "0"}</td>
                         </tr>
                     </tbody>
