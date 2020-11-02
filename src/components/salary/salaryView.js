@@ -339,7 +339,7 @@ function ViewShift() {
           firstName={firstName} lastName={lastName} numberOfHours={numberOfHours}
           lop={lop} contractType={contractType} extraHours={extraHours} reason={reason}
           month={month} salaryId={salaryId} status={status} statusDesc={statusDesc} totalHours={totalHours} year={year}
-          additionalHours={additionalHours}
+          additionalHours={additionalHours} costCenter={user.costCentre}
         />
 
       </div>

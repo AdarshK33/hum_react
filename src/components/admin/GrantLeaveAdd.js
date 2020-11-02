@@ -121,7 +121,8 @@ const GrantLeaveAdd = (props) => {
                                                 required
                                                 onChange={(e) => setCostCenterHandler(e)} >
                                                 <option value="">Select Cost Center</option>
-                                                {costCenterList !== null && costCenterList.map((item, i) => {
+                                                {costCenterList !== null && costCenterList !== undefined
+                                                 && costCenterList.map((item, i) => {
                                                     return (
                                                         <option key={item.costCenterId} value={item.costCentreName}>
                                                             {item.costCentreName}</option>
