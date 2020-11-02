@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useContext, useState } from 'react';
+import React, { Fragment, useEffect, useContext, useState, useRef } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import Pagination from 'react-js-pagination'
@@ -19,12 +19,45 @@ const MasterWeek = () => {
   const [fileUpload, setFileUpload] = useState();
   const [year, setYear] = useState();
   const [data, setData] = useState([]);
+  
+  const today = new Date();
+
+  useEffect(()=>{
+    setYear(today)    
+    getMasterWeeks(today)
+  },[])
 
   const { getMasterWeeks, masterWeeks, uploadWeeks } = useContext(RosterContext);
 
+  const [currentPage, setCurrentPage] = useState(1);
+    const recordPerPage = 10;
+    let totalRecords = 0;
+    let indexOfFirstRecord = 0;
+    let indexOfLastRecord = 0;
+    const pageRange = 10;
+    let currentRecords = [];
+
+    if (masterWeeks !== null) {
+        totalRecords = masterWeeks.length;
+        indexOfLastRecord = currentPage * recordPerPage;
+        indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+        currentRecords = masterWeeks.slice(indexOfFirstRecord, indexOfLastRecord);
+    }
+
+    const handlePageChange = pageNumber => {
+      setCurrentPage(pageNumber);
+  }
+
+
+  const ref = React.useRef(null);
+
+  const removeFileName = (e) =>{
+    console.log("=================",ref.current )
+    // ref.current.pause();
+  }
+
   useEffect(() => {
-    console.log("Hello from useEffect");
-    console.log(masterWeeks);
+    
     let d = [];
     setData([])
     if (masterWeeks !== null && masterWeeks !== undefined) {
@@ -43,13 +76,9 @@ const MasterWeek = () => {
         setData(d);
       }, 100)
       
-      console.log(data);
+    
     }
   }, [masterWeeks])
-
-  useEffect(()=>{
-    console.log("==========LISTENING============",data)
-  },[data])
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -60,8 +89,13 @@ const MasterWeek = () => {
 
   const changeHandler = (event) => {
     let fileObj = event.target.files[0];
-    console.log("clicked", fileObj)
+    console.log("clicked", event.target.value)
     setFileUpload(fileObj)
+
+    // setTimeout(() => {
+    //   event.target.value = null;
+    // }, 5000)
+    
   }
 
   //File export 
@@ -139,9 +173,11 @@ const MasterWeek = () => {
                     className="btn"
                     type="file"
                     accept=".xlsx, .xls, .csv"
+                    ref={ref}
                     onChange={(e) => {
                       // getMasterWeeks()
                       changeHandler(e)
+                      // removeFileName(e)
                     }}
                     style={{ padding: "10px" }}
                   />
@@ -187,12 +223,12 @@ const MasterWeek = () => {
                     </tr>
                   </thead>
 
-                  {masterWeeks !== null && masterWeeks !== undefined && masterWeeks.length > 0 ?
-                    masterWeeks.map((item, i) => {
+                  {currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 ?
+                    currentRecords.map((item, i) => {
                       return (
                         <tbody key={i + 1}>
                           <tr>
-                            <td>{i + 1}</td>
+                            <td>{i + 1 + indexOfFirstRecord}</td>
                             <td>{item.weekName}</td>
                             <td>{item.startDate}</td>
                             <td>{item.endDate}</td>
@@ -209,8 +245,24 @@ const MasterWeek = () => {
 
               </div>
 
+              <div>
+                    {masterWeeks !== null && masterWeeks.length > 10 &&
+                        <Pagination
+                            itemClass="page-item"
+                            linkClass="page-link"
+                            activePage={currentPage}
+                            itemsCountPerPage={recordPerPage}
+                            totalItemsCount={totalRecords}
+                            pageRangeDisplayed={pageRange}
+                            onChange={handlePageChange}
+                        />
+                    }
+                </div>
+
             </div>
           </div>
+
+
         </div>
 
       </div>
