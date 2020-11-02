@@ -37,7 +37,7 @@ export const ClusterProvider = ({ children }) => {
 
 
   const updateCluster = (updateCluter) => {
-    return client.put("cluster/update", updateCluter).then(function (respone) {
+    return client.post("cluster/create", updateCluter).then(function (respone) {
       console.log("api response===", respone.data.message);
       viewCluster()
       toast.info(respone.data.message);
@@ -49,7 +49,7 @@ export const ClusterProvider = ({ children }) => {
   }
 
   const updateAdminEditCluster = (updateCluter) => {
-    return client.put("cluster/update", updateCluter).then(function (respone) {
+    return client.post("cluster/create", updateCluter).then(function (respone) {
       // const {
       //   clusterCostCenter: { costCenter },
       // } = state;
@@ -244,7 +244,7 @@ export const ClusterProvider = ({ children }) => {
 
   function salaryEdit(salaryEdit) {
     console.log("salary edit api response", salaryEdit)
-    return client.put('salary/update', salaryEdit)
+    return client.post('salary/update', salaryEdit)
       .then((response) => {
         state.message = response.data.message
         state.month = response.data.data.month
@@ -287,7 +287,7 @@ export const ClusterProvider = ({ children }) => {
 
   const salaryApproval = (salaryData, month, year, storeId) => {
     console.log("++++update salary approval api response+++++", salaryData)
-    return client.put('salary/approve', salaryData)
+    return client.post('salary/approve', salaryData)
       .then((response) => {
         state.message = response.data.message
         toast.info(state.message)
