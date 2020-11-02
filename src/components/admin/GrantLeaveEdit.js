@@ -48,17 +48,18 @@ const GrantLeaveEdit = (props) => {
     }, [])
 
     const setClear = () => {
-        setEmployeeId('')
-        setNumOfDays('')
-        setSuccessMsg('')
+        setCostCenter(props.editData.costCentre)
+        setEmployeeCostCenter(props.editData.empId)
+        setEmployeeName(props.editData.empName)
+        setNumOfDays(props.editData.numOfDays)
+        setCount(props.editData.numOfDays)
+        setGrantLeaveId(props.editData.grantLeaveId)
     }
 
-    const callTimer = () => {
+   
+    const clearAndClose = () => {
         const setModal = props.handleEditClose;
         setModal()
-    }
-    const clearAndClose = () => {
-        props.handleEditClose();
     }
 
     const onSubmit = (event, props) => {
@@ -86,20 +87,26 @@ const GrantLeaveEdit = (props) => {
                 console.log("api response===", result.data.message);
                 toast.info(result.data.message);
                 setTimeout(() => {
-                    callTimer();
-                    setClear();
+                    clearAndClose();
                 }, 2000);
                 viewGrantLeave();
             })
             .catch((error) => {
                 alert(" In error catch ", error);
             })
-            clearAndClose();
+            
         }
       
+        setTimeout(() => {
+            clearAndClose();
+        }, 2000);
+
+        setClear()
         
-        console.log(result, "in competent");
-        
+    }
+    const onCloseModal = () => {
+        setClear()
+        clearAndClose()
     }
 
 
@@ -107,9 +114,14 @@ const GrantLeaveEdit = (props) => {
         <Fragment>
             <Modal show={props.modal} onHide={clearAndClose} centered>
 
-                <Modal.Header closeButton>
+                <Modal.Header>
                     <Modal.Title>Grant Leave</Modal.Title>
+                    <button type="button" className="close" data-dismiss="modal" aria-label="Close"
+                            onClick={onCloseModal}>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                 </Modal.Header>
+                
                 <Modal.Body>
                     <form onSubmit={onSubmit}>
                         <div className="row">
@@ -179,8 +191,8 @@ const GrantLeaveEdit = (props) => {
                             </div>
                         </div>
                         <button className="myclass mb-2 mr-2" type="submit" value="Submit" >Save</button>
-                        <button className="myclass mb-2 mr-2" onClick={() => { clearAndClose() }}>Close</button>
-                        <h5>{successMsg.length !== 0 && <div className="text-success">{successMsg}</div>}</h5>
+                        {/* <button className="myclass mb-2 mr-2" onClick={() => { clearAndClose() }}>Close</button>
+                        <h5>{successMsg.length !== 0 && <div className="text-success">{successMsg}</div>}</h5> */}
                     </form>
                 </Modal.Body>
 

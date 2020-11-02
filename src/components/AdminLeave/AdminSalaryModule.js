@@ -286,7 +286,7 @@ const AdminSalaryModule = () => {
                                     setReason(item.reason); setMonth(item.month); setSalaryId(item.salaryId);
                                     setStatus(item.status); setStatusDesc(item.statusDesc);
                                     setTotalHours(item.totalHours); setYear(item.year);
-                                    setadditionalHours(item.additionalHours);
+                                    setadditionalHours(item.additionalHours); 
                                   }} />
                                   :
                                   <Edit2 disabled style={{ color: 'lightgrey' }} />
@@ -325,6 +325,7 @@ const AdminSalaryModule = () => {
             totalHours={totalHours} 
             year={year}
             additionalHours={additionalHours}
+            costCenter = {costCenter}
         />
         </div>
         {salaryList !== null && salaryList.length > 10 &&

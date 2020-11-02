@@ -242,7 +242,7 @@ export const ClusterProvider = ({ children }) => {
 
   //Edit Salary
 
-  function salaryEdit(salaryEdit) {
+  function salaryEdit(salaryEdit,costCenter) {
     console.log("salary edit api response", salaryEdit)
     return client.post('salary/update', salaryEdit)
       .then((response) => {
@@ -250,7 +250,7 @@ export const ClusterProvider = ({ children }) => {
         state.month = response.data.data.month
         state.year = response.data.data.year
         toast.info(state.message)
-        viewSalary(state.month, state.year, user.costCentre)
+        viewSalary(state.month, state.year, costCenter)
         console.log("salary edit response", response.data.data)
         console.log("salary edit message", state.message)
         return (
@@ -283,7 +283,7 @@ export const ClusterProvider = ({ children }) => {
         console.log(error);
       });
   }
-  //Approval salary input from admin
+  //Approval salary input from admin.
 
   const salaryApproval = (salaryData, month, year, storeId) => {
     console.log("++++update salary approval api response+++++", salaryData)

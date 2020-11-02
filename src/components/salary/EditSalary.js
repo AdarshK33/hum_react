@@ -186,7 +186,7 @@ const onSubmit = e => {
 
     }
     console.log("EditSalary request",EditSalary)
-    salaryEdit(EditSalary)
+    salaryEdit(EditSalary, props.costCenter)
 
     // history.push("/salary/salaryView");
     const setModal = props.handleEditClose;
