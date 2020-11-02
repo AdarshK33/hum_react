@@ -86,9 +86,10 @@ const GrantLeaveEdit = (props) => {
             .then((result) => {
                 console.log("api response===", result.data.message);
                 toast.info(result.data.message);
-                setTimeout(() => {
+               /*  setTimeout(() => {
                     clearAndClose();
-                }, 2000);
+                }, 2000); */
+                clearAndClose();
                 viewGrantLeave();
             })
             .catch((error) => {
@@ -96,10 +97,11 @@ const GrantLeaveEdit = (props) => {
             })
             
         }
-      
+      /* 
         setTimeout(() => {
             clearAndClose();
-        }, 2000);
+        }, 2000); */
+        clearAndClose();
 
         setClear()
         
