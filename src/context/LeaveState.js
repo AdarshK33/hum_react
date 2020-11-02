@@ -198,7 +198,7 @@ export const LeaveProvider = ({ children }) => {
   //Edit Leave
   const editPopup = (editPopup) => {
     console.log("edit data", editPopup)
-    return client.put('leave_transaction/update', editPopup)
+    return client.post('leave_transaction/update', editPopup)
       .then((response) => {
         state.message = response.data.message
         state.editLeavesData = response.data.data
@@ -216,7 +216,7 @@ export const LeaveProvider = ({ children }) => {
 
   const editList = (editLeave) => {
     console.log("??????????????????edit api id response???????????????/", editLeave)
-    return client.put('leave_transaction/update', editLeave)
+    return client.post('leave_transaction/update', editLeave)
       .then((response) => {
         state.message = response.data.message
         toast.info(state.message)
@@ -236,7 +236,7 @@ export const LeaveProvider = ({ children }) => {
   }
   const editEmpList = (editLeave) => {
     console.log("??????????????????edit api id response???????????????/", editLeave)
-    return client.put('leave_transaction/update', editLeave)
+    return client.post('leave_transaction/update', editLeave)
       .then((response) => {
         state.message = response.data.message
         toast.info(state.message)
@@ -436,20 +436,20 @@ export const LeaveProvider = ({ children }) => {
   const productivityReport = (reportData) => {
     console.log("reportData", reportData)
 
-      return client.post('report/productivity',  reportData)
-        .then((response) => {
-          state.productivityList = response.data.data
-          console.log("productivity list api++++++", state.productivityList)
-          console.log("productivity list api message", response.data.message)
-          if (response.data.data === null) {
-            toast.info("Data" + " " + response.data.message)
-          }
-          return dispatch({ type: 'PRODUCTIVITY_REPORT', payload: state.productivityList })
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    }
+    return client.post('report/productivity', reportData)
+      .then((response) => {
+        state.productivityList = response.data.data
+        console.log("productivity list api++++++", state.productivityList)
+        console.log("productivity list api message", response.data.message)
+        if (response.data.data === null) {
+          toast.info("Data" + " " + response.data.message)
+        }
+        return dispatch({ type: 'PRODUCTIVITY_REPORT', payload: state.productivityList })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
   //City view Api
   const getCity = () => {
     client.get('city/view')

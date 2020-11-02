@@ -37,7 +37,7 @@ export const ClusterProvider = ({ children }) => {
 
 
   const updateCluster = (updateCluter) => {
-    return client.put("cluster/update", updateCluter).then(function (respone) {
+    return client.post("cluster/create", updateCluter).then(function (respone) {
       console.log("api response===", respone.data.message);
       viewCluster()
       toast.info(respone.data.message);
@@ -49,7 +49,7 @@ export const ClusterProvider = ({ children }) => {
   }
 
   const updateAdminEditCluster = (updateCluter) => {
-    return client.put("cluster/update", updateCluter).then(function (respone) {
+    return client.post("cluster/create", updateCluter).then(function (respone) {
       // const {
       //   clusterCostCenter: { costCenter },
       // } = state;
