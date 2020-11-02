@@ -58,7 +58,6 @@ const LeaveAdd = (props) => {
 
     const fromDateHandler = (date) => {
         let value = date
-        console.log("fromDate", value)
         setStartDate(value);
         setEndDate(null)
         setEditMsg(false)
@@ -87,7 +86,6 @@ const LeaveAdd = (props) => {
 
     const toDateHandler = (date) => {
         let value1 = date
-        console.log("toDate", value1)
         setEndDate(value1);
 
         var newData
@@ -120,8 +118,6 @@ const LeaveAdd = (props) => {
 
     const setStartMaternityDateHandler = (date) => {
         let value2 = date
-        console.log("MATERNITY=======")
-        console.log(value2)
         setStartMaternityDate(value2)
 
         var d1 = new Date(value2);
@@ -154,11 +150,8 @@ const LeaveAdd = (props) => {
 
     const setLeaveHandler = (e) => {
         const leave1 = e.target.value
-        console.log("LEAVE TYPE===================")
-        console.log(leave1)
         setLeave(leave1)
     }
-    console.log("leave data", leave)
     // Fields validation
     const validation = (event) => {
         let flag = true
