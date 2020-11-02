@@ -19,7 +19,8 @@ const initialState = {
   leaveEmpList: [],
   leaveTypeReport: [],
   leaveManagerList: [],
-  cityList: []
+  cityList: [],
+  loader:false
 
 }
 
@@ -32,11 +33,15 @@ export const LeaveProvider = ({ children }) => {
   //View Leave
 
   const viewList = (empId1) => {
+    state.loader=true
+    console.log("loader value outsie method", state.loader)
     client.get('leave_transaction/view')
       .then((response) => {
         state.leaveList = response.data.data
         getLeave(empId1);
         console.log("=====GET API respone for Admin=====", state.leaveList)
+        state.loader=false
+        console.log("loader value inside method", state.loader)
         return (
           dispatch({ type: 'FETCH_LEAVE_LIST', payload: state.leaveList })
         )
@@ -521,7 +526,8 @@ export const LeaveProvider = ({ children }) => {
       editLeavesData: state.editLeavesData,
       leaveTypeReport: state.leaveTypeReport,
       leaveManagerList: state.leaveManagerList,
-      cityList: state.cityList
+      cityList: state.cityList,
+      loader: state.loader
 
     }}>
       {children}

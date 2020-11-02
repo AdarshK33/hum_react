@@ -24,8 +24,20 @@ const AdminLeavesList = (props) => {
     const [searchValue, setSearchValue] = useState(false);
     const [searchLeaveList, setLeaveList] = useState();
     const { searchByEmpId, empIdSearchList } = useContext(SearchContext);
+   
 
-    const { viewList, leaveList } = useContext(LeaveContext)
+    const { viewList, leaveList, loader } = useContext(LeaveContext)
+   
+   /*  const [loaderSet, setLoaderSet] = useState(loader)
+    console.log("loader value in comp", loaderSet)
+   useEffect(() => {
+       viewList()
+       if(leaveList.status === 200){
+           setLoaderSet(!loaderSet)
+           console.log("loader value in useEffect", loaderSet)
+       }
+
+   },[]) */
 
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
@@ -101,6 +113,7 @@ const AdminLeavesList = (props) => {
                             </div>
                             <AdminLeaveAdd handleClose={handleClose} modal={modal} />
                             <div className="table-responsive">
+                              
                                 <Table id="table-to-xls" className="table table-hover">
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
