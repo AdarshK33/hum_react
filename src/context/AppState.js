@@ -68,11 +68,15 @@ export const AppProvider = ({ children, history }) => {
 
           return dispatch({ type: SET_ACCESS_TOKEN_SUCCESS, payload: data });
         }
+        else {
+          toast.error("Unable to process the request. Please try again later")
+          setTimeout(function () { userLogout(); }, 4000);
+        }
       })
       .catch((err) => {
 
         setTimeout(() => {
-          toast.error("Oppss.. Something went wrong");
+          toast.error("Unable to process the request. Please try again later");
         }, 200);
         return dispatch({ type: SET_ACCESS_TOKEN_FAIL, payload: err });
       });
