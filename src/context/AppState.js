@@ -90,7 +90,13 @@ export const AppProvider = ({ children, history }) => {
         if (response.data.data === {}) {
           toast.error("User does not exist");
         }
-        return dispatch({ type: 'FETCH_USER_INFO', payload: state.user });
+        else if (response.data.data === null) {
+          toast.error("This user is not active")
+          setTimeout(function () { userLogout(); }, 4000);
+        }
+        else {
+          return dispatch({ type: 'FETCH_USER_INFO', payload: state.user });
+        }
       })
       .catch((error) => {
         console.log(error)
