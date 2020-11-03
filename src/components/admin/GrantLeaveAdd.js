@@ -9,7 +9,7 @@ const GrantLeaveAdd = (props) => {
 
     const [employeeId, setEmployeeId] = useState('');
     const [numOfDays, setNumOfDays] = useState('');
-    /*  const [year, setYear] = useState(''); */
+   /*  const [year, setYear] = useState(''); */
     const [successMsg, setSuccessMsg] = useState("");
     const [costCenter, setCostCenter] = useState()
     const [employeeCostCenter, setEmployeeCostCenter] = useState('')
@@ -67,7 +67,7 @@ const GrantLeaveAdd = (props) => {
         }
         let result = {};
         // if(flag === 0){
-        result = createGrantLeave(addGrantLeave)
+             result = createGrantLeave(addGrantLeave)
             .then((result) => {
                 console.log("api response===", result.data.message);
                 toast.info(result.data.message);
@@ -95,9 +95,9 @@ const GrantLeaveAdd = (props) => {
         //         alert(" In error catch ", error);
         //     })
         // }
-
+        
         console.log(result, "in competent");
-
+        
     }
 
 
@@ -122,13 +122,13 @@ const GrantLeaveAdd = (props) => {
                                                 onChange={(e) => setCostCenterHandler(e)} >
                                                 <option value="">Select Cost Center</option>
                                                 {costCenterList !== null && costCenterList !== undefined
-                                                    && costCenterList.map((item, i) => {
-                                                        return (
-                                                            <option key={item.costCenterId} value={item.costCentreName}>
-                                                                {item.costCentreName}</option>
+                                                 && costCenterList.map((item, i) => {
+                                                    return (
+                                                        <option key={item.costCenterId} value={item.costCentreName}>
+                                                            {item.costCentreName}</option>
 
-                                                        );
-                                                    })}
+                                                    );
+                                                })}
                                             </select>
                                         </div>
                                     </div>
@@ -162,7 +162,7 @@ const GrantLeaveAdd = (props) => {
                                             <label htmlFor="exampleFormControlInput1">Number of days</label>
 
                                             <input type="number" className="form-control digit" required min='1'
-                                                onChange={(e) => setNumOfDays(e.target.value)} value={numOfDays} placeholder="Number of days" />
+                                            onChange={(e) => setNumOfDays(e.target.value)} value={numOfDays} placeholder="Number of days" />
                                         </div>
                                     </div>
                                 </div>
@@ -170,8 +170,8 @@ const GrantLeaveAdd = (props) => {
                                     <div className="col-sm-12">
                                         <div className="form-group">
                                             <label htmlFor="exampleFormControlInput1">Year</label>
-                                            <input type="number" placeholder="YYYY" className="form-control digit" required /* onChange={(e) => setYear(e.target.value)} */
-                                                value={year} />
+                                            <input type="number" placeholder="YYYY" className="form-control digit" required /* onChange={(e) => setYear(e.target.value)} */ 
+                                            value={year} />
                                         </div>
                                     </div>
                                 </div>

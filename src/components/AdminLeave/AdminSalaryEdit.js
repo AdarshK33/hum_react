@@ -28,7 +28,6 @@ const AdminSalaryEdit = (props) => {
     const [val2, setValues2] = useState([]);
     const [inputValue, setInputValue] = useState(null)
     const [inputDate, setInputDate] = useState()
-    
 
     let history = useHistory();
 
@@ -93,7 +92,6 @@ const AdminSalaryEdit = (props) => {
     useEffect(() => {
         setadditionalHours(props.additionalHours)
     }, [props.additionalHours])
-
 
     function createInputs() {
         return val.map((el, i) =>
@@ -185,24 +183,39 @@ const onSubmit = e => {
         year: year
 
     }
-    console.log("EditSalary request",EditSalary)
-    salaryEdit(EditSalary)
+    console.log("EditSalary request",props.costCenter)
+    salaryEdit(EditSalary,props.costCenter)
 
     // history.push("/salary/salaryView");
     const setModal = props.handleEditClose;
     setModal()
+    setExtraHours(props.extraHours)
+    setReason(props.reason)
+    setValues([])
+    setValues2([])
 }
-
+const onCloseModal = () => {
+    const setModal = props.handleEditClose;
+   setModal()
+   setExtraHours(props.extraHours)
+   setReason(props.reason)
+   setValues([])
+   setValues2([])
+}
 
 return (
     <React.Fragment>
         <ToastContainer />
         <Modal show={props.modal} onHide={props.handleEditClose} centered>
             <Container style={{ paddingBottom: '1rem' }}>
-                <Modal.Header closeButton>
+                <Modal.Header >
                     <Modal.Title >
                         <h5 className="modal-heading">Edit Salary</h5>
                     </Modal.Title>
+                    <button type="button" className="close" data-dismiss="modal" aria-label="Close"
+                            onClick={onCloseModal}>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                 </Modal.Header>
                 <Modal.Body>
                     <Form onSubmit={onSubmit}>

@@ -9,7 +9,7 @@ const GrantLeaveEdit = (props) => {
 
     const [employeeId, setEmployeeId] = useState('');
     const [numOfDays, setNumOfDays] = useState('');
-    /*  const [year, setYear] = useState(''); */
+   /*  const [year, setYear] = useState(''); */
     const [successMsg, setSuccessMsg] = useState("");
     const [costCenter, setCostCenter] = useState()
     const [employeeCostCenter, setEmployeeCostCenter] = useState('')
@@ -56,7 +56,7 @@ const GrantLeaveEdit = (props) => {
         setGrantLeaveId(props.editData.grantLeaveId)
     }
 
-
+   
     const clearAndClose = () => {
         const setModal = props.handleEditClose;
         setModal()
@@ -64,9 +64,9 @@ const GrantLeaveEdit = (props) => {
 
     const onSubmit = (event, props) => {
         event.preventDefault();
-
+       
         let empList = grantLeaveView;
-
+        
 
         const addGrantLeave = {
             leaveId: 1,
@@ -76,35 +76,35 @@ const GrantLeaveEdit = (props) => {
             year
         }
         let result = {};
-
-        if (numOfDays < 1) {
+        
+           if(numOfDays < 1){
             toast.info("Number of days should be greater than 0 ");
-        } else if (count > numOfDays) {
-            toast.info("Number of days should be greater than " + count);
-        } else {
-            result = createLeaveForSameEmp(addGrantLeave)
-                .then((result) => {
-                    console.log("api response===", result.data.message);
-                    toast.info(result.data.message);
-                    /*  setTimeout(() => {
-                         clearAndClose();
-                     }, 2000); */
+           }else if(count > numOfDays){
+            toast.info("Number of days should be greater than " + count); 
+           }else{
+             result = createLeaveForSameEmp(addGrantLeave)
+            .then((result) => {
+                console.log("api response===", result.data.message);
+                toast.info(result.data.message);
+               /*  setTimeout(() => {
                     clearAndClose();
-                    viewGrantLeave();
-                })
-                .catch((error) => {
-                    alert(" In error catch ", error);
-                })
-
+                }, 2000); */
+                clearAndClose();
+                viewGrantLeave();
+            })
+            .catch((error) => {
+                alert(" In error catch ", error);
+            })
+            
         }
-        /* 
-          setTimeout(() => {
-              clearAndClose();
-          }, 2000); */
+      /* 
+        setTimeout(() => {
+            clearAndClose();
+        }, 2000); */
         clearAndClose();
 
         setClear()
-
+        
     }
     const onCloseModal = () => {
         setClear()
@@ -119,11 +119,11 @@ const GrantLeaveEdit = (props) => {
                 <Modal.Header>
                     <Modal.Title>Grant Leave</Modal.Title>
                     <button type="button" className="close" data-dismiss="modal" aria-label="Close"
-                        onClick={onCloseModal}>
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                            onClick={onCloseModal}>
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                 </Modal.Header>
-
+                
                 <Modal.Body>
                     <form onSubmit={onSubmit}>
                         <div className="row">
@@ -176,8 +176,8 @@ const GrantLeaveEdit = (props) => {
                                         <div className="form-group">
                                             <label htmlFor="exampleFormControlInput1">Number of days</label>
 
-                                            <input type="number" className="form-control digit" required min={numOfDays} value={numOfDays}
-                                                onChange={(e) => setNumOfDays(e.target.value)} value={numOfDays} placeholder="Number of days" />
+                                            <input type="number" className="form-control digit" required min={numOfDays} value = {numOfDays}
+                                            onChange={(e) => setNumOfDays(e.target.value)} value={numOfDays} placeholder="Number of days" />
                                         </div>
                                     </div>
                                 </div>
@@ -185,8 +185,8 @@ const GrantLeaveEdit = (props) => {
                                     <div className="col-sm-12">
                                         <div className="form-group">
                                             <label htmlFor="exampleFormControlInput1">Year</label>
-                                            <input type="number" placeholder="YYYY" className="form-control digit" required /* onChange={(e) => setYear(e.target.value)} */
-                                                value={year} />
+                                            <input type="number" placeholder="YYYY" className="form-control digit" required /* onChange={(e) => setYear(e.target.value)} */ 
+                                            value={year} />
                                         </div>
                                     </div>
                                 </div>

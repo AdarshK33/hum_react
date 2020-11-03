@@ -196,29 +196,29 @@ function ViewShift() {
                   text="Export excel"
                 />}
 
-
+                
               {
-                (user.loginType === "1" || user.additionalRole === "1" ||
-                  user.loginType === "7" || user.additionalRole === "7" ||
-                  user.loginType === "9" || user.additionalRole === "9"
-                ) ?
-                  <div className="ml-2" style={{ float: 'left' }}>
-                    <Button
-                      className="btn btn-light mr-2"
-                      onClick={approvedButton}
-                    >
-                      Approve
+                (user.loginType==="1" || user.additionalRole==="1" ||
+                user.loginType==="7" || user.additionalRole==="7" ||
+                user.loginType==="9" || user.additionalRole==="9"
+                )?
+                <div className="ml-2" style={{ float: 'left' }}>
+                <Button
+                  className="btn btn-light mr-2"
+                  onClick={approvedButton}
+                >
+                  Approve
                   </Button>
-                    <Button
-                      variant="danger"
-                      onClick={() => {
-                        setDeleteModal(true);
-                      }}
-                    >Cancel </Button>
-                  </div>
-                  :
-                  <div></div>
-              }
+                <Button
+                  variant="danger"
+                  onClick={() => {
+                    setDeleteModal(true);
+                  }}
+                >Cancel </Button>
+              </div>
+              :
+              <div></div>
+                }
             </div>
             <Modal show={deleteModal} onHide={handleDeleteClose} centered>
               <Modal.Body style={{ marginTop: "1rem" }}>
@@ -251,10 +251,10 @@ function ViewShift() {
                   <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                     <tr>
                       {
-                        (user.loginType === "7" || user.additionalRole === "7") ?
-                          <th>Select</th> : <th></th>
+                        (user.loginType==="7" || user.additionalRole==="7" ) ?
+                        <th>Select</th> : <th></th>
                       }
-
+                      
                       <th>S. No</th>
                       <th scope="col">Employee Id</th>
                       <th scope="col">Employee Name</th>
@@ -270,30 +270,30 @@ function ViewShift() {
                   </thead>
 
                   {currentRecords !== null && currentRecords.length > 0 &&
-                    (
-                      user.loginType === "7" || user.additionalRole === "7" ||
-                      user.loginType === "3" || user.additionalRole === "3" ||
-                      (user.role !== "MANAGER" && user.isClusterManager === 1)
-                    ) &&
+                  (
+                    user.loginType==="7" || user.additionalRole==="7" ||
+                    user.loginType==="3" || user.additionalRole==="3" ||
+                    (user.role !== "MANAGER" && user.isClusterManager === 1)
+                  ) &&
                     currentRecords.map((item, i) => {
                       return (
                         <tbody key={i + 1}>
                           <tr>
-                            {(user.loginType === "7" || user.additionalRole === "7") ?
-                              <td>
-                                {" "}
-                                {
-                                  item.statusDesc === "Pending" ?
-                                    <input
-                                      type="checkbox"
-                                      checked={checked.indexOf(item.salaryId) >= 0}
-                                      onChange={() => checkboxHandler(item.salaryId)}
-                                      name="selectCheckbox"
-                                    />
-                                    :
-                                    <input type="checkbox" disabled />
+                            {(user.loginType==="7" || user.additionalRole==="7") ? 
+                            <td>
+                              {" "}
+                              {
+                              item.statusDesc === "Pending" ? 
+                                <input
+                                  type="checkbox"
+                                  checked={checked.indexOf(item.salaryId) >= 0}
+                                  onChange={() => checkboxHandler(item.salaryId)}
+                                  name="selectCheckbox"
+                                />
+                               : 
+                                  <input type="checkbox" disabled />
                                 }{" "}
-                              </td> : <td></td>}
+                            </td> : <td></td> }
                             <td>{i + 1 + indexOfFirstRecord}</td>
 
                             <td>{item.employeeId}</td>
@@ -305,22 +305,22 @@ function ViewShift() {
                             <td>{item.extraHours}</td>
                             <td>{item.totalHours}</td>
                             <td>{item.statusDesc}</td>
-                            {user.loginType === "7" || user.additionalRole === "7" ?
-                              <td>{
-                                item.statusDesc === 'Pending' ?
-                                  <Edit2 onClick={() => {
-                                    setEditModal(true); setEmployeeId(item.employeeId);
-                                    setFirstName(item.firstName); setLastName(item.lastName); setNumberOfHours(item.numberOfHours)
-                                    setLop(item.lop); setContractType(item.contractType); setExtraHours(item.extraHours);
-                                    setReason(item.reason); setMonth(item.month); setSalaryId(item.salaryId);
-                                    setStatus(item.status); setStatusDesc(item.statusDesc);
-                                    setTotalHours(item.totalHours); setYear(item.year);
-                                    setadditionalHours(item.additionalHours);
-                                  }} /> :
-                                  <Edit2 disabled style={{ color: 'lightgrey' }} />}
+                            {user.loginType==="7" || user.additionalRole==="7" ?
+                              <td>{ 
+                                  item.statusDesc === 'Pending' ?
+                                <Edit2 onClick={() => {
+                                  setEditModal(true); setEmployeeId(item.employeeId);
+                                  setFirstName(item.firstName); setLastName(item.lastName); setNumberOfHours(item.numberOfHours)
+                                  setLop(item.lop); setContractType(item.contractType); setExtraHours(item.extraHours);
+                                  setReason(item.reason); setMonth(item.month); setSalaryId(item.salaryId);
+                                  setStatus(item.status); setStatusDesc(item.statusDesc);
+                                  setTotalHours(item.totalHours); setYear(item.year);
+                                  setadditionalHours(item.additionalHours);
+                                }} /> :
+                                <Edit2 disabled style={{ color: 'lightgrey' }} /> }
                               </td>
-                              : <td></td>}
-
+                              : <td></td> }
+                            
 
                           </tr>
 
