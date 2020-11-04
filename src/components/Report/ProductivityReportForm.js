@@ -83,16 +83,33 @@ const ProductivityReportForm = () => {
     }
     const submitData = (e) => {
         e.preventDefault();
+        let reportData = {};
+        let storeId = [];
+        storeId.push(costCenter);
+        if (user.loginType !== "1" && user.loginType !== "9" &&
+            user.additionalRole !== '1' && user.additionalRole !== '9') {
 
-        const reportData = {
+         reportData = {
              clusterIds : cluster.length > 0 ?  cluster.map((e,i) => cluster[i].value) : null,
              contractTypes : contractTypeData.length > 0 ? contractTypeData.map((e,i) => contractTypeData[i].value) : null,
              employeeIds : employeeCostCenter.length > 0 ? employeeCostCenter.map((e,i) => employeeCostCenter[i].value) : null ,
              month : reportType === 'Monthly' ? moment(getM, ["YYYY-MM"]).format("M") : 0,
              sportIds : sports.length > 0 ? sports.map((e,i) => sports[i].value) : null,
-             storeIds : costCenter.length > 0 ? costCenter.map((e,i) => costCenter[i].value) : null,
+             storeIds : storeId,
              year : reportType === 'Monthly' ? moment(getM, ["MMM Do YY"]).format('YYYY') : yearly,
         }
+    }else{
+
+         reportData = {
+            clusterIds : cluster.length > 0 ?  cluster.map((e,i) => cluster[i].value) : null,
+            contractTypes : contractTypeData.length > 0 ? contractTypeData.map((e,i) => contractTypeData[i].value) : null,
+            employeeIds : employeeCostCenter.length > 0 ? employeeCostCenter.map((e,i) => employeeCostCenter[i].value) : null ,
+            month : reportType === 'Monthly' ? moment(getM, ["YYYY-MM"]).format("M") : 0,
+            sportIds : sports.length > 0 ? sports.map((e,i) => sports[i].value) : null,
+            storeIds : costCenter.length > 0 ? costCenter.map((e,i) => costCenter[i].value) : null,
+            year : reportType === 'Monthly' ? moment(getM, ["MMM Do YY"]).format('YYYY') : yearly,
+       }
+    }
 
         console.log("productivity data", reportData)
         productivityReport(reportData)
@@ -100,7 +117,7 @@ const ProductivityReportForm = () => {
 
 
         setReportType('')
-        setCostCenter([])
+       
         setEmployeeCostCenter([])
         setSports([])
         setCluster([])
