@@ -29,9 +29,6 @@ function Dashboard() {
         if (StoreType !== "" && ClusterType !== "") {
             viewData(e, StoreType, ClusterType)
         }
-
-
-
     }
     // useEffect(() => {
     //     getUserInfo()
@@ -73,29 +70,40 @@ function Dashboard() {
 
 
     }
+    
 
     const { clusterList, viewCluster, viewClusterCostCenter, clusterCostCenterList, } = useContext(ClusterContext);
 
     useEffect(() => {
-        viewCluster()
+        setStartDate(today)
+        viewCluster() 
         viewCostCentre()
+       
+    }, []);
+
+    useEffect(() => {
+        if(clusterList !== undefined && clusterList !== null && clusterList.length > 0){
+            setClusterName(clusterList[0].clusterName);
+            setClusterType(clusterList[0].clusterId);
+        }
+
         if (user.costCentre !== undefined) {
             viewClusterCostCenter(user.costCentre)
         }
 
         // console.log(clusterList)
-        // if(user.loginType !== '1' && user.loginType !== '9'){
+        if(user.loginType !== '1' && user.loginType !== '9' && user.additionalRole !== "1" && user.additionalRole !== "9"){
         setStoreType(user.costCentre)
-        // }
-    }, [user.costCentre]);
-
-    useEffect(() => {
-        setStartDate(today)
+         }
+        
+       
         if (cosCentreList !== undefined && cosCentreList !== null && cosCentreList.length > 0 && clusterList !== null && clusterList !== undefined && clusterList.length > 0) {
-            setStartDate(today)
+            // setStartDate(today)
+            setStoreType(cosCentreList[0].costCentreName)
             viewData(today, cosCentreList[0].costCentreName, clusterList[0].clusterId);
+
         }
-    }, [user.costCentre]);
+    }, [user.costCentre, cosCentreList, clusterList]);
 
 
 
