@@ -216,6 +216,26 @@ function Dashboard() {
                         </div>
                         <div className="col-sm-4">
                             <div className="form-group">
+                                <label className="name f-w-600" >Select Store<span style={{ color: 'red' }}>*</span>&nbsp; </label>
+                                {user.loginType === "1" || user.loginType === "9" || user.additionalRole === "1" || user.additionalRole === "9" ?
+                                    <select
+                                        className="form-control Value"
+                                        onChange={(e) => fromStoreHandler(e.target.value)}
+                                    >
+                                        {/* <option value="">Select</option> */}
+                                        {cosCentreList !== null && cosCentreList !== undefined && cosCentreList.map((e, i) => {
+                                            return (
+                                                <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
+                                        })}
+
+                                    </select>
+                                    :
+                                    <input type="text" className="form-control Value" required readOnly value={user.costCentre} />
+                                }
+                            </div>
+                        </div>
+                        <div className="col-sm-4">
+                            <div className="form-group">
                                 <label className="name f-w-600" >Select Cluster<span style={{ color: 'red' }}>*</span>&nbsp; </label>
                                 {user.loginType === "1" || user.loginType === "9" || user.additionalRole === "1" || user.additionalRole === "9" ?
 
@@ -257,26 +277,7 @@ function Dashboard() {
                                 }
                             </div>
                         </div>
-                        <div className="col-sm-4">
-                            <div className="form-group">
-                                <label className="name f-w-600" >Select Store<span style={{ color: 'red' }}>*</span>&nbsp; </label>
-                                {user.loginType === "1" || user.loginType === "9" || user.additionalRole === "1" || user.additionalRole === "9" ?
-                                    <select
-                                        className="form-control Value"
-                                        onChange={(e) => fromStoreHandler(e.target.value)}
-                                    >
-                                        {/* <option value="">Select</option> */}
-                                        {cosCentreList !== null && cosCentreList !== undefined && cosCentreList.map((e, i) => {
-                                            return (
-                                                <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
-                                        })}
-
-                                    </select>
-                                    :
-                                    <input type="text" className="form-control Value" required readOnly value={user.costCentre} />
-                                }
-                            </div>
-                        </div>
+                        
                     </Row>
 
                 </Col>
