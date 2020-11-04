@@ -297,7 +297,7 @@ const EditClusterModal = (props) => {
                     options={costCenterEmpAndMgrList}
                     value={employee}
                     selectedValues={getEmployeesNames}
-                    displayValue="firstName"
+                    displayValue="employeeName"
                     onRemove={onRemoveEmployee}
                     onSelect={handleMultiChange1}
                     isMulti

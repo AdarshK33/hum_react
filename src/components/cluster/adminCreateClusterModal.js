@@ -264,7 +264,7 @@ const AdminCreateClusterModal = (props) => {
                                         placeholder="Select Employee"
                                         options={callClusterEmployeesList}
                                         value={employee}
-                                        displayValue="firstName"
+                                        displayValue="employeeName"
                                         onSelect={handleMultiChange1}
                                         isMulti
                                     />

@@ -50,6 +50,11 @@ const EditShiftModal = (props) => {
     setStartBreakTime('')
     setEndBreakTIme('');
     setSuccessMsg('');
+    setErrorMsg('')
+    setNineHourWarnMsg('')
+    setFiveToEightWarnMsg('')
+    setOneFiveWarnMsg('')
+    props.handleEditClose()
   }
 
 
@@ -257,8 +262,19 @@ const EditShiftModal = (props) => {
   return (
     <Modal show={props.modal} onHide={props.handleEditClose} centered>
       <Fragment>
-        <Modal.Header closeButton>
+        {/* <Modal.Header closeButton>
           <Modal.Title>Edit Shift</Modal.Title>
+          <button type="button" className="close" data-dismiss="modal" aria-label="Close"
+            onClick={setClear}>
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </Modal.Header> */}
+        <Modal.Header>
+          <Modal.Title>Edit Shift</Modal.Title>
+          <button type="button" className="close" data-dismiss="modal" aria-label="Close"
+            onClick={setClear}>
+            <span aria-hidden="true">&times;</span>
+          </button>
         </Modal.Header>
         <div className="row">
           <div className="col-sm-12">

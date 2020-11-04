@@ -242,7 +242,7 @@ const CreateClusterModal = (props) => {
                     placeholder="Select Employee"
                     options={callClusterEmployeesList}
                     value={employee}
-                    displayValue="firstName"
+                    displayValue="employeeName"
                     onSelect={handleMultiChange1}
                     isMulti
                   />

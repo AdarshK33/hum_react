@@ -312,12 +312,14 @@ const AdminEditClusterModal = (props) => {
                                         options={costCenterEmpAndMgrList}
                                         value={employee}
                                         selectedValues={getEmployeesNames}
-                                        displayValue="firstName"
+                                        displayValue="employeeName"
                                         onRemove={onRemoveEmployee}
                                         onSelect={handleMultiChange1}
                                         isMulti
                                     />
                                 </div>
+
+
                             </div>
                         </div>
 
@@ -351,7 +353,7 @@ const AdminEditClusterModal = (props) => {
                         <div className="row">
                             <div className="col-sm-12">
                                 <div className="form-group">
-                                    <label htmlFor="exampleFormControlInput1"> Shift Status</label>
+                                    <label htmlFor="exampleFormControlInput1"> Cluster Status</label>
                                     <select
                                         className="form-control"
                                         value={status}

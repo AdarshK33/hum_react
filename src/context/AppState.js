@@ -52,7 +52,7 @@ export const AppProvider = ({ children, history }) => {
       .then((resp) => {
 
         const { status, data: { data: { access_token, refresh_token, id_token } } } = resp;
-        console.log('GOt resp', resp)
+        // console.log('GOt resp', resp)
         if (status === 200) {
           localStorage.setItem('APPID', id_token)
           Cookies.set('APPAT', access_token)
@@ -60,7 +60,7 @@ export const AppProvider = ({ children, history }) => {
 
           // const { data, data: { refresh_token, access_token } } = resp;
 
-          console.log("=== ID toKEN ", id_token);
+          //  console.log("=== ID toKEN ", id_token);
           // setTimeout(() => { }, 1000)
 
           // Cookies.set('APPSID', {refresh_token, access_token});
