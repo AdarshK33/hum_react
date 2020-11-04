@@ -29,9 +29,6 @@ function Dashboard() {
         if (StoreType !== "" && ClusterType !== "") {
             viewData(e, StoreType, ClusterType)
         }
-
-
-
     }
     // useEffect(() => {
     //     getUserInfo()
@@ -73,29 +70,40 @@ function Dashboard() {
 
 
     }
+    
 
     const { clusterList, viewCluster, viewClusterCostCenter, clusterCostCenterList, } = useContext(ClusterContext);
 
     useEffect(() => {
-        viewCluster()
+        setStartDate(today)
+        viewCluster() 
         viewCostCentre()
+       
+    }, []);
+
+    useEffect(() => {
+        if(clusterList !== undefined && clusterList !== null && clusterList.length > 0){
+            setClusterName(clusterList[0].clusterName);
+            setClusterType(clusterList[0].clusterId);
+        }
+
         if (user.costCentre !== undefined) {
             viewClusterCostCenter(user.costCentre)
         }
 
         // console.log(clusterList)
-        // if(user.loginType !== '1' && user.loginType !== '9'){
+        if(user.loginType !== '1' && user.loginType !== '9' && user.additionalRole !== "1" && user.additionalRole !== "9"){
         setStoreType(user.costCentre)
-        // }
-    }, [user.costCentre]);
-
-    useEffect(() => {
-        setStartDate(today)
+         }
+        
+       
         if (cosCentreList !== undefined && cosCentreList !== null && cosCentreList.length > 0 && clusterList !== null && clusterList !== undefined && clusterList.length > 0) {
-            setStartDate(today)
+            // setStartDate(today)
+            setStoreType(cosCentreList[0].costCentreName)
             viewData(today, cosCentreList[0].costCentreName, clusterList[0].clusterId);
+
         }
-    }, [user.costCentre]);
+    }, [user.costCentre, cosCentreList, clusterList]);
 
 
 
@@ -208,6 +216,26 @@ function Dashboard() {
                         </div>
                         <div className="col-sm-4">
                             <div className="form-group">
+                                <label className="name f-w-600" >Select Store<span style={{ color: 'red' }}>*</span>&nbsp; </label>
+                                {user.loginType === "1" || user.loginType === "9" || user.additionalRole === "1" || user.additionalRole === "9" ?
+                                    <select
+                                        className="form-control Value"
+                                        onChange={(e) => fromStoreHandler(e.target.value)}
+                                    >
+                                        {/* <option value="">Select</option> */}
+                                        {cosCentreList !== null && cosCentreList !== undefined && cosCentreList.map((e, i) => {
+                                            return (
+                                                <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
+                                        })}
+
+                                    </select>
+                                    :
+                                    <input type="text" className="form-control Value" required readOnly value={user.costCentre} />
+                                }
+                            </div>
+                        </div>
+                        <div className="col-sm-4">
+                            <div className="form-group">
                                 <label className="name f-w-600" >Select Cluster<span style={{ color: 'red' }}>*</span>&nbsp; </label>
                                 {user.loginType === "1" || user.loginType === "9" || user.additionalRole === "1" || user.additionalRole === "9" ?
 
@@ -249,26 +277,7 @@ function Dashboard() {
                                 }
                             </div>
                         </div>
-                        <div className="col-sm-4">
-                            <div className="form-group">
-                                <label className="name f-w-600" >Select Store<span style={{ color: 'red' }}>*</span>&nbsp; </label>
-                                {user.loginType === "1" || user.loginType === "9" || user.additionalRole === "1" || user.additionalRole === "9" ?
-                                    <select
-                                        className="form-control Value"
-                                        onChange={(e) => fromStoreHandler(e.target.value)}
-                                    >
-                                        {/* <option value="">Select</option> */}
-                                        {cosCentreList !== null && cosCentreList !== undefined && cosCentreList.map((e, i) => {
-                                            return (
-                                                <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
-                                        })}
-
-                                    </select>
-                                    :
-                                    <input type="text" className="form-control Value" required readOnly value={user.costCentre} />
-                                }
-                            </div>
-                        </div>
+                        
                     </Row>
 
                 </Col>
