@@ -33,7 +33,7 @@ class Graph extends Component {
 			yTotal += chart.data[0].dataPoints[i].y;
 	
 		chart.creditText = "";
-		chart.addTo("data",{type:"line",showInLegend: true, name: "Planned Hours", yValueFormatString: "0.##"%"", lineDashType: "dash", dataPoints: this.props.Qty});
+		chart.addTo("data",{type:"line",showInLegend: true, name: "Qty Target", yValueFormatString: "0.##"%"", lineDashType: "dash", dataPoints: this.props.Qty});
 		chart.data[1].set("axisYType", "secondary", false);
 		chart.axisY[0].set("maximum", Math.round(yTotal / 10) * 5);
 		chart.axisY2[0].set("maximum", 200);
@@ -75,7 +75,7 @@ class Graph extends Component {
 			data: [{
 				type: "column",
 				showInLegend: true,
-				name: "Qty Target",
+				name: "Planned Hours",
 				dataPoints:this.props.hours
 				
 			}]
