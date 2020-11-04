@@ -242,7 +242,7 @@ export const ClusterProvider = ({ children }) => {
 
   //Edit Salary
 
-  function salaryEdit(salaryEdit,costCenter) {
+  function salaryEdit(salaryEdit, costCenter) {
     console.log("salary edit api response", salaryEdit)
     return client.post('salary/update', salaryEdit)
       .then((response) => {
