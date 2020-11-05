@@ -150,8 +150,19 @@ function ClusterProductTarget(){
                                          </tr>
                                     </tbody>
                                  )
-                            }) : ""
-                            // <div id="loader"><Loader /></div>
+                            }) : 
+                            clusterProductList !== undefined && clusterProductList !== null && currentRecords.length === 0 ?
+                            
+                                <div className="loader-box loader" style ={{width : "100% !important"}}>
+                                    <div className="loader">
+                                    <div className="line bg-primary"></div>
+                                    <div className="line bg-primary"></div>
+                                    <div className="line bg-primary"></div>
+                                    <div className="line bg-primary"></div>
+                                    </div>
+                                </div>
+                                :
+                                <p style={{ textAlign: "center" }}>N0 RECORDS EXIST</p>
                             }
                     </Table> 
 
