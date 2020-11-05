@@ -60,7 +60,7 @@ const HolidayList = () => {
   }
 
   let data = [];
-  if(holidayDataList !== undefined && holidayDataList !== null){
+  if (holidayDataList !== undefined && holidayDataList !== null) {
     for (let i = 0; i < holidayDataList.length; i++) {
       console.log(holidayDataList[i].holidayDate)
       data.push({
@@ -73,7 +73,7 @@ const HolidayList = () => {
       })
     }
   }
-  
+
 
   const handleUpload = () => {
     if (fileUpload !== undefined && fileUpload !== null) {
@@ -161,7 +161,21 @@ const HolidayList = () => {
                     })}
 
                 </table>
+                {(holidayDataList === null) ?
+                  <p style={{ textAlign: "center" }}>No Record Found</p> : null}
 
+                {holidayDataList !== undefined && holidayDataList !== null && currentRecords.length === 0 ?
+
+                  <div className="loader-box loader" style={{ width: "100% !important" }}>
+                    <div className="loader">
+                      <div className="line bg-primary"></div>
+                      <div className="line bg-primary"></div>
+                      <div className="line bg-primary"></div>
+                      <div className="line bg-primary"></div>
+                    </div>
+                  </div>
+                  :
+                  null}
               </div>
 
             </div>
