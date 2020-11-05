@@ -66,7 +66,7 @@ class Graph extends Component {
 				
 			},
 			axisY2: {
-				title: "Quality Targets",
+				title: "Quantity Targets",
 				suffix: "%",
 				lineColor: "#C0504E",
 				tickColor: "#C0504E",
