@@ -30,9 +30,7 @@ function Dashboard() {
             viewData(e, StoreType, ClusterType)
         }
     }
-    // useEffect(() => {
-    //     getUserInfo()
-    // }, [])
+    
     function week_no(dt) {
         var tdt = new Date(dt.valueOf());
         var dayn = (dt.getDay() + 6) % 7;
@@ -82,10 +80,13 @@ function Dashboard() {
     }, []);
 
     useEffect(() => {
-        if(clusterList !== undefined && clusterList !== null && clusterList.length > 0){
-            setClusterName(clusterList[0].clusterName);
-            setClusterType(clusterList[0].clusterId);
-        }
+        if(user.loginType === '1' && user.loginType === '9' && user.additionalRole === "1" && user.additionalRole === "9"){
+            if(clusterList !== undefined && clusterList !== null && clusterList.length > 0){
+                setClusterName(clusterList[0].clusterName);
+                setClusterType(clusterList[0].clusterId);
+            }
+             }
+        
 
         if (user.costCentre !== undefined) {
             viewClusterCostCenter(user.costCentre)
@@ -93,17 +94,28 @@ function Dashboard() {
 
         // console.log(clusterList)
         if(user.loginType !== '1' && user.loginType !== '9' && user.additionalRole !== "1" && user.additionalRole !== "9"){
-        setStoreType(user.costCentre)
+            setStoreType(user.costCentre)
+            if(clusterCostCenterList !== undefined && clusterCostCenterList !== null && clusterCostCenterList.length > 0){
+                setClusterName(clusterCostCenterList[0].clusterName);
+                setClusterType(clusterCostCenterList[0].clusterId);
+                // viewData(today, user.costCentre, clusterCostCenterList[0].clusterId);
+            }
          }
         
        
         if (cosCentreList !== undefined && cosCentreList !== null && cosCentreList.length > 0 && clusterList !== null && clusterList !== undefined && clusterList.length > 0) {
             // setStartDate(today)
             setStoreType(cosCentreList[0].costCentreName)
-            viewData(today, cosCentreList[0].costCentreName, clusterList[0].clusterId);
+            // viewData(today, cosCentreList[0].costCentreName, clusterList[0].clusterId);
 
         }
-    }, [user.costCentre, cosCentreList, clusterList]);
+    }, [user.costCentre, cosCentreList, clusterList, clusterCostCenterList]);
+
+    useEffect(() => {
+       
+                viewData(today, StoreType, ClusterType);
+         
+    }, [StoreType,ClusterType]);
 
 
 
