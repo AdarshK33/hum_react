@@ -61,11 +61,12 @@ export const PermissionProvider = ({ children }) => {
         // console.log(month);
         // console.log(year);
 
-        return client.get('/monthly/view?'+'&month='+month+'&storeId='+id+'&year='+year)
+        return client.get('/monthly/view?' + '&month=' + month + '&storeId=' + id + '&year=' + year)
             .then((response) => {
 
                 if (response.data.data === null) {
                     state.monthlyQtyDetailsList = []
+                    toast.info("No Records Found")
                 }
                 else {
                     state.monthlyQtyDetailsList = response.data.data;
@@ -93,16 +94,16 @@ export const PermissionProvider = ({ children }) => {
     }
 
 
-    const viewPermission = () =>{
+    const viewPermission = () => {
         return client.get("/email/view")
             .then((response) => {
                 console.log(response.data.data[0]);
                 state.permissionList = response.data.data[0];
-                return(
-                    dispatch({type:'VIEW_PERMISSION', payload: state.permissionList})
+                return (
+                    dispatch({ type: 'VIEW_PERMISSION', payload: state.permissionList })
                 )
             })
-            .catch((error) =>{
+            .catch((error) => {
                 console.log(error)
             })
     }

@@ -20,6 +20,7 @@ const MasterMonthlyQuantity = () => {
     const [month, setMonth] = useState();
     const [year, setYear] = useState();
     const [costCenter, setCostCenter] = useState();
+    const [displayLoader, setDisplayLoader] = useState(false);
 
     var monthsNumber = new Array();
     monthsNumber["1"] = "Jan";
@@ -72,6 +73,7 @@ const MasterMonthlyQuantity = () => {
         const mon = monthsNumber[moment(date, ["YYYY-MM"]).format("M")];
         const y = moment(date, ["MMM Do YY"]).format("YYYY");
         monthlyQtyDetails(costCenter, mon, y);
+        setDisplayLoader(true);
     }
 
 
@@ -80,7 +82,7 @@ const MasterMonthlyQuantity = () => {
         viewCostCentre()
     }, [])
 
-   
+
 
 
     const filename = 'MonthlyQuantitylist';
@@ -96,7 +98,7 @@ const MasterMonthlyQuantity = () => {
     }
 
     let data = [];
-    if(monthlyQtyDetailsList !== undefined && monthlyQtyDetailsList !== null){
+    if (monthlyQtyDetailsList !== undefined && monthlyQtyDetailsList !== null) {
         for (let i = 0; i < monthlyQtyDetailsList.length; i++) {
             console.log(monthlyQtyDetailsList[i].holidayDate)
             data.push({
@@ -119,8 +121,8 @@ const MasterMonthlyQuantity = () => {
         // setTimeout(()=>{
         //   window.location.reload()
         // }, 5000)
-      }
-    
+    }
+
     const handleUpload = () => {
         if (fileUpload !== undefined && fileUpload !== null) {
             uploadMonthFile(fileUpload)
@@ -184,7 +186,7 @@ const MasterMonthlyQuantity = () => {
                 </Form>
                 <br />
                 <div className="title_bar" >
-                    
+
                     <input
                         className="btn"
                         type="file"
@@ -195,23 +197,23 @@ const MasterMonthlyQuantity = () => {
                     <Button className="btn btn-light mr-2" onClick={handleUpload}>Upload File</Button>
 
                     {data.length > 0 &&
-                      <JsonToExcel
-                        data={data}
-                        className="btn btn-light mr-2"
-                        filename={filename}
-                        fields={fields}
+                        <JsonToExcel
+                            data={data}
+                            className="btn btn-light mr-2"
+                            filename={filename}
+                            fields={fields}
 
-                        text="Export excel"
-                      />
-                    // : 
-                    // <JsonToExcel
-                    //     data=""
-                    //     className="btn btn-light mr-2"
-                    //     filename={filename}
-                    //     fields={fields}
+                            text="Export excel"
+                        />
+                        // : 
+                        // <JsonToExcel
+                        //     data=""
+                        //     className="btn btn-light mr-2"
+                        //     filename={filename}
+                        //     fields={fields}
 
-                    //     text="Export excel"
-                    //   />
+                        //     text="Export excel"
+                        //   />
                     }
 
                 </div>
@@ -250,11 +252,31 @@ const MasterMonthlyQuantity = () => {
                                 )
                             })}
                     </table>
+                    {displayLoader &&
+                        <div>
+                            {(monthlyQtyDetailsList.length === 0) ?
+                                <p style={{ textAlign: "center" }}>No Record Found</p> : null}
+
+
+                            {monthlyQtyDetailsList !== undefined && monthlyQtyDetailsList !== null && currentRecords.length === 0 ?
+
+                                <div className="loader-box loader" style={{ width: "100% !important" }}>
+                                    <div className="loader">
+                                        <div className="line bg-primary"></div>
+                                        <div className="line bg-primary"></div>
+                                        <div className="line bg-primary"></div>
+                                        <div className="line bg-primary"></div>
+                                    </div>
+                                </div>
+                                :
+                                null}
+                        </div>
+                    }
                     {monthlyQtyDetailsList !== null && monthlyQtyDetailsList.length <= 0 ? (
-                    <p style={{ textAlign: "center" }}>Select Month and Cost Center</p>
-                  ) : monthlyQtyDetailsList === null  ? (
-                    <p style={{ textAlign: "center" }}>No Records Found</p>
-                  ) : null}
+                        <p style={{ textAlign: "center" }}>Select Month and Cost Center</p>
+                    ) : monthlyQtyDetailsList === null ? (
+                        <p style={{ textAlign: "center" }}>No Records Found</p>
+                    ) : null}
                 </div>
                 <div>
                     {monthlyQtyDetailsList !== null && monthlyQtyDetailsList.length > 10 &&
