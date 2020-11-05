@@ -10,11 +10,31 @@ import {
 } from 'react-json-excel';
 import { Button } from 'react-bootstrap';
 
+
 const MasterState = () => {
 
   
   const { viewStates, stateList, uploadStateFile} = useContext(MasterFilesContext);
   const [fileUpload, setFileUpload] = useState();
+
+  const [currentPage, setCurrentPage] = useState(1);
+    const recordPerPage = 10;
+    let totalRecords = 0;
+    let indexOfFirstRecord = 0;
+    let indexOfLastRecord = 0;
+    const pageRange = 10;
+    let currentRecords = [];
+
+    if (stateList !== null) {
+        totalRecords = stateList.length;
+        indexOfLastRecord = currentPage * recordPerPage;
+        indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+        currentRecords = stateList.slice(indexOfFirstRecord, indexOfLastRecord);
+    }
+
+    const handlePageChange = pageNumber => {
+      setCurrentPage(pageNumber);
+  }
 
   useEffect(() =>{
     viewStates()
@@ -104,12 +124,12 @@ const MasterState = () => {
                     </tr>
                   </thead>   
 
-                  {stateList !== null && stateList !== undefined && stateList.length > 0 &&
-                    stateList.map((item, i) => {
+                  {currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 &&
+                    currentRecords.map((item, i) => {
                       return (
                         <tbody key={i + 1}>
                           <tr>
-                            <td>{i + 1 }</td>
+                            <td>{i + 1 + indexOfFirstRecord}</td>
                             <td>{item.stateName}</td>
                             <td>{item.stateCode}</td>
                             
@@ -117,11 +137,42 @@ const MasterState = () => {
                           </tr>
                         </tbody>
                       )
-                    })}            
+                    })
+                    
+                  }            
 
                 </table>
 
+                {(stateList === null) ?
+                        <p style={{ textAlign: "center" }}>No Record Found</p> : null}
+                    
+                    {stateList !== undefined && stateList !== null && stateList.length === 0 ?
+
+                        <div className="loader-box loader" style={{ width: "100% !important" }}>
+                            <div className="loader">
+                                <div className="line bg-primary"></div>
+                                <div className="line bg-primary"></div>
+                                <div className="line bg-primary"></div>
+                                <div className="line bg-primary"></div>
+                            </div>
+                        </div>
+                        :
+                            null}
+
               </div>
+              <div>
+                    {stateList !== null && stateList.length > 10 &&
+                        <Pagination
+                            itemClass="page-item"
+                            linkClass="page-link"
+                            activePage={currentPage}
+                            itemsCountPerPage={recordPerPage}
+                            totalItemsCount={totalRecords}
+                            pageRangeDisplayed={pageRange}
+                            onChange={handlePageChange}
+                        />
+                    }
+                </div>
 
             </div>
           </div>

@@ -136,9 +136,26 @@ const MasterCountry = () => {
                           </tr>
                         </tbody>
                       )
-                    })}
+                    })                                              
+                  }
 
                 </table>
+
+                {(countryList === null) ?
+                        <p style={{ textAlign: "center" }}>No Record Found</p> : null}
+                    
+                    {countryList !== undefined && countryList !== null && countryList.length === 0 ?
+
+                        <div className="loader-box loader" style={{ width: "100% !important" }}>
+                            <div className="loader">
+                                <div className="line bg-primary"></div>
+                                <div className="line bg-primary"></div>
+                                <div className="line bg-primary"></div>
+                                <div className="line bg-primary"></div>
+                            </div>
+                        </div>
+                        :
+                            null}
 
               </div>
 

@@ -223,7 +223,7 @@ const MasterWeek = () => {
                     </tr>
                   </thead>
 
-                  {currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 ?
+                  {currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 &&
                     currentRecords.map((item, i) => {
                       return (
                         <tbody key={i + 1}>
@@ -237,12 +237,23 @@ const MasterWeek = () => {
                         </tbody>
                       )
                     })
-                    :
-                    <p style={{ textAlign: "center" }}>Select a year</p>}
-
-
+                  }
                 </table>
+                {(masterWeeks === null) ?
+                        <p style={{ textAlign: "center" }}>No Record Found</p> : null}
+                    
+                    {masterWeeks !== undefined && masterWeeks !== null && masterWeeks.length === 0 ?
 
+                        <div className="loader-box loader" style={{ width: "100% !important" }}>
+                            <div className="loader">
+                                <div className="line bg-primary"></div>
+                                <div className="line bg-primary"></div>
+                                <div className="line bg-primary"></div>
+                                <div className="line bg-primary"></div>
+                            </div>
+                        </div>
+                        :
+                            null}
               </div>
 
               <div>
