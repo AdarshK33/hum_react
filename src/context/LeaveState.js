@@ -33,15 +33,11 @@ export const LeaveProvider = ({ children }) => {
   //View Leave
 
   const viewList = (empId1) => {
-    state.loader=true
-    console.log("loader value outsie method", state.loader)
     client.get('leave_transaction/view')
       .then((response) => {
         state.leaveList = response.data.data
         getLeave(empId1);
         console.log("=====GET API respone for Admin=====", state.leaveList)
-        state.loader=false
-        console.log("loader value inside method", state.loader)
         return (
           dispatch({ type: 'FETCH_LEAVE_LIST', payload: state.leaveList })
         )
@@ -435,14 +431,15 @@ export const LeaveProvider = ({ children }) => {
   } */
   const productivityReport = (reportData) => {
     console.log("reportData", reportData)
-
+state.loader = true
     return client.post('report/productivity', reportData)
       .then((response) => {
         state.productivityList = response.data.data
         console.log("productivity list api++++++", state.productivityList)
         console.log("productivity list api message", response.data.message)
+        state.loader = false
         if (response.data.data === null) {
-          toast.info("Data" + " " + response.data.message)
+          toast.info(response.data.message)
         }
         return dispatch({ type: 'PRODUCTIVITY_REPORT', payload: state.productivityList })
       })

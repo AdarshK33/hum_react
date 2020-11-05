@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useContext } from 'react';
 import { Table, Row } from 'react-bootstrap'
 import '../Leaves/Leaves.css'
 import '../AdminLeave/AdminLeaves.css'
@@ -6,9 +6,11 @@ import Pagination from 'react-js-pagination'
 import {
     JsonToExcel
 } from 'react-json-excel';
+import { LeaveContext } from '../../context/LeaveState'
 
 const ProductivityReportView = (props) => {
     const productivityList = props.productivityList
+    const {loader } = useContext(LeaveContext)
 
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
@@ -81,6 +83,8 @@ const ProductivityReportView = (props) => {
                             </div>
 
                             <div className="table-responsive">
+                               {/*  {currentRecords !== null && currentRecords !== undefined 
+                                    && currentRecords.length > 0  ? */}
                                 <Table id="table-to-xls" className="table table-hover" style={{ tableLayout: 'fixed' }}>
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
@@ -115,13 +119,17 @@ const ProductivityReportView = (props) => {
                                                     </tr>
                                                 </tbody>
                                             )
-                                        }): <tbody>
+                                        }) 
+                                         : <tbody>
                                         <tr>
                                             <td colspan='10'>No Record Found</td>
                                         </tr>
                                     </tbody>}
 
-                                </Table>
+                               </Table>
+                               
+                      
+                        {/*  <p style={{ textAlign: "center" }}>N0 RECORDS EXIST</p> */}
                                 {/* {(currentRecords !== null && currentRecords !== undefined &&
                                  currentRecords.length <= 0) ? 
                                 <p style={{ textAlign: "center" }}>No Record Found</p> : null} */}
