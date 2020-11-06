@@ -101,7 +101,7 @@ function ClusterProductTarget() {
                             </tr>
                         </thead>
 
-                        {currentRecords.length > 0 ?
+                        {currentRecords.length > 0 &&
                             currentRecords.map((item, i) => {
                                 return (
                                     <tbody key={i + 1}>
@@ -150,21 +150,25 @@ function ClusterProductTarget() {
                                         </tr>
                                     </tbody>
                                 )
-                            }) :
-                            clusterProductList !== undefined && clusterProductList !== null && currentRecords.length === 0 ?
-
-                                <div className="loader-box loader" style={{ width: "100% !important" }}>
-                                    <div className="loader">
-                                        <div className="line bg-primary"></div>
-                                        <div className="line bg-primary"></div>
-                                        <div className="line bg-primary"></div>
-                                        <div className="line bg-primary"></div>
-                                    </div>
-                                </div>
-                                :
-                                <p style={{ textAlign: "center" }}>N0 RECORDS EXIST</p>
+                            }) 
                         }
                     </Table>
+
+                    {(clusterProductList === null) ?
+                        <p style={{ textAlign: "center" }}>No Record Found</p> : null}
+                    
+                    {clusterProductList !== undefined && clusterProductList !== null && currentRecords.length === 0 ?
+
+                        <div className="loader-box loader" style={{ width: "100% !important" }}>
+                            <div className="loader">
+                                <div className="line bg-primary"></div>
+                                <div className="line bg-primary"></div>
+                                <div className="line bg-primary"></div>
+                                <div className="line bg-primary"></div>
+                            </div>
+                        </div>
+                        :
+                            null}
 
                     <EditTarget
                         handleEditClose={handleEditClose}

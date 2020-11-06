@@ -134,6 +134,21 @@ const MasterCostCenter = () => {
                                 )
                             })}
                     </table>
+                    {(costCenterList === null) ?
+                        <p style={{ textAlign: "center" }}>No Record Found</p> : null}
+                    
+                    {costCenterList !== undefined && costCenterList !== null && currentRecords.length === 0 ?
+
+                        <div className="loader-box loader" style={{ width: "100% !important" }}>
+                            <div className="loader">
+                                <div className="line bg-primary"></div>
+                                <div className="line bg-primary"></div>
+                                <div className="line bg-primary"></div>
+                                <div className="line bg-primary"></div>
+                            </div>
+                        </div>
+                        :
+                            null}
                 </div>
                 <div>
                     {costCenterList !== null && costCenterList.length > 10 &&
