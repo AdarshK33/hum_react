@@ -100,8 +100,7 @@ const ProductivityReportView = (props) => {
                                             <th>Month</th>
                                         </tr>
                                     </thead>
-                                    {loader === true && currentRecords !== null && currentRecords !== undefined &&
-                                        currentRecords.length === 0 ?
+                                    {loader === true && currentRecords !== null && currentRecords !== undefined ?
                                         <tbody>
                                             <tr>
                                                 <td colspan='10'>

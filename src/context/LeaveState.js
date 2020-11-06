@@ -34,12 +34,14 @@ export const LeaveProvider = ({ children }) => {
   
   const viewList = (empId1) => {
     setLoader(true)
+    console.log("reue loader",loader)
     client.get('leave_transaction/view')
       .then((response) => {
         state.leaveList = response.data.data
         getLeave(empId1);
         console.log("=====GET API respone for Admin=====", state.leaveList)
         setLoader(false)
+        console.log("false loader",loader)
         return (
           dispatch({ type: 'FETCH_LEAVE_LIST', payload: state.leaveList, loader:loader  }
           
@@ -157,7 +159,6 @@ export const LeaveProvider = ({ children }) => {
 
 
   const addLeave = (newLeave) => {
-
     console.log("++++create api response+++++", newLeave)
     return client.post('leave_transaction/create', newLeave)
       .then((response) => {
@@ -169,7 +170,7 @@ export const LeaveProvider = ({ children }) => {
         viewManagerList()
         console.log("new create list response===>", response.data.data)
         console.log("new create list message===>", state.message)
-        return dispatch({ type: 'ADD_NEW_LEAVE', payload: state.leaveList })
+        return dispatch({ type: 'ADD_NEW_LEAVE', payload: state.leaveList})
         return (<ToastContainer />)
       })
       .catch((error) => {
