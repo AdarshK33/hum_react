@@ -30,9 +30,7 @@ function Dashboard() {
             viewData(e, StoreType, ClusterType)
         }
     }
-    // useEffect(() => {
-    //     getUserInfo()
-    // }, [])
+    
     function week_no(dt) {
         var tdt = new Date(dt.valueOf());
         var dayn = (dt.getDay() + 6) % 7;
@@ -48,9 +46,12 @@ function Dashboard() {
 
     const fromStoreHandler = (e) => {
         setStoreType(e);
-        if (startDate !== undefined && ClusterType !== "") {
-            viewData(startDate, e, ClusterType)
-        }
+        viewClusterCostCenter(e)
+        setClusterName("");
+        setClusterType("");
+        // if (startDate !== undefined && ClusterType !== "") {
+        //     // viewData(startDate, e, ClusterType)
+        // }
 
 
     }
@@ -63,10 +64,10 @@ function Dashboard() {
         } else {
             setClusterName("");
         }
-        if (startDate !== undefined && StoreType !== "") {
-            viewData(startDate, StoreType, e.target.value);
+        // if (startDate !== undefined && StoreType !== "") {
+        //     // viewData(startDate, StoreType, e.target.value);
 
-        }
+        // }
 
 
     }
@@ -82,28 +83,57 @@ function Dashboard() {
     }, []);
 
     useEffect(() => {
-        if(clusterList !== undefined && clusterList !== null && clusterList.length > 0){
-            setClusterName(clusterList[0].clusterName);
-            setClusterType(clusterList[0].clusterId);
-        }
+        // if(user.loginType === '1' && user.loginType === '9' && user.additionalRole === "1" && user.additionalRole === "9"){
+           if(clusterCostCenterList !== undefined && clusterCostCenterList !== null && 
+            clusterCostCenterList.length > 0 &&
+            (ClusterType === "" || ClusterType === undefined)){
+                setClusterName(clusterCostCenterList[0].clusterName);
+                setClusterType(clusterCostCenterList[0].clusterId);
+             }
+            //  }
+        
 
-        if (user.costCentre !== undefined) {
-            viewClusterCostCenter(user.costCentre)
-        }
+       
 
         // console.log(clusterList)
         if(user.loginType !== '1' && user.loginType !== '9' && user.additionalRole !== "1" && user.additionalRole !== "9"){
-        setStoreType(user.costCentre)
+            setStoreType(user.costCentre)
+            if (user.costCentre !== undefined) {
+                viewClusterCostCenter(user.costCentre)
+            }
+            // if(clusterCostCenterList !== undefined && clusterCostCenterList !== null && clusterCostCenterList.length > 0){
+            //     setClusterName(clusterCostCenterList[0].clusterName);
+            //     setClusterType(clusterCostCenterList[0].clusterId);
+            //     // viewData(today, user.costCentre, clusterCostCenterList[0].clusterId);
+            // }
          }
         
        
-        if (cosCentreList !== undefined && cosCentreList !== null && cosCentreList.length > 0 && clusterList !== null && clusterList !== undefined && clusterList.length > 0) {
+        if (cosCentreList !== undefined && cosCentreList !== null && cosCentreList.length > 0 
+            && clusterList !== null && clusterList !== undefined && clusterList.length > 0 && 
+            (StoreType === "" || StoreType === undefined)) {
             // setStartDate(today)
+            
             setStoreType(cosCentreList[0].costCentreName)
-            viewData(today, cosCentreList[0].costCentreName, clusterList[0].clusterId);
+            // viewData(today, cosCentreList[0].costCentreName, clusterList[0].clusterId);
 
         }
-    }, [user.costCentre, cosCentreList, clusterList]);
+    }, [user.costCentre, cosCentreList, clusterList, clusterCostCenterList]);
+
+    useEffect(() => {
+                // viewClusterCostCenter(StoreType)
+                if(StoreType !== undefined  && StoreType !== "" && ClusterType !== undefined && ClusterType !== ""){
+                    viewData(today, StoreType, ClusterType);  
+                }
+                
+         
+    }, [StoreType,ClusterType]);
+    useEffect(() => {
+        if(StoreType !== undefined && StoreType !== null && StoreType !== ""){
+            viewClusterCostCenter(StoreType)
+        }      
+ 
+}, [StoreType]);
 
 
 
@@ -115,7 +145,7 @@ function Dashboard() {
     let clusterHours = [];
 
     let FTcluster = 0, PPTcluster = 0, INTcluster = 0, TPTcluster = 0, FTstore = 0, PPTstore = 0, INTstore = 0;
-    if (graphData !== null && graphData[0] !== undefined) {
+    if (graphData !== null && graphData[0] !== undefined && ClusterName !== "" ) {
 
         for (let i = 1; i <= 24; i++) {
             for (let x in graphData[0].graphData) {
@@ -237,14 +267,14 @@ function Dashboard() {
                         <div className="col-sm-4">
                             <div className="form-group">
                                 <label className="name f-w-600" >Select Cluster<span style={{ color: 'red' }}>*</span>&nbsp; </label>
-                                {user.loginType === "1" || user.loginType === "9" || user.additionalRole === "1" || user.additionalRole === "9" ?
+                                {/* {user.loginType === "1" || user.loginType === "9" || user.additionalRole === "1" || user.additionalRole === "9" ?
 
 
                                     <select
                                         className="form-control Value"
                                         onChange={(e) => fromClusterHandler(e)}
                                     >
-                                        {/* <option value ="">{clusterList !== undefined ?clusterList[0].clusterName : " "}</option> */}
+                                        
 
                                         {clusterList !== null &&
                                             clusterList.map((e, i) => {
@@ -253,7 +283,7 @@ function Dashboard() {
                                             })}
 
 
-                                    </select> :
+                                    </select> : */}
 
                                     <select
                                         className="form-control Value"
@@ -274,7 +304,7 @@ function Dashboard() {
 
 
                                     </select>
-                                }
+                                {/* } */}
                             </div>
                         </div>
                         
@@ -288,21 +318,21 @@ function Dashboard() {
                     <tbody>
                         <tr className="Border">
                             <td className="Tdwidth Border">Target productivity of cluster</td>
-                            <td className="Tdwidth Border">{graphData !== null && graphData[0] !== undefined ? graphData[0].hoursData[0].clusterProductivityTarget : "0"}</td>
+                            <td className="Tdwidth Border">{graphData !== null && graphData[0] !== undefined && ClusterName !== "" ? graphData[0].hoursData[0].clusterProductivityTarget : "0"}</td>
                             <td className="Tdwidth Border">Target productivity of store</td>
-                            <td className="Tdwidth Border">{graphData !== null && graphData[0] !== undefined ? graphData[0].hoursData[0].storeProductivityTarget : "0"}</td>
+                            <td className="Tdwidth Border">{graphData !== null && graphData[0] !== undefined && ClusterName !== "" ? graphData[0].hoursData[0].storeProductivityTarget : "0"}</td>
                         </tr>
                         <tr >
                             <td className="Tdwidth">Quantity Target of cluster</td>
-                            <td className="Tdwidth">{graphData !== null && graphData[0] !== undefined ? graphData[0].hoursData[0].clusterQtyTarget : "0"}</td>
+                            <td className="Tdwidth">{graphData !== null && graphData[0] !== undefined && ClusterName !== "" ? graphData[0].hoursData[0].clusterQtyTarget : "0"}</td>
                             <td className="Tdwidth">Quantity Piloted of store</td>
-                            <td className="Tdwidth">{graphData !== null && graphData[0] !== undefined ? (graphData[0].hoursData[0].storeQtyPiloted).toFixed(2) : "0"}</td>
+                            <td className="Tdwidth">{graphData !== null && graphData[0] !== undefined && ClusterName !== "" ? (graphData[0].hoursData[0].storeQtyPiloted).toFixed(2) : "0"}</td>
                         </tr>
                         <tr >
                             <td className="Tdwidth">Planned Hours of cluster</td>
-                            <td className="Tdwidth">{graphData !== null && graphData[0] !== undefined ? graphData[0].hoursData[0].clusterPlannedHours : "0"}</td>
+                            <td className="Tdwidth">{graphData !== null && graphData[0] !== undefined && ClusterName !== "" ? graphData[0].hoursData[0].clusterPlannedHours : "0"}</td>
                             <td className="Tdwidth">Quantity Target of store</td>
-                            <td className="Tdwidth">{graphData !== null && graphData[0] !== undefined ? graphData[0].hoursData[0].storeQtYTarget : "0"}</td>
+                            <td className="Tdwidth">{graphData !== null && graphData[0] !== undefined && ClusterName !== "" ? graphData[0].hoursData[0].storeQtYTarget : "0"}</td>
                         </tr>
                     </tbody>
 
@@ -316,7 +346,7 @@ function Dashboard() {
                             <tr >
 
                                 <td className="Tdwidth Border">Gap</td>
-                                <td className="Tdwidth Border">{graphData !== null && graphData[0] !== undefined ? (graphData[0].hoursData[0].storeQtYTarget - graphData[0].hoursData[0].storeQtyPiloted).toFixed(2) : "0"}</td>
+                                <td className="Tdwidth Border">{graphData !== null && graphData[0] !== undefined && ClusterName !== "" ? (graphData[0].hoursData[0].storeQtYTarget - graphData[0].hoursData[0].storeQtyPiloted).toFixed(2) : "0"}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -327,27 +357,27 @@ function Dashboard() {
                     <tbody>
                         <tr >
                             <td className="Tdwidth">Planned Hours FT</td>
-                            <td className="Tdwidth">{clusterHours.length !== 0 ? clusterHours[0].permanent : 0}</td>
+                            <td className="Tdwidth">{clusterHours.length !== 0 && ClusterName !== "" ? clusterHours[0].permanent : 0}</td>
                             <td className="Tdwidth">Planned Hours Store</td>
-                            <td className="Tdwidth">{graphData !== null && graphData[0] !== undefined ? graphData[0].hoursData[0].storePlannedHours : "0"}</td>
+                            <td className="Tdwidth">{graphData !== null && graphData[0] !== undefined && ClusterName !== "" ? graphData[0].hoursData[0].storePlannedHours : "0"}</td>
                         </tr>
                         <tr >
                             <td className="Tdwidth">Planned Hours PPT</td>
-                            <td className="Tdwidth">{clusterHours.length !== 0 ? clusterHours[1].parttime : 0}</td>
+                            <td className="Tdwidth">{clusterHours.length !== 0 && ClusterName !== "" ? clusterHours[1].parttime : 0}</td>
                             <td className="Tdwidth">Planned Hours FT</td>
-                            <td className="Tdwidth">{roasterHour.length !== 0 ? roasterHour[0].permanent : 0}</td>
+                            <td className="Tdwidth">{roasterHour.length !== 0 && ClusterName !== "" ? roasterHour[0].permanent : 0}</td>
                         </tr>
                         <tr >
                             <td className="Tdwidth">Planned Hours TPT</td>
-                            <td className="Tdwidth">{clusterHours.length !== 0 ? clusterHours[3].temporary : 0}</td>
+                            <td className="Tdwidth">{clusterHours.length !== 0 && ClusterName !== "" ? clusterHours[3].temporary : 0}</td>
                             <td className="Tdwidth">Planned Hours PPT</td>
-                            <td className="Tdwidth">{roasterHour.length !== 0 ? roasterHour[1].parttime : 0}</td>
+                            <td className="Tdwidth">{roasterHour.length !== 0 && ClusterName !== "" ? roasterHour[1].parttime : 0}</td>
                         </tr>
                         <tr >
                             <td className="Tdwidth">Planned Hours INT</td>
-                            <td className="Tdwidth">{clusterHours.length !== 0 ? clusterHours[2].internship : 0}</td>
+                            <td className="Tdwidth">{clusterHours.length !== 0 && ClusterName !== "" ? clusterHours[2].internship : 0}</td>
                             <td className="Tdwidth">Planned Hours INT</td>
-                            <td className="Tdwidth">{roasterHour.length !== 0 ? roasterHour[2].internship : 0}</td>
+                            <td className="Tdwidth">{roasterHour.length !== 0 && ClusterName !== "" ? roasterHour[2].internship : 0}</td>
                         </tr>
                     </tbody>
                 </table>

@@ -12,14 +12,14 @@ import { DashboardContext } from "../../context/DashboardState";
 import moment from "moment";
 
 const MasterMonthlyQuantity = () => {
-
     const { cosCentreList, viewCostCentre } = useContext(DashboardContext);
-    const { monthlyQtyDetails, monthlyQtyDetailsList, uploadMonthFile } = useContext(PermissionContext)
+    const { monthlyQtyDetails, monthlyQtyDetailsList, uploadMonthFile, loader } = useContext(PermissionContext)
     const [fileUpload, setFileUpload] = useState();
     const [date, setDate] = useState();
     const [month, setMonth] = useState();
     const [year, setYear] = useState();
     const [costCenter, setCostCenter] = useState();
+
 
     var monthsNumber = new Array();
     monthsNumber["1"] = "Jan";
@@ -50,7 +50,8 @@ const MasterMonthlyQuantity = () => {
         indexOfFirstRecord = indexOfLastRecord - recordPerPage;
         currentRecords = monthlyQtyDetailsList.slice(indexOfFirstRecord, indexOfLastRecord);
     }
-
+    console.log(JSON.stringify(monthlyQtyDetailsList));
+    console.log(monthlyQtyDetailsList.length);
 
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber);
@@ -76,11 +77,13 @@ const MasterMonthlyQuantity = () => {
 
 
 
+
     useEffect(() => {
         viewCostCentre()
+
     }, [])
 
-   
+
 
 
     const filename = 'MonthlyQuantitylist';
@@ -96,9 +99,9 @@ const MasterMonthlyQuantity = () => {
     }
 
     let data = [];
-    if(monthlyQtyDetailsList !== undefined && monthlyQtyDetailsList !== null){
+    if (monthlyQtyDetailsList !== undefined && monthlyQtyDetailsList !== null) {
         for (let i = 0; i < monthlyQtyDetailsList.length; i++) {
-            console.log(monthlyQtyDetailsList[i].holidayDate)
+            //console.log(monthlyQtyDetailsList[i].holidayDate)
             data.push({
                 Id: i + 1,
                 storeId: monthlyQtyDetailsList[i].storeId,
@@ -119,8 +122,8 @@ const MasterMonthlyQuantity = () => {
         // setTimeout(()=>{
         //   window.location.reload()
         // }, 5000)
-      }
-    
+    }
+
     const handleUpload = () => {
         if (fileUpload !== undefined && fileUpload !== null) {
             uploadMonthFile(fileUpload)
@@ -184,7 +187,7 @@ const MasterMonthlyQuantity = () => {
                 </Form>
                 <br />
                 <div className="title_bar" >
-                    
+
                     <input
                         className="btn"
                         type="file"
@@ -195,23 +198,23 @@ const MasterMonthlyQuantity = () => {
                     <Button className="btn btn-light mr-2" onClick={handleUpload}>Upload File</Button>
 
                     {data.length > 0 &&
-                      <JsonToExcel
-                        data={data}
-                        className="btn btn-light mr-2"
-                        filename={filename}
-                        fields={fields}
+                        <JsonToExcel
+                            data={data}
+                            className="btn btn-light mr-2"
+                            filename={filename}
+                            fields={fields}
 
-                        text="Export excel"
-                      />
-                    // : 
-                    // <JsonToExcel
-                    //     data=""
-                    //     className="btn btn-light mr-2"
-                    //     filename={filename}
-                    //     fields={fields}
+                            text="Export excel"
+                        />
+                        // : 
+                        // <JsonToExcel
+                        //     data=""
+                        //     className="btn btn-light mr-2"
+                        //     filename={filename}
+                        //     fields={fields}
 
-                    //     text="Export excel"
-                    //   />
+                        //     text="Export excel"
+                        //   />
                     }
 
                 </div>
@@ -231,30 +234,47 @@ const MasterMonthlyQuantity = () => {
 
                             </tr>
                         </thead>
-                        {currentRecords !== null &&
-                            currentRecords.map((item, i) => {
-                                return (
-                                    <tbody key={i + 1}>
-                                        <tr>
-                                            <td>{i + 1 + indexOfFirstRecord}</td>
-                                            <td>{item.storeId}</td>
-                                            <td>{item.store}</td>
-                                            <td>{item.year}</td>
-                                            <td>{item.month}</td>
-                                            <td>{item.hour}</td>
-                                            <td>{item.turnover}</td>
-                                            <td>{item.quantity}</td>
-                                        </tr>
-                                    </tbody>
+                        {loader === true && currentRecords !== null && currentRecords !== undefined &&
+                            currentRecords.length === 0 ?
+                            <div className="loader-box loader" style={{ width: "100% !important", marginLeft: "300px" }}>
+                                <div className="loader">
+                                    <div className="line bg-primary"></div>
+                                    <div className="line bg-primary"></div>
+                                    <div className="line bg-primary"></div>
+                                    <div className="line bg-primary"></div>
+                                </div>
+                            </div> :
+                            currentRecords !== null && currentRecords !== undefined
+                                && currentRecords.length > 0 ?
+                                currentRecords.map((item, i) => {
+                                    return (
+                                        <tbody key={i + 1}>
+                                            <tr>
+                                                <td>{i + 1 + indexOfFirstRecord}</td>
+                                                <td>{item.storeId}</td>
+                                                <td>{item.store}</td>
+                                                <td>{item.year}</td>
+                                                <td>{item.month}</td>
+                                                <td>{item.hour}</td>
+                                                <td>{item.turnover}</td>
+                                                <td>{item.quantity}</td>
+                                            </tr>
+                                        </tbody>
 
-                                )
-                            })}
+                                    )
+                                }) :
+                                <tbody>
+                                    <tr>
+                                        <td colspan='10'>No Record Found</td>
+                                    </tr>
+                                </tbody>
+                        }
                     </table>
-                    {monthlyQtyDetailsList !== null && monthlyQtyDetailsList.length <= 0 ? (
-                    <p style={{ textAlign: "center" }}>Select Month and Cost Center</p>
-                  ) : monthlyQtyDetailsList === null  ? (
-                    <p style={{ textAlign: "center" }}>No Records Found</p>
-                  ) : null}
+
+
+
+
+
                 </div>
                 <div>
                     {monthlyQtyDetailsList !== null && monthlyQtyDetailsList.length > 10 &&

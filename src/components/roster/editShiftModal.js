@@ -385,7 +385,7 @@ const EditShiftModal = (props) => {
                                   required
                                   showTimeSelectOnly
                                   timeFormat="HH:mm"
-                                  timeIntervals={30}
+                                  timeIntervals={60}
                                   timeCaption="Time"
                                   // minTime={startTime}
                                   // maxTime={endTime}

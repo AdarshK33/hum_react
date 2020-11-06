@@ -25,9 +25,12 @@ const LeaveView = () => {
     const [reason, setReason] = useState()
     const [empId, setEmpID] = useState('')
     const [numberOfDays, setNumberOfDays] = useState()
+    const [ displayLoader, setDisplayLoader ] = useState(true)
+    const [leaveList, setLeaveList] = useState();
  
-    const { leaveDataList, viewLeaveData, viewEmpLeaveData, leaveEmpList }
+    const { leaveDataList, viewLeaveData, viewEmpLeaveData, leaveEmpList, loader }
         = useContext(LeaveContext);
+        console.log("loader in leave",loader)
 
     const { user } = useContext(AppContext);
 
@@ -65,6 +68,14 @@ const LeaveView = () => {
          setLeaveTypeId(newLeaveTypeId)
          console.log("newLeaveTypeId", newLeaveTypeId)
       } */
+      useEffect(() => {
+        if (leaveEmpList !== undefined && leaveEmpList !== null && leaveEmpList.length > 0) {
+            setLeaveList(leaveEmpList);
+            setDisplayLoader(false)
+            console.log("displayLoader-------",displayLoader)
+        }
+
+    }, [leaveEmpList, displayLoader])
 
 
     return (
@@ -180,7 +191,17 @@ const LeaveView = () => {
                                 </tr>
                             </thead>
 
-                            { currentRecords !== null && currentRecords !== undefined &&
+                            {loader === true && currentRecords !== null && currentRecords !== undefined &&
+                                currentRecords.length === 0 ? 
+                             <div className="loader-box loader" style={{ width: "100% !important",marginLeft:'400px' }}>
+                             <div className="loader">
+                                 <div className="line bg-primary"></div>
+                                 <div className="line bg-primary"></div>
+                                 <div className="line bg-primary"></div>
+                                 <div className="line bg-primary"></div>
+                             </div>
+                         </div>: 
+                             currentRecords !== null && currentRecords !== undefined &&
                             currentRecords.length > 0 ?
                                 currentRecords.map((item, i) => {
                                     return (
@@ -210,7 +231,8 @@ const LeaveView = () => {
                                             </tr>
                                         </tbody>
                                     )
-                                }) :  <tbody>
+                                }) :  
+                                <tbody>
                                 <tr>
                                     <td colspan='10'>No Record Found</td>
                                 </tr>

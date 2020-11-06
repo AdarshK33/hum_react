@@ -99,7 +99,7 @@ if(storeLeaderProductList !== null){
                 </Row>
 
                 <div className="table-responsive">
-                {currentRecords !== undefined && currentRecords !== null && currentRecords.length > 0  ?
+                {currentRecords !== undefined && currentRecords !== null && currentRecords.length > 0  &&
                     <Table id="table-to-xls" className="table table-hover">
                         <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                             <tr>
@@ -155,23 +155,24 @@ if(storeLeaderProductList !== null){
                                     </tbody>
                                  )
                             })} 
-                    </Table>
-                    : storeLeaderProductList !== undefined && storeLeaderProductList !== null && currentRecords.length === 0 ?
-                            
-                     <div className="loader-box loader" style ={{width : "100% !important"}}>
-                         <div className="loader">
-                         <div className="line bg-primary"></div>
-                         <div className="line bg-primary"></div>
-                         <div className="line bg-primary"></div>
-                         <div className="line bg-primary"></div>
-                         </div>
-                     </div> 
-                    : 
-                        <p style={{ textAlign: "center" }}>N0 RECORDS EXIST</p>
+                    </Table>                   
+                    
              } 
-              {/* {storeLeaderProductList === undefined && storeLeaderProductList === null ? (
-                    <p style={{ textAlign: "center" }}>N0 RECORDS EXIST</p>
-                  ) : null} */}
+             {(storeLeaderProductList === null) ?
+                        <p style={{ textAlign: "center" }}>No Record Found</p> : null}
+
+                    {storeLeaderProductList !== undefined && storeLeaderProductList !== null && currentRecords.length === 0 ?
+
+                        <div className="loader-box loader" style={{ width: "100% !important" }}>
+                            <div className="loader">
+                                <div className="line bg-primary"></div>
+                                <div className="line bg-primary"></div>
+                                <div className="line bg-primary"></div>
+                                <div className="line bg-primary"></div>
+                            </div>
+                        </div>
+                        :
+                            null}
                    
                     {editTarget !== null && editTarget !== undefined && 
                         editTarget.length !== 0 ? <EditLeaderTarget handleEditClose={handleEditClose}

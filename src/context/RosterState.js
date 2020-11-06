@@ -240,7 +240,7 @@ export const RosterProvider = ({ children }) => {
 
 
   const getMasterWeeks = (year) => {
-    year = moment(year, ["MMM Do YY"]).format("YYYY");  
+    year = moment(year, ["MMM Do YY"]).format("YYYY");
     client.get('/weekoff/weeks/' + year)
       .then((response) => {
         // console.log("===================NAVANEETHA=========");
