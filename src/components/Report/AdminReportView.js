@@ -1,14 +1,16 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect, useContext } from 'react';
 import { Table, Row } from 'react-bootstrap'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import '../Leaves/Leaves.css'
 import '../AdminLeave/AdminLeaves.css'
 import Pagination from 'react-js-pagination'
 import moment from 'moment'
+import { LeaveContext } from '../../context/LeaveState'
 
 
 const AdminReportView = (props) => {
     const reportList = props.AdminReportList
+    const {loader } = useContext(LeaveContext)
    
 console.log("startDate", props.startDate)
 console.log("endDate", props.endDate)
@@ -93,7 +95,17 @@ console.log(dates)
                                             )}
                                         </tr>
                                     </thead>
-                                    {currentRecords !== undefined && currentRecords !== null &&
+                                    {loader === true && currentRecords !== null && currentRecords !== undefined &&
+                                        currentRecords.length === 0 ? 
+                                    <div className="loader-box loader" style={{ width: "100% !important",marginLeft:'400px' }}>
+                                        <div className="loader">
+                                            <div className="line bg-primary"></div>
+                                            <div className="line bg-primary"></div>
+                                            <div className="line bg-primary"></div>
+                                            <div className="line bg-primary"></div>
+                                        </div>
+                                    </div>:
+                                    currentRecords !== undefined && currentRecords !== null &&
                                         currentRecords.length > 0 ?
                                         currentRecords.map((item, i) => {
                                             return (
@@ -126,7 +138,7 @@ console.log(dates)
                                                     </tr>
                                                 </tbody>
                                             )
-                                        }) : 
+                                        }) :
                                         <tbody>
                                             <tr>
                                                 <td colspan='12'>No Record Found</td>

@@ -100,7 +100,17 @@ const ProductivityReportView = (props) => {
                                             <th>Month</th>
                                         </tr>
                                     </thead>
-                                    {currentRecords !== null && currentRecords !== undefined 
+                                    {loader === true && currentRecords !== null && currentRecords !== undefined &&
+                                        currentRecords.length === 0 ? 
+                                    <div className="loader-box loader" style={{ width: "100% !important", marginLeft:'400px' }}>
+                                        <div className="loader">
+                                            <div className="line bg-primary"></div>
+                                            <div className="line bg-primary"></div>
+                                            <div className="line bg-primary"></div>
+                                            <div className="line bg-primary"></div>
+                                        </div>
+                                    </div>:
+                                    currentRecords !== null && currentRecords !== undefined 
                                     && currentRecords.length > 0  ?
                                         currentRecords.map((item, i) => {
                                             return (
@@ -119,7 +129,7 @@ const ProductivityReportView = (props) => {
                                                     </tr>
                                                 </tbody>
                                             )
-                                        }) 
+                                        })
                                          : <tbody>
                                         <tr>
                                             <td colspan='10'>No Record Found</td>
