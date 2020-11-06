@@ -1,10 +1,10 @@
-import React, { Fragment, useEffect, useContext, useState} from 'react';
+import React, { Fragment, useEffect, useContext, useState } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import Pagination from 'react-js-pagination'
 import { MasterFilesContext } from "../../context/MasterFilesState";
 import { DashboardContext } from "../../context/DashboardState";
-import { Button, Modal,Form, Table, Row, Container } from "react-bootstrap";
+import { Button, Modal, Form, Table, Row, Container } from "react-bootstrap";
 import { toast } from "react-toastify";
 import {
   JsonToExcel
@@ -15,19 +15,34 @@ import {
 
 const MasterDailyQty = () => {
 
-  const {dailyQty, viewDailyQty, uploadDailyQty} = useContext(MasterFilesContext);
+  const { dailyQty, viewDailyQty, uploadDailyQty, loader } = useContext(MasterFilesContext);
   const { cosCentreList, viewCostCentre } = useContext(DashboardContext);
   const [fileUpload, setFileUpload] = useState();
-
-
   const [date, setDate] = useState();
   const [costCenter, setCostCenter] = useState();
 
-  useEffect(() =>{
+  /*-----------------Pagination------------------*/
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordPerPage = 10;
+  const totalRecords = dailyQty !== null && dailyQty !== undefined && dailyQty.length;
+  const pageRange = 10;
+
+  const indexOfLastRecord = currentPage * recordPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+  const currentRecords = dailyQty !== null && dailyQty !== undefined ?
+    dailyQty.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+
+  console.log("PRODUCTVITY LIST " + dailyQty)
+
+  const handlePageChange = pageNumber => {
+    setCurrentPage(pageNumber);
+  }
+  /*-----------------Pagination------------------*/
+  useEffect(() => {
     viewCostCentre()
   }, [])
 
-    
+
   const changeHandler = (event) => {
     let fileObj = event.target.files[0];
     console.log("clicked", fileObj)
@@ -43,16 +58,16 @@ const MasterDailyQty = () => {
     setCostCenter(e.target.value);
   }
 
-  const dateHandler = (d) =>{
+  const dateHandler = (d) => {
     // console.log(d);
     setDate(d);
   }
 
-  const onSubmit = (e) =>{
+  const onSubmit = (e) => {
     e.preventDefault();
     viewDailyQty(costCenter, date);
   }
-  
+
 
   const filename = 'DailyQuantitylist';
   let fields = {
@@ -67,7 +82,7 @@ const MasterDailyQty = () => {
   }
 
   let data = [];
-  if(dailyQty !== undefined && dailyQty !== null){
+  if (dailyQty !== undefined && dailyQty !== null) {
     for (let i = 0; i < dailyQty.length; i++) {
       console.log(dailyQty[i].holidayDate)
       data.push({
@@ -82,7 +97,7 @@ const MasterDailyQty = () => {
       })
     }
   }
-  
+
 
   const handleUpload = () => {
     if (fileUpload !== undefined && fileUpload !== null) {
@@ -100,94 +115,94 @@ const MasterDailyQty = () => {
     <Fragment>
       <Breadcrumb title="Daily Quantity" parent="Daily Quantity" />
       <div className="container-fluid">
-      <Form 
-        onSubmit={onSubmit}
+        <Form
+          onSubmit={onSubmit}
         >
           <Row>
             <div className="col-sm-4">
               <Form.Group>
-                <Form.Label>Select Date</Form.Label><span style = {{color:'red'}}>*</span>
-                <input 
-                  type="date" 
-                  style={{ fontSize: "0.8rem" }} 
-                  className="form-control digit"                   
+                <Form.Label>Select Date</Form.Label><span style={{ color: 'red' }}>*</span>
+                <input
+                  type="date"
+                  style={{ fontSize: "0.8rem" }}
+                  className="form-control digit"
                   placeholder="Enter Date"
-                  required 
-                  onChange={(e) => dateHandler(e.target.value)} 
-                  value={date} 
+                  required
+                  onChange={(e) => dateHandler(e.target.value)}
+                  value={date}
                 />
               </Form.Group>
             </div>
             <div className="col-sm-4">
               <Form.Group>
-                <Form.Label>Cost Center</Form.Label><span style = {{color:'red'}}>*</span>
-                <Form.Control as="select" 
-                  required 
-                  value={costCenter}  
+                <Form.Label>Cost Center</Form.Label><span style={{ color: 'red' }}>*</span>
+                <Form.Control as="select"
+                  required
+                  value={costCenter}
                   onChange={(e) => costCenterHandler(e)}
                 >
                   <option value="">Select</option>
-                    {cosCentreList.map((e, i) => {
-                      return (
-                        <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
-                    })}
+                  {cosCentreList.map((e, i) => {
+                    return (
+                      <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
+                  })}
 
                 </Form.Control>
               </Form.Group>
             </div>
           </Row>
 
-          <Button 
-            type="submit"              
+          <Button
+            type="submit"
             className="submitButton"
-            // style={{paddingBottom:"10px"}}            
+          // style={{paddingBottom:"10px"}}            
           >
             Submit</Button>
-          
+
 
         </Form>
         <div className="row">
           <div className="col-sm-12">
-          <br />
+            <br />
             <div className="card" style={{ overflowX: "auto" }}>
-            {                  
-                  <div className="title_bar" >                   
-                    <input
-                      className="btn"
-                      type="file"
-                      accept=".xlsx, .xls, .csv"
-                      onChange={(e) => changeHandler(e)}
-                      style={{ padding: "10px" }}
+              {
+                <div className="title_bar" >
+                  <input
+                    className="btn"
+                    type="file"
+                    accept=".xlsx, .xls, .csv"
+                    onChange={(e) => changeHandler(e)}
+                    style={{ padding: "10px" }}
+                  />
+                  <Button className="btn btn-light mr-2" onClick={handleUpload}>Upload File</Button>
+                  {data.length > 0 &&
+                    <JsonToExcel
+                      data={data}
+                      className="btn btn-light mr-2"
+                      filename={filename}
+                      fields={fields}
+
+                      text="Export excel"
                     />
-                    <Button className="btn btn-light mr-2" onClick={handleUpload}>Upload File</Button>
-                     {data.length > 0 &&
-                      <JsonToExcel
-                        data={data}
-                        className="btn btn-light mr-2"
-                        filename={filename}
-                        fields={fields}
+                    // : 
+                    // <JsonToExcel
+                    //   data=""
+                    //   className="btn btn-light mr-2"
+                    //   filename={filename}
+                    //   fields={fields}
 
-                        text="Export excel"
-                      /> 
-                      // : 
-                      // <JsonToExcel
-                      //   data=""
-                      //   className="btn btn-light mr-2"
-                      //   filename={filename}
-                      //   fields={fields}
-
-                      //   text="Export excel"
-                      // />
-                      }
-                    {/* <ReactHTMLTableToExcel
+                    //   text="Export excel"
+                    // />
+                  }
+                  {/* <ReactHTMLTableToExcel
                       className="btn btn-light mr-2"
                       table="table-to-xls"
                       filename="dailyQtyList"
                       sheet="Sheet"
                       buttonText="Export excel" /> */}
-                  </div>
-            }
-              
+                </div>
+              }
+
 
               <div className="table-responsive">
                 <table id="table-to-xls" className="table table-hover">
@@ -196,49 +211,69 @@ const MasterDailyQty = () => {
                       <th>S. No</th>
                       <th scope="col"> Store ID</th>
                       <th scope="col">  Date</th>
-                      <th scope="col">  Day </th>     
-                      <th scope="col"> Week </th>    
-                      <th scope="col"> Month </th>  
-                      <th scope="col"> To </th>  
-                      <th scope="col"> Quantity </th>             
+                      <th scope="col">  Day </th>
+                      <th scope="col"> Week </th>
+                      <th scope="col"> Month </th>
+                      <th scope="col"> To </th>
+                      <th scope="col"> Quantity </th>
                     </tr>
                   </thead>
 
-                  
+                  {loader === true && currentRecords !== null && currentRecords !== undefined &&
+                    currentRecords.length === 0 ?
+                    <div className="loader-box loader" style={{ width: "100% !important" }}>
+                      <div className="loader">
+                        <div className="line bg-primary"></div>
+                        <div className="line bg-primary"></div>
+                        <div className="line bg-primary"></div>
+                        <div className="line bg-primary"></div>
+                      </div>
+                    </div> :
+                    currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 ?
+                      currentRecords.map((item, i) => {
+                        return (
+                          <tbody key={i + 1}>
+                            <tr>
+                              <td>{i + 1}</td>
+                              <td>{item.dqStoreId}</td>
+                              <td>{item.dqDate}</td>
+                              <td>{item.dqDay}</td>
+                              <td>{item.dqWeek}</td>
+                              <td>{item.dqMonth}</td>
+                              <td>{item.dqTo}</td>
+                              <td>{item.dqQty}</td>
+                            </tr>
+                          </tbody>
+                        )
+                      }) : <tbody>
+                        <tr>
+                          <td colspan='10'>No Record Found</td>
+                        </tr>
+                      </tbody>}
 
-                  {dailyQty !== null && dailyQty !== undefined && dailyQty.length > 0 &&
-                    dailyQty.map((item, i) => {
-                      return (
-                        <tbody key={i + 1}>
-                          <tr>
-                            <td>{i + 1 }</td>
-                            <td>{item.dqStoreId}</td>
-                            <td>{item.dqDate}</td>
-                            <td>{item.dqDay}</td>
-                            <td>{item.dqWeek}</td>
-                            <td>{item.dqMonth}</td>
-                            <td>{item.dqTo}</td>
-                            <td>{item.dqQty}</td>
-                          </tr>
-                        </tbody>
-                      )
-                    })}       
                 </table>
-                {dailyQty !== null && dailyQty.length <= 0 ? (
-                    <p style={{ textAlign: "center" }}>Select Date and Cost Center</p>
-                  ) : dailyQty === null  ? (
-                    <p style={{ textAlign: "center" }}>No Records Found</p>
-                  ) : null}
 
-                  
+
+
 
               </div>
 
             </div>
           </div>
         </div>
-        
+
       </div>
+      {dailyQty !== null && dailyQty !== undefined && dailyQty.length > 10 &&
+        <Pagination
+          itemClass="page-item"
+          linkClass="page-link"
+          activePage={currentPage}
+          itemsCountPerPage={recordPerPage}
+          totalItemsCount={totalRecords}
+          pageRangeDisplayed={pageRange}
+          onChange={handlePageChange}
+        />
+      }
     </Fragment>
   );
 

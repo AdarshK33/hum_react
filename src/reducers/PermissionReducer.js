@@ -7,10 +7,10 @@ const PermissionReducer = (state, action) => {
             return { ...state, locationDetailsList: action.payload };
 
         case 'MONTHLY_QTY_DETAILS_LIST':
-            return { ...state, monthlyQtyDetailsList: action.payload };
+            return { ...state, monthlyQtyDetailsList: action.payload, loader: action.loader };
 
         case 'VIEW_PERMISSION':
-            return {...state, permissionList: action.payload};
+            return { ...state, permissionList: action.payload };
 
         default: return state;
     }
