@@ -27,17 +27,18 @@ const AdminLeavesList = (props) => {
    
 
     const { viewList, leaveList, loader } = useContext(LeaveContext)
-   
-   /*  const [loaderSet, setLoaderSet] = useState(loader)
-    console.log("loader value in comp", loaderSet)
-   useEffect(() => {
-       viewList()
-       if(leaveList.status === 200){
-           setLoaderSet(!loaderSet)
-           console.log("loader value in useEffect", loaderSet)
-       }
+    console.log("loader in admin leave", loader)
 
-   },[]) */
+    /*  const [loaderSet, setLoaderSet] = useState(loader)
+     console.log("loader value in comp", loaderSet)
+    useEffect(() => {
+        viewList()
+        if(leaveList.status === 200){
+            setLoaderSet(!loaderSet)
+            console.log("loader value in useEffect", loaderSet)
+        }
+ 
+    },[]) */
 
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
@@ -62,7 +63,9 @@ const AdminLeavesList = (props) => {
 
     useEffect(() => {
         viewList()
+
     }, [])
+    
 
     useEffect(() => {
         if (leaveList !== undefined && leaveList !== null && leaveList.length > 0) {
@@ -113,7 +116,7 @@ const AdminLeavesList = (props) => {
                             </div>
                             <AdminLeaveAdd handleClose={handleClose} modal={modal} />
                             <div className="table-responsive">
-                              
+
                                 <Table id="table-to-xls" className="table table-hover">
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
@@ -128,46 +131,58 @@ const AdminLeavesList = (props) => {
                                         </tr>
                                     </thead>
 
-                                    {currentRecords !== undefined && currentRecords !== null &&
-                                    currentRecords.length > 0 ?
-                                        currentRecords.map((item, i) => {
-                                            return (
-                                                <tbody key={i + 1}>
-                                                    <tr>
-                                                        <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.empId}</td>
-                                                        <td>{item.leaveTypeId === 1 ? 'General' : (item.leaveTypeId === 2 ? 'Paternity' : (item.leaveTypeId === 3 ? 'Maternity' :
-                                                            (item.leaveTypeId === 0 ? 'LOP' : '')))}
-                                                        </td>
-                                                        <td>{item.numberOfDays}</td>
-                                                        <td>{item.fromDate}</td>
-                                                        <td>{item.toDate}</td>
-                                                        <td>{item.leaveTypeId === 3 ? 
-                                                            <Edit2 disabled style={{color:'lightgray'}} />
-                                                            : <Edit2 onClick={() => {
-                                                            setEditModal(true); setLeaveTypeId(item.leaveTypeId);
-                                                            setFromDate(item.fromDate); setToDate(item.toDate); setReason(item.reason)
-                                                            setltId(item.ltId); setEmpId(item.empId)
+                                    {loader === true && currentRecords !== null && currentRecords !== undefined &&
+                                        currentRecords.length === 0 ? 
+                                        <div className="loader-box loader" style={{ width: "100% !important",marginLeft:'400px' }}>
+                                            <div className="loader">
+                                                <div className="line bg-primary"></div>
+                                                <div className="line bg-primary"></div>
+                                                <div className="line bg-primary"></div>
+                                                <div className="line bg-primary"></div>
+                                            </div>
+                                        </div>
+                                        :
+                                        currentRecords !== undefined && currentRecords !== null &&
+                                            currentRecords.length > 0 ?
+                                            currentRecords.map((item, i) => {
+                                                return (
+                                                    <tbody key={i + 1}>
+                                                        <tr>
+                                                            <td>{i + 1 + indexOfFirstRecord}</td>
+                                                            <td>{item.empId}</td>
+                                                            <td>{item.leaveTypeId === 1 ? 'General' : (item.leaveTypeId === 2 ? 'Paternity' : (item.leaveTypeId === 3 ? 'Maternity' :
+                                                                (item.leaveTypeId === 0 ? 'LOP' : '')))}
+                                                            </td>
+                                                            <td>{item.numberOfDays}</td>
+                                                            <td>{item.fromDate}</td>
+                                                            <td>{item.toDate}</td>
+                                                            <td>{item.leaveTypeId === 3 ?
+                                                                <Edit2 disabled style={{ color: 'lightgray' }} />
+                                                                : <Edit2 onClick={() => {
+                                                                    setEditModal(true); setLeaveTypeId(item.leaveTypeId);
+                                                                    setFromDate(item.fromDate); setToDate(item.toDate); setReason(item.reason)
+                                                                    setltId(item.ltId); setEmpId(item.empId)
 
-                                                            }} /> }
-                                                        </td>
-                                                        <td>{item.leaveTypeId === 3 ?
-                                                            <Trash2 disabled style={{color:'lightgray'}} />
-                                                            : <Trash2 onClick={() => {
-                                                            setDeleteModal(true); setltId(item.ltId)
-                                                            }} /> }
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            )
-                                        }):  <tbody>
-                                        <tr>
-                                            <td colspan='6'>No Record Found</td>
-                                        </tr>
-                                    </tbody>}
+                                                                }} />}
+                                                            </td>
+                                                            <td>{item.leaveTypeId === 3 ?
+                                                                <Trash2 disabled style={{ color: 'lightgray' }} />
+                                                                : <Trash2 onClick={() => {
+                                                                    setDeleteModal(true); setltId(item.ltId)
+                                                                }} />}
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                )
+                                            }) : 
+                                             <tbody>
+                                                <tr>
+                                                    <td colspan='6'>No Record Found</td>
+                                                </tr>
+                                            </tbody>}
                                 </Table>
-                               {/*  {(leaveList === null ) ? 
-                                <p style={{ textAlign: "center" }}>No Record Found</p> : null} */} 
+                                {/*  {(leaveList === null ) ? 
+                                <p style={{ textAlign: "center" }}>No Record Found</p> : null} */}
                             </div>
                         </div>
                     </div>

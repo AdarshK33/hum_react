@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useContext } from 'react';
+import React, { createContext, useReducer, useContext, useState } from 'react';
 import { client } from '../utils/axios';
 import ClusterReducer from '../reducers/ClusterReducer';
 import { toast } from "react-toastify";
@@ -31,10 +31,10 @@ export const ClusterContext = createContext();
 export const ClusterProvider = ({ children }) => {
   const [state, dispatch] = useReducer(ClusterReducer, initial_state);
   const { user } = useContext(AppContext);
+  const [loader, setLoader] = useState(false)
+
+
   // ADD SHIFT
-
-
-
 
   const updateCluster = (updateCluter) => {
     return client.post("cluster/create", updateCluter).then(function (respone) {
@@ -207,6 +207,7 @@ export const ClusterProvider = ({ children }) => {
 
   // SALARY INPUT
   const viewSalary = (month, year, id) => {
+    setLoader(true)
     console.log(" in cluster" + month + " " + year)
     let flag = localStorage.getItem('flag')
 
@@ -218,7 +219,8 @@ export const ClusterProvider = ({ children }) => {
         if (response.data.data === null) {
           toast.info(response.data.message)
         }
-        return dispatch({ type: 'FETCH_SALARY_LIST', payload: state.salaryList });
+        setLoader(false)
+        return dispatch({ type: 'FETCH_SALARY_LIST', payload: state.salaryList, loader: loader });
       })
       .catch(function (error) {
         console.log(error);
@@ -447,6 +449,7 @@ export const ClusterProvider = ({ children }) => {
     viewManagerByCostCenterList: state.viewManagerByCostCenterList,
     callClusterEmployeesList: state.callClusterEmployeesList,
     callClusterLeadersList: state.callClusterLeadersList,
+    loader: loader
 
   }}>
     {children}

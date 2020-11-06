@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useContext } from 'react';
+import React, { createContext, useReducer, useContext, useState } from 'react';
 import { client } from '../utils/axios';
 import { ToastContainer, toast } from "react-toastify";
 import LeaveReducer from '../reducers/LeaveReducer'
@@ -19,8 +19,7 @@ const initialState = {
   leaveEmpList: [],
   leaveTypeReport: [],
   leaveManagerList: [],
-  cityList: [],
-  loader:false
+  cityList: []
 
 }
 
@@ -29,21 +28,22 @@ export const LeaveContext = createContext();
 export const LeaveProvider = ({ children }) => {
   const [state, dispatch] = useReducer(LeaveReducer, initialState);
   const { user, getUserMenu } = useContext(AppContext);
+  const [loader, setLoader] = useState(false)
 
   //View Leave
-
+  
   const viewList = (empId1) => {
-    state.loader=true
-    console.log("loader value outsie method", state.loader)
+    setLoader(true)
     client.get('leave_transaction/view')
       .then((response) => {
         state.leaveList = response.data.data
         getLeave(empId1);
         console.log("=====GET API respone for Admin=====", state.leaveList)
-        state.loader=false
-        console.log("loader value inside method", state.loader)
+        setLoader(false)
         return (
-          dispatch({ type: 'FETCH_LEAVE_LIST', payload: state.leaveList })
+          dispatch({ type: 'FETCH_LEAVE_LIST', payload: state.leaveList, loader:loader  }
+          
+          )
         )
       })
       .catch((error) => {
@@ -52,13 +52,15 @@ export const LeaveProvider = ({ children }) => {
   }
 
   const viewManagerList = (empId1) => {
+    setLoader(true)
     client.get('/leave_transaction/view/manager')
       .then((response) => {
         state.leaveManagerList = response.data.data
         getLeave(empId1);
         console.log("=====GET API respone for manager=====", state.leaveManagerList)
+        setLoader(false)
         return (
-          dispatch({ type: 'FETCH_MANAGER_LEAVE_LIST', payload: state.leaveManagerList })
+          dispatch({ type: 'FETCH_MANAGER_LEAVE_LIST', payload: state.leaveManagerList, loader:loader })
         )
       })
       .catch((error) => {
@@ -83,13 +85,17 @@ export const LeaveProvider = ({ children }) => {
   }
   // View Leave Data
   const viewEmpLeaveData = (empId1) => {
+    setLoader(true)
+    console.log("loader outside", loader)
     if (empId1 !== null && empId1 !== undefined) {
 
       client.get('leave_transaction/view/' + empId1)
         .then((response) => {
           state.leaveEmpList = response.data.data.leaveTransactions
           console.log("=====GET Emp Leave Data API respone=====", state.leaveEmpList)
-          return dispatch({ type: 'FETCH_EMP_LEAVE_DATA_LIST', payload: state.leaveEmpList })
+         setLoader(false)
+         console.log("loader inside", loader)
+          return dispatch({ type: 'FETCH_EMP_LEAVE_DATA_LIST', payload: state.leaveEmpList, loader:loader })
         })
         .catch((error) => {
           console.log(error)
@@ -361,6 +367,7 @@ export const LeaveProvider = ({ children }) => {
 
   //Report Leave api
   const reportLeave = (reportData) => {
+    setLoader(true)
     console.log("++++report api response+++++", reportData)
     return client.post('leave_transaction/view/report', reportData)
       .then((response) => {
@@ -372,7 +379,8 @@ export const LeaveProvider = ({ children }) => {
         getLeaveReport()
         console.log("new report list response===>", response.data.data)
         console.log("new report list message===>", state.message)
-        return dispatch({ type: 'REPORT_LEAVE', payload: state.reportList })
+        setLoader(false)
+        return dispatch({ type: 'REPORT_LEAVE', payload: state.reportList, loader: loader })
       })
       .catch((error) => {
         console.log(error)
@@ -435,16 +443,18 @@ export const LeaveProvider = ({ children }) => {
   } */
   const productivityReport = (reportData) => {
     console.log("reportData", reportData)
-
+    setLoader(true)
     return client.post('report/productivity', reportData)
       .then((response) => {
         state.productivityList = response.data.data
         console.log("productivity list api++++++", state.productivityList)
         console.log("productivity list api message", response.data.message)
+       
         if (response.data.data === null) {
-          toast.info("Data" + " " + response.data.message)
+          toast.info(response.data.message)
         }
-        return dispatch({ type: 'PRODUCTIVITY_REPORT', payload: state.productivityList })
+        setLoader(false)
+        return dispatch({ type: 'PRODUCTIVITY_REPORT', payload: state.productivityList, loader: loader })
       })
       .catch((error) => {
         console.log(error)
@@ -527,7 +537,7 @@ export const LeaveProvider = ({ children }) => {
       leaveTypeReport: state.leaveTypeReport,
       leaveManagerList: state.leaveManagerList,
       cityList: state.cityList,
-      loader: state.loader
+      loader: loader
 
     }}>
       {children}

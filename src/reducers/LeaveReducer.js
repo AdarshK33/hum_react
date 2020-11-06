@@ -2,16 +2,16 @@
 const LeaveReducer = (state, action) => {
     switch (action.type) {
         case 'FETCH_LEAVE_LIST':
-            return { ...state, leaveList: action.payload }
+            return { ...state, leaveList: action.payload, loader: action.loader }
 
         case 'FETCH_MANAGER_LEAVE_LIST':
-            return { ...state, leaveManagerList: action.payload }
+            return { ...state, leaveManagerList: action.payload, loader: action.loader }
 
         case 'FETCH_LEAVE_DATA_LIST':
             return { ...state, leaveDataList: action.payload }
 
         case 'FETCH_EMP_LEAVE_DATA_LIST':
-                return { ...state, leaveEmpList: action.payload }
+                return { ...state, leaveEmpList: action.payload, loader: action.loader }
 
         case 'ADD_NEW_LEAVE':
             return { ...state, leaveList: action.payload }
@@ -58,13 +58,13 @@ const LeaveReducer = (state, action) => {
             return ({ ...state, empData: action.payload })
 
         case 'REPORT_LEAVE':
-            return { ...state, reportList: action.payload }
+            return { ...state, reportList: action.payload, loader: action.loader}
 
         case 'FETCH_EMPLOYEE_TYPE':
             return { ...state, employeeList: action.payload }
 
         case 'PRODUCTIVITY_REPORT':
-            return { ...state, productivityList: action.payload }
+            return { ...state, productivityList: action.payload, loader: action.loader }
 
         case 'CITY_LIST':
             return { ...state, cityList: action.payload };

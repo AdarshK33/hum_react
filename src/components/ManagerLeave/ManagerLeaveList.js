@@ -26,7 +26,7 @@ const ManagerLeaveList = (props) => {
 
     const { searchByEmpIdManager, empIdManagerSearchList } = useContext(SearchContext);
 
-    const { viewManagerList, leaveManagerList } = useContext(LeaveContext)
+    const { viewManagerList, leaveManagerList, loader } = useContext(LeaveContext)
 
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
@@ -115,7 +115,18 @@ const ManagerLeaveList = (props) => {
                                     </tr>
                                 </thead>
 
-                                {currentRecords !== undefined &&  currentRecords !== null &&
+                                {loader === true && currentRecords !== null && currentRecords !== undefined &&
+                                currentRecords.length === 0 ? 
+                                <div className="loader-box loader" style={{ width: "100% !important",marginLeft:'400px' }}>
+                                    <div className="loader">
+                                        <div className="line bg-primary"></div>
+                                        <div className="line bg-primary"></div>
+                                        <div className="line bg-primary"></div>
+                                        <div className="line bg-primary"></div>
+                                    </div>
+                                </div>: 
+                                currentRecords !== undefined &&  currentRecords !== null &&
+                                currentRecords.length > 0 ?
                                     currentRecords.map((item, i) => {
                                         return (
                                             <tbody key={i + 1}>
@@ -146,10 +157,15 @@ const ManagerLeaveList = (props) => {
                                                 </tr>
                                             </tbody>
                                         )
-                                    })}
+                                    }):  
+                                    <tbody>
+                                    <tr>
+                                        <td colspan='10'>No Record Found</td>
+                                    </tr>
+                                </tbody>}
                             </Table>
-                            {(leaveManagerList === null) ? 
-                                <p style={{ textAlign: "center" }}>No Record Found</p> : null}
+                            {/* {(leaveManagerList === null) ? 
+                                <p style={{ textAlign: "center" }}>No Record Found</p> : null} */}
                         </div>
                         </div>
                     </div>

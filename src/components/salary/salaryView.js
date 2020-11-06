@@ -25,7 +25,7 @@ function ViewShift() {
   const [getM, setGetM] = useState();
 
   const { cosCentreList, viewCostCentre } = useContext(DashboardContext);
-  const { viewSalary, salaryList, salaryApproval } = useContext(ClusterContext);
+  const { viewSalary, salaryList, salaryApproval, loader } = useContext(ClusterContext);
 
   const [editModal, setEditModal] = useState(false)
   const [employeeId, setEmployeeId] = useState()
@@ -269,7 +269,18 @@ function ViewShift() {
                     </tr>
                   </thead>
 
-                  {currentRecords !== null && currentRecords.length > 0 &&
+                  {loader === true && currentRecords !== null && currentRecords !== undefined &&
+                    currentRecords.length === 0 ?
+                    <div className="loader-box loader"
+                     style={{ width: "100% !important", textAlign:'center', marginLeft:'400px' }}>
+                      <div className="loader">
+                        <div className="line bg-primary"></div>
+                        <div className="line bg-primary"></div>
+                        <div className="line bg-primary"></div>
+                        <div className="line bg-primary"></div>
+                      </div>
+                    </div> :
+                  currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 &&
                   (
                     user.loginType==="7" || user.additionalRole==="7" ||
                     user.loginType==="3" || user.additionalRole==="3" ||
