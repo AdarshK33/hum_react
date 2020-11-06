@@ -254,11 +254,11 @@ const MasterMonthlyQuantity = () => {
                     </table>
                     {displayLoader &&
                         <div>
-                            {(monthlyQtyDetailsList.length === 0) ?
-                                <p style={{ textAlign: "center" }}>No Record Found</p> : null}
+                            {/* {(monthlyQtyDetailsList.length === 0) ?
+                                <p style={{ textAlign: "center" }}>No Record Found</p> : null} */}
 
 
-                            {monthlyQtyDetailsList !== undefined && monthlyQtyDetailsList !== null && currentRecords.length === 0 ?
+                            {/* {monthlyQtyDetailsList !== undefined && monthlyQtyDetailsList !== null && currentRecords.length === 0 ?
 
                                 <div className="loader-box loader" style={{ width: "100% !important" }}>
                                     <div className="loader">
@@ -269,7 +269,7 @@ const MasterMonthlyQuantity = () => {
                                     </div>
                                 </div>
                                 :
-                                null}
+                                null} */}
                         </div>
                     }
                     {monthlyQtyDetailsList !== null && monthlyQtyDetailsList.length <= 0 ? (
