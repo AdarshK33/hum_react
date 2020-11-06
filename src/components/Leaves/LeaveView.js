@@ -191,8 +191,7 @@ const LeaveView = () => {
                             </tr>
                         </thead>
 
-                        {loader === true && currentRecords !== null && currentRecords !== undefined &&
-                            currentRecords.length === 0 ?
+                        {loader === true && currentRecords !== null && currentRecords !== undefined ?
                             <tbody>
                                 <tr>
                                     <td colSpan='10'>
