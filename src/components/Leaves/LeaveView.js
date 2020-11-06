@@ -25,12 +25,12 @@ const LeaveView = () => {
     const [reason, setReason] = useState()
     const [empId, setEmpID] = useState('')
     const [numberOfDays, setNumberOfDays] = useState()
-    const [ displayLoader, setDisplayLoader ] = useState(true)
+    const [displayLoader, setDisplayLoader] = useState(true)
     const [leaveList, setLeaveList] = useState();
- 
+
     const { leaveDataList, viewLeaveData, viewEmpLeaveData, leaveEmpList, loader }
         = useContext(LeaveContext);
-        console.log("loader in leave",loader)
+    console.log("loader in leave", loader)
 
     const { user } = useContext(AppContext);
 
@@ -68,11 +68,11 @@ const LeaveView = () => {
          setLeaveTypeId(newLeaveTypeId)
          console.log("newLeaveTypeId", newLeaveTypeId)
       } */
-      useEffect(() => {
+    useEffect(() => {
         if (leaveEmpList !== undefined && leaveEmpList !== null && leaveEmpList.length > 0) {
             setLeaveList(leaveEmpList);
             setDisplayLoader(false)
-            console.log("displayLoader-------",displayLoader)
+            console.log("displayLoader-------", displayLoader)
         }
 
     }, [leaveEmpList, displayLoader])
@@ -171,38 +171,45 @@ const LeaveView = () => {
                         <Button className="apply-button btn btn-light"
                             onClick={() => { setModal(true); setEmpID(user.employeeId) }}>Apply</Button>
                     </Col>
-                    {user.employeeId !== undefined ? 
-                    <LeaveAdd handleClose={handleClose} modal={modal} empid={empId}  /> : ""}
+                    {user.employeeId !== undefined ?
+                        <LeaveAdd handleClose={handleClose} modal={modal} empid={empId} /> : ""}
 
                 </Row>
 
                 <div className="table-responsive">
-                        <Table id="table-to-xls" className="table table-hover">
+                    <Table id="table-to-xls" className="table table-hover" >
 
-                            <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
+                        <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
+                            <tr>
+                                <th>S. No</th>
+                                <th>Leave Type</th>
+                                <th>Total No. of Days</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        {loader === true && currentRecords !== null && currentRecords !== undefined &&
+                            currentRecords.length === 0 ?
+                            <tbody>
                                 <tr>
-                                    <th>S. No</th>
-                                    <th>Leave Type</th>
-                                    <th>Total No. of Days</th>
-                                    <th>Start Date</th>
-                                    <th>End Date</th>
-                                    <th></th>
-                                    <th></th>
+                                    <td colSpan='10'>
+                                        <div className="loader-box loader" style={{ width: "100% !important" }}>
+                                            <div className="loader">
+                                                <div className="line bg-primary"></div>
+                                                <div className="line bg-primary"></div>
+                                                <div className="line bg-primary"></div>
+                                                <div className="line bg-primary"></div>
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
-                            </thead>
-
-                            {loader === true && currentRecords !== null && currentRecords !== undefined &&
-                                currentRecords.length === 0 ? 
-                             <div className="loader-box loader" style={{ width: "100% !important",marginLeft:'400px' }}>
-                             <div className="loader">
-                                 <div className="line bg-primary"></div>
-                                 <div className="line bg-primary"></div>
-                                 <div className="line bg-primary"></div>
-                                 <div className="line bg-primary"></div>
-                             </div>
-                         </div>: 
-                             currentRecords !== null && currentRecords !== undefined &&
-                            currentRecords.length > 0 ?
+                            </tbody>
+                            :
+                            currentRecords !== null && currentRecords !== undefined &&
+                                currentRecords.length > 0 ?
                                 currentRecords.map((item, i) => {
                                     return (
                                         <tbody key={i + 1}>
@@ -231,15 +238,15 @@ const LeaveView = () => {
                                             </tr>
                                         </tbody>
                                     )
-                                }) :  
+                                }) :
                                 <tbody>
-                                <tr>
-                                    <td colspan='10'>No Record Found</td>
-                                </tr>
-                            </tbody>}
+                                    <tr>
+                                        <td colSpan='10'>No Record Found</td>
+                                    </tr>
+                                </tbody>}
 
-                        </Table>
-                        {/* {(leaveEmpList !== null && leaveEmpList.length <= 0) ? 
+                    </Table>
+                    {/* {(leaveEmpList !== null && leaveEmpList.length <= 0) ? 
                                 <p style={{ textAlign: "center" }}>No Record Found</p> : null} */}
 
                     <DeleteLeave handleDeleteClose={handleDeleteClose} modal={deleteModal} ltId={ltId} empid={user.employeeId} />

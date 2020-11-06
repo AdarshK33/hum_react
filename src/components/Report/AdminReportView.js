@@ -74,7 +74,7 @@ console.log(dates)
                             </div>
 
                             <div className="table-responsive">
-                                <Table id="table-to-xls" className="table table-hover">
+                                <Table id="table-to-xls" className="table table-hover" >
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
                                             <th>S. No</th>
@@ -97,14 +97,20 @@ console.log(dates)
                                     </thead>
                                     {loader === true && currentRecords !== null && currentRecords !== undefined &&
                                         currentRecords.length === 0 ? 
-                                    <div className="loader-box loader" style={{ width: "100% !important",marginLeft:'400px' }}>
-                                        <div className="loader">
-                                            <div className="line bg-primary"></div>
-                                            <div className="line bg-primary"></div>
-                                            <div className="line bg-primary"></div>
-                                            <div className="line bg-primary"></div>
-                                        </div>
-                                    </div>:
+                                        <tbody>
+                                        <tr>
+                                            <td colSpan='12'>
+                                                <div className="loader-box loader" style={{ width: "100% !important"}}>
+                                                    <div className="loader">
+                                                        <div className="line bg-primary"></div>
+                                                        <div className="line bg-primary"></div>
+                                                        <div className="line bg-primary"></div>
+                                                        <div className="line bg-primary"></div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>:
                                     currentRecords !== undefined && currentRecords !== null &&
                                         currentRecords.length > 0 ?
                                         currentRecords.map((item, i) => {

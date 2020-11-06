@@ -222,7 +222,7 @@ const AdminSalaryModule = () => {
           <div className="col-sm-12">
             <div className="card" style={{ overflowX: "auto" }}>
               <div className="table-responsive">
-                <Table id="table-to-xls1" className="table table-hover">
+                <Table id="table-to-xls1" className="table table-hover" >
                   <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                     <tr>
                       <th>Select</th>
@@ -245,15 +245,21 @@ const AdminSalaryModule = () => {
 
                   {loader === true && currentRecords !== null && currentRecords !== undefined &&
                     currentRecords.length === 0 ?
-                    <div className="loader-box loader" style={{ width: "100% !important",marginLeft:'400px' }}>
-                      <div className="loader">
-                        <div className="line bg-primary"></div>
-                        <div className="line bg-primary"></div>
-                        <div className="line bg-primary"></div>
-                        <div className="line bg-primary"></div>
-                      </div>
-                    </div> :
-                    currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 &&
+                    <tbody>
+                    <tr>
+                        <td colSpan='10'>
+                            <div className="loader-box loader" style={{ width: "100% !important"}}>
+                                <div className="loader">
+                                    <div className="line bg-primary"></div>
+                                    <div className="line bg-primary"></div>
+                                    <div className="line bg-primary"></div>
+                                    <div className="line bg-primary"></div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody> :
+                    currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 ?
                     currentRecords.map((item, i) => {
                       return (
                         <tbody key={i + 1}>
@@ -307,11 +313,17 @@ const AdminSalaryModule = () => {
                           </tr>
                         </tbody>
                       )
-                    })}
+                    }):
+                    <tbody>
+                      <tr>
+                        <td colSpan="10">No Record Found</td>
+                      </tr>
+                    </tbody>
+                    }
                 </Table>
-                {salaryList !== null && salaryList.length <= 0 ? (
+               {/*  {salaryList !== null && salaryList.length <= 0 ? (
                   <p style={{ textAlign: "center" }}>Select Month and Year</p>
-                ) : null}
+                ) : null} */}
                 {/* {salaryList.length>0 ?<p>No data found</p>:null} */}
               </div>
             </div>
