@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useReducer, useState } from "react";
 import { client } from '../utils/axios';
 import PermissionReducer from '../reducers/PermissionReducer';
 import { toast } from "react-toastify";
@@ -16,6 +16,7 @@ export const PermissionContext = createContext();
 export const PermissionProvider = ({ children }) => {
 
     const [state, dispatch] = useReducer(PermissionReducer, initial_state);
+    const [loader, setLoader] = useState(false)
 
     const editPermission = (val) => {
         // console.log("====================NAV================");
@@ -60,19 +61,20 @@ export const PermissionProvider = ({ children }) => {
         // console.log(id);
         // console.log(month);
         // console.log(year);
-
+        setLoader(true)
         return client.get('/monthly/view?' + '&month=' + month + '&storeId=' + id + '&year=' + year)
             .then((response) => {
 
                 if (response.data.data === null) {
                     state.monthlyQtyDetailsList = []
-                    toast.info("No Records Found")
+                    // toast.info("No Records Found")
                 }
                 else {
                     state.monthlyQtyDetailsList = response.data.data;
                 }
+                setLoader(false)
                 return (
-                    dispatch({ type: 'MONTHLY_QTY_DETAILS_LIST', payload: state.monthlyQtyDetailsList })
+                    dispatch({ type: 'MONTHLY_QTY_DETAILS_LIST', payload: state.monthlyQtyDetailsList, loader: loader })
                 )
             })
             .catch((error) => {
@@ -119,7 +121,8 @@ export const PermissionProvider = ({ children }) => {
         permission: state.permission,
         locationDetailsList: state.locationDetailsList,
         monthlyQtyDetailsList: state.monthlyQtyDetailsList,
-        permissionList: state.permissionList
+        permissionList: state.permissionList,
+        loader: loader
     }}>
         {children}
     </PermissionContext.Provider>)
