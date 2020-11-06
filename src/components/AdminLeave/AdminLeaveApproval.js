@@ -68,7 +68,7 @@ const AdminLeaveApproval = () => {
             <Breadcrumb title="Admin" parent=" Leave Approval" />
             <div className="container-fluid">
                 <div className="row">
-                    <Table className="adminTable">
+                    <Table className="adminTable table table-hover">
                         <thead style={{ background: '#006EBB', color: 'white' }}>
                             <tr>
                                 <th>Sr.</th>
@@ -85,14 +85,21 @@ const AdminLeaveApproval = () => {
                         </thead>
                         {loader === true && currentRecords !== null && currentRecords !== undefined &&
                             currentRecords.length === 0 ?
-                            <div className="loader-box loader" style={{ width: "100% !important", marginLeft: '300px' }}>
-                                <div className="loader">
-                                    <div className="line bg-primary"></div>
-                                    <div className="line bg-primary"></div>
-                                    <div className="line bg-primary"></div>
-                                    <div className="line bg-primary"></div>
-                                </div>
-                            </div>
+                            <tbody>
+                                <tr>
+                                    <td colspan='7'>
+                                        <div className="loader-box loader" style={{ width: "100% !important" }}>
+                                            <div className="loader">
+                                                <div className="line bg-primary"></div>
+                                                <div className="line bg-primary"></div>
+                                                <div className="line bg-primary"></div>
+                                                <div className="line bg-primary"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+
                             :
                             currentRecords !== null && currentRecords !== undefined &&
                                 currentRecords.length > 0 ?

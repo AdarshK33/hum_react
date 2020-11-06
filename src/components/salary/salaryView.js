@@ -271,21 +271,26 @@ function ViewShift() {
 
                   {loader === true && currentRecords !== null && currentRecords !== undefined &&
                     currentRecords.length === 0 ?
-                    <div className="loader-box loader"
-                     style={{ width: "100% !important", textAlign:'center', marginLeft:'400px' }}>
-                      <div className="loader">
-                        <div className="line bg-primary"></div>
-                        <div className="line bg-primary"></div>
-                        <div className="line bg-primary"></div>
-                        <div className="line bg-primary"></div>
-                      </div>
-                    </div> :
+                    <tbody>
+                    <tr>
+                        <td colSpan='10'>
+                            <div className="loader-box loader" style={{ width: "100% !important"}}>
+                                <div className="loader">
+                                    <div className="line bg-primary"></div>
+                                    <div className="line bg-primary"></div>
+                                    <div className="line bg-primary"></div>
+                                    <div className="line bg-primary"></div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>:
                   currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 &&
                   (
                     user.loginType==="7" || user.additionalRole==="7" ||
                     user.loginType==="3" || user.additionalRole==="3" ||
                     (user.role !== "MANAGER" && user.isClusterManager === 1)
-                  ) &&
+                  ) ?
                     currentRecords.map((item, i) => {
                       return (
                         <tbody key={i + 1}>
@@ -338,9 +343,15 @@ function ViewShift() {
                         </tbody>
 
                       )
-                    })}
+                    }):
+                    <tbody>
+                      <tr>
+                        <td colSpan="10">No Record Found</td>
+                      </tr>
+                    </tbody>
+                    }
                 </Table>
-                {(salaryList !== null && salaryList.length <= 0) ? <p style={{ textAlign: "center" }}>Select Month and Year</p> : null}
+               {/*  {(salaryList !== null && salaryList.length <= 0) ? <p style={{ textAlign: "center" }}>Select Month and Year</p> : null} */}
               </div>
             </div>
           </div>

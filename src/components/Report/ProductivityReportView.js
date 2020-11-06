@@ -10,7 +10,7 @@ import { LeaveContext } from '../../context/LeaveState'
 
 const ProductivityReportView = (props) => {
     const productivityList = props.productivityList
-    const {loader } = useContext(LeaveContext)
+    const { loader } = useContext(LeaveContext)
 
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
@@ -83,9 +83,9 @@ const ProductivityReportView = (props) => {
                             </div>
 
                             <div className="table-responsive">
-                               {/*  {currentRecords !== null && currentRecords !== undefined 
+                                {/*  {currentRecords !== null && currentRecords !== undefined 
                                     && currentRecords.length > 0  ? */}
-                                <Table id="table-to-xls" className="table table-hover" style={{ tableLayout: 'fixed' }}>
+                                <Table id="table-to-xls" className="table table-hover" >
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
                                             <th>S. No</th>
@@ -101,50 +101,57 @@ const ProductivityReportView = (props) => {
                                         </tr>
                                     </thead>
                                     {loader === true && currentRecords !== null && currentRecords !== undefined &&
-                                        currentRecords.length === 0 ? 
-                                    <div className="loader-box loader" style={{ width: "100% !important", marginLeft:'400px' }}>
-                                        <div className="loader">
-                                            <div className="line bg-primary"></div>
-                                            <div className="line bg-primary"></div>
-                                            <div className="line bg-primary"></div>
-                                            <div className="line bg-primary"></div>
-                                        </div>
-                                    </div>:
-                                    currentRecords !== null && currentRecords !== undefined 
-                                    && currentRecords.length > 0  ?
-                                        currentRecords.map((item, i) => {
-                                            return (
-                                                <tbody key={i + 1}>
-                                                    <tr>
-                                                        <td>{i + 1 + indexOfFirstRecord}</td>
-                                                        <td>{item.costCentre}</td>
-                                                        <td>{item.employeeId}</td>
-                                                        <td>{item.firstName} {item.lastName}</td>
-                                                        <td>{item.clusterName}</td>
-                                                        <td>{item.sports}</td>
-                                                        <td>{item.paymentType}</td>
-                                                        <td>{item.contractType}</td>
-                                                        <td>{item.workingHours}</td>
-                                                        <td>{item.duration}</td>
-                                                    </tr>
-                                                </tbody>
-                                            )
-                                        })
-                                         : <tbody>
-                                        <tr>
-                                            <td colspan='10'>No Record Found</td>
-                                        </tr>
-                                    </tbody>}
+                                        currentRecords.length === 0 ?
+                                        <tbody>
+                                            <tr>
+                                                <td colspan='10'>
+                                                    <div className="loader-box loader" style={{ width: "100% !important" }}>
+                                                        <div className="loader">
+                                                            <div className="line bg-primary"></div>
+                                                            <div className="line bg-primary"></div>
+                                                            <div className="line bg-primary"></div>
+                                                            <div className="line bg-primary"></div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        :
+                                        currentRecords !== null && currentRecords !== undefined
+                                            && currentRecords.length > 0 ?
+                                            currentRecords.map((item, i) => {
+                                                return (
+                                                    <tbody key={i + 1}>
+                                                        <tr>
+                                                            <td>{i + 1 + indexOfFirstRecord}</td>
+                                                            <td>{item.costCentre}</td>
+                                                            <td>{item.employeeId}</td>
+                                                            <td>{item.firstName} {item.lastName}</td>
+                                                            <td>{item.clusterName}</td>
+                                                            <td>{item.sports}</td>
+                                                            <td>{item.paymentType}</td>
+                                                            <td>{item.contractType}</td>
+                                                            <td>{item.workingHours}</td>
+                                                            <td>{item.duration}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                )
+                                            })
+                                            : <tbody>
+                                                <tr>
+                                                    <td colspan='10'>No Record Found</td>
+                                                </tr>
+                                            </tbody>}
 
-                               </Table>
-                               
-                      
-                        {/*  <p style={{ textAlign: "center" }}>N0 RECORDS EXIST</p> */}
+                                </Table>
+
+
+                                {/*  <p style={{ textAlign: "center" }}>N0 RECORDS EXIST</p> */}
                                 {/* {(currentRecords !== null && currentRecords !== undefined &&
                                  currentRecords.length <= 0) ? 
                                 <p style={{ textAlign: "center" }}>No Record Found</p> : null} */}
                             </div>
-                           
+
                         </div>
                     </div>
                 </Row>
