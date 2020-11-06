@@ -1,5 +1,5 @@
 /* eslint-disable no-useless-concat */
-import React, { createContext, useReducer, useContext } from 'react';
+import React, { createContext, useReducer, useContext,useState } from 'react';
 import { client } from '../utils/axios';
 import AdminReducer from '../reducers/AdminReducer';
 import { toast } from "react-toastify";
@@ -23,6 +23,7 @@ export const AdminContext = createContext();
 export const AdminProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AdminReducer, initial_state);
   const { user, getUserMenu } = useContext(AppContext);
+  const [loader, setLoader] = useState(false)
 
   // view Leaves for Admin
 
@@ -143,11 +144,13 @@ export const AdminProvider = ({ children }) => {
   // Leave Approval List
 
   const ApprovalView = () => {
+    setLoader(true)
     client.get('leave_transaction/approval_view')
       .then((response) => {
         state.ApprovalLeaveList = response.data.data
         console.log("Approval List data", state.ApprovalLeaveList)
-        return dispatch({ type: 'APPRROVAL_LEAVE_LIST', payload: state.ApprovalLeaveList })
+        setLoader(false)
+        return dispatch({ type: 'APPRROVAL_LEAVE_LIST', payload: state.ApprovalLeaveList, loader: loader })
       })
       .catch((error) => {
         console.log(error)
@@ -212,7 +215,8 @@ export const AdminProvider = ({ children }) => {
     employeeIdList: state.employeeIdList,
     leaveMasterList: state.leaveMasterList,
     ApprovalLeaveList: state.ApprovalLeaveList,
-    managerEmployeeIdList: state.managerEmployeeIdList
+    managerEmployeeIdList: state.managerEmployeeIdList,
+    loader: loader 
   }}>
     {children}
   </AdminContext.Provider>);

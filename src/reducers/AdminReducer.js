@@ -26,7 +26,7 @@ const AdminReducer = (state, action) => {
             return { ...state, leaveMasterList: action.payload }
 
         case 'APPRROVAL_LEAVE_LIST':
-            return { ...state, ApprovalLeaveList: action.payload }
+            return { ...state, ApprovalLeaveList: action.payload, loader: action.loader }
 
         case 'UPDATED_APPRROVAL_LEAVE_LIST':
             return { ...state, ApprovalLeaveList: action.payload }
