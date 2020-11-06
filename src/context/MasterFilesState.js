@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useReducer, useState } from "react";
 import { client } from '../utils/axios';
 import MasterFilesReducer from '../reducers/MasterFilesReducer';
 import { toast } from "react-toastify";
@@ -15,7 +15,7 @@ export const MasterFilesContext = createContext();
 export const MasterFilesProvider = ({ children }) => {
 
     const [state, dispatch] = useReducer(MasterFilesReducer, initial_state);
-
+    const [loader, setLoader] = useState(false)
 
     const viewCountries = () => {
         return client.get("/country/view")
@@ -50,14 +50,17 @@ export const MasterFilesProvider = ({ children }) => {
     const viewDailyQty = (id, date) => {
         // console.log(id);
         // console.log(date);
+        setLoader(true)
         return client.get('/daily/view?' + '&storeId=' + id + '&date=' + date)
             .then((response) => {
                 console.log(response.data.data);
                 state.dailyQty = response.data.data;
+                setLoader(false)
                 return (
                     dispatch({ type: 'VIEW_DAILY_QTY', payload: state.dailyQty })
                 )
             })
+
             .catch((error) => {
                 console.log(error)
             })
@@ -135,7 +138,8 @@ export const MasterFilesProvider = ({ children }) => {
         uploadMasterLocation,
         countryList: state.countryList,
         stateList: state.stateList,
-        dailyQty: state.dailyQty
+        dailyQty: state.dailyQty,
+        loader: loader
     }}>
         {children}
     </MasterFilesContext.Provider>)
