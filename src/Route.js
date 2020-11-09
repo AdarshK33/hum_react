@@ -141,9 +141,9 @@ const RoutePath = () => {
                               component={AdminLeaveApproval}
                             />
                             :
-                            e.path === "/adminleaves/adminsalarymodule" ?
+                            e.path === "/salary/approval" ?
                               <Route
-                                path={`${process.env.PUBLIC_URL}/adminleaves/adminsalarymodule`}
+                                path={`${process.env.PUBLIC_URL}/salary/approval`}
                                 component={AdminSalaryModule}
                               />
                               :
