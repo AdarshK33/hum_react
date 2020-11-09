@@ -10,6 +10,7 @@ import AdminReportView from './AdminReportView'
 import { AppContext } from "../../context/AppState";
 import '../Leaves/Leaves.css'
 import MultiSelect from 'react-multi-select-component'
+import Select from 'react-select'
 
 const AdminReportForm = () => {
     const [reportType, setReportType] = useState('')
@@ -47,9 +48,9 @@ const AdminReportForm = () => {
         getLeaveReport()
     },[])
 
-    const setCostCenterHandler = (e) => {
-        let data1 = e.target.value
-       setCostCenter(data1)
+    const setCostCenterHandler = (options) => {
+        let data1 = options !== null ? options.value : ''
+       setCostCenter(options)
        employeeIdData(data1)
        console.log("data1", data1)
     }
@@ -149,8 +150,8 @@ const AdminReportForm = () => {
                         <div className="col-sm-4">
                             <Form.Group>
                                 <Form.Label>Cost Center</Form.Label> <span style={{color:'red'}}>*</span> 
-                                <Form.Control as="select" required value={costCenter}
-                                 onChange={(e) => setCostCenterHandler(e)} isSearchable >
+                                {/* <Form.Control as="select" required value={costCenter}
+                                 onChange={(e) => setCostCenterHandler(e)} data-live-search="true" >
                                     <option value=''>Select Cost Center</option>
                                     <option value='all'>All</option>
                                     {costCenterList.length > 0 && costCenterList.map((item, i) => {
@@ -160,7 +161,16 @@ const AdminReportForm = () => {
                                             )
                                         })
                                         }
-                                </Form.Control>
+                                </Form.Control> */}
+                                <Select
+                                name="filters"
+                                placeholder="Select Cost Center"
+                                value={costCenter} 
+                                style={{fontSize:"0.8rem"}}
+                                options={costCenterList !== null  ?
+                                    costCenterList.map(e => ({label: e.costCentreName, value: e.costCentreName})):[]}
+                                onChange={setCostCenterHandler}
+                                 required isSearchable /> 
                             </Form.Group>
                         </div> : 
                          <div className="col-sm-4">
