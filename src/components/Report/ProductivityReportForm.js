@@ -157,8 +157,7 @@ const ProductivityReportForm = () => {
                                         onChange={setCostCenterHandler}
                                         labelledBy={"Select"}
                                         hasSelectAll={true}
-                                        disableSearch={true}
-                                        isSearchable
+                                        disableSearch={false}
                                     />
                                 </Form.Group>
                             </div> :
@@ -181,7 +180,7 @@ const ProductivityReportForm = () => {
                                     onChange={setEmployeeCostCenterHandler}
                                     labelledBy={"Select Employee Id"}
                                     hasSelectAll={true}
-                                    disableSearch={true}
+                                    disableSearch={false}
                                 />
                             </Form.Group>
                         </div>
@@ -195,7 +194,7 @@ const ProductivityReportForm = () => {
                                     onChange={setSportsHandler}
                                     labelledBy={"Select sports Id"}
                                     hasSelectAll={true}
-                                    disableSearch={true}
+                                    disableSearch={false}
                                 />
 
                             </Form.Group>
@@ -212,7 +211,7 @@ const ProductivityReportForm = () => {
                                     onChange={setClusterHandler}
                                     labelledBy={"Select cluster Id"}
                                     hasSelectAll={true}
-                                    disableSearch={true}
+                                    disableSearch={false}
                                 />
                             </Form.Group>
                         </div>
@@ -226,7 +225,7 @@ const ProductivityReportForm = () => {
                                     onChange={setContractTypeHandler}
                                     labelledBy={"Select contract type"}
                                     hasSelectAll={true}
-                                    disableSearch={true}
+                                    disableSearch={false}
                                 />
                             </Form.Group>
                         </div>
