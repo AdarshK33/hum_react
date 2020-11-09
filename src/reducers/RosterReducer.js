@@ -57,8 +57,11 @@ const RosterReducer = (state, action) => {
             return {...state, masterWeeks: action.payload};
             
 
-            case 'COST_CENTER_DATA':
-                return { ...state, costCenterList: action.payload };
+        case 'COST_CENTER_DATA':
+            return { ...state, costCenterList: action.payload };
+
+        case 'FETCH_PAGESHIFT_LIST':
+            return { ...state, pageData: action.payload };
 
 
 

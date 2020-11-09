@@ -118,7 +118,7 @@ function Dashboard() {
             // viewData(today, cosCentreList[0].costCentreName, clusterList[0].clusterId);
 
         }
-    }, [user.costCentre, cosCentreList, clusterList, clusterCostCenterList]);
+    }, [user.costCentre, cosCentreList, clusterList]);
 
     useEffect(() => {
                 // viewClusterCostCenter(StoreType)

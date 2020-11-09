@@ -26,7 +26,8 @@ const initial_state = {
   adminRosterWeekOffDataList: [],
   adminRosterAvailableShiftList: [],
   costCenterList: [],
-  masterWeeks: []
+  masterWeeks: [],
+  pageData:[]
 
 }
 
@@ -47,6 +48,23 @@ export const RosterProvider = ({ children }) => {
       .catch(function (error) {
         console.log(error);
       });
+  }
+
+  // page wise fetching data 
+  const viewShiftPage = (page, size) => {
+    state.pageData = [];
+
+    client.get('/shift/page?page=' + page + '&size=' +size).then(function (response) {
+      state.pageData = [];
+      // console.log("data==>" + JSON.stringify(response));
+      state.pageData = response.data.data;
+      return dispatch({ type: 'FETCH_PAGESHIFT_LIST', payload: state.pageData });
+    })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+      state.pageData = [];
   }
 
 
@@ -443,6 +461,7 @@ export const RosterProvider = ({ children }) => {
     costCenter,
     uploadWeeks,
     getMasterWeeks,
+    viewShiftPage,
     masterWeeks: state.masterWeeks,
     costCenterList: state.costCenterList,
     shiftList: state.shiftList,
@@ -460,7 +479,8 @@ export const RosterProvider = ({ children }) => {
     adminWeeksInYear: state.adminWeeksInYear,
     adminCalculateWeekResult: state.adminCalculateWeekResult,
     adminRosterAvailableShiftList: state.adminRosterAvailableShiftList,
-    EmployeeListForAdminRosterWeekOff: state.EmployeeListForAdminRosterWeekOff
+    EmployeeListForAdminRosterWeekOff: state.EmployeeListForAdminRosterWeekOff,
+    pageData: state.pageData
   }}>
     {children}
   </RosterContext.Provider>);
