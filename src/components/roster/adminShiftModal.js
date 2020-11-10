@@ -332,7 +332,8 @@ const AdminShiftModal = (props) => {
                           defaultValue=""
                           value={days}
                           style={{ fontSize: "0.8rem" }}
-                          options={dayList.map(e => ({ label: e.day, value: e.date }))}
+                          options={dayList !== null && dayList.map(e => ({ label: e.day, value: e.date }))}
+
                           onChange={handleDayList}
                           isMulti
                         />
