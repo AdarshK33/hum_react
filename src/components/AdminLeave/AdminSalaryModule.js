@@ -23,7 +23,7 @@ const AdminSalaryModule = () => {
   const [getM, setGetM] = useState();
   const [deleteModal, setDeleteModal] = useState(false);
   const [checked, setChecked] = useState([]);
-  const [costCenter, setCostCenter] = useState()
+  const [costCenter, setCostCenter] = useState('')
 
   const [editModal, setEditModal] = useState(false)
   const [employeeId, setEmployeeId] = useState()
@@ -77,25 +77,31 @@ const AdminSalaryModule = () => {
     setCurrentPage(pageNumber);
   }
   /*-----------------Pagination------------------*/
-  const validation = (event) => {
+  
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+const validate = validation()
+    
+  
+    const month = moment(getM, ["YYYY-MM"]).format("M");
+    const year = moment(getM, ["MMM Do YY"]).format("YYYY");
+    console.log("costCenter", costCenter)
+    if(validate){
+      viewSalary(month, year, costCenter);
+    }
+    
+  };
+
+  const validation = () => {
     let flag = true
     if (costCenter === '') {
-        toast.info("Select Leave Type")
+        toast.error("Select Cost Center")
         flag = false;
         return;
     }
     return flag;
 }
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    validation();
-  
-    const month = moment(getM, ["YYYY-MM"]).format("M");
-    const year = moment(getM, ["MMM Do YY"]).format("YYYY");
-    console.log("costCenter", costCenter)
-    viewSalary(month, year, costCenter);
-  };
 
   const costCenterHandler = (options) => {
     let data1 = options !== null ? options.value : ''
