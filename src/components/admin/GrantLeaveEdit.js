@@ -3,6 +3,8 @@ import { Modal } from 'react-bootstrap'
 import { AdminContext } from "../../context/AdminState";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Select from 'react-select'
+
 const GrantLeaveEdit = (props) => {
 
 
@@ -12,7 +14,7 @@ const GrantLeaveEdit = (props) => {
    /*  const [year, setYear] = useState(''); */
     const [successMsg, setSuccessMsg] = useState("");
     const [costCenter, setCostCenter] = useState()
-    const [employeeCostCenter, setEmployeeCostCenter] = useState('')
+    const [employeeCostCenter, setEmployeeCostCenter] = useState()
     const [employeeName, setEmployeeName] = useState('')
     const [grantLeaveId, setGrantLeaveId] = useState('');
     const [count, setCount] = useState();
@@ -23,6 +25,7 @@ const GrantLeaveEdit = (props) => {
         CostCenter()
         // viewGrantLeave()
         setCostCenter(props.editData.costCentre)
+        console.log("props.editData.costCentre",props.editData.costCentre)
         setEmployeeCostCenter(props.editData.empId)
         setEmployeeName(props.editData.empName)
         setNumOfDays(props.editData.numOfDays)
@@ -30,13 +33,20 @@ const GrantLeaveEdit = (props) => {
         setGrantLeaveId(props.editData.grantLeaveId)
         // employeeIdData()
     }, [props.editData])
+    
 
-    const setCostCenterHandler = (e) => {
+    const setCostCenterHandler = (options) => {
+        let data1 = options !== null ? options.value : ''
+        setCostCenter(options)
+        employeeIdData(data1)
+        console.log("data1", data1)
+    }
+    /* const setCostCenterHandler = (e) => {
         let data1 = e.target.value
         setCostCenter(data1)
         employeeIdData(data1)
         console.log("data1", data1)
-    }
+    } */
     const setEmployeeCostCenterHandler = (e) => {
         let data2 = e.target.value
         setEmployeeCostCenter(data2)
@@ -132,7 +142,7 @@ const GrantLeaveEdit = (props) => {
                                     <div className="col-sm-12">
                                         <div className="form-group md">
                                             <label htmlFor="exampleFormControlInput1"> Select Cost Center</label>
-                                            <select
+                                            {/* <select
                                                 className="form-control"
                                                 required
                                                 onChange={(e) => setCostCenterHandler(e)} >
@@ -144,7 +154,17 @@ const GrantLeaveEdit = (props) => {
 
                                                     );
                                                 })}
-                                            </select>
+                                            </select> */}
+                                            <Select
+                                                 name="filters" 
+                                               placeholder="Select Cost Center" 
+                                                value={costCenter}
+                                                defaultInputValue ={props.editData.costCentre}
+                                                style={{ fontSize: "0.8rem" }}
+                                                options={costCenterList !== null &&  costCenterList !== undefined ?
+                                                    costCenterList.map(e => ({ label: e.costCentreName, value: e.costCentreName })) : []}
+                                                onChange={setCostCenterHandler}
+                                                required isSearchable />
                                         </div>
                                     </div>
                                 </div>
@@ -156,9 +176,9 @@ const GrantLeaveEdit = (props) => {
 
                                             <select
                                                 className="form-control"
-                                                required
+                                                required value={employeeName-employeeCostCenter}
                                                 onChange={(e) => setEmployeeCostCenterHandler(e)}>
-                                                <option value={employeeCostCenter}>{employeeName}-{employeeCostCenter}</option>
+                                                {/* <option value={employeeCostCenter}>{employeeName}-{employeeCostCenter}</option> */}
                                                 {employeeIdList !== null && employeeIdList.map((item, i) => {
                                                     return (
                                                         <option key={item.employeeId} value={item.employeeId}>
