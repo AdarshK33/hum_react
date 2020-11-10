@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Container, Row, Button, Form, Modal } from 'react-bootstrap';
-
+import Select from 'react-select';
 import "react-datepicker/dist/react-datepicker.css";
 // import { useHistory } from "react-router-dom";
 import { ToastContainer} from "react-toastify";
@@ -54,8 +54,9 @@ const AddTarget = (props) => {
 
 
     const fromStoreHandler = (e) => {
+        // console.log(e)
         setStoreType(e);
-        viewClusterList(e)
+        viewClusterList(e.value);
     }
 
 
@@ -120,10 +121,11 @@ const AddTarget = (props) => {
             month: MonthData,
             monthName: "",
             productTarget: target,
-            storeName: StoreType,
+            storeName: StoreType.value,
             targetId: 0,           
             year: year
             }
+            // console.log(Values)
              addTarget(Values);
         
 
@@ -169,7 +171,17 @@ const AddTarget = (props) => {
                                     <div className="col-sm-12">
                                         <Form.Group>
                                             <Form.Label>Select Cost Center :</Form.Label>
-                                            <Form.Control as="select"
+
+                                            <Select
+                                                name="filters"
+                                                placeholder="Select Cost Center"
+                                                value={StoreType} 
+                                                style={{fontSize:"0.8rem"}}
+                                                options={cosCentreList !== null  ?
+                                                    cosCentreList.map(e => ({label: e.costCentreName, value: e.costCentreName})):[]}
+                                                onChange={fromStoreHandler}
+                                                required isSearchable /> 
+                                            {/* <Form.Control as="select"
                                                 onChange={(e)=>fromStoreHandler(e.target.value)}
                                                 required
                                                 >
@@ -179,7 +191,7 @@ const AddTarget = (props) => {
                                                         return(
                                                         <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
                                                     })}
-                                            </Form.Control>
+                                            </Form.Control> */}
                                         </Form.Group>
                                     </div>
                                 </Row>

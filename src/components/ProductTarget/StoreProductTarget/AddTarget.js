@@ -4,7 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useHistory } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import Select from 'react-select';
 import { DashboardContext } from "../../../context/DashboardState";
 import { StoreProductContext } from "../../../context/StoreProductState";
 import moment from 'moment'
@@ -44,7 +44,7 @@ const AddTarget = (props) => {
 
     const fromStoreHandler = (e) => {
         setStoreType(e);
-        getStateData(e) ; 
+        getStateData(e.value) ; 
                  
 
     }
@@ -96,7 +96,7 @@ const AddTarget = (props) => {
         const year = moment(getM, ["MMM Do YY"]).format('YYYY');
         const validate = validation();
         const Values = {
-            costCenter: StoreType,
+            costCenter: StoreType.value,
             growth: Percentage,
             month: MonthData,
             monthName: "",
@@ -107,6 +107,7 @@ const AddTarget = (props) => {
             year: year
            }
         if(validate){
+            // console.log(Values);
             addTarget(Values);
         }
        
@@ -180,7 +181,16 @@ const AddTarget = (props) => {
                                 <div className="col-sm-12">
                                     <Form.Group>
                                         <Form.Label>Select Cost Center :</Form.Label>
-                                        <Form.Control as="select" required
+                                        <Select
+                                                name="filters"
+                                                placeholder="Select Cost Center"
+                                                value={StoreType} 
+                                                style={{fontSize:"0.8rem"}}
+                                                options={cosCentreList !== null && cosCentreList !== undefined ?
+                                                    cosCentreList.map(e => ({label: e.costCentreName, value: e.costCentreName})):[]}
+                                                onChange={fromStoreHandler}
+                                                required isSearchable /> 
+                                        {/* <Form.Control as="select" required
                                             onChange={(e)=>fromStoreHandler(e.target.value)}
                                             >
                                             <option value="">Select</option>
@@ -189,7 +199,7 @@ const AddTarget = (props) => {
                                                     return(
                                                     <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
                                                 })}
-                                        </Form.Control>
+                                        </Form.Control> */}
                                     </Form.Group>
                                 </div>
                             </Row>
