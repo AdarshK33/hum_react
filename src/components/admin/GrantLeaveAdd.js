@@ -3,6 +3,8 @@ import { Modal } from 'react-bootstrap'
 import { AdminContext } from "../../context/AdminState";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Select from 'react-select'
+
 const GrantLeaveAdd = (props) => {
 
 
@@ -17,8 +19,8 @@ const GrantLeaveAdd = (props) => {
 
     var year = new Date().getFullYear()
 
-    const setCostCenterHandler = (e) => {
-        let data1 = e.target.value
+    const setCostCenterHandler = (options) => {
+        let data1 = options !== null ? options.value : ''
         setCostCenter(data1)
         employeeIdData(data1)
         console.log("data1", data1)
@@ -116,7 +118,7 @@ const GrantLeaveAdd = (props) => {
                                     <div className="col-sm-12">
                                         <div className="form-group md">
                                             <label htmlFor="exampleFormControlInput1"> Select Cost Center</label>
-                                            <select
+                                            {/* <select
                                                 className="form-control"
                                                 required
                                                 onChange={(e) => setCostCenterHandler(e)} >
@@ -129,7 +131,16 @@ const GrantLeaveAdd = (props) => {
 
                                                     );
                                                 })}
-                                            </select>
+                                            </select> */}
+                                            <Select
+                                                name="filters"
+                                                placeholder="Select Cost Center"
+                                                /* value={costCenter} */
+                                                style={{ fontSize: "0.8rem" }}
+                                                options={costCenterList !== null ?
+                                                    costCenterList.map(e => ({ label: e.costCentreName, value: e.costCentreName })) : []}
+                                                onChange={setCostCenterHandler}
+                                                required isSearchable />
                                         </div>
                                     </div>
                                 </div>

@@ -14,6 +14,9 @@ import { AppContext } from "../../context/AppState";
 import { DashboardContext } from "../../context/DashboardState";
 import Pagination from 'react-js-pagination';
 import AdminSalaryEdit from './AdminSalaryEdit';
+import Select from 'react-select'
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AdminSalaryModule = () => {
   const [shiftButton] = useState(false);
@@ -38,6 +41,7 @@ const AdminSalaryModule = () => {
   const [totalHours, setTotalHours] = useState()
   const [additionalHours, setadditionalHours] = useState()
   const [year, setYear] = useState()
+  const [error, setError] = useState(false)
 
 
 
@@ -62,7 +66,7 @@ const AdminSalaryModule = () => {
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
   const recordPerPage = 10;
-  const totalRecords = salaryList !== null && salaryList.length;
+  const totalRecords = salaryList !== null && salaryList !== undefined && salaryList.length;
   const pageRange = 10;
 
   const indexOfLastRecord = currentPage * recordPerPage;
@@ -73,19 +77,33 @@ const AdminSalaryModule = () => {
     setCurrentPage(pageNumber);
   }
   /*-----------------Pagination------------------*/
+  const validation = (event) => {
+    let flag = true
+    if (costCenter === '') {
+        toast.info("Select Leave Type")
+        flag = false;
+        return;
+    }
+    return flag;
+}
 
   const onSubmit = (e) => {
     e.preventDefault();
+    validation();
+  
     const month = moment(getM, ["YYYY-MM"]).format("M");
     const year = moment(getM, ["MMM Do YY"]).format("YYYY");
     console.log("costCenter", costCenter)
     viewSalary(month, year, costCenter);
   };
 
-  const costCenterHandler = e => {
-    setCostCenter(e.target.value)
-    console.log("e.target.value", e.target.value)
+  const costCenterHandler = (options) => {
+    let data1 = options !== null ? options.value : ''
+    setCostCenter(data1)
+    console.log("data1", data1)
   }
+
+
 
   const approvedButton = () => {
     const approvalData = {
@@ -101,7 +119,7 @@ const AdminSalaryModule = () => {
     /* 
     console.log("month, costCenter, year",month, costCenter, year)
     viewStoreSalary(month, costCenter, year) */
-    history.push("/adminleaves/adminsalarymodule");
+    history.push("/salary/approval");
   };
 
 
@@ -118,7 +136,7 @@ const AdminSalaryModule = () => {
 
     /*   console.log("month, costCenter, year",month, costCenter, year)
       viewStoreSalary(month, costCenter, year) */
-    history.push("/adminleaves/adminsalarymodule");
+    history.push("/salary/approval");
   };
 
   const checkboxHandler = (salaryId) => {
@@ -152,14 +170,25 @@ const AdminSalaryModule = () => {
             <div className="col-sm-4">
               <Form.Group>
                 <Form.Label>Cost Center</Form.Label><span style={{ color: 'red' }}>*</span>
-                <Form.Control as="select" required value={costCenter} onChange={(e) => costCenterHandler(e)}>
+               {/*  <Form.Control as="select" required value={costCenter} onChange={(e) => costCenterHandler(e)}>
                   <option value="">Select</option>
                   {cosCentreList.map((e, i) => {
                     return (
                       <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
                   })}
 
-                </Form.Control>
+                </Form.Control> */}
+                <Select
+                  name="filters"
+                  placeholder="Select Cost Center"
+                 /*  value={costCenter} */
+                  style={{ fontSize: "0.8rem" }}
+                  options={cosCentreList !== null ?
+                    cosCentreList.map(e => ({ label: e.costCentreName, value: e.costCentreName })) : []}
+                  onChange={costCenterHandler}
+                  required={true} isSearchable 
+                  />
+                  <div>{error && <span style={{color:'red'}}>Cost Center is Required</span> }</div>
               </Form.Group>
             </div>
           </Row>
@@ -243,84 +272,84 @@ const AdminSalaryModule = () => {
                     </tr>
                   </thead>
 
-                  {loader === true && currentRecords !== null && currentRecords !== undefined  ?
-                    <tbody>
-                    <tr>
-                        <td colSpan='10'>
-                            <div className="loader-box loader" style={{ width: "100% !important"}}>
-                                <div className="loader">
-                                    <div className="line bg-primary"></div>
-                                    <div className="line bg-primary"></div>
-                                    <div className="line bg-primary"></div>
-                                    <div className="line bg-primary"></div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody> :
-                    currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 ?
-                    currentRecords.map((item, i) => {
-                      return (
-                        <tbody key={i + 1}>
-                          <tr>
-                            <td>
-                              {" "}
-                              {item.statusDesc === "Pending" ? (
-                                <input
-                                  type="checkbox"
-                                  checked={checked.indexOf(item.salaryId) >= 0}
-                                  onChange={() => checkboxHandler(item.salaryId)}
-                                  name="selectCheckbox"
-                                />
-                              ) : (
-                                  <input type="checkbox" disabled />
-                                )}{" "}
-                            </td>
-                            <td>{i + 1 + indexOfFirstRecord}</td>
-
-                            <td>{item.employeeId}</td>
-                            <td>
-                              {item.firstName} {item.lastName}
-                            </td>
-                            <td>{item.numberOfHours}</td>
-
-                            <td>{item.lop}</td>
-                            <td>{item.contractType}</td>
-
-                            <td>{item.reason}</td>
-                            <td>{item.extraHours}</td>
-                            <td>{item.totalHours}</td>
-                            <td>{item.statusDesc}</td>
-                            <td>
-                              {
-                                item.statusDesc === 'Pending' ?
-                                  <Edit2 onClick={() => {
-                                    setEditModal(true); setEmployeeId(item.employeeId);
-                                    setFirstName(item.firstName); setLastName(item.lastName); setNumberOfHours(item.numberOfHours)
-                                    setLop(item.lop); setContractType(item.contractType); setExtraHours(item.extraHours);
-                                    setReason(item.reason); setMonth(item.month); setSalaryId(item.salaryId);
-                                    setStatus(item.status); setStatusDesc(item.statusDesc);
-                                    setTotalHours(item.totalHours); setYear(item.year);
-                                    setadditionalHours(item.additionalHours);
-                                  }} />
-                                  :
-                                  <Edit2 disabled style={{ color: 'lightgrey' }} />
-                              }
-                            </td>
-
-
-                          </tr>
-                        </tbody>
-                      )
-                    }):
+                  {loader === true && currentRecords !== null && currentRecords !== undefined ?
                     <tbody>
                       <tr>
-                        <td colSpan="10">No Record Found</td>
+                        <td colSpan='10'>
+                          <div className="loader-box loader" style={{ width: "100% !important" }}>
+                            <div className="loader">
+                              <div className="line bg-primary"></div>
+                              <div className="line bg-primary"></div>
+                              <div className="line bg-primary"></div>
+                              <div className="line bg-primary"></div>
+                            </div>
+                          </div>
+                        </td>
                       </tr>
-                    </tbody>
-                    }
+                    </tbody> :
+                    currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 ?
+                      currentRecords.map((item, i) => {
+                        return (
+                          <tbody key={i + 1}>
+                            <tr>
+                              <td>
+                                {" "}
+                                {item.statusDesc === "Pending" ? (
+                                  <input
+                                    type="checkbox"
+                                    checked={checked.indexOf(item.salaryId) >= 0}
+                                    onChange={() => checkboxHandler(item.salaryId)}
+                                    name="selectCheckbox"
+                                  />
+                                ) : (
+                                    <input type="checkbox" disabled />
+                                  )}{" "}
+                              </td>
+                              <td>{i + 1 + indexOfFirstRecord}</td>
+
+                              <td>{item.employeeId}</td>
+                              <td>
+                                {item.firstName} {item.lastName}
+                              </td>
+                              <td>{item.numberOfHours}</td>
+
+                              <td>{item.lop}</td>
+                              <td>{item.contractType}</td>
+
+                              <td>{item.reason}</td>
+                              <td>{item.extraHours}</td>
+                              <td>{item.totalHours}</td>
+                              <td>{item.statusDesc}</td>
+                              <td>
+                                {
+                                  item.statusDesc === 'Pending' ?
+                                    <Edit2 onClick={() => {
+                                      setEditModal(true); setEmployeeId(item.employeeId);
+                                      setFirstName(item.firstName); setLastName(item.lastName); setNumberOfHours(item.numberOfHours)
+                                      setLop(item.lop); setContractType(item.contractType); setExtraHours(item.extraHours);
+                                      setReason(item.reason); setMonth(item.month); setSalaryId(item.salaryId);
+                                      setStatus(item.status); setStatusDesc(item.statusDesc);
+                                      setTotalHours(item.totalHours); setYear(item.year);
+                                      setadditionalHours(item.additionalHours);
+                                    }} />
+                                    :
+                                    <Edit2 disabled style={{ color: 'lightgrey' }} />
+                                }
+                              </td>
+
+
+                            </tr>
+                          </tbody>
+                        )
+                      }) :
+                      <tbody>
+                        <tr>
+                          <td colSpan="10">No Record Found</td>
+                        </tr>
+                      </tbody>
+                  }
                 </Table>
-               {/*  {salaryList !== null && salaryList.length <= 0 ? (
+                {/*  {salaryList !== null && salaryList.length <= 0 ? (
                   <p style={{ textAlign: "center" }}>Select Month and Year</p>
                 ) : null} */}
                 {/* {salaryList.length>0 ?<p>No data found</p>:null} */}
@@ -349,7 +378,7 @@ const AdminSalaryModule = () => {
           costCenter={costCenter}
         />
       </div>
-      {salaryList !== null && salaryList.length > 10 &&
+      {salaryList !== null && salaryList !== undefined && salaryList.length > 10 &&
         <Pagination
           itemClass="page-item"
           linkClass="page-link"

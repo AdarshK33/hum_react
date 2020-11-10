@@ -50,7 +50,7 @@ const AdminReportForm = () => {
 
     const setCostCenterHandler = (options) => {
         let data1 = options !== null ? options.value : ''
-       setCostCenter(options)
+       setCostCenter(data1)
        employeeIdData(data1)
        console.log("data1", data1)
     }
@@ -165,12 +165,13 @@ const AdminReportForm = () => {
                                 <Select
                                 name="filters"
                                 placeholder="Select Cost Center"
-                                value={costCenter} 
+                               /*  value={costCenter} */ 
                                 style={{fontSize:"0.8rem"}}
                                 options={costCenterList !== null  ?
                                     costCenterList.map(e => ({label: e.costCentreName, value: e.costCentreName})):[]}
                                 onChange={setCostCenterHandler}
-                                 required isSearchable /> 
+                                 required={true} 
+                                 isSearchable /> 
                             </Form.Group>
                         </div> : 
                          <div className="col-sm-4">
@@ -201,7 +202,7 @@ const AdminReportForm = () => {
                                     onChange={setEmployeeCostCenterHandler}
                                     labelledBy={"Select Employee Id"}
                                     hasSelectAll={true}
-                                    disableSearch={true}
+                                    disableSearch={false}
                                 />
                             </Form.Group>
                         </div>
@@ -222,7 +223,7 @@ const AdminReportForm = () => {
                                     onChange={setLeaveHandler}
                                     labelledBy={"Select Leave Type"}
                                     hasSelectAll={true}
-                                    disableSearch={true}
+                                    disableSearch={false}
                                 />
                             </Form.Group>
                         </div>

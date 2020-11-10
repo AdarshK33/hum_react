@@ -1,14 +1,17 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
+import { Table } from 'react-bootstrap';
 import Breadcrumb from '../common/breadcrumb';
 import GrantLeaveAdd from './GrantLeaveAdd';
 import GrantLeaveEdit from './GrantLeaveEdit';
 import { Edit2, Search } from 'react-feather'
 import Pagination from 'react-js-pagination'
 import { AdminContext } from "../../context/AdminState";
+import { SearchContext } from '../../context/SearchState';
+
 const GrantLeaveView = () => {
 
 
-  const { viewGrantLeave, grantLeaveView } = useContext(AdminContext);
+  const { viewGrantLeave, grantLeaveView, loader } = useContext(AdminContext);
 
 
   const [modal, setModal] = useState(false);
@@ -18,13 +21,17 @@ const GrantLeaveView = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const handleEditClose = () => setEditModal(false);
   const [empLeave, setEmpLeave] = useState();
+  const [searchValue, setSearchValue] = useState(false);
+  const [searchLeaveList, setLeaveList] = useState();
+  const { searchByEmpId, empIdSearchList } = useContext(SearchContext);
+
   const recordPerPage = 10;
-  const totalRecords = grantLeaveView.length;
+  const totalRecords = searchLeaveList !== undefined && searchLeaveList !== null && searchLeaveList.length;
   const pageRange = 10;
 
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  const currentRecords = grantLeaveView.slice(indexOfFirstRecord, indexOfLastRecord);
+  const currentRecords = searchLeaveList !== undefined && searchLeaveList !== null ? searchLeaveList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
   useEffect(() => {
     viewGrantLeave()
@@ -37,8 +44,33 @@ const GrantLeaveView = () => {
 
     setEmpLeave(item);
 
+  }
+  useEffect(() => {
+    if (grantLeaveView !== undefined && grantLeaveView !== null && grantLeaveView.length > 0) {
+      setLeaveList(grantLeaveView);
+    }
+
+  }, [grantLeaveView])
+
+  const searchHandler = (e) => {
+    setSearchValue(e.target.value)
 
   }
+
+  const searchDataHandler = () => {
+    if (searchValue !== "") {
+      searchByEmpId(searchValue);
+    } else {
+      viewGrantLeave()
+    }
+
+  }
+
+  useEffect(() => {
+    if (empIdSearchList !== undefined && empIdSearchList !== null && empIdSearchList.length > 0) {
+      setLeaveList(empIdSearchList);
+    }
+  }, [empIdSearchList])
   return (
     <Fragment>
       <Breadcrumb title="Grant Leave " parent=" Grant Leave " />
@@ -46,11 +78,17 @@ const GrantLeaveView = () => {
         <div className="title_bar" style={{ background: "#006EBB" }} >
 
           <button className="btn btn-light mr-2" onClick={handleShow}>Create</button>
+          <div className="job-filter">
+            <div className="faq-form mr-2">
+              <input className="form-control searchButton" type="text" placeholder="Search.." onChange={(e) => searchHandler(e)} />
+              <Search className="search-icon" style={{ color: "#313131" }} onClick={searchDataHandler} />
+            </div>
+          </div>
         </div>
         <GrantLeaveAdd handleClose={handleClose} modal={modal} />
 
 
-        <table id="table-to-xls" className="table table-hover">
+        <Table id="table-to-xls" className="table table-hover">
           <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
             <tr>
               <th scope="col">S. No</th>
@@ -63,32 +101,54 @@ const GrantLeaveView = () => {
               <th scope="col"></th>
             </tr>
           </thead>
-          {currentRecords !== undefined && currentRecords !== null &&
-            currentRecords.map((item, i) => {
-              return (
-                <tbody key={i + 1}>
-                  <tr>
-                    <td>{i + 1 + indexOfFirstRecord}</td>
-                    <td>{item.empId}</td>
-                    <td>{item.empName}</td>
-                    <td>{item.costCentre}</td>
-                    <td>{item.numOfDays}</td>
-                    <td>{item.year}</td>
-                    <td><Edit2 style={{ color: '#376ebb' }}
-                      onClick={() => {
-                        setEditModal(true);
-                        editHandler(item)
-                      }}
+          {loader === true && currentRecords !== null && currentRecords !== undefined ?
+            <tbody>
+              <tr>
+                <td colspan='6'>
+                  <div className="loader-box loader" style={{ width: "100% !important" }}>
+                    <div className="loader">
+                      <div className="line bg-primary"></div>
+                      <div className="line bg-primary"></div>
+                      <div className="line bg-primary"></div>
+                      <div className="line bg-primary"></div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
 
-                    /></td>
-                  </tr>
-                </tbody>
+            :
+            currentRecords !== undefined && currentRecords !== null &&
+              currentRecords.length > 0 ?
+              currentRecords.map((item, i) => {
+                return (
+                  <tbody key={i + 1}>
+                    <tr>
+                      <td>{i + 1 + indexOfFirstRecord}</td>
+                      <td>{item.empId}</td>
+                      <td>{item.empName}</td>
+                      <td>{item.costCentre}</td>
+                      <td>{item.numOfDays}</td>
+                      <td>{item.year}</td>
+                      <td><Edit2 style={{ color: '#376ebb' }}
+                        onClick={() => {
+                          setEditModal(true);
+                          editHandler(item)
+                        }}
 
-              )
-            })}
-        </table>
+                      /></td>
+                    </tr>
+                  </tbody>
 
-        {(grantLeaveView === null) ?
+                )
+              }) : <tbody>
+                <tr>
+                  <td colspan='6'>No Record Found</td>
+                </tr>
+              </tbody>}
+        </Table>
+
+        {/*   {(grantLeaveView === null) ?
           <p style={{ textAlign: "center" }}>No Record Found</p> : null}
 
         {grantLeaveView !== undefined && grantLeaveView !== null && currentRecords.length === 0 ?
@@ -102,7 +162,7 @@ const GrantLeaveView = () => {
             </div>
           </div>
           :
-          null}
+          null} */}
         {empLeave !== null && empLeave !== undefined &&
           empLeave.length !== 0 ? <GrantLeaveEdit handleEditClose={handleEditClose}
             modal={editModal}
@@ -110,7 +170,7 @@ const GrantLeaveView = () => {
           /> : ""}
 
         <div>
-          {grantLeaveView !== null && grantLeaveView.length > 10 &&
+          {searchLeaveList !== undefined && searchLeaveList !== null && searchLeaveList.length > 10 &&
             <Pagination
               itemClass="page-item"
               linkClass="page-link"
