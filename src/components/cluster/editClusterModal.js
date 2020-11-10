@@ -4,6 +4,7 @@ import { ClusterContext } from "../../context/ClusterState";
 import { Multiselect } from 'multiselect-react-dropdown';
 import { toast } from "react-toastify";
 import { RosterContext } from "../../context/RosterState";
+import Select from 'react-select'
 import { AppContext } from "../../context/AppState";
 import "react-toastify/dist/ReactToastify.css";
 const EditClusterModal = (props) => {
@@ -52,7 +53,7 @@ const EditClusterModal = (props) => {
     setDescription(getSingleCluster.description)
     setClusterLeader(getSingleCluster.clusterLeader)
     setStatus(getSingleCluster.status)
-    setCostCenterName(props.shiftData.storeId)
+    setCostCenterName(getSingleCluster.storeId)
   }, [props])
 
   useEffect(() => {
@@ -78,14 +79,19 @@ const EditClusterModal = (props) => {
   }, [user.costCentre, user.loginType]);
 
 
-  const getCostCenterName = (e) => {
-    let data = e.target.value
+  // const getCostCenterName = (e) => {
+  //   let data = e.target.value
+  //   setCostCenterName(data)
+  //   callClusterEmployees(data, user.employeeId)
+  //   callClusterLeaders(data, user.employeeId)
+  //   //selectClusterLeader(data1)
+  // }
+  const getCostCenterName = (options) => {
+    let data = options !== null ? options.value : ''
     setCostCenterName(data)
     callClusterEmployees(data, user.employeeId)
     callClusterLeaders(data, user.employeeId)
-    //selectClusterLeader(data1)
   }
-
 
   //cost center name
 
@@ -191,7 +197,7 @@ const EditClusterModal = (props) => {
   }
 
 
-
+  console.log("=== " + props.shiftData.storeId)
 
   //Timer to close modal 
   const callTimer = () => {
@@ -263,9 +269,9 @@ const EditClusterModal = (props) => {
                 return (
                   <div className="row">
                     <div className="col-sm-12">
-                      <div className="form-group">
-                        <label htmlFor="exampleFormControlInput1">Select Cost Center</label>
-                        <select
+                      {/* <div className="form-group"> */}
+                      <label htmlFor="exampleFormControlInput1">Select Cost Center</label>
+                      {/* <select
                           value={costCenterName}
                           className="form-control"
                           required
@@ -278,10 +284,20 @@ const EditClusterModal = (props) => {
                               <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
                           })}
 
-                        </select>
-                      </div>
+                        </select> */}
+
+
+                      <Select
+                        name="filters"
+                        placeholder={getSingleCluster.storeId}
+                        options={costCenterList !== null && costCenterList !== undefined ?
+                          costCenterList.map(e => ({ label: e.costCentreName, value: e.costCentreName })) : []}
+                        style={{ fontSize: "0.9rem" }}
+                        onChange={getCostCenterName}
+                        required isSearchable />
                     </div>
                   </div>
+                  // </div>
                 )
               }
             })()}

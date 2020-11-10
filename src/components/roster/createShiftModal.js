@@ -4,6 +4,7 @@ import moment from 'moment';
 import "react-datepicker/dist/react-datepicker.css";
 import { Modal } from 'react-bootstrap'
 import { RosterContext } from "../../context/RosterState";
+import Select from 'react-select'
 import { AppContext } from "../../context/AppState";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -33,7 +34,8 @@ const CreateShiftModal = (props) => {
   const [fiveToEightWarnMsg, setFiveToEightWarnMsg] = useState(false);
   const [oneToFiveWarnMsg, setOneFiveWarnMsg] = useState(false);
   const [costCenterName, setCostCenterName] = useState('');
-  const { addShift, viewShift, viewShiftTypes, viewContractTypes, shiftContractNames, costCenterList, costCenter } = useContext(RosterContext);
+  const [costCenterRequireMsg, setCostCenterRequireMsg] = useState(false);
+  const { addShift, viewShiftTypes, viewContractTypes, shiftContractNames, costCenterList, costCenter } = useContext(RosterContext);
 
   const { user } = useContext(AppContext);
 
@@ -160,7 +162,16 @@ const CreateShiftModal = (props) => {
     setClear();
     props.handleClose();
   }
+
+  const handleCostCenter = (options) => {
+    let data = options !== null ? options.value : ''
+    setCostCenterName(data)
+  }
+
+
+
   const onSubmit = e => {
+
     const stime = moment(startTime, ["h:mm A"]).format("HH:mm");
     const etime = moment(endTime, ["h:mm A"]).format("HH:mm");
     let storeId = costCenterName;
@@ -168,68 +179,118 @@ const CreateShiftModal = (props) => {
     // alert(workingHours);
     if (user.loginType !== "1" && user.loginType !== "9" && user.additionalRole !== "1" && user.additionalRole !== "9") {
       storeId = user.costCentre;
-    }
-    var result = parseInt(workingHours);
-    if (result <= 5) {
-      e.preventDefault();
-      const newShift = {
-        startTime: moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
-        endTime: moment(endTime, ["h:mm A"]).format("HH:mm:ss"),
-        contractType,
-        shiftMasterId: 0,
-        shiftType,
-        workingHours: 0,
-        storeId: storeId,
-        breakStartTime: 0,
-        breakEndTime: 0,
-        status: 0
-      }
-      setSuccessMsg(true);
-      const result = addShift(newShift)
-        .then((result) => {
-          console.log("api response===", result.data.message);
-          toast.info(result.data.message);
-          setTimeout(() => {
-            callTimer();
-          }, 1000);
-          viewShift();
-        })
-        .catch((error) => {
-          alert(" In error catch ", error);
-        })
+      var result = parseInt(workingHours);
+      if (result <= 5) {
+        e.preventDefault();
 
+
+
+        const newShift = {
+          startTime: moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
+          endTime: moment(endTime, ["h:mm A"]).format("HH:mm:ss"),
+          contractType,
+          shiftMasterId: 0,
+          shiftType,
+          workingHours: 0,
+          storeId: storeId,
+          breakStartTime: 0,
+          breakEndTime: 0,
+          status: 0
+        }
+
+        addShift(newShift)
+        setClear()
+
+
+
+      }
+      else {
+
+
+        e.preventDefault();
+
+        const newShift = {
+
+          startTime: moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
+          endTime: moment(endTime, ["h:mm A"]).format("HH:mm:ss"),
+          contractType,
+          shiftMasterId: 0,
+          shiftType,
+          workingHours: 0,
+          storeId: storeId,
+          breakStartTime: moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
+          breakEndTime: moment(breakStartTime).add(1, 'hours').format('HH:mm:ss'),
+          status: 0
+        }
+
+        addShift(newShift)
+        setClear()
+      }
     }
     else {
 
 
-      e.preventDefault();
-      const newShift = {
-        startTime: moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
-        endTime: moment(endTime, ["h:mm A"]).format("HH:mm:ss"),
-        contractType,
-        shiftMasterId: 0,
-        shiftType,
-        workingHours: 0,
-        storeId: storeId,
-        breakStartTime: moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
-        breakEndTime: moment(breakStartTime).add(1, 'hours').format('HH:mm:ss'),
-        status: 0
+      var result = parseInt(workingHours);
+      if (result <= 5) {
+        e.preventDefault();
+
+        const validate = validation();
+
+        const newShift = {
+          startTime: moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
+          endTime: moment(endTime, ["h:mm A"]).format("HH:mm:ss"),
+          contractType,
+          shiftMasterId: 0,
+          shiftType,
+          workingHours: 0,
+          storeId: storeId,
+          breakStartTime: 0,
+          breakEndTime: 0,
+          status: 0
+        }
+        if (validate) {
+          addShift(newShift)
+          setClear()
+        }
+
+
       }
-      setSuccessMsg(true);
-      const result = addShift(newShift)
-        .then((result) => {
-          toast.info(result.data.message);
-          setTimeout(() => {
-            callTimer();
-          }, 1000);
-          viewShift();
-        })
+      else {
 
-        .catch((error) => {
-          alert(" In error catch ", error);
-        })
 
+        e.preventDefault();
+        const validate = validation();
+        const newShift = {
+
+          startTime: moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
+          endTime: moment(endTime, ["h:mm A"]).format("HH:mm:ss"),
+          contractType,
+          shiftMasterId: 0,
+          shiftType,
+          workingHours: 0,
+          storeId: storeId,
+          breakStartTime: moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
+          breakEndTime: moment(breakStartTime).add(1, 'hours').format('HH:mm:ss'),
+          status: 0
+        }
+
+        if (validate) {
+          addShift(newShift)
+          setClear()
+        }
+      }
     }
+  }
+
+
+  const validation = () => {
+    let flag = true
+    if (costCenterName === "") {
+      toast.info("cost center is required")
+      flag = false;
+      return;
+    }
+    return flag;
   }
   return (
     <Modal show={props.modal} onHide={props.handleClose} centered>
@@ -406,7 +467,7 @@ const CreateShiftModal = (props) => {
                           <div className="col-sm-12">
                             <div className="form-group">
                               <label htmlFor="exampleFormControlInput1">Select cost center</label>
-                              <select
+                              {/* <select
                                 isSearchable
                                 required
                                 value={costCenterName}
@@ -420,13 +481,26 @@ const CreateShiftModal = (props) => {
                                       <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
                                   })}
 
-                              </select>
+                              </select> */}
+
+                              <Select
+                                name="filters"
+                                placeholder="Cost Center"
+                                //value={costCenter1}
+                                style={{ fontSize: "0.9rem", height: "0px" }}
+                                options={costCenterList !== null && costCenterList !== undefined ?
+                                  costCenterList.map(e => ({ label: e.costCentreName, value: e.costCentreName })) : []}
+
+                                onChange={handleCostCenter}
+                                required isSearchable />
                             </div>
+
                           </div>
                         </div>
                       )
                     }
                   })()}
+
                   <button className="myclass mb-2 mr-2" type="submit" disabled={shiftButton} value="Submit">Save</button>
                   <button className="myclass mb-2 ml-2" onClick={() => { clearAndClose() }}>Close</button>
                 </form>
