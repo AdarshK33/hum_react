@@ -14,7 +14,7 @@ const GrantLeaveEdit = (props) => {
    /*  const [year, setYear] = useState(''); */
     const [successMsg, setSuccessMsg] = useState("");
     const [costCenter, setCostCenter] = useState()
-    const [employeeCostCenter, setEmployeeCostCenter] = useState()
+    const [employeeCostCenter, setEmployeeCostCenter] = useState('')
     const [employeeName, setEmployeeName] = useState('')
     const [grantLeaveId, setGrantLeaveId] = useState('');
     const [count, setCount] = useState();
@@ -25,7 +25,6 @@ const GrantLeaveEdit = (props) => {
         CostCenter()
         // viewGrantLeave()
         setCostCenter(props.editData.costCentre)
-        console.log("props.editData.costCentre",props.editData.costCentre)
         setEmployeeCostCenter(props.editData.empId)
         setEmployeeName(props.editData.empName)
         setNumOfDays(props.editData.numOfDays)
@@ -33,13 +32,12 @@ const GrantLeaveEdit = (props) => {
         setGrantLeaveId(props.editData.grantLeaveId)
         // employeeIdData()
     }, [props.editData])
-    
 
-    const setCostCenterHandler = (options) => {
-        let data1 = options !== null ? options.value : ''
-        setCostCenter(options)
-        employeeIdData(data1)
-        console.log("data1", data1)
+    const setCostCenterHandler = (e) => {
+       /*  let data1 = options !== null ? options.value : '' */
+        setCostCenter(e.value)
+        employeeIdData(e.value)
+        console.log("data1", e.value)
     }
     /* const setCostCenterHandler = (e) => {
         let data1 = e.target.value
@@ -48,9 +46,8 @@ const GrantLeaveEdit = (props) => {
         console.log("data1", data1)
     } */
     const setEmployeeCostCenterHandler = (e) => {
-        let data2 = e.target.value
-        setEmployeeCostCenter(data2)
-        console.log("data2", data2)
+        setEmployeeCostCenter(e.value)
+        console.log("data2", e.value)
     }
     useEffect(() => {
         CostCenter()
@@ -157,9 +154,9 @@ const GrantLeaveEdit = (props) => {
                                             </select> */}
                                             <Select
                                                  name="filters" 
-                                               placeholder="Select Cost Center" 
+                                               placeholder={costCenter}
                                                 value={costCenter}
-                                                defaultInputValue ={props.editData.costCentre}
+                                                selected={costCenter}
                                                 style={{ fontSize: "0.8rem" }}
                                                 options={costCenterList !== null &&  costCenterList !== undefined ?
                                                     costCenterList.map(e => ({ label: e.costCentreName, value: e.costCentreName })) : []}
@@ -174,18 +171,30 @@ const GrantLeaveEdit = (props) => {
                                         <div className="form-group md">
                                             <label htmlFor="exampleFormControlInput1"> Select Employee</label>
 
-                                            <select
+                                            {/* <select
                                                 className="form-control"
-                                                required value={employeeName-employeeCostCenter}
+                                                required value={employeeCostCenter} 
+                                                placeholder={employeeCostCenter} 
+                                                selected={employeeCostCenter}
                                                 onChange={(e) => setEmployeeCostCenterHandler(e)}>
-                                                {/* <option value={employeeCostCenter}>{employeeName}-{employeeCostCenter}</option> */}
+                                                <option value={employeeCostCenter}>{employeeName}-{employeeCostCenter}</option>
                                                 {employeeIdList !== null && employeeIdList.map((item, i) => {
                                                     return (
                                                         <option key={item.employeeId} value={item.employeeId}>
                                                             {item.firstName}-{item.employeeId}</option>
                                                     );
                                                 })}
-                                            </select>
+                                            </select> */}
+                                             <Select
+                                                 name="filters" 
+                                               placeholder={employeeName + '-' + employeeCostCenter}
+                                                /* value={employeeCostCenter} */
+                                                selected={employeeName + '-' + employeeCostCenter}
+                                                style={{ fontSize: "0.8rem" }}
+                                                options={employeeIdList !== null &&  employeeIdList !== undefined ?
+                                                    employeeIdList.map(e => ({ label: e.firstName + '-'+ e.employeeId, value: e.employeeId })) : []}
+                                                onChange={setEmployeeCostCenterHandler}
+                                                required isSearchable />
                                         </div>
                                     </div>
                                 </div>
