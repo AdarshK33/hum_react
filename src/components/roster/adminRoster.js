@@ -3,8 +3,10 @@ import Breadcrumb from "../common/breadcrumb";
 import { RosterContext } from "../../context/RosterState";
 import { AppContext } from "../../context/AppState";
 import DatePicker from "react-datepicker";
+import Select from 'react-select'
 import "react-datepicker/dist/react-datepicker.css";
 import AdminShiftModal from "./adminShiftModal";
+
 import moment from 'moment'
 
 const AdminRoster = () => {
@@ -17,7 +19,7 @@ const AdminRoster = () => {
     // const [weekid] = useState(0);
     const [singleWeek, getSingleWeek] = useState()
     const [firstName, setFirstName] = useState('');
-    const [costCenter1, setCostCenter1] = useState('');
+    const [costCenter1, setCostCenter1] = useState();
     const [tableShow, setTableShow] = useState(false);
     const [adminRosterButton, setadminRosterButton] = useState(true);
     const [storecostCenterName, setstorecostCenterName] = useState('');
@@ -59,13 +61,19 @@ const AdminRoster = () => {
 
     }
 
-    const handleCostCenter = (e) => {
-        let data2 = e.target.value
+    // const handleCostCenter = (options) => {
+    //     let data2 = options !== null ? options.value : ''
+    //     setCostCenter1(options)
+    //     alert(options);
+    //     setstorecostCenterName(data2)
+    //     setadminRosterButton(false)
+    // }
+    const handleCostCenter = (options) => {
+        let data2 = options !== null ? options.value : ''
         setCostCenter1(data2)
-        setstorecostCenterName(data2)
+        setstorecostCenterName(options)
         setadminRosterButton(false)
     }
-
 
 
 
@@ -122,7 +130,7 @@ const AdminRoster = () => {
                                             <div className="form-group">
                                                 <label className="name f-w-600">From Date &nbsp;</label>
                                                 <DatePicker
-                                                    className="form-control"
+                                                    className="form-control Value"
                                                     selected={startDate.toDate()}
                                                     dateFormat="yyyy-MM-dd"
                                                     required
@@ -134,7 +142,7 @@ const AdminRoster = () => {
                                             <div className="form-group">
                                                 <label className="name f-w-600">To Date&nbsp; </label>
                                                 <DatePicker
-                                                    className="form-control"
+                                                    className="form-control Value"
                                                     selected={endDate.toDate()}
                                                     dateFormat="yyyy-MM-dd"
                                                     required
@@ -149,9 +157,9 @@ const AdminRoster = () => {
                                             if (user.loginType !== "1" || user.loginType !== "7" || user.loginType !== "9") {
                                                 return (
                                                     <div className="col-sm-3">
-                                                        <div className="form-group">
-                                                            <label className="name f-w-600">Select Cost Center&nbsp;<span style={{ color: 'red' }}>*</span> &nbsp;</label>
-                                                            <select
+                                                        {/* <div className="form-group"> */}
+                                                        <label className="name f-w-600">Select Cost Center&nbsp;<span style={{ color: 'red' }}>*</span> &nbsp;</label>
+                                                        {/* <select
                                                                 className="form-control"
                                                                 style={{ fontSize: "0.8rem", height: "34px" }}
                                                                 value={costCenter1}
@@ -165,9 +173,18 @@ const AdminRoster = () => {
 
                                                                     );
                                                                 })}
-                                                            </select>
-                                                        </div>
+                                                            </select> */}
+                                                        <Select
+                                                            name="filters"
+                                                            placeholder="Cost Center"
+                                                            //value={costCenter1}
+                                                            style={{ fontSize: "0.9rem", }}
+                                                            options={costCenterList !== null ?
+                                                                costCenterList.map(e => ({ label: e.costCentreName, value: e.costCentreName })) : []}
+                                                            onChange={handleCostCenter}
+                                                            required isSearchable />
                                                     </div>
+                                                    // </div>
                                                 )
                                             }
                                         })()}
@@ -181,9 +198,9 @@ const AdminRoster = () => {
                                                 <label className="name f-w-600">&nbsp;Select Week </label>
 
                                                 <select
-                                                    className="form-control"
+                                                    className="form-control Value"
                                                     value={singleWeek}
-                                                    style={{ height: "34px", paddingLeft: "5px" }}
+                                                    style={{ height: "40px", paddingLeft: "5px" }}
                                                     onChange={(e) => setWeekCalc(e)}>
                                                     <option value="">Select Week &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
@@ -206,8 +223,8 @@ const AdminRoster = () => {
                                                 <label className="name f-w-600">&nbsp;Select Employee Type </label>
 
                                                 <select
-                                                    className="form-control"
-                                                    style={{ height: "34px", paddingLeft: "5px", marginLeft: "5px" }}
+                                                    className="form-control Value"
+                                                    style={{ height: "40px", paddingLeft: "10px", paddingRight: "20px" }}
                                                     // value={contractType}
                                                     onChange={(e) => {
                                                         setContractType(e.target.value)

@@ -4,6 +4,7 @@ import { ClusterContext } from "../../context/ClusterState";
 import { Multiselect } from 'multiselect-react-dropdown';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Select from 'react-select'
 import { AppContext } from "../../context/AppState";
 import { RosterContext } from "../../context/RosterState";
 const CreateClusterModal = (props) => {
@@ -126,13 +127,18 @@ const CreateClusterModal = (props) => {
 
     }
   };
-  const getCostCenterName = (e) => {
-    let data = e.target.value
+  // const getCostCenterName = (e) => {
+  //   let data = e.target.value
+  //   setCostCenterName(data)
+  //   callClusterEmployees(data, user.employeeId)
+  //   callClusterLeaders(data, user.employeeId)
+  // }
+  const getCostCenterName = (options) => {
+    let data = options !== null ? options.value : ''
     setCostCenterName(data)
     callClusterEmployees(data, user.employeeId)
     callClusterLeaders(data, user.employeeId)
   }
-
 
   const handleMultiChange = (option) => {
     setClusterButton(false)
@@ -213,7 +219,7 @@ const CreateClusterModal = (props) => {
                     <div className="col-sm-12">
                       <div className="form-group">
                         <label htmlFor="exampleFormControlInput1">Select Cost Center</label>
-                        <select
+                        {/* <select
 
                           className="form-control"
                           required
@@ -225,7 +231,15 @@ const CreateClusterModal = (props) => {
                               <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
                           })}
 
-                        </select>
+                        </select> */}
+                        <Select
+                          name="filters"
+                          placeholder="Cost Center"
+                          //value={costCenter1}
+                          style={{ fontSize: "0.9rem" }}
+                          options={costCenterList !== null && costCenterList.map(e => ({ label: e.costCentreName, value: e.costCentreName }))}
+                          onChange={getCostCenterName}
+                          required isSearchable />
                       </div>
                     </div>
                   </div>

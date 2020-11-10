@@ -5,7 +5,7 @@ import DatePicker from "react-datepicker";
 import './dashboard.css';
 import { ClusterContext } from "../../context/ClusterState";
 import { DashboardContext } from "../../context/DashboardState";
-
+import Select from 'react-select';
 import { AppContext } from "../../context/AppState";
 
 
@@ -45,8 +45,9 @@ function Dashboard() {
 
 
     const fromStoreHandler = (e) => {
-        setStoreType(e);
-        viewClusterCostCenter(e)
+        console.log("========",e)
+        setStoreType(e.value);
+        viewClusterCostCenter(e.value)
         setClusterName("");
         setClusterType("");
         // if (startDate !== undefined && ClusterType !== "") {
@@ -247,18 +248,30 @@ function Dashboard() {
                         <div className="col-sm-4">
                             <div className="form-group">
                                 <label className="name f-w-600" >Select Store<span style={{ color: 'red' }}>*</span>&nbsp; </label>
+                                {/* <h1> {StoreType} </h1> */}
                                 {user.loginType === "1" || user.loginType === "9" || user.additionalRole === "1" || user.additionalRole === "9" ?
-                                    <select
-                                        className="form-control Value"
-                                        onChange={(e) => fromStoreHandler(e.target.value)}
-                                    >
-                                        {/* <option value="">Select</option> */}
-                                        {cosCentreList !== null && cosCentreList !== undefined && cosCentreList.map((e, i) => {
-                                            return (
-                                                <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
-                                        })}
+                    
+                                    <Select
+                                    name="filters"
+                                    placeholder={StoreType} 
+                                    value ={StoreType} 
+                                    style={{fontSize:"0.8rem"}}
+                                    options={cosCentreList !== null && cosCentreList !== undefined ?
+                                        cosCentreList.map(e => ({label: e.costCentreName, value: e.costCentreName})):[]}
+                                    onChange={fromStoreHandler}
+                                    required isSearchable />                                    
+                                    
+                                    // <select
+                                    //     className="form-control Value"
+                                    //     onChange={(e) => fromStoreHandler(e.target.value)}
+                                    // >
+                                    //     {/* <option value="">Select</option> */}
+                                    //     {cosCentreList !== null && cosCentreList !== undefined && cosCentreList.map((e, i) => {
+                                    //         return (
+                                    //             <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
+                                    //     })}
 
-                                    </select>
+                                    // </select>
                                     :
                                     <input type="text" className="form-control Value" required readOnly value={user.costCentre} />
                                 }

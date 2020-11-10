@@ -4,6 +4,7 @@ import { ClusterContext } from "../../context/ClusterState";
 import { Multiselect } from 'multiselect-react-dropdown';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Select from 'react-select'
 import { AppContext } from "../../context/AppState";
 import { RosterContext } from "../../context/RosterState";
 const AdminCreateClusterModal = (props) => {
@@ -85,7 +86,11 @@ const AdminCreateClusterModal = (props) => {
             flag = false;
             return;
         }
-
+        if (costCenterName.length === 0) {
+            toast.info("Select sports is mandatory")
+            flag = false;
+            return;
+        }
         return flag;
     }
 
@@ -128,13 +133,13 @@ const AdminCreateClusterModal = (props) => {
 
 
 
-    const getCostCenterName = (e) => {
-        let data = e.target.value
+
+    const getCostCenterName = (options) => {
+        let data = options !== null ? options.value : ''
         setCostCenterName(data)
         callClusterEmployees(data)
         callClusterLeaders(data)
     }
-
     // const getEmployeeId = (e) => {
     //     let data = e.target.value;
     //     callClusterEmployees(costCenterName, data)
@@ -217,7 +222,7 @@ const AdminCreateClusterModal = (props) => {
                             <div className="col-sm-12">
                                 <div className="form-group">
                                     <label htmlFor="exampleFormControlInput1">Select Cost Center</label>
-                                    <select
+                                    {/* <select
                                         className="form-control"
                                         required
                                         onChange={(e) => getCostCenterName(e)}
@@ -228,7 +233,16 @@ const AdminCreateClusterModal = (props) => {
                                                 <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
                                         })}
 
-                                    </select>
+                                    </select> */}
+                                    <Select
+                                        name="filters"
+                                        placeholder="Cost Center"
+                                        //value={costCenter1}
+                                        style={{ fontSize: "0.9rem" }}
+                                        options={costCenterList !== null ?
+                                            costCenterList.map(e => ({ label: e.costCentreName, value: e.costCentreName })) : []}
+                                        onChange={getCostCenterName}
+                                        required isSearchable />
                                 </div>
                             </div>
                         </div>
