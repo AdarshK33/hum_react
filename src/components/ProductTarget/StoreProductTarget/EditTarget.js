@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap'
 
 import "react-datepicker/dist/react-datepicker.css";
-
+import Select from 'react-select';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -64,8 +64,8 @@ const EditTarget = (props) => {
     
 
     const fromStoreHandler = (e) => {
-        setStoreType(e);
-        getStateData(e) ; 
+        setStoreType(e.value);
+        getStateData(e.value) ; 
                  
 
     }
@@ -126,7 +126,7 @@ const EditTarget = (props) => {
             weekend: WeekendsTarget,
             year: year
            }
-    
+        //    console.log(Values);
         UpdateTarget(Values);
        
         const setModal = props.handleEditClose;
@@ -171,7 +171,17 @@ const EditTarget = (props) => {
                                 <div className="col-sm-12">
                                     <Form.Group>
                                         <Form.Label>Select Cost Center :</Form.Label>
-                                        <Form.Control as="select" 
+                                        <Select                                       
+                                                name="filters"
+                                                placeholder={StoreType} 
+                                                value={StoreType} 
+                                                style={{fontSize:"0.8rem"}}
+                                                selected={StoreType}
+                                                options={cosCentreList !== null && cosCentreList !== undefined ?
+                                                    cosCentreList.map(e => ({label: e.costCentreName, value: e.costCentreName})):[]}
+                                                onChange={fromStoreHandler}
+                                                required isSearchable /> 
+                                        {/* <Form.Control as="select" 
                                             onChange={(e)=>fromStoreHandler(e.target.value)} required
                                             >
                                             <option value={StoreType}>{StoreType}</option>
@@ -182,7 +192,7 @@ const EditTarget = (props) => {
                                                     return(
                                                     <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
                                                 })}
-                                        </Form.Control>
+                                        </Form.Control> */}
                                     </Form.Group>
                                 </div>
                             </Row>
