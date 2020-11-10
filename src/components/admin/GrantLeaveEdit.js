@@ -3,6 +3,8 @@ import { Modal } from 'react-bootstrap'
 import { AdminContext } from "../../context/AdminState";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Select from 'react-select'
+
 const GrantLeaveEdit = (props) => {
 
 
@@ -32,15 +34,20 @@ const GrantLeaveEdit = (props) => {
     }, [props.editData])
 
     const setCostCenterHandler = (e) => {
+       /*  let data1 = options !== null ? options.value : '' */
+        setCostCenter(e.value)
+        employeeIdData(e.value)
+        console.log("data1", e.value)
+    }
+    /* const setCostCenterHandler = (e) => {
         let data1 = e.target.value
         setCostCenter(data1)
         employeeIdData(data1)
         console.log("data1", data1)
-    }
+    } */
     const setEmployeeCostCenterHandler = (e) => {
-        let data2 = e.target.value
-        setEmployeeCostCenter(data2)
-        console.log("data2", data2)
+        setEmployeeCostCenter(e.value)
+        console.log("data2", e.value)
     }
     useEffect(() => {
         CostCenter()
@@ -132,7 +139,7 @@ const GrantLeaveEdit = (props) => {
                                     <div className="col-sm-12">
                                         <div className="form-group md">
                                             <label htmlFor="exampleFormControlInput1"> Select Cost Center</label>
-                                            <select
+                                            {/* <select
                                                 className="form-control"
                                                 required
                                                 onChange={(e) => setCostCenterHandler(e)} >
@@ -144,7 +151,17 @@ const GrantLeaveEdit = (props) => {
 
                                                     );
                                                 })}
-                                            </select>
+                                            </select> */}
+                                            <Select
+                                                 name="filters" 
+                                               placeholder={costCenter}
+                                                value={costCenter}
+                                                selected={costCenter}
+                                                style={{ fontSize: "0.8rem" }}
+                                                options={costCenterList !== null &&  costCenterList !== undefined ?
+                                                    costCenterList.map(e => ({ label: e.costCentreName, value: e.costCentreName })) : []}
+                                                onChange={setCostCenterHandler}
+                                                required isSearchable />
                                         </div>
                                     </div>
                                 </div>
@@ -154,9 +171,11 @@ const GrantLeaveEdit = (props) => {
                                         <div className="form-group md">
                                             <label htmlFor="exampleFormControlInput1"> Select Employee</label>
 
-                                            <select
+                                            {/* <select
                                                 className="form-control"
-                                                required
+                                                required value={employeeCostCenter} 
+                                                placeholder={employeeCostCenter} 
+                                                selected={employeeCostCenter}
                                                 onChange={(e) => setEmployeeCostCenterHandler(e)}>
                                                 <option value={employeeCostCenter}>{employeeName}-{employeeCostCenter}</option>
                                                 {employeeIdList !== null && employeeIdList.map((item, i) => {
@@ -165,7 +184,17 @@ const GrantLeaveEdit = (props) => {
                                                             {item.firstName}-{item.employeeId}</option>
                                                     );
                                                 })}
-                                            </select>
+                                            </select> */}
+                                             <Select
+                                                 name="filters" 
+                                               placeholder={employeeName + '-' + employeeCostCenter}
+                                                /* value={employeeCostCenter} */
+                                                selected={employeeName + '-' + employeeCostCenter}
+                                                style={{ fontSize: "0.8rem" }}
+                                                options={employeeIdList !== null &&  employeeIdList !== undefined ?
+                                                    employeeIdList.map(e => ({ label: e.firstName + '-'+ e.employeeId, value: e.employeeId })) : []}
+                                                onChange={setEmployeeCostCenterHandler}
+                                                required isSearchable />
                                         </div>
                                     </div>
                                 </div>
