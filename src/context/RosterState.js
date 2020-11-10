@@ -27,7 +27,7 @@ const initial_state = {
   adminRosterAvailableShiftList: [],
   costCenterList: [],
   masterWeeks: [],
-  pageData:[]
+  pageData: []
 
 }
 
@@ -54,7 +54,7 @@ export const RosterProvider = ({ children }) => {
   const viewShiftPage = (page, size) => {
     state.pageData = [];
 
-    client.get('/shift/page?page=' + page + '&size=' +size).then(function (response) {
+    client.get('/shift/page?page=' + page + '&size=' + size).then(function (response) {
       state.pageData = [];
       // console.log("data==>" + JSON.stringify(response));
       state.pageData = response.data.data;
@@ -64,7 +64,7 @@ export const RosterProvider = ({ children }) => {
         console.log(error);
       });
 
-      state.pageData = [];
+    state.pageData = [];
   }
 
 
@@ -126,11 +126,15 @@ export const RosterProvider = ({ children }) => {
 
   // ADD SHIFT
 
-  function addShift(newShift) {
-    //   alert(JSON.stringify(newShift) );
-
-    return client.post("shift/create", newShift)
-
+  const addShift = (newShift) => {
+    return client.post("shift/create", newShift).then(function (respone) {
+      console.log("api response===", respone.data.message);
+      toast.info(respone.data.message);
+      viewShift()
+    })
+      .catch((error) => {
+        alert(" In error catch ", error);
+      });
   }
 
 
