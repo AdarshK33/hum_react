@@ -13,7 +13,7 @@ function ViewCluster() {
 
 
   const { viewCluster, clusterList, getCluster, viewCostCenterEmployeeByManger,
-    getSingleCluster, getSingleCluster1, getEmployeesNames, } = useContext(ClusterContext);
+    getSingleCluster, getSingleCluster1, getEmployeesNames, loader } = useContext(ClusterContext);
   const [searchValue, setSearchValue] = useState(false);
   const [searchLeaveList, setLeaveList] = useState();
   const { viewSearchClusterList, searchClusterList } = useContext(SearchContext);
@@ -74,6 +74,11 @@ function ViewCluster() {
   }, [searchClusterList])
 
 
+
+  //pagenation data
+
+  //variable
+
   return (
     <Fragment>
       <Breadcrumb title="View Cluster" parent="View Cluster" />
@@ -122,54 +127,63 @@ function ViewCluster() {
                     </tr>
                   </thead>
 
-                  {currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 &&
-                    currentRecords.map((e, i) => {
-                      return (
-                        <tbody key={i + 1}>
-                          <tr>
-                            <td>{i + 1 + indexOfFirstRecord}</td>
-                            {e.sports.map((f, j) => {
-                              return (<tr key={j + 1}>
-                                <td style={{ marginLeft: "10px", fontSize: "10px", paddingTop: "5px", paddingBottom: "5px" }}>{f.sportName}</td>
-                              </tr>)
-                            })}
-                            <td>{e.clusterName}</td>
-                            <td>{e.storeId}</td>
-                            <td>{e.description}</td>
-                            <td>{e.clusterLeaderName}</td>
-                            <td>{e.teamCount}</td>
-                            <td>{e.createdDate}</td>
-                            <td>{e.status === 0 ? "active" : "inactive"} </td>
-                            <td><Edit2 onClick={() => {
-                              setEditModal(true);
-                              getCluster(e.clusterId);
-                              viewCostCenterEmployeeByManger(e.storeId)
-                              //store id to call edit
-                            }} />
-                            </td>
+                  {loader === true && currentRecords !== null && currentRecords !== undefined ?
+                    <tbody>
+                      <tr>
+                        <td colspan='6'>
+                          <div className="loader-box loader" style={{ width: "100% !important", marginLeft: "200px" }}>
+                            <div className="loader">
+                              <div className="line bg-primary"></div>
+                              <div className="line bg-primary"></div>
+                              <div className="line bg-primary"></div>
+                              <div className="line bg-primary"></div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
 
-                          </tr>
+                    :
+                    currentRecords !== undefined && currentRecords !== null &&
+                      currentRecords.length > 0 ?
+                      currentRecords.map((e, i) => {
+                        return (
+                          <tbody key={i + 1}>
+                            <tr>
+                              <td>{i + 1 + indexOfFirstRecord}</td>
+                              {e.sports.map((f, j) => {
+                                return (<tr key={j + 1}>
+                                  <td style={{ marginLeft: "10px", fontSize: "10px", paddingTop: "5px", paddingBottom: "5px" }}>{f.sportName}</td>
+                                </tr>)
+                              })}
+                              <td>{e.clusterName}</td>
+                              <td>{e.storeId}</td>
+                              <td>{e.description}</td>
+                              <td>{e.clusterLeaderName}</td>
+                              <td>{e.teamCount}</td>
+                              <td>{e.createdDate}</td>
+                              <td>{e.status === 0 ? "active" : "inactive"} </td>
+                              <td><Edit2 onClick={() => {
+                                setEditModal(true);
+                                getCluster(e.clusterId);
+                                viewCostCenterEmployeeByManger(e.storeId)
+                                //store id to call edit
+                              }} />
+                              </td>
 
-                        </tbody>
-                      );
-                    })}
+                            </tr>
+
+                          </tbody>
+                        )
+                      }) :
+                      <tbody>
+                        <tr>
+                          <td colspan='6'>No Record Found</td>
+                        </tr>
+                      </tbody>}
 
                 </table>
-                {(clusterList === null) ?
-                  <p style={{ textAlign: "center" }}>No Record Found</p> : null}
 
-                {clusterList !== undefined && clusterList !== null && currentRecords.length === 0 ?
-
-                  <div className="loader-box loader" style={{ width: "100% !important" }}>
-                    <div className="loader">
-                      <div className="line bg-primary"></div>
-                      <div className="line bg-primary"></div>
-                      <div className="line bg-primary"></div>
-                      <div className="line bg-primary"></div>
-                    </div>
-                  </div>
-                  :
-                  null}
                 <EditClusterModal handleEditClose={handleEditClose}
                   shiftData={getSingleCluster}
                   clusterData={getSingleCluster1}

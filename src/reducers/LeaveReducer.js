@@ -41,7 +41,7 @@ const LeaveReducer = (state, action) => {
             return ({ ...state, grantLeave: action.payload })
 
         case 'FETCH_HOLIDAY_LIST':
-                return { ...state, holiday: action.payload };
+                return { ...state, holiday: action.payload, loader: action.loader  };
 
         case 'DELETE_LEAVE':
             return {

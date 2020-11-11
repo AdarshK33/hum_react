@@ -1,5 +1,5 @@
 import React, { useState, useContext, Fragment, useEffect } from 'react'
-import { Modal } from 'react-bootstrap'
+import { Modal, Form } from 'react-bootstrap'
 import { AdminContext } from "../../context/AdminState";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -33,21 +33,24 @@ const GrantLeaveEdit = (props) => {
         // employeeIdData()
     }, [props.editData])
 
-    const setCostCenterHandler = (e) => {
-       /*  let data1 = options !== null ? options.value : '' */
-        setCostCenter(e.value)
-        employeeIdData(e.value)
-        console.log("data1", e.value)
-    }
-    /* const setCostCenterHandler = (e) => {
-        let data1 = e.target.value
+    useEffect(() => {
+    employeeIdData(props.editData.costCentre)
+    },[props.editData.costCentre])
+
+  /*   const setCostCenterHandler = (options) => {
+        let data1 = options !== null ? options.value : ''
         setCostCenter(data1)
         employeeIdData(data1)
         console.log("data1", data1)
     } */
+    const setCostCenterHandler = (e) => {
+        let data1 = e.target.value
+        setCostCenter(data1)
+        console.log("data1", data1)
+    }
     const setEmployeeCostCenterHandler = (e) => {
-        setEmployeeCostCenter(e.value)
-        console.log("data2", e.value)
+        setEmployeeCostCenter(e.target.value)
+        console.log("data2", e.target.value)
     }
     useEffect(() => {
         CostCenter()
@@ -132,27 +135,18 @@ const GrantLeaveEdit = (props) => {
                 </Modal.Header>
                 
                 <Modal.Body>
-                    <form onSubmit={onSubmit}>
+                    <Form onSubmit={onSubmit}>
                         <div className="row">
                             <div className="col-sm-12">
                                 <div className="row">
                                     <div className="col-sm-12">
                                         <div className="form-group md">
                                             <label htmlFor="exampleFormControlInput1"> Select Cost Center</label>
-                                            {/* <select
-                                                className="form-control"
-                                                required
-                                                onChange={(e) => setCostCenterHandler(e)} >
-                                                <option value={costCenter}>{costCenter}</option>
-                                                {costCenterList !== null && costCenterList.map((item, i) => {
-                                                    return (
-                                                        <option key={item.costCenterId} value={item.costCentreName}>
-                                                            {item.costCentreName}</option>
-
-                                                    );
-                                                })}
-                                            </select> */}
-                                            <Select
+                                           
+                                            <Form.Control size="sm" type="text" value={costCenter || ''} readOnly
+                                            onChange={(e) => setCostCenterHandler(e)} />
+                                           
+                                           {/*  <Select
                                                  name="filters" 
                                                placeholder={costCenter}
                                                 value={costCenter}
@@ -161,7 +155,7 @@ const GrantLeaveEdit = (props) => {
                                                 options={costCenterList !== null &&  costCenterList !== undefined ?
                                                     costCenterList.map(e => ({ label: e.costCentreName, value: e.costCentreName })) : []}
                                                 onChange={setCostCenterHandler}
-                                                required isSearchable />
+                                                required isSearchable /> */}
                                         </div>
                                     </div>
                                 </div>
@@ -171,7 +165,7 @@ const GrantLeaveEdit = (props) => {
                                         <div className="form-group md">
                                             <label htmlFor="exampleFormControlInput1"> Select Employee</label>
 
-                                            {/* <select
+                                            <select
                                                 className="form-control"
                                                 required value={employeeCostCenter} 
                                                 placeholder={employeeCostCenter} 
@@ -184,17 +178,16 @@ const GrantLeaveEdit = (props) => {
                                                             {item.firstName}-{item.employeeId}</option>
                                                     );
                                                 })}
-                                            </select> */}
-                                             <Select
+                                            </select>
+                                            {/*  <Select
                                                  name="filters" 
                                                placeholder={employeeName + '-' + employeeCostCenter}
-                                                /* value={employeeCostCenter} */
                                                 selected={employeeName + '-' + employeeCostCenter}
                                                 style={{ fontSize: "0.8rem" }}
                                                 options={employeeIdList !== null &&  employeeIdList !== undefined ?
                                                     employeeIdList.map(e => ({ label: e.firstName + '-'+ e.employeeId, value: e.employeeId })) : []}
                                                 onChange={setEmployeeCostCenterHandler}
-                                                required isSearchable />
+                                                required isSearchable /> */}
                                         </div>
                                     </div>
                                 </div>
@@ -224,7 +217,7 @@ const GrantLeaveEdit = (props) => {
                         <button className="myclass mb-2 mr-2" type="submit" value="Submit" >Save</button>
                         {/* <button className="myclass mb-2 mr-2" onClick={() => { clearAndClose() }}>Close</button>
                         <h5>{successMsg.length !== 0 && <div className="text-success">{successMsg}</div>}</h5> */}
-                    </form>
+                    </Form>
                 </Modal.Body>
 
             </Modal>

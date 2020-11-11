@@ -13,6 +13,9 @@ const SearchReducer = (state, action) => {
         case 'FETCH_CLUSTER_SEARCH_LIST':
             return { ...state, searchClusterList: action.payload };
 
+        case 'SEARCH_HOLIDAY_LIST':
+            return { ...state, searchHolidayList: action.payload }
+
         default: return state;
     }
 }
