@@ -2,6 +2,7 @@ import React, { Fragment, useState, useContext, useEffect } from "react";
 import Breadcrumb from "../common/breadcrumb";
 import { RosterContext } from "../../context/RosterState";
 import DatePicker from "react-datepicker";
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import "react-datepicker/dist/react-datepicker.css";
 import ShiftModal from "./shiftModal";
 import { AppContext } from "../../context/AppState";
@@ -97,6 +98,14 @@ const Roster = () => {
                       <button className="myclass" style={{ marginTop: "20px" }} type="button" onClick={(e) => submitDate(e)}>Submit</button>
                     </div>
                   </div>
+                  {/* <div className="title_bar" >
+                    <ReactHTMLTableToExcel
+                      className="btn btn-light mr-2"
+                      table="table-to-xls"
+                      filename="report"
+                      sheet="Sheet"
+                      buttonText="Export excel" />
+                  </div> */}
 
                   {/* roster changes */}
 
@@ -105,7 +114,7 @@ const Roster = () => {
 
               </div>
               <div className="table-responsive">
-                <table className="table">
+                <table className="table" id="table-to-xls">
 
                   <thead style={{ background: '#006EBB', color: 'white' }}>
                     <tr>

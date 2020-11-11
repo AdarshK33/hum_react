@@ -217,10 +217,10 @@ const AdminRoster = () => {
                                         </div>
 
 
-                                        <div className="col-sm-3">
+                                        <div className="col-sm-4">
 
                                             <div className="form-group">
-                                                <label className="name f-w-600">&nbsp;Select Employee Type </label>
+                                                <label className="name f-w-600">Select Employee Type</label>
 
                                                 <select
                                                     className="form-control Value"
