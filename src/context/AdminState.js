@@ -91,18 +91,33 @@ export const AdminProvider = ({ children }) => {
   }
 
 
-  function viewGrantLeave() {
+  function viewGrantLeave(key) {
     setLoader(true)
-    client.get('grant_leave/view', {
-    }).then(function (response) {
-      console.log("data==>" + JSON.stringify(response));
-      state.grantLeaveView = response.data.data;
-      setLoader(false)
-      return dispatch({ type: 'VIEW_GRANT_LEAVE', payload: state.grantLeaveView, loader: loader });
-    })
-      .catch(function (error) {
-        console.log(error);
-      });
+    if(key !== null && key !== undefined){
+      client.get('grant_leave/view' + '?key=' + key )
+      .then(function (response) {
+        state.grantLeaveView = response.data.data;
+        console.log("data==>" + state.grantLeaveView);
+        setLoader(false)
+        return dispatch({ type: 'VIEW_GRANT_LEAVE', payload: state.grantLeaveView, loader: loader });
+      })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+    else{
+      client.get('grant_leave/view')
+      .then(function (response) {
+        state.grantLeaveView = response.data.data;
+        console.log("data==>" + state.grantLeaveView);
+        setLoader(false)
+        return dispatch({ type: 'VIEW_GRANT_LEAVE', payload: state.grantLeaveView, loader: loader });
+      })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+    
   }
   function createGrantLeave(addGrantLeave) {
     return client.post("grant_leave/create", addGrantLeave, {
