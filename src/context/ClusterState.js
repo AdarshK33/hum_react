@@ -98,12 +98,14 @@ export const ClusterProvider = ({ children }) => {
 
 
   const viewCluster = () => {
+    setLoader(true)
     client.get('cluster/view').then(function (response) {
       state.clusterList = response.data.data;
       // console.log("====CLUSTER LIST====")
       // console.log(JSON.stringify(state.clusterList))
+      setLoader(false)
+      return dispatch({ type: 'FETCH_ClUSTER_LIST', payload: state.clusterList, loader: loader });
 
-      return dispatch({ type: 'FETCH_ClUSTER_LIST', payload: state.clusterList });
     })
       .catch(function (error) {
         console.log(error);

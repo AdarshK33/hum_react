@@ -423,7 +423,18 @@ const EditShiftModal = (props) => {
 
                     <h6>{breakDuationMsg && <div className="text-danger pl-3">Break Should be one hour</div>}</h6>
                   </div>
-
+                  <div className="row">
+                    <div className="col-sm-12">
+                      <div className="form-group">
+                        <label htmlFor="exampleFormControlInput1">Cost Center</label>
+                        <input type="text"
+                          placeholder={singleShiftList.storeId}
+                          className="form-control"
+                          readOnly
+                        />
+                      </div>
+                    </div>
+                  </div>
                   <div className="row">
                     <div className="col-sm-12">
                       <div className="form-group">
