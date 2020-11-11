@@ -9,6 +9,9 @@ const SearchReducer = (state, action) => {
 
         case 'FETCH_SHIFT_LIST':
             return { ...state, searchShiftList: action.payload };
+
+        case 'SEARCH_HOLIDAY_LIST':
+            return { ...state, searchHolidayList: action.payload}
                
         default: return state;
     }

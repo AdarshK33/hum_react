@@ -8,7 +8,8 @@ import { toast } from "react-toastify";
 const initial_state = {
   empIdSearchList: [],
   empIdManagerSearchList: [],
-  searchShiftList: []
+  searchShiftList: [],
+  searchHolidayList: []
 
 }
 
@@ -56,14 +57,31 @@ export const SearchProvider = ({ children }) => {
       });
   }
 
+  //search api for holiday
+  const searchHoliday = (key) => {
+console.log("key value",key)
+    client.get('/holiday/search' + '?key=' + key)
+    .then((response) => {
+      
+      state.searchHolidayList = response.data.data;
+      console.log('holiday search api response',state.searchHolidayLis);
+      return dispatch({ type: 'SEARCH_HOLIDAY_LIST', payload: state.searchHolidayList });
+    })
+      .catch( (error) => {
+        console.log(error);
+      });
+  }
+
 
   return (<SearchContext.Provider value={{
     searchByEmpId,
     searchByEmpIdManager,
     viewSearchSiftList,
+    searchHoliday,
     empIdSearchList: state.empIdSearchList,
     empIdManagerSearchList: state.empIdManagerSearchList,
-    searchShiftList: state.searchShiftList
+    searchShiftList: state.searchShiftList,
+    searchHolidayList: state.searchHolidayList
   }}>
     {children}
   </SearchContext.Provider>);
