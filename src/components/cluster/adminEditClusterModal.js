@@ -272,7 +272,7 @@ const AdminEditClusterModal = (props) => {
                         <div className="row">
                             <div className="col-sm-12">
                                 <div className="form-group">
-                                    <label htmlFor="exampleFormControlInput1">Select cost center</label>
+                                    <label htmlFor="exampleFormControlInput1">Cost Center</label>
                                     <input type="text"
                                         placeholder={props.shiftData.storeId}
                                         className="form-control"

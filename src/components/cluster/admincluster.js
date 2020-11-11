@@ -3,8 +3,9 @@ import Breadcrumb from "../common/breadcrumb";
 import AdminCreateClusterModal from "./adminCreateClusterModal";
 import AdminEditClusterModal from "./adminEditClusterModal";
 import { Button } from 'react-bootstrap'
-import { Edit2 } from 'react-feather'
+import { Edit2, Search } from 'react-feather'
 import { ClusterContext } from "../../context/ClusterState";
+import { SearchContext } from '../../context/SearchState';
 import { AppContext } from "../../context/AppState";
 import Pagination from 'react-js-pagination';
 function AdminCluster() {
@@ -18,30 +19,62 @@ function AdminCluster() {
     const [editModal, setEditModal] = useState(false)
     const handleEditClose = () => setEditModal(false)
     const handleEditShow = () => setEditModal(true)
+    // const [searchValue, setSearchValue] = useState(false);
+    // const [searchCluster, setSearchCluster] = useState();
 
+    // const { viewSearchClusterList, searchClusterList } = useContext(SearchContext);
+    const [searchValue, setSearchValue] = useState(false);
+    const [searchLeaveList, setLeaveList] = useState();
+    const { viewSearchClusterList, searchClusterList } = useContext(SearchContext);
     const { viewCluster, clusterList, getCluster, viewCostCenterEmployeeByManger, getSingleCluster, getSingleCluster1, getEmployeesNames } = useContext(ClusterContext);
-    const { user, } = useContext(AppContext);
+    const { user } = useContext(AppContext);
 
     useEffect(() => {
         viewCluster()
     }, [])
 
 
+
+
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
-    const totalRecords = clusterList !== null && clusterList !== undefined && clusterList.length;
+    const totalRecords = searchLeaveList !== null && searchLeaveList !== undefined && searchLeaveList.length;
     const pageRange = 10;
-
     const indexOfLastRecord = currentPage * recordPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    const currentRecords = clusterList !== null ? clusterList !== undefined && clusterList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+    const currentRecords = searchLeaveList !== null ? searchLeaveList !== undefined && searchLeaveList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+
 
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber);
     }
+    useEffect(() => {
+        if (clusterList !== undefined && clusterList !== null && clusterList.length > 0) {
+            setLeaveList(clusterList);
+        }
+
+    }, [clusterList])
 
 
+    const searchHandler = (e) => {
+        setSearchValue(e.target.value)
 
+    }
+
+    const searchDataHandler = () => {
+        if (searchValue !== "") {
+            viewSearchClusterList(searchValue);
+        } else {
+            viewCluster()
+        }
+
+    }
+
+    useEffect(() => {
+        if (searchClusterList !== undefined && searchClusterList !== null && searchClusterList.length > 0) {
+            setLeaveList(searchClusterList);
+        }
+    }, [searchClusterList])
 
     return (
         <Fragment>
@@ -53,6 +86,12 @@ function AdminCluster() {
 
 
                             <div className="title_bar">
+                                <div className="job-filter">
+                                    <div className="faq-form mr-2">
+                                        <input className="form-control searchButton" type="text" placeholder="Search.." onChange={(e) => searchHandler(e)} />
+                                        <Search className="search-icon" style={{ color: "#313131" }} onClick={searchDataHandler} />
+                                    </div>
+                                </div>
                                 <Button className="btn btn-light mr-2" onClick={handleShow}>Create</Button>
                                 {/* <Button className="btn btn-light mr-2" onClick={handleEditShow}>edit</Button> */}
 
@@ -75,7 +114,7 @@ function AdminCluster() {
                                         </tr>
                                     </thead>
 
-                                    {currentRecords !== null && currentRecords !== undefined &&
+                                    {currentRecords !== undefined && currentRecords !== null && currentRecords.length > 0 &&
                                         currentRecords.map((e, i) => {
                                             return (
                                                 <tbody key={i + 1}>
@@ -132,7 +171,7 @@ function AdminCluster() {
                                 />
                             </div>
                             <div>
-                                {clusterList !== null && clusterList.length > 10 &&
+                                {searchLeaveList !== null && searchLeaveList !== undefined && searchLeaveList.length > 10 &&
                                     <Pagination
                                         itemClass="page-item"
                                         linkClass="page-link"

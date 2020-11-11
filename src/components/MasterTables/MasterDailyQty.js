@@ -1,10 +1,10 @@
 import React, { Fragment, useEffect, useContext, useState } from 'react';
 import Breadcrumb from '../common/breadcrumb';
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import Pagination from 'react-js-pagination'
 import { MasterFilesContext } from "../../context/MasterFilesState";
 import { DashboardContext } from "../../context/DashboardState";
-import { Button, Modal, Form, Table, Row, Container } from "react-bootstrap";
+import Select from 'react-select'
+import { Button, Form, Row, } from "react-bootstrap";
 import { toast } from "react-toastify";
 import {
   JsonToExcel
@@ -19,7 +19,7 @@ const MasterDailyQty = () => {
   const { cosCentreList, viewCostCentre } = useContext(DashboardContext);
   const [fileUpload, setFileUpload] = useState();
   const [date, setDate] = useState();
-  const [costCenter, setCostCenter] = useState();
+  const [costCenter, setCostCenter] = useState('');
 
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
@@ -53,10 +53,10 @@ const MasterDailyQty = () => {
     // }, 5000)
   }
 
-  const costCenterHandler = e => {
-    // console.log(e.target.value);
-    setCostCenter(e.target.value);
-  }
+  // const costCenterHandler = e => {
+  //   // console.log(e.target.value);
+  //   setCostCenter(e.target.value);
+  // }
 
   const dateHandler = (d) => {
     // console.log(d);
@@ -65,9 +65,27 @@ const MasterDailyQty = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    viewDailyQty(costCenter, date);
+    const validate = validation()
+    if (validate) {
+      viewDailyQty(costCenter, date);
+    }
   }
 
+  const validation = () => {
+    let flag = true
+    if (costCenter === '') {
+      toast.error("Select Cost Center")
+      flag = false;
+      return;
+    }
+    return flag;
+  }
+
+
+  const costCenterHandler = (options) => {
+    let data = options !== null ? options.value : ''
+    setCostCenter(data)
+  }
 
   const filename = 'DailyQuantitylist';
   let fields = {
@@ -136,7 +154,7 @@ const MasterDailyQty = () => {
             <div className="col-sm-4">
               <Form.Group>
                 <Form.Label>Cost Center</Form.Label><span style={{ color: 'red' }}>*</span>
-                <Form.Control as="select"
+                {/* <Form.Control as="select"
                   required
                   value={costCenter}
                   onChange={(e) => costCenterHandler(e)}
@@ -147,7 +165,16 @@ const MasterDailyQty = () => {
                       <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
                   })}
 
-                </Form.Control>
+                </Form.Control> */}
+                <Select
+                  name="filters"
+                  placeholder="Cost Center"
+                  //value={costCenter1}
+                  style={{ fontSize: "0.9rem", height: "0px" }}
+                  options={cosCentreList !== null && cosCentreList !== undefined ?
+                    cosCentreList.map(e => ({ label: e.costCentreName, value: e.costCentreName })) : []}
+                  onChange={costCenterHandler}
+                  required isSearchable />
               </Form.Group>
             </div>
           </Row>
@@ -221,7 +248,7 @@ const MasterDailyQty = () => {
 
                   {loader === true && currentRecords !== null && currentRecords !== undefined &&
                     currentRecords.length === 0 ?
-                    <div className="loader-box loader" style={{ width: "100% !important" }}>
+                    <div className="loader-box loader" style={{ width: "100% !important", marginLeft: "300px" }}>
                       <div className="loader">
                         <div className="line bg-primary"></div>
                         <div className="line bg-primary"></div>

@@ -8,8 +8,8 @@ import { toast } from "react-toastify";
 const initial_state = {
   empIdSearchList: [],
   empIdManagerSearchList: [],
-  searchShiftList: []
-
+  searchShiftList: [],
+  searchClusterList: []
 }
 
 export const SearchContext = createContext();
@@ -57,13 +57,29 @@ export const SearchProvider = ({ children }) => {
   }
 
 
+  function viewSearchClusterList(Id) {
+
+    client.get('/cluster/search?key=' + Id).then(function (response) {
+
+      state.searchClusterList = response.data.data;
+      console.log(state.searchClusterList);
+      return dispatch({ type: 'FETCH_CLUSTER_SEARCH_LIST', payload: state.searchClusterList });
+    })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
+
   return (<SearchContext.Provider value={{
     searchByEmpId,
     searchByEmpIdManager,
     viewSearchSiftList,
+    viewSearchClusterList,
     empIdSearchList: state.empIdSearchList,
     empIdManagerSearchList: state.empIdManagerSearchList,
-    searchShiftList: state.searchShiftList
+    searchShiftList: state.searchShiftList,
+    searchClusterList: state.searchClusterList
   }}>
     {children}
   </SearchContext.Provider>);

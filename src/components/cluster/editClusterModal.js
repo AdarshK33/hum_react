@@ -270,7 +270,7 @@ const EditClusterModal = (props) => {
                   <div className="row">
                     <div className="col-sm-12">
                       {/* <div className="form-group"> */}
-                      <label htmlFor="exampleFormControlInput1">Select Cost Center</label>
+                      {/* <label htmlFor="exampleFormControlInput1">Select Cost Center</label> */}
                       {/* <select
                           value={costCenterName}
                           className="form-control"
@@ -287,14 +287,27 @@ const EditClusterModal = (props) => {
                         </select> */}
 
 
-                      <Select
+                      {/* <Select
                         name="filters"
                         placeholder={getSingleCluster.storeId}
                         options={costCenterList !== null && costCenterList !== undefined ?
                           costCenterList.map(e => ({ label: e.costCentreName, value: e.costCentreName })) : []}
                         style={{ fontSize: "0.9rem" }}
                         onChange={getCostCenterName}
-                        required isSearchable />
+                        required isSearchable /> */}
+
+                      <div className="row">
+                        <div className="col-sm-12">
+                          <div className="form-group">
+                            <label htmlFor="exampleFormControlInput1">Cost Center</label>
+                            <input type="text"
+                              placeholder={getSingleCluster.storeId}
+                              className="form-control"
+                              readOnly
+                            />
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   // </div>
