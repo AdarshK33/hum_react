@@ -305,13 +305,13 @@ export const LeaveProvider = ({ children }) => {
   //Holiday List
 
   const getHoliday = () => {
-    // const [state, updateStae] =uss
+    setLoader(true)
     client.get('holiday/view').then(function (response) {
       console.log(response)
       state.holidayDataList = response.data.data
 
-      // state.holiday = response.data.data;
-      return dispatch({ type: 'FETCH_HOLIDAY_LIST', payload: state.holidayDataList });
+     setLoader(false)
+      return dispatch({ type: 'FETCH_HOLIDAY_LIST', payload: state.holidayDataList, loader: loader });
     })
       .catch(function (error) {
         console.log(error);

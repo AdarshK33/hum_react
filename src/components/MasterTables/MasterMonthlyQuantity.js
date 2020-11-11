@@ -1,9 +1,9 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import Pagination from 'react-js-pagination'
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+import Select from 'react-select'
 import { PermissionContext } from '../../context/PermissionState'
-import { Button, Modal, Form, Table, Row, Container } from "react-bootstrap";
+import { Button, Form, Row } from "react-bootstrap";
 import {
     JsonToExcel
 } from 'react-json-excel';
@@ -18,7 +18,7 @@ const MasterMonthlyQuantity = () => {
     const [date, setDate] = useState();
     const [month, setMonth] = useState();
     const [year, setYear] = useState();
-    const [costCenter, setCostCenter] = useState();
+    const [costCenter, setCostCenter] = useState('');
 
 
     var monthsNumber = new Array();
@@ -57,10 +57,7 @@ const MasterMonthlyQuantity = () => {
         setCurrentPage(pageNumber);
     }
 
-    const costCenterHandler = e => {
-        // console.log(e.target.value);
-        setCostCenter(e.target.value);
-    }
+
 
     const dateHandler = (d) => {
         setDate(d);
@@ -70,11 +67,27 @@ const MasterMonthlyQuantity = () => {
 
     const onSubmit = (e) => {
         e.preventDefault();
+        const validate = validation()
         const mon = monthsNumber[moment(date, ["YYYY-MM"]).format("M")];
         const y = moment(date, ["MMM Do YY"]).format("YYYY");
-        monthlyQtyDetails(costCenter, mon, y);
+        if (validate) {
+            monthlyQtyDetails(costCenter, mon, y);
+        }
+    }
+    const validation = () => {
+        let flag = true
+        if (costCenter === '') {
+            toast.error("Select Cost Center")
+            flag = false;
+            return;
+        }
+        return flag;
     }
 
+    const costCenterHandler = (options) => {
+        let data = options !== null ? options.value : ''
+        setCostCenter(data)
+    }
 
 
 
@@ -160,7 +173,7 @@ const MasterMonthlyQuantity = () => {
                         <div className="col-sm-4">
                             <Form.Group>
                                 <Form.Label>Cost Center</Form.Label><span style={{ color: 'red' }}>*</span>
-                                <Form.Control as="select"
+                                {/* <Form.Control as="select"
                                     required
                                     value={costCenter}
                                     onChange={(e) => costCenterHandler(e)}
@@ -171,7 +184,16 @@ const MasterMonthlyQuantity = () => {
                                             <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
                                     })}
 
-                                </Form.Control>
+                                </Form.Control> */}
+                                <Select
+                                    name="filters"
+                                    placeholder="Cost Center"
+                                    //value={costCenter1}
+                                    style={{ fontSize: "0.9rem", height: "0px" }}
+                                    options={cosCentreList !== null && cosCentreList !== undefined ?
+                                        cosCentreList.map(e => ({ label: e.costCentreName, value: e.costCentreName })) : []}
+                                    onChange={costCenterHandler}
+                                    required isSearchable />
                             </Form.Group>
                         </div>
                     </Row>

@@ -4,28 +4,34 @@ import { LeaveContext } from '../../context/LeaveState';
 import { Button } from 'react-bootstrap';
 import '../Leaves/Leaves.css'
 import '../AdminLeave/AdminLeaves.css'
+import '../../assets/css/search.css'
 import { toast } from "react-toastify";
 import Pagination from 'react-js-pagination'
 import { AppContext } from "../../context/AppState";
+import {  Search } from 'react-feather'
 import {
   JsonToExcel
 } from 'react-json-excel';
+import { SearchContext } from '../../context/SearchState';
 
 const HolidayList = () => {
 
-  const { getHoliday, holidayDataList, uploadFile } = useContext(LeaveContext);
+  const { getHoliday, holidayDataList, uploadFile, loader } = useContext(LeaveContext);
   const { user } = useContext(AppContext);
   const [fileUpload, setFileUpload] = useState();
+  const [searchValue, setSearchValue] = useState(false);
+  const [searchLeaveList, setLeaveList] = useState();
+  const { searchHoliday, searchHolidayList } = useContext(SearchContext);
 
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
   const recordPerPage = 10;
-  const totalRecords = holidayDataList !== null && holidayDataList.length;
+  const totalRecords = searchLeaveList !== null && searchLeaveList !== undefined && searchLeaveList.length;
   const pageRange = 10;
 
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  const currentRecords = holidayDataList !== null ? holidayDataList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+  const currentRecords = searchLeaveList !== null && searchLeaveList !== undefined ? searchLeaveList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
   const handlePageChange = pageNumber => {
     setCurrentPage(pageNumber);
@@ -35,6 +41,34 @@ const HolidayList = () => {
   useEffect(() => {
     getHoliday()
   }, [])
+
+  useEffect(() => {
+    if (holidayDataList !== undefined && holidayDataList !== null && holidayDataList.length > 0) {
+      setLeaveList(holidayDataList);
+    }
+
+  }, [holidayDataList])
+
+
+  const searchHandler = (e) => {
+    setSearchValue(e.target.value)
+
+  }
+
+  const searchDataHandler = () => {
+    if (searchValue !== "") {
+      searchHoliday(searchValue);
+    } else {
+      getHoliday()
+    }
+
+  }
+
+  useEffect(() => {
+    if (searchHolidayList !== undefined && searchHolidayList !== null && searchHolidayList.length > 0) {
+      setLeaveList(searchHolidayList);
+    }
+  }, [searchHolidayList])
 
   console.log("holiday", holidayDataList)
   const changeHandler = (event) => {
@@ -118,12 +152,12 @@ const HolidayList = () => {
                         text="Export excel"
                       />}
 
-                    {/* <ReactHTMLTableToExcel
-                      className="btn btn-light mr-2"
-                      table="table-to-xls"
-                      filename="holidaylist"
-                      sheet="Sheet"
-                      buttonText="Export excel" /> */}
+                    <div className="job-filter">
+                      <div className="faq-form mr-2">
+                        <input className="form-control searchButton" type="text" placeholder="Search.." onChange={(e) => searchHandler(e)} />
+                        <Search className="search-icon" style={{ color: "#313131" }} onClick={searchDataHandler} />
+                      </div>
+                    </div>
                   </div>
                   : <div className="title_bar" >
 
@@ -144,7 +178,22 @@ const HolidayList = () => {
                     </tr>
                   </thead>
 
-                  {currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 &&
+                  {loader === true && currentRecords !== null && currentRecords !== undefined ?
+                    <tbody>
+                      <tr>
+                        <td colSpan='10'>
+                          <div className="loader-box loader" style={{ width: "100% !important" }}>
+                            <div className="loader">
+                              <div className="line bg-primary"></div>
+                              <div className="line bg-primary"></div>
+                              <div className="line bg-primary"></div>
+                              <div className="line bg-primary"></div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody> :
+                  currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 ?
                     currentRecords.map((item, i) => {
                       return (
                         <tbody key={i + 1}>
@@ -158,13 +207,18 @@ const HolidayList = () => {
                           </tr>
                         </tbody>
                       )
-                    })}
+                    }) :
+                    <tbody>
+                        <tr>
+                            <td colspan='6'>No Record Found</td>
+                        </tr>
+                    </tbody>}
 
                 </table>
-                {(holidayDataList === null) ?
+               {/*  {(holidayDataList === null) ?
                   <p style={{ textAlign: "center" }}>No Record Found</p> : null}
 
-                {holidayDataList !== undefined && holidayDataList !== null && currentRecords.length === 0 ?
+                {currentRecords !== undefined && holidayDataList !== null && currentRecords.length === 0 ?
 
                   <div className="loader-box loader" style={{ width: "100% !important" }}>
                     <div className="loader">
@@ -175,13 +229,13 @@ const HolidayList = () => {
                     </div>
                   </div>
                   :
-                  null}
+                  null} */}
               </div>
 
             </div>
           </div>
         </div>
-        {holidayDataList !== null && holidayDataList.length > 10 &&
+        {searchLeaveList !== null && searchLeaveList !== undefined && searchLeaveList.length > 10 &&
           <Pagination
             itemClass="page-item"
             linkClass="page-link"

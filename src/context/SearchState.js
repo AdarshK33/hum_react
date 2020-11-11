@@ -1,14 +1,15 @@
 import React, { createContext, useReducer } from 'react';
 import { client } from '../utils/axios';
 import SearchReducer from '../reducers/SearchReducer';
-import { toast } from "react-toastify";
 
 
 
 const initial_state = {
   empIdSearchList: [],
   empIdManagerSearchList: [],
-  searchShiftList: []
+  searchShiftList: [],
+  searchClusterList: [],
+  searchHolidayList: []
 
 }
 
@@ -56,14 +57,47 @@ export const SearchProvider = ({ children }) => {
       });
   }
 
+  //search api for holiday
+  const searchHoliday = (key) => {
+    console.log("key value", key)
+    client.get('/holiday/search' + '?key=' + key)
+      .then((response) => {
+
+        state.searchHolidayList = response.data.data;
+        console.log('holiday search api response', state.searchHolidayLis);
+        return dispatch({ type: 'SEARCH_HOLIDAY_LIST', payload: state.searchHolidayList });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+
+  function viewSearchClusterList(Id) {
+
+    client.get('/cluster/search?key=' + Id).then(function (response) {
+
+      state.searchClusterList = response.data.data;
+      console.log(state.searchClusterList);
+      return dispatch({ type: 'FETCH_CLUSTER_SEARCH_LIST', payload: state.searchClusterList });
+    })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
 
   return (<SearchContext.Provider value={{
     searchByEmpId,
     searchByEmpIdManager,
     viewSearchSiftList,
+    viewSearchClusterList,
     empIdSearchList: state.empIdSearchList,
     empIdManagerSearchList: state.empIdManagerSearchList,
-    searchShiftList: state.searchShiftList
+    searchShiftList: state.searchShiftList,
+    searchClusterList: state.searchClusterList,
+    searchHoliday,
+    searchHolidayList: state.searchHolidayList
   }}>
     {children}
   </SearchContext.Provider>);
