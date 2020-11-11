@@ -5,7 +5,7 @@ const AdminReducer = (state, action) => {
             return { ...state, createGrantLeaveResponse: action.payload };
 
         case 'VIEW_GRANT_LEAVE':
-            return { ...state, grantLeaveView: action.payload };
+            return { ...state, grantLeaveView: action.payload, loader: action.loader };
 
         case 'FETCH_ADMIN_LEAVE_LIST':
             return { ...state, leaveAdminList: action.payload }

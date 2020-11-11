@@ -11,6 +11,8 @@ import { AppContext } from "../../context/AppState";
 import '../Leaves/Leaves.css'
 import MultiSelect from 'react-multi-select-component'
 import Select from 'react-select'
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AdminReportForm = () => {
     const [reportType, setReportType] = useState('')
@@ -18,7 +20,7 @@ const AdminReportForm = () => {
     const [endDate, setEndDate] = useState()
     const [yearly, setYearly] = useState()
     const [leave, setLeave] = useState([])
-    const [costCenter, setCostCenter] = useState()
+    const [costCenter, setCostCenter] = useState('')
     const [employeeCostCenter, setEmployeeCostCenter] = useState([])
     const { user } = useContext(AppContext);
     
@@ -82,8 +84,24 @@ const AdminReportForm = () => {
 
     }
 
+    const validation = () => {
+        let flag = true
+        if (costCenter === '') {
+            toast.error("Select Cost Center")
+            flag = false;
+            return;
+        }
+        if (leave.length === 0) {
+            toast.error("Select Leave Category")
+            flag = false;
+            return;
+        }
+        return flag;
+    }
+
     const submitData = (e) => {
         e.preventDefault();
+        const validate = validation()
         let leaveIds = [];
         for(let i = 0 ; i < leave.length; i++ ){
             if(leave[i].value === 1){                
@@ -95,27 +113,32 @@ const AdminReportForm = () => {
         }
         console.log("leaveIds", leaveIds)
 
-        const monthReportData = {
-            employeeIds: (costCenter === 'all' ? ['string'] : employeeCostCenter.map((e,i) => employeeCostCenter[i].value)),
-            fromDate: moment(startDate).format("YYYY-MM-DD"),
+        const reportData = {
+            employeeIds: employeeCostCenter.map((e,i) => employeeCostCenter[i].value),
+            fromDate: reportType === 'Monthly' ? moment(startDate).format("YYYY-MM-DD") : 'string',
             leaveTypeIds:  leaveIds,
-            toDate: moment(endDate).format("YYYY-MM-DD"),
-            year: 'string'
+            toDate: reportType === 'Monthly' ? moment(endDate).format("YYYY-MM-DD") : 'string',
+            year: reportType === 'Monthly' ? 'string' : yearly
         }
-        const yearReportData = {
-            employeeIds: (costCenter === 'all' ? ['string'] : employeeCostCenter.map((e,i) => employeeCostCenter[i].value)),
+       /*  const yearReportData = {
+            employeeIds:  employeeCostCenter.map((e,i) => employeeCostCenter[i].value),
             fromDate: 'string',
             leaveTypeIds: leaveIds,
             toDate: 'string',
             year: yearly
-        }
-        if(reportType === 'Monthly'){
+        } */
+        if(validate){
+                reportLeave(reportData)
+            }
+        
+       /*  if(reportType === 'Monthly' ){
             console.log("leaveTypeIds",monthReportData)
             reportLeave(monthReportData)
         }
         if(reportType === 'Yearly'){
             reportLeave(yearReportData)
-        }
+        } */
+    
 
         setReportType('')
         setCostCenter(costCenter)
@@ -170,7 +193,8 @@ const AdminReportForm = () => {
                                 options={costCenterList !== null  ?
                                     costCenterList.map(e => ({label: e.costCentreName, value: e.costCentreName})):[]}
                                 onChange={setCostCenterHandler}
-                                 required isSearchable /> 
+                                 required={true} 
+                                 isSearchable /> 
                             </Form.Group>
                         </div> : 
                          <div className="col-sm-4">
@@ -201,7 +225,7 @@ const AdminReportForm = () => {
                                     onChange={setEmployeeCostCenterHandler}
                                     labelledBy={"Select Employee Id"}
                                     hasSelectAll={true}
-                                    disableSearch={true}
+                                    disableSearch={false}
                                 />
                             </Form.Group>
                         </div>
@@ -222,7 +246,7 @@ const AdminReportForm = () => {
                                     onChange={setLeaveHandler}
                                     labelledBy={"Select Leave Type"}
                                     hasSelectAll={true}
-                                    disableSearch={true}
+                                    disableSearch={false}
                                 />
                             </Form.Group>
                         </div>

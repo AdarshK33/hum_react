@@ -27,18 +27,6 @@ const AdminLeavesList = (props) => {
 
 
     const { viewList, leaveList, loader } = useContext(LeaveContext)
-    console.log("loader in admin leave", loader)
-
-    /*  const [loaderSet, setLoaderSet] = useState(loader)
-     console.log("loader value in comp", loaderSet)
-    useEffect(() => {
-        viewList()
-        if(leaveList.status === 200){
-            setLoaderSet(!loaderSet)
-            console.log("loader value in useEffect", loaderSet)
-        }
- 
-    },[]) */
 
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);

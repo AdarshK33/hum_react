@@ -77,6 +77,8 @@ const AdminEditClusterModal = (props) => {
 
 
 
+    console.log("PROPS " + props.shiftData.storeId);
+
     // useEffect(() => {
     //     if (getEmployeesNames !== null && getEmployeesNames === undefined) {
 
@@ -265,14 +267,14 @@ const AdminEditClusterModal = (props) => {
                         </div>
 
 
-
-
+                        {/* 
+                        <h1>{props.shiftData.storeId}</h1> */}
                         <div className="row">
                             <div className="col-sm-12">
                                 <div className="form-group">
                                     <label htmlFor="exampleFormControlInput1">Select cost center</label>
                                     <input type="text"
-                                        defaultValue={props.shiftData.storeId}
+                                        placeholder={props.shiftData.storeId}
                                         className="form-control"
                                         readOnly
                                     />

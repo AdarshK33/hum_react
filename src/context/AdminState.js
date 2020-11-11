@@ -92,11 +92,13 @@ export const AdminProvider = ({ children }) => {
 
 
   function viewGrantLeave() {
+    setLoader(true)
     client.get('grant_leave/view', {
     }).then(function (response) {
       console.log("data==>" + JSON.stringify(response));
       state.grantLeaveView = response.data.data;
-      return dispatch({ type: 'VIEW_GRANT_LEAVE', payload: state.grantLeaveView });
+      setLoader(false)
+      return dispatch({ type: 'VIEW_GRANT_LEAVE', payload: state.grantLeaveView, loader: loader });
     })
       .catch(function (error) {
         console.log(error);

@@ -17,13 +17,6 @@ import { SearchContext } from '../../context/SearchState';
 function ViewShift() {
   useEffect(() => {
     viewShift()
-    viewShiftPage(0,10)
-    setTotal(0)
-    setCurrentPage(1);
-    setPageNumber(0)
-    setPageCurrentNumber(0)
-    setShiftList("")   
-    
   }, [])
   const [modal, setModal] = useState(false);
   const handleClose = () => setModal(false)
@@ -41,16 +34,11 @@ function ViewShift() {
   const [breakEndTime, setBreakEndTime] = useState(new Date());
   const [workingHours, setWorkingHour] = useState();
   const [status, setStatus] = useState('')
-  const [searchValue, setSearchValue] = useState("");
-  const [searchShift, setShiftList] = useState([]);
-  const [pageShiftData, setPageShiftData] = useState();
-  const [Total, setTotal] = useState(0);
-  const [PageNumber, setPageNumber] = useState(0);
-  const [PageCurrentNumber, setPageCurrentNumber] = useState(0);
- 
+  const [searchValue, setSearchValue] = useState(false);
+  const [searchShift, setShiftList] = useState();
 
   const { searchShiftList, viewSearchSiftList } = useContext(SearchContext);
-  const { shiftList, editShift, viewShift, viewShiftTypes, viewContractTypes, singleShiftList,viewShiftPage, pageData } = useContext(RosterContext);
+  const { shiftList, editShift, viewShift, viewShiftTypes, viewContractTypes, singleShiftList } = useContext(RosterContext);
   //pagenation data
 
 
@@ -58,110 +46,34 @@ function ViewShift() {
 
   //pagenation data
   useEffect(() => {
-      
-    // if (shiftList !== undefined && shiftList !== null && shiftList.length > 0) {
-    //   setShiftList(shiftList);
-    // }
-    
-    if(pageData !== undefined && pageData !== null  ){
-     
-      setShiftList(pageData)
-      setPageShiftData(pageData)
-    
+    if (shiftList !== undefined && shiftList !== null && shiftList.length > 0) {
+      setShiftList(shiftList);
     }
-    // else if(pageData.length > 0 && searchShift.length > 0 ){
-    //   if(pageData[1].shiftMasterId !== searchShift[1].shiftMasterId){
-       
-    //       setShiftList(pageData)
-    //       setPageShiftData(pageData)
-    //   }
-    // }   
-    
-  }, [pageData])
+  }, [shiftList])
 
-
-  // let totalRecords =0;
   const [currentPage, setCurrentPage] = useState(1);
   const recordPerPage = 10;
-  // totalRecords = pageData !== undefined && pageData !== null &&  totalRecords + pageData.length + 1;
+  const totalRecords = searchShift !== undefined && searchShift !== null && searchShift.length;
   const pageRange = 10;
-  useEffect(()=>{
-    let totalRecords =0;
-    if(searchShift !== undefined && searchShift !== null  ){     
-      totalRecords = totalRecords + searchShift.length ;
-      if(currentPage > PageNumber && currentPage > PageCurrentNumber){
-        if(searchShift.length < 10 ){
-          setTotal(Total+totalRecords)
-        }else if(Total > 0 ){
-          setTotal(Total+totalRecords)
-        }else{
-          setTotal(Total+totalRecords+1)
-        }
-      }
-      // else if(currentPage < PageNumber){
-      //   let diff = (PageNumber - currentPage) * 10 
-      //   setTotal(Total-diff - 1)
-      // }
-    } 
-  },[searchShift])
 
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  // const currentRecords = searchShift !== undefined && searchShift !== null ? searchShift.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+  const currentRecords = searchShift !== undefined && searchShift !== null ? searchShift.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
   const handlePageChange = pageNumber => {
-    setCurrentPage(pageNumber); 
-    let page = Math.trunc(Total/10) ;
-if(pageData !== null && pageData.length > 0 && pageData.length % 10 !== 0){
-  page = page + 1;
-}
-    
-    
-    if (searchValue !== "") {
-      if(searchShift.length % 10 === 0 && pageNumber !==  currentPage){
-        setShiftList([]);       
-        setPageCurrentNumber(page)        
-        viewSearchSiftList(searchValue,pageNumber-1,10)
-      }else if(pageNumber < PageNumber){
-        setShiftList([]);       
-        setPageCurrentNumber(page)        
-        viewSearchSiftList(searchValue,pageNumber-1,10)
-      }else{
-        setPageNumber(pageNumber)
-      }
-    }
-    else{
-      if(searchShift.length % 10 === 0 && pageNumber !==  currentPage){
-        setShiftList([]);       
-          setPageCurrentNumber(page)        
-        viewShiftPage(pageNumber-1,10)
-      }else if(pageNumber < PageNumber){
-        setShiftList([]);       
-        setPageCurrentNumber(page)        
-        viewShiftPage(pageNumber-1,10)
-      }else{
-        setPageNumber(pageNumber)
-      }
-    }
-   
+    setCurrentPage(pageNumber);
   }
 
   const searchHandler = (e) => {
     setSearchValue(e.target.value)
+
   }
 
   const searchDataHandler = () => {
-    setTotal(0)
-    setCurrentPage(1);
-    setPageNumber(0)
-    setPageCurrentNumber(0)
-    
     if (searchValue !== "") {
-      setShiftList([]);
-      viewSearchSiftList(searchValue,0,10);
+      viewSearchSiftList(searchValue);
     } else {
-      setShiftList([]);
-      viewShiftPage(0,10)
+      viewShift()
     }
 
   }
@@ -243,8 +155,8 @@ if(pageData !== null && pageData.length > 0 && pageData.length % 10 !== 0){
                     </tr>
                   </thead>
 
-                  {searchShift !== undefined && searchShift !== null &&
-                    searchShift.map((e, i) => {
+                  {currentRecords !== undefined && currentRecords !== null &&
+                    currentRecords.map((e, i) => {
                       return (
                         <tbody key={i + 1}>
                           <tr>
@@ -282,10 +194,10 @@ if(pageData !== null && pageData.length > 0 && pageData.length % 10 !== 0){
                       );
                     })}
                 </table>
-                {(pageData === null || searchShiftList === null) ?
+                {(shiftList === null) ?
                   <p style={{ textAlign: "center" }}>No Record Found</p> : null}
 
-                {pageData !== undefined && pageData !== null && searchShift !== undefined && searchShiftList !== null && searchShift.length === 0 ?
+                {shiftList !== undefined && shiftList !== null && currentRecords.length === 0 ?
 
                   <div className="loader-box loader" style={{ width: "100% !important" }}>
                     <div className="loader">
@@ -318,7 +230,7 @@ if(pageData !== null && pageData.length > 0 && pageData.length % 10 !== 0){
                     linkClass="page-link"
                     activePage={currentPage}
                     itemsCountPerPage={recordPerPage}
-                    totalItemsCount={Total}
+                    totalItemsCount={totalRecords}
                     pageRangeDisplayed={pageRange}
                     onChange={handlePageChange}
                   />
