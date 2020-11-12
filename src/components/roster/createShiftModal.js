@@ -33,6 +33,7 @@ const CreateShiftModal = (props) => {
   const [nineHourWarnMsg, setNineHourWarnMsg] = useState(false);
   const [fiveToEightWarnMsg, setFiveToEightWarnMsg] = useState(false);
   const [oneToFiveWarnMsg, setOneFiveWarnMsg] = useState(false);
+  const [oneToEightWarnMsg, setOneToEightWarnMsg] = useState(false)
   const [costCenterName, setCostCenterName] = useState('');
   const [costCenterRequireMsg, setCostCenterRequireMsg] = useState(false);
   const { addShift, viewShiftTypes, viewContractTypes, shiftContractNames, costCenterList, costCenter } = useContext(RosterContext);
@@ -60,6 +61,7 @@ const CreateShiftModal = (props) => {
     setNineHourWarnMsg('')
     setFiveToEightWarnMsg('')
     setOneFiveWarnMsg('')
+    setOneToEightWarnMsg('')
     props.handleClose()
   }
   const calcTime = () => {
@@ -98,9 +100,10 @@ const CreateShiftModal = (props) => {
           setShiftButton(true)
           setOneFiveWarnMsg(true)
           setFiveToEightWarnMsg(true)
+          setOneToEightWarnMsg(true)
         }
       }
-      else if (contractType === "Parttime" || contractType === "Temporary") {
+      else if (contractType === "Temporary") {
 
         if (parseFloat(workingHours) >= 5 && parseFloat(workingHours) <= 8) {
           setShiftButton(false)
@@ -112,6 +115,7 @@ const CreateShiftModal = (props) => {
           setShiftButton(true)
           setNineHourWarnMsg(true)
           setOneFiveWarnMsg(true)
+          setOneToEightWarnMsg(true)
         }
       }
       else if (contractType === "Internship (young persons)") {
@@ -124,7 +128,22 @@ const CreateShiftModal = (props) => {
           setOneFiveWarnMsg(false)
           setOneFiveWarnMsg("* Shift should be 1 to 5 hours")
           setShiftButton(true)
+          setOneToEightWarnMsg(true)
           setNineHourWarnMsg(true)
+          setFiveToEightWarnMsg(true)
+        }
+      }
+      else if (contractType === "Parttime") {
+        if (parseFloat(workingHours) >= 1 && parseFloat(workingHours) <= 8) {
+          setShiftButton(false)
+          setOneToEightWarnMsg(true)
+        }
+        else {
+          setOneToEightWarnMsg(false)
+          setOneToEightWarnMsg("* Shift should be 1 to 8 hours")
+          setShiftButton(true)
+          setNineHourWarnMsg(true)
+          setOneFiveWarnMsg(true)
           setFiveToEightWarnMsg(true)
         }
       }
@@ -286,7 +305,7 @@ const CreateShiftModal = (props) => {
   const validation = () => {
     let flag = true
     if (costCenterName === "") {
-      toast.info("cost center is required")
+      toast.error("cost center is required")
       flag = false;
       return;
     }
@@ -383,6 +402,7 @@ const CreateShiftModal = (props) => {
                   <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px", marginTop: "10px" }}>{nineHourWarnMsg}</h6>
                   <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px", marginTop: "10px" }}>{fiveToEightWarnMsg}</h6>
                   <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px", marginTop: "10px" }}>{oneToFiveWarnMsg}</h6>
+                  <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px", marginTop: "10px" }}>{oneToEightWarnMsg}</h6>
                   {/* <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px" }}>{warnMsg}</h6> */}
                   <div className="row">
                     <div className="col-sm-12">

@@ -1,6 +1,7 @@
 import React, { createContext, useReducer } from 'react';
 import { client } from '../utils/axios';
 import SearchReducer from '../reducers/SearchReducer';
+import { toast } from 'react-toastify';
 
 
 
@@ -76,8 +77,12 @@ export const SearchProvider = ({ children }) => {
   function viewSearchClusterList(Id) {
 
     client.get('/cluster/search?key=' + Id).then(function (response) {
-
-      state.searchClusterList = response.data.data;
+      if (response.data.data === null) {
+        toast.error("No Data Found")
+      }
+      else {
+        state.searchClusterList = response.data.data;
+      }
       console.log(state.searchClusterList);
       return dispatch({ type: 'FETCH_CLUSTER_SEARCH_LIST', payload: state.searchClusterList });
     })

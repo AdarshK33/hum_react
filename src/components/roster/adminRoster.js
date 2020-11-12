@@ -71,7 +71,7 @@ const AdminRoster = () => {
     const handleCostCenter = (options) => {
         let data2 = options !== null ? options.value : ''
         setCostCenter1(data2)
-        setstorecostCenterName(options)
+        setstorecostCenterName(data2)
         setadminRosterButton(false)
     }
 
@@ -217,7 +217,7 @@ const AdminRoster = () => {
                                         </div>
 
 
-                                        <div className="col-sm-4">
+                                        <div className="col-sm-3">
 
                                             <div className="form-group">
                                                 <label className="name f-w-600">Select Employee Type</label>

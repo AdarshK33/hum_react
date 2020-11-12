@@ -19,45 +19,45 @@ const MasterWeek = () => {
   const [fileUpload, setFileUpload] = useState();
   const [year, setYear] = useState();
   const [data, setData] = useState([]);
-  
+
   const today = new Date();
 
-  useEffect(()=>{
-    setYear(today)    
+  useEffect(() => {
+    setYear(today)
     getMasterWeeks(today)
-  },[])
+  }, [])
 
   const { getMasterWeeks, masterWeeks, uploadWeeks } = useContext(RosterContext);
 
   const [currentPage, setCurrentPage] = useState(1);
-    const recordPerPage = 10;
-    let totalRecords = 0;
-    let indexOfFirstRecord = 0;
-    let indexOfLastRecord = 0;
-    const pageRange = 10;
-    let currentRecords = [];
+  const recordPerPage = 10;
+  let totalRecords = 0;
+  let indexOfFirstRecord = 0;
+  let indexOfLastRecord = 0;
+  const pageRange = 10;
+  let currentRecords = [];
 
-    if (masterWeeks !== null) {
-        totalRecords = masterWeeks.length;
-        indexOfLastRecord = currentPage * recordPerPage;
-        indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-        currentRecords = masterWeeks.slice(indexOfFirstRecord, indexOfLastRecord);
-    }
+  if (masterWeeks !== null) {
+    totalRecords = masterWeeks.length;
+    indexOfLastRecord = currentPage * recordPerPage;
+    indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+    currentRecords = masterWeeks.slice(indexOfFirstRecord, indexOfLastRecord);
+  }
 
-    const handlePageChange = pageNumber => {
-      setCurrentPage(pageNumber);
+  const handlePageChange = pageNumber => {
+    setCurrentPage(pageNumber);
   }
 
 
   const ref = React.useRef(null);
 
-  const removeFileName = (e) =>{
-    console.log("=================",ref.current )
+  const removeFileName = (e) => {
+    console.log("=================", ref.current)
     // ref.current.pause();
   }
 
   useEffect(() => {
-    
+
     let d = [];
     setData([])
     if (masterWeeks !== null && masterWeeks !== undefined) {
@@ -72,11 +72,11 @@ const MasterWeek = () => {
           year: masterWeeks[i].year
         })
       }
-      setTimeout(()=>{
+      setTimeout(() => {
         setData(d);
       }, 100)
-      
-    
+
+
     }
   }, [masterWeeks])
 
@@ -95,7 +95,7 @@ const MasterWeek = () => {
     // setTimeout(() => {
     //   event.target.value = null;
     // }, 5000)
-    
+
   }
 
   //File export 
@@ -108,7 +108,7 @@ const MasterWeek = () => {
     "year": "Year"
   }
 
-  
+
   // console.log(masterWeeks);
   // console.log("=============", data)
 
@@ -135,6 +135,7 @@ const MasterWeek = () => {
               <Form.Group>
                 <Form.Label>Select Year</Form.Label><span style={{ color: 'red' }}>*</span> <br />
                 <DatePicker
+                  className="form-control"
                   selected={year}
                   onChange={y => {
                     console.log(moment(y, ["MMM Do YY"]).format("YYYY"));
@@ -191,9 +192,9 @@ const MasterWeek = () => {
                       fields={fields}
 
                       text="Export excel"
-                    />:
+                    /> :
                     <Button className="btn btn-light mr-2">Export Excel</Button>
-                    }
+                  }
                   {/* <input
                       className="btn"
                       type="file"
@@ -240,35 +241,35 @@ const MasterWeek = () => {
                   }
                 </table>
                 {(masterWeeks === null) ?
-                        <p style={{ textAlign: "center" }}>No Record Found</p> : null}
-                    
-                    {masterWeeks !== undefined && masterWeeks !== null && masterWeeks.length === 0 ?
+                  <p style={{ textAlign: "center" }}>No Record Found</p> : null}
 
-                        <div className="loader-box loader" style={{ width: "100% !important" }}>
-                            <div className="loader">
-                                <div className="line bg-primary"></div>
-                                <div className="line bg-primary"></div>
-                                <div className="line bg-primary"></div>
-                                <div className="line bg-primary"></div>
-                            </div>
-                        </div>
-                        :
-                            null}
+                {masterWeeks !== undefined && masterWeeks !== null && masterWeeks.length === 0 ?
+
+                  <div className="loader-box loader" style={{ width: "100% !important" }}>
+                    <div className="loader">
+                      <div className="line bg-primary"></div>
+                      <div className="line bg-primary"></div>
+                      <div className="line bg-primary"></div>
+                      <div className="line bg-primary"></div>
+                    </div>
+                  </div>
+                  :
+                  null}
               </div>
 
               <div>
-                    {masterWeeks !== null && masterWeeks.length > 10 &&
-                        <Pagination
-                            itemClass="page-item"
-                            linkClass="page-link"
-                            activePage={currentPage}
-                            itemsCountPerPage={recordPerPage}
-                            totalItemsCount={totalRecords}
-                            pageRangeDisplayed={pageRange}
-                            onChange={handlePageChange}
-                        />
-                    }
-                </div>
+                {masterWeeks !== null && masterWeeks.length > 10 &&
+                  <Pagination
+                    itemClass="page-item"
+                    linkClass="page-link"
+                    activePage={currentPage}
+                    itemsCountPerPage={recordPerPage}
+                    totalItemsCount={totalRecords}
+                    pageRangeDisplayed={pageRange}
+                    onChange={handlePageChange}
+                  />
+                }
+              </div>
 
             </div>
           </div>

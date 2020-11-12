@@ -4,7 +4,6 @@ import Select from 'react-select';
 import { toast } from "react-toastify";
 import { RosterContext } from "../../context/RosterState";
 import "react-toastify/dist/ReactToastify.css";
-import './roster.css'
 import moment from 'moment'
 
 

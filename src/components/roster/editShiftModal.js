@@ -36,6 +36,7 @@ const EditShiftModal = (props) => {
   const [timeError, setTimeErrorMsg] = useState(false);
   const [nineHourWarnMsg, setNineHourWarnMsg] = useState(false);
   const [fiveToEightWarnMsg, setFiveToEightWarnMsg] = useState(false);
+  const [oneToEightWarnMsg, setOneToEightWarnMsg] = useState(false)
   const [oneToFiveWarnMsg, setOneFiveWarnMsg] = useState(false);
 
   const { updateShift, singleShiftList, viewShiftTypes, costCenter, viewContractTypes, shiftContractNames } = useContext(RosterContext);
@@ -120,10 +121,10 @@ const EditShiftModal = (props) => {
           setShiftButton(true)
           setOneFiveWarnMsg(true)
           setFiveToEightWarnMsg(true)
-
+          setOneToEightWarnMsg(true)
         }
       }
-      else if (contractType === "Parttime" || contractType === "Temporary") {
+      else if (contractType === "Temporary") {
         if (parseFloat(workingHours) >= 5 && parseFloat(workingHours) <= 8) {
           setShiftButton(false)
           setFiveToEightWarnMsg(true)
@@ -134,6 +135,7 @@ const EditShiftModal = (props) => {
           setShiftButton(true)
           setNineHourWarnMsg(true)
           setOneFiveWarnMsg(true)
+          setOneToEightWarnMsg(true)
         }
       }
       else if (contractType === "Internship (young persons)") {
@@ -146,6 +148,22 @@ const EditShiftModal = (props) => {
           setOneFiveWarnMsg("* Shift should be between 1 to 5 hours only")
           setShiftButton(true)
           setNineHourWarnMsg(true)
+          setFiveToEightWarnMsg(true)
+          setOneToEightWarnMsg(true)
+        }
+      }
+
+      else if (contractType === "Parttime") {
+        if (parseFloat(workingHours) >= 1 && parseFloat(workingHours) <= 8) {
+          setShiftButton(false)
+          setOneToEightWarnMsg(true)
+        }
+        else {
+          setOneToEightWarnMsg(false)
+          setOneToEightWarnMsg("* Shift should be 1 to 8 hours")
+          setShiftButton(true)
+          setNineHourWarnMsg(true)
+          setOneFiveWarnMsg(true)
           setFiveToEightWarnMsg(true)
         }
       }
@@ -352,7 +370,7 @@ const EditShiftModal = (props) => {
                   <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px", marginTop: "10px" }}>{fiveToEightWarnMsg}</h6>
                   <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px", marginTop: "10px" }}>{oneToFiveWarnMsg}</h6>
                   <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px", marginTop: "10px" }}>{errormsg}</h6>
-
+                  <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px", marginTop: "10px" }}>{oneToEightWarnMsg}</h6>
 
                   {showBreakDuration &&
                     <div className="row">
