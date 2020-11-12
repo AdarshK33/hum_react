@@ -96,7 +96,10 @@ export const AdminProvider = ({ children }) => {
     if(key !== null && key !== undefined){
       client.get('grant_leave/view' + '?key=' + key )
       .then(function (response) {
-        state.grantLeaveView = response.data.data;
+        
+          state.grantLeaveView = response.data.data;
+          console.log("data",state.grantLeaveView)
+        
         console.log("data==>" + state.grantLeaveView);
         setLoader(false)
         return dispatch({ type: 'VIEW_GRANT_LEAVE', payload: state.grantLeaveView, loader: loader });
