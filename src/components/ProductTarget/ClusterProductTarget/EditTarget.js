@@ -186,8 +186,9 @@ const EditTarget = (props) => {
                             <Row>
                                 <div className="col-sm-12">
                                     <Form.Group>
-                                        <Form.Label>Select Cost Center</Form.Label>                                        
-                                        <Select                                       
+                                        <Form.Label>Select Cost Center</Form.Label>     
+                                        <Form.Control value={costCenter} readOnly />                                   
+                                        {/* <Select                                       
                                                 name="filters"
                                                 placeholder={costCenter}
                                                 // defaultInputValue={costCenter} 
@@ -196,7 +197,7 @@ const EditTarget = (props) => {
                                                 options={cosCentreList !== null  ?
                                                     cosCentreList.map(e => ({label: e.costCentreName, value: e.costCentreName})):[]}
                                                 onChange={setCosCenterHandler}
-                                                required isSearchable /> 
+                                                required isSearchable />  */}
 
                                         {/* <Form.Control as="select"                                             
                                             onChange={(e) => setCosCenterHandler(e.target.value)}>
