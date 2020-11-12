@@ -63,7 +63,11 @@ const RosterReducer = (state, action) => {
         case 'FETCH_PAGESHIFT_LIST':
             return { ...state, pageData: action.payload };
 
-
+        case 'ROSTER_EXPORT':
+            return{
+                ...state
+                // , ...action.payload
+            };
 
         default: return state;
     }

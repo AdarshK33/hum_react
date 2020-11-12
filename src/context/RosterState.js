@@ -4,7 +4,7 @@ import { client } from '../utils/axios';
 import { toast } from "react-toastify";
 import RosterReducer from '../reducers/RosterReducer';
 import moment from 'moment'
-
+var fileDownload = require('js-file-download');
 
 const initial_state = {
   shiftList: [],
@@ -27,8 +27,8 @@ const initial_state = {
   adminRosterAvailableShiftList: [],
   costCenterList: [],
   masterWeeks: [],
-  pageData: []
-
+  pageData: [],
+  rosterSheet: {}
 }
 
 
@@ -327,6 +327,19 @@ export const RosterProvider = ({ children }) => {
       })
   }
 
+  const rosterExport = (endDate, startDate, contract, weekid, id) => {
+      const flag=0;    
+      client.get('/roster/download?contractType=' + contract + '&endDate=' + endDate + '&flag=' +flag + '&startDate=' + startDate + '&storeId=' + id + '&weekId=' + weekid, {responseType: 'blob'})    
+      .then((response) => {
+
+      let fileData = new Blob([response.data],{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+      fileDownload(fileData,'roster.xlsx');
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
   //ADMIN GET ALL WEEKS
   const adminCalculateWeek = (endDate, startDate) => {
     //  alert(endDate,endDate);
@@ -466,6 +479,7 @@ export const RosterProvider = ({ children }) => {
     uploadWeeks,
     getMasterWeeks,
     viewShiftPage,
+    rosterExport,
     masterWeeks: state.masterWeeks,
     costCenterList: state.costCenterList,
     shiftList: state.shiftList,

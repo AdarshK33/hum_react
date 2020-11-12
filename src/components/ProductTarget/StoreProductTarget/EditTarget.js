@@ -171,7 +171,8 @@ const EditTarget = (props) => {
                                 <div className="col-sm-12">
                                     <Form.Group>
                                         <Form.Label>Select Cost Center :</Form.Label>
-                                        <Select                                       
+                                        <Form.Control as="input" required value = {StoreType} readOnly />
+                                        {/* <Select                                       
                                                 name="filters"
                                                 placeholder={StoreType} 
                                                 value={StoreType} 
@@ -180,7 +181,7 @@ const EditTarget = (props) => {
                                                 options={cosCentreList !== null && cosCentreList !== undefined ?
                                                     cosCentreList.map(e => ({label: e.costCentreName, value: e.costCentreName})):[]}
                                                 onChange={fromStoreHandler}
-                                                required isSearchable /> 
+                                                required isSearchable />  */}
                                         {/* <Form.Control as="select" 
                                             onChange={(e)=>fromStoreHandler(e.target.value)} required
                                             >
@@ -201,7 +202,7 @@ const EditTarget = (props) => {
                                 <div className="col-sm-12">
                                     <Form.Group>
                                         <Form.Label>State :</Form.Label>
-                                        <Form.Control as="input" required defaultValue = {StateData.stateName}/>                                           
+                                        <Form.Control as="input" required defaultValue = {StateData.stateName} readOnly/>                                           
                                     </Form.Group>
                                 </div>
                             </Row>
