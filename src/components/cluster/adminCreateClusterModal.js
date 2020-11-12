@@ -76,18 +76,18 @@ const AdminCreateClusterModal = (props) => {
     const validation = () => {
         let flag = true
         if (employee.length === 0) {
-            toast.info("Select employee is mandatory")
+            toast.error("Select employee is mandatory")
             flag = false;
             return;
         }
 
         if (sportsList.length === 0) {
-            toast.info("Select sports is mandatory")
+            toast.error("Select sports is mandatory")
             flag = false;
             return;
         }
         if (costCenterName.length === 0) {
-            toast.info("Select sports is mandatory")
+            toast.error("Cost Center is mandatory")
             flag = false;
             return;
         }
