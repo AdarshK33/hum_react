@@ -15,6 +15,9 @@ import { AppContext } from "../../context/AppState";
 import Pagination from 'react-js-pagination'
 import '../AdminLeave/AdminLeaves.css'
 import { useHistory } from "react-router-dom";
+import DatePicker from 'react-datepicker'
+import "react-datepicker/dist/react-datepicker.css";
+import { toast } from "react-toastify";
 
 function ViewShift() {
 
@@ -22,7 +25,7 @@ function ViewShift() {
     viewCostCentre()
   }, [])
   const [shiftButton] = useState(false);
-  const [getM, setGetM] = useState();
+  const [getM, setGetM] = useState('');
 
   const { cosCentreList, viewCostCentre } = useContext(DashboardContext);
   const { viewSalary, salaryList, salaryApproval, loader } = useContext(ClusterContext);
@@ -45,6 +48,7 @@ function ViewShift() {
   const [year, setYear] = useState()
   const [checked, setChecked] = useState([]);
   const [deleteModal, setDeleteModal] = useState(false);
+  
 
   let history = useHistory();
 
@@ -56,26 +60,41 @@ function ViewShift() {
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
   const recordPerPage = 10;
-  const totalRecords = salaryList !== null && salaryList.length;
+  const totalRecords = salaryList !== null && salaryList !== undefined && salaryList.length;
   const pageRange = 10;
 
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  const currentRecords = salaryList !== null ? salaryList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+  const currentRecords = salaryList !== null && salaryList !== undefined ? salaryList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
   const handlePageChange = pageNumber => {
     setCurrentPage(pageNumber);
   }
   /*-----------------Pagination------------------*/
-
+ /*  useEffect(() => {
+    const month = moment(getM, ["YYYY-MM"]).format("M");
+    const year = moment(getM, ["MMM Do YY"]).format('YYYY');
+    viewSalary(month, year, user.costCentre)
+  }, []) */
 
   const onSubmit = e => {
     e.preventDefault();
     const month = moment(getM, ["YYYY-MM"]).format("M");
-    const year = moment(getM, ["MMM Do YY"]).format('YYYY');
+    const year  = moment(getM, ["MMM Do YY"]).format('YYYY');
     // alert(month, year)
     viewSalary(month, year, user.costCentre)
+    setGetM(getM)
   }
+
+  const validation = () => {
+    let flag = true
+    if (getM === '') {
+        toast.error("Select Month and Year")
+        flag = false;
+        return;
+    }
+    return flag;
+}
 
   const approvedButton = () => {
     const approvalData = {
@@ -85,10 +104,14 @@ function ViewShift() {
     const month = moment(getM, ["YYYY-MM"]).format("M");
     const year = moment(getM, ["MMM Do YY"]).format("YYYY");
     console.log("approval data=====", approvalData);
+    /* salaryApproval(approvalData, month, year, user.costCentre); */
+    const validate = validation()
+    if(validate){
     salaryApproval(approvalData, month, year, user.costCentre);
+    }
     setChecked([])
-    /* 
-     console.log("month, costCenter, year",month, year, user.costCentre)
+
+    /*  console.log("month, costCenter, year",month, year, user.costCentre)
      viewSalary(month, year, user.costCentre) */
     history.push("/salary/processsalary");
   };
@@ -100,7 +123,10 @@ function ViewShift() {
     };
     const month = moment(getM, ["YYYY-MM"]).format("M");
     const year = moment(getM, ["MMM Do YY"]).format("YYYY");
+    const validate = validation()
+    if(validate){
     salaryApproval(cancelData, month, year, user.costCentre);
+    }
     setDeleteModal(false);
     setChecked([])
 
@@ -166,7 +192,12 @@ function ViewShift() {
                 <Form.Label>Select Month and Year</Form.Label>
                 <input type="month" style={{ fontSize: "0.8rem" }} className="form-control digit" min="2020-08"
                   placeholder="Number Of Days"
-                  required onChange={(e) => setGetM(e.target.value)} value={getM || ''} />
+                  required onChange={(e) => setGetM(e.target.value)} value={getM} />
+               {/*  <div className="salary-date">
+                <DatePicker selected={getM} onChange={(date) => setGetM(date)}
+                  className="form-control salary-view" dateFormat="MM/yyyy" showMonthYearPicker
+                  placeholder='Select Month' />
+                </div> */}
               </Form.Group>
             </div>
 
@@ -196,29 +227,29 @@ function ViewShift() {
                   text="Export excel"
                 />}
 
-                
+
               {
-                (user.loginType==="1" || user.additionalRole==="1" ||
-                user.loginType==="7" || user.additionalRole==="7" ||
-                user.loginType==="9" || user.additionalRole==="9"
-                )?
-                <div className="ml-2" style={{ float: 'left' }}>
-                <Button
-                  className="btn btn-light mr-2"
-                  onClick={approvedButton}
-                >
-                  Approve
+                (user.loginType === "1" || user.additionalRole === "1" ||
+                  user.loginType === "7" || user.additionalRole === "7" ||
+                  user.loginType === "9" || user.additionalRole === "9"
+                ) ?
+                  <div className="ml-2" style={{ float: 'left' }}>
+                    <Button
+                      className="btn btn-light mr-2"
+                      onClick={approvedButton}
+                    >
+                      Approve
                   </Button>
-                <Button
-                  variant="danger"
-                  onClick={() => {
-                    setDeleteModal(true);
-                  }}
-                >Cancel </Button>
-              </div>
-              :
-              <div></div>
-                }
+                    <Button
+                      variant="danger"
+                      onClick={() => {
+                        setDeleteModal(true);
+                      }}
+                    >Cancel </Button>
+                  </div>
+                  :
+                  <div></div>
+              }
             </div>
             <Modal show={deleteModal} onHide={handleDeleteClose} centered>
               <Modal.Body style={{ marginTop: "1rem" }}>
@@ -251,10 +282,10 @@ function ViewShift() {
                   <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                     <tr>
                       {
-                        (user.loginType==="7" || user.additionalRole==="7" ) ?
-                        <th>Select</th> : <th></th>
+                        (user.loginType === "7" || user.additionalRole === "7") ?
+                          <th>Select</th> : <th></th>
                       }
-                      
+
                       <th>S. No</th>
                       <th scope="col">Employee Id</th>
                       <th scope="col">Employee Name</th>
@@ -272,86 +303,86 @@ function ViewShift() {
                   {loader === true && currentRecords !== null && currentRecords !== undefined &&
                     currentRecords.length === 0 ?
                     <tbody>
-                    <tr>
-                        <td colSpan='10'>
-                            <div className="loader-box loader" style={{ width: "100% !important"}}>
-                                <div className="loader">
-                                    <div className="line bg-primary"></div>
-                                    <div className="line bg-primary"></div>
-                                    <div className="line bg-primary"></div>
-                                    <div className="line bg-primary"></div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>:
-                  currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 &&
-                  (
-                    user.loginType==="7" || user.additionalRole==="7" ||
-                    user.loginType==="3" || user.additionalRole==="3" ||
-                    (user.role !== "MANAGER" && user.isClusterManager === 1)
-                  ) ?
-                    currentRecords.map((item, i) => {
-                      return (
-                        <tbody key={i + 1}>
-                          <tr>
-                            {(user.loginType==="7" || user.additionalRole==="7") ? 
-                            <td>
-                              {" "}
-                              {
-                              item.statusDesc === "Pending" ? 
-                                <input
-                                  type="checkbox"
-                                  checked={checked.indexOf(item.salaryId) >= 0}
-                                  onChange={() => checkboxHandler(item.salaryId)}
-                                  name="selectCheckbox"
-                                />
-                               : 
-                                  <input type="checkbox" disabled />
-                                }{" "}
-                            </td> : <td></td> }
-                            <td>{i + 1 + indexOfFirstRecord}</td>
-
-                            <td>{item.employeeId}</td>
-                            <td>{item.firstName} {item.lastName}</td>
-                            <td>{item.numberOfHours}</td>
-
-                            <td>{item.lop}</td>
-                            <td>{item.contractType}</td>
-                            <td>{item.extraHours}</td>
-                            <td>{item.totalHours}</td>
-                            <td>{item.statusDesc}</td>
-                            {user.loginType==="7" || user.additionalRole==="7" ?
-                              <td>{ 
-                                  item.statusDesc === 'Pending' ?
-                                <Edit2 onClick={() => {
-                                  setEditModal(true); setEmployeeId(item.employeeId);
-                                  setFirstName(item.firstName); setLastName(item.lastName); setNumberOfHours(item.numberOfHours)
-                                  setLop(item.lop); setContractType(item.contractType); setExtraHours(item.extraHours);
-                                  setReason(item.reason); setMonth(item.month); setSalaryId(item.salaryId);
-                                  setStatus(item.status); setStatusDesc(item.statusDesc);
-                                  setTotalHours(item.totalHours); setYear(item.year);
-                                  setadditionalHours(item.additionalHours);
-                                }} /> :
-                                <Edit2 disabled style={{ color: 'lightgrey' }} /> }
-                              </td>
-                              : <td></td> }
-                            
-
-                          </tr>
-
-                        </tbody>
-
-                      )
-                    }):
-                    <tbody>
                       <tr>
-                        <td colSpan="10">No Record Found</td>
+                        <td colSpan='10'>
+                          <div className="loader-box loader" style={{ width: "100% !important" }}>
+                            <div className="loader">
+                              <div className="line bg-primary"></div>
+                              <div className="line bg-primary"></div>
+                              <div className="line bg-primary"></div>
+                              <div className="line bg-primary"></div>
+                            </div>
+                          </div>
+                        </td>
                       </tr>
-                    </tbody>
-                    }
+                    </tbody> :
+                    currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 &&
+                      (
+                        user.loginType === "7" || user.additionalRole === "7" ||
+                        user.loginType === "3" || user.additionalRole === "3" ||
+                        (user.role !== "MANAGER" && user.isClusterManager === 1)
+                      ) ?
+                      currentRecords.map((item, i) => {
+                        return (
+                          <tbody key={i + 1}>
+                            <tr>
+                              {(user.loginType === "7" || user.additionalRole === "7") ?
+                                <td>
+                                  {" "}
+                                  {
+                                    item.statusDesc === "Pending" ?
+                                      <input
+                                        type="checkbox"
+                                        checked={checked.indexOf(item.salaryId) >= 0}
+                                        onChange={() => checkboxHandler(item.salaryId)}
+                                        name="selectCheckbox"
+                                      />
+                                      :
+                                      <input type="checkbox" disabled />
+                                  }{" "}
+                                </td> : <td></td>}
+                              <td>{i + 1 + indexOfFirstRecord}</td>
+
+                              <td>{item.employeeId}</td>
+                              <td>{item.firstName} {item.lastName}</td>
+                              <td>{item.numberOfHours}</td>
+
+                              <td>{item.lop}</td>
+                              <td>{item.contractType}</td>
+                              <td>{item.extraHours}</td>
+                              <td>{item.totalHours}</td>
+                              <td>{item.statusDesc}</td>
+                              {user.loginType === "7" || user.additionalRole === "7" ?
+                                <td>{
+                                  item.statusDesc === 'Pending' ?
+                                    <Edit2 onClick={() => {
+                                      setEditModal(true); setEmployeeId(item.employeeId);
+                                      setFirstName(item.firstName); setLastName(item.lastName); setNumberOfHours(item.numberOfHours)
+                                      setLop(item.lop); setContractType(item.contractType); setExtraHours(item.extraHours);
+                                      setReason(item.reason); setMonth(item.month); setSalaryId(item.salaryId);
+                                      setStatus(item.status); setStatusDesc(item.statusDesc);
+                                      setTotalHours(item.totalHours); setYear(item.year);
+                                      setadditionalHours(item.additionalHours);
+                                    }} /> :
+                                    <Edit2 disabled style={{ color: 'lightgrey' }} />}
+                                </td>
+                                : <td></td>}
+
+
+                            </tr>
+
+                          </tbody>
+
+                        )
+                      }) :
+                      <tbody>
+                        <tr>
+                          <td colSpan="10">No Record Found</td>
+                        </tr>
+                      </tbody>
+                  }
                 </Table>
-               {/*  {(salaryList !== null && salaryList.length <= 0) ? <p style={{ textAlign: "center" }}>Select Month and Year</p> : null} */}
+                {/*  {(salaryList !== null && salaryList.length <= 0) ? <p style={{ textAlign: "center" }}>Select Month and Year</p> : null} */}
               </div>
             </div>
           </div>
@@ -365,7 +396,7 @@ function ViewShift() {
         />
 
       </div>
-      {salaryList !== null && salaryList.length > 10 &&
+      {salaryList !== null && salaryList !== undefined && salaryList.length > 10 &&
         <Pagination
           itemClass="page-item"
           linkClass="page-link"

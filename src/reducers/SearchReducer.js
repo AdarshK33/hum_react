@@ -16,6 +16,9 @@ const SearchReducer = (state, action) => {
         case 'SEARCH_HOLIDAY_LIST':
             return { ...state, searchHolidayList: action.payload }
 
+        case 'VIEW_GRANT_LEAVE':
+            return { ...state, searchGrantLeaveView: action.payload }
+
         default: return state;
     }
 }
