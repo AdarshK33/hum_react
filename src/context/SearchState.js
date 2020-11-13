@@ -69,7 +69,7 @@ export const SearchProvider = ({ children }) => {
     client.get('/holiday/search' + '?key=' + key)
       .then((response) => {
         if (response.data.data === null) {
-          toast.error("No Record Found")
+          toast.error("No Data Found")
         }
         else {
           state.searchHolidayList = response.data.data;
