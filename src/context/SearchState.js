@@ -24,10 +24,10 @@ export const SearchProvider = ({ children }) => {
 
     client.get('/leave_transaction/view?empId=' + Id).then(function (response) {
       console.log(response);
-      if(response.data.data === null){
+      if (response.data.data === null) {
         toast.error("No Data Found")
       }
-      else{
+      else {
         state.empIdSearchList = response.data.data;
       }
 
@@ -42,13 +42,13 @@ export const SearchProvider = ({ children }) => {
 
     client.get('/leave_transaction/view/manager?empId=' + Id).then(function (response) {
       console.log(response);
-      if(response.data.data === null){
+      if (response.data.data === null) {
         toast.error("No Data Found")
       }
-      else{
+      else {
         state.empIdManagerSearchList = response.data.data;
       }
-     
+
 
       return dispatch({ type: 'FETCH_EMPIDMANAGER_LIST', payload: state.empIdManagerSearchList });
     })
@@ -81,7 +81,7 @@ export const SearchProvider = ({ children }) => {
     client.get('/holiday/search' + '?key=' + key)
       .then((response) => {
         if (response.data.data === null) {
-          toast.error("No Record Found")
+          toast.error("No Data Found")
         }
         else {
           state.searchHolidayList = response.data.data;
@@ -113,22 +113,22 @@ export const SearchProvider = ({ children }) => {
   }
 
   function searchGrantLeave(key) {
-      client.get('grant_leave/view' + '?key=' + key)
+    client.get('grant_leave/view' + '?key=' + key)
       .then(function (response) {
-        if(response.data.data === null){
+        if (response.data.data === null) {
           toast.error("No Data Found")
         }
-        else{
+        else {
           state.searchGrantLeaveView = response.data.data;
         }
-      
-        return dispatch({ type: 'VIEW_GRANT_LEAVE', payload: state.searchGrantLeaveView});
+
+        return dispatch({ type: 'VIEW_GRANT_LEAVE', payload: state.searchGrantLeaveView });
       })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
-    
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
 
 
   return (<SearchContext.Provider value={{

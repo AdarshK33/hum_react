@@ -367,7 +367,7 @@ const CreateShiftModal = (props) => {
                           showTimeSelectOnly
                           //  onCalendarClose={() => { calcTime() }}
                           timeFormat="HH:mm"
-                          timeIntervals={60}
+                          timeIntervals={30}
                           timeCaption="Time"
                           dateFormat="HH:mm aa"
                           placeholderText="Select start time"
@@ -388,7 +388,7 @@ const CreateShiftModal = (props) => {
                           showTimeSelect
                           showTimeSelectOnly
                           timeFormat="HH:mm"
-                          timeIntervals={60}
+                          timeIntervals={30}
                           timeCaption="Time"
                           dateFormat="HH:mm aa"
 
@@ -420,7 +420,7 @@ const CreateShiftModal = (props) => {
                                   showTimeSelect
                                   showTimeSelectOnly
                                   timeFormat="HH:mm"
-                                  timeIntervals={60}
+                                  timeIntervals={30}
                                   timeCaption="Time"
                                   minTime={startTime}
                                   maxTime={endTime}
