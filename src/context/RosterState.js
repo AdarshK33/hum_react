@@ -328,7 +328,8 @@ export const RosterProvider = ({ children }) => {
   }
 
   const rosterExport = (endDate, startDate, contract, weekid, id) => {
-      const flag=0;    
+    let flag = localStorage.getItem('flag')
+   
       if (contract === "") {
         contract = "permanent"
       }
