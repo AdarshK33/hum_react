@@ -125,7 +125,7 @@ function Dashboard() {
     useEffect(() => {
                 // viewClusterCostCenter(StoreType)
                 if(StoreType !== undefined  && StoreType !== "" && ClusterType !== undefined && ClusterType !== ""){
-                    viewData(today, StoreType, ClusterType);  
+                    viewData(startDate, StoreType, ClusterType);  
                 }
                 
          
