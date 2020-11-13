@@ -27,3 +27,9 @@ button.submitButton.btn.btn-primary {
     border-color: #006EBB !important;
 }
 
+.salary-date .react-datepicker-wrapper{
+    width: 80% !important;
+}
+.salary-date input.form-control.salary-view {
+    height: 34px;
+}
