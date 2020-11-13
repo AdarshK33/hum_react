@@ -328,14 +328,15 @@ export const RosterProvider = ({ children }) => {
   }
 
   const rosterExport = (endDate, startDate, contract, weekid, id) => {
-    const flag = 0;
-    if (contract === "") {
-      contract = "permanent"
-    }
-    if (weekid === undefined) {
-      weekid = 0
-    }
-    client.get('/roster/download?contractType=' + contract + '&endDate=' + endDate + '&flag=' + flag + '&startDate=' + startDate + '&storeId=' + id + '&weekId=' + weekid, { responseType: 'blob' })
+    let flag = localStorage.getItem('flag')
+   
+      if (contract === "") {
+        contract = "permanent"
+      }
+      if (weekid === undefined) {
+        weekid = 0
+      }
+      client.get('/roster/download?contractType=' + contract + '&endDate=' + endDate + '&flag=' +flag + '&startDate=' + startDate + '&storeId=' + id + '&weekId=' + weekid, {responseType: 'blob'})    
       .then((response) => {
 
         let fileData = new Blob([response.data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
