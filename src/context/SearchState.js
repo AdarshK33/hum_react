@@ -60,8 +60,13 @@ export const SearchProvider = ({ children }) => {
   function viewSearchSiftList(Id) {
 
     client.get('/shift/search?key=' + Id).then(function (response) {
-      console.log(response);
-      state.searchShiftList = response.data.data;
+      if (response.data.data === null) {
+        toast.error("No Data Found")
+      }
+      else {
+        state.searchShiftList = response.data.data;
+      }
+
 
       return dispatch({ type: 'FETCH_SHIFT_LIST', payload: state.searchShiftList });
     })
@@ -74,13 +79,13 @@ export const SearchProvider = ({ children }) => {
   const searchHoliday = (key) => {
     console.log("key value", key)
     client.get('/holiday/search' + '?key=' + key)
-    .then((response) => {
-      if(response.data.data === null){
-        toast.error("No Record Found")
-      }
-      else{
-        state.searchHolidayList = response.data.data;
-      }
+      .then((response) => {
+        if (response.data.data === null) {
+          toast.error("No Record Found")
+        }
+        else {
+          state.searchHolidayList = response.data.data;
+        }
         console.log('holiday search api response', state.searchHolidayLis);
         return dispatch({ type: 'SEARCH_HOLIDAY_LIST', payload: state.searchHolidayList });
       })
@@ -93,8 +98,12 @@ export const SearchProvider = ({ children }) => {
   function viewSearchClusterList(Id) {
 
     client.get('/cluster/search?key=' + Id).then(function (response) {
-
-      state.searchClusterList = response.data.data;
+      if (response.data.data === null) {
+        toast.error("No Data Found")
+      }
+      else {
+        state.searchClusterList = response.data.data;
+      }
       console.log(state.searchClusterList);
       return dispatch({ type: 'FETCH_CLUSTER_SEARCH_LIST', payload: state.searchClusterList });
     })

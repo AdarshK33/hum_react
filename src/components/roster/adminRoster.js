@@ -71,11 +71,11 @@ const AdminRoster = () => {
     const handleCostCenter = (options) => {
         let data2 = options !== null ? options.value : ''
         setCostCenter1(data2)
-        setstorecostCenterName(options)
+        setstorecostCenterName(data2)
         setadminRosterButton(false)
     }
 
-
+    // data for next page  setstorecostCenterName
 
     const submitDate = (e) => {
         e.preventDefault();
