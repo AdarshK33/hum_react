@@ -1,6 +1,7 @@
 import React, { createContext, useReducer } from 'react';
 import { client } from '../utils/axios';
 import SearchReducer from '../reducers/SearchReducer';
+import { toast } from "react-toastify";
 
 
 
@@ -9,7 +10,8 @@ const initial_state = {
   empIdManagerSearchList: [],
   searchShiftList: [],
   searchClusterList: [],
-  searchHolidayList: []
+  searchHolidayList: [],
+  searchGrantLeaveView: []
 
 }
 
@@ -22,7 +24,12 @@ export const SearchProvider = ({ children }) => {
 
     client.get('/leave_transaction/view?empId=' + Id).then(function (response) {
       console.log(response);
-      state.empIdSearchList = response.data.data;
+      if(response.data.data === null){
+        toast.error("No Data Found")
+      }
+      else{
+        state.empIdSearchList = response.data.data;
+      }
 
       return dispatch({ type: 'FETCH_EMPID_LIST', payload: state.empIdSearchList });
     })
@@ -35,7 +42,13 @@ export const SearchProvider = ({ children }) => {
 
     client.get('/leave_transaction/view/manager?empId=' + Id).then(function (response) {
       console.log(response);
-      state.empIdManagerSearchList = response.data.data;
+      if(response.data.data === null){
+        toast.error("No Data Found")
+      }
+      else{
+        state.empIdManagerSearchList = response.data.data;
+      }
+     
 
       return dispatch({ type: 'FETCH_EMPIDMANAGER_LIST', payload: state.empIdManagerSearchList });
     })
@@ -90,18 +103,38 @@ export const SearchProvider = ({ children }) => {
       });
   }
 
+  function searchGrantLeave(key) {
+      client.get('grant_leave/view' + '?key=' + key)
+      .then(function (response) {
+        if(response.data.data === null){
+          toast.error("No Data Found")
+        }
+        else{
+          state.searchGrantLeaveView = response.data.data;
+        }
+      
+        return dispatch({ type: 'VIEW_GRANT_LEAVE', payload: state.searchGrantLeaveView});
+      })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+    
+
 
   return (<SearchContext.Provider value={{
     searchByEmpId,
     searchByEmpIdManager,
     viewSearchSiftList,
     viewSearchClusterList,
+    searchGrantLeave,
     empIdSearchList: state.empIdSearchList,
     empIdManagerSearchList: state.empIdManagerSearchList,
     searchShiftList: state.searchShiftList,
     searchClusterList: state.searchClusterList,
     searchHoliday,
-    searchHolidayList: state.searchHolidayList
+    searchHolidayList: state.searchHolidayList,
+    searchGrantLeaveView: state.searchGrantLeaveView
   }}>
     {children}
   </SearchContext.Provider>);

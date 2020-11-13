@@ -17,10 +17,12 @@ import AdminSalaryEdit from './AdminSalaryEdit';
 import Select from 'react-select'
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import DatePicker from 'react-datepicker'
+import "react-datepicker/dist/react-datepicker.css";
 
 const AdminSalaryModule = () => {
   const [shiftButton] = useState(false);
-  const [getM, setGetM] = useState();
+  const [getM, setGetM] = useState('');
   const [deleteModal, setDeleteModal] = useState(false);
   const [checked, setChecked] = useState([]);
   const [costCenter, setCostCenter] = useState('')
@@ -90,7 +92,8 @@ const validate = validation()
     if(validate){
       viewSalary(month, year, costCenter);
     }
-    
+    setGetM(getM)
+    setCostCenter(costCenter)
   };
 
   const validation = () => {
@@ -100,6 +103,11 @@ const validate = validation()
         flag = false;
         return;
     }
+    if (getM === '') {
+      toast.error("Select Month and Year")
+      flag = false;
+      return;
+  }
     return flag;
 }
 
@@ -119,12 +127,16 @@ const validate = validation()
     const month = moment(getM, ["YYYY-MM"]).format("M");
     const year = moment(getM, ["MMM Do YY"]).format("YYYY");
     console.log("approval data=====", approvalData);
-    salaryApproval(approvalData, month, year, costCenter);
+    const validate = validation()
+    if(validate){
+      salaryApproval(approvalData, month, year, costCenter);
+    }
+    
+   /*  salaryApproval(approvalData); */
     setChecked([])
-
-    /* 
-    console.log("month, costCenter, year",month, costCenter, year)
-    viewStoreSalary(month, costCenter, year) */
+  
+   /*  console.log("month, costCenter, year",month, year, costCenter)
+    viewSalary(month, year, costCenter) */
     history.push("/salary/approval");
   };
 
@@ -136,7 +148,11 @@ const validate = validation()
     };
     const month = moment(getM, ["YYYY-MM"]).format("M");
     const year = moment(getM, ["MMM Do YY"]).format("YYYY");
-    salaryApproval(cancelData, month, year, costCenter);
+    const validate = validation()
+    if(validate){
+      salaryApproval(cancelData, month, year, costCenter);
+    }
+    
     setDeleteModal(false);
     setChecked([])
 
@@ -171,6 +187,11 @@ const validate = validation()
                 <input type="month" style={{ fontSize: "0.8rem" }} className="form-control digit" min="2020-08"
                   placeholder="Number Of Days"
                   required onChange={(e) => setGetM(e.target.value)} value={getM} />
+                   {/* <div className="salary-date">
+                <DatePicker selected={getM} onChange={(date) => setGetM(date)}
+                  className="form-control salary-view" dateFormat="MM/yyyy" showMonthYearPicker
+                  placeholder='Select Month' />
+                </div> */}
               </Form.Group>
             </div>
             <div className="col-sm-4">
