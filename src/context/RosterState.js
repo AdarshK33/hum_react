@@ -328,12 +328,18 @@ export const RosterProvider = ({ children }) => {
   }
 
   const rosterExport = (endDate, startDate, contract, weekid, id) => {
-      const flag=0;    
-      client.get('/roster/download?contractType=' + contract + '&endDate=' + endDate + '&flag=' +flag + '&startDate=' + startDate + '&storeId=' + id + '&weekId=' + weekid, {responseType: 'blob'})    
+    const flag = 0;
+    if (contract === "") {
+      contract = "permanent"
+    }
+    if (weekid === undefined) {
+      weekid = 0
+    }
+    client.get('/roster/download?contractType=' + contract + '&endDate=' + endDate + '&flag=' + flag + '&startDate=' + startDate + '&storeId=' + id + '&weekId=' + weekid, { responseType: 'blob' })
       .then((response) => {
 
-      let fileData = new Blob([response.data],{type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
-      fileDownload(fileData,'roster.xlsx');
+        let fileData = new Blob([response.data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+        fileDownload(fileData, 'roster.xlsx');
       })
       .catch((error) => {
         console.log(error)
@@ -359,7 +365,10 @@ export const RosterProvider = ({ children }) => {
   const getEmployeeListForAdminRosterWeekOff = (contractType, storeId) => {
     // const contractType="Parttime";
     console.log("=============NAV============", contractType)
-    client.get('employee/view?contract_type=' + contractType + '&storeId=' + storeId)
+    //http://humine.theretailinsights.co/employee/view?cluster=1&contract_type=Permanent&storeId=IN1305
+    let flag = localStorage.getItem('flag')
+
+    client.get('employee/view?cluster=' + flag + '&contractType=' + contractType + '&storeId=' + storeId)
       .then((response) => {
         state.EmployeeListForAdminRosterWeekOff = response.data.data;
         console.log("admin calculate week for store id  ", state.EmployeeListForAdminRosterWeekOff)
