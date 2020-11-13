@@ -6,11 +6,13 @@ import GrantLeaveEdit from './GrantLeaveEdit';
 import { Edit2, Search } from 'react-feather'
 import Pagination from 'react-js-pagination'
 import { AdminContext } from "../../context/AdminState";
+import { SearchContext } from '../../context/SearchState';
 
 const GrantLeaveView = () => {
 
 
   const { viewGrantLeave, grantLeaveView, loader } = useContext(AdminContext);
+  const {searchGrantLeave, searchGrantLeaveView} = useContext(SearchContext)
 
 
   const [modal, setModal] = useState(false);
@@ -57,7 +59,7 @@ const GrantLeaveView = () => {
 
   const searchDataHandler = () => {
     if (searchValue !== "") {
-      viewGrantLeave(searchValue);
+      searchGrantLeave(searchValue);
     } else {
       viewGrantLeave()
     }
@@ -65,10 +67,11 @@ const GrantLeaveView = () => {
   }
 
   useEffect(() => {
-    if (grantLeaveView !== undefined && grantLeaveView !== null && grantLeaveView.length > 0) {
+    if (searchGrantLeaveView !== undefined && searchGrantLeaveView !== null && searchGrantLeaveView.length > 0) {
       setLeaveList(grantLeaveView);
     }
-  }, [grantLeaveView])
+  }, [searchGrantLeaveView])
+  
   return (
     <Fragment>
       <Breadcrumb title="Grant Leave " parent=" Grant Leave " />
