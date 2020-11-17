@@ -94,8 +94,8 @@ const AdminRoster = () => {
 
     const exportSheet = (e) => {
         e.preventDefault();
-        rosterExport(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"), contractType, singleWeek, costCenter1)    
-    }   
+        rosterExport(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"), contractType, singleWeek, costCenter1)
+    }
 
 
     const checkCondition = (item, name, ctype, costCentreName, weekId) => {
@@ -257,10 +257,10 @@ const AdminRoster = () => {
                                         <div className="col-sm-3">
                                             <div class="align-self-center mx-auto">
                                                 <button className="myclass" style={{ marginTop: "20px", marginLeft: "20px", paddingLeft: "40px", paddingRight: "40px", fontWeight: "bold" }}
-                                                    type="button" 
+                                                    type="button"
                                                     onClick={(e) => exportSheet(e)}
-                                                    >
-                                                        Export</button>
+                                                >
+                                                    Export</button>
                                             </div>
                                         </div>
                                     </div>

@@ -84,6 +84,17 @@ function Dashboard() {
     }, []);
 
     useEffect(() => {
+        if(user.loginType !== '1' && user.loginType !== '9' && user.additionalRole !== "1" && user.additionalRole !== "9"){
+            setStoreType(user.costCentre)
+            if (user.costCentre !== undefined) {
+                viewClusterCostCenter(user.costCentre)
+            }
+            
+         }
+       
+    }, [user]);
+
+    useEffect(() => {
         // if(user.loginType === '1' && user.loginType === '9' && user.additionalRole === "1" && user.additionalRole === "9"){
            if(clusterCostCenterList !== undefined && clusterCostCenterList !== null && 
             clusterCostCenterList.length > 0 &&
@@ -97,17 +108,7 @@ function Dashboard() {
        
 
         // console.log(clusterList)
-        if(user.loginType !== '1' && user.loginType !== '9' && user.additionalRole !== "1" && user.additionalRole !== "9"){
-            setStoreType(user.costCentre)
-            if (user.costCentre !== undefined) {
-                viewClusterCostCenter(user.costCentre)
-            }
-            // if(clusterCostCenterList !== undefined && clusterCostCenterList !== null && clusterCostCenterList.length > 0){
-            //     setClusterName(clusterCostCenterList[0].clusterName);
-            //     setClusterType(clusterCostCenterList[0].clusterId);
-            //     // viewData(today, user.costCentre, clusterCostCenterList[0].clusterId);
-            // }
-         }
+       
         
        
         if (cosCentreList !== undefined && cosCentreList !== null && cosCentreList.length > 0 
@@ -119,12 +120,12 @@ function Dashboard() {
             // viewData(today, cosCentreList[0].costCentreName, clusterList[0].clusterId);
 
         }
-    }, [user.costCentre, cosCentreList, clusterList]);
+    }, [user.costCentre, cosCentreList, clusterList, clusterCostCenterList]);
 
     useEffect(() => {
                 // viewClusterCostCenter(StoreType)
                 if(StoreType !== undefined  && StoreType !== "" && ClusterType !== undefined && ClusterType !== ""){
-                    viewData(today, StoreType, ClusterType);  
+                    viewData(startDate, StoreType, ClusterType);  
                 }
                 
          

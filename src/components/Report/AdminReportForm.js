@@ -96,6 +96,12 @@ const AdminReportForm = () => {
             flag = false;
             return;
         }
+        if (employeeCostCenter.length === 0) {
+            toast.error("Select Employee Id")
+            flag = false;
+            return;
+        }
+        
         return flag;
     }
 
@@ -208,7 +214,7 @@ const AdminReportForm = () => {
                     <Row>
                         <div className="col-sm-4">
                             <Form.Group>
-                                <Form.Label>Employee Id</Form.Label> 
+                                <Form.Label>Employee Id</Form.Label> <span style={{color:'red'}}>*</span> 
                                {/*  <Select
                                 name="filters"
                                 placeholder="Select Employee Id"

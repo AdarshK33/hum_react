@@ -334,7 +334,7 @@ const EditShiftModal = (props) => {
                           showTimeSelect
                           showTimeSelectOnly
                           timeFormat="HH:mm"
-                          timeIntervals={60}
+                          timeIntervals={30}
                           timeCaption="Time"
                           dateFormat="HH:mm aa"
                           value={moment(startTime, ["HH:mm:ss"]).format("HH:mm A")}
@@ -356,7 +356,7 @@ const EditShiftModal = (props) => {
                           showTimeSelect
                           showTimeSelectOnly
                           timeFormat="HH:mm"
-                          timeIntervals={60}
+                          timeIntervals={30}
                           timeCaption="Time"
                           dateFormat="HH:mm aa"
                           value={moment(endTime, ["HH:mm:ss"]).format("HH:mm A")}
@@ -403,7 +403,7 @@ const EditShiftModal = (props) => {
                                   required
                                   showTimeSelectOnly
                                   timeFormat="HH:mm"
-                                  timeIntervals={60}
+                                  timeIntervals={30}
                                   timeCaption="Time"
                                   // minTime={startTime}
                                   // maxTime={endTime}

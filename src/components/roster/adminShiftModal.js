@@ -355,7 +355,7 @@ const AdminShiftModal = (props) => {
                 <form onSubmit={onSubmit}>
                   <div className="row py-2">
                     <div className="col-sm-5 px-2">Select Employees :<span style={{ color: 'red' }}>*</span></div>
-                    <div className="col-sm-7 ">
+                    <div className="col-sm-7">
                       <div className="form-group">
                         <Select
                           name="filters"

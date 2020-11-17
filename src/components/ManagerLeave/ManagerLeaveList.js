@@ -105,7 +105,7 @@ const ManagerLeaveList = (props) => {
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
                                             <th>S. No</th>
-                                            <th>Emp Id</th>
+                                            <th>Employee Id</th>
                                             <th>Leave Type</th>
                                             <th>Total No. of Days</th>
                                             <th>Start Date</th>
