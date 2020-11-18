@@ -99,10 +99,11 @@ export const ClusterProvider = ({ children }) => {
 
   const viewCluster = () => {
     setLoader(true)
-    client.get('cluster/view').then(function (response) {
+    let flag = localStorage.getItem('flag')
+    console.log("=== Flag set" + flag)
+
+    client.get('cluster/view?leader=' + flag).then(function (response) {
       state.clusterList = response.data.data;
-      // console.log("====CLUSTER LIST====")
-      // console.log(JSON.stringify(state.clusterList))
       setLoader(false)
       return dispatch({ type: 'FETCH_ClUSTER_LIST', payload: state.clusterList, loader: loader });
 

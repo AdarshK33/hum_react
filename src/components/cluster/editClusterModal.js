@@ -197,7 +197,7 @@ const EditClusterModal = (props) => {
   }
 
 
-  console.log("=== " + props.shiftData.storeId)
+
 
   //Timer to close modal 
   const callTimer = () => {
