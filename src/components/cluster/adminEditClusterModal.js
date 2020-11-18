@@ -77,7 +77,7 @@ const AdminEditClusterModal = (props) => {
 
 
 
-    console.log("PROPS " + props.shiftData.storeId);
+    // console.log("PROPS " + props.shiftData.storeId);
 
     // useEffect(() => {
     //     if (getEmployeesNames !== null && getEmployeesNames === undefined) {

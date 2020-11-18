@@ -86,13 +86,22 @@ function ViewCluster() {
         <div className="row">
           <div className="col-sm-12">
             <div className="card" style={{ overflowX: "auto" }}>
+              {/* <div>{user.loginType === "3" && user.additionalRole === "7" && localStorage.getItem('flag') === "1" ?
+                <h1>Ranjith</h1>
+                :
+                <h2>Kumar</h2>}
 
+              </div> */}
 
-              <div className="title_bar">
+              <div>
                 {(() => {
-                  if (user.loginType === "1" || user.additionalRole === "1" || user.loginType === "7" || user.additionalRole === "7" || user.loginType === "9" || user.additionalRole === "9") {
+
+                  if ((user.loginType === "7" || user.additionalRole === "7") && localStorage.getItem('flag') === "1") {
+                    return (<div></div>)
+                  }
+                  else if (user.loginType === "1" || user.additionalRole === "1" || user.loginType === "7" || user.additionalRole === "7" || user.loginType === "9" || user.additionalRole === "9") {
                     return (
-                      <div>
+                      <div className="title_bar">
                         <Button className="btn btn-light mr-2" onClick={handleShow}>Create</Button>
                         <div className="job-filter">
                           <div className="faq-form mr-2">
@@ -103,7 +112,6 @@ function ViewCluster() {
                       </div>
                     )
                   }
-
                 })()}
 
                 {/* <Button className="btn btn-light mr-2" onClick={handleEditShow}>edit</Button> */}
@@ -178,7 +186,7 @@ function ViewCluster() {
                       }) :
                       <tbody>
                         <tr>
-                          <td colspan='6'>No Record Found</td>
+                          <td colspan='12'>No Record Found</td>
                         </tr>
                       </tbody>}
 

@@ -129,7 +129,7 @@ function LeaderCluster(){
                                 return (
                                    <tbody key={i + 1}>
                                         <tr>
-                                            <td>{i + 1 }</td>                                            
+                                            <td>{i + 1 + indexOfFirstRecord}</td>                                            
                                             <td>{user.costCentre}</td>
                                             <td>{item.clusterName}</td>
                                             <td>{item.monthName}</td>

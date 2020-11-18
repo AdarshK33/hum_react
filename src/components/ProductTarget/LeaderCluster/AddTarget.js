@@ -102,7 +102,7 @@ const AddTarget = (props) => {
             month: MonthData,
             monthName: "",
             productTarget: target,
-            storeName: costCenterID,
+            storeName: user.costCentre,
             targetId: 0,
             year: year
           }

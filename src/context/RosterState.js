@@ -366,7 +366,6 @@ export const RosterProvider = ({ children }) => {
   const getEmployeeListForAdminRosterWeekOff = (contractType, storeId) => {
     // const contractType="Parttime";
     console.log("=============NAV============", contractType)
-    //http://humine.theretailinsights.co/employee/view?cluster=1&contract_type=Permanent&storeId=IN1305
     let flag = localStorage.getItem('flag')
 
     client.get('employee/view?cluster=' + flag + '&contract_type=' + contractType + '&storeId=' + storeId)
@@ -513,4 +512,4 @@ export const RosterProvider = ({ children }) => {
     {children}
   </RosterContext.Provider>);
 }
-// /roster/view?contractType=Permanent&endDate=2020-09-10&startDate=2020-08-10&storeId=IN1055&weekId=0
+

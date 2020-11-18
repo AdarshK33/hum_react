@@ -36,8 +36,8 @@ export const ClusterProductProvider = ({ children }) => {
   }
 
   const viewLeaderClusterList = () => {
-
-    client.get('/cluster/view/').then((response) => {
+    let leader = localStorage.getItem('flag');
+    client.get('/cluster/view/'+ '?leader='+leader).then((response) => {
       console.log("==========List of Clusters==============");
       console.log(response.data.data);
       console.log("==========List of Clusters==============");
@@ -67,11 +67,11 @@ export const ClusterProductProvider = ({ children }) => {
 
 
   function viewLeaderClusterTarget(id) {
-
-    client.get('/cluster/product_target/view/' + id).then(function (response) {
-      console.log("============NAV==============");
-      console.log(id);
-      console.log(response.data.data);
+    let leader = localStorage.getItem('flag');
+    client.get('/cluster/product_target/view/' + id + '?leader='+leader).then(function (response) {
+      // console.log("============NAV==============");
+      // console.log(id);
+      // console.log(response.data.data);
       state.leaderClusterProductList = response.data.data;
       return dispatch({ type: 'FETCH_LEADERCLUSTERPRODUCTTARGET_LIST', payload: state.leaderClusterProductList });
     })
