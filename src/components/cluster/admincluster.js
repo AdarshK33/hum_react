@@ -164,7 +164,7 @@ function AdminCluster() {
                                             }) :
                                             <tbody>
                                                 <tr>
-                                                    <td colspan='6'>No Record Found</td>
+                                                    <td colspan='12'>No Record Found</td>
                                                 </tr>
                                             </tbody>}
 
