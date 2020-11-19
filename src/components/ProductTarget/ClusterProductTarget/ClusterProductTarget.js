@@ -41,6 +41,7 @@ function ClusterProductTarget() {
     const handleClose = () => {
         viewClusterTarget();
         setModal(false);
+        setCurrentPage(1);
     }
     useEffect(() => {
         let date = new Date();
@@ -179,7 +180,7 @@ function ClusterProductTarget() {
                 </div>
 
                 <div>
-                    {clusterProductList !== null && clusterProductList.length > 0 &&
+                    {clusterProductList !== null && clusterProductList.length > 10 &&
                         <Pagination
                             itemClass="page-item"
                             linkClass="page-link"

@@ -25,6 +25,7 @@ function LeaderCluster(){
     const handleClose = () => {
         viewLeaderClusterTarget(user.costCentre); 
         setModal(false);
+        setCurrentPage(1);
     }
 
     // useEffect(() =>{
@@ -194,7 +195,7 @@ function LeaderCluster(){
                 </div>
 
                 <div>
-                    {leaderClusterProductList !== null && leaderClusterProductList.length > 0 ?
+                    {leaderClusterProductList !== null && leaderClusterProductList.length > 10 ?
                     <Pagination
                         itemClass="page-item"
                         linkClass="page-link"

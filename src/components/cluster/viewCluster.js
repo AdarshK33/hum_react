@@ -24,7 +24,7 @@ function ViewCluster() {
   }, [])
 
   const [modal, setModal] = useState(false);
-  const handleClose = () => setModal(false)
+
   const handleShow = () => setModal(true)
 
   const [editModal, setEditModal] = useState(false)
@@ -73,7 +73,10 @@ function ViewCluster() {
     }
   }, [searchClusterList])
 
-
+  const handleClose = () => {
+    setModal(false)
+    setCurrentPage(1)
+  }
 
   //pagenation data
 
@@ -129,7 +132,7 @@ function ViewCluster() {
                       <th scope="col">Cluster Details</th>
                       <th scope="col">Cluster Leader</th>
                       <th scope="col">Team Count</th>
-                      <th scope="col">Create Date</th>
+                      <th scope="col">Create Date&nbsp;&nbsp;&nbsp;&nbsp;</th>
                       <th scope="col">Status</th>
                       <th scope="col">Edit</th>
                     </tr>

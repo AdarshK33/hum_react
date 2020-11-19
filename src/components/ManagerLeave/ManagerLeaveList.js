@@ -43,7 +43,10 @@ const ManagerLeaveList = (props) => {
     }
     /*-----------------Pagination------------------*/
 
-    const handleClose = () => setModal(false)
+    const handleClose = () => {
+        setModal(false)
+        setCurrentPage(1)
+    }
     const handleShow = () => setModal(true)
 
     const handleEditClose = () => setEditModal(false)

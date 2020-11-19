@@ -33,3 +33,8 @@ button.submitButton.btn.btn-primary {
 .salary-date input.form-control.salary-view {
     height: 34px;
 }
+button.disabled-export-button.btn.btn-primary {
+    background-color: white !important;
+    color: black;
+    border-color: white;
+}
