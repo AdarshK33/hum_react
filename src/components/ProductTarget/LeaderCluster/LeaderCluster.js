@@ -194,7 +194,7 @@ function LeaderCluster(){
                 </div>
 
                 <div>
-                    {leaderClusterProductList !== null && leaderClusterProductList.length > 0 ?
+                    {leaderClusterProductList !== null && leaderClusterProductList.length > 10 ?
                     <Pagination
                         itemClass="page-item"
                         linkClass="page-link"
