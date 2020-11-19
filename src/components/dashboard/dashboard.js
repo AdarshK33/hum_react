@@ -30,7 +30,7 @@ function Dashboard() {
             viewData(e, StoreType, ClusterType)
         }
     }
-    
+
     function week_no(dt) {
         var tdt = new Date(dt.valueOf());
         var dayn = (dt.getDay() + 6) % 7;
@@ -45,7 +45,7 @@ function Dashboard() {
 
 
     const fromStoreHandler = (e) => {
-        console.log("========",e)
+        console.log("========", e)
         setStoreType(e.value);
         viewClusterCostCenter(e.value)
         setClusterName("");
@@ -72,70 +72,70 @@ function Dashboard() {
 
 
     }
-    
+
 
     const { clusterList, viewCluster, viewClusterCostCenter, clusterCostCenterList, } = useContext(ClusterContext);
 
     useEffect(() => {
         setStartDate(today)
-        viewCluster() 
+        //viewCluster()
         viewCostCentre()
-       
+
     }, []);
 
     useEffect(() => {
-        if(user.loginType !== '1' && user.loginType !== '9' && user.additionalRole !== "1" && user.additionalRole !== "9"){
+        if (user.loginType !== '1' && user.loginType !== '9' && user.additionalRole !== "1" && user.additionalRole !== "9") {
             setStoreType(user.costCentre)
             if (user.costCentre !== undefined) {
                 viewClusterCostCenter(user.costCentre)
             }
-            
-         }
-       
+
+        }
+
     }, [user]);
 
     useEffect(() => {
         // if(user.loginType === '1' && user.loginType === '9' && user.additionalRole === "1" && user.additionalRole === "9"){
-           if(clusterCostCenterList !== undefined && clusterCostCenterList !== null && 
+        if (clusterCostCenterList !== undefined && clusterCostCenterList !== null &&
             clusterCostCenterList.length > 0 &&
-            (ClusterType === "" || ClusterType === undefined)){
-                setClusterName(clusterCostCenterList[0].clusterName);
-                setClusterType(clusterCostCenterList[0].clusterId);
-             }
-            //  }
-        
+            (ClusterType === "" || ClusterType === undefined)) {
+            setClusterName(clusterCostCenterList[0].clusterName);
+            setClusterType(clusterCostCenterList[0].clusterId);
+        }
+        //  }
 
-       
+
+
 
         // console.log(clusterList)
-       
-        
-       
-        if (cosCentreList !== undefined && cosCentreList !== null && cosCentreList.length > 0 
-            && clusterList !== null && clusterList !== undefined && clusterList.length > 0 && 
+
+
+
+        if (cosCentreList !== undefined && cosCentreList !== null && cosCentreList.length > 0
+            &&
             (StoreType === "" || StoreType === undefined)) {
             // setStartDate(today)
-            
+
             setStoreType(cosCentreList[0].costCentreName)
             // viewData(today, cosCentreList[0].costCentreName, clusterList[0].clusterId);
 
         }
-    }, [user.costCentre, cosCentreList, clusterList, clusterCostCenterList]);
+    }, [user.costCentre, cosCentreList, clusterCostCenterList]);
 
     useEffect(() => {
-                // viewClusterCostCenter(StoreType)
-                if(StoreType !== undefined  && StoreType !== "" && ClusterType !== undefined && ClusterType !== ""){
-                    viewData(startDate, StoreType, ClusterType);  
-                }
-                
-         
-    }, [StoreType,ClusterType]);
+        // viewClusterCostCenter(StoreType)
+        if (StoreType !== undefined && StoreType !== "" && ClusterType !== undefined && ClusterType !== "") {
+            viewData(startDate, StoreType, ClusterType);
+        }
+
+
+    }, [StoreType, ClusterType]);
     useEffect(() => {
-        if(StoreType !== undefined && StoreType !== null && StoreType !== ""){
+        if (StoreType !== undefined && StoreType !== null && StoreType !== "") {
             viewClusterCostCenter(StoreType)
-        }      
- 
-}, [StoreType]);
+        }
+
+    }, [StoreType]);
 
 
 
@@ -147,7 +147,7 @@ function Dashboard() {
     let clusterHours = [];
 
     let FTcluster = 0, PPTcluster = 0, INTcluster = 0, TPTcluster = 0, FTstore = 0, PPTstore = 0, INTstore = 0;
-    if (graphData !== null && graphData[0] !== undefined && ClusterName !== "" ) {
+    if (graphData !== null && graphData[0] !== undefined && ClusterName !== "") {
 
         for (let i = 1; i <= 24; i++) {
             for (let x in graphData[0].graphData) {
@@ -251,17 +251,17 @@ function Dashboard() {
                                 <label className="name f-w-600" >Select Store<span style={{ color: 'red' }}>*</span>&nbsp; </label>
                                 {/* <h1> {StoreType} </h1> */}
                                 {user.loginType === "1" || user.loginType === "9" || user.additionalRole === "1" || user.additionalRole === "9" ?
-                    
+
                                     <Select
-                                    name="filters"
-                                    placeholder={StoreType} 
-                                    value ={StoreType} 
-                                    style={{fontSize:"0.8rem"}}
-                                    options={cosCentreList !== null && cosCentreList !== undefined ?
-                                        cosCentreList.map(e => ({label: e.costCentreName, value: e.costCentreName})):[]}
-                                    onChange={fromStoreHandler}
-                                    required isSearchable />                                    
-                                    
+                                        name="filters"
+                                        placeholder={StoreType}
+                                        value={StoreType}
+                                        style={{ fontSize: "0.8rem" }}
+                                        options={cosCentreList !== null && cosCentreList !== undefined ?
+                                            cosCentreList.map(e => ({ label: e.costCentreName, value: e.costCentreName })) : []}
+                                        onChange={fromStoreHandler}
+                                        required isSearchable />
+
                                     // <select
                                     //     className="form-control Value"
                                     //     onChange={(e) => fromStoreHandler(e.target.value)}
@@ -299,29 +299,29 @@ function Dashboard() {
 
                                     </select> : */}
 
-                                    <select
-                                        className="form-control Value"
-                                        onChange={(e) => fromClusterHandler(e)}
-                                    >
-                                        {clusterCostCenterList == null ?
+                                <select
+                                    className="form-control Value"
+                                    onChange={(e) => fromClusterHandler(e)}
+                                >
+                                    {clusterCostCenterList == null ?
 
-                                            <option value="">No Options</option> :
+                                        <option value="">No Options</option> :
 
-                                            clusterCostCenterList.map((e, i) => {
-                                                return (
-                                                    <option key={i + 1} value={e.clusterId} >{e.clusterName}</option>)
-                                            })
-                                        }
-
-
+                                        clusterCostCenterList.map((e, i) => {
+                                            return (
+                                                <option key={i + 1} value={e.clusterId} >{e.clusterName}</option>)
+                                        })
+                                    }
 
 
 
-                                    </select>
+
+
+                                </select>
                                 {/* } */}
                             </div>
                         </div>
-                        
+
                     </Row>
 
                 </Col>

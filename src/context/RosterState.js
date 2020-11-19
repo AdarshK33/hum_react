@@ -329,14 +329,14 @@ export const RosterProvider = ({ children }) => {
 
   const rosterExport = (endDate, startDate, contract, weekid, id) => {
     let flag = localStorage.getItem('flag')
-   
-      if (contract === "") {
-        contract = "permanent"
-      }
-      if (weekid === undefined) {
-        weekid = 0
-      }
-      client.get('/roster/download?contractType=' + contract + '&endDate=' + endDate + '&flag=' +flag + '&startDate=' + startDate + '&storeId=' + id + '&weekId=' + weekid, {responseType: 'blob'})    
+
+    if (contract === "") {
+      contract = "permanent"
+    }
+    if (weekid === undefined) {
+      weekid = 0
+    }
+    client.get('/roster/download?contractType=' + contract + '&endDate=' + endDate + '&flag=' + flag + '&startDate=' + startDate + '&storeId=' + id + '&weekId=' + weekid, { responseType: 'blob' })
       .then((response) => {
 
         let fileData = new Blob([response.data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
@@ -366,10 +366,9 @@ export const RosterProvider = ({ children }) => {
   const getEmployeeListForAdminRosterWeekOff = (contractType, storeId) => {
     // const contractType="Parttime";
     console.log("=============NAV============", contractType)
-    //http://humine.theretailinsights.co/employee/view?cluster=1&contract_type=Permanent&storeId=IN1305
     let flag = localStorage.getItem('flag')
 
-    client.get('employee/view?cluster=' + flag + '&contractType=' + contractType + '&storeId=' + storeId)
+    client.get('employee/view?cluster=' + flag + '&contract_type=' + contractType + '&storeId=' + storeId)
       .then((response) => {
         state.EmployeeListForAdminRosterWeekOff = response.data.data;
         console.log("admin calculate week for store id  ", state.EmployeeListForAdminRosterWeekOff)
@@ -513,4 +512,4 @@ export const RosterProvider = ({ children }) => {
     {children}
   </RosterContext.Provider>);
 }
-// /roster/view?contractType=Permanent&endDate=2020-09-10&startDate=2020-08-10&storeId=IN1055&weekId=0
+

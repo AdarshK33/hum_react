@@ -179,7 +179,7 @@ function ClusterProductTarget() {
                 </div>
 
                 <div>
-                    {clusterProductList !== null && clusterProductList.length > 0 &&
+                    {clusterProductList !== null && clusterProductList.length > 10 &&
                         <Pagination
                             itemClass="page-item"
                             linkClass="page-link"

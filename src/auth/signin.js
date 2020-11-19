@@ -33,7 +33,7 @@ const Signin = ({ location, history }) => {
     const [, code] = search.split("?code=");
 
     accessToken(code)
-    console.log(accessToken);
+    //console.log(accessToken);
   }
 
   return (
