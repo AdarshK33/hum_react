@@ -19,7 +19,7 @@ function ViewShift() {
     viewShift()
   }, [])
   const [modal, setModal] = useState(false);
-  const handleClose = () => setModal(false)
+
   const handleShow = () => setModal(true)
 
   const [editModal, setEditModal] = useState(false)
@@ -75,7 +75,11 @@ function ViewShift() {
     } else {
       viewShift()
     }
+  }
 
+  const handleClose = () => {
+    setModal(false)
+    setCurrentPage(1)
   }
 
   useEffect(() => {
