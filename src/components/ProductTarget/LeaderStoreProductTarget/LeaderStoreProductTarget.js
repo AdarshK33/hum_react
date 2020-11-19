@@ -20,6 +20,7 @@ const LeaderStoreProductTarget = () => {
     const handleClose = () => {
         LeaderTargetList(user.costCentre);
         setModal(false);
+        setCurrentPage(1);
     }
     useEffect(() => { 
         let date = new Date(); 

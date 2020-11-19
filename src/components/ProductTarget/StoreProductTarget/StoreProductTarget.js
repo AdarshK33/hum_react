@@ -21,6 +21,7 @@ const StoreProductTarget = () => {
     const handleClose = () => {
         viewStoreProduct();
         setModal(false);
+        setCurrentPage(1);
     }
     useEffect(() => {
         let date = new Date();
