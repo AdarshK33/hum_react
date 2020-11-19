@@ -25,6 +25,7 @@ function LeaderCluster(){
     const handleClose = () => {
         viewLeaderClusterTarget(user.costCentre); 
         setModal(false);
+        setCurrentPage(1);
     }
 
     // useEffect(() =>{

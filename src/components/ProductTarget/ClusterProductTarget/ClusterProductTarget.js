@@ -41,6 +41,7 @@ function ClusterProductTarget() {
     const handleClose = () => {
         viewClusterTarget();
         setModal(false);
+        setCurrentPage(1);
     }
     useEffect(() => {
         let date = new Date();
