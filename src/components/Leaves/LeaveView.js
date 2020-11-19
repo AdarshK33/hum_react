@@ -49,7 +49,10 @@ const LeaveView = () => {
     }
     /*-----------------Pagination------------------*/
 
-    const handleClose = () => setModal(false)
+    const handleClose = () => {
+        setModal(false)
+        setCurrentPage(1)
+    }
 
     const handleEditClose = () => setEditModal(false)
 

@@ -1,11 +1,12 @@
 import React, { Fragment, useState, useEffect, useContext } from 'react';
-import { Table, Row } from 'react-bootstrap'
+import { Table, Row, Button } from 'react-bootstrap'
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import '../Leaves/Leaves.css'
 import '../AdminLeave/AdminLeaves.css'
 import Pagination from 'react-js-pagination'
 import moment from 'moment'
 import { LeaveContext } from '../../context/LeaveState'
+import { toast } from "react-toastify";
 
 
 const AdminReportView = (props) => {
@@ -57,6 +58,9 @@ console.log(dates)
         return date
     }
     /*-----------------Pagination------------------*/
+    const disabledText = () => {
+        toast.error("No Records to be Export")
+      }
     return (
         <Fragment>
             <div className="container-fluid">
@@ -65,12 +69,17 @@ console.log(dates)
                         <div className="card" style={{ overflowX: "auto" }}>
 
                             <div className="title_bar" >
+                                {currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 ?
                                 <ReactHTMLTableToExcel
                                     className="btn btn-light mr-2"
                                     table="table-to-xls"
                                     filename="report"
                                     sheet="Sheet"
                                     buttonText="Export excel" />
+                                    :
+                                    <Button className="btn btn-light mr-2" onClick={disabledText}>
+                                    Export excel</Button>
+                                }
                             </div>
 
                             <div className="table-responsive">

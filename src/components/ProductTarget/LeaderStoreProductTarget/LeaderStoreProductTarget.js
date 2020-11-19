@@ -122,9 +122,9 @@ if(storeLeaderProductList !== null){
                              {currentRecords !== undefined && currentRecords !== null &&
                                 currentRecords.map((item, i) => {
                                 return (
-                                   <tbody key={i + 1 + indexOfFirstRecord}>
+                                   <tbody key={i + 1 }>
                                         <tr>
-                                            <td>{i + 1}</td>
+                                            <td>{i + 1 + indexOfFirstRecord}</td>
                                             <td>{item.costCenter}</td>
                                             <td>{item.stateName}</td>
                                             <td>{item.monthName}</td>

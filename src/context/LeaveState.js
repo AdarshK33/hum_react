@@ -29,7 +29,6 @@ export const LeaveProvider = ({ children }) => {
   const [state, dispatch] = useReducer(LeaveReducer, initialState);
   const { user, getUserMenu } = useContext(AppContext);
   const [loader, setLoader] = useState(false)
-
   //View Leave
   
   const viewList = (empId1) => {

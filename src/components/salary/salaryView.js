@@ -180,6 +180,9 @@ function ViewShift() {
       })
     }
   }
+  const disabledText = () => {
+    toast.error("No Records to be Export")
+  }
 
   return (
     <Fragment>
@@ -217,7 +220,7 @@ function ViewShift() {
         <Row style={{ marginTop: '2rem' }}>
           <div className="col-sm-12">
             <div className="title_bar" >
-              {data.length > 0 &&
+              {data.length > 0 ?
                 <JsonToExcel
                   data={data}
                   className="btn btn-light mr-2"
@@ -225,14 +228,17 @@ function ViewShift() {
                   fields={fields}
 
                   text="Export excel"
-                />}
+                />:
+                <Button className="btn btn-light mr-2" onClick={disabledText}>
+                  Export excel</Button>  
+                }
 
 
               {
                 (user.loginType === "1" || user.additionalRole === "1" ||
                   user.loginType === "7" || user.additionalRole === "7" ||
                   user.loginType === "9" || user.additionalRole === "9"
-                ) ?
+                ) &&
                   <div className="ml-2" style={{ float: 'left' }}>
                     <Button
                       className="btn btn-light mr-2"
@@ -247,8 +253,7 @@ function ViewShift() {
                       }}
                     >Cancel </Button>
                   </div>
-                  :
-                  <div></div>
+                  
               }
             </div>
             <Modal show={deleteModal} onHide={handleDeleteClose} centered>
