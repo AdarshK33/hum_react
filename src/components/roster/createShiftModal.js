@@ -175,6 +175,16 @@ const CreateShiftModal = (props) => {
     let data = e.target.value
     console.log(data);
     setContractType(data);
+    setStartBreakTime('')
+    setEndBreakTIme('');
+    setWorkingHour('');
+    setStartTime('')
+    setEndTime('')
+    setErrorMsg('')
+    setNineHourWarnMsg('')
+    setFiveToEightWarnMsg('')
+    setOneFiveWarnMsg('')
+    setOneToEightWarnMsg('')
   }
 
   const clearAndClose = () => {
@@ -248,7 +258,7 @@ const CreateShiftModal = (props) => {
     }
     else {
 
-
+      // validate the cost center required condition
       var result = parseInt(workingHours);
       if (result <= 5) {
         e.preventDefault();
@@ -487,22 +497,6 @@ const CreateShiftModal = (props) => {
                           <div className="col-sm-12">
                             <div className="form-group">
                               <label htmlFor="exampleFormControlInput1">Select cost center</label>
-                              {/* <select
-                                isSearchable
-                                required
-                                value={costCenterName}
-                                className="form-control"
-                                onChange={(e) => setCostCenterName(e.target.value)}
-                              >
-                                <option value="">Select cost center</option>
-                                {costCenterList !== null &&
-                                  costCenterList.map((e, i) => {
-                                    return (
-                                      <option key={i + 1} value={e.costCentreName}>{e.costCentreName}</option>)
-                                  })}
-
-                              </select> */}
-
                               <Select
                                 name="filters"
                                 placeholder="Cost Center"
