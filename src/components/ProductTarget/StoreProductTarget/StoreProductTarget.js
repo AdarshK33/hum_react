@@ -198,7 +198,7 @@ const StoreProductTarget = () => {
                 </div>
 
                 <div>
-                    {storeProductList !== undefined && storeProductList !== null && storeProductList.length > 0 &&
+                    {storeProductList !== undefined && storeProductList !== null && storeProductList.length > 10 &&
                         <Pagination
                             itemClass="page-item"
                             linkClass="page-link"
