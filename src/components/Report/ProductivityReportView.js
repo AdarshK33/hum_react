@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useContext } from 'react';
-import { Table, Row } from 'react-bootstrap'
+import { Table, Row, Button } from 'react-bootstrap'
 import '../Leaves/Leaves.css'
 import '../AdminLeave/AdminLeaves.css'
 import Pagination from 'react-js-pagination'
@@ -7,6 +7,7 @@ import {
     JsonToExcel
 } from 'react-json-excel';
 import { LeaveContext } from '../../context/LeaveState'
+import { toast } from "react-toastify";
 
 const ProductivityReportView = (props) => {
     const productivityList = props.productivityList
@@ -62,6 +63,9 @@ const ProductivityReportView = (props) => {
         }
 
     }
+    const disabledText = () => {
+        toast.error("No Records to be Export")
+      }
 
     return (
         <Fragment>
@@ -71,7 +75,7 @@ const ProductivityReportView = (props) => {
                         <div className="card" style={{ overflowX: "auto" }}>
 
                             <div className="title_bar" >
-                                {data.length > 0 &&
+                                {data.length > 0 ?
                                     <JsonToExcel
                                         data={data}
                                         className="btn btn-light mr-2"
@@ -79,7 +83,9 @@ const ProductivityReportView = (props) => {
                                         fields={fields}
                                         text="Export excel"
 
-                                    />}
+                                    /> :
+                                    <Button className="btn btn-light mr-2" onClick={disabledText}>
+                                    Export excel</Button>}
                             </div>
 
                             <div className="table-responsive">

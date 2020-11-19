@@ -52,17 +52,23 @@ const HolidayList = () => {
 
   const searchHandler = (e) => {
     setSearchValue(e.target.value)
+    if (e.target.value !== "") {
+      searchHoliday(e.target.value);
+    } else {
+      getHoliday()
+    }
+
 
   }
 
-  const searchDataHandler = () => {
+ /*  const searchDataHandler = () => {
     if (searchValue !== "") {
       searchHoliday(searchValue);
     } else {
       getHoliday()
     }
 
-  }
+  } */
 
   useEffect(() => {
     if (searchHolidayList !== undefined && searchHolidayList !== null && searchHolidayList.length > 0) {
@@ -155,7 +161,7 @@ const HolidayList = () => {
                     <div className="job-filter">
                       <div className="faq-form mr-2">
                         <input className="form-control searchButton" type="text" placeholder="Search.." onChange={(e) => searchHandler(e)} />
-                        <Search className="search-icon" style={{ color: "#313131" }} onClick={searchDataHandler} />
+                        {/* <Search className="search-icon" style={{ color: "#313131" }} onClick={searchDataHandler} /> */}
                       </div>
                     </div>
                   </div>
@@ -167,6 +173,7 @@ const HolidayList = () => {
 
               <div className="table-responsive">
                 <table id="table-to-xls" className="table table-hover">
+                {user.loginType === "1" || user.additionalRole === "1" ?
                   <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                     <tr>
                       <th>S. No</th>
@@ -177,6 +184,18 @@ const HolidayList = () => {
                       <th scope="col">Department</th>
                     </tr>
                   </thead>
+                  :
+                   <thead style={{ backgroundColor: "#006EBB", color:'white' }}>
+                   <tr>
+                     <th>S. No</th>
+                     <th scope="col"> Date</th>
+                     <th scope="col"> Name</th>
+                     <th scope="col">Year</th>
+                     <th scope="col">State</th>
+                     <th scope="col">Department</th>
+                   </tr>
+                 </thead>
+                }
 
                   {loader === true && currentRecords !== null && currentRecords !== undefined ?
                     <tbody>
