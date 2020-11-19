@@ -13,7 +13,7 @@ function AdminCluster() {
 
 
     const [modal, setModal] = useState(false);
-    const handleClose = () => setModal(false)
+
     const handleShow = () => setModal(true)
 
     const [editModal, setEditModal] = useState(false)
@@ -70,6 +70,11 @@ function AdminCluster() {
 
     }
 
+
+    const handleClose = () => {
+        setModal(false)
+        setCurrentPage(1)
+    }
     useEffect(() => {
         if (searchClusterList !== undefined && searchClusterList !== null && searchClusterList.length > 0) {
             setLeaveList(searchClusterList);
@@ -108,7 +113,7 @@ function AdminCluster() {
                                             <th scope="col">Cluster Details</th>
                                             <th scope="col">Cluster Leader</th>
                                             <th scope="col">Team Count</th>
-                                            <th scope="col">Create Date</th>
+                                            <th scope="col">Create Date&nbsp;&nbsp;&nbsp;&nbsp;</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Edit</th>
                                         </tr>
