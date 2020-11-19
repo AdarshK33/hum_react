@@ -16,7 +16,10 @@ const GrantLeaveView = () => {
 
 
   const [modal, setModal] = useState(false);
-  const handleClose = () => setModal(false)
+  const handleClose = () => {
+  setModal(false)
+  setCurrentPage(1);
+}
   const [editModal, setEditModal] = useState(false);
   const handleShow = () => setModal(true)
   const [currentPage, setCurrentPage] = useState(1);

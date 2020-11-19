@@ -2,7 +2,7 @@
 const LeaveReducer = (state, action) => {
     switch (action.type) {
         case 'FETCH_LEAVE_LIST':
-            return { ...state, leaveList: action.payload, loader: action.loader }
+            return { ...state, leaveList: action.payload, loader: action.loader}
 
         case 'FETCH_MANAGER_LEAVE_LIST':
             return { ...state, leaveManagerList: action.payload, loader: action.loader }
