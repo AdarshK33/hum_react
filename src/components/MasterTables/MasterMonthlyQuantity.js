@@ -171,12 +171,15 @@ const MasterMonthlyQuantity = () => {
                                     onChange={(e) => dateHandler(e.target.value)}
                                     value={date}
                                 /> */}
-                                <DatePicker
-                                    selected={startDate}
-                                    className="form-control"
-                                    placeholderText="Select Month and Year"
-
-                                    onChange={date => setStartDate(date)} />
+                                <div className="salary-date">
+                                    <DatePicker
+                                        selected={startDate}
+                                        className="form-control salary-view"
+                                        placeholderText="Select Month and Year"
+                                        dateFormat="MM/yyyy"
+                                        showMonthYearPicker
+                                        onChange={date => setStartDate(date)} />
+                                </div>
                             </Form.Group>
                         </div>
                         <div className="col-sm-4">

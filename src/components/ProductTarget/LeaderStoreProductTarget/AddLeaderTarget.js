@@ -9,6 +9,7 @@ import { AppContext } from "../../../context/AppState";
 import { DashboardContext } from "../../../context/DashboardState";
 import { StoreProductContext } from "../../../context/StoreProductState";
 import moment from 'moment'
+import DatePicker from 'react-datepicker';
 
 const AddLeaderTarget = (props) => {
     let history = useHistory();
@@ -203,11 +204,15 @@ const AddLeaderTarget = (props) => {
                                 <div className="col-sm-12">
                                     <Form.Group>
                                         <Form.Label>Select Month and Year :</Form.Label>
-                                        
-                                        <Form.Control type="month" className="digit" min={Year + "-" + month}
+                                        <div className="salary-date">
+                                                <DatePicker selected={getM} onChange={(date) => setGetM(date)}
+                                                className="form-control salary-view" dateFormat="MM/yyyy" showMonthYearPicker
+                                                placeholderText='Select Month and Year' />
+                                            </div>
+                                        {/* <Form.Control type="month" className="digit" min={Year + "-" + month}
                                             onChange={(e) => setGetM(e.target.value)} required
                                             >
-                                        </Form.Control> 
+                                        </Form.Control>  */}
                                        
                                     </Form.Group>
                                 </div>
