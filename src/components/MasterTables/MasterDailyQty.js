@@ -155,12 +155,13 @@ const MasterDailyQty = () => {
                   onChange={(e) => dateHandler(e.target.value)}
                   value={date}
                 /> */}
-                <DatePicker
-                  selected={startDate}
-                  className="form-control"
-                  placeholderText=" Enter Date "
-
-                  onChange={date => setStartDate(date)} />
+                <div className="salary-date">
+                  <DatePicker
+                    selected={startDate}
+                    placeholderText=" Enter Date "
+                    className="form-control salary-view"
+                    onChange={date => setStartDate(date)} />
+                </div>
               </Form.Group>
             </div>
             <div className="col-sm-4">
