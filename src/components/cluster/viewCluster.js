@@ -24,7 +24,7 @@ function ViewCluster() {
   }, [])
 
   const [modal, setModal] = useState(false);
-  const handleClose = () => setModal(false)
+
   const handleShow = () => setModal(true)
 
   const [editModal, setEditModal] = useState(false)
@@ -73,7 +73,10 @@ function ViewCluster() {
     }
   }, [searchClusterList])
 
-
+  const handleClose = () => {
+    setModal(false)
+    setCurrentPage(1)
+  }
 
   //pagenation data
 
@@ -86,12 +89,7 @@ function ViewCluster() {
         <div className="row">
           <div className="col-sm-12">
             <div className="card" style={{ overflowX: "auto" }}>
-              {/* <div>{user.loginType === "3" && user.additionalRole === "7" && localStorage.getItem('flag') === "1" ?
-                <h1>Ranjith</h1>
-                :
-                <h2>Kumar</h2>}
 
-              </div> */}
 
               <div>
                 {(() => {
@@ -120,20 +118,62 @@ function ViewCluster() {
               <CreateClusterModal handleClose={handleClose} modal={modal} />
               <div className="table-responsive">
                 <table id="table" className="table table-hover">
-                  <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
-                    <tr>
-                      <th>S. No</th>
-                      <th scope="col">Sports Name</th>
-                      <th scope="col">Cluster Name</th>
-                      <th scope="col">Cost Center</th>
-                      <th scope="col">Cluster Details</th>
-                      <th scope="col">Cluster Leader</th>
-                      <th scope="col">Team Count</th>
-                      <th scope="col">Create Date</th>
-                      <th scope="col">Status</th>
-                      <th scope="col">Edit</th>
-                    </tr>
-                  </thead>
+                  {(() => {
+                    if ((user.loginType === "7" || user.additionalRole === "7") && localStorage.getItem('flag') === "1") {
+                      return (
+                        <thead className="thead" style={{ backgroundColor: "#006EBB", color: "white" }}>
+                          <tr>
+                            <th>S. No</th>
+                            <th scope="col">Sports Name</th>
+                            <th scope="col">Cluster Name</th>
+                            <th scope="col">Cost Center</th>
+                            <th scope="col">Cluster Details</th>
+                            <th scope="col">Cluster Leader</th>
+                            <th scope="col">Team Count</th>
+                            <th scope="col">Create Date&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Edit</th>
+                          </tr>
+                        </thead>
+                      )
+                    }
+                    else if ((user.loginType === "1" || user.additionalRole === "1" || user.loginType === "7" || user.additionalRole === "7" || user.loginType === "9" || user.additionalRole === "9")) {
+                      return (
+                        <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
+                          <tr>
+                            <th>S. No</th>
+                            <th scope="col">Sports Name</th>
+                            <th scope="col">Cluster Name</th>
+                            <th scope="col">Cost Center</th>
+                            <th scope="col">Cluster Details</th>
+                            <th scope="col">Cluster Leader</th>
+                            <th scope="col">Team Count</th>
+                            <th scope="col">Create Date&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Edit</th>
+                          </tr>
+                        </thead>
+                      )
+                    }
+                    else {
+                      return (
+                        <thead className="thead" style={{ backgroundColor: "#006EBB", color: "white" }}>         <tr>
+                          <th>S. No</th>
+                          <th scope="col">Sports Name</th>
+                          <th scope="col">Cluster Name</th>
+                          <th scope="col">Cost Center</th>
+                          <th scope="col">Cluster Details</th>
+                          <th scope="col">Cluster Leader</th>
+                          <th scope="col">Team Count</th>
+                          <th scope="col">Create Date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                          <th scope="col">Status</th>
+                          <th scope="col">Edit</th>
+                        </tr>
+                        </thead>
+                      )
+                    }
+                  })()}
+
 
                   {loader === true && currentRecords !== null && currentRecords !== undefined ?
                     <tbody>
