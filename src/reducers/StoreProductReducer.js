@@ -2,7 +2,7 @@ const StoreProductReducer = (state, action) => {
     switch (action.type) {
 
         case 'FETCH_STOREPRODUCTTARGET_LIST':
-            return { ...state, storeProductList: action.payload };
+            return { ...state, storeProductList: action.payload, loader: action.loader };
         
         case 'FETCH_STATEDATA_LIST':
             return { ...state, StateData: action.payload };
@@ -17,7 +17,7 @@ const StoreProductReducer = (state, action) => {
             return { ...state, updateTargetList: action.payload }
 
         case 'FETCH_STORELEADERPRODUCTTARGET_LIST' :
-            return { ...state, storeLeaderProductList: action.payload }
+            return { ...state, storeLeaderProductList: action.payload, loader: action.loader }
 
         default: return state;
     }

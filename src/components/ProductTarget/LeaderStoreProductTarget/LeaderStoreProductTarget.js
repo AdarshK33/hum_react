@@ -14,7 +14,7 @@ const LeaderStoreProductTarget = () => {
     const [month, setMonth] = useState();
     const [Year, setYear] = useState();
     const [editModal, setEditModal] = useState(false);
-    const { storeLeaderProductList,LeaderTargetList,editTargetHandler,editTarget } = useContext(StoreProductContext);
+    const { storeLeaderProductList,LeaderTargetList,editTargetHandler,editTarget, loader } = useContext(StoreProductContext);
     const { user } = useContext(AppContext);
     
     const handleClose = () => {
@@ -100,7 +100,7 @@ if(storeLeaderProductList !== null){
                 </Row>
 
                 <div className="table-responsive">
-                {currentRecords !== undefined && currentRecords !== null && currentRecords.length > 0  &&
+                
                     <Table id="table-to-xls" className="table table-hover">
                         <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                             <tr>
@@ -116,11 +116,23 @@ if(storeLeaderProductList !== null){
                                 
                             </tr>
                         </thead>
-
-                        {/* {storeLeaderProductList !== null &&storeLeaderProductList !== undefined 
-                             && storeLeaderProductList.length > 0 &&
-                            storeLeaderProductList.map((item, i) => { */}
-                             {currentRecords !== undefined && currentRecords !== null &&
+                             {loader === true && currentRecords !== undefined && currentRecords !== null ?
+                                <tbody>
+                                <tr>
+                                    <td colspan='6'>
+                                        <div className="loader-box loader" style={{ width: "100% !important" }}>
+                                            <div className="loader">
+                                                <div className="line bg-primary"></div>
+                                                <div className="line bg-primary"></div>
+                                                <div className="line bg-primary"></div>
+                                                <div className="line bg-primary"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            :
+                            currentRecords !== undefined && currentRecords !== null && currentRecords.length > 0 ?
                                 currentRecords.map((item, i) => {
                                 return (
                                    <tbody key={i + 1 }>
@@ -155,11 +167,17 @@ if(storeLeaderProductList !== null){
                                         </tr>
                                     </tbody>
                                  )
-                            })} 
+                            }) :
+                            <tbody>
+                                <tr>
+                                    <td colspan='8'>No Record Found</td>
+                                </tr>
+                            </tbody>
+                        } 
                     </Table>                   
                     
-             } 
-             {(storeLeaderProductList === null) ?
+             
+             {/* {(storeLeaderProductList === null) ?
                         <p style={{ textAlign: "center" }}>No Record Found</p> : null}
 
                     {storeLeaderProductList !== undefined && storeLeaderProductList !== null && currentRecords.length === 0 ?
@@ -173,7 +191,7 @@ if(storeLeaderProductList !== null){
                             </div>
                         </div>
                         :
-                            null}
+                            null} */}
                    
                     {editTarget !== null && editTarget !== undefined && 
                         editTarget.length !== 0 ? <EditLeaderTarget handleEditClose={handleEditClose}

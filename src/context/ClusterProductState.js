@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer, useState } from 'react';
 import { client } from '../utils/axios';
 import ClusterProductReducer from '../reducers/ClusterProductReducer';
 import { toast } from "react-toastify";
@@ -18,14 +18,14 @@ const initial_state = {
 export const ClusterProductContext = createContext();
 export const ClusterProductProvider = ({ children }) => {
   const [state, dispatch] = useReducer(ClusterProductReducer, initial_state);
-
+  const [loader, setLoader] = useState(false)
 
   const viewClusterList = (id) => {
 
     client.get('/cluster/view/' + id).then((response) => {
-      console.log("==========List of Clusters==============");
-      console.log(response.data.data);
-      console.log("==========List of Clusters==============");
+      // console.log("==========List of Clusters==============");
+      // console.log(response.data.data);
+      // console.log("==========List of Clusters==============");
       state.clusterList = response.data.data;
 
       return dispatch({ type: 'FETCH_CLUSTER_LIST', payload: state.clusterList });
@@ -38,9 +38,9 @@ export const ClusterProductProvider = ({ children }) => {
   const viewLeaderClusterList = () => {
     let leader = localStorage.getItem('flag');
     client.get('/cluster/view/'+ '?leader='+leader).then((response) => {
-      console.log("==========List of Clusters==============");
-      console.log(response.data.data);
-      console.log("==========List of Clusters==============");
+      // console.log("==========List of Clusters==============");
+      // console.log(response.data.data);
+      // console.log("==========List of Clusters==============");
       state.leaderClusterList = response.data.data;
 
       return dispatch({ type: 'FETCH_LEADER_CLUSTER_LIST', payload: state.leaderClusterList });
@@ -54,11 +54,13 @@ export const ClusterProductProvider = ({ children }) => {
 
 
   function viewClusterTarget() {
-
+    setLoader(true)
     client.get('/cluster/product_target/view').then(function (response) {
-
+      
       state.clusterProductList = response.data.data;
-      return dispatch({ type: 'FETCH_CLUSTERPRODUCTTARGET_LIST', payload: state.clusterProductList });
+      setLoader(false)
+      
+      return dispatch({ type: 'FETCH_CLUSTERPRODUCTTARGET_LIST', payload: state.clusterProductList, loader:loader  });
     })
       .catch(function (error) {
         console.log(error);
@@ -67,13 +69,16 @@ export const ClusterProductProvider = ({ children }) => {
 
 
   function viewLeaderClusterTarget(id) {
+    setLoader(true)
     let leader = localStorage.getItem('flag');
     client.get('/cluster/product_target/view/' + id + '?leader='+leader).then(function (response) {
       // console.log("============NAV==============");
       // console.log(id);
       // console.log(response.data.data);
       state.leaderClusterProductList = response.data.data;
-      return dispatch({ type: 'FETCH_LEADERCLUSTERPRODUCTTARGET_LIST', payload: state.leaderClusterProductList });
+      setLoader(false)
+      console.log(loader)
+      return dispatch({ type: 'FETCH_LEADERCLUSTERPRODUCTTARGET_LIST', payload: state.leaderClusterProductList, loader:loader });
     })
       .catch(function (error) {
         console.log(error);
@@ -146,8 +151,8 @@ export const ClusterProductProvider = ({ children }) => {
     clusterList: state.clusterList,
     clusterProductList: state.clusterProductList,
     leaderClusterProductList: state.leaderClusterProductList,
-    leaderClusterList: state.leaderClusterList
-
+    leaderClusterList: state.leaderClusterList,
+    loader: loader
   }}>
     {children}
   </ClusterProductContext.Provider>);
