@@ -3,6 +3,7 @@ import { Table, Row, Button } from 'react-bootstrap'
 import '../Leaves/Leaves.css'
 import '../AdminLeave/AdminLeaves.css'
 import Pagination from 'react-js-pagination'
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import {
     JsonToExcel
 } from 'react-json-excel';
@@ -75,7 +76,7 @@ const ProductivityReportView = (props) => {
                         <div className="card" style={{ overflowX: "auto" }}>
 
                             <div className="title_bar" >
-                                {data.length > 0 ?
+                               {/*  {data.length > 0 ?
                                     <JsonToExcel
                                         data={data}
                                         className="btn btn-light mr-2"
@@ -85,13 +86,22 @@ const ProductivityReportView = (props) => {
 
                                     /> :
                                     <Button className="btn btn-light mr-2" onClick={disabledText}>
-                                    Export excel</Button>}
+                                    Export excel</Button>} */}
+                                     {currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 ?
+                                    <ReactHTMLTableToExcel
+                                    className="btn btn-light mr-2"
+                                    table="table-to-xls"
+                                    filename="productivity report"
+                                    sheet="Sheet"
+                                    buttonText="Export excel" />
+                                    :
+                                    <Button className="btn btn-light mr-2" onClick={disabledText}>
+                                    Export excel</Button>
+                                }
                             </div>
 
                             <div className="table-responsive">
-                                {/*  {currentRecords !== null && currentRecords !== undefined 
-                                    && currentRecords.length > 0  ? */}
-                                <Table id="table-to-xls" className="table table-hover" >
+                                <Table  className="table table-hover" >
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
                                             <th>S. No</th>
@@ -149,12 +159,47 @@ const ProductivityReportView = (props) => {
                                             </tbody>}
 
                                 </Table>
+                            </div>
 
+                   {/*  ================== other table for export the data  =============================== */}
+                            <div className="table-responsive" style={{display:'none'}}>
+                                <Table id="table-to-xls" className="table table-hover" >
+                                    <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
+                                        <tr>
+                                            <th>S. No</th>
+                                            <th>Cost Center</th>
+                                            <th>Employee Id</th>
+                                            <th>Name</th>
+                                            <th>Cluster</th>
+                                            <th>Sports</th>
+                                            <th>Payment Type</th>
+                                            <th>Type of Contract</th>
+                                            <th>Hours for the month</th>
+                                            <th>Month</th>
+                                        </tr>
+                                    </thead>
+                                    {productivityList !== null && productivityList !== undefined
+                                            && productivityList.length > 0 &&
+                                            productivityList.map((item, i) => {
+                                                return (
+                                                    <tbody key={i + 1}>
+                                                        <tr>
+                                                            <td>{i + 1 }</td>
+                                                            <td>{item.costCentre}</td>
+                                                            <td>{item.employeeId}</td>
+                                                            <td>{item.firstName} {item.lastName}</td>
+                                                            <td>{item.clusterName}</td>
+                                                            <td>{item.sports}</td>
+                                                            <td>{item.paymentType}</td>
+                                                            <td>{item.contractType}</td>
+                                                            <td>{item.workingHours}</td>
+                                                            <td>{item.duration}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                )
+                                            })}
 
-                                {/*  <p style={{ textAlign: "center" }}>N0 RECORDS EXIST</p> */}
-                                {/* {(currentRecords !== null && currentRecords !== undefined &&
-                                 currentRecords.length <= 0) ? 
-                                <p style={{ textAlign: "center" }}>No Record Found</p> : null} */}
+                                </Table>
                             </div>
 
                         </div>
