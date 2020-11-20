@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer, useState } from 'react';
 import { client } from '../utils/axios';
 import StoreProductReducer from '../reducers/StoreProductReducer';
 import { toast } from "react-toastify";
@@ -20,16 +20,16 @@ const initial_state = {
 export const StoreProductContext = createContext();
 export const StoreProductProvider = ({ children }) => {
   const [state, dispatch] = useReducer(StoreProductReducer, initial_state);
-
+  const [loader, setLoader] = useState(false);
 
 
   function viewStoreProduct() {
-
+    setLoader(true)
     client.get('/store/view').then(function (response) {
 
       state.storeProductList = response.data.data;
-
-      return dispatch({ type: 'FETCH_STOREPRODUCTTARGET_LIST', payload: state.storeProductList });
+      setLoader(false)
+      return dispatch({ type: 'FETCH_STOREPRODUCTTARGET_LIST', payload: state.storeProductList, loader:loader });
     })
       .catch(function (error) {
         console.log(error);
@@ -99,12 +99,12 @@ export const StoreProductProvider = ({ children }) => {
 
 
   const LeaderTargetList = (storeId) => {
-
+    setLoader(true)
     return client.get('/store/view/' + storeId)
       .then((response) => {
         state.storeLeaderProductList = response.data.data;
-
-        return dispatch({ type: 'FETCH_STORELEADERPRODUCTTARGET_LIST', payload: state.storeLeaderProductList });
+        setLoader(false)
+        return dispatch({ type: 'FETCH_STORELEADERPRODUCTTARGET_LIST', payload: state.storeLeaderProductList, loader:loader });
       })
       .catch(function (error) {
         console.log(error);
@@ -123,7 +123,8 @@ export const StoreProductProvider = ({ children }) => {
     NewTarget: state.NewTarget,
     editTarget: state.editTarget,
     updateTargetList: state.updateTargetList,
-    storeLeaderProductList: state.storeLeaderProductList
+    storeLeaderProductList: state.storeLeaderProductList,
+    loader: loader
   }}>
     {children}
   </StoreProductContext.Provider>);

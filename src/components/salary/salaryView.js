@@ -193,14 +193,14 @@ function ViewShift() {
             <div className="col-sm-4">
               <Form.Group>
                 <Form.Label>Select Month and Year</Form.Label>
-                <input type="month" style={{ fontSize: "0.8rem" }} className="form-control digit" min="2020-08"
+               {/*  <input type="month" style={{ fontSize: "0.8rem" }} className="form-control digit" min="2020-08"
                   placeholder="Number Of Days"
-                  required onChange={(e) => setGetM(e.target.value)} value={getM} />
-               {/*  <div className="salary-date">
+                  required onChange={(e) => setGetM(e.target.value)} value={getM} /> */}
+                <div className="salary-date">
                 <DatePicker selected={getM} onChange={(date) => setGetM(date)}
                   className="form-control salary-view" dateFormat="MM/yyyy" showMonthYearPicker
-                  placeholder='Select Month' />
-                </div> */}
+                  placeholderText='Select Month and Year' />
+                </div>
               </Form.Group>
             </div>
 
@@ -238,7 +238,7 @@ function ViewShift() {
                 (user.loginType === "1" || user.additionalRole === "1" ||
                   user.loginType === "7" || user.additionalRole === "7" ||
                   user.loginType === "9" || user.additionalRole === "9"
-                ) &&
+                ) && currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 ?
                   <div className="ml-2" style={{ float: 'left' }}>
                     <Button
                       className="btn btn-light mr-2"
@@ -253,6 +253,7 @@ function ViewShift() {
                       }}
                     >Cancel </Button>
                   </div>
+                  : <div></div>
                   
               }
             </div>

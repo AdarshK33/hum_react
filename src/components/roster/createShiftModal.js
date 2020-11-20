@@ -171,6 +171,12 @@ const CreateShiftModal = (props) => {
     setClear()
     setModal()
   }
+
+  const handleCostCenter = (options) => {
+    let data = options !== null ? options.value : ''
+    setCostCenterName(data)
+  }
+
   const getContractType = (e) => {
     let data = e.target.value
     console.log(data);
@@ -185,6 +191,8 @@ const CreateShiftModal = (props) => {
     setFiveToEightWarnMsg('')
     setOneFiveWarnMsg('')
     setOneToEightWarnMsg('')
+    setShiftType('')
+
   }
 
   const clearAndClose = () => {
@@ -192,10 +200,6 @@ const CreateShiftModal = (props) => {
     props.handleClose();
   }
 
-  const handleCostCenter = (options) => {
-    let data = options !== null ? options.value : ''
-    setCostCenterName(data)
-  }
 
 
 
@@ -500,7 +504,6 @@ const CreateShiftModal = (props) => {
                               <Select
                                 name="filters"
                                 placeholder="Cost Center"
-                                //value={costCenter1}
                                 style={{ fontSize: "0.9rem", height: "0px" }}
                                 options={costCenterList !== null && costCenterList !== undefined ?
                                   costCenterList.map(e => ({ label: e.costCentreName, value: e.costCentreName })) : []}

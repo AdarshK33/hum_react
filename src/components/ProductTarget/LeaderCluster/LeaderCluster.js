@@ -18,7 +18,7 @@ function LeaderCluster(){
     const [month, setMonth] = useState();
     const [Year, setYear] = useState();
 
-    const { leaderClusterProductList,singleClusterTarget,viewLeaderClusterTarget, viewSingleClusterTarget } = useContext(ClusterProductContext);
+    const { leaderClusterProductList,singleClusterTarget,viewLeaderClusterTarget, viewSingleClusterTarget, loader } = useContext(ClusterProductContext);
     const { user } = useContext(AppContext);
 
     
@@ -40,13 +40,16 @@ function LeaderCluster(){
         setTodayDate(dd);
         setMonth(mm);
         setYear(yyyy);
+        
         if(user.costCentre !== undefined){
             viewLeaderClusterTarget(user.costCentre);
         }
                  
     }, [user.costCentre]);
 
-    
+    useEffect(()=>{
+        console.log(loader)
+    }, [loader])
 
 
 
@@ -125,7 +128,23 @@ function LeaderCluster(){
                                 <th></th>
                             </tr>
                         </thead>
-                        {currentRecords!==null ?
+                        {loader === true && currentRecords!==null && currentRecords !== undefined ?
+                            <tbody>
+                            <tr>
+                                <td colspan='6'>
+                                    <div className="loader-box loader" style={{ width: "100% !important" }}>
+                                        <div className="loader">
+                                            <div className="line bg-primary"></div>
+                                            <div className="line bg-primary"></div>
+                                            <div className="line bg-primary"></div>
+                                            <div className="line bg-primary"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        :
+                        currentRecords !== undefined && currentRecords !== null && currentRecords.length > 0 ?                                            
                             currentRecords.map((item, i) => {
                                 return (
                                    <tbody key={i + 1}>
@@ -170,18 +189,11 @@ function LeaderCluster(){
                                     </tbody>
                                  )
                             }) :
-                            leaderClusterProductList !== undefined && leaderClusterProductList !== null && currentRecords.length === 0 ?
-                            
-                            <div className="loader-box loader" style ={{width : "100% !important"}}>
-                                <div className="loader">
-                                <div className="line bg-primary"></div>
-                                <div className="line bg-primary"></div>
-                                <div className="line bg-primary"></div>
-                                <div className="line bg-primary"></div>
-                                </div>
-                            </div>
-                            :
-                            <p style={{ textAlign: "center" }}>N0 RECORDS EXIST</p>
+                            <tbody>
+                                <tr>
+                                    <td colspan='6'>No Record Found</td>
+                                </tr>
+                            </tbody>
                         }
                         
                     </Table> 

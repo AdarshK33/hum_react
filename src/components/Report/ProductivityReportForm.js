@@ -20,7 +20,7 @@ const ProductivityReportForm = () => {
     const [sports, setSports] = useState([])
     const [cluster, setCluster] = useState([])
     const [contractTypeData, setContractType] = useState([])
-    const [getM, setGetM] = useState(new Date())
+    const [getM, setGetM] = useState('')
     const [yearly, setYearly] = useState(new Date())
     const { user } = useContext(AppContext);
 
@@ -54,7 +54,7 @@ const ProductivityReportForm = () => {
     }, [user.costCentre, user.loginType])
 
     const setCostCenterHandler = (options) => {
-        let data1 = options !== null ? options.map((e,i) => options[i].value) : []
+        let data1 = options !== null ? options.map((e, i) => options[i].value) : []
         setCostCenter(options)
         employeeIdData(data1)
         viewClusterCostCenter(data1)
@@ -69,17 +69,17 @@ const ProductivityReportForm = () => {
         setContractType(options)
 
     }
-    const setGetMHandler = (e) => {
+    /* const setGetMHandler = (e) => {
         let data4 = e.target.value
         setGetM(data4)
         console.log("month data", data4)
-    }
+    } */
     const setClusterHandler = (options) => {
         setCluster(options)
     }
     const setSportsHandler = (options) => {
         setSports(options)
-        console.log("sports",options)
+        console.log("sports", options)
     }
     const submitData = (e) => {
         e.preventDefault();
@@ -89,27 +89,27 @@ const ProductivityReportForm = () => {
         if (user.loginType !== "1" && user.loginType !== "9" &&
             user.additionalRole !== '1' && user.additionalRole !== '9') {
 
-         reportData = {
-             clusterIds : cluster.length > 0 ?  cluster.map((e,i) => cluster[i].value) : null,
-             contractTypes : contractTypeData.length > 0 ? contractTypeData.map((e,i) => contractTypeData[i].value) : null,
-             employeeIds : employeeCostCenter.length > 0 ? employeeCostCenter.map((e,i) => employeeCostCenter[i].value) : null ,
-             month : reportType === 'Monthly' ? moment(getM, ["YYYY-MM"]).format("M") : 0,
-             sportIds : sports.length > 0 ? sports.map((e,i) => sports[i].value) : null,
-             storeIds : storeId,
-             year : reportType === 'Monthly' ? moment(getM, ["MMM Do YY"]).format('YYYY') : yearly,
-        }
-    }else{
+            reportData = {
+                clusterIds: cluster.length > 0 ? cluster.map((e, i) => cluster[i].value) : null,
+                contractTypes: contractTypeData.length > 0 ? contractTypeData.map((e, i) => contractTypeData[i].value) : null,
+                employeeIds: employeeCostCenter.length > 0 ? employeeCostCenter.map((e, i) => employeeCostCenter[i].value) : null,
+                month: reportType === 'Monthly' ? moment(getM, ["YYYY-MM"]).format("M") : 0,
+                sportIds: sports.length > 0 ? sports.map((e, i) => sports[i].value) : null,
+                storeIds: storeId,
+                year: reportType === 'Monthly' ? moment(getM, ["MMM Do YY"]).format('YYYY') : yearly,
+            }
+        } else {
 
-         reportData = {
-            clusterIds : cluster.length > 0 ?  cluster.map((e,i) => cluster[i].value) : null,
-            contractTypes : contractTypeData.length > 0 ? contractTypeData.map((e,i) => contractTypeData[i].value) : null,
-            employeeIds : employeeCostCenter.length > 0 ? employeeCostCenter.map((e,i) => employeeCostCenter[i].value) : null ,
-            month : reportType === 'Monthly' ? moment(getM, ["YYYY-MM"]).format("M") : 0,
-            sportIds : sports.length > 0 ? sports.map((e,i) => sports[i].value) : null,
-            storeIds : costCenter.length > 0 ? costCenter.map((e,i) => costCenter[i].value) : null,
-            year : reportType === 'Monthly' ? moment(getM, ["MMM Do YY"]).format('YYYY') : yearly,
-       }
-    }
+            reportData = {
+                clusterIds: cluster.length > 0 ? cluster.map((e, i) => cluster[i].value) : null,
+                contractTypes: contractTypeData.length > 0 ? contractTypeData.map((e, i) => contractTypeData[i].value) : null,
+                employeeIds: employeeCostCenter.length > 0 ? employeeCostCenter.map((e, i) => employeeCostCenter[i].value) : null,
+                month: reportType === 'Monthly' ? moment(getM, ["YYYY-MM"]).format("M") : 0,
+                sportIds: sports.length > 0 ? sports.map((e, i) => sports[i].value) : null,
+                storeIds: costCenter.length > 0 ? costCenter.map((e, i) => costCenter[i].value) : null,
+                year: reportType === 'Monthly' ? moment(getM, ["MMM Do YY"]).format('YYYY') : yearly,
+            }
+        }
 
         console.log("productivity data", reportData)
         productivityReport(reportData)
@@ -117,12 +117,12 @@ const ProductivityReportForm = () => {
 
 
         setReportType('')
-       
+
         setEmployeeCostCenter([])
         setSports([])
         setCluster([])
         setContractType([])
-        setGetM()
+        setGetM('')
 
     }
     return (
@@ -151,8 +151,8 @@ const ProductivityReportForm = () => {
                                 <Form.Group>
                                     <Form.Label>Cost Center </Form.Label>
                                     <MultiSelect
-                                        options={costCenterList !== null  ?
-                                            costCenterList.map(e => ({label: e.costCentreName, value: e.costCentreName})):[]}
+                                        options={costCenterList !== null ?
+                                            costCenterList.map(e => ({ label: e.costCentreName, value: e.costCentreName })) : []}
                                         value={costCenter}
                                         onChange={setCostCenterHandler}
                                         labelledBy={"Select"}
@@ -174,8 +174,8 @@ const ProductivityReportForm = () => {
                             <Form.Group>
                                 <Form.Label>Employee Id</Form.Label>
                                 <MultiSelect
-                                    options={employeeIdList !== null  ?
-                                    employeeIdList.map(e => ({label: e.firstName + " - " + e.employeeId, value: e.employeeId})):[]}
+                                    options={employeeIdList !== null ?
+                                        employeeIdList.map(e => ({ label: e.firstName + " - " + e.employeeId, value: e.employeeId })) : []}
                                     value={employeeCostCenter}
                                     onChange={setEmployeeCostCenterHandler}
                                     labelledBy={"Select Employee Id"}
@@ -188,8 +188,8 @@ const ProductivityReportForm = () => {
                             <Form.Group>
                                 <Form.Label>Select Sports</Form.Label>
                                 <MultiSelect
-                                    options={sportsNames !== null && sportsNames !== undefined  ?
-                                        sportsNames.map(e => ({label: e.sportName, value: e.sportId})):[]}
+                                    options={sportsNames !== null && sportsNames !== undefined ?
+                                        sportsNames.map(e => ({ label: e.sportName, value: e.sportId })) : []}
                                     value={sports}
                                     onChange={setSportsHandler}
                                     labelledBy={"Select sports Id"}
@@ -205,8 +205,8 @@ const ProductivityReportForm = () => {
                             <Form.Group>
                                 <Form.Label>Select Cluster</Form.Label>
                                 <MultiSelect
-                                    options={clusterCostCenterList !== null && clusterCostCenterList !== undefined  ?
-                                        clusterCostCenterList.map(e => ({label: e.clusterName, value: e.clusterId})):[]}
+                                    options={clusterCostCenterList !== null && clusterCostCenterList !== undefined ?
+                                        clusterCostCenterList.map(e => ({ label: e.clusterName, value: e.clusterId })) : []}
                                     value={cluster}
                                     onChange={setClusterHandler}
                                     labelledBy={"Select cluster Id"}
@@ -219,8 +219,8 @@ const ProductivityReportForm = () => {
                             <Form.Group>
                                 <Form.Label>Select Type of Contract</Form.Label>
                                 <MultiSelect
-                                    options={shiftContractNames !== null && shiftContractNames !== undefined  ?
-                                        shiftContractNames.map(e => ({label: e.contractType, value: e.contractType})):[]}
+                                    options={shiftContractNames !== null && shiftContractNames !== undefined ?
+                                        shiftContractNames.map(e => ({ label: e.contractType, value: e.contractType })) : []}
                                     value={contractTypeData}
                                     onChange={setContractTypeHandler}
                                     labelledBy={"Select contract type"}
@@ -235,9 +235,14 @@ const ProductivityReportForm = () => {
                             <div className="col-sm-4">
                                 <Form.Group>
                                     <Form.Label>Select Month </Form.Label> <span style={{ color: 'red' }}>*</span>
-                                    <Form.Control type="month" style={{ fontSize: "0.8rem" }} className="form-control digit" min="2020-08"
+                                    {/*  <Form.Control type="month" style={{ fontSize: "0.8rem" }} className="form-control digit" min="2020-08"
                                         placeholder="Number Of Days"
-                                        required onChange={(e) => setGetMHandler(e)} value={getM} />
+                                        required onChange={(e) => setGetMHandler(e)} value={getM} /> */}
+                                    <div className="salary-date">
+                                        <DatePicker selected={getM} onChange={(date) => setGetM(date)}
+                                            className="form-control salary-view" dateFormat="MM/yyyy" showMonthYearPicker
+                                            placeholderText='Select Month' />
+                                    </div>
                                 </Form.Group>
                             </div>
                         </Row>
@@ -248,8 +253,8 @@ const ProductivityReportForm = () => {
                                 <Form.Group>
                                     <Form.Label>Select Year </Form.Label> <span style={{ color: 'red' }}>*</span>
                                     <Form.Control type="number" placeholder="YYYY" min={previousYear} max={nextYear}
-                                    className="form-control digit"
-                                    required onChange={(e) => setYearly(e.target.value)} value={yearly || ''} />
+                                        className="form-control digit"
+                                        required onChange={(e) => setYearly(e.target.value)} value={yearly || ''} />
                                 </Form.Group>
                             </div>
                         </Row>
