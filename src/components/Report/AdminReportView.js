@@ -73,7 +73,7 @@ console.log(dates)
                                 <ReactHTMLTableToExcel
                                     className="btn btn-light mr-2"
                                     table="table-to-xls"
-                                    filename="report"
+                                    filename="leave report"
                                     sheet="Sheet"
                                     buttonText="Export excel" />
                                     :
@@ -83,7 +83,7 @@ console.log(dates)
                             </div>
 
                             <div className="table-responsive">
-                                <Table id="table-to-xls" className="table table-hover" >
+                                <Table  className="table table-hover" >
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
                                             <th>S. No</th>
@@ -161,8 +161,68 @@ console.log(dates)
                                         }
 
                                 </Table>
-                                {/* {(reportList === null && reportList.length<=0 ) ? 
-                                <p style={{ textAlign: "center" }}>No Record Found</p>: null}  */}
+                            </div>
+                            
+                 {/*  ================== other table for export the data  =============================== */}
+                            <div className="table-responsive" style={{display:'none'}}>
+                                <Table id="table-to-xls" className="table table-hover" >
+                                    <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
+                                        <tr>
+                                            <th>S. No</th>
+                                            <th>Employee Id</th>
+                                            <th>Employee Name</th>
+                                            <th>Cost Center</th>
+                                            <th>Work Location</th>
+                                            <th>Eligible Leaves</th>
+                                            <th>Planned Leaves</th>
+                                            <th>Unplanned Leaves</th>
+                                            <th>Leaves Remaining</th>
+                                            <th>Leave Type</th>
+                                            <th>Grant Leaves</th>
+                                            <th>State Eligible Leaves</th>
+                                            <th>LOP</th>
+                                            {dates.map((date,key) => 
+                                                <th {...{key}} style={{display:'none'}} >{date} </th>
+                                            )}
+                                        </tr>
+                                    </thead>
+                                   {
+                                    reportList !== undefined && reportList !== null &&
+                                    reportList.length > 0 &&
+                                    reportList.map((item, i) => {
+                                            return (
+                                                <tbody key={i + 1}>
+                                                    <tr>
+                                                        <td>{i + 1 }</td>
+                                                        <td>{item.leaveReports.employeeId}</td>
+                                                        <td>{item.leaveReports.username}</td>
+                                                        <td>{item.leaveReports.costCentre}</td>
+                                                        <td>{item.leaveReports.workLocation}</td>
+                                                        <td>{item.leaveReports.leaveEligible}</td>
+                                                        <td>{item.leaveReports.planned === null ?
+                                                            0 : item.leaveReports.planned}</td>
+                                                        <td>{item.leaveReports.unPlanned === null ?
+                                                            0 : item.leaveReports.unPlanned}</td>
+                                                        <td>{item.leaveReports.leaveremaining}</td>
+                                                        <td>{item.leaveReports.leaveName}</td>
+                                                        <td>{item.leaveReports.grantLeave}</td>
+                                                        <td>{item.leaveReports.stateLeaveEligible}</td>
+                                                        <td>{item.leaveReports.lop}</td>
+                                                        {
+                                                            dates.map((date) => {
+                                                                return (
+                                                                    <td style={{display:'none'}}>{ getTdData(date,item)                                                                  
+                                                                }</td> 
+                                                                )
+                                                            })
+                                                       
+                                                    }
+                                                    </tr>
+                                                </tbody>
+                                            )
+                                        })}
+
+                                </Table>
                             </div>
                          
                         </div>
