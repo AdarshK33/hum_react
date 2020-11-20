@@ -1,5 +1,5 @@
 /* eslint-disable no-useless-concat */
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer, useState } from 'react';
 import { client } from '../utils/axios';
 import { toast } from "react-toastify";
 import RosterReducer from '../reducers/RosterReducer';
@@ -35,15 +35,16 @@ const initial_state = {
 export const RosterContext = createContext();
 export const RosterProvider = ({ children }) => {
   const [state, dispatch] = useReducer(RosterReducer, initial_state);
-
+  const [loader, setLoader] = useState(false)
   // VIEWSHIFT
 
   const viewShift = () => {
-
+    setLoader(true)
     client.get('shift/view').then(function (response) {
       // console.log("data==>" + JSON.stringify(response));
       state.shiftList = response.data.data;
-      return dispatch({ type: 'FETCH_SHIFT_LIST', payload: state.shiftList });
+      setLoader(false)
+      return dispatch({ type: 'FETCH_SHIFT_LIST', payload: state.shiftList, loader: loader });
     })
       .catch(function (error) {
         console.log(error);

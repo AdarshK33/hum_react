@@ -303,7 +303,7 @@ const EditShiftModal = (props) => {
                     <div className="col-sm-12">
                       <div className="form-group">
                         <label htmlFor="exampleFormControlInput1"> Select Contract Type</label>
-                        <select
+                        {/* <select
                           className="form-control"
                           defaultValue={singleShiftList.contractType}
                           onChange={(e) => getContractType(e)}
@@ -315,7 +315,12 @@ const EditShiftModal = (props) => {
                               </option>
                             );
                           })}
-                        </select>
+                        </select> */}
+                        <input type="text"
+                          placeholder={singleShiftList.contractType}
+                          className="form-control"
+                          readOnly
+                        />
                       </div>
                     </div>
 
@@ -457,7 +462,7 @@ const EditShiftModal = (props) => {
                     <div className="col-sm-12">
                       <div className="form-group">
                         <label htmlFor="exampleFormControlInput1"> Shift Type</label>
-                        <select
+                        {/* <select
                           className="form-control"
                           defaultValue={singleShiftList.shiftType}
                           onChange={(e) => setShiftType(e.target.value)}
@@ -465,7 +470,12 @@ const EditShiftModal = (props) => {
                           <option>Captain</option>
                           <option>On Duty</option>
                           <option>General</option>
-                        </select>
+                        </select> */}
+                        <input type="text"
+                          placeholder={singleShiftList.shiftType}
+                          className="form-control"
+                          readOnly
+                        />
                       </div>
                     </div>
                   </div>
