@@ -11,7 +11,7 @@ import Pagination from 'react-js-pagination';
 
 function ClusterProductTarget() {
 
-    const { clusterProductList, singleClusterTarget, viewClusterTarget, viewSingleClusterTarget } = useContext(ClusterProductContext);
+    const { clusterProductList, singleClusterTarget, viewClusterTarget, viewSingleClusterTarget, loader } = useContext(ClusterProductContext);
 
     const [modal, setModal] = useState(false);
     const [editModal, setEditModal] = useState(false);
@@ -52,6 +52,7 @@ function ClusterProductTarget() {
         setMonth(mm);
         setYear(yyyy);
         viewClusterTarget();
+        
     }, []);
 
 
@@ -102,7 +103,23 @@ function ClusterProductTarget() {
                             </tr>
                         </thead>
 
-                        {currentRecords.length > 0 &&
+                        {loader === true && currentRecords!==null && currentRecords !== undefined ?
+                            <tbody>
+                            <tr>
+                                <td colspan='6'>
+                                    <div className="loader-box loader" style={{ width: "100% !important" }}>
+                                        <div className="loader">
+                                            <div className="line bg-primary"></div>
+                                            <div className="line bg-primary"></div>
+                                            <div className="line bg-primary"></div>
+                                            <div className="line bg-primary"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        :
+                        currentRecords !== undefined && currentRecords !== null && currentRecords.length > 0 ?
                             currentRecords.map((item, i) => {
                                 return (
                                     <tbody key={i + 1}>
@@ -151,11 +168,16 @@ function ClusterProductTarget() {
                                         </tr>
                                     </tbody>
                                 )
-                            }) 
+                            }) :
+                            <tbody>
+                                <tr>
+                                    <td colspan='6'>No Record Found</td>
+                                </tr>
+                            </tbody>
                         }
                     </Table>
 
-                    {(clusterProductList === null) ?
+                    {/* {(clusterProductList === null) ?
                         <p style={{ textAlign: "center" }}>No Record Found</p> : null}
                     
                     {clusterProductList !== undefined && clusterProductList !== null && currentRecords.length === 0 ?
@@ -169,7 +191,7 @@ function ClusterProductTarget() {
                             </div>
                         </div>
                         :
-                            null}
+                            null} */}
 
                     <EditTarget
                         handleEditClose={handleEditClose}

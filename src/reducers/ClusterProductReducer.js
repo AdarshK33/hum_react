@@ -5,7 +5,7 @@ const ClusterProductReducer = (state, action) => {
             return { ...state, clusterList: action.payload };
 
         case 'FETCH_CLUSTERPRODUCTTARGET_LIST':
-            return { ...state, clusterProductList: action.payload};
+            return { ...state, clusterProductList: action.payload, loader: action.loader};
 
         case 'ADD_NEW_TARGET':
             return { ...state, NewTarget: action.payload }
@@ -20,7 +20,7 @@ const ClusterProductReducer = (state, action) => {
             return {...state, leaderClusterList: action.payload}
 
         case 'FETCH_LEADERCLUSTERPRODUCTTARGET_LIST' :
-            return {...state, leaderClusterProductList: action.payload}
+            return {...state, leaderClusterProductList: action.payload, loader: action.loader}
 
         case 'FETCH_LEADER_CLUSTER_LIST' :
             return {...state, leaderClusterList : action.payload}
