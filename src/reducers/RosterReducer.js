@@ -3,7 +3,7 @@ const RosterReducer = (state, action) => {
     switch (action.type) {
 
         case 'FETCH_SHIFT_LIST':
-            return { ...state, shiftList: action.payload };
+            return { ...state, shiftList: action.payload, loader: action.loader };
 
 
         case 'DELETE_SHIFT':
