@@ -3,6 +3,7 @@ import { Container, Row, Button, Form, Modal } from 'react-bootstrap';
 import Select from 'react-select';
 import "react-datepicker/dist/react-datepicker.css";
 // import { useHistory } from "react-router-dom";
+import DatePicker from 'react-datepicker';
 import { ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { DashboardContext } from "../../../context/DashboardState";
@@ -223,11 +224,16 @@ const AddTarget = (props) => {
                                     <div className="col-sm-12">
                                         <Form.Group>
                                             <Form.Label>Select Month and Year :</Form.Label>
-                                            <Form.Control type="month" className="digit" min={Year + "-" + month}
+                                            <div className="salary-date">
+                                                <DatePicker selected={getM} onChange={(date) => setGetM(date)}
+                                                className="form-control salary-view" dateFormat="MM/yyyy" showMonthYearPicker
+                                                placeholderText='Select Month and Year' />
+                                            </div>
+                                            {/* <Form.Control type="month" className="digit" min={Year + "-" + month}
                                                 onChange={(e) => setGetM(e.target.value)}
                                                 required
                                                 >
-                                            </Form.Control>
+                                            </Form.Control> */}
                                         </Form.Group>
                                     </div>
                                 </Row>
