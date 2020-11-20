@@ -19,6 +19,9 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
+import {
+  JsonToExcel
+} from 'react-json-excel';
 
 const AdminSalaryModule = () => {
   const [shiftButton] = useState(false);
@@ -175,6 +178,41 @@ const validate = validation()
       }
     });
   };
+  //File export 
+  const filename = 'salaryList';
+  let fields = {
+    "salaryListId": "S. No",
+    "employeeId": "Employee Id",
+    "firstName": "Employee Name",
+    "numberOfHours": "Number Of Hours",
+    "lop": "LOP",
+    "contractType": "Contract Type",
+    "extraHours": "Extra Hours",
+    "totalHours": "Total Hours",
+    "statusDesc": "Status"
+  }
+
+  let data = [];
+  if (salaryList !== undefined && salaryList !== null) {
+    for (let i = 0; i < salaryList.length; i++) {
+      console.log(salaryList[i].holidayDate)
+      data.push({
+        salaryListId: i + 1,
+        employeeId: salaryList[i].employeeId,
+        firstName: salaryList[i].firstName,
+        numberOfHours: salaryList[i].numberOfHours,
+        lop: salaryList[i].lop,
+        contractType: salaryList[i].contractType,
+        extraHours: salaryList[i].extraHours,
+        totalHours: salaryList[i].totalHours,
+        statusDesc: salaryList[i].statusDesc
+      })
+    }
+  }
+  const disabledText = () => {
+    toast.error("No Records to be Export")
+  }
+
   return (
     <Fragment>
       <Breadcrumb title="Salary" parent="Admin" />
@@ -184,14 +222,14 @@ const validate = validation()
             <div className="col-sm-4">
               <Form.Group>
                 <Form.Label>Select Month and Year</Form.Label>
-                <input type="month" style={{ fontSize: "0.8rem" }} className="form-control digit" min="2020-08"
+                {/* <input type="month" style={{ fontSize: "0.8rem" }} className="form-control digit" min="2020-08"
                   placeholder="Number Of Days"
-                  required onChange={(e) => setGetM(e.target.value)} value={getM} />
-                   {/* <div className="salary-date">
+                  required onChange={(e) => setGetM(e.target.value)} value={getM} /> */}
+                   <div className="salary-date">
                 <DatePicker selected={getM} onChange={(date) => setGetM(date)}
                   className="form-control salary-view" dateFormat="MM/yyyy" showMonthYearPicker
-                  placeholder='Select Month' />
-                </div> */}
+                  placeholderText='Select Month and Year' />
+                </div>
               </Form.Group>
             </div>
             <div className="col-sm-4">
@@ -228,13 +266,19 @@ const validate = validation()
         <Row style={{ marginTop: '2rem' }}>
           <div className="col-sm-12">
             <div className="title_bar">
-              <ReactHTMLTableToExcel
-                className="btn btn-light mr-2"
-                table="table-to-xls1"
-                filename="salaryFile"
-                sheet="Sheet"
+              {data.length > 0 ?
+                <JsonToExcel
+                  data={data}
+                  className="btn btn-light mr-2"
+                  filename={filename}
+                  fields={fields}
 
-                buttonText="Export excel" />
+                  text="Export excel"
+                />:
+                <Button className="btn btn-light mr-2" onClick={disabledText}>
+                  Export excel</Button>  
+                }
+                {currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 ?
               <div className="ml-2" style={{ float: 'left' }}>
                 <Button
                   className="btn btn-light mr-2"
@@ -249,6 +293,9 @@ const validate = validation()
                   }}
                 >Cancel </Button>
               </div>
+               : <div></div>
+                  
+              }
             </div>
 
             <Modal show={deleteModal} onHide={handleDeleteClose} centered>
