@@ -4,6 +4,8 @@ import Pagination from 'react-js-pagination'
 import Select from 'react-select'
 import { PermissionContext } from '../../context/PermissionState'
 import { Button, Form, Row } from "react-bootstrap";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import {
     JsonToExcel
 } from 'react-json-excel';
@@ -15,12 +17,15 @@ const MasterMonthlyQuantity = () => {
     const { cosCentreList, viewCostCentre } = useContext(DashboardContext);
     const { monthlyQtyDetails, monthlyQtyDetailsList, uploadMonthFile, loader } = useContext(PermissionContext)
     const [fileUpload, setFileUpload] = useState();
-    const [date, setDate] = useState();
     const [month, setMonth] = useState();
     const [year, setYear] = useState();
     const [costCenter, setCostCenter] = useState('');
+    const [startDate, setStartDate] = useState('');
 
+    useEffect(() => {
+        viewCostCentre()
 
+    }, [])
     var monthsNumber = new Array();
     monthsNumber["1"] = "Jan";
     monthsNumber["2"] = "Feb";
@@ -59,17 +64,18 @@ const MasterMonthlyQuantity = () => {
 
 
 
-    const dateHandler = (d) => {
-        setDate(d);
-        // setMonth(monthsNumber[moment(date, ["YYYY-MM"]).format("M")]);
-        // setYear(moment(date, ["MMM Do YY"]).format("YYYY"));     
-    }
+    // const dateHandler = (d) => {
+    //     setDate(d);
+    //     // setMonth(monthsNumber[moment(date, ["YYYY-MM"]).format("M")]);
+    //     // setYear(moment(date, ["MMM Do YY"]).format("YYYY"));     
+    // }
 
     const onSubmit = (e) => {
         e.preventDefault();
         const validate = validation()
-        const mon = monthsNumber[moment(date, ["YYYY-MM"]).format("M")];
-        const y = moment(date, ["MMM Do YY"]).format("YYYY");
+
+        const mon = moment(startDate, ["YYYY-MM"]).format("MMM");
+        const y = moment(startDate, ["MMM Do YY"]).format("YYYY");
         if (validate) {
             monthlyQtyDetails(costCenter, mon, y);
         }
@@ -91,10 +97,7 @@ const MasterMonthlyQuantity = () => {
 
 
 
-    useEffect(() => {
-        viewCostCentre()
 
-    }, [])
 
 
 
@@ -159,7 +162,7 @@ const MasterMonthlyQuantity = () => {
                         <div className="col-sm-4">
                             <Form.Group>
                                 <Form.Label>Select Month and Year</Form.Label><span style={{ color: 'red' }}>*</span>
-                                <input
+                                {/* <input
                                     type="month"
                                     style={{ fontSize: "0.8rem" }}
                                     className="form-control digit"
@@ -167,7 +170,16 @@ const MasterMonthlyQuantity = () => {
                                     required
                                     onChange={(e) => dateHandler(e.target.value)}
                                     value={date}
-                                />
+                                /> */}
+                                <div className="salary-date">
+                                    <DatePicker
+                                        selected={startDate}
+                                        className="form-control salary-view"
+                                        placeholderText="Select Month and Year"
+                                        dateFormat="MM/yyyy"
+                                        showMonthYearPicker
+                                        onChange={date => setStartDate(date)} />
+                                </div>
                             </Form.Group>
                         </div>
                         <div className="col-sm-4">
@@ -318,3 +330,4 @@ const MasterMonthlyQuantity = () => {
 }
 
 export default MasterMonthlyQuantity;
+//http://humine.theretailinsights.co/monthly/view?&month=Jun&storeId=IN1059&year=2019

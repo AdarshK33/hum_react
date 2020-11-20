@@ -6,6 +6,10 @@ import { DashboardContext } from "../../context/DashboardState";
 import Select from 'react-select'
 import { Button, Form, Row, } from "react-bootstrap";
 import { toast } from "react-toastify";
+import moment from "moment";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 import {
   JsonToExcel
 } from 'react-json-excel';
@@ -20,7 +24,7 @@ const MasterDailyQty = () => {
   const [fileUpload, setFileUpload] = useState();
   const [date, setDate] = useState();
   const [costCenter, setCostCenter] = useState('');
-
+  const [startDate, setStartDate] = useState('');
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
   const recordPerPage = 10;
@@ -67,7 +71,8 @@ const MasterDailyQty = () => {
     e.preventDefault();
     const validate = validation()
     if (validate) {
-      viewDailyQty(costCenter, date);
+      const mydate = moment(startDate, ["MMM Do YY"]).format("YYYY-MM-DD");
+      viewDailyQty(costCenter, mydate);
     }
   }
 
@@ -140,7 +145,8 @@ const MasterDailyQty = () => {
             <div className="col-sm-4">
               <Form.Group>
                 <Form.Label>Select Date</Form.Label><span style={{ color: 'red' }}>*</span>
-                <input
+                <br />
+                {/* <input
                   type="date"
                   style={{ fontSize: "0.8rem" }}
                   className="form-control digit"
@@ -148,7 +154,14 @@ const MasterDailyQty = () => {
                   required
                   onChange={(e) => dateHandler(e.target.value)}
                   value={date}
-                />
+                /> */}
+                <div className="salary-date">
+                  <DatePicker
+                    selected={startDate}
+                    placeholderText=" Enter Date "
+                    className="form-control salary-view"
+                    onChange={date => setStartDate(date)} />
+                </div>
               </Form.Group>
             </div>
             <div className="col-sm-4">

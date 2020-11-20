@@ -13,7 +13,7 @@ import { Button } from 'react-bootstrap'
 import { RosterContext } from "../../context/RosterState";
 import { Edit2, Search } from 'react-feather';
 import { SearchContext } from '../../context/SearchState';
-
+import { toast } from "react-toastify";
 function ViewShift() {
   useEffect(() => {
     viewShift()
@@ -38,7 +38,7 @@ function ViewShift() {
   const [searchShift, setShiftList] = useState();
 
   const { searchShiftList, viewSearchSiftList } = useContext(SearchContext);
-  const { shiftList, editShift, viewShift, viewShiftTypes, viewContractTypes, singleShiftList } = useContext(RosterContext);
+  const { shiftList, editShift, viewShift, viewShiftTypes, viewContractTypes, singleShiftList, loader } = useContext(RosterContext);
   //pagenation data
 
 
@@ -87,7 +87,9 @@ function ViewShift() {
       setShiftList(searchShiftList);
     }
   }, [searchShiftList])
-
+  const disabledText = () => {
+    toast.error("No Records to be Export")
+  }
   const filename = 'Shiftlist';
   let fields = {
     "id": "S. No",
@@ -131,15 +133,16 @@ function ViewShift() {
                   </div>
                 </div>
                 <Button className="btn btn-light mr-2" onClick={handleShow}>Create</Button>
-                {data.length > 0 &&
+                {data.length > 0 ?
                   <JsonToExcel
                     data={data}
                     className="btn btn-light mr-2"
                     filename={filename}
                     fields={fields}
-
                     text="Export excel"
-                  />}
+                  /> : <Button className="btn btn-light mr-2" onClick={disabledText}>
+                    Export excel</Button>
+                }
               </div>
               <CreateShiftModal handleClose={handleClose} modal={modal} />
               <div className="table-responsive">
