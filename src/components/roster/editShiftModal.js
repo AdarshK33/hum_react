@@ -3,6 +3,7 @@ import DatePicker from "react-datepicker";
 import moment from 'moment';
 import "react-datepicker/dist/react-datepicker.css";
 import { Modal } from 'react-bootstrap'
+import { toast } from "react-toastify";
 import { RosterContext } from "../../context/RosterState";
 import { AppContext } from "../../context/AppState";
 import "react-toastify/dist/ReactToastify.css";
@@ -226,8 +227,8 @@ const EditShiftModal = (props) => {
     else {
       //==========
       if (breakNumber === 1) {
+        console.log("break number 1")
 
-        console.log("out side break end time")
         e.preventDefault();
         const newShift = {
           startTime: moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
@@ -251,9 +252,10 @@ const EditShiftModal = (props) => {
 
       }
       else {
+        console.log("break number 2");
 
-        console.log("inside break end time")
         e.preventDefault();
+        const validate = validation();
         const newShift = {
           startTime: moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
           endTime: moment(endTime, ["h:mm A"]).format("HH:mm:ss"),
@@ -267,14 +269,26 @@ const EditShiftModal = (props) => {
           status: status
         }
         // alert(JSON.stringify(newShift));
-        setSuccessMsg(true);
-        updateShift(newShift);
-        props.handleEditClose();
-        console.log(result, "in competent");
+        if (validate) {
+          setSuccessMsg(true);
+          updateShift(newShift);
+          props.handleEditClose();
+          console.log(result, "in competent");
+        }
+
       }
     }
   }
-
+  const validation = () => {
+    console.log("hi" + breakStartTime + " " + typeof (breakStartTime));
+    let flag = true
+    if (breakStartTime === "0" || breakStartTime === "00:00:00") {
+      toast.error("Please enter break time")
+      flag = false;
+      return;
+    }
+    return flag;
+  }
 
 
   return (
