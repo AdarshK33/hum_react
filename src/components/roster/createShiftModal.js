@@ -319,7 +319,7 @@ const CreateShiftModal = (props) => {
   const validation = () => {
     let flag = true
     if (costCenterName === "") {
-      toast.error("cost center is required")
+      toast.error("Cost center is required")
       flag = false;
       return;
     }
