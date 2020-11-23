@@ -80,12 +80,7 @@ export const SearchProvider = ({ children }) => {
     console.log("key value", key)
     client.get('/holiday/search' + '?key=' + key)
       .then((response) => {
-        if (response.data.data === null) {
-          toast.error("No Data Found")
-        }
-        else {
           state.searchHolidayList = response.data.data;
-        }
         console.log('holiday search api response', state.searchHolidayLis);
         return dispatch({ type: 'SEARCH_HOLIDAY_LIST', payload: state.searchHolidayList });
       })
