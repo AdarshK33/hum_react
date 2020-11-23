@@ -71,7 +71,7 @@ const GrantLeaveView = () => {
 
   useEffect(() => {
     if (searchGrantLeaveView !== undefined && searchGrantLeaveView !== null && searchGrantLeaveView.length > 0) {
-      setLeaveList(grantLeaveView);
+      setLeaveList(searchGrantLeaveView);
     }
   }, [searchGrantLeaveView])
   
