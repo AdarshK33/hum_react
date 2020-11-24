@@ -8,7 +8,6 @@ import moment from 'moment'
 import { LeaveContext } from '../../context/LeaveState'
 import { toast } from "react-toastify";
 
-
 const AdminReportView = (props) => {
     const reportList = props.AdminReportList
     const {loader } = useContext(LeaveContext)
@@ -80,6 +79,7 @@ console.log(dates)
                                     <Button className="btn btn-light mr-2" onClick={disabledText}>
                                     Export excel</Button>
                                 }
+                                 
                             </div>
 
                             <div className="table-responsive">
@@ -162,10 +162,9 @@ console.log(dates)
 
                                 </Table>
                             </div>
-                            
-                 {/*  ================== other table for export the data  =============================== */}
+               {/*  ----------------------other table for export table-----------------------------------  */}
                             <div className="table-responsive" style={{display:'none'}}>
-                                <Table id="table-to-xls" className="table table-hover" >
+                                <Table id='table-to-xls'  className="table table-hover" >
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                         <tr>
                                             <th>S. No</th>
@@ -186,14 +185,13 @@ console.log(dates)
                                             )}
                                         </tr>
                                     </thead>
-                                   {
-                                    reportList !== undefined && reportList !== null &&
-                                    reportList.length > 0 &&
-                                    reportList.map((item, i) => {
+                                    {currentRecords !== undefined && currentRecords !== null &&
+                                        currentRecords.length > 0 &&
+                                        currentRecords.map((item, i) => {
                                             return (
                                                 <tbody key={i + 1}>
                                                     <tr>
-                                                        <td>{i + 1 }</td>
+                                                        <td>{i + 1 + indexOfFirstRecord}</td>
                                                         <td>{item.leaveReports.employeeId}</td>
                                                         <td>{item.leaveReports.username}</td>
                                                         <td>{item.leaveReports.costCentre}</td>
@@ -224,7 +222,6 @@ console.log(dates)
 
                                 </Table>
                             </div>
-                         
                         </div>
                     </div>
                 </Row>
