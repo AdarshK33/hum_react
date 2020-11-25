@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import Select from 'react-select';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import DatePicker from 'react-datepicker';
 import { DashboardContext } from "../../../context/DashboardState";
 import { StoreProductContext } from "../../../context/StoreProductState";
 import moment from 'moment'
@@ -14,7 +14,7 @@ const EditTarget = (props) => {
     
     
     const [StoreType, setStoreType] = useState('');
-    const [getM, setGetM] = useState();
+    const [getM, setGetM] = useState(new Date());
     const [WeekdaysTarget, setWeekdaysTarget] = useState();
     const [WeekendsTarget, setWeekendsTarget] = useState();
     const [Percentage, setGrowthPercentage] = useState();
@@ -82,6 +82,14 @@ const EditTarget = (props) => {
     const fromGrowthHandler = (e) => {
         setGrowthPercentage(e);       
     }
+
+    // const setGetMHandler = (date) =>{
+    //     console.log(date)
+    //     const month = moment(date, ["YYYY-MM"]).format("M");
+    //     console.log(month)
+    //     const year = moment(date, ["MMM Do YY"]).format('YYYY');
+    //     console.log(year)
+    // }
     var months = new Array();
     months[1] = "Jan";
     months[2] = "Feb";
@@ -209,12 +217,31 @@ const EditTarget = (props) => {
                             <Row>
                                 <div className="col-sm-12">
                                     <Form.Group>
-                                        <Form.Label>Select Month and Year :</Form.Label>
-                                        <Form.Control type="month" className="digit" min={Year + "-" + month} required                                           
+                                        <div className="date-picker">
+                                            <Form.Label>Select Month and Year :</Form.Label>
+                                            <br />
+                                            <DatePicker                                                     
+                                                onChange={(date) => {
+                                                    // console.log(date)
+                                                    const month = moment(date, ["YYYY-MM"]).format("M");
+                                                    // console.log(month)
+                                                    const year = moment(date, ["MMM Do YY"]).format('YYYY');
+                                                    // console.log(year)
+                                                    setGetM(year+"-"+month)
+                                                    
+                                                }}
+                                                className="form-control" 
+                                                dateFormat="MM/yyyy" 
+                                                showMonthYearPicker
+                                                placeholderText={getM} />
+                                       
+                                                
+                                        </div>
+                                        {/* <Form.Control type="month" className="digit" min={Year + "-" + month} required                                           
                                             defaultValue = {getM}
                                             onChange={(e) => setGetM(e.target.value)}
                                             >
-                                        </Form.Control>
+                                        </Form.Control> */}
                                     </Form.Group>
                                 </div>
                             </Row>
