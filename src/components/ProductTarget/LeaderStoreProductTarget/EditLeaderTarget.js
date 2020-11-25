@@ -6,6 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { DashboardContext } from "../../../context/DashboardState";
 import { StoreProductContext } from "../../../context/StoreProductState";
 import moment from 'moment'
+import DatePicker from 'react-datepicker';
+
 
 const EditLeaderTarget = (props) => {
       
@@ -189,11 +191,25 @@ const EditLeaderTarget = (props) => {
                                 <div className="col-sm-12">
                                     <Form.Group>
                                         <Form.Label>Select Month and Year :</Form.Label>
-                                        <Form.Control type="month" className="digit" min={Year + "-" + month} required
+                                        <DatePicker                                                     
+                                                onChange={(date) => {
+                                                    // console.log(date)
+                                                    const month = moment(date, ["YYYY-MM"]).format("M");
+                                                    // console.log(month)
+                                                    const year = moment(date, ["MMM Do YY"]).format('YYYY');
+                                                    // console.log(year)
+                                                    setGetM(year+"-"+month)
+                                                    
+                                                }}
+                                                className="form-control" 
+                                                dateFormat="MM/yyyy" 
+                                                showMonthYearPicker
+                                                placeholderText={getM} />
+                                        {/* <Form.Control type="month" className="digit" min={Year + "-" + month} required
                                             defaultValue = {getM}
                                             onChange={(e) => setGetM(e.target.value)}
                                             >
-                                        </Form.Control>
+                                        </Form.Control> */}
                                     </Form.Group>
                                 </div>
                             </Row>
