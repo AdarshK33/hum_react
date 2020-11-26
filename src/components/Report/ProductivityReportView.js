@@ -75,18 +75,19 @@ const ProductivityReportView = (props) => {
                                 {currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 ?
                                 <ExcelFile filename='Productivity Report' element={ <Button className="btn btn-light mr-2"> Export excel</Button>}>
                                     <ExcelSheet data={productivityList} name="Productivity Report" style={{width:'500px'}}>
-                                        {/* <ExcelColumn label="S. No" value="name" /> */}
                                         <ExcelColumn label="Cost Center" value="costCentre" />
                                         <ExcelColumn label="Employee Id" value="employeeId" />
                                         <ExcelColumn label="Name" value="firstName" />
                                         <ExcelColumn label="Clusters" value="clusterName" />
                                         <ExcelColumn label="Sports" value="sports" />
-                                        <ExcelColumn label="Payment Type" value="paymentType" />
+                                        <ExcelColumn label="Payment Type"
+                                        value={(col) => col.paymentType === null ? "N/A" : col.paymentType} />
                                         <ExcelColumn label="Type of Contract" value="contractType" />
                                         <ExcelColumn label="Hours for the month" value="workingHours" />
                                         <ExcelColumn label="Month" value="duration" />
                                     </ExcelSheet>
                                 </ExcelFile>
+                               
                                 :
                                 <Button className="btn btn-light mr-2" onClick={disabledText}>
                                 Export excel</Button>
