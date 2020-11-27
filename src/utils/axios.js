@@ -27,8 +27,11 @@ const getRefreshToken = () => {
 // };
 
 client.interceptors.request.use((config) => {
+    console.log("config------",config)
+    const fedid = config.url.includes('auth/token?code=')
+    console.log("fedid", fedid)
     const token = Cookies.get("APPAT");
-    if (token) {
+    if (token && !fedid) {
         config.headers["Authorization"] = `Bearer ${token}`;
     }
     return config;
