@@ -7,7 +7,7 @@ import { ToastContainer,  } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ClusterProductContext } from "../../../context/ClusterProductState";
 import { DashboardContext } from "../../../context/DashboardState";
-
+import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import { AppContext } from "../../../context/AppState";
 
@@ -224,12 +224,26 @@ const EditTarget = (props) => {
                                     <div className="col-sm-12">
                                         <Form.Group>
                                             <Form.Label>Select Month and Year :</Form.Label>
-                                            <Form.Control type="month" className="digit" min={Year + "-" + month}
+                                            <DatePicker                                                     
+                                                onChange={(d) => {
+                                                    // console.log(date)
+                                                    const month = moment(d, ["YYYY-MM"]).format("M");
+                                                    // console.log(month)
+                                                    const year = moment(d, ["MMM Do YY"]).format('YYYY');
+                                                    // console.log(year)
+                                                    setDate(year+"-"+month)
+                                                    
+                                                }}
+                                                className="form-control" 
+                                                dateFormat="MM/yyyy" 
+                                                showMonthYearPicker
+                                                placeholderText={date} />
+                                            {/* <Form.Control type="month" className="digit" min={Year + "-" + month}
                                                 value = {date}
                                                 onChange={(e) => setDate(e.target.value)}
                                                 >
                                                     
-                                            </Form.Control>
+                                            </Form.Control> */}
                                         </Form.Group>
                                     </div>
                                 </Row>
