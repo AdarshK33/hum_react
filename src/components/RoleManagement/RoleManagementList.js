@@ -15,7 +15,7 @@ const RoleManagementList = () => {
         viewRoleListData()
         viewMenu()
     }, [])
-
+    console.log('EditMenuList',EditMenuList);
     const handleClose = () => {
         // viewStoreProduct();
         setModal(false);
