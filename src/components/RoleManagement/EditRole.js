@@ -92,7 +92,7 @@ const EditRole = (props) => {
                                 <div className="col-sm-12">
                                 <Form.Group>
                                         <Form.Label>Role Name :</Form.Label>
-                                        <Form.Control as="input" required defaultValue = {StoreRole} readOnly/>                                           
+                                        <Form.Control as="input" required defaultValue = {props.role} readOnly/>                                           
                                 </Form.Group>
 
                                 {/* <Form.Group>
@@ -141,7 +141,7 @@ const EditRole = (props) => {
                                                 MenuList.map(e => ({ label: e.menuName, value: e.menuId })) : []}
                                             value={menuList}
                                             onChange={handleMultiChange}
-                                            defaultValue={menuList.menuName}
+                                            defaultValue={menuList.menuId}
                                             labelledBy={"Select"}
                                             hasSelectAll={true}
                                             disableSearch={false}
