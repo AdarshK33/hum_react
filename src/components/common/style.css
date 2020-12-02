@@ -8,4 +8,12 @@
     transition: 0.3s;
 }
 
-
+.table th, .table td {
+    padding: 0.5rem;
+}
+.page-wrapper .page-body-wrapper .page-header .row h3 {
+    font-size: 18px;
+}
+thead.thead-light th {
+    vertical-align: top;
+}

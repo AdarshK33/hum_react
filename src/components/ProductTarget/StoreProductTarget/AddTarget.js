@@ -10,7 +10,6 @@ import { StoreProductContext } from "../../../context/StoreProductState";
 import moment from 'moment'
 import DatePicker from 'react-datepicker';
 
-
 const AddTarget = (props) => {
     let history = useHistory();
  
@@ -218,7 +217,7 @@ const AddTarget = (props) => {
                                 <div className="col-sm-12">
                                     <Form.Group>
                                         <Form.Label>Select Month and Year :</Form.Label>
-                                        <div className="salary-date">
+                                        <div className="salary-product-date">
                                                 <DatePicker selected={getM} onChange={(date) => setGetM(date)}
                                                 className="form-control salary-view" dateFormat="MM/yyyy" showMonthYearPicker
                                                 placeholderText='Select Month and Year' />
