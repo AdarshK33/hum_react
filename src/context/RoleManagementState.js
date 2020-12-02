@@ -92,7 +92,8 @@ export const RoleManagementProvider = ({ children }) => {
       for (let j = 0; j < response.data.data.length; j++) {
         for (let i = 0; i < state.MenuList.length; i++) {
           if (response.data.data[j].menuId === state.MenuList[i].menuId) {
-            state.EditMenuList.push(state.MenuList[i]);
+            state.EditMenuList.push({label: state.MenuList[i].menuName, value: state.MenuList[i].menuId} );
+           
           }
         }
       }

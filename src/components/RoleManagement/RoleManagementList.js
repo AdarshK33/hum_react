@@ -10,18 +10,20 @@ const RoleManagementList = () => {
 
     const [editModal, setEditModal] = useState(false);
     const [modal, setModal] = useState(false);
+    const [role, setRole] = useState(false);
     const { viewMenu, EditMenuList, viewRoleListData, RoleListData, GetRoleData, GetRolePermission } = useContext(RoleManagementContext);
     useEffect(() => {
         viewRoleListData()
         viewMenu()
     }, [])
-
+    console.log('EditMenuList',EditMenuList);
     const handleClose = () => {
         // viewStoreProduct();
         setModal(false);
     }
     const roleEditHandler = (role) => {
         GetRoleData(role);
+        setRole(role);
         // console.log("MenuList");
         // console.log(EditMenuList);
     }
@@ -107,6 +109,7 @@ const RoleManagementList = () => {
                             modal={editModal}
                             MenuList={EditMenuList}
                             editData={GetRolePermission}
+                            role = {role}
                         />
                         : ""}
                 </div>

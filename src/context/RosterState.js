@@ -296,7 +296,7 @@ export const RosterProvider = ({ children }) => {
 
   //ADMIN ROSTER
 
-  const adminWeekOffDataEmp = (endDate, startDate, contract, weekid, empId) => {
+  const adminWeekOffDataEmp = (endDate, startDate, contract, weekid, empId, clusterId) => {
     // alert("in admin week off "+empId);
     if (contract === "") {
       contract = "permanent"
@@ -304,10 +304,13 @@ export const RosterProvider = ({ children }) => {
     if (weekid === undefined) {
       weekid = 0
     }
+    if (clusterId === undefined) {
+      clusterId = 0
+    }
     let flag = localStorage.getItem('flag')
 
     // eslint-disable-next-line no-useless-concat
-    client.get('roster/view' + '?contractType=' + contract + '&' + 'endDate=' + endDate + '&' + 'startDate=' + startDate + '&' + 'storeId=' + empId + '&' + 'weekId=' + weekid + '&' + 'flag=' + flag)
+    client.get('roster/view' + '?clusterId=' + clusterId + '&' + 'contractType=' + contract + '&' + 'endDate=' + endDate + '&' + 'startDate=' + startDate + '&' + 'storeId=' + empId + '&' + 'weekId=' + weekid + '&' + 'flag=' + flag)
       .then((response) => {
         const adminWeekOffDataListHeader = response.data.data.rosterDates;
         const adminWeekOffDataList = response.data.data.rosterResponses;
@@ -328,7 +331,7 @@ export const RosterProvider = ({ children }) => {
       })
   }
 
-  const rosterExport = (endDate, startDate, contract, weekid, id) => {
+  const rosterExport = (endDate, startDate, contract, weekid, id, clusterId) => {
     let flag = localStorage.getItem('flag')
 
     if (contract === "") {
@@ -337,7 +340,10 @@ export const RosterProvider = ({ children }) => {
     if (weekid === undefined) {
       weekid = 0
     }
-    client.get('/roster/download?contractType=' + contract + '&endDate=' + endDate + '&flag=' + flag + '&startDate=' + startDate + '&storeId=' + id + '&weekId=' + weekid, { responseType: 'blob' })
+    if (clusterId === undefined) {
+      clusterId = 0
+    }
+    client.get('/roster/download?clusterId=' + clusterId + '&contractType=' + contract + '&endDate=' + endDate + '&flag=' + flag + '&startDate=' + startDate + '&storeId=' + id + '&weekId=' + weekid, { responseType: 'blob' })
       .then((response) => {
 
         let fileData = new Blob([response.data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
@@ -386,12 +392,12 @@ export const RosterProvider = ({ children }) => {
     return client.post("weekoff/manager/create", newWeekOff)
       .then((response) => {
         const {
-          adminSelectedRosterRange: { endDate, startDate, contract, weekid, empId },
+          adminSelectedRosterRange: { endDate, startDate, contract, weekid, empId, clusterId },
         } = state;
         state.adminRosterWeekOffDataList = response.data.data;
         state.message = response.data.message;
         toast.info(state.message);
-        adminWeekOffDataEmp(endDate, startDate, contract, weekid, empId);
+        adminWeekOffDataEmp(endDate, startDate, contract, weekid, empId, clusterId);
         console.log("new create list response===>", response.data.data);
         console.log("new create list message===>", state.message);
         // return dispatch({ type: 'ADD_NEW_WEEKOFF_DATA', payload: state.weekOffDataList })
@@ -434,12 +440,12 @@ export const RosterProvider = ({ children }) => {
     return client.post('shift/assign', assignData)
       .then((response) => {
         const {
-          adminSelectedRosterRange: { endDate, startDate, contract, weekid, empId },
+          adminSelectedRosterRange: { endDate, startDate, contract, weekid, empId, clusterId },
         } = state;
         toast.info(response.data.message)
         console.log("==========NAVANEETHA===================")
         console.log(response, "cre")
-        adminWeekOffDataEmp(endDate, startDate, contract, weekid, empId);
+        adminWeekOffDataEmp(endDate, startDate, contract, weekid, empId, clusterId);
       })
       .catch((error) => {
         console.log(error)
