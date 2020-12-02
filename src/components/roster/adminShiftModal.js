@@ -260,7 +260,7 @@ const AdminShiftModal = (props) => {
                   <div className="row py-2">
                     <div className="col-sm-5 px-2">Available Shifts :<span style={{ color: 'red' }}>*</span></div>
                     {/* Name :<h1>{firstName}{contractType}</h1> */}
-                    <div className="col-sm-7 ">
+                    <div className="col-sm-7">
                       <div className="form-group">
                         <select
                           className="form-control"
