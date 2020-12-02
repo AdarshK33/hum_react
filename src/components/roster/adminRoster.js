@@ -2,6 +2,7 @@ import React, { Fragment, useState, useContext, useEffect } from "react";
 import Breadcrumb from "../common/breadcrumb";
 import { RosterContext } from "../../context/RosterState";
 import { AppContext } from "../../context/AppState";
+import { ClusterContext } from "../../context/ClusterState";
 import DatePicker from "react-datepicker";
 import Select from 'react-select'
 import "react-datepicker/dist/react-datepicker.css";
@@ -18,6 +19,7 @@ const AdminRoster = () => {
     // const [contract] = useState('permanent');
     // const [weekid] = useState(0);
     const [singleWeek, getSingleWeek] = useState()
+    const [clusterId, setClusterId] = useState();
     const [firstName, setFirstName] = useState('');
     const [costCenter1, setCostCenter1] = useState();
     const [tableShow, setTableShow] = useState(false);
@@ -31,7 +33,7 @@ const AdminRoster = () => {
         setContractType("Permanent")
         costCenter()
         calcWeek()
-
+        viewClusterCostCenter(user.costCentre)
         if (user.loginType !== "1" && user.loginType !== "7" && user.loginType !== "9") {
             setCostCenter1(user.costCenter)
             setstorecostCenterName(user.costCenter)
@@ -42,7 +44,7 @@ const AdminRoster = () => {
 
 
     const { adminWeekOffDataEmp, viewContractTypes, shiftContractNames, costCenterList, adminWeekOffDataListHeader, adminWeekOffDataList, adminCalculateWeek, adminCalculateWeekResult, adminRosterAvailableShift, getallWeeks, costCenter, rosterExport } = useContext(RosterContext);
-
+    const { viewClusterCostCenter, clusterCostCenterList, } = useContext(ClusterContext);
     const handleClose = () => setAdminModal(false)
     const handleShow = (item, name, ctype, weekId) => {
         setshiftDate(item.weekId)
@@ -60,6 +62,13 @@ const AdminRoster = () => {
         getSingleWeek(data1)
 
     }
+
+    const setClusterIdForAdmin = (e) => {
+        let data = e.target.value
+        setClusterId(data)
+    }
+
+
 
     // const handleCostCenter = (options) => {
     //     let data2 = options !== null ? options.value : ''
@@ -79,7 +88,7 @@ const AdminRoster = () => {
 
     const submitDate = (e) => {
         e.preventDefault();
-        adminWeekOffDataEmp(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"), contractType, singleWeek, costCenter1)
+        adminWeekOffDataEmp(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"), contractType, singleWeek, costCenter1, clusterId)
         checkAdminListLength()
     }
     const checkAdminListLength = () => {
@@ -94,7 +103,7 @@ const AdminRoster = () => {
 
     const exportSheet = (e) => {
         e.preventDefault();
-        rosterExport(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"), contractType, singleWeek, costCenter1)
+        rosterExport(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"), contractType, singleWeek, costCenter1, clusterId)
     }
 
 
@@ -127,87 +136,74 @@ const AdminRoster = () => {
                     <div className="col-sm-12">
                         <div className="card h-100" >
                             <div className="card-header">
-
-                                <form className="form-inline">
-                                    <div className="row align-items-start">
-                                        <div className="col-sm-3">
+                                <div className="form">
+                                    <div className="row">
+                                        <div className="col-sm-4">
                                             <div className="form-group">
-                                                <label className="name f-w-600">From Date &nbsp;</label>
-                                                <DatePicker
-                                                    className="form-control Value"
-                                                    selected={startDate.toDate()}
-                                                    dateFormat="yyyy-MM-dd"
-                                                    required
-                                                    onChange={(date) => setStartDate(moment(date, 'YYYY-MM-DD'))}
-                                                />
+                                                <label className="name f-w-600">From Date</label>
+
+                                                <div className="shift-date">
+                                                    <DatePicker
+                                                        className="form-control shift-view"
+                                                        selected={startDate.toDate()}
+                                                        dateFormat="yyyy-MM-dd"
+                                                        required
+                                                        onChange={(date) => setStartDate(moment(date, 'YYYY-MM-DD'))}
+                                                    />
+                                                </div>
                                             </div>
+
                                         </div>
-                                        <div className="col-sm-3">
+                                        <div className="col-sm-4">
                                             <div className="form-group">
-                                                <label className="name f-w-600">To Date&nbsp; </label>
-                                                <DatePicker
-                                                    className="form-control Value"
-                                                    selected={endDate.toDate()}
-                                                    dateFormat="yyyy-MM-dd"
-                                                    required
-                                                    onCalendarClose={() => { calcWeek() }}
-                                                    onChange={(date) => setEndDate(moment(date, 'YYYY-MM-DD'))}
-                                                />
+                                                <label className="name f-w-600">To Date</label>
 
+                                                <div className="shift-date">
+                                                    <DatePicker
+                                                        className="form-control shift-view"
+                                                        selected={endDate.toDate()}
+                                                        dateFormat="yyyy-MM-dd"
+                                                        required
+                                                        onCalendarClose={() => { calcWeek() }}
+                                                        onChange={(date) => setEndDate(moment(date, 'YYYY-MM-DD'))}
+                                                    />
+                                                </div>
                                             </div>
-                                        </div>
 
+                                        </div>
                                         {(() => {
                                             if (user.loginType !== "1" || user.loginType !== "7" || user.loginType !== "9") {
                                                 return (
-                                                    <div className="col-sm-3">
-                                                        {/* <div className="form-group"> */}
-                                                        <label className="name f-w-600">Select Cost Center&nbsp;<span style={{ color: 'red' }}>*</span> &nbsp;</label>
-                                                        {/* <select
-                                                                className="form-control"
-                                                                style={{ fontSize: "0.8rem", height: "34px" }}
-                                                                value={costCenter1}
-                                                                required
-                                                                onChange={(e) => handleCostCenter(e)}>
-                                                                <option value="">Select Cost Center</option>
-                                                                {costCenterList !== null && costCenterList.map((item, i) => {
-                                                                    return (
-                                                                        <option key={item.costCenterId} value={item.costCentreName}>
-                                                                            {item.costCentreName}</option>
+                                                    <div className="col-sm-4">
 
-                                                                    );
-                                                                })}
-                                                            </select> */}
+                                                        <label className="name f-w-600">Select Cost Center&nbsp;<span style={{ color: 'red' }}>*</span> &nbsp;</label>
+
                                                         <Select
                                                             name="filters"
                                                             placeholder="Cost Center"
-                                                            //value={costCenter1}
-                                                            style={{ fontSize: "0.9rem", }}
                                                             options={costCenterList !== null ?
                                                                 costCenterList.map(e => ({ label: e.costCentreName, value: e.costCentreName })) : []}
                                                             onChange={handleCostCenter}
                                                             required isSearchable />
                                                     </div>
-                                                    // </div>
+
                                                 )
                                             }
                                         })()}
 
-
                                     </div>
-                                    <br />
-                                    <div className="row align-items-start mt-lg-4">
-                                        <div className="col-sm-3">
+                                    <div className="row">
+                                        <div className="col-sm-4">
                                             <div className="form-group">
-                                                <label className="name f-w-600">&nbsp;Select Week </label>
+                                                <label className="name f-w-600">Select Week </label>
 
                                                 <select
-                                                    className="form-control Value"
+                                                    className="form-control shift-view"
                                                     value={singleWeek}
-                                                    style={{ height: "40px", paddingLeft: "5px" }}
+
                                                     onChange={(e) => setWeekCalc(e)}>
                                                     <option value="">Select Week &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+                                                </option>
                                                     {adminCalculateWeekResult !== null && adminCalculateWeekResult.map((e, i) => {
                                                         return (
                                                             <option key={e.weekId} value={e.weekId}>
@@ -219,16 +215,13 @@ const AdminRoster = () => {
                                             </div>
 
                                         </div>
-
-
-                                        <div className="col-sm-3">
-
+                                        <div className="col-sm-4">
                                             <div className="form-group">
                                                 <label className="name f-w-600">Select Employee Type</label>
 
                                                 <select
-                                                    className="form-control Value"
-                                                    style={{ height: "40px", paddingLeft: "10px", paddingRight: "20px" }}
+                                                    className="form-control shift-view"
+
                                                     // value={contractType}
                                                     onChange={(e) => {
                                                         setContractType(e.target.value)
@@ -246,25 +239,61 @@ const AdminRoster = () => {
                                                     })}
                                                 </select>
                                             </div>
+
                                         </div>
-                                        <div className="col-sm-3">
-                                            <div class="align-self-center mx-auto">
-                                                <button className="myclass" style={{ marginTop: "20px", marginLeft: "20px", paddingLeft: "40px", paddingRight: "40px", fontWeight: "bold" }}
-                                                    disabled={adminRosterButton}
-                                                    type="button" onClick={(e) => submitDate(e)}>Submit</button>
+
+                                        <div className="col-sm-4">
+                                            <div className="form-group">
+                                                <label className="name f-w-600">Select Cluster</label>
+
+                                                <select
+                                                    className="form-control shift-view"
+                                                    onChange={(e) => setClusterIdForAdmin(e)}>
+
+                                                    {/* {clusterCostCenterList == null ?
+
+                                                        <option value="">No Options</option> :
+
+                                                        clusterCostCenterList.map((e, i) => {
+                                                            return (
+                                                                <option key={i + 1} value={e.clusterId} >{e.clusterName}</option>)
+                                                        })
+                                                    } */}
+                                                    <option value="">Select Cluster</option>
+                                                    {clusterCostCenterList !== null && clusterCostCenterList.map((e, i) => {
+                                                        return (
+                                                            <option key={i + 1} value={e.clusterId} >{e.clusterName}</option>
+                                                        );
+                                                    })}
+
+
+
+
+                                                </select>
                                             </div>
-                                        </div>
-                                        <div className="col-sm-3">
-                                            <div class="align-self-center mx-auto">
-                                                <button className="myclass" style={{ marginTop: "20px", marginLeft: "20px", paddingLeft: "40px", paddingRight: "40px", fontWeight: "bold" }}
-                                                    type="button"
-                                                    onClick={(e) => exportSheet(e)}
-                                                >
-                                                    Export</button>
-                                            </div>
+
                                         </div>
                                     </div>
-                                </form>
+                                    <div className="row">
+                                        <div className="col-sm-4">
+                                            <button className="myclass" style={{ marginTop: "5px", paddingLeft: "40px", paddingRight: "40px", fontWeight: "bold" }}
+                                                disabled={adminRosterButton}
+                                                type="button" onClick={(e) => submitDate(e)}>Submit</button>
+
+                                        </div>
+                                        <div className="col-sm-4">
+                                            <button className="myclass" style={{ marginTop: "5px", paddingLeft: "40px", paddingRight: "40px", fontWeight: "bold" }}
+                                                type="button"
+                                                onClick={(e) => exportSheet(e)}
+                                            >
+                                                Export</button>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
                             </div>
                             {tableShow &&
                                 <div className="table-responsive">
