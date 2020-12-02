@@ -7,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Multiselect } from 'multiselect-react-dropdown';
 import { RoleManagementContext } from '../../context/RoleManagementState';
-
+import MultiSelect from 'react-multi-select-component'
 
 const EditRole = (props) => {
 
@@ -37,7 +37,7 @@ const EditRole = (props) => {
         const newPermissions = {
             role: StoreRole,
           
-            menuIds: menuList.map((e) => e.menuId),
+            menuIds: menuList.map((e, i) => menuList[i].value),
           
         }
         EditRole(newPermissions);
@@ -92,7 +92,7 @@ const EditRole = (props) => {
                                 <div className="col-sm-12">
                                 <Form.Group>
                                         <Form.Label>Role Name :</Form.Label>
-                                        <Form.Control as="input" required defaultValue = {StoreRole} readOnly/>                                           
+                                        <Form.Control as="input" required defaultValue = {props.role} readOnly/>                                           
                                 </Form.Group>
 
                                 {/* <Form.Group>
@@ -123,7 +123,7 @@ const EditRole = (props) => {
                                 <div className="col-sm-12">
                                     <Form.Group>
                                         <Form.Label>Screen Permissions :</Form.Label>
-                                       <Multiselect
+                                       {/* <Multiselect
                                             required
                                             placeholder="Select Permissions"
                                             options={MenuList}
@@ -133,7 +133,18 @@ const EditRole = (props) => {
                                             displayValue="menuName"
                                             onSelect={handleMultiChange}
                                             onRemove={onRemove}
+                                            showCheckbox={true}
                                             isMulti
+                                        /> */}
+                                         <MultiSelect
+                                            options={MenuList !== null ?
+                                                MenuList.map(e => ({ label: e.menuName, value: e.menuId })) : []}
+                                            value={menuList}
+                                            onChange={handleMultiChange}
+                                            defaultValue={menuList.menuId}
+                                            labelledBy={"Select"}
+                                            hasSelectAll={true}
+                                            disableSearch={false}
                                         />
                                                     
                                     </Form.Group>
