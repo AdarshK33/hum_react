@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useContext,useEffect } from 'react';
+import React, { Fragment, useState, useContext, useEffect } from 'react';
 import { Row, Col, Table, Button } from 'react-bootstrap'
 import Breadcrumb from '../../common/breadcrumb';
 import { Edit2 } from 'react-feather';
@@ -10,20 +10,20 @@ import Pagination from 'react-js-pagination';
 import Loader from "../../common/loader";
 import '../ClusterProductTarget/styles.css';
 
-function LeaderCluster(){
-    
+function LeaderCluster() {
+
     const [modal, setModal] = useState(false);
     const [editModal, setEditModal] = useState(false);
     const [TodayDate, setTodayDate] = useState();
     const [month, setMonth] = useState();
     const [Year, setYear] = useState();
 
-    const { leaderClusterProductList,singleClusterTarget,viewLeaderClusterTarget, viewSingleClusterTarget, loader } = useContext(ClusterProductContext);
+    const { leaderClusterProductList, singleClusterTarget, viewLeaderClusterTarget, viewSingleClusterTarget, loader } = useContext(ClusterProductContext);
     const { user } = useContext(AppContext);
 
-    
+
     const handleClose = () => {
-        viewLeaderClusterTarget(user.costCentre); 
+        viewLeaderClusterTarget(user.costCentre);
         setModal(false);
         setCurrentPage(1);
     }
@@ -33,21 +33,21 @@ function LeaderCluster(){
     // }, [user.costCentre])
 
     useEffect(() => {
-        let date = new Date(); 
+        let date = new Date();
         var dd = String(date.getDate()).padStart(2, '0');
         var mm = String(date.getMonth() + 1).padStart(2, '0');
         var yyyy = date.getFullYear();
         setTodayDate(dd);
         setMonth(mm);
         setYear(yyyy);
-        
-        if(user.costCentre !== undefined){
+
+        if (user.costCentre !== undefined) {
             viewLeaderClusterTarget(user.costCentre);
         }
-                 
+
     }, [user.costCentre]);
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log(loader)
     }, [loader])
 
@@ -64,19 +64,19 @@ function LeaderCluster(){
     let indexOfFirstRecord = 1;
     let currentRecords = [];
 
-    if (leaderClusterProductList!== null){
-         totalRecords = leaderClusterProductList.length;
-         indexOfLastRecord = currentPage * recordPerPage;
-         indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-         currentRecords = leaderClusterProductList.slice(indexOfFirstRecord, indexOfLastRecord);
+    if (leaderClusterProductList !== null) {
+        totalRecords = leaderClusterProductList.length;
+        indexOfLastRecord = currentPage * recordPerPage;
+        indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+        currentRecords = leaderClusterProductList.slice(indexOfFirstRecord, indexOfLastRecord);
     }
 
-    
+
 
     const handlePageChange = pageNumber => {
         setCurrentPage(pageNumber);
     }
-    
+
 
     //pagenation data
 
@@ -85,144 +85,144 @@ function LeaderCluster(){
     monthsNumber["Feb"] = '02';
     monthsNumber["Mar"] = '03';
     monthsNumber["Apr"] = '04';
-    monthsNumber["May"] = '05' ;
-    monthsNumber["Jun"] = '06' ;
-    monthsNumber["Jul"] = '07' ;
-    monthsNumber["Aug"] = '08' ;
-    monthsNumber["Sep"] = '09' ;
-    monthsNumber["Oct"] = '10' ;
-    monthsNumber["Nov"] = '11' ;
-    monthsNumber["Dec"] = '12' ;
-    
+    monthsNumber["May"] = '05';
+    monthsNumber["Jun"] = '06';
+    monthsNumber["Jul"] = '07';
+    monthsNumber["Aug"] = '08';
+    monthsNumber["Sep"] = '09';
+    monthsNumber["Oct"] = '10';
+    monthsNumber["Nov"] = '11';
+    monthsNumber["Dec"] = '12';
+
     const handleEditClose = () => setEditModal(false);
-    
-    return(
+
+    return (
         <div>
             <Fragment>
-            <Breadcrumb title="View Cluster" parent="View Cluster" />
-            <div className="container-fluid">
+                <Breadcrumb title="View Cluster" parent="View Cluster" />
+                <div className="container-fluid">
 
-                <Row className="apply-button-row">
-                    <Col className="leaveApplications">Cluster Target</Col>
-                    <Col>
-                    
-                        <Button className="apply-button btn btn-light"
-                        onClick={() => {setModal(true) }}
-                        >Add Target</Button>
-                    </Col>
-                    <AddTarget handleClose={handleClose} modal={modal} />
-                </Row>
+                    <Row className="apply-button-row">
+                        <Col className="leaveApplications">Cluster Target</Col>
+                        <Col>
 
-                <div className="table-responsive">
-                    <Table id="table-to-xls" className="table table-hover">
-                        <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
-                            <tr>
-                                <th>S. No</th>                                
-                                <th>Store Name</th>
-                                <th>Cluster Name</th>
-                                <th>Month</th>
-                                <th>Year</th>
-                                <th>Productivity Target</th>
+                            <Button className="apply-button btn btn-light"
+                                onClick={() => { setModal(true) }}
+                            >Add Target</Button>
+                        </Col>
+                        <AddTarget handleClose={handleClose} modal={modal} />
+                    </Row>
 
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        {loader === true && currentRecords!==null && currentRecords !== undefined ?
-                            <tbody>
-                            <tr>
-                                <td colspan='6'>
-                                    <div className="loader-box loader" style={{ width: "100% !important" }}>
-                                        <div className="loader">
-                                            <div className="line bg-primary"></div>
-                                            <div className="line bg-primary"></div>
-                                            <div className="line bg-primary"></div>
-                                            <div className="line bg-primary"></div>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                        :
-                        currentRecords !== undefined && currentRecords !== null && currentRecords.length > 0 ?                                            
-                            currentRecords.map((item, i) => {
-                                return (
-                                   <tbody key={i + 1}>
-                                        <tr>
-                                            <td>{i + 1 + indexOfFirstRecord}</td>                                            
-                                            <td>{user.costCentre}</td>
-                                            <td>{item.clusterName}</td>
-                                            <td>{item.monthName}</td>
-                                            <td>{item.year}</td>
-                                            <td>{item.productTarget}</td>
-                                            {Year > item.year?
-                                            <td><Edit2 disabled style={{color:'lightgrey'}} /></td>
-                                             : 
-                                             Year == item.year && monthsNumber[item.month] < month  
-                                             ?
-                                             <td><Edit2 disabled style={{color:'lightgrey'}} /></td> 
-                                             :
-                                             Year === item.year && monthsNumber[item.month]=== month && TodayDate > 20 
-                                             ?
-                                             <Edit2 disabled style={{color:'lightgrey'}} /> :  
-                                            <td><Edit2 
-                                            style={{color:'#006EBB'}}
-                                            onClick={() => {
-                                                setEditModal(true);
-                                                viewSingleClusterTarget(item.targetId) 
-                                             }} 
-                                            
-                                             />
-                                            </td> }
+                    <div className="table-responsive">
+                        <Table id="table-to-xls" className="table table-hover">
+                            <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
+                                <tr>
+                                    <th>S. No</th>
+                                    <th>Cost Center</th>
+                                    <th>Cluster Name</th>
+                                    <th>Month</th>
+                                    <th>Year</th>
+                                    <th>Productivity Target</th>
 
-                                            <td></td>
-                                           
-                                    
-                                            
-                                            {/* <td><Edit2 onClick={() => {
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            {loader === true && currentRecords !== null && currentRecords !== undefined ?
+                                <tbody>
+                                    <tr>
+                                        <td colspan='6'>
+                                            <div className="loader-box loader" style={{ width: "100% !important" }}>
+                                                <div className="loader">
+                                                    <div className="line bg-primary"></div>
+                                                    <div className="line bg-primary"></div>
+                                                    <div className="line bg-primary"></div>
+                                                    <div className="line bg-primary"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                :
+                                currentRecords !== undefined && currentRecords !== null && currentRecords.length > 0 ?
+                                    currentRecords.map((item, i) => {
+                                        return (
+                                            <tbody key={i + 1}>
+                                                <tr>
+                                                    <td>{i + 1 + indexOfFirstRecord}</td>
+                                                    <td>{user.costCentre}</td>
+                                                    <td>{item.clusterName}</td>
+                                                    <td>{item.monthName}</td>
+                                                    <td>{item.year}</td>
+                                                    <td>{item.productTarget}</td>
+                                                    {Year > item.year ?
+                                                        <td><Edit2 disabled style={{ color: 'lightgrey' }} /></td>
+                                                        :
+                                                        Year == item.year && monthsNumber[item.month] < month
+                                                            ?
+                                                            <td><Edit2 disabled style={{ color: 'lightgrey' }} /></td>
+                                                            :
+                                                            Year === item.year && monthsNumber[item.month] === month && TodayDate > 20
+                                                                ?
+                                                                <Edit2 disabled style={{ color: 'lightgrey' }} /> :
+                                                                <td><Edit2
+                                                                    style={{ color: '#006EBB' }}
+                                                                    onClick={() => {
+                                                                        setEditModal(true);
+                                                                        viewSingleClusterTarget(item.targetId)
+                                                                    }}
+
+                                                                />
+                                                                </td>}
+
+                                                    <td></td>
+
+
+
+                                                    {/* <td><Edit2 onClick={() => {
                                                 setEditModal(true); 
                                                 viewSingleClusterTarget(item.targetId);
                                                                                            
                                             }} /> </td>                                                                                      */}
-                                            
+
+                                                </tr>
+                                            </tbody>
+                                        )
+                                    }) :
+                                    <tbody>
+                                        <tr>
+                                            <td colspan='6'>No Record Found</td>
                                         </tr>
                                     </tbody>
-                                 )
-                            }) :
-                            <tbody>
-                                <tr>
-                                    <td colspan='6'>No Record Found</td>
-                                </tr>
-                            </tbody>
+                            }
+
+                        </Table>
+
+                        <EditTarget
+                            handleEditClose={handleEditClose}
+                            modal={editModal}
+                            singleClusterTarget={singleClusterTarget}
+                        />
+
+                    </div>
+
+                    <div>
+                        {leaderClusterProductList !== null && leaderClusterProductList.length > 10 ?
+                            <Pagination
+                                itemClass="page-item"
+                                linkClass="page-link"
+                                activePage={currentPage}
+                                itemsCountPerPage={recordPerPage}
+                                totalItemsCount={totalRecords}
+                                pageRangeDisplayed={pageRange}
+                                onChange={handlePageChange}
+                            />
+                            :
+                            ""
                         }
-                        
-                    </Table> 
-
-                    <EditTarget
-                     handleEditClose={handleEditClose}
-                     modal={editModal}
-                     singleClusterTarget = {singleClusterTarget}                
-                     />
-
+                    </div>
                 </div>
-
-                <div>
-                    {leaderClusterProductList !== null && leaderClusterProductList.length > 10 ?
-                    <Pagination
-                        itemClass="page-item"
-                        linkClass="page-link"
-                        activePage={currentPage}
-                        itemsCountPerPage={recordPerPage}
-                        totalItemsCount={totalRecords}
-                        pageRangeDisplayed={pageRange}
-                        onChange={handlePageChange}
-                    />
-                    :
-                    ""
-                    }
-              </div>
-            </div>
-        </Fragment>
+            </Fragment>
         </div>
     )
 }
