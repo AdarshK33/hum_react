@@ -159,7 +159,7 @@ export const RosterProvider = ({ children }) => {
 
   // Get View WeekOff Weeks according to days
   const weekOffDays = (weekId) => {
-
+    //alert(weekId)
     // eslint-disable-next-line no-useless-concat
     client.get('weekoff/weeks/days' + '?weekId=' + weekId)
       .then((response) => {
@@ -297,7 +297,7 @@ export const RosterProvider = ({ children }) => {
   //ADMIN ROSTER
 
   const adminWeekOffDataEmp = (endDate, startDate, contract, weekid, empId, clusterId) => {
-    // alert("in admin week off "+empId);
+    console.log("My data" + endDate, startDate, contract, weekid, empId, clusterId)
     if (contract === "") {
       contract = "permanent"
     }
@@ -314,7 +314,7 @@ export const RosterProvider = ({ children }) => {
       .then((response) => {
         const adminWeekOffDataListHeader = response.data.data.rosterDates;
         const adminWeekOffDataList = response.data.data.rosterResponses;
-        const adminSelectedRosterRange = { endDate, startDate, contract, weekid, empId }
+        const adminSelectedRosterRange = { endDate, startDate, contract, weekid, empId, clusterId }
 
         console.log("=====  table header =", state.adminWeekOffDataListHeader)
         console.log("=====  table body data =", state.adminWeekOffDataList)
@@ -370,12 +370,15 @@ export const RosterProvider = ({ children }) => {
   }
 
   //ADMIN EMPLOYEE LIST FOR ROSTER WEEKOFF
-  const getEmployeeListForAdminRosterWeekOff = (contractType, storeId) => {
+  const getEmployeeListForAdminRosterWeekOff = (contractType, storeId, clusterId) => {
     // const contractType="Parttime";
     console.log("=============NAV============", contractType)
     let flag = localStorage.getItem('flag')
+    if (clusterId === undefined) {
+      clusterId = 0
+    }
 
-    client.get('employee/view?cluster=' + flag + '&contract_type=' + contractType + '&storeId=' + storeId)
+    client.get('employee/view?cluster=' + flag + '&clusterId=' + clusterId + '&contract_type=' + contractType + '&storeId=' + storeId)
       .then((response) => {
         state.EmployeeListForAdminRosterWeekOff = response.data.data;
         console.log("admin calculate week for store id  ", state.EmployeeListForAdminRosterWeekOff)

@@ -31,7 +31,6 @@ const CreateShiftModal = (props) => {
   const [timeError, setTimeErrorMsg] = useState(false);
   const [errormsg, setErrorMsg] = useState(false);
   const [nineHourWarnMsg, setNineHourWarnMsg] = useState(false);
-  const [fiveToEightWarnMsg, setFiveToEightWarnMsg] = useState(false);
   const [oneToFiveWarnMsg, setOneFiveWarnMsg] = useState(false);
   const [oneToEightWarnMsg, setOneToEightWarnMsg] = useState(false)
   const [costCenterName, setCostCenterName] = useState('');
@@ -59,7 +58,7 @@ const CreateShiftModal = (props) => {
     setSuccessMsg('');
     setErrorMsg('')
     setNineHourWarnMsg('')
-    setFiveToEightWarnMsg('')
+
     setOneFiveWarnMsg('')
     setOneToEightWarnMsg('')
     props.handleClose()
@@ -99,25 +98,10 @@ const CreateShiftModal = (props) => {
           setNineHourWarnMsg("* Shift should be 9 hours only")
           setShiftButton(true)
           setOneFiveWarnMsg(true)
-          setFiveToEightWarnMsg(true)
           setOneToEightWarnMsg(true)
         }
       }
-      else if (contractType === "Temporary") {
 
-        if (parseFloat(workingHours) >= 5 && parseFloat(workingHours) <= 8) {
-          setShiftButton(false)
-          setFiveToEightWarnMsg(true)
-        }
-        else {
-          setFiveToEightWarnMsg(false)
-          setFiveToEightWarnMsg("* Shift should be between 5 to 8 hours only")
-          setShiftButton(true)
-          setNineHourWarnMsg(true)
-          setOneFiveWarnMsg(true)
-          setOneToEightWarnMsg(true)
-        }
-      }
       else if (contractType === "Internship (young persons)") {
         if (parseFloat(workingHours) >= 1 && parseFloat(workingHours) <= 5) {
           setShiftButton(false)
@@ -130,10 +114,10 @@ const CreateShiftModal = (props) => {
           setShiftButton(true)
           setOneToEightWarnMsg(true)
           setNineHourWarnMsg(true)
-          setFiveToEightWarnMsg(true)
+
         }
       }
-      else if (contractType === "Parttime") {
+      else if (contractType === "Parttime" || contractType === "Temporary") {
         if (parseFloat(workingHours) >= 1 && parseFloat(workingHours) <= 8) {
           setShiftButton(false)
           setOneToEightWarnMsg(true)
@@ -144,7 +128,7 @@ const CreateShiftModal = (props) => {
           setShiftButton(true)
           setNineHourWarnMsg(true)
           setOneFiveWarnMsg(true)
-          setFiveToEightWarnMsg(true)
+
         }
       }
     }
@@ -188,7 +172,6 @@ const CreateShiftModal = (props) => {
     setEndTime('')
     setErrorMsg('')
     setNineHourWarnMsg('')
-    setFiveToEightWarnMsg('')
     setOneFiveWarnMsg('')
     setOneToEightWarnMsg('')
     setShiftType('')
@@ -414,7 +397,6 @@ const CreateShiftModal = (props) => {
                   </div>
                   <h6 style={{ color: "black", fontFamily: "work-Sans, sans-serif", fontSize: "14px", display: "overhidden" }}>Total no. of working hours {workingHours.substring(0, workingHours.length - 3).replace(".", ":")}</h6>
                   <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px", marginTop: "10px" }}>{nineHourWarnMsg}</h6>
-                  <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px", marginTop: "10px" }}>{fiveToEightWarnMsg}</h6>
                   <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px", marginTop: "10px" }}>{oneToFiveWarnMsg}</h6>
                   <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px", marginTop: "10px" }}>{oneToEightWarnMsg}</h6>
                   {/* <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px" }}>{warnMsg}</h6> */}

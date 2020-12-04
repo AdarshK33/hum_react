@@ -52,7 +52,7 @@ function ClusterProductTarget() {
         setMonth(mm);
         setYear(yyyy);
         viewClusterTarget();
-        
+
     }, []);
 
 
@@ -91,8 +91,8 @@ function ClusterProductTarget() {
                         <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                             <tr>
                                 <th>S. No</th>
-                                <th>Cost Center ID</th>
-                                <th>Store Name</th>
+                                <th>Cost Center</th>
+
                                 <th>Cluster Name</th>
                                 <th>Month</th>
                                 <th>Year</th>
@@ -103,58 +103,58 @@ function ClusterProductTarget() {
                             </tr>
                         </thead>
 
-                        {loader === true && currentRecords!==null && currentRecords !== undefined ?
+                        {loader === true && currentRecords !== null && currentRecords !== undefined ?
                             <tbody>
-                            <tr>
-                                <td colspan='6'>
-                                    <div className="loader-box loader" style={{ width: "100% !important" }}>
-                                        <div className="loader">
-                                            <div className="line bg-primary"></div>
-                                            <div className="line bg-primary"></div>
-                                            <div className="line bg-primary"></div>
-                                            <div className="line bg-primary"></div>
+                                <tr>
+                                    <td colspan='6'>
+                                        <div className="loader-box loader" style={{ width: "100% !important" }}>
+                                            <div className="loader">
+                                                <div className="line bg-primary"></div>
+                                                <div className="line bg-primary"></div>
+                                                <div className="line bg-primary"></div>
+                                                <div className="line bg-primary"></div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                        :
-                        currentRecords !== undefined && currentRecords !== null && currentRecords.length > 0 ?
-                            currentRecords.map((item, i) => {
-                                return (
-                                    <tbody key={i + 1}>
-                                        <tr>
-                                            <td>{i + 1 + indexOfFirstRecord}</td>
-                                            <td>{item.storeName}</td>
-                                            <td>{item.storeName}</td>
-                                            <td>{item.clusterName}</td>
-                                            <td>{item.monthName}</td>
-                                            <td>{item.year}</td>
-                                            <td>{item.productTarget}</td>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            :
+                            currentRecords !== undefined && currentRecords !== null && currentRecords.length > 0 ?
+                                currentRecords.map((item, i) => {
+                                    return (
+                                        <tbody key={i + 1}>
+                                            <tr>
+                                                <td>{i + 1 + indexOfFirstRecord}</td>
+                                                <td>{item.storeName}</td>
 
-                                            {Year > item.year ?
-                                                <td><Edit2 disabled style={{ color: 'lightgrey' }} /></td>
-                                                :
-                                                Year === item.year && monthsNumber[item.month] < month
-                                                    ?
+                                                <td>{item.clusterName}</td>
+                                                <td>{item.monthName}</td>
+                                                <td>{item.year}</td>
+                                                <td>{item.productTarget}</td>
+
+                                                {Year > item.year ?
                                                     <td><Edit2 disabled style={{ color: 'lightgrey' }} /></td>
                                                     :
-                                                    Year === item.year && monthsNumber[item.month] === month && TodayDate > 20
+                                                    Year === item.year && monthsNumber[item.month] < month
                                                         ?
-                                                        <Edit2 disabled style={{ color: 'lightgrey' }} /> :
-                                                        <td><Edit2
-                                                            style={{ color: '#006EBB' }}
-                                                            onClick={() => {
-                                                                setEditModal(true);
-                                                                viewSingleClusterTarget(item.targetId)
-                                                            }}
+                                                        <td><Edit2 disabled style={{ color: 'lightgrey' }} /></td>
+                                                        :
+                                                        Year === item.year && monthsNumber[item.month] === month && TodayDate > 20
+                                                            ?
+                                                            <Edit2 disabled style={{ color: 'lightgrey' }} /> :
+                                                            <td><Edit2
+                                                                style={{ color: '#006EBB' }}
+                                                                onClick={() => {
+                                                                    setEditModal(true);
+                                                                    viewSingleClusterTarget(item.targetId)
+                                                                }}
 
-                                                        />
-                                                        </td>}
+                                                            />
+                                                            </td>}
 
-                                            <td></td>
+                                                <td></td>
 
-                                            {/* <td><Edit2 onClick={() => {
+                                                {/* <td><Edit2 onClick={() => {
                                                 setEditModal(true);
                                                 viewSingleClusterTarget(item.targetId);
                                                 // setCostCenter(item.storeName);
@@ -165,15 +165,15 @@ function ClusterProductTarget() {
 
                                             }} /></td>                                                                                      */}
 
-                                        </tr>
-                                    </tbody>
-                                )
-                            }) :
-                            <tbody>
-                                <tr>
-                                    <td colspan='6'>No Record Found</td>
-                                </tr>
-                            </tbody>
+                                            </tr>
+                                        </tbody>
+                                    )
+                                }) :
+                                <tbody>
+                                    <tr>
+                                        <td colspan='6'>No Record Found</td>
+                                    </tr>
+                                </tbody>
                         }
                     </Table>
 
