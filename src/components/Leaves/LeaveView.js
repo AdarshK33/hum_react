@@ -25,27 +25,40 @@ const LeaveView = () => {
     const [reason, setReason] = useState()
     const [empId, setEmpID] = useState('')
     const [numberOfDays, setNumberOfDays] = useState()
-    const [displayLoader, setDisplayLoader] = useState(true)
-    const [leaveList, setLeaveList] = useState();
-
-    const { leaveDataList, viewLeaveData, viewEmpLeaveData, leaveEmpList, loader }
+    let [pageCount, setPageCount] = useState(0)
+    
+    const { leaveDataList, viewLeaveData, viewEmpLeaveData, leaveEmpList, loader, total }
         = useContext(LeaveContext);
-    console.log("loader in leave", loader)
 
+    const [currentRecords, setCurrentRecords] = useState([])
     const { user } = useContext(AppContext);
+
+    useEffect(() => {
+        if(leaveEmpList !== null && leaveEmpList !== undefined){
+            setCurrentRecords(leaveEmpList)
+            console.log("leaveEmpList",leaveEmpList)
+            console.log("currentRecords-------------",currentRecords)
+        }
+        
+    },[leaveEmpList,currentRecords])
 
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
-    const recordPerPage = 10;
-    const totalRecords = leaveEmpList !== null && leaveEmpList.length;
+    const recordPerPage = 10 ;
+    /* const totalRecords = leaveEmpList !== null && leaveEmpList !== undefined && leaveEmpList.length; */
+    const totalRecords = total;
     const pageRange = 10;
 
     const indexOfLastRecord = currentPage * recordPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    const currentRecords = leaveEmpList !== null ? leaveEmpList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+     /* currentRecords = leaveEmpList !== null && leaveEmpList !== undefined ? leaveEmpList.slice(indexOfFirstRecord, indexOfLastRecord) : []; */
+
 
     const handlePageChange = pageNumber => {
+        setPageCount(pageNumber-1)
         setCurrentPage(pageNumber);
+        viewEmpLeaveData(user.employeeId,pageNumber - 1)
+        setCurrentRecords(leaveEmpList)
     }
     /*-----------------Pagination------------------*/
 
@@ -62,24 +75,12 @@ const LeaveView = () => {
         viewLeaveData(user.employeeId)
     }, [user.employeeId])
 
+    
     useEffect(() => {
-        viewEmpLeaveData(user.employeeId)
-    }, [user.employeeId])
-    /*
-      if(leaveTypeId === 0 || leaveTypeId === 1){
-          var newLeaveTypeId = 1
-         setLeaveTypeId(newLeaveTypeId)
-         console.log("newLeaveTypeId", newLeaveTypeId)
-      } */
-    useEffect(() => {
-        if (leaveEmpList !== undefined && leaveEmpList !== null && leaveEmpList.length > 0) {
-            setLeaveList(leaveEmpList);
-            setDisplayLoader(false)
-            console.log("displayLoader-------", displayLoader)
-        }
-
-    }, [leaveEmpList, displayLoader])
-
+        viewEmpLeaveData(user.employeeId, pageCount)
+       
+    }, [user.employeeId, pageCount])
+   
 
     return (
         <Fragment>
@@ -87,7 +88,7 @@ const LeaveView = () => {
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-sm-12 main-heading-row">
-                        <h4 className="main-heading">Leaves</h4>
+                        <h5 className="main-heading">Leaves</h5>
                     </div>
                 </div>
                 <Row className="row">
@@ -175,7 +176,7 @@ const LeaveView = () => {
                             onClick={() => { setModal(true); setEmpID(user.employeeId) }}>Apply</Button>
                     </Col>
                     {user.employeeId !== undefined ?
-                        <LeaveAdd handleClose={handleClose} modal={modal} empid={empId} /> : ""}
+                        <LeaveAdd handleClose={handleClose} modal={modal} empid={empId} pageNumber={pageCount}  /> : ""}
 
                 </Row>
 
@@ -194,7 +195,7 @@ const LeaveView = () => {
                             </tr>
                         </thead>
 
-                        {loader === true && currentRecords !== null && currentRecords !== undefined ?
+                        {loader === true && leaveEmpList !== null && leaveEmpList !== undefined ?
                             <tbody>
                                 <tr>
                                     <td colSpan='10'>
@@ -210,9 +211,9 @@ const LeaveView = () => {
                                 </tr>
                             </tbody>
                             :
-                            currentRecords !== null && currentRecords !== undefined &&
-                                currentRecords.length > 0 ?
-                                currentRecords.map((item, i) => {
+                            leaveEmpList !== null && leaveEmpList !== undefined &&
+                            leaveEmpList.length > 0 ?
+                            leaveEmpList.map((item, i) => {
                                     return (
                                         <tbody key={i + 1}>
                                             <tr>
@@ -251,16 +252,17 @@ const LeaveView = () => {
                     {/* {(leaveEmpList !== null && leaveEmpList.length <= 0) ? 
                                 <p style={{ textAlign: "center" }}>No Record Found</p> : null} */}
 
-                    <DeleteLeave handleDeleteClose={handleDeleteClose} modal={deleteModal} ltId={ltId} empid={user.employeeId} />
+                    <DeleteLeave handleDeleteClose={handleDeleteClose} modal={deleteModal} ltId={ltId} 
+                    empid={user.employeeId} pageNumber={pageCount} />
                     {user.employeeId !== undefined ?
                         <EditLeave handleEditClose={handleEditClose} modal={editModal} empid={user.employeeId} numberOfDays={numberOfDays}
                             leaveTypeId={leaveTypeId === 0 || leaveTypeId === 1 ? (leaveTypeId = 1) : (leaveTypeId === 2 ? (leaveTypeId = 2) :
                                 leaveTypeId === 3 ? (leaveTypeId = 3) : '')} fromDate={fromDate} toDate={toDate}
-                            reason={reason} ltId={ltId} /> : ""}
+                            reason={reason} ltId={ltId} pageNumber={pageCount} /> : ""}
                 </div>
 
             </div>
-            {leaveEmpList !== null && leaveEmpList.length > 10 &&
+            {leaveEmpList !== null && leaveEmpList !== undefined && 
                 <Pagination
                     itemClass="page-item"
                     linkClass="page-link"
@@ -269,6 +271,8 @@ const LeaveView = () => {
                     totalItemsCount={totalRecords}
                     pageRangeDisplayed={pageRange}
                     onChange={handlePageChange}
+                    firstPageText="First"
+                    lastPageText="Last"
                 />
             }
         </Fragment>

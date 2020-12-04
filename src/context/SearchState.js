@@ -24,11 +24,12 @@ export const SearchProvider = ({ children }) => {
 
     client.get('/leave_transaction/view?empId=' + Id).then(function (response) {
       console.log(response);
-      if (response.data.data === null) {
+      if (response.data.data.data === null) {
         toast.error("No Data Found")
       }
       else {
-        state.empIdSearchList = response.data.data;
+        state.empIdSearchList = response.data.data.data;
+        console.log("searchEmpId----",response.data.data.data)
       }
 
       return dispatch({ type: 'FETCH_EMPID_LIST', payload: state.empIdSearchList });

@@ -16,7 +16,7 @@ const DeleteLeave = (props) => {
   console.log("emp id in delete", empId)
     const deleteListcheck = (id, empId) => {
         console.log("delete id", id)
-        deleteEmpList(id, empId)
+        deleteEmpList(id, empId, props.pageNumber)
         deleteModal()
     }
     return (
