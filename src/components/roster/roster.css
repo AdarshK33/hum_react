@@ -49,3 +49,9 @@ thead th {
      margin-left: 25%;
  }
 
+ .shift-date .react-datepicker-wrapper{
+    width: 100% !important;
+}
+.shift-date input.form-control.shift-view {
+    height: 40px;
+}

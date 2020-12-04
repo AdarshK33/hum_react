@@ -118,7 +118,7 @@ const StoreProductTarget = () => {
                             <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
                                 <tr>
                                     <th>S.No.</th>
-                                    <th>Cost Center ID</th>
+                                    <th>Cost Center</th>
 
                                     <th>State</th>
                                     <th>Month</th>
@@ -137,7 +137,7 @@ const StoreProductTarget = () => {
                             {currentRecords !== undefined && currentRecords !== null &&
                                 currentRecords.map((item, i) => {
                                     return (
-                                        <tbody key={i + 1 }>
+                                        <tbody key={i + 1}>
                                             <tr>
                                                 <td>{i + 1 + indexOfFirstRecord}</td>
                                                 <td>{item.costCenter}</td>

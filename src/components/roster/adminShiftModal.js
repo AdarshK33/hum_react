@@ -40,7 +40,7 @@ const AdminShiftModal = (props) => {
 
   useEffect(() => {
     setFirstName(props.firstName)
-    adminWeekOffDataEmp()
+
   }, [props.firstName])
 
   useEffect(() => {
@@ -50,7 +50,7 @@ const AdminShiftModal = (props) => {
 
 
   useEffect(() => {
-    getEmployeeListForAdminRosterWeekOff(props.contractType, props.mystoreId)
+    getEmployeeListForAdminRosterWeekOff(props.contractType, props.mystoreId, props.cid)
     availableShifts()
     if (props.Date !== undefined) {
       getallWeeks(props.Date)
@@ -60,19 +60,20 @@ const AdminShiftModal = (props) => {
       setEmpData(props.empData)
     }
     adminRosterAvailableShift(props.contractType, props.mystoreId)
-  }, [props.contractType, props.mystoreId, props.empData])
+  }, [props.contractType, props.mystoreId, props.empData, props.cid])
   //my store id
 
   useEffect(() => {
     // console.log('shiftDateWeek', shiftDateWeek)
     console.log("props my store ID ", props.mystoreId)
     console.log('props.shiftDate', props.shiftDate)
+
+    console.log('props cluster id  ========' + props.cid)
     weekOffDays(shiftDateWeek)
   }, [selectedWeeks])
 
 
 
-  //  console.log("i am here"+JSON.stringify(weekDayList));
 
   useEffect(() => {
 
