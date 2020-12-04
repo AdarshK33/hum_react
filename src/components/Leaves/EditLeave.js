@@ -234,11 +234,11 @@ console.log("d3",moment(d3).format("YYYY-MM-DD"))
         }
         if (leave === 3) {
           console.log("edit leave data for maternity----", editLeave)
-          editEmpList(editLeave)
+          editEmpList(editLeave, props.pageNumber)
         }
         else {
             console.log("edit leave data for general----", editLeave1)
-            editEmpList(editLeave1)
+            editEmpList(editLeave1, props.pageNumber)
         }
 
         history.push("/leaves/viewleave");

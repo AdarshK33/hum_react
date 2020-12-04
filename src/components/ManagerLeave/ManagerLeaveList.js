@@ -23,23 +23,32 @@ const ManagerLeaveList = (props) => {
     const [reason, setReason] = useState()
     const [searchValue, setSearchValue] = useState(false);
     const [searchLeaveList, setLeaveList] = useState();
+    const [pageCount, setPageCount] = useState(0)
 
     const { searchByEmpIdManager, empIdManagerSearchList } = useContext(SearchContext);
 
-    const { viewManagerList, leaveManagerList, loader } = useContext(LeaveContext)
+    const { viewManagerList, leaveManagerList, loader, managerTotal, viewManagerListSearch } = useContext(LeaveContext)
 
+    const [currentRecords, setCurrentRecords] = useState([])
+    console.log("managerTotal----", managerTotal)
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
     const recordPerPage = 10;
-    const totalRecords = searchLeaveList !== undefined && searchLeaveList !== null && searchLeaveList.length;
+    const totalRecords = managerTotal
     const pageRange = 10;
 
     const indexOfLastRecord = currentPage * recordPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    const currentRecords = searchLeaveList !== undefined && searchLeaveList !== null ? searchLeaveList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+    /* const currentRecords = searchLeaveList !== undefined && searchLeaveList !== null ? searchLeaveList.slice(indexOfFirstRecord, indexOfLastRecord) : []; */
 
     const handlePageChange = pageNumber => {
+        setPageCount(pageNumber-1)
         setCurrentPage(pageNumber);
+        if (searchValue !== "") {
+            viewManagerListSearch(searchValue);
+        } else {
+            viewManagerList(pageNumber-1)
+        }
     }
     /*-----------------Pagination------------------*/
 
@@ -53,34 +62,36 @@ const ManagerLeaveList = (props) => {
     const handleDeleteClose = () => setDeleteModal(false)
 
     useEffect(() => {
-        viewManagerList()
-    }, [])
+        viewManagerList(pageCount)
+    }, [pageCount])
 
     useEffect(() => {
         if (leaveManagerList !== undefined && leaveManagerList !== null && leaveManagerList.length > 0) {
             setLeaveList(leaveManagerList);
+            setCurrentRecords(leaveManagerList)
         }
     }, [leaveManagerList])
 
     const searchHandler = (e) => {
         setSearchValue(e.target.value)
+      
 
     }
 
     const searchDataHandler = () => {
         if (searchValue !== "") {
-            searchByEmpIdManager(searchValue);
+            viewManagerListSearch(searchValue);
         } else {
-            viewManagerList()
+            viewManagerList(pageCount)
         }
 
     }
 
-    useEffect(() => {
+   /*  useEffect(() => {
         if (empIdManagerSearchList !== undefined && empIdManagerSearchList !== null && empIdManagerSearchList.length > 0) {
             setLeaveList(empIdManagerSearchList);
         }
-    }, [empIdManagerSearchList])
+    }, [empIdManagerSearchList]) */
 
 
     return (
@@ -88,7 +99,7 @@ const ManagerLeaveList = (props) => {
             <Breadcrumb title="Manager" parent="Manager Leave" />
             <div className="container-fluid">
                 <Row className="heading-row">
-                    <h4 className="main-heading">Manager Leaves</h4>
+                    <h5 className="main-heading">Manager Leaves</h5>
                 </Row>
                 <Row>
                     <div className="col-sm-12">
@@ -102,7 +113,7 @@ const ManagerLeaveList = (props) => {
                                 </div>
                                 <Button className="apply-button btn btn-light mr-2" onClick={handleShow}>Apply</Button>
                             </div>
-                            <ManagerLeaveAdd handleClose={handleClose} modal={modal} />
+                            <ManagerLeaveAdd handleClose={handleClose} modal={modal} pageNumber={pageCount} />
                             <div className="table-responsive">
                                 <Table id="table-to-xls" className="table table-hover">
                                     <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
@@ -178,14 +189,15 @@ const ManagerLeaveList = (props) => {
                             </div>
                         </div>
                     </div>
-                    <ManagerDeleteLeaves handleDeleteClose={handleDeleteClose} modal={deleteModal} ltId={ltId} />
+                    <ManagerDeleteLeaves handleDeleteClose={handleDeleteClose} modal={deleteModal} ltId={ltId} 
+                    pageNumber={pageCount} />
                     <ManagerLeaveEdit handleEditClose={handleEditClose} modal={editModal}
                         leaveTypeId={leaveTypeId === 0 || leaveTypeId === 1 ? (leaveTypeId = 1) : (leaveTypeId === 2 ? (leaveTypeId = 2) :
                             leaveTypeId === 3 ? (leaveTypeId = 3) : '')} fromDate={fromDate} toDate={toDate}
-                        reason={reason} ltId={ltId} empId={empId} />
+                        reason={reason} ltId={ltId} empId={empId} pageNumber={pageCount} />
                 </Row>
             </div>
-            {leaveManagerList !== null && leaveManagerList.length > 10 &&
+            {leaveManagerList !== null && leaveManagerList !== undefined && 
                 <Pagination
                     itemClass="page-item"
                     linkClass="page-link"
@@ -194,6 +206,8 @@ const ManagerLeaveList = (props) => {
                     totalItemsCount={totalRecords}
                     pageRangeDisplayed={pageRange}
                     onChange={handlePageChange}
+                    firstPageText="First"
+                    lastPageText="Last"
                 />
             }
         </Fragment>

@@ -24,23 +24,32 @@ const AdminLeavesList = (props) => {
     const [searchValue, setSearchValue] = useState(false);
     const [searchLeaveList, setLeaveList] = useState();
     const { searchByEmpId, empIdSearchList } = useContext(SearchContext);
+    const [pageCount, setPageCount] = useState(0)
 
+    const { viewList, leaveList, loader, adminTotal, viewListSearch } = useContext(LeaveContext)
 
-    const { viewList, leaveList, loader } = useContext(LeaveContext)
+    const [currentRecords, setCurrentRecords] = useState([])
+
 
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
 
     const recordPerPage = 10;
-    const totalRecords = searchLeaveList !== undefined && searchLeaveList !== null && searchLeaveList.length;
+    const totalRecords = adminTotal
     const pageRange = 10;
 
     const indexOfLastRecord = currentPage * recordPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-    const currentRecords = searchLeaveList !== undefined && searchLeaveList !== null ? searchLeaveList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+    /* const currentRecords = searchLeaveList !== undefined && searchLeaveList !== null ? searchLeaveList.slice(indexOfFirstRecord, indexOfLastRecord) : []; */
 
     const handlePageChange = pageNumber => {
+        setPageCount(pageNumber-1)
         setCurrentPage(pageNumber);
+        if (searchValue !== "") {
+            viewListSearch(searchValue);
+        } else {
+            viewList(pageNumber-1)
+        }
         console.log("pageNumber", pageNumber)
     }
     /*-----------------Pagination------------------*/
@@ -56,14 +65,15 @@ const AdminLeavesList = (props) => {
     const handleDeleteClose = () => setDeleteModal(false)
 
     useEffect(() => {
-        viewList()
+        viewList(pageCount)
 
-    }, [])
+    }, [pageCount])
 
 
     useEffect(() => {
         if (leaveList !== undefined && leaveList !== null && leaveList.length > 0) {
             setLeaveList(leaveList);
+            setCurrentRecords(leaveList)
         }
 
     }, [leaveList])
@@ -71,23 +81,24 @@ const AdminLeavesList = (props) => {
 
     const searchHandler = (e) => {
         setSearchValue(e.target.value)
-
+       
     }
 
     const searchDataHandler = () => {
         if (searchValue !== "") {
-            searchByEmpId(searchValue);
+            viewListSearch(searchValue);
         } else {
-            viewList()
+            viewList(pageCount)
         }
 
     }
 
-    useEffect(() => {
+   /*  useEffect(() => {
         if (empIdSearchList !== undefined && empIdSearchList !== null && empIdSearchList.length > 0) {
             setLeaveList(empIdSearchList);
+            setCurrentRecords(empIdSearchList)
         }
-    }, [empIdSearchList])
+    }, [empIdSearchList]) */
 
 
 
@@ -96,7 +107,7 @@ const AdminLeavesList = (props) => {
             <Breadcrumb title="Admin " parent="Admin Leave" />
             <div className="container-fluid">
                 <Row className="heading-row">
-                    <h4 className="main-heading">Admin Leaves</h4>
+                    <h5 className="main-heading">Admin Leaves</h5>
                 </Row>
                 <Row>
                     <div className="col-sm-12">
@@ -110,7 +121,7 @@ const AdminLeavesList = (props) => {
                                 </div>
                                 <Button className="apply-button btn btn-light mr-2" onClick={handleShow}>Apply</Button>
                             </div>
-                            <AdminLeaveAdd handleClose={handleClose} modal={modal} />
+                            <AdminLeaveAdd handleClose={handleClose} modal={modal} pageNumber={pageCount} />
                             <div className="table-responsive">
 
                                 <Table id="table-to-xls" className="table table-hover" >
@@ -188,14 +199,15 @@ const AdminLeavesList = (props) => {
                             </div>
                         </div>
                     </div>
-                    <AdminDeleteLeaves handleDeleteClose={handleDeleteClose} modal={deleteModal} ltId={ltId} />
+                    <AdminDeleteLeaves handleDeleteClose={handleDeleteClose} modal={deleteModal} ltId={ltId}
+                     pageNumber={pageCount} />
                     <AdminLeaveEdit handleEditClose={handleEditClose} modal={editModal}
                         leaveTypeId={leaveTypeId === 0 || leaveTypeId === 1 ? (leaveTypeId = 1) : (leaveTypeId === 2 ? (leaveTypeId = 2) :
                             leaveTypeId === 3 ? (leaveTypeId = 3) : '')} fromDate={fromDate} toDate={toDate}
-                        reason={reason} ltId={ltId} empId={empId} />
+                        reason={reason} ltId={ltId} empId={empId} pageNumber={pageCount} />
                 </Row>
             </div>
-            {searchLeaveList !== undefined && searchLeaveList !== null && searchLeaveList.length > 10 &&
+            {leaveList !== undefined && leaveList !== null && 
                 <Pagination
                     itemClass="page-item"
                     linkClass="page-link"
@@ -204,6 +216,8 @@ const AdminLeavesList = (props) => {
                     totalItemsCount={totalRecords}
                     pageRangeDisplayed={pageRange}
                     onChange={handlePageChange}
+                    firstPageText="First"
+                    lastPageText="Last"
                 />
             }
         </Fragment>

@@ -15,7 +15,7 @@ const ManagerDeleteLeaves = (props) => {
   
     const deleteListcheck = (id) => {
         console.log("delete id", id)
-        deleteList(id)
+        deleteList(id, props.pageNumber)
         deleteModal()
     }
     return (

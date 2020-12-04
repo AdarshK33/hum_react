@@ -2,16 +2,16 @@
 const LeaveReducer = (state, action) => {
     switch (action.type) {
         case 'FETCH_LEAVE_LIST':
-            return { ...state, leaveList: action.payload, loader: action.loader}
+            return { ...state, leaveList: action.payload, loader: action.loader, adminTotal: action.adminTotal, adminData: action.adminData}
 
         case 'FETCH_MANAGER_LEAVE_LIST':
-            return { ...state, leaveManagerList: action.payload, loader: action.loader }
+            return { ...state, leaveManagerList: action.payload, loader: action.loader, managerTotal: action.managerTotal, managerData: action.managerData }
 
         case 'FETCH_LEAVE_DATA_LIST':
             return { ...state, leaveDataList: action.payload }
 
         case 'FETCH_EMP_LEAVE_DATA_LIST':
-                return { ...state, leaveEmpList: action.payload, loader: action.loader }
+                return { ...state, leaveEmpList: action.payload, loader: action.loader, total: action.total, data: action.data }
 
         case 'ADD_NEW_LEAVE':
             return { ...state, leaveList: action.payload }
