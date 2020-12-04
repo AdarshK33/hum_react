@@ -262,10 +262,10 @@ const AdminLeaveAdd = (props) => {
         }
         if (leave === '3') {
             console.log("newLeave maternity---------", newLeave1)
-            addLeave(newLeave1)
+            addLeave(newLeave1, props.pageNumber)
         } else {
             console.log("newLeave general---------", newLeave)
-            addLeave(newLeave)
+            addLeave(newLeave, props.pageNumber)
         }
 
         history.push("/adminleave");

@@ -15,7 +15,8 @@ const AdminDeleteLeaves = (props) => {
   
     const deleteListcheck = (id) => {
         console.log("delete id", id)
-        deleteList(id)
+        deleteList(id, props.pageNumber)
+        console.log("props.pageNumber",props.pageNumber)
         deleteModal()
     }
     return (

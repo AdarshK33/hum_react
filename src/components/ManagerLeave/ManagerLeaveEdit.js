@@ -231,11 +231,11 @@ const ManagerLeaveEdit = (props) => {
         }
         if (leave === 3) {
             console.log("edit leave data for maternity----", editLeave1)
-              editList(editLeave1)
+              editList(editLeave1, props.pageNumber)
           }
           else {
             console.log("edit leave data for general----", editLeave)
-              editList(editLeave)
+              editList(editLeave, props.pageNumber)
           }
             history.push("/managerleaves");
             setEditMsg(false)

@@ -22,6 +22,7 @@ const LeaveAdd = (props) => {
     const [min, setMin] = useState(false)
     const [max, setMax] = useState(false)
     const [editMsg, setEditMsg] = useState(false)
+    const [pageCount, setPageCount] = useState()
     /*  const [modal, setModal] = useState(false) */
 
     let history = useHistory();
@@ -48,6 +49,12 @@ const LeaveAdd = (props) => {
         getLeave(props.empid)
     }, [props.empid]);
 
+    useEffect(() => {
+        setPageCount(props.pageNumber)
+        console.log("props.pageNumber", props.pageNumber)
+    }, [props.pageNumber]);
+
+    console.log("page count", pageCount)
     const today = new Date()
 
     let nextYear = new Date()
@@ -246,11 +253,11 @@ const LeaveAdd = (props) => {
         console.log("newLeave empId-----", newLeave.empId)
         if (leave === '3') {
             console.log("newLeave maternity---------", newLeave1)
-            addEmpLeave(newLeave1)
+            addEmpLeave(newLeave1, props.pageNumber)
         }
         else {
             console.log("newLeave general---------", newLeave)
-            addEmpLeave(newLeave, newLeave.empId)
+            addEmpLeave(newLeave, props.pageNumber)
         }
         history.push("/leaves/viewleave");
         setEditMsg(false)

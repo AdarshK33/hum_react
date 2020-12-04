@@ -21,7 +21,7 @@ function Dashboard() {
     const [ClusterName, setClusterName] = useState('');
     var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const today = new Date();
-
+console.log("graphData0----------", graphData)
     const fromDateHandler = (e) => {
         setStartDate(e);
 
@@ -392,6 +392,18 @@ function Dashboard() {
                             <td className="Tdwidth">{clusterHours.length !== 0 && ClusterName !== "" ? clusterHours[2].internship : 0}</td>
                             <td className="Tdwidth">Planned Hours INT</td>
                             <td className="Tdwidth">{roasterHour.length !== 0 && ClusterName !== "" ? roasterHour[2].internship : 0}</td>
+                        </tr>
+                        <tr >
+                            <td className="Tdwidth">Cluster OnDuty Hours</td>
+                            <td className="Tdwidth">{graphData !== null && graphData[0] !== undefined && ClusterName !== "" ? graphData[0].hoursData[0].clusterOnDutyHours : "0"}</td>
+                            <td className="Tdwidth">Store OnDuty Hours</td>
+                            <td className="Tdwidth">{graphData !== null && graphData[0] !== undefined && ClusterName !== "" ? graphData[0].hoursData[0].storeOnDutyHours : "0"}</td>
+                        </tr>
+                        <tr >
+                            <td className="Tdwidth">Cluster Captain Hours</td>
+                            <td className="Tdwidth">{graphData !== null && graphData[0] !== undefined && ClusterName !== "" ? graphData[0].hoursData[0].clusterCaptainHours : "0"}</td>
+                            <td className="Tdwidth">Store Captain Hours</td>
+                            <td className="Tdwidth">{graphData !== null && graphData[0] !== undefined && ClusterName !== "" ? graphData[0].hoursData[0].storeCaptainHours : "0"}</td>
                         </tr>
                     </tbody>
                 </table>
