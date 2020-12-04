@@ -28,32 +28,9 @@ const AdminRoster = () => {
     const [date, setDate] = useState()
     const { user } = useContext(AppContext);
 
-    useEffect(() => {
-        viewContractTypes()
-        setContractType("Permanent")
-        costCenter()
-        calcWeek()
-        viewClusterCostCenter(user.costCentre)
-        if (user.loginType !== "1" && user.loginType !== "7" && user.loginType !== "9") {
-            setCostCenter1(user.costCenter)
-            setstorecostCenterName(user.costCenter)
-        }
-    }, [user.costCenter, user.loginType])
-
-
-
 
     const { adminWeekOffDataEmp, viewContractTypes, shiftContractNames, costCenterList, adminWeekOffDataListHeader, adminWeekOffDataList, adminCalculateWeek, adminCalculateWeekResult, adminRosterAvailableShift, getallWeeks, costCenter, rosterExport } = useContext(RosterContext);
     const { viewClusterCostCenter, clusterCostCenterList, } = useContext(ClusterContext);
-    const handleClose = () => setAdminModal(false)
-    const handleShow = (item, name, ctype, weekId) => {
-        setshiftDate(item.weekId)
-        setAdminModal(true)
-        setDate(item)
-        setFirstName(name);
-        adminRosterAvailableShift(contractType, costCenter1)
-        // getallWeeks()
-    }
 
 
 
@@ -62,11 +39,49 @@ const AdminRoster = () => {
         getSingleWeek(data1)
 
     }
+    const handleCostCenter = (options) => {
+        let data2 = options !== null ? options.value : ''
+        setCostCenter1(data2)
+        setstorecostCenterName(data2)
+        setadminRosterButton(false)
+        viewClusterCostCenter(data2)
+    }
 
     const setClusterIdForAdmin = (e) => {
         let data = e.target.value
         setClusterId(data)
     }
+    useEffect(() => {
+        viewContractTypes()
+        setContractType("Permanent")
+        costCenter()
+        calcWeek()
+
+        if (user.loginType !== "1" && user.loginType !== "7" && user.loginType !== "9") {
+            setCostCenter1(user.costCenter)
+            setstorecostCenterName(user.costCenter)
+            viewClusterCostCenter(user.costCentre)
+        }
+    }, [user.costCenter, user.loginType])
+
+
+
+
+
+    const handleClose = () => setAdminModal(false)
+    const handleShow = (item, name, ctype, weekId, cid) => {
+        setshiftDate(item.weekId)
+        setAdminModal(true)
+        setDate(item)
+        setFirstName(name);
+        adminRosterAvailableShift(contractType, costCenter1)
+
+        // getallWeeks()
+    }
+
+
+
+
 
 
 
@@ -77,12 +92,7 @@ const AdminRoster = () => {
     //     setstorecostCenterName(data2)
     //     setadminRosterButton(false)
     // }
-    const handleCostCenter = (options) => {
-        let data2 = options !== null ? options.value : ''
-        setCostCenter1(data2)
-        setstorecostCenterName(data2)
-        setadminRosterButton(false)
-    }
+
 
     // data for next page  setstorecostCenterName
 
@@ -172,7 +182,7 @@ const AdminRoster = () => {
 
                                         </div>
                                         {(() => {
-                                            if (user.loginType !== "1" || user.loginType !== "7" || user.loginType !== "9") {
+                                            if (user.loginType !== "1" || user.additionalRole !== "1" || user.loginType !== "9" || user.additionalRole !== "9") {
                                                 return (
                                                     <div className="col-sm-4">
 
@@ -189,6 +199,7 @@ const AdminRoster = () => {
 
                                                 )
                                             }
+
                                         })()}
 
                                     </div>
@@ -382,6 +393,7 @@ const AdminRoster = () => {
                         mystoreId={storecostCenterName}
                         Date={date.date}
                         empData={adminWeekOffDataList}
+                        cid={clusterId}
                     />}
             </div>
 

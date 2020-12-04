@@ -310,8 +310,34 @@ export const ClusterProvider = ({ children }) => {
   }
   //view cluster by coster center
   const viewClusterCostCenter = (costCenter) => {
-    return client.get('cluster/view/' + costCenter)
-      .then((response) => {
+
+    let flag = localStorage.getItem('flag')
+
+    console.log("=== Flag set" + flag)
+    if (flag === "0") {
+      console.log("MY FLAGE VALUE" + flag)
+      return client.get('cluster/view/' + costCenter)
+        .then((response) => {
+          const clusterCostCenterList = response.data.data
+
+          const clusterCostCenter = { costCenter }
+          //  console.log("cluster based on cost center list", state.clusterCostCenterList)
+          //  console.log("cluster based on cost center message", response.data.message)
+          return dispatch({
+            type: 'CLUSTER_COST_CENTER', payload: {
+              clusterCostCenterList,
+              clusterCostCenter,
+
+            }
+          })
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+    else {
+      console.log("MY FLAGE VALUE" + flag)
+      client.get('cluster/view?leader=' + flag).then(function (response) {
         const clusterCostCenterList = response.data.data
         const clusterCostCenter = { costCenter }
         //  console.log("cluster based on cost center list", state.clusterCostCenterList)
@@ -324,9 +350,11 @@ export const ClusterProvider = ({ children }) => {
           }
         })
       })
-      .catch((error) => {
-        console.log(error)
-      })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+
   }
 
   const viewClusterForAdmin = (storeId) => {
