@@ -51,6 +51,7 @@ import MasterLeave from "./components/MasterTables/MasterLeave";
 import MasterMonthlyQuantity from "./components/MasterTables/MasterMonthlyQuantity";
 import MasterDailyQty from "./components/MasterTables/MasterDailyQty";
 import MasterCostCenter from "./components/MasterTables/MasterCostCenter";
+import CreateTicket from "./components/support/createTicket";
 
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
@@ -95,6 +96,13 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/sample/samplepage`}
             component={Samplepage}
           />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/createTicket`}
+            component={CreateTicket}
+          />
+
+
 
 
           {state.MenuPermissionsRoute.map((e) => {
@@ -301,12 +309,12 @@ const RoutePath = () => {
                                                                                   <Route
                                                                                     path={`${process.env.PUBLIC_URL}/master/daily-qty`}
                                                                                     component={MasterDailyQty}
-                                                                                  /> : 
+                                                                                  /> :
                                                                                   e.path === "/master/cost-center" ?
-                                                                                  <Route
-                                                                                    path={`${process.env.PUBLIC_URL}/master/cost-center`}
-                                                                                    component={MasterCostCenter}
-                                                                                  />: ""
+                                                                                    <Route
+                                                                                      path={`${process.env.PUBLIC_URL}/master/cost-center`}
+                                                                                      component={MasterCostCenter}
+                                                                                    /> : ""
 
 
                   //  <Route
