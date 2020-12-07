@@ -52,6 +52,7 @@ import MasterMonthlyQuantity from "./components/MasterTables/MasterMonthlyQuanti
 import MasterDailyQty from "./components/MasterTables/MasterDailyQty";
 import MasterCostCenter from "./components/MasterTables/MasterCostCenter";
 import CreateTicket from "./components/support/createTicket";
+import TicketListingPage from "./components/support/ticketListingPage"
 import ViewTicket from './components/support/viewTicket'
 
 const RoutePath = () => {
@@ -103,6 +104,11 @@ const RoutePath = () => {
             component={CreateTicket}
           />
 
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/ticketListingPage`}
+            component={TicketListingPage}
+          />
           <Route
             path={`${process.env.PUBLIC_URL}/viewTicket`}
             component={ViewTicket}

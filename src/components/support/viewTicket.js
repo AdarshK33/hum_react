@@ -8,7 +8,7 @@ const ViewTicket = () => {
         <Fragment>
             <Breadcrumb title="View Ticket" parent="View Ticket" />
             <Container fluid>
-                <Form style={{backgroundColor:'white', padding:'3rem'}} >
+                <Form style={{ backgroundColor: 'white', padding: '3rem' }} >
                     <Row>
                         <Col sm={6}>
                             <Form.Group as={Row}>
@@ -63,119 +63,119 @@ const ViewTicket = () => {
                             </Form.Group>
                         </Col>
                     </Row>
-                        <Row>
-                            <Col sm={8}>
-                                <Form.Group as={Row} >
-                                    <Form.Label column sm='4' className='labels'>Select Role :</Form.Label>
-                                    <Col sm='7'>
-                                        <Form.Control type='text' value='Store Leader' readOnly className='disabledValue' />
-                                    </Col>
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                        <Row>
-                           <Col sm={8}>
+                    <Row>
+                        <Col sm={8}>
                             <Form.Group as={Row} >
-                                    <Form.Label column sm='4' className='labels'>Selected Issue Category :</Form.Label>
-                                    <Col sm='7'>
-                                        <Form.Control type='text' value='Feature Issue' readOnly className='disabledValue' />
-                                    </Col>
-                                </Form.Group>
-                           </Col>
-                        </Row>
-                        <Row>
-                            <Col sm={8}>
-                                <Form.Group as={Row} >
-                                    <Form.Label column sm='4' className='labels'>Title :</Form.Label>
-                                    <Col sm='7'>
-                                        <Form.Control type='text' value='Unable to assign shifts' readOnly className='disabledValue' />
-                                    </Col>
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col sm={8}>
-                                <Form.Group as={Row} >
-                                    <Form.Label column sm='4' className='labels'>Description :</Form.Label>
-                                    <Col sm='8'>
-                                        <Form.Control type='text' value='I was not able to assign shifts as the dropdown was not working'
+                                <Form.Label column sm='4' className='labels'>Select Role :</Form.Label>
+                                <Col sm='7'>
+                                    <Form.Control type='text' value='Store Leader' readOnly className='disabledValue' />
+                                </Col>
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col sm={8}>
+                            <Form.Group as={Row} >
+                                <Form.Label column sm='4' className='labels'>Selected Issue Category :</Form.Label>
+                                <Col sm='7'>
+                                    <Form.Control type='text' value='Feature Issue' readOnly className='disabledValue' />
+                                </Col>
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col sm={8}>
+                            <Form.Group as={Row} >
+                                <Form.Label column sm='4' className='labels'>Title :</Form.Label>
+                                <Col sm='7'>
+                                    <Form.Control type='text' value='Unable to assign shifts' readOnly className='disabledValue' />
+                                </Col>
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col sm={8}>
+                            <Form.Group as={Row} >
+                                <Form.Label column sm='4' className='labels'>Description :</Form.Label>
+                                <Col sm='8'>
+                                    <Form.Control type='text' value='I was not able to assign shifts as the dropdown was not working'
                                         readOnly className='disabledValue' />
-                                    </Col>
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col sm={8}>
-                                <Form.Group as={Row} >
-                                    <Form.Label column sm='4' className='labels'>Urgency :</Form.Label>
-                                    <Col sm='7'>
-                                        <Form.Control type='text' value='This Issue partially blocks my work' readOnly className='disabledValue' />
-                                    </Col>
-                                </Form.Group>
-                            </Col>     
-                        </Row>
-                        <Row>
-                            <Col sm={8}>
-                                <Form.Group as={Row} >
-                                    <Form.Label column sm='4' className='labels'>Priority :</Form.Label>
-                                    <Col sm='7'>
-                                        <Form.Control type='text' value='High' readOnly className='disabledValue' />
-                                    </Col>
-                                </Form.Group>
-                            </Col>    
-                        </Row>
-                        <Row>
-                            <Col sm={8}>
-                                <Form.Group as={Row} >
-                                    <Form.Label column sm='4' className='labels'>Service Groups :</Form.Label>
-                                    <Col sm='7'>
-                                        <Form.Control as='select' > 
-                                            <option>PYR_Humine V2_LR</option>
-                                        </Form.Control>
-                                    </Col>
-                                </Form.Group>
-                            </Col>     
-                        </Row>
-                        <Row>
-                            <Col sm={8}>
-                                <Form.Group as={Row} >
-                                    <Form.Label column sm='4' className='labels'>Resolution :</Form.Label>
-                                    <Col sm='7'>
-                                        <Form.Control as='textarea' row='3' value='This issue has been assigned to payroll team' />
-                                    </Col>
-                                </Form.Group>
-                            </Col>  
-                        </Row>
-                        <Row>
-                            <Col sm={8}>
-                                <Form.Group as={Row} >
-                                    <Form.Label column sm='4' className='labels'>Completion Status :</Form.Label>
-                                    <Col sm='7'>
-                                        <Form.Control as='select' > 
-                                            <option>Fullfilled online</option>
-                                        </Form.Control>
-                                    </Col>
-                                </Form.Group>
-                            </Col>     
-                        </Row>
-                        <Row>
-                            <Col sm={8}>
-                                <Form.Group as={Row} >
-                                    <Form.Label column sm='4' className='labels'>Ticket Status :</Form.Label>
-                                    <Col sm='7'>
-                                        <Form.Control as='select' > 
-                                            <option>In Progress</option>
-                                        </Form.Control>
-                                    </Col>
-                                </Form.Group>
-                            </Col>   
-                        </Row>
-                        <Row>
-                            <Col sm={5}></Col>
-                            <Col sm={4}>
-                                <Button type='submit'>Submit</Button>
-                            </Col>
-                        </Row>
+                                </Col>
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col sm={8}>
+                            <Form.Group as={Row} >
+                                <Form.Label column sm='4' className='labels'>Urgency :</Form.Label>
+                                <Col sm='7'>
+                                    <Form.Control type='text' value='This Issue partially blocks my work' readOnly className='disabledValue' />
+                                </Col>
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col sm={8}>
+                            <Form.Group as={Row} >
+                                <Form.Label column sm='4' className='labels'>Priority :</Form.Label>
+                                <Col sm='7'>
+                                    <Form.Control type='text' value='High' readOnly className='disabledValue' />
+                                </Col>
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col sm={8}>
+                            <Form.Group as={Row} >
+                                <Form.Label column sm='4' className='labels'>Service Groups :</Form.Label>
+                                <Col sm='7'>
+                                    <Form.Control as='select' >
+                                        <option>PYR_Humine V2_LR</option>
+                                    </Form.Control>
+                                </Col>
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col sm={8}>
+                            <Form.Group as={Row} >
+                                <Form.Label column sm='4' className='labels'>Resolution :</Form.Label>
+                                <Col sm='7'>
+                                    <Form.Control as='textarea' row='3' value='This issue has been assigned to payroll team' />
+                                </Col>
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col sm={8}>
+                            <Form.Group as={Row} >
+                                <Form.Label column sm='4' className='labels'>Completion Status :</Form.Label>
+                                <Col sm='7'>
+                                    <Form.Control as='select' >
+                                        <option>Fullfilled online</option>
+                                    </Form.Control>
+                                </Col>
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col sm={8}>
+                            <Form.Group as={Row} >
+                                <Form.Label column sm='4' className='labels'>Ticket Status :</Form.Label>
+                                <Col sm='7'>
+                                    <Form.Control as='select' >
+                                        <option>In Progress</option>
+                                    </Form.Control>
+                                </Col>
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col sm={5}></Col>
+                        <Col sm={4}>
+                            <Button type='submit'>Submit</Button>
+                        </Col>
+                    </Row>
                 </Form>
             </Container>
         </Fragment>
