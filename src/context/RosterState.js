@@ -297,6 +297,7 @@ export const RosterProvider = ({ children }) => {
   //ADMIN ROSTER
 
   const adminWeekOffDataEmp = (endDate, startDate, contract, weekid, empId, clusterId) => {
+    setLoader(true)
     console.log("My data" + endDate, startDate, contract, weekid, empId, clusterId)
     if (contract === "") {
       contract = "permanent"
@@ -315,7 +316,7 @@ export const RosterProvider = ({ children }) => {
         const adminWeekOffDataListHeader = response.data.data.rosterDates;
         const adminWeekOffDataList = response.data.data.rosterResponses;
         const adminSelectedRosterRange = { endDate, startDate, contract, weekid, empId, clusterId }
-
+        setLoader(false)
         console.log("=====  table header =", state.adminWeekOffDataListHeader)
         console.log("=====  table body data =", state.adminWeekOffDataList)
         return dispatch({
