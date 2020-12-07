@@ -52,6 +52,7 @@ import MasterMonthlyQuantity from "./components/MasterTables/MasterMonthlyQuanti
 import MasterDailyQty from "./components/MasterTables/MasterDailyQty";
 import MasterCostCenter from "./components/MasterTables/MasterCostCenter";
 import CreateTicket from "./components/support/createTicket";
+import TicketListingPage from "./components/support/ticketListingPage"
 
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
@@ -103,7 +104,10 @@ const RoutePath = () => {
           />
 
 
-
+          <Route
+            path={`${process.env.PUBLIC_URL}/ticketListingPage`}
+            component={TicketListingPage}
+          />
 
           {state.MenuPermissionsRoute.map((e) => {
             return (
