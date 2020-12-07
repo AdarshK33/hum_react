@@ -17,3 +17,13 @@
 thead.thead-light th {
     vertical-align: top;
 } */
+input.disabledValue.form-control {
+    background-color: transparent;
+    border-color: transparent;
+}
+input.disabledValue.blueText.form-control{
+    color: blue
+}
+label.labels.form-label.col-form-label.col-sm-4 {
+    font-weight: 600;
+}

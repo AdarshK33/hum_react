@@ -1,220 +1,249 @@
-import React, { Fragment, useState, useContext, useEffect } from 'react';
+import React, { Fragment } from 'react';
 import Breadcrumb from '../common/breadcrumb';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap'
+import '../common/style.css'
 
 const CreateTicket = () => {
-    const [shiftButton, setShiftButton] = useState(false);
     return (
         <Fragment>
             <Breadcrumb title="Create Ticket" parent="Create Ticket" />
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col-sm-12">
-                        <div className="card">
-                            <div className="row">
-                                <div className="col-5 px-4 py-3">
+            <Container fluid>
+                <Form style={{ backgroundColor: 'white', padding: '3rem' }} >
+                    <Row>
+                        <Col sm={6}>
+                            <Form.Group as={Row}>
+                                <Form.Label column sm='4' className='labels'>Ticket Number :</Form.Label>
+                                <Col sm='6'>
+                                    <Form.Control type='text' value='1001' readOnly className='disabledValue blueText' />
+                                </Col>
+                            </Form.Group>
+                        </Col>
+                        <Col sm={6}>
+                            <Form.Group as={Row}>
+                                <Form.Label column sm='4' className='labels'>Cost Center :</Form.Label>
+                                <Col sm='6'>
+                                    <Form.Control type='text' value='IN 1305' readOnly className='disabledValue blueText' />
+                                </Col>
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col sm={6}>
+                            <Form.Group as={Row}>
+                                <Form.Label column sm='4' className='labels'>Name :</Form.Label>
+                                <Col sm='6'>
+                                    <Form.Control type='text' value='Garima Singh' readOnly className='disabledValue blueText' />
+                                </Col>
+                            </Form.Group>
+                        </Col>
+                        <Col sm={6}>
+                            <Form.Group as={Row}>
+                                <Form.Label column sm='4' className='labels'>FED ID :</Form.Label>
+                                <Col sm='6'>
+                                    <Form.Control type='text' value='AXP 012' readOnly className='disabledValue blueText' />
+                                </Col>
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col sm={6}>
+                            <Form.Group as={Row}>
+                                <Form.Label column sm='4' className='labels'>Emai Id :</Form.Label>
+                                <Col sm='6'>
+                                    <Form.Control type='text' value='Garima.singh@decathlon.in' readOnly className='disabledValue blueText' />
+                                </Col>
+                            </Form.Group>
+                        </Col>
+                        <Col sm={6}>
+                            <Form.Group as={Row}>
+                                <Form.Label column sm='4' className='labels'>Position :</Form.Label>
+                                <Col sm='6'>
+                                    <Form.Control type='text' value='Store Leader' readOnly className='disabledValue blueText' />
+                                </Col>
+                            </Form.Group>
+                        </Col>
+                    </Row>
 
-                                    <label className="name f-w-600">Ticket Number:&nbsp;&nbsp;</label>34776
-                                    </div>
-                                <div className="col-5 px-4 py-3">
-                                    <label className="name f-w-600">Cost Center:&nbsp;&nbsp;</label>IN1058
-                                    </div>
-                            </div>
 
-                            <div className="row">
-                                <div className="col-5 px-4">
 
-                                    <label className="name f-w-600">Name:&nbsp;&nbsp;</label>Ranjith Kumar HN
-                                    </div>
-                                <div className="col-5 px-4">
-                                    <label className="name f-w-600">FED ID:&nbsp;&nbsp;</label>AXP102
-                                    </div>
-                            </div>
-                            <br />
-                            <div className="row">
-                                <div className="col-5 px-4">
 
-                                    <label className="name f-w-600">Email Id:&nbsp;&nbsp;</label>ranjithReatilInsightgmail.com
-                                    </div>
-                                <div className="col-5 px-4">
-                                    <label className="name f-w-600">Position:&nbsp;&nbsp;</label>Store Leader
-                                    </div>
-                            </div>
+                    <Row>
+                        <Col sm={8}>
+                            <Form.Group as={Row} >
+                                <Form.Label column sm='4' className='labels'>Select Role :<span style={{ color: 'red' }}>*</span></Form.Label>
+                                <Col sm='8'>
+                                    <select
+                                        className="form-control"
+                                        required
+                                    // value={contractType}
 
-                            <br />
-                            <div className="row px-2">
-                                <div className="col-sm-12">
-                                    <div className="form">
-                                        <div className="row">
-                                            <div className="col-sm-12">
-                                                <div className="form-group">
-                                                    <label className="name f-w-600">Select Role</label>
-                                                    <select
-                                                        className="form-control"
-                                                        required
-                                                    // value={contractType}
+                                    // defaultValue={shiftContractNames.contractType}
+                                    // onChange={(e) => getContractType(e)}
+                                    >
 
-                                                    // defaultValue={shiftContractNames.contractType}
-                                                    // onChange={(e) => getContractType(e)}
-                                                    >
-
-                                                        <option value="">Select Role</option>
-                                                        {/* {shiftContractNames !== null &&
+                                        <option value="">Select Role</option>
+                                        {/* {shiftContractNames !== null &&
                                                     shiftContractNames.map((e, i) => { */}
                                                         return (
                                                             <option >
 
-                                                        </option>
-                                                        {/* <option key={e.typeId} value={e.contractType}>
+                                        </option>
+                                        {/* <option key={e.typeId} value={e.contractType}>
                                                                 {e.contractType}
                                                             </option> */}
-                                                        {/* );
+                                        {/* );
                                                     })} */}
-                                                    </select>
-                                                </div>
-                                            </div>
+                                    </select>
+                                </Col>
+                            </Form.Group>
+                        </Col>
+                    </Row>
 
+                    <Row>
+                        <Col sm={8}>
+                            <Form.Group as={Row} >
+                                <Form.Label column sm='4' className='labels'>Select Issue and Category :</Form.Label>
+                                <Col sm='8'>
+                                    <select
+                                        className="form-control"
+                                        required
+                                    // value={contractType}
 
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-sm-12">
-                                                <div className="form-group">
-                                                    <label className="name f-w-600">Select Issue and Category</label>
-                                                    <select
-                                                        className="form-control"
-                                                        required
-                                                    // value={contractType}
+                                    // defaultValue={shiftContractNames.contractType}
+                                    // onChange={(e) => getContractType(e)}
+                                    >
 
-                                                    // defaultValue={shiftContractNames.contractType}
-                                                    // onChange={(e) => getContractType(e)}
-                                                    >
-
-                                                        <option value="">Select Role</option>
-                                                        {/* {shiftContractNames !== null &&
+                                        <option value="">Select Issue and Category</option>
+                                        {/* {shiftContractNames !== null &&
                                                     shiftContractNames.map((e, i) => { */}
                                                         return (
                                                             <option >
 
-                                                        </option>
-                                                        {/* <option key={e.typeId} value={e.contractType}>
+                                        </option>
+                                        {/* <option key={e.typeId} value={e.contractType}>
                                                                 {e.contractType}
                                                             </option> */}
-                                                        {/* );
+                                        {/* );
                                                     })} */}
-                                                    </select>
-                                                </div>
-                                            </div>
+                                    </select>
+                                </Col>
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col sm={8}>
+                            <Form.Group as={Row} >
+                                <Form.Label column sm='4' className='labels'>Title :<span style={{ color: 'red' }}>*</span></Form.Label>
+                                <Col sm='8'>
+                                    <select
+                                        className="form-control"
+                                        required
+                                    // value={contractType}
 
+                                    // defaultValue={shiftContractNames.contractType}
+                                    // onChange={(e) => getContractType(e)}
+                                    >
 
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-sm-12">
-                                                <div className="form-group">
-                                                    <label className="name f-w-600">Title</label>
-                                                    <select
-                                                        className="form-control"
-                                                        required
-                                                    // value={contractType}
-
-                                                    // defaultValue={shiftContractNames.contractType}
-                                                    // onChange={(e) => getContractType(e)}
-                                                    >
-
-                                                        <option value="">Select Role</option>
-                                                        {/* {shiftContractNames !== null &&
+                                        <option value="">Select Title</option>
+                                        {/* {shiftContractNames !== null &&
                                                     shiftContractNames.map((e, i) => { */}
                                                         return (
                                                             <option >
 
-                                                        </option>
-                                                        {/* <option key={e.typeId} value={e.contractType}>
+                                        </option>
+                                        {/* <option key={e.typeId} value={e.contractType}>
                                                                 {e.contractType}
                                                             </option> */}
-                                                        {/* );
+                                        {/* );
                                                     })} */}
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    </select>
+                                </Col>
+                            </Form.Group>
+                        </Col>
+                    </Row>
 
+                    <Row>
+                        <Col sm={8}>
+                            <Form.Group as={Row} >
+                                <Form.Label column sm='4' className='labels'>Description :</Form.Label>
+                                <Col sm='8'>
+                                    <textarea className="form-control" rows="3" placeholder="Description.."></textarea>
 
-                                        <label className="name f-w-600">Description</label>
-                                        <textarea className="form-control" rows="3" placeholder="Description.."></textarea>
+                                </Col>
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col sm={8}>
+                            <Form.Group as={Row} >
+                                <Form.Label column sm='4' className='labels'>Urgency:<span style={{ color: 'red' }}>*</span></Form.Label>
+                                <Col sm='8'>
+                                    <select
+                                        className="form-control"
+                                        required
+                                    // value={contractType}
 
-                                        <br />
-                                        <div className="row">
-                                            <div className="col-sm-12">
-                                                <div className="form-group">
-                                                    <label className="name f-w-600">Select Urgency</label>
-                                                    <select
-                                                        className="form-control"
-                                                        required
-                                                    // value={contractType}
+                                    // defaultValue={shiftContractNames.contractType}
+                                    // onChange={(e) => getContractType(e)}
+                                    >
 
-                                                    // defaultValue={shiftContractNames.contractType}
-                                                    // onChange={(e) => getContractType(e)}
-                                                    >
-
-                                                        <option value="">Select Urgency</option>
-                                                        {/* {shiftContractNames !== null &&
+                                        <option value="">Select Urgency</option>
+                                        {/* {shiftContractNames !== null &&
                                                     shiftContractNames.map((e, i) => { */}
                                                         return (
                                                             <option >
 
-                                                        </option>
-                                                        {/* <option key={e.typeId} value={e.contractType}>
+                                        </option>
+                                        {/* <option key={e.typeId} value={e.contractType}>
                                                                 {e.contractType}
                                                             </option> */}
-                                                        {/* );
+                                        {/* );
                                                     })} */}
-                                                    </select>
-                                                </div>
-                                            </div>
+                                    </select>
+                                </Col>
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col sm={8}>
+                            <Form.Group as={Row} >
+                                <Form.Label column sm='4' className='labels'>Priority:</Form.Label>
+                                <Col sm='8'>
+                                    <select
+                                        className="form-control"
+                                        required
+                                    // value={contractType}
 
+                                    // defaultValue={shiftContractNames.contractType}
+                                    // onChange={(e) => getContractType(e)}
+                                    >
 
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-sm-12">
-                                                <div className="form-group">
-                                                    <label className="name f-w-600">Priority</label>
-                                                    <select
-                                                        className="form-control"
-                                                        required
-                                                    // value={contractType}
-
-                                                    // defaultValue={shiftContractNames.contractType}
-                                                    // onChange={(e) => getContractType(e)}
-                                                    >
-
-                                                        <option value="">Select Priority</option>
-                                                        {/* {shiftContractNames !== null &&
+                                        <option value="">Select Priority</option>
+                                        {/* {shiftContractNames !== null &&
                                                     shiftContractNames.map((e, i) => { */}
                                                         return (
                                                             <option >
 
-                                                        </option>
-                                                        {/* <option key={e.typeId} value={e.contractType}>
+                                        </option>
+                                        {/* <option key={e.typeId} value={e.contractType}>
                                                                 {e.contractType}
                                                             </option> */}
-                                                        {/* );
+                                        {/* );
                                                     })} */}
-                                                    </select>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                        <button className="myclass" style={{ marginTop: "5px", paddingLeft: "40px", paddingRight: "40px", fontWeight: "bold", marginBottom: "20px" }}
-                                            disabled={shiftButton}
-                                            type="button" >Submit</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </Fragment >
+                                    </select>
+                                </Col>
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col sm={5}></Col>
+                        <Col sm={4}>
+                            <Button type='submit'>Submit</Button>
+                        </Col>
+                    </Row>
+                </Form>
+            </Container>
+        </Fragment>
     );
 };
 
