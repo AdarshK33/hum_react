@@ -52,6 +52,7 @@ import MasterMonthlyQuantity from "./components/MasterTables/MasterMonthlyQuanti
 import MasterDailyQty from "./components/MasterTables/MasterDailyQty";
 import MasterCostCenter from "./components/MasterTables/MasterCostCenter";
 import CreateTicket from "./components/support/createTicket";
+import ViewTicket from './components/support/viewTicket'
 
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
@@ -102,7 +103,10 @@ const RoutePath = () => {
             component={CreateTicket}
           />
 
-
+          <Route
+            path={`${process.env.PUBLIC_URL}/viewTicket`}
+            component={ViewTicket}
+          />
 
 
           {state.MenuPermissionsRoute.map((e) => {
