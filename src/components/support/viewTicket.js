@@ -1,9 +1,14 @@
 import React, { Fragment } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
+import { useHistory } from "react-router-dom";
 import '../common/style.css'
 
 const ViewTicket = () => {
+    let history = useHistory();
+    const submitHandler = () => {
+        history.push("./ticketListingPage")
+    }
     return (
         <Fragment>
             <Breadcrumb title="View Ticket" parent="View Ticket" />
@@ -173,7 +178,7 @@ const ViewTicket = () => {
                     <Row>
                         <Col sm={5}></Col>
                         <Col sm={4}>
-                            <Button type='submit'>Submit</Button>
+                            <Button type='submit' onClick={submitHandler}>Submit</Button>
                         </Col>
                     </Row>
                 </Form>

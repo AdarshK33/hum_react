@@ -3,6 +3,7 @@ import man from '../../../assets/images/dashboard/userImage.png';
 import { User, Mail, Lock, Settings, LogOut, LogIn, Users, UserPlus } from 'react-feather';
 import { AppContext } from "../../../context/AppState";
 import { useHistory } from "react-router-dom";
+import TicketListingPage from '../../support/ticketListingPage'
 
 const loginUrl = `${process.env.REACT_APP_FEDID_AUTH_URL}?response_type=code&client_id=${process.env.REACT_APP_FEDID_CLIENTID}&scope=openid%20profile&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}`;
 const UserMenu = () => {
@@ -35,6 +36,10 @@ const UserMenu = () => {
         localStorage.setItem('type', "leader")
         localStorage.setItem('flag', "1")
         history.push("/dashboard/storedashboard");
+    }
+
+    const TicketListingPage = () => {
+        history.push("/ticketListingPage");
     }
 
     // const gotoProfilePage = () => {
@@ -72,6 +77,7 @@ const UserMenu = () => {
                     {user.clusterManagerMenus !== null &&
                         <li onClick={handleMenuListCluster}><a href="#leader"><Users />Cluster Leader</a></li>
                     }
+                    <li onClick={TicketListingPage}><a><Users />Support</a></li>
                     {/*  <li><a href="#javascript"><Settings />Settings</a></li> */}
                     {/* <li><a href="#javascript"><LogOut /> Log out</a></li> */}
                     {/* <li><a href={loginUrl}><LogIn />Log In</a></li> */}
