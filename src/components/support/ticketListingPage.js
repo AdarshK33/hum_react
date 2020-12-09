@@ -1,4 +1,6 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
+import {Link} from 'react-router-dom'
+import {Button} from 'react-bootstrap'
 import Breadcrumb from '../common/breadcrumb';
 import { Edit2, Search } from 'react-feather';
 const TicketListingPage = () => {
@@ -11,12 +13,13 @@ const TicketListingPage = () => {
                     <div className="col-sm-12">
                         <div className="card" style={{ overflowX: "auto" }}>
                             <div className="title_bar" >
-                                <div className="job-filter">
+                               {/*  <div className="job-filter">
                                     <div className="faq-form mr-2">
                                         <input className="form-control searchButton" type="text" placeholder="Search.." />
                                         <Search className="search-icon" style={{ color: "#313131" }} />
                                     </div>
-                                </div>
+                                </div> */}
+                                <Link to='/CreateTicket'><Button className="apply-button btn btn-light mr-2">Create</Button></Link>
 
 
                             </div>
@@ -55,7 +58,7 @@ const TicketListingPage = () => {
                                             <td>open</td>
                                             <td>10-05-2020</td>
                                             <td>30-05-2020</td>
-                                            <td><Edit2></Edit2></td>
+                                            <Link to='/viewTicket'><td><Edit2></Edit2></td></Link>
                                         </tr>
                                         <tr>
                                             <td>2</td>
@@ -69,7 +72,7 @@ const TicketListingPage = () => {
                                             <td>open</td>
                                             <td>10-05-2020</td>
                                             <td>30-05-2020</td>
-                                            <td><Edit2></Edit2></td>
+                                            <Link to='/viewTicket'><td><Edit2></Edit2></td></Link>
                                         </tr>
                                     </tbody>
 
