@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import { Edit2, Search } from 'react-feather';
+import { Button } from 'react-bootstrap'
 const TicketListingPage = () => {
 
     return (
@@ -17,7 +18,7 @@ const TicketListingPage = () => {
                                         <Search className="search-icon" style={{ color: "#313131" }} />
                                     </div>
                                 </div>
-
+                                <Button className="btn btn-light mr-2" >Create</Button>
 
                             </div>
 
@@ -36,7 +37,7 @@ const TicketListingPage = () => {
                                             <th scope="col">Priority</th>
                                             <th scope="col">Completion Status</th>
                                             <th scope="col">Ticket Status</th>
-                                            <th scope="col">Updated Date&nbsp;</th>
+                                            <th scope="col">Updated Date</th>
                                             <th scope="col">Created Date</th>
                                             <th scope="col">Edit</th>
                                         </tr>
@@ -59,7 +60,7 @@ const TicketListingPage = () => {
                                         </tr>
                                         <tr>
                                             <td>2</td>
-                                            <td>1001</td>
+                                            <td>1002</td>
                                             <td>IN1035</td>
                                             <td>Ranjith</td>
                                             <td>Manager</td>
