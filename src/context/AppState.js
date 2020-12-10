@@ -27,7 +27,7 @@ const initialState = {
   flag: 0,
   MenuPermissionsRoute: []
 };
-const loginUrl = `${process.env.REACT_APP_FEDID_AUTH_URL}?response_type=code&client_id=${process.env.REACT_APP_FEDID_CLIENTID}&scope=openid%20profile&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}`;
+// const loginUrl = `${process.env.REACT_APP_FEDID_AUTH_URL}?response_type=code&client_id=${process.env.REACT_APP_FEDID_CLIENTID}&scope=openid%20profile&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}`;
 export const AppContext = createContext();
 
 export const AppProvider = ({ children, history }) => {
@@ -113,29 +113,30 @@ export const AppProvider = ({ children, history }) => {
 
   const userLogout = () => {
     console.log("*********** ", localStorage.getItem('APPID'));
-    client.get('/auth/logout?id_token=' + localStorage.getItem('APPID'))
-      .then((response) => {
-        console.log(response)
-        if (response.status === 201) {
+    const logOutUrl = `${process.env.REACT_APP_FEDID_LOGOUT_URL}?id_token_hint=${localStorage.getItem('APPID')}&post_logout_redirect_uri=${process.env.REACT_APP_LOGOUTREDIRECT_URL}`;
+    // client.get('/auth/logout?id_token=' + localStorage.getItem('APPID'))
+    //   .then((response) => {
+    //     console.log(response)
+    //     if (response.status === 201) {
           Cookies.remove('APPAT')
           Cookies.remove('APPRT')
           localStorage.removeItem('APPID')
           localStorage.removeItem('type')
           localStorage.removeItem('flag')
-          window.location.href = loginUrl
+          window.location.href = logOutUrl
           // window.open(
           //   loginUrl,
           //   '_blank' // <- This is what makes it open in a new window.
           // );
 
-        }
-        else {
-          toast.info("Something went Wrong..!")
-        }
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+      //   }
+      //   else {
+      //     toast.info("Something went Wrong..!")
+      //   }
+      // })
+      // .catch((error) => {
+      //   console.log(error)
+      // })
   }
 
 

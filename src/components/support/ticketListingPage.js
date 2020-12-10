@@ -1,7 +1,8 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
+import {Link} from 'react-router-dom'
+import {Button} from 'react-bootstrap'
 import Breadcrumb from '../common/breadcrumb';
 import { Edit2, Search } from 'react-feather';
-import { Button } from 'react-bootstrap'
 const TicketListingPage = () => {
 
     return (
@@ -12,13 +13,14 @@ const TicketListingPage = () => {
                     <div className="col-sm-12">
                         <div className="card" style={{ overflowX: "auto" }}>
                             <div className="title_bar" >
-                                <div className="job-filter">
+                               {/*  <div className="job-filter">
                                     <div className="faq-form mr-2">
                                         <input className="form-control searchButton" type="text" placeholder="Search.." />
                                         <Search className="search-icon" style={{ color: "#313131" }} />
                                     </div>
-                                </div>
-                                <Button className="btn btn-light mr-2" >Create</Button>
+                                </div> */}
+                                <Link to='/CreateTicket'><Button className="apply-button btn btn-light mr-2">Create</Button></Link>
+
 
                             </div>
 
@@ -37,7 +39,7 @@ const TicketListingPage = () => {
                                             <th scope="col">Priority</th>
                                             <th scope="col">Completion Status</th>
                                             <th scope="col">Ticket Status</th>
-                                            <th scope="col">Updated Date</th>
+                                            <th scope="col">Updated Date&nbsp;</th>
                                             <th scope="col">Created Date</th>
                                             <th scope="col">Edit</th>
                                         </tr>
@@ -56,11 +58,11 @@ const TicketListingPage = () => {
                                             <td>open</td>
                                             <td>10-05-2020</td>
                                             <td>30-05-2020</td>
-                                            <td><Edit2></Edit2></td>
+                                            <Link to='/viewTicket'><td><Edit2></Edit2></td></Link>
                                         </tr>
                                         <tr>
                                             <td>2</td>
-                                            <td>1002</td>
+                                            <td>1001</td>
                                             <td>IN1035</td>
                                             <td>Ranjith</td>
                                             <td>Manager</td>
@@ -70,7 +72,7 @@ const TicketListingPage = () => {
                                             <td>open</td>
                                             <td>10-05-2020</td>
                                             <td>30-05-2020</td>
-                                            <td><Edit2></Edit2></td>
+                                            <Link to='/viewTicket'><td><Edit2></Edit2></td></Link>
                                         </tr>
                                     </tbody>
 
