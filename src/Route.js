@@ -51,6 +51,9 @@ import MasterLeave from "./components/MasterTables/MasterLeave";
 import MasterMonthlyQuantity from "./components/MasterTables/MasterMonthlyQuantity";
 import MasterDailyQty from "./components/MasterTables/MasterDailyQty";
 import MasterCostCenter from "./components/MasterTables/MasterCostCenter";
+import CreateTicket from "./components/support/createTicket";
+import TicketListingPage from "./components/support/ticketListingPage"
+import ViewTicket from './components/support/viewTicket'
 
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
@@ -94,6 +97,21 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/sample/samplepage`}
             component={Samplepage}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/createTicket`}
+            component={CreateTicket}
+          />
+
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/ticketListingPage`}
+            component={TicketListingPage}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/viewTicket`}
+            component={ViewTicket}
           />
 
 
@@ -301,12 +319,12 @@ const RoutePath = () => {
                                                                                   <Route
                                                                                     path={`${process.env.PUBLIC_URL}/master/daily-qty`}
                                                                                     component={MasterDailyQty}
-                                                                                  /> : 
+                                                                                  /> :
                                                                                   e.path === "/master/cost-center" ?
-                                                                                  <Route
-                                                                                    path={`${process.env.PUBLIC_URL}/master/cost-center`}
-                                                                                    component={MasterCostCenter}
-                                                                                  />: ""
+                                                                                    <Route
+                                                                                      path={`${process.env.PUBLIC_URL}/master/cost-center`}
+                                                                                      component={MasterCostCenter}
+                                                                                    /> : ""
 
 
                   //  <Route
