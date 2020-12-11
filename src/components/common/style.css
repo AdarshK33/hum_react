@@ -24,6 +24,6 @@ input.disabledValue.form-control {
 input.disabledValue.blueText.form-control{
     color: blue
 }
-label.labels.form-label.col-form-label.col-sm-4 {
+label.labels.form-label.col-form-label {
     font-weight: 600;
 }
