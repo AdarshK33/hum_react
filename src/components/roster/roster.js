@@ -98,16 +98,7 @@ const Roster = () => {
                       <button className="myclass" style={{ marginTop: "20px" }} type="button" onClick={(e) => submitDate(e)}>Submit</button>
                     </div>
                   </div>
-                  {/* <div className="title_bar" >
-                    <ReactHTMLTableToExcel
-                      className="btn btn-light mr-2"
-                      table="table-to-xls"
-                      filename="report"
-                      sheet="Sheet"
-                      buttonText="Export excel" />
-                  </div> */}
 
-                  {/* roster changes */}
 
 
                 </form>
