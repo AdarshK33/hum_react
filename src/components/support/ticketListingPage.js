@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
-import {Link} from 'react-router-dom'
-import {Button} from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import { Button } from 'react-bootstrap'
+import Priority from "./priority";
 import Breadcrumb from '../common/breadcrumb';
 import { Edit2, Search } from 'react-feather';
 const TicketListingPage = () => {
@@ -13,7 +14,7 @@ const TicketListingPage = () => {
                     <div className="col-sm-12">
                         <div className="card" style={{ overflowX: "auto" }}>
                             <div className="title_bar" >
-                               {/*  <div className="job-filter">
+                                {/*  <div className="job-filter">
                                     <div className="faq-form mr-2">
                                         <input className="form-control searchButton" type="text" placeholder="Search.." />
                                         <Search className="search-icon" style={{ color: "#313131" }} />
@@ -39,7 +40,7 @@ const TicketListingPage = () => {
                                             <th scope="col">Priority</th>
                                             <th scope="col">Completion Status</th>
                                             <th scope="col">Ticket Status</th>
-                                            <th scope="col">Updated Date&nbsp;</th>
+                                            <th scope="col">Updated Date</th>
                                             <th scope="col">Created Date</th>
                                             <th scope="col">Edit</th>
                                         </tr>
@@ -53,16 +54,17 @@ const TicketListingPage = () => {
                                             <td>Ranjith</td>
                                             <td>Manager</td>
                                             <td>Operational</td>
+                                            {/* <td> <Priority /></td> */}
                                             <td>High</td>
                                             <td>Fulfiled office</td>
                                             <td>open</td>
                                             <td>10-05-2020</td>
                                             <td>30-05-2020</td>
-                                            <Link to='/viewTicket'><td><Edit2></Edit2></td></Link>
+                                            <a to='/viewTicket'><td><Edit2></Edit2></td></a>
                                         </tr>
                                         <tr>
                                             <td>2</td>
-                                            <td>1001</td>
+                                            <td>1002</td>
                                             <td>IN1035</td>
                                             <td>Ranjith</td>
                                             <td>Manager</td>
