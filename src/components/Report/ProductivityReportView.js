@@ -50,34 +50,14 @@ const ProductivityReportView = (props) => {
                         <div className="card" style={{ overflowX: "auto" }}>
 
                             <div className="title_bar" >
-                                {/*  {data.length > 0 ?
-                                    <JsonToExcel
-                                        data={data}
-                                        className="btn btn-light mr-2"
-                                        filename={filename}
-                                        fields={fields}
-                                        text="Export excel"
-
-                                    /> :
-                                    <Button className="btn btn-light mr-2" onClick={disabledText}>
-                                    Export excel</Button>} */}
-                                {/*  {currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 ?
-                                    <ReactHTMLTableToExcel
-                                    className="btn btn-light mr-2"
-                                    table="table-to-xls"
-                                    filename="productivity report"
-                                    sheet="Sheet"
-                                    buttonText="Export excel" />
-                                    :
-                                    <Button className="btn btn-light mr-2" onClick={disabledText}>
-                                    Export excel</Button>
-                                } */}
+                               
                                 {currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 ?
                                 <ExcelFile filename='Productivity Report' element={ <Button className="btn btn-light mr-2"> Export excel</Button>}>
                                     <ExcelSheet data={productivityList} name="Productivity Report" style={{width:'500px'}}>
                                         <ExcelColumn label="Cost Center" value="costCentre" />
                                         <ExcelColumn label="Employee Id" value="employeeId" />
-                                        <ExcelColumn label="Name" value="firstName" />
+                                        <ExcelColumn label="Employee Name"
+                                        value={(col) => col.firstName !== null && col.firstName+' '+ col.lastName} />
                                         <ExcelColumn label="Clusters" value="clusterName" />
                                         <ExcelColumn label="Sports" value="sports" />
                                         <ExcelColumn label="Payment Type"

@@ -1,8 +1,5 @@
 import React, { Fragment, useEffect, useContext, useState } from 'react';
 import Breadcrumb from '../common/breadcrumb';
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
-import Pagination from 'react-js-pagination'
-import { Button } from 'react-bootstrap';
 import { AppContext } from "../../context/AppState";
 import { MasterFilesContext } from "../../context/MasterFilesState";
 import {
@@ -42,7 +39,7 @@ const MasterCountry = () => {
   }
 
   let data = [];
-  if (countryList!== null){
+  if (countryList !== null) {
     for (let i = 0; i < countryList.length; i++) {
 
       data.push({
@@ -53,7 +50,7 @@ const MasterCountry = () => {
       })
     }
   }
-  
+
 
   const handleUpload = () => {
     if (fileUpload !== undefined && fileUpload !== null) {
@@ -136,26 +133,26 @@ const MasterCountry = () => {
                           </tr>
                         </tbody>
                       )
-                    })                                              
+                    })
                   }
 
                 </table>
 
                 {(countryList === null) ?
-                        <p style={{ textAlign: "center" }}>No Record Found</p> : null}
-                    
-                    {countryList !== undefined && countryList !== null && countryList.length === 0 ?
+                  <p style={{ textAlign: "center" }}>No Record Found</p> : null}
 
-                        <div className="loader-box loader" style={{ width: "100% !important" }}>
-                            <div className="loader">
-                                <div className="line bg-primary"></div>
-                                <div className="line bg-primary"></div>
-                                <div className="line bg-primary"></div>
-                                <div className="line bg-primary"></div>
-                            </div>
-                        </div>
-                        :
-                            null}
+                {countryList !== undefined && countryList !== null && countryList.length === 0 ?
+
+                  <div className="loader-box loader" style={{ width: "100% !important" }}>
+                    <div className="loader">
+                      <div className="line bg-primary"></div>
+                      <div className="line bg-primary"></div>
+                      <div className="line bg-primary"></div>
+                      <div className="line bg-primary"></div>
+                    </div>
+                  </div>
+                  :
+                  null}
 
               </div>
 

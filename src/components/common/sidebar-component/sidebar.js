@@ -16,11 +16,11 @@ const Sidebar = (props) => {
     const [mainmenu, setMainMenu] = useState(props.MENUITEMS);
     const wrapper = configDB.data.settings.sidebar.wrapper;
     const layout = "1tr";
-   // const layout = useSelector(content => content.Customizer.layout);
-  //  console.log(wrapper+ "*********"+layout)
-  useEffect(() => {
-    setMainMenu(props.MENUITEMS);
-}, [props.MENUITEMS]);
+    // const layout = useSelector(content => content.Customizer.layout);
+    //  console.log(wrapper+ "*********"+layout)
+    useEffect(() => {
+        setMainMenu(props.MENUITEMS);
+    }, [props.MENUITEMS]);
     useEffect(() => {
         window.addEventListener('resize', handleResize)
         handleResize();
@@ -174,7 +174,7 @@ const Sidebar = (props) => {
             <div className="page-sidebar">
                 <div className="main-header-left d-none d-lg-block">
                     <div className="logo-wrapper compactLogo">
-                        <Link to="/dashboard/default">
+                        <Link to="/dashboard/storedashboard">
                             <img className="blur-up lazyloaded" src={logo_compact} alt="" />
                             <img className="blur-up lazyloaded" src={logo} alt="" />
                         </Link>
@@ -215,17 +215,17 @@ const Sidebar = (props) => {
                                                 <i className="fa fa-angle-right pull-right"></i> : ''}
                                         </Link>
                                         : (menuItem.type === 'link') ?
-                                         <Link
-                                        // to={`${process.env.PUBLIC_URL}${menuItem.children[0].path}`}
-                                        to = "#"
-                                        className={`sidebar-header ${menuItem.active ? 'active' : ''}`}
+                                            <Link
+                                                // to={`${process.env.PUBLIC_URL}${menuItem.children[0].path}`}
+                                                to="#"
+                                                className={`sidebar-header ${menuItem.active ? 'active' : ''}`}
 
-                                        onClick={() => toggletNavActive(menuItem)}
-                                    >
-                                        <menuItem.icon /><span>{props.t(menuItem.title)}</span>
-                                        {menuItem.children ?
-                                            <i className="fa fa-angle-right pull-right"></i> : ''}
-                                    </Link> : ""}
+                                                onClick={() => toggletNavActive(menuItem)}
+                                            >
+                                                <menuItem.icon /><span>{props.t(menuItem.title)}</span>
+                                                {menuItem.children ?
+                                                    <i className="fa fa-angle-right pull-right"></i> : ''}
+                                            </Link> : ""}
                                     {menuItem.children ?
                                         <ul
                                             className={`sidebar-submenu ${menuItem.active ? 'menu-open' : ''}`}

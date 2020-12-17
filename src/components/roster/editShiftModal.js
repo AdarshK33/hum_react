@@ -53,7 +53,9 @@ const EditShiftModal = (props) => {
     setSuccessMsg('');
     setErrorMsg('')
     setNineHourWarnMsg('')
+    setOneToEightWarnMsg('')
     setOneFiveWarnMsg('')
+    setTimeErrorMsg('')
     props.handleEditClose()
   }
 
@@ -77,6 +79,7 @@ const EditShiftModal = (props) => {
     costCenter()
     if (user.loginType !== "1" && user.loginType !== "9" && user.additionalRole !== "1" && user.additionalRole !== "9") {
       setCostCenterName(user.costCentre)
+
     }
   }, [user.costCentre, user.loginType]);
 
@@ -157,6 +160,8 @@ const EditShiftModal = (props) => {
     // setshowBreakDuration1(true)
     // setshowBreakDuration2(false)
     setBreakNumber(0)
+
+
   }
   const callShowMethod = () => {
     setShowText(true);
@@ -176,7 +181,6 @@ const EditShiftModal = (props) => {
       setTimeErrorMsg(false);
     }
   }
-
 
 
 
@@ -277,13 +281,6 @@ const EditShiftModal = (props) => {
   return (
     <Modal show={props.modal} onHide={props.handleEditClose} centered>
       <Fragment>
-        {/* <Modal.Header closeButton>
-          <Modal.Title>Edit Shift</Modal.Title>
-          <button type="button" className="close" data-dismiss="modal" aria-label="Close"
-            onClick={setClear}>
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </Modal.Header> */}
         <Modal.Header>
           <Modal.Title>Edit Shift</Modal.Title>
           <button type="button" className="close" data-dismiss="modal" aria-label="Close"
@@ -291,6 +288,7 @@ const EditShiftModal = (props) => {
             <span aria-hidden="true">&times;</span>
           </button>
         </Modal.Header>
+
         <div className="row">
           <div className="col-sm-12">
             <div className="card">
@@ -386,62 +384,132 @@ const EditShiftModal = (props) => {
                     </div>
                   }
 
-                  {/* {showBreakDuration2 && */}
-                  <div className="row">
-                    <div className="col-sm-12">
-                      {parseFloat(workingHours) > 5 ?
-                        <div>
-                          <div className="row">
+                  {(() => {
+                    if ((parseFloat(workingHours) > 5 && (nineHourWarnMsg === true) && (contractType === "Permanent" || contractType === "Internship"))) {
+                      return (<div>
+                        <div className="row">
+                          <div className="col-sm-6">
+                            <div className="form-group">
+                              <label htmlFor="exampleFormControlInput1">Break Duration</label>
+                              <br />
+                              <DatePicker
+                                className="form-control"
+                                // selected={breakStartTime}
+                                onChange={date => setStartBreakTime(date)}
+                                showTimeSelect
+                                required
+                                showTimeSelectOnly
+                                timeFormat="HH:mm"
+                                timeIntervals={30}
+                                timeCaption="Time"
+                                // minTime={startTime}
+                                // maxTime={endTime}
+                                dateFormat="HH:mm aa"
+                                onCalendarClose={() => { callShowMethod() }}
+                                defaultValue={moment(singleShiftList.breakStartTime, ["HH:mm:ss"]).format("HH:mm A")}
+                                value={moment(breakStartTime, ["HH:mm:ss"]).format("HH:mm A")}
+                              />
+                            </div>
+                          </div>
+                          {invalidText &&
                             <div className="col-sm-6">
                               <div className="form-group">
-                                <label htmlFor="exampleFormControlInput1">Break Duration</label>
-                                <br />
-                                <DatePicker
-                                  className="form-control"
-                                  // selected={breakStartTime}
-                                  onChange={date => setStartBreakTime(date)}
-                                  showTimeSelect
-                                  required
-                                  showTimeSelectOnly
-                                  timeFormat="HH:mm"
-                                  timeIntervals={30}
-                                  timeCaption="Time"
-                                  // minTime={startTime}
-                                  // maxTime={endTime}
-                                  dateFormat="HH:mm aa"
-                                  onCalendarClose={() => { callShowMethod() }}
-                                  defaultValue={moment(singleShiftList.breakStartTime, ["HH:mm:ss"]).format("HH:mm A")}
-                                  value={moment(breakStartTime, ["HH:mm:ss"]).format("HH:mm A")}
-
-                                />
+                                <label htmlFor="exampleFormControlInput1"></label>
+                                <input type="text" style={{ marginTop: "7px" }} className="form-control" placeholder="Enter break end time" defaultValue={singleShiftList.breakEndTime} value={moment(breakStartTime).add(1, 'hours').format('HH:mm A')} />
                               </div>
                             </div>
+                          }
+                        </div>
+                        <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px" }}>{timeError}</h6>
 
-                            {invalidText &&
-                              <div className="col-sm-6">
-                                <div className="form-group">
-                                  <label htmlFor="exampleFormControlInput1"></label>
-                                  <input type="text" style={{ marginTop: "7px" }} className="form-control" placeholder="Enter break end time" defaultValue={singleShiftList.breakEndTime} value={moment(breakStartTime).add(1, 'hours').format('HH:mm A')} />
-                                </div>
-                              </div>
-                            }
+                      </div>)
+                    }
+
+                    else if ((parseFloat(workingHours) > 5 && (oneToEightWarnMsg === true) && (contractType === "Parttime" || contractType === "Temporary"))) {
+                      return (<div>
+                        <div className="row">
+                          <div className="col-sm-6">
+                            <div className="form-group">
+                              <label htmlFor="exampleFormControlInput1">Break Duration</label>
+                              <br />
+                              <DatePicker
+                                className="form-control"
+                                // selected={breakStartTime}
+                                onChange={date => setStartBreakTime(date)}
+                                showTimeSelect
+                                required
+                                showTimeSelectOnly
+                                timeFormat="HH:mm"
+                                timeIntervals={30}
+                                timeCaption="Time"
+                                // minTime={startTime}
+                                // maxTime={endTime}
+                                dateFormat="HH:mm aa"
+                                onCalendarClose={() => { callShowMethod() }}
+                                defaultValue={moment(singleShiftList.breakStartTime, ["HH:mm:ss"]).format("HH:mm A")}
+                                value={moment(breakStartTime, ["HH:mm:ss"]).format("HH:mm A")}
+                              />
+                            </div>
                           </div>
-                          <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px" }}>{timeError}</h6>
-                          {/* {showText &&
-                            <div className="row">
-                              <div className="col-sm-12">
-                                Break Hour: &nbsp;&nbsp;{moment(breakStartTime, ["h:mm A"]).format("HH:mm")}--
-                            {moment(breakStartTime).add(1, 'hours').format('HH:mm')}
+
+
+                          {invalidText &&
+                            <div className="col-sm-6">
+                              <div className="form-group">
+                                <label htmlFor="exampleFormControlInput1"></label>
+                                <input type="text" style={{ marginTop: "7px" }} className="form-control" placeholder={moment(breakStartTime).add(1, 'hours').format('HH:mm A')} />
                               </div>
                             </div>
-                          } */}
-                        </div> :
-                        null
-                      }
-                    </div>
+                          }
+                        </div>
+                        <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px" }}>{timeError}</h6>
 
-                    <h6>{breakDuationMsg && <div className="text-danger pl-3">Break Should be one hour</div>}</h6>
-                  </div>
+                      </div>)
+                    }
+                    else if ((parseFloat(workingHours) > 5 && (oneToFiveWarnMsg === true) && (contractType === "Internship (young persons)"))) {
+                      return (<div>
+                        <div className="row">
+                          <div className="col-sm-6">
+                            <div className="form-group">
+                              <label htmlFor="exampleFormControlInput1">Break Duration</label>
+                              <br />
+                              <DatePicker
+                                className="form-control"
+                                // selected={breakStartTime}
+                                onChange={date => setStartBreakTime(date)}
+                                showTimeSelect
+                                required
+                                showTimeSelectOnly
+                                timeFormat="HH:mm"
+                                timeIntervals={30}
+                                timeCaption="Time"
+                                // minTime={startTime}
+                                // maxTime={endTime}
+                                dateFormat="HH:mm aa"
+                                onCalendarClose={() => { callShowMethod() }}
+                                defaultValue={moment(singleShiftList.breakStartTime, ["HH:mm:ss"]).format("HH:mm A")}
+                                value={moment(breakStartTime, ["HH:mm:ss"]).format("HH:mm A")}
+                              />
+                            </div>
+                          </div>
+
+
+                          {invalidText &&
+                            <div className="col-sm-6">
+                              <div className="form-group">
+                                <label htmlFor="exampleFormControlInput1"></label>
+                                <input type="text" style={{ marginTop: "7px" }} className="form-control" placeholder={moment(breakStartTime).add(1, 'hours').format('HH:mm A')} />
+                              </div>
+                            </div>
+                          }
+                        </div>
+                        <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px" }}>{timeError}</h6>
+
+                      </div>)
+                    }
+
+                  })()}
+
                   <div className="row">
                     <div className="col-sm-12">
                       <div className="form-group">
@@ -494,6 +562,7 @@ const EditShiftModal = (props) => {
                     </div>
                   </div>
                   <button className="myclass mb-2 mr-2" type="submit" disabled={shiftButton} value="Submit">Save</button>
+
                 </form>
                 <h5>{successMsg.length !== 0 && <div className="text-success">{successMsg}</div>}</h5>
               </div>

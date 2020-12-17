@@ -23,7 +23,6 @@ const AdminLeavesList = (props) => {
     const [reason, setReason] = useState()
     const [searchValue, setSearchValue] = useState(false);
     const [searchLeaveList, setLeaveList] = useState();
-    const { searchByEmpId, empIdSearchList } = useContext(SearchContext);
     const [pageCount, setPageCount] = useState(0)
 
     const { viewList, leaveList, loader, adminTotal, viewListSearch } = useContext(LeaveContext)

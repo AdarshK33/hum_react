@@ -2,7 +2,6 @@ import React, { Fragment, useEffect, useContext, useState } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import { LeaveContext } from '../../context/LeaveState';
 import { ClusterContext } from '../../context/ClusterState';
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import {
   JsonToExcel
 } from 'react-json-excel';

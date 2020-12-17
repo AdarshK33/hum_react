@@ -1,6 +1,5 @@
-import React, { Fragment, useEffect, useContext, useState} from 'react';
+import React, { Fragment, useEffect, useContext, useState } from 'react';
 import Breadcrumb from '../common/breadcrumb';
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import Pagination from 'react-js-pagination'
 import { AppContext } from "../../context/AppState";
 import { toast } from "react-toastify";
@@ -13,35 +12,35 @@ import { Button } from 'react-bootstrap';
 
 const MasterState = () => {
 
-  
-  const { viewStates, stateList, uploadStateFile} = useContext(MasterFilesContext);
+
+  const { viewStates, stateList, uploadStateFile } = useContext(MasterFilesContext);
   const [fileUpload, setFileUpload] = useState();
 
   const [currentPage, setCurrentPage] = useState(1);
-    const recordPerPage = 10;
-    let totalRecords = 0;
-    let indexOfFirstRecord = 0;
-    let indexOfLastRecord = 0;
-    const pageRange = 10;
-    let currentRecords = [];
+  const recordPerPage = 10;
+  let totalRecords = 0;
+  let indexOfFirstRecord = 0;
+  let indexOfLastRecord = 0;
+  const pageRange = 10;
+  let currentRecords = [];
 
-    if (stateList !== null) {
-        totalRecords = stateList.length;
-        indexOfLastRecord = currentPage * recordPerPage;
-        indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-        currentRecords = stateList.slice(indexOfFirstRecord, indexOfLastRecord);
-    }
-
-    const handlePageChange = pageNumber => {
-      setCurrentPage(pageNumber);
+  if (stateList !== null) {
+    totalRecords = stateList.length;
+    indexOfLastRecord = currentPage * recordPerPage;
+    indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+    currentRecords = stateList.slice(indexOfFirstRecord, indexOfLastRecord);
   }
 
-  useEffect(() =>{
+  const handlePageChange = pageNumber => {
+    setCurrentPage(pageNumber);
+  }
+
+  useEffect(() => {
     viewStates()
-    
+
   }, [])
 
-    
+
   const changeHandler = (event) => {
     let fileObj = event.target.files[0];
     console.log("clicked", fileObj)
@@ -57,7 +56,7 @@ const MasterState = () => {
 
   let data = [];
   for (let i = 0; i < stateList.length; i++) {
-    
+
     data.push({
       stateId: i + 1,
       stateName: stateList[i].stateName,
@@ -84,35 +83,35 @@ const MasterState = () => {
         <div className="row">
           <div className="col-sm-12">
             <div className="card" style={{ overflowX: "auto" }}>
-            {                  
-                  <div className="title_bar" >                   
-                    <input
-                      className="btn"
-                      type="file"
-                      accept=".xlsx, .xls, .csv"
-                      onChange={(e) => changeHandler(e)}
-                      style={{ padding: "10px" }}
-                    />
+              {
+                <div className="title_bar" >
+                  <input
+                    className="btn"
+                    type="file"
+                    accept=".xlsx, .xls, .csv"
+                    onChange={(e) => changeHandler(e)}
+                    style={{ padding: "10px" }}
+                  />
 
-                    <Button className="btn btn-light mr-2" onClick={handleUpload}>Upload File</Button>
-                    {data.length > 0 &&
-                      <JsonToExcel
-                        data={data}
-                        className="btn btn-light mr-2"
-                        filename={filename}
-                        fields={fields}
+                  <Button className="btn btn-light mr-2" onClick={handleUpload}>Upload File</Button>
+                  {data.length > 0 &&
+                    <JsonToExcel
+                      data={data}
+                      className="btn btn-light mr-2"
+                      filename={filename}
+                      fields={fields}
 
-                        text="Export excel"
-                      />}
-                    {/* <ReactHTMLTableToExcel
+                      text="Export excel"
+                    />}
+                  {/* <ReactHTMLTableToExcel
                       className="btn btn-light mr-2"
                       table="table-to-xls"
                       filename="statelist"
                       sheet="Sheet"
                       buttonText="Export excel" /> */}
-                  </div>
-            }
-              
+                </div>
+              }
+
 
               <div className="table-responsive">
                 <table id="table-to-xls" className="table table-hover">
@@ -120,9 +119,9 @@ const MasterState = () => {
                     <tr>
                       <th>S. No</th>
                       <th scope="col"> State Name</th>
-                      <th scope="col"> State Code</th>                                     
+                      <th scope="col"> State Code</th>
                     </tr>
-                  </thead>   
+                  </thead>
 
                   {currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 &&
                     currentRecords.map((item, i) => {
@@ -132,52 +131,52 @@ const MasterState = () => {
                             <td>{i + 1 + indexOfFirstRecord}</td>
                             <td>{item.stateName}</td>
                             <td>{item.stateCode}</td>
-                            
-                            
+
+
                           </tr>
                         </tbody>
                       )
                     })
-                    
-                  }            
+
+                  }
 
                 </table>
 
                 {(stateList === null) ?
-                        <p style={{ textAlign: "center" }}>No Record Found</p> : null}
-                    
-                    {stateList !== undefined && stateList !== null && stateList.length === 0 ?
+                  <p style={{ textAlign: "center" }}>No Record Found</p> : null}
 
-                        <div className="loader-box loader" style={{ width: "100% !important" }}>
-                            <div className="loader">
-                                <div className="line bg-primary"></div>
-                                <div className="line bg-primary"></div>
-                                <div className="line bg-primary"></div>
-                                <div className="line bg-primary"></div>
-                            </div>
-                        </div>
-                        :
-                            null}
+                {stateList !== undefined && stateList !== null && stateList.length === 0 ?
+
+                  <div className="loader-box loader" style={{ width: "100% !important" }}>
+                    <div className="loader">
+                      <div className="line bg-primary"></div>
+                      <div className="line bg-primary"></div>
+                      <div className="line bg-primary"></div>
+                      <div className="line bg-primary"></div>
+                    </div>
+                  </div>
+                  :
+                  null}
 
               </div>
               <div>
-                    {stateList !== null && stateList.length > 10 &&
-                        <Pagination
-                            itemClass="page-item"
-                            linkClass="page-link"
-                            activePage={currentPage}
-                            itemsCountPerPage={recordPerPage}
-                            totalItemsCount={totalRecords}
-                            pageRangeDisplayed={pageRange}
-                            onChange={handlePageChange}
-                        />
-                    }
-                </div>
+                {stateList !== null && stateList.length > 10 &&
+                  <Pagination
+                    itemClass="page-item"
+                    linkClass="page-link"
+                    activePage={currentPage}
+                    itemsCountPerPage={recordPerPage}
+                    totalItemsCount={totalRecords}
+                    pageRangeDisplayed={pageRange}
+                    onChange={handlePageChange}
+                  />
+                }
+              </div>
 
             </div>
           </div>
         </div>
-        
+
       </div>
     </Fragment>
   );
