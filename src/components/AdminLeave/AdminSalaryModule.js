@@ -19,9 +19,11 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
-import {
-  JsonToExcel
-} from 'react-json-excel';
+import ReactExport from 'react-data-export'
+
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 const AdminSalaryModule = () => {
   const [shiftButton] = useState(false);
@@ -82,17 +84,17 @@ const AdminSalaryModule = () => {
     setCurrentPage(pageNumber);
   }
   /*-----------------Pagination------------------*/
-  
+
 
   const onSubmit = (e) => {
     e.preventDefault();
-const validate = validation()
-    
-  
+    const validate = validation()
+
+
     const month = moment(getM, ["YYYY-MM"]).format("M");
     const year = moment(getM, ["MMM Do YY"]).format("YYYY");
     console.log("costCenter", costCenter)
-    if(validate){
+    if (validate) {
       viewSalary(month, year, costCenter);
     }
     setGetM(getM)
@@ -102,17 +104,17 @@ const validate = validation()
   const validation = () => {
     let flag = true
     if (costCenter === '') {
-        toast.error("Select Cost Center")
-        flag = false;
-        return;
+      toast.error("Select Cost Center")
+      flag = false;
+      return;
     }
     if (getM === '') {
       toast.error("Select Month and Year")
       flag = false;
       return;
-  }
+    }
     return flag;
-}
+  }
 
   const costCenterHandler = (options) => {
     let data1 = options !== null ? options.value : ''
@@ -131,15 +133,15 @@ const validate = validation()
     const year = moment(getM, ["MMM Do YY"]).format("YYYY");
     console.log("approval data=====", approvalData);
     const validate = validation()
-    if(validate){
+    if (validate) {
       salaryApproval(approvalData, month, year, costCenter);
     }
-    
-   /*  salaryApproval(approvalData); */
+
+    /*  salaryApproval(approvalData); */
     setChecked([])
-  
-   /*  console.log("month, costCenter, year",month, year, costCenter)
-    viewSalary(month, year, costCenter) */
+
+    /*  console.log("month, costCenter, year",month, year, costCenter)
+     viewSalary(month, year, costCenter) */
     history.push("/salary/approval");
   };
 
@@ -152,10 +154,10 @@ const validate = validation()
     const month = moment(getM, ["YYYY-MM"]).format("M");
     const year = moment(getM, ["MMM Do YY"]).format("YYYY");
     const validate = validation()
-    if(validate){
+    if (validate) {
       salaryApproval(cancelData, month, year, costCenter);
     }
-    
+
     setDeleteModal(false);
     setChecked([])
 
@@ -178,37 +180,7 @@ const validate = validation()
       }
     });
   };
-  //File export 
-  const filename = 'salaryList';
-  let fields = {
-    "salaryListId": "S. No",
-    "employeeId": "Employee Id",
-    "firstName": "Employee Name",
-    "numberOfHours": "Number Of Hours",
-    "lop": "LOP",
-    "contractType": "Contract Type",
-    "extraHours": "Extra Hours",
-    "totalHours": "Total Hours",
-    "statusDesc": "Status"
-  }
-
-  let data = [];
-  if (salaryList !== undefined && salaryList !== null) {
-    for (let i = 0; i < salaryList.length; i++) {
-      console.log(salaryList[i].holidayDate)
-      data.push({
-        salaryListId: i + 1,
-        employeeId: salaryList[i].employeeId,
-        firstName: salaryList[i].firstName,
-        numberOfHours: salaryList[i].numberOfHours,
-        lop: salaryList[i].lop,
-        contractType: salaryList[i].contractType,
-        extraHours: salaryList[i].extraHours,
-        totalHours: salaryList[i].totalHours,
-        statusDesc: salaryList[i].statusDesc
-      })
-    }
-  }
+  
   const disabledText = () => {
     toast.error("No Records to be Export")
   }
@@ -225,17 +197,17 @@ const validate = validation()
                 {/* <input type="month" style={{ fontSize: "0.8rem" }} className="form-control digit" min="2020-08"
                   placeholder="Number Of Days"
                   required onChange={(e) => setGetM(e.target.value)} value={getM} /> */}
-                   <div className="salary-date">
-                <DatePicker selected={getM} onChange={(date) => setGetM(date)}
-                  className="form-control salary-view" dateFormat="MM/yyyy" showMonthYearPicker
-                  placeholderText='Select Month and Year' />
+                <div className="salary-date">
+                  <DatePicker selected={getM} onChange={(date) => setGetM(date)}
+                    className="form-control salary-view" dateFormat="MM/yyyy" showMonthYearPicker
+                    placeholderText='Select Month and Year' />
                 </div>
               </Form.Group>
             </div>
             <div className="col-sm-4">
               <Form.Group>
                 <Form.Label>Cost Center</Form.Label><span style={{ color: 'red' }}>*</span>
-               {/*  <Form.Control as="select" required value={costCenter} onChange={(e) => costCenterHandler(e)}>
+                {/*  <Form.Control as="select" required value={costCenter} onChange={(e) => costCenterHandler(e)}>
                   <option value="">Select</option>
                   {cosCentreList.map((e, i) => {
                     return (
@@ -246,14 +218,14 @@ const validate = validation()
                 <Select
                   name="filters"
                   placeholder="Select Cost Center"
-                 /*  value={costCenter} */
+                  /*  value={costCenter} */
                   style={{ fontSize: "0.8rem" }}
                   options={cosCentreList !== null ?
                     cosCentreList.map(e => ({ label: e.costCentreName, value: e.costCentreName })) : []}
                   onChange={costCenterHandler}
-                  required={true} isSearchable 
-                  />
-                  <div>{error && <span style={{color:'red'}}>Cost Center is Required</span> }</div>
+                  required={true} isSearchable
+                />
+                <div>{error && <span style={{ color: 'red' }}>Cost Center is Required</span>}</div>
               </Form.Group>
             </div>
           </Row>
@@ -266,35 +238,43 @@ const validate = validation()
         <Row style={{ marginTop: '2rem' }}>
           <div className="col-sm-12">
             <div className="title_bar">
-              {data.length > 0 ?
-                <JsonToExcel
-                  data={data}
-                  className="btn btn-light mr-2"
-                  filename={filename}
-                  fields={fields}
+              {currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 ?
+                <ExcelFile filename='Salary List' element={<Button className="btn btn-light mr-2"> Export excel</Button>}>
+                  <ExcelSheet data={salaryList} name="Salary List" style={{ width: '500px' }}>
+                    <ExcelColumn label="Employee Id" value="employeeId" />
+                    <ExcelColumn label="Employee Name"
+                                        value={(col) => col.firstName !== null && col.firstName+' '+ col.lastName} />
+                    <ExcelColumn label="Number Of Hours" value="numberOfHours" />
+                    <ExcelColumn label="LOP" value="lop" />
+                    <ExcelColumn label="Contract Type" value="contractType" />
+                    <ExcelColumn label="Extra Hours" value="extraHours" />
+                    <ExcelColumn label="Total Hours" value="totalHours" />
+                    <ExcelColumn label="Status" value="statusDesc" />
+                   
+                  </ExcelSheet>
+                </ExcelFile>
 
-                  text="Export excel"
-                />:
+                :
                 <Button className="btn btn-light mr-2" onClick={disabledText}>
-                  Export excel</Button>  
-                }
-                {currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 ?
-              <div className="ml-2" style={{ float: 'left' }}>
-                <Button
-                  className="btn btn-light mr-2"
-                  onClick={approvedButton}
-                >
-                  Approve
+                  Export excel</Button>
+              }
+              {currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 ?
+                <div className="ml-2" style={{ float: 'left' }}>
+                  <Button
+                    className="btn btn-light mr-2"
+                    onClick={approvedButton}
+                  >
+                    Approve
                   </Button>
-                <Button
-                  variant="danger"
-                  onClick={() => {
-                    setDeleteModal(true);
-                  }}
-                >Cancel </Button>
-              </div>
-               : <div></div>
-                  
+                  <Button
+                    variant="danger"
+                    onClick={() => {
+                      setDeleteModal(true);
+                    }}
+                  >Cancel </Button>
+                </div>
+                : <div></div>
+
               }
             </div>
 

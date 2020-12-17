@@ -54,6 +54,7 @@ import MasterCostCenter from "./components/MasterTables/MasterCostCenter";
 import CreateTicket from "./components/support/createTicket";
 import TicketListingPage from "./components/support/ticketListingPage"
 import ViewTicket from './components/support/viewTicket'
+import ViewGroup from './components/group/ViewGroup'
 
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
@@ -112,6 +113,11 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/viewTicket`}
             component={ViewTicket}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/ViewGroup`}
+            component={ViewGroup}
           />
 
 
