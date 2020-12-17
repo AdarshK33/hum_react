@@ -51,10 +51,7 @@ const MasterDailyQty = () => {
     let fileObj = event.target.files[0];
     console.log("clicked", fileObj)
     setFileUpload(fileObj)
-    // uploadDailyQty(fileObj)
-    // setTimeout(()=>{
-    //   window.location.reload()
-    // }, 5000)
+
   }
 
   // const costCenterHandler = e => {

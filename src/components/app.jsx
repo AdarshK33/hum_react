@@ -9,7 +9,7 @@ import { AppContext } from "../context/AppState";
 import Cookies from "js-cookie";
 const AppLayout = ({ children }) => {
 
-    const { authenticateUser, getUserInfo, state, getUserMenu, flag, app } = useContext(AppContext);
+    const { authenticateUser, getUserInfo, state, getUserMenu, flag, app, access_tokenState } = useContext(AppContext);
     const [flagValue, setFlagValue] = useState();
     const [menuItems, setMenuItems] = useState();
     const loginUrl = `${process.env.REACT_APP_FEDID_AUTH_URL}?response_type=code&client_id=${process.env.REACT_APP_FEDID_CLIENTID}&scope=openid%20profile&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}`;
@@ -44,8 +44,9 @@ const AppLayout = ({ children }) => {
     const checkTokenExists = () => {
         console.log("APP RESULT " + app.isLoggedin);
         // console.log("ALL TOKENS "+Cookies.get());
-        let access_token = Cookies.get('APPAT');
 
+        let access_token = access_tokenState;
+        console.log("CONTEXT API ", access_token)
         if (access_token) {
             authenticateUser(true)
             getUserInfo()
