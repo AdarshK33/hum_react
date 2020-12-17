@@ -15,12 +15,13 @@ const Signin = ({ location, history }) => {
   const { accessToken, state } = useContext(AppContext);
 
   useEffect(() => {
-      getAccessToken()
+    // getAccessToken()
   }, []);
 
   useEffect(() => {
-      console.log('state inside appstate changed', state)
-      checkIsloggedIn(state)
+    console.log('state inside appstate changed', state)
+    // checkIsloggedIn(state)
+    
   }, [state]);
 
   const checkIsloggedIn = (state) => {
