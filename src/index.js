@@ -23,6 +23,7 @@ import { MasterFilesProvider } from "./context/MasterFilesState";
 import { PermissionProvider } from "./context/PermissionState";
 import { SearchProvider } from "./context/SearchState";
 import { SupportProvider } from "./context/SupportState"
+import { GroupProvider } from './context/GroupState'
 import RoutePath from "./Route";
 
 
@@ -49,6 +50,7 @@ function Root() {
                           <SearchProvider>
                             <AdminProvider>
                               <SupportProvider>
+                                <GroupProvider>
                                 {/* //Support provider 14-12-20*/}
                                 <BrowserRouter basename={"/"}>
                                   <ScrollContext>
@@ -56,6 +58,7 @@ function Root() {
                                   </ScrollContext>
                                 </BrowserRouter>
                                 {/* </Provider>  */}
+                                </GroupProvider>
                               </SupportProvider>
                             </AdminProvider>
                           </SearchProvider>
