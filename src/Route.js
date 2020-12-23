@@ -121,10 +121,6 @@ const RoutePath = () => {
             component={ViewTicket}
           />
 
-          <Route
-            path={`${process.env.PUBLIC_URL}/ViewGroup`}
-            component={ViewGroup}
-          />
 
 
           {state.MenuPermissionsRoute.map((e) => {
@@ -336,6 +332,11 @@ const RoutePath = () => {
                                                                                     <Route
                                                                                       path={`${process.env.PUBLIC_URL}/master/cost-center`}
                                                                                       component={MasterCostCenter}
+                                                                                    /> : 
+                                                                                    e.path === "/service-group" ?
+                                                                                    <Route
+                                                                                      path={`${process.env.PUBLIC_URL}/group/ViewGroup`}
+                                                                                      component={ViewGroup}
                                                                                     /> : ""
 
 

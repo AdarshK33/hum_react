@@ -1,10 +1,11 @@
 import React, { Fragment, useContext, useEffect, useState } from 'react';
 import Breadcrumb from '../common/breadcrumb';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap'
+import { Container, Row, Col, Form, Button, Table} from 'react-bootstrap'
 import { useHistory } from "react-router-dom";
 import '../common/style.css'
 import { SupportContext } from '../../context/SupportState'
 import { GroupContext} from '../../context/GroupState'
+import { AlignCenter } from 'react-feather';
 
 const ViewTicket = () => {
     const { completeStatus, completeStatusView, ticketStatus,
@@ -34,12 +35,12 @@ const ViewTicket = () => {
             employeeId: ticketIdList.employeeId,
             fedId: ticketIdList.fedId,
             firstName: ticketIdList.firstName,
+            groupId: serviceGroup,
             lastName: ticketIdList.lastName,
             position: ticketIdList.position,
             priorityId: ticketIdList.priorityId,
             resolution: resolution,
             role: ticketIdList.role,
-            serviceGroup: ticketIdList.serviceGroup,
             storeId: ticketIdList.storeId,
             ticketFiles: null,
             ticketId: ticketIdList.ticketId,
@@ -53,25 +54,6 @@ const ViewTicket = () => {
         history.push("./ticketListingPage")
     }
 
-  /*   useEffect(() => {
-        setCompStatus(ticketIdList.completionStatus === 0 ? 'Fulfilled Offline' :
-                    (ticketIdList.completionStatus === 1 ? 'Fulfilled by live suppor' :
-                    (ticketIdList.completionStatus === 2 ? 'Abandoned by User' :
-                    (ticketIdList.completionStatus === 3 ? 'Enhancement request' : 
-                    (ticketIdList.completionStatus === 4 ? 'Resolved by Workaround' : 
-                    (ticketIdList.completionStatus === 5 ? 'Training' : ''))))))
-                    console.log("completionStatus status in useEffect",ticketIdList.completionStatus)
-
-    },[ticketIdList.completionStatus])
-
-    useEffect(() => {
-        setTickStatus(ticketIdList.ticketStatus === 0 ? 'Open' :
-                    (ticketIdList.ticketStatus === 1 ? 'In Progress' :
-                    (ticketIdList.ticketStatus === 2 ? 'On Hold' :
-                    (ticketIdList.ticketStatus === 3 ? 'Closed' : ''))))
-                    console.log("ticket status in useEffect",ticketIdList.ticketStatus)
-
-    },[ticketIdList.ticketStatus]) */
 
     useEffect(() => {
         setCompStatus(ticketIdList.completionStatus)
@@ -85,10 +67,10 @@ const ViewTicket = () => {
         setServiceGroup(ticketIdList.groupId)
     },[ticketIdList.groupId])
 
-    useEffect(() => {
-        setResolution(ticketIdList.resolution)
-        console.log("resolution ticketIdList value",ticketIdList.resolution)
-    },[ticketIdList.resolution])
+    // useEffect(() => {
+    //     setResolution(ticketIdList.resolution)
+    //     console.log("resolution ticketIdList value",ticketIdList.resolution)
+    // },[ticketIdList.resolution])
 
     useEffect(() => {
         completeStatus()
@@ -107,7 +89,6 @@ const ViewTicket = () => {
 
     const resolutionHandler = (e) => {
         setResolution(e.target.value)
-        console.log("resolution target value",e.target.value)
     }
 
     const serviceGroupHandler = (e) => {
@@ -298,17 +279,6 @@ const ViewTicket = () => {
                     <Row>
                         <Col sm={8}>
                             <Form.Group as={Row} >
-                                <Form.Label column sm='3' className='labels'>Resolution :</Form.Label>
-                                <Col sm='9'>
-                                    <Form.Control as='textarea' row='3' value={resolution || ''} 
-                                    onChange={resolutionHandler} />
-                                </Col>
-                            </Form.Group>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col sm={8}>
-                            <Form.Group as={Row} >
                                 <Form.Label column sm='3' className='labels'>Completion Status :</Form.Label>
                                 <Col sm='9'>
                                     <Form.Control as='select' value={compStatus}
@@ -343,6 +313,46 @@ const ViewTicket = () => {
                                             })}
                                     </Form.Control>
                                 </Col>
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col sm={8}>
+                            <Form.Group as={Row} >
+                                <Form.Label column sm='3' className='labels'>Resolution :</Form.Label>
+                                <Col sm='9'>
+                                    <Row>
+                                        <Table>  
+                                            {ticketIdList.ticketResolutions !== null &&
+                                            ticketIdList.ticketResolutions !== undefined &&
+                                            ticketIdList.ticketResolutions.length >0 &&
+                                            ticketIdList.ticketResolutions.map((item,id) => {
+                                                return(
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style={{textAlign:'center',padding:'4px 0',border:'none'}}>
+                                                                {item.date}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style={{textAlign:'left',padding:'4px 0',border:'none'}}>
+                                                                {item.employeeName}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style={{textAlign:'center',padding:'4px 0',border:'none'}}>
+                                                                {item.comment}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                )
+                                            })}
+                            
+                                        </Table>
+                                    
+                                    </Row>
+                                </Col>
+                                <Row>
+                                    <Form.Control as='textarea' row='3' value={resolution || ''} 
+                                    onChange={resolutionHandler} />
+                                </Row>
                             </Form.Group>
                         </Col>
                     </Row>
