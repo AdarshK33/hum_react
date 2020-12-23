@@ -4,8 +4,7 @@ import GroupReducer from '../reducers/GroupReducer';
 import { toast } from "react-toastify";
 import {
     GROUP_SERVICE_VIEW,
-    CREATE_SERVICE_ROLE,
-    UPDATE_SERVICE_ROLE
+    CREATE_SERVICE_ROLE
 } from '../constant/actionTypes'
 
 const initial_state = {
@@ -47,25 +46,11 @@ export const GroupProvider = ({children}) => {
         }
     }
 
-    //Update the Service Role
-    const updateRole = async(updateData) => {
-        try {
-            const result = await client.post('group/create',updateData)
-            toast.info(result.data.message)
-            serviceGroupView()
-            return dispatch({type: UPDATE_SERVICE_ROLE, payload: state.serviceGroupList})
-        }
-        catch(error){
-            console.log(error)
-        }
-    }
-
 
 
     return (<GroupContext.Provider value={{
         serviceGroupView,
         createRole,
-        updateRole,
         serviceGroupList: state.serviceGroupList,
         loader: loader
     }}>

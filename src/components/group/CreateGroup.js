@@ -22,7 +22,7 @@ const CreateGroup = (props) => {
         CostCenter()
     }, [])
 
-console.log("callClusterEmployeesList",callClusterEmployeesList)
+
     const groupNameHandler = (e) => {
         setGroupName(e.target.value)
     }
@@ -35,7 +35,6 @@ console.log("callClusterEmployeesList",callClusterEmployeesList)
     }
     const handleMultiChange = (options) => {
         setEmployee(options)
-        console.log("multiselect options",options)
     }
 
     const submitHandler = (e) => {
@@ -110,7 +109,6 @@ console.log("callClusterEmployeesList",callClusterEmployeesList)
                                              value={employee}
                                              displayValue="employeeName"
                                              onSelect={handleMultiChange}
-                                             selectionLimit='10'
                                              isMulti
                                         />
                                     </Form.Group>

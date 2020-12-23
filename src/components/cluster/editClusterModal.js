@@ -44,8 +44,6 @@ const EditClusterModal = (props) => {
   const { user } = useContext(AppContext);
   const { costCenter, costCenterList } = useContext(RosterContext);
 
-  console.log("getEmployeesNames",getEmployeesNames)
-
   useEffect(() => {
     viewSports()
   }, [])

@@ -5,9 +5,9 @@ import { Multiselect } from 'multiselect-react-dropdown';
 import { AdminContext } from '../../context/AdminState'
 import { ClusterContext } from "../../context/ClusterState";
 import { GroupContext} from '../../context/GroupState'
-
 const UpdateGroup = (props) => {
-    const [groupName, setGroupName] = useState()
+    const [groupName, setGroupName] = useState('')
+    let [costCenter, setCostCenter] = useState()
     const [employee, setEmployee] = useState([])
     const [status, setStatus] = useState()
 
@@ -16,61 +16,52 @@ const UpdateGroup = (props) => {
 
     const { CostCenter, costCenterList} = useContext(AdminContext)
     const { callClusterEmployeesList,callClusterEmployees} = useContext(ClusterContext);
-    const {updateRole} = useContext(GroupContext)
+    const {createRole} = useContext(GroupContext)
     useEffect(() => {
         CostCenter()
     }, [])
-console.log("props.emps",props.emps)
-console.log("props.empIds",props.empIds)
 
-     useEffect(() => {
-        setGroupName(props.groupName)
-    },[props.groupName])
-    
-
-useEffect(() => {
-
-    callClusterEmployees(props.costCenter)
-    console.log("props.costCenter",props.costCenter)
-},[props.costCenter])
-      
-        useEffect(() => {
-                 
-            setEmployee(props.empIds)
-            console.log("props.empIds",props.empIds)
-        },[props.empIds]) 
+  /*   useEffect(() => {
+        setGroupName()
+    },[])
 
     useEffect(() => {
-        setStatus(props.status)
-    },[props.status])
- 
+        setCostCenter()
+    },[])
+    useEffect(() => {
+        setEmployee()
+    },[])
+    useEffect(() => {
+        setStatus()
+    },[])
+ */
 
 
     const groupNameHandler = (e) => {
         setGroupName(e.target.value)
     }
 
-
+    const setCostCenterHandler = (options) => {
+        let data = options !== null ? options.value : ''
+        setCostCenter(options)
+        callClusterEmployees(data)        
+        console.log("costCenter", data)
+    }
     const handleMultiChange = (options) => {
         setEmployee(options)
-        console.log("updated multiselect",options)
     }
-    const onRemoveEmployee = (options) => {
-        setEmployee(options)
-        console.log('employee on remove function',employee);
-      }
 
     const submitHandler = (e) => {
         e.preventDefault();
 
-        const updateData = {
+        const createData = {
             employeeIds:  employee.map((e) => e.employeeId),
-            groupId: props.groupId,
+            groupId: 0,
             groupName: groupName,
             status: parseInt(status)
           }
-          console.log("updateData", updateData)
-          updateRole(updateData)
+          console.log("createData", createData)
+          createRole(createData)
 
           const setModal = props.handleEditClose;
           setModal()
@@ -79,6 +70,8 @@ useEffect(() => {
     const onCloseModal = () => {
         const setModal = props.handleEditClose;
         setModal()
+        setGroupName('')
+        setStatus('')
     }
     return (
         <Fragment>
@@ -108,7 +101,15 @@ useEffect(() => {
                             <Col sm={12}>
                                 <Form.Group>
                                     <Form.Label>Cost Center</Form.Label>
-                                    <Form.Control type='text' value={props.costCenter} readOnly />
+                                    <Select
+                                        name="filters"
+                                        placeholder="Select Cost Center"
+                                        value={costCenter}
+                                        style={{ fontSize: "0.8rem" }}
+                                        options={costCenterList !== null ?
+                                            costCenterList.map(e => ({ label: e.costCentreName, value: e.costCentreName })) : []}
+                                        onChange={setCostCenterHandler}
+                                        required isSearchable />
                                 </Form.Group>
                             </Col>
                         </Row>
@@ -120,10 +121,7 @@ useEffect(() => {
                                          placeholder="Select Employee"
                                          options={callClusterEmployeesList}
                                          value={employee}
-                                        //  defaultValue={props.empIds}
-                                         selectedValues={props.emps}
                                          displayValue="employeeName"
-                                         onRemove={onRemoveEmployee}
                                          onSelect={handleMultiChange}
                                          isMulti
                                     />
@@ -134,8 +132,9 @@ useEffect(() => {
                             <Col sm={12}>
                                 <Form.Group>
                                     <Form.Label>Status</Form.Label>
-                                    <Form.Control as='select'  value={status} required
+                                    <Form.Control as='select' value={status} required
                                         onChange={(e) => setStatus(e.target.value)}>
+                                        <option value=''>Select Status</option>
                                         {statusList.map((item, id) => {
                                             return (
                                                 <option key={id} value={item.value}>{item.status}</option>
@@ -145,7 +144,7 @@ useEffect(() => {
                                 </Form.Group>
                             </Col>
                         </Row>
-                        <Button type='submit'>Update</Button>
+                        <Button type='submit'>Create</Button>
                     </Form>
                 </Modal.Body>
             </Container>
