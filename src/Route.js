@@ -5,7 +5,6 @@ import App from "./components/app";
 
 // Import custom Components
 import Signin from "./auth/signin";
-import Login from "./auth/login";
 import Default from "./components/dashboard/defaultCompo/default";
 // sample page
 import Samplepage from "./components/sample/samplepage";
@@ -71,11 +70,6 @@ const RoutePath = () => {
         path={`${process.env.PUBLIC_URL}/signin`}
         component={Signin}
       />
-
-<Route
-       path={`${process.env.PUBLIC_URL}/login`}
-       component={Login}
-     />
 
 
 

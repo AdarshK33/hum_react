@@ -1,92 +1,40 @@
 import React, { useEffect, useContext } from "react";
 import { withRouter } from "react-router";
-import { UserManager } from 'oidc-client';
+
+// Context
 import { AppContext } from "../context/AppState";
+
+// components
 import Loader from "../components/common/loader";
-import { setDefaultHeader } from "../utils/axios";
 import { ToastContainer } from "react-toastify";
+
+// css
 import "react-toastify/dist/ReactToastify.css";
 
-let access_token = "";
-
-// const initial_state = {
-//   idTokenState: "",
-//   access_tokenState: "",
-//   refresh_tokenState: "",
-
-// }
 const Signin = ({ location, history }) => {
   const { accessToken, state } = useContext(AppContext);
 
   useEffect(() => {
-    // getAccessToken()
+    getAccessToken()
   }, []);
 
   useEffect(() => {
     console.log('state inside appstate changed', state)
-    //checkIsloggedIn(state)
-
+    checkIsloggedIn(state)
   }, [state]);
-  const config = {
-    authority: "https://preprod.idpdecathlon.oxylane.com",
-    client_id: "C6a7b68d52ad21c0d5546fbef78c0903a55190480",
-    redirect_uri: window.location.origin + "/signin",
-    response_type: "code",
-    scope: "openid profile",
-    filterProtocolClaims: true,
-    loadUserInfo: true,
-  };
-  const userManager = new UserManager(config);
 
+  const checkIsloggedIn = (state) => {
+    const { app: { isLoggedin } } = state
+    if (isLoggedin) history.push('/dashboard/storedashboard')
+  }
 
+  const getAccessToken = () => {
+    const { search } = location;
+    const [, code] = search.split("?code=");
 
-
-
-  useEffect(() => {
-    //  checkTokenExists()
-    // setFlagValue(flag)
-    // let access_tokenState= "";
-    console.log("APP JSX USE EFFECT.")
-    userManager.signinRedirectCallback().then(user => {
-      console.log(user, 'found user TOKEN GENRATED');
-      const idTokenState = user.id_token;
-      access_token = user.access_token;
-      const refresh_tokenState = user.refresh_token;
-      if(access_token !== ""){
-        // let location = window.location.pathname;
-        // localStorage.setItem('URL', location)
-        // localStorage.setItem('URL', "/dashboard/storedashboard")
-        setDefaultHeader(access_token, user.refresh_token);
-        if(localStorage.getItem("URL") === null){
-          history.push('/dashboard/storedashboard');
-        }else{
-          let url = localStorage.getItem('URL');
-          history.push(url);
-          // history.push('/dashboard/storedashboard');
-        }
-       
-        // setDefaultHeader(access_token);
-      }
-       
-      // setDefaultHeader(user.access_token);
-    }).catch(e => console.log("INSIDE USE EFFECT ERROR " + e));
-    // history.push('/dashboard/storedashboard')
-    
-  }, []);
-
-
-  // const checkIsloggedIn = (state) => {
-  //   const { app: { isLoggedin } } = state
-  //   if (isLoggedin) history.push('/dashboard/storedashboard')
-  // }
-
-  // const getAccessToken = () => {
-  //   const { search } = location;
-  //   const [, code] = search.split("?code=");
-
-  //   accessToken(code)
-  //   //console.log(accessToken);
-  // }
+    accessToken(code)
+    //console.log(accessToken);
+  }
 
   return (
     <div>
@@ -95,5 +43,5 @@ const Signin = ({ location, history }) => {
     </div>
   );
 };
-export {access_token};
+
 export default withRouter(Signin);

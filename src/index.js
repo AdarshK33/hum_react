@@ -25,7 +25,6 @@ import { SearchProvider } from "./context/SearchState";
 import { SupportProvider } from "./context/SupportState"
 import { GroupProvider } from './context/GroupState'
 import RoutePath from "./Route";
-import WithAxios from "./utils/axios";
 
 
 //firebase Auth
@@ -55,9 +54,7 @@ function Root() {
                                 {/* //Support provider 14-12-20*/}
                                 <BrowserRouter basename={"/"}>
                                   <ScrollContext>
-                                    <WithAxios>
-                                      <RoutePath />
-                                    </WithAxios>
+                                    <RoutePath />
                                   </ScrollContext>
                                 </BrowserRouter>
                                 {/* </Provider>  */}
