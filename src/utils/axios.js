@@ -1,37 +1,20 @@
 import axios from 'axios';
 import Cookies from "js-cookie";
-import { useEffect, useState } from 'react';
-import { access_token } from '../auth/signin';
-import { UserManager } from 'oidc-client';
-import { useHistory } from "react-router-dom";
 axios.defaults.baseURL = process.env.REACT_APP_BASEURL
 // axios.defaults.headers.common['Authorization'] = 'Bearer AUTH_TOKEN'
 export const client = axios;
 
-   let accessToken = "";
-   let refreshToken = "";         
+export const setDefaultHeader = AUTH_TOKEN => axios.defaults.headers.common['Authorization'] = 'Bearer  ' + AUTH_TOKEN;
 
-export const setDefaultHeader = (Token, refresh_Token) =>{
-accessToken = Token;
-refreshToken =refresh_Token;
-//  axios.defaults.headers.common['Authorization'] = 'Bearer  ' + access_token
-};
 
-const WithAxios = ({ children }) => {
-    let history = useHistory();
-    // const [accessToken, setAccessToken] = useState({access_token});
-    // useEffect(() => {
-    //     console.log("accessToken :    ",access_token);
-    //     axios.defaults.headers.common['Authorization'] = 'Bearer  ' + access_token;
-    // }, [access_token]);
 const getRefreshToken = () => {
     console.log("INSIDE THE GET_REFRESH_TOKEN")
-    // let refreshToken = Cookies.get('APPRT');
-   
+    let refreshToken = Cookies.get('APPRT');
+
     let config = {
         method: "get",
-        url: client.defaults.baseURL + "auth/token/refresh?refresh_token=" + refreshToken,
-       
+        url: client.defaults.baseURL + "/auth/token/refresh?refresh_token=" + refreshToken,
+
     };
     return client(config)
 }
@@ -42,20 +25,12 @@ const getRefreshToken = () => {
 // const resetAuthTokenRequest = () => {
 //     authTokenRequest = null;
 // };
-useEffect(() => {
-    
+
 client.interceptors.request.use((config) => {
     const fedid = config.url.includes('auth/token?code=')
     const token = Cookies.get("APPAT");
-    const refreshUrl = config.url.includes('/auth/token/refresh')
-   
-    if (accessToken && !refreshUrl) {
-        if(window.location.pathname !== "/signin"){
-            let location = window.location.pathname;
-            localStorage.setItem('URL', location)
-        }
-                
-        config.headers["Authorization"] = `Bearer ${accessToken}`;
+    if (token && !fedid) {
+        config.headers["Authorization"] = `Bearer ${token}`;
     }
     return config;
 });
@@ -79,10 +54,8 @@ client.interceptors.response.use(
                             access_token, refresh_token
                         }
                     } } = response;
-                    // Cookies.set("APPAT", access_token);
-                    // Cookies.set("APPRT", refresh_token, { expires: 0.5 });
-                    accessToken = access_token;
-                    refreshToken = refresh_token;
+                    Cookies.set("APPAT", access_token);
+                    Cookies.set("APPRT", refresh_token, { expires: 0.5 });
                     console.log(axios.defaults);
                     config.headers.Authorization = `Bearer ${access_token}`;
                     config.__isRetryRequest = true;
@@ -107,9 +80,5 @@ client.interceptors.response.use(
         }
     }
 );
-}, [accessToken]);
-return children
-}
-export {accessToken,refreshToken};
-export default WithAxios
+
 
