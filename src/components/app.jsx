@@ -6,18 +6,35 @@ import { ToastContainer } from 'react-toastify';
 import Loader from "../components/common/loader";
 import 'react-toastify/dist/ReactToastify.css';
 import { AppContext } from "../context/AppState";
+import { UserManager } from 'oidc-client';
+import { useHistory } from "react-router-dom";
 import Cookies from "js-cookie";
-const AppLayout = ({ children }) => {
+import { access_token } from '../auth/signin';
+import { accessToken } from '../utils/axios';
 
+const AppLayout = ({ children }) => {
+    let history = useHistory();
     const { authenticateUser, getUserInfo, state, getUserMenu, flag, app } = useContext(AppContext);
     const [flagValue, setFlagValue] = useState();
     const [menuItems, setMenuItems] = useState();
     const loginUrl = `${process.env.REACT_APP_FEDID_AUTH_URL}?response_type=code&client_id=${process.env.REACT_APP_FEDID_CLIENTID}&scope=openid%20profile&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}`;
 
+
+
     useEffect(() => {
-        checkTokenExists()
+        // checkTokenExists()
         setFlagValue(flag)
+
     }, []);
+
+
+    useEffect(() => {
+        checkTokenExists(accessToken)
+        // setFlagValue(flag)
+
+    }, [accessToken]);
+
+
     useEffect(() => {
         const { MENUITEMS, flag, user } = state
         setMenuItems(MENUITEMS);
@@ -33,6 +50,7 @@ const AppLayout = ({ children }) => {
             } else {
                 getUserMenu(user.generalUserMenus, "profile", user);
                 localStorage.setItem('flag', "0")
+                
             }
         }
     }, [window.location.href, state])
@@ -41,20 +59,26 @@ const AppLayout = ({ children }) => {
         setMenuItems(state.MENUITEMS);
     }, [state.MENUITEMS]);
 
-    const checkTokenExists = () => {
+    const checkTokenExists = (accessToken) => {
         console.log("APP RESULT " + app.isLoggedin);
-        // console.log("ALL TOKENS "+Cookies.get());
-        let access_token = Cookies.get('APPAT');
+        console.log("inside the check token exist")
+        
+        // let access_token = Cookies.get('APPAT');
 
-        if (access_token) {
+        if (accessToken) {
+            console.log("access token present ")
             authenticateUser(true)
             getUserInfo()
             console.log("login valid")
         }
         else {
+            console.log("access token not present")
+            const userManager = new UserManager();
             authenticateUser(false)
             console.log("Invalid Login")
-            window.location.href = loginUrl
+            //  window.location.href = loginUrl
+            // userManager.signinRedirect();
+             history.push("/login");
         }
     }
     return (
