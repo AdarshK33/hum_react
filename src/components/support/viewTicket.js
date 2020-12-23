@@ -4,17 +4,23 @@ import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import { useHistory } from "react-router-dom";
 import '../common/style.css'
 import { SupportContext } from '../../context/SupportState'
+import { GroupContext} from '../../context/GroupState'
 
 const ViewTicket = () => {
     const { completeStatus, completeStatusView, ticketStatus,
          ticketStatusView, ticketIdList, updateTicket, loader,ticketIdView } = useContext(SupportContext)
+         const {serviceGroupView, serviceGroupList} = useContext(GroupContext)
    
     const [compStatus, setCompStatus] = useState()
     const [tickStatus, setTickStatus] = useState()
     const [resolution, setResolution] = useState()
-    const [serviceGroup, setServiceGroup] = useState('')
+    const [serviceGroup, setServiceGroup] = useState()
     
      let history = useHistory();
+     
+     useEffect(() => {
+        serviceGroupView()
+     },[])
 
 
     const submitHandler = (e) => {
@@ -74,6 +80,10 @@ const ViewTicket = () => {
     useEffect(() => {
         setTickStatus(ticketIdList.ticketStatus)
     },[ticketIdList.ticketStatus])
+
+    useEffect(() => {
+        setServiceGroup(ticketIdList.groupId)
+    },[ticketIdList.groupId])
 
     useEffect(() => {
         setResolution(ticketIdList.resolution)
@@ -158,7 +168,7 @@ const ViewTicket = () => {
                     <Row>
                         <Col sm={6}>
                             <Form.Group as={Row}>
-                                <Form.Label column sm='4' className='labels'>Emai Id :</Form.Label>
+                                <Form.Label column sm='4' className='labels'>Email Id :</Form.Label>
                                 <Col sm='8'>
                                     <Form.Control type='text' value={ticketIdList.email} readOnly className='disabledValue blueText' />
                                 </Col>
@@ -274,7 +284,12 @@ const ViewTicket = () => {
                                 <Form.Label column sm='3' className='labels'>Service Groups :</Form.Label>
                                 <Col sm='9'>
                                     <Form.Control as='select' value={serviceGroup} onChange={serviceGroupHandler} >
-                                        <option>{ticketIdList.serviceGroup}</option>
+                                        {serviceGroupList.map((item,i) => {
+                                            return(
+                                                <option key={item.groupId} value={item.groupId}>{item.groupName}</option>
+                                            )
+                                            
+                                        })}
                                     </Form.Control>
                                 </Col>
                             </Form.Group>
