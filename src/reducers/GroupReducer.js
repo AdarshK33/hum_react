@@ -1,6 +1,8 @@
+
 import {
     GROUP_SERVICE_VIEW,
-    CREATE_SERVICE_ROLE
+    CREATE_SERVICE_ROLE,
+    UPDATE_SERVICE_ROLE
 } from '../constant/actionTypes'
 
 const GroupReducer = (state,action) => {
@@ -10,6 +12,9 @@ const GroupReducer = (state,action) => {
             return {...state, serviceGroupList: action.payload, loader: action.loader}
 
         case CREATE_SERVICE_ROLE:
+            return {...state, serviceGroupList: action.payload}
+
+        case UPDATE_SERVICE_ROLE:
             return {...state, serviceGroupList: action.payload}
 
         default: return state;
