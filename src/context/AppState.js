@@ -1,5 +1,5 @@
 import React, { createContext, useReducer } from "react";
-import { client, setDefaultHeader } from "../utils/axios";
+import { client } from "../utils/axios";
 import AppReducer from "../reducers/AppReducer";
 import { toast } from "react-toastify";
 import {
@@ -64,7 +64,7 @@ export const AppProvider = ({ children, history }) => {
           // setTimeout(() => { }, 1000)
 
           // Cookies.set('APPSID', {refresh_token, access_token});
-          setDefaultHeader(resp.data.data.access_token)
+          // setDefaultHeader(resp.data.data.access_token)
 
           return dispatch({ type: SET_ACCESS_TOKEN_SUCCESS, payload: data });
         }
@@ -124,6 +124,7 @@ export const AppProvider = ({ children, history }) => {
           localStorage.removeItem('type')
           localStorage.removeItem('flag')
           window.location.href = logOutUrl
+          localStorage.removeItem('URL')
           // window.open(
           //   loginUrl,
           //   '_blank' // <- This is what makes it open in a new window.
