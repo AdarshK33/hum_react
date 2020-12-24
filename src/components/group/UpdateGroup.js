@@ -2,66 +2,63 @@ import React, { useState, useEffect, useContext, Fragment } from 'react';
 import { Container, Row, Button, Form, Modal, Col } from 'react-bootstrap'
 import Select from 'react-select'
 import { Multiselect } from 'multiselect-react-dropdown';
-import { AdminContext } from '../../context/AdminState'
-import { ClusterContext } from "../../context/ClusterState";
 import { GroupContext} from '../../context/GroupState'
+
 const UpdateGroup = (props) => {
-    const [groupName, setGroupName] = useState('')
-    let [costCenter, setCostCenter] = useState()
+    const [groupName, setGroupName] = useState()
     const [employee, setEmployee] = useState([])
     const [status, setStatus] = useState()
 
     const statusList = [{ status: 'Active', value: 0, id: 1 },
     { status: 'Inactive', value: 1, id: 2 }]
 
-    const { CostCenter, costCenterList} = useContext(AdminContext)
-    const { callClusterEmployeesList,callClusterEmployees} = useContext(ClusterContext);
-    const {createRole} = useContext(GroupContext)
+    const {updateRole, empList,serviceEmp} = useContext(GroupContext)
     useEffect(() => {
-        CostCenter()
+        serviceEmp()
     }, [])
+    
+     useEffect(() => {
+        setGroupName(props.groupName)
+    },[props.groupName])
+    
+      
+        useEffect(() => {
+                 
+            setEmployee(props.empIds)
+            console.log("props.empIds",props.empIds)
+        },[props.empIds]) 
 
-  /*   useEffect(() => {
-        setGroupName()
-    },[])
-
     useEffect(() => {
-        setCostCenter()
-    },[])
-    useEffect(() => {
-        setEmployee()
-    },[])
-    useEffect(() => {
-        setStatus()
-    },[])
- */
+        setStatus(props.status)
+    },[props.status])
+ 
 
 
     const groupNameHandler = (e) => {
         setGroupName(e.target.value)
     }
 
-    const setCostCenterHandler = (options) => {
-        let data = options !== null ? options.value : ''
-        setCostCenter(options)
-        callClusterEmployees(data)        
-        console.log("costCenter", data)
-    }
+
     const handleMultiChange = (options) => {
         setEmployee(options)
+        console.log("updated multiselect",options)
     }
+    const onRemoveEmployee = (options) => {
+        setEmployee(options)
+        console.log('employee on remove function',employee);
+      }
 
     const submitHandler = (e) => {
         e.preventDefault();
 
-        const createData = {
+        const updateData = {
             employeeIds:  employee.map((e) => e.employeeId),
-            groupId: 0,
+            groupId: props.groupId,
             groupName: groupName,
             status: parseInt(status)
           }
-          console.log("createData", createData)
-          createRole(createData)
+          console.log("updateData", updateData)
+          updateRole(updateData)
 
           const setModal = props.handleEditClose;
           setModal()
@@ -70,8 +67,6 @@ const UpdateGroup = (props) => {
     const onCloseModal = () => {
         const setModal = props.handleEditClose;
         setModal()
-        setGroupName('')
-        setStatus('')
     }
     return (
         <Fragment>
@@ -100,28 +95,15 @@ const UpdateGroup = (props) => {
                         <Row>
                             <Col sm={12}>
                                 <Form.Group>
-                                    <Form.Label>Cost Center</Form.Label>
-                                    <Select
-                                        name="filters"
-                                        placeholder="Select Cost Center"
-                                        value={costCenter}
-                                        style={{ fontSize: "0.8rem" }}
-                                        options={costCenterList !== null ?
-                                            costCenterList.map(e => ({ label: e.costCentreName, value: e.costCentreName })) : []}
-                                        onChange={setCostCenterHandler}
-                                        required isSearchable />
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col sm={12}>
-                                <Form.Group>
                                     <Form.Label>Employee Id</Form.Label>
                                     <Multiselect
                                          placeholder="Select Employee"
-                                         options={callClusterEmployeesList}
+                                         options={empList}
                                          value={employee}
+                                        //  defaultValue={props.empIds}
+                                         selectedValues={props.emps}
                                          displayValue="employeeName"
+                                         onRemove={onRemoveEmployee}
                                          onSelect={handleMultiChange}
                                          isMulti
                                     />
@@ -132,9 +114,8 @@ const UpdateGroup = (props) => {
                             <Col sm={12}>
                                 <Form.Group>
                                     <Form.Label>Status</Form.Label>
-                                    <Form.Control as='select' value={status} required
+                                    <Form.Control as='select'  value={status} required
                                         onChange={(e) => setStatus(e.target.value)}>
-                                        <option value=''>Select Status</option>
                                         {statusList.map((item, id) => {
                                             return (
                                                 <option key={id} value={item.value}>{item.status}</option>
@@ -144,7 +125,7 @@ const UpdateGroup = (props) => {
                                 </Form.Group>
                             </Col>
                         </Row>
-                        <Button type='submit'>Create</Button>
+                        <Button type='submit'>Update</Button>
                     </Form>
                 </Modal.Body>
             </Container>

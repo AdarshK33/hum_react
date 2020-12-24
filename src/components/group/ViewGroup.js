@@ -9,6 +9,11 @@ import UpdateGroup from './UpdateGroup';
 const ViewGroup = () => {
     const [modal, setModal] = useState(false);
     const [editModal, setEditModal] = useState(false)
+    const [groupName, setGroupName] = useState()
+    const [status, setStatus] = useState()
+    const [empIds, setEmpIds] = useState()
+    const [groupId, setGroupId] = useState()
+    const [emps, setEmps] = useState()
 
     const {serviceGroupView, serviceGroupList, loader} = useContext(GroupContext)
 
@@ -75,8 +80,12 @@ const ViewGroup = () => {
                                                    <td>{item.groupName}</td>
                                                    <td>{item.teamCount}</td>
                                                    <td>{item.status === 0 ? 'Active' : 'Inactive'}</td>
+                                                   
                                                    <td><Edit2 onClick={() => {
-                                                       setEditModal(true)
+                                                       setEditModal(true); setGroupName(item.groupName);
+                                                       setStatus(item.status); setEmpIds(item.employeeIds)
+                                                       setGroupId(item.groupId)
+                                                       setEmps(item.employees)
                                                    }} /></td>
                                                </tr>
                                            </tbody>
@@ -89,7 +98,9 @@ const ViewGroup = () => {
                                 </Table>
                             </div>
                         </div>
-                        <UpdateGroup  handleEditClose={handleEditClose} modal={editModal} />
+                        <UpdateGroup  handleEditClose={handleEditClose} modal={editModal}
+                        status={status} groupName={groupName} empIds={empIds}
+                        groupId={groupId} emps={emps} />
                     </Col>
                 </Row>
             </Container>
