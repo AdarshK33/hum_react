@@ -12,7 +12,6 @@ const ViewGroup = () => {
     const [groupName, setGroupName] = useState()
     const [status, setStatus] = useState()
     const [empIds, setEmpIds] = useState()
-    const [costCenter, setCostCenter] = useState()
     const [groupId, setGroupId] = useState()
     const [emps, setEmps] = useState()
 
@@ -85,7 +84,6 @@ const ViewGroup = () => {
                                                    <td><Edit2 onClick={() => {
                                                        setEditModal(true); setGroupName(item.groupName);
                                                        setStatus(item.status); setEmpIds(item.employeeIds)
-                                                       setCostCenter(item.costCentre)
                                                        setGroupId(item.groupId)
                                                        setEmps(item.employees)
                                                    }} /></td>
@@ -101,7 +99,7 @@ const ViewGroup = () => {
                             </div>
                         </div>
                         <UpdateGroup  handleEditClose={handleEditClose} modal={editModal}
-                        status={status} groupName={groupName} empIds={empIds} costCenter={costCenter} 
+                        status={status} groupName={groupName} empIds={empIds}
                         groupId={groupId} emps={emps} />
                     </Col>
                 </Row>

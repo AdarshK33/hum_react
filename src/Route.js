@@ -335,7 +335,7 @@ const RoutePath = () => {
                                                                                     /> : 
                                                                                     e.path === "/service-group" ?
                                                                                     <Route
-                                                                                      path={`${process.env.PUBLIC_URL}/group/ViewGroup`}
+                                                                                      path={`${process.env.PUBLIC_URL}/service-group`}
                                                                                       component={ViewGroup}
                                                                                     /> : ""
 

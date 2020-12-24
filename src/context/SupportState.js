@@ -10,6 +10,7 @@ import {
      VIEW_TICKET_ID_INFO,
      UPDATE_TICKET
 } from '../constant/actionTypes'
+var fileDownload = require('js-file-download');
 
 
 
@@ -106,14 +107,27 @@ export const SupportProvider = ({ children }) => {
      }
 
     //Update the tickets
-    const updateTicket = async(updateData) => {
+    const updateTicket = async(updateData, ticketId) => {
         try {
             const result = await client.post('ticket/update',updateData)
             state.ticketListing = result.data.data
             console.log("updated response",state.ticketListing)
             ticketView('all',0)
+            ticketIdView(ticketId)
             toast.info(result.data.message)
             return dispatch({type: UPDATE_TICKET, payload: state.ticketListing})
+        }
+        catch(error){
+            console.log(error)
+        }
+    }
+
+    //Download file
+    const downloadFile = async(fileName) => {
+        try {
+            const result = await client.get('ticket/download?name='+fileName)
+            fileDownload(result.data, fileName);
+
         }
         catch(error){
             console.log(error)
@@ -211,6 +225,7 @@ export const SupportProvider = ({ children }) => {
         ticketStatus,
         ticketIdView,
         updateTicket,
+        downloadFile,
         ticketListing: state.ticketListing,
         completeStatusView: state.completeStatusView,
         ticketStatusView: state.ticketStatusView,

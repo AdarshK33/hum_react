@@ -27,3 +27,11 @@ input.disabledValue.blueText.form-control{
 label.labels.form-label.col-form-label {
     font-weight: 600;
 }
+input.fileButton {
+    background-color: white;
+    border: none;
+}
+input.fileButton:hover{
+    font-weight: bold;
+    text-decoration: underline;
+}

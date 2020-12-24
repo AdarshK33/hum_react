@@ -127,11 +127,13 @@ const TicketListingPage = () => {
                                                             <td>{item.storeId}</td>
                                                             <td>{item.firstName} {item.lastName}</td>
                                                             <td>{item.role}</td>
-                                                            <td>{item.issueCategory}</td>
+                                                            <td>{item.issueCategory === null ?
+                                                            '-' : item.issueCategory}</td>
                                                             <td>{item.priority}</td>
                                                             <td>{item.completionStatusDesc}</td>
                                                             <td>{item.ticketStatusDesc}</td>
-                                                            <td>{item.updatedDate}</td>
+                                                            <td>{item.updatedDate === null ? '-' :
+                                                            item.updatedDate}</td>
                                                             <td>{item.createdDate}</td>
                                                             <Link to='/viewTicket'>
                                                                 <td><Edit2 onClick={() => {
