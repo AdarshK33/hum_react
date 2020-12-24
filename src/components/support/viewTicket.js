@@ -365,7 +365,8 @@ const ViewTicket = () => {
                                                         return (
                                                             <tbody>
                                                                 <tr>
-                                                                    <td style={{ textAlign: 'center', padding: '4px 0', border: 'none' }}>
+                                                                    <td style={{ textAlign: 'center', padding: '4px 0', 
+                                                                    border: 'none',fontWeight:'bolder' }}>
                                                                         {item.date}</td>
                                                                 </tr>
 
@@ -373,13 +374,15 @@ const ViewTicket = () => {
                                                                     return (
                                                                         <Fragment>
                                                                             <tr>
-                                                                                <td style={{ textAlign: 'left', padding: '4px 0', border: 'none' }}>
-                                                                                    {i.employeeName}</td>
+                                                                                <td style={{ textAlign: 'left', padding: '4px 0', 
+                                                                                border: 'none',fontWeight:'bolder',textDecoration:'underline' }}>
+                                                                                {i.employeeName}</td>
                                                                             </tr>
                                                                             {i.comments.map(a => {
                                                                                 return (
                                                                                     <tr>
-                                                                                        <td style={{ textAlign: 'left', padding: '4px 0', border: 'none' }}>{a}</td>
+                                                                                        <td style={{ textAlign: 'left', padding: '4px 0', 
+                                                                                        border: 'none',backgroundColor:'aliceblue' }}>{a}</td>
                                                                                     </tr>
                                                                                 )
                                                                             })}
@@ -396,22 +399,6 @@ const ViewTicket = () => {
                                                     })}
 
                                             </Table>
-                                            {/* {ticketIdList.ticketResolutions !== null &&
-                                                    ticketIdList.ticketResolutions !== undefined &&
-                                                    ticketIdList.ticketResolutions.length > 0 &&
-                                                    ticketIdList.ticketResolutions.map((item, id) => {
-                                                        return(
-                                                            <div>
-                                                                <p>{item.date}</p>
-                                                                {item.resolutions.map((i,e) => {
-                                                                    return(
-                                                                        <p>{i.employeeName}</p>
-                                                                       
-                                                                    )
-                                                                })}
-                                                            </div>
-                                                        )
-                                                    })} */}
                                         </Row>
                                         <Row>
                                             <Form.Control as='textarea' row='3' value={resolution || ''}
