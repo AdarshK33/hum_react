@@ -118,31 +118,7 @@ const CreateTicket = () => {
 
     }
 
-    const onSubmit = e => {
-        e.preventDefault();
 
-        const createSingleTicket = {
-            employeeId: user.employeeId,
-            categoryId,
-            completionStatus: 0,
-            description,
-            priorityId: priorityListId,
-            resolution: "aaa",
-            role,
-            storeId: user.costCentre,
-            ticketId: 0,
-            ticketStatus: 0,
-            title,
-            urgencyId,
-            ticketResolutions: null,
-            ticketFiles: null
-        }
-        addCreateTicket(createSingleTicket)
-        console.log(JSON.stringify(createSingleTicket));
-        //alert(JSON.stringify(createSingleTicket));
-        setClear()
-        history.push("./ticketListingPage")
-    }
 
     const onSubmit = e => {
 
