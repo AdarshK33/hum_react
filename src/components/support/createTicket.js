@@ -2,6 +2,7 @@ import React, { Fragment, useState, useContext, useEffect } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import '../common/style.css'
 import 'react-dropzone-uploader/dist/styles.css';
+import Dropzone from 'react-dropzone-uploader'
 import { AppContext } from "../../context/AppState";
 import { SupportContext } from "../../context/SupportState"
 import { Container, Row, Col, Form } from 'react-bootstrap'
@@ -10,6 +11,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import '../common/style.css'
 import { Users } from 'react-feather';
+import { access_token } from '../../auth/signin';;
+
 
 const CreateTicket = () => {
 
@@ -19,16 +22,18 @@ const CreateTicket = () => {
     const [description, setDescription] = useState('')
     const [urgencyId, setUrgencyId] = useState('');
     const [priority, setPriority] = useState('')
+    const [number, setNumber] = useState()
     // const [uploadFileButton, setUploadFileButton] = useState(false)
     // const [filesCount, setFilesCount] = useState([])
-    // const [fileName, setFileName] = useState([])
-    const [fileUpload, setFileUpload] = useState();
+    const [fileNames, setFileNames] = useState([])
+    //const [fileUpload, setFileUpload] = useState();
     const [loader, setLoader] = useState(false);
-    const [inp, setInp] = useState([]);
+    let count = 0;
+
     let history = useHistory();
     const { user } = useContext(AppContext);
     const { getRolesForSupport, getRoles, getIssueAndCategory,
-        getIssueAndCategoryList, selectUrgency, urgencyList, priorityList, selectPriority, addCreateTicket, priorityListId } = useContext(SupportContext);
+        getIssueAndCategoryList, selectUrgency, urgencyList, priorityList, selectPriority, addCreateTicket, priorityListId, } = useContext(SupportContext);
 
 
     useEffect(() => {
@@ -67,48 +72,109 @@ const CreateTicket = () => {
     const callLoader = () => {
         setLoader(true)
     }
-    const fileHandler = () => {
-        const inp = document.getElementById('fileElementId');
 
 
-        if (inp.files.length > 3) {
-            toast.error("Maximum three files can be selected.")
-        }
-        else {
-            for (var i = 0; i < inp.files.length; ++i) {
-                var name = inp.files.item(i).name;
-                var size = inp.files.item(i).size / 1024
-                alert("File name: " + name + " size " + Math.round(size) + "kb");
+
+
+
+
+
+
+    const getUploadParams = ({ meta }) => {
+
+        return {
+            // url: 'https://httpbin.org/post',
+            url: `${process.env.REACT_APP_BASEURL}ticket/upload`,
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Authorization': `Bearer ${access_token}`
+
             }
-            setInp(inp)
+
+
 
         }
+
     }
 
-    const onSubmit = e => {
-        e.preventDefault();
 
-        const createSingleTicket = {
-            employeeId: user.employeeId,
-            categoryId,
-            completionStatus: 0,
-            description,
-            priorityId: priorityListId,
-            resolution: "aaa",
-            role,
-            storeId: user.costCentre,
-            ticketId: 0,
-            ticketStatus: 0,
-            title,
-            urgencyId,
-            ticketResolutions: null,
-            ticketFiles: null
+
+    const handleSubmit = (files) => {
+        console.log(files.map(f => f.meta))
+    }
+
+    const handleChangeStatus = ({ meta, remove }, status) => {
+        setNumber(1)
+        if (meta.status === 'done') {
+            // alert(`${meta.name} uploaded!`)
+            fileNames.push({ fileId: 0, fileName: meta.name })
+            console.log("sucess ", fileNames)
+            //remove()
+        } else if (meta.status !== 'done') {
+            //  alert(`${meta.name}, upload failed...`)
+            // console.log("META^^^^^^^^^^^^^^^^^^ " + JSON.stringify(meta))
         }
-        addCreateTicket(createSingleTicket)
-        console.log(JSON.stringify(createSingleTicket));
-        //alert(JSON.stringify(createSingleTicket));
-        setClear()
-        history.push("./ticketListingPage")
+
+    }
+
+
+
+    const onSubmit = e => {
+
+        if (number === 1) {
+
+            e.preventDefault();
+
+            const createSingleTicket = {
+                employeeId: user.employeeId,
+                categoryId,
+                completionStatus: 0,
+                description,
+                priorityId: priorityListId,
+                resolution: "aaa",
+                role,
+                storeId: user.costCentre,
+                ticketId: 0,
+                ticketStatus: 0,
+                title,
+                urgencyId,
+                ticketResolutions: null,
+                ticketFiles: fileNames
+            }
+            addCreateTicket(createSingleTicket)
+            console.log(JSON.stringify(createSingleTicket));
+            //alert(JSON.stringify(createSingleTicket));
+            setClear()
+            history.push("./ticketListingPage")
+        }
+        else {
+            console.log("outside")
+            e.preventDefault();
+
+            const createSingleTicket = {
+                employeeId: user.employeeId,
+                categoryId,
+                completionStatus: 0,
+                description,
+                priorityId: priorityListId,
+                resolution: "aaa",
+                role,
+                storeId: user.costCentre,
+                ticketId: 0,
+                ticketStatus: 0,
+                title,
+                urgencyId,
+                ticketResolutions: null,
+                ticketFiles: null
+            }
+            addCreateTicket(createSingleTicket)
+            console.log(JSON.stringify(createSingleTicket));
+            //alert(JSON.stringify(createSingleTicket));
+            setClear()
+            history.push("./ticketListingPage")
+        }
+
     }
 
     return (
@@ -159,7 +225,7 @@ const CreateTicket = () => {
                             <Col sm={6}>
                                 <Form.Group as={Row}>
                                     <Form.Label column sm='4' className='labels'>Emai Id :</Form.Label>
-                                    <Col sm='6'>
+                                    <Col sm='7'>
                                         <Form.Control type='text' value={user.email} readOnly className='disabledValue blueText' />
                                     </Col>
                                 </Form.Group>
@@ -204,15 +270,15 @@ const CreateTicket = () => {
                         <Row>
                             <Col sm={8}>
                                 <Form.Group as={Row} >
-                                    <Form.Label column sm='4' className='labels'>Select Issue and Category :</Form.Label>
+                                    <Form.Label column sm='4' className='labels'>Select Issue :</Form.Label>
                                     <Col sm='8'>
                                         <select
                                             className="form-control"
-                                            required
+
                                             value={categoryId}
                                             onChange={(event) => setcategoryId(event.target.value)}>
 
-                                            <option value="">Select Urgency</option>
+                                            <option value="">Select Issue</option>
                                             {getIssueAndCategoryList !== null &&
                                                 getIssueAndCategoryList.map((e, i) => {
                                                     return (
@@ -242,49 +308,50 @@ const CreateTicket = () => {
                                 <Form.Group as={Row} >
                                     <Form.Label column sm='4' className='labels'>Description :</Form.Label>
                                     <Col sm='8'>
-
-                                        <textarea className="form-control" rows="3" placeholder="Description" maxLength="300" value={description} required onChange={(event) => setDescription(event.target.value)}></textarea>
+                                        <textarea className="form-control" rows="3" placeholder="Description" maxLength="300" value={description} onChange={(event) => setDescription(event.target.value)}></textarea>
                                     </Col>
                                 </Form.Group>
                             </Col>
                         </Row>
 
-                        <Row>
+                        {/* <Row>
                             <Col sm={8}>
-                                <Form.Group as={Row} >
-                                    <Form.Label column sm='4' className='labels'>File Upload :</Form.Label>
-                                    <Col sm='5'>
-                                        <input type="file" id="fileElementId" name="files[]" accept="image/*,video/*,.pdf" multiple="multiple" onChange={() => { fileHandler() }} />
-                                    </Col>
-                                    <Col sm='3'>
-                                        <button className="myclass" style={{ paddingLeft: "30px", paddingRight: "30px", fontWeight: "bold" }}
-                                            type="button" >Upload</button>
+                              
 
-                                    </Col>
-                                </Form.Group>
                                 <Form.Group as={Row} >
                                     <Col sm='4'>
 
                                     </Col>
-                                    <Col sm='8'>
-                                        <div className="card">
-                                            <div className="card-header text-white py-2" style={{ backgroundColor: "#006EBB" }}>List of Files</div>
-                                            <ul className="list-group list-group-flush border border-secondary">
-
-                                                <ol className="list-group-item" >image1.png</ol>
-                                                <ol className="list-group-item">image2.png</ol>
-
-                                            </ul>
-                                        </div>
-                                        <div className="progress" style={{ height: "12px" }}>
-                                            <div className="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style={{ width: "75%" }}>75%</div>
-                                        </div>
-                                    </Col>
 
                                 </Form.Group>
                             </Col>
-                        </Row>
+                        </Row> */}
+                        <Row>
+                            <Col sm={8}>
+                                <Form.Group as={Row} >
+                                    <Form.Label column sm='4' className='labels'>File Upload :</Form.Label>
+                                    <Col sm='8'>
 
+                                        <Dropzone
+                                            getUploadParams={getUploadParams}
+                                            onChangeStatus={handleChangeStatus}
+                                            // onSubmit={handleSubmit}
+
+                                            accept="image/*,.pdf,video/*"
+                                            maxFiles={3}
+                                            inputContent="Browse file"
+
+                                            styles={{
+                                                dropzone: { width: 360, height: 300 },
+                                                dropzoneActive: { borderColor: 'green' },
+                                            }}
+                                        />
+                                    </Col>
+
+                                </Form.Group>
+
+                            </Col>
+                        </Row>
 
                         <Row>
                             <Col sm={8}>
@@ -334,7 +401,7 @@ const CreateTicket = () => {
                         <Row>
                             <Col sm={5}></Col>
                             <Col sm={4}>
-                                <button className="myclass" style={{ marginTop: "5px", paddingLeft: "30px", paddingRight: "30px", fontWeight: "bold" }}
+                                <button className="btn btn-primary" style={{ marginTop: "5px", paddingLeft: "30px", paddingRight: "30px", fontWeight: "bold" }}
                                     type="submit" value="Submit"
                                 >Submit</button>
                             </Col>

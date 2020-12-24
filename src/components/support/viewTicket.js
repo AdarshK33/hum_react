@@ -8,7 +8,7 @@ import { GroupContext } from '../../context/GroupState'
 
 const ViewTicket = () => {
     const { completeStatus, completeStatusView, ticketStatus,
-        ticketStatusView, ticketIdList, updateTicket, loader, ticketIdView,downloadFile } = useContext(SupportContext)
+        ticketStatusView, ticketIdList, updateTicket, loader, ticketIdView, downloadFile } = useContext(SupportContext)
     const { serviceGroupView, serviceGroupList } = useContext(GroupContext)
 
     const [compStatus, setCompStatus] = useState()
@@ -49,7 +49,7 @@ const ViewTicket = () => {
             title: ticketIdList.title,
             urgencyId: ticketIdList.urgencyId
         }
-        updateTicket(updateData,ticketIdList.ticketId)
+        updateTicket(updateData, ticketIdList.ticketId)
         setResolution('')
 
     }
@@ -61,7 +61,7 @@ const ViewTicket = () => {
 
     const downloadFileHandler = (e) => {
         setFileName(e.target.value)
-        console.log("file name",e.target.value)
+        console.log("file name", e.target.value)
     }
 
     useEffect(() => {
@@ -78,8 +78,8 @@ const ViewTicket = () => {
 
     useEffect(() => {
         setFileName(ticketIdList.fileName)
-        console.log("ticketIdList.fileName",ticketIdList.fileName)
-    },[ticketIdList.fileName])
+        console.log("ticketIdList.fileName", ticketIdList.fileName)
+    }, [ticketIdList.fileName])
 
     useEffect(() => {
         completeStatus()
@@ -231,28 +231,28 @@ const ViewTicket = () => {
                         </Row>
                         <Row>
                             {ticketIdList.ticketFiles !== undefined &&
-                            ticketIdList.ticketFiles.length===0 ? '' :
-                            <Col sm={8}>
-                           <Form.Group as={Row}>
-                            <Form.Label column sm='3'></Form.Label>
-                            <Col sm='9'>
-                            {ticketIdList.ticketFiles != null &&
-                                ticketIdList.ticketFiles !== undefined &&
-                                ticketIdList.ticketFiles.length > 0 &&
-                                ticketIdList.ticketFiles.map((item, i) => {
-                                    return(
-                                       
-                                           <input className="fileButton" type='button' onClick={downloadFileHandler} value={item.fileName} 
-                                      />
-                                       
-                                    )
-                                })}
-                               &nbsp; &nbsp; <span>(Select File to download {fileName})</span><br/>
-                                <Button type='submit' size='sm' onClick={downloadFileButton}>Download</Button>
-                                </Col>
-                           </Form.Group>
-                                
-                            </Col>}
+                                ticketIdList.ticketFiles.length === 0 ? '' :
+                                <Col sm={8}>
+                                    <Form.Group as={Row}>
+                                        <Form.Label column sm='3'></Form.Label>
+                                        <Col sm='9'>
+                                            {ticketIdList.ticketFiles != null &&
+                                                ticketIdList.ticketFiles !== undefined &&
+                                                ticketIdList.ticketFiles.length > 0 &&
+                                                ticketIdList.ticketFiles.map((item, i) => {
+                                                    return (
+
+                                                        <input className="fileButton" type='button' onClick={downloadFileHandler} value={item.fileName}
+                                                        />
+
+                                                    )
+                                                })}
+                               &nbsp; &nbsp; <span>(Select File to download {fileName})</span><br />
+                                            <Button type='submit' size='sm' onClick={downloadFileButton}>Download</Button>
+                                        </Col>
+                                    </Form.Group>
+
+                                </Col>}
                         </Row>
                         <Row>
                             <Col sm={8}>
@@ -355,7 +355,7 @@ const ViewTicket = () => {
                             <Col sm={8}>
                                 <Form.Group as={Row} >
                                     <Form.Label column sm='3' className='labels'>Resolution :</Form.Label>
-                                    <Col sm='9' style={{padding:'0 2rem'}}>
+                                    <Col sm='9' style={{ padding: '0 2rem' }}>
                                         <Row>
                                             <Table style={{ margin: '0 1rem' }}>
                                                 {ticketIdList.ticketResolutions !== null &&
@@ -369,31 +369,31 @@ const ViewTicket = () => {
                                                                     border: 'none',fontWeight:'bolder' }}>
                                                                         {item.date}</td>
                                                                 </tr>
-                                                               
-                                                                    {item.resolutions.map((i,j) => {
-                                                                        return(
-                                                                            <Fragment>
+
+                                                                {item.resolutions.map((i, j) => {
+                                                                    return (
+                                                                        <Fragment>
                                                                             <tr>
                                                                                 <td style={{ textAlign: 'left', padding: '4px 0', 
                                                                                 border: 'none',fontWeight:'bolder',textDecoration:'underline' }}>
                                                                                 {i.employeeName}</td>
                                                                             </tr>
-                                                                                {i.comments.map(a => {
-                                                                                return(
+                                                                            {i.comments.map(a => {
+                                                                                return (
                                                                                     <tr>
                                                                                         <td style={{ textAlign: 'left', padding: '4px 0', 
                                                                                         border: 'none',backgroundColor:'aliceblue' }}>{a}</td>
                                                                                     </tr>
-                                                                                    )
-                                                                                })}
-                                                                            
-                                                                            </Fragment>
-                                                                            
-                                                                            
-                                                                            
-                                                                        )
-                                                                    })}
-                                                              
+                                                                                )
+                                                                            })}
+
+                                                                        </Fragment>
+
+
+
+                                                                    )
+                                                                })}
+
                                                             </tbody>
                                                         )
                                                     })}

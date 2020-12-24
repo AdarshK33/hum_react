@@ -12,7 +12,7 @@ const GrantLeaveEdit = (props) => {
     const [employeeId, setEmployeeId] = useState('');
     const [numOfDays, setNumOfDays] = useState('');
    /*  const [year, setYear] = useState(''); */
-    const [successMsg, setSuccessMsg] = useState("");
+ 
     const [costCenter, setCostCenter] = useState()
     const [employeeCostCenter, setEmployeeCostCenter] = useState('')
     const [employeeName, setEmployeeName] = useState('')
@@ -215,8 +215,7 @@ const GrantLeaveEdit = (props) => {
                             </div>
                         </div>
                         <button className="myclass mb-2 mr-2" type="submit" value="Submit" >Save</button>
-                        {/* <button className="myclass mb-2 mr-2" onClick={() => { clearAndClose() }}>Close</button>
-                        <h5>{successMsg.length !== 0 && <div className="text-success">{successMsg}</div>}</h5> */}
+                   
                     </Form>
                 </Modal.Body>
 

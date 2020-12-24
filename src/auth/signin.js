@@ -28,8 +28,8 @@ const Signin = ({ location, history }) => {
 
   }, [state]);
   const config = {
-    authority: "https://preprod.idpdecathlon.oxylane.com",
-    client_id: "C6a7b68d52ad21c0d5546fbef78c0903a55190480",
+    authority: process.env.REACT_APP_AUTHORITY,
+    client_id: process.env.REACT_APP_FEDID_CLIENTID,
     redirect_uri: window.location.origin + "/signin",
     response_type: "code",
     scope: "openid profile",
@@ -52,26 +52,26 @@ const Signin = ({ location, history }) => {
       const idTokenState = user.id_token;
       access_token = user.access_token;
       const refresh_tokenState = user.refresh_token;
-      if(access_token !== ""){
+      if (access_token !== "") {
         // let location = window.location.pathname;
         // localStorage.setItem('URL', location)
         // localStorage.setItem('URL', "/dashboard/storedashboard")
         setDefaultHeader(access_token, user.refresh_token);
-        if(localStorage.getItem("URL") === null){
+        if (localStorage.getItem("URL") === null) {
           history.push('/dashboard/storedashboard');
-        }else{
+        } else {
           let url = localStorage.getItem('URL');
           history.push(url);
           // history.push('/dashboard/storedashboard');
         }
-       
+
         // setDefaultHeader(access_token);
       }
-       
+
       // setDefaultHeader(user.access_token);
     }).catch(e => console.log("INSIDE USE EFFECT ERROR " + e));
     // history.push('/dashboard/storedashboard')
-    
+
   }, []);
 
 
@@ -95,5 +95,5 @@ const Signin = ({ location, history }) => {
     </div>
   );
 };
-export {access_token};
+export { access_token };
 export default withRouter(Signin);
