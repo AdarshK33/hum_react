@@ -1,3 +1,4 @@
+
 import React, { createContext, useReducer, useState } from 'react'
 import { client } from '../utils/axios';
 import GroupReducer from '../reducers/GroupReducer';
@@ -5,11 +6,13 @@ import { toast } from "react-toastify";
 import {
     GROUP_SERVICE_VIEW,
     CREATE_SERVICE_ROLE,
-    UPDATE_SERVICE_ROLE
+    UPDATE_SERVICE_ROLE,
+    SERVICE_GROUP_EMPLOYEES
 } from '../constant/actionTypes'
 
 const initial_state = {
-    serviceGroupList:[]
+    serviceGroupList:[],
+    empList:[]
 }
 
 export const GroupContext = createContext();
@@ -60,14 +63,28 @@ export const GroupProvider = ({children}) => {
         }
     }
 
+    //service group employee list
+    const serviceEmp = async() => {
+        try {
+            const result = await client.get('employee/view/service_group')
+            state.empList = result.data.data
+            console.log("empList", state.empList)
+            return dispatch({type: SERVICE_GROUP_EMPLOYEES, payload: state.empList})
+        }
+        catch(error) {
+            console.log(error)
+        }
+    }
 
 
     return (<GroupContext.Provider value={{
         serviceGroupView,
         createRole,
         updateRole,
+        serviceEmp,
         serviceGroupList: state.serviceGroupList,
-        loader: loader
+        loader: loader,
+        empList: state.empList
     }}>
         {children}
     </GroupContext.Provider>)

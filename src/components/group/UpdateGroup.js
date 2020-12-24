@@ -2,8 +2,6 @@ import React, { useState, useEffect, useContext, Fragment } from 'react';
 import { Container, Row, Button, Form, Modal, Col } from 'react-bootstrap'
 import Select from 'react-select'
 import { Multiselect } from 'multiselect-react-dropdown';
-import { AdminContext } from '../../context/AdminState'
-import { ClusterContext } from "../../context/ClusterState";
 import { GroupContext} from '../../context/GroupState'
 
 const UpdateGroup = (props) => {
@@ -14,25 +12,15 @@ const UpdateGroup = (props) => {
     const statusList = [{ status: 'Active', value: 0, id: 1 },
     { status: 'Inactive', value: 1, id: 2 }]
 
-    const { CostCenter, costCenterList} = useContext(AdminContext)
-    const { callClusterEmployeesList,callClusterEmployees} = useContext(ClusterContext);
-    const {updateRole} = useContext(GroupContext)
+    const {updateRole, empList,serviceEmp} = useContext(GroupContext)
     useEffect(() => {
-        CostCenter()
+        serviceEmp()
     }, [])
-console.log("props.emps",props.emps)
-console.log("props.empIds",props.empIds)
-
+    
      useEffect(() => {
         setGroupName(props.groupName)
     },[props.groupName])
     
-
-useEffect(() => {
-
-    callClusterEmployees(props.costCenter)
-    console.log("props.costCenter",props.costCenter)
-},[props.costCenter])
       
         useEffect(() => {
                  
@@ -107,18 +95,10 @@ useEffect(() => {
                         <Row>
                             <Col sm={12}>
                                 <Form.Group>
-                                    <Form.Label>Cost Center</Form.Label>
-                                    <Form.Control type='text' value={props.costCenter} readOnly />
-                                </Form.Group>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col sm={12}>
-                                <Form.Group>
                                     <Form.Label>Employee Id</Form.Label>
                                     <Multiselect
                                          placeholder="Select Employee"
-                                         options={callClusterEmployeesList}
+                                         options={empList}
                                          value={employee}
                                         //  defaultValue={props.empIds}
                                          selectedValues={props.emps}
