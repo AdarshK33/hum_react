@@ -10,6 +10,7 @@ import {
     VIEW_TICKET_ID_INFO,
     UPDATE_TICKET
 } from '../constant/actionTypes'
+var fileDownload = require('js-file-download');
 
 
 
@@ -24,8 +25,8 @@ const initial_state = {
     getIssueAndCategoryList: [],
     urgencyList: [],
     priorityList: '',
-    priorityListId: '',
-    fileName: [],
+    priorityListId: ''
+
 
 
 }
@@ -110,14 +111,27 @@ export const SupportProvider = ({ children }) => {
     }
 
     //Update the tickets
-    const updateTicket = async (updateData) => {
+    const updateTicket = async (updateData, ticketId) => {
         try {
             const result = await client.post('ticket/update', updateData)
             state.ticketListing = result.data.data
             console.log("updated response", state.ticketListing)
             ticketView('all', 0)
+            ticketIdView(ticketId)
             toast.info(result.data.message)
             return dispatch({ type: UPDATE_TICKET, payload: state.ticketListing })
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
+
+    //Download file
+    const downloadFile = async (fileName) => {
+        try {
+            const result = await client.get('ticket/download?name=' + fileName)
+            fileDownload(result.data, fileName);
+
         }
         catch (error) {
             console.log(error)
@@ -185,7 +199,7 @@ export const SupportProvider = ({ children }) => {
 
             state.priorityList = response.data.data.priorityName;
             state.priorityListId = response.data.data.priorityId;
-
+            // alert(state.priorityListId)
 
             console.log(state.priorityList)
             return dispatch({ type: 'FETCH_PRIORITY_LIST', payload: state.priorityList, priorityListId: state.priorityListId });
@@ -207,23 +221,7 @@ export const SupportProvider = ({ children }) => {
                 alert(" In error catch ", error);
             });
     }
-    const uploadImageCreateTicket = (file) => {
-        console.log(file)
-        const formData = new FormData();
-        formData.append('file', file)
 
-
-        return client.post('/ticket/upload', file)
-            .then((response) => {
-                console.log(response, "res")
-                toast.info(response.data.message)
-                state.fileName = response.data;
-                console.log(state.fileName)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    }
 
     return (<SupportContext.Provider value={{
         ticketView,
@@ -231,7 +229,7 @@ export const SupportProvider = ({ children }) => {
         ticketStatus,
         ticketIdView,
         updateTicket,
-        uploadImageCreateTicket,
+        downloadFile,
         ticketListing: state.ticketListing,
         completeStatusView: state.completeStatusView,
         ticketStatusView: state.ticketStatusView,
@@ -247,8 +245,7 @@ export const SupportProvider = ({ children }) => {
         priorityListId: state.priorityListId,
         getRoles: state.getRoles,
         getIssueAndCategoryList: state.getIssueAndCategoryList,
-        urgencyList: state.urgencyList,
-        fileName: state.fileName
+        urgencyList: state.urgencyList
 
     }}>
         {children}

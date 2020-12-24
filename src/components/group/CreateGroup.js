@@ -1,56 +1,50 @@
 import React, { useState, useEffect, useContext, Fragment } from 'react';
 import { Container, Row, Button, Form, Modal, Col } from 'react-bootstrap'
-import Select from 'react-select'
 import { Multiselect } from 'multiselect-react-dropdown';
-import { AdminContext } from '../../context/AdminState'
-import { ClusterContext } from "../../context/ClusterState";
-import { GroupContext} from '../../context/GroupState'
+import { GroupContext } from '../../context/GroupState'
 
 const CreateGroup = (props) => {
     const [groupName, setGroupName] = useState('')
-    let [costCenter, setCostCenter] = useState()
     const [employee, setEmployee] = useState([])
     const [status, setStatus] = useState()
 
     const statusList = [{ status: 'Active', value: 0, id: 1 },
     { status: 'Inactive', value: 1, id: 2 }]
 
-    const { CostCenter, costCenterList} = useContext(AdminContext)
-    const { callClusterEmployeesList,callClusterEmployees} = useContext(ClusterContext);
-    const {createRole} = useContext(GroupContext)
-    useEffect(() => {
-        CostCenter()
-    }, [])
-
+    // const { callClusterEmployeesList,callClusterEmployees} = useContext(ClusterContext);
+    const { createRole, empList, serviceEmp } = useContext(GroupContext)
 
     const groupNameHandler = (e) => {
         setGroupName(e.target.value)
     }
-
-    const setCostCenterHandler = (options) => {
-        let data = options !== null ? options.value : ''
-        setCostCenter(options)
-        callClusterEmployees(data)        
-        console.log("costCenter", data)
-    }
+    useEffect(() => {
+        serviceEmp()
+    }, [])
+    // const setCostCenterHandler = (options) => {
+    //     let data = options !== null ? options.value : ''
+    //     setCostCenter(options)
+    //     callClusterEmployees(data)        
+    //     console.log("costCenter", data)
+    // }
     const handleMultiChange = (options) => {
         setEmployee(options)
+        console.log("multiselect options", options)
     }
 
     const submitHandler = (e) => {
         e.preventDefault();
 
         const createData = {
-            employeeIds:  employee.map((e) => e.employeeId),
+            employeeIds: employee.map((e) => e.employeeId),
             groupId: 0,
             groupName: groupName,
             status: parseInt(status)
-          }
-          console.log("createData", createData)
-          createRole(createData)
+        }
+        console.log("createData", createData)
+        createRole(createData)
 
-          const setModal = props.handleClose;
-          setModal()
+        const setModal = props.handleClose;
+        setModal()
     }
 
     const onCloseModal = () => {
@@ -86,30 +80,15 @@ const CreateGroup = (props) => {
                             <Row>
                                 <Col sm={12}>
                                     <Form.Group>
-                                        <Form.Label>Cost Center</Form.Label>
-                                        <Select
-                                            name="filters"
-                                            placeholder="Select Cost Center"
-                                            value={costCenter}
-                                            style={{ fontSize: "0.8rem" }}
-                                            options={costCenterList !== null ?
-                                                costCenterList.map(e => ({ label: e.costCentreName, value: e.costCentreName })) : []}
-                                            onChange={setCostCenterHandler}
-                                            required isSearchable />
-                                    </Form.Group>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col sm={12}>
-                                    <Form.Group>
                                         <Form.Label>Employee Id</Form.Label>
                                         <Multiselect
-                                             placeholder="Select Employee"
-                                             options={callClusterEmployeesList}
-                                             value={employee}
-                                             displayValue="employeeName"
-                                             onSelect={handleMultiChange}
-                                             isMulti
+                                            placeholder="Select Employee"
+                                            options={empList}
+                                            value={employee}
+                                            displayValue="employeeName"
+                                            onSelect={handleMultiChange}
+                                            selectionLimit='10'
+                                            isMulti
                                         />
                                     </Form.Group>
                                 </Col>

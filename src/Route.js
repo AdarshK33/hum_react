@@ -127,6 +127,7 @@ const RoutePath = () => {
           />
 
 
+
           {state.MenuPermissionsRoute.map((e) => {
             return (
               <div>
@@ -336,6 +337,11 @@ const RoutePath = () => {
                                                                                     <Route
                                                                                       path={`${process.env.PUBLIC_URL}/master/cost-center`}
                                                                                       component={MasterCostCenter}
+                                                                                    /> : 
+                                                                                    e.path === "/service-group" ?
+                                                                                    <Route
+                                                                                      path={`${process.env.PUBLIC_URL}/service-group`}
+                                                                                      component={ViewGroup}
                                                                                     /> : ""
 
 

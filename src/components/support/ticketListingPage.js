@@ -13,50 +13,50 @@ const TicketListingPage = () => {
     const [currentRecords, setCurrentRecords] = useState([])
     const [searchValue, setSearchValue] = useState('');
 
-    const { ticketView, ticketListing, loader, total, ticketIdView} = useContext(SupportContext)
+    const { ticketView, ticketListing, loader, total, ticketIdView } = useContext(SupportContext)
 
     useEffect(() => {
-        ticketView('all',pageCount)
+        ticketView('all', pageCount)
     }, [])
 
     useEffect(() => {
-        if(ticketListing !== null && ticketListing !== undefined){
+        if (ticketListing !== null && ticketListing !== undefined) {
             setCurrentRecords(ticketListing)
         }
-    },[ticketListing,currentRecords])
+    }, [ticketListing, currentRecords])
 
     /*-----------------Pagination------------------*/
     const [currentPage, setCurrentPage] = useState(1);
-    const recordPerPage = 10 ;
+    const recordPerPage = 10;
     const totalRecords = total;
     const pageRange = 10;
 
     const indexOfLastRecord = currentPage * recordPerPage;
     const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
 
-      
-        const handlePageChange = pageNumber => {
-            setPageCount(pageNumber-1)
-            setCurrentPage(pageNumber);
-            if (searchValue !== "") {
-                ticketView(searchValue,pageNumber-1);
-            } else {
-                ticketView('all', pageNumber-1)
-            }
-            setCurrentRecords(ticketListing)
+
+    const handlePageChange = pageNumber => {
+        setPageCount(pageNumber - 1)
+        setCurrentPage(pageNumber);
+        if (searchValue !== "") {
+            ticketView(searchValue, pageNumber - 1);
+        } else {
+            ticketView('all', pageNumber - 1)
         }
-   
-   
+        setCurrentRecords(ticketListing)
+    }
+
+
     /*-----------------Pagination------------------*/
 
     const searchHandler = (e) => {
         setSearchValue(e.target.value)
-       
+
     }
 
     const searchDataHandler = () => {
         if (searchValue !== "") {
-            ticketView(searchValue,pageCount);
+            ticketView(searchValue, pageCount);
         } else {
             ticketView('all', pageCount)
         }
@@ -127,11 +127,13 @@ const TicketListingPage = () => {
                                                             <td>{item.storeId}</td>
                                                             <td>{item.firstName} {item.lastName}</td>
                                                             <td>{item.role}</td>
-                                                            <td>{item.issueCategory}</td>
+                                                            <td>{item.issueCategory === null ?
+                                                                '-' : item.issueCategory}</td>
                                                             <td>{item.priority}</td>
                                                             <td>{item.completionStatusDesc}</td>
                                                             <td>{item.ticketStatusDesc}</td>
-                                                            <td>{item.updatedDate}</td>
+                                                            <td>{item.updatedDate === null ? '-' :
+                                                                item.updatedDate}</td>
                                                             <td>{item.createdDate}</td>
                                                             <Link to='/viewTicket'>
                                                                 <td><Edit2 onClick={() => {
@@ -140,12 +142,12 @@ const TicketListingPage = () => {
                                                         </tr>
                                                     </tbody>
                                                 )
-                                            }):
+                                            }) :
                                             <tbody>
-                                            <tr>
-                                                <td colSpan='6'>No Record Found</td>
-                                            </tr>
-                                        </tbody>}
+                                                <tr>
+                                                    <td colSpan='6'>No Record Found</td>
+                                                </tr>
+                                            </tbody>}
 
                                 </Table>
                             </div>
@@ -158,7 +160,7 @@ const TicketListingPage = () => {
 
 
             </Container>
-            {ticketListing !== null && ticketListing !== undefined && 
+            {ticketListing !== null && ticketListing !== undefined &&
                 <Pagination
                     itemClass="page-item"
                     linkClass="page-link"
