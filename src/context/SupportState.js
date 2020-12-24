@@ -5,22 +5,22 @@ import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import {
     VIEW_TICKET_LISTING,
-     COMPLETE_STATUS,
-     TICKET_STATUS,
-     VIEW_TICKET_ID_INFO,
-     UPDATE_TICKET
+    COMPLETE_STATUS,
+    TICKET_STATUS,
+    VIEW_TICKET_ID_INFO,
+    UPDATE_TICKET
 } from '../constant/actionTypes'
 var fileDownload = require('js-file-download');
 
 
 
 const initial_state = {
-    ticketListing:[],
-    completeStatusView:[],
-    ticketStatusView:[],
-    total:{},
-    data:[],
-    ticketIdList:{},
+    ticketListing: [],
+    completeStatusView: [],
+    ticketStatusView: [],
+    total: {},
+    data: [],
+    ticketIdList: {},
     getRoles: [],
     getIssueAndCategoryList: [],
     urgencyList: [],
@@ -31,7 +31,7 @@ const initial_state = {
 
 }
 
- export const SupportContext = createContext();
+export const SupportContext = createContext();
 
 export const SupportProvider = ({ children }) => {
     const [state, dispatch] = useReducer(SupportReducer, initial_state);
@@ -40,96 +40,100 @@ export const SupportProvider = ({ children }) => {
     let history = useHistory();
 
     //view ticket listing
-    const ticketView = async(key,page) => {
+    const ticketView = async (key, page) => {
         console.log("pageCount", page)
         setLoader(true)
         try {
-            const result = await client.get('/ticket?key='+ key +
-             '&page=' + page + '&size='+10)
+            const result = await client.get('/ticket?key=' + key +
+                '&page=' + page + '&size=' + 10)
             state.ticketListing = result.data.data.data
             state.data = result.data.data
             state.total = state.data.total
             setLoader(false)
             console.log("ticket response", state.ticketListing)
             console.log("total response", state.total)
-            return dispatch({type: VIEW_TICKET_LISTING, payload: state.ticketListing,
-            loader: loader, data: state.data, total: state.total })
+            return dispatch({
+                type: VIEW_TICKET_LISTING, payload: state.ticketListing,
+                loader: loader, data: state.data, total: state.total
+            })
         }
-        catch(error) {
+        catch (error) {
             console.log(error)
         }
 
     }
     //view ticket info based on ticket Id
-    const ticketIdView = async(id) => {
+    const ticketIdView = async (id) => {
         setLoader(true)
-            try {
-                const result = await client.get('/ticket/'+id)
-                state.ticketIdList = result.data.data
-                console.log("ticket id response",state.ticketIdList)
-                setLoader(false)
-                return dispatch({type: VIEW_TICKET_ID_INFO, 
-                    payload: state.ticketIdList, loader: loader})
-            }
-            catch(error) {
-                console.log(error)
-            }
-        
+        try {
+            const result = await client.get('/ticket/' + id)
+            state.ticketIdList = result.data.data
+            console.log("ticket id response", state.ticketIdList)
+            setLoader(false)
+            return dispatch({
+                type: VIEW_TICKET_ID_INFO,
+                payload: state.ticketIdList, loader: loader
+            })
+        }
+        catch (error) {
+            console.log(error)
+        }
+
     }
 
 
     //conpletion status
-    const completeStatus = async() => {
+    const completeStatus = async () => {
 
-       try {
-        const result = await client.get('ticket/completion/status')
-        state.completeStatusView = result.data.data
-        console.log("somplete status", state.completeStatusView)
-        return dispatch({type: COMPLETE_STATUS, payload: state.completeStatusView})
-       }
-       catch(error){
-           console.log(error)
-       }
+        try {
+            const result = await client.get('ticket/completion/status')
+            state.completeStatusView = result.data.data
+            console.log("somplete status", state.completeStatusView)
+            return dispatch({ type: COMPLETE_STATUS, payload: state.completeStatusView })
+        }
+        catch (error) {
+            console.log(error)
+        }
     }
 
     //Ticket status
-    const ticketStatus = async() => {
+    const ticketStatus = async () => {
 
         try {
-         const result = await client.get('ticket/status')
-         state.ticketStatusView = result.data.data
-         console.log("ticket status", state.ticketStatusView)
-         return dispatch({type: TICKET_STATUS, payload: state.ticketStatusView})
+            const result = await client.get('ticket/status')
+            state.ticketStatusView = result.data.data
+            console.log("ticket status", state.ticketStatusView)
+            return dispatch({ type: TICKET_STATUS, payload: state.ticketStatusView })
         }
-        catch(error){
+        catch (error) {
             console.log(error)
         }
-     }
+    }
 
     //Update the tickets
-    const updateTicket = async(updateData, ticketId) => {
+    const updateTicket = async (updateData, ticketId) => {
         try {
-            const result = await client.post('ticket/update',updateData)
+            const result = await client.post('ticket/update', updateData)
             state.ticketListing = result.data.data
-            console.log("updated response",state.ticketListing)
-            ticketView('all',0)
+            console.log("updated response", state.ticketListing)
+            ticketView('all', 0)
             ticketIdView(ticketId)
             toast.info(result.data.message)
-            return dispatch({type: UPDATE_TICKET, payload: state.ticketListing})
+            return dispatch({ type: UPDATE_TICKET, payload: state.ticketListing })
         }
-        catch(error){
+        catch (error) {
             console.log(error)
         }
     }
 
     //Download file
-    const downloadFile = async(fileName) => {
+    const downloadFile = async (fileName) => {
         try {
-            const result = await client.get('ticket/download?name='+fileName)
+            const result = await client.get('ticket/download?name=' + fileName)
             fileDownload(result.data, fileName);
 
         }
-        catch(error){
+        catch (error) {
             console.log(error)
         }
     }
@@ -195,7 +199,7 @@ export const SupportProvider = ({ children }) => {
 
             state.priorityList = response.data.data.priorityName;
             state.priorityListId = response.data.data.priorityId;
-            alert(state.priorityListId)
+            // alert(state.priorityListId)
 
             console.log(state.priorityList)
             return dispatch({ type: 'FETCH_PRIORITY_LIST', payload: state.priorityList, priorityListId: state.priorityListId });
@@ -210,7 +214,7 @@ export const SupportProvider = ({ children }) => {
         return client.post("/ticket/create", newTicket).then(function (respone) {
             console.log("api response===", respone.data.message);
             toast.success(respone.data.message);
-            ticketView('all',0)
+            ticketView('all', 0)
 
         })
             .catch((error) => {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, Fragment } from 'react';
 import { Container, Row, Button, Form, Modal, Col } from 'react-bootstrap'
 import { Multiselect } from 'multiselect-react-dropdown';
-import { GroupContext} from '../../context/GroupState'
+import { GroupContext } from '../../context/GroupState'
 
 const CreateGroup = (props) => {
     const [groupName, setGroupName] = useState('')
@@ -12,14 +12,14 @@ const CreateGroup = (props) => {
     { status: 'Inactive', value: 1, id: 2 }]
 
     // const { callClusterEmployeesList,callClusterEmployees} = useContext(ClusterContext);
-    const {createRole, empList,serviceEmp} = useContext(GroupContext)
+    const { createRole, empList, serviceEmp } = useContext(GroupContext)
 
     const groupNameHandler = (e) => {
         setGroupName(e.target.value)
     }
     useEffect(() => {
         serviceEmp()
-    },[])
+    }, [])
     // const setCostCenterHandler = (options) => {
     //     let data = options !== null ? options.value : ''
     //     setCostCenter(options)
@@ -28,23 +28,23 @@ const CreateGroup = (props) => {
     // }
     const handleMultiChange = (options) => {
         setEmployee(options)
-        console.log("multiselect options",options)
+        console.log("multiselect options", options)
     }
 
     const submitHandler = (e) => {
         e.preventDefault();
 
         const createData = {
-            employeeIds:  employee.map((e) => e.employeeId),
+            employeeIds: employee.map((e) => e.employeeId),
             groupId: 0,
             groupName: groupName,
             status: parseInt(status)
-          }
-          console.log("createData", createData)
-          createRole(createData)
+        }
+        console.log("createData", createData)
+        createRole(createData)
 
-          const setModal = props.handleClose;
-          setModal()
+        const setModal = props.handleClose;
+        setModal()
     }
 
     const onCloseModal = () => {
@@ -82,13 +82,13 @@ const CreateGroup = (props) => {
                                     <Form.Group>
                                         <Form.Label>Employee Id</Form.Label>
                                         <Multiselect
-                                             placeholder="Select Employee"
-                                             options={empList}
-                                             value={employee}
-                                             displayValue="employeeName"
-                                             onSelect={handleMultiChange}
-                                             selectionLimit='10'
-                                             isMulti
+                                            placeholder="Select Employee"
+                                            options={empList}
+                                            value={employee}
+                                            displayValue="employeeName"
+                                            onSelect={handleMultiChange}
+                                            selectionLimit='10'
+                                            isMulti
                                         />
                                     </Form.Group>
                                 </Col>
