@@ -5,6 +5,7 @@ import App from "./components/app";
 
 // Import custom Components
 import Signin from "./auth/signin";
+import Login from "./auth/login";
 import Default from "./components/dashboard/defaultCompo/default";
 // sample page
 import Samplepage from "./components/sample/samplepage";
@@ -54,6 +55,7 @@ import MasterCostCenter from "./components/MasterTables/MasterCostCenter";
 import CreateTicket from "./components/support/createTicket";
 import TicketListingPage from "./components/support/ticketListingPage"
 import ViewTicket from './components/support/viewTicket'
+import ViewGroup from './components/group/ViewGroup'
 
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
@@ -69,6 +71,11 @@ const RoutePath = () => {
         path={`${process.env.PUBLIC_URL}/signin`}
         component={Signin}
       />
+
+<Route
+       path={`${process.env.PUBLIC_URL}/login`}
+       component={Login}
+     />
 
 
 
@@ -112,6 +119,11 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/viewTicket`}
             component={ViewTicket}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/ViewGroup`}
+            component={ViewGroup}
           />
 
 

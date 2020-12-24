@@ -8,7 +8,7 @@ import '../../assets/css/search.css'
 import { toast } from "react-toastify";
 import Pagination from 'react-js-pagination'
 import { AppContext } from "../../context/AppState";
-import { Search } from 'react-feather'
+import {  Search } from 'react-feather'
 import {
   JsonToExcel
 } from 'react-json-excel';
@@ -61,14 +61,14 @@ const HolidayList = () => {
 
   }
 
-  /*  const searchDataHandler = () => {
-     if (searchValue !== "") {
-       searchHoliday(searchValue);
-     } else {
-       getHoliday()
-     }
- 
-   } */
+ /*  const searchDataHandler = () => {
+    if (searchValue !== "") {
+      searchHoliday(searchValue);
+    } else {
+      getHoliday()
+    }
+
+  } */
 
   useEffect(() => {
     if (searchHolidayList !== undefined && searchHolidayList !== null && searchHolidayList.length > 0) {
@@ -81,7 +81,10 @@ const HolidayList = () => {
     let fileObj = event.target.files[0];
     console.log("clicked", fileObj)
     setFileUpload(fileObj)
-
+    // uploadFile(fileObj)
+    // setTimeout(()=>{
+    //   window.location.reload()
+    // }, 5000)
 
   }
 
@@ -170,29 +173,29 @@ const HolidayList = () => {
 
               <div className="table-responsive">
                 <table id="table-to-xls" className="table table-hover">
-                  {user.loginType === "1" || user.additionalRole === "1" ?
-                    <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
-                      <tr>
-                        <th>S. No</th>
-                        <th scope="col"> Date</th>
-                        <th scope="col"> Name</th>
-                        <th scope="col">Year</th>
-                        <th scope="col">State</th>
-                        <th scope="col">Department</th>
-                      </tr>
-                    </thead>
-                    :
-                    <thead style={{ backgroundColor: "#006EBB", color: 'white' }}>
-                      <tr>
-                        <th>S. No</th>
-                        <th scope="col"> Date</th>
-                        <th scope="col"> Name</th>
-                        <th scope="col">Year</th>
-                        <th scope="col">State</th>
-                        <th scope="col">Department</th>
-                      </tr>
-                    </thead>
-                  }
+                {user.loginType === "1" || user.additionalRole === "1" ?
+                  <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
+                    <tr>
+                      <th>S. No</th>
+                      <th scope="col"> Date</th>
+                      <th scope="col"> Name</th>
+                      <th scope="col">Year</th>
+                      <th scope="col">State</th>
+                      <th scope="col">Department</th>
+                    </tr>
+                  </thead>
+                  :
+                   <thead style={{ backgroundColor: "#006EBB", color:'white' }}>
+                   <tr>
+                     <th>S. No</th>
+                     <th scope="col"> Date</th>
+                     <th scope="col"> Name</th>
+                     <th scope="col">Year</th>
+                     <th scope="col">State</th>
+                     <th scope="col">Department</th>
+                   </tr>
+                 </thead>
+                }
 
                   {loader === true && currentRecords !== null && currentRecords !== undefined ?
                     <tbody>
@@ -209,29 +212,29 @@ const HolidayList = () => {
                         </td>
                       </tr>
                     </tbody> :
-                    currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 ?
-                      currentRecords.map((item, i) => {
-                        return (
-                          <tbody key={i + 1}>
-                            <tr>
-                              <td>{i + 1 + indexOfFirstRecord}</td>
-                              <td>{item.holidayDate}</td>
-                              <td>{item.holidayName}</td>
-                              <td>{item.year}</td>
-                              <td>{item.state}</td>
-                              <td>{item.department}</td>
-                            </tr>
-                          </tbody>
-                        )
-                      }) :
-                      <tbody>
+                  currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 ?
+                    currentRecords.map((item, i) => {
+                      return (
+                        <tbody key={i + 1}>
+                          <tr>
+                            <td>{i + 1 + indexOfFirstRecord}</td>
+                            <td>{item.holidayDate}</td>
+                            <td>{item.holidayName}</td>
+                            <td>{item.year}</td>
+                            <td>{item.state}</td>
+                            <td>{item.department}</td>
+                          </tr>
+                        </tbody>
+                      )
+                    }) :
+                    <tbody>
                         <tr>
-                          <td colspan='6'>No Record Found</td>
+                            <td colspan='6'>No Record Found</td>
                         </tr>
-                      </tbody>}
+                    </tbody>}
 
                 </table>
-                {/*  {(holidayDataList === null) ?
+               {/*  {(holidayDataList === null) ?
                   <p style={{ textAlign: "center" }}>No Record Found</p> : null}
 
                 {currentRecords !== undefined && holidayDataList !== null && currentRecords.length === 0 ?
