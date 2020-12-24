@@ -121,6 +121,11 @@ const RoutePath = () => {
             component={ViewTicket}
           />
 
+          <Route
+            path={`${process.env.PUBLIC_URL}/ViewGroup`}
+            component={ViewGroup}
+          />
+
 
 
           {state.MenuPermissionsRoute.map((e) => {

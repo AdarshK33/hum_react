@@ -2,7 +2,6 @@ import React, { Fragment, useState, useContext, useEffect } from "react";
 import Breadcrumb from "../common/breadcrumb";
 import { RosterContext } from "../../context/RosterState";
 import DatePicker from "react-datepicker";
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import "react-datepicker/dist/react-datepicker.css";
 import ShiftModal from "./shiftModal";
 import { AppContext } from "../../context/AppState";
