@@ -5,11 +5,13 @@ import { useHistory } from "react-router-dom";
 import '../common/style.css'
 import { SupportContext } from '../../context/SupportState'
 import { GroupContext } from '../../context/GroupState'
+import { AppContext } from "../../context/AppState";
 
 const ViewTicket = () => {
     const { completeStatus, completeStatusView, ticketStatus,
         ticketStatusView, ticketIdList, updateTicket, loader, ticketIdView, downloadFile } = useContext(SupportContext)
     const { serviceGroupView, serviceGroupList } = useContext(GroupContext)
+    const { user } = useContext(AppContext);
 
     const [compStatus, setCompStatus] = useState()
     const [tickStatus, setTickStatus] = useState()
@@ -23,6 +25,7 @@ const ViewTicket = () => {
         serviceGroupView()
     }, [])
 
+   
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -303,6 +306,8 @@ const ViewTicket = () => {
                                 <Form.Group as={Row} >
                                     <Form.Label column sm='3' className='labels'>Service Groups :</Form.Label>
                                     <Col sm='9'>
+                                    {user.loginType === '1' || user.loginType === '9' || 
+                                    user.additionalRole === '1' || user.additionalRole === '9'? 
                                         <Form.Control as='select' value={serviceGroup} onChange={serviceGroupHandler} >
                                             {serviceGroupList !== null &&
                                             serviceGroupList !== undefined &&
@@ -313,7 +318,10 @@ const ViewTicket = () => {
                                                 )
 
                                             })}
-                                        </Form.Control>
+                                        </Form.Control>:
+                                        <Form.Control type='text' readOnly className='disabledValue'
+                                        value={ticketIdList.groupId} />
+                                        }
                                     </Col>
                                 </Form.Group>
                             </Col>
@@ -323,6 +331,8 @@ const ViewTicket = () => {
                                 <Form.Group as={Row} >
                                     <Form.Label column sm='3' className='labels'>Completion Status :</Form.Label>
                                     <Col sm='9'>
+                                    {user.loginType === '1' || user.loginType === '9' || 
+                                    user.additionalRole === '1' || user.additionalRole === '9'?
                                         <Form.Control as='select' value={compStatus}
                                             onChange={compStatusHandler} >
                                             {completeStatusView !== null &&
@@ -333,7 +343,14 @@ const ViewTicket = () => {
                                                         <option key={i} value={item.value}>{item.name}</option>
                                                     )
                                                 })}
-                                        </Form.Control>
+                                        </Form.Control>:
+                                        <Form.Control type='text' readOnly className='disabledValue'
+                                        value={ticketIdList.completionStatus === 0 ? 'Fulfilled Offline':
+                                            (ticketIdList.completionStatus === 1 ? 'Fulfilled by live support':
+                                            (ticketIdList.completionStatus === 2 ? 'Abandoned by User':
+                                            (ticketIdList.completionStatus === 3 ? 'Enhancement request':
+                                            (ticketIdList.completionStatus === 4 ? 'Resolved by Workaround':
+                                            (ticketIdList.completionStatus === 5 ? 'Training':''))))) } />}
                                     </Col>
                                 </Form.Group>
                             </Col>
@@ -343,6 +360,8 @@ const ViewTicket = () => {
                                 <Form.Group as={Row} >
                                     <Form.Label column sm='3' className='labels'>Ticket Status :</Form.Label>
                                     <Col sm='9'>
+                                    {user.loginType === '1' || user.loginType === '9' || 
+                                    user.additionalRole === '1' || user.additionalRole === '9'?
                                         <Form.Control as='select' value={tickStatus}
                                             onChange={tickStatusHandler} >
                                             {ticketStatusView !== null &&
@@ -353,7 +372,12 @@ const ViewTicket = () => {
                                                         <option key={i} value={item.value}>{item.name}</option>
                                                     )
                                                 })}
-                                        </Form.Control>
+                                        </Form.Control>:
+                                        <Form.Control type='text' readOnly className='disabledValue'
+                                        value={ticketIdList.ticketStatus === 0 ? 'Open':
+                                               (ticketIdList.ticketStatus === 1 ? 'In Progress':
+                                               (ticketIdList.ticketStatus === 2 ? 'On Hold':
+                                               (ticketIdList.ticketStatus === 3 ? 'Closed':'')))} />}
                                     </Col>
                                 </Form.Group>
                             </Col>
