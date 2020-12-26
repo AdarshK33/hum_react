@@ -54,6 +54,10 @@ const ViewTicket = () => {
 
     }
 
+    const backHandler = (e) => {
+        history.push("./ticketListingPage")
+    }
+
     const downloadFileButton = (e) => {
         e.preventDefault();
         downloadFile(fileName)
@@ -300,7 +304,10 @@ const ViewTicket = () => {
                                     <Form.Label column sm='3' className='labels'>Service Groups :</Form.Label>
                                     <Col sm='9'>
                                         <Form.Control as='select' value={serviceGroup} onChange={serviceGroupHandler} >
-                                            {serviceGroupList.map((item, i) => {
+                                            {serviceGroupList !== null &&
+                                            serviceGroupList !== undefined &&
+                                            serviceGroupList.length >0 &&
+                                            serviceGroupList.map((item, i) => {
                                                 return (
                                                     <option key={item.groupId} value={item.groupId}>{item.groupName}</option>
                                                 )
@@ -365,7 +372,8 @@ const ViewTicket = () => {
                                                         return (
                                                             <tbody>
                                                                 <tr>
-                                                                    <td style={{ textAlign: 'center', padding: '4px 0', border: 'none' }}>
+                                                                    <td style={{ textAlign: 'center', padding: '4px 0', 
+                                                                    border: 'none',fontWeight:'bolder' }}>
                                                                         {item.date}</td>
                                                                 </tr>
 
@@ -373,13 +381,15 @@ const ViewTicket = () => {
                                                                     return (
                                                                         <Fragment>
                                                                             <tr>
-                                                                                <td style={{ textAlign: 'left', padding: '4px 0', border: 'none' }}>
-                                                                                    {i.employeeName}</td>
+                                                                                <td style={{ textAlign: 'left', padding: '4px 0', 
+                                                                                border: 'none',fontWeight:'bolder',textDecoration:'underline' }}>
+                                                                                {i.employeeName}</td>
                                                                             </tr>
                                                                             {i.comments.map(a => {
                                                                                 return (
                                                                                     <tr>
-                                                                                        <td style={{ textAlign: 'left', padding: '4px 0', border: 'none' }}>{a}</td>
+                                                                                        <td style={{ textAlign: 'left', padding: '4px 0', 
+                                                                                        border: 'none',backgroundColor:'aliceblue' }}>{a}</td>
                                                                                     </tr>
                                                                                 )
                                                                             })}
@@ -396,22 +406,6 @@ const ViewTicket = () => {
                                                     })}
 
                                             </Table>
-                                            {/* {ticketIdList.ticketResolutions !== null &&
-                                                    ticketIdList.ticketResolutions !== undefined &&
-                                                    ticketIdList.ticketResolutions.length > 0 &&
-                                                    ticketIdList.ticketResolutions.map((item, id) => {
-                                                        return(
-                                                            <div>
-                                                                <p>{item.date}</p>
-                                                                {item.resolutions.map((i,e) => {
-                                                                    return(
-                                                                        <p>{i.employeeName}</p>
-                                                                       
-                                                                    )
-                                                                })}
-                                                            </div>
-                                                        )
-                                                    })} */}
                                         </Row>
                                         <Row>
                                             <Form.Control as='textarea' row='3' value={resolution || ''}
@@ -422,10 +416,14 @@ const ViewTicket = () => {
                             </Col>
                         </Row>
                         <Row>
-                            <Col sm={4}></Col>
-                            <Col sm={4}>
+                            <Col sm={3}></Col>
+                            <Col sm={2}>
                                 <Button type='submit' onClick={submitHandler}>Submit</Button>
                             </Col>
+                            <Col sm={2}>
+                                <Button onClick={backHandler}>Back</Button>
+                            </Col>
+                            <Col sm={3}></Col>
                         </Row>
                     </Form>
                 }
