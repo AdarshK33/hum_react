@@ -213,7 +213,7 @@ export const SupportProvider = ({ children }) => {
         // alert(newTicket)
         return client.post("/ticket/create", newTicket).then(function (respone) {
             console.log("api response===", respone.data.message);
-            toast.success(respone.data.message);
+            toast.info(respone.data.message);
             ticketView('all', 0)
 
         })

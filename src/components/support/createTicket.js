@@ -28,7 +28,7 @@ const CreateTicket = () => {
     const [fileNames, setFileNames] = useState([])
     //const [fileUpload, setFileUpload] = useState();
     const [loader, setLoader] = useState(false);
-    let count = 0;
+
 
     let history = useHistory();
     const { user } = useContext(AppContext);
@@ -74,35 +74,23 @@ const CreateTicket = () => {
     }
 
 
-
-
-
-
-
-
     const getUploadParams = ({ meta }) => {
-
+        console.log("BASE URL CHECK " + process.env.REACT_APP_BASEURL)
         return {
-            // url: 'https://httpbin.org/post',
-            url: `${process.env.REACT_APP_BASEURL}ticket/upload`,
+            //url: 'https://httpbin.org/post',
+            url: `${process.env.REACT_APP_BASEURL}/ticket/upload`,
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
                 'Authorization': `Bearer ${access_token}`
-
             }
-
-
-
         }
-
     }
-
-
 
     const handleSubmit = (files) => {
         console.log(files.map(f => f.meta))
     }
+
 
     const handleChangeStatus = ({ meta, remove }, status) => {
         setNumber(1)
@@ -111,6 +99,7 @@ const CreateTicket = () => {
             fileNames.push({ fileId: 0, fileName: meta.name })
             console.log("sucess ", fileNames)
             //remove()
+            console.log("META^^^^^^^^^^^^^^^^^^ " + JSON.stringify(meta))
         } else if (meta.status !== 'done') {
             //  alert(`${meta.name}, upload failed...`)
             // console.log("META^^^^^^^^^^^^^^^^^^ " + JSON.stringify(meta))
@@ -132,7 +121,7 @@ const CreateTicket = () => {
                 completionStatus: 0,
                 description,
                 priorityId: priorityListId,
-                resolution: "aaa",
+                resolution: null,
                 role,
                 storeId: user.costCentre,
                 ticketId: 0,
@@ -158,7 +147,7 @@ const CreateTicket = () => {
                 completionStatus: 0,
                 description,
                 priorityId: priorityListId,
-                resolution: "aaa",
+                resolution: null,
                 role,
                 storeId: user.costCentre,
                 ticketId: 0,
@@ -336,7 +325,7 @@ const CreateTicket = () => {
                                             getUploadParams={getUploadParams}
                                             onChangeStatus={handleChangeStatus}
                                             // onSubmit={handleSubmit}
-
+                                            maxSizeBytes="5e+6"
                                             accept="image/*,.pdf,video/*"
                                             maxFiles={3}
                                             inputContent="Browse file"
