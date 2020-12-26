@@ -54,6 +54,10 @@ const ViewTicket = () => {
 
     }
 
+    const backHandler = (e) => {
+        history.push("./ticketListingPage")
+    }
+
     const downloadFileButton = (e) => {
         e.preventDefault();
         downloadFile(fileName)
@@ -300,7 +304,10 @@ const ViewTicket = () => {
                                     <Form.Label column sm='3' className='labels'>Service Groups :</Form.Label>
                                     <Col sm='9'>
                                         <Form.Control as='select' value={serviceGroup} onChange={serviceGroupHandler} >
-                                            {serviceGroupList.map((item, i) => {
+                                            {serviceGroupList !== null &&
+                                            serviceGroupList !== undefined &&
+                                            serviceGroupList.length >0 &&
+                                            serviceGroupList.map((item, i) => {
                                                 return (
                                                     <option key={item.groupId} value={item.groupId}>{item.groupName}</option>
                                                 )
@@ -409,10 +416,14 @@ const ViewTicket = () => {
                             </Col>
                         </Row>
                         <Row>
-                            <Col sm={4}></Col>
-                            <Col sm={4}>
+                            <Col sm={3}></Col>
+                            <Col sm={2}>
                                 <Button type='submit' onClick={submitHandler}>Submit</Button>
                             </Col>
+                            <Col sm={2}>
+                                <Button onClick={backHandler}>Back</Button>
+                            </Col>
+                            <Col sm={3}></Col>
                         </Row>
                     </Form>
                 }

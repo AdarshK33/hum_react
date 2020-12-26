@@ -93,8 +93,8 @@ const TicketListingPage = () => {
                                             <th scope="col">Priority</th>
                                             <th scope="col">Completion Status</th>
                                             <th scope="col">Ticket Status</th>
-                                            <th scope="col">Updated Date</th>
                                             <th scope="col">Created Date</th>
+                                            <th scope="col">Updated Date</th>
                                             <th scope="col">Edit</th>
                                         </tr>
 
@@ -132,9 +132,9 @@ const TicketListingPage = () => {
                                                             <td>{item.priority}</td>
                                                             <td>{item.completionStatusDesc}</td>
                                                             <td>{item.ticketStatusDesc}</td>
+                                                            <td>{item.createdDate}</td>
                                                             <td>{item.updatedDate === null ? '-' :
                                                                 item.updatedDate}</td>
-                                                            <td>{item.createdDate}</td>
                                                             <Link to='/viewTicket'>
                                                                 <td><Edit2 onClick={() => {
                                                                     ticketIdView(item.ticketId)
@@ -145,7 +145,7 @@ const TicketListingPage = () => {
                                             }) :
                                             <tbody>
                                                 <tr>
-                                                    <td colSpan='6'>No Record Found</td>
+                                                    <td colSpan='12'>No Record Found</td>
                                                 </tr>
                                             </tbody>}
 
