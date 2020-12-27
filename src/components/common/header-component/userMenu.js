@@ -38,9 +38,9 @@ const UserMenu = () => {
         history.push("/dashboard/storedashboard");
     }
 
-    // const TicketListingPage = () => {
-    //     history.push("/ticketListingPage");
-    // } 
+    const TicketListingPage = () => {
+        history.push("/ticketListingPage");
+    } 
 
     // const gotoProfilePage = () => {
     //     window.location.href = "../profileEdit"
@@ -77,7 +77,7 @@ const UserMenu = () => {
                     {user.clusterManagerMenus !== null &&
                         <li onClick={handleMenuListCluster}><a href="#leader"><Users />Cluster Leader</a></li>
                     }
-                     {/* <li onClick={TicketListingPage}><a><Users />Support</a></li>  */}
+                     <li onClick={TicketListingPage}><a><Users />Support</a></li> 
                     {/*  <li><a href="#javascript"><Settings />Settings</a></li> */}
                     {/* <li><a href="#javascript"><LogOut /> Log out</a></li> */}
                     {/* <li><a href={loginUrl}><LogIn />Log In</a></li> */}
