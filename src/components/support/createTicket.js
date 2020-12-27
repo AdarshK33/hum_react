@@ -11,6 +11,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import '../common/style.css'
 import { Users } from 'react-feather';
+import { client } from '../../utils/axios';
+
 import { access_token } from '../../auth/signin';;
 
 
@@ -26,7 +28,7 @@ const CreateTicket = () => {
     // const [uploadFileButton, setUploadFileButton] = useState(false)
     // const [filesCount, setFilesCount] = useState([])
     const [fileNames, setFileNames] = useState([])
-    //const [fileUpload, setFileUpload] = useState();
+    const [fileUpload, setFileUpload] = useState();
     const [loader, setLoader] = useState(false);
 
 
@@ -107,6 +109,39 @@ const CreateTicket = () => {
 
     }
 
+
+
+    // ===================================================================================
+    const changeHandler = (event) => {
+        let fileObj = event.target.files[0];
+        console.log("clicked", fileObj)
+        setFileUpload(fileObj)
+        setNumber(1)
+    }
+
+
+    const handleUpload = () => {
+        console.log(fileUpload);
+        if (fileUpload !== undefined && fileUpload !== null) {
+            uploadDailyQty(fileUpload)
+        } else {
+            toast.info("Please select a file to upload")
+        }
+    }
+    const uploadDailyQty = (file) => {
+        const formData = new FormData();
+        formData.append('file', file)
+
+        return client.post('/ticket/upload', formData)
+            .then((response) => {
+                console.log(response, "responce")
+                toast.info(response.data.fileName)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+    //========================================================================================
 
 
     const onSubmit = e => {
@@ -382,6 +417,23 @@ const CreateTicket = () => {
                                 </Form.Group>
                             </Col>
                         </Row>
+
+
+
+                        {/* =============================================== */}
+                        <input
+                            className="btn"
+                            type="file"
+                            accept="image/*,video/*,.pdf"
+                            multiple="multiple"
+                            onChange={(e) => changeHandler(e)}
+                            style={{ padding: "5px" }}
+                        />
+
+                        <button className="btn btn-primary" style={{ marginTop: "5px", marginLeft: "30px", paddingLeft: "20px", paddingRight: "20px", fontWeight: "bold" }}
+                            type="button" onClick={handleUpload}
+                        >Upload</button>
+                        {/* =============================================== */}
 
 
 
