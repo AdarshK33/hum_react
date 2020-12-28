@@ -1,14 +1,20 @@
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment, useContext,useEffect } from 'react';
 import man from '../../../assets/images/dashboard/userImage.png';
 import { User, Mail, Lock, Settings, LogOut, LogIn, Users, UserPlus } from 'react-feather';
 import { AppContext } from "../../../context/AppState";
 import { useHistory } from "react-router-dom";
 import TicketListingPage from '../../support/ticketListingPage'
+import { PermissionContext } from '../../../context/PermissionState'
 
 const loginUrl = `${process.env.REACT_APP_FEDID_AUTH_URL}?response_type=code&client_id=${process.env.REACT_APP_FEDID_CLIENTID}&scope=openid%20profile&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}`;
 const UserMenu = () => {
     const { user, getUserMenu, userLogout } = useContext(AppContext);
+    const {viewServiceGroup, groupList } = useContext(PermissionContext)
     let history = useHistory();
+
+    useEffect(() => {
+        viewServiceGroup()
+    },[])
 
     const handleMenuListProfile = () => {
         getUserMenu(user.generalUserMenus, "profile", user);
@@ -77,7 +83,9 @@ const UserMenu = () => {
                     {user.clusterManagerMenus !== null &&
                         <li onClick={handleMenuListCluster}><a href="#leader"><Users />Cluster Leader</a></li>
                     }
+                    {groupList !== null && groupList.groupStatus === 0 ?
                      <li onClick={TicketListingPage}><a><Users />Support</a></li> 
+                     : ''}
                     {/*  <li><a href="#javascript"><Settings />Settings</a></li> */}
                     {/* <li><a href="#javascript"><LogOut /> Log out</a></li> */}
                     {/* <li><a href={loginUrl}><LogIn />Log In</a></li> */}
