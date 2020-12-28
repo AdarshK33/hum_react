@@ -118,26 +118,26 @@ export const AppProvider = ({ children, history }) => {
     //   .then((response) => {
     //     console.log(response)
     //     if (response.status === 201) {
-          Cookies.remove('APPAT')
-          Cookies.remove('APPRT')
-          localStorage.removeItem('APPID')
-          localStorage.removeItem('type')
-          localStorage.removeItem('flag')
-          window.location.href = logOutUrl
-          localStorage.removeItem('URL')
-          // window.open(
-          //   loginUrl,
-          //   '_blank' // <- This is what makes it open in a new window.
-          // );
+    Cookies.remove('APPAT')
+    Cookies.remove('APPRT')
+    localStorage.removeItem('APPID')
+    localStorage.removeItem('type')
+    localStorage.removeItem('flag')
+    window.location.href = logOutUrl
+    localStorage.removeItem('URL')
+    // window.open(
+    //   loginUrl,
+    //   '_blank' // <- This is what makes it open in a new window.
+    // );
 
-      //   }
-      //   else {
-      //     toast.info("Something went Wrong..!")
-      //   }
-      // })
-      // .catch((error) => {
-      //   console.log(error)
-      // })
+    //   }
+    //   else {
+    //     toast.info("Something went Wrong..!")
+    //   }
+    // })
+    // .catch((error) => {
+    //   console.log(error)
+    // })
   }
 
 
@@ -204,5 +204,4 @@ export const AppProvider = ({ children, history }) => {
     </AppContext.Provider>
   );
 };
-
 
