@@ -77,7 +77,7 @@ const TicketListingPage = () => {
                                         <Search className="search-icon" style={{ color: "#313131" }} onClick={searchDataHandler} />
                                     </div>
                                 </div>
-                                <Link to='/CreateTicket'><Button className="apply-button btn btn-light mr-2">Create</Button></Link>
+                                <Link to='/createticket'><Button className="apply-button btn btn-light mr-2">Create</Button></Link>
                             </div>
 
                             <div className="table-responsive">
