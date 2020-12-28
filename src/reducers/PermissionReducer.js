@@ -12,6 +12,13 @@ const PermissionReducer = (state, action) => {
         case 'VIEW_PERMISSION':
             return { ...state, permissionList: action.payload };
 
+        case 'GROUP_LIST':
+            return { ...state, groupList: action.payload };
+
+        case 'CREATE_GROUP':
+            return { ...state, groupList: action.payload };
+            
+
         default: return state;
     }
 }

@@ -58,7 +58,7 @@ const ViewTicket = () => {
     }
 
     const backHandler = (e) => {
-        history.push("./ticketListingPage")
+        history.push("./ticketlistingpage")
     }
 
     const downloadFileButton = (e) => {
@@ -319,8 +319,19 @@ const ViewTicket = () => {
 
                                             })}
                                         </Form.Control>:
-                                        <Form.Control type='text' readOnly className='disabledValue'
-                                        value={ticketIdList.groupId} />
+                                        <Form.Control as='select' value={serviceGroup} readOnly className='disabled-select'>
+                                        {serviceGroupList !== null &&
+                                        serviceGroupList !== undefined &&
+                                        serviceGroupList.length >0 &&
+                                        serviceGroupList.map((item, i) => {
+                                            return (
+                                                <option key={item.groupId} value={item.groupId}>{item.groupName}</option>
+                                            )
+
+                                        })}
+                                    </Form.Control>
+                                        // <Form.Control type='text' readOnly className='disabledValue'
+                                        // value={ticketIdList.groupId} />
                                         }
                                     </Col>
                                 </Form.Group>
