@@ -107,17 +107,17 @@ const RoutePath = () => {
           />
 
           <Route
-            path={`${process.env.PUBLIC_URL}/createTicket`}
+            path={`${process.env.PUBLIC_URL}/createticket`}
             component={CreateTicket}
           />
 
 
           <Route
-            path={`${process.env.PUBLIC_URL}/ticketListingPage`}
+            path={`${process.env.PUBLIC_URL}/ticketlistingpage`}
             component={TicketListingPage}
           />
           <Route
-            path={`${process.env.PUBLIC_URL}/viewTicket`}
+            path={`${process.env.PUBLIC_URL}/viewticket`}
             component={ViewTicket}
           />
 

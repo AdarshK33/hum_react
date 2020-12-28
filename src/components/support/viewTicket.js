@@ -58,7 +58,7 @@ const ViewTicket = () => {
     }
 
     const backHandler = (e) => {
-        history.push("./ticketListingPage")
+        history.push("./ticketlistingpage")
     }
 
     const downloadFileButton = (e) => {

@@ -8,7 +8,8 @@ const initial_state = {
     permission: false,
     locationDetailsList: [],
     monthlyQtyDetailsList: [],
-    permissionList: []
+    permissionList: [],
+    groupList: []
 }
 
 export const PermissionContext = createContext();
@@ -110,6 +111,32 @@ export const PermissionProvider = ({ children }) => {
             })
     }
 
+        //Service group permission get api
+        const viewServiceGroup = async() => {
+            try {
+                const result = await client.get('service_group/view')
+                state.groupList = result.data.data[0]
+                console.log("service group list", state.groupList)
+                return dispatch({type:'GROUP_LIST', payload: state.groupList})
+            }
+            catch(error){
+                console.log(error)
+            }
+        }
+
+        //Service group permission post api
+        const createServiceGroup = async(values) => {
+            console.log("values in state", values)
+            try {
+                const result = await client.post('service_group/create',values)
+                toast.info(result.data.message)
+                viewServiceGroup()
+                return dispatch({type:'CREATE_GROUP', payload: state.groupList})
+            }
+            catch(error){
+                console.log(error)
+            }
+        }
 
 
     return (<PermissionContext.Provider value={{
@@ -118,11 +145,14 @@ export const PermissionProvider = ({ children }) => {
         monthlyQtyDetails,
         viewPermission,
         uploadMonthFile,
+        viewServiceGroup,
+        createServiceGroup,
         permission: state.permission,
         locationDetailsList: state.locationDetailsList,
         monthlyQtyDetailsList: state.monthlyQtyDetailsList,
         permissionList: state.permissionList,
-        loader: loader
+        loader: loader,
+        groupList: state.groupList
     }}>
         {children}
     </PermissionContext.Provider>)
