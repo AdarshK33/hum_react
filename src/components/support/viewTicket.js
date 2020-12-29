@@ -238,20 +238,21 @@ const ViewTicket = () => {
                                 <Col sm={8}>
                                     <Form.Group as={Row}>
                                         <Form.Label column sm='3'></Form.Label>
-                                        <Col sm='9'>
+                                        <Col sm='9' style={{paddingLeft:'1.5rem'}}>
                                             {ticketIdList.ticketFiles != null &&
                                                 ticketIdList.ticketFiles !== undefined &&
                                                 ticketIdList.ticketFiles.length > 0 &&
                                                 ticketIdList.ticketFiles.map((item, i) => {
                                                     return (
 
-                                                        <span style={{paddingRight:'1.5rem'}}>
+                                                        <div style={{paddingRight:'1.5rem'}}>
                                                             <span style={{paddingRight:'0.5rem'}}>
                                                                 {item.fileName}</span>
                                                         <Download onClick={() => 
-                                                            {downloadFileButton(item.fileName)}} />
+                                                            {downloadFileButton(item.fileName)}}
+                                                            style={{cursor:'pointer',color:'blue'}} />
                                                             
-                                                        </span>
+                                                        </div>
 
                                                     )
                                                 })}

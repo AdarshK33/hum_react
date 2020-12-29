@@ -135,10 +135,13 @@ const TicketListingPage = () => {
                                                             <td>{item.createdDate}</td>
                                                             <td>{item.updatedDate === null ? '-' :
                                                                 item.updatedDate}</td>
+                                                            {item.ticketStatusDesc === 'Closed' ?
+                                                            <td><Edit2 style={{ color: 'lightblue' }} /></td> 
+                                                            :
                                                             <Link to='/viewTicket'>
                                                                 <td><Edit2 onClick={() => {
                                                                     ticketIdView(item.ticketId)
-                                                                }} /></td></Link>
+                                                                }} /></td></Link>}
                                                         </tr>
                                                     </tbody>
                                                 )
