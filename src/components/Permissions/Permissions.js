@@ -60,7 +60,9 @@ const Permissions = () => {
                 setNoSupportFlag(true)
             }
             setSupportStatus(groupList.groupStatus);
+            console.log("groupList inside", groupList)
         }
+        console.log("groupList outside", groupList)
     }, [groupList])
 
     const checkYesHandler = () => {
@@ -124,7 +126,7 @@ const Permissions = () => {
         setSupportStatus(1)
 
         const Values = {
-            groupId: groupList.groupId,
+            groupId: groupList === null ? 0 : groupList.groupId,
             groupStatus: 1
         }
         console.log("yes values",Values)
@@ -137,7 +139,7 @@ const Permissions = () => {
         setSupportStatus(0)
 
         const Values = {
-            groupId: groupList.groupId,
+            groupId: groupList === null ? 0 : groupList.groupId ,
             groupStatus: 0
         }
         console.log("no values",Values)
@@ -211,7 +213,7 @@ const Permissions = () => {
                                     <input
                                         type="checkbox"
                                         checked={yesSupportFlag}
-                                        onChange={() => checkSupportYesHandler()}
+                                        onChange={checkSupportYesHandler}
                                         name="selectCheckbox"
                                     />
                                 </td>
@@ -219,7 +221,7 @@ const Permissions = () => {
                                     <input
                                         type="checkbox"
                                         checked={noSupportFlag}
-                                        onChange={() => checkSupportNoHandler()}
+                                        onChange={checkSupportNoHandler}
                                         name="selectCheckbox"
                                     />
                                 </td>

@@ -115,7 +115,14 @@ export const PermissionProvider = ({ children }) => {
         const viewServiceGroup = async() => {
             try {
                 const result = await client.get('service_group/view')
-                state.groupList = result.data.data[0]
+                if(result.data.data !== null){
+                    state.groupList = result.data.data[0]
+                    console.log("service group list if", state.groupList)
+                }else{
+                    state.groupList = result.data.data
+                    console.log("service group list else", state.groupList)
+                }
+
                 console.log("service group list", state.groupList)
                 return dispatch({type:'GROUP_LIST', payload: state.groupList})
             }

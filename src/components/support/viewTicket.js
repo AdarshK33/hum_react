@@ -2,6 +2,7 @@ import React, { Fragment, useContext, useEffect, useState } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import { Container, Row, Col, Form, Button, Table } from 'react-bootstrap'
 import { useHistory } from "react-router-dom";
+import { Download} from 'react-feather';
 import '../common/style.css'
 import { SupportContext } from '../../context/SupportState'
 import { GroupContext } from '../../context/GroupState'
@@ -62,13 +63,8 @@ const ViewTicket = () => {
     }
 
     const downloadFileButton = (e) => {
-        e.preventDefault();
-        downloadFile(fileName)
-    }
-
-    const downloadFileHandler = (e) => {
-        setFileName(e.target.value)
-        console.log("file name", e.target.value)
+        console.log("e==========",e)
+        downloadFile(e)
     }
 
     useEffect(() => {
@@ -83,10 +79,10 @@ const ViewTicket = () => {
         setServiceGroup(ticketIdList.groupId)
     }, [ticketIdList.groupId])
 
-    useEffect(() => {
+    /* useEffect(() => {
         setFileName(ticketIdList.fileName)
         console.log("ticketIdList.fileName", ticketIdList.fileName)
-    }, [ticketIdList.fileName])
+    }, [ticketIdList.fileName]) */
 
     useEffect(() => {
         completeStatus()
@@ -249,13 +245,19 @@ const ViewTicket = () => {
                                                 ticketIdList.ticketFiles.map((item, i) => {
                                                     return (
 
-                                                        <input className="fileButton" type='button' onClick={downloadFileHandler} value={item.fileName}
-                                                        />
+                                                        <span style={{paddingRight:'1.5rem'}}>
+                                                            <span style={{paddingRight:'0.5rem'}}>
+                                                                {item.fileName}</span>
+                                                        <Download onClick={() => 
+                                                            {downloadFileButton(item.fileName)}} />
+                                                            
+                                                        </span>
 
                                                     )
                                                 })}
+                                                {/* 
                                &nbsp; &nbsp; <span>(Select File to download {fileName})</span><br />
-                                            <Button type='submit' size='sm' onClick={downloadFileButton}>Download</Button>
+                                            <Button type='submit' size='sm' onClick={downloadFileButton}>Download</Button> */}
                                         </Col>
                                     </Form.Group>
 
