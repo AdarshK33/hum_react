@@ -206,8 +206,8 @@ const CreateTicket = () => {
         return client.post('/ticket/upload', formData)
             .then((response) => {
                 console.log(response, "responce")
-                fileNames.push({ fileId: 0, fileName: response.data.fileName })
-                toast.info(response.data.fileName + " " + response.data.message)
+                fileNames.push({ fileId: 0, fileName: response.data.data })
+                toast.info(response.data.data + " " + response.data.message)
             })
             .catch((error) => {
                 console.log(error)
