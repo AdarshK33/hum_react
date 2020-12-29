@@ -1,4 +1,4 @@
-import React, { Fragment, useContext,useEffect } from 'react';
+import React, { Fragment, useContext, useEffect } from 'react';
 import man from '../../../assets/images/dashboard/userImage.png';
 import { User, Mail, Lock, Settings, LogOut, LogIn, Users, UserPlus } from 'react-feather';
 import { AppContext } from "../../../context/AppState";
@@ -9,12 +9,12 @@ import { PermissionContext } from '../../../context/PermissionState'
 const loginUrl = `${process.env.REACT_APP_FEDID_AUTH_URL}?response_type=code&client_id=${process.env.REACT_APP_FEDID_CLIENTID}&scope=openid%20profile&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}`;
 const UserMenu = () => {
     const { user, getUserMenu, userLogout } = useContext(AppContext);
-    const {viewServiceGroup, groupList } = useContext(PermissionContext)
+    const { viewServiceGroup, groupList } = useContext(PermissionContext)
     let history = useHistory();
 
     useEffect(() => {
         viewServiceGroup()
-    },[])
+    }, [])
 
     const handleMenuListProfile = () => {
         getUserMenu(user.generalUserMenus, "profile", user);
@@ -45,8 +45,8 @@ const UserMenu = () => {
     }
 
     const TicketListingPage = () => {
-        history.push("/ticketListingPage");
-    } 
+        history.push("/ticketlistingpage");
+    }
 
     // const gotoProfilePage = () => {
     //     window.location.href = "../profileEdit"

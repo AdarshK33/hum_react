@@ -10,8 +10,9 @@ import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import '../common/style.css'
-import { Users } from 'react-feather';
+import { Users, PlusCircle, MinusCircle } from 'react-feather';
 import { client } from '../../utils/axios';
+// import { Edit2, Search } from 'react-feather'
 
 import { access_token } from '../../auth/signin';;
 
@@ -25,12 +26,15 @@ const CreateTicket = () => {
     const [urgencyId, setUrgencyId] = useState('');
     const [priority, setPriority] = useState('')
     const [number, setNumber] = useState()
-    // const [uploadFileButton, setUploadFileButton] = useState(false)
     // const [filesCount, setFilesCount] = useState([])
+    const [fileSubmitButton, setFileSubmitButton] = useState();
     const [fileNames, setFileNames] = useState([])
+    const [filenames, setFilenames] = useState([])
     const [fileUpload, setFileUpload] = useState();
     const [loader, setLoader] = useState(false);
-
+    const [showFirst, setshowFirst] = useState(false);
+    const [showSecond, setshowSecond] = useState(false);
+    let count = 0;
 
     let history = useHistory();
     const { user } = useContext(AppContext);
@@ -44,6 +48,25 @@ const CreateTicket = () => {
         selectUrgency()
         setTimeout(() => { callLoader() }, 1500);
     }, [])
+
+    const handleAddUpload = () => {
+        if (showFirst !== true) {
+            setshowFirst(true);
+        } else if (showFirst === true && showSecond !== true) {
+            setshowSecond(true);
+        } else {
+            toast.info("Cannot upload more than 3 files.");
+        }
+    }
+
+    const handleRemoveUpload = (text) => {
+        if (text === "second") {
+            setshowFirst(false);
+        } else if (text === "third") {
+            setshowSecond(false);
+        }
+    }
+
 
 
     const setClear = () => {
@@ -113,10 +136,58 @@ const CreateTicket = () => {
 
     // ===================================================================================
     const changeHandler = (event) => {
-        let fileObj = event.target.files[0];
-        console.log("clicked", fileObj)
-        setFileUpload(fileObj)
-        setNumber(1)
+        let fName = [];
+        let i = 0
+        for (i = 0; i < event.target.files.length; i++) {
+            let fileObj = event.target.files[i];
+
+            console.log("clicked", fileObj)
+            let fileSize = fileObj.size / 1000;
+            fName.push({ name: fileObj.name });
+
+            // console.log(filenames)
+            if (fileObj.type === "image/png" || fileObj.type === "image/jpeg") {
+                if (fileSize <= 200) {
+                    setFileSubmitButton(false)
+                    console.log("clicked", fileObj)
+                    setFileUpload(fileObj)
+                    setNumber(1)
+                }
+                else {
+                    setFileSubmitButton(true)
+                    toast.info("Cannot upload file with size more than 200 KB")
+                }
+            }
+            else if (fileObj.type === "application/pdf" || fileObj.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
+                if (fileSize <= 400) {
+                    setFileSubmitButton(false)
+                    console.log("clicked", fileObj)
+                    setFileUpload(fileObj)
+                    setNumber(1)
+                }
+                else {
+                    setFileSubmitButton(true)
+                    toast.info("Cannot upload file with size more than 400 KB")
+                }
+            }
+            else if (fileObj.type === "video/mp4") {
+                if (fileSize <= 3500) {
+                    setFileSubmitButton(false)
+                    console.log("clicked", fileObj)
+                    setFileUpload(fileObj)
+                    setNumber(1)
+                }
+                else {
+                    setFileSubmitButton(true)
+                    toast.info("Cannot upload file with size more than 3 mb")
+
+                }
+            } else {
+                toast.info("Please select only .png, .jpeg, .pdf, .xlsx and .mp4")
+            }
+        }
+
+        setFilenames(fName);
     }
 
 
@@ -135,7 +206,8 @@ const CreateTicket = () => {
         return client.post('/ticket/upload', formData)
             .then((response) => {
                 console.log(response, "responce")
-                toast.info(response.data.fileName)
+                fileNames.push({ fileId: 0, fileName: response.data.data })
+                toast.info(response.data.data + " " + response.data.message)
             })
             .catch((error) => {
                 console.log(error)
@@ -170,7 +242,7 @@ const CreateTicket = () => {
             console.log(JSON.stringify(createSingleTicket));
             //alert(JSON.stringify(createSingleTicket));
             setClear()
-            history.push("./ticketListingPage")
+            history.push("./ticketlistingpage")
         }
         else {
             console.log("outside")
@@ -196,7 +268,7 @@ const CreateTicket = () => {
             console.log(JSON.stringify(createSingleTicket));
             //alert(JSON.stringify(createSingleTicket));
             setClear()
-            history.push("./ticketListingPage")
+            history.push("./ticketlistingpage")
         }
 
     }
@@ -294,11 +366,11 @@ const CreateTicket = () => {
                         <Row>
                             <Col sm={8}>
                                 <Form.Group as={Row} >
-                                    <Form.Label column sm='4' className='labels'>Select Issue :</Form.Label>
+                                    <Form.Label column sm='4' className='labels'>Select Issue :<span style={{ color: 'red' }}>*</span></Form.Label>
                                     <Col sm='8'>
                                         <select
                                             className="form-control"
-
+                                            required
                                             value={categoryId}
                                             onChange={(event) => setcategoryId(event.target.value)}>
 
@@ -354,9 +426,9 @@ const CreateTicket = () => {
                             <Col sm={8}>
                                 <Form.Group as={Row} >
                                     <Form.Label column sm='4' className='labels'>File Upload :</Form.Label>
-                                    <Col sm='8'>
+                                    <Col sm='4'>
 
-                                        <Dropzone
+                                        {/* <Dropzone
                                             getUploadParams={getUploadParams}
                                             onChangeStatus={handleChangeStatus}
                                             // onSubmit={handleSubmit}
@@ -369,13 +441,184 @@ const CreateTicket = () => {
                                                 dropzone: { width: 360, height: 300 },
                                                 dropzoneActive: { borderColor: 'green' },
                                             }}
+                                        /> */}
+                                        <input
+                                            className="btn"
+                                            type="file"
+                                            accept="image/*,video/*,.pdf"
+                                            // multiple="multiple"
+                                            onChange={(e) => changeHandler(e)}
+                                            style={{ padding: "5px" }}
                                         />
+                                        <br />
+
+                                        {filenames !== null && filenames.length > 1 && filenames.map((e, i) => {
+                                            return (
+                                                <div>{e.name}</div>
+                                            );
+                                        })}
                                     </Col>
+                                    {/* <Form.Group as={Row} >
+                                    <Col sm='4'></Col> */}
+                                    <Col sm='4'>
+                                        <button className="btn btn-primary" style={{ paddingLeft: "20px", paddingRight: "20px", fontWeight: "bold" }}
+                                            type="button" onClick={handleUpload} disabled={fileSubmitButton}
+                                        >Upload</button>
+                                        {/* <button className="btn btn-primary mx-2" style={{ paddingLeft: "20px", paddingRight: "20px", fontWeight: "bold" }}
+                                            type="button" onClick={handleAddUpload} disabled={fileSubmitButton}
+                                        >+</button> */}
+                                        <div style={{ paddingTop: '5px', float: 'right' }}>
+                                            <PlusCircle style={{ color: '#376ebb' }}
+                                                onClick={handleAddUpload}
+
+                                            />
+                                            <MinusCircle disabled style={{ color: 'lightgrey' }}
+
+
+                                            />
+                                        </div>
+
+
+                                    </Col>
+
+                                    {/* </Form.Group> */}
 
                                 </Form.Group>
 
                             </Col>
                         </Row>
+
+                        {showFirst === true ?
+                            <Row>
+                                <Col sm={8}>
+                                    <Form.Group as={Row} >
+                                        <Form.Label column sm='4' className='labels'></Form.Label>
+                                        <Col sm='4'>
+
+                                            {/* <Dropzone
+                                        getUploadParams={getUploadParams}
+                                        onChangeStatus={handleChangeStatus}
+                                        // onSubmit={handleSubmit}
+                                        maxSizeBytes="5e+6"
+                                        accept="image/*,.pdf,video/*"
+                                        maxFiles={3}
+                                        inputContent="Browse file"
+
+                                        styles={{
+                                            dropzone: { width: 360, height: 300 },
+                                            dropzoneActive: { borderColor: 'green' },
+                                        }}
+                                    /> */}
+                                            <input
+                                                className="btn"
+                                                type="file"
+                                                accept="image/*,video/*,.pdf"
+                                                // multiple="multiple"
+                                                onChange={(e) => changeHandler(e)}
+                                                style={{ padding: "5px" }}
+                                            />
+                                            <br />
+
+                                            {filenames !== null && filenames.length > 1 && filenames.map((e, i) => {
+                                                return (
+                                                    <div>{e.name}</div>
+                                                );
+                                            })}
+                                        </Col>
+                                        {/* <Form.Group as={Row} >
+                                <Col sm='4'></Col> */}
+                                        <Col sm='4'>
+                                            <button className="btn btn-primary" style={{ paddingLeft: "20px", paddingRight: "20px", fontWeight: "bold" }}
+                                                type="button" onClick={handleUpload} disabled={fileSubmitButton}
+                                            >Upload</button>
+                                            {/* <button className="btn btn-primary mx-2" style={{ paddingLeft: "20px", paddingRight: "20px", fontWeight: "bold" }}
+                                        type="button" onClick={handleAddUpload} disabled={fileSubmitButton}
+                                    >+</button> */}
+                                            <div style={{ paddingTop: '5px', float: 'right' }}>
+                                                <PlusCircle style={{ color: '#376ebb' }}
+                                                    onClick={handleAddUpload}
+
+                                                />
+                                                <MinusCircle style={{ color: '#376ebb' }}
+                                                    onClick={() => handleRemoveUpload("second")}
+
+                                                />
+                                            </div>
+                                        </Col>
+
+                                        {/* </Form.Group> */}
+
+                                    </Form.Group>
+
+                                </Col>
+                            </Row>
+                            : ""}
+
+                        {showSecond === true ?
+                            <Row>
+                                <Col sm={8}>
+                                    <Form.Group as={Row} >
+                                        <Form.Label column sm='4' className='labels'></Form.Label>
+                                        <Col sm='4'>
+
+                                            {/* <Dropzone
+                                            getUploadParams={getUploadParams}
+                                            onChangeStatus={handleChangeStatus}
+                                            // onSubmit={handleSubmit}
+                                            maxSizeBytes="5e+6"
+                                            accept="image/*,.pdf,video/*"
+                                            maxFiles={3}
+                                            inputContent="Browse file"
+
+                                            styles={{
+                                                dropzone: { width: 360, height: 300 },
+                                                dropzoneActive: { borderColor: 'green' },
+                                            }}
+                                        /> */}
+                                            <input
+                                                className="btn"
+                                                type="file"
+                                                accept="image/*,video/*,.pdf"
+                                                // multiple="multiple"
+                                                onChange={(e) => changeHandler(e)}
+                                                style={{ padding: "5px" }}
+                                            />
+                                            <br />
+
+                                            {filenames !== null && filenames.length > 1 && filenames.map((e, i) => {
+                                                return (
+                                                    <div>{e.name}</div>
+                                                );
+                                            })}
+                                        </Col>
+                                        {/* <Form.Group as={Row} >
+                                    <Col sm='4'></Col> */}
+                                        <Col sm='4'>
+                                            <button className="btn btn-primary" style={{ paddingLeft: "20px", paddingRight: "20px", fontWeight: "bold" }}
+                                                type="button" onClick={handleUpload} disabled={fileSubmitButton}
+                                            >Upload</button>
+                                            {/* <button className="btn btn-primary mx-2" style={{ paddingLeft: "20px", paddingRight: "20px", fontWeight: "bold" }}
+                                            type="button" onClick={handleUpload} disabled={fileSubmitButton}
+                                        >+</button> */}
+                                            <div style={{ paddingTop: '5px', float: 'right' }}>
+                                                <PlusCircle disabled style={{ color: 'lightgrey' }}
+                                                    onClick={handleAddUpload}
+
+                                                />
+                                                <MinusCircle style={{ color: '#376ebb' }}
+                                                    onClick={() => handleRemoveUpload("third")}
+
+                                                />
+                                            </div>
+                                        </Col>
+
+                                        {/* </Form.Group> */}
+
+                                    </Form.Group>
+
+                                </Col>
+                            </Row>
+                            : ""}
 
                         <Row>
                             <Col sm={8}>
@@ -418,22 +661,44 @@ const CreateTicket = () => {
                             </Col>
                         </Row>
 
+                        <Row>
+                            <Col sm={8}>
+                                {/* <Form.Group as={Row} >
+                                    <Form.Label column sm='4' className='labels'>File Upload :</Form.Label>
+                                    <Col sm='8'>
+                                        <input
+                                            className="btn"
+                                            type="file"
+                                            accept="image/*,video/*,.pdf"
+                                            multiple="multiple"
+                                            onChange={(e) => changeHandler(e)}
+                                            style={{ padding: "5px" }}
+                                        />
+                                        <br/>
+                                        
+                                        {filenames !== null && filenames.length > 1 && filenames.map((e, i) => {
+                                            return (
+                                                <div>{e.name}</div>
+                                            );
+                                        })}
+                                        
+                                    </Col>
 
+                                </Form.Group> */}
+                                {/* <Form.Group as={Row} >
+                                    <Col sm='4'></Col>
+                                    <Col sm='3'>
+                                        <button className="btn btn-primary" style={{ paddingLeft: "20px", paddingRight: "20px", fontWeight: "bold" }}
+                                            type="button" onClick={handleUpload} disabled={fileSubmitButton}
+                                        >Upload</button>
+                                    </Col>
 
-                        {/* =============================================== */}
-                        <input
-                            className="btn"
-                            type="file"
-                            accept="image/*,video/*,.pdf"
-                            multiple="multiple"
-                            onChange={(e) => changeHandler(e)}
-                            style={{ padding: "5px" }}
-                        />
+                                </Form.Group> */}
 
-                        <button className="btn btn-primary" style={{ marginTop: "5px", marginLeft: "30px", paddingLeft: "20px", paddingRight: "20px", fontWeight: "bold" }}
-                            type="button" onClick={handleUpload}
-                        >Upload</button>
-                        {/* =============================================== */}
+                            </Col>
+
+                        </Row>
+
 
 
 
