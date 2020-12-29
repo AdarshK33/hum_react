@@ -83,9 +83,9 @@ const UserMenu = () => {
                     {user.clusterManagerMenus !== null &&
                         <li onClick={handleMenuListCluster}><a href="#leader"><Users />Cluster Leader</a></li>
                     }
-                    {groupList !== null && groupList.groupStatus === 0 ?
+                    {groupList !== null ? (groupList.groupStatus === 0 ?
                      <li onClick={TicketListingPage}><a><Users />Support</a></li> 
-                     : ''}
+                     : '') :  <li onClick={TicketListingPage}><a><Users />Support</a></li> }
                     {/*  <li><a href="#javascript"><Settings />Settings</a></li> */}
                     {/* <li><a href="#javascript"><LogOut /> Log out</a></li> */}
                     {/* <li><a href={loginUrl}><LogIn />Log In</a></li> */}
