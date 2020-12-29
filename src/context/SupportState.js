@@ -10,6 +10,8 @@ import {
     VIEW_TICKET_ID_INFO,
     UPDATE_TICKET
 } from '../constant/actionTypes'
+import Axios from 'axios';
+import { access_token } from '../auth/signin';
 var fileDownload = require('js-file-download');
 
 
@@ -127,17 +129,34 @@ export const SupportProvider = ({ children }) => {
     }
 
     //Download file
-    const downloadFile = async (fileName) => {
+    /* const downloadFile = async (fileName) => {
         try {
             const result = await client.get('ticket/download?name=' + fileName)
-            fileDownload(result.data, fileName);
+            let fileData = new Blob([result.data]);
+            fileDownload(fileData, fileName);
+           
 
         }
         catch (error) {
             console.log(error)
         }
+    } */
+    const downloadFile = (fileName) => {
+        Axios({
+            url: `${process.env.REACT_APP_BASEURL}/ticket/download?name=${fileName}`,
+                method:'GET',
+                responseType:'blob',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${access_token}`
+                }
+        })
+        .then((response) => {
+            fileDownload(response.data, fileName);
+        })
     }
-
+ 
     // SELECT ROLES
     const getRolesForSupport = () => {
 
