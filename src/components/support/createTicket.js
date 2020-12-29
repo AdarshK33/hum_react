@@ -145,8 +145,22 @@ const CreateTicket = () => {
             let fileSize = fileObj.size / 1000;
             fName.push({ name: fileObj.name });
 
+
+
             // console.log(filenames)
             if (fileObj.type === "image/png" || fileObj.type === "image/jpeg") {
+                if (fileSize <= 500) {
+                    setFileSubmitButton(false)
+                    console.log("clicked", fileObj)
+                    setFileUpload(fileObj)
+                    setNumber(1)
+                }
+                else {
+                    setFileSubmitButton(true)
+                    toast.info("Cannot upload file with size more than 500 KB")
+                }
+            }
+            else if (fileObj.type === "application/pdf" || fileObj.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
                 if (fileSize <= 200) {
                     setFileSubmitButton(false)
                     console.log("clicked", fileObj)
@@ -158,20 +172,8 @@ const CreateTicket = () => {
                     toast.info("Cannot upload file with size more than 200 KB")
                 }
             }
-            else if (fileObj.type === "application/pdf" || fileObj.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
-                if (fileSize <= 400) {
-                    setFileSubmitButton(false)
-                    console.log("clicked", fileObj)
-                    setFileUpload(fileObj)
-                    setNumber(1)
-                }
-                else {
-                    setFileSubmitButton(true)
-                    toast.info("Cannot upload file with size more than 400 KB")
-                }
-            }
             else if (fileObj.type === "video/mp4") {
-                if (fileSize <= 3500) {
+                if (fileSize <= 1500) {
                     setFileSubmitButton(false)
                     console.log("clicked", fileObj)
                     setFileUpload(fileObj)
@@ -179,7 +181,7 @@ const CreateTicket = () => {
                 }
                 else {
                     setFileSubmitButton(true)
-                    toast.info("Cannot upload file with size more than 3 mb")
+                    toast.info("Cannot upload file with size more than 1 mb")
 
                 }
             } else {
@@ -246,6 +248,7 @@ const CreateTicket = () => {
         }
         else {
             console.log("outside")
+
             e.preventDefault();
 
             const createSingleTicket = {
@@ -428,27 +431,14 @@ const CreateTicket = () => {
                                     <Form.Label column sm='4' className='labels'>File Upload :</Form.Label>
                                     <Col sm='4'>
 
-                                        {/* <Dropzone
-                                            getUploadParams={getUploadParams}
-                                            onChangeStatus={handleChangeStatus}
-                                            // onSubmit={handleSubmit}
-                                            maxSizeBytes="5e+6"
-                                            accept="image/*,.pdf,video/*"
-                                            maxFiles={3}
-                                            inputContent="Browse file"
 
-                                            styles={{
-                                                dropzone: { width: 360, height: 300 },
-                                                dropzoneActive: { borderColor: 'green' },
-                                            }}
-                                        /> */}
                                         <input
                                             className="btn"
                                             type="file"
                                             accept="image/*,video/*,.pdf"
                                             // multiple="multiple"
                                             onChange={(e) => changeHandler(e)}
-                                            style={{ padding: "5px" }}
+                                            style={{ padding: "5px", width: "200px", whiteSpace: "initial" }}
                                         />
                                         <br />
 
@@ -458,15 +448,12 @@ const CreateTicket = () => {
                                             );
                                         })}
                                     </Col>
-                                    {/* <Form.Group as={Row} >
-                                    <Col sm='4'></Col> */}
+
                                     <Col sm='4'>
                                         <button className="btn btn-primary" style={{ paddingLeft: "20px", paddingRight: "20px", fontWeight: "bold" }}
                                             type="button" onClick={handleUpload} disabled={fileSubmitButton}
                                         >Upload</button>
-                                        {/* <button className="btn btn-primary mx-2" style={{ paddingLeft: "20px", paddingRight: "20px", fontWeight: "bold" }}
-                                            type="button" onClick={handleAddUpload} disabled={fileSubmitButton}
-                                        >+</button> */}
+
                                         <div style={{ paddingTop: '5px', float: 'right' }}>
                                             <PlusCircle style={{ color: '#376ebb' }}
                                                 onClick={handleAddUpload}
@@ -487,6 +474,7 @@ const CreateTicket = () => {
 
                             </Col>
                         </Row>
+
 
                         {showFirst === true ?
                             <Row>
@@ -515,7 +503,7 @@ const CreateTicket = () => {
                                                 accept="image/*,video/*,.pdf"
                                                 // multiple="multiple"
                                                 onChange={(e) => changeHandler(e)}
-                                                style={{ padding: "5px" }}
+                                                style={{ padding: "5px", width: "200px", whiteSpace: "initial" }}
                                             />
                                             <br />
 
@@ -581,7 +569,7 @@ const CreateTicket = () => {
                                                 accept="image/*,video/*,.pdf"
                                                 // multiple="multiple"
                                                 onChange={(e) => changeHandler(e)}
-                                                style={{ padding: "5px" }}
+                                                style={{ padding: "5px", width: "200px", whiteSpace: "initial" }}
                                             />
                                             <br />
 
