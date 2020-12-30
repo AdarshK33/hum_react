@@ -36,7 +36,10 @@ const CreateTicket = () => {
     const [loader, setLoader] = useState(false);
     const [showFirst, setshowFirst] = useState(false);
     const [showSecond, setshowSecond] = useState(false);
-    const [deleteFileId, setDeleteFileId] = useState()
+    const [deleteFirstFile, setDeleteFirstFile] = useState()
+    const [deleteSecondFile, setDeleteSecondFile] = useState()
+    const [deleteThirdFile, setDeleteThirdFile] = useState()
+
     let count = 0;
 
     let history = useHistory();
@@ -63,14 +66,23 @@ const CreateTicket = () => {
     }
 
     const handleRemoveUpload = (text) => {
+
         if (text === "second") {
             setshowFirst(false);
+            deleteFile(deleteSecondFile)
         } else if (text === "third") {
             setshowSecond(false);
+            deleteFile(deleteThirdFile)
+        } else if (text === "first") {
+            var file = document.getElementById(text);
+            var emptyFile = document.createElement('input');
+            emptyFile.type = 'file';
+            emptyFile.id = text;
+            file.files = emptyFile.files;
+            setFileSubmitButtonFirst(false)
+            deleteFile(deleteFirstFile)
         }
     }
-
-
 
     const setClear = () => {
         setRole('')
@@ -80,9 +92,6 @@ const CreateTicket = () => {
         setUrgencyId('')
         setPriority('')
     }
-
-
-
 
     const selectValueForDropDownRole = (e) => {
         let data1 = e.target.value
@@ -102,38 +111,7 @@ const CreateTicket = () => {
     }
 
 
-    const getUploadParams = ({ meta }) => {
-        console.log("BASE URL CHECK " + process.env.REACT_APP_BASEURL)
-        return {
-            //url: 'https://httpbin.org/post',
-            url: `${process.env.REACT_APP_BASEURL}/ticket/upload`,
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${access_token}`
-            }
-        }
-    }
 
-    const handleSubmit = (files) => {
-        console.log(files.map(f => f.meta))
-    }
-
-
-    const handleChangeStatus = ({ meta, remove }, status) => {
-        setNumber(1)
-        if (meta.status === 'done') {
-            // alert(`${meta.name} uploaded!`)
-            fileNames.push({ fileId: 0, fileName: meta.name })
-            console.log("sucess ", fileNames)
-            //remove()
-            console.log("META^^^^^^^^^^^^^^^^^^ " + JSON.stringify(meta))
-        } else if (meta.status !== 'done') {
-            //  alert(`${meta.name}, upload failed...`)
-            // console.log("META^^^^^^^^^^^^^^^^^^ " + JSON.stringify(meta))
-        }
-
-    }
 
 
 
@@ -266,24 +244,29 @@ const CreateTicket = () => {
         const formData = new FormData();
         formData.append('file', file)
 
+
         return client.post('/ticket/upload', formData)
             .then((response) => {
 
                 if (response.status === 200) {
                     if (text === "first") {
                         setFileSubmitButtonFirst(true)
+                        setDeleteFirstFile(response.data.data)
                     }
                     else if (text === "second") {
                         setFileSubmitButtonSecond(true)
+                        setDeleteSecondFile(response.data.data)
                     }
                     else if (text === "third") {
                         setFileSubmitButtonThird(true)
+                        setDeleteThirdFile(response.data.data)
                     }
                 }
 
                 console.log(response, "responce")
                 fileNames.push({ fileId: 0, fileName: response.data.data })
-                setDeleteFileId(response.data.message)
+                toast.info(response.data.message)
+
 
                 // toast.info(response.data.data)
             })
@@ -294,16 +277,24 @@ const CreateTicket = () => {
     //========================================================================================
 
 
-    const deleteFile = () => {
+    const deleteFile = (file) => {
+        //   alert("file", file)
+        if (file !== undefined || file !== null || file !== '') {
+            return client.get('/ticket/delete/' + file)
+                .then((response) => {
+                    console.log(response, "responce")
+                    toast.info(response.data.message)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        }
 
-        return client.post('/ticket/delete/' + deleteFileId)
-            .then((response) => {
-                console.log(response, "responce")
-                toast.info(response.data.message)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+
+
+
+
+
     }
 
 
@@ -515,7 +506,7 @@ const CreateTicket = () => {
                                         <input
                                             className="btn"
                                             type="file"
-
+                                            id="first"
                                             accept="image/*,video/*,.pdf"
                                             // multiple="multiple"
                                             onChange={(e) => changeHandler(e, "first")}
@@ -540,7 +531,7 @@ const CreateTicket = () => {
                                                 onClick={handleAddUpload}
 
                                             />
-                                            <MinusCircle style={{ color: '#376ebb' }} onClick={deleteFile} />
+                                            <MinusCircle style={{ color: '#376ebb' }} onClick={() => handleRemoveUpload("first")} />
 
 
 
