@@ -245,20 +245,17 @@ const ViewTicket = () => {
                                                 ticketIdList.ticketFiles.map((item, i) => {
                                                     return (
 
-                                                        <div style={{paddingRight:'1.5rem'}}>
-                                                            <span style={{paddingRight:'0.5rem'}}>
+                                                        <div style={{display:'flow-root'}}>
+                                                            <span style={{float:'left'}}>
                                                                 {item.fileName}</span>
                                                         <Download onClick={() => 
                                                             {downloadFileButton(item.fileName)}}
-                                                            style={{cursor:'pointer',color:'blue'}} />
+                                                            style={{cursor:'pointer',color:'blue',float:'right'}} />
                                                             
                                                         </div>
 
                                                     )
                                                 })}
-                                                {/* 
-                               &nbsp; &nbsp; <span>(Select File to download {fileName})</span><br />
-                                            <Button type='submit' size='sm' onClick={downloadFileButton}>Download</Button> */}
                                         </Col>
                                     </Form.Group>
 

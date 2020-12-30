@@ -3,9 +3,6 @@ import Breadcrumb from "../common/breadcrumb";
 import moment from 'moment';
 import "./salary.css";
 import { Form, Table, Row, Button, Modal } from 'react-bootstrap'
-import {
-  JsonToExcel
-} from 'react-json-excel';
 import { ClusterContext } from "../../context/ClusterState";
 import { DashboardContext } from "../../context/DashboardState";
 import EditSalary from './EditSalary'
@@ -18,6 +15,11 @@ import { useHistory } from "react-router-dom";
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "react-toastify";
+import ReactExport from 'react-data-export'
+
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 function ViewShift() {
 
@@ -150,7 +152,7 @@ function ViewShift() {
     });
   };
   //File export 
-  const filename = 'salaryList';
+ /*  const filename = 'salaryList';
   let fields = {
     "salaryListId": "S. No",
     "employeeId": "Employee Id",
@@ -179,7 +181,7 @@ function ViewShift() {
         statusDesc: salaryList[i].statusDesc
       })
     }
-  }
+  } */
   const disabledText = () => {
     toast.error("No Records to be Export")
   }
@@ -220,18 +222,26 @@ function ViewShift() {
         <Row style={{ marginTop: '2rem' }}>
           <div className="col-sm-12">
             <div className="title_bar" >
-              {data.length > 0 ?
-                <JsonToExcel
-                  data={data}
-                  className="btn btn-light mr-2"
-                  filename={filename}
-                  fields={fields}
+            {currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 ?
+                <ExcelFile filename='Salary List' element={<Button className="btn btn-light mr-2"> Export excel</Button>}>
+                  <ExcelSheet data={salaryList} name="Salary List" style={{ width: '500px' }}>
+                    <ExcelColumn label="Employee Id" value="employeeId" />
+                    <ExcelColumn label="Employee Name"
+                                        value={(col) => col.firstName !== null && col.firstName+' '+ col.lastName} />
+                    <ExcelColumn label="Number Of Hours" value="numberOfHours" />
+                    <ExcelColumn label="LOP" value="lop" />
+                    <ExcelColumn label="Contract Type" value="contractType" />
+                    <ExcelColumn label="Extra Hours" value="extraHours" />
+                    <ExcelColumn label="Total Hours" value="totalHours" />
+                    <ExcelColumn label="Status" value="statusDesc" />
+                   
+                  </ExcelSheet>
+                </ExcelFile>
 
-                  text="Export excel"
-                />:
+                :
                 <Button className="btn btn-light mr-2" onClick={disabledText}>
-                  Export excel</Button>  
-                }
+                  Export excel</Button>
+              }
 
 
               {
