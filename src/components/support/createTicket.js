@@ -27,13 +27,16 @@ const CreateTicket = () => {
     const [priority, setPriority] = useState('')
     const [number, setNumber] = useState()
     // const [filesCount, setFilesCount] = useState([])
-    const [fileSubmitButton, setFileSubmitButton] = useState();
+    const [fileSubmitButtonFirst, setFileSubmitButtonFirst] = useState(false);
+    const [fileSubmitButtonSecond, setFileSubmitButtonSecond] = useState(false);
+    const [fileSubmitButtonThird, setFileSubmitButtonThird] = useState(false);
     const [fileNames, setFileNames] = useState([])
     const [filenames, setFilenames] = useState([])
     const [fileUpload, setFileUpload] = useState();
     const [loader, setLoader] = useState(false);
     const [showFirst, setshowFirst] = useState(false);
     const [showSecond, setshowSecond] = useState(false);
+    const [deleteFileId, setDeleteFileId] = useState()
     let count = 0;
 
     let history = useHistory();
@@ -135,9 +138,10 @@ const CreateTicket = () => {
 
 
     // ===================================================================================
-    const changeHandler = (event) => {
+    const changeHandler = (event, text) => {
         let fName = [];
         let i = 0
+
         for (i = 0; i < event.target.files.length; i++) {
             let fileObj = event.target.files[i];
 
@@ -149,38 +153,91 @@ const CreateTicket = () => {
 
             // console.log(filenames)
             if (fileObj.type === "image/png" || fileObj.type === "image/jpeg") {
+
                 if (fileSize <= 500) {
-                    setFileSubmitButton(false)
+                    if (text === "first") {
+                        setFileSubmitButtonFirst(false)
+                    }
+                    else if (text === "second") {
+                        setFileSubmitButtonSecond(false)
+                    }
+                    else if (text === "third") {
+                        setFileSubmitButtonThird(false)
+                    }
+                    // setFileSubmitButton(false)
                     console.log("clicked", fileObj)
                     setFileUpload(fileObj)
                     setNumber(1)
                 }
                 else {
-                    setFileSubmitButton(true)
+                    // setFileSubmitButton(true)
+                    if (text === "first") {
+                        setFileSubmitButtonFirst(true)
+                    }
+                    else if (text === "second") {
+                        setFileSubmitButtonSecond(true)
+                    }
+                    else if (text === "third") {
+                        setFileSubmitButtonThird(true)
+                    }
                     toast.info("Cannot upload file with size more than 500 KB")
                 }
             }
             else if (fileObj.type === "application/pdf" || fileObj.type === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
                 if (fileSize <= 200) {
-                    setFileSubmitButton(false)
+                    if (text === "first") {
+                        setFileSubmitButtonFirst(false)
+                    }
+                    else if (text === "second") {
+                        setFileSubmitButtonSecond(false)
+                    }
+                    else if (text === "third") {
+                        setFileSubmitButtonThird(false)
+                    }
                     console.log("clicked", fileObj)
                     setFileUpload(fileObj)
                     setNumber(1)
                 }
                 else {
-                    setFileSubmitButton(true)
+                    //  setFileSubmitButton(true)
+                    if (text === "first") {
+                        setFileSubmitButtonFirst(true)
+                    }
+                    else if (text === "second") {
+                        setFileSubmitButtonSecond(true)
+                    }
+                    else if (text === "third") {
+                        setFileSubmitButtonThird(true)
+                    }
                     toast.info("Cannot upload file with size more than 200 KB")
                 }
             }
             else if (fileObj.type === "video/mp4") {
                 if (fileSize <= 1500) {
-                    setFileSubmitButton(false)
+                    if (text === "first") {
+                        setFileSubmitButtonFirst(false)
+                    }
+                    else if (text === "second") {
+                        setFileSubmitButtonSecond(false)
+                    }
+                    else if (text === "third") {
+                        setFileSubmitButtonThird(false)
+                    }
                     console.log("clicked", fileObj)
                     setFileUpload(fileObj)
                     setNumber(1)
                 }
                 else {
-                    setFileSubmitButton(true)
+                    //  setFileSubmitButton(true)
+                    if (text === "first") {
+                        setFileSubmitButtonFirst(true)
+                    }
+                    else if (text === "second") {
+                        setFileSubmitButtonSecond(true)
+                    }
+                    else if (text === "third") {
+                        setFileSubmitButtonThird(true)
+                    }
                     toast.info("Cannot upload file with size more than 1 mb")
 
                 }
@@ -193,29 +250,63 @@ const CreateTicket = () => {
     }
 
 
-    const handleUpload = () => {
+    const handleUpload = (text) => {
+
+
         console.log(fileUpload);
         if (fileUpload !== undefined && fileUpload !== null) {
-            uploadDailyQty(fileUpload)
+            uploadDailyQty(fileUpload, text)
         } else {
             toast.info("Please select a file to upload")
         }
     }
-    const uploadDailyQty = (file) => {
+    const uploadDailyQty = (file, text) => {
+
+
         const formData = new FormData();
         formData.append('file', file)
 
         return client.post('/ticket/upload', formData)
             .then((response) => {
+
+                if (response.status === 200) {
+                    if (text === "first") {
+                        setFileSubmitButtonFirst(true)
+                    }
+                    else if (text === "second") {
+                        setFileSubmitButtonSecond(true)
+                    }
+                    else if (text === "third") {
+                        setFileSubmitButtonThird(true)
+                    }
+                }
+
                 console.log(response, "responce")
                 fileNames.push({ fileId: 0, fileName: response.data.data })
-                toast.info(response.data.data + " " + response.data.message)
+                setDeleteFileId(response.data.message)
+
+                // toast.info(response.data.data)
             })
             .catch((error) => {
                 console.log(error)
             })
     }
     //========================================================================================
+
+
+    const deleteFile = () => {
+
+        return client.post('/ticket/delete/' + deleteFileId)
+            .then((response) => {
+                console.log(response, "responce")
+                toast.info(response.data.message)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }
+
+
 
 
     const onSubmit = e => {
@@ -413,18 +504,7 @@ const CreateTicket = () => {
                             </Col>
                         </Row>
 
-                        {/* <Row>
-                            <Col sm={8}>
-                              
 
-                                <Form.Group as={Row} >
-                                    <Col sm='4'>
-
-                                    </Col>
-
-                                </Form.Group>
-                            </Col>
-                        </Row> */}
                         <Row>
                             <Col sm={8}>
                                 <Form.Group as={Row} >
@@ -435,9 +515,10 @@ const CreateTicket = () => {
                                         <input
                                             className="btn"
                                             type="file"
+
                                             accept="image/*,video/*,.pdf"
                                             // multiple="multiple"
-                                            onChange={(e) => changeHandler(e)}
+                                            onChange={(e) => changeHandler(e, "first")}
                                             style={{ padding: "5px", width: "200px", whiteSpace: "initial" }}
                                         />
                                         <br />
@@ -451,7 +532,7 @@ const CreateTicket = () => {
 
                                     <Col sm='4'>
                                         <button className="btn btn-primary" style={{ paddingLeft: "20px", paddingRight: "20px", fontWeight: "bold" }}
-                                            type="button" onClick={handleUpload} disabled={fileSubmitButton}
+                                            type="button" onClick={() => handleUpload("first")} disabled={fileSubmitButtonFirst}
                                         >Upload</button>
 
                                         <div style={{ paddingTop: '5px', float: 'right' }}>
@@ -459,10 +540,10 @@ const CreateTicket = () => {
                                                 onClick={handleAddUpload}
 
                                             />
-                                            <MinusCircle disabled style={{ color: 'lightgrey' }}
+                                            <MinusCircle style={{ color: '#376ebb' }} onClick={deleteFile} />
 
 
-                                            />
+
                                         </div>
 
 
@@ -483,26 +564,13 @@ const CreateTicket = () => {
                                         <Form.Label column sm='4' className='labels'></Form.Label>
                                         <Col sm='4'>
 
-                                            {/* <Dropzone
-                                        getUploadParams={getUploadParams}
-                                        onChangeStatus={handleChangeStatus}
-                                        // onSubmit={handleSubmit}
-                                        maxSizeBytes="5e+6"
-                                        accept="image/*,.pdf,video/*"
-                                        maxFiles={3}
-                                        inputContent="Browse file"
 
-                                        styles={{
-                                            dropzone: { width: 360, height: 300 },
-                                            dropzoneActive: { borderColor: 'green' },
-                                        }}
-                                    /> */}
                                             <input
                                                 className="btn"
                                                 type="file"
                                                 accept="image/*,video/*,.pdf"
                                                 // multiple="multiple"
-                                                onChange={(e) => changeHandler(e)}
+                                                onChange={(e) => changeHandler(e, "second")}
                                                 style={{ padding: "5px", width: "200px", whiteSpace: "initial" }}
                                             />
                                             <br />
@@ -517,7 +585,7 @@ const CreateTicket = () => {
                                 <Col sm='4'></Col> */}
                                         <Col sm='4'>
                                             <button className="btn btn-primary" style={{ paddingLeft: "20px", paddingRight: "20px", fontWeight: "bold" }}
-                                                type="button" onClick={handleUpload} disabled={fileSubmitButton}
+                                                type="button" onClick={() => handleUpload("second")} disabled={fileSubmitButtonSecond}
                                             >Upload</button>
                                             {/* <button className="btn btn-primary mx-2" style={{ paddingLeft: "20px", paddingRight: "20px", fontWeight: "bold" }}
                                         type="button" onClick={handleAddUpload} disabled={fileSubmitButton}
@@ -549,26 +617,13 @@ const CreateTicket = () => {
                                         <Form.Label column sm='4' className='labels'></Form.Label>
                                         <Col sm='4'>
 
-                                            {/* <Dropzone
-                                            getUploadParams={getUploadParams}
-                                            onChangeStatus={handleChangeStatus}
-                                            // onSubmit={handleSubmit}
-                                            maxSizeBytes="5e+6"
-                                            accept="image/*,.pdf,video/*"
-                                            maxFiles={3}
-                                            inputContent="Browse file"
 
-                                            styles={{
-                                                dropzone: { width: 360, height: 300 },
-                                                dropzoneActive: { borderColor: 'green' },
-                                            }}
-                                        /> */}
                                             <input
                                                 className="btn"
                                                 type="file"
                                                 accept="image/*,video/*,.pdf"
                                                 // multiple="multiple"
-                                                onChange={(e) => changeHandler(e)}
+                                                onChange={(e) => changeHandler(e, "third")}
                                                 style={{ padding: "5px", width: "200px", whiteSpace: "initial" }}
                                             />
                                             <br />
@@ -579,15 +634,12 @@ const CreateTicket = () => {
                                                 );
                                             })}
                                         </Col>
-                                        {/* <Form.Group as={Row} >
-                                    <Col sm='4'></Col> */}
+
                                         <Col sm='4'>
                                             <button className="btn btn-primary" style={{ paddingLeft: "20px", paddingRight: "20px", fontWeight: "bold" }}
-                                                type="button" onClick={handleUpload} disabled={fileSubmitButton}
+                                                type="button" onClick={() => handleUpload("third")} disabled={fileSubmitButtonThird}
                                             >Upload</button>
-                                            {/* <button className="btn btn-primary mx-2" style={{ paddingLeft: "20px", paddingRight: "20px", fontWeight: "bold" }}
-                                            type="button" onClick={handleUpload} disabled={fileSubmitButton}
-                                        >+</button> */}
+
                                             <div style={{ paddingTop: '5px', float: 'right' }}>
                                                 <PlusCircle disabled style={{ color: 'lightgrey' }}
                                                     onClick={handleAddUpload}
@@ -600,7 +652,7 @@ const CreateTicket = () => {
                                             </div>
                                         </Col>
 
-                                        {/* </Form.Group> */}
+
 
                                     </Form.Group>
 
@@ -651,37 +703,7 @@ const CreateTicket = () => {
 
                         <Row>
                             <Col sm={8}>
-                                {/* <Form.Group as={Row} >
-                                    <Form.Label column sm='4' className='labels'>File Upload :</Form.Label>
-                                    <Col sm='8'>
-                                        <input
-                                            className="btn"
-                                            type="file"
-                                            accept="image/*,video/*,.pdf"
-                                            multiple="multiple"
-                                            onChange={(e) => changeHandler(e)}
-                                            style={{ padding: "5px" }}
-                                        />
-                                        <br/>
-                                        
-                                        {filenames !== null && filenames.length > 1 && filenames.map((e, i) => {
-                                            return (
-                                                <div>{e.name}</div>
-                                            );
-                                        })}
-                                        
-                                    </Col>
 
-                                </Form.Group> */}
-                                {/* <Form.Group as={Row} >
-                                    <Col sm='4'></Col>
-                                    <Col sm='3'>
-                                        <button className="btn btn-primary" style={{ paddingLeft: "20px", paddingRight: "20px", fontWeight: "bold" }}
-                                            type="button" onClick={handleUpload} disabled={fileSubmitButton}
-                                        >Upload</button>
-                                    </Col>
-
-                                </Form.Group> */}
 
                             </Col>
 
