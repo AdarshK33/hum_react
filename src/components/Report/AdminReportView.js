@@ -68,7 +68,7 @@ console.log(dates)
                         <div className="card" style={{ overflowX: "auto" }}>
 
                             <div className="title_bar" >
-                                {currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 ?
+                                {reportList !== null && reportList !== undefined && reportList.length > 0 ?
                                 <ReactHTMLTableToExcel
                                     className="btn btn-light mr-2"
                                     table="table-to-xls"
@@ -185,9 +185,9 @@ console.log(dates)
                                             )}
                                         </tr>
                                     </thead>
-                                    {currentRecords !== undefined && currentRecords !== null &&
-                                        currentRecords.length > 0 &&
-                                        currentRecords.map((item, i) => {
+                                    {reportList !== undefined && reportList !== null &&
+                                        reportList.length > 0 &&
+                                        reportList.map((item, i) => {
                                             return (
                                                 <tbody key={i + 1}>
                                                     <tr>
