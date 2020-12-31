@@ -8,9 +8,14 @@ const UpdateGroup = (props) => {
     const [groupName, setGroupName] = useState()
     const [employee, setEmployee] = useState([])
     const [status, setStatus] = useState()
+    const [groupType, setGroupType] = useState()
+    const [errormsg, setErrorMsg] = useState(false)
 
     const statusList = [{ status: 'Active', value: 0, id: 1 },
     { status: 'Inactive', value: 1, id: 2 }]
+
+    const groupTypeList = [{ type: 'Payroll', value: 0, id: 1 },
+    { type: 'Others', value: 1, id: 2 }]
 
     const { updateRole, empList, serviceEmp } = useContext(GroupContext)
     useEffect(() => {
@@ -32,6 +37,10 @@ const UpdateGroup = (props) => {
         setStatus(props.status)
     }, [props.status])
 
+    useEffect(() => {
+        setGroupType(props.groupType)
+    }, [props.groupType])
+
 
 
     const groupNameHandler = (e) => {
@@ -41,6 +50,11 @@ const UpdateGroup = (props) => {
 
     const handleMultiChange = (options) => {
         setEmployee(options)
+        if(options === null){
+            setErrorMsg(true)
+        }else{
+            setErrorMsg(false)
+        }
         console.log("updated multiselect", options)
     }
     const onRemoveEmployee = (options) => {
@@ -48,8 +62,19 @@ const UpdateGroup = (props) => {
         console.log('employee on remove function', employee);
     }
 
+    const validation = () => {
+        let flag = true
+        if (employee.length === 0) {
+           setErrorMsg(true)
+            flag = false;
+            return;
+        }
+        return flag;
+    }
+
     const submitHandler = (e) => {
         e.preventDefault();
+        const validate = validation()
 
         const updateData = {
             employeeIds: employee.map((e) => e.employeeId),
@@ -58,15 +83,20 @@ const UpdateGroup = (props) => {
             status: parseInt(status)
         }
         console.log("updateData", updateData)
-        updateRole(updateData)
+        if(validate){
+            updateRole(updateData)
 
-        const setModal = props.handleEditClose;
-        setModal()
+            const setModal = props.handleEditClose;
+            setModal()
+            setErrorMsg(false)
+        }
+        
     }
 
     const onCloseModal = () => {
         const setModal = props.handleEditClose;
         setModal()
+        setErrorMsg(false)
     }
     return (
         <Fragment>
@@ -107,6 +137,24 @@ const UpdateGroup = (props) => {
                                             onSelect={handleMultiChange}
                                             isMulti
                                         />
+                                         {errormsg === true ? <p style={{color:'red',fontWeight:'bold'}}>*This field is Mandatory</p> : ''}
+                                    </Form.Group>
+                                   
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col sm={12}>
+                                    <Form.Group>
+                                        <Form.Label>Group Type</Form.Label>
+                                        <Form.Control as='select' value={groupType} required
+                                            onChange={(e) => setGroupType(e.target.value)}>
+                                            <option value=''>Select Group Type</option>
+                                            {groupTypeList.map((item, id) => {
+                                                return (
+                                                    <option key={id} value={item.value}>{item.type}</option>
+                                                )
+                                            })}
+                                        </Form.Control>
                                     </Form.Group>
                                 </Col>
                             </Row>

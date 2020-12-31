@@ -14,6 +14,7 @@ const ViewGroup = () => {
     const [empIds, setEmpIds] = useState()
     const [groupId, setGroupId] = useState()
     const [emps, setEmps] = useState()
+    const [groupType, setGroupType] = useState()
 
     const { serviceGroupView, serviceGroupList, loader } = useContext(GroupContext)
 
@@ -83,9 +84,9 @@ const ViewGroup = () => {
 
                                                             <td><Edit2 onClick={() => {
                                                                 setEditModal(true); setGroupName(item.groupName);
-                                                                setStatus(item.status); setEmpIds(item.employeeIds)
-                                                                setGroupId(item.groupId)
-                                                                setEmps(item.employees)
+                                                                setStatus(item.status); setEmpIds(item.employeeIds);
+                                                                setGroupId(item.groupId);
+                                                                setEmps(item.employees); setGroupType(item.groupType)
                                                             }} /></td>
                                                         </tr>
                                                     </tbody>
@@ -100,7 +101,7 @@ const ViewGroup = () => {
                         </div>
                         <UpdateGroup handleEditClose={handleEditClose} modal={editModal}
                             status={status} groupName={groupName} empIds={empIds}
-                            groupId={groupId} emps={emps} />
+                            groupId={groupId} emps={emps} groupType={groupType} />
                     </Col>
                 </Row>
             </Container>
