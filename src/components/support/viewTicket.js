@@ -2,7 +2,7 @@ import React, { Fragment, useContext, useEffect, useState } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import { Container, Row, Col, Form, Button, Table } from 'react-bootstrap'
 import { useHistory } from "react-router-dom";
-import { Download} from 'react-feather';
+import { Download } from 'react-feather';
 import '../common/style.css'
 import { SupportContext } from '../../context/SupportState'
 import { GroupContext } from '../../context/GroupState'
@@ -26,7 +26,7 @@ const ViewTicket = () => {
         serviceGroupView()
     }, [])
 
-   
+
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -63,7 +63,7 @@ const ViewTicket = () => {
     }
 
     const downloadFileButton = (e) => {
-        console.log("e==========",e)
+        console.log("e==========", e)
         downloadFile(e)
     }
 
@@ -234,24 +234,24 @@ const ViewTicket = () => {
                         </Row>
                         <Row>
                             {ticketIdList.ticketFiles !== undefined &&
+                                ticketIdList.ticketFiles !== null &&
                                 ticketIdList.ticketFiles.length === 0 ? '' :
                                 <Col sm={8}>
                                     <Form.Group as={Row}>
                                         <Form.Label column sm='3'></Form.Label>
-                                        <Col sm='9' style={{paddingLeft:'1.5rem'}}>
+                                        <Col sm='9' style={{ paddingLeft: '1.5rem' }}>
                                             {ticketIdList.ticketFiles != null &&
                                                 ticketIdList.ticketFiles !== undefined &&
                                                 ticketIdList.ticketFiles.length > 0 &&
                                                 ticketIdList.ticketFiles.map((item, i) => {
                                                     return (
 
-                                                        <div style={{display:'flow-root'}}>
-                                                            <span style={{float:'left'}}>
+                                                        <div style={{ display: 'flow-root' }}>
+                                                            <span style={{ float: 'left' }}>
                                                                 {item.fileName}</span>
-                                                        <Download onClick={() => 
-                                                            {downloadFileButton(item.fileName)}}
-                                                            style={{cursor:'pointer',color:'blue',float:'right'}} />
-                                                            
+                                                                <Download onClick={() => { downloadFileButton(item.fileName) }}
+                                                                    style={{ cursor: 'pointer', color: 'blue', float: 'right' }} />
+
                                                         </div>
 
                                                     )
@@ -306,32 +306,21 @@ const ViewTicket = () => {
                                 <Form.Group as={Row} >
                                     <Form.Label column sm='3' className='labels'>Service Groups :</Form.Label>
                                     <Col sm='9'>
-                                    {user.loginType === '1' || user.loginType === '9' || 
-                                    user.additionalRole === '1' || user.additionalRole === '9'? 
-                                        <Form.Control as='select' value={serviceGroup} onChange={serviceGroupHandler} >
-                                            {serviceGroupList !== null &&
-                                            serviceGroupList !== undefined &&
-                                            serviceGroupList.length >0 &&
-                                            serviceGroupList.map((item, i) => {
-                                                return (
-                                                    <option key={item.groupId} value={item.groupId}>{item.groupName}</option>
-                                                )
+                                        {user.loginType === '1' || user.loginType === '9' ||
+                                            user.additionalRole === '1' || user.additionalRole === '9' ?
+                                            <Form.Control as='select' value={serviceGroup} onChange={serviceGroupHandler} >
+                                                {serviceGroupList !== null &&
+                                                    serviceGroupList !== undefined &&
+                                                    serviceGroupList.length > 0 &&
+                                                    serviceGroupList.map((item, i) => {
+                                                        return (
+                                                            <option key={item.groupId} value={item.groupId}>{item.groupName}</option>
+                                                        )
 
-                                            })}
-                                        </Form.Control>:
-                                        <Form.Control as='select' value={serviceGroup} readOnly className='disabled-select'>
-                                        {serviceGroupList !== null &&
-                                        serviceGroupList !== undefined &&
-                                        serviceGroupList.length >0 &&
-                                        serviceGroupList.map((item, i) => {
-                                            return (
-                                                <option key={item.groupId} value={item.groupId}>{item.groupName}</option>
-                                            )
-
-                                        })}
-                                    </Form.Control>
-                                        // <Form.Control type='text' readOnly className='disabledValue'
-                                        // value={ticketIdList.groupId} />
+                                                    })}
+                                            </Form.Control> :
+                                            <Form.Control type='text' readOnly className='disabledValue'
+                                                value={ticketIdList.serviceGroup} />
                                         }
                                     </Col>
                                 </Form.Group>
@@ -342,26 +331,26 @@ const ViewTicket = () => {
                                 <Form.Group as={Row} >
                                     <Form.Label column sm='3' className='labels'>Completion Status :</Form.Label>
                                     <Col sm='9'>
-                                    {user.loginType === '1' || user.loginType === '9' || 
-                                    user.additionalRole === '1' || user.additionalRole === '9'?
-                                        <Form.Control as='select' value={compStatus}
-                                            onChange={compStatusHandler} >
-                                            {completeStatusView !== null &&
-                                                completeStatusView !== undefined &&
-                                                completeStatusView.length > 0 &&
-                                                completeStatusView.map((item, i) => {
-                                                    return (
-                                                        <option key={i} value={item.value}>{item.name}</option>
-                                                    )
-                                                })}
-                                        </Form.Control>:
-                                        <Form.Control type='text' readOnly className='disabledValue'
-                                        value={ticketIdList.completionStatus === 0 ? 'Fulfilled Offline':
-                                            (ticketIdList.completionStatus === 1 ? 'Fulfilled by live support':
-                                            (ticketIdList.completionStatus === 2 ? 'Abandoned by User':
-                                            (ticketIdList.completionStatus === 3 ? 'Enhancement request':
-                                            (ticketIdList.completionStatus === 4 ? 'Resolved by Workaround':
-                                            (ticketIdList.completionStatus === 5 ? 'Training':''))))) } />}
+                                        {user.loginType === '1' || user.loginType === '9' ||
+                                            user.additionalRole === '1' || user.additionalRole === '9' ?
+                                            <Form.Control as='select' value={compStatus}
+                                                onChange={compStatusHandler} >
+                                                {completeStatusView !== null &&
+                                                    completeStatusView !== undefined &&
+                                                    completeStatusView.length > 0 &&
+                                                    completeStatusView.map((item, i) => {
+                                                        return (
+                                                            <option key={i} value={item.value}>{item.name}</option>
+                                                        )
+                                                    })}
+                                            </Form.Control> :
+                                            <Form.Control type='text' readOnly className='disabledValue'
+                                                value={ticketIdList.completionStatus === 0 ? 'Fulfilled Offline' :
+                                                    (ticketIdList.completionStatus === 1 ? 'Fulfilled by live support' :
+                                                        (ticketIdList.completionStatus === 2 ? 'Abandoned by User' :
+                                                            (ticketIdList.completionStatus === 3 ? 'Enhancement request' :
+                                                                (ticketIdList.completionStatus === 4 ? 'Resolved by Workaround' :
+                                                                    (ticketIdList.completionStatus === 5 ? 'Training' : '')))))} />}
                                     </Col>
                                 </Form.Group>
                             </Col>
@@ -371,24 +360,24 @@ const ViewTicket = () => {
                                 <Form.Group as={Row} >
                                     <Form.Label column sm='3' className='labels'>Ticket Status :</Form.Label>
                                     <Col sm='9'>
-                                    {user.loginType === '1' || user.loginType === '9' || 
-                                    user.additionalRole === '1' || user.additionalRole === '9'?
-                                        <Form.Control as='select' value={tickStatus}
-                                            onChange={tickStatusHandler} >
-                                            {ticketStatusView !== null &&
-                                                ticketStatusView !== undefined &&
-                                                ticketStatusView.length > 0 &&
-                                                ticketStatusView.map((item, i) => {
-                                                    return (
-                                                        <option key={i} value={item.value}>{item.name}</option>
-                                                    )
-                                                })}
-                                        </Form.Control>:
-                                        <Form.Control type='text' readOnly className='disabledValue'
-                                        value={ticketIdList.ticketStatus === 0 ? 'Open':
-                                               (ticketIdList.ticketStatus === 1 ? 'In Progress':
-                                               (ticketIdList.ticketStatus === 2 ? 'On Hold':
-                                               (ticketIdList.ticketStatus === 3 ? 'Closed':'')))} />}
+                                        {user.loginType === '1' || user.loginType === '9' ||
+                                            user.additionalRole === '1' || user.additionalRole === '9' ?
+                                            <Form.Control as='select' value={tickStatus}
+                                                onChange={tickStatusHandler} >
+                                                {ticketStatusView !== null &&
+                                                    ticketStatusView !== undefined &&
+                                                    ticketStatusView.length > 0 &&
+                                                    ticketStatusView.map((item, i) => {
+                                                        return (
+                                                            <option key={i} value={item.value}>{item.name}</option>
+                                                        )
+                                                    })}
+                                            </Form.Control> :
+                                            <Form.Control type='text' readOnly className='disabledValue'
+                                                value={ticketIdList.ticketStatus === 0 ? 'Open' :
+                                                    (ticketIdList.ticketStatus === 1 ? 'In Progress' :
+                                                        (ticketIdList.ticketStatus === 2 ? 'On Hold' :
+                                                            (ticketIdList.ticketStatus === 3 ? 'Closed' : '')))} />}
                                     </Col>
                                 </Form.Group>
                             </Col>
@@ -407,8 +396,10 @@ const ViewTicket = () => {
                                                         return (
                                                             <tbody>
                                                                 <tr>
-                                                                    <td style={{ textAlign: 'center', padding: '4px 0', 
-                                                                    border: 'none',fontWeight:'bolder' }}>
+                                                                    <td style={{
+                                                                        textAlign: 'center', padding: '4px 0',
+                                                                        border: 'none', fontWeight: 'bolder'
+                                                                    }}>
                                                                         {item.date}</td>
                                                                 </tr>
 
@@ -416,15 +407,19 @@ const ViewTicket = () => {
                                                                     return (
                                                                         <Fragment>
                                                                             <tr>
-                                                                                <td style={{ textAlign: 'left', padding: '4px 0', 
-                                                                                border: 'none',fontWeight:'bolder',textDecoration:'underline' }}>
-                                                                                {i.employeeName}</td>
+                                                                                <td style={{
+                                                                                    textAlign: 'left', padding: '4px 0',
+                                                                                    border: 'none', fontWeight: 'bolder', textDecoration: 'underline'
+                                                                                }}>
+                                                                                    {i.employeeName}</td>
                                                                             </tr>
                                                                             {i.comments.map(a => {
                                                                                 return (
                                                                                     <tr>
-                                                                                        <td style={{ textAlign: 'left', padding: '4px 0', 
-                                                                                        border: 'none',backgroundColor:'aliceblue' }}>{a}</td>
+                                                                                        <td style={{
+                                                                                            textAlign: 'left', padding: '4px 0',
+                                                                                            border: 'none', backgroundColor: 'aliceblue'
+                                                                                        }}>{a}</td>
                                                                                     </tr>
                                                                                 )
                                                                             })}
