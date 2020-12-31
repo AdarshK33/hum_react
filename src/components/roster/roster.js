@@ -13,12 +13,14 @@ const Roster = () => {
   const [modal, setModal] = useState(false)
   const [date, setDate] = useState()
   const [shiftDate, setshiftDate] = useState(false)
+  const [weekName, setweekName] = useState(false)
   const { weekOffDataEmp, weekOffDataList, availableShifts } = useContext(RosterContext)
   const { user } = useContext(AppContext);
   const handleClose = () => setModal(false)
-  const handleShow = (item, weekId) => {
+  const handleShow = (item, weekId, weekName) => {
     console.log(item, "item onclick")
     setDate(item)
+    setweekName(weekName)
     setshiftDate(weekId)
     setModal(true)
     availableShifts();
@@ -38,24 +40,24 @@ const Roster = () => {
     weekOffDataEmp(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"), user.employeeId)
     console.log("weekOff Data", startDate)
   }
-  const checkCondition = (item, weekId) => {
+  const checkCondition = (item, weekId , weekName) => {
     //console.log(item, "che")
     if (item.roster == null) {
-      return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item, weekId)}>+</button>
+      return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item, weekId, weekName)}>+</button>
 
     }
     else if (item.roster.leave !== "" && item.roster.leave !== null) {
-      return <button className="btn btn-square btn-danger btn-sm" onClick={() => handleShow(item, weekId)} type="button">Leave</button>
+      return <button className="btn btn-square btn-danger btn-sm" onClick={() => handleShow(item, weekId, weekName)} type="button">Leave</button>
     }
     else if (item.roster.holiday !== "" && item.roster.holiday !== null) {
-      return <button className="btn btn-square btn-warning btn-sm" onClick={() => handleShow(item, weekId)}>{item.roster.holiday}</button>
+      return <button className="btn btn-square btn-warning btn-sm" onClick={() => handleShow(item, weekId, weekName)}>{item.roster.holiday}</button>
     }
     else if (item.roster.weekOff) {
-      return <button className="btn btn-square btn-info btn-sm" onClick={() => handleShow(item, weekId)} type="button">Week Off</button>
+      return <button className="btn btn-square btn-info btn-sm" onClick={() => handleShow(item, weekId, weekName)} type="button">Week Off</button>
     } else if (item.roster.shiftName !== "" && item.roster.shiftName !== null) {
-      return <button className="btn btn-square btn-success  btn-sm" type="button" onClick={() => handleShow(item, weekId)}>{item.roster.shiftName}</button>
+      return <button className="btn btn-square btn-success  btn-sm" type="button" onClick={() => handleShow(item, weekId, weekName)}>{item.roster.shiftName}</button>
     } else {
-      return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item, weekId)}>+</button>
+      return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item, weekId, weekName)}>+</button>
     }
   }
   return (
@@ -163,7 +165,7 @@ const Roster = () => {
                               {item.employeeRosters.map(data => {
                                 // let newData = new Date(data.date)
                                 //console.log(newData.getDay(), "day")
-                                return <td>{item.weekName}<br />{data.date}<br />{checkCondition(data, item.weekId)}</td>
+                                return <td>{item.weekName}<br />{data.date}<br />{checkCondition(data, item.weekId, item.weekName)}</td>
                               })}
                             </tr>
                           )
@@ -191,7 +193,7 @@ const Roster = () => {
             </div>
           </div>
         </div>
-        {modal && <ShiftModal handleClose={handleClose} modal={modal} shiftDate={shiftDate} Date={date.date} empData={weekOffDataList} />}
+        {modal && <ShiftModal handleClose={handleClose} modal={modal} shiftDate={shiftDate} Date={date.date} empData={weekOffDataList} weekName = {weekName} />}
       </div>
 
     </Fragment>
