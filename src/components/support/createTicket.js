@@ -66,12 +66,24 @@ const CreateTicket = () => {
     }
 
     const handleRemoveUpload = (text) => {
-
+    let fileArr = [];
         if (text === "second") {
             setshowFirst(false);
+            for(let i = 0 ; i < fileNames.length;i++){
+                if (deleteSecondFile !== fileNames[i].fileName){
+                    fileArr.push({ fileId: 0, fileName: fileNames[i].fileName });
+                }
+            }
+            setFileNames(fileArr);
             deleteFile(deleteSecondFile)
         } else if (text === "third") {
             setshowSecond(false);
+            for(let i = 0 ; i < fileNames.length;i++){
+                if (deleteThirdFile !== fileNames[i].fileName){
+                    fileArr.push({ fileId: 0, fileName: fileNames[i].fileName });
+                }
+            }
+            setFileNames(fileArr);
             deleteFile(deleteThirdFile)
         } else if (text === "first") {
             var file = document.getElementById(text);
@@ -80,6 +92,12 @@ const CreateTicket = () => {
             emptyFile.id = text;
             file.files = emptyFile.files;
             setFileSubmitButtonFirst(false)
+            for(let i = 0 ; i < fileNames.length;i++){
+                if (deleteFirstFile !== fileNames[i].fileName){
+                    fileArr.push({ fileId: 0, fileName: fileNames[i].fileName });
+                }
+            }
+            setFileNames(fileArr);
             deleteFile(deleteFirstFile)
         }
     }

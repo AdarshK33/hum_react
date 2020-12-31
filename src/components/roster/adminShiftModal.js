@@ -122,7 +122,7 @@ const AdminShiftModal = (props) => {
     let WeekDate = weekDay;
     let weekNumber = date
     if (weekNameData !== undefined) {
-      weekNumber = weekNameData.split(' ')[0].trim();
+      weekNumber = weekNameData.split('-')[0].trim();
       weekNumber = weekNumber.split('Week')[1].trim();
     }
     var loIsDate = new Date(weekDay);
