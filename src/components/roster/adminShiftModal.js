@@ -10,7 +10,9 @@ import moment from 'moment'
 
 const AdminShiftModal = (props) => {
   console.log("MY PROPS " + JSON.stringify(props));
-  const date = moment(props.Date, 'YYYY-MM-DD').week();
+  // let date = moment(props.Date, 'YYYY-MM-DD').week();
+  const [date, setdate] = useState()
+  // let date = "";
   const [key, setKey] = useState('shift')
   const shiftDateWeek = props.shiftDate;
   console.log("=====" + shiftDateWeek)
@@ -43,6 +45,17 @@ const AdminShiftModal = (props) => {
 
   }, [props.firstName])
 
+  useEffect(() => {
+    for(let i = 0 ; i<adminWeekOffDataListHeader.length;i++){
+      if(props.shiftDate === adminWeekOffDataListHeader[i].weekId){
+        let weekNumber = adminWeekOffDataListHeader[i].weekName
+        //  date = weekNumber.split(' ')[0].trim();
+        setdate(weekNumber.split('Week')[1].trim());
+        // date = weekNumber.split('Week')[1].trim();
+      }
+    }
+
+  }, [props.shiftDate])
   useEffect(() => {
     setContractType(props.contractType)
   }, [props.contractType])
