@@ -9,7 +9,10 @@ import moment from 'moment'
 
 const ShiftModal = (props) => {
   const [key, setKey] = useState('shift')
-  const date = moment(props.Date, 'YYYY-MM-DD').week();
+  // const date = moment(props.Date, 'YYYY-MM-DD').week();
+  const date = parseInt(props.weekName.split('Week')[1].trim());
+  // const [date, setdate] = useState()
+  
   const shiftDateWeek = props.shiftDate;
   const [selectedWeeks, setSelectedWeeks] = useState()
   const [weekDay, setWeekDay] = useState()
@@ -39,6 +42,11 @@ const ShiftModal = (props) => {
     console.log('shiftDateWeek', shiftDateWeek)
     weekOffDays(shiftDateWeek)
   }, [selectedWeeks])
+
+  // useEffect(() => {
+  //   setdate(props.weekName.split('Week')[1].trim())
+  //   // setSelectedWeeks(props.weekName)
+  // }, [props.weekName])
 
   console.log("***" + props.Date)
   useEffect(() => {
@@ -72,7 +80,7 @@ const ShiftModal = (props) => {
     let WeekDate = weekDay;
     let weekNumber = date
     if (weekNameData !== undefined) {
-      weekNumber = weekNameData.split(' ')[0].trim();
+      weekNumber = weekNameData.split('-')[0].trim();
       weekNumber = weekNumber.split('Week')[1].trim();
     }
     var loIsDate = new Date(weekDay);
