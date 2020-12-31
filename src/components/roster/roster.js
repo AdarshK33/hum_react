@@ -137,7 +137,7 @@ const Roster = () => {
                                     return (
                                       <>
                                         {/* {Array.from(Array(newData.getDay() - 1)).map(() => <td></td>)} */}
-                                        <td>{item.weekName}<br />{data.date}<br />{checkCondition(data, item.weekId)}</td>
+                                        <td>{item.weekName}<br />{data.date}<br />{checkCondition(data, item.weekId, item.weekName)}</td>
                                       </>
 
                                     )
@@ -145,14 +145,14 @@ const Roster = () => {
                                     return (
                                       <>
                                         {Array.from(Array(newData.getDay())).map(() => <td></td>)}
-                                        <td>{item.weekName}<br />{data.date}<br />{checkCondition(data, item.weekId)}</td>
+                                        <td>{item.weekName}<br />{data.date}<br />{checkCondition(data, item.weekId, item.weekName)}</td>
                                       </>
 
                                     )
                                   }
 
                                 } else {
-                                  return <td>{item.weekName}<br />{data.date}<br />{checkCondition(data, item.weekId)}</td>
+                                  return <td>{item.weekName}<br />{data.date}<br />{checkCondition(data, item.weekId, item.weekName)}</td>
                                 }
 
                               }
