@@ -7,9 +7,14 @@ const CreateGroup = (props) => {
     const [groupName, setGroupName] = useState('')
     const [employee, setEmployee] = useState([])
     const [status, setStatus] = useState()
+    const [groupType, setGroupType] = useState()
+    const [errormsg, setErrorMsg] = useState(false)
 
     const statusList = [{ status: 'Active', value: 0, id: 1 },
     { status: 'Inactive', value: 1, id: 2 }]
+
+    const groupTypeList = [{ type: 'Payroll', value: 0, id: 1 },
+    { type: 'Others', value: 1, id: 2 }]
 
     // const { callClusterEmployeesList,callClusterEmployees} = useContext(ClusterContext);
     const { createRole, empList, serviceEmp } = useContext(GroupContext)
@@ -28,30 +33,55 @@ const CreateGroup = (props) => {
     // }
     const handleMultiChange = (options) => {
         setEmployee(options)
+        if(options === null){
+            setErrorMsg(true)
+        }else{
+            setErrorMsg(false)
+        }
         console.log("multiselect options", options)
+    }
+    const validation = () => {
+        let flag = true
+        if (employee.length === 0) {
+           setErrorMsg(true)
+            flag = false;
+            return;
+        }
+        return flag;
     }
 
     const submitHandler = (e) => {
         e.preventDefault();
+        const validate = validation()
 
         const createData = {
             employeeIds: employee.map((e) => e.employeeId),
             groupId: 0,
             groupName: groupName,
+            groupType: parseInt(groupType),
             status: parseInt(status)
         }
         console.log("createData", createData)
-        createRole(createData)
-
-        const setModal = props.handleClose;
-        setModal()
+        if(validate){
+            createRole(createData)
+            const setModal = props.handleClose;
+            setModal()
+            setErrorMsg(false)
+            setGroupName('')
+            setGroupType('')
+            setStatus('')
+        }
+       
+        
     }
 
     const onCloseModal = () => {
         const setModal = props.handleClose;
         setModal()
         setGroupName('')
+        setGroupType('')
         setStatus('')
+        setErrorMsg(false)
     }
     return (
         <Fragment>
@@ -90,6 +120,24 @@ const CreateGroup = (props) => {
                                             selectionLimit='10'
                                             isMulti
                                         />
+                                         {errormsg === true ? <p style={{color:'red',fontWeight:'bold'}}>*This field is Mandatory</p> : ''}
+                                    </Form.Group>
+                                   
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col sm={12}>
+                                    <Form.Group>
+                                        <Form.Label>Group Type</Form.Label>
+                                        <Form.Control as='select' value={groupType} required
+                                            onChange={(e) => setGroupType(e.target.value)} >
+                                            <option value=''>Select Group Type</option>
+                                            {groupTypeList.map((item, id) => {
+                                                return (
+                                                    <option key={id} value={item.value}>{item.type}</option>
+                                                )
+                                            })}
+                                        </Form.Control>
                                     </Form.Group>
                                 </Col>
                             </Row>
