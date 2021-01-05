@@ -1,15 +1,14 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react'
-import { Container, Modal, Tabs, Tab, InputGroup } from 'react-bootstrap'
+import { Container, Modal, Tabs, Tab } from 'react-bootstrap'
 import Select from 'react-select';
 import { toast } from "react-toastify";
 import { RosterContext } from "../../context/RosterState";
 import "react-toastify/dist/ReactToastify.css";
-import moment from 'moment'
 
 
 
 const AdminShiftModal = (props) => {
-  console.log("MY PROPS " + JSON.stringify(props));
+  // console.log("MY PROPS " + JSON.stringify(props));
   // let date = moment(props.Date, 'YYYY-MM-DD').week();
   const [date, setdate] = useState()
   // let date = "";
@@ -33,7 +32,7 @@ const AdminShiftModal = (props) => {
   const [empData, setEmpData] = useState();
   const [weekNameData, setWeekNameData] = useState();
   const { weekDays, weekOffDays, availableShifts, availableShiftData, adminRosterAvailableShiftList, adminRosterAvailableShift,
-    assignAdminShift, getallWeeks, weeksInYear, getEmployeeListForAdminRosterWeekOff, EmployeeListForAdminRosterWeekOff, adminAddWeekOff, adminWeekOffDataListHeader, adminWeekOffDataEmp } = useContext(RosterContext)
+    assignAdminShift, getallWeeks, weeksInYear, getEmployeeListForAdminRosterWeekOff, EmployeeListForAdminRosterWeekOff, adminAddWeekOff, adminWeekOffDataListHeader } = useContext(RosterContext)
 
   let Days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -46,8 +45,8 @@ const AdminShiftModal = (props) => {
   }, [props.firstName])
 
   useEffect(() => {
-    for(let i = 0 ; i<adminWeekOffDataListHeader.length;i++){
-      if(props.shiftDate === adminWeekOffDataListHeader[i].weekId){
+    for (let i = 0; i < adminWeekOffDataListHeader.length; i++) {
+      if (props.shiftDate === adminWeekOffDataListHeader[i].weekId) {
         let weekNumber = adminWeekOffDataListHeader[i].weekName
         //  date = weekNumber.split(' ')[0].trim();
         setdate(weekNumber.split('Week')[1].trim());

@@ -1,9 +1,7 @@
 import React, { Fragment, useEffect, useContext, useState } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import Pagination from 'react-js-pagination'
-import { AppContext } from "../../context/AppState";
 import { RosterContext } from "../../context/RosterState";
-import { MasterFilesContext } from "../../context/MasterFilesState";
 import {
   JsonToExcel
 } from 'react-json-excel';
@@ -50,10 +48,7 @@ const MasterWeek = () => {
 
   const ref = React.useRef(null);
 
-  const removeFileName = (e) => {
-    console.log("=================", ref.current)
-    // ref.current.pause();
-  }
+
 
   useEffect(() => {
 

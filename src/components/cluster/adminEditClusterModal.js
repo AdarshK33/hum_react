@@ -19,7 +19,7 @@ const AdminEditClusterModal = (props) => {
     const [clustertButton, setClusterButton] = useState(false);
     const [costCenterName, setCostCenterName] = useState('');
     const [status, setStatus] = useState(0);
-    const [fullName, setFullName] = useState([]);
+    // const [fullName, setFullName] = useState([]);
 
 
 
