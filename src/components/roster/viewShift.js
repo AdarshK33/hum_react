@@ -38,7 +38,7 @@ function ViewShift() {
   const [searchShift, setShiftList] = useState();
 
   const { searchShiftList, viewSearchSiftList } = useContext(SearchContext);
-  const { shiftList, editShift, viewShift, viewShiftTypes, viewContractTypes, singleShiftList, loader } = useContext(RosterContext);
+  const { shiftList, editShift, viewShift, viewShiftTypes, viewContractTypes, singleShiftList } = useContext(RosterContext);
   //pagenation data
 
 

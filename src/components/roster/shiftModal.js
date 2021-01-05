@@ -3,7 +3,6 @@ import { Container, Form, Modal, Tabs, Tab, } from 'react-bootstrap'
 import { RosterContext } from "../../context/RosterState";
 import { AppContext } from "../../context/AppState";
 import './roster.css'
-import moment from 'moment'
 
 
 
@@ -12,7 +11,7 @@ const ShiftModal = (props) => {
   // const date = moment(props.Date, 'YYYY-MM-DD').week();
   const date = parseInt(props.weekName.split('Week')[1].trim());
   // const [date, setdate] = useState()
-  
+
   const shiftDateWeek = props.shiftDate;
   const [selectedWeeks, setSelectedWeeks] = useState()
   const [weekDay, setWeekDay] = useState()

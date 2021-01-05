@@ -8,8 +8,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { AppContext } from "../context/AppState";
 import { UserManager } from 'oidc-client';
 import { useHistory } from "react-router-dom";
-import Cookies from "js-cookie";
-import { access_token } from '../auth/signin';
 import { accessToken } from '../utils/axios';
 
 const AppLayout = ({ children }) => {
@@ -50,7 +48,7 @@ const AppLayout = ({ children }) => {
             } else {
                 getUserMenu(user.generalUserMenus, "profile", user);
                 localStorage.setItem('flag', "0")
-                
+
             }
         }
     }, [window.location.href, state])
@@ -62,7 +60,7 @@ const AppLayout = ({ children }) => {
     const checkTokenExists = (accessToken) => {
         console.log("APP RESULT " + app.isLoggedin);
         console.log("inside the check token exist")
-        
+
         // let access_token = Cookies.get('APPAT');
 
         if (accessToken) {
@@ -78,7 +76,7 @@ const AppLayout = ({ children }) => {
             console.log("Invalid Login")
             //  window.location.href = loginUrl
             // userManager.signinRedirect();
-             history.push("/login");
+            history.push("/login");
         }
     }
     return (

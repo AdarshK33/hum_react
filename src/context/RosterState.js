@@ -164,7 +164,7 @@ export const RosterProvider = ({ children }) => {
     client.get('weekoff/weeks/days' + '?weekId=' + weekId)
       .then((response) => {
         state.weekDays = response.data.data
-        console.log("SELECT WEEK ========== ", weekId, JSON.stringify(state.weekDays))
+        //   console.log("SELECT WEEK ========== ", weekId, JSON.stringify(state.weekDays))
         return dispatch({ type: 'WEEKOFF_WEEK_DAYS', payload: state.weekDays })
       })
       .catch((error) => {
@@ -252,9 +252,15 @@ export const RosterProvider = ({ children }) => {
     let year = new Date(date).getFullYear();
     client.get('/weekoff/weeks?year=' + year)
       .then((response) => {
-        state.weeksInYear = response.data.data
-        console.log("=====GET ALL WEEK =====", JSON.stringify(state.weeksInYear))
+        if (response.data.data === null) {
+          state.weeksInYear = []
+        }
+        else {
+          state.weeksInYear = response.data.data
+        }
+        // console.log("=====GET ALL WEEK =====", JSON.stringify(state.weeksInYear))
         return dispatch({ type: 'AVAILABLE_WEEKS', payload: state.weeksInYear })
+
       })
       .catch((error) => {
         console.log(error)
@@ -447,8 +453,8 @@ export const RosterProvider = ({ children }) => {
           adminSelectedRosterRange: { endDate, startDate, contract, weekid, empId, clusterId },
         } = state;
         toast.info(response.data.message)
-        console.log("==========NAVANEETHA===================")
-        console.log(response, "cre")
+        // console.log("==========NAVANEETHA===================")
+        // console.log(response, "cre")
         adminWeekOffDataEmp(endDate, startDate, contract, weekid, empId, clusterId);
       })
       .catch((error) => {
