@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import "./index.scss";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
@@ -52,15 +52,15 @@ function Root() {
                             <AdminProvider>
                               <SupportProvider>
                                 <GroupProvider>
-                                {/* //Support provider 14-12-20*/}
-                                <BrowserRouter basename={"/"}>
-                                  <ScrollContext>
-                                    <WithAxios>
-                                      <RoutePath />
-                                    </WithAxios>
-                                  </ScrollContext>
-                                </BrowserRouter>
-                                {/* </Provider>  */}
+                                  {/* //Support provider 14-12-20*/}
+                                  <BrowserRouter basename={"/"}>
+                                    <ScrollContext>
+                                      <WithAxios>
+                                        <RoutePath />
+                                      </WithAxios>
+                                    </ScrollContext>
+                                  </BrowserRouter>
+                                  {/* </Provider>  */}
                                 </GroupProvider>
                               </SupportProvider>
                             </AdminProvider>

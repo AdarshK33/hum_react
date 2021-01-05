@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect, useContext, useState } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import Pagination from 'react-js-pagination'
-import { AppContext } from "../../context/AppState";
 import { toast } from "react-toastify";
 import { MasterFilesContext } from "../../context/MasterFilesState";
 import {
@@ -103,12 +102,7 @@ const MasterState = () => {
 
                       text="Export excel"
                     />}
-                  {/* <ReactHTMLTableToExcel
-                      className="btn btn-light mr-2"
-                      table="table-to-xls"
-                      filename="statelist"
-                      sheet="Sheet"
-                      buttonText="Export excel" /> */}
+
                 </div>
               }
 

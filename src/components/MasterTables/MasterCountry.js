@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useContext, useState } from 'react';
 import Breadcrumb from '../common/breadcrumb';
-import { AppContext } from "../../context/AppState";
 import { MasterFilesContext } from "../../context/MasterFilesState";
 import {
   JsonToExcel
@@ -9,7 +8,7 @@ import { toast } from "react-toastify";
 
 const MasterCountry = () => {
 
-  const { user } = useContext(AppContext);
+
   const [fileUpload, setFileUpload] = useState();
 
   const { viewCountries, countryList } = useContext(MasterFilesContext);

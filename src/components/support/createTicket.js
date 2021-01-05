@@ -2,7 +2,6 @@ import React, { Fragment, useState, useContext, useEffect } from 'react';
 import Breadcrumb from '../common/breadcrumb';
 import '../common/style.css'
 import 'react-dropzone-uploader/dist/styles.css';
-import Dropzone from 'react-dropzone-uploader'
 import { AppContext } from "../../context/AppState";
 import { SupportContext } from "../../context/SupportState"
 import { Container, Row, Col, Form } from 'react-bootstrap'
@@ -10,11 +9,9 @@ import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import '../common/style.css'
-import { Users, PlusCircle, MinusCircle } from 'react-feather';
+import { PlusCircle, MinusCircle } from 'react-feather';
 import { client } from '../../utils/axios';
 // import { Edit2, Search } from 'react-feather'
-
-import { access_token } from '../../auth/signin';;
 
 
 const CreateTicket = () => {
@@ -40,7 +37,7 @@ const CreateTicket = () => {
     const [deleteSecondFile, setDeleteSecondFile] = useState()
     const [deleteThirdFile, setDeleteThirdFile] = useState()
 
-    let count = 0;
+
 
     let history = useHistory();
     const { user } = useContext(AppContext);
@@ -66,11 +63,11 @@ const CreateTicket = () => {
     }
 
     const handleRemoveUpload = (text) => {
-    let fileArr = [];
+        let fileArr = [];
         if (text === "second") {
             setshowFirst(false);
-            for(let i = 0 ; i < fileNames.length;i++){
-                if (deleteSecondFile !== fileNames[i].fileName){
+            for (let i = 0; i < fileNames.length; i++) {
+                if (deleteSecondFile !== fileNames[i].fileName) {
                     fileArr.push({ fileId: 0, fileName: fileNames[i].fileName });
                 }
             }
@@ -78,8 +75,8 @@ const CreateTicket = () => {
             deleteFile(deleteSecondFile)
         } else if (text === "third") {
             setshowSecond(false);
-            for(let i = 0 ; i < fileNames.length;i++){
-                if (deleteThirdFile !== fileNames[i].fileName){
+            for (let i = 0; i < fileNames.length; i++) {
+                if (deleteThirdFile !== fileNames[i].fileName) {
                     fileArr.push({ fileId: 0, fileName: fileNames[i].fileName });
                 }
             }
@@ -92,8 +89,8 @@ const CreateTicket = () => {
             emptyFile.id = text;
             file.files = emptyFile.files;
             setFileSubmitButtonFirst(false)
-            for(let i = 0 ; i < fileNames.length;i++){
-                if (deleteFirstFile !== fileNames[i].fileName){
+            for (let i = 0; i < fileNames.length; i++) {
+                if (deleteFirstFile !== fileNames[i].fileName) {
                     fileArr.push({ fileId: 0, fileName: fileNames[i].fileName });
                 }
             }

@@ -6,7 +6,6 @@ import { Button } from 'react-bootstrap'
 import { Edit2, Search } from 'react-feather'
 import { ClusterContext } from "../../context/ClusterState";
 import { SearchContext } from '../../context/SearchState';
-import { AppContext } from "../../context/AppState";
 import Pagination from 'react-js-pagination';
 function AdminCluster() {
 
@@ -27,7 +26,6 @@ function AdminCluster() {
     const [searchLeaveList, setLeaveList] = useState();
     const { viewSearchClusterList, searchClusterList } = useContext(SearchContext);
     const { viewCluster, clusterList, getCluster, viewCostCenterEmployeeByManger, getSingleCluster, getSingleCluster1, getEmployeesNames, loader } = useContext(ClusterContext);
-    const { user } = useContext(AppContext);
 
     useEffect(() => {
         viewCluster()

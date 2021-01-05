@@ -1,7 +1,6 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import { Button, Table, Container, Row, Col } from 'react-bootstrap'
-import Priority from "./priority";
 import Breadcrumb from '../common/breadcrumb';
 import { Edit2, Search } from 'react-feather';
 import { SupportContext } from '../../context/SupportState'
@@ -136,12 +135,12 @@ const TicketListingPage = () => {
                                                             <td>{item.updatedDate === null ? '-' :
                                                                 item.updatedDate}</td>
                                                             {item.ticketStatusDesc === 'Closed' ?
-                                                            <td><Edit2 style={{ color: 'lightblue' }} /></td> 
-                                                            :
-                                                            <Link to='/viewTicket'>
-                                                                <td><Edit2 onClick={() => {
-                                                                    ticketIdView(item.ticketId)
-                                                                }} /></td></Link>}
+                                                                <td><Edit2 style={{ color: 'lightblue' }} /></td>
+                                                                :
+                                                                <Link to='/viewTicket'>
+                                                                    <td><Edit2 onClick={() => {
+                                                                        ticketIdView(item.ticketId)
+                                                                    }} /></td></Link>}
                                                         </tr>
                                                     </tbody>
                                                 )

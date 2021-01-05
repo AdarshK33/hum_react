@@ -4,7 +4,6 @@ import { ClusterContext } from "../../context/ClusterState";
 import { Multiselect } from 'multiselect-react-dropdown';
 import { toast } from "react-toastify";
 import { RosterContext } from "../../context/RosterState";
-import Select from 'react-select'
 import { AppContext } from "../../context/AppState";
 import "react-toastify/dist/ReactToastify.css";
 const EditClusterModal = (props) => {
@@ -21,7 +20,7 @@ const EditClusterModal = (props) => {
   const [clustertButton, setClusterButton] = useState(false);
   const [costCenterName, setCostCenterName] = useState('');
   const [status, setStatus] = useState(0);
-  const [clusterLeaderName, setClusterLeaderName] = useState('')
+  //const [clusterLeaderName, setClusterLeaderName] = useState('')
 
 
 
@@ -42,9 +41,9 @@ const EditClusterModal = (props) => {
   const { updateAdminEditCluster, getSingleCluster, viewSports, costCenterEmpAndMgrList, sportsNames, callClusterEmployees, callClusterLeaders
     , getSingleCluster1, getEmployeesNames } = useContext(ClusterContext);
   const { user } = useContext(AppContext);
-  const { costCenter, costCenterList } = useContext(RosterContext);
+  const { costCenter } = useContext(RosterContext);
 
-  console.log("getEmployeesNames",getEmployeesNames)
+  console.log("getEmployeesNames", getEmployeesNames)
 
   useEffect(() => {
     viewSports()
