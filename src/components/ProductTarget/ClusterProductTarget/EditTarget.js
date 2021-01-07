@@ -1,13 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Container, Row, Button, Form, Modal } from 'react-bootstrap'
-// import { useHistory } from "react-router-dom";
-// import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
-import { ToastContainer,  } from "react-toastify";
+import { ToastContainer, } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ClusterProductContext } from "../../../context/ClusterProductState";
 import { DashboardContext } from "../../../context/DashboardState";
-import Select from 'react-select';
 import moment from 'moment'
 import DatePicker from 'react-datepicker';
 
@@ -17,30 +14,28 @@ const EditTarget = (props) => {
     const [cluster, setCluster] = useState()
     const [clusterName, setClusterName] = useState()
     const [date, setDate] = useState();
-    // const [targetWeekdays, setTargetWeekdays] = useState()
-    // const [targetWeekend, setTargetWeekend] = useState()
     const [TodayDate, setTodayDate] = useState();
     const [month, setMonth] = useState();
     const [Year, setYear] = useState();
     const [target, setTarget] = useState()
-    
-
-    const { cosCentreList,viewCostCentre } = useContext(DashboardContext);
-    const { clusterList, viewClusterList,editTarget } = useContext(ClusterProductContext);
 
 
-      useEffect(() => {
-        setCostCenter(props.singleClusterTarget.storeName); 
-        setCluster(props.singleClusterTarget.clusterId);   
+    const { viewCostCentre } = useContext(DashboardContext);
+    const { clusterList, viewClusterList, editTarget } = useContext(ClusterProductContext);
+
+
+    useEffect(() => {
+        setCostCenter(props.singleClusterTarget.storeName);
+        setCluster(props.singleClusterTarget.clusterId);
         setClusterName(props.singleClusterTarget.clusterName);
-        viewClusterList(props.singleClusterTarget.storeName);   
+        viewClusterList(props.singleClusterTarget.storeName);
         viewCostCentre()
-        let date = new Date(); 
+        let date = new Date();
         var dd = String(date.getDate()).padStart(2, '0');
         var mm = String(date.getMonth() + 1).padStart(2, '0')
-        if(dd > 20){
-             mm++;
-        } 
+        if (dd > 20) {
+            mm++;
+        }
         var yyyy = date.getFullYear();
         setTodayDate(dd);
         setMonth(mm);
@@ -48,9 +43,9 @@ const EditTarget = (props) => {
     }, [props.singleClusterTarget.storeName]);
 
 
-    useEffect(() => {        
-        setDate(props.singleClusterTarget.year+"-"+monthsNumber[props.singleClusterTarget.month]);            
-       
+    useEffect(() => {
+        setDate(props.singleClusterTarget.year + "-" + monthsNumber[props.singleClusterTarget.month]);
+
     }, [props.singleClusterTarget.month, props.singleClusterTarget.year]);
 
     useEffect(() => {
@@ -82,18 +77,18 @@ const EditTarget = (props) => {
 
     const fromClusterHandler = (e) => {
         setCluster(e);
-      }
+    }
 
     const fromTargetHandler = (e) => {
         setTarget(e);
     }
-  
-  
+
+
     //   const fromWeekdaysHandler = (e) => {
     //       setTargetWeekdays(e);
     //   }
-  
-  
+
+
     //   const fromWeekendHandler = (e) => {
     //       setTargetWeekend(e);
     //   }
@@ -118,14 +113,14 @@ const EditTarget = (props) => {
     monthsNumber["Feb"] = '02';
     monthsNumber["Mar"] = '03';
     monthsNumber["Apr"] = '04';
-    monthsNumber["May"] = '05' ;
-    monthsNumber["Jun"] = '06' ;
-    monthsNumber["Jul"] = '07' ;
-    monthsNumber["Aug"] = '08' ;
-    monthsNumber["Sep"] = '09' ;
-    monthsNumber["Oct"] = '10' ;
-    monthsNumber["Nov"] = '11' ;
-    monthsNumber["Dec"] = '12' ;
+    monthsNumber["May"] = '05';
+    monthsNumber["Jun"] = '06';
+    monthsNumber["Jul"] = '07';
+    monthsNumber["Aug"] = '08';
+    monthsNumber["Sep"] = '09';
+    monthsNumber["Oct"] = '10';
+    monthsNumber["Nov"] = '11';
+    monthsNumber["Dec"] = '12';
 
 
     const onSubmit = e => {
@@ -147,7 +142,7 @@ const EditTarget = (props) => {
         }
         // console.log(Values);
         editTarget(Values);
-        
+
         const setModal = props.handleEditClose;
         setModal()
     }
@@ -158,14 +153,14 @@ const EditTarget = (props) => {
         setModal()
         setCostCenter(props.singleClusterTarget.storeName)
         setCluster(props.singleClusterTarget.clusterId)
-        setDate(props.singleClusterTarget.year+"-"+monthsNumber[props.singleClusterTarget.month])
+        setDate(props.singleClusterTarget.year + "-" + monthsNumber[props.singleClusterTarget.month])
         setTarget(props.singleClusterTarget.productTarget)
         // setTargetWeekdays(props.singleClusterTarget.weekDayTarget)
         // setTargetWeekend(props.singleClusterTarget.weekEndTarget)
         viewClusterList(props.singleClusterTarget.storeName)
     }
 
-    
+
     return (
         <React.Fragment>
             <ToastContainer />
@@ -176,18 +171,18 @@ const EditTarget = (props) => {
                             <h5 className="modal-heading">Edit Target</h5>
                         </Modal.Title>
                         <button type="button" className="close" data-dismiss="modal" aria-label="Close"
-                        onClick={onCloseModal}>
+                            onClick={onCloseModal}>
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </Modal.Header>
                     <Modal.Body>
                         <Form onSubmit={onSubmit}>
-                            
+
                             <Row>
                                 <div className="col-sm-12">
                                     <Form.Group>
-                                        <Form.Label>Select Cost Center</Form.Label>     
-                                        <Form.Control value={costCenter} readOnly />                                   
+                                        <Form.Label>Select Cost Center</Form.Label>
+                                        <Form.Control value={costCenter} readOnly />
                                         {/* <Select                                       
                                                 name="filters"
                                                 placeholder={costCenter}
@@ -216,58 +211,58 @@ const EditTarget = (props) => {
                             </Row>
 
                             <Row>
-                                    <div className="col-sm-12">
-                                        <Form.Group>
-                                            <Form.Label>Select Cluster :</Form.Label>
-                                            <Form.Control as="select"
-                                                onChange={(e)=>fromClusterHandler(e.target.value)}
-                                                >                                               
+                                <div className="col-sm-12">
+                                    <Form.Group>
+                                        <Form.Label>Select Cluster :</Form.Label>
+                                        <Form.Control as="select"
+                                            onChange={(e) => fromClusterHandler(e.target.value)}
+                                        >
 
-                                                <option value={cluster}>{clusterName}</option>
-                                                { 
-                                                clusterList !== null ? 
-                                                clusterList.map((e, i) => {
-                                                    return(
-                                                        // console.log(e.clusterId)
-                                                    <option key={i + 1} value={e.clusterId}>{e.clusterName}</option>)
-                                                    }): ""}
-                                            </Form.Control>
-                                        </Form.Group>
-                                    </div>
-                                </Row>
+                                            <option value={cluster}>{clusterName}</option>
+                                            {
+                                                clusterList !== null ?
+                                                    clusterList.map((e, i) => {
+                                                        return (
+                                                            // console.log(e.clusterId)
+                                                            <option key={i + 1} value={e.clusterId}>{e.clusterName}</option>)
+                                                    }) : ""}
+                                        </Form.Control>
+                                    </Form.Group>
+                                </div>
+                            </Row>
 
-                                <Row>
-                                    <div className="col-sm-12">
-                                        <Form.Group>
-                                            <Form.Label>Select Month and Year :</Form.Label>
-                                            <DatePicker                                                     
-                                                onChange={(d) => {
-                                                    // console.log(date)
-                                                    const month = moment(d, ["YYYY-MM"]).format("M");
-                                                    // console.log(month)
-                                                    const year = moment(d, ["MMM Do YY"]).format('YYYY');
-                                                    // console.log(year)
-                                                    setDate(year+"-"+month)
-                                                    
-                                                }}
-                                                className="form-control" 
-                                                dateFormat="MM/yyyy" 
-                                                showMonthYearPicker
-                                                placeholderText={date} />
+                            <Row>
+                                <div className="col-sm-12">
+                                    <Form.Group>
+                                        <Form.Label>Select Month and Year :</Form.Label>
+                                        <DatePicker
+                                            onChange={(d) => {
+                                                // console.log(date)
+                                                const month = moment(d, ["YYYY-MM"]).format("M");
+                                                // console.log(month)
+                                                const year = moment(d, ["MMM Do YY"]).format('YYYY');
+                                                // console.log(year)
+                                                setDate(year + "-" + month)
+
+                                            }}
+                                            className="form-control"
+                                            dateFormat="MM/yyyy"
+                                            showMonthYearPicker
+                                            placeholderText={date} />
 
 
-                                            {/* <Form.Control type="month" className="digit" min={Year + "-" + month}
+                                        {/* <Form.Control type="month" className="digit" min={Year + "-" + month}
                                                 value = {date}
                                                 onChange={(e) => setDate(e.target.value)}
                                                 >
                                                     
                                             </Form.Control> */}
-                                        </Form.Group>
-                                    </div>
-                                </Row>
+                                    </Form.Group>
+                                </div>
+                            </Row>
 
 
-                                {/* <Row>
+                            {/* <Row>
                                     <Col>
                                         <Form.Group>
                                             <Form.Label>Product Target for Weekdays :</Form.Label>
@@ -291,15 +286,15 @@ const EditTarget = (props) => {
                                     </Col>
                                 </Row> */}
 
-<Row>
+                            <Row>
                                 <div className="col-sm-12">
                                     <Form.Group>
                                         <Form.Label>Productivity Target</Form.Label>
-                                        <Form.Control size="lg" type="text" 
+                                        <Form.Control size="lg" type="text"
                                             onChange={(e) => fromTargetHandler(e.target.value)}
-                                            value= {target}
-                                            >
-                                           
+                                            value={target}
+                                        >
+
                                         </Form.Control>
                                     </Form.Group>
                                 </div>

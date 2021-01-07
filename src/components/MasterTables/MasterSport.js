@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useContext, useState } from 'react';
 import Breadcrumb from '../common/breadcrumb';
-import { LeaveContext } from '../../context/LeaveState';
 import { ClusterContext } from '../../context/ClusterState';
 import {
   JsonToExcel
@@ -8,13 +7,13 @@ import {
 import '../Leaves/Leaves.css'
 import '../AdminLeave/AdminLeaves.css'
 import Pagination from 'react-js-pagination'
-import { AppContext } from "../../context/AppState";
+
 
 const MasterSport = () => {
 
-  const { uploadFile } = useContext(LeaveContext);
+
   const { viewSports, sportsNames } = useContext(ClusterContext)
-  const { user } = useContext(AppContext);
+
 
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);

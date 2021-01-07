@@ -1,6 +1,5 @@
-import React, { Fragment, useEffect, useContext, useState } from 'react';
+import React, { Fragment, useEffect, useContext } from 'react';
 import Breadcrumb from '../common/breadcrumb';
-import { LeaveContext } from '../../context/LeaveState';
 import { RosterContext } from '../../context/RosterState';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import '../Leaves/Leaves.css'
@@ -8,13 +7,13 @@ import '../AdminLeave/AdminLeaves.css'
 
 const MasterContractType = () => {
 
-  const { uploadFile } = useContext(LeaveContext);
+
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext)
 
 
   useEffect(() => {
     viewContractTypes()
-  }, [])
+  }, [viewContractTypes])
 
   return (
     <Fragment>
