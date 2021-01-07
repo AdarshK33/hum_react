@@ -304,16 +304,7 @@ const CreateTicket = () => {
                     console.log(error)
                 })
         }
-
-
-
-
-
-
     }
-
-
-
 
     const onSubmit = e => {
 
