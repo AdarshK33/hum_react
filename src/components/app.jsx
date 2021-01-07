@@ -15,7 +15,7 @@ const AppLayout = ({ children }) => {
     const { authenticateUser, getUserInfo, state, getUserMenu, flag, app } = useContext(AppContext);
     const [flagValue, setFlagValue] = useState();
     const [menuItems, setMenuItems] = useState();
-    const loginUrl = `${process.env.REACT_APP_FEDID_AUTH_URL}?response_type=code&client_id=${process.env.REACT_APP_FEDID_CLIENTID}&scope=openid%20profile&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}`;
+   // const loginUrl = `${process.env.REACT_APP_FEDID_AUTH_URL}?response_type=code&client_id=${process.env.REACT_APP_FEDID_CLIENTID}&scope=openid%20profile&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}`;
 
 
 

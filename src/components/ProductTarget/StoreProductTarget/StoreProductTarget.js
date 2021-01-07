@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
 import Breadcrumb from '../../common/breadcrumb';
 import { Row, Col, Table, Button } from 'react-bootstrap'
-import { Edit2, Search } from 'react-feather'
+import { Edit2 } from 'react-feather'
 import EditTarget from './EditTarget';
 import AddTarget from './AddTarget';
 import Pagination from 'react-js-pagination';

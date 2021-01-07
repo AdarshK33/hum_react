@@ -4,7 +4,6 @@ import Breadcrumb from '../../common/breadcrumb';
 import { Edit2 } from 'react-feather';
 import AddTarget from './AddTarget';
 import EditTarget from './EditTarget';
-import Loader from "../../common/loader";
 import { ClusterProductContext } from "../../../context/ClusterProductState";
 import './styles.css';
 import Pagination from 'react-js-pagination';

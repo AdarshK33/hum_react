@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom";
 import "./index.scss";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { ScrollContext } from "react-router-scroll-4";
 import * as serviceWorker from "./serviceWorker";
 
 
 
 // Added by Ranjith 31 july 2020
-import { GlobalCustomThemeProvider } from "./context/GlobalState";
+//import { GlobalCustomThemeProvider } from "./context/GlobalState";
 import { RosterProvider } from "./context/RosterState";
 import { LeaveProvider } from "./context/LeaveState";
 import { ClusterProvider } from "./context/ClusterState";

@@ -43,8 +43,8 @@ const WithAxios = ({ children }) => {
     useEffect(() => {
 
         client.interceptors.request.use((config) => {
-            const fedid = config.url.includes('auth/token?code=')
-            const token = Cookies.get("APPAT");
+            // const fedid = config.url.includes('auth/token?code=')
+            //const token = Cookies.get("APPAT");
             const refreshUrl = config.url.includes('/auth/token/refresh')
 
             if (accessToken && !refreshUrl) {

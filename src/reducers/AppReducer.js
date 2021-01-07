@@ -1,4 +1,3 @@
-import { app } from "firebase";
 import {
   ADD_COSTOMIZER,
   ADD_LAYOUT,

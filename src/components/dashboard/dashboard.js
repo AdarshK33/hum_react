@@ -14,14 +14,14 @@ import { AppContext } from "../../context/AppState";
 function Dashboard() {
     const { cosCentreList, viewCostCentre, viewData, graphData } = useContext(DashboardContext);
 
-    const { user, getUserInfo } = useContext(AppContext);
+    const { user } = useContext(AppContext);
     const [startDate, setStartDate] = useState();
     const [StoreType, setStoreType] = useState('');
     const [ClusterType, setClusterType] = useState('');
     const [ClusterName, setClusterName] = useState('');
     var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const today = new Date();
-console.log("graphData0----------", graphData)
+    console.log("graphData0----------", graphData)
     const fromDateHandler = (e) => {
         setStartDate(e);
 
@@ -74,7 +74,7 @@ console.log("graphData0----------", graphData)
     }
 
 
-    const { clusterList, viewCluster, viewClusterCostCenter, clusterCostCenterList, } = useContext(ClusterContext);
+    const { viewClusterCostCenter, clusterCostCenterList, } = useContext(ClusterContext);
 
     useEffect(() => {
         setStartDate(today)
