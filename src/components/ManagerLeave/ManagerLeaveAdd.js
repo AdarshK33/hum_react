@@ -21,8 +21,8 @@ const ManagerLeaveAdd = (props) => {
     const [startMaternityDate, setStartMaternityDate] = useState(new Date())
     const [endMaternityDate, setEndMaternityDate] = useState()
     const [leave, setLeave] = useState('')
-    const [leaveTypeId, setLeaveTypeId] = useState(null)
-    const [leaveName, setLeaveName] = useState('')
+    /* const [leaveTypeId, setLeaveTypeId] = useState(null)
+    const [leaveName, setLeaveName] = useState('') */
     const [reason, setReason] = useState('')
     const [disable, setDisable] = useState(true)
     const [min, setMin] = useState(false)

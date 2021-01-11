@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, Fragment } from 'react';
-import { Row, Button, Table, Modal } from 'react-bootstrap';
+import { Row, Button, Table } from 'react-bootstrap';
 import { LeaveContext } from '../../context/LeaveState';
 import ManagerLeaveEdit from './ManagerLeaveEdit'
 import Breadcrumb from '../common/breadcrumb';
@@ -25,8 +25,7 @@ const ManagerLeaveList = (props) => {
     const [searchLeaveList, setLeaveList] = useState();
     const [pageCount, setPageCount] = useState(0)
 
-    const { searchByEmpIdManager, empIdManagerSearchList } = useContext(SearchContext);
-
+   
     const { viewManagerList, leaveManagerList, loader, managerTotal, viewManagerListSearch } = useContext(LeaveContext)
 
     const [currentRecords, setCurrentRecords] = useState([])

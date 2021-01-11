@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect, Fragment } from 'react';
 import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap'
-import { useHistory } from "react-router-dom";
 /* import DatePicker from 'react-datepicker' */
 import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer, } from "react-toastify";
@@ -28,9 +27,6 @@ const EditSalary = (props) => {
     const [val2, setValues2] = useState([]);
     const [inputValue, setInputValue] = useState(null)
     const [inputDate, setInputDate] = useState()
-    
-
-    let history = useHistory();
 
     const { salaryEdit } = useContext(ClusterContext);
 
@@ -105,7 +101,6 @@ const EditSalary = (props) => {
         );
     }
   let nowDate = new Date()
-  let nowMonth = nowDate.getMonth()+1
  let getMonth = props.month
  let getYear = props.year
   var firstDay =  new Date(getYear, getMonth-2, 21); 

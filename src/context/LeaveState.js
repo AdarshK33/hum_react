@@ -1,8 +1,7 @@
-import React, { createContext, useReducer, useContext, useState } from 'react';
+import React, { createContext, useReducer, useState } from 'react';
 import { client } from '../utils/axios';
 import { ToastContainer, toast } from "react-toastify";
 import LeaveReducer from '../reducers/LeaveReducer'
-import { AppContext } from "../context/AppState";
 
 
 const initialState = {
@@ -31,7 +30,6 @@ export const LeaveContext = createContext();
 
 export const LeaveProvider = ({ children }) => {
   const [state, dispatch] = useReducer(LeaveReducer, initialState);
-  const { user, getUserMenu } = useContext(AppContext);
   const [loader, setLoader] = useState(false)
   //View Leave
   

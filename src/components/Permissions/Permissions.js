@@ -1,9 +1,8 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
 import Breadcrumb from '../common/breadcrumb';
-import { Row, Col, Table, Button } from 'react-bootstrap'
-import { Edit2 } from 'react-feather'
+import { Row, Col, Table } from 'react-bootstrap'
 import { PermissionContext } from '../../context/PermissionState'
-import { AppContext } from "../../context/AppState";
+//import { AppContext } from "../../context/AppState";
 
 const Permissions = () => {
 
@@ -20,7 +19,6 @@ const Permissions = () => {
 
     const { editPermission, viewPermission, permissionList, 
         viewServiceGroup, groupList, createServiceGroup } = useContext(PermissionContext)
-    const { user } = useContext(AppContext);
 
     useEffect(() => {
         viewPermission()
