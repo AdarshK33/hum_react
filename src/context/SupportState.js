@@ -2,7 +2,6 @@ import React, { createContext, useReducer, useState } from 'react';
 import { client } from '../utils/axios';
 import SupportReducer from '../reducers/SupportReducer';
 import { toast } from "react-toastify";
-import { useHistory } from "react-router-dom";
 import {
     VIEW_TICKET_LISTING,
     COMPLETE_STATUS,
@@ -39,7 +38,6 @@ export const SupportProvider = ({ children }) => {
     const [state, dispatch] = useReducer(SupportReducer, initial_state);
     const [loader, setLoader] = useState(false)
 
-    let history = useHistory();
 
     //view ticket listing
     const ticketView = async (key, page) => {

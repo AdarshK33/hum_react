@@ -1,12 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Container, Row, Col, Button, Form, Modal } from 'react-bootstrap'
+import { Container, Row, Button, Form, Modal } from 'react-bootstrap'
 import { useHistory } from "react-router-dom";
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { LeaveContext } from '../../context/LeaveState'
-import { AppContext } from "../../context/AppState";
 import moment from 'moment'
 
 const ManagerLeaveEdit = (props) => {
@@ -26,9 +25,7 @@ const ManagerLeaveEdit = (props) => {
     const [editMsg, setEditMsg] = useState(false)
     let history = useHistory();
 
-    const { getLeave, leaveType, editList, addPopup, editPopup, editLeavesData  } = useContext(LeaveContext);
-
-    const { user } = useContext(AppContext);
+    const { getLeave, editList, editPopup, editLeavesData  } = useContext(LeaveContext);
 
     const today = new Date()
     

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext, Fragment } from 'react';
 import { Container, Row, Button, Form, Modal, Col } from 'react-bootstrap'
-import Select from 'react-select'
 import { Multiselect } from 'multiselect-react-dropdown';
 import { GroupContext } from '../../context/GroupState'
 

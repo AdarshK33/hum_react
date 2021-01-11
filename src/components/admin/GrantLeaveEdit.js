@@ -3,13 +3,13 @@ import { Modal, Form } from 'react-bootstrap'
 import { AdminContext } from "../../context/AdminState";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Select from 'react-select'
+//import Select from 'react-select'
 
 const GrantLeaveEdit = (props) => {
 
 
 
-    const [employeeId, setEmployeeId] = useState('');
+    //const [employeeId, setEmployeeId] = useState('');
     const [numOfDays, setNumOfDays] = useState('');
    /*  const [year, setYear] = useState(''); */
  
@@ -18,7 +18,7 @@ const GrantLeaveEdit = (props) => {
     const [employeeName, setEmployeeName] = useState('')
     const [grantLeaveId, setGrantLeaveId] = useState('');
     const [count, setCount] = useState();
-    const { viewGrantLeave, grantLeaveView, createLeaveForSameEmp, createGrantLeave, CostCenter, costCenterList, employeeIdData, employeeIdList } = useContext(AdminContext);
+    const { viewGrantLeave, grantLeaveView, createLeaveForSameEmp, CostCenter, employeeIdData, employeeIdList } = useContext(AdminContext);
 
     var year = new Date().getFullYear()
     useEffect(() => {
@@ -75,7 +75,7 @@ const GrantLeaveEdit = (props) => {
     const onSubmit = (event, props) => {
         event.preventDefault();
        
-        let empList = grantLeaveView;
+       // let empList = grantLeaveView;
         
 
         const addGrantLeave = {
@@ -198,7 +198,7 @@ const GrantLeaveEdit = (props) => {
                                         <div className="form-group">
                                             <label htmlFor="exampleFormControlInput1">Number of days</label>
 
-                                            <input type="number" className="form-control digit" required min={numOfDays} value = {numOfDays}
+                                            <input type="number" className="form-control digit" required min={numOfDays} 
                                             onChange={(e) => setNumOfDays(e.target.value)} value={numOfDays} placeholder="Number of days" />
                                         </div>
                                     </div>

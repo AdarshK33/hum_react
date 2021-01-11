@@ -1,12 +1,11 @@
 import React, { Fragment, useContext, useEffect } from 'react';
 import man from '../../../assets/images/dashboard/userImage.png';
-import { User, Mail, Lock, Settings, LogOut, LogIn, Users, UserPlus } from 'react-feather';
+import { User, LogOut, Users, UserPlus } from 'react-feather';
 import { AppContext } from "../../../context/AppState";
 import { useHistory } from "react-router-dom";
-import TicketListingPage from '../../support/ticketListingPage'
 import { PermissionContext } from '../../../context/PermissionState'
 
-const loginUrl = `${process.env.REACT_APP_FEDID_AUTH_URL}?response_type=code&client_id=${process.env.REACT_APP_FEDID_CLIENTID}&scope=openid%20profile&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}`;
+// const loginUrl = `${process.env.REACT_APP_FEDID_AUTH_URL}?response_type=code&client_id=${process.env.REACT_APP_FEDID_CLIENTID}&scope=openid%20profile&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}`;
 const UserMenu = () => {
     const { user, getUserMenu, userLogout } = useContext(AppContext);
     const { viewServiceGroup, groupList } = useContext(PermissionContext)

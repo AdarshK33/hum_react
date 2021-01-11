@@ -29,7 +29,7 @@ function ViewShift() {
   const [shiftButton] = useState(false);
   const [getM, setGetM] = useState('');
 
-  const { cosCentreList, viewCostCentre } = useContext(DashboardContext);
+  const { viewCostCentre } = useContext(DashboardContext);
   const { viewSalary, salaryList, salaryApproval, loader } = useContext(ClusterContext);
 
   const [editModal, setEditModal] = useState(false)

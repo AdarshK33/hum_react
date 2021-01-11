@@ -127,7 +127,7 @@ const LeaveView = () => {
                                     <h6 style={{ fontWeight: 'bold', color: 'red' }}>LOP</h6>
                                 </Row>
                                 <Row className="text-center" style={{ margin: '15px 0 30px 0' }}>
-                                    <img src={calendarImage} alt="calendar-image" width='50px' />
+                                    <img src={calendarImage} alt="" width='50px' />
                                 </Row>
                                 <Row>
                                     <Col>
@@ -147,7 +147,7 @@ const LeaveView = () => {
                                     <h6 style={{ fontWeight: 'bold', color: 'green' }}>Other Leaves</h6>
                                 </Row>
                                 <Row className="text-center" style={{ margin: '15px 0 30px 0' }}>
-                                    <img src={calendarImage} alt="calendar-image" width='50px' />
+                                    <img src={calendarImage} alt="" width='50px' />
                                 </Row>
                                 <Row>
                                     <Col>

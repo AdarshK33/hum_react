@@ -5,12 +5,10 @@ import "../salary/salary.css";
 import "../Leaves/Leaves.css";
 import "./AdminLeaves.css";
 import { Edit2, } from 'react-feather';
-import { Button, Modal, Form, Table, Row, Container } from "react-bootstrap";
-import ReactHTMLTableToExcel from "react-html-table-to-excel";
+import { Button, Modal, Form, Table, Row } from "react-bootstrap";
 import { ClusterContext } from "../../context/ClusterState";
 import "react-datepicker/dist/react-datepicker.css";
 import { useHistory } from "react-router-dom";
-import { AppContext } from "../../context/AppState";
 import { DashboardContext } from "../../context/DashboardState";
 import Pagination from 'react-js-pagination';
 import AdminSalaryEdit from './AdminSalaryEdit';
@@ -61,7 +59,6 @@ const AdminSalaryModule = () => {
   } = useContext(ClusterContext);
   const { cosCentreList, viewCostCentre } = useContext(DashboardContext);
 
-  const { user } = useContext(AppContext);
 
   const handleEditClose = () => setEditModal(false)
   const handleDeleteClose = () => setDeleteModal(false);
