@@ -7,7 +7,6 @@ import EditTarget from './EditTarget';
 import { ClusterProductContext } from "../../../context/ClusterProductState";
 import { AppContext } from "../../../context/AppState";
 import Pagination from 'react-js-pagination';
-import Loader from "../../common/loader";
 import '../ClusterProductTarget/styles.css';
 
 function LeaderCluster() {

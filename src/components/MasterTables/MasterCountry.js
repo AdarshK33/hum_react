@@ -4,28 +4,27 @@ import { MasterFilesContext } from "../../context/MasterFilesState";
 import {
   JsonToExcel
 } from 'react-json-excel';
-import { toast } from "react-toastify";
 
 const MasterCountry = () => {
 
 
-  const [fileUpload, setFileUpload] = useState();
+
 
   const { viewCountries, countryList } = useContext(MasterFilesContext);
 
   useEffect(() => {
     viewCountries()
     console.log(countryList)
-  }, [])
+  }, [countryList])
 
 
-  const changeHandler = (event) => {
-    let fileObj = event.target.files[0];
-    console.log("clicked", fileObj)
-    // uploadFile(fileObj)
-    setFileUpload(fileObj)
+  // const changeHandler = (event) => {
+  //   let fileObj = event.target.files[0];
+  //   console.log("clicked", fileObj)
+  //   // uploadFile(fileObj)
+  //   setFileUpload(fileObj)
 
-  }
+  // }
 
 
   //File export 
@@ -51,17 +50,14 @@ const MasterCountry = () => {
   }
 
 
-  const handleUpload = () => {
-    if (fileUpload !== undefined && fileUpload !== null) {
-      // uploadFile(fileUpload)
-    } else {
-      toast.info("Please select a file to upload")
-    }
+  // const handleUpload = () => {
+  //   if (fileUpload !== undefined && fileUpload !== null) {
+  //     // uploadFile(fileUpload)
+  //   } else {
+  //     toast.info("Please select a file to upload")
+  //   }
 
-    setTimeout(() => {
-      window.location.reload()
-    }, 5000)
-  }
+  // }
 
 
 
