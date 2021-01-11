@@ -3,10 +3,6 @@ import { Table, Row, Button } from 'react-bootstrap'
 import '../Leaves/Leaves.css'
 import '../AdminLeave/AdminLeaves.css'
 import Pagination from 'react-js-pagination'
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
-import {
-    JsonToExcel
-} from 'react-json-excel';
 import { LeaveContext } from '../../context/LeaveState'
 import { toast } from "react-toastify";
 import ReactExport from 'react-data-export'

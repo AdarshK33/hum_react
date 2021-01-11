@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, Fragment } from 'react';
-import { Row, Button, Table, Modal } from 'react-bootstrap';
+import { Row, Button, Table } from 'react-bootstrap';
 import { LeaveContext } from '../../context/LeaveState';
 import AdminLeaveEdit from './AdminLeaveEdit'
 import AdminDeleteLeaves from './AdminDeleteLeaves'
@@ -9,7 +9,6 @@ import '../../assets/css/search.css'
 import Pagination from 'react-js-pagination'
 import { Edit2, Trash2, Search } from 'react-feather'
 import AdminLeaveAdd from './AdminLeaveAdd';
-import { SearchContext } from '../../context/SearchState';
 
 const AdminLeavesList = (props) => {
     const [modal, setModal] = useState(false);

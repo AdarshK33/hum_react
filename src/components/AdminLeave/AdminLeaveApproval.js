@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect, useContext } from 'react';
-import { Button, Table, Modal } from 'react-bootstrap'
+import { Button, Table } from 'react-bootstrap'
 import Breadcrumb from '../common/breadcrumb';
 import { AdminContext } from '../../context/AdminState';
 import { useHistory } from "react-router-dom";

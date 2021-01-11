@@ -1,8 +1,6 @@
 import React, { Fragment,  useEffect, useContext, useState } from 'react';
-import {Button} from 'react-bootstrap'
 import Breadcrumb from '../common/breadcrumb';
 import { AdminContext } from '../../context/AdminState';
-import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import '../Leaves/Leaves.css'
 import './AdminLeaves.css'
 import Pagination from 'react-js-pagination'

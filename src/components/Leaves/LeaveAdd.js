@@ -28,7 +28,7 @@ const LeaveAdd = (props) => {
     let history = useHistory();
 
 
-    const { addEmpLeave, addPopup, leavesData, getLeave, leaveType, viewLeaveData, viewEmpData }
+    const { addEmpLeave, addPopup, leavesData, getLeave, leaveType, viewLeaveData }
         = useContext(LeaveContext);
 
     const { user } = useContext(AppContext);

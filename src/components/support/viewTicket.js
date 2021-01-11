@@ -10,7 +10,7 @@ import { AppContext } from "../../context/AppState";
 
 const ViewTicket = () => {
     const { completeStatus, completeStatusView, ticketStatus,
-        ticketStatusView, ticketIdList, updateTicket, loader, ticketIdView, downloadFile } = useContext(SupportContext)
+        ticketStatusView, ticketIdList, updateTicket, loader, downloadFile } = useContext(SupportContext)
     const { serviceGroupView, serviceGroupList } = useContext(GroupContext)
     const { user } = useContext(AppContext);
 
@@ -18,7 +18,7 @@ const ViewTicket = () => {
     const [tickStatus, setTickStatus] = useState()
     const [resolution, setResolution] = useState()
     const [serviceGroup, setServiceGroup] = useState()
-    const [fileName, setFileName] = useState('')
+  //const [fileName, setFileName] = useState('')
 
     let history = useHistory();
 
