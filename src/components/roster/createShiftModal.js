@@ -43,8 +43,6 @@ const CreateShiftModal = (props) => {
     costCenter()
   }, []);
 
-
-
   const setClear = () => {
     setStartTime('')
     setEndTime('')
@@ -71,17 +69,25 @@ const CreateShiftModal = (props) => {
     var ctime = stime.replace(/:/g, ".");
     var dtime = etime.replace(/:/g, ".");
     //  alert(ctime+ " "+dtime);
-    if (stime === etime || dtime < ctime) {
-      setErrorMsg("Invalid Shift Time");
-      setShiftButton(true)
-    }
-    else {
+    if (ctime === 0.00 || dtime === 0.00 ) {
+      /* setWorkingHour('00.00'); */
       setShiftButton(false)
-      setErrorMsg(false)
+        setErrorMsg('')
+    }else{
+      if (ctime != 0.00 && dtime != 0.00 &&  ctime === dtime || dtime < ctime ) {
+        setErrorMsg("Invalid Shift Time");
+        setShiftButton(true)
+      }
+      else {
+        setShiftButton(false)
+        setErrorMsg(false)
+      }
     }
+   
     const result = moment.utc(moment(etime, "HH:mm:ss").diff(moment(stime, "HH:mm:ss"))).format("HH:mm:ss")
 
     var workingHours = result.replace(/:/g, ".");
+    console.log("workingHours",workingHours)
     setWorkingHour(workingHours);
     checkTimeValidation();
     setInvalidText(false)
@@ -90,7 +96,7 @@ const CreateShiftModal = (props) => {
 
 
       if (contractType === "Permanent" || contractType === "Internship") {
-        if (parseFloat(workingHours) === 9) {
+        if (parseFloat(workingHours) === 9 || parseFloat(workingHours) === 0) {
           setShiftButton(false)
           setNineHourWarnMsg(true)
         }
@@ -103,8 +109,8 @@ const CreateShiftModal = (props) => {
         }
       }
 
-      else if (contractType === "Internship (young persons)") {
-        if (parseFloat(workingHours) >= 1 && parseFloat(workingHours) <= 5) {
+      else if (ctime != 0.00 && dtime != 0.00 && contractType === "Internship (young persons)") {
+        if (parseFloat(workingHours) >= 1 && parseFloat(workingHours) <= 5 || parseFloat(workingHours) === 0) {
           setShiftButton(false)
           setOneFiveWarnMsg(true)
 
@@ -118,8 +124,8 @@ const CreateShiftModal = (props) => {
 
         }
       }
-      else if (contractType === "Parttime" || contractType === "Temporary") {
-        if (parseFloat(workingHours) >= 1 && parseFloat(workingHours) <= 8) {
+      else if (ctime != 0.00 && dtime != 0.00 && contractType === "Parttime" || contractType === "Temporary") {
+        if (parseFloat(workingHours) >= 1 && parseFloat(workingHours) <= 8 || parseFloat(workingHours) === 0) {
           setShiftButton(false)
           setOneToEightWarnMsg(true)
         }
@@ -149,6 +155,11 @@ const CreateShiftModal = (props) => {
       setShiftButton(false);
       setTimeErrorMsg(false);
     }
+  }
+
+  const setShiftTypeHandler = (e) => {
+    setShiftType(e.target.value)
+    console.log("shift type value",e.target.value)
   }
 
   const callTimer = () => {
@@ -214,7 +225,7 @@ const CreateShiftModal = (props) => {
           breakEndTime: 0,
           status: 0
         }
-
+        console.log("new shift data", newShift)
         addShift(newShift)
         setClear()
 
@@ -239,7 +250,7 @@ const CreateShiftModal = (props) => {
           breakEndTime: moment(breakStartTime).add(1, 'hours').format('HH:mm:ss'),
           status: 0
         }
-
+        console.log("new shift data else", newShift)
         addShift(newShift)
         setClear()
       }
@@ -368,7 +379,7 @@ const CreateShiftModal = (props) => {
                           timeFormat="HH:mm"
                           timeIntervals={30}
                           timeCaption="Time"
-                          dateFormat="HH:mm aa"
+                          dateFormat="HH:mm "
                           placeholderText="Select start time"
                           required
                         />
@@ -389,7 +400,7 @@ const CreateShiftModal = (props) => {
                           timeFormat="HH:mm"
                           timeIntervals={30}
                           timeCaption="Time"
-                          dateFormat="HH:mm aa"
+                          dateFormat="HH:mm "
 
                           placeholderText="Select end time"
                         />
@@ -559,9 +570,10 @@ const CreateShiftModal = (props) => {
                           required
 
                           value={shiftType}
-                          onChange={(e) => setShiftType(e.target.value)}>
+                          onChange={setShiftTypeHandler}>
 
                           <option value="">Select Shift Type</option>
+                          <option value='NA'>N/A</option>
                           <option>Captain</option>
                           <option>On Duty</option>
                           <option>General</option>
