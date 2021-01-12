@@ -74,7 +74,6 @@ const EditShiftModal = (props) => {
 
   }, [props])
 
-
   useEffect(() => {
     costCenter()
     if (user.loginType !== "1" && user.loginType !== "9" && user.additionalRole !== "1" && user.additionalRole !== "9") {
@@ -94,25 +93,31 @@ const EditShiftModal = (props) => {
 
     var ctime = stime.replace(/:/g, ".");
     var dtime = etime.replace(/:/g, ".");
-    if (stime === etime || dtime < ctime) {
-      setErrorMsg("Invalid input");
-      setShiftButton(true)
-    }
-    else {
+    if (ctime === 0.00 || dtime === 0.00 ) {
+      /* setWorkingHour('00.00'); */
       setShiftButton(false)
-      setErrorMsg(false)
+        setErrorMsg('')
+    }else{
+      if (ctime != 0.00 && dtime != 0.00 &&  ctime === dtime || dtime < ctime ) {
+        setErrorMsg("Invalid Shift Time");
+        setShiftButton(true)
+      }
+      else {
+        setShiftButton(false)
+        setErrorMsg(false)
+      }
     }
 
     const result = moment.utc(moment(etime, "HH:mm:ss").diff(moment(stime, "HH:mm:ss"))).format("HH:mm:ss")
     var workingHours = result.replace(/:/g, ".");
-
+    console.log("workingHours in edit",workingHours)
     setWorkingHour(workingHours);
     checkTimeValidation();
 
     function checkTimeValidation() {
 
       if (contractType === "Permanent" || contractType === "Internship") {
-        if (parseFloat(workingHours) === 9) {
+        if (parseFloat(workingHours) === 9 || parseFloat(workingHours) === 0) {
           setShiftButton(false)
 
           setNineHourWarnMsg(true)
@@ -127,7 +132,7 @@ const EditShiftModal = (props) => {
       }
 
       else if (contractType === "Internship (young persons)") {
-        if (parseFloat(workingHours) >= 1 && parseFloat(workingHours) <= 5) {
+        if (parseFloat(workingHours) >= 1 && parseFloat(workingHours) <= 5 || parseFloat(workingHours) === 0) {
           setShiftButton(false)
           setOneFiveWarnMsg(true)
         }
@@ -141,7 +146,7 @@ const EditShiftModal = (props) => {
       }
 
       else if (contractType === "Parttime" || contractType === "Temporary") {
-        if (parseFloat(workingHours) >= 1 && parseFloat(workingHours) <= 8) {
+        if (parseFloat(workingHours) >= 1 && parseFloat(workingHours) <= 8 || parseFloat(workingHours) === 0) {
           setShiftButton(false)
           setOneToEightWarnMsg(true)
         }
@@ -336,10 +341,10 @@ const EditShiftModal = (props) => {
                           timeFormat="HH:mm"
                           timeIntervals={30}
                           timeCaption="Time"
-                          dateFormat="HH:mm aa"
-                          value={moment(startTime, ["HH:mm:ss"]).format("HH:mm A")}
+                          dateFormat="HH:mm"
+                          value={moment(startTime, ["HH:mm:ss"]).format("HH:mm ")}
 
-                          defaultValue={moment(singleShiftList.startTime, ["HH:mm:ss"]).format("HH:mm A")}
+                          defaultValue={moment(singleShiftList.startTime, ["HH:mm:ss"]).format("HH:mm ")}
                         />
                       </div>
                     </div>
@@ -358,9 +363,9 @@ const EditShiftModal = (props) => {
                           timeFormat="HH:mm"
                           timeIntervals={30}
                           timeCaption="Time"
-                          dateFormat="HH:mm aa"
-                          value={moment(endTime, ["HH:mm:ss"]).format("HH:mm A")}
-                          defaultValue={moment(singleShiftList.endTime, ["HH:mm:ss"]).format("HH:mm A")}
+                          dateFormat="HH:mm"
+                          value={moment(endTime, ["HH:mm:ss"]).format("HH:mm ")}
+                          defaultValue={moment(singleShiftList.endTime, ["HH:mm:ss"]).format("HH:mm ")}
                         />
                       </div>
                     </div>
@@ -526,20 +531,21 @@ const EditShiftModal = (props) => {
                     <div className="col-sm-12">
                       <div className="form-group">
                         <label htmlFor="exampleFormControlInput1"> Shift Type</label>
-                        {/* <select
+                        <select
                           className="form-control"
                           defaultValue={singleShiftList.shiftType}
                           onChange={(e) => setShiftType(e.target.value)}
                           value={shiftType}>
+                          <option value='NA'>N/A</option>
                           <option>Captain</option>
                           <option>On Duty</option>
                           <option>General</option>
-                        </select> */}
-                        <input type="text"
+                        </select>
+                        {/* <input type="text"
                           placeholder={singleShiftList.shiftType}
                           className="form-control"
                           readOnly
-                        />
+                        /> */}
                       </div>
                     </div>
                   </div>
