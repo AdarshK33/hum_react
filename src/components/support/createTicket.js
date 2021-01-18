@@ -4,7 +4,7 @@ import '../common/style.css'
 import 'react-dropzone-uploader/dist/styles.css';
 import { AppContext } from "../../context/AppState";
 import { SupportContext } from "../../context/SupportState"
-import { Container, Row, Col, Form } from 'react-bootstrap'
+import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -363,6 +363,9 @@ const CreateTicket = () => {
         }
 
     }
+    const backHandler = (e) => {
+        history.push("./ticketlistingpage")
+    }
 
     return (
 
@@ -712,12 +715,14 @@ const CreateTicket = () => {
                         <br />
 
                         <Row>
-                            <Col sm={5}></Col>
-                            <Col sm={4}>
-                                <button className="btn btn-primary" style={{ marginTop: "5px", paddingLeft: "30px", paddingRight: "30px", fontWeight: "bold" }}
-                                    type="submit" value="Submit"
-                                >Submit</button>
+                            <Col sm={3}></Col>
+                            <Col sm={2}>
+                                <Button type="submit">Submit</Button>
                             </Col>
+                            <Col sm={2}>
+                                <Button onClick={backHandler}>Back</Button>
+                            </Col>
+                            <Col sm={3}></Col>
                         </Row>
                     </Form>
 
