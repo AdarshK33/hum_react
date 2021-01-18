@@ -45,6 +45,9 @@ const AppLayout = ({ children }) => {
                 getUserMenu(user.adminMenus);
             } else if (type === "leader") {
                 getUserMenu(user.clusterManagerMenus);
+            }
+                else if (type === 'support') {
+                    getUserMenu(user.supportMenus)
             } else {
                 getUserMenu(user.generalUserMenus, "profile", user);
                 localStorage.setItem('flag', "0")
