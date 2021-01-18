@@ -2,7 +2,7 @@ import React, { Fragment, useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import { Button, Table, Container, Row, Col } from 'react-bootstrap'
 import Breadcrumb from '../common/breadcrumb';
-import { Edit2, Search } from 'react-feather';
+import { Edit2, Search, Info } from 'react-feather';
 import { SupportContext } from '../../context/SupportState'
 import Pagination from 'react-js-pagination'
 import 'react-confirm-alert/src/react-confirm-alert.css';
@@ -135,7 +135,10 @@ const TicketListingPage = () => {
                                                             <td>{item.updatedDate === null ? '-' :
                                                                 item.updatedDate}</td>
                                                             {item.ticketStatusDesc === 'Closed' ?
-                                                                <td><Edit2 style={{ color: 'lightblue' }} /></td>
+                                                                 <Link to='/viewTicket'>
+                                                                 <td><Info onClick={() => {
+                                                                     ticketIdView(item.ticketId)
+                                                                 }} /></td></Link>
                                                                 :
                                                                 <Link to='/viewTicket'>
                                                                     <td><Edit2 onClick={() => {
