@@ -785,7 +785,7 @@ const ViewTicket = () => {
                                                                                             }}>{a.comment}</td>
                                                                                             <td style={{ border: 'none' }}>{a.time}</td>
                                                                                         </tr>
-                                                                                        {a.fileNames !== null &&
+                                                                                        {a.fileNames !== null && a.fileNames.length > 0 &&
                                                                                             <tr>{a.fileNames}<Download onClick={() => { downloadFileButton(a.fileNames) }}
                                                                                                 style={{ cursor: 'pointer', color: 'blue', float: 'right' }} /></tr>}
                                                                                     </Fragment>
