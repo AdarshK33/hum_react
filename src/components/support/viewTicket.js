@@ -757,7 +757,7 @@ const ViewTicket = () => {
                                                     ticketIdList.ticketResolutions.length > 0 &&
                                                     ticketIdList.ticketResolutions.map((item, id) => {
                                                         return (
-                                                            <tbody>
+                                                            <tbody style={{border:'none'}}>
                                                                 <tr>
                                                                     <td style={{
                                                                         textAlign: 'center', padding: '4px 0',
@@ -832,10 +832,10 @@ const ViewTicket = () => {
                         </Row>
                         }
                         {ticketIdList.ticketStatus === 3 ? <Row></Row> :
-                            <Row style={{ marginBottom: '1rem' }}>
+                            <Row style={{ marginBottom: '2rem' }}>
                                 <Col sm={8}>
                                     <Form.Group as={Row} >
-                                        <Col sm='4'></Col>
+                                        <Col sm='3'></Col>
                                         <Col sm='4'>
 
 
