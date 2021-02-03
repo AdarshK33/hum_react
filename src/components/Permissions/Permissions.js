@@ -3,6 +3,7 @@ import Breadcrumb from '../common/breadcrumb';
 import { Row, Col, Table } from 'react-bootstrap'
 import { PermissionContext } from '../../context/PermissionState'
 //import { AppContext } from "../../context/AppState";
+import Switch from 'react-switch'
 
 const Permissions = () => {
 
@@ -15,6 +16,7 @@ const Permissions = () => {
     const [yesSupportFlag, setYesSupportFLag] = useState(false);
     const [noSupportFlag, setNoSupportFlag] = useState(true);
     const [supportStatus, setSupportStatus] = useState();
+    const [checked, setChecked] = useState(false)
 
 
     const { editPermission, viewPermission, permissionList, 
@@ -143,6 +145,7 @@ const Permissions = () => {
         console.log("no values",Values)
         createServiceGroup(Values);
     }
+
     return (
         <Fragment>
             <Breadcrumb title="Permissions" parent="Permissions" />
@@ -224,7 +227,6 @@ const Permissions = () => {
                                     />
                                 </td>
                             </tr>
-
                         </tbody>
                     </Table>
 

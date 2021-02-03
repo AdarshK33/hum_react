@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useContext, useState } from "react";
-import {  Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 import App from "./components/app";
 
@@ -56,6 +56,8 @@ import CreateTicket from "./components/support/createTicket";
 import TicketListingPage from "./components/support/ticketListingPage"
 import ViewTicket from './components/support/viewTicket'
 import ViewGroup from './components/group/ViewGroup'
+import ManagerOfferRelease from './components/Offers/managerOfferRelease'
+import OfferReleaseList from './components/Offers/OfferReleaseList'
 
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
@@ -72,10 +74,10 @@ const RoutePath = () => {
         component={Signin}
       />
 
-<Route
-       path={`${process.env.PUBLIC_URL}/login`}
-       component={Login}
-     />
+      <Route
+        path={`${process.env.PUBLIC_URL}/login`}
+        component={Login}
+      />
 
 
 
@@ -124,6 +126,15 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/ViewGroup`}
             component={ViewGroup}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/managerOfferRelease`}
+            component={ManagerOfferRelease}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/offerReleaseList`}
+            component={OfferReleaseList}
           />
 
 
@@ -337,12 +348,12 @@ const RoutePath = () => {
                                                                                     <Route
                                                                                       path={`${process.env.PUBLIC_URL}/master/cost-center`}
                                                                                       component={MasterCostCenter}
-                                                                                    /> : 
+                                                                                    /> :
                                                                                     e.path === "/service-group" ?
-                                                                                    <Route
-                                                                                      path={`${process.env.PUBLIC_URL}/service-group`}
-                                                                                      component={ViewGroup}
-                                                                                    /> : ""
+                                                                                      <Route
+                                                                                        path={`${process.env.PUBLIC_URL}/service-group`}
+                                                                                        component={ViewGroup}
+                                                                                      /> : ""
 
 
                   //  <Route
