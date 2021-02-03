@@ -140,7 +140,7 @@ function ClusterProductTarget() {
                                                         :
                                                         Year === item.year && monthsNumber[item.month] === month && TodayDate > 20
                                                             ?
-                                                            <Edit2 disabled style={{ color: 'lightgrey' }} /> :
+                                                            <td><Edit2 disabled style={{ color: 'lightgrey' }} /></td> :
                                                             <td><Edit2
                                                                 style={{ color: '#006EBB' }}
                                                                 onClick={() => {
