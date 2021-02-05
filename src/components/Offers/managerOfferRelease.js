@@ -16,8 +16,9 @@ import WorkInformation from './workInformation'
 const ManagerOfferRelease = () => {
     return (
         <Fragment>
-            <Container>
-                <h5>New Initation</h5>
+            <Container fluid>
+                <h5 style={{marginTop:'1rem',fontWeight:'700'}}>New Offer Initation</h5>
+               
                     <Accordion preExpanded={['a']}>
                         <AccordionItem uuid="a">
                             <AccordionItemHeading>

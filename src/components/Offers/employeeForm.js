@@ -1,9 +1,11 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useContext, useEffect } from 'react';
 import { Row, Col, Form, Button } from 'react-bootstrap'
 import { Search, PlusCircle, MinusCircle } from 'react-feather';
 import './offers.css'
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
+import {OfferContext} from '../../context/OfferState'
+import { useHistory } from "react-router-dom";
 
 const EmployeeForm = () => {
     const [state, setState] = useState({
@@ -21,6 +23,22 @@ const EmployeeForm = () => {
     const [yesChecked, setYesChecked] = useState(true)
     const [noChecked, setNoChecked] = useState(false)
     const [secondRef, setSecondRef] = useState(false)
+    const [searchValue, setSearchValue] = useState('');
+    let history = useHistory();
+
+    const {searchByAadhar, searchData, createCandidate} = useContext(OfferContext)
+
+
+    const searchHandler = (e) => {
+        setSearchValue(e.target.value)
+
+    }
+    const searchDataHandler = () => {
+        if (searchValue !== "") {
+            searchByAadhar(searchValue);
+        } 
+
+    }
 
     const showOneMoreRefer = () => {
         setSecondRef(true)
@@ -51,7 +69,32 @@ const EmployeeForm = () => {
 
     const submitHandler = (e) => {
         e.preventDefault()
-        console.log(state, 'state')
+        
+        const CandidateInfo = {
+            adharDoc: null,
+            adharName: null,
+            adharNumber : null,
+            bloodGroup: null,
+            candidateId: 0,
+            dateOfBirth: null,
+            disability: null,
+            disabilityDoc: null,
+            fatherName: null,
+            firstName: state.firstName,
+            gender: null,
+            lastName: state.lastName,
+            lgbt: null,
+            maritalStatus: null,
+            nationality: null,
+            panDoc: null,
+            panNumber: null,
+            personalEmail: state.email,
+            photo: null,
+            refered: true,
+            status: 1,
+            verificationStatus: 0
+          }
+          createCandidate(CandidateInfo)
         setState({ firstName: '', lastName: '', email: '', refEmail: '', phoneNo: '', designation: '' })
         setDateOfJoining(null)
 
@@ -85,8 +128,10 @@ const EmployeeForm = () => {
                                 <Form.Label>Search by Account Number/<br />Aadhar Number</Form.Label>
                                 <div className="faq-form mr-2">
 
-                                    <input className="form-control searchButton" type="text" placeholder="Search.." />
-                                    <Search className="search-icon" style={{ color: "#313131" }} />
+                                    <input className="form-control searchButton" type="text" placeholder="Search.."
+                                    onChange={(e) => searchHandler(e)} />
+                                    <Search className="search-icon" style={{ color: "#313131" }} 
+                                    onClick={searchDataHandler} />
                                 </div>
                             </div>
                         </Form.Group>
