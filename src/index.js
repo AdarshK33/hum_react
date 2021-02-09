@@ -24,6 +24,7 @@ import { PermissionProvider } from "./context/PermissionState";
 import { SearchProvider } from "./context/SearchState";
 import { SupportProvider } from "./context/SupportState"
 import { GroupProvider } from './context/GroupState'
+import { OfferProvider } from './context/OfferState'
 import RoutePath from "./Route";
 import WithAxios from "./utils/axios";
 
@@ -52,7 +53,7 @@ function Root() {
                             <AdminProvider>
                               <SupportProvider>
                                 <GroupProvider>
-                                  {/* //Support provider 14-12-20*/}
+                                  <OfferProvider>
                                   <BrowserRouter basename={"/"}>
                                     <ScrollContext>
                                       <WithAxios>
@@ -60,6 +61,9 @@ function Root() {
                                       </WithAxios>
                                     </ScrollContext>
                                   </BrowserRouter>
+                                  </OfferProvider>
+                                  {/* //Support provider 14-12-20*/}
+                                  
                                   {/* </Provider>  */}
                                 </GroupProvider>
                               </SupportProvider>
