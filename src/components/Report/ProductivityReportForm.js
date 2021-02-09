@@ -22,6 +22,8 @@ const ProductivityReportForm = () => {
     const [contractTypeData, setContractType] = useState([])
     const [getM, setGetM] = useState('')
     const [yearly, setYearly] = useState(new Date())
+    const [startDate, setStartDate] = useState();
+    const [endDate, setEndDate] = useState()
     const { user } = useContext(AppContext);
 
     const reportTypeList = [{ reportTypeData: 'Monthly', id: 1 }, { reportTypeData: 'Yearly', id: 2 }]
@@ -59,7 +61,7 @@ const ProductivityReportForm = () => {
         employeeIdData(data1)
         viewClusterCostCenter(data1)
         console.log("options in cost center", data1)
-    }
+    } 
    
 
     const setEmployeeCostCenterHandler = (options) => {
@@ -70,11 +72,17 @@ const ProductivityReportForm = () => {
         setContractType(options)
 
     }
-    /* const setGetMHandler = (e) => {
-        let data4 = e.target.value
-        setGetM(data4)
-        console.log("month data", data4)
-    } */
+    const fromDateHandler = (date) => {
+        let value = date
+        console.log("fromDate", value)
+        setStartDate(value);
+    }
+
+    const toDateHandler = (date) => {
+        let value1 = date
+        console.log("toDate", value1)
+        setEndDate(value1);
+    }
     const setClusterHandler = (options) => {
         setCluster(options)
     }
@@ -94,10 +102,12 @@ const ProductivityReportForm = () => {
                 clusterIds: cluster.length > 0 ? cluster.map((e, i) => cluster[i].value) : null,
                 contractTypes: contractTypeData.length > 0 ? contractTypeData.map((e, i) => contractTypeData[i].value) : null,
                 employeeIds: employeeCostCenter.length > 0 ? employeeCostCenter.map((e, i) => employeeCostCenter[i].value) : null,
-                month: reportType === 'Monthly' ? moment(getM, ["YYYY-MM"]).format("M") : 0,
+                /* month: reportType === 'Monthly' ? moment(getM, ["YYYY-MM"]).format("M") : 0, */
+                endDate: reportType === 'Monthly' ? moment(endDate).format("YYYY-MM-DD") : 0,
                 sportIds: sports.length > 0 ? sports.map((e, i) => sports[i].value) : null,
+                startDate: reportType === 'Monthly' ? moment(startDate).format("YYYY-MM-DD") : 0,
                 storeIds: storeId,
-                year: reportType === 'Monthly' ? moment(getM, ["MMM Do YY"]).format('YYYY') : yearly,
+                year: reportType === 'Monthly' ? 0 : yearly,
             }
         } else {
 
@@ -105,10 +115,12 @@ const ProductivityReportForm = () => {
                 clusterIds: cluster.length > 0 ? cluster.map((e, i) => cluster[i].value) : null,
                 contractTypes: contractTypeData.length > 0 ? contractTypeData.map((e, i) => contractTypeData[i].value) : null,
                 employeeIds: employeeCostCenter.length > 0 ? employeeCostCenter.map((e, i) => employeeCostCenter[i].value) : null,
-                month: reportType === 'Monthly' ? moment(getM, ["YYYY-MM"]).format("M") : 0,
+               /*  month: reportType === 'Monthly' ? moment(getM, ["YYYY-MM"]).format("M") : 0, */
+               endDate: reportType === 'Monthly' ? moment(endDate).format("YYYY-MM-DD") : 0,
                 sportIds: sports.length > 0 ? sports.map((e, i) => sports[i].value) : null,
+                startDate: reportType === 'Monthly' ? moment(startDate).format("YYYY-MM-DD") : 0,
                 storeIds: costCenter.length > 0 ? costCenter.map((e, i) => costCenter[i].value) : null,
-                year: reportType === 'Monthly' ? moment(getM, ["MMM Do YY"]).format('YYYY') : yearly,
+                year: reportType === 'Monthly' ? 0 : yearly,
             }
         }
 
@@ -232,13 +244,10 @@ const ProductivityReportForm = () => {
                         </div>
                     </Row>
                     {reportType === 'Monthly' &&
-                        <Row>
+                         /* <Row>
                             <div className="col-sm-4">
                                 <Form.Group>
                                     <Form.Label>Select Month </Form.Label> <span style={{ color: 'red' }}>*</span>
-                                    {/*  <Form.Control type="month" style={{ fontSize: "0.8rem" }} className="form-control digit" min="2020-08"
-                                        placeholder="Number Of Days"
-                                        required onChange={(e) => setGetMHandler(e)} value={getM} /> */}
                                     <div className="salary-date">
                                         <DatePicker selected={getM} onChange={(date) => setGetM(date)}
                                             className="form-control salary-view" dateFormat="MM/yyyy" showMonthYearPicker
@@ -246,7 +255,32 @@ const ProductivityReportForm = () => {
                                     </div>
                                 </Form.Group>
                             </div>
-                        </Row>
+                        </Row> */
+                        <Row>
+                        <div className="col-sm-4">
+                            <Form.Group>
+                                <Form.Label>From Date</Form.Label> <span style={{color:'red'}}>*</span> 
+                                <div>
+                                    <DatePicker selected={startDate} onChange={(e) => fromDateHandler(e)}
+                                        className="form-control" dateFormat="yyyy-MM-dd"
+                                        /*  minDate={currentYear} */
+                                        placeholderText="From Date" required />
+                                </div>
+                            </Form.Group>
+                        </div>
+                        <div className="col-sm-4">
+                            <Form.Group>
+                                <Form.Label>To Date</Form.Label> <span style={{color:'red'}}>*</span> 
+                                <div>
+                                    <DatePicker selected={endDate} onChange={(e) => toDateHandler(e)}
+                                        className="form-control" dateFormat="yyyy-MM-dd"
+                                        minDate={startDate}
+                                        placeholderText="To Date" />
+                                </div>
+
+                            </Form.Group>
+                        </div>
+                    </Row>
                     }
                     {reportType === 'Yearly' &&
                         <Row>
