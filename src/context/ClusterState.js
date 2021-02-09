@@ -209,12 +209,12 @@ export const ClusterProvider = ({ children }) => {
 
 
   // SALARY INPUT
-  const viewSalary = (month, year, id) => {
+  const viewSalary = (salaryData) => {
     setLoader(true)
-    console.log(" in cluster" + month + " " + year)
-    let flag = localStorage.getItem('flag')
+    /* console.log(" in cluster" + month + " " + year)
+    let flag = localStorage.getItem('flag') */
 
-    client.get('salary/view/store?month=' + month + '&year=' + year + '&storeId=' + id + '&cluster=' + flag)
+    return client.post('salary/view/store',salaryData)
       .then(function (response) {
         console.log("data message==>", response.data.message);
         console.log("data==>1", response);
@@ -247,17 +247,24 @@ export const ClusterProvider = ({ children }) => {
 
   //Edit Salary
 
-  function salaryEdit(salaryEdit, costCenter) {
+  function salaryEdit(salaryEdit, salaryData) {
     console.log("salary edit api response", salaryEdit)
     return client.post('salary/update', salaryEdit)
       .then((response) => {
-        state.message = response.data.message
-        state.month = response.data.data.month
-        state.year = response.data.data.year
-        toast.info(state.message)
-        viewSalary(state.month, state.year, costCenter)
+        if(response.data === null) {
+          toast.info(response.message)
+          console.log("response.message", response.message)
+        }else{
+          state.message = response.data.message
+          /* state.month = response.data.data.month
+          state.year = response.data.data.year */
+          toast.info(state.message)
+          viewSalary(salaryData)
+           
         console.log("salary edit response", response.data.data)
         console.log("salary edit message", state.message)
+        }
+       
         return (
           dispatch({ type: 'EDIT_SALARY', payload: state.salaryList })
         )
@@ -290,13 +297,13 @@ export const ClusterProvider = ({ children }) => {
   }
   //Approval salary input from admin.
 
-  const salaryApproval = (salaryData, month, year, storeId) => {
-    console.log("++++update salary approval api response+++++", salaryData)
-    return client.post('salary/approve', salaryData)
+  const salaryApproval = (approvalData, salaryData) => {
+    console.log("++++update salary approval api response+++++", approvalData)
+    return client.post('salary/approve', approvalData)
       .then((response) => {
         state.message = response.data.message
         toast.info(state.message)
-        viewSalary(month, year, storeId)
+        viewSalary(salaryData)
         /*  viewStoreSalary(month, year, storeId) */
         console.log("salary approval list response===>", response.data.data)
         console.log("salary approval list message===>", state.message)

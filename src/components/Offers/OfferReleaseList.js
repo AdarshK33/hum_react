@@ -1,13 +1,14 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom'
 import Breadcrumb from '../common/breadcrumb';
-import {Container, Card, Row, Col, Table, Button } from 'react-bootstrap'
+import {Container, Form, Row, Col, Table, Button } from 'react-bootstrap'
 import { Edit2, Eye, Search } from 'react-feather';
 import {OfferContext} from '../../context/OfferState'
 import Pagination from 'react-js-pagination'
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
 const OfferReleaseList = () => {
+
     const {candidateView, candidateList, loader,total } = useContext(OfferContext)
 
     const [pageCount, setPageCount] = useState(0)
@@ -60,7 +61,7 @@ const OfferReleaseList = () => {
         }
 
     }
-
+   
     return (
         <Fragment>
             <Breadcrumb title="Offers" parent="Offer Release" />
