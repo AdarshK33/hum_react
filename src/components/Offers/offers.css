@@ -39,3 +39,6 @@
 .form-input.form-control {
     border-radius: 12.25rem;
 }
+.reactDate.form-group .react-datepicker-wrapper{
+    display: block !important;
+}
