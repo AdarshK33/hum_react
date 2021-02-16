@@ -10,29 +10,24 @@ import {
 } from 'react-accessible-accordion';
 import 'react-accessible-accordion/dist/fancy-example.css';
 import './offers.css'
-import EmployeeForm from './employeeForm'
-import WorkInformation from './workInformation'
+import EditEmployeeForm from './editEmployeeForm'
+import EditWorkInformation from './editWorkInformation'
 
-const ManagerOfferRelease = () => {
-    const [isChecked, setIsChecked] = useState(false)
-    const checkedHandler = (e) => {
-        setIsChecked(true)
-    }
+const EditOfferRelease = () => {
     return (
         <Fragment>
             <Container fluid>
-                <h5 style={{marginTop:'1rem',fontWeight:'700'}}>New Offer Initation</h5>
+                <h5 style={{marginTop:'1rem',fontWeight:'700'}}>Edit Offer Initation</h5>
                
                     <Accordion preExpanded={['a']}>
                         <AccordionItem uuid="a">
                             <AccordionItemHeading>
                                 <AccordionItemButton>
-                                 <input type='checkbox' checked={isChecked} onChange={checkedHandler} />&nbsp;
                                     Step 1: Candidate Information
                                 </AccordionItemButton>
                             </AccordionItemHeading>
                             <AccordionItemPanel>
-                                <EmployeeForm isChecked={isChecked} checkedHandler={checkedHandler} />
+                                <EditEmployeeForm />
                             </AccordionItemPanel>
                         </AccordionItem>
 
@@ -43,7 +38,7 @@ const ManagerOfferRelease = () => {
                                 </AccordionItemButton>
                             </AccordionItemHeading>
                             <AccordionItemPanel>
-                                <WorkInformation />
+                                <EditWorkInformation />
                             </AccordionItemPanel>
                         </AccordionItem>
 
@@ -64,4 +59,4 @@ const ManagerOfferRelease = () => {
     );
 };
 
-export default ManagerOfferRelease;
+export default EditOfferRelease;

@@ -11,6 +11,9 @@ button.btn.btn-sm.disable-button:disabled {
     border-color: lightgrey !important;
     color: black
 }
+.table thead th {
+    vertical-align: top;
+}
 ul.pagination{
     justify-content: center;
     margin: 30px 0;

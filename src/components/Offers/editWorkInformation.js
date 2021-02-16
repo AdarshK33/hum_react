@@ -9,7 +9,7 @@ import {OfferContext} from '../../context/OfferState'
 import {RosterContext} from '../../context/RosterState'
 import { AppContext } from "../../context/AppState";
 
-const WorkInformation = () => {
+const EditWorkInformation = () => {
     const [state, setState] = useState({
         employmentType:'',
         department:'',
@@ -28,7 +28,7 @@ const WorkInformation = () => {
     const {viewSports, sportsNames} = useContext(ClusterContext)
     const {CostCenter, costCenterList} = useContext(AdminContext)
     const {departmentView, departmentName, designationView, designationName,
-            locationView, locationName, createCandidateWork, createCandidateResponse} = useContext(OfferContext)
+            locationView, locationName, createCandidateWork, candidateData, updateCandidateWork} = useContext(OfferContext)
     const {viewContractTypes, shiftContractNames} = useContext(RosterContext)
     const { user } = useContext(AppContext);
 
@@ -39,6 +39,27 @@ const WorkInformation = () => {
         viewContractTypes()
         designationView()
     },[])
+
+    useEffect(() => {
+        let workData = candidateData !== null && candidateData !== undefined && candidateData.workInformation
+
+        if(workData !== null && workData !== undefined){
+            setState({
+                    employmentType: workData.contractType,
+                    department: workData.department,
+                    position: workData.position,
+                    designation: workData.designation,
+                    //sports: workData,
+                    probation: workData.probationPeriod,
+                    recuritment: workData.recruitmentSource
+            })
+            setDateOFJoining(new Date(workData.dateOfJoin))
+            setCostCenter(workData.costCentre)
+            locationView(workData.costCentre)
+
+        }
+
+    },[candidateData])
    
     const changeHandler = (e) => {
         setState({
@@ -55,12 +76,12 @@ console.log("locationView",e.target.value)
     const dateOfJoiningHandler = (date) => {
         setDateOFJoining(date)
     }
-    
+
     const submitHandler = (e) => {
         e.preventDefault()
         console.log(state,'state')
-        const createData = {
-            candidateId: createCandidateResponse.candidateId,
+        const updateData = {
+            candidateId: candidateData.candidateInformation.candidateId,
             cityId: locationName.cityId,
             companyName: user.company,
             contractType: state.employmentType,
@@ -79,7 +100,7 @@ console.log("locationView",e.target.value)
             relievingLetter: null,
             workId: 0
           }
-        createCandidateWork(createData)
+        updateCandidateWork(updateData)
         setDisabled(true)
         setEditButton(true)
 
@@ -104,7 +125,6 @@ console.log("locationView",e.target.value)
                             <Form.Label>Type of Employment</Form.Label>
                             <Form.Control as='select' value={state.employmentType} className='form-input'
                                 name='employmentType' onChange={changeHandler} disabled={disabled} >
-                                    <option value=''>Select Employment Type</option>
                                     {shiftContractNames !== null && shiftContractNames !== undefined &&
                                     shiftContractNames.length > 0 &&
                                     shiftContractNames.map(item => {
@@ -128,7 +148,6 @@ console.log("locationView",e.target.value)
                             <Form.Label>Department</Form.Label>
                             <Form.Control as='select' value={state.department} className='form-input'
                                 name='department' onChange={changeHandler} disabled={disabled} >
-                                    <option value=''>Select Department</option>
                                     {departmentName !== null && departmentName !== undefined &&
                                     departmentName.length>0 &&
                                     departmentName.map(item => {
@@ -147,7 +166,6 @@ console.log("locationView",e.target.value)
                             <Form.Label>Position</Form.Label>
                             <Form.Control as='select' value={state.position} className='form-input'
                                 name='position' onChange={changeHandler} disabled={disabled} >
-                                    <option value=''>Select Position</option>
                                     {designationName !== null && designationName !== undefined &&
                                     designationName.length>0 &&
                                     designationName.map(item => {
@@ -164,7 +182,6 @@ console.log("locationView",e.target.value)
                             <Form.Label>Designation</Form.Label>
                             <Form.Control as='select' value={state.designation} className='form-input'
                                 name='designation' onChange={changeHandler} disabled={disabled} >
-                                    <option value=''>Select Designation</option>
                                     {designationName !== null && designationName !== undefined &&
                                     designationName.length>0 &&
                                     designationName.map(item => {
@@ -180,7 +197,6 @@ console.log("locationView",e.target.value)
                             <Form.Label>Cost Center</Form.Label>
                             <Form.Control as='select' value={costCenter} className='form-input'
                                 name='costCenter' onChange={costCenterChangeHandler}  disabled={disabled}>
-                                    <option value=''>Select Cost Center</option>
                                     {costCenterList !== null && costCenterList !== undefined &&
                                     costCenterList.length > 0 &&
                                     costCenterList.map(item => {
@@ -196,7 +212,6 @@ console.log("locationView",e.target.value)
                             <Form.Label>Sports</Form.Label>
                             <Form.Control as='select' value={state.sports} className='form-input'
                                 name='sports' onChange={changeHandler} disabled={disabled} >
-                                    <option value=''>Select Sports</option>
                                     {sportsNames !== null && sportsNames !== undefined &&
                                     sportsNames.length > 0 &&
                                     sportsNames.map(item => {
@@ -229,7 +244,6 @@ console.log("locationView",e.target.value)
                             <Form.Label>Probation Period</Form.Label>
                             <Form.Control as='select' value={state.probation} className='form-input'
                                 name='probation' onChange={changeHandler} disabled={disabled} >
-                                    <option value=''>Select Probation</option>
                                     <option value='1' >1 Month</option>
                                     <option value='2'>2 Month</option>
                                     <option value='3'>3 Month</option>
@@ -241,7 +255,6 @@ console.log("locationView",e.target.value)
                             <Form.Label>Recuritment Source</Form.Label>
                             <Form.Control as='select' value={state.recuritment} className='form-input'
                                 name='recuritment' onChange={changeHandler} disabled={disabled} >
-                                    <option value=''>Select Recuritment Source</option>
                                     <option>Employee Referral</option>
                                     <option>LinkedIn</option>
                                     <option>Monster</option>
@@ -280,4 +293,4 @@ console.log("locationView",e.target.value)
     );
 };
 
-export default WorkInformation;
+export default EditWorkInformation;
