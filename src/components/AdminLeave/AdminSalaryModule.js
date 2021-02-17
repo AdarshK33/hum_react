@@ -337,6 +337,7 @@ const AdminSalaryModule = () => {
                     <tr>
                       <th>Select</th>
                       <th>S. No</th>
+                      <th scope="col">Cost Center</th>
                       <th scope="col">Employee Id</th>
                       <th scope="col">Employee Name</th>
                       <th scope="col">Number Of Hours</th>
@@ -387,7 +388,7 @@ const AdminSalaryModule = () => {
                                   )}{" "}
                               </td>
                               <td>{i + 1 + indexOfFirstRecord}</td>
-
+                              <td>{item.costCenter}</td>
                               <td>{item.employeeId}</td>
                               <td>
                                 {item.firstName} {item.lastName}

@@ -27,6 +27,7 @@ import { GroupProvider } from './context/GroupState'
 import { OfferProvider } from './context/OfferState'
 import RoutePath from "./Route";
 import WithAxios from "./utils/axios";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 
 //firebase Auth

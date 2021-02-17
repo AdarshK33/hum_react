@@ -8,8 +8,7 @@ import Pagination from 'react-js-pagination'
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
 const OfferReleaseList = () => {
-
-    const {candidateView, candidateList, loader,total } = useContext(OfferContext)
+    const {candidateView, candidateList, loader,total, viewCandidateId } = useContext(OfferContext)
 
     const [pageCount, setPageCount] = useState(0)
     const [currentRecords, setCurrentRecords] = useState([])
@@ -61,7 +60,7 @@ const OfferReleaseList = () => {
         }
 
     }
-   
+
     return (
         <Fragment>
             <Breadcrumb title="Offers" parent="Offer Release" />
@@ -118,10 +117,12 @@ const OfferReleaseList = () => {
                                                         <td>{i + 1 + indexOfFirstRecord}</td>
                                                         <td>{item.candidateId}</td>
                                                         <td>{item.firstName} {item.lastName}</td>
-                                                        <td></td>
-                                                        <td>{item.verificationStatus}</td>
-                                                        <td>{item.status}</td>
-                                                        <td><Edit2 /></td>
+                                                        <td>{item.createdDate}</td>
+                                                        <td>{item.verificationStatusDesc}</td>
+                                                        <td>{item.statusDesc}</td>
+                                                        <Link to='/edit-offer-release'>
+                                                        <td><Edit2 onClick={() => {viewCandidateId(item.candidateId)}} /></td>
+                                                        </Link>
                                                         <td><Eye /></td>
                                                        
                                                     </tr>
