@@ -25,6 +25,7 @@ const Permissions = () => {
     useEffect(() => {
         viewPermission()
         viewServiceGroup()
+        console.log('permission list',permissionList )
     }, [])
     useEffect(() => {
         if (permissionList !== null) {
@@ -45,8 +46,9 @@ const Permissions = () => {
             }
             setLeaveStatus(permissionList.leaveStatus);
             setRosterStatus(permissionList.rosterStatus);
-
+            console.log('permission list inside',permissionList )
         }
+        console.log('permission list outside',permissionList )
     }, [permissionList])
 
     useEffect(() => {
@@ -75,7 +77,7 @@ const Permissions = () => {
             leaveStatus: 1,
             rosterStatus: rosterStatus
         }
-        // console.log(Values);
+        console.log( 'values of leave=========',Values);
         editPermission(Values);
     }
 
@@ -89,7 +91,7 @@ const Permissions = () => {
             leaveStatus: 0,
             rosterStatus: rosterStatus
         }
-        // console.log(Values);
+         console.log( 'values of leave=========',Values);
         editPermission(Values);
     }
 
@@ -99,7 +101,7 @@ const Permissions = () => {
         setRosterStatus(1)
 
         const Values = {
-            emailId: permissionList.emailId,
+            emailId: permissionList === null ? 0 : permissionList.emailId,
             leaveStatus: leaveStatus,
             rosterStatus: 1
         }
@@ -113,7 +115,7 @@ const Permissions = () => {
         setRosterStatus(0)
 
         const Values = {
-            emailId: permissionList.emailId,
+            emailId: permissionList === null ? 0 : permissionList.emailId,
             leaveStatus: leaveStatus,
             rosterStatus: 0
         }
