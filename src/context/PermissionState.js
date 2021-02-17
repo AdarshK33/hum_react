@@ -26,7 +26,7 @@ export const PermissionProvider = ({ children }) => {
             .then((response) => {
                 toast.info(response.data.message);
                 return (
-                    dispatch({ type: 'SET_PERMISSION', payload: state.permission })
+                    dispatch({ type: 'SET_PERMISSION', payload: state.permissionList })
                 )
             })
             .catch((error) => {
@@ -100,8 +100,15 @@ export const PermissionProvider = ({ children }) => {
     const viewPermission = () => {
         return client.get("/email/view")
             .then((response) => {
-                console.log(response.data.data[0]);
-                state.permissionList = response.data.data[0];
+                if(response.data.data !== null){
+                    state.permissionList = response.data.data[0];
+                    console.log("service permission list if", state.permissionList)
+                }else{
+                    state.permissionList = response.data.data
+                    console.log("service permission list else", state.permissionList)
+                }
+
+                console.log("service permission list", state.permissionList)
                 return (
                     dispatch({ type: 'VIEW_PERMISSION', payload: state.permissionList })
                 )
