@@ -18,7 +18,7 @@ export const MasterFilesProvider = ({ children }) => {
     const [loader, setLoader] = useState(false)
 
     const viewCountries = () => {
-        return client.get("/country/view")
+        return client.get("api/v1/country/view")
             .then((response) => {
                 console.log(response);
                 state.countryList = response.data.data;
@@ -33,7 +33,7 @@ export const MasterFilesProvider = ({ children }) => {
 
 
     const viewStates = () => {
-        return client.get("/state/view")
+        return client.get("api/v1/state/view")
             .then((response) => {
                 console.log(response.data.data);
                 state.stateList = response.data.data;
@@ -51,7 +51,7 @@ export const MasterFilesProvider = ({ children }) => {
         // console.log(id);
         // console.log(date);
         setLoader(true)
-        return client.get('/daily/view?' + '&storeId=' + id + '&date=' + date)
+        return client.get('api/v1/daily/view?' + '&storeId=' + id + '&date=' + date)
             .then((response) => {
                 console.log(response.data.data);
                 state.dailyQty = response.data.data;
@@ -70,7 +70,7 @@ export const MasterFilesProvider = ({ children }) => {
         const formData = new FormData();
         formData.append('file', file)
 
-        return client.post('/state/upload', formData)
+        return client.post('api/v1/state/upload', formData)
             .then((response) => {
                 console.log(response, "res")
                 toast.info(response.data.message)
@@ -84,7 +84,7 @@ export const MasterFilesProvider = ({ children }) => {
         const formData = new FormData();
         formData.append('file', file)
 
-        return client.post('/daily/upload', formData)
+        return client.post('api/v1/daily/upload', formData)
             .then((response) => {
                 console.log(response, "res")
                 toast.info(response.data.message)
@@ -98,7 +98,7 @@ export const MasterFilesProvider = ({ children }) => {
         const formData = new FormData();
         formData.append('file', file)
 
-        return client.post('/monthly/upload', formData)
+        return client.post('api/v1/monthly/upload', formData)
             .then((response) => {
                 console.log(response, "res")
                 toast.info(response.data.message)
@@ -112,7 +112,7 @@ export const MasterFilesProvider = ({ children }) => {
         const formData = new FormData();
         formData.append('file', file)
 
-        return client.post('/location/upload', formData)
+        return client.post('api/v1/location/upload', formData)
             .then((response) => {
                 console.log(response, "res")
                 toast.info(response.data.message)
