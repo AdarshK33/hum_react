@@ -22,7 +22,7 @@ export const PermissionProvider = ({ children }) => {
     const editPermission = (val) => {
         // console.log("====================NAV================");
         // console.log(val)
-        return client.post('/email/create', val)
+        return client.post('api/v1/email/create', val)
             .then((response) => {
                 toast.info(response.data.message);
                 return (
@@ -36,7 +36,7 @@ export const PermissionProvider = ({ children }) => {
 
     const locationDetails = () => {
 
-        return client.get('/location/view')
+        return client.get('api/v1/location/view')
             .then((response) => {
 
                 if (response.data.data === null) {
@@ -63,7 +63,7 @@ export const PermissionProvider = ({ children }) => {
         // console.log(month);
         // console.log(year);
         setLoader(true)
-        return client.get('/monthly/view?' + '&month=' + month + '&storeId=' + id + '&year=' + year)
+        return client.get('api/v1/monthly/view?' + '&month=' + month + '&storeId=' + id + '&year=' + year)
             .then((response) => {
 
                 if (response.data.data === null) {
@@ -86,7 +86,7 @@ export const PermissionProvider = ({ children }) => {
         const formData = new FormData();
         formData.append('file', file)
 
-        return client.post('/monthly/upload', formData)
+        return client.post('api/v1/monthly/upload', formData)
             .then((response) => {
                 console.log(response, "res")
                 toast.info(response.data.message)
@@ -98,7 +98,7 @@ export const PermissionProvider = ({ children }) => {
 
 
     const viewPermission = () => {
-        return client.get("/email/view")
+        return client.get("api/v1/email/view")
             .then((response) => {
                 if(response.data.data !== null){
                     state.permissionList = response.data.data[0];
@@ -121,7 +121,7 @@ export const PermissionProvider = ({ children }) => {
         //Service group permission get api
         const viewServiceGroup = async() => {
             try {
-                const result = await client.get('service_group/view')
+                const result = await client.get('api/v1/service_group/view')
                 if(result.data.data !== null){
                     state.groupList = result.data.data[0]
                     console.log("service group list if", state.groupList)
@@ -142,7 +142,7 @@ export const PermissionProvider = ({ children }) => {
         const createServiceGroup = async(values) => {
             console.log("values in state", values)
             try {
-                const result = await client.post('service_group/create',values)
+                const result = await client.post('api/v1/service_group/create',values)
                 toast.info(result.data.message)
                 viewServiceGroup()
                 return dispatch({type:'CREATE_GROUP', payload: state.groupList})
