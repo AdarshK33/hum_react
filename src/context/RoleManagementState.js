@@ -25,7 +25,7 @@ export const RoleManagementProvider = ({ children }) => {
 
   function viewMenu() {
 
-    client.get('/menu/view').then(function (response) {
+    client.get('api/v1/menu/view').then(function (response) {
       //  console.log(response);
       if (response.data.data !== null) {
         state.MenuList = response.data.data;
@@ -42,7 +42,7 @@ export const RoleManagementProvider = ({ children }) => {
 
   function viewRole() {
 
-    client.get('/menu/roles/view').then(function (response) {
+    client.get('api/v1/menu/roles/view').then(function (response) {
       //  console.log(response);
       state.RoleList = response.data.data;
 
@@ -55,7 +55,7 @@ export const RoleManagementProvider = ({ children }) => {
 
   function viewRoleListData() {
 
-    client.get('/menu/permission/view').then(function (response) {
+    client.get('api/v1/menu/permission/view').then(function (response) {
       //  console.log(response);
       state.RoleListData = response.data.data;
 
@@ -68,7 +68,7 @@ export const RoleManagementProvider = ({ children }) => {
 
   function AddRole(values) {
 
-    client.post('/menu/permission/create', values).then(function (response) {
+    client.post('api/v1/menu/permission/create', values).then(function (response) {
       //  console.log(response);
       toast.info(response.data.message);
       state.AddNewRole = response.data.data;
@@ -82,7 +82,7 @@ export const RoleManagementProvider = ({ children }) => {
 
   function GetRoleData(role) {
 
-    client.get('/menu/permission/view/' + role).then(function (response) {
+    client.get('api/v1/menu/permission/view/' + role).then(function (response) {
       //  console.log(response);
       state.GetRolePermission = response.data.data;
       viewMenu();
@@ -108,7 +108,7 @@ export const RoleManagementProvider = ({ children }) => {
 
   function EditRole(values) {
 
-    client.post('/menu/permission/update', values).then(function (response) {
+    client.post('api/v1/menu/permission/update', values).then(function (response) {
       //  console.log(response);
       toast.info(response.data.message);
       state.EditRolePermission = response.data.data;

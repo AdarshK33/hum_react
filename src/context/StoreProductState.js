@@ -25,7 +25,7 @@ export const StoreProductProvider = ({ children }) => {
 
   function viewStoreProduct() {
     setLoader(true)
-    client.get('/store/view').then(function (response) {
+    client.get('api/v1/store/view').then(function (response) {
 
       state.storeProductList = response.data.data;
       setLoader(false)
@@ -38,7 +38,7 @@ export const StoreProductProvider = ({ children }) => {
 
   function getStateData(store) {
 
-    client.get('/cost_centre/view/' + store).then(function (response) {
+    client.get('api/v1/cost_centre/view/' + store).then(function (response) {
 
       state.StateData = response.data.data;
 
@@ -50,7 +50,7 @@ export const StoreProductProvider = ({ children }) => {
   }
 
   function editTargetHandler(id) {
-    client.get('/store/' + id).then(function (response) {
+    client.get('api/v1/store/' + id).then(function (response) {
 
       state.editTarget = response.data.data;
 
@@ -63,7 +63,7 @@ export const StoreProductProvider = ({ children }) => {
 
   const addTarget = (values) => {
 
-    return client.post('/store/create', values)
+    return client.post('api/v1/store/create', values)
       .then((response) => {
 
         toast.info(response.data.message);
@@ -81,7 +81,7 @@ export const StoreProductProvider = ({ children }) => {
 
   const UpdateTarget = (Target) => {
 
-    return client.post('/store/update', Target)
+    return client.post('api/v1/store/update', Target)
       .then((response) => {
         toast.info(response.data.message);
         viewStoreProduct();
@@ -100,7 +100,7 @@ export const StoreProductProvider = ({ children }) => {
 
   const LeaderTargetList = (storeId) => {
     setLoader(true)
-    return client.get('/store/view/' + storeId)
+    return client.get('api/v1/store/view/' + storeId)
       .then((response) => {
         state.storeLeaderProductList = response.data.data;
         setLoader(false)
