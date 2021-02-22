@@ -9,7 +9,7 @@ import {
 
 export const MENUITEMS = [
     {
-        path: '/dashboard/default', title: 'Dashboard', icon: Home, type: 'link', active: false
+        path: 'api/v1/dashboard/default', title: 'Dashboard', icon: Home, type: 'link', active: false
         // title: 'Dashboard', icon: Home, type: 'sub', badgeType: 'primary', active: false, children: [
         //     { path: '/dashboard/default', title: 'Default', type: 'link' },
 

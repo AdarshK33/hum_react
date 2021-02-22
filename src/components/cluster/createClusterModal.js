@@ -237,7 +237,8 @@ const CreateClusterModal = (props) => {
                           placeholder="Cost Center"
                           //value={costCenter1}
                           style={{ fontSize: "0.9rem" }}
-                          options={costCenterList !== null && costCenterList.map(e => ({ label: e.costCentreName, value: e.costCentreName }))}
+                          options={costCenterList !== null && costCenterList !== null ?
+                             costCenterList.map(e => ({ label: e.costCentreName, value: e.costCentreName })):[]}
                           onChange={getCostCenterName}
                           required isSearchable />
                       </div>

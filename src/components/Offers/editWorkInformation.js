@@ -49,9 +49,10 @@ const EditWorkInformation = () => {
                     department: workData.department,
                     position: workData.position,
                     designation: workData.designation,
-                    //sports: workData,
+                    sports: workData.sportId !== null ? workData.sportId : '',
                     probation: workData.probationPeriod,
-                    recuritment: workData.recruitmentSource
+                    recuritment: workData.recruitmentSource,
+                    ngoDetail: workData.ngoDetails !== null ? workData.ngoDetails : ''
             })
             setDateOFJoining(new Date(workData.dateOfJoin))
             setCostCenter(workData.costCentre)
