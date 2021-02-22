@@ -81,12 +81,23 @@ function ViewShift() {
 
   const onSubmit = e => {
     e.preventDefault();
+    const validate = validation()
+
     const month = moment(getM, ["YYYY-MM"]).format("M");
     const year  = moment(getM, ["MMM Do YY"]).format('YYYY');
+    let flag = localStorage.getItem('flag')
     // alert(month, year)
-    viewSalary(month, year, user.costCentre)
+    const salaryData = {
+      cluster: flag,
+      month: month,
+      storeIds: [user.costCentre],
+      year: year
+    }
+     if (validate) {
+      viewSalary(salaryData);
+    }
     setGetM(getM)
-  }
+  } 
 
   const validation = () => {
     let flag = true
@@ -106,10 +117,17 @@ function ViewShift() {
     const month = moment(getM, ["YYYY-MM"]).format("M");
     const year = moment(getM, ["MMM Do YY"]).format("YYYY");
     console.log("approval data=====", approvalData);
+    let flag = localStorage.getItem('flag')
     /* salaryApproval(approvalData, month, year, user.costCentre); */
+    const salaryData = {
+      cluster: flag,
+      month: month,
+      storeIds: [user.costCentre],
+      year: year
+    }
     const validate = validation()
     if(validate){
-    salaryApproval(approvalData, month, year, user.costCentre);
+      salaryApproval(approvalData, salaryData);
     }
     setChecked([])
 
@@ -125,9 +143,16 @@ function ViewShift() {
     };
     const month = moment(getM, ["YYYY-MM"]).format("M");
     const year = moment(getM, ["MMM Do YY"]).format("YYYY");
+    let flag = localStorage.getItem('flag')
+    const salaryData = {
+      cluster: flag,
+      month: month,
+      storeIds: [user.costCentre],
+      year: year
+    }
     const validate = validation()
-    if(validate){
-    salaryApproval(cancelData, month, year, user.costCentre);
+    if (validate) {
+      salaryApproval(cancelData, salaryData);
     }
     setDeleteModal(false);
     setChecked([])

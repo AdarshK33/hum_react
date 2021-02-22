@@ -277,7 +277,7 @@ export const ClusterProvider = ({ children }) => {
   }
 
   // View Admin Salary Input 
-
+//not used
   const viewStoreSalary = (month, costCentre, year) => {
     console.log(" in cluster" + month + " " + costCentre + '' + year)
 
