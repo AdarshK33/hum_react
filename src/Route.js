@@ -56,9 +56,9 @@ import CreateTicket from "./components/support/createTicket";
 import TicketListingPage from "./components/support/ticketListingPage"
 import ViewTicket from './components/support/viewTicket'
 import ViewGroup from './components/group/ViewGroup'
-import ManagerOfferRelease from './components/Offers/managerOfferRelease'
+/* import ManagerOfferRelease from './components/Offers/managerOfferRelease'
 import OfferReleaseList from './components/Offers/OfferReleaseList'
-import EditOfferRelease from './components/Offers/editOfferRelease'
+import EditOfferRelease from './components/Offers/editOfferRelease' */
 
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
@@ -129,7 +129,7 @@ const RoutePath = () => {
             component={ViewGroup}
           />
 
-          <Route
+         {/*  <Route
             path={`${process.env.PUBLIC_URL}/manager-offer-release`}
             component={ManagerOfferRelease}
           />
@@ -140,7 +140,7 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/edit-offer-release`}
             component={EditOfferRelease}
-          />
+          /> */}
 
 
 

@@ -26,7 +26,7 @@ const initial_state = {
 
     function viewCostCentre() {
        
-        client.get('api/v1/cost_centre/view').then(function (response) {
+        client.get('/cost_centre/view').then(function (response) {
          console.log(response);
           state.cosCentreList = response.data.data;          
     
@@ -41,7 +41,7 @@ const initial_state = {
         
         let dateValue = convert(date);
 
-        client.get('api/v1/dashboard/view/'+dateValue+'/'+store+'/'+clusterId).then(function (response) {
+        client.get('/dashboard/view/'+dateValue+'/'+store+'/'+clusterId).then(function (response) {
 
           if(response.data.data != null){
             state.graphData = response.data.data;

@@ -44,7 +44,7 @@ export const SupportProvider = ({ children }) => {
         console.log("pageCount", page)
         setLoader(true)
         try {
-            const result = await client.get('api/v1/ticket?key=' + key +
+            const result = await client.get('/ticket?key=' + key +
                 '&page=' + page + '&size=' + 10)
             state.ticketListing = result.data.data.data
             state.data = result.data.data
@@ -66,7 +66,7 @@ export const SupportProvider = ({ children }) => {
     const ticketIdView = async (id) => {
         setLoader(true)
         try {
-            const result = await client.get('api/v1/ticket/' + id)
+            const result = await client.get('/ticket/' + id)
             state.ticketIdList = result.data.data
             console.log("ticket id response", state.ticketIdList)
             setLoader(false)
@@ -86,7 +86,7 @@ export const SupportProvider = ({ children }) => {
     const completeStatus = async () => {
 
         try {
-            const result = await client.get('api/v1/ticket/completion/status')
+            const result = await client.get('/ticket/completion/status')
             state.completeStatusView = result.data.data
             console.log("somplete status", state.completeStatusView)
             return dispatch({ type: COMPLETE_STATUS, payload: state.completeStatusView })
@@ -100,7 +100,7 @@ export const SupportProvider = ({ children }) => {
     const ticketStatus = async () => {
 
         try {
-            const result = await client.get('api/v1/ticket/status')
+            const result = await client.get('/ticket/status')
             state.ticketStatusView = result.data.data
             console.log("ticket status", state.ticketStatusView)
             return dispatch({ type: TICKET_STATUS, payload: state.ticketStatusView })
@@ -113,7 +113,7 @@ export const SupportProvider = ({ children }) => {
     //Update the tickets
     const updateTicket = async (updateData, ticketId) => {
         try {
-            const result = await client.post('api/v1/ticket/update', updateData)
+            const result = await client.post('/ticket/update', updateData)
             state.ticketListing = result.data.data
             console.log("updated response", state.ticketListing)
             ticketView('all', 0)
@@ -141,7 +141,7 @@ export const SupportProvider = ({ children }) => {
     } */
     const downloadFile = (fileName) => {
         Axios({
-            url: `${process.env.REACT_APP_BASEURL}/api/v1/ticket/download?name=${fileName}`,
+            url: `${process.env.REACT_APP_BASEURL}//ticket/download?name=${fileName}`,
                 method:'GET',
                 responseType:'blob',
                 headers: {
@@ -158,7 +158,7 @@ export const SupportProvider = ({ children }) => {
     // SELECT ROLES
     const getRolesForSupport = () => {
 
-        client.get('api/v1/ticket/roles').then(function (response) {
+        client.get('/ticket/roles').then(function (response) {
 
             if (response.data.data === null) {
                 state.getRoles = []
@@ -178,7 +178,7 @@ export const SupportProvider = ({ children }) => {
 
     const getIssueAndCategory = () => {
 
-        client.get('api/v1/ticket_category/view').then(function (response) {
+        client.get('/ticket_category/view').then(function (response) {
 
             if (response.data.data === null) {
                 state.getIssueAndCategoryList = []
@@ -196,7 +196,7 @@ export const SupportProvider = ({ children }) => {
 
 
     const selectUrgency = () => {
-        client.get('api/v1/ticket_urgency/view').then(function (response) {
+        client.get('/ticket_urgency/view').then(function (response) {
             if (response.data.data === null) {
                 state.urgencyList = []
             }
@@ -212,7 +212,7 @@ export const SupportProvider = ({ children }) => {
 
     const selectPriority = (role, urgency) => {
 
-        client.get('api/v1/ticket_priority?role=' + role + '&urgency=' + urgency).then(function (response) {
+        client.get('/ticket_priority?role=' + role + '&urgency=' + urgency).then(function (response) {
 
             state.priorityList = response.data.data.priorityName;
             state.priorityListId = response.data.data.priorityId;
@@ -228,7 +228,7 @@ export const SupportProvider = ({ children }) => {
     }
     const addCreateTicket = (newTicket) => {
         // alert(newTicket)
-        return client.post("api/v1/ticket/create", newTicket).then(function (respone) {
+        return client.post("/ticket/create", newTicket).then(function (respone) {
             console.log("api response===", respone.data.message);
             toast.info(respone.data.message);
             ticketView('all', 0)

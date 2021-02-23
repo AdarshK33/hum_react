@@ -37,7 +37,7 @@ export const LeaveProvider = ({ children }) => {
     console.log("page---",page)
     setLoader(true)
     console.log("reue loader",loader)
-    client.get('api/v1/leave_transaction/view' + '?page=' + page + '&size=' + 10)
+    client.get('/leave_transaction/view' + '?page=' + page + '&size=' + 10)
       .then((response) => {
         state.leaveList = response.data.data.data
        /*  getLeave(empId1); */
@@ -61,7 +61,7 @@ export const LeaveProvider = ({ children }) => {
       console.log("emp---",emp)
       setLoader(true)
       console.log("reue loader",loader)
-      client.get('api/v1/leave_transaction/view?empId=' + emp)
+      client.get('/leave_transaction/view?empId=' + emp)
         .then((response) => {
           state.leaveList = response.data.data.data
          /*  getLeave(empId1); */
@@ -85,7 +85,7 @@ export const LeaveProvider = ({ children }) => {
   const viewManagerList = (page) => {
     console.log("page----",page)
     setLoader(true)
-    client.get('api/v1/leave_transaction/view/manager' + '?page=' + page + '&size=' + 10)
+    client.get('/leave_transaction/view/manager' + '?page=' + page + '&size=' + 10)
       .then((response) => {
         state.leaveManagerList = response.data.data.data
         /* getLeave(empId1); */
@@ -104,7 +104,7 @@ export const LeaveProvider = ({ children }) => {
   }
   const viewManagerListSearch = (emp) => {
     setLoader(true)
-    client.get('api/v1/leave_transaction/view/manager?empId=' + emp)
+    client.get('/leave_transaction/view/manager?empId=' + emp)
       .then((response) => {
         state.leaveManagerList = response.data.data.data
         /* getLeave(empId1); */
@@ -126,7 +126,7 @@ export const LeaveProvider = ({ children }) => {
   const viewLeaveData = (empId1) => {
     console.log("data list for leave", empId1)
     if (empId1 !== null && empId1 !== undefined) {
-      client.get('api/v1/leave_transaction/view/' + empId1)
+      client.get('/leave_transaction/view/' + empId1)
         .then((response) => {
           state.leaveDataList = response.data.data.data
           console.log("=====GET Leave Data API respone=====", state.leaveDataList)
@@ -143,7 +143,7 @@ export const LeaveProvider = ({ children }) => {
     setLoader(true)
     if (empId1 !== null && empId1 !== undefined) {
 
-      client.get('api/v1/leave_transaction/view/' + empId1 + '?page=' + page + '&size=' + 10) 
+      client.get('/leave_transaction/view/' + empId1 + '?page=' + page + '&size=' + 10) 
         .then((response) => {
           state.leaveEmpList = response.data.data.data.leaveTransactions
           state.data = response.data.data
@@ -165,7 +165,7 @@ export const LeaveProvider = ({ children }) => {
     // let empId1 = 'DSI000035'
     console.log("emp id in context", empId1)
     if (empId1 !== null && empId1 !== undefined) {
-      client.get('api/v1/leave_type/view/' + empId1)
+      client.get('/leave_type/view/' + empId1)
 
         .then((response) => {
           state.leaveType = response.data.data
@@ -179,7 +179,7 @@ export const LeaveProvider = ({ children }) => {
   }
   // get leave for report
   const getLeaveReport = () => {
-    client.get('api/v1/leave_type/view/')
+    client.get('/leave_type/view/')
 
       .then((response) => {
         state.leaveTypeReport = response.data.data
@@ -195,7 +195,7 @@ export const LeaveProvider = ({ children }) => {
   const addPopup = (newPopup) => {
 
     console.log("newPopup data", newPopup)
-    return client.post('api/v1/leave_transaction/create', newPopup)
+    return client.post('/leave_transaction/create', newPopup)
       .then((response) => {
         state.message = response.data.message
         state.leavesData = response.data.data
@@ -214,7 +214,7 @@ export const LeaveProvider = ({ children }) => {
 
   const addLeave = (newLeave,page) => {
     console.log("++++create api response+++++", newLeave)
-    return client.post('api/v1/leave_transaction/create', newLeave)
+    return client.post('/leave_transaction/create', newLeave)
       .then((response) => {
         state.message = response.data.message;
         toast.info(state.message)
@@ -236,7 +236,7 @@ export const LeaveProvider = ({ children }) => {
   const addEmpLeave = (newLeave, page) => {
     console.log("newLeave emp data++++", newLeave.empId, page)
     console.log("++++create api response+++++", newLeave)
-    return client.post('api/v1/leave_transaction/create', newLeave)
+    return client.post('/leave_transaction/create', newLeave)
       .then((response) => {
         state.message = response.data.message;
         toast.info(state.message)
@@ -259,7 +259,7 @@ export const LeaveProvider = ({ children }) => {
   //Edit Leave
   const editPopup = (editPopup) => {
     console.log("edit data", editPopup)
-    return client.post('api/v1/leave_transaction/update', editPopup)
+    return client.post('/leave_transaction/update', editPopup)
       .then((response) => {
         state.message = response.data.message
         state.editLeavesData = response.data.data
@@ -277,7 +277,7 @@ export const LeaveProvider = ({ children }) => {
 
   const editList = (editLeave, page) => {
     console.log("??????????????????edit api id response???????????????/", editLeave)
-    return client.post('api/v1/leave_transaction/update', editLeave)
+    return client.post('/leave_transaction/update', editLeave)
       .then((response) => {
         state.message = response.data.message
         toast.info(state.message)
@@ -297,7 +297,7 @@ export const LeaveProvider = ({ children }) => {
   }
   const editEmpList = (editLeave, page) => {
     console.log("??????????????????edit api id response???????????????/", editLeave)
-    return client.post('api/v1/leave_transaction/update', editLeave)
+    return client.post('/leave_transaction/update', editLeave)
       .then((response) => {
         state.message = response.data.message
         toast.info(state.message)
@@ -320,7 +320,7 @@ export const LeaveProvider = ({ children }) => {
   const deleteList = (leaveId, page) => {
     console.log("delete id------", leaveId)
     console.log("page id------", page)
-    client.get('api/v1/leave_transaction/delete' + '?ltId=' + leaveId)
+    client.get('/leave_transaction/delete' + '?ltId=' + leaveId)
       .then((response) => {
         toast.info(response.data.message)
         viewList(page)
@@ -338,7 +338,7 @@ export const LeaveProvider = ({ children }) => {
   const deleteEmpList = (leaveId, empId, page) => {
     console.log("delete id------", leaveId)
     console.log("empId id------", empId)
-    client.get('api/v1/leave_transaction/delete' + '?ltId=' + leaveId)
+    client.get('/leave_transaction/delete' + '?ltId=' + leaveId)
       .then((response) => {
         toast.info(response.data.message)
         console.log("response message for delete", response.data.message)
@@ -360,7 +360,7 @@ export const LeaveProvider = ({ children }) => {
 
   const getHoliday = () => {
     setLoader(true)
-    client.get('api/v1/holiday/view').then(function (response) {
+    client.get('/holiday/view').then(function (response) {
       console.log(response)
       state.holidayDataList = response.data.data
 
@@ -376,7 +376,7 @@ export const LeaveProvider = ({ children }) => {
     const formData = new FormData();
     formData.append('file', file, file.name)
 
-    return client.post('api/v1/holiday/upload', formData)
+    return client.post('/holiday/upload', formData)
       .then((response) => {
         console.log(response, "res")
         toast.info(response.data.message)
@@ -394,7 +394,7 @@ export const LeaveProvider = ({ children }) => {
     const formData = new FormData();
     formData.append('file', file, file.name)
 
-    return client.post('api/v1/leave_master/upload', formData)
+    return client.post('/leave_master/upload', formData)
       .then((response) => {
         console.log(response, "res")
         toast.info(response.data.message)
@@ -424,7 +424,7 @@ export const LeaveProvider = ({ children }) => {
   const reportLeave = (reportData) => {
     setLoader(true)
     console.log("++++report api response+++++", reportData)
-    return client.post('api/v1/leave_transaction/view/report', reportData)
+    return client.post('/leave_transaction/view/report', reportData)
       .then((response) => {
         state.message = response.data.message
         state.reportList = response.data.data
@@ -446,7 +446,7 @@ export const LeaveProvider = ({ children }) => {
   //api for employee dropdown
 
   const employeeType = () => {
-    client.get('api/v1/employee/view/leave/employee')
+    client.get('/employee/view/leave/employee')
 
       .then((response) => {
         state.employeeList = response.data.data
@@ -499,7 +499,7 @@ export const LeaveProvider = ({ children }) => {
   const productivityReport = (reportData) => {
     console.log("reportData", reportData)
     setLoader(true)
-    return client.post('api/v1/report/productivity', reportData)
+    return client.post('/report/productivity', reportData)
       .then((response) => {
         state.productivityList = response.data.data
         console.log("productivity list api++++++", state.productivityList)
@@ -517,7 +517,7 @@ export const LeaveProvider = ({ children }) => {
   }
   //City view Api
   const getCity = () => {
-    client.get('api/v1/city/view')
+    client.get('/city/view')
       .then((response) => {
         console.log('city view api', response)
         state.cityList = response.data.data
@@ -532,7 +532,7 @@ export const LeaveProvider = ({ children }) => {
     const formData = new FormData();
     formData.append('file', file, file.name)
 
-    return client.post('api/v1/city/upload', formData)
+    return client.post('/city/upload', formData)
       .then((response) => {
         console.log(response, "city upload api")
         toast.info(response.data.message)

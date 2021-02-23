@@ -28,7 +28,7 @@ export const AdminProvider = ({ children }) => {
   // view Leaves for Admin
 
   const viewAdminList = () => {
-    client.get('api/v1/employee/view/leave_view/')
+    client.get('/employee/view/leave_view/')
       .then((response) => {
         state.leaveAdminList = response.data.data
         console.log("=====GET Admin Leave API respone=====", state.leaveAdminList)
@@ -42,7 +42,7 @@ export const AdminProvider = ({ children }) => {
 
   // Cost Center List
   const CostCenter = () => {
-    client.get('api/v1/cost_centre/view')
+    client.get('/cost_centre/view')
       .then((response) => {
         state.costCenterList = response.data.data
         console.log("cost center data", state.costCenterList)
@@ -56,7 +56,7 @@ export const AdminProvider = ({ children }) => {
   //employee id according to cost center
 
   const employeeIdData = (costData) => {
-    client.get('api/v1/employee/view/leave_view/' + '?costCentre=' + costData)
+    client.get('/employee/view/leave_view/' + '?costCentre=' + costData)
       .then((response) => {
         state.employeeIdList = response.data.data
         if (response.data.data === null) {
@@ -78,7 +78,7 @@ export const AdminProvider = ({ children }) => {
   }
 
   const managerEmployeeId = () => {
-    client.get('api/v1/employee/view/leave/manager')
+    client.get('/employee/view/leave/manager')
       .then((response) => {
         state.managerEmployeeIdList = response.data.data
         console.log("employee id data for manager", state.managerEmployeeIdList)
@@ -93,7 +93,7 @@ export const AdminProvider = ({ children }) => {
 
   function viewGrantLeave() {
     setLoader(true)
-      client.get('api/v1/grant_leave/view')
+      client.get('/grant_leave/view')
       .then(function (response) {
         state.grantLeaveView = response.data.data;
         console.log("data==>" + state.grantLeaveView);
@@ -119,7 +119,7 @@ export const AdminProvider = ({ children }) => {
 
   //view leave master 
   const leaveMasterView = () => {
-    client.get('api/v1/leave_master/view')
+    client.get('/leave_master/view')
       .then((response) => {
         state.leaveMasterList = response.data.data
         console.log("leave master view", state.leaveMasterList)
@@ -133,7 +133,7 @@ export const AdminProvider = ({ children }) => {
     const formData = new FormData();
     formData.append('file', file, file.name)
 
-    return client.post('api/v1/leave_master/upload', formData)
+    return client.post('/leave_master/upload', formData)
       .then((response) => {
         console.log(response, "res")
         toast.info(response.data.message)
@@ -149,7 +149,7 @@ export const AdminProvider = ({ children }) => {
 
   const ApprovalView = () => {
     setLoader(true)
-    client.get('api/v1/leave_transaction/approval_view')
+    client.get('/leave_transaction/approval_view')
       .then((response) => {
         state.ApprovalLeaveList = response.data.data
         console.log("Approval List data", state.ApprovalLeaveList)
@@ -164,7 +164,7 @@ export const AdminProvider = ({ children }) => {
   //Approved update List
   const approvedUpdate = (approvalData) => {
     console.log("++++update approval api response+++++", approvalData)
-    return client.post('api/v1/leave_transaction/approve', approvalData)
+    return client.post('/leave_transaction/approve', approvalData)
       .then((response) => {
         state.message = response.data.message
         toast.info(state.message)
@@ -184,7 +184,7 @@ export const AdminProvider = ({ children }) => {
 
   const cancelLeaveList = (ltId) => {
     console.log("itid", ltId)
-    client.post('api/v1/leave_transaction/reject/' + ltId)
+    client.post('/leave_transaction/reject/' + ltId)
       .then((response) => {
         toast.info(response.data.message)
         console.log("-----delete data-----", response)
