@@ -37,7 +37,7 @@ export const ClusterProvider = ({ children }) => {
   // ADD SHIFT
 
   const updateCluster = (updateCluter) => {
-    return client.post("api/v1/cluster/create", updateCluter).then(function (respone) {
+    return client.post("/cluster/create", updateCluter).then(function (respone) {
       console.log("api response===", respone.data.message);
       viewCluster()
       toast.info(respone.data.message);
@@ -49,7 +49,7 @@ export const ClusterProvider = ({ children }) => {
   }
 
   const updateAdminEditCluster = (updateCluter) => {
-    return client.post("api/v1/cluster/create", updateCluter).then(function (respone) {
+    return client.post("/cluster/create", updateCluter).then(function (respone) {
       // const {
       //   clusterCostCenter: { costCenter },
       // } = state;
@@ -66,7 +66,7 @@ export const ClusterProvider = ({ children }) => {
 
 
   const addCluster = (addCluster) => {
-    return client.post("api/v1/cluster/create", addCluster).then(function (respone) {
+    return client.post("/cluster/create", addCluster).then(function (respone) {
       console.log("api response===", respone.data.message);
       viewCluster()
       toast.info(respone.data.message);
@@ -79,7 +79,7 @@ export const ClusterProvider = ({ children }) => {
 
   const updateAdminaddCluster = (addCluster) => {
 
-    return client.post("api/v1/cluster/create", addCluster).then(function (respone) {
+    return client.post("/cluster/create", addCluster).then(function (respone) {
       // const {
       //   clusterCostCenter: { costCenter },
       // } = state;
@@ -102,7 +102,7 @@ export const ClusterProvider = ({ children }) => {
     let flag = localStorage.getItem('flag')
     console.log("=== Flag set" + flag)
 
-    client.get('api/v1/cluster/view?leader=' + flag).then(function (response) {
+    client.get('/cluster/view?leader=' + flag).then(function (response) {
       state.clusterList = response.data.data;
       setLoader(false)
       return dispatch({ type: 'FETCH_ClUSTER_LIST', payload: state.clusterList, loader: loader });
@@ -115,7 +115,7 @@ export const ClusterProvider = ({ children }) => {
 
 
   function selectEmployeeForCluster(storeId) {
-    client.get('api/v1/employee/view/' + storeId + '/cluster_employees').then(function (response) {
+    client.get('/employee/view/' + storeId + '/cluster_employees').then(function (response) {
       if (response.data.data === null) {
         state.getClusterEmployees = []
       }
@@ -136,7 +136,7 @@ export const ClusterProvider = ({ children }) => {
 
   const viewSports = () => {
 
-    client.get('api/v1/sport/view').then(function (response) {
+    client.get('/sport/view').then(function (response) {
       // console.log("data==>" + JSON.stringify(response));
       if (response.data.data === null) {
         state.sportsNames = []
@@ -156,7 +156,7 @@ export const ClusterProvider = ({ children }) => {
 
   const getCluster = (id) => {
 
-    client.get('api/v1/cluster/' + id).then(function (response) {
+    client.get('/cluster/' + id).then(function (response) {
       const getSingleCluster = response.data.data;
       const getSingleCluster1 = response.data.data.sports;
       const getEmployeesNames = response.data.data.employees;
@@ -183,7 +183,7 @@ export const ClusterProvider = ({ children }) => {
 
   const selectClusterLeader = (storeId) => {
     //console.log("in cluster state", storeId)
-    client.get('api/v1/employee/view/' + storeId + '/cluster_leader').then(function (response) {
+    client.get('/employee/view/' + storeId + '/cluster_leader').then(function (response) {
       //    alert("Leaderes" + JSON.stringify(response));
       state.clusterLeaderNames = response.data.data;
       return dispatch({ type: 'FETCH_LEADERS_NAME', payload: state.clusterLeaderNames });
@@ -196,7 +196,7 @@ export const ClusterProvider = ({ children }) => {
   // EDIT CLUSTER LEADER NAMES
 
   const selectAllClusterLeaderForEdit = (storeId) => {
-    client.get('api/v1/employee/view/' + storeId).then(function (response) {
+    client.get('/employee/view/' + storeId).then(function (response) {
       state.clusterAllLeaderNames = response.data.data;
       return dispatch({ type: 'FETCH_ALL_LEADERS_NAME', payload: state.clusterAllLeaderNames });
     })
@@ -214,7 +214,7 @@ export const ClusterProvider = ({ children }) => {
     /* console.log(" in cluster" + month + " " + year)
     let flag = localStorage.getItem('flag') */
 
-    return client.post('api/v1/salary/view/store',salaryData)
+    return client.post('/salary/view/store',salaryData)
       .then(function (response) {
         console.log("data message==>", response.data.message);
         console.log("data==>1", response);
@@ -234,7 +234,7 @@ export const ClusterProvider = ({ children }) => {
   function viewSalaryData() {
 
     let empId1 = "DSI000035"
-    client.get('api/v1/salary/view' + empId1)
+    client.get('/salary/view' + empId1)
       .then((response) => {
         state.salaryList = response.data.data
         console.log("=====GET Leave Data API respone=====", state.salaryList)
@@ -248,7 +248,7 @@ export const ClusterProvider = ({ children }) => {
   //Edit Salary
 
   function salaryEdit(salaryEdit, salaryData) {
-    console.log("api/v1/salary edit api response", salaryEdit)
+    console.log("/salary edit api response", salaryEdit)
     return client.post('salary/update', salaryEdit)
       .then((response) => {
         if(response.data === null) {
@@ -281,7 +281,7 @@ export const ClusterProvider = ({ children }) => {
   const viewStoreSalary = (month, costCentre, year) => {
     console.log(" in cluster" + month + " " + costCentre + '' + year)
 
-    client.get('api/v1/salary/view/store?month=' + month + '&storeId=' + costCentre + '&year=' + year)
+    client.get('/salary/view/store?month=' + month + '&storeId=' + costCentre + '&year=' + year)
       .then((response) => {
         console.log("slary data on store id", response);
         state.salaryStoreList = response.data.data;
@@ -299,7 +299,7 @@ export const ClusterProvider = ({ children }) => {
 
   const salaryApproval = (approvalData, salaryData) => {
     console.log("++++update salary approval api response+++++", approvalData)
-    return client.post('api/v1/salary/approve', approvalData)
+    return client.post('/salary/approve', approvalData)
       .then((response) => {
         state.message = response.data.message
         toast.info(state.message)
@@ -323,7 +323,7 @@ export const ClusterProvider = ({ children }) => {
     console.log("=== Flag set" + flag)
     if (flag === "0") {
       console.log("MY FLAGE VALUE" + flag)
-      return client.get('api/v1/cluster/view/' + costCenter)
+      return client.get('/cluster/view/' + costCenter)
         .then((response) => {
           const clusterCostCenterList = response.data.data
 
@@ -344,7 +344,7 @@ export const ClusterProvider = ({ children }) => {
     }
     else {
       console.log("MY FLAGE VALUE" + flag)
-      client.get('api/v1/cluster/view?leader=' + flag).then(function (response) {
+      client.get('/cluster/view?leader=' + flag).then(function (response) {
         const clusterCostCenterList = response.data.data
         const clusterCostCenter = { costCenter }
         //  console.log("cluster based on cost center list", state.clusterCostCenterList)
@@ -365,7 +365,7 @@ export const ClusterProvider = ({ children }) => {
   }
 
   const viewClusterForAdmin = (storeId) => {
-    client.get('api/v1/cluster/view', storeId).then(function (response) {
+    client.get('/cluster/view', storeId).then(function (response) {
       //  console.log("data==>" + JSON.stringify(response));
       state.adminClusterList = response.data.data;
       console.log("==== ADMIN_CLUSTER LIST====")
@@ -378,7 +378,7 @@ export const ClusterProvider = ({ children }) => {
 
 
   const viewCostCenterEmployeeByManger = (storeId) => {
-    client.get('api/v1/employee/view/' + storeId + '/cluster_employee').then(function (response) {
+    client.get('/employee/view/' + storeId + '/cluster_employee').then(function (response) {
       if (response.data.data === null) {
         state.costCenterEmpAndMgrList = []
       }
@@ -394,7 +394,7 @@ export const ClusterProvider = ({ children }) => {
   }
 
   const viewManagerByCostCenter = (storeId) => {
-    client.get('api/v1/employee/manager/' + storeId).then(function (response) {
+    client.get('/employee/manager/' + storeId).then(function (response) {
       if (response.data.data === null) {
         state.viewManagerByCostCenterList = []
       }
@@ -411,7 +411,7 @@ export const ClusterProvider = ({ children }) => {
 
   const callClusterEmployees = (storeId) => {
     // alert("callClusterEmloyees " + storeId)
-    client.get('api/v1/employee/view/' + storeId + '/cluster').then(function (response) {
+    client.get('/employee/view/' + storeId + '/cluster').then(function (response) {
       if (response.data.data === null) {
         state.callClusterEmployeesList = []
       }
@@ -428,7 +428,7 @@ export const ClusterProvider = ({ children }) => {
 
   const callClusterLeaders = (storeId) => {
     // alert("callClusterEmloyees " + storeId)
-    client.get('api/v1/employee/view/' + storeId + '/cluster').then(function (response) {
+    client.get('/employee/view/' + storeId + '/cluster').then(function (response) {
       if (response.data.data === null) {
         state.callClusterLeadersList = []
       }
