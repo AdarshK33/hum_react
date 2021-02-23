@@ -235,7 +235,7 @@ const ViewTicket = () => {
         formData.append('file', file)
 
 
-        return client.post('api/v1/ticket/upload', formData)
+        return client.post('/ticket/upload', formData)
             .then((response) => {
 
                 if (response.status === 200) {
@@ -270,7 +270,7 @@ const ViewTicket = () => {
     const deleteFile = (file) => {
         //   alert("file", file)
         if (file !== undefined || file !== null || file !== '') {
-            return client.get('api/v1/ticket/delete/' + file)
+            return client.get('/ticket/delete/' + file)
                 .then((response) => {
                     console.log(response, "responce")
                     toast.info(response.data.message)

@@ -88,7 +88,7 @@ export const AppProvider = ({ children, history }) => {
 
   const getUserInfo = () => {
     // state.MENUITEMS = [];
-    client.get('api/v1/employee/profile')
+    client.get('/employee/profile')
       .then((response) => {
         state.user = response.data.data
         if (response.data.data === {}) {
@@ -152,10 +152,10 @@ export const AppProvider = ({ children, history }) => {
       state.flag = 1;
       for (let i = 0; i < menus.length; i++) {
         if (type === "profile" && user.department !== "Retail") {
-          if (menus[i].hasChild === true && menus[i].menuUrl !== "api/v1/leaves/viewleave" && menus[i].menuUrl !== "api/v1/roster/teamroster") {
+          if (menus[i].hasChild === true && menus[i].menuUrl !== "/leaves/viewleave" && menus[i].menuUrl !== "/roster/teamroster") {
             state.MENUITEMS.push({ title: menus[i].menuName, icon: File, type: 'link', path: menus[i].menuUrl, active: false, children: [] })
 
-          } else if (menus[i].child === false && menus[i].menuUrl !== "api/v1/leaves/viewleave" && menus[i].menuUrl !== "api/v1/roster/teamroster") {
+          } else if (menus[i].child === false && menus[i].menuUrl !== "/leaves/viewleave" && menus[i].menuUrl !== "/roster/teamroster") {
             state.MENUITEMS.push({ path: menus[i].menuUrl, title: menus[i].menuName, icon: File, type: 'link', active: false })
           }
         } else {

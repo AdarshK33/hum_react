@@ -22,7 +22,7 @@ export const SearchProvider = ({ children }) => {
 
   function searchByEmpId(Id) {
 
-    client.get('api/v1/leave_transaction/view?empId=' + Id).then(function (response) {
+    client.get('/leave_transaction/view?empId=' + Id).then(function (response) {
       console.log(response);
       if (response.data.data.data === null) {
         toast.error("No Data Found")
@@ -41,7 +41,7 @@ export const SearchProvider = ({ children }) => {
 
   function searchByEmpIdManager(Id) {
 
-    client.get('api/v1/leave_transaction/view/manager?empId=' + Id).then(function (response) {
+    client.get('/leave_transaction/view/manager?empId=' + Id).then(function (response) {
       console.log(response);
       if (response.data.data === null) {
         toast.error("No Data Found")
@@ -60,7 +60,7 @@ export const SearchProvider = ({ children }) => {
 
   function viewSearchSiftList(Id) {
 
-    client.get('api/v1/shift/search?key=' + Id).then(function (response) {
+    client.get('/shift/search?key=' + Id).then(function (response) {
       if (response.data.data === null) {
         toast.error("No Data Found")
       }
@@ -79,7 +79,7 @@ export const SearchProvider = ({ children }) => {
   //search api for holiday
   const searchHoliday = (key) => {
     console.log("key value", key)
-    client.get('api/v1/holiday/search' + '?key=' + key)
+    client.get('/holiday/search' + '?key=' + key)
       .then((response) => {
           state.searchHolidayList = response.data.data;
         console.log('holiday search api response', state.searchHolidayLis);
@@ -93,7 +93,7 @@ export const SearchProvider = ({ children }) => {
 
   function viewSearchClusterList(Id) {
 
-    client.get('api/v1/cluster/search?key=' + Id).then(function (response) {
+    client.get('/cluster/search?key=' + Id).then(function (response) {
       if (response.data.data === null) {
         toast.error("No Data Found")
       }
@@ -109,7 +109,7 @@ export const SearchProvider = ({ children }) => {
   }
 
   function searchGrantLeave(key) {
-    client.get('api/v1/grant_leave/view' + '?key=' + key)
+    client.get('/grant_leave/view' + '?key=' + key)
       .then(function (response) {
         if (response.data.data === null) {
           toast.error("No Data Found")

@@ -40,7 +40,7 @@ export const RosterProvider = ({ children }) => {
 
   const viewShift = () => {
     setLoader(true)
-    client.get('api/v1/shift/view').then(function (response) {
+    client.get('/shift/view').then(function (response) {
       // console.log("data==>" + JSON.stringify(response));
       state.shiftList = response.data.data;
       setLoader(false)
@@ -55,7 +55,7 @@ export const RosterProvider = ({ children }) => {
   const viewShiftPage = (page, size) => {
     state.pageData = [];
 
-    client.get('api/v1/shift/page?page=' + page + '&size=' + size).then(function (response) {
+    client.get('/shift/page?page=' + page + '&size=' + size).then(function (response) {
       state.pageData = [];
       // console.log("data==>" + JSON.stringify(response));
       state.pageData = response.data.data;
@@ -72,7 +72,7 @@ export const RosterProvider = ({ children }) => {
   // VIEW SHIFT TYPE LIST
 
   function viewShiftTypes() {
-    client.get('api/v1/shift/types').then(function (response) {
+    client.get('/shift/types').then(function (response) {
       // console.log("data==>" + JSON.stringify(response));
       state.shiftListNames = response.data.data;
       return dispatch({ type: 'FETCH_SHIFT_LIST_NAMES', payload: state.shiftListNames });
@@ -85,7 +85,7 @@ export const RosterProvider = ({ children }) => {
   //VIEW CONTRACT TYPE LIST
 
   function viewContractTypes() {
-    client.get('api/v1/contract_type/view').then(function (response) {
+    client.get('/contract_type/view').then(function (response) {
       //console.log("data==>" + JSON.stringify(response));
       state.shiftContractNames = response.data.data;
 
@@ -104,7 +104,7 @@ export const RosterProvider = ({ children }) => {
 
   function editShift(shiftMasterId) {
     // alert(shiftMasterId);
-    client.get('api/v1/shift/' + shiftMasterId).then(function (response) {
+    client.get('/shift/' + shiftMasterId).then(function (response) {
       //console.log("single shift list" + JSON.stringify(response));
       state.singleShiftList = response.data.data;
       return dispatch({ type: 'EDIT_SHIFT_LIST', payload: state.singleShiftList });
@@ -115,7 +115,7 @@ export const RosterProvider = ({ children }) => {
   }
 
   function updateShift(newEditShift) {
-    return client.post("api/v1/shift/update", newEditShift).then(function (respone) {
+    return client.post("/shift/update", newEditShift).then(function (respone) {
       console.log("api response===", respone.data.message);
       toast.info(respone.data.message);
       viewShift()
@@ -128,7 +128,7 @@ export const RosterProvider = ({ children }) => {
   // ADD SHIFT
 
   const addShift = (newShift) => {
-    return client.post("api/v1/shift/create", newShift).then(function (respone) {
+    return client.post("/shift/create", newShift).then(function (respone) {
       console.log("api response===", respone.data.message);
       toast.info(respone.data.message);
       viewShift()
@@ -144,7 +144,7 @@ export const RosterProvider = ({ children }) => {
   function deleteShift(shiftMasterId) {
     // alert("delete" + shiftMasterId)
     // eslint-disable-next-line no-useless-concat
-    client.delete('api/v1/shift/delete' + "?shiftId=" + shiftMasterId).then(function (response) {
+    client.delete('/shift/delete' + "?shiftId=" + shiftMasterId).then(function (response) {
 
       console.log("data==>" + JSON.stringify(response));
       // let myresult = response.data.data.shiftMasterId;   
@@ -161,7 +161,7 @@ export const RosterProvider = ({ children }) => {
   const weekOffDays = (weekId) => {
     //alert(weekId)
     // eslint-disable-next-line no-useless-concat
-    client.get('api/v1/weekoff/weeks/days' + '?weekId=' + weekId)
+    client.get('/weekoff/weeks/days' + '?weekId=' + weekId)
       .then((response) => {
         state.weekDays = response.data.data
         //   console.log("SELECT WEEK ========== ", weekId, JSON.stringify(state.weekDays))
@@ -177,7 +177,7 @@ export const RosterProvider = ({ children }) => {
 
   const weekOffDataEmp = (endDate, startDate, empId) => {
     // const empId = 'DSI000035'  
-    client.get('api/v1/roster/employee/view' + '?employeeId=' + empId +
+    client.get('/roster/employee/view' + '?employeeId=' + empId +
       '&' + 'endDate=' + endDate + '&' + 'startDate=' + startDate)
       .then((response) => {
         const weekOffDataList = response.data.data
@@ -199,7 +199,7 @@ export const RosterProvider = ({ children }) => {
   //Add week off Data according to the emp id
   const addWeekOff = (newWeekOff) => {
     console.log("++++create weekOff api response+++++", newWeekOff)
-    return client.post("api/v1/weekoff/employee/create", newWeekOff)
+    return client.post("/weekoff/employee/create", newWeekOff)
       .then((response) => {
         const {
           selectedRosterRange: { endDate, startDate, empId },
@@ -219,7 +219,7 @@ export const RosterProvider = ({ children }) => {
   }
   const availableShifts = () => {
 
-    client.get('api/v1/shift/view/employee')
+    client.get('/shift/view/employee')
       .then((response) => {
         // console.log(response,"ava")
         state.availableShiftData = response.data.data
@@ -233,7 +233,7 @@ export const RosterProvider = ({ children }) => {
   }
   const assignShift = (assignData) => {
 
-    return client.post('api/v1/shift/assign/employee', assignData)
+    return client.post('/shift/assign/employee', assignData)
       .then((response) => {
         const {
           selectedRosterRange: { endDate, startDate, empId },
@@ -250,7 +250,7 @@ export const RosterProvider = ({ children }) => {
 
   const getallWeeks = (date) => {
     let year = new Date(date).getFullYear();
-    client.get('api/v1/weekoff/weeks?year=' + year)
+    client.get('/weekoff/weeks?year=' + year)
       .then((response) => {
         if (response.data.data === null) {
           state.weeksInYear = []
@@ -270,7 +270,7 @@ export const RosterProvider = ({ children }) => {
 
   const getMasterWeeks = (year) => {
     year = moment(year, ["MMM Do YY"]).format("YYYY");
-    client.get('api/v1/weekoff/weeks/' + year)
+    client.get('/weekoff/weeks/' + year)
       .then((response) => {
         // console.log("===================NAVANEETHA=========");
         // console.log(response.data.data);
@@ -288,7 +288,7 @@ export const RosterProvider = ({ children }) => {
     const formData = new FormData();
     formData.append('file', file)
     console.log(formData)
-    return client.post('api/v1/weekoff/weeks/upload', formData)
+    return client.post('/weekoff/weeks/upload', formData)
       .then((response) => {
         console.log(response, "res")
         toast.info(response.data.message)
@@ -317,7 +317,7 @@ export const RosterProvider = ({ children }) => {
     let flag = localStorage.getItem('flag')
 
     // eslint-disable-next-line no-useless-concat
-    client.get('api/v1/roster/view' + '?clusterId=' + clusterId + '&' + 'contractType=' + contract + '&' + 'endDate=' + endDate + '&' + 'startDate=' + startDate + '&' + 'storeId=' + empId + '&' + 'weekId=' + weekid + '&' + 'flag=' + flag)
+    client.get('/roster/view' + '?clusterId=' + clusterId + '&' + 'contractType=' + contract + '&' + 'endDate=' + endDate + '&' + 'startDate=' + startDate + '&' + 'storeId=' + empId + '&' + 'weekId=' + weekid + '&' + 'flag=' + flag)
       .then((response) => {
         const adminWeekOffDataListHeader = response.data.data.rosterDates;
         const adminWeekOffDataList = response.data.data.rosterResponses;
@@ -350,7 +350,7 @@ export const RosterProvider = ({ children }) => {
     if (clusterId === undefined) {
       clusterId = 0
     }
-    client.get('api/v1/roster/download?clusterId=' + clusterId + '&contractType=' + contract + '&endDate=' + endDate + '&flag=' + flag + '&startDate=' + startDate + '&storeId=' + id + '&weekId=' + weekid, { responseType: 'blob' })
+    client.get('/roster/download?clusterId=' + clusterId + '&contractType=' + contract + '&endDate=' + endDate + '&flag=' + flag + '&startDate=' + startDate + '&storeId=' + id + '&weekId=' + weekid, { responseType: 'blob' })
       .then((response) => {
 
         let fileData = new Blob([response.data], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
@@ -365,7 +365,7 @@ export const RosterProvider = ({ children }) => {
   const adminCalculateWeek = (endDate, startDate) => {
     //  alert(endDate,endDate);
     // eslint-disable-next-line no-useless-concat
-    client.get('api/v1/roster/view/weeks?' + 'endDate=' + endDate + '&' + 'startDate=' + startDate)
+    client.get('/roster/view/weeks?' + 'endDate=' + endDate + '&' + 'startDate=' + startDate)
       .then((response) => {
         state.adminCalculateWeekResult = response.data.data;
         console.log("admin calculate week ", state.adminCalculateWeekResult)
@@ -385,7 +385,7 @@ export const RosterProvider = ({ children }) => {
       clusterId = 0
     }
 
-    client.get('api/v1/employee/view?cluster=' + flag + '&clusterId=' + clusterId + '&contract_type=' + contractType + '&storeId=' + storeId)
+    client.get('/employee/view?cluster=' + flag + '&clusterId=' + clusterId + '&contract_type=' + contractType + '&storeId=' + storeId)
       .then((response) => {
         state.EmployeeListForAdminRosterWeekOff = response.data.data;
         console.log("admin calculate week for store id  ", state.EmployeeListForAdminRosterWeekOff)
@@ -399,7 +399,7 @@ export const RosterProvider = ({ children }) => {
   const adminAddWeekOff = (newWeekOff) => {
     //  alert(newWeekOff);
     console.log("++++create weekOff api response+++++", newWeekOff)
-    return client.post("api/v1/weekoff/manager/create", newWeekOff)
+    return client.post("/weekoff/manager/create", newWeekOff)
       .then((response) => {
         const {
           adminSelectedRosterRange: { endDate, startDate, contract, weekid, empId, clusterId },
@@ -428,7 +428,7 @@ export const RosterProvider = ({ children }) => {
     }
 
 
-    client.get('api/v1/shift/view/store/active?contract_type=' + contractType + '&storeId=' + costCenter1)
+    client.get('/shift/view/store/active?contract_type=' + contractType + '&storeId=' + costCenter1)
       .then((response) => {
         state.adminRosterAvailableShiftList = response.data.data;
         console.log("admin calculate week ", state.adminRosterAvailableShiftList)
@@ -447,7 +447,7 @@ export const RosterProvider = ({ children }) => {
 
 
   const assignAdminShift = (assignData) => {
-    return client.post('api/v1/shift/assign', assignData)
+    return client.post('/shift/assign', assignData)
       .then((response) => {
         const {
           adminSelectedRosterRange: { endDate, startDate, contract, weekid, empId, clusterId },
@@ -466,7 +466,7 @@ export const RosterProvider = ({ children }) => {
   //Cost Center List
   const costCenter = () => {
 
-    client.get('api/v1/cost_centre/view').then(function (response) {
+    client.get('/cost_centre/view').then(function (response) {
 
       state.costCenterList = response.data.data;
 
