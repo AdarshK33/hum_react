@@ -12,10 +12,13 @@ import 'react-accessible-accordion/dist/fancy-example.css';
 import './offers.css'
 import EmployeeForm from './employeeForm'
 import WorkInformation from './workInformation'
+import OnBoarding from '../../components/Offers/OnBoardGui' //Rajasekhar
+
 
 const ManagerOfferRelease = () => {
     return (
         <Fragment>
+
             <Container fluid>
                 <h5 style={{marginTop:'1rem',fontWeight:'700'}}>New Offer Initation</h5>
                

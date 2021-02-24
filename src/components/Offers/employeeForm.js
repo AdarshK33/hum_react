@@ -7,7 +7,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { OfferContext } from '../../context/OfferState'
 import { useHistory } from "react-router-dom";
 
-const EmployeeForm = () => {
+
+const EmployeeForm = (props) => {
     const [state, setState] = useState({
         firstName: '',
         lastName: '',

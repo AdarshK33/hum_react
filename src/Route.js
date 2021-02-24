@@ -59,6 +59,9 @@ import ViewGroup from './components/group/ViewGroup'
 import ManagerOfferRelease from './components/Offers/managerOfferRelease'
 import OfferReleaseList from './components/Offers/OfferReleaseList'
 
+import OnBoarding from './components/Offers/OnBoardGui' //Rajasekhar
+
+
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
   const [routPath, setRoutPath] = useState(false);
@@ -73,10 +76,15 @@ const RoutePath = () => {
         path={`${process.env.PUBLIC_URL}/signin`}
         component={Signin}
       />
-
       <Route
         path={`${process.env.PUBLIC_URL}/login`}
         component={Login}
+      />
+
+      <Route
+      //  {/*Rajasekhar */}
+        path={`${process.env.PUBLIC_URL}/TempLogin`}
+        component={OnBoarding}
       />
 
 
@@ -136,9 +144,6 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/offer-release-list`}
             component={OfferReleaseList}
           />
-
-
-
           {state.MenuPermissionsRoute.map((e) => {
             return (
               <div>
