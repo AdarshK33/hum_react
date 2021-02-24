@@ -3,8 +3,6 @@ import { Row, Col, Form, Button } from 'react-bootstrap'
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import Select from 'react-select'
-
-//import RehiredModal from './RehiredModal'
 import './OnBoard.css'
 
 
@@ -12,7 +10,7 @@ const submitHandler = (e) => {
     e.preventDefault()
 }
 
-const OnBoarding = () => {
+const PersonalInformation = () => {
 const[isClicked,setIsClicked]= useState(false)
 
 const AddExtrReferenceClick =() =>{
@@ -56,12 +54,12 @@ const CancelExtrReferenceClick =() =>{
                 <Row style={{ marginBottom: '1rem' }}>
                 <Col sm={4}>
                         <Form.Group>
-                            <div className="ControlField">
-                        <select className="form-control" >
-                                <option value="" style={{ backgroundColor: 'red', color: 'blue' }}>Blood Group</option>
+                            <div className="select_box">
+                        <select>
+                                <option>Blood Group</option>
                                 <option value='1'>O+</option>
                                 <option value='2'>O-</option>
-                                 <option value='3'>A+</option>
+                                <option value='3'>A+</option>
                                  <option value='4'>A-</option>
                                  <option value='5'>B+</option>
                                  <option value='6'>B+</option>
@@ -69,20 +67,6 @@ const CancelExtrReferenceClick =() =>{
                                  <option value='8'>AB-</option>
                             </select>
                             </div>
-                            {/* <div  className="ControlField">
-                               <Form.Control   as ="select" type="text" placeholder="Blood Group" >
-                               <option value=''>Blood Group</option> 
-                               <option value='1'>O+</option>
-                                <option value='2'>O-</option>
-                                 <option value='3'>A+</option>
-                                 <option value='4'>A-</option>
-                                 <option value='5'>B+</option>
-                                 <option value='6'>B+</option>
-                                 <option value='7'>AB+</option>
-                                 <option value='8'>AB-</option>
-
-                                 </Form.Control>
-                            </div> */}
                         </Form.Group>
                     </Col>
                     <Col sm={4}>
@@ -105,32 +89,30 @@ const CancelExtrReferenceClick =() =>{
                 <Row style={{ marginBottom: '1rem' }}>
                 <Col sm={4}>
                         <Form.Group>
-                            <div  className="ControlField">
-                               <Form.Control   as ="select" type="text"> 
+                            <div  className="select_box">
+                            <select> 
                                <option value=''>Natonality</option>
 
-                                 </Form.Control>
+                               </select>
                             </div>
                         </Form.Group>
                     </Col>
                     <Col sm={4}>
                         <Form.Group>
-                            <div  className="ControlField">
-                               <Form.Control   as ="select" type="text" > 
-                               <option value=''>Disability</option>
-
-                                 </Form.Control>
+                            <div  className="select_box">
+                            <select>
+                            <option value=''>Disability</option>
+                            </select>
                             </div>
                         </Form.Group>
                     </Col>
                     <Col sm={4}>
                         <Form.Group>
-                            <div  className="ControlField">
-                               <Form.Control   as ="select" type="text"  name='probation'  > 
+                            <div  className="select_box">
+                               <select>
                                <option value=''>LGBT</option>
-
-                                 </Form.Control>
-                            </div>
+                                   </select> 
+                                 </div>
                         </Form.Group>
                     </Col>
                </Row>
@@ -267,4 +249,4 @@ const CancelExtrReferenceClick =() =>{
     );
 
 }
-export default OnBoarding;
+export default PersonalInformation;

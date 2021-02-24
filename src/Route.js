@@ -59,7 +59,8 @@ import ViewGroup from './components/group/ViewGroup'
 import ManagerOfferRelease from './components/Offers/managerOfferRelease'
 import OfferReleaseList from './components/Offers/OfferReleaseList'
 
-import OnBoarding from './components/Offers/OnBoardGui' //Rajasekhar
+import PersonalInformation from './components/OnBording/PersonalInformation'
+import Address from './components/OnBording/Address'
 
 
 const RoutePath = () => {
@@ -83,8 +84,13 @@ const RoutePath = () => {
 
       <Route
       //  {/*Rajasekhar */}
-        path={`${process.env.PUBLIC_URL}/TempLogin`}
-        component={OnBoarding}
+        path={`${process.env.PUBLIC_URL}/onboarding`}
+        component={PersonalInformation}
+      />
+      <Route
+      //  {/*Rajasekhar */}
+        path={`${process.env.PUBLIC_URL}/address`}
+        component={Address}
       />
 
 

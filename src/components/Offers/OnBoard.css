@@ -1,7 +1,11 @@
 .ControlField {
-    width: 180px;
+    width: 150px;
     margin: 5px 0;
+    border-radius: 5px
 }
+.ControlField label{position:absolute;left:5px;top:5px;color:black;}
+.ControlField label::after{content:"*";color:red;}
+
 .CheckBoxField{
     display: flex;
     justify-content: space-between;
