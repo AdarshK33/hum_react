@@ -1,6 +1,5 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
 import { Row, Col, Form, Button } from 'react-bootstrap'
-import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import Select from 'react-select'
 import './OnBoard.css'
@@ -92,22 +91,20 @@ const Address = () => {
                 </Col>
                 <Col  sm={1}>
                         <Form.Group>
-                        <div className="CheckBoxField" >
+                        <div className="boxField input" >{/* className="CheckBoxField" */}
                             
-                        {/* <input  className="largerCheckbox" type="checkbox" value="No" checked={!isChecked}
-            onChange={handleNoCheckboxChange}/> */}
-            <input type="checkbox" value="No"/>
+                        {/* <input  className="largerCheckbox" type="checkbox" value="No" /> */}
+            <input type="checkbox"  value="No" checked={!isChecked}  onChange={handleNoCheckboxChange}/>
             <label>No </label>
                             </div>
                             </Form.Group>
                     </Col>
                     <Col sm={1} >
                         <Form.Group>
-                        <div className="CheckBoxField" >
+                        <div className="boxField input" >
                             {/* <label>Yes</label> */}
-                        {/* <input  className="largerCheckbox" type="checkbox" value="Yes" checked={isChecked}
-                         onChange={handleCheckboxChange}/> */}
-                     <input   type="checkbox" value="Yes" />
+                        {/* <input  className="largerCheckbox" type="checkbox" value="Yes" /> */}
+                     <input   type="checkbox"  value="Yes" checked={isChecked} onChange={handleCheckboxChange}/>
                          <label>Yes</label>
                             </div>
                             </Form.Group>

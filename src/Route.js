@@ -61,6 +61,11 @@ import OfferReleaseList from './components/Offers/OfferReleaseList'
 
 import PersonalInformation from './components/OnBording/PersonalInformation'
 import Address from './components/OnBording/Address'
+import EmergencyContact from './components/OnBording/EmergencyContact'
+import BankDetails from './components/OnBording/BankDetails'
+import InsuranceNomination from './components/OnBording/InsuranceNomination'
+import PFDeclaration from './components/OnBording/PFDeclaration'
+import Documents from './components/OnBording/Documents'
 
 
 const RoutePath = () => {
@@ -92,7 +97,32 @@ const RoutePath = () => {
         path={`${process.env.PUBLIC_URL}/address`}
         component={Address}
       />
-
+      <Route
+      //  {/*Rajasekhar */}
+        path={`${process.env.PUBLIC_URL}/emergency_contact`}
+        component={EmergencyContact}
+      />
+      
+      <Route
+      //  {/*Rajasekhar */}
+        path={`${process.env.PUBLIC_URL}/bank_details`}
+        component={BankDetails}
+      />
+      <Route
+      //  {/*Rajasekhar */}
+        path={`${process.env.PUBLIC_URL}/nomine`}
+        component={InsuranceNomination}
+      />
+      <Route
+      //  {/*Rajasekhar */}
+        path={`${process.env.PUBLIC_URL}/pf_declaration`}
+        component={PFDeclaration}
+      />
+      <Route
+      //  {/*Rajasekhar */}
+        path={`${process.env.PUBLIC_URL}/documents`}
+        component={Documents}
+      />
 
 
 

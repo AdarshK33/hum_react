@@ -128,17 +128,17 @@ const CancelExtrReferenceClick =() =>{
                     </Col>
                     <Col sm={4} style={{ marginTop: '3.5rem' }}>
                         <Form.Group>
-                        <div className="CheckBoxField" >
-                            <label>Male </label>
+                        <div className="boxField input" >
                         <input  className="largerCheckbox" type="checkbox" value="Male"/>
+                        <label>Male </label>
                             </div>
                             </Form.Group>
                     </Col>
                     <Col sm={5} style={{ marginTop: '3.5rem' }}>
                         <Form.Group>
-                        <div className="CheckBoxField" >
-                            <label>Female</label>
+                        <div className="boxField input" >
                         <input  className="largerCheckbox" type="checkbox" value="Female"/>
+                        <label>Female</label>
                             </div>
                             </Form.Group>
                     </Col>
@@ -154,17 +154,19 @@ const CancelExtrReferenceClick =() =>{
                     </Col>
                     <Col sm={4} >
                         <Form.Group>
-                        <div className="CheckBoxField"  style={{ marginTop: '1rem' }}>
-                            <label>Married </label>
+                        <div className="boxField input" style={{ marginTop: '1rem' }}>
+                            
                         <input  className="largerCheckbox" type="checkbox" value="Married"/>
+                        <label>Married </label>
                             </div>
                             </Form.Group>
                     </Col>
                     <Col sm={5} >
                         <Form.Group>
-                        <div className="CheckBoxField" style={{ marginTop: '0.9rem' }}>
-                            <label>UnMarried</label>
+                        <div className="boxField input" style={{ marginTop: '0.9rem' }}>
+                            
                             <input  className="largerCheckbox" type="checkbox" value="Unarried"/>
+                            <label>UnMarried</label>
                             </div>
                             </Form.Group>
                     </Col>
