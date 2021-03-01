@@ -60,7 +60,7 @@ const Documents = () => {
                     <Col>
                     <Form.Group>
                         <div className="FileInput">
-                        <label>Aadhaar ID<span style={{color:"#32CD32"}}>(Upload the first and last page)</span></label>
+                        <label>Aadhaar ID<span style={{color:"#47ef47",fontStyle:"italic"}}>(Upload the first and last page)</span></label>
                         </div>
                         <div className="parentInput">
                         <input className="fileInputField" placeholder="Choose File" type="text" value={FileName} />
@@ -112,7 +112,7 @@ const Documents = () => {
                     <Col>
                     <Form.Group>
                         <div className="FileInputWithOutStar">
-                        <label>EPF Passbook<span style={{color:"#32CD32"}}>(First page of the book)</span></label>
+                        <label>EPF Passbook<span style={{color:"#47ef47" , fontStyle:"italic"}}>(First page of the book)</span></label>
                         </div>
                         <div className="parentInput">
                         <input className="fileInputField" placeholder="Choose File" type="text" value={FileName} />
