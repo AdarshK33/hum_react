@@ -155,7 +155,7 @@ const AddRole = (props) => {
                                             isMulti
                                         /> */}
                                         <MultiSelect
-                                            options={MenuList !== null ?
+                                            options={MenuList !== null && MenuList !== undefined ?
                                                 MenuList.map(e => ({ label: e.menuName, value: e.menuId })) : []}
                                             value={menuList}
                                             onChange={handleMultiChange}
