@@ -15,7 +15,7 @@ export const HolidayrProvider = ({ children }) => {
   
   const getHoliday = () => {
     // const [state, updateStae] =uss
-     client.get('holiday/view').then(function (response) {
+     client.get('/holiday/view').then(function (response) {
       console.log(response)
       state.holiday = response;
       return dispatch({ type: 'FETCH_HOLIDAY_LIST', payload: state.holiday });

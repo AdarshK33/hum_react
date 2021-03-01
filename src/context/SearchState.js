@@ -109,7 +109,7 @@ export const SearchProvider = ({ children }) => {
   }
 
   function searchGrantLeave(key) {
-    client.get('grant_leave/view' + '?key=' + key)
+    client.get('/grant_leave/view' + '?key=' + key)
       .then(function (response) {
         if (response.data.data === null) {
           toast.error("No Data Found")

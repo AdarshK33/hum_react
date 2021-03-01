@@ -121,7 +121,7 @@ export const PermissionProvider = ({ children }) => {
         //Service group permission get api
         const viewServiceGroup = async() => {
             try {
-                const result = await client.get('service_group/view')
+                const result = await client.get('/service_group/view')
                 if(result.data.data !== null){
                     state.groupList = result.data.data[0]
                     console.log("service group list if", state.groupList)
@@ -142,7 +142,7 @@ export const PermissionProvider = ({ children }) => {
         const createServiceGroup = async(values) => {
             console.log("values in state", values)
             try {
-                const result = await client.post('service_group/create',values)
+                const result = await client.post('/service_group/create',values)
                 toast.info(result.data.message)
                 viewServiceGroup()
                 return dispatch({type:'CREATE_GROUP', payload: state.groupList})
