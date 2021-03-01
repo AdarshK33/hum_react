@@ -2,9 +2,9 @@ import Cookies from "js-cookie";
 
 const secure = process.env.NODE_ENV === 'production'
 let flag = false;
-if(process.env.REACT_APP_BASEURL.includes("https")){
+/* if(process.env.REACT_APP_BASEURL.includes("https")){
   flag = true;
-}
+} */
 console.log({ secure })
 Cookies.defaults = {
   path: "/",

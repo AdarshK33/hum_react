@@ -39,3 +39,27 @@
 .form-input.form-control {
     border-radius: 12.25rem;
 }
+.reactDate.form-group .react-datepicker-wrapper{
+    display: block !important;
+}
+.main-container.container {
+    /* margin-top: 4rem; */
+    padding-top: 2rem;
+    text-align: center;
+}
+h5.offerHeading {
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.middle-container.container {
+    margin-top: 3rem;
+}
+.react-switch {
+    vertical-align: middle;
+}
+.react-switch-bg {
+    background: #006EBB !important;
+}
+canvas.react-pdf__Page__canvas {
+    display: unset !important;
+}

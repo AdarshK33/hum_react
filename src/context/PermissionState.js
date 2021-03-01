@@ -26,7 +26,7 @@ export const PermissionProvider = ({ children }) => {
             .then((response) => {
                 toast.info(response.data.message);
                 return (
-                    dispatch({ type: 'SET_PERMISSION', payload: state.permission })
+                    dispatch({ type: 'SET_PERMISSION', payload: state.permissionList })
                 )
             })
             .catch((error) => {
@@ -100,8 +100,15 @@ export const PermissionProvider = ({ children }) => {
     const viewPermission = () => {
         return client.get("/email/view")
             .then((response) => {
-                console.log(response.data.data[0]);
-                state.permissionList = response.data.data[0];
+                if(response.data.data !== null){
+                    state.permissionList = response.data.data[0];
+                    console.log("service permission list if", state.permissionList)
+                }else{
+                    state.permissionList = response.data.data
+                    console.log("service permission list else", state.permissionList)
+                }
+
+                console.log("service permission list", state.permissionList)
                 return (
                     dispatch({ type: 'VIEW_PERMISSION', payload: state.permissionList })
                 )
@@ -114,7 +121,7 @@ export const PermissionProvider = ({ children }) => {
         //Service group permission get api
         const viewServiceGroup = async() => {
             try {
-                const result = await client.get('service_group/view')
+                const result = await client.get('/service_group/view')
                 if(result.data.data !== null){
                     state.groupList = result.data.data[0]
                     console.log("service group list if", state.groupList)
@@ -135,7 +142,7 @@ export const PermissionProvider = ({ children }) => {
         const createServiceGroup = async(values) => {
             console.log("values in state", values)
             try {
-                const result = await client.post('service_group/create',values)
+                const result = await client.post('/service_group/create',values)
                 toast.info(result.data.message)
                 viewServiceGroup()
                 return dispatch({type:'CREATE_GROUP', payload: state.groupList})

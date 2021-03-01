@@ -26,7 +26,6 @@ const AdminSalaryEdit = (props) => {
     const [inputValue, setInputValue] = useState(null)
     const [inputDate, setInputDate] = useState()
 
-
     const { salaryEdit } = useContext(ClusterContext);
 
     useEffect(() => {
@@ -106,8 +105,6 @@ const AdminSalaryEdit = (props) => {
 var lastDay =  new Date(getYear, getMonth - 1 , 20); 
 var firstDate =  moment(firstDay).format("YYYY-MM-DD")
 var lastDate =  moment(lastDay).format("YYYY-MM-DD")
-console.log("firstDay",firstDate)
-console.log("lastDay",lastDate)
 
         function createDate() {
             return val2.map((el, i) =>
@@ -178,8 +175,14 @@ const onSubmit = e => {
         year: year
 
     }
-    console.log("EditSalary request",props.costCenter)
-    salaryEdit(EditSalary,props.costCenter)
+    let flag = localStorage.getItem('flag')
+    const salaryData = {
+      cluster: flag,
+      month: month,
+      storeIds: props.costCenter,
+      year: year
+    }
+    salaryEdit(EditSalary, salaryData)
 
     // history.push("/salary/salaryView");
     const setModal = props.handleEditClose;

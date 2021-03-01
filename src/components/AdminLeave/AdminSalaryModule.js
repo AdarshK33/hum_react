@@ -18,6 +18,8 @@ import "react-toastify/dist/ReactToastify.css";
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import ReactExport from 'react-data-export'
+import MultiSelect from 'react-multi-select-component'
+import { AdminContext } from '../../context/AdminState'
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -28,7 +30,7 @@ const AdminSalaryModule = () => {
   const [getM, setGetM] = useState('');
   const [deleteModal, setDeleteModal] = useState(false);
   const [checked, setChecked] = useState([]);
-  const [costCenter, setCostCenter] = useState('')
+  const [costCenter, setCostCenter] = useState([])
 
   const [editModal, setEditModal] = useState(false)
   const [employeeId, setEmployeeId] = useState()
@@ -57,14 +59,14 @@ const AdminSalaryModule = () => {
     viewSalary,
     salaryApproval, loader
   } = useContext(ClusterContext);
-  const { cosCentreList, viewCostCentre } = useContext(DashboardContext);
+  const { CostCenter, costCenterList } = useContext(AdminContext)
 
 
   const handleEditClose = () => setEditModal(false)
   const handleDeleteClose = () => setDeleteModal(false);
 
   useEffect(() => {
-    viewCostCentre();
+    CostCenter();
   }, []);
 
   /*-----------------Pagination------------------*/
@@ -90,12 +92,18 @@ const AdminSalaryModule = () => {
 
     const month = moment(getM, ["YYYY-MM"]).format("M");
     const year = moment(getM, ["MMM Do YY"]).format("YYYY");
-    console.log("costCenter", costCenter)
+    let flag = localStorage.getItem('flag')
+    const salaryData = {
+      cluster: flag,
+      month: month,
+      storeIds: costCenter.length > 0 ? costCenter.map((e, i) => costCenter[i].value) : null,
+      year: year
+    }
     if (validate) {
-      viewSalary(month, year, costCenter);
+      viewSalary(salaryData);
     }
     setGetM(getM)
-    setCostCenter(costCenter)
+    /* setCostCenter(costCenter) */
   };
 
   const validation = () => {
@@ -113,11 +121,11 @@ const AdminSalaryModule = () => {
     return flag;
   }
 
-  const costCenterHandler = (options) => {
-    let data1 = options !== null ? options.value : ''
-    setCostCenter(data1)
-    console.log("data1", data1)
-  }
+  const setCostCenterHandler = (options) => {
+    let data1 = options !== null ? options.map((e, i) => options[i].value) : []
+    setCostCenter(options)
+    console.log("options in cost center", data1)
+} 
 
 
 
@@ -129,9 +137,16 @@ const AdminSalaryModule = () => {
     const month = moment(getM, ["YYYY-MM"]).format("M");
     const year = moment(getM, ["MMM Do YY"]).format("YYYY");
     console.log("approval data=====", approvalData);
+    let flag = localStorage.getItem('flag')
+    const salaryData = {
+      cluster: flag,
+      month: month,
+      storeIds: costCenter.length > 0 ? costCenter.map((e, i) => costCenter[i].value) : null,
+      year: year
+    }
     const validate = validation()
     if (validate) {
-      salaryApproval(approvalData, month, year, costCenter);
+      salaryApproval(approvalData, salaryData);
     }
 
     /*  salaryApproval(approvalData); */
@@ -150,9 +165,16 @@ const AdminSalaryModule = () => {
     };
     const month = moment(getM, ["YYYY-MM"]).format("M");
     const year = moment(getM, ["MMM Do YY"]).format("YYYY");
+    let flag = localStorage.getItem('flag')
+    const salaryData = {
+      cluster: flag,
+      month: month,
+      storeIds: costCenter.length > 0 ? costCenter.map((e, i) => costCenter[i].value) : null,
+      year: year
+    }
     const validate = validation()
     if (validate) {
-      salaryApproval(cancelData, month, year, costCenter);
+      salaryApproval(cancelData, salaryData);
     }
 
     setDeleteModal(false);
@@ -177,7 +199,7 @@ const AdminSalaryModule = () => {
       }
     });
   };
-  
+
   const disabledText = () => {
     toast.error("No Records to be Export")
   }
@@ -212,15 +234,23 @@ const AdminSalaryModule = () => {
                   })}
 
                 </Form.Control> */}
-                <Select
+                {/* <Select
                   name="filters"
                   placeholder="Select Cost Center"
-                  /*  value={costCenter} */
                   style={{ fontSize: "0.8rem" }}
                   options={cosCentreList !== null ?
                     cosCentreList.map(e => ({ label: e.costCentreName, value: e.costCentreName })) : []}
                   onChange={costCenterHandler}
                   required={true} isSearchable
+                /> */}
+                <MultiSelect
+                  options={costCenterList !== null ?
+                    costCenterList.map(e => ({ label: e.costCentreName, value: e.costCentreName })) : []}
+                  value={costCenter}
+                  onChange={setCostCenterHandler}
+                  labelledBy={"Select"}
+                  hasSelectAll={true}
+                  disableSearch={false}
                 />
                 <div>{error && <span style={{ color: 'red' }}>Cost Center is Required</span>}</div>
               </Form.Group>
@@ -238,16 +268,17 @@ const AdminSalaryModule = () => {
               {currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 ?
                 <ExcelFile filename='Salary List' element={<Button className="btn btn-light mr-2"> Export excel</Button>}>
                   <ExcelSheet data={salaryList} name="Salary List" style={{ width: '500px' }}>
+                  <ExcelColumn label="Cost Center" value="costCenter" />
                     <ExcelColumn label="Employee Id" value="employeeId" />
                     <ExcelColumn label="Employee Name"
-                                        value={(col) => col.firstName !== null && col.firstName+' '+ col.lastName} />
+                      value={(col) => col.firstName !== null && col.firstName + ' ' + col.lastName} />
                     <ExcelColumn label="Number Of Hours" value="numberOfHours" />
                     <ExcelColumn label="LOP" value="lop" />
                     <ExcelColumn label="Contract Type" value="contractType" />
                     <ExcelColumn label="Extra Hours" value="extraHours" />
                     <ExcelColumn label="Total Hours" value="totalHours" />
                     <ExcelColumn label="Status" value="statusDesc" />
-                   
+
                   </ExcelSheet>
                 </ExcelFile>
 
@@ -307,6 +338,7 @@ const AdminSalaryModule = () => {
                     <tr>
                       <th>Select</th>
                       <th>S. No</th>
+                      <th scope="col">Cost Center</th>
                       <th scope="col">Employee Id</th>
                       <th scope="col">Employee Name</th>
                       <th scope="col">Number Of Hours</th>
@@ -357,7 +389,7 @@ const AdminSalaryModule = () => {
                                   )}{" "}
                               </td>
                               <td>{i + 1 + indexOfFirstRecord}</td>
-
+                              <td>{item.costCenter}</td>
                               <td>{item.employeeId}</td>
                               <td>
                                 {item.firstName} {item.lastName}
@@ -426,7 +458,7 @@ const AdminSalaryModule = () => {
           totalHours={totalHours}
           year={year}
           additionalHours={additionalHours}
-          costCenter={costCenter}
+          costCenter={costCenter.length > 0 ? costCenter.map((e, i) => costCenter[i].value) : null}
         />
       </div>
       {salaryList !== null && salaryList !== undefined && salaryList.length > 10 &&
