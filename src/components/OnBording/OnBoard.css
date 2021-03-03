@@ -1,228 +1,336 @@
-.ControlField {
-    width: 150px;
-    margin: 5px 0;
-    border-radius: 5px
+.OnBoardHeading {
+  height: 50px;
+  background-color: #c2cfe4;
+  text-align: center;
+  color: #4466f2;
+  font-size: 25px;
 }
-.ControlField label{position:absolute;left:5px;top:5px;color:black;}
-.ControlField label::after{content:"*";color:red;}
+.insideIcon {
+  margin-left: 20px;
+  /* font-size: 30px; */
+}
+.CheckStep {
+  height: 45px;
+  width: 45px;
+  background-color: #aaa;
+  border-radius: 50%;
+  color: white;
+  margin-left: 20px;
+  text-align: center;
+  font-size: 25px;
+}
 
-.CheckBoxField{
-    display: flex;
-    justify-content: space-between;
+.ConnectLine {
+  border-left: 3px solid #aaa;
+  height: 30px;
+  margin-left: 42px;
+  margin-bottom: 5px;
+  top: 0;
 }
-.CenterButton{
+.CurrentCheckStep {
+  height: 45px;
+  width: 45px;
+  background-color: #4466f2;
+  border-radius: 50%;
+  color: white;
+  margin-left: 20px;
+  text-align: center;
+  font-size: 25px;
+}
+.OkCheckStep {
+  height: 45px;
+  width: 45px;
+  background-color: green;
+  border-radius: 50%;
+  color: white;
+  margin-left: 20px;
+  text-align: center;
+  font-size: 25px;
+}
+.OkConnectLine {
+  border-left: 3px solid green;
+  height: 30px;
+  margin-left: 42px;
+  margin-bottom: 5px;
+  top: 0;
+}
+.ControlField {
+  width: 150px;
+  margin: 5px 0;
+  border-radius: 5px;
+}
+.ControlField label {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  color: black;
+}
+.ControlField label::after {
+  content: "*";
+  color: red;
+}
+
+.CheckBoxField {
+  display: flex;
+  justify-content: space-between;
+}
+.CenterButton {
   display: flex;
   justify-content: center;
 }
-.buttonField.button{
-    Width:80px;
-    height: 30px; 
-    background-color: white;
-    color:#4466f2;
-    border: 1px solid#4466f2;
-    
+.buttonField.button {
+  width: 80px;
+  height: 30px;
+  background-color: white;
+  color: #4466f2;
+  border: 1px solid#4466f2;
 }
-.buttonField.button:disabled{
-    border: 1px solid red ;
-    color : red
-  }
-input.largerCheckbox { 
-    width: 30px; 
-    height: 30px;
-    margin-left: 25px;
+.buttonField.button:disabled {
+  border: 1px solid red;
+  color: red;
+}
+input.largerCheckbox {
+  width: 30px;
+  height: 30px;
+  margin-left: 25px;
+}
 
-} 
+.inputField {
+  position: relative;
+}
+.inputField input {
+  position: relative;
+  background: transparent;
+  border: 1px solid #aaa;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: white;
+}
+.inputField label {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  color: black;
+}
+.inputField label::after {
+  content: "*";
+  color: red;
+}
+input[required]:valid + label {
+  display: none;
+}
 
-.inputField{position:relative;}
-.inputField input{position:relative;background:transparent;border:1px solid #aaa;padding: 5px;border-radius: 5px; background-color: white;}
-.inputField label{position:absolute;left:5px;top:5px;color:black;}
-.inputField label::after{content:"*";color:red;}
-input[required]:valid + label{display: none;}
+.inputFieldWithoutStar {
+  position: relative;
+}
+.inputFieldWithoutStar input {
+  position: relative;
+  background: transparent;
+  border: 1px solid #aaa;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: white;
+}
+.inputFieldWithoutStar label {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  color: black;
+}
 
-.inputFieldWithoutStar{position:relative;}
-.inputFieldWithoutStar input{position:relative;background:transparent;border:1px solid #aaa;padding: 5px;border-radius: 5px; background-color: white;}
-.inputFieldWithoutStar label{position:absolute;left:5px;top:5px;color:black;}
+.inputFieldLarge {
+  position: relative;
+}
+.inputFieldLarge input {
+  position: relative;
+  background: transparent;
+  width: 200px;
+  border: 1px solid #aaa;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: white;
+}
+.inputFieldLarge label {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  color: black;
+}
+.inputFieldLarge label::after {
+  content: "*";
+  color: red;
+}
+input[required]:valid + label {
+  display: none;
+}
 
-.inputFieldLarge{position:relative;}
-.inputFieldLarge input{position:relative;background:transparent; width: 200px;border:1px solid #aaa;padding: 5px;border-radius: 5px; background-color: white;}
-.inputFieldLarge label{position:absolute;left:5px;top:5px;color:black;}
-.inputFieldLarge label::after{content:"*";color:red;}
-input[required]:valid + label{display: none;}
+.select_box {
+  width: 150px;
+  height: 32px;
+  background-color: white;
+  margin: 5px 0;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid #aaa;
+  position: relative;
+}
+.select_box:after {
+  content: "\f107";
+  font: normal normal normal 35px/1 FontAwesome;
+  color: #4466f2;
+  right: 11px;
+  top: 0px;
+  height: 3px;
+  padding: 0px 0px 0px 8px;
+  /* border-left: 1px solid #0ebeff; */
+  position: absolute;
+  pointer-events: none;
+}
+.select_box select {
+  width: 170px;
+  border: 0;
+  position: relative;
+  background: none;
+}
+.large_select_box {
+  width: 200px;
+  height: 32px;
+  background-color: white;
+  margin: 5px 0;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid #aaa;
+  position: relative;
+}
+.large_select_box:after {
+  content: "\f107";
+  font: normal normal normal 35px/1 FontAwesome;
+  color: #4466f2;
+  right: 11px;
+  top: 0px;
+  height: 3px;
+  padding: 0px 0px 0px 8px;
+  /* border-left: 1px solid #0ebeff; */
+  position: absolute;
+  pointer-events: none;
+}
+.large_select_box select {
+  width: 220px;
+  border: 0;
+  position: relative;
+  background: none;
+}
 
-.select_box{
-    width: 150px;
-    height: 32px;
-    background-color: white;
-    margin: 5px 0;
-    border-radius: 5px;
-    overflow: hidden;
-    border: 1px solid #aaa;
-    position: relative;
-  }
-  .select_box:after{
-    content: '\f107';
-      font: normal normal normal 35px/1 FontAwesome;
-      color: #4466f2;
-      right: 11px;
-      top: 0px;
-      height: 3px;
-      padding: 0px 0px 0px 8px;
-      /* border-left: 1px solid #0ebeff; */
-      position: absolute;
-      pointer-events: none;
-   }
-  .select_box select{
-    width: 170px;
-    border: 0;
-    position: relative;
-    background: none;
-  }
-  .large_select_box{
-    width: 200px;
-    height: 32px;
-    background-color: white;
-    margin: 5px 0;
-    border-radius: 5px;
-    overflow: hidden;
-    border: 1px solid #aaa;
-    position: relative;
-  }
-  .large_select_box:after{
-    content: '\f107';
-      font: normal normal normal 35px/1 FontAwesome;
-      color: #4466f2;
-      right: 11px;
-      top: 0px;
-      height: 3px;
-      padding: 0px 0px 0px 8px;
-      /* border-left: 1px solid #0ebeff; */
-      position: absolute;
-      pointer-events: none;
-   }
-  .large_select_box select{
-    width: 220px;
-    border: 0;
-    position: relative;
-    background: none;
-  }
+.boxField input[type="checkbox"] {
+  --active: #4466f2;
+  --active-inner: #fff;
+  --focus: 2px #4466f2;
+  /* rgba(39, 94, 254, .3); */
+  --border: #bbc1e1;
+  --border-hover: #4466f2;
+  --background: #fff;
+  --disabled: #f6f8ff;
+  --disabled-inner: #e1e6f9;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  height: 30px;
+  width: 35px;
+  outline: none;
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  margin: 0;
+  cursor: pointer;
+  border: 1px solid var(--bc, var(--border));
+  background: var(--b, var(--background));
+  transition: background 0.3s, border-color 0.3s, box-shadow 0.2s;
+}
+.boxField input[type="checkbox"]:after {
+  content: "";
+  display: block;
+  left: 0;
+  top: 0;
+  position: absolute;
+  transition: transform var(--d-t, 0.3s) var(--d-t-e, ease),
+    opacity var(--d-o, 0.2s);
+}
+.boxField input[type="checkbox"]:checked {
+  --b: var(--active);
+  --bc: var(--active);
+  --d-o: 0.3s;
+  --d-t: 0.6s;
+  --d-t-e: cubic-bezier(0.2, 0.85, 0.32, 1.2);
+}
+.boxField input[type="checkbox"]:disabled {
+  --b: var(--disabled);
+  cursor: not-allowed;
+  opacity: 0.9;
+}
+.boxField input[type="checkbox"]:disabled:checked {
+  --b: var(--disabled-inner);
+  --bc: var(--border);
+}
+.boxField input[type="checkbox"]:disabled + label {
+  cursor: not-allowed;
+}
+.boxField input[type="checkbox"]:hover:not(:checked):not(:disabled) {
+  --bc: var(--border-hover);
+}
+.boxField input[type="checkbox"]:focus {
+  box-shadow: 0 0 0 var(--focus);
+}
+.boxField input[type="checkbox"]:not(.switch) {
+  width: 30px;
+}
+.boxField input[type="checkbox"]:not(.switch):after {
+  opacity: var(--o, 0);
+}
+.boxField input[type="checkbox"]:not(.switch):checked {
+  --o: 1;
+}
+.boxField input[type="checkbox"] + label {
+  font-size: 14px;
+  line-height: 21px;
+  display: inline-block;
+  vertical-align: top;
+  cursor: pointer;
+  margin-left: 4px;
+  padding: 5px 0px 0px 8px;
+}
 
-
-
-  .boxField input[type=checkbox] {
-      --active: #4466f2;
-      --active-inner: #fff;
-      --focus: 2px  #4466f2;
-       /* rgba(39, 94, 254, .3); */
-      --border: #BBC1E1;
-      --border-hover: #4466f2;
-      --background: #fff;
-      --disabled: #F6F8FF;
-      --disabled-inner: #E1E6F9;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      height: 30px;
-      width: 35px;
-      outline: none;
-      display: inline-block;
-      vertical-align: top;
-      position: relative;
-      margin: 0;
-      cursor: pointer;
-      border: 1px solid var(--bc, var(--border));
-      background: var(--b, var(--background));
-      transition: background 0.3s, border-color 0.3s, box-shadow 0.2s;
-    }
-  .boxField input[type=checkbox]:after {
-      content: "";
-      display: block;
-      left: 0;
-      top: 0;
-      position: absolute;
-      transition: transform var(--d-t, 0.3s) var(--d-t-e, ease), opacity var(--d-o, 0.2s);
-    }
-.boxField input[type=checkbox]:checked{
-      --b: var(--active);
-      --bc: var(--active);
-      --d-o: .3s;
-      --d-t: .6s;
-      --d-t-e: cubic-bezier(.2, .85, .32, 1.2);
-    }
-.boxField input[type=checkbox]:disabled {
-      --b: var(--disabled);
-      cursor: not-allowed;
-      opacity: 0.9;
-    }
-    .boxField input[type=checkbox]:disabled:checked{
-      --b: var(--disabled-inner);
-      --bc: var(--border);
-    }
-    .boxField input[type=checkbox]:disabled + label {
-      cursor: not-allowed;
-    }
-    .boxField input[type=checkbox]:hover:not(:checked):not(:disabled) {
-      --bc: var(--border-hover);
-    }
-    .boxField  input[type=checkbox]:focus {
-      box-shadow: 0 0 0 var(--focus);
-    }
-    .boxField   input[type=checkbox]:not(.switch) {
-      width: 30px;
-    }
-    .boxField   input[type=checkbox]:not(.switch):after {
-      opacity: var(--o, 0);
-    }
-    .boxField  input[type=checkbox]:not(.switch):checked{
-      --o: 1;
-    }
-    .boxField  input[type=checkbox] + label {
-      font-size: 14px;
-      line-height: 21px;
-      display: inline-block;
-      vertical-align: top;
-      cursor: pointer;
-      margin-left: 4px;
-      padding: 5px 0px 0px 8px;
-      
-    }
-  
-    .boxField  input[type=checkbox]:not(.switch) {
-      border-radius: 7px;
-    }
-    .boxField  input[type=checkbox]:not(.switch):after {
-      width: 5px;
-      height: 13px;
-      border: 2px solid var(--active-inner);
-      border-top: 0;
-      border-left: 0;
-      left: 11px;
-      top: 5px;
-      transform: rotate(var(--r, 20deg));
-    }
-    .boxField  input[type=checkbox]:not(.switch):checked {
-      --r: 43deg;
-    }
-    .boxField   input[type=checkbox].switch {
-      width: 38px;
-      border-radius: 11px;
-    }
-    .boxField  input[type=checkbox].switch:after {
-      left: 2px;
-      top: 2px;
-      border-radius: 50%;
-      width: 15px;
-      height: 15px;
-      background: var(--ab, var(--border));
-      transform: translateX(var(--x, 0));
-    }
-    .boxField  input[type=checkbox].switch:checked {
-      --ab: var(--active-inner);
-      --x: 17px;
-    }
-    .boxField  input[type=checkbox].switch:disabled:not(:checked):after {
-      opacity: 0.6;
-    }
-  
-  
-
-
-
+.boxField input[type="checkbox"]:not(.switch) {
+  border-radius: 7px;
+}
+.boxField input[type="checkbox"]:not(.switch):after {
+  width: 5px;
+  height: 13px;
+  border: 2px solid var(--active-inner);
+  border-top: 0;
+  border-left: 0;
+  left: 11px;
+  top: 5px;
+  transform: rotate(var(--r, 20deg));
+}
+.boxField input[type="checkbox"]:not(.switch):checked {
+  --r: 43deg;
+}
+.boxField input[type="checkbox"].switch {
+  width: 38px;
+  border-radius: 11px;
+}
+.boxField input[type="checkbox"].switch:after {
+  left: 2px;
+  top: 2px;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  background: var(--ab, var(--border));
+  transform: translateX(var(--x, 0));
+}
+.boxField input[type="checkbox"].switch:checked {
+  --ab: var(--active-inner);
+  --x: 17px;
+}
+.boxField input[type="checkbox"].switch:disabled:not(:checked):after {
+  opacity: 0.6;
+}

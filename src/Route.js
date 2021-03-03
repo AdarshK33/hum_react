@@ -66,6 +66,7 @@ import BankDetails from './components/OnBording/BankDetails'
 import InsuranceNomination from './components/OnBording/InsuranceNomination'
 import PFDeclaration from './components/OnBording/PFDeclaration'
 import Documents from './components/OnBording/Documents'
+import OnBoardingStepper from './components/OnBording/OnBoardingStepper'
 
 
 const RoutePath = () => {
@@ -123,7 +124,11 @@ const RoutePath = () => {
         path={`${process.env.PUBLIC_URL}/documents`}
         component={Documents}
       />
-
+    <Route
+      //  {/*Rajasekhar */}
+        path={`${process.env.PUBLIC_URL}/stepper`}
+        component={OnBoardingStepper}
+      />
 
 
       <Fragment>

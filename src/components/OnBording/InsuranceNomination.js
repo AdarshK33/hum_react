@@ -29,7 +29,10 @@ const InsuranceNomination = () => {
 
 
     const handleIncrement = () => {
-        setNomineeCount(NomineeCount + 1);
+        if (NomineeCount <4){
+            setNomineeCount(NomineeCount + 1); 
+        }
+        // setNomineeCount(NomineeCount + 1);
         NomineeArray[NomineeCount]= 1;
         console.log(NomineeArray)
       console.log(NomineeCount)
@@ -112,6 +115,17 @@ const InsuranceNomination = () => {
                         <NomineeForm /> </div>)
                     case 3:
                         return (<div><NomineeForm /> 
+                            <NomineeForm />
+                            <NomineeForm /></div>)
+                    case 4:
+                        return (<div><NomineeForm /> 
+                            <NomineeForm />
+                            <NomineeForm />
+                            <NomineeForm /></div>)
+                    case 5:
+                        return (<div><NomineeForm /> 
+                            <NomineeForm />
+                            <NomineeForm />
                             <NomineeForm />
                             <NomineeForm /></div>)
                     default:

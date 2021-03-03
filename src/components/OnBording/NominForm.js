@@ -1,7 +1,5 @@
 import React, { Fragment, useState, useContext, useEffect } from 'react';
 import { Row, Col, Form, Button } from 'react-bootstrap'
-import { Search, PlusCircle, MinusCircle } from 'react-feather';
-import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 
 
