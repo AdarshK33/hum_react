@@ -22,7 +22,7 @@ const PersonalInformation = () => {
     <Fragment>
       <Form onSubmit={submitHandler}>
         <Row style={{ marginBottom: "1rem" }}>
-          <Col sm={6}>
+          <Col sm={9}>
             <Row style={{ marginBottom: "1rem" }}>
               <Col sm={4}>
                 <Form.Group>
@@ -207,7 +207,7 @@ const PersonalInformation = () => {
           </Col>
         </Row>
         <Row style={{ marginBottom: "1rem" }}>
-          <Col sm={2}>
+          <Col sm={3}>
             <Form.Group>
               <div className="inputField">
                 <input type="text" required="required" />
@@ -215,14 +215,14 @@ const PersonalInformation = () => {
               </div>
             </Form.Group>
           </Col>
-          <Col sm={2}>
+          <Col sm={3}>
             <Form.Group>
               <div className="inputField">
                 <input type="text" required="required" placeholder="Email ID" />
               </div>
             </Form.Group>
           </Col>
-          <Col sm={2}>
+          <Col sm={3}>
             <Form.Group>
               <div className="inputField">
                 <input
@@ -233,7 +233,7 @@ const PersonalInformation = () => {
               </div>
             </Form.Group>
           </Col>
-          <Col sm={1}>
+          <Col sm={3}>
             <Form.Group>
               <div>
                 <button
@@ -249,7 +249,7 @@ const PersonalInformation = () => {
         </Row>
         {isClicked ? (
           <Row style={{ marginBottom: "1rem" }}>
-            <Col sm={2}>
+            <Col sm={3}>
               <Form.Group>
                 <div className="inputField">
                   <input type="text" required="required" />
@@ -257,7 +257,7 @@ const PersonalInformation = () => {
                 </div>
               </Form.Group>
             </Col>
-            <Col sm={2}>
+            <Col sm={3}>
               <Form.Group>
                 <div className="inputField">
                   <input
@@ -268,7 +268,7 @@ const PersonalInformation = () => {
                 </div>
               </Form.Group>
             </Col>
-            <Col sm={2}>
+            <Col sm={3}>
               <Form.Group>
                 <div className="inputField">
                   <input
@@ -279,7 +279,7 @@ const PersonalInformation = () => {
                 </div>
               </Form.Group>
             </Col>
-            <Col sm={1}>
+            <Col sm={3}>
               <Form.Group>
                 <div>
                   <button

@@ -22,26 +22,26 @@ const EmergencyContact = () => {
           </Col>
         </Row>
         <Row style={{ marginBottom: "1rem" }}>
-          <Col sm={2}>
+          <Col sm={3}>
             <div className="inputField">
               <input type="text" required="required" />
               <label>Name</label>
             </div>
           </Col>
-          <Col sm={2}>
+          <Col sm={3}>
             <div className="select_box">
               <select>
                 <option value="">Relationship</option>
               </select>
             </div>
           </Col>
-          <Col sm={2}>
+          <Col sm={3}>
             <div className="inputFieldWithoutStar">
               <input type="text" required="required" />
               <label>Contact No</label>
             </div>
           </Col>
-          <Col sm={2}>
+          <Col sm={3}>
             <div className="inputField">
               <input type="text" required="required" />
               <label>Address Line 1</label>
@@ -49,27 +49,27 @@ const EmergencyContact = () => {
           </Col>
         </Row>
         <Row style={{ marginBottom: "1rem" }}>
-          <Col sm={2}>
+          <Col sm={3}>
             <div className="inputFieldWithoutStar">
               <input type="text" required="required" />
               <label>Locality</label>
             </div>
           </Col>
-          <Col sm={2}>
+          <Col sm={3}>
             <div className="inputField">
               <input type="text" required="required" />
               <label>City</label>
             </div>
           </Col>
 
-          <Col sm={2}>
+          <Col sm={3}>
             <div className="select_box">
               <select>
                 <option value="">Country</option>
               </select>
             </div>
           </Col>
-          <Col sm={2}>
+          <Col sm={3}>
             <div className="inputField">
               <input type="text" required="required" />
               <label>PinCode</label>

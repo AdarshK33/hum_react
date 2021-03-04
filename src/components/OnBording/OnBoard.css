@@ -54,6 +54,15 @@
   margin-bottom: 5px;
   top: 0;
 }
+.stepperButtons {
+  width: 120px;
+  height: 30px;
+  background-color: #4466f2;
+  color: white;
+  border: 1px solid#4466f2;
+  margin-left: 40px;
+}
+
 .ControlField {
   width: 150px;
   margin: 5px 0;
@@ -77,6 +86,10 @@
 .CenterButton {
   display: flex;
   justify-content: center;
+}
+.divContents {
+  display: flex;
+  justify-content: space-between;
 }
 .buttonField.button {
   width: 80px;
