@@ -12,25 +12,43 @@ const BankDetails = () => {
   return (
     <Fragment>
       <Form onSubmit={submitHandler}>
-        <Row style={{ marginBottom: "1rem" }}>
-          <Col sm={4}>
-            <div className="inputFieldLarge">
-              <input type="text" required="required" />
-              <label>Bank Name</label>
-            </div>
-          </Col>
-          <Col sm={4}>
-            <div className="inputFieldLarge">
-              <input type="text" required="required" />
-              <label>Bank Account No</label>
-            </div>
-          </Col>
-          <Col sm={4}>
-            <div className="inputFieldLarge">
-              <input type="text" required="required" />
-              <label>IFSC Code</label>
-            </div>
-          </Col>
+        <Row style={{ marginBottom: "2rem" }}>
+          <div className="col-sm-4">
+            <Form.Group>
+              <Form.Label>
+                Bank Name<span style={{ color: "red" }}>*</span>
+              </Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Bank Name"
+                required="required"
+              />
+            </Form.Group>
+          </div>
+          <div className="col-sm-4">
+            <Form.Group>
+              <Form.Label>
+                Bank Account No<span style={{ color: "red" }}>*</span>
+              </Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Bank Account No"
+                required="required"
+              />
+            </Form.Group>
+          </div>
+          <div className="col-sm-4">
+            <Form.Group>
+              <Form.Label>
+                IFSC Code<span style={{ color: "red" }}>*</span>
+              </Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Bank Account No"
+                required="required"
+              />
+            </Form.Group>
+          </div>
         </Row>
         <Row style={{ marginBottom: "1rem" }}>
           <Col sm={8}>

@@ -22,35 +22,51 @@ const PersonalInformation = () => {
     <Fragment>
       <Form onSubmit={submitHandler}>
         <Row style={{ marginBottom: "1rem" }}>
-          <Col sm={9}>
-            <Row style={{ marginBottom: "1rem" }}>
-              <Col sm={4}>
+          <Col sm={8}>
+            <Row style={{ marginBottom: "2rem" }}>
+              <div className="col-sm-4">
                 <Form.Group>
-                  <div className="inputField">
-                    <input type="text" required="required" />
-                    <label>Name as per Aadhaar</label>
+                  <Form.Label>
+                    Name as per Aadhaar<span style={{ color: "red" }}>*</span>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Name as per Aadhaar"
+                    required="required"
+                  />
+                </Form.Group>
+              </div>
+              <div className="col-sm-4">
+                <Form.Group>
+                  <Form.Label>
+                    Father's Name<span style={{ color: "red" }}>*</span>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Father's Name"
+                    required="required"
+                  />
+                </Form.Group>
+              </div>
+              <div className="col-sm-4">
+                <Form.Group>
+                  <Form.Label>
+                    Date Of Birth<span style={{ color: "red" }}>*</span>
+                  </Form.Label>
+                  <div className="onBoard-date">
+                    <DatePicker
+                      className="form-control onBoard-view"
+                      dateFormat="MM/yyyy"
+                      showMonthYearPicker
+                      placeholderText="Date Of Birth"
+                    />
                   </div>
                 </Form.Group>
-              </Col>
-              <Col sm={4}>
-                <Form.Group>
-                  <div className="inputField">
-                    <input type="text" required="required" />
-                    <label>Father's Name</label>
-                  </div>
-                </Form.Group>
-              </Col>
-              <Col sm={4}>
-                <Form.Group>
-                  <div className="inputField">
-                    <DatePicker requireddateFormat="yyyy-MM-dd" />
-                    <label>Date Of Birth</label>
-                  </div>
-                </Form.Group>
-              </Col>
+              </div>
             </Row>
-            <Row style={{ marginBottom: "1rem" }}>
-              <Col sm={4}>
+
+            <Row style={{ marginBottom: "2rem" }}>
+              {/* <Col sm={4}>
                 <Form.Group>
                   <div className="select_box">
                     <select>
@@ -66,57 +82,79 @@ const PersonalInformation = () => {
                     </select>
                   </div>
                 </Form.Group>
-              </Col>
-              <Col sm={4}>
+              </Col> */}
+              <div className="col-sm-4">
                 <Form.Group>
-                  <div className="inputField">
-                    <input type="text" required="required" />
-                    <label>Aadhaar Number</label>
-                  </div>
+                  <Form.Label>
+                    Blood Group<span style={{ color: "red" }}>*</span>
+                  </Form.Label>
+                  <Form.Control as="select">
+                    <option value="">Select Blood Group</option>
+                  </Form.Control>
                 </Form.Group>
-              </Col>
-              <Col sm={4}>
+              </div>
+              <div className="col-sm-4">
                 <Form.Group>
-                  <div className="inputField">
-                    <input type="text" required="required" />
-                    <label>Pan Number</label>
-                  </div>
+                  <Form.Label>
+                    Aadhaar Number<span style={{ color: "red" }}>*</span>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Aadhaar Number"
+                    required="required"
+                  />
                 </Form.Group>
-              </Col>
+              </div>
+              <div className="col-sm-4">
+                <Form.Group>
+                  <Form.Label>
+                    Pan Number<span style={{ color: "red" }}>*</span>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Pan Number"
+                    required="required"
+                  />
+                </Form.Group>
+              </div>
             </Row>
-            <Row style={{ marginBottom: "1rem" }}>
-              <Col sm={4}>
+            <Row style={{ marginBottom: "2rem" }}>
+              <div className="col-sm-4">
                 <Form.Group>
-                  <div className="select_box">
-                    <select>
-                      <option value="">Natonality</option>
-                    </select>
-                  </div>
+                  <Form.Label>
+                    Natonality<span style={{ color: "red" }}>*</span>
+                  </Form.Label>
+                  <Form.Control as="select">
+                    <option value="">Natonality</option>
+                  </Form.Control>
                 </Form.Group>
-              </Col>
-              <Col sm={4}>
+              </div>
+              <div className="col-sm-4">
                 <Form.Group>
-                  <div className="select_box">
-                    <select>
-                      <option value="">Disability</option>
-                    </select>
-                  </div>
+                  <Form.Label>
+                    Disability<span style={{ color: "red" }}>*</span>
+                  </Form.Label>
+                  <Form.Control as="select">
+                    <option value="">Disability</option>
+                  </Form.Control>
                 </Form.Group>
-              </Col>
-              <Col sm={4}>
+              </div>
+
+              <div className="col-sm-4">
                 <Form.Group>
-                  <div className="select_box">
-                    <select>
-                      <option value="">LGBT</option>
-                    </select>
-                  </div>
+                  <Form.Label>
+                    LGBT<span style={{ color: "red" }}>*</span>
+                  </Form.Label>
+                  <Form.Control as="select">
+                    <option value="">LGBT</option>
+                  </Form.Control>
                 </Form.Group>
-              </Col>
+              </div>
             </Row>
           </Col>
-          <Col sm={3}>
+          <Col sm={4}>
             <Row style={{ marginBottom: "1rem" }}>
-              <Col sm={3} style={{ marginTop: "3rem" }}>
+              <Col sm={3} style={{ marginTop: "2rem" }}>
                 <Form.Group>
                   <div className="inputField">
                     <label>
@@ -125,7 +163,7 @@ const PersonalInformation = () => {
                   </div>
                 </Form.Group>
               </Col>
-              <Col sm={4} style={{ marginTop: "3.5rem" }}>
+              <Col sm={4} style={{ marginTop: "2rem" }}>
                 <Form.Group>
                   <div className="boxField input">
                     <input
@@ -137,7 +175,7 @@ const PersonalInformation = () => {
                   </div>
                 </Form.Group>
               </Col>
-              <Col sm={5} style={{ marginTop: "3.5rem" }}>
+              <Col sm={5} style={{ marginTop: "2rem" }}>
                 <Form.Group>
                   <div className="boxField input">
                     <input
@@ -150,7 +188,7 @@ const PersonalInformation = () => {
                 </Form.Group>
               </Col>
             </Row>
-            <Row style={{ marginBottom: "1rem" }}>
+            <Row style={{ marginTop: "3rem" }}>
               <Col sm={3}>
                 <Form.Group>
                   <div className="inputField">
@@ -207,33 +245,48 @@ const PersonalInformation = () => {
           </Col>
         </Row>
         <Row style={{ marginBottom: "1rem" }}>
-          <Col sm={3}>
-            <Form.Group>
-              <div className="inputField">
-                <input type="text" required="required" />
-                <label>Emp Name/ID</label>
+          <Col sm={8}>
+            <Row style={{ marginBottom: "2rem" }}>
+              <div className="col-sm-4">
+                <Form.Group>
+                  <Form.Label>
+                    Emp Name/ID<span style={{ color: "red" }}>*</span>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Emp Name/ID"
+                    required="required"
+                  />
+                </Form.Group>
               </div>
-            </Form.Group>
-          </Col>
-          <Col sm={3}>
-            <Form.Group>
-              <div className="inputField">
-                <input type="text" required="required" placeholder="Email ID" />
+              <div className="col-sm-4">
+                <Form.Group>
+                  <Form.Label>
+                    Email ID<span style={{ color: "red" }}>*</span>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Email ID"
+                    required="required"
+                  />
+                </Form.Group>
               </div>
-            </Form.Group>
-          </Col>
-          <Col sm={3}>
-            <Form.Group>
-              <div className="inputField">
-                <input
-                  type="text"
-                  required="required"
-                  placeholder="Designation"
-                />
+              <div className="col-sm-4">
+                <Form.Group>
+                  <Form.Label>
+                    Designation<span style={{ color: "red" }}>*</span>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Designation"
+                    required="required"
+                  />
+                </Form.Group>
               </div>
-            </Form.Group>
+            </Row>
           </Col>
-          <Col sm={3}>
+
+          <Col sm={3} style={{ marginTop: "2rem" }}>
             <Form.Group>
               <div>
                 <button
@@ -249,37 +302,47 @@ const PersonalInformation = () => {
         </Row>
         {isClicked ? (
           <Row style={{ marginBottom: "1rem" }}>
-            <Col sm={3}>
-              <Form.Group>
-                <div className="inputField">
-                  <input type="text" required="required" />
-                  <label>Emp Name/ID</label>
+            <Col sm={8}>
+              <Row style={{ marginBottom: "1rem" }}>
+                <div className="col-sm-4">
+                  <Form.Group>
+                    <Form.Label>
+                      Emp Name/ID<span style={{ color: "red" }}>*</span>
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Emp Name/ID"
+                      required="required"
+                    />
+                  </Form.Group>
                 </div>
-              </Form.Group>
-            </Col>
-            <Col sm={3}>
-              <Form.Group>
-                <div className="inputField">
-                  <input
-                    type="text"
-                    required="required"
-                    placeholder="Email ID"
-                  />
+                <div className="col-sm-4">
+                  <Form.Group>
+                    <Form.Label>
+                      Email ID<span style={{ color: "red" }}>*</span>
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Email ID"
+                      required="required"
+                    />
+                  </Form.Group>
                 </div>
-              </Form.Group>
-            </Col>
-            <Col sm={3}>
-              <Form.Group>
-                <div className="inputField">
-                  <input
-                    type="text"
-                    required="required"
-                    placeholder="Designation"
-                  />
+                <div className="col-sm-4">
+                  <Form.Group>
+                    <Form.Label>
+                      Designation<span style={{ color: "red" }}>*</span>
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Designation"
+                      required="required"
+                    />
+                  </Form.Group>
                 </div>
-              </Form.Group>
+              </Row>
             </Col>
-            <Col sm={3}>
+            <Col sm={3} style={{ marginTop: "2rem" }}>
               <Form.Group>
                 <div>
                   <button

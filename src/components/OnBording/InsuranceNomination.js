@@ -48,7 +48,7 @@ const InsuranceNomination = () => {
   return (
     <Fragment>
       {/* <Form onSubmit={submitHandler}>  */}
-      <Row style={{ marginBottom: "1rem" }} className="CheckBoxField">
+      <Row style={{ marginBottom: "2rem" }} className="CheckBoxField">
         <Col sm={2}>
           <div>
             <label>
@@ -112,7 +112,7 @@ const InsuranceNomination = () => {
           </div>
         </Col>
       </Row>
-      <Row>
+      <Row style={{ marginBottom: "2rem" }}>
         <Col sm={3}>
           <Form.Group>
             <div className="boxField input">

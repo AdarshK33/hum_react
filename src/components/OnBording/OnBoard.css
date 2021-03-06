@@ -1,13 +1,21 @@
 .OnBoardHeading {
   height: 50px;
-  background-color: #c2cfe4;
+  background-color: #006ebb;
   text-align: center;
-  color: #4466f2;
+  color: white;
   font-size: 25px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
-.insideIcon {
-  margin-left: 20px;
+.defaultLabelColour {
+  color: black;
+}
+.CurrentLabelColour {
+  color: #006ebb;
   /* font-size: 30px; */
+}
+.OkLabbelColour {
+  color: green;
 }
 .CheckStep {
   height: 45px;
@@ -15,25 +23,25 @@
   background-color: #aaa;
   border-radius: 50%;
   color: white;
-  margin-left: 20px;
+  margin-left: 23px;
   text-align: center;
-  font-size: 25px;
+  /* font-size: 25px; */
 }
 
 .ConnectLine {
-  border-left: 3px solid #aaa;
+  border-left: 3px dashed #aaa;
   height: 30px;
-  margin-left: 42px;
+  margin-left: 44px;
   margin-bottom: 5px;
   top: 0;
 }
 .CurrentCheckStep {
   height: 45px;
   width: 45px;
-  background-color: #4466f2;
+  background-color: #006ebb;
   border-radius: 50%;
   color: white;
-  margin-left: 20px;
+  margin-left: 23px;
   text-align: center;
   font-size: 25px;
 }
@@ -43,23 +51,23 @@
   background-color: green;
   border-radius: 50%;
   color: white;
-  margin-left: 20px;
+  margin-left: 23px;
   text-align: center;
   font-size: 25px;
 }
 .OkConnectLine {
   border-left: 3px solid green;
   height: 30px;
-  margin-left: 42px;
+  margin-left: 44px;
   margin-bottom: 5px;
   top: 0;
 }
 .stepperButtons {
   width: 120px;
   height: 30px;
-  background-color: #4466f2;
+  background-color: #006ebb;
   color: white;
-  border: 1px solid#4466f2;
+  border: 1px solid#006ebb;
   margin-left: 40px;
 }
 
@@ -95,8 +103,8 @@
   width: 80px;
   height: 30px;
   background-color: white;
-  color: #4466f2;
-  border: 1px solid#4466f2;
+  color: #006ebb;
+  border: 1px solid#006ebb;
 }
 .buttonField.button:disabled {
   border: 1px solid red;
@@ -106,6 +114,14 @@ input.largerCheckbox {
   width: 30px;
   height: 30px;
   margin-left: 25px;
+}
+
+.onBoard-date .react-datepicker-wrapper {
+  width: 80% !important;
+}
+.onBoard-date input.form-control.onBoard-view {
+  height: 34px;
+  width: 130%;
 }
 
 .inputField {
@@ -190,7 +206,7 @@ input[required]:valid + label {
 .select_box:after {
   content: "\f107";
   font: normal normal normal 35px/1 FontAwesome;
-  color: #4466f2;
+  color: #006ebb;
   right: 11px;
   top: 0px;
   height: 3px;
@@ -218,7 +234,7 @@ input[required]:valid + label {
 .large_select_box:after {
   content: "\f107";
   font: normal normal normal 35px/1 FontAwesome;
-  color: #4466f2;
+  color: #006ebb;
   right: 11px;
   top: 0px;
   height: 3px;
@@ -235,18 +251,18 @@ input[required]:valid + label {
 }
 
 .boxField input[type="checkbox"] {
-  --active: #4466f2;
+  --active: #006ebb;
   --active-inner: #fff;
-  --focus: 2px #4466f2;
+  --focus: 2px #006ebb;
   /* rgba(39, 94, 254, .3); */
   --border: #bbc1e1;
-  --border-hover: #4466f2;
+  --border-hover: #006ebb;
   --background: #fff;
   --disabled: #f6f8ff;
   --disabled-inner: #e1e6f9;
   -webkit-appearance: none;
   -moz-appearance: none;
-  height: 30px;
+  height: 25px;
   width: 35px;
   outline: none;
   display: inline-block;
@@ -293,7 +309,7 @@ input[required]:valid + label {
   box-shadow: 0 0 0 var(--focus);
 }
 .boxField input[type="checkbox"]:not(.switch) {
-  width: 30px;
+  width: 25px;
 }
 .boxField input[type="checkbox"]:not(.switch):after {
   opacity: var(--o, 0);
@@ -316,11 +332,11 @@ input[required]:valid + label {
 }
 .boxField input[type="checkbox"]:not(.switch):after {
   width: 5px;
-  height: 13px;
+  height: 10px;
   border: 2px solid var(--active-inner);
   border-top: 0;
   border-left: 0;
-  left: 11px;
+  left: 10px;
   top: 5px;
   transform: rotate(var(--r, 20deg));
 }

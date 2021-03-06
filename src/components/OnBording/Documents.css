@@ -1,95 +1,101 @@
-.buttonField1.button{
-    /* Width:80px;
+.buttonField1.button {
+  /* Width:80px;
     height: 30px;  */
-    background-color:#e6e6e6 ;
-    color:black;
-    border:  1px solid transparent ;
-    flex-grow: 1;
-    text-align: left;
-    font-size:18px;
-    height: 43px;
-    border-radius: 0px 0px 0px !important;
-    border-top-left-radius: 12px !important;
-    border-bottom-left-radius: 12px !important;
-    
+  background-color: #e6e6e6;
+  color: black;
+  border: 1px solid transparent;
+  flex-grow: 1;
+  text-align: left;
+  font-size: 18px;
+  height: 43px;
+  border-radius: 0px 0px 0px !important;
+  border-top-left-radius: 12px !important;
+  border-bottom-left-radius: 12px !important;
 }
 
-.buttonField2.button{
-    /* Width:80px;
+.buttonField2.button {
+  /* Width:80px;
     height: 30px;  */
-    background-color:#e6e6e6 ;
-    color:black;
-    border:  1px solid transparent ;
-    flex-grow: 1;
-    text-align: left;
-    font-size:18px;
-    height: 43px;
-    border-radius: 0px 0px 0px !important;
-    border-top-right-radius: 12px !important;
-    border-bottom-right-radius: 12px !important;
-    
+  background-color: #e6e6e6;
+  color: black;
+  border: 1px solid transparent;
+  flex-grow: 1;
+  text-align: left;
+  font-size: 18px;
+  height: 43px;
+  border-radius: 0px 0px 0px !important;
+  border-top-right-radius: 12px !important;
+  border-bottom-right-radius: 12px !important;
 }
 
-.buttonField1.button:disabled{
-    border: 1px solid#4466f2; 
-    color :#4466f2;
-    background-color:white;
-    font-style: bold;
-    /* rgb(214, 210, 210); */
-  }
-.buttonField2.button:disabled{
-    border: 1px solid#4466f2; 
-    color :#4466f2;
-    background-color:white;
-    font-style: bold;
-    /* rgb(214, 210, 210); */
-  }
+.buttonField1.button:disabled {
+  border: 1px solid#006ebb;
+  color: #006ebb;
+  background-color: white;
+  font-style: bold;
+  /* rgb(214, 210, 210); */
+}
+.buttonField2.button:disabled {
+  border: 1px solid#006ebb;
+  color: #006ebb;
+  background-color: white;
+  font-style: bold;
+  /* rgb(214, 210, 210); */
+}
 
-.parent{
-    align-items: center;
-    display: flex;
-    margin-left: 5px;
-    margin-right: 5px;
-  }
-.parentInput{
-    align-items: center;
-    display: flex;
-    margin-left: 15px;
-    margin-right: 15px;
-  }
+.parent {
+  align-items: center;
+  display: flex;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.parentInput {
+  align-items: center;
+  display: flex;
+  margin-left: 15px;
+  margin-right: 15px;
+}
 
-.fileInputField{
-    flex-grow: 1;
-    height: 33px;
-    border: 1px solid black;
-    border-top-left-radius: 12px;
-    border-bottom-left-radius: 12px;
-
+.fileInputField {
+  flex-grow: 1;
+  height: 33px;
+  border: 1px solid black;
+  border-top-left-radius: 12px;
+  border-bottom-left-radius: 12px;
 }
 .custom-file-upload {
-    display: flex;
-    justify-content: space-between;
-    border: 1px solid #ccc;
-    display: inline-block;
-    padding: 5px 30px;
-    cursor: pointer;
-    color:white;
-    background-color:#4466f2 ;
-    font-size:15px;
-    margin-top: 7px;
-    margin-right: 5px;
-    border-top-right-radius: 12px ;
-    border-bottom-right-radius: 12px ;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 5px 30px;
+  cursor: pointer;
+  color: white;
+  background-color: #006ebb;
+  font-size: 15px;
+  margin-top: 7px;
+  margin-right: 5px;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 12px;
 }
-.custom_file_Upload_button{
-    display:none;
-    background-color:red;
+.custom_file_Upload_button {
+  display: none;
+  background-color: red;
 }
-#custom_file_upload_icon{
-    margin-left: 30px;
-    font-size: 18px;
+#custom_file_upload_icon {
+  margin-left: 30px;
+  font-size: 18px;
 }
-.FileInput label{margin-left:20px;color:black;}
-.FileInput label::after{content:"*";color:red;}
+.FileInput label {
+  margin-left: 20px;
+  color: black;
+}
+.FileInput label::after {
+  content: "*";
+  color: red;
+}
 
-.FileInputWithOutStar label{margin-left:20px;color:black;}
+.FileInputWithOutStar label {
+  margin-left: 20px;
+  color: black;
+}

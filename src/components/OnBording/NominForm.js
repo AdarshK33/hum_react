@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "react-datepicker";
 
 const NomineeForm = (props) => {
   const [Valuestate, setValueState] = useState("");
@@ -15,33 +16,44 @@ const NomineeForm = (props) => {
       <Form>
         {cancelState ? (
           <div>
-            <Row style={{ marginBottom: "1rem" }}>
-              <Col sm={4}>
-                <Form.Group>
-                  <div className="inputFieldLarge">
-                    <input type="text" required="required" />
-                    <label>Nominee Name</label>
+            <Row style={{ marginBottom: "2rem" }}>
+              <Col sm={11}>
+                <Row>
+                  <div className="col-sm-4">
+                    <Form.Group>
+                      <Form.Label>
+                        Nominee Name<span style={{ color: "red" }}>*</span>
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Nominee Name"
+                        required="required"
+                      />
+                    </Form.Group>
                   </div>
-                </Form.Group>
-              </Col>
-              <Col sm={4}>
-                <Form.Group>
-                  <div className="large_select_box">
-                    <select>
-                      <option value="">Relationship</option>
-                    </select>
+                  <div className="col-sm-4">
+                    <Form.Group>
+                      <Form.Label>Relationship</Form.Label>
+                      <Form.Control as="select">
+                        <option value="">Relationship</option>
+                      </Form.Control>
+                    </Form.Group>
                   </div>
-                </Form.Group>
-              </Col>
-              <Col sm={3}>
-                <Form.Group>
-                  <div className="inputFieldLarge">
-                    <input type="text" required="required" />
-                    <label>Gender</label>
+                  <div className="col-sm-4">
+                    <Form.Group>
+                      <Form.Label>
+                        Gender<span style={{ color: "red" }}>*</span>
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Gender"
+                        required="required"
+                      />
+                    </Form.Group>
                   </div>
-                </Form.Group>
+                </Row>
               </Col>
-              <Col sm={1} style={{ marginLeft: "-4rem", marginTop: "-1rem" }}>
+              <Col sm={1} style={{ marginLeft: "-2rem" }}>
                 <Form.Group>
                   <div>
                     <button
@@ -59,31 +71,46 @@ const NomineeForm = (props) => {
               </Col>
             </Row>
             <Row style={{ marginBottom: "1rem" }}>
-              <Col sm={4}>
-                <Form.Group>
-                  <div className="inputFieldLarge">
-                    <input type="text" required="required" />
-                    <label>Datte Of Birth</label>
+              <Col sm={11}>
+                <Row>
+                  <div className="col-sm-4">
+                    <Form.Group>
+                      <Form.Label>
+                        Datte Of Birth<span style={{ color: "red" }}>*</span>
+                      </Form.Label>
+                      <div className="onBoard-date">
+                        <DatePicker
+                          className="form-control onBoard-view"
+                          dateFormat="MM/yyyy"
+                          showMonthYearPicker
+                          placeholderText="Date Of Birth"
+                        />
+                      </div>
+                    </Form.Group>
                   </div>
-                </Form.Group>
-              </Col>
-              <Col sm={4}>
-                <Form.Group>
-                  <div className="inputFieldLarge">
-                    <input type="text" required="required" />
-                    <label>Age</label>
+                  <div className="col-sm-4">
+                    <Form.Group>
+                      <Form.Label>
+                        Age<span style={{ color: "red" }}>*</span>
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Age"
+                        required="required"
+                      />
+                    </Form.Group>
                   </div>
-                </Form.Group>
-              </Col>
-              <Col sm={3}>
-                <Form.Group>
-                  <div className="large_select_box">
-                    <select>
-                      <option value="">Blood Group</option>
-                    </select>
+                  <div className="col-sm-4">
+                    <Form.Group>
+                      <Form.Label>Blood Group</Form.Label>
+                      <Form.Control as="select">
+                        <option value="">Blood Group</option>
+                      </Form.Control>
+                    </Form.Group>
                   </div>
-                </Form.Group>
+                </Row>
               </Col>
+              <Col sm={1}></Col>
             </Row>
           </div>
         ) : (
