@@ -5,15 +5,15 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { OfferContext } from "../../context/OfferState";
 
-const RemunerationInformation = (props) => {
+const EditRemunerationInformation = (props) => {
   const [fixedGross, setFixedGross] = useState("");
   const [monthlyBonus, setMonthlyBonus] = useState("");
-  const [fixedGrossError, setFixedGrossError] = useState(false);
-  const [monthlyBonusError, setMonthlyBonusError] = useState(false);
   const [editButton, setEditButton] = useState(false);
   const [disabled, setDisabled] = useState(false);
+  const [fixedGrossError, setFixedGrossError] = useState(false);
+  const [monthlyBonusError, setMonthlyBonusError] = useState(false);
 
-  const { remunerationSave, createCandidateResponse } = useContext(
+  const { remunerationUpdate, createCandidateResponse } = useContext(
     OfferContext
   );
 
@@ -37,7 +37,7 @@ const RemunerationInformation = (props) => {
         remunerationId: 0,
         stipend: 0,
       };
-      remunerationSave(data);
+      remunerationUpdate(data);
       setDisabled(true);
       setEditButton(true);
     }
@@ -117,4 +117,4 @@ const RemunerationInformation = (props) => {
   );
 };
 
-export default RemunerationInformation;
+export default EditRemunerationInformation;
