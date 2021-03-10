@@ -27,7 +27,7 @@ export const OfferProvider = (props) => {
     // Offer List api 
     const candidateView = (key, page) => {
         setLoader(true)
-        client.get('/candidate/view?key='+ key + '&page=' + page + '&size=' + 10)
+        client.get('/api/v1/candidate/view?key='+ key + '&page=' + page + '&size=' + 10)
         .then((response) => {
             state.candidateList = response.data.data.data
             state.data = response.data.data
@@ -44,7 +44,7 @@ export const OfferProvider = (props) => {
 
     //candidate create api
     const createCandidate = (createData) => {
-        return client.post('/candidate/create',createData)
+        return client.post('/api/v1/candidate/create',createData)
         .then((response) => {
             state.createCandidateResponse = response.data.data
             toast.info(response.data.message)
@@ -58,7 +58,7 @@ export const OfferProvider = (props) => {
 
     //take candidate id
     const viewCandidateId = (id) => {
-        client.get('/candidate/'+id)
+        client.get('/api/v1/candidate/'+id)
         .then((response) => {
             state.candidateData = response.data.data
             console.log("viewCandidateData response", state.candidateData)
@@ -71,7 +71,7 @@ export const OfferProvider = (props) => {
 
     //edit candidate api
     const editCandidate = (updateData) => {
-        return client.post('/candidate/update', updateData)
+        return client.post('/api/v1/candidate/update', updateData)
         .then((response) => {
             toast.info(response.data.message)
             return dispatch({type:'UPDATE_CANDIDATE', payload: state.createCandidateResponse})
@@ -83,7 +83,7 @@ export const OfferProvider = (props) => {
 
     //Work Information create api
     const createCandidateWork = (createData) => {
-        return client.post('/candidate/work-information/create',createData)
+        return client.post('/api/v1/candidate/work-information/create',createData)
         .then((response) => {
             toast.info(response.data.message)
             return dispatch({type: 'CREATE_CANDIDATE_WORK', payload: state.workInformationData})
@@ -95,7 +95,7 @@ export const OfferProvider = (props) => {
 
     //Work Information update api
     const updateCandidateWork = (updateData) => {
-        return client.post('/candidate/work-information/create',updateData)
+        return client.post('/api/v1/candidate/work-information/create',updateData)
         .then((response) => {
             toast.info(response.data.message)
             return dispatch({type: 'UPDATE_CANDIDATE_WORK', payload: state.workInformationData})
@@ -108,7 +108,7 @@ export const OfferProvider = (props) => {
 
     //Search by aadhar card/bank account
     const searchByAadhar = (number) => {
-        client.get('/candidate/search?number=' + number)
+        client.get('/api/v1/candidate/search?number=' + number)
         .then((response) => {
             
             if(response.data.data === null){
@@ -128,7 +128,7 @@ export const OfferProvider = (props) => {
 
     //Search by reference emp name1 or emp id
     const searchForEmp1 = (key) => {
-        client.get('/employee/search?key=' + key)
+        client.get('/api/v1/employee/search?key=' + key)
         .then((response) => {
             if(response.data.data === null){
             state.searchEmpData1 = response.data.data
@@ -149,7 +149,7 @@ export const OfferProvider = (props) => {
     }
     //Search by reference emp name2 or emp id
     const searchForEmp2 = (key) => {
-        client.get('/employee/search?key=' + key)
+        client.get('/api/v1/employee/search?key=' + key)
         .then((response) => {
             if(response.data.data === null){
             state.searchEmpData2 = response.data.data
@@ -171,7 +171,7 @@ export const OfferProvider = (props) => {
 
 // Department api for work information
 const departmentView = () => {
-    client.get('/department/view')
+    client.get('/api/v1/department/view')
     .then((response) => {
         state.departmentName = response.data.data
         console.log('DEPARTMENT response',state.departmentName)
@@ -184,7 +184,7 @@ const departmentView = () => {
 
 // Designation api for work information
 const designationView = () => {
-    client.get('/designation/view')
+    client.get('/api/v1/designation/view')
     .then((response) => {
         state.designationName = response.data.data
         console.log('designationName response',state.designationName)
@@ -196,7 +196,7 @@ const designationView = () => {
 }
 // location api for work information
 const locationView = (costCenter) => {
-    client.get('/location/view/'+costCenter)
+    client.get('/api/v1/location/view/'+costCenter)
     .then((response) => {
         state.locationName = response.data.data
         console.log('locationName response',state.locationName)

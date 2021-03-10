@@ -24,7 +24,7 @@ export const GroupProvider = ({ children }) => {
     const serviceGroupView = async () => {
         setLoader(true)
         try {
-            const result = await client.get('/group/view')
+            const result = await client.get('/api/v1/group/view')
             state.serviceGroupList = result.data.data
             console.log("service group response", state.serviceGroupList)
             setLoader(false)
@@ -41,7 +41,7 @@ export const GroupProvider = ({ children }) => {
     //Create the Service Role
     const createRole = async (createData) => {
         try {
-            const result = await client.post('/group/create', createData)
+            const result = await client.post('/api/v1/group/create', createData)
             toast.info(result.data.message)
             serviceGroupView()
             return dispatch({ type: CREATE_SERVICE_ROLE, payload: state.serviceGroupList })
@@ -54,7 +54,7 @@ export const GroupProvider = ({ children }) => {
     //Update the Service Role
     const updateRole = async (updateData) => {
         try {
-            const result = await client.post('/group/create', updateData)
+            const result = await client.post('/api/v1/group/create', updateData)
             toast.info(result.data.message)
             serviceGroupView()
             return dispatch({ type: UPDATE_SERVICE_ROLE, payload: state.serviceGroupList })
@@ -67,7 +67,7 @@ export const GroupProvider = ({ children }) => {
     //service group employee list
     const serviceEmp = async () => {
         try {
-            const result = await client.get('/employee/view/service_group')
+            const result = await client.get('/api/v1/employee/view/service_group')
             state.empList = result.data.data
             console.log("empList", state.empList)
             return dispatch({ type: SERVICE_GROUP_EMPLOYEES, payload: state.empList })
