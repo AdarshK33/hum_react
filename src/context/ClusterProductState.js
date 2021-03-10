@@ -22,7 +22,7 @@ export const ClusterProductProvider = ({ children }) => {
 
   const viewClusterList = (id) => {
 
-    client.get('/cluster/view/' + id).then((response) => {
+    client.get('/api/v1/cluster/view/' + id).then((response) => {
       // console.log("==========List of Clusters==============");
       // console.log(response.data.data);
       // console.log("==========List of Clusters==============");
@@ -37,7 +37,7 @@ export const ClusterProductProvider = ({ children }) => {
 
   const viewLeaderClusterList = () => {
     let leader = localStorage.getItem('flag');
-    client.get('/cluster/view/'+ '?leader='+leader).then((response) => {
+    client.get('/api/v1/cluster/view/'+ '?leader='+leader).then((response) => {
       // console.log("==========List of Clusters==============");
       // console.log(response.data.data);
       // console.log("==========List of Clusters==============");
@@ -55,7 +55,7 @@ export const ClusterProductProvider = ({ children }) => {
 
   function viewClusterTarget() {
     setLoader(true)
-    client.get('/cluster/product_target/view').then(function (response) {
+    client.get('/api/v1/cluster/product_target/view').then(function (response) {
       
       state.clusterProductList = response.data.data;
       setLoader(false)
@@ -71,7 +71,7 @@ export const ClusterProductProvider = ({ children }) => {
   function viewLeaderClusterTarget(id) {
     setLoader(true)
     let leader = localStorage.getItem('flag');
-    client.get('/cluster/product_target/view/' + id + '?leader='+leader).then(function (response) {
+    client.get('/api/v1/cluster/product_target/view/' + id + '?leader='+leader).then(function (response) {
       // console.log("============NAV==============");
       // console.log(id);
       // console.log(response.data.data);
@@ -88,7 +88,7 @@ export const ClusterProductProvider = ({ children }) => {
 
 
   function viewSingleClusterTarget(id) {
-    client.get('/cluster/product_target/' + id).then(function (response) {
+    client.get('/api/v1/cluster/product_target/' + id).then(function (response) {
 
       // console.log("========Single Cluster==========")
       //  console.log(response.data.data)
@@ -104,7 +104,7 @@ export const ClusterProductProvider = ({ children }) => {
 
 
   const addTarget = (values) => {
-    return client.post('/cluster/product_target/create', values)
+    return client.post('/api/v1/cluster/product_target/create', values)
       .then((response) => {
         toast.info(response.data.message);
         viewClusterTarget();
@@ -122,7 +122,7 @@ export const ClusterProductProvider = ({ children }) => {
   //Edit target
   const editTarget = (values) => {
 
-    return client.post('/cluster/product_target/update', values)
+    return client.post('/api/v1/cluster/product_target/update', values)
       .then((response) => {
         toast.info(response.data.message)
         viewClusterTarget();
