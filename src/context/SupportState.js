@@ -86,7 +86,7 @@ export const SupportProvider = ({ children }) => {
     const completeStatus = async () => {
 
         try {
-            const result = await client.get('ticket/completion/status')
+            const result = await client.get('/ticket/completion/status')
             state.completeStatusView = result.data.data
             console.log("somplete status", state.completeStatusView)
             return dispatch({ type: COMPLETE_STATUS, payload: state.completeStatusView })
@@ -100,7 +100,7 @@ export const SupportProvider = ({ children }) => {
     const ticketStatus = async () => {
 
         try {
-            const result = await client.get('ticket/status')
+            const result = await client.get('/ticket/status')
             state.ticketStatusView = result.data.data
             console.log("ticket status", state.ticketStatusView)
             return dispatch({ type: TICKET_STATUS, payload: state.ticketStatusView })
@@ -113,7 +113,7 @@ export const SupportProvider = ({ children }) => {
     //Update the tickets
     const updateTicket = async (updateData, ticketId) => {
         try {
-            const result = await client.post('ticket/update', updateData)
+            const result = await client.post('/ticket/update', updateData)
             state.ticketListing = result.data.data
             console.log("updated response", state.ticketListing)
             ticketView('all', 0)
@@ -141,7 +141,7 @@ export const SupportProvider = ({ children }) => {
     } */
     const downloadFile = (fileName) => {
         Axios({
-            url: `${process.env.REACT_APP_BASEURL}/ticket/download?name=${fileName}`,
+            url: `${process.env.REACT_APP_BASEURL}//ticket/download?name=${fileName}`,
                 method:'GET',
                 responseType:'blob',
                 headers: {

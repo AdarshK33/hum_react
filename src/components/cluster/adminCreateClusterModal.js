@@ -239,7 +239,7 @@ const AdminCreateClusterModal = (props) => {
                                         placeholder="Cost Center"
                                         //value={costCenter1}
                                         style={{ fontSize: "0.9rem" }}
-                                        options={costCenterList !== null ?
+                                        options={costCenterList !== null && costCenterList !== undefined ?
                                             costCenterList.map(e => ({ label: e.costCentreName, value: e.costCentreName })) : []}
                                         onChange={getCostCenterName}
                                         required isSearchable />
@@ -298,7 +298,7 @@ const AdminCreateClusterModal = (props) => {
                                         style={{ fontSize: "0.8rem" }}
                                         onChange={clusterLeaderSelect}>
                                         <option value="">Select Cluster Leader</option>
-                                        {callClusterLeadersList !== null
+                                        {callClusterLeadersList !== null && callClusterLeadersList !== null
                                             && callClusterLeadersList.map((e, i) => {
                                                 return (
 

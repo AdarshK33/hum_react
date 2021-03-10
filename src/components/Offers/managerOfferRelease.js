@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import Breadcrumb from "../common/breadcrumb";
 import {
@@ -14,6 +14,10 @@ import EmployeeForm from "./employeeForm";
 import WorkInformation from "./workInformation";
 
 const ManagerOfferRelease = () => {
+  const [isChecked, setIsChecked] = useState(false);
+  const checkedHandler = (e) => {
+    setIsChecked(true);
+  };
   return (
     <Fragment>
       <Container fluid>
@@ -21,6 +25,26 @@ const ManagerOfferRelease = () => {
           New Offer Initation
         </h5>
 
+        <Accordion preExpanded={["a"]}>
+          <AccordionItem uuid="a">
+            <AccordionItemHeading>
+              <AccordionItemButton>
+                <input
+                  type="checkbox"
+                  checked={isChecked}
+                  onChange={checkedHandler}
+                />
+                &nbsp; Step 1: Candidate Information
+              </AccordionItemButton>
+            </AccordionItemHeading>
+            <AccordionItemPanel>
+              <EmployeeForm
+                isChecked={isChecked}
+                checkedHandler={checkedHandler}
+              />
+            </AccordionItemPanel>
+          </AccordionItem>
+        </Accordion>
         <Accordion preExpanded={["a"]}>
           <AccordionItem uuid="a">
             <AccordionItemHeading>

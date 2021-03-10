@@ -1,7 +1,7 @@
 const PermissionReducer = (state, action) => {
     switch (action.type) {
         case 'SET_PERMISSION':
-            return { ...state, permission: action.payload };
+            return { ...state, permissionList: action.payload };
 
         case 'LOCATION_DETAILS_LIST':
             return { ...state, locationDetailsList: action.payload };

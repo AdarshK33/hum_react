@@ -53,20 +53,16 @@ import MasterMonthlyQuantity from "./components/MasterTables/MasterMonthlyQuanti
 import MasterDailyQty from "./components/MasterTables/MasterDailyQty";
 import MasterCostCenter from "./components/MasterTables/MasterCostCenter";
 import CreateTicket from "./components/support/createTicket";
+
+import OnBoardingStepper from "./components/OnBording/OnBoardingStepper";
+
 import TicketListingPage from "./components/support/ticketListingPage";
 import ViewTicket from "./components/support/viewTicket";
 import ViewGroup from "./components/group/ViewGroup";
 import ManagerOfferRelease from "./components/Offers/managerOfferRelease";
 import OfferReleaseList from "./components/Offers/OfferReleaseList";
-
-import PersonalInformation from "./components/OnBording/PersonalInformation";
-import Address from "./components/OnBording/Address";
-import EmergencyContact from "./components/OnBording/EmergencyContact";
-import BankDetails from "./components/OnBording/BankDetails";
-import InsuranceNomination from "./components/OnBording/InsuranceNomination";
-import PFDeclaration from "./components/OnBording/PFDeclaration";
-import Documents from "./components/OnBording/Documents";
-import OnBoardingStepper from "./components/OnBording/OnBoardingStepper";
+import EditOfferRelease from "./components/Offers/editOfferRelease";
+import OfferAccept from "./components/Offers/OfferAcceptance/OfferAccept";
 
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
@@ -80,46 +76,7 @@ const RoutePath = () => {
     <Switch>
       <Route path={`${process.env.PUBLIC_URL}/signin`} component={Signin} />
       <Route path={`${process.env.PUBLIC_URL}/login`} component={Login} />
-      <Route
-        //  {/*Rajasekhar */}
-        path={`${process.env.PUBLIC_URL}/onboarding`}
-        component={PersonalInformation}
-      />
-      <Route
-        //  {/*Rajasekhar */}
-        path={`${process.env.PUBLIC_URL}/address`}
-        component={Address}
-      />
-      <Route
-        //  {/*Rajasekhar */}
-        path={`${process.env.PUBLIC_URL}/emergency_contact`}
-        component={EmergencyContact}
-      />
-      <Route
-        //  {/*Rajasekhar */}
-        path={`${process.env.PUBLIC_URL}/bank_details`}
-        component={BankDetails}
-      />
-      <Route
-        //  {/*Rajasekhar */}
-        path={`${process.env.PUBLIC_URL}/nomine`}
-        component={InsuranceNomination}
-      />
-      <Route
-        //  {/*Rajasekhar */}
-        path={`${process.env.PUBLIC_URL}/pf_declaration`}
-        component={PFDeclaration}
-      />
-      <Route
-        //  {/*Rajasekhar */}
-        path={`${process.env.PUBLIC_URL}/documents`}
-        component={Documents}
-      />
-      {/* <Route
-        //  {/*Rajasekhar */}
-      path={`${process.env.PUBLIC_URL}/onboard`}
-      component={OnBoardingStepper}
-      /> */}
+
       <Fragment>
         <App>
           {/* dashboard menu */}
@@ -128,7 +85,6 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/`}
             component={Default}
           /> */}
-
           {/* <Route
             path={`${process.env.PUBLIC_URL}/profileEdit`}
             component={ProfileEdit}
@@ -138,18 +94,15 @@ const RoutePath = () => {
             component={Default}
           />
           {/* <Route exact path={`${process.env.PUBLIC_URL}/dashboard/default`} component={Default} /> */}
-
           {/* Sample page */}
           <Route
             path={`${process.env.PUBLIC_URL}/sample/samplepage`}
             component={Samplepage}
           />
-
           <Route
             path={`${process.env.PUBLIC_URL}/createticket`}
             component={CreateTicket}
           />
-
           <Route
             path={`${process.env.PUBLIC_URL}/ticketlistingpage`}
             component={TicketListingPage}
@@ -158,12 +111,10 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/viewticket`}
             component={ViewTicket}
           />
-
           <Route
             path={`${process.env.PUBLIC_URL}/ViewGroup`}
             component={ViewGroup}
           />
-
           <Route
             path={`${process.env.PUBLIC_URL}/manager-offer-release`}
             component={ManagerOfferRelease}
@@ -176,6 +127,14 @@ const RoutePath = () => {
             //  {/*Rajasekhar */}
             path={`${process.env.PUBLIC_URL}/onboard`}
             component={OnBoardingStepper}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/edit-offer-release`}
+            component={EditOfferRelease}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/offer-accept`}
+            component={OfferAccept}
           />
           {state.MenuPermissionsRoute.map((e) => {
             return (

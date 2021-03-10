@@ -50,6 +50,10 @@ const UserMenu = () => {
         history.push("/ticketlistingpage");
     }
 
+    const offerClick = ()=> {
+        history.push("/offer-accept");
+    }
+
     return (
         <Fragment>
             <li className="onhover-dropdown">
@@ -82,6 +86,7 @@ const UserMenu = () => {
                     {/* <li><a href="#javascript"><LogOut /> Log out</a></li> */}
                     {/* <li><a href={loginUrl}><LogIn />Log In</a></li> */}
                     {/* <li onClick={gotoProfilePage}><a href="#profile">Profile Edit</a></li> */}
+                    <li onClick={offerClick}>Offer Accept</li>
                     <li onClick={() => { userLogout() }}><a href="#javascript"><LogOut /> Log out</a></li>
                 </ul>
             </li>

@@ -268,6 +268,7 @@ const AdminSalaryModule = () => {
               {currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 ?
                 <ExcelFile filename='Salary List' element={<Button className="btn btn-light mr-2"> Export excel</Button>}>
                   <ExcelSheet data={salaryList} name="Salary List" style={{ width: '500px' }}>
+                  <ExcelColumn label="Cost Center" value="costCenter" />
                     <ExcelColumn label="Employee Id" value="employeeId" />
                     <ExcelColumn label="Employee Name"
                       value={(col) => col.firstName !== null && col.firstName + ' ' + col.lastName} />
@@ -337,6 +338,7 @@ const AdminSalaryModule = () => {
                     <tr>
                       <th>Select</th>
                       <th>S. No</th>
+                      <th scope="col">Cost Center</th>
                       <th scope="col">Employee Id</th>
                       <th scope="col">Employee Name</th>
                       <th scope="col">Number Of Hours</th>
@@ -387,7 +389,7 @@ const AdminSalaryModule = () => {
                                   )}{" "}
                               </td>
                               <td>{i + 1 + indexOfFirstRecord}</td>
-
+                              <td>{item.costCenter}</td>
                               <td>{item.employeeId}</td>
                               <td>
                                 {item.firstName} {item.lastName}
