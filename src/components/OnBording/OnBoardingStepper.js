@@ -81,7 +81,7 @@ const OnBoardingStepper = () => {
                         </div>
                         <label
                           className={stepArray[0].label}
-                          style={{ marginLeft: "15px", textAlign: "center" }}
+                          style={{ marginLeft: "10px", textAlign: "center" }}
                         >
                           {" "}
                           Personal Information
@@ -99,7 +99,7 @@ const OnBoardingStepper = () => {
                         </div>
                         <label
                           className={stepArray[1].label}
-                          style={{ marginLeft: "15px", textAlign: "center" }}
+                          style={{ marginLeft: "21px", textAlign: "center" }}
                         >
                           {" "}
                           Address

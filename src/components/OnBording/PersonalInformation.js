@@ -154,12 +154,10 @@ const PersonalInformation = () => {
           </Col>
           <Col sm={4}>
             <Row style={{ marginBottom: "1rem" }}>
-              <Col sm={3} style={{ marginTop: "2rem" }}>
+              <Col sm={3} style={{ marginTop: "1.8rem" }}>
                 <Form.Group>
                   <div className="inputField">
-                    <label>
-                      <b>Gender</b>
-                    </label>
+                    <label>Gender</label>
                   </div>
                 </Form.Group>
               </Col>
@@ -193,10 +191,7 @@ const PersonalInformation = () => {
                 <Form.Group>
                   <div className="inputField">
                     <label>
-                      <b>
-                        {" "}
-                        Marital<br></br>Status
-                      </b>
+                      Marital<br></br>Status
                     </label>
                   </div>
                 </Form.Group>
@@ -234,11 +229,9 @@ const PersonalInformation = () => {
         <Row style={{ marginBottom: "1rem" }}>
           <Col sm={5}>
             <div>
+              {/* style={{ backgroundColor: "#006ebb" }} */}
               <label>
-                <b>State References</b>
-              </label>
-              <br></br>
-              <label>
+                <b>State References:</b>
                 <b>(Max: Only 2)</b>
               </label>
             </div>

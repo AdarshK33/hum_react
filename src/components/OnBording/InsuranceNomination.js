@@ -36,8 +36,8 @@ const InsuranceNomination = () => {
       setNomineeCount(NomineeCount + 1);
     }
     // setNomineeCount(NomineeCount + 1);
-    NomineeArray[NomineeCount] = 1;
-    console.log(NomineeArray);
+    // NomineeArray[NomineeCount] = 1;
+    // console.log(NomineeArray);
     console.log(NomineeCount);
   };
 

@@ -9,13 +9,15 @@
 }
 .defaultLabelColour {
   color: black;
+  font-size: 0.8rem;
 }
 .CurrentLabelColour {
   color: #006ebb;
-  /* font-size: 30px; */
+  font-size: 0.8rem;
 }
 .OkLabbelColour {
   color: green;
+  font-size: 0.8rem;
 }
 .CheckStep {
   height: 45px;
@@ -318,7 +320,7 @@ input[required]:valid + label {
   --o: 1;
 }
 .boxField input[type="checkbox"] + label {
-  font-size: 14px;
+  font-size: 0.8rem;
   line-height: 21px;
   display: inline-block;
   vertical-align: top;
