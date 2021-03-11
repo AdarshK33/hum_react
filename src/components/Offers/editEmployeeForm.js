@@ -24,6 +24,13 @@ const EditEmployeeForm = () => {
 
     const {   candidateData, searchForEmp1, editCandidate, searchForEmp2 } = useContext(OfferContext)
 
+var candidateRefData = candidateData !== null && candidateData !== undefined && candidateData.candidateInformation
+var data1 = candidateRefData !== undefined && candidateRefData.candidateReferences !== null && candidateRefData.candidateReferences !== undefined &&
+         candidateRefData.candidateReferences[0]
+var data2 = candidateRefData !== undefined && candidateRefData.candidateReferences !== null && candidateRefData.candidateReferences !== undefined &&
+           candidateRefData.candidateReferences[1]
+console.log("data1", data1)
+console.log("data2", data2)
 
     useEffect(() => {
         let candidateRefData = candidateData !== null && candidateData !== undefined && candidateData.candidateInformation
@@ -40,14 +47,14 @@ const EditEmployeeForm = () => {
     
          const data1 = candidateRefData.candidateReferences !== null && candidateRefData.candidateReferences !== undefined &&
          candidateRefData.candidateReferences[0]
-                        setEmpName1(data1.employeeName)
-                        setRefEmail1(data1.email)
-               setDesignation1(data1.designation)
+                        setEmpName1(data1 !== null && data1 !== undefined && data1.employeeName !== undefined  && data1.employeeName)
+                        setRefEmail1(data1 !== null && data1 !== undefined && data1.email !== undefined &&  data1.email)
+               setDesignation1(data1 !== null && data1 !== undefined && data1.designation !== undefined && data1.designation)
            const data2 = candidateRefData.candidateReferences !== null && candidateRefData.candidateReferences !== undefined &&
            candidateRefData.candidateReferences[1]
-                        setEmpName2(data2.employeeName)
-                        setRefEmail2(data2.email)
-               setDesignation2(data2.designation)
+                        setEmpName2(data2 !== null && data2 !== undefined && data2.employeeName !== undefined && data2.employeeName)
+                        setRefEmail2(data2 !== null && data2 !== undefined && data2.email !== undefined && data2.email)
+               setDesignation2(data2 !== null && data2 !== undefined && data2.designation !== undefined && data2.designation)
                
         }
       
@@ -183,6 +190,7 @@ const emailChangeHandler = (e) => {
                 </Row>
                 {yesChecked === true ?
                     <Fragment>
+                        {data1 !== null && data1 !== undefined ? 
                         <Row>
                             <Col sm={4}>
                                 <Form.Group>
@@ -211,7 +219,8 @@ const emailChangeHandler = (e) => {
                                 </Form.Group>
                             </Col>
                         </Row>
-                    
+                        : '' }
+                    {data2 !== null && data2 !== undefined ?
                     <Row>
                         <Col sm={4}>
                             <Form.Group>
@@ -238,7 +247,7 @@ const emailChangeHandler = (e) => {
                                 value={empName2 === '' ? '': desgination2} readOnly />
                             </Form.Group>
                         </Col>
-                    </Row>
+                    </Row> : ''}
                     
                     </Fragment>
                     :''}
