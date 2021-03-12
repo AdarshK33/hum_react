@@ -28,12 +28,28 @@ const EditEmployeeForm = () => {
     searchForEmp2,
   } = useContext(OfferContext);
 
+  var candidateRefData =
+    candidateData !== null &&
+    candidateData !== undefined &&
+    candidateData.candidateInformation;
+  var data1 =
+    candidateRefData !== undefined &&
+    candidateRefData.candidateReferences !== null &&
+    candidateRefData.candidateReferences !== undefined &&
+    candidateRefData.candidateReferences[0];
+  var data2 =
+    candidateRefData !== undefined &&
+    candidateRefData.candidateReferences !== null &&
+    candidateRefData.candidateReferences !== undefined &&
+    candidateRefData.candidateReferences[1];
+  console.log("data1", data1);
+  console.log("data2", data2);
+
   useEffect(() => {
     let candidateRefData =
       candidateData !== null &&
       candidateData !== undefined &&
       candidateData.candidateInformation;
-
     console.log("candidateData outside", candidateRefData);
     if (candidateRefData !== null && candidateRefData !== undefined) {
       console.log("candidateData", candidateRefData);
@@ -57,16 +73,46 @@ const EditEmployeeForm = () => {
         candidateRefData.candidateReferences !== null &&
         candidateRefData.candidateReferences !== undefined &&
         candidateRefData.candidateReferences[0];
-      setEmpName1(data1.employeeName);
-      setRefEmail1(data1.email);
-      setDesignation1(data1.designation);
+      setEmpName1(
+        data1 !== null &&
+          data1 !== undefined &&
+          data1.employeeName !== undefined &&
+          data1.employeeName
+      );
+      setRefEmail1(
+        data1 !== null &&
+          data1 !== undefined &&
+          data1.email !== undefined &&
+          data1.email
+      );
+      setDesignation1(
+        data1 !== null &&
+          data1 !== undefined &&
+          data1.designation !== undefined &&
+          data1.designation
+      );
       const data2 =
         candidateRefData.candidateReferences !== null &&
         candidateRefData.candidateReferences !== undefined &&
         candidateRefData.candidateReferences[1];
-      setEmpName2(data2.employeeName);
-      setRefEmail2(data2.email);
-      setDesignation2(data2.designation);
+      setEmpName2(
+        data2 !== null &&
+          data2 !== undefined &&
+          data2.employeeName !== undefined &&
+          data2.employeeName
+      );
+      setRefEmail2(
+        data2 !== null &&
+          data2 !== undefined &&
+          data2.email !== undefined &&
+          data2.email
+      );
+      setDesignation2(
+        data2 !== null &&
+          data2 !== undefined &&
+          data2.designation !== undefined &&
+          data2.designation
+      );
     }
   }, [candidateData]);
 
@@ -220,95 +266,102 @@ const EditEmployeeForm = () => {
         </Row>
         {yesChecked === true ? (
           <Fragment>
-            <Row>
-              <Col sm={4}>
-                <Form.Group>
-                  <Form.Label>Emp Name/Emp ID</Form.Label>
-                  <div className="faq-form">
-                    <input
-                      className="form-control searchButton"
+            {data1 !== null && data1 !== undefined ? (
+              <Row>
+                <Col sm={4}>
+                  <Form.Group>
+                    <Form.Label>Emp Name/Emp ID</Form.Label>
+                    <div className="faq-form">
+                      <input
+                        className="form-control searchButton"
+                        type="text"
+                        disabled={disabled}
+                        value={empName1}
+                        placeholder="Search by Emp Name/Emp Id"
+                        onChange={(e) => empName1Handler(e)}
+                      />
+                      <Search
+                        className="search-icon"
+                        style={{ color: "#313131" }}
+                        onClick={empName1Search}
+                      />
+                    </div>
+                  </Form.Group>
+                </Col>
+                <Col sm={4}>
+                  <Form.Group>
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control
+                      className="form-input"
                       type="text"
-                      disabled={disabled}
-                      value={empName1}
-                      placeholder="Search by Emp Name/Emp Id"
-                      onChange={(e) => empName1Handler(e)}
+                      value={refEmail1}
+                      readOnly
                     />
-                    <Search
-                      className="search-icon"
-                      style={{ color: "#313131" }}
-                      onClick={empName1Search}
-                    />
-                  </div>
-                </Form.Group>
-              </Col>
-              <Col sm={4}>
-                <Form.Group>
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control
-                    className="form-input"
-                    type="text"
-                    value={refEmail1}
-                    readOnly
-                  />
-                </Form.Group>
-              </Col>
-              <Col sm={3}>
-                <Form.Group>
-                  <Form.Label>Designation</Form.Label>
-                  <Form.Control
-                    className="form-input"
-                    type="text"
-                    value={desgination1}
-                    readOnly
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col sm={4}>
-                <Form.Group>
-                  <Form.Label>Emp Name/Emp ID</Form.Label>
-                  <div className="faq-form">
-                    <input
-                      className="form-control searchButton"
+                  </Form.Group>
+                </Col>
+                <Col sm={3}>
+                  <Form.Group>
+                    <Form.Label>Designation</Form.Label>
+                    <Form.Control
+                      className="form-input"
                       type="text"
-                      disabled={disabled}
-                      value={empName2}
-                      placeholder="Search by Emp Name/Emp Id"
-                      onChange={(e) => empName2Handler(e)}
+                      value={desgination1}
+                      readOnly
                     />
-                    <Search
-                      className="search-icon"
-                      style={{ color: "#313131" }}
-                      onClick={empName2Search}
+                  </Form.Group>
+                </Col>
+              </Row>
+            ) : (
+              ""
+            )}
+            {data2 !== null && data2 !== undefined ? (
+              <Row>
+                <Col sm={4}>
+                  <Form.Group>
+                    <Form.Label>Emp Name/Emp ID</Form.Label>
+                    <div className="faq-form">
+                      <input
+                        className="form-control searchButton"
+                        type="text"
+                        disabled={disabled}
+                        value={empName2}
+                        placeholder="Search by Emp Name/Emp Id"
+                        onChange={(e) => empName2Handler(e)}
+                      />
+                      <Search
+                        className="search-icon"
+                        style={{ color: "#313131" }}
+                        onClick={empName2Search}
+                      />
+                    </div>
+                  </Form.Group>
+                </Col>
+                <Col sm={4}>
+                  <Form.Group>
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control
+                      className="form-input"
+                      type="text"
+                      readOnly
+                      value={empName2 === "" ? "" : refEmail2}
                     />
-                  </div>
-                </Form.Group>
-              </Col>
-              <Col sm={4}>
-                <Form.Group>
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control
-                    className="form-input"
-                    type="text"
-                    readOnly
-                    value={empName2 === "" ? "" : refEmail2}
-                  />
-                </Form.Group>
-              </Col>
-              <Col sm={3}>
-                <Form.Group>
-                  <Form.Label>Designation</Form.Label>
-                  <Form.Control
-                    className="form-input"
-                    type="text"
-                    value={empName2 === "" ? "" : desgination2}
-                    readOnly
-                  />
-                </Form.Group>
-              </Col>
-            </Row>
+                  </Form.Group>
+                </Col>
+                <Col sm={3}>
+                  <Form.Group>
+                    <Form.Label>Designation</Form.Label>
+                    <Form.Control
+                      className="form-input"
+                      type="text"
+                      value={empName2 === "" ? "" : desgination2}
+                      readOnly
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
+            ) : (
+              ""
+            )}
           </Fragment>
         ) : (
           ""
