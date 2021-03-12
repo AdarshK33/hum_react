@@ -33,6 +33,7 @@ const EditEmployeeForm = () => {
       candidateData !== null &&
       candidateData !== undefined &&
       candidateData.candidateInformation;
+
     console.log("candidateData outside", candidateRefData);
     if (candidateRefData !== null && candidateRefData !== undefined) {
       console.log("candidateData", candidateRefData);

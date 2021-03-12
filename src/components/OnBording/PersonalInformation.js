@@ -5,12 +5,62 @@ import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import "./OnBoard.css";
 
-const submitHandler = (e) => {
-  e.preventDefault();
-};
-
 const PersonalInformation = () => {
   const [isClicked, setIsClicked] = useState(false);
+  const [disabled, setDisableState] = useState(false);
+  const [state, setState] = useState({
+    aadhaarName: "",
+  });
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+
+    const personalInformation = {
+      // adharDoc: null,
+      adharName: state.aadhaarName,
+      // adharNumber: ,
+      // bloodGroup: null,
+      // candidateId: 0,
+      // candidateReferences: [
+      //   {
+      //     designation: desgination1 !== null ? desgination1 : null,
+      //     email: refEmail1 !== null ? refEmail1 : null,
+      //     employeeName: empName1 !== null ? empName1 : null,
+      //   },
+      //   {
+      //     designation: desgination2 !== null ? desgination2 : null,
+      //     email: refEmail2 !== null ? refEmail2 : null,
+      //     employeeName: empName2 !== null ? empName2 : null,
+      //   },
+      // ],
+      // createdDate: null,
+      // dateOfBirth: null,
+      // disability: null,
+      // disabilityDoc: null,
+      // fatherName: null,
+      // firstName: state.firstName,
+      // gender: null,
+      // lastName: state.lastName,
+      // lgbt: null,
+      // maritalStatus: null,
+      // nationality: null,
+      // panDoc: null,
+      // panNumber: null,
+      // personalEmail: state.email,
+      // photo: null,
+      // refered: true,
+      // status: 1,
+      // verificationStatus: 0,
+    };
+    console.log(personalInformation);
+  };
+  const changeHandler = (e) => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
+    console.log(state);
+  };
 
   const AddExtrReferenceClick = () => {
     setIsClicked(true);
@@ -31,8 +81,18 @@ const PersonalInformation = () => {
                   </Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Name as per Aadhaar"
-                    required="required"
+                    name="aadhaarName"
+                    value={state.aadhaarName}
+                    onChange={changeHandler}
+                    required
+                    placeholder="First Name"
+                    disabled={disabled}
+                    // type="text"
+                    // placeholder="Name as per Aadhaar"
+                    // value={state.firstName}
+                    // onChange={changeHandler}
+                    // required="required"
+                    // disabled={disabled}
                   />
                 </Form.Group>
               </div>

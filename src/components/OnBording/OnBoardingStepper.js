@@ -10,8 +10,16 @@ import BankDetails from "./BankDetails";
 import InsuranceNomination from "./InsuranceNomination";
 import PFDeclaration from "./PFDeclaration";
 import Documents from "./Documents";
+import { OnBoardContext } from "../../context/OnBoardState";
 
 const OnBoardingStepper = () => {
+  const { name, updateName } = useContext(OnBoardContext);
+
+  useEffect(() => {
+    updateName();
+  }, []);
+
+  console.log(name);
   const checkOk = "OkCheckStep";
   const currStep = "CurrentCheckStep";
   const defaultStep = "CheckStep";
@@ -65,10 +73,10 @@ const OnBoardingStepper = () => {
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
-            <div className="card">
+            <div className="card" style={{ borderRadius: "1rem" }}>
               <div>
                 <div className="OnBoardHeading">
-                  <b>ONBOARDING</b>
+                  <b>ONBOARDING </b>
                 </div>
                 <div>
                   <Row style={{ marginTop: "1rem" }}>
@@ -210,7 +218,11 @@ const OnBoardingStepper = () => {
                         <button className="stepperButtons" onClick={PrevStep}>
                           Back
                         </button>
-                        <button className="stepperButtons" onClick={NextStep}>
+                        <button
+                          className="stepperButtons"
+                          type="submit"
+                          onClick={NextStep}
+                        >
                           Save & Next
                         </button>
                       </div>
