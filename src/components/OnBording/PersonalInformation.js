@@ -8,8 +8,22 @@ import "./OnBoard.css";
 const PersonalInformation = () => {
   const [isClicked, setIsClicked] = useState(false);
   const [disabled, setDisableState] = useState(false);
+  const [DOB, setDOB] = useState();
   const [state, setState] = useState({
     aadhaarName: "",
+    fatherName: "",
+    aadhaarNumber: "",
+    panNumber: "",
+    bloodGroup: "",
+    nationality: "",
+    disability: "",
+    lgbt: "",
+    emp1Name: "",
+    emp1Eamil: "",
+    emp1Designation: "",
+    emp2Name: "",
+    emp2Eamil: "",
+    emp2Designation: "",
   });
 
   const submitHandler = (e) => {
@@ -18,21 +32,27 @@ const PersonalInformation = () => {
     const personalInformation = {
       // adharDoc: null,
       adharName: state.aadhaarName,
+      fatherName: state.fatherName,
+      aadhaarNumber: state.aadhaarNumber,
+      panNumber: state.panNumber,
+      dateOfBirth: DOB,
+      bloodGroup: state.bloodGroup,
+      candidateReferences: [
+        {
+          designation: emp1Designation !== null ? emp1Designation : null,
+          email: emp1Eamil !== null ? emp1Eamil : null,
+          employeeName: empName1 !== null ? empName1 : null,
+        },
+        {
+          designation: emp2Designation !== null ? emp2Designation : null,
+          email: emp1Eamil !== null ? emp1Eamil : null,
+          employeeName: empName2 !== null ? empName2 : null,
+        },
+      ],
       // adharNumber: ,
       // bloodGroup: null,
       // candidateId: 0,
-      // candidateReferences: [
-      //   {
-      //     designation: desgination1 !== null ? desgination1 : null,
-      //     email: refEmail1 !== null ? refEmail1 : null,
-      //     employeeName: empName1 !== null ? empName1 : null,
-      //   },
-      //   {
-      //     designation: desgination2 !== null ? desgination2 : null,
-      //     email: refEmail2 !== null ? refEmail2 : null,
-      //     employeeName: empName2 !== null ? empName2 : null,
-      //   },
-      // ],
+
       // createdDate: null,
       // dateOfBirth: null,
       // disability: null,
@@ -52,6 +72,7 @@ const PersonalInformation = () => {
       // status: 1,
       // verificationStatus: 0,
     };
+    console.log("onsubmit");
     console.log(personalInformation);
   };
   const changeHandler = (e) => {
@@ -60,6 +81,10 @@ const PersonalInformation = () => {
       [e.target.name]: e.target.value,
     });
     console.log(state);
+  };
+  const dateOfBirthHandler = (date) => {
+    setDOB(date);
+    console.log(DOB);
   };
 
   const AddExtrReferenceClick = () => {
@@ -87,12 +112,6 @@ const PersonalInformation = () => {
                     required
                     placeholder="First Name"
                     disabled={disabled}
-                    // type="text"
-                    // placeholder="Name as per Aadhaar"
-                    // value={state.firstName}
-                    // onChange={changeHandler}
-                    // required="required"
-                    // disabled={disabled}
                   />
                 </Form.Group>
               </div>
@@ -103,8 +122,12 @@ const PersonalInformation = () => {
                   </Form.Label>
                   <Form.Control
                     type="text"
+                    name="fatherName"
+                    value={state.fatherName}
+                    onChange={changeHandler}
+                    required
                     placeholder="Father's Name"
-                    required="required"
+                    disabled={disabled}
                   />
                 </Form.Group>
               </div>
@@ -116,9 +139,12 @@ const PersonalInformation = () => {
                   <div className="onBoard-date">
                     <DatePicker
                       className="form-control onBoard-view"
-                      dateFormat="MM/yyyy"
-                      showMonthYearPicker
+                      selected={DOB}
+                      required
+                      onChange={(e) => dateOfBirthHandler(e)}
+                      dateFormat="yyyy-MM-dd"
                       placeholderText="Date Of Birth"
+                      disabled={disabled}
                     />
                   </div>
                 </Form.Group>
@@ -126,30 +152,21 @@ const PersonalInformation = () => {
             </Row>
 
             <Row style={{ marginBottom: "2rem" }}>
-              {/* <Col sm={4}>
-                <Form.Group>
-                  <div className="select_box">
-                    <select>
-                      <option>Blood Group</option>
-                      <option value="1">O+</option>
-                      <option value="2">O-</option>
-                      <option value="3">A+</option>
-                      <option value="4">A-</option>
-                      <option value="5">B+</option>
-                      <option value="6">B+</option>
-                      <option value="7">AB+</option>
-                      <option value="8">AB-</option>
-                    </select>
-                  </div>
-                </Form.Group>
-              </Col> */}
               <div className="col-sm-4">
                 <Form.Group>
                   <Form.Label>
                     Blood Group<span style={{ color: "red" }}>*</span>
                   </Form.Label>
-                  <Form.Control as="select">
+                  <Form.Control
+                    as="select"
+                    name="bloodGroup"
+                    value={state.bloodGroup}
+                    onChange={changeHandler}
+                    required
+                    disabled={disabled}
+                  >
                     <option value="">Select Blood Group</option>
+                    <option>one</option>
                   </Form.Control>
                 </Form.Group>
               </div>
@@ -160,8 +177,12 @@ const PersonalInformation = () => {
                   </Form.Label>
                   <Form.Control
                     type="text"
+                    name="aadhaarNumber"
+                    value={state.aadhaarNumber}
+                    onChange={changeHandler}
+                    required
                     placeholder="Aadhaar Number"
-                    required="required"
+                    disabled={disabled}
                   />
                 </Form.Group>
               </div>
@@ -172,8 +193,12 @@ const PersonalInformation = () => {
                   </Form.Label>
                   <Form.Control
                     type="text"
+                    name="panNumber"
+                    value={state.panNumber}
+                    onChange={changeHandler}
+                    required
                     placeholder="Pan Number"
-                    required="required"
+                    disabled={disabled}
                   />
                 </Form.Group>
               </div>
@@ -184,7 +209,14 @@ const PersonalInformation = () => {
                   <Form.Label>
                     Natonality<span style={{ color: "red" }}>*</span>
                   </Form.Label>
-                  <Form.Control as="select">
+                  <Form.Control
+                    as="select"
+                    name="nationality"
+                    value={state.nationality}
+                    onChange={changeHandler}
+                    required
+                    disabled={disabled}
+                  >
                     <option value="">Natonality</option>
                   </Form.Control>
                 </Form.Group>
@@ -194,8 +226,17 @@ const PersonalInformation = () => {
                   <Form.Label>
                     Disability<span style={{ color: "red" }}>*</span>
                   </Form.Label>
-                  <Form.Control as="select">
+                  <Form.Control
+                    as="select"
+                    name="disability"
+                    value={state.disablity}
+                    onChange={changeHandler}
+                    required
+                    disabled={disabled}
+                  >
                     <option value="">Disability</option>
+                    <option> Yes</option>
+                    <option> No</option>
                   </Form.Control>
                 </Form.Group>
               </div>
@@ -205,8 +246,17 @@ const PersonalInformation = () => {
                   <Form.Label>
                     LGBT<span style={{ color: "red" }}>*</span>
                   </Form.Label>
-                  <Form.Control as="select">
+                  <Form.Control
+                    as="select"
+                    name="lgbt"
+                    value={state.lgbt}
+                    onChange={changeHandler}
+                    required
+                    disabled={disabled}
+                  >
                     <option value="">LGBT</option>
+                    <option> Yes</option>
+                    <option> No</option>
                   </Form.Control>
                 </Form.Group>
               </div>
@@ -307,8 +357,12 @@ const PersonalInformation = () => {
                   </Form.Label>
                   <Form.Control
                     type="text"
+                    name="emp1Name"
+                    value={state.emp1Name}
+                    onChange={changeHandler}
+                    required
                     placeholder="Emp Name/ID"
-                    required="required"
+                    disabled={disabled}
                   />
                 </Form.Group>
               </div>
@@ -319,8 +373,12 @@ const PersonalInformation = () => {
                   </Form.Label>
                   <Form.Control
                     type="text"
+                    name="emp1Email"
+                    value={state.emp1Email}
+                    onChange={changeHandler}
+                    required
                     placeholder="Email ID"
-                    required="required"
+                    disabled={disabled}
                   />
                 </Form.Group>
               </div>
@@ -331,8 +389,12 @@ const PersonalInformation = () => {
                   </Form.Label>
                   <Form.Control
                     type="text"
+                    name="emp1Designation"
+                    value={state.emp1Designation}
+                    onChange={changeHandler}
+                    required
                     placeholder="Designation"
-                    required="required"
+                    disabled={disabled}
                   />
                 </Form.Group>
               </div>
@@ -364,8 +426,12 @@ const PersonalInformation = () => {
                     </Form.Label>
                     <Form.Control
                       type="text"
+                      name="emp2Name"
+                      value={state.emp2Name}
+                      onChange={changeHandler}
+                      required
                       placeholder="Emp Name/ID"
-                      required="required"
+                      disabled={disabled}
                     />
                   </Form.Group>
                 </div>
@@ -376,8 +442,12 @@ const PersonalInformation = () => {
                     </Form.Label>
                     <Form.Control
                       type="text"
+                      name="emp2Email"
+                      value={state.emp2Email}
+                      onChange={changeHandler}
+                      required
                       placeholder="Email ID"
-                      required="required"
+                      disabled={disabled}
                     />
                   </Form.Group>
                 </div>
@@ -388,8 +458,12 @@ const PersonalInformation = () => {
                     </Form.Label>
                     <Form.Control
                       type="text"
+                      name="emp2Designation"
+                      value={state.emp2Designation}
+                      onChange={changeHandler}
+                      required
                       placeholder="Designation"
-                      required="required"
+                      disabled={disabled}
                     />
                   </Form.Group>
                 </div>
@@ -412,6 +486,12 @@ const PersonalInformation = () => {
         ) : (
           <div></div>
         )}
+        <div style={{ marginTop: "2rem", textAlign: "center" }}>
+          <button className="stepperButtons">Back</button>
+          <button className="stepperButtons" type="submit">
+            Save & Next
+          </button>
+        </div>
       </Form>
     </Fragment>
   );
