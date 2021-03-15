@@ -62,8 +62,8 @@ const RemunerationInformation = (props) => {
     console.log("view cadidate id ", createCandidateResponse.candidateId);
     setDisabled(false);
     console.log("remunerationViewData", remunerationViewData);
-    setFixedGross(remunerationViewData.fixedGross);
-    setMonthlyBonus(remunerationViewData.monthlyBonus);
+    // setFixedGross(remunerationViewData.fixedGross);
+    // setMonthlyBonus(remunerationViewData.monthlyBonus);
   };
 
   return (
