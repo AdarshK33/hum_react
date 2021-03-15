@@ -17,6 +17,8 @@ const initial_state = {
   candidateData: {},
   workInformationData: {},
   remunerationData: {},
+  remunerationViewData: {},
+  offerLetterData: {},
 };
 
 export const OfferContext = createContext();
@@ -280,6 +282,40 @@ export const OfferProvider = (props) => {
       });
   };
 
+  const remunerationView = (id) => {
+    console.log("view data", id);
+    return client
+      .get("/api/v1/candidate/remuneration/view/" + id)
+      .then((response) => {
+        state.remunerationViewData = response.data.data;
+        console.log("state.message", state.remunerationViewData);
+        return dispatch({
+          type: "REMUNERATION_VIEW_DATA",
+          payload: state.remunerationViewData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const generateOfferLetter = (id) => {
+    console.log("state offer id", id);
+    return client
+      .get("/api/v1/candidate/offer/" + id)
+      .then((response) => {
+        state.offerLetterData = response.data.data;
+        console.log("offer.message", state.offerLetterData);
+        return dispatch({
+          type: "OFFER_LETTER_DATA",
+          payload: state.offerLetterData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <OfferContext.Provider
       value={{
@@ -297,6 +333,8 @@ export const OfferProvider = (props) => {
         updateCandidateWork,
         remunerationSave,
         remunerationUpdate,
+        remunerationView,
+        generateOfferLetter,
         searchData: state.searchData,
         departmentName: state.departmentName,
         designationName: state.designationName,
@@ -309,6 +347,8 @@ export const OfferProvider = (props) => {
         candidateData: state.candidateData,
         createCandidateResponse: state.createCandidateResponse,
         remunerationData: state.remunerationData,
+        remunerationViewData: state.remunerationViewData,
+        offerLetterData: state.offerLetterData,
       }}
     >
       {props.children}

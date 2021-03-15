@@ -1,7 +1,8 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Modal, Row, Col, Form, Button } from "react-bootstrap";
 import calendarImage from "../../assets/images/calendar-image.png";
 import "./offers.css";
+import { OfferContext } from "../../context/OfferState";
 
 const GenerateOfferLetter = () => {
   const [showModal, setShow] = useState(false);
@@ -11,9 +12,18 @@ const GenerateOfferLetter = () => {
   const [previewLetter, setPreviewLetter] = useState(false);
   const [letterSent, setLetterSent] = useState(false);
 
+  const {
+    createCandidateResponse,
+    generateOfferLetter,
+    offerLetterData,
+  } = useContext(OfferContext);
+
   const handleClose = () => setShow(false);
   const handleShow = () => {
     setShow(true);
+    console.log("offer candidate id", createCandidateResponse.candidateId);
+    console.log("offer letter response", offerLetterData);
+    generateOfferLetter(createCandidateResponse.candidateId);
   };
 
   const saveOfferLetter = () => {

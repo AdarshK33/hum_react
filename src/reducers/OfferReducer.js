@@ -48,6 +48,11 @@ const GroupReducer = (state, action) => {
     case "REMUNERATION_UPDATE_DATA":
       return { ...state, remunerationData: action.payload };
 
+    case "REMUNERATION_VIEW_DATA":
+      return { ...state, remunerationViewData: action.payload };
+
+    case "OFFER_LETTER_DATA":
+      return { ...state, offerLetterData: action.payload };
     default:
       return state;
   }
