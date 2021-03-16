@@ -4,11 +4,22 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import "./OnBoard.css";
+import { OnBoardContext } from "../../context/OnBoardState";
 
 const PersonalInformation = () => {
+  const { updatePersonalInfo, Infodata } = useContext(OnBoardContext);
+  // const [InfoData, setInfo] = useState("");
   const [isClicked, setIsClicked] = useState(false);
   const [disabled, setDisableState] = useState(false);
   const [DOB, setDOB] = useState();
+  const [genderCheckM, setGenderM] = useState(false);
+  const [genderCheckF, setGenderF] = useState(false);
+  const [married, setMarried] = useState(false);
+  const [unMarried, setUnMarried] = useState(false);
+  const [gender, setGender] = useState("");
+  const [maritalStatus, setMaritalStatus] = useState("");
+  const [required, setRequired] = useState(true);
+  const [statusRequired, setstatusRequired] = useState(true);
   const [state, setState] = useState({
     aadhaarName: "",
     fatherName: "",
@@ -29,8 +40,7 @@ const PersonalInformation = () => {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    const personalInformation = {
-      // adharDoc: null,
+    const InfoData = {
       adharName: state.aadhaarName,
       fatherName: state.fatherName,
       aadhaarNumber: state.aadhaarNumber,
@@ -39,42 +49,26 @@ const PersonalInformation = () => {
       bloodGroup: state.bloodGroup,
       candidateReferences: [
         {
-          designation: emp1Designation !== null ? emp1Designation : null,
-          email: emp1Eamil !== null ? emp1Eamil : null,
-          employeeName: empName1 !== null ? empName1 : null,
+          designation:
+            state.emp1Designation !== null ? state.emp1Designation : null,
+          email: state.emp1Eamil !== null ? state.emp1Eamil : null,
+          employeeName: state.empName1 !== null ? state.empName1 : null,
         },
         {
-          designation: emp2Designation !== null ? emp2Designation : null,
-          email: emp1Eamil !== null ? emp1Eamil : null,
-          employeeName: empName2 !== null ? empName2 : null,
+          designation:
+            state.emp2Designation !== null ? state.emp2Designation : null,
+          email: state.emp1Eamil !== null ? state.emp1Eamil : null,
+          employeeName: state.empName2 !== null ? state.empName2 : null,
         },
       ],
-      // adharNumber: ,
-      // bloodGroup: null,
-      // candidateId: 0,
-
-      // createdDate: null,
-      // dateOfBirth: null,
-      // disability: null,
-      // disabilityDoc: null,
-      // fatherName: null,
-      // firstName: state.firstName,
-      // gender: null,
-      // lastName: state.lastName,
-      // lgbt: null,
-      // maritalStatus: null,
-      // nationality: null,
-      // panDoc: null,
-      // panNumber: null,
-      // personalEmail: state.email,
-      // photo: null,
-      // refered: true,
-      // status: 1,
-      // verificationStatus: 0,
+      gender: gender,
+      maritalStatus: maritalStatus,
     };
     console.log("onsubmit");
-    console.log(personalInformation);
+    console.log(InfoData);
+    updatePersonalInfo(InfoData);
   };
+
   const changeHandler = (e) => {
     setState({
       ...state,
@@ -87,6 +81,60 @@ const PersonalInformation = () => {
     console.log(DOB);
   };
 
+  const handleMaleGenderCheckboxChange = (e) => {
+    setGenderM(e.target.checked);
+    setGenderF(!e.target.checked);
+    {
+      required ? setRequired(!required) : setRequired(required);
+    }
+    {
+      genderCheckM ? setGender("FeMale") : setGender("Male");
+    }
+    console.log(genderCheckM);
+    console.log("---");
+    console.log(gender);
+  };
+  const handleFemaleGenderCheckboxChange = (e) => {
+    setGenderF(e.target.checked);
+    setGenderM(!e.target.checked);
+    {
+      required ? setRequired(!required) : setRequired(required);
+    }
+    {
+      genderCheckF ? setGender("Male") : setGender("FeMale");
+    }
+    console.log(genderCheckF);
+    console.log("---");
+    console.log(gender);
+  };
+  const handleMarriedCheckboxChange = (e) => {
+    setMarried(e.target.checked);
+    setUnMarried(!e.target.checked);
+    {
+      statusRequired
+        ? setstatusRequired(!statusRequired)
+        : setstatusRequired(statusRequired);
+    }
+    {
+      married ? setMaritalStatus("UnMarried") : setMaritalStatus("Married");
+    }
+    console.log(married);
+    console.log(maritalStatus);
+  };
+  const handleUnMarriedCheckboxChange = (e) => {
+    setUnMarried(e.target.checked);
+    setMarried(!e.target.checked);
+    {
+      statusRequired
+        ? setstatusRequired(!statusRequired)
+        : setstatusRequired(statusRequired);
+    }
+    {
+      unMarried ? setMaritalStatus("Married") : setMaritalStatus("UnMarried");
+    }
+    console.log(unMarried);
+    console.log(maritalStatus);
+  };
   const AddExtrReferenceClick = () => {
     setIsClicked(true);
   };
@@ -166,7 +214,14 @@ const PersonalInformation = () => {
                     disabled={disabled}
                   >
                     <option value="">Select Blood Group</option>
-                    <option>one</option>
+                    <option>A+</option>
+                    <option>A-</option>
+                    <option>B+</option>
+                    <option>B-</option>
+                    <option>O+</option>
+                    <option>O-</option>
+                    <option>AB+</option>
+                    <option>AB-</option>
                   </Form.Control>
                 </Form.Group>
               </div>
@@ -218,6 +273,7 @@ const PersonalInformation = () => {
                     disabled={disabled}
                   >
                     <option value="">Natonality</option>
+                    <option> one</option>
                   </Form.Control>
                 </Form.Group>
               </div>
@@ -278,6 +334,9 @@ const PersonalInformation = () => {
                       className="largerCheckbox"
                       type="checkbox"
                       value="Male"
+                      checked={genderCheckM}
+                      required={required}
+                      onChange={handleMaleGenderCheckboxChange}
                     />
                     <label>Male </label>
                   </div>
@@ -290,6 +349,9 @@ const PersonalInformation = () => {
                       className="largerCheckbox"
                       type="checkbox"
                       value="Female"
+                      required={required}
+                      checked={genderCheckF}
+                      onChange={handleFemaleGenderCheckboxChange}
                     />
                     <label>Female</label>
                   </div>
@@ -313,6 +375,9 @@ const PersonalInformation = () => {
                       className="largerCheckbox"
                       type="checkbox"
                       value="Married"
+                      reuired={statusRequired}
+                      checked={married}
+                      onChange={handleMarriedCheckboxChange}
                     />
                     <label>Married </label>
                   </div>
@@ -327,7 +392,10 @@ const PersonalInformation = () => {
                     <input
                       className="largerCheckbox"
                       type="checkbox"
-                      value="Unarried"
+                      value="Unmarried"
+                      required={statusRequired}
+                      checked={unMarried}
+                      onChange={handleUnMarriedCheckboxChange}
                     />
                     <label>UnMarried</label>
                   </div>
@@ -486,12 +554,12 @@ const PersonalInformation = () => {
         ) : (
           <div></div>
         )}
-        <div style={{ marginTop: "2rem", textAlign: "center" }}>
+        {/* <div style={{ marginTop: "2rem", textAlign: "center" }}>
           <button className="stepperButtons">Back</button>
           <button className="stepperButtons" type="submit">
             Save & Next
           </button>
-        </div>
+        </div> */}
       </Form>
     </Fragment>
   );
