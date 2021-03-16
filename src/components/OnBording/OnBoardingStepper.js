@@ -214,7 +214,7 @@ const OnBoardingStepper = () => {
                         }
                       })()}
 
-                      <div style={{ marginTop: "2rem", textAlign: "center" }}>
+                      {/* <div style={{ marginTop: "2rem", textAlign: "center" }}>
                         <button className="stepperButtons" onClick={PrevStep}>
                           Back
                         </button>
@@ -225,7 +225,7 @@ const OnBoardingStepper = () => {
                         >
                           Save & Next
                         </button>
-                      </div>
+                      </div> */}
                     </Col>
                   </Row>
                 </div>

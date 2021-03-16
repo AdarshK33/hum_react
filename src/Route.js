@@ -76,6 +76,11 @@ const RoutePath = () => {
     <Switch>
       <Route path={`${process.env.PUBLIC_URL}/signin`} component={Signin} />
       <Route path={`${process.env.PUBLIC_URL}/login`} component={Login} />
+      <Route
+        //  {/*Rajasekhar */}
+        path={`${process.env.PUBLIC_URL}/onboarding`}
+        component={OnBoardingStepper}
+      />
 
       <Fragment>
         <App>

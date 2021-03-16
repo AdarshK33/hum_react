@@ -1,14 +1,23 @@
-import React, { Fragment, useState, useContext, useEffect } from "react";
+import React, {
+  Fragment,
+  useState,
+  useContext,
+  useEffect,
+  useMemo,
+} from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import "./OnBoard.css";
 import { OnBoardContext } from "../../context/OnBoardState";
+import countryList from "react-select-country-list";
 
 const PersonalInformation = () => {
   const { updatePersonalInfo, Infodata } = useContext(OnBoardContext);
+  const options = useMemo(() => countryList().getData(), []);
   // const [InfoData, setInfo] = useState("");
+  console.log(options);
   const [isClicked, setIsClicked] = useState(false);
   const [disabled, setDisableState] = useState(false);
   const [DOB, setDOB] = useState();
@@ -29,10 +38,10 @@ const PersonalInformation = () => {
     nationality: "",
     disability: "",
     lgbt: "",
-    emp1Name: "",
+    empName1: "",
     emp1Eamil: "",
     emp1Designation: "",
-    emp2Name: "",
+    empName2: "",
     emp2Eamil: "",
     emp2Designation: "",
   });
@@ -57,12 +66,13 @@ const PersonalInformation = () => {
         {
           designation:
             state.emp2Designation !== null ? state.emp2Designation : null,
-          email: state.emp1Eamil !== null ? state.emp1Eamil : null,
+          email: state.emp2Eamil !== null ? state.emp2Eamil : null,
           employeeName: state.empName2 !== null ? state.empName2 : null,
         },
       ],
       gender: gender,
       maritalStatus: maritalStatus,
+      nationality: state.nationality,
     };
     console.log("onsubmit");
     console.log(InfoData);
@@ -158,7 +168,7 @@ const PersonalInformation = () => {
                     value={state.aadhaarName}
                     onChange={changeHandler}
                     required
-                    placeholder="First Name"
+                    placeholder="Name as per adhaar"
                     disabled={disabled}
                   />
                 </Form.Group>
@@ -268,12 +278,15 @@ const PersonalInformation = () => {
                     as="select"
                     name="nationality"
                     value={state.nationality}
+                    options={options}
                     onChange={changeHandler}
                     required
                     disabled={disabled}
                   >
-                    <option value="">Natonality</option>
-                    <option> one</option>
+                    <option>Nationality</option>
+                    {options.map((item) => {
+                      return <option key={item.value}>{item.label}</option>;
+                    })}
                   </Form.Control>
                 </Form.Group>
               </div>
@@ -299,15 +312,12 @@ const PersonalInformation = () => {
 
               <div className="col-sm-4">
                 <Form.Group>
-                  <Form.Label>
-                    LGBT<span style={{ color: "red" }}>*</span>
-                  </Form.Label>
+                  <Form.Label>LGBT</Form.Label>
                   <Form.Control
                     as="select"
                     name="lgbt"
                     value={state.lgbt}
                     onChange={changeHandler}
-                    required
                     disabled={disabled}
                   >
                     <option value="">LGBT</option>
@@ -425,8 +435,8 @@ const PersonalInformation = () => {
                   </Form.Label>
                   <Form.Control
                     type="text"
-                    name="emp1Name"
-                    value={state.emp1Name}
+                    name="empName1"
+                    value={state.empName1}
                     onChange={changeHandler}
                     required
                     placeholder="Emp Name/ID"
@@ -436,15 +446,12 @@ const PersonalInformation = () => {
               </div>
               <div className="col-sm-4">
                 <Form.Group>
-                  <Form.Label>
-                    Email ID<span style={{ color: "red" }}>*</span>
-                  </Form.Label>
+                  <Form.Label>Email ID</Form.Label>
                   <Form.Control
                     type="text"
-                    name="emp1Email"
-                    value={state.emp1Email}
+                    name="emp1Eamil"
+                    value={state.emp1Eamil}
                     onChange={changeHandler}
-                    required
                     placeholder="Email ID"
                     disabled={disabled}
                   />
@@ -452,15 +459,12 @@ const PersonalInformation = () => {
               </div>
               <div className="col-sm-4">
                 <Form.Group>
-                  <Form.Label>
-                    Designation<span style={{ color: "red" }}>*</span>
-                  </Form.Label>
+                  <Form.Label>Designation</Form.Label>
                   <Form.Control
                     type="text"
                     name="emp1Designation"
                     value={state.emp1Designation}
                     onChange={changeHandler}
-                    required
                     placeholder="Designation"
                     disabled={disabled}
                   />
@@ -494,8 +498,8 @@ const PersonalInformation = () => {
                     </Form.Label>
                     <Form.Control
                       type="text"
-                      name="emp2Name"
-                      value={state.emp2Name}
+                      name="empName2"
+                      value={state.empName2}
                       onChange={changeHandler}
                       required
                       placeholder="Emp Name/ID"
@@ -505,15 +509,12 @@ const PersonalInformation = () => {
                 </div>
                 <div className="col-sm-4">
                   <Form.Group>
-                    <Form.Label>
-                      Email ID<span style={{ color: "red" }}>*</span>
-                    </Form.Label>
+                    <Form.Label>Email ID</Form.Label>
                     <Form.Control
                       type="text"
-                      name="emp2Email"
-                      value={state.emp2Email}
+                      name="emp2Eamil"
+                      value={state.emp2Eamil}
                       onChange={changeHandler}
-                      required
                       placeholder="Email ID"
                       disabled={disabled}
                     />
@@ -521,15 +522,12 @@ const PersonalInformation = () => {
                 </div>
                 <div className="col-sm-4">
                   <Form.Group>
-                    <Form.Label>
-                      Designation<span style={{ color: "red" }}>*</span>
-                    </Form.Label>
+                    <Form.Label>Designation</Form.Label>
                     <Form.Control
                       type="text"
                       name="emp2Designation"
                       value={state.emp2Designation}
                       onChange={changeHandler}
-                      required
                       placeholder="Designation"
                       disabled={disabled}
                     />
@@ -554,12 +552,12 @@ const PersonalInformation = () => {
         ) : (
           <div></div>
         )}
-        {/* <div style={{ marginTop: "2rem", textAlign: "center" }}>
+        <div style={{ marginTop: "2rem", textAlign: "center" }}>
           <button className="stepperButtons">Back</button>
           <button className="stepperButtons" type="submit">
             Save & Next
           </button>
-        </div> */}
+        </div>
       </Form>
     </Fragment>
   );
