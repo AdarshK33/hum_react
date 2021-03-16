@@ -1,113 +1,117 @@
-import React, { useEffect, Fragment, useContext, useState } from 'react'
+import React, { useEffect, Fragment, useContext, useState } from "react";
 import Breadcrumb from "../common/breadcrumb";
-import moment from 'moment';
+import moment from "moment";
 import "./salary.css";
-import { Form, Table, Row, Button, Modal } from 'react-bootstrap'
+import { Form, Table, Row, Button, Modal } from "react-bootstrap";
 import { ClusterContext } from "../../context/ClusterState";
 import { DashboardContext } from "../../context/DashboardState";
-import EditSalary from './EditSalary'
+import EditSalary from "./EditSalary";
 import "react-datepicker/dist/react-datepicker.css";
-import { Edit2, } from 'react-feather'
+import { Edit2 } from "react-feather";
 import { AppContext } from "../../context/AppState";
-import Pagination from 'react-js-pagination'
-import '../AdminLeave/AdminLeaves.css'
+import Pagination from "react-js-pagination";
+import "../AdminLeave/AdminLeaves.css";
 import { useHistory } from "react-router-dom";
-import DatePicker from 'react-datepicker'
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { toast } from "react-toastify";
-import ReactExport from 'react-data-export'
+import ReactExport from "react-data-export";
 
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 function ViewShift() {
-
   useEffect(() => {
-    viewCostCentre()
-  }, [])
+    viewCostCentre();
+  }, []);
   const [shiftButton] = useState(false);
-  const [getM, setGetM] = useState('');
+  const [getM, setGetM] = useState("");
 
   const { viewCostCentre } = useContext(DashboardContext);
-  const { viewSalary, salaryList, salaryApproval, loader } = useContext(ClusterContext);
+  const { viewSalary, salaryList, salaryApproval, loader } = useContext(
+    ClusterContext
+  );
 
-  const [editModal, setEditModal] = useState(false)
-  const [employeeId, setEmployeeId] = useState()
-  const [firstName, setFirstName] = useState()
-  const [lastName, setLastName] = useState()
-  const [numberOfHours, setNumberOfHours] = useState()
-  const [lop, setLop] = useState()
-  const [contractType, setContractType] = useState()
-  const [extraHours, setExtraHours] = useState()
-  const [reason, setReason] = useState()
-  const [month, setMonth] = useState()
-  const [salaryId, setSalaryId] = useState()
-  const [status, setStatus] = useState()
-  const [statusDesc, setStatusDesc] = useState()
-  const [totalHours, setTotalHours] = useState()
-  const [additionalHours, setadditionalHours] = useState()
-  const [year, setYear] = useState()
+  const [editModal, setEditModal] = useState(false);
+  const [employeeId, setEmployeeId] = useState();
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [numberOfHours, setNumberOfHours] = useState();
+  const [lop, setLop] = useState();
+  const [contractType, setContractType] = useState();
+  const [extraHours, setExtraHours] = useState();
+  const [reason, setReason] = useState();
+  const [month, setMonth] = useState();
+  const [salaryId, setSalaryId] = useState();
+  const [status, setStatus] = useState();
+  const [statusDesc, setStatusDesc] = useState();
+  const [totalHours, setTotalHours] = useState();
+  const [additionalHours, setadditionalHours] = useState();
+  const [year, setYear] = useState();
   const [checked, setChecked] = useState([]);
   const [deleteModal, setDeleteModal] = useState(false);
-  
 
   let history = useHistory();
 
   const { user } = useContext(AppContext);
 
-  const handleEditClose = () => setEditModal(false)
+  const handleEditClose = () => setEditModal(false);
   const handleDeleteClose = () => setDeleteModal(false);
 
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
   const recordPerPage = 10;
-  const totalRecords = salaryList !== null && salaryList !== undefined && salaryList.length;
+  const totalRecords =
+    salaryList !== null && salaryList !== undefined && salaryList.length;
   const pageRange = 10;
 
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  const currentRecords = salaryList !== null && salaryList !== undefined ? salaryList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+  const currentRecords =
+    salaryList !== null && salaryList !== undefined
+      ? salaryList.slice(indexOfFirstRecord, indexOfLastRecord)
+      : [];
 
-  const handlePageChange = pageNumber => {
+  const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
-  }
+  };
   /*-----------------Pagination------------------*/
- /*  useEffect(() => {
+  /*  useEffect(() => {
     const month = moment(getM, ["YYYY-MM"]).format("M");
     const year = moment(getM, ["MMM Do YY"]).format('YYYY');
     viewSalary(month, year, user.costCentre)
   }, []) */
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    const validate = validation()
+    const validate = validation();
 
     const month = moment(getM, ["YYYY-MM"]).format("M");
-    const year  = moment(getM, ["MMM Do YY"]).format('YYYY');
-    let flag = localStorage.getItem('flag')
+    const year = moment(getM, ["MMM Do YY"]).format("YYYY");
+    let flag = localStorage.getItem("flag");
     // alert(month, year)
     const salaryData = {
       cluster: flag,
       month: month,
       storeIds: [user.costCentre],
-      year: year
-    }
-     if (validate) {
+      year: year,
+    };
+    if (validate) {
       viewSalary(salaryData);
     }
-    setGetM(getM)
-  } 
+    setGetM(getM);
+  };
 
   const validation = () => {
-    let flag = true
-    if (getM === '') {
-        toast.error("Select Month and Year")
-        flag = false;
-        return;
+    let flag = true;
+    if (getM === "") {
+      toast.error("Select Month and Year");
+      flag = false;
+      return;
     }
     return flag;
-}
+  };
 
   const approvedButton = () => {
     const approvalData = {
@@ -117,19 +121,19 @@ function ViewShift() {
     const month = moment(getM, ["YYYY-MM"]).format("M");
     const year = moment(getM, ["MMM Do YY"]).format("YYYY");
     console.log("approval data=====", approvalData);
-    let flag = localStorage.getItem('flag')
+    let flag = localStorage.getItem("flag");
     /* salaryApproval(approvalData, month, year, user.costCentre); */
     const salaryData = {
       cluster: flag,
       month: month,
       storeIds: [user.costCentre],
-      year: year
-    }
-    const validate = validation()
-    if(validate){
+      year: year,
+    };
+    const validate = validation();
+    if (validate) {
       salaryApproval(approvalData, salaryData);
     }
-    setChecked([])
+    setChecked([]);
 
     /*  console.log("month, costCenter, year",month, year, user.costCentre)
      viewSalary(month, year, user.costCentre) */
@@ -143,19 +147,19 @@ function ViewShift() {
     };
     const month = moment(getM, ["YYYY-MM"]).format("M");
     const year = moment(getM, ["MMM Do YY"]).format("YYYY");
-    let flag = localStorage.getItem('flag')
+    let flag = localStorage.getItem("flag");
     const salaryData = {
       cluster: flag,
       month: month,
       storeIds: [user.costCentre],
-      year: year
-    }
-    const validate = validation()
+      year: year,
+    };
+    const validate = validation();
     if (validate) {
       salaryApproval(cancelData, salaryData);
     }
     setDeleteModal(false);
-    setChecked([])
+    setChecked([]);
 
     /* console.log("month, costCenter, year",month, year, user.costCentre)
     viewSalary(month, year, user.costCentre) */
@@ -176,8 +180,8 @@ function ViewShift() {
       }
     });
   };
-  //File export 
- /*  const filename = 'salaryList';
+  //File export
+  /*  const filename = 'salaryList';
   let fields = {
     "salaryListId": "S. No",
     "employeeId": "Employee Id",
@@ -208,8 +212,8 @@ function ViewShift() {
     }
   } */
   const disabledText = () => {
-    toast.error("No Records to be Export")
-  }
+    toast.error("No Records to be Export");
+  };
 
   return (
     <Fragment>
@@ -220,13 +224,18 @@ function ViewShift() {
             <div className="col-sm-4">
               <Form.Group>
                 <Form.Label>Select Month and Year</Form.Label>
-               {/*  <input type="month" style={{ fontSize: "0.8rem" }} className="form-control digit" min="2020-08"
+                {/*  <input type="month" style={{ fontSize: "0.8rem" }} className="form-control digit" min="2020-08"
                   placeholder="Number Of Days"
                   required onChange={(e) => setGetM(e.target.value)} value={getM} /> */}
                 <div className="salary-date">
-                <DatePicker selected={getM} onChange={(date) => setGetM(date)}
-                  className="form-control salary-view" dateFormat="MM/yyyy" showMonthYearPicker
-                  placeholderText='Select Month and Year' />
+                  <DatePicker
+                    selected={getM}
+                    onChange={(date) => setGetM(date)}
+                    className="form-control salary-view"
+                    dateFormat="MM/yyyy"
+                    showMonthYearPicker
+                    placeholderText="Select Month and Year"
+                  />
                 </div>
               </Form.Group>
             </div>
@@ -239,58 +248,89 @@ function ViewShift() {
             </div>
           </Row>
 
-          <button type="submit" className="myclass mb-2 mr-2" disabled={shiftButton} value="Submit">Submit</button>
-
-
+          <button
+            type="submit"
+            className="myclass mb-2 mr-2"
+            disabled={shiftButton}
+            value="Submit"
+          >
+            Submit
+          </button>
         </Form>
 
-        <Row style={{ marginTop: '2rem' }}>
+        <Row style={{ marginTop: "2rem" }}>
           <div className="col-sm-12">
-            <div className="title_bar" >
-            {currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 ?
-                <ExcelFile filename='Salary List' element={<Button className="btn btn-light mr-2"> Export excel</Button>}>
-                  <ExcelSheet data={salaryList} name="Salary List" style={{ width: '500px' }}>
+            <div className="title_bar">
+              {currentRecords !== null &&
+              currentRecords !== undefined &&
+              currentRecords.length > 0 ? (
+                <ExcelFile
+                  filename="Salary List"
+                  element={
+                    <Button className="btn btn-light mr-2">
+                      {" "}
+                      Export excel
+                    </Button>
+                  }
+                >
+                  <ExcelSheet
+                    data={salaryList}
+                    name="Salary List"
+                    style={{ width: "500px" }}
+                  >
                     <ExcelColumn label="Employee Id" value="employeeId" />
-                    <ExcelColumn label="Employee Name"
-                                        value={(col) => col.firstName !== null && col.firstName+' '+ col.lastName} />
-                    <ExcelColumn label="Number Of Hours" value="numberOfHours" />
+                    <ExcelColumn
+                      label="Employee Name"
+                      value={(col) =>
+                        col.firstName !== null &&
+                        col.firstName + " " + col.lastName
+                      }
+                    />
+                    <ExcelColumn
+                      label="Number Of Hours"
+                      value="numberOfHours"
+                    />
                     <ExcelColumn label="LOP" value="lop" />
                     <ExcelColumn label="Contract Type" value="contractType" />
                     <ExcelColumn label="Extra Hours" value="extraHours" />
                     <ExcelColumn label="Total Hours" value="totalHours" />
                     <ExcelColumn label="Status" value="statusDesc" />
-                   
                   </ExcelSheet>
                 </ExcelFile>
-
-                :
+              ) : (
                 <Button className="btn btn-light mr-2" onClick={disabledText}>
-                  Export excel</Button>
-              }
+                  Export excel
+                </Button>
+              )}
 
-
-              {
-                (user.loginType === "1" || user.additionalRole === "1" ||
-                  user.loginType === "7" || user.additionalRole === "7" ||
-                  user.loginType === "9" || user.additionalRole === "9"
-                ) && currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 ?
-                  <div className="ml-2" style={{ float: 'left' }}>
-                    <Button
-                      className="btn btn-light mr-2"
-                      onClick={approvedButton}
-                    >
-                      Approve
+              {(user.loginType === "1" ||
+                user.additionalRole === "1" ||
+                user.loginType === "7" ||
+                user.additionalRole === "7" ||
+                user.loginType === "9" ||
+                user.additionalRole === "9") &&
+              currentRecords !== null &&
+              currentRecords !== undefined &&
+              currentRecords.length > 0 ? (
+                <div className="ml-2" style={{ float: "left" }}>
+                  <Button
+                    className="btn btn-light mr-2"
+                    onClick={approvedButton}
+                  >
+                    Approve
                   </Button>
-                    <Button
-                      variant="danger"
-                      onClick={() => {
-                        setDeleteModal(true);
-                      }}
-                    >Cancel </Button>
-                  </div>
-                  : <div></div>
-                  
-              }
+                  <Button
+                    variant="danger"
+                    onClick={() => {
+                      setDeleteModal(true);
+                    }}
+                  >
+                    Cancel{" "}
+                  </Button>
+                </div>
+              ) : (
+                <div></div>
+              )}
             </div>
             <Modal show={deleteModal} onHide={handleDeleteClose} centered>
               <Modal.Body style={{ marginTop: "1rem" }}>
@@ -320,12 +360,16 @@ function ViewShift() {
             <div className="card" style={{ overflowX: "auto" }}>
               <div className="table-responsive">
                 <Table id="table-to-xls1" className="table table-hover">
-                  <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
+                  <thead
+                    className="thead-light"
+                    style={{ backgroundColor: "#2f3c4e" }}
+                  >
                     <tr>
-                      {
-                        (user.loginType === "7" || user.additionalRole === "7") ?
-                          <th>Select</th> : <th></th>
-                      }
+                      {user.loginType === "7" || user.additionalRole === "7" ? (
+                        <th>Select</th>
+                      ) : (
+                        <th></th>
+                      )}
 
                       <th>S. No</th>
                       <th scope="col">Employee Id</th>
@@ -341,12 +385,17 @@ function ViewShift() {
                     </tr>
                   </thead>
 
-                  {loader === true && currentRecords !== null && currentRecords !== undefined &&
-                    currentRecords.length === 0 ?
+                  {loader === true &&
+                  currentRecords !== null &&
+                  currentRecords !== undefined &&
+                  currentRecords.length === 0 ? (
                     <tbody>
                       <tr>
-                        <td colSpan='10'>
-                          <div className="loader-box loader" style={{ width: "100% !important" }}>
+                        <td colSpan="10">
+                          <div
+                            className="loader-box loader"
+                            style={{ width: "100% !important" }}
+                          >
                             <div className="loader">
                               <div className="line bg-primary"></div>
                               <div className="line bg-primary"></div>
@@ -356,102 +405,142 @@ function ViewShift() {
                           </div>
                         </td>
                       </tr>
-                    </tbody> :
-                    currentRecords !== null && currentRecords !== undefined && currentRecords.length > 0 &&
-                      (
-                        user.loginType === "7" || user.additionalRole === "7" ||
-                        user.loginType === "3" || user.additionalRole === "3" ||
-                        (user.role !== "MANAGER" && user.isClusterManager === 1)
-                      ) ?
-                      currentRecords.map((item, i) => {
-                        return (
-                          <tbody key={i + 1}>
-                            <tr>
-                              {(user.loginType === "7" || user.additionalRole === "7") ?
-                                <td>
-                                  {" "}
-                                  {
-                                    item.statusDesc === "Pending" ?
-                                      <input
-                                        type="checkbox"
-                                        checked={checked.indexOf(item.salaryId) >= 0}
-                                        onChange={() => checkboxHandler(item.salaryId)}
-                                        name="selectCheckbox"
-                                      />
-                                      :
-                                      <input type="checkbox" disabled />
-                                  }{" "}
-                                </td> : <td></td>}
-                              <td>{i + 1 + indexOfFirstRecord}</td>
+                    </tbody>
+                  ) : currentRecords !== null &&
+                    currentRecords !== undefined &&
+                    currentRecords.length > 0 &&
+                    (user.loginType === "7" ||
+                      user.additionalRole === "7" ||
+                      user.loginType === "3" ||
+                      user.additionalRole === "3" ||
+                      (user.role !== "MANAGER" &&
+                        user.isClusterManager === 1)) ? (
+                    currentRecords.map((item, i) => {
+                      return (
+                        <tbody key={i + 1}>
+                          <tr>
+                            {user.loginType === "7" ||
+                            user.additionalRole === "7" ? (
+                              <td>
+                                {" "}
+                                {item.statusDesc === "Pending" ? (
+                                  <input
+                                    type="checkbox"
+                                    checked={
+                                      checked.indexOf(item.salaryId) >= 0
+                                    }
+                                    onChange={() =>
+                                      checkboxHandler(item.salaryId)
+                                    }
+                                    name="selectCheckbox"
+                                  />
+                                ) : (
+                                  <input type="checkbox" disabled />
+                                )}{" "}
+                              </td>
+                            ) : (
+                              <td></td>
+                            )}
+                            <td>{i + 1 + indexOfFirstRecord}</td>
 
-                              <td>{item.employeeId}</td>
-                              <td>{item.firstName} {item.lastName}</td>
-                              <td>{item.numberOfHours}</td>
+                            <td>{item.employeeId}</td>
+                            <td>
+                              {item.firstName} {item.lastName}
+                            </td>
+                            <td>{item.numberOfHours}</td>
 
-                              <td>{item.lop}</td>
-                              <td>{item.contractType}</td>
-                              <td>{item.extraHours}</td>
-                              <td>{item.totalHours}</td>
-                              <td>{item.statusDesc}</td>
-                              {user.loginType === "7" || user.additionalRole === "7" ?
-                                <td>{
-                                  item.statusDesc === 'Pending' ?
-                                    <Edit2 onClick={() => {
-                                      setEditModal(true); setEmployeeId(item.employeeId);
-                                      setFirstName(item.firstName); setLastName(item.lastName); setNumberOfHours(item.numberOfHours)
-                                      setLop(item.lop); setContractType(item.contractType); setExtraHours(item.extraHours);
-                                      setReason(item.reason); setMonth(item.month); setSalaryId(item.salaryId);
-                                      setStatus(item.status); setStatusDesc(item.statusDesc);
-                                      setTotalHours(item.totalHours); setYear(item.year);
+                            <td>{item.lop}</td>
+                            <td>{item.contractType}</td>
+                            <td>{item.extraHours}</td>
+                            <td>{item.totalHours}</td>
+                            <td>{item.statusDesc}</td>
+                            {user.loginType === "7" ||
+                            user.additionalRole === "7" ? (
+                              <td>
+                                {item.statusDesc === "Pending" ? (
+                                  <Edit2
+                                    onClick={() => {
+                                      setEditModal(true);
+                                      setEmployeeId(item.employeeId);
+                                      setFirstName(item.firstName);
+                                      setLastName(item.lastName);
+                                      setNumberOfHours(item.numberOfHours);
+                                      setLop(item.lop);
+                                      setContractType(item.contractType);
+                                      setExtraHours(item.extraHours);
+                                      setReason(item.reason);
+                                      setMonth(item.month);
+                                      setSalaryId(item.salaryId);
+                                      setStatus(item.status);
+                                      setStatusDesc(item.statusDesc);
+                                      setTotalHours(item.totalHours);
+                                      setYear(item.year);
                                       setadditionalHours(item.additionalHours);
-                                    }} /> :
-                                    <Edit2 disabled style={{ color: 'lightgrey' }} />}
-                                </td>
-                                : <td></td>}
-
-
-                            </tr>
-
-                          </tbody>
-
-                        )
-                      }) :
-                      <tbody>
-                        <tr>
-                          <td colSpan="10">No Record Found</td>
-                        </tr>
-                      </tbody>
-                  }
+                                    }}
+                                  />
+                                ) : (
+                                  <Edit2
+                                    disabled
+                                    style={{ color: "lightgrey" }}
+                                  />
+                                )}
+                              </td>
+                            ) : (
+                              <td></td>
+                            )}
+                          </tr>
+                        </tbody>
+                      );
+                    })
+                  ) : (
+                    <tbody>
+                      <tr>
+                        <td colSpan="10">No Record Found</td>
+                      </tr>
+                    </tbody>
+                  )}
                 </Table>
                 {/*  {(salaryList !== null && salaryList.length <= 0) ? <p style={{ textAlign: "center" }}>Select Month and Year</p> : null} */}
               </div>
             </div>
           </div>
         </Row>
-        <EditSalary handleEditClose={handleEditClose} modal={editModal}
+        <EditSalary
+          handleEditClose={handleEditClose}
+          modal={editModal}
           employeeId={employeeId}
-          firstName={firstName} lastName={lastName} numberOfHours={numberOfHours}
-          lop={lop} contractType={contractType} extraHours={extraHours} reason={reason}
-          month={month} salaryId={salaryId} status={status} statusDesc={statusDesc} totalHours={totalHours} year={year}
-          additionalHours={additionalHours} costCenter={user.costCentre}
+          firstName={firstName}
+          lastName={lastName}
+          numberOfHours={numberOfHours}
+          lop={lop}
+          contractType={contractType}
+          extraHours={extraHours}
+          reason={reason}
+          month={month}
+          salaryId={salaryId}
+          status={status}
+          statusDesc={statusDesc}
+          totalHours={totalHours}
+          year={year}
+          additionalHours={additionalHours}
+          costCenter={user.costCentre}
         />
-
       </div>
-      {salaryList !== null && salaryList !== undefined && salaryList.length > 10 &&
-        <Pagination
-          itemClass="page-item"
-          linkClass="page-link"
-          activePage={currentPage}
-          itemsCountPerPage={recordPerPage}
-          totalItemsCount={totalRecords}
-          pageRangeDisplayed={pageRange}
-          onChange={handlePageChange}
-        />
-      }
+      {salaryList !== null &&
+        salaryList !== undefined &&
+        salaryList.length > 10 && (
+          <Pagination
+            itemClass="page-item"
+            linkClass="page-link"
+            activePage={currentPage}
+            itemsCountPerPage={recordPerPage}
+            totalItemsCount={totalRecords}
+            pageRangeDisplayed={pageRange}
+            onChange={handlePageChange}
+          />
+        )}
     </Fragment>
-
-  )
+  );
 }
 
-export default ViewShift
-
+export default ViewShift;

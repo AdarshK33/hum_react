@@ -46,6 +46,18 @@ const ManagerOfferRelease = () => {
               />
             </AccordionItemPanel>
           </AccordionItem>
+        </Accordion>
+        <Accordion preExpanded={["a"]}>
+          <AccordionItem uuid="a">
+            <AccordionItemHeading>
+              <AccordionItemButton>
+                Step 1: Employee Information
+              </AccordionItemButton>
+            </AccordionItemHeading>
+            <AccordionItemPanel>
+              <EmployeeForm />
+            </AccordionItemPanel>
+          </AccordionItem>
 
           <AccordionItem>
             <AccordionItemHeading>

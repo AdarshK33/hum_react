@@ -1,0 +1,367 @@
+.OnBoardHeading {
+  height: 50px;
+  background-color: #006ebb;
+  text-align: center;
+  color: white;
+  font-size: 25px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.defaultLabelColour {
+  color: black;
+  font-size: 0.8rem;
+}
+.CurrentLabelColour {
+  color: #006ebb;
+  font-size: 0.8rem;
+}
+.OkLabbelColour {
+  color: green;
+  font-size: 0.8rem;
+}
+.CheckStep {
+  height: 45px;
+  width: 45px;
+  background-color: #aaa;
+  border-radius: 50%;
+  color: white;
+  margin-left: 23px;
+  text-align: center;
+  /* font-size: 25px; */
+}
+
+.ConnectLine {
+  border-left: 3px dashed #aaa;
+  height: 30px;
+  margin-left: 44px;
+  margin-bottom: 5px;
+  top: 0;
+}
+.CurrentCheckStep {
+  height: 45px;
+  width: 45px;
+  background-color: #006ebb;
+  border-radius: 50%;
+  color: white;
+  margin-left: 23px;
+  text-align: center;
+  font-size: 25px;
+}
+.OkCheckStep {
+  height: 45px;
+  width: 45px;
+  background-color: green;
+  border-radius: 50%;
+  color: white;
+  margin-left: 23px;
+  text-align: center;
+  font-size: 25px;
+}
+.OkConnectLine {
+  border-left: 3px solid green;
+  height: 30px;
+  margin-left: 44px;
+  margin-bottom: 5px;
+  top: 0;
+}
+.stepperButtons {
+  width: 120px;
+  height: 30px;
+  background-color: #006ebb;
+  color: white;
+  border: 1px solid#006ebb;
+  margin-left: 40px;
+}
+
+.ControlField {
+  width: 150px;
+  margin: 5px 0;
+  border-radius: 5px;
+}
+.ControlField label {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  color: black;
+}
+.ControlField label::after {
+  content: "*";
+  color: red;
+}
+
+.CheckBoxField {
+  display: flex;
+  justify-content: space-between;
+}
+.CenterButton {
+  display: flex;
+  justify-content: center;
+}
+.divContents {
+  display: flex;
+  justify-content: space-between;
+}
+.buttonField.button {
+  width: 80px;
+  height: 30px;
+  background-color: white;
+  color: #006ebb;
+  border: 1px solid#006ebb;
+}
+.buttonField.button:disabled {
+  border: 1px solid red;
+  color: red;
+}
+input.largerCheckbox {
+  width: 30px;
+  height: 30px;
+  margin-left: 25px;
+}
+
+.onBoard-date .react-datepicker-wrapper {
+  width: 80% !important;
+}
+.onBoard-date input.form-control.onBoard-view {
+  height: 34px;
+  width: 130%;
+}
+
+.inputField {
+  position: relative;
+}
+.inputField input {
+  position: relative;
+  background: transparent;
+  border: 1px solid #aaa;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: white;
+}
+.inputField label {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  color: black;
+}
+.inputField label::after {
+  content: "*";
+  color: red;
+}
+input[required]:valid + label {
+  display: none;
+}
+
+.inputFieldWithoutStar {
+  position: relative;
+}
+.inputFieldWithoutStar input {
+  position: relative;
+  background: transparent;
+  border: 1px solid #aaa;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: white;
+}
+.inputFieldWithoutStar label {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  color: black;
+}
+
+.inputFieldLarge {
+  position: relative;
+}
+.inputFieldLarge input {
+  position: relative;
+  background: transparent;
+  width: 200px;
+  border: 1px solid #aaa;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: white;
+}
+.inputFieldLarge label {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  color: black;
+}
+.inputFieldLarge label::after {
+  content: "*";
+  color: red;
+}
+input[required]:valid + label {
+  display: none;
+}
+
+.select_box {
+  width: 150px;
+  height: 32px;
+  background-color: white;
+  margin: 5px 0;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid #aaa;
+  position: relative;
+}
+.select_box:after {
+  content: "\f107";
+  font: normal normal normal 35px/1 FontAwesome;
+  color: #006ebb;
+  right: 11px;
+  top: 0px;
+  height: 3px;
+  padding: 0px 0px 0px 8px;
+  /* border-left: 1px solid #0ebeff; */
+  position: absolute;
+  pointer-events: none;
+}
+.select_box select {
+  width: 170px;
+  border: 0;
+  position: relative;
+  background: none;
+}
+.large_select_box {
+  width: 200px;
+  height: 32px;
+  background-color: white;
+  margin: 5px 0;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid #aaa;
+  position: relative;
+}
+.large_select_box:after {
+  content: "\f107";
+  font: normal normal normal 35px/1 FontAwesome;
+  color: #006ebb;
+  right: 11px;
+  top: 0px;
+  height: 3px;
+  padding: 0px 0px 0px 8px;
+  /* border-left: 1px solid #0ebeff; */
+  position: absolute;
+  pointer-events: none;
+}
+.large_select_box select {
+  width: 220px;
+  border: 0;
+  position: relative;
+  background: none;
+}
+
+.boxField input[type="checkbox"] {
+  --active: #006ebb;
+  --active-inner: #fff;
+  --focus: 2px #006ebb;
+  /* rgba(39, 94, 254, .3); */
+  --border: #bbc1e1;
+  --border-hover: #006ebb;
+  --background: #fff;
+  --disabled: #f6f8ff;
+  --disabled-inner: #e1e6f9;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  height: 25px;
+  width: 35px;
+  outline: none;
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  margin: 0;
+  cursor: pointer;
+  border: 1px solid var(--bc, var(--border));
+  background: var(--b, var(--background));
+  transition: background 0.3s, border-color 0.3s, box-shadow 0.2s;
+}
+.boxField input[type="checkbox"]:after {
+  content: "";
+  display: block;
+  left: 0;
+  top: 0;
+  position: absolute;
+  transition: transform var(--d-t, 0.3s) var(--d-t-e, ease),
+    opacity var(--d-o, 0.2s);
+}
+.boxField input[type="checkbox"]:checked {
+  --b: var(--active);
+  --bc: var(--active);
+  --d-o: 0.3s;
+  --d-t: 0.6s;
+  --d-t-e: cubic-bezier(0.2, 0.85, 0.32, 1.2);
+}
+.boxField input[type="checkbox"]:disabled {
+  --b: var(--disabled);
+  cursor: not-allowed;
+  opacity: 0.9;
+}
+.boxField input[type="checkbox"]:disabled:checked {
+  --b: var(--disabled-inner);
+  --bc: var(--border);
+}
+.boxField input[type="checkbox"]:disabled + label {
+  cursor: not-allowed;
+}
+.boxField input[type="checkbox"]:hover:not(:checked):not(:disabled) {
+  --bc: var(--border-hover);
+}
+.boxField input[type="checkbox"]:focus {
+  box-shadow: 0 0 0 var(--focus);
+}
+.boxField input[type="checkbox"]:not(.switch) {
+  width: 25px;
+}
+.boxField input[type="checkbox"]:not(.switch):after {
+  opacity: var(--o, 0);
+}
+.boxField input[type="checkbox"]:not(.switch):checked {
+  --o: 1;
+}
+.boxField input[type="checkbox"] + label {
+  font-size: 0.8rem;
+  line-height: 21px;
+  display: inline-block;
+  vertical-align: top;
+  cursor: pointer;
+  margin-left: 4px;
+  padding: 5px 0px 0px 8px;
+}
+
+.boxField input[type="checkbox"]:not(.switch) {
+  border-radius: 7px;
+}
+.boxField input[type="checkbox"]:not(.switch):after {
+  width: 5px;
+  height: 10px;
+  border: 2px solid var(--active-inner);
+  border-top: 0;
+  border-left: 0;
+  left: 10px;
+  top: 5px;
+  transform: rotate(var(--r, 20deg));
+}
+.boxField input[type="checkbox"]:not(.switch):checked {
+  --r: 43deg;
+}
+.boxField input[type="checkbox"].switch {
+  width: 38px;
+  border-radius: 11px;
+}
+.boxField input[type="checkbox"].switch:after {
+  left: 2px;
+  top: 2px;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  background: var(--ab, var(--border));
+  transform: translateX(var(--x, 0));
+}
+.boxField input[type="checkbox"].switch:checked {
+  --ab: var(--active-inner);
+  --x: 17px;
+}
+.boxField input[type="checkbox"].switch:disabled:not(:checked):after {
+  opacity: 0.6;
+}

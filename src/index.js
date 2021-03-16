@@ -5,8 +5,6 @@ import { BrowserRouter } from "react-router-dom";
 import { ScrollContext } from "react-router-scroll-4";
 import * as serviceWorker from "./serviceWorker";
 
-
-
 // Added by Ranjith 31 july 2020
 //import { GlobalCustomThemeProvider } from "./context/GlobalState";
 import { RosterProvider } from "./context/RosterState";
@@ -22,13 +20,13 @@ import { AdminProvider } from "./context/AdminState";
 import { MasterFilesProvider } from "./context/MasterFilesState";
 import { PermissionProvider } from "./context/PermissionState";
 import { SearchProvider } from "./context/SearchState";
-import { SupportProvider } from "./context/SupportState"
-import { GroupProvider } from './context/GroupState'
-import { OfferProvider } from './context/OfferState'
+import { SupportProvider } from "./context/SupportState";
+import { GroupProvider } from "./context/GroupState";
+import { OfferProvider } from "./context/OfferState";
+import { OnBoardProvider } from "./context/OnBoardState";
 import RoutePath from "./Route";
 import WithAxios from "./utils/axios";
 import "bootstrap/dist/css/bootstrap.min.css";
-
 
 //firebase Auth
 function Root() {
@@ -55,16 +53,18 @@ function Root() {
                               <SupportProvider>
                                 <GroupProvider>
                                   <OfferProvider>
-                                  <BrowserRouter basename={"/"}>
-                                    <ScrollContext>
-                                      <WithAxios>
-                                        <RoutePath />
-                                      </WithAxios>
-                                    </ScrollContext>
-                                  </BrowserRouter>
+                                    <OnBoardProvider>
+                                      <BrowserRouter basename={"/"}>
+                                        <ScrollContext>
+                                          <WithAxios>
+                                            <RoutePath />
+                                          </WithAxios>
+                                        </ScrollContext>
+                                      </BrowserRouter>
+                                    </OnBoardProvider>
                                   </OfferProvider>
                                   {/* //Support provider 14-12-20*/}
-                                  
+
                                   {/* </Provider>  */}
                                 </GroupProvider>
                               </SupportProvider>

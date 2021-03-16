@@ -8,8 +8,10 @@
     "@fullcalendar/react": "^4.4.2",
     "@fullcalendar/timegrid": "^4.4.2",
     "@lourenci/react-kanban": "^0.14.0",
+    "@react-pdf/renderer": "^1.6.13",
+    "react-pdf": "^5.2.0",
     "array-unique": "^0.3.2",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "body-scroll-lock": "^2.7.1",
     "chart.js": "^2.9.4",
     "chartist": "^0.11.4",
@@ -67,7 +69,6 @@
     "react-masonry-css": "^1.0.14",
     "react-moment": "^0.9.7",
     "react-multi-select-component": "^3.0.8",
-    "react-pdf": "^5.2.0",
     "react-photo-gallery": "^8.0.0",
     "react-popup": "^0.10.0",
     "react-rangeslider": "^2.2.0",
@@ -131,5 +132,17 @@
     "moment-timezone": "^0.5.32",
     "react": "^16.14.0",
     "react-dom": "^16.14.0"
-  }
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/sales_retail/humine-new-development.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/sales_retail/humine-new-development/issues"
+  },
+  "homepage": "https://gitlab.com/sales_retail/humine-new-development#readme"
 }
