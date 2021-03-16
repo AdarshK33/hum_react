@@ -1,12 +1,12 @@
 .accordion__button {
-  background-color: #006ebb;
-  color: white;
-  cursor: pointer;
-  padding: 9px;
-  width: 100%;
-  text-align: left;
-  border: none;
-  margin: 5px 0;
+  background-color: #006ebb !important;
+  color: white !important;
+  cursor: pointer !important;
+  padding: 9px !important;
+  width: 100% !important;
+  text-align: left !important;
+  border: none !important;
+  margin: 5px 0 !important;
 }
 .accordion__button:hover {
   background-color: #006ebb;

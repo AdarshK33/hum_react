@@ -302,7 +302,7 @@ export const OfferProvider = (props) => {
   const generateOfferLetter = (id) => {
     console.log("state offer id", id);
     return client
-      .get("/api/v1/candidate/offer/" + id)
+      .get("/api/v1/candidate/offer/8")
       .then((response) => {
         state.offerLetterData = response.data.data;
         console.log("offer.message", state.offerLetterData);

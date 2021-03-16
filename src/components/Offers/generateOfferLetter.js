@@ -16,14 +16,25 @@ const GenerateOfferLetter = () => {
     createCandidateResponse,
     generateOfferLetter,
     offerLetterData,
+    offerLetterViewData,
   } = useContext(OfferContext);
 
   const handleClose = () => setShow(false);
-  const handleShow = () => {
-    setShow(true);
+
+  const offerLetterClick = () => {
     console.log("offer candidate id", createCandidateResponse.candidateId);
-    console.log("offer letter response", offerLetterData);
     generateOfferLetter(createCandidateResponse.candidateId);
+    console.log("offer letter response data", offerLetterData.length);
+
+    handleShow();
+  };
+  const handleShow = () => {
+    console.log("inside show moodal");
+    console.log("offer view data", offerLetterViewData);
+    // if (offerLetterData.length > 0) {
+    setShow(true);
+    console.log("offer letter response", offerLetterData);
+    // }
   };
 
   const saveOfferLetter = () => {
@@ -33,6 +44,7 @@ const GenerateOfferLetter = () => {
 
   const digitalSignature = () => {
     setShowSignature(true);
+    console.log("offer letter response sig", offerLetterData);
   };
 
   const submitHandler = (e) => {
@@ -58,7 +70,7 @@ const GenerateOfferLetter = () => {
           <Row>
             <Col sm={5}></Col>
             <Col sm={2}>
-              <Button type="button" onClick={handleShow}>
+              <Button type="button" onClick={offerLetterClick}>
                 Generate Offer Letter
               </Button>
             </Col>
