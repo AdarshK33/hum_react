@@ -62,6 +62,7 @@ const OfferReleaseList = () => {
     }
 
     return (
+        
         <Fragment>
             <Breadcrumb title="Offers" parent="Offer Release" />
             <Container fluid>
@@ -155,6 +156,7 @@ const OfferReleaseList = () => {
                 />
             }
         </Fragment>
+
     );
 };
 
