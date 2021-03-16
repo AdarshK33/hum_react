@@ -6,7 +6,7 @@ const AcceptModal = (props) => {
     let history = useHistory();
 
     const goToFom = () => {
-        history.push('./manager-offer-release')
+        history.push('./onboard')
     }
     return (
         <Fragment>

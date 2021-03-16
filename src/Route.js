@@ -133,7 +133,7 @@ const RoutePath = () => {
             component={EditOfferRelease}
           />
           <Route
-            path={`${process.env.PUBLIC_URL}/offer-accept`}
+            path={`${process.env.PUBLIC_URL}/onboard-offer`}
             component={OfferAccept}
           />
           {state.MenuPermissionsRoute.map((e) => {
