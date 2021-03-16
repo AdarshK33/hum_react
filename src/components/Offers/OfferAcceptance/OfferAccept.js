@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { Button, Container, Row, Col } from 'react-bootstrap'
+import Breadcrumb from '../../common/breadcrumb';
 import Switch from 'react-switch'
 import '../offers.css'
 import AcceptModal from './AcceptModal'
@@ -47,6 +48,7 @@ const OfferAccept = () => {
 
     return (
         <Fragment>
+            <Breadcrumb title="OnBoard" parent="onBoard" />
             <Container className='main-container'>
                 <h5 className='offerHeading'>Candidate Offer Acceptance</h5>
                 <Container className='middle-container'>

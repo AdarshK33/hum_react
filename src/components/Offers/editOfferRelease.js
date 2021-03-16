@@ -16,7 +16,7 @@ import EditWorkInformation from './editWorkInformation'
 const EditOfferRelease = () => {
     return (
         <Fragment>
-            <Container fluid>
+            <Container fluid className='container-accordion'>
                 <h5 style={{marginTop:'1rem',fontWeight:'700'}}>Edit Offer Initation</h5>
                
                     <Accordion preExpanded={['a']}>
