@@ -40,6 +40,7 @@ console.log("data2", data2)
             setFirstName(candidateRefData.firstName)
             setLastName(candidateRefData.lastName)
             setEmail(candidateRefData.personalEmail)
+            
     
             candidateRefData.candidateReferences !== null && candidateRefData.candidateReferences !== undefined &&
             candidateRefData.candidateReferences.length > 0 ?
