@@ -323,7 +323,7 @@ export const ClusterProvider = ({ children }) => {
     console.log("=== Flag set" + flag)
     if (flag === "0") {
       console.log("MY FLAGE VALUE" + flag)
-      return client.get('/cluster/view/' + costCenter)
+      return client.get('/api/v1/cluster/view/' + costCenter)
         .then((response) => {
           const clusterCostCenterList = response.data.data
 
