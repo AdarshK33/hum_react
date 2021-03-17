@@ -3,6 +3,9 @@ import { Modal, Row, Col, Form, Button } from "react-bootstrap";
 import calendarImage from "../../assets/images/calendar-image.png";
 import "./offers.css";
 import { OfferContext } from "../../context/OfferState";
+import PartTimeOfferLetter from "../Offers/partTimeOfferLetter";
+import PermanentOfferLetter from "./permanentOfferLetter";
+import { Link } from "react-router-dom";
 
 const GenerateOfferLetter = () => {
   const [showModal, setShow] = useState(false);
@@ -16,7 +19,6 @@ const GenerateOfferLetter = () => {
     createCandidateResponse,
     generateOfferLetter,
     offerLetterData,
-    offerLetterViewData,
   } = useContext(OfferContext);
 
   const handleClose = () => setShow(false);
@@ -24,13 +26,12 @@ const GenerateOfferLetter = () => {
   const offerLetterClick = () => {
     console.log("offer candidate id", createCandidateResponse.candidateId);
     generateOfferLetter(createCandidateResponse.candidateId);
-    console.log("offer letter response data", offerLetterData.length);
+    console.log("offer letter response data", offerLetterData);
 
     handleShow();
   };
   const handleShow = () => {
     console.log("inside show moodal");
-    console.log("offer view data", offerLetterViewData);
     // if (offerLetterData.length > 0) {
     setShow(true);
     console.log("offer letter response", offerLetterData);
@@ -60,7 +61,6 @@ const GenerateOfferLetter = () => {
   const previewOfferLetter = () => {
     setSubmitLetter(false);
     setPreviewLetter(true);
-
     setShow(true);
   };
   return (
@@ -107,14 +107,16 @@ const GenerateOfferLetter = () => {
             <div className="offer-letter-message">
               <p className="signature-text">Offer Letter Sent to Candidate</p>
               <br></br>
-              <Button type="button" onClick={handleClose}>
-                close
-              </Button>
+              <Link to="/offer-release-list">
+                <Button type="button" onClick={handleClose}>
+                  close
+                </Button>
+              </Link>
             </div>
           </Modal.Body>
         ) : previewLetter || showModal ? (
           <Modal.Body>
-            <p>[Your Company's Name]</p>
+            {/* <p>[Your Company's Name]</p>
             <p>[Street Address]</p>
             <p>[City, State Zip Code]</p>
             <p>[Phone Number]</p>
@@ -159,11 +161,17 @@ const GenerateOfferLetter = () => {
               [Your Name(or the name of the person who is doing the hiring)]
             </p>
             <br></br>
-            <p>[Title - if applicable]</p>
+            <p>[Title - if applicable]</p> */}
+            {offerLetterData.contractType === "permanent" ? (
+              <PermanentOfferLetter />
+            ) : (
+              <PartTimeOfferLetter />
+            )}
+            <br></br>
             <Row>
               <Col sm={6}>
-                <p>Enclosures :</p>
-                <p>CC :</p>
+                <p>Thanking you</p>
+                <p>{offerLetterData.managerName}</p>
               </Col>
               <Col sm={6}>
                 {showSignature ? (

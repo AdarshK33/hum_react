@@ -301,19 +301,22 @@ export const OfferProvider = (props) => {
 
   const generateOfferLetter = (id) => {
     console.log("state offer id", id);
-    return client
-      .get("/api/v1/candidate/offer/8")
-      .then((response) => {
-        state.offerLetterData = response.data.data;
-        console.log("offer.message", state.offerLetterData);
-        return dispatch({
-          type: "OFFER_LETTER_DATA",
-          payload: state.offerLetterData,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    return (
+      client
+        .get("/api/v1/candidate/offer/8")
+        // .get("/api/v1/candidate/offer/" + id)
+        .then((response) => {
+          state.offerLetterData = response.data.data;
+          console.log("offer.message", state.offerLetterData);
+          return dispatch({
+            type: "OFFER_LETTER_DATA",
+            payload: state.offerLetterData,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    );
   };
 
   return (

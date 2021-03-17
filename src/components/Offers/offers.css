@@ -1,27 +1,27 @@
-.accordion__button {
-  background-color: #006ebb !important;
-  color: white !important;
-  cursor: pointer !important;
-  padding: 9px !important;
-  width: 100% !important;
-  text-align: left !important;
-  border: none !important;
-  margin: 5px 0 !important;
+.container-accordion .accordion__button {
+  background-color: #006ebb;
+  color: white;
+  cursor: pointer;
+  padding: 9px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  margin: 5px 0;
 }
-.accordion__button:hover {
+.container-accordion .accordion__button:hover {
   background-color: #006ebb;
 }
-.accordion {
+.container-accordion .accordion {
   border: none;
   border-radius: 0;
 }
-.accordion__item + .accordion__item {
+.container-accordion .accordion__item + .accordion__item {
   border-top: none;
 }
-.accordion__button:before {
+.container-accordion .accordion__button:before {
   display: none;
 }
-.accordion__button:after {
+.container-accordion .accordion__button:after {
   display: block;
   content: "";
   height: 10px;
@@ -33,20 +33,21 @@
   float: right;
   clear: both;
 }
-.accordion__button[aria-expanded="true"]::after,
-.accordion__button[aria-selected="true"]::after {
+.container-accordion .accordion__button[aria-expanded="true"]::after,
+.container-accordion .accordion__button[aria-selected="true"]::after {
   transform: rotate(45deg);
 }
-.form-input .form-control {
+.container-accordion .form-input.form-control {
   border-radius: 12.25rem;
 }
-.reactDate.form-group .react-datepicker-wrapper {
+.container-accordion .reactDate.form-group .react-datepicker-wrapper {
   display: block !important;
 }
 .main-container.container {
   /* margin-top: 4rem; */
-  padding-top: 2rem;
+  padding: 4rem 0;
   text-align: center;
+  background-color: white;
 }
 h5.offerHeading {
   font-weight: 700;
@@ -64,25 +65,21 @@ h5.offerHeading {
 canvas.react-pdf__Page__canvas {
   display: unset !important;
 }
-
-.modal-line {
-  border: unset;
+.react-pdf__Document {
+  border: 1px solid lightgrey;
+}
+p.offerHeader {
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 15px;
 }
 
-.digital-signature {
-  margin-left: 100px;
+p.offerSubHeader {
+  font-weight: 700;
+  font-size: 15px;
 }
 
-.signature-text {
-  color: rgb(42, 203, 243);
-}
-
-.preview-section {
-  display: grid;
-  justify-content: center;
-}
-
-.offer-letter-message {
-  display: grid;
-  justify-content: center;
+span.boldText {
+  font-weight: bold;
 }

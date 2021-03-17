@@ -22,7 +22,7 @@ const ManagerOfferRelease = () => {
   };
   return (
     <Fragment>
-      <Container fluid>
+      <Container fluid className='container-accordion'>
         <h5 style={{ marginTop: "1rem", fontWeight: "700" }}>
           New Offer Initation
         </h5>
@@ -46,7 +46,7 @@ const ManagerOfferRelease = () => {
               />
             </AccordionItemPanel>
           </AccordionItem>
-        </Accordion>
+        {/* </Accordion>
         <Accordion preExpanded={["a"]}>
           <AccordionItem uuid="a">
             <AccordionItemHeading>
@@ -57,7 +57,7 @@ const ManagerOfferRelease = () => {
             <AccordionItemPanel>
               <EmployeeForm />
             </AccordionItemPanel>
-          </AccordionItem>
+          </AccordionItem> */}
 
           <AccordionItem>
             <AccordionItemHeading>

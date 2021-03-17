@@ -129,7 +129,7 @@ const EditRemunerationInformation = (props) => {
                       className="form-input"
                       type="nummber"
                       name="monthlyBonus"
-                      value={monthlyBonus}
+                      value={0}
                       onChange={(event) => setMonthlyBonus(0)}
                       required
                       readOnly
