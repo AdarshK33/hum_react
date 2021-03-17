@@ -71,7 +71,7 @@ console.log("locationView",e.target.value)
             designation: state.designation,
             educationCertificate: null,
             locationId: 0,
-            managerId: null,
+            managerId: user.employeeId,
             paySlip: null,
             position: state.position,
             probationPeriod: state.probation,
