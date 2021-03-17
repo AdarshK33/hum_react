@@ -10,6 +10,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import "./OnBoard.css";
+import "./Documents.css";
 import { OnBoardContext } from "../../context/OnBoardState";
 import countryList from "react-select-country-list";
 
@@ -29,6 +30,7 @@ const PersonalInformation = () => {
   const [maritalStatus, setMaritalStatus] = useState("");
   const [required, setRequired] = useState(true);
   const [statusRequired, setstatusRequired] = useState(true);
+  const [disabilityDoc, setDocName] = useState("");
   const [state, setState] = useState({
     aadhaarName: "",
     fatherName: "",
@@ -45,17 +47,18 @@ const PersonalInformation = () => {
     emp2Eamil: "",
     emp2Designation: "",
   });
-
+  const prevent = (e) => {
+    e.preventDefault();
+  };
   const submitHandler = (e) => {
     e.preventDefault();
 
     const InfoData = {
-      adharName: state.aadhaarName,
-      fatherName: state.fatherName,
-      aadhaarNumber: state.aadhaarNumber,
-      panNumber: state.panNumber,
-      dateOfBirth: DOB,
+      aadhaarDoc: null,
+      aadhaarName: state.aadhaarName,
+      aadhaarNumber: state.fatherName,
       bloodGroup: state.bloodGroup,
+      candidateId: 0,
       candidateReferences: [
         {
           designation:
@@ -70,13 +73,37 @@ const PersonalInformation = () => {
           employeeName: state.empName2 !== null ? state.empName2 : null,
         },
       ],
+      createdDate: null,
+      dateOfBirth: DOB,
+      disability: state.disability,
+      disabilityDoc: disabilityDoc,
+      fatherName: state.fatherName,
+      firstName: null,
       gender: gender,
+      lastName: null,
+      lgbt: state.lgbt,
       maritalStatus: maritalStatus,
       nationality: state.nationality,
+      panDoc: null,
+      panNumber: state.panNumber,
+      personalEmail: null,
+      photo: null,
+      referred: true,
+      status: 0,
+      statusDesc: null,
+      verificationStatus: 0,
+      verificationStatusDesc: null,
     };
     console.log("onsubmit");
     console.log(InfoData);
     updatePersonalInfo(InfoData);
+  };
+
+  const disabilityDocument = (e) => {
+    var files = e.target.files;
+    console.log(files[0].name);
+    setDocName(files[0].name);
+    console.log(state);
   };
 
   const changeHandler = (e) => {
@@ -85,6 +112,34 @@ const PersonalInformation = () => {
       [e.target.name]: e.target.value,
     });
     console.log(state);
+  };
+
+  const aadharChecking = (e) => {
+    const re = /^[0-9\b]+$/; //rules
+    if (e.target.value === "" || re.test(e.target.value)) {
+      setState({
+        ...state,
+        [e.target.name]: e.target.value,
+      });
+      console.log(state);
+    }
+  };
+  const panChecking = (e) => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
+    console.log(state);
+    console.log(e.target.value.length);
+    if (e.target.value.length >= 10) {
+      const re = /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/;
+      if (re.test(e.target.value) === false) {
+        setState({
+          ...state,
+          [e.target.name]: "",
+        });
+      }
+    }
   };
   const dateOfBirthHandler = (date) => {
     setDOB(date);
@@ -244,8 +299,10 @@ const PersonalInformation = () => {
                     type="text"
                     name="aadhaarNumber"
                     value={state.aadhaarNumber}
-                    onChange={changeHandler}
+                    onChange={aadharChecking}
                     required
+                    maxLength="12"
+                    pattern="[0-9]*"
                     placeholder="Aadhaar Number"
                     disabled={disabled}
                   />
@@ -260,7 +317,8 @@ const PersonalInformation = () => {
                     type="text"
                     name="panNumber"
                     value={state.panNumber}
-                    onChange={changeHandler}
+                    onChange={panChecking}
+                    maxLength="10"
                     required
                     placeholder="Pan Number"
                     disabled={disabled}
@@ -298,7 +356,7 @@ const PersonalInformation = () => {
                   <Form.Control
                     as="select"
                     name="disability"
-                    value={state.disablity}
+                    value={state.disability}
                     onChange={changeHandler}
                     required
                     disabled={disabled}
@@ -412,6 +470,43 @@ const PersonalInformation = () => {
                 </Form.Group>
               </Col>
             </Row>
+            {state.disability === "Yes" ? (
+              <Row style={{ marginTop: "2rem" }}>
+                <Col sm={12}>
+                  <div className="FileInput">
+                    <label>Disability Document</label>
+                  </div>
+                  <div className="parentInput">
+                    <input
+                      className="fileInputField2"
+                      placeholder="Choose File"
+                      type="text"
+                      name="disabilityDoc"
+                      value={disabilityDoc}
+                    />
+                    <label
+                      className="custom-file-upload"
+                      style={{ fontSize: "16px" }}
+                    >
+                      <input
+                        type="file"
+                        className="custom_file_Upload_button"
+                        onChange={disabilityDocument}
+                      />
+                      {/* <i className="fa fa-cloud-upload" />  */}
+                      Upload
+                      {/* <i
+                      id="custom_file_upload_icon"
+                      class="fa fa-upload"
+                      aria-hidden="true"
+                    ></i> */}
+                    </label>
+                  </div>
+                </Col>
+              </Row>
+            ) : (
+              <div></div>
+            )}
           </Col>
         </Row>
         <Row style={{ marginBottom: "1rem" }}>
