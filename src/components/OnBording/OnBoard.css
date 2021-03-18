@@ -7,6 +7,9 @@
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
+.errorBorder {
+  border-color: red;
+}
 .defaultLabelColour {
   color: black;
   font-size: 0.8rem;
