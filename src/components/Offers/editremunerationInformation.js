@@ -54,6 +54,7 @@ const EditRemunerationInformation = (props) => {
     } else if (user.role === "ADMIN" && monthlyBonus === "") {
       setMonthlyBonusError(true);
     } else {
+      setMonthlyBonus(0);
       setFixedGrossError(false);
       setMonthlyBonusError(false);
       console.log("remuneration Info", fixedGross, monthlyBonus);
@@ -166,9 +167,6 @@ const EditRemunerationInformation = (props) => {
                       className="form-input"
                       type="nummber"
                       name="monthlyBonus"
-                      value={0}
-                      onChange={(event) => setMonthlyBonus(0)}
-                      required
                       readOnly
                       disabled={disabled}
                       placeholder="0"
