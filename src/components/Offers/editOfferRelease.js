@@ -23,6 +23,18 @@ const EditOfferRelease = () => {
           Edit Offer Initation
         </h5>
 
+        {/* <Accordion preExpanded={["a"]}>
+          <AccordionItem uuid="a">
+            <AccordionItemHeading>
+              <AccordionItemButton>
+                Step 1: Candidate Information
+              </AccordionItemButton>
+            </AccordionItemHeading>
+            <AccordionItemPanel>
+              <EditEmployeeForm />
+            </AccordionItemPanel>
+          </AccordionItem> */}
+
         <Accordion preExpanded={["a"]}>
           <AccordionItem uuid="a">
             <AccordionItemHeading>
@@ -35,52 +47,40 @@ const EditOfferRelease = () => {
             </AccordionItemPanel>
           </AccordionItem>
 
-          <Accordion preExpanded={["a"]}>
-            <AccordionItem uuid="a">
-              <AccordionItemHeading>
-                <AccordionItemButton>
-                  Step 1: Candidate Information
-                </AccordionItemButton>
-              </AccordionItemHeading>
-              <AccordionItemPanel>
-                <EditEmployeeForm />
-              </AccordionItemPanel>
-            </AccordionItem>
+          <AccordionItem>
+            <AccordionItemHeading>
+              <AccordionItemButton>
+                Step 2: Work Information
+              </AccordionItemButton>
+            </AccordionItemHeading>
+            <AccordionItemPanel>
+              <EditWorkInformation />
+            </AccordionItemPanel>
+          </AccordionItem>
 
-            <AccordionItem>
-              <AccordionItemHeading>
-                <AccordionItemButton>
-                  Step 2: Work Information
-                </AccordionItemButton>
-              </AccordionItemHeading>
-              <AccordionItemPanel>
-                <EditWorkInformation />
-              </AccordionItemPanel>
-            </AccordionItem>
+          <AccordionItem>
+            <AccordionItemHeading>
+              <AccordionItemButton>
+                Step 3: Remuneration Information
+              </AccordionItemButton>
+            </AccordionItemHeading>
+            <AccordionItemPanel>
+              <EditRemunerationInformation />
+            </AccordionItemPanel>
+          </AccordionItem>
 
-            <AccordionItem>
-              <AccordionItemHeading>
-                <AccordionItemButton>
-                  Step 3: Remuneration Information
-                </AccordionItemButton>
-              </AccordionItemHeading>
-              <AccordionItemPanel>
-                <EditRemunerationInformation />
-              </AccordionItemPanel>
-            </AccordionItem>
-
-            <AccordionItem>
-              <AccordionItemHeading>
-                <AccordionItemButton>
-                  Step 4: Generate Offer Letter
-                </AccordionItemButton>
-              </AccordionItemHeading>
-              <AccordionItemPanel>
-                <GenerateOfferLetter />
-              </AccordionItemPanel>
-            </AccordionItem>
-          </Accordion>
+          <AccordionItem>
+            <AccordionItemHeading>
+              <AccordionItemButton>
+                Step 4: Generate Offer Letter
+              </AccordionItemButton>
+            </AccordionItemHeading>
+            <AccordionItemPanel>
+              <GenerateOfferLetter />
+            </AccordionItemPanel>
+          </AccordionItem>
         </Accordion>
+        {/* </Accordion> */}
       </Container>
     </Fragment>
   );
