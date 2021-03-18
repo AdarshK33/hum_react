@@ -111,6 +111,7 @@ const EditWorkInformation = () => {
       relievingLetter: null,
       workId: 0,
     };
+    console.log("update data", updateData);
     updateCandidateWork(updateData);
     setDisabled(true);
     setEditButton(true);

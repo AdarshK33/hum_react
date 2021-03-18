@@ -12,6 +12,8 @@ import "react-accessible-accordion/dist/fancy-example.css";
 import "./offers.css";
 import EmployeeForm from "./employeeForm";
 import WorkInformation from "./workInformation";
+import RemunerationInformation from "./remunerationInformation";
+import GenerateOfferLetter from "./generateOfferLetter";
 
 const ManagerOfferRelease = () => {
   const [isChecked, setIsChecked] = useState(false);
@@ -74,7 +76,20 @@ const ManagerOfferRelease = () => {
                 Step 3: Remuneration Information
               </AccordionItemButton>
             </AccordionItemHeading>
-            <AccordionItemPanel></AccordionItemPanel>
+            <AccordionItemPanel>
+              <RemunerationInformation />
+            </AccordionItemPanel>
+          </AccordionItem>
+
+          <AccordionItem>
+            <AccordionItemHeading>
+              <AccordionItemButton>
+                Step 4: Generate Offer Letter
+              </AccordionItemButton>
+            </AccordionItemHeading>
+            <AccordionItemPanel>
+              <GenerateOfferLetter />
+            </AccordionItemPanel>
           </AccordionItem>
         </Accordion>
       </Container>
