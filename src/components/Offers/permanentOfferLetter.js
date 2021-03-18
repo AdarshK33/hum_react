@@ -34,8 +34,8 @@ const PermanentOfferLetter = () => {
         </li>
         <li>
           Your monthly gross salary will not exceed Rs.{" "}
-          <span className="boldText">{offerLetterData.fixedGross}</span> (INR.
-          Forty Thousand ). Refer to the salary annexure mentioned below
+          <span className="boldText">{offerLetterData.fixedGross}</span>. Refer
+          to the salary annexure mentioned below
         </li>
         <li>
           You may also receive a bonus on monthly basis and which would be to a

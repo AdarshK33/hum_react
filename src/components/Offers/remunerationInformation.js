@@ -7,12 +7,13 @@ import { OfferContext } from "../../context/OfferState";
 import { AppContext } from "../../context/AppState";
 
 const RemunerationInformation = (props) => {
-  const [fixedGross, setFixedGross] = useState("");
-  const [monthlyBonus, setMonthlyBonus] = useState("");
+  const [fixedGross, setFixedGross] = useState();
+  const [monthlyBonus, setMonthlyBonus] = useState();
   const [fixedGrossError, setFixedGrossError] = useState(false);
   const [monthlyBonusError, setMonthlyBonusError] = useState(false);
   const [editButton, setEditButton] = useState(false);
   const [disabled, setDisabled] = useState(false);
+  const [saveclick, setSaveclick] = useState(false);
 
   const {
     remunerationSave,
@@ -23,15 +24,15 @@ const RemunerationInformation = (props) => {
   } = useContext(OfferContext);
   const { user } = useContext(AppContext);
 
-  // useEffect(() => {
-  //   console.log("candidateData remuneration1", createCandidateResponse);
-  //   console.log("candidateData remuneration2", candidateData);
-  //   getUserInfo();
-  //   console.log("user profile", user);
-  // });
+  useEffect(() => {
+    console.log("candidateData remuneration1", createCandidateResponse);
+    console.log("candidateData remuneration2", candidateData);
+    console.log("user profile", user);
+  });
 
   const submitHandler = (e) => {
-    console.log("inside submit");
+    console.log("inside submit", candidateData);
+    let remunerationinfo;
     e.preventDefault();
     if (user.role === "ADMIN" && fixedGross === "" && monthlyBonus === "") {
       setFixedGrossError(true);
@@ -41,17 +42,42 @@ const RemunerationInformation = (props) => {
     } else if (user.role === "ADMIN" && monthlyBonus === "") {
       setMonthlyBonusError(true);
     } else {
+      setMonthlyBonus(0);
       setFixedGrossError(false);
       setMonthlyBonusError(false);
       console.log("remuneration Info", fixedGross, monthlyBonus);
-      const data = {
-        candidateId: createCandidateResponse.candidateId,
-        fixedGross: fixedGross,
-        monthlyBonus: monthlyBonus,
-        remunerationId: 0,
-        stipend: 0,
-      };
-      remunerationSave(data);
+      console.log("remunerationViewData save", remunerationViewData);
+      if (saveclick === false) {
+        console.log("first click");
+        setSaveclick(true);
+        remunerationinfo = {
+          candidateId: createCandidateResponse.candidateId,
+          fixedGross: fixedGross,
+          monthlyBonus:
+            monthlyBonus === undefined || monthlyBonus === null
+              ? 0
+              : monthlyBonus,
+          remunerationId: 0,
+          stipend: 0,
+        };
+      } else if (remunerationViewData && saveclick === true) {
+        console.log("second click");
+        remunerationinfo = {
+          candidateId: createCandidateResponse.candidateId,
+          fixedGross: fixedGross,
+          monthlyBonus: monthlyBonus,
+          remunerationId: remunerationViewData.remunerationId,
+          stipend: 0,
+        };
+      }
+
+      console.log(
+        "createCandidateResponse.candidateId",
+        createCandidateResponse.candidateId
+      );
+
+      console.log("createCandidateResponse data", remunerationinfo);
+      remunerationSave(remunerationinfo);
       remunerationView(createCandidateResponse.candidateId);
       setDisabled(true);
       setEditButton(true);
@@ -61,7 +87,7 @@ const RemunerationInformation = (props) => {
   const editHandler = () => {
     console.log("view cadidate id ", createCandidateResponse.candidateId);
     setDisabled(false);
-    console.log("remunerationViewData", remunerationViewData);
+    console.log("remunerationViewData edit", remunerationViewData);
     // setFixedGross(remunerationViewData.fixedGross);
     // setMonthlyBonus(remunerationViewData.monthlyBonus);
   };
@@ -96,57 +122,66 @@ const RemunerationInformation = (props) => {
                 </Col>
               </Form.Group>
             </Col>
-            {user.role === "ADMIN" ? (
-              <Col sm={6}>
-                <Form.Group as={Row} controlId="formHorizontalEmail">
-                  <Form.Label column sm={3}>
-                    Monthly Bonus
-                  </Form.Label>
-                  <Col sm={6}>
-                    <Form.Control
-                      className="form-input"
-                      type="number"
-                      name="monthlyBonus"
-                      placeholder="0"
-                      value={monthlyBonus}
-                      onChange={(event) => setMonthlyBonus(event.target.value)}
-                      required
-                      disabled={disabled}
-                    />
-                    {monthlyBonusError ? (
-                      <p style={{ color: "red" }}>This field cannot be empty</p>
-                    ) : (
-                      ""
-                    )}
-                  </Col>
-                </Form.Group>
-              </Col>
+            {user ? (
+              user.role === "ADMIN" ? (
+                <Col sm={6}>
+                  <Form.Group as={Row} controlId="formHorizontalEmail">
+                    <Form.Label column sm={3}>
+                      Monthly Bonus ( % )
+                    </Form.Label>
+                    <Col sm={6}>
+                      <Form.Control
+                        className="form-input"
+                        type="number"
+                        name="monthlyBonus"
+                        placeholder="0"
+                        value={monthlyBonus}
+                        onChange={(event) =>
+                          setMonthlyBonus(event.target.value)
+                        }
+                        required
+                        disabled={disabled}
+                      />
+                      {monthlyBonusError ? (
+                        <p style={{ color: "red" }}>
+                          This field cannot be empty
+                        </p>
+                      ) : monthlyBonus > 20 ? (
+                        <p style={{ color: "red" }}>Maximum Bonus 20 %</p>
+                      ) : (
+                        ""
+                      )}
+                    </Col>
+                  </Form.Group>
+                </Col>
+              ) : (
+                <Col sm={6}>
+                  <Form.Group as={Row} controlId="formHorizontalEmail">
+                    <Form.Label column sm={3}>
+                      Monthly Bonus
+                    </Form.Label>
+                    <Col sm={6}>
+                      <Form.Control
+                        className="form-input"
+                        type="nummber"
+                        name="monthlyBonus"
+                        placeholder="0"
+                        readOnly
+                        disabled={disabled}
+                      />
+                      {monthlyBonusError ? (
+                        <p style={{ color: "red" }}>
+                          This field cannot be empty
+                        </p>
+                      ) : (
+                        ""
+                      )}
+                    </Col>
+                  </Form.Group>
+                </Col>
+              )
             ) : (
-              <Col sm={6}>
-                <Form.Group as={Row} controlId="formHorizontalEmail">
-                  <Form.Label column sm={3}>
-                    Monthly Bonus
-                  </Form.Label>
-                  <Col sm={6}>
-                    <Form.Control
-                      className="form-input"
-                      type="nummber"
-                      name="monthlyBonus"
-                      placeholder="0"
-                      value={0}
-                      onChange={(event) => setMonthlyBonus(event.target.value)}
-                      required
-                      readOnly
-                      disabled={disabled}
-                    />
-                    {monthlyBonusError ? (
-                      <p style={{ color: "red" }}>This field cannot be empty</p>
-                    ) : (
-                      ""
-                    )}
-                  </Col>
-                </Form.Group>
-              </Col>
+              ""
             )}
           </Fragment>
         </Row>

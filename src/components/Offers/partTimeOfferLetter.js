@@ -19,19 +19,19 @@ const PartTimeOfferLetter = () => {
           <p className="offerHeader">OFFER LETTER</p>
           <br></br>
           <p className="offerSubHeader">PRIVATE AND CONFIDENTIAL</p>
-          <br></br>
+
           <p className="offerSubHeader">
             Date: {moment().format("DD-MM-YYYY")}
           </p>
-          <br></br>
+
           <p>Dear {offerLetterData.candidateName},</p>
-          <br></br>
+
           <p>
             We have the pleasure to offer you the position of{" "}
             <span className="boldText">{offerLetterData.position}</span> on
             Part-Time Basis at Decathlon Sports India Pvt. Ltd.{" "}
           </p>
-          <br></br>
+
           <p className="offerSubHeader">1. Terms & Conditions</p>
           <ol>
             <li>
@@ -42,8 +42,8 @@ const PartTimeOfferLetter = () => {
             </li>
             <li>
               Your gross salary will not exceed{" "}
-              <span className="boldText">{offerLetterData.fixedGross}</span>
-              (INR. One Hundred and Twenty) per Hourly
+              <span className="boldText">{offerLetterData.fixedGross}</span> per
+              Hourly
             </li>
             <li>
               You may also receive a bonus on monthly basis and which would be
