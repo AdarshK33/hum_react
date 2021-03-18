@@ -1,11 +1,14 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useState, useContext} from 'react';
 import {Button, Container, Modal} from 'react-bootstrap'
 import { useHistory } from "react-router-dom";
+import {OfferContext} from '../../../context/OfferState'
 
 const AcceptModal = (props) => {
+    const {createCandidateResponse} = useContext(OfferContext)
     let history = useHistory();
 
     const goToFom = () => {
+        
         history.push('./onboard')
     }
     return (

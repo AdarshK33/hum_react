@@ -59,7 +59,6 @@ const WorkInformation = () => {
     locationView(e.target.value);
     console.log("locationView", e.target.value);
   };
-
   const dateOfJoiningHandler = (date) => {
     setDateOFJoining(date);
   };
@@ -78,7 +77,7 @@ const WorkInformation = () => {
       department: state.department,
       designation: state.designation,
       educationCertificate: null,
-      locationId: 0,
+      locationId: locationName.locationId,
       managerId: user.employeeId,
       paySlip: null,
       position: state.position,
@@ -87,11 +86,12 @@ const WorkInformation = () => {
       relievingLetter: null,
       workId: 0,
     };
-    console.log("createData work info", createData);
+    console.log("createData", createData);
     createCandidateWork(createData);
     setDisabled(true);
     setEditButton(true);
   };
+
   const editHandler = () => {
     setDisabled(false);
     console.log("state", state);

@@ -42,9 +42,7 @@ const PartTimeOfferLetter = () => {
             </li>
             <li>
               Your gross salary will not exceed{" "}
-              <span className="boldText">
-                {offerLetterData.partTimeCandidateOffer.rate}
-              </span>
+              <span className="boldText">{offerLetterData.fixedGross}</span>
               (INR. One Hundred and Twenty) per Hourly
             </li>
             <li>

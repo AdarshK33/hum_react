@@ -102,8 +102,8 @@ const EditWorkInformation = () => {
       department: state.department,
       designation: state.designation,
       educationCertificate: null,
-      locationId: 0,
-      managerId: null,
+      locationId: locationName.locationId,
+      managerId: user.employeeId,
       paySlip: null,
       position: state.position,
       probationPeriod: state.probation,
@@ -111,6 +111,7 @@ const EditWorkInformation = () => {
       relievingLetter: null,
       workId: 0,
     };
+    console.log("update data", updateData);
     updateCandidateWork(updateData);
     setDisabled(true);
     setEditButton(true);

@@ -29,7 +29,7 @@ const EditRemunerationInformation = (props) => {
     let remunerationData =
       candidateData !== null &&
       candidateData !== undefined &&
-      candidateData.remunerationData;
+      candidateData.remuneration;
 
     if (remunerationData !== null && remunerationData !== undefined) {
       setFixedGross(remunerationData.fixedGross);
@@ -42,7 +42,7 @@ const EditRemunerationInformation = (props) => {
     let remunerationSubmitData =
       candidateData !== null &&
       candidateData !== undefined &&
-      candidateData.remunerationData;
+      candidateData.remuneration;
     e.preventDefault();
     if (user.role === "ADMIN" && fixedGross === "" && monthlyBonus === "") {
       setFixedGrossError(true);
