@@ -103,23 +103,23 @@ const GenerateOfferLetter = () => {
         )}
       </Form>
 
-      <Modal show={showModal} onHide={handleClose}>
+      <Modal show={showModal} onHide={handleClose} size="lg">
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         {submitLetter ? (
           <Modal.Body>
-            <div className="offer-letter-message">
+            <div className="offer-letter-message ">
               <p className="signature-text">Offer Letter Sent to Candidate</p>
               <br></br>
-              <Link to="/offer-release-list">
+              <Link to="/offer-release-list" className="text-center">
                 <Button type="button" onClick={handleClose}>
-                  close
+                  Close
                 </Button>
               </Link>
             </div>
           </Modal.Body>
         ) : previewLetter || showModal ? (
           <Modal.Body>
-            {/* <p>[Your Company's Name]</p>
+            {/* <p>[Your Company's Namee]</p>
             <p>[Street Address]</p>
             <p>[City, State Zip Code]</p>
             <p>[Phone Number]</p>
@@ -176,7 +176,7 @@ const GenerateOfferLetter = () => {
                 <p>Thanking you</p>
                 <p>{offerLetterData.managerName}</p>
               </Col>
-              <Col sm={6}>
+              <Col sm={6} className="signature-center-text">
                 {showSignature ? (
                   <img
                     src={calendarImage}

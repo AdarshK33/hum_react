@@ -304,7 +304,7 @@ export const OfferProvider = (props) => {
     console.log("state offer id", id);
     return (
       client
-        // .get("/api/v1/candidate/offer/8")
+        // .get("/api/v1/candidate/offer/54")
         .get("/api/v1/candidate/offer/" + id)
         .then((response) => {
           state.offerLetterData = response.data.data;
@@ -324,7 +324,7 @@ export const OfferProvider = (props) => {
     console.log("state submit id", id);
     return (
       client
-        // .get("/api/v1/candidate/notification/8")
+        // .get("/api/v1/candidate/notification/54")
         .get("/api/v1/candidate/notification/" + id)
         .then((response) => {
           state.submitOfferLetter = response.data.data;
