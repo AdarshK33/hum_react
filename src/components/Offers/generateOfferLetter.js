@@ -165,7 +165,9 @@ const GenerateOfferLetter = () => {
             </p>
             <br></br>
             <p>[Title - if applicable]</p> */}
-            {offerLetterData.contractType === "Permanent" ? (
+            {typeof offerLetterData.contractType !== undefined &&
+            offerLetterData.contractType !== null &&
+            offerLetterData.contractType === "Permanent" ? (
               <PermanentOfferLetter />
             ) : (
               <PartTimeOfferLetter />
