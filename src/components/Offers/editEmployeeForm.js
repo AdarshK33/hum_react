@@ -76,9 +76,10 @@ const EditEmployeeForm = () => {
       setEmpName1(
         data1 !== null &&
           data1 !== undefined &&
-          data1.employeeName !== undefined &&
-          data1.employeeName
+          data1.employeeName !== undefined && (data1.employeeName !== '' ?
+          data1.employeeName : '')
       );
+      console.log("empName",data1.employeeName)
       setRefEmail1(
         data1 !== null &&
           data1 !== undefined &&
@@ -88,8 +89,8 @@ const EditEmployeeForm = () => {
       setDesignation1(
         data1 !== null &&
           data1 !== undefined &&
-          data1.designation !== undefined &&
-          data1.designation
+          data1.designation !== undefined && (data1.designation !== null ?
+          data1.designation : '')
       );
       const data2 =
         candidateRefData.candidateReferences !== null &&
@@ -98,20 +99,20 @@ const EditEmployeeForm = () => {
       setEmpName2(
         data2 !== null &&
           data2 !== undefined &&
-          data2.employeeName !== undefined &&
-          data2.employeeName
+          data2.employeeName !== undefined && (data2.employeeName !== '' ?
+          data2.employeeName :'')
       );
       setRefEmail2(
         data2 !== null &&
           data2 !== undefined &&
-          data2.email !== undefined &&
-          data2.email
+          data2.email !== undefined && (data2.email !== '' ?
+          data2.email :'')
       );
       setDesignation2(
         data2 !== null &&
           data2 !== undefined &&
-          data2.designation !== undefined &&
-          data2.designation
+          data2.designation !== undefined && (data2.designation !== null ?
+          data2.designation : '')
       );
     }
   }, [candidateData]);

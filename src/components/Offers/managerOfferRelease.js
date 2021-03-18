@@ -31,12 +31,12 @@ const ManagerOfferRelease = () => {
           <AccordionItem uuid="a">
             <AccordionItemHeading>
               <AccordionItemButton>
-                <input
+                {/* <input
                   type="checkbox"
                   checked={isChecked}
                   onChange={checkedHandler}
                 />
-                &nbsp; Step 1: Candidate Information
+                &nbsp; */} Step 1: Candidate Information
               </AccordionItemButton>
             </AccordionItemHeading>
             <AccordionItemPanel>
