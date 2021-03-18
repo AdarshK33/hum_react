@@ -27,10 +27,10 @@ const EmployeeForm = (props) => {
   const [disabled, setDisabled] = useState(false);
   const [empName1, setEmpName1] = useState("");
   const [empName2, setEmpName2] = useState("");
-  const [refEmail1, setRefEmail1] = useState();
-  const [refEmail2, setRefEmail2] = useState();
-  const [desgination1, setDesignation1] = useState();
-  const [desgination2, setDesignation2] = useState();
+  const [refEmail1, setRefEmail1] = useState('');
+  const [refEmail2, setRefEmail2] = useState('');
+  const [desgination1, setDesignation1] = useState('');
+  const [desgination2, setDesignation2] = useState('');
   const [modal, setModal] = useState(false);
   let history = useHistory();
 
@@ -48,13 +48,19 @@ const EmployeeForm = (props) => {
   const handleShow = () => setModal(true);
 
   useEffect(() => {
-    setRefEmail1(searchEmpData1.email);
-    setDesignation1(searchEmpData1.position);
+    setRefEmail1(searchEmpData1 !== null ? 
+      (searchEmpData1.email !== undefined &&  searchEmpData1.email !== null ? searchEmpData1.email : ''):'');
+    setDesignation1(searchEmpData1 !== null ? 
+      (searchEmpData1.position !== undefined && searchEmpData1.position !== null ? searchEmpData1.position : ''):'');
   }, [searchEmpData1]);
+
   useEffect(() => {
-    setRefEmail2(searchEmpData2.email);
-    setDesignation2(searchEmpData2.position);
+    setRefEmail2(searchEmpData2 !== null ? 
+      (searchEmpData2.email !== undefined && searchEmpData2.email !== null ? searchEmpData2.email : ''):'' );
+    setDesignation2(searchEmpData2 !== null ? 
+      (searchEmpData2.position !== undefined && searchEmpData2.position !== null ? searchEmpData2.position : ''):'' );
   }, [searchEmpData2]);
+
 
   useEffect(() => {
     if (searchData !== null && Object.keys(searchData).length > 0) {
@@ -136,7 +142,6 @@ const EmployeeForm = (props) => {
   refState.map((item) => {
     return item.empName, item.refEmail, item.destination;
   });
-  console.log("refState", refState);
 
   const submitHandler = (e) => {
     e.preventDefault();
