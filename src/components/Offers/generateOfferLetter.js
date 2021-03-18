@@ -119,7 +119,7 @@ const GenerateOfferLetter = () => {
           </Modal.Body>
         ) : previewLetter || showModal ? (
           <Modal.Body>
-            {/* <p>[Your Company's Name]</p>
+            {/* <p>[Your Company's Namee]</p>
             <p>[Street Address]</p>
             <p>[City, State Zip Code]</p>
             <p>[Phone Number]</p>
