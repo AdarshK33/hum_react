@@ -83,3 +83,30 @@ p.offerSubHeader {
 span.boldText {
   font-weight: bold;
 }
+
+.modal-line {
+  border: unset !important;
+}
+
+.digital-signature {
+  margin-left: 100px;
+}
+
+.signature-text {
+  color: rgb(42, 203, 243);
+  text-align: center;
+}
+
+.preview-section {
+  display: grid;
+  justify-content: center;
+}
+
+.offer-letter-message {
+  display: grid;
+  justify-content: center;
+}
+
+.signature-center-text {
+  text-align: center;
+}
