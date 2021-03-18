@@ -84,14 +84,14 @@ const PermanentOfferLetter = () => {
             </tr>
             <tr>
               <td>Fixed Gross </td>
-              <td>{offerLetterData.permanentCandidateOffer.fixedGross}</td>
-              <td>{offerLetterData.permanentCandidateOffer.fixedGross * 12}</td>
+              <td>{offerLetterData.fixedGross}</td>
+              <td>{offerLetterData.fixedGross * 12}</td>
               <td>
-                {offerLetterData.permanentCandidateOffer.fixedGross +
+                {offerLetterData.fixedGross +
                   offerLetterData.permanentCandidateOffer.bonus}
               </td>
               <td>
-                {(offerLetterData.permanentCandidateOffer.fixedGross +
+                {(offerLetterData.fixedGross +
                   offerLetterData.permanentCandidateOffer.bonus) *
                   12}
               </td>
