@@ -70,7 +70,7 @@ console.log("locationView",e.target.value)
             department: state.department,
             designation: state.designation,
             educationCertificate: null,
-            locationId: 0,
+            locationId: locationName.locationId,
             managerId: user.employeeId,
             paySlip: null,
             position: state.position,
