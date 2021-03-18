@@ -3,6 +3,7 @@ import { Modal, Row, Table, Col, Form, Button } from "react-bootstrap";
 import calendarImage from "../../assets/images/calendar-image.png";
 import "./offers.css";
 import { OfferContext } from "../../context/OfferState";
+import moment from "moment";
 
 const PermanentOfferLetter = () => {
   const {

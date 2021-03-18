@@ -19,6 +19,7 @@ const initial_state = {
   remunerationData: {},
   remunerationViewData: {},
   offerLetterData: {},
+  submitOfferLetter: {},
 };
 
 export const OfferContext = createContext();
@@ -319,6 +320,26 @@ export const OfferProvider = (props) => {
     );
   };
 
+  const finalSubmitOfferLetter = (id) => {
+    console.log("state submit id", id);
+    return (
+      client
+        .get("/api/v1/candidate/notification/8")
+        // .get("/api/v1/candidate/notification/" + id)
+        .then((response) => {
+          state.submitOfferLetter = response.data.data;
+          console.log("offer.message", state.submitOfferLetter);
+          return dispatch({
+            type: "SUBMIT_OFFER_LETTER",
+            payload: state.submitOfferLetter,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    );
+  };
+
   return (
     <OfferContext.Provider
       value={{
@@ -338,6 +359,7 @@ export const OfferProvider = (props) => {
         remunerationUpdate,
         remunerationView,
         generateOfferLetter,
+        finalSubmitOfferLetter,
         searchData: state.searchData,
         departmentName: state.departmentName,
         designationName: state.designationName,
@@ -352,6 +374,7 @@ export const OfferProvider = (props) => {
         remunerationData: state.remunerationData,
         remunerationViewData: state.remunerationViewData,
         offerLetterData: state.offerLetterData,
+        submitOfferLetter: state.submitOfferLetter,
       }}
     >
       {props.children}

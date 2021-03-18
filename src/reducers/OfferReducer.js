@@ -53,6 +53,10 @@ const GroupReducer = (state, action) => {
 
     case "OFFER_LETTER_DATA":
       return { ...state, offerLetterData: action.payload };
+
+    case "SUBMIT_OFFER_LETTER":
+      return { ...state, submitOfferLetter: action.payload };
+
     default:
       return state;
   }

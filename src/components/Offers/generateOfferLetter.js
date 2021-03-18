@@ -19,6 +19,7 @@ const GenerateOfferLetter = () => {
     createCandidateResponse,
     generateOfferLetter,
     offerLetterData,
+    finalSubmitOfferLetter,
   } = useContext(OfferContext);
 
   const handleClose = () => setShow(false);
@@ -53,9 +54,11 @@ const GenerateOfferLetter = () => {
   };
 
   const submitOfferLetter = () => {
+    console.log("offer Letter id", createCandidateResponse.candidateId);
     setSubmitLetter(true);
     setLetterSent(true);
     setShow(true);
+    finalSubmitOfferLetter(createCandidateResponse.candidateId);
   };
 
   const previewOfferLetter = () => {

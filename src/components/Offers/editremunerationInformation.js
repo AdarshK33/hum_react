@@ -26,10 +26,23 @@ const EditRemunerationInformation = (props) => {
 
   useEffect(() => {
     console.log("candidateData remuneration", candidateData);
+    let remunerationData =
+      candidateData !== null &&
+      candidateData !== undefined &&
+      candidateData.remunerationData;
+
+    if (remunerationData !== null && remunerationData !== undefined) {
+      setFixedGross(remunerationData.fixedGross);
+      setMonthlyBonus(remunerationData.monthlyBonus);
+    }
   }, [candidateData]);
 
   const submitHandler = (e) => {
     console.log("inside edit submit");
+    let remunerationSubmitData =
+      candidateData !== null &&
+      candidateData !== undefined &&
+      candidateData.remunerationData;
     e.preventDefault();
     if (user.role === "ADMIN" && fixedGross === "" && monthlyBonus === "") {
       setFixedGrossError(true);
@@ -46,7 +59,7 @@ const EditRemunerationInformation = (props) => {
         candidateId: createCandidateResponse.candidateId,
         fixedGross: fixedGross,
         monthlyBonus: monthlyBonus,
-        remunerationId: 0,
+        remunerationId: remunerationSubmitData.remunerationId,
         stipend: 0,
       };
       remunerationUpdate(data);
