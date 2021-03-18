@@ -7,12 +7,13 @@ import { OfferContext } from "../../context/OfferState";
 import { AppContext } from "../../context/AppState";
 
 const EditRemunerationInformation = (props) => {
-  const [fixedGross, setFixedGross] = useState("");
-  const [monthlyBonus, setMonthlyBonus] = useState("");
+  const [fixedGross, setFixedGross] = useState();
+  const [monthlyBonus, setMonthlyBonus] = useState();
   const [editButton, setEditButton] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [fixedGrossError, setFixedGrossError] = useState(false);
   const [monthlyBonusError, setMonthlyBonusError] = useState(false);
+  const [saveclick, setSaveclick] = useState(false);
 
   const {
     remunerationUpdate,
@@ -38,7 +39,8 @@ const EditRemunerationInformation = (props) => {
   }, [candidateData]);
 
   const submitHandler = (e) => {
-    console.log("inside edit submit");
+    console.log("inside edit submit", candidateData);
+    let remunerationinfo;
     let remunerationSubmitData =
       candidateData !== null &&
       candidateData !== undefined &&
@@ -55,14 +57,34 @@ const EditRemunerationInformation = (props) => {
       setFixedGrossError(false);
       setMonthlyBonusError(false);
       console.log("remuneration Info", fixedGross, monthlyBonus);
-      const data = {
-        candidateId: createCandidateResponse.candidateId,
-        fixedGross: fixedGross,
-        monthlyBonus: monthlyBonus,
-        remunerationId: remunerationSubmitData.remunerationId,
-        stipend: 0,
-      };
-      remunerationUpdate(data);
+      if (saveclick === false) {
+        console.log("first click");
+        setSaveclick(true);
+        remunerationinfo = {
+          candidateId: createCandidateResponse.candidateId,
+          fixedGross: fixedGross,
+          monthlyBonus: monthlyBonus,
+          remunerationId: candidateData.remuneration.remunerationId
+            ? candidateData.remuneration.remunerationId
+            : 0,
+          stipend: 0,
+        };
+      } else if (candidateData.remuneration && saveclick === true) {
+        remunerationinfo = {
+          candidateId: createCandidateResponse.candidateId,
+          fixedGross: fixedGross,
+          monthlyBonus: monthlyBonus,
+          remunerationId: remunerationSubmitData.remunerationId,
+          stipend: 0,
+        };
+      }
+      console.log(
+        "remunerationViewData.remunerationId",
+        remunerationViewData.remunerationId
+      );
+
+      console.log("createCandidateResponse data", remunerationinfo);
+      remunerationUpdate(remunerationinfo);
       remunerationView(createCandidateResponse.candidateId);
       setDisabled(true);
       setEditButton(true);
@@ -110,7 +132,7 @@ const EditRemunerationInformation = (props) => {
               <Col sm={6}>
                 <Form.Group as={Row} controlId="formHorizontalEmail">
                   <Form.Label column sm={3}>
-                    Monthly Bonus
+                    Monthly Bonus ( % )
                   </Form.Label>
                   <Col sm={6}>
                     <Form.Control
@@ -125,6 +147,8 @@ const EditRemunerationInformation = (props) => {
                     />
                     {monthlyBonusError ? (
                       <p style={{ color: "red" }}>This field cannot be empty</p>
+                    ) : monthlyBonus > 20 ? (
+                      <p style={{ color: "red" }}>Maximum Bonus 20 %</p>
                     ) : (
                       ""
                     )}
