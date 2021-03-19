@@ -54,7 +54,6 @@ const EditRemunerationInformation = (props) => {
     } else if (user.role === "ADMIN" && monthlyBonus === "") {
       setMonthlyBonusError(true);
     } else {
-      setMonthlyBonus(0);
       setFixedGrossError(false);
       setMonthlyBonusError(false);
       console.log("remuneration Info", fixedGross, monthlyBonus);
@@ -64,7 +63,10 @@ const EditRemunerationInformation = (props) => {
         remunerationinfo = {
           candidateId: createCandidateResponse.candidateId,
           fixedGross: fixedGross,
-          monthlyBonus: monthlyBonus,
+          monthlyBonus:
+            monthlyBonus === undefined || monthlyBonus === null
+              ? 0
+              : monthlyBonus,
           remunerationId: candidateData.remuneration.remunerationId
             ? candidateData.remuneration.remunerationId
             : 0,
@@ -123,6 +125,10 @@ const EditRemunerationInformation = (props) => {
                   />
                   {fixedGrossError ? (
                     <p style={{ color: "red" }}>This field cannot be empty</p>
+                  ) : fixedGross < 15000 ? (
+                    <p style={{ color: "red" }}>
+                      Should be greater than 15000{" "}
+                    </p>
                   ) : (
                     ""
                   )}

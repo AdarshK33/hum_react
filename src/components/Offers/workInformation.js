@@ -24,6 +24,7 @@ const WorkInformation = () => {
   const [costCenter, setCostCenter] = useState("");
   const [editButton, setEditButton] = useState(false);
   const [disabled, setDisabled] = useState(false);
+  const [saveclick, setSaveclick] = useState(false);
 
   const { viewSports, sportsNames } = useContext(ClusterContext);
   const { CostCenter, costCenterList } = useContext(AdminContext);
@@ -36,6 +37,8 @@ const WorkInformation = () => {
     locationName,
     createCandidateWork,
     createCandidateResponse,
+    workInfoViewData,
+    workInfoView,
   } = useContext(OfferContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const { user } = useContext(AppContext);
@@ -64,28 +67,55 @@ const WorkInformation = () => {
   };
 
   const submitHandler = (e) => {
+    let createData;
+    console.log("work information form id", workInfoViewData);
     e.preventDefault();
     console.log(state, "state");
-    const createData = {
-      candidateId: createCandidateResponse.candidateId,
-      cityId: locationName.cityId,
-      companyName: user.company,
-      contractType: state.employmentType,
-      costCentre: costCenter,
-      dateOfJoin: dateOfJoining,
-      dateOfLeaving: null,
-      department: state.department,
-      designation: state.designation,
-      educationCertificate: null,
-      locationId: locationName.locationId,
-      managerId: user.employeeId,
-      paySlip: null,
-      position: state.position,
-      probationPeriod: state.probation,
-      recruitmentSource: state.recuritment,
-      relievingLetter: null,
-      workId: 0,
-    };
+    if (saveclick === false) {
+      console.log("first click");
+      setSaveclick(true);
+      createData = {
+        candidateId: createCandidateResponse.candidateId,
+        cityId: locationName.cityId,
+        companyName: user.company,
+        contractType: state.employmentType,
+        costCentre: costCenter,
+        dateOfJoin: dateOfJoining,
+        dateOfLeaving: null,
+        department: state.department,
+        designation: state.designation,
+        educationCertificate: null,
+        locationId: locationName.locationId,
+        managerId: user.employeeId,
+        paySlip: null,
+        position: state.position,
+        probationPeriod: state.probation,
+        recruitmentSource: state.recuritment,
+        relievingLetter: null,
+        workId: 0,
+      };
+    } else if (createCandidateResponse.candidateId && saveclick === true) {
+      createData = {
+        candidateId: createCandidateResponse.candidateId,
+        cityId: locationName.cityId,
+        companyName: user.company,
+        contractType: state.employmentType,
+        costCentre: costCenter,
+        dateOfJoin: dateOfJoining,
+        dateOfLeaving: null,
+        department: state.department,
+        designation: state.designation,
+        educationCertificate: null,
+        locationId: locationName.locationId,
+        managerId: user.employeeId,
+        paySlip: null,
+        position: state.position,
+        probationPeriod: state.probation,
+        recruitmentSource: state.recuritment,
+        relievingLetter: null,
+        workId: workInfoViewData.workId,
+      };
+    }
     console.log("createData", createData);
     createCandidateWork(createData);
     setDisabled(true);
@@ -93,6 +123,7 @@ const WorkInformation = () => {
   };
 
   const editHandler = () => {
+    workInfoView(createCandidateResponse.candidateId);
     setDisabled(false);
     console.log("state", state);
   };

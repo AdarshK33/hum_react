@@ -56,7 +56,8 @@ const GroupReducer = (state, action) => {
 
     case "SUBMIT_OFFER_LETTER":
       return { ...state, submitOfferLetter: action.payload };
-
+    case "WORK_INFO_VIEW":
+      return { ...state, workInfoViewData: action.payload };
     default:
       return state;
   }

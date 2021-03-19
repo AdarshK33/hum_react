@@ -119,53 +119,9 @@ const GenerateOfferLetter = () => {
           </Modal.Body>
         ) : previewLetter || showModal ? (
           <Modal.Body>
-            {/* <p>[Your Company's Namee]</p>
-            <p>[Street Address]</p>
-            <p>[City, State Zip Code]</p>
-            <p>[Phone Number]</p>
-            <br></br>
-            <p>[Date]</p>
-            <br></br>
-            <p>[Recipient Name]</p>
-            <p>[Street Address]</p>
-            <p>[City, State Zip Code]</p>
-            <p>[Phone Number]</p>
-            <br></br>
-            <p>Dear [Name of Recipient],</p>
-            <br></br>
-            <p>
-              [Introduction - State the company's name and extend them a job.
-              Give them details about the position and their department.]
-            </p>
-            <br></br>
-            <p>
-              [Let them know what they get if they accept the job. This would
-              include salary, benefits, bonuses, stocks, etc. Identify a start
-              date.]
-            </p>
-            <br></br>
-            <p>
-              [Let them know by what date they need to respond to the offer and
-              when their hire date is.]
-            </p>
-            <br></br>
-            <p>
-              [Let them know to whom they will report and whom to call if any
-              questions arise.]
-            </p>
-            <br></br>
-            <p>Sincerely,</p>
-            <br></br>
-            <br></br>
-            <p>(Sign here for letters sent by mail or fax)</p>
-            <br></br>
-            <br></br>
-            <p>
-              [Your Name(or the name of the person who is doing the hiring)]
-            </p>
-            <br></br>
-            <p>[Title - if applicable]</p> */}
-            {typeof offerLetterData.contractType !== undefined &&
+            {}
+            {offerLetterData &&
+            offerLetterData.contractType !== undefined &&
             offerLetterData.contractType !== null &&
             offerLetterData.contractType === "Permanent" ? (
               <PermanentOfferLetter />

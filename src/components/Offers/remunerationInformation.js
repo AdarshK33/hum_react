@@ -42,7 +42,6 @@ const RemunerationInformation = (props) => {
     } else if (user.role === "ADMIN" && monthlyBonus === "") {
       setMonthlyBonusError(true);
     } else {
-      setMonthlyBonus(0);
       setFixedGrossError(false);
       setMonthlyBonusError(false);
       console.log("remuneration Info", fixedGross, monthlyBonus);
@@ -116,6 +115,10 @@ const RemunerationInformation = (props) => {
                   />
                   {fixedGrossError ? (
                     <p style={{ color: "red" }}>This field cannot be empty</p>
+                  ) : fixedGross < 18000 ? (
+                    <p style={{ color: "red" }}>
+                      should be greater than 15000{" "}
+                    </p>
                   ) : (
                     ""
                   )}

@@ -47,6 +47,7 @@ const EditWorkInformation = () => {
     departmentView();
     viewContractTypes();
     designationView();
+    console.log("candidateData work info", candidateData);
   }, []);
 
   useEffect(() => {
@@ -91,6 +92,7 @@ const EditWorkInformation = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     console.log(state, "state");
+    console.log("candidateData work info", candidateData);
     const updateData = {
       candidateId: candidateData.candidateInformation.candidateId,
       cityId: locationName.cityId,
@@ -109,7 +111,7 @@ const EditWorkInformation = () => {
       probationPeriod: state.probation,
       recruitmentSource: state.recuritment,
       relievingLetter: null,
-      workId: 0,
+      workId: candidateData.workInformation.workId,
     };
     console.log("update data", updateData);
     updateCandidateWork(updateData);

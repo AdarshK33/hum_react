@@ -20,6 +20,7 @@ const initial_state = {
   remunerationViewData: {},
   offerLetterData: {},
   submitOfferLetter: {},
+  workInfoViewData: {},
 };
 
 export const OfferContext = createContext();
@@ -340,6 +341,23 @@ export const OfferProvider = (props) => {
     );
   };
 
+  const workInfoView = (id) => {
+    console.log("work info id", id);
+    return client
+      .get("/api/v1/candidate/work-information/view/" + id)
+      .then((response) => {
+        state.workInfoViewData = response.data.data;
+        console.log("workInfoViewData.message", state.workInfoViewData);
+        return dispatch({
+          type: "WORK_INFO_VIEW",
+          payload: state.workInfoViewData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <OfferContext.Provider
       value={{
@@ -360,6 +378,7 @@ export const OfferProvider = (props) => {
         remunerationView,
         generateOfferLetter,
         finalSubmitOfferLetter,
+        workInfoView,
         searchData: state.searchData,
         departmentName: state.departmentName,
         designationName: state.designationName,
@@ -375,6 +394,7 @@ export const OfferProvider = (props) => {
         remunerationViewData: state.remunerationViewData,
         offerLetterData: state.offerLetterData,
         submitOfferLetter: state.submitOfferLetter,
+        workInfoViewData: state.workInfoViewData,
       }}
     >
       {props.children}

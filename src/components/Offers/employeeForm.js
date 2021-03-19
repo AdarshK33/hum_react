@@ -27,11 +27,12 @@ const EmployeeForm = (props) => {
   const [disabled, setDisabled] = useState(false);
   const [empName1, setEmpName1] = useState("");
   const [empName2, setEmpName2] = useState("");
-  const [refEmail1, setRefEmail1] = useState('');
-  const [refEmail2, setRefEmail2] = useState('');
-  const [desgination1, setDesignation1] = useState('');
-  const [desgination2, setDesignation2] = useState('');
+  const [refEmail1, setRefEmail1] = useState("");
+  const [refEmail2, setRefEmail2] = useState("");
+  const [desgination1, setDesignation1] = useState("");
+  const [desgination2, setDesignation2] = useState("");
   const [modal, setModal] = useState(false);
+  const [saveclick, setSaveclick] = useState(false);
   let history = useHistory();
 
   const {
@@ -42,25 +43,48 @@ const EmployeeForm = (props) => {
     searchEmpData1,
     searchForEmp2,
     searchEmpData2,
+    createCandidateResponse,
+    editCandidate,
   } = useContext(OfferContext);
 
   const handleClose = () => setModal(false);
   const handleShow = () => setModal(true);
 
   useEffect(() => {
-    setRefEmail1(searchEmpData1 !== null ? 
-      (searchEmpData1.email !== undefined &&  searchEmpData1.email !== null ? searchEmpData1.email : ''):'');
-    setDesignation1(searchEmpData1 !== null ? 
-      (searchEmpData1.position !== undefined && searchEmpData1.position !== null ? searchEmpData1.position : ''):'');
+    setRefEmail1(
+      searchEmpData1 !== null
+        ? searchEmpData1.email !== undefined && searchEmpData1.email !== null
+          ? searchEmpData1.email
+          : ""
+        : ""
+    );
+    setDesignation1(
+      searchEmpData1 !== null
+        ? searchEmpData1.position !== undefined &&
+          searchEmpData1.position !== null
+          ? searchEmpData1.position
+          : ""
+        : ""
+    );
   }, [searchEmpData1]);
 
   useEffect(() => {
-    setRefEmail2(searchEmpData2 !== null ? 
-      (searchEmpData2.email !== undefined && searchEmpData2.email !== null ? searchEmpData2.email : ''):'' );
-    setDesignation2(searchEmpData2 !== null ? 
-      (searchEmpData2.position !== undefined && searchEmpData2.position !== null ? searchEmpData2.position : ''):'' );
+    setRefEmail2(
+      searchEmpData2 !== null
+        ? searchEmpData2.email !== undefined && searchEmpData2.email !== null
+          ? searchEmpData2.email
+          : ""
+        : ""
+    );
+    setDesignation2(
+      searchEmpData2 !== null
+        ? searchEmpData2.position !== undefined &&
+          searchEmpData2.position !== null
+          ? searchEmpData2.position
+          : ""
+        : ""
+    );
   }, [searchEmpData2]);
-
 
   useEffect(() => {
     if (searchData !== null && Object.keys(searchData).length > 0) {
@@ -144,51 +168,101 @@ const EmployeeForm = (props) => {
   });
 
   const submitHandler = (e) => {
+    let CandidateInfo;
+    console.log("employee form id", createCandidateResponse.candidateId);
     e.preventDefault();
+    if (saveclick === false) {
+      console.log("first click");
+      setSaveclick(true);
+      CandidateInfo = {
+        adharDoc: null,
+        adharName: null,
+        adharNumber: searchValue,
+        bloodGroup: null,
+        candidateId: 0,
+        candidateReferences: [
+          {
+            designation: desgination1 !== null ? desgination1 : null,
+            email: refEmail1 !== null ? refEmail1 : null,
+            employeeName: empName1 !== null ? empName1 : null,
+          },
+          {
+            designation: desgination2 !== null ? desgination2 : null,
+            email: refEmail2 !== null ? refEmail2 : null,
+            employeeName: empName2 !== null ? empName2 : null,
+          },
+        ],
+        createdDate: null,
+        dateOfBirth: null,
+        disability: null,
+        disabilityDoc: null,
+        fatherName: null,
+        firstName: state.firstName,
+        gender: null,
+        lastName: state.lastName,
+        lgbt: null,
+        maritalStatus: null,
+        nationality: null,
+        panDoc: null,
+        panNumber: null,
+        personalEmail: state.email,
+        photo: null,
+        refered: true,
+        status: 1,
+        verificationStatus: 0,
+      };
+    } else if (createCandidateResponse.candidateId && saveclick === true) {
+      CandidateInfo = {
+        adharDoc: null,
+        adharName: null,
+        adharNumber: searchValue,
+        bloodGroup: null,
+        candidateId: createCandidateResponse.candidateId,
+        candidateReferences: [
+          {
+            designation: desgination1 !== null ? desgination1 : null,
+            email: refEmail1 !== null ? refEmail1 : null,
+            employeeName: empName1 !== null ? empName1 : null,
+          },
+          {
+            designation: desgination2 !== null ? desgination2 : null,
+            email: refEmail2 !== null ? refEmail2 : null,
+            employeeName: empName2 !== null ? empName2 : null,
+          },
+        ],
+        createdDate: null,
+        dateOfBirth: null,
+        disability: null,
+        disabilityDoc: null,
+        fatherName: null,
+        firstName: state.firstName,
+        gender: null,
+        lastName: state.lastName,
+        lgbt: null,
+        maritalStatus: null,
+        nationality: null,
+        panDoc: null,
+        panNumber: null,
+        personalEmail: state.email,
+        photo: null,
+        refered: true,
+        status: 1,
+        verificationStatus: 0,
+      };
+    }
 
-    const CandidateInfo = {
-      adharDoc: null,
-      adharName: null,
-      adharNumber: searchValue,
-      bloodGroup: null,
-      candidateId: 0,
-      candidateReferences: [
-        {
-          designation: desgination1 !== null ? desgination1 : null,
-          email: refEmail1 !== null ? refEmail1 : null,
-          employeeName: empName1 !== null ? empName1 : null,
-        },
-        {
-          designation: desgination2 !== null ? desgination2 : null,
-          email: refEmail2 !== null ? refEmail2 : null,
-          employeeName: empName2 !== null ? empName2 : null,
-        },
-      ],
-      createdDate: null,
-      dateOfBirth: null,
-      disability: null,
-      disabilityDoc: null,
-      fatherName: null,
-      firstName: state.firstName,
-      gender: null,
-      lastName: state.lastName,
-      lgbt: null,
-      maritalStatus: null,
-      nationality: null,
-      panDoc: null,
-      panNumber: null,
-      personalEmail: state.email,
-      photo: null,
-      refered: true,
-      status: 1,
-      verificationStatus: 0,
-    };
-    createCandidate(CandidateInfo);
+    if (saveclick === true) {
+      editCandidate(CandidateInfo);
+    } else {
+      createCandidate(CandidateInfo);
+    }
+
     setDisabled(true);
     setEditButton(true);
     const checkedInput = props.checkedHandler;
     checkedInput();
   };
+
   const editHandler = () => {
     setDisabled(false);
     console.log("state", state);
