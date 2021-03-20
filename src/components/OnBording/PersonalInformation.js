@@ -14,11 +14,9 @@ import "./Documents.css";
 import { OnBoardContext } from "../../context/OnBoardState";
 import countryList from "react-select-country-list";
 
-const PersonalInformation = () => {
+const PersonalInformation = (props) => {
   const { updatePersonalInfo, Infodata } = useContext(OnBoardContext);
   const options = useMemo(() => countryList().getData(), []);
-  // const [InfoData, setInfo] = useState("");
-  const styleVar = { borderColor: "red" };
   const [isClicked, setIsClicked] = useState(false);
   const [disabled, setDisableState] = useState(false);
   const [DOB, setDOB] = useState();
@@ -59,6 +57,10 @@ const PersonalInformation = () => {
     emp2Eamil: "",
     emp2Designation: "",
   });
+  useEffect(() => {
+    setState(Infodata);
+    console.log(Infodata);
+  }, [Infodata]);
   const AdharNameValidation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
     if (
@@ -260,6 +262,8 @@ const PersonalInformation = () => {
     }
   };
   const submitHandler = (e) => {
+    const submited = props.NextStep;
+    submited();
     e.preventDefault();
     const value = checkValidations();
     if (value === true) {
@@ -308,6 +312,11 @@ const PersonalInformation = () => {
       console.log(InfoData);
       updatePersonalInfo(InfoData);
     }
+  };
+  const PrevStep = () => {
+    console.log("previous");
+    const back = props.PrevStep;
+    back();
   };
 
   const disabilityDocument = (e) => {
@@ -916,7 +925,9 @@ const PersonalInformation = () => {
           <div></div>
         )}
         <div style={{ marginTop: "2rem", textAlign: "center" }}>
-          <button className="stepperButtons">Back</button>
+          <button className="stepperButtons" onClick={PrevStep}>
+            Back
+          </button>
           <button className="stepperButtons" onClick={submitHandler}>
             Save & Next
           </button>

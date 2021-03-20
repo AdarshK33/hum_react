@@ -1,16 +1,59 @@
-import React, { Fragment, useState, useContext, useEffect } from "react";
+import React, {
+  Fragment,
+  useState,
+  useContext,
+  useEffect,
+  useMemo,
+} from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import "./OnBoard.css";
+import countryList from "react-select-country-list";
 
-const submitHandler = (e) => {
-  e.preventDefault();
-};
-
-const Address = () => {
+const Address = (props) => {
   const [isChecked, changeCheckState] = useState(false);
+  const [disabled, setDisableState] = useState(false);
+  const options = useMemo(() => countryList().getData(), []);
 
+  const [state, setState] = useState({
+    flatNumber: "",
+    street: "",
+    locality: "",
+    addressLine: "",
+    countryId: 0,
+    stateId: 0,
+    cityId: 0,
+    pinCode: "",
+    phoneNumber: "",
+    permanentFlatNumber: "",
+    permanentStreet: "",
+    permanentLocality: "",
+    permanentAddressLine: "",
+    permanentCountryId: 0,
+    permanentStateId: 0,
+    permanentCityId: 0,
+    permanentPinCode: "",
+    permanentPhoneNumber: "",
+  });
+
+  const submitHandler = (e) => {
+    const nextPage = props.NextStep;
+    nextPage();
+  };
+
+  const PrevStep = () => {
+    console.log("previous");
+    const back = props.PrevStep;
+    back();
+  };
+  const changeHandler = (e) => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
+    console.log(state);
+  };
   const handleCheckboxChange = (e) => {
     changeCheckState(e.target.checked);
     console.log(isChecked);
@@ -21,7 +64,7 @@ const Address = () => {
   };
   return (
     <Fragment>
-      <Form onSubmit={submitHandler}>
+      <Form>
         <Row style={{ marginBottom: "1rem" }}>
           <Col sm={6}>
             <div>
@@ -40,8 +83,12 @@ const Address = () => {
               </Form.Label>
               <Form.Control
                 type="text"
+                name="flatNumber"
+                value={state.flatNumber}
+                onChange={changeHandler}
+                required
                 placeholder="Flat/Plot No"
-                required="required"
+                disabled={disabled}
               />
             </Form.Group>
           </div>
@@ -50,18 +97,27 @@ const Address = () => {
               <Form.Label>Street</Form.Label>
               <Form.Control
                 type="text"
+                name="street"
+                value={state.street}
+                onChange={changeHandler}
+                required
                 placeholder="Street"
-                required="required"
+                disabled={disabled}
               />
             </Form.Group>
           </div>
           <div className="col-sm-3">
             <Form.Group>
               <Form.Label>Locality</Form.Label>
+
               <Form.Control
                 type="text"
+                name="locality"
+                value={state.locality}
+                onChange={changeHandler}
+                required
                 placeholder="Locality"
-                required="required"
+                disabled={disabled}
               />
             </Form.Group>
           </div>
@@ -72,8 +128,12 @@ const Address = () => {
               </Form.Label>
               <Form.Control
                 type="text"
+                name="addressLine"
+                value={state.addressLine}
+                onChange={changeHandler}
+                required
                 placeholder="Address Line 1"
-                required="required"
+                disabled={disabled}
               />
             </Form.Group>
           </div>
@@ -82,20 +142,50 @@ const Address = () => {
         <Row style={{ marginBottom: "2rem" }}>
           <div className="col-sm-3">
             <Form.Group>
-              <Form.Label>City</Form.Label>
-              <Form.Control as="select">
-                <option value="">City</option>
+              <Form.Label>Country</Form.Label>
+              <Form.Control
+                as="select"
+                name="countryId"
+                value={state.countryId}
+                options={options}
+                onChange={changeHandler}
+                required
+                disabled={disabled}
+              >
+                <option value="">Country</option>
+                {options.map((item) => {
+                  return <option key={item.value}>{item.label}</option>;
+                })}
               </Form.Control>
             </Form.Group>
           </div>
           <div className="col-sm-3">
             <Form.Group>
-              <Form.Label>Country</Form.Label>
-              <Form.Control as="select">
-                <option value="">Country</option>
+              <Form.Label>State</Form.Label>
+              <Form.Control
+                as="select"
+                name="stateId"
+                value={state.stateId}
+                onChange={changeHandler}
+              >
+                <option value="">State</option>
               </Form.Control>
             </Form.Group>
           </div>
+          <div className="col-sm-3">
+            <Form.Group>
+              <Form.Label>City</Form.Label>
+              <Form.Control
+                as="select"
+                name="cityId"
+                value={state.cityId}
+                onChange={changeHandler}
+              >
+                <option value="">City</option>
+              </Form.Control>
+            </Form.Group>
+          </div>
+
           <div className="col-sm-3">
             <Form.Group>
               <Form.Label>
@@ -103,11 +193,17 @@ const Address = () => {
               </Form.Label>
               <Form.Control
                 type="text"
-                placeholder="PinCode"
-                required="required"
+                name="pinCode"
+                value={state.pinCode}
+                onChange={changeHandler}
+                required
+                placeholder="Pin Code"
+                disabled={disabled}
               />
             </Form.Group>
           </div>
+        </Row>
+        <Row style={{ marginBottom: "2rem" }}>
           <div className="col-sm-3">
             <Form.Group>
               <Form.Label>
@@ -115,8 +211,12 @@ const Address = () => {
               </Form.Label>
               <Form.Control
                 type="text"
+                name="phoneNumber"
+                value={state.phoneNumber}
+                onChange={changeHandler}
+                required
                 placeholder="Phone No"
-                required="required"
+                disabled={disabled}
               />
             </Form.Group>
           </div>
@@ -183,8 +283,12 @@ const Address = () => {
                   </Form.Label>
                   <Form.Control
                     type="text"
+                    name="permanentFlatNumber"
+                    value={state.permanentFlatNumber}
+                    onChange={changeHandler}
+                    required
                     placeholder="Flat/Plot No"
-                    required="required"
+                    disabled={disabled}
                   />
                 </Form.Group>
               </div>
@@ -193,18 +297,27 @@ const Address = () => {
                   <Form.Label>Street</Form.Label>
                   <Form.Control
                     type="text"
+                    name="permanentStreet"
+                    value={state.permanentStreet}
+                    onChange={changeHandler}
+                    required
                     placeholder="Street"
-                    required="required"
+                    disabled={disabled}
                   />
                 </Form.Group>
               </div>
               <div className="col-sm-3">
                 <Form.Group>
                   <Form.Label>Locality</Form.Label>
+
                   <Form.Control
                     type="text"
+                    name="permanentLocality"
+                    value={state.permanentLocality}
+                    onChange={changeHandler}
+                    required
                     placeholder="Locality"
-                    required="required"
+                    disabled={disabled}
                   />
                 </Form.Group>
               </div>
@@ -215,8 +328,12 @@ const Address = () => {
                   </Form.Label>
                   <Form.Control
                     type="text"
+                    name="permanentAddressLine"
+                    value={state.permanentAddressLine}
+                    onChange={changeHandler}
+                    required
                     placeholder="Address Line 1"
-                    required="required"
+                    disabled={disabled}
                   />
                 </Form.Group>
               </div>
@@ -225,20 +342,50 @@ const Address = () => {
             <Row style={{ marginBottom: "2rem" }}>
               <div className="col-sm-3">
                 <Form.Group>
-                  <Form.Label>City</Form.Label>
-                  <Form.Control as="select">
-                    <option value="">City</option>
+                  <Form.Label>Country</Form.Label>
+                  <Form.Control
+                    as="select"
+                    name="permanentCountryId"
+                    value={state.permanentCountryId}
+                    options={options}
+                    onChange={changeHandler}
+                    required
+                    disabled={disabled}
+                  >
+                    <option value="">Country</option>
+                    {options.map((item) => {
+                      return <option key={item.value}>{item.label}</option>;
+                    })}
                   </Form.Control>
                 </Form.Group>
               </div>
               <div className="col-sm-3">
                 <Form.Group>
-                  <Form.Label>Country</Form.Label>
-                  <Form.Control as="select">
-                    <option value="">Country</option>
+                  <Form.Label>State</Form.Label>
+                  <Form.Control
+                    as="select"
+                    name="permanentStateId"
+                    value={state.permanentStateId}
+                    onChange={changeHandler}
+                  >
+                    <option value="">State</option>
                   </Form.Control>
                 </Form.Group>
               </div>
+              <div className="col-sm-3">
+                <Form.Group>
+                  <Form.Label>City</Form.Label>
+                  <Form.Control
+                    as="select"
+                    name="permanentCityId"
+                    value={state.permanentCityId}
+                    onChange={changeHandler}
+                  >
+                    <option value="">City</option>
+                  </Form.Control>
+                </Form.Group>
+              </div>
+
               <div className="col-sm-3">
                 <Form.Group>
                   <Form.Label>
@@ -246,11 +393,17 @@ const Address = () => {
                   </Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="PinCode"
-                    required="required"
+                    name="permanentPinCode"
+                    value={state.permanentPinCode}
+                    onChange={changeHandler}
+                    required
+                    placeholder="Pin Code"
+                    disabled={disabled}
                   />
                 </Form.Group>
               </div>
+            </Row>
+            <Row style={{ marginBottom: "2rem" }}>
               <div className="col-sm-3">
                 <Form.Group>
                   <Form.Label>
@@ -258,14 +411,26 @@ const Address = () => {
                   </Form.Label>
                   <Form.Control
                     type="text"
+                    name="permanentPhoneNumber"
+                    value={state.permanentPhoneNumber}
+                    onChange={changeHandler}
+                    required
                     placeholder="Phone No"
-                    required="required"
+                    disabled={disabled}
                   />
                 </Form.Group>
               </div>
             </Row>
           </div>
         )}
+        <div style={{ marginTop: "2rem", textAlign: "center" }}>
+          <button className="stepperButtons" onClick={PrevStep}>
+            Back
+          </button>
+          <button className="stepperButtons" onClick={submitHandler}>
+            Save & Next
+          </button>
+        </div>
       </Form>
     </Fragment>
   );

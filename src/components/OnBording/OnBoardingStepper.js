@@ -1,4 +1,10 @@
-import React, { Fragment, useState, useContext, useEffect } from "react";
+import React, {
+  Fragment,
+  useState,
+  useContext,
+  useEffect,
+  useRef,
+} from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import "./OnBoard.css";
@@ -12,7 +18,7 @@ import PFDeclaration from "./PFDeclaration";
 import Documents from "./Documents";
 import { OnBoardContext } from "../../context/OnBoardState";
 
-const OnBoardingStepper = () => {
+const OnBoardingStepper = (props) => {
   const { name, updateName } = useContext(OnBoardContext);
 
   useEffect(() => {
@@ -20,6 +26,7 @@ const OnBoardingStepper = () => {
   }, []);
 
   console.log(name);
+  const personalInfoRef = useRef();
   const checkOk = "OkCheckStep";
   const currStep = "CurrentCheckStep";
   const defaultStep = "CheckStep";
@@ -55,6 +62,7 @@ const OnBoardingStepper = () => {
     }
   };
   const PrevStep = () => {
+    console.log("prevStep");
     console.log(stepCount);
     if (stepCount > 0 && stepCount <= 6) {
       let tempArray = [...stepArray];
@@ -195,20 +203,55 @@ const OnBoardingStepper = () => {
                       {(() => {
                         switch (stepCount) {
                           case 0:
-                            return <PersonalInformation />;
+                            return (
+                              <PersonalInformation
+                                NextStep={NextStep}
+                                PrevStep={PrevStep}
+                              />
+                            );
 
                           case 1:
-                            return <Address />;
+                            return (
+                              <Address
+                                NextStep={NextStep}
+                                PrevStep={PrevStep}
+                              />
+                            );
                           case 2:
-                            return <EmergencyContact />;
+                            return (
+                              <EmergencyContact
+                                NextStep={NextStep}
+                                PrevStep={PrevStep}
+                              />
+                            );
                           case 3:
-                            return <BankDetails />;
+                            return (
+                              <BankDetails
+                                NextStep={NextStep}
+                                PrevStep={PrevStep}
+                              />
+                            );
                           case 4:
-                            return <InsuranceNomination />;
+                            return (
+                              <InsuranceNomination
+                                NextStep={NextStep}
+                                PrevStep={PrevStep}
+                              />
+                            );
                           case 5:
-                            return <PFDeclaration />;
+                            return (
+                              <PFDeclaration
+                                NextStep={NextStep}
+                                PrevStep={PrevStep}
+                              />
+                            );
                           case 6:
-                            return <Documents />;
+                            return (
+                              <Documents
+                                NextStep={NextStep}
+                                PrevStep={PrevStep}
+                              />
+                            );
                           default:
                             return <div>OnBoarding</div>;
                         }

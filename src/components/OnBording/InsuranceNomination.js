@@ -10,18 +10,30 @@ import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import "./OnBoard.css";
 import NomineeForm from "./NominForm";
-import EmployeeForm from "../Offers/employeeForm";
+import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "react-datepicker";
 
 const submitHandler = (e) => {
   e.preventDefault();
 };
 var NomineeArray = [0, 0, 0, 0, 0];
 
-const InsuranceNomination = () => {
+const InsuranceNomination = (props) => {
   const [isChecked, changeCheckState] = useState(false);
   const [count, setCount] = useState(0);
   const [NomineeCount, setNomineeCount] = useState(1);
+  const [NominForm1, setNominForm1] = useState(true);
+  const [NominForm2, setNominForm2] = useState(true);
+  const submitHandler = (e) => {
+    const nextPage = props.NextStep;
+    nextPage();
+  };
 
+  const PrevStep = () => {
+    console.log("previous");
+    const back = props.PrevStep;
+    back();
+  };
   const handleCheckboxChange = (e) => {
     changeCheckState(e.target.checked);
     console.log(isChecked);
@@ -144,7 +156,92 @@ const InsuranceNomination = () => {
         <div></div>
       ) : (
         <div>
-          {(() => {
+          <div>
+            <Row style={{ marginBottom: "2rem" }}>
+              <Col sm={11}>
+                <Row>
+                  <div className="col-sm-4">
+                    <Form.Group>
+                      <Form.Label>
+                        Nominee Name<span style={{ color: "red" }}>*</span>
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Nominee Name"
+                        required="required"
+                      />
+                    </Form.Group>
+                  </div>
+                  <div className="col-sm-4">
+                    <Form.Group>
+                      <Form.Label>Relationship</Form.Label>
+                      <Form.Control as="select">
+                        <option value="">Relationship</option>
+                      </Form.Control>
+                    </Form.Group>
+                  </div>
+                  <div className="col-sm-4">
+                    <Form.Group>
+                      <Form.Label>
+                        Gender<span style={{ color: "red" }}>*</span>
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Gender"
+                        required="required"
+                      />
+                    </Form.Group>
+                  </div>
+                </Row>
+              </Col>
+            </Row>
+            <Row style={{ marginBottom: "1rem" }}>
+              <Col sm={11}>
+                <Row>
+                  <div className="col-sm-4">
+                    <Form.Group>
+                      <Form.Label>
+                        Datte Of Birth<span style={{ color: "red" }}>*</span>
+                      </Form.Label>
+                      <div className="onBoard-date">
+                        <DatePicker
+                          className="form-control onBoard-view"
+                          dateFormat="MM/yyyy"
+                          showMonthYearPicker
+                          placeholderText="Date Of Birth"
+                        />
+                      </div>
+                    </Form.Group>
+                  </div>
+                  <div className="col-sm-4">
+                    <Form.Group>
+                      <Form.Label>
+                        Age<span style={{ color: "red" }}>*</span>
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="Age"
+                        required="required"
+                      />
+                    </Form.Group>
+                  </div>
+                  <div className="col-sm-4">
+                    <Form.Group>
+                      <Form.Label>Blood Group</Form.Label>
+                      <Form.Control as="select">
+                        <option value="">Blood Group</option>
+                      </Form.Control>
+                    </Form.Group>
+                  </div>
+                </Row>
+              </Col>
+              <Col sm={1}></Col>
+            </Row>
+          </div>
+          {NominForm1 === true ? <NomineeForm /> : ""}
+          {NominForm2 === false ? <NomineeForm /> : ""}
+
+          {/* {(() => {
             switch (NomineeCount) {
               case 1:
                 return <NomineeForm />;
@@ -185,7 +282,7 @@ const InsuranceNomination = () => {
               default:
                 return <div>Nominees.</div>;
             }
-          })()}
+          })()} */}
 
           <Row>
             <Col sm={4}></Col>
@@ -208,6 +305,14 @@ const InsuranceNomination = () => {
           </Row>
         </div>
       )}
+      <div style={{ marginTop: "2rem", textAlign: "center" }}>
+        <button className="stepperButtons" onClick={PrevStep}>
+          Back
+        </button>
+        <button className="stepperButtons" onClick={submitHandler}>
+          Save & Next
+        </button>
+      </div>
     </Fragment>
   );
 };
