@@ -63,20 +63,30 @@ import ManagerOfferRelease from "./components/Offers/managerOfferRelease";
 import OfferReleaseList from "./components/Offers/OfferReleaseList";
 import EditOfferRelease from "./components/Offers/editOfferRelease";
 import OfferAccept from "./components/Offers/OfferAcceptance/OfferAccept";
-
+import LoginOnboard from "./components/Login/LoginOnboard"
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
+  console.log(user,state,"route8888888888888")
   const [routPath, setRoutPath] = useState(false);
   useEffect(() => {
     setRoutPath(user.loginType);
     console.log(user);
   }, [user.loginType]);
-
+console.log(process.env.PUBLIC_URL,"env00000000000000")
   return (
     <Switch>
       <Route path={`${process.env.PUBLIC_URL}/signin`} component={Signin} />
       <Route path={`${process.env.PUBLIC_URL}/login`} component={Login} />
-
+      <Route
+            //  {/*sachin */}
+            path={`${process.env.PUBLIC_URL}/loginonboard`}
+            component={LoginOnboard}
+          />
+<Route
+            //  {/*Rajasekhar */}
+            path={`${process.env.PUBLIC_URL}/onboard`}
+            component={OnBoardingStepper}
+          />
       <Fragment>
         <App>
           {/* dashboard menu */}
@@ -123,11 +133,7 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/offer-release-list`}
             component={OfferReleaseList}
           />
-          <Route
-            //  {/*Rajasekhar */}
-            path={`${process.env.PUBLIC_URL}/onboard`}
-            component={OnBoardingStepper}
-          />
+          
           <Route
             path={`${process.env.PUBLIC_URL}/edit-offer-release`}
             component={EditOfferRelease}
