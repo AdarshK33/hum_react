@@ -15,7 +15,12 @@ import { OnBoardContext } from "../../context/OnBoardState";
 import countryList from "react-select-country-list";
 
 const PersonalInformation = (props) => {
-  const { updatePersonalInfo, Infodata } = useContext(OnBoardContext);
+  const {
+    updatePersonalInfo,
+    Infodata,
+    CandidateProfile,
+    candidateData,
+  } = useContext(OnBoardContext);
   const options = useMemo(() => countryList().getData(), []);
   const [isClicked, setIsClicked] = useState(false);
   const [disabled, setDisableState] = useState(false);
@@ -58,9 +63,9 @@ const PersonalInformation = (props) => {
     emp2Designation: "",
   });
   useEffect(() => {
-    setState(Infodata);
-    console.log(Infodata);
-  }, [Infodata]);
+    CandidateProfile();
+  }, []);
+  console.log(candidateData);
   const AdharNameValidation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
     if (

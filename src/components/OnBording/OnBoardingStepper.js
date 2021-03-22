@@ -19,13 +19,6 @@ import Documents from "./Documents";
 import { OnBoardContext } from "../../context/OnBoardState";
 
 const OnBoardingStepper = (props) => {
-  const { name, updateName } = useContext(OnBoardContext);
-
-  useEffect(() => {
-    updateName();
-  }, []);
-
-  console.log(name);
   const personalInfoRef = useRef();
   const checkOk = "OkCheckStep";
   const currStep = "CurrentCheckStep";

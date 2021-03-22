@@ -7,15 +7,13 @@ import { toast } from "react-toastify";
 export const OnBoardContext = createContext();
 const initial_state = {
   name: " ",
-  Infodata: "",
+  Infodata: [],
+  candidateData: {},
+  stateList: [],
+  cityList: [],
 };
 export const OnBoardProvider = (props) => {
   const [state, dispatch] = useReducer(OnBoardReducer, initial_state);
-  const updateName = () => {
-    state.name = "First Reducer Implemented";
-    console.log("on statefile");
-    return dispatch({ type: "UPDATING", payload: state.name });
-  };
   const updatePersonalInfo = (updateData) => {
     console.log("Info data -----");
     console.log(updateData);
@@ -23,6 +21,7 @@ export const OnBoardProvider = (props) => {
       .post("/api/v2/candidate/update", updateData)
       .then((response) => {
         toast.info(response.data.message);
+        console.log(response.data.message);
         return dispatch({
           type: "UPDATE_PERSONAL_INFO",
           payload: state.Infodata,
@@ -32,13 +31,65 @@ export const OnBoardProvider = (props) => {
         console.log(error);
       });
   };
+  const CandidateProfile = () => {
+    client
+      .get("/api/v2/candidate/profile")
+      .then((response) => {
+        state.candidateData = response.data.data;
+        console.log("CandidateProfile Response ", state.candidateData);
+        return dispatch({
+          type: "CANDIDATE_PROFILE",
+          payload: state.candidateData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const StateList = (country) => {
+    client
+      .get("/api/v2/candidate/address/view/state/" + country)
+      .then((response) => {
+        state.stateList = response.data.data;
+        console.log("CandidateProfile Response ", state.stateList);
+        return dispatch({
+          type: "STATE_LIST",
+          payload: state.stateList,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const CityList = (stateItem) => {
+    client
+      .get("/api/v2/candidate/address/view/city/" + stateItem)
+      .then((response) => {
+        state.CityList = response.data.data;
+        console.log("CandidateProfile Response ", state.cityList);
+        return dispatch({
+          type: "CITY_LIST",
+          payload: state.cityList,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <OnBoardContext.Provider
       value={{
-        updateName,
         updatePersonalInfo,
+        CandidateProfile,
+        StateList,
+        CityList,
         name: state.name,
         Infodata: state.Infodata,
+        candidateData: state.candidateData,
+        stateList: state.stateList,
+        cityList: state.cityList,
       }}
     >
       {props.children}
