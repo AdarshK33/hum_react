@@ -9,7 +9,7 @@ import { OfferContext } from "../../context/OfferState";
 import { RosterContext } from "../../context/RosterState";
 import { AppContext } from "../../context/AppState";
 
-const WorkInformation = () => {
+const ViewWorkInformation = () => {
   const [state, setState] = useState({
     employmentType: "",
     department: "",
@@ -22,10 +22,6 @@ const WorkInformation = () => {
   });
   const [dateOfJoining, setDateOFJoining] = useState();
   const [costCenter, setCostCenter] = useState("");
-  const [editButton, setEditButton] = useState(false);
-  const [disabled, setDisabled] = useState(false);
-  const [saveclick, setSaveclick] = useState(false);
-
   const { viewSports, sportsNames } = useContext(ClusterContext);
   const { CostCenter, costCenterList } = useContext(AdminContext);
   const {
@@ -35,12 +31,7 @@ const WorkInformation = () => {
     designationName,
     locationView,
     locationName,
-    createCandidateWork,
-    createCandidateResponse,
-    workInfoViewData,
-    workInfoView,
     candidateData,
-    viewCandidateId,
   } = useContext(OfferContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const { user } = useContext(AppContext);
@@ -51,89 +42,35 @@ const WorkInformation = () => {
     departmentView();
     viewContractTypes();
     designationView();
+    console.log("candidateData work info", candidateData);
   }, []);
 
-  const changeHandler = (e) => {
-    setState({
-      ...state,
-      [e.target.name]: e.target.value,
-    });
-  };
-  const costCenterChangeHandler = (e) => {
-    setCostCenter(e.target.value);
-    locationView(e.target.value);
-    console.log("locationView", e.target.value);
-  };
-  const dateOfJoiningHandler = (date) => {
-    setDateOFJoining(date);
-  };
+  useEffect(() => {
+    let workData =
+      candidateData !== null &&
+      candidateData !== undefined &&
+      candidateData.workInformation;
 
-  const submitHandler = (e) => {
-    let createData;
-    console.log("work information form id", workInfoViewData);
-    e.preventDefault();
-    console.log(state, "state");
-    if (saveclick === false) {
-      console.log("first click");
-      setSaveclick(true);
-      createData = {
-        candidateId: createCandidateResponse.candidateId,
-        cityId: locationName.cityId,
-        companyName: user.company,
-        contractType: state.employmentType,
-        costCentre: costCenter,
-        dateOfJoin: dateOfJoining,
-        dateOfLeaving: null,
-        department: state.department,
-        designation: state.designation,
-        educationCertificate: null,
-        locationId: locationName.locationId,
-        managerId: user.employeeId,
-        paySlip: null,
-        position: state.position,
-        probationPeriod: state.probation,
-        recruitmentSource: state.recuritment,
-        relievingLetter: null,
-        workId: 0,
-      };
-    } else if (createCandidateResponse.candidateId && saveclick === true) {
-      createData = {
-        candidateId: createCandidateResponse.candidateId,
-        cityId: locationName.cityId,
-        companyName: user.company,
-        contractType: state.employmentType,
-        costCentre: costCenter,
-        dateOfJoin: dateOfJoining,
-        dateOfLeaving: null,
-        department: state.department,
-        designation: state.designation,
-        educationCertificate: null,
-        locationId: locationName.locationId,
-        managerId: user.employeeId,
-        paySlip: null,
-        position: state.position,
-        probationPeriod: state.probation,
-        recruitmentSource: state.recuritment,
-        relievingLetter: null,
-        workId: workInfoViewData.workId,
-      };
+    if (workData !== null && workData !== undefined) {
+      setState({
+        employmentType: workData.contractType,
+        department: workData.department,
+        position: workData.position,
+        designation: workData.designation,
+        sports: workData.sportId !== null ? workData.sportId : "",
+        probation: workData.probationPeriod,
+        recuritment: workData.recruitmentSource,
+        ngoDetail: workData.ngoDetails !== null ? workData.ngoDetails : "",
+      });
+      setDateOFJoining(new Date(workData.dateOfJoin));
+      setCostCenter(workData.costCentre);
+      locationView(workData.costCentre);
     }
-    console.log("createData", createData);
-    createCandidateWork(createData);
-    viewCandidateId(createCandidateResponse.candidateId);
-    setDisabled(true);
-    setEditButton(true);
-  };
-
-  const editHandler = () => {
-    workInfoView(createCandidateResponse.candidateId);
-    setDisabled(false);
-    console.log("state", state);
-  };
+  }, [candidateData]);
 
   return (
     <Fragment>
-      <Form onSubmit={submitHandler}>
+      <Form>
         <Row>
           <Col sm={3}>
             <Form.Group>
@@ -155,10 +92,9 @@ const WorkInformation = () => {
                 value={state.employmentType}
                 className="form-input"
                 name="employmentType"
-                onChange={changeHandler}
-                disabled={disabled}
+                readOnly
+                disabled="true"
               >
-                <option value="">Select Employment Type</option>
                 {shiftContractNames !== null &&
                   shiftContractNames !== undefined &&
                   shiftContractNames.length > 0 &&
@@ -176,11 +112,9 @@ const WorkInformation = () => {
               <DatePicker
                 className="form-control form-input"
                 selected={dateOfJoining}
-                required
-                onChange={(e) => dateOfJoiningHandler(e)}
                 dateFormat="yyyy-MM-dd"
                 placeholderText="Date of Joining"
-                disabled={disabled}
+                readOnly
               />
             </Form.Group>
           </Col>
@@ -192,10 +126,9 @@ const WorkInformation = () => {
                 value={state.department}
                 className="form-input"
                 name="department"
-                onChange={changeHandler}
-                disabled={disabled}
+                readOnly
+                disabled="true"
               >
-                <option value="">Select Department</option>
                 {departmentName !== null &&
                   departmentName !== undefined &&
                   departmentName.length > 0 &&
@@ -217,10 +150,9 @@ const WorkInformation = () => {
                 value={state.position}
                 className="form-input"
                 name="position"
-                onChange={changeHandler}
-                disabled={disabled}
+                readOnly
+                disabled="true"
               >
-                <option value="">Select Position</option>
                 {designationName !== null &&
                   designationName !== undefined &&
                   designationName.length > 0 &&
@@ -242,10 +174,9 @@ const WorkInformation = () => {
                 value={state.designation}
                 className="form-input"
                 name="designation"
-                onChange={changeHandler}
-                disabled={disabled}
+                readOnly
+                disabled="true"
               >
-                <option value="">Select Designation</option>
                 {designationName !== null &&
                   designationName !== undefined &&
                   designationName.length > 0 &&
@@ -267,10 +198,9 @@ const WorkInformation = () => {
                 value={costCenter}
                 className="form-input"
                 name="costCenter"
-                onChange={costCenterChangeHandler}
-                disabled={disabled}
+                readOnly
+                disabled="true"
               >
-                <option value="">Select Cost Center</option>
                 {costCenterList !== null &&
                   costCenterList !== undefined &&
                   costCenterList.length > 0 &&
@@ -292,10 +222,8 @@ const WorkInformation = () => {
                 value={state.sports}
                 className="form-input"
                 name="sports"
-                onChange={changeHandler}
-                disabled={disabled}
+                disabled="true"
               >
-                <option value="">Select Sports</option>
                 {sportsNames !== null &&
                   sportsNames !== undefined &&
                   sportsNames.length > 0 &&
@@ -319,6 +247,7 @@ const WorkInformation = () => {
                 value={locationName.stateName}
                 className="form-input"
                 readOnly
+                disabled="true"
               />
             </Form.Group>
           </Col>
@@ -330,6 +259,7 @@ const WorkInformation = () => {
                 value={locationName.cityName}
                 className="form-input"
                 readOnly
+                disabled="true"
               />
             </Form.Group>
           </Col>
@@ -342,10 +272,8 @@ const WorkInformation = () => {
                 value={state.probation}
                 className="form-input"
                 name="probation"
-                onChange={changeHandler}
-                disabled={disabled}
+                disabled="true"
               >
-                <option value="">Select Probation</option>
                 <option value="1">1 Month</option>
                 <option value="2">2 Month</option>
                 <option value="3">3 Month</option>
@@ -360,10 +288,9 @@ const WorkInformation = () => {
                 value={state.recuritment}
                 className="form-input"
                 name="recuritment"
-                onChange={changeHandler}
-                disabled={disabled}
+                readOnly
+                disabled="true"
               >
-                <option value="">Select Recuritment Source</option>
                 <option>Employee Referral</option>
                 <option>LinkedIn</option>
                 <option>Monster</option>
@@ -384,10 +311,10 @@ const WorkInformation = () => {
                   type="text"
                   value={state.ngoDetail}
                   className="form-input"
-                  disabled={disabled}
-                  onChange={changeHandler}
+                  readOnly
                   name="ngoDetail"
                   placeholder="Enter NGO Detail"
+                  disabled="true"
                 />
               </Form.Group>
             </Col>
@@ -395,22 +322,9 @@ const WorkInformation = () => {
         ) : (
           ""
         )}
-        <Row>
-          <Col sm={4}></Col>
-          <Col sm={2}>
-            <Button type="submit">Save</Button>
-          </Col>
-          {editButton === true ? (
-            <Col sm={2}>
-              <Button onClick={editHandler}>Edit</Button>
-            </Col>
-          ) : (
-            ""
-          )}
-        </Row>
       </Form>
     </Fragment>
   );
 };
 
-export default WorkInformation;
+export default ViewWorkInformation;

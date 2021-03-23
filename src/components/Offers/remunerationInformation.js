@@ -19,6 +19,7 @@ const RemunerationInformation = (props) => {
     remunerationSave,
     candidateData,
     createCandidateResponse,
+    viewCandidateId,
     remunerationView,
     remunerationViewData,
   } = useContext(OfferContext);
@@ -26,9 +27,12 @@ const RemunerationInformation = (props) => {
 
   useEffect(() => {
     console.log("candidateData remuneration1", createCandidateResponse);
+    if (createCandidateResponse && createCandidateResponse.candidateId) {
+      viewCandidateId(createCandidateResponse.candidateId);
+    }
     console.log("candidateData remuneration2", candidateData);
     console.log("user profile", user);
-  });
+  }, [candidateData]);
 
   const submitHandler = (e) => {
     console.log("inside submit", candidateData);
@@ -46,6 +50,7 @@ const RemunerationInformation = (props) => {
       setMonthlyBonusError(false);
       console.log("remuneration Info", fixedGross, monthlyBonus);
       console.log("remunerationViewData save", remunerationViewData);
+      console.log("contracttype", candidateData.workInformation.contractType);
       if (saveclick === false) {
         console.log("first click");
         setSaveclick(true);
@@ -77,6 +82,7 @@ const RemunerationInformation = (props) => {
 
       console.log("createCandidateResponse data", remunerationinfo);
       remunerationSave(remunerationinfo);
+      viewCandidateId(createCandidateResponse.candidateId);
       remunerationView(createCandidateResponse.candidateId);
       setDisabled(true);
       setEditButton(true);
@@ -115,9 +121,20 @@ const RemunerationInformation = (props) => {
                   />
                   {fixedGrossError ? (
                     <p style={{ color: "red" }}>This field cannot be empty</p>
-                  ) : fixedGross < 18000 ? (
+                  ) : candidateData &&
+                    candidateData.workInformation &&
+                    candidateData.workInformation.contractType === "Parttime" &&
+                    (fixedGross < 90 || fixedGross > 200) ? (
                     <p style={{ color: "red" }}>
-                      should be greater than 15000{" "}
+                      Value should be between 90 - 200{" "}
+                    </p>
+                  ) : candidateData &&
+                    candidateData.workInformation &&
+                    candidateData.workInformation.contractType ===
+                      "Permanent" &&
+                    fixedGross < 18000 ? (
+                    <p style={{ color: "red" }}>
+                      Value should be greater than 18000{" "}
                     </p>
                   ) : (
                     ""

@@ -45,6 +45,7 @@ const EmployeeForm = (props) => {
     searchEmpData2,
     createCandidateResponse,
     editCandidate,
+    viewCandidateId,
   } = useContext(OfferContext);
 
   const handleClose = () => setModal(false);
@@ -175,9 +176,9 @@ const EmployeeForm = (props) => {
       console.log("first click");
       setSaveclick(true);
       CandidateInfo = {
-        adharDoc: null,
-        adharName: null,
-        adharNumber: searchValue,
+        aadhaarDoc: null,
+        aadhaarName: null,
+        aadhaarNumber: searchValue,
         bloodGroup: null,
         candidateId: 0,
         candidateReferences: [
@@ -213,9 +214,9 @@ const EmployeeForm = (props) => {
       };
     } else if (createCandidateResponse.candidateId && saveclick === true) {
       CandidateInfo = {
-        adharDoc: null,
-        adharName: null,
-        adharNumber: searchValue,
+        aadhaarDoc: null,
+        aadhaarName: null,
+        aadhaarNumber: searchValue,
         bloodGroup: null,
         candidateId: createCandidateResponse.candidateId,
         candidateReferences: [
@@ -256,8 +257,10 @@ const EmployeeForm = (props) => {
     } else {
       createCandidate(CandidateInfo);
     }
-
     setDisabled(true);
+    if (createCandidateResponse && createCandidateResponse.candidateId) {
+      viewCandidateId(createCandidateResponse.candidateId);
+    }
     setEditButton(true);
     const checkedInput = props.checkedHandler;
     checkedInput();

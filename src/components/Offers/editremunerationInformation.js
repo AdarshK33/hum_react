@@ -125,9 +125,20 @@ const EditRemunerationInformation = (props) => {
                   />
                   {fixedGrossError ? (
                     <p style={{ color: "red" }}>This field cannot be empty</p>
-                  ) : fixedGross < 15000 ? (
+                  ) : candidateData &&
+                    candidateData.workInformation &&
+                    candidateData.workInformation.contractType === "Parttime" &&
+                    (fixedGross < 90 || fixedGross > 200) ? (
                     <p style={{ color: "red" }}>
-                      Should be greater than 15000{" "}
+                      Value should be between 90 - 200{" "}
+                    </p>
+                  ) : candidateData &&
+                    candidateData.workInformation &&
+                    candidateData.workInformation.contractType ===
+                      "Permanent" &&
+                    fixedGross < 18000 ? (
+                    <p style={{ color: "red" }}>
+                      Value should be greater than 18000{" "}
                     </p>
                   ) : (
                     ""
