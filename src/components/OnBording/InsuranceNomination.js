@@ -21,9 +21,21 @@ var NomineeArray = [0, 0, 0, 0, 0];
 const InsuranceNomination = (props) => {
   const [isChecked, changeCheckState] = useState(false);
   const [count, setCount] = useState(0);
-  const [NomineeCount, setNomineeCount] = useState(1);
-  const [NominForm1, setNominForm1] = useState(true);
-  const [NominForm2, setNominForm2] = useState(true);
+  const [NomineeCount, setNomineeCount] = useState(0);
+  const [NominForm1, setNominForm1] = useState(false);
+  const [NominForm2, setNominForm2] = useState(false);
+  const [NominForm3, setNominForm3] = useState(false);
+  const [NominForm4, setNominForm4] = useState(false);
+  const [state, setState] = useState({
+    age: 0,
+    bloodGroup: "",
+    candidateId: 0,
+    dateOfBirth: "",
+    gender: "",
+    nominiId: 0,
+    nominiName: "",
+    relationship: "",
+  });
   const submitHandler = (e) => {
     const nextPage = props.NextStep;
     nextPage();
@@ -42,19 +54,85 @@ const InsuranceNomination = (props) => {
     changeCheckState(!e.target.checked);
     console.log(isChecked);
   };
+  const cancel = () => {
+    if (NomineeCount >= 0) {
+      console.log(NomineeCount);
+      switch (NomineeCount) {
+        case 1:
+          console.log("11111");
+          setNominForm1(false);
+          setNomineeCount(NomineeCount - 1);
+          return;
+          break;
+        case 2:
+          console.log("22222");
+          setNominForm2(false);
+          setNomineeCount(NomineeCount - 1);
+          return;
+          break;
+        case 3:
+          console.log("3333");
+          setNominForm3(false);
+          setNomineeCount(NomineeCount - 1);
+          return;
+          break;
+        case 4:
+          console.log("4444");
+          setNominForm4(false);
+          setNomineeCount(NomineeCount - 1);
+          return;
+          break;
 
-  const handleIncrement = () => {
-    if (NomineeCount < 4) {
-      setNomineeCount(NomineeCount + 1);
+        default:
+          break;
+      }
     }
-    // setNomineeCount(NomineeCount + 1);
-    // NomineeArray[NomineeCount] = 1;
-    // console.log(NomineeArray);
     console.log(NomineeCount);
   };
 
-  const handleDecrement = () => {
-    setCount((prevCount) => prevCount - 1);
+  const handleIncrement = () => {
+    if (NomineeCount <= 4) {
+      console.log(NomineeCount);
+
+      switch (NomineeCount) {
+        case 0:
+          console.log("11111");
+          setNominForm1(true);
+          setNomineeCount(NomineeCount + 1);
+          return;
+          break;
+        case 1:
+          console.log("22222");
+          setNominForm2(true);
+          setNomineeCount(NomineeCount + 1);
+          return;
+          break;
+        case 2:
+          console.log("3333");
+          setNominForm3(true);
+          setNomineeCount(NomineeCount + 1);
+          return;
+          break;
+        case 3:
+          console.log("4444");
+          setNominForm4(true);
+          setNomineeCount(NomineeCount + 1);
+          return;
+          break;
+
+        default:
+          break;
+      }
+    }
+    console.log(NomineeCount);
+  };
+
+  const changeHandler = (e) => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
+    console.log(state);
   };
 
   return (
@@ -157,25 +235,37 @@ const InsuranceNomination = (props) => {
       ) : (
         <div>
           <div>
+            {/* first Nominee */}
             <Row style={{ marginBottom: "2rem" }}>
               <Col sm={11}>
                 <Row>
                   <div className="col-sm-4">
                     <Form.Group>
                       <Form.Label>
-                        Nominee Name<span style={{ color: "red" }}>*</span>
+                        Nominee Name
+                        <span style={{ color: "red" }}>*</span>
                       </Form.Label>
                       <Form.Control
                         type="text"
+                        name="nominiName"
+                        value={state.nominiName}
+                        onChange={changeHandler}
+                        required
                         placeholder="Nominee Name"
-                        required="required"
                       />
                     </Form.Group>
                   </div>
                   <div className="col-sm-4">
                     <Form.Group>
-                      <Form.Label>Relationship</Form.Label>
-                      <Form.Control as="select">
+                      <Form.Label>
+                        Relationship <span style={{ color: "red" }}>*</span>
+                      </Form.Label>
+                      <Form.Control
+                        as="select"
+                        name="relationship"
+                        value={state.relationship}
+                        onChange={changeHandler}
+                      >
                         <option value="">Relationship</option>
                       </Form.Control>
                     </Form.Group>
@@ -227,7 +317,9 @@ const InsuranceNomination = (props) => {
                   </div>
                   <div className="col-sm-4">
                     <Form.Group>
-                      <Form.Label>Blood Group</Form.Label>
+                      <Form.Label>
+                        Blood Group <span style={{ color: "red" }}>*</span>
+                      </Form.Label>
                       <Form.Control as="select">
                         <option value="">Blood Group</option>
                       </Form.Control>
@@ -238,8 +330,438 @@ const InsuranceNomination = (props) => {
               <Col sm={1}></Col>
             </Row>
           </div>
-          {NominForm1 === true ? <NomineeForm /> : ""}
-          {NominForm2 === false ? <NomineeForm /> : ""}
+          {NominForm1 === true ? (
+            <div>
+              {/* second Nominee */}
+              <Row style={{ marginBottom: "2rem" }}>
+                <Col sm={11}>
+                  <Row>
+                    <div className="col-sm-4">
+                      <Form.Group>
+                        <Form.Label>
+                          Second Nominee Name
+                          <span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Nominee Name"
+                          required="required"
+                        />
+                      </Form.Group>
+                    </div>
+                    <div className="col-sm-4">
+                      <Form.Group>
+                        <Form.Label>
+                          Relationship <span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+                        <Form.Control as="select">
+                          <option value="">Relationship</option>
+                        </Form.Control>
+                      </Form.Group>
+                    </div>
+                    <div className="col-sm-4">
+                      <Form.Group>
+                        <Form.Label>
+                          Gender<span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Gender"
+                          required="required"
+                        />
+                      </Form.Group>
+                    </div>
+                  </Row>
+                </Col>
+                <Col sm={1} style={{ marginLeft: "-2rem" }}>
+                  <Form.Group>
+                    <div>
+                      <button
+                        onClick={cancel}
+                        type="cancel"
+                        style={{ color: "white", border: " 2px solid#4466f2" }}
+                      >
+                        <i
+                          class="fa fa-close"
+                          style={{ fontSize: "20px", color: "red" }}
+                        ></i>
+                      </button>
+                    </div>
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row style={{ marginBottom: "1rem" }}>
+                <Col sm={11}>
+                  <Row>
+                    <div className="col-sm-4">
+                      <Form.Group>
+                        <Form.Label>
+                          Datte Of Birth<span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+                        <div className="onBoard-date">
+                          <DatePicker
+                            className="form-control onBoard-view"
+                            dateFormat="MM/yyyy"
+                            showMonthYearPicker
+                            placeholderText="Date Of Birth"
+                          />
+                        </div>
+                      </Form.Group>
+                    </div>
+                    <div className="col-sm-4">
+                      <Form.Group>
+                        <Form.Label>
+                          Age<span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Age"
+                          required="required"
+                        />
+                      </Form.Group>
+                    </div>
+                    <div className="col-sm-4">
+                      <Form.Group>
+                        <Form.Label>
+                          Blood Group <span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+                        <Form.Control as="select">
+                          <option value="">Blood Group</option>
+                        </Form.Control>
+                      </Form.Group>
+                    </div>
+                  </Row>
+                </Col>
+                <Col sm={1}></Col>
+              </Row>
+            </div>
+          ) : (
+            ""
+          )}
+          {NominForm2 === true ? (
+            <div>
+              {/* Third Nominee  */}
+              <Row style={{ marginBottom: "2rem" }}>
+                <Col sm={11}>
+                  <Row>
+                    <div className="col-sm-4">
+                      <Form.Group>
+                        <Form.Label>
+                          Third Nominee Name
+                          <span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Nominee Name"
+                          required="required"
+                        />
+                      </Form.Group>
+                    </div>
+                    <div className="col-sm-4">
+                      <Form.Group>
+                        <Form.Label>
+                          Relationship <span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+                        <Form.Control as="select">
+                          <option value="">Relationship</option>
+                        </Form.Control>
+                      </Form.Group>
+                    </div>
+                    <div className="col-sm-4">
+                      <Form.Group>
+                        <Form.Label>
+                          Gender<span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Gender"
+                          required="required"
+                        />
+                      </Form.Group>
+                    </div>
+                  </Row>
+                </Col>
+                <Col sm={1} style={{ marginLeft: "-2rem" }}>
+                  <Form.Group>
+                    <div>
+                      <button
+                        onClick={cancel}
+                        type="cancel"
+                        style={{ color: "white", border: " 2px solid#4466f2" }}
+                      >
+                        <i
+                          class="fa fa-close"
+                          style={{ fontSize: "20px", color: "red" }}
+                        ></i>
+                      </button>
+                    </div>
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row style={{ marginBottom: "1rem" }}>
+                <Col sm={11}>
+                  <Row>
+                    <div className="col-sm-4">
+                      <Form.Group>
+                        <Form.Label>
+                          Datte Of Birth<span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+                        <div className="onBoard-date">
+                          <DatePicker
+                            className="form-control onBoard-view"
+                            dateFormat="MM/yyyy"
+                            showMonthYearPicker
+                            placeholderText="Date Of Birth"
+                          />
+                        </div>
+                      </Form.Group>
+                    </div>
+                    <div className="col-sm-4">
+                      <Form.Group>
+                        <Form.Label>
+                          Age<span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Age"
+                          required="required"
+                        />
+                      </Form.Group>
+                    </div>
+                    <div className="col-sm-4">
+                      <Form.Group>
+                        <Form.Label>
+                          Blood Group <span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+                        <Form.Control as="select">
+                          <option value="">Blood Group</option>
+                        </Form.Control>
+                      </Form.Group>
+                    </div>
+                  </Row>
+                </Col>
+                <Col sm={1}></Col>
+              </Row>
+            </div>
+          ) : (
+            ""
+          )}
+          {NominForm3 === true ? (
+            <div>
+              {/* fourth Nominee Name */}
+              <Row style={{ marginBottom: "2rem" }}>
+                <Col sm={11}>
+                  <Row>
+                    <div className="col-sm-4">
+                      <Form.Group>
+                        <Form.Label>
+                          Fourth Nominee Name
+                          <span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Nominee Name"
+                          required="required"
+                        />
+                      </Form.Group>
+                    </div>
+                    <div className="col-sm-4">
+                      <Form.Group>
+                        <Form.Label>
+                          Relationship <span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+                        <Form.Control as="select">
+                          <option value="">Relationship</option>
+                        </Form.Control>
+                      </Form.Group>
+                    </div>
+                    <div className="col-sm-4">
+                      <Form.Group>
+                        <Form.Label>
+                          Gender<span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Gender"
+                          required="required"
+                        />
+                      </Form.Group>
+                    </div>
+                  </Row>
+                </Col>
+                <Col sm={1} style={{ marginLeft: "-2rem" }}>
+                  <Form.Group>
+                    <div>
+                      <button
+                        onClick={cancel}
+                        type="cancel"
+                        style={{ color: "white", border: " 2px solid#4466f2" }}
+                      >
+                        <i
+                          class="fa fa-close"
+                          style={{ fontSize: "20px", color: "red" }}
+                        ></i>
+                      </button>
+                    </div>
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row style={{ marginBottom: "1rem" }}>
+                <Col sm={11}>
+                  <Row>
+                    <div className="col-sm-4">
+                      <Form.Group>
+                        <Form.Label>
+                          Datte Of Birth<span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+                        <div className="onBoard-date">
+                          <DatePicker
+                            className="form-control onBoard-view"
+                            dateFormat="MM/yyyy"
+                            showMonthYearPicker
+                            placeholderText="Date Of Birth"
+                          />
+                        </div>
+                      </Form.Group>
+                    </div>
+                    <div className="col-sm-4">
+                      <Form.Group>
+                        <Form.Label>
+                          Age<span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Age"
+                          required="required"
+                        />
+                      </Form.Group>
+                    </div>
+                    <div className="col-sm-4">
+                      <Form.Group>
+                        <Form.Label>
+                          Blood Group <span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+                        <Form.Control as="select">
+                          <option value="">Blood Group</option>
+                        </Form.Control>
+                      </Form.Group>
+                    </div>
+                  </Row>
+                </Col>
+                <Col sm={1}></Col>
+              </Row>
+            </div>
+          ) : (
+            ""
+          )}
+          {NominForm4 === true ? (
+            <div>
+              {/* Fifth Nominee */}
+              <Row style={{ marginBottom: "2rem" }}>
+                <Col sm={11}>
+                  <Row>
+                    <div className="col-sm-4">
+                      <Form.Group>
+                        <Form.Label>
+                          Fifth Nominee Name
+                          <span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Nominee Name"
+                          required="required"
+                        />
+                      </Form.Group>
+                    </div>
+                    <div className="col-sm-4">
+                      <Form.Group>
+                        <Form.Label>
+                          Relationship <span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+                        <Form.Control as="select">
+                          <option value="">Relationship</option>
+                        </Form.Control>
+                      </Form.Group>
+                    </div>
+                    <div className="col-sm-4">
+                      <Form.Group>
+                        <Form.Label>
+                          Gender<span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Gender"
+                          required="required"
+                        />
+                      </Form.Group>
+                    </div>
+                  </Row>
+                </Col>
+                <Col sm={1} style={{ marginLeft: "-2rem" }}>
+                  <Form.Group>
+                    <div>
+                      <button
+                        onClick={cancel}
+                        type="cancel"
+                        style={{ color: "white", border: " 2px solid#4466f2" }}
+                      >
+                        <i
+                          class="fa fa-close"
+                          style={{ fontSize: "20px", color: "red" }}
+                        ></i>
+                      </button>
+                    </div>
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row style={{ marginBottom: "1rem" }}>
+                <Col sm={11}>
+                  <Row>
+                    <div className="col-sm-4">
+                      <Form.Group>
+                        <Form.Label>
+                          Datte Of Birth<span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+                        <div className="onBoard-date">
+                          <DatePicker
+                            className="form-control onBoard-view"
+                            dateFormat="MM/yyyy"
+                            showMonthYearPicker
+                            placeholderText="Date Of Birth"
+                          />
+                        </div>
+                      </Form.Group>
+                    </div>
+                    <div className="col-sm-4">
+                      <Form.Group>
+                        <Form.Label>
+                          Age<span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+                        <Form.Control
+                          type="text"
+                          placeholder="Age"
+                          required="required"
+                        />
+                      </Form.Group>
+                    </div>
+                    <div className="col-sm-4">
+                      <Form.Group>
+                        <Form.Label>
+                          Blood Group <span style={{ color: "red" }}>*</span>
+                        </Form.Label>
+                        <Form.Control as="select">
+                          <option value="">Blood Group</option>
+                        </Form.Control>
+                      </Form.Group>
+                    </div>
+                  </Row>
+                </Col>
+                <Col sm={1}></Col>
+              </Row>
+            </div>
+          ) : (
+            ""
+          )}
 
           {/* {(() => {
             switch (NomineeCount) {
