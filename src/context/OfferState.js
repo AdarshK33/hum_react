@@ -253,9 +253,14 @@ export const OfferProvider = (props) => {
     return client
       .post("/api/v1/candidate/remuneration/create", createData)
       .then((response) => {
-        state.remunerationData = response.data.data;
-        toast.info(response.data.message);
-        console.log("remuneration.message", state.remunerationData);
+        if (response.status === 200) {
+          state.remunerationData = response.data.data;
+          toast.info(response.data.message);
+          console.log("remuneration.message", state.remunerationData);
+        } else {
+          toast.info("Something went wrong");
+        }
+
         return dispatch({
           type: "REMUNERATION_DATA",
           payload: state.remunerationData,

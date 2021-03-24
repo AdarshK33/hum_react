@@ -43,10 +43,8 @@ const PartTimeOfferLetter = () => {
             </li>
             <li>
               Your gross salary will not exceed{" "}
-              <span className="boldText">
-                {offerLetterData.partTimeCandidateOffer.grossSalary}
-              </span>{" "}
-              per Hourly
+              <span className="boldText">{offerLetterData.fixedGross}</span> per
+              Hourly
             </li>
             <li>
               You may also receive a bonus on monthly basis and which would be
