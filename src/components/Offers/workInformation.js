@@ -8,6 +8,7 @@ import { AdminContext } from "../../context/AdminState";
 import { OfferContext } from "../../context/OfferState";
 import { RosterContext } from "../../context/RosterState";
 import { AppContext } from "../../context/AppState";
+import moment from 'moment'
 
 const WorkInformation = () => {
   const [state, setState] = useState({
@@ -21,9 +22,13 @@ const WorkInformation = () => {
     ngoDetail: "",
   });
   const [dateOfJoining, setDateOFJoining] = useState();
+  const [dateOfLeaving, setDateOFLeaving] = useState();
   const [costCenter, setCostCenter] = useState("");
   const [editButton, setEditButton] = useState(false);
   const [disabled, setDisabled] = useState(false);
+  const [college, setCollege] = useState('')
+  
+  
 
   const { viewSports, sportsNames } = useContext(ClusterContext);
   const { CostCenter, costCenterList } = useContext(AdminContext);
@@ -36,9 +41,13 @@ const WorkInformation = () => {
     locationName,
     createCandidateWork,
     createCandidateResponse,
+    stateList,
+    stateData, cityData, cityList
   } = useContext(OfferContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const { user } = useContext(AppContext);
+  const [stateValue, setStateValue] = useState()
+  const [city, setCity] = useState()
 
   useEffect(() => {
     viewSports();
@@ -46,7 +55,26 @@ const WorkInformation = () => {
     departmentView();
     viewContractTypes();
     designationView();
+    stateData()
   }, []);
+
+useEffect(() => {
+  setStateValue(locationName.stateId)
+  setCity(locationName.cityId)
+  cityData(locationName.stateId)
+    console.log("state in useEffect",locationName)
+},[locationName])
+
+  const stateHandler = (e) => {
+    setStateValue(e.target.value)
+    cityData(e.target.value)
+    console.log("stateName in state handler",e.target.value)
+  }
+
+  const cityHandler = (e) => {
+    setCity(e.target.value)
+    console.log("city",e.target.value)
+  }
 
   const changeHandler = (e) => {
     setState({
@@ -57,10 +85,14 @@ const WorkInformation = () => {
   const costCenterChangeHandler = (e) => {
     setCostCenter(e.target.value);
     locationView(e.target.value);
-    console.log("locationView", e.target.value);
+    setStateValue(locationName.stateId)
+    setCity(locationName.cityId)
   };
   const dateOfJoiningHandler = (date) => {
     setDateOFJoining(date);
+  };
+  const dateOfLeavingHandler = (date) => {
+    setDateOFLeaving(date);
   };
 
   const submitHandler = (e) => {
@@ -68,21 +100,21 @@ const WorkInformation = () => {
     console.log(state, "state");
     const createData = {
       candidateId: createCandidateResponse.candidateId,
-      cityId: locationName.cityId,
+      cityId: city,
       companyName: user.company,
       contractType: state.employmentType,
       costCentre: costCenter,
-      dateOfJoin: dateOfJoining,
-      dateOfLeaving: null,
+      dateOfJoin: moment(dateOfJoining).format("YYYY-MM-DD"),
+      dateOfLeaving: state.employmentType === 'Internship' ? moment(dateOfLeaving).format("YYYY-MM-DD") : null,
       department: state.department,
-      designation: state.designation,
+      designation: state.employmentType === 'Internship' ? 'Intern' :  state.designation,
       educationCertificate: null,
       locationId: locationName.locationId,
       managerId: user.employeeId,
       paySlip: null,
-      position: state.position,
-      probationPeriod: state.probation,
-      recruitmentSource: state.recuritment,
+      position: state.employmentType === 'Internship' ? null : state.position,
+      probationPeriod: state.employmentType === 'Internship' ? null : state.probation,
+      recruitmentSource: state.employmentType === 'Internship' ? null : state.recuritment ,
       relievingLetter: null,
       workId: 0,
     };
@@ -117,7 +149,7 @@ const WorkInformation = () => {
               <Form.Label>Type of Employment</Form.Label>
               <Form.Control
                 as="select"
-                value={state.employmentType}
+                value={state.employmentType }
                 className="form-input"
                 name="employmentType"
                 onChange={changeHandler}
@@ -136,6 +168,16 @@ const WorkInformation = () => {
             </Form.Group>
           </Col>
           <Col sm={3}>
+            {state.employmentType === 'Internship' ? 
+            <Form.Group className='reactDate'>
+              <Form.Label>Manager Id</Form.Label>
+              <Form.Control 
+              type='text'
+              value={user.managerId}
+              className="form-input"
+              readOnly />
+            </Form.Group>
+            :
             <Form.Group className="reactDate">
               <Form.Label>Date of Joining</Form.Label>
               <DatePicker
@@ -148,6 +190,7 @@ const WorkInformation = () => {
                 disabled={disabled}
               />
             </Form.Group>
+            }
           </Col>
           <Col sm={3}>
             <Form.Group>
@@ -160,6 +203,7 @@ const WorkInformation = () => {
                 onChange={changeHandler}
                 disabled={disabled}
               >
+                {}
                 <option value="">Select Department</option>
                 {departmentName !== null &&
                   departmentName !== undefined &&
@@ -175,6 +219,14 @@ const WorkInformation = () => {
         </Row>
         <Row>
           <Col sm={3}>
+          {state.employmentType === 'Internship' ? 
+            <Form.Group className='reactDate'>
+              <Form.Label>College Name</Form.Label>
+              <Form.Control type='text' value={college} onChange={(e) => setCollege(e.target.value)} 
+              placeholder='Enter College Name' className='form-input'  />
+                
+            </Form.Group>
+            :
             <Form.Group>
               <Form.Label>Position</Form.Label>
               <Form.Control
@@ -198,10 +250,15 @@ const WorkInformation = () => {
                   })}
               </Form.Control>
             </Form.Group>
+            }
           </Col>
           <Col sm={3}>
             <Form.Group>
               <Form.Label>Designation</Form.Label>
+              {state.employmentType === 'Internship' ? 
+              <Form.Control type='text' value='Intern'
+              className='form-input' readOnly />
+              :
               <Form.Control
                 as="select"
                 value={state.designation}
@@ -222,6 +279,7 @@ const WorkInformation = () => {
                     );
                   })}
               </Form.Control>
+              }
             </Form.Group>
           </Col>
           <Col sm={3}>
@@ -252,6 +310,9 @@ const WorkInformation = () => {
           <Col sm={3}>
             <Form.Group>
               <Form.Label>Sports</Form.Label>
+              {state.employmentType === 'Internship' ? 
+              <Form.Control type='text' value='N/A' readOnly className='form-input' />
+              :
               <Form.Control
                 as="select"
                 value={state.sports}
@@ -271,7 +332,7 @@ const WorkInformation = () => {
                       </option>
                     );
                   })}
-              </Form.Control>
+              </Form.Control>}
             </Form.Group>
           </Col>
         </Row>
@@ -279,27 +340,52 @@ const WorkInformation = () => {
           <Col sm={3}>
             <Form.Group>
               <Form.Label>Work Location state</Form.Label>
-              <Form.Control
-                type="text"
-                value={locationName.stateName}
+              <Form.Control as='select' value={stateValue}
                 className="form-input"
-                readOnly
-              />
+                onChange={stateHandler}
+                disabled={disabled}>
+                    <option value=''>Select State</option>
+                    {stateList.map((item,i) => {
+                      return(
+                        <option key={i} value={item.stateId}>{item.stateName}</option>
+                      )
+                    })}
+              </Form.Control>
+             
             </Form.Group>
           </Col>
           <Col sm={3}>
             <Form.Group>
               <Form.Label>Work Location City</Form.Label>
-              <Form.Control
-                type="text"
-                value={locationName.cityName}
+              <Form.Control as='select' value={city}
                 className="form-input"
-                readOnly
-              />
+                onChange={cityHandler}
+                disabled={disabled}>
+                    <option value=''>Select City</option>
+                    {cityList !==null && cityList !== undefined && cityList.map((item,i) => {
+                      return(
+                        <option key={i} value={item.cityId}>{item.cityName}</option>
+                      )
+                    })}
+              </Form.Control>
             </Form.Group>
           </Col>
 
           <Col sm={3}>
+          {state.employmentType === 'Internship' ? 
+          <Form.Group className="reactDate">
+          <Form.Label>Date of Joining</Form.Label>
+          <DatePicker
+            className="form-control form-input"
+            selected={dateOfJoining}
+            required
+            onChange={(e) => dateOfJoiningHandler(e)}
+            dateFormat="yyyy-MM-dd"
+            placeholderText="Date of Joining"
+            disabled={disabled}
+          />
+        </Form.Group>
+          :
             <Form.Group>
               <Form.Label>Probation Period</Form.Label>
               <Form.Control
@@ -316,8 +402,23 @@ const WorkInformation = () => {
                 <option value="3">3 Month</option>
               </Form.Control>
             </Form.Group>
+          }
           </Col>
           <Col sm={3}>
+          {state.employmentType === 'Internship' ? 
+          <Form.Group className="reactDate">
+          <Form.Label>Date of Leaving</Form.Label>
+          <DatePicker
+            className="form-control form-input"
+            selected={dateOfLeaving}
+            required
+            onChange={(e) => dateOfLeavingHandler(e)}
+            dateFormat="yyyy-MM-dd"
+            placeholderText="Date of Leaving"
+            disabled={disabled}
+          />
+        </Form.Group>
+          :
             <Form.Group>
               <Form.Label>Recuritment Source</Form.Label>
               <Form.Control
@@ -337,7 +438,7 @@ const WorkInformation = () => {
                 <option>Recruitment Agency</option>
                 <option>NGO</option>
               </Form.Control>
-            </Form.Group>
+            </Form.Group>}
           </Col>
         </Row>
         {state.recuritment === "NGO" ? (

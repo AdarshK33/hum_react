@@ -20,6 +20,8 @@ const initial_state = {
   remunerationViewData: {},
   offerLetterData: {},
   submitOfferLetter: {},
+  stateList: [],
+  cityList:[]
 };
 
 export const OfferContext = createContext();
@@ -340,6 +342,35 @@ export const OfferProvider = (props) => {
     );
   };
 
+  //State api
+  const stateData = () => {
+    client
+    .get("/api/v1/city/view")
+    .then((response) => {
+      state.stateList = response.data.data;
+      console.log("state name", state.stateList);
+      return dispatch({ type: "STATE", payload: state.stateList });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+  //City api
+  const cityData = (stateId) => {
+    if(stateId !== undefined){
+    client
+    .get("/api/v1/city/view/city/stateId?stateId="+stateId)
+    .then((response) => {
+      state.cityList = response.data.data;
+      console.log("city name", state.cityList);
+      return dispatch({ type: "CITY", payload: state.cityList });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+  }
+
   return (
     <OfferContext.Provider
       value={{
@@ -360,6 +391,8 @@ export const OfferProvider = (props) => {
         remunerationView,
         generateOfferLetter,
         finalSubmitOfferLetter,
+        stateData,
+        cityData,
         searchData: state.searchData,
         departmentName: state.departmentName,
         designationName: state.designationName,
@@ -375,6 +408,8 @@ export const OfferProvider = (props) => {
         remunerationViewData: state.remunerationViewData,
         offerLetterData: state.offerLetterData,
         submitOfferLetter: state.submitOfferLetter,
+        stateList: state.stateList,
+        cityList: state.cityList
       }}
     >
       {props.children}
