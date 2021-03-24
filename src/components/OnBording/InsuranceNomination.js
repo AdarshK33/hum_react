@@ -26,19 +26,123 @@ const InsuranceNomination = (props) => {
   const [NominForm2, setNominForm2] = useState(false);
   const [NominForm3, setNominForm3] = useState(false);
   const [NominForm4, setNominForm4] = useState(false);
+  const [Nominee1DOB, setNominee1DOB] = useState();
+  const [Nominee2DOB, setNominee2DOB] = useState();
+  const [Nominee3DOB, setNominee3DOB] = useState();
+  const [Nominee4DOB, setNominee4DOB] = useState();
+  const [Nominee5DOB, setNominee5DOB] = useState();
   const [state, setState] = useState({
     age: 0,
     bloodGroup: "",
     candidateId: 0,
-    dateOfBirth: "",
     gender: "",
     nominiId: 0,
     nominiName: "",
     relationship: "",
+
+    nominee2Age: 0,
+    nominee2BloodGroup: "",
+    nominee2CandidateId: 0,
+    nominee2Gender: "",
+    nominee2NominiId: 0,
+    nominee2NominiName: "",
+    nominee2Relationship: "",
+
+    nominee3Age: 0,
+    nominee3BloodGroup: "",
+    nominee3CandidateId: 0,
+    nominee3Gender: "",
+    nominee3NominiId: 0,
+    nominee3NominiName: "",
+    nominee3Relationship: "",
+
+    nominee4Age: 0,
+    nominee4BloodGroup: "",
+    nominee4CandidateId: 0,
+    nominee4Gender: "",
+    nominee4NominiId: 0,
+    nominee4NominiName: "",
+    nominee4Relationship: "",
+
+    nominee5Age: 0,
+    nominee5BloodGroup: "",
+    nominee5CandidateId: 0,
+    nominee5Gender: "",
+    nominee5NominiId: 0,
+    nominee5NominiName: "",
+    nominee5Relationship: "",
   });
   const submitHandler = (e) => {
     const nextPage = props.NextStep;
     nextPage();
+    const NominiInfo = [
+      {
+        age: state.age,
+        bloodGroup: state.bloodGroup,
+        candidateId: 0,
+        dateOfBirth: Nominee1DOB,
+        gender: state.gender,
+        nominiId: 0,
+        nominiName: state.nominiName,
+        relationship: state.relationship,
+      },
+
+      // NominForm1 == true
+      //   ? {
+      //       age: NominForm1 == true ? state.nominee2Age : 0,
+      //       bloodGroup: NominForm1 == true ? state.nominee2BloodGroup : null,
+      //       candidateId: NominForm1 == true ? 0 : 0,
+      //       dateOfBirth: NominForm1 == true ? Nominee2DOB : null,
+      //       gender: NominForm1 == true ? state.nominee2Gender : null,
+      //       nominiId: NominForm1 == true ? 0 : 0,
+      //       nominiName: NominForm1 == true ? state.nominee2NominiName : null,
+      //       relationship:
+      //         NominForm1 == true ? state.nominee2Relationship : null,
+      //     }
+      //   : null,
+      // NominForm2 == true
+      //   ? {
+      //       age: NominForm2 == true ? state.nominee3Age : 0,
+      //       bloodGroup: NominForm2 == true ? state.nominee3BloodGroup : null,
+      //       candidateId: NominForm2 == true ? 0 : 0,
+      //       dateOfBirth: NominForm2 == true ? Nominee3DOB : null,
+      //       gender: NominForm2 == true ? state.nominee3Gender : null,
+      //       nominiId: NominForm2 == true ? 0 : 0,
+      //       nominiName: NominForm2 == true ? state.nominee3NominiName : null,
+      //       relationship:
+      //         NominForm2 == true ? state.nominee3Relationship : null,
+      //     }
+      //   : null,
+      // NominForm3 == true
+      //   ? {
+      //       age: NominForm3 == true ? state.nominee4Age : 0,
+      //       bloodGroup: NominForm3 == true ? state.nominee4BloodGroup : null,
+      //       candidateId: NominForm3 == true ? 0 : 0,
+      //       dateOfBirth: NominForm3 == true ? Nominee4DOB : null,
+      //       gender: NominForm3 == true ? state.nominee4Gender : null,
+      //       nominiId: NominForm3 == true ? 0 : 0,
+      //       nominiName: NominForm3 == true ? state.nominee4NominiName : null,
+      //       relationship:
+      //         NominForm3 == true ? state.nominee4Relationship : null,
+      //     }
+      //   : null,
+      // NominForm4 == true
+      //   ? {
+      //       age: NominForm4 == true ? state.nominee5Age : 0,
+      //       bloodGroup: NominForm4 == true ? state.nominee5BloodGroup : null,
+      //       candidateId: NominForm4 == true ? 0 : 0,
+      //       dateOfBirth: NominForm4 == true ? Nominee5DOB : null,
+      //       gender: NominForm4 == true ? state.nominee5Gender : null,
+      //       nominiId: NominForm4 == true ? 0 : 0,
+      //       nominiName: NominForm4 == true ? state.nominee5NominiName : null,
+      //       relationship:
+      //         NominForm4 == true ? state.nominee5Relationship : null,
+      //     }
+      //   : null,
+    ];
+    console.log(NominiInfo);
+    // const nextPage = props.NextStep;
+    // nextPage();
   };
 
   const PrevStep = () => {
@@ -53,6 +157,33 @@ const InsuranceNomination = (props) => {
   const handleNoCheckboxChange = (e) => {
     changeCheckState(!e.target.checked);
     console.log(isChecked);
+  };
+  const dateOfBirthHandler = (date, key) => {
+    switch (key) {
+      case "1":
+        setNominee1DOB(date);
+        console.log("Nomineee1Dob");
+        break;
+      case "2":
+        setNominee2DOB(date);
+        console.log("Nomineee2Dob");
+        break;
+      case "3":
+        setNominee3DOB(date);
+        console.log("Nomineee3Dob");
+        break;
+      case "4":
+        setNominee4DOB(date);
+        console.log("Nomineee4Dob");
+        break;
+      case "5":
+        setNominee5DOB(date);
+        console.log("Nomineee5Dob");
+        break;
+
+      default:
+        break;
+    }
   };
   const cancel = () => {
     if (NomineeCount >= 0) {
@@ -279,6 +410,9 @@ const InsuranceNomination = (props) => {
                         type="text"
                         placeholder="Gender"
                         required="required"
+                        name="gender"
+                        value={state.gender}
+                        onChange={changeHandler}
                       />
                     </Form.Group>
                   </div>
@@ -296,9 +430,11 @@ const InsuranceNomination = (props) => {
                       <div className="onBoard-date">
                         <DatePicker
                           className="form-control onBoard-view"
-                          dateFormat="MM/yyyy"
-                          showMonthYearPicker
-                          placeholderText="Date Of Birth"
+                          selected={Nominee1DOB}
+                          required
+                          onChange={(e) => dateOfBirthHandler(e, "1")}
+                          dateFormat="yyyy-MM-dd"
+                          placeholderText="YYYY-MM-DD"
                         />
                       </div>
                     </Form.Group>
@@ -312,6 +448,9 @@ const InsuranceNomination = (props) => {
                         type="text"
                         placeholder="Age"
                         required="required"
+                        name="age"
+                        value={state.age}
+                        onChange={changeHandler}
                       />
                     </Form.Group>
                   </div>
@@ -320,7 +459,12 @@ const InsuranceNomination = (props) => {
                       <Form.Label>
                         Blood Group <span style={{ color: "red" }}>*</span>
                       </Form.Label>
-                      <Form.Control as="select">
+                      <Form.Control
+                        as="select"
+                        name="bloodGroup"
+                        value={state.bloodGroup}
+                        onChange={changeHandler}
+                      >
                         <option value="">Blood Group</option>
                       </Form.Control>
                     </Form.Group>
@@ -344,6 +488,9 @@ const InsuranceNomination = (props) => {
                         </Form.Label>
                         <Form.Control
                           type="text"
+                          name="nominee2NominiName"
+                          value={state.nominee2NominiName}
+                          onChange={changeHandler}
                           placeholder="Nominee Name"
                           required="required"
                         />
@@ -354,7 +501,12 @@ const InsuranceNomination = (props) => {
                         <Form.Label>
                           Relationship <span style={{ color: "red" }}>*</span>
                         </Form.Label>
-                        <Form.Control as="select">
+                        <Form.Control
+                          as="select"
+                          name="nominee2Relationship"
+                          value={state.nominee2Relationship}
+                          onChange={changeHandler}
+                        >
                           <option value="">Relationship</option>
                         </Form.Control>
                       </Form.Group>
@@ -366,6 +518,9 @@ const InsuranceNomination = (props) => {
                         </Form.Label>
                         <Form.Control
                           type="text"
+                          name="nominee2Gender"
+                          value={state.nominee2Gender}
+                          onChange={changeHandler}
                           placeholder="Gender"
                           required="required"
                         />
@@ -401,9 +556,11 @@ const InsuranceNomination = (props) => {
                         <div className="onBoard-date">
                           <DatePicker
                             className="form-control onBoard-view"
-                            dateFormat="MM/yyyy"
-                            showMonthYearPicker
-                            placeholderText="Date Of Birth"
+                            selected={Nominee2DOB}
+                            required
+                            onChange={(e) => dateOfBirthHandler(e, "2")}
+                            dateFormat="yyyy-MM-dd"
+                            placeholderText="YYYY-MM-DD"
                           />
                         </div>
                       </Form.Group>
@@ -415,6 +572,9 @@ const InsuranceNomination = (props) => {
                         </Form.Label>
                         <Form.Control
                           type="text"
+                          name="nominee2Age"
+                          value={state.nominee2Age}
+                          onChange={changeHandler}
                           placeholder="Age"
                           required="required"
                         />
@@ -425,7 +585,12 @@ const InsuranceNomination = (props) => {
                         <Form.Label>
                           Blood Group <span style={{ color: "red" }}>*</span>
                         </Form.Label>
-                        <Form.Control as="select">
+                        <Form.Control
+                          as="select"
+                          name="nominee2BloodGroup"
+                          value={state.nominee2BloodGroup}
+                          onChange={changeHandler}
+                        >
                           <option value="">Blood Group</option>
                         </Form.Control>
                       </Form.Group>
@@ -452,6 +617,9 @@ const InsuranceNomination = (props) => {
                         </Form.Label>
                         <Form.Control
                           type="text"
+                          name="nominee3NominiName"
+                          value={state.nominee3NominiName}
+                          onChange={changeHandler}
                           placeholder="Nominee Name"
                           required="required"
                         />
@@ -462,7 +630,12 @@ const InsuranceNomination = (props) => {
                         <Form.Label>
                           Relationship <span style={{ color: "red" }}>*</span>
                         </Form.Label>
-                        <Form.Control as="select">
+                        <Form.Control
+                          as="select"
+                          name="nominee3Relationship"
+                          value={state.nominee3Relationship}
+                          onChange={changeHandler}
+                        >
                           <option value="">Relationship</option>
                         </Form.Control>
                       </Form.Group>
@@ -474,6 +647,9 @@ const InsuranceNomination = (props) => {
                         </Form.Label>
                         <Form.Control
                           type="text"
+                          name="nominee3Gender"
+                          value={state.nominee3Gender}
+                          onChange={changeHandler}
                           placeholder="Gender"
                           required="required"
                         />
@@ -509,9 +685,11 @@ const InsuranceNomination = (props) => {
                         <div className="onBoard-date">
                           <DatePicker
                             className="form-control onBoard-view"
-                            dateFormat="MM/yyyy"
-                            showMonthYearPicker
-                            placeholderText="Date Of Birth"
+                            selected={Nominee3DOB}
+                            required
+                            onChange={(e) => dateOfBirthHandler(e, "3")}
+                            dateFormat="yyyy-MM-dd"
+                            placeholderText="YYYY-MM-DD"
                           />
                         </div>
                       </Form.Group>
@@ -523,6 +701,9 @@ const InsuranceNomination = (props) => {
                         </Form.Label>
                         <Form.Control
                           type="text"
+                          name="nominee3Age"
+                          value={state.nominee3Age}
+                          onChange={changeHandler}
                           placeholder="Age"
                           required="required"
                         />
@@ -533,7 +714,12 @@ const InsuranceNomination = (props) => {
                         <Form.Label>
                           Blood Group <span style={{ color: "red" }}>*</span>
                         </Form.Label>
-                        <Form.Control as="select">
+                        <Form.Control
+                          as="select"
+                          name="nominee3BloodGroup"
+                          value={state.nominee3BloodGroup}
+                          onChange={changeHandler}
+                        >
                           <option value="">Blood Group</option>
                         </Form.Control>
                       </Form.Group>
@@ -560,6 +746,9 @@ const InsuranceNomination = (props) => {
                         </Form.Label>
                         <Form.Control
                           type="text"
+                          name="nominee4NominiName"
+                          value={state.nominee4NominiName}
+                          onChange={changeHandler}
                           placeholder="Nominee Name"
                           required="required"
                         />
@@ -570,7 +759,12 @@ const InsuranceNomination = (props) => {
                         <Form.Label>
                           Relationship <span style={{ color: "red" }}>*</span>
                         </Form.Label>
-                        <Form.Control as="select">
+                        <Form.Control
+                          as="select"
+                          name="nominee4Relationship"
+                          value={state.nominee4Relationship}
+                          onChange={changeHandler}
+                        >
                           <option value="">Relationship</option>
                         </Form.Control>
                       </Form.Group>
@@ -582,6 +776,9 @@ const InsuranceNomination = (props) => {
                         </Form.Label>
                         <Form.Control
                           type="text"
+                          name="nominee4Gender"
+                          value={state.nominee4Gender}
+                          onChange={changeHandler}
                           placeholder="Gender"
                           required="required"
                         />
@@ -617,9 +814,11 @@ const InsuranceNomination = (props) => {
                         <div className="onBoard-date">
                           <DatePicker
                             className="form-control onBoard-view"
-                            dateFormat="MM/yyyy"
-                            showMonthYearPicker
-                            placeholderText="Date Of Birth"
+                            selected={Nominee4DOB}
+                            required
+                            onChange={(e) => dateOfBirthHandler(e, "4")}
+                            dateFormat="yyyy-MM-dd"
+                            placeholderText="YYYY-MM-DD"
                           />
                         </div>
                       </Form.Group>
@@ -631,6 +830,9 @@ const InsuranceNomination = (props) => {
                         </Form.Label>
                         <Form.Control
                           type="text"
+                          name="nominee4Age"
+                          value={state.nominee4Age}
+                          onChange={changeHandler}
                           placeholder="Age"
                           required="required"
                         />
@@ -641,7 +843,12 @@ const InsuranceNomination = (props) => {
                         <Form.Label>
                           Blood Group <span style={{ color: "red" }}>*</span>
                         </Form.Label>
-                        <Form.Control as="select">
+                        <Form.Control
+                          as="select"
+                          name="nominee4BloodGroup"
+                          value={state.nominee4BloodGroup}
+                          onChange={changeHandler}
+                        >
                           <option value="">Blood Group</option>
                         </Form.Control>
                       </Form.Group>
@@ -668,6 +875,9 @@ const InsuranceNomination = (props) => {
                         </Form.Label>
                         <Form.Control
                           type="text"
+                          name="nominee5NominiName"
+                          value={state.nominee5NominiName}
+                          onChange={changeHandler}
                           placeholder="Nominee Name"
                           required="required"
                         />
@@ -678,7 +888,12 @@ const InsuranceNomination = (props) => {
                         <Form.Label>
                           Relationship <span style={{ color: "red" }}>*</span>
                         </Form.Label>
-                        <Form.Control as="select">
+                        <Form.Control
+                          as="select"
+                          name="nominee5Relationship"
+                          value={state.nominee5Relationship}
+                          onChange={changeHandler}
+                        >
                           <option value="">Relationship</option>
                         </Form.Control>
                       </Form.Group>
@@ -690,6 +905,9 @@ const InsuranceNomination = (props) => {
                         </Form.Label>
                         <Form.Control
                           type="text"
+                          name="nominee5Gender"
+                          value={state.nominee5Gender}
+                          onChange={changeHandler}
                           placeholder="Gender"
                           required="required"
                         />
@@ -725,9 +943,11 @@ const InsuranceNomination = (props) => {
                         <div className="onBoard-date">
                           <DatePicker
                             className="form-control onBoard-view"
-                            dateFormat="MM/yyyy"
-                            showMonthYearPicker
-                            placeholderText="Date Of Birth"
+                            selected={Nominee5DOB}
+                            required
+                            onChange={(e) => dateOfBirthHandler(e, "5")}
+                            dateFormat="yyyy-MM-dd"
+                            placeholderText="YYYY-MM-DD"
                           />
                         </div>
                       </Form.Group>
@@ -739,6 +959,9 @@ const InsuranceNomination = (props) => {
                         </Form.Label>
                         <Form.Control
                           type="text"
+                          name="nominee5Age"
+                          value={state.nominee5Age}
+                          onChange={changeHandler}
                           placeholder="Age"
                           required="required"
                         />
@@ -749,7 +972,12 @@ const InsuranceNomination = (props) => {
                         <Form.Label>
                           Blood Group <span style={{ color: "red" }}>*</span>
                         </Form.Label>
-                        <Form.Control as="select">
+                        <Form.Control
+                          as="select"
+                          name="nominee5BloodGroup"
+                          value={state.nominee5BloodGroup}
+                          onChange={changeHandler}
+                        >
                           <option value="">Blood Group</option>
                         </Form.Control>
                       </Form.Group>
