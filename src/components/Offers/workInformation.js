@@ -20,6 +20,8 @@ const WorkInformation = () => {
     probation: "",
     recuritment: "",
     ngoDetail: "",
+    internship:"",
+    noticePeriod:""
   });
   const [dateOfJoining, setDateOFJoining] = useState();
   const [dateOfLeaving, setDateOFLeaving] = useState();
@@ -111,6 +113,7 @@ const WorkInformation = () => {
       createData = {
         candidateId: createCandidateResponse.candidateId,
         cityId: city,
+        collegeName: college,
         companyName: user.company,
         contractType: state.employmentType,
         costCentre: costCenter,
@@ -123,6 +126,7 @@ const WorkInformation = () => {
         designation:
           state.employmentType === "Internship" ? "Intern" : state.designation,
         educationCertificate: null,
+        internshipPeriod:  state.employmentType === "Internship" ? state.internship : 0,
         locationId: locationName.locationId,
         managerId: user.employeeId,
         paySlip: null,
@@ -134,11 +138,13 @@ const WorkInformation = () => {
         relievingLetter: null,
         workId: 0,
         ngoDetails: state.ngoDetail,
+        noticePeriod: state.employmentType === "Internship" ? 0 : state.noticePeriod
       };
     } else if (createCandidateResponse.candidateId && saveclick === true) {
       createData = {
         candidateId: createCandidateResponse.candidateId,
         cityId: city,
+        collegeName: college,
         companyName: user.company,
         contractType: state.employmentType,
         costCentre: costCenter,
@@ -151,6 +157,7 @@ const WorkInformation = () => {
         designation:
           state.employmentType === "Internship" ? "Intern" : state.designation,
         educationCertificate: null,
+        internshipPeriod: state.employmentType === "Internship" ? state.internship : 0,
         locationId: locationName.locationId,
         managerId: user.employeeId,
         paySlip: null,
@@ -162,6 +169,7 @@ const WorkInformation = () => {
         relievingLetter: null,
         workId: workInfoViewData.workId,
         ngoDetails: state.ngoDetail,
+        noticePeriod: state.employmentType === "Internship" ? 0 : state.noticePeriod
       };
     }
     console.log("createData", createData);
@@ -203,6 +211,7 @@ const WorkInformation = () => {
                 name="employmentType"
                 onChange={changeHandler}
                 disabled={disabled}
+                required
               >
                 <option value="">Select Employment Type</option>
                 {shiftContractNames !== null &&
@@ -235,6 +244,7 @@ const WorkInformation = () => {
                   selected={dateOfJoining}
                   required
                   onChange={(e) => dateOfJoiningHandler(e)}
+                  minDate={new Date()}
                   dateFormat="yyyy-MM-dd"
                   placeholderText="Date of Joining"
                   disabled={disabled}
@@ -252,6 +262,7 @@ const WorkInformation = () => {
                 name="department"
                 onChange={changeHandler}
                 disabled={disabled}
+                required
               >
                 {}
                 <option value="">Select Department</option>
@@ -278,6 +289,7 @@ const WorkInformation = () => {
                   onChange={(e) => setCollege(e.target.value)}
                   placeholder="Enter College Name"
                   className="form-input"
+                  required
                 />
               </Form.Group>
             ) : (
@@ -290,6 +302,7 @@ const WorkInformation = () => {
                   name="position"
                   onChange={changeHandler}
                   disabled={disabled}
+                  required
                 >
                   <option value="">Select Position</option>
                   {designationName !== null &&
@@ -324,6 +337,7 @@ const WorkInformation = () => {
                   name="designation"
                   onChange={changeHandler}
                   disabled={disabled}
+                  required
                 >
                   <option value="">Select Designation</option>
                   {designationName !== null &&
@@ -350,6 +364,7 @@ const WorkInformation = () => {
                 name="costCenter"
                 onChange={costCenterChangeHandler}
                 disabled={disabled}
+                required
               >
                 <option value="">Select Cost Center</option>
                 {costCenterList !== null &&
@@ -383,6 +398,7 @@ const WorkInformation = () => {
                   name="sports"
                   onChange={changeHandler}
                   disabled={disabled}
+                  required
                 >
                   <option value="">Select Sports</option>
                   {sportsNames !== null &&
@@ -408,6 +424,7 @@ const WorkInformation = () => {
                 className="form-input"
                 onChange={stateHandler}
                 disabled={disabled}
+                required
               >
                 <option value="">Select State</option>
                 {stateList.map((item, i) => {
@@ -429,6 +446,7 @@ const WorkInformation = () => {
                 className="form-input"
                 onChange={cityHandler}
                 disabled={disabled}
+                required
               >
                 <option value="">Select City</option>
                 {cityList !== null &&
@@ -453,9 +471,11 @@ const WorkInformation = () => {
                   selected={dateOfJoining}
                   required
                   onChange={(e) => dateOfJoiningHandler(e)}
+                  minDate={new Date()}
                   dateFormat="yyyy-MM-dd"
                   placeholderText="Date of Joining"
                   disabled={disabled}
+                  
                 />
               </Form.Group>
             ) : (
@@ -468,6 +488,7 @@ const WorkInformation = () => {
                   name="probation"
                   onChange={changeHandler}
                   disabled={disabled}
+                  required
                 >
                   <option value="">Select Probation</option>
                   <option value="1">1 Month</option>
@@ -486,6 +507,7 @@ const WorkInformation = () => {
                   selected={dateOfLeaving}
                   required
                   onChange={(e) => dateOfLeavingHandler(e)}
+                  minDate={dateOfJoining}
                   dateFormat="yyyy-MM-dd"
                   placeholderText="Date of Leaving"
                   disabled={disabled}
@@ -501,6 +523,7 @@ const WorkInformation = () => {
                   name="recuritment"
                   onChange={changeHandler}
                   disabled={disabled}
+                  required
                 >
                   <option value="">Select Recuritment Source</option>
                   <option>Employee Referral</option>
@@ -513,6 +536,50 @@ const WorkInformation = () => {
                 </Form.Control>
               </Form.Group>
             )}
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={3}>
+          {state.employmentType === "Internship" ? 
+           <Form.Group>
+           <Form.Label>Internship Duration</Form.Label>
+           <Form.Control
+             as="select"
+             value={state.internship}
+             className="form-input"
+             name="internship"
+             onChange={changeHandler}
+             disabled={disabled}
+             required
+           >
+             <option value="">Select Internship Duration</option>
+             <option value='1'>1 Month</option>
+             <option value='2'>2 Month</option>
+             <option value='3'>3 Month</option>
+             <option value='4'>4 Month</option>
+             <option value='5'>5 Month</option>
+             <option value='6'>6 Month</option>
+           </Form.Control>
+         </Form.Group>
+         :
+          <Form.Group>
+                <Form.Label>Notice Period</Form.Label>
+                <Form.Control
+                  as="select"
+                  value={state.noticePeriod}
+                  className="form-input"
+                  name="noticePeriod"
+                  onChange={changeHandler}
+                  disabled={disabled}
+                  required
+                >
+                  <option value="">Select Notice Period</option>
+                  <option value='1'>1 Month</option>
+                  <option value='2'>2 Month</option>
+                  <option value='3'>3 Month</option>
+                </Form.Control>
+              </Form.Group>
+              }
           </Col>
         </Row>
         {state.recuritment === "NGO" ? (
@@ -528,6 +595,7 @@ const WorkInformation = () => {
                   onChange={changeHandler}
                   name="ngoDetail"
                   placeholder="Enter NGO Detail"
+                  required
                 />
               </Form.Group>
             </Col>

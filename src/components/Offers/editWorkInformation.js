@@ -20,6 +20,8 @@ const EditWorkInformation = () => {
     probation: "",
     recuritment: "",
     ngoDetail: "",
+    internship:"",
+    noticePeriod:""
   });
   const [dateOfJoining, setDateOFJoining] = useState();
   const [dateOfLeaving, setDateOFLeaving] = useState();
@@ -75,11 +77,15 @@ const EditWorkInformation = () => {
         probation: workData.probationPeriod,
         recuritment: workData.recruitmentSource,
         ngoDetail: workData.ngoDetails !== null ? workData.ngoDetails : "",
+        internship: workData.internshipPeriod,
+        noticePeriod: workData.noticePeriod
+
       });
       setDateOFJoining(new Date(workData.dateOfJoin));
       setDateOFLeaving(new Date(workData.dateOfLeaving));
       setCostCenter(workData.costCentre);
       locationView(workData.costCentre);
+      setCollege(workData.collegeName)
     }
   }, [candidateData]);
 
@@ -129,6 +135,7 @@ const EditWorkInformation = () => {
     const updateData = {
       candidateId: candidateData.candidateInformation.candidateId,
       cityId: city,
+      collegeName: college,
       companyName: user.company,
       contractType: state.employmentType,
       costCentre: costCenter,
@@ -142,6 +149,7 @@ const EditWorkInformation = () => {
       designation:
         state.employmentType === "Internship" ? "Intern" : state.designation,
       educationCertificate: null,
+      internshipPeriod:  state.employmentType === "Internship" ? state.internship : 0,
       locationId: locationName.locationId,
       managerId: user.employeeId,
       paySlip: null,
@@ -153,6 +161,7 @@ const EditWorkInformation = () => {
       relievingLetter: null,
       workId: candidateData.workInformation.workId,
       ngoDetails: state.ngoDetail,
+      noticePeriod: state.employmentType === "Internship" ? 0 : state.noticePeriod
     };
     console.log("update data", updateData);
     updateCandidateWork(updateData);
@@ -176,6 +185,7 @@ const EditWorkInformation = () => {
                 className="form-input"
                 name="company"
                 readOnly
+                
               />
             </Form.Group>
           </Col>
@@ -226,6 +236,7 @@ const EditWorkInformation = () => {
                   selected={dateOfJoining}
                   required
                   onChange={(e) => dateOfJoiningHandler(e)}
+                  minDate={new Date()}
                   dateFormat="yyyy-MM-dd"
                   placeholderText="Date of Joining"
                   disabled={disabled}
@@ -243,6 +254,7 @@ const EditWorkInformation = () => {
                 name="department"
                 onChange={changeHandler}
                 disabled={disabled}
+                required
               >
                 {departmentName !== null &&
                   departmentName !== undefined &&
@@ -267,6 +279,8 @@ const EditWorkInformation = () => {
                   onChange={(e) => setCollege(e.target.value)}
                   placeholder="Enter College Name"
                   className="form-input"
+                  disabled={disabled}
+                  required
                 />
               </Form.Group>
             ) : (
@@ -279,6 +293,7 @@ const EditWorkInformation = () => {
                   name="position"
                   onChange={changeHandler}
                   disabled={disabled}
+                  required
                 >
                   {designationName !== null &&
                     designationName !== undefined &&
@@ -312,6 +327,7 @@ const EditWorkInformation = () => {
                   name="designation"
                   onChange={changeHandler}
                   disabled={disabled}
+                  required
                 >
                   {designationName !== null &&
                     designationName !== undefined &&
@@ -337,6 +353,7 @@ const EditWorkInformation = () => {
                 name="costCenter"
                 onChange={costCenterChangeHandler}
                 disabled={disabled}
+                required
               >
                 {costCenterList !== null &&
                   costCenterList !== undefined &&
@@ -369,6 +386,7 @@ const EditWorkInformation = () => {
                   name="sports"
                   onChange={changeHandler}
                   disabled={disabled}
+                  required
                 >
                   {sportsNames !== null &&
                     sportsNames !== undefined &&
@@ -395,6 +413,7 @@ const EditWorkInformation = () => {
                 className="form-input"
                 onChange={stateHandler}
                 disabled={disabled}
+                required
               >
                 <option value="">Select State</option>
                 {stateList.map((item, i) => {
@@ -416,6 +435,7 @@ const EditWorkInformation = () => {
                 className="form-input"
                 onChange={cityHandler}
                 disabled={disabled}
+                required
               >
                 <option value="">Select City</option>
                 {cityList !== null &&
@@ -440,6 +460,7 @@ const EditWorkInformation = () => {
                   selected={dateOfJoining}
                   required
                   onChange={(e) => dateOfJoiningHandler(e)}
+                  minDate={dateOfJoining}
                   dateFormat="yyyy-MM-dd"
                   placeholderText="Date of Joining"
                   disabled={disabled}
@@ -455,6 +476,7 @@ const EditWorkInformation = () => {
                   name="probation"
                   onChange={changeHandler}
                   disabled={disabled}
+                  required
                 >
                   <option value="1">1 Month</option>
                   <option value="2">2 Month</option>
@@ -487,6 +509,7 @@ const EditWorkInformation = () => {
                   name="recuritment"
                   onChange={changeHandler}
                   disabled={disabled}
+                  required
                 >
                   <option>Employee Referral</option>
                   <option>LinkedIn</option>
@@ -498,6 +521,49 @@ const EditWorkInformation = () => {
                 </Form.Control>
               </Form.Group>
             )}
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={3}>
+          {state.employmentType === "Internship" ? 
+           <Form.Group>
+           <Form.Label>Internship Duration</Form.Label>
+           <Form.Control
+             as="select"
+             value={state.internship}
+             className="form-input"
+             name="internship"
+             onChange={changeHandler}
+             disabled={disabled}
+             required
+           >
+             <option value="">Select Internship Duration</option>
+             <option value='1'>1 Month</option>
+             <option value='2'>2 Month</option>
+             <option value='3'>3 Month</option>
+             <option value='4'>4 Month</option>
+             <option value='5'>5 Month</option>
+             <option value='6'>6 Month</option>
+           </Form.Control>
+         </Form.Group>
+         :
+          <Form.Group>
+                <Form.Label>Notice Period</Form.Label>
+                <Form.Control
+                  as="select"
+                  value={state.noticePeriod}
+                  className="form-input"
+                  name="noticePeriod"
+                  onChange={changeHandler}
+                  disabled={disabled}
+                  required
+                >
+                  <option value="">Select Notice Period</option>
+                  <option value='1'>1 Month</option>
+                  <option value='2'>2 Month</option>
+                  <option value='3'>3 Month</option>
+                </Form.Control>
+              </Form.Group>}
           </Col>
         </Row>
         {state.recuritment === "NGO" ? (
@@ -513,6 +579,7 @@ const EditWorkInformation = () => {
                   onChange={changeHandler}
                   name="ngoDetail"
                   placeholder="Enter NGO Detail"
+                  required
                 />
               </Form.Group>
             </Col>

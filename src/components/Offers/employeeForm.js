@@ -45,21 +45,41 @@ const EmployeeForm = (props) => {
   const handleClose = () => setModal(false);
   const handleShow = () => setModal(true);
 
-  useEffect(() => {
-    /* setRefEmail1(searchEmpData1 !== null ? 
-      (searchEmpData1.email !== undefined &&  searchEmpData1.email !== null ? searchEmpData1.email : ''):''); */
+ /*  useEffect(() => {
+   
       setRefEmail1(searchEmpData1 !== null ? 
         (searchEmpData1.email !== undefined &&  searchEmpData1.email !== null ? searchEmpData1.email : ''):'');
     setDesignation1(searchEmpData1 !== null ? 
       (searchEmpData1.position !== undefined && searchEmpData1.position !== null ? searchEmpData1.position : ''):'');
-  }, [searchEmpData1, empName1]);
-
+  }, [searchEmpData1]); */
+  useEffect(() => {
+   
+    setRefEmail1(searchEmpData1.email);
+  setDesignation1(searchEmpData1.position);
+}, [searchEmpData1]);
+useEffect(() => {
+   
+  setRefEmail2(searchEmpData2.email);
+setDesignation2(searchEmpData2.position);
+}, [searchEmpData2]);
+/* 
   useEffect(() => {
     setRefEmail2(searchEmpData2 !== null ? 
       (searchEmpData2.email !== undefined && searchEmpData2.email !== null ? searchEmpData2.email : ''):'');
     setDesignation2(searchEmpData2 !== null ?
       (searchEmpData2.position !== undefined && searchEmpData2.position !== null ? searchEmpData2.position : ''):'' );
-  }, [searchEmpData2, empName2]);
+  }, [searchEmpData2]); */
+
+  useEffect(() => {
+    if(empName1 === ''){
+      setRefEmail1('')
+      setDesignation1('')
+    }
+    if(empName2 === ''){
+      setRefEmail2('')
+      setDesignation2('')
+    }
+  },[])
 
   useEffect(() => {
     if (searchData !== null && Object.keys(searchData).length > 0) {
@@ -123,9 +143,17 @@ const EmployeeForm = (props) => {
   };
   const empName1Handler = (e) => {
     setEmpName1(e.target.value);
+    if(e.target.value === ''){
+      setRefEmail1('')
+      setDesignation1('')
+    }
   };
   const empName2Handler = (e) => {
     setEmpName2(e.target.value);
+    if(e.target.value === ''){
+      setRefEmail2('')
+      setDesignation2('')
+    }
   };
   const empName1Search = () => {
     if (empName1 !== "") {
@@ -157,11 +185,13 @@ const EmployeeForm = (props) => {
             designation: desgination1 !== null ? desgination1 : null,
             email: refEmail1 !== null ? refEmail1 : null,
             employeeName: empName1 !== null ? empName1 : null,
+            referenceId: 0
           },
           {
             designation: desgination2 !== null ? desgination2 : null,
             email: refEmail2 !== null ? refEmail2 : null,
             employeeName: empName2 !== null ? empName2 : null,
+            referenceId: 0
           },
         ],
         createdDate: null,
@@ -195,11 +225,13 @@ const EmployeeForm = (props) => {
             designation: desgination1 !== null ? desgination1 : null,
             email: refEmail1 !== null ? refEmail1 : null,
             employeeName: empName1 !== null ? empName1 : null,
+            referenceId: 0
           },
           {
             designation: desgination2 !== null ? desgination2 : null,
             email: refEmail2 !== null ? refEmail2 : null,
             employeeName: empName2 !== null ? empName2 : null,
+            referenceId: 0
           },
         ],
         createdDate: null,
@@ -371,8 +403,8 @@ const EmployeeForm = (props) => {
                   <Form.Control
                     className="form-input"
                     type="text"
-                    /* value={empName1 === '' ? '' : refEmail1} */
-                    value={refEmail1}
+                    value={empName1 === '' ? '' : refEmail1}
+                  /*  value={refEmail1} */
                     onChange={(e) => setRefEmail1(e.target.value)}
                     readOnly
                   />
@@ -385,6 +417,7 @@ const EmployeeForm = (props) => {
                     className="form-input"
                     type="text"
                     value={empName1 === '' ? '' : desgination1}
+                   /*  value={desgination1} */
                     onChange={(e) => setDesignation1(e.target.value)}
                     readOnly
                   />
@@ -430,6 +463,7 @@ const EmployeeForm = (props) => {
                   type="text"
                   readOnly
                   value={empName2 === "" ? "" : refEmail2}
+                 /*  value={refEmail2} */
                   onChange={(e) => setRefEmail2(e.target.value)}
                 />
               </Form.Group>
@@ -441,6 +475,7 @@ const EmployeeForm = (props) => {
                   className="form-input"
                   type="text"
                   value={empName2 === "" ? "" : desgination2} 
+                  /* value={desgination2} */
                   onChange={(e) => setDesignation2(e.target.value)}
                   readOnly
                 />

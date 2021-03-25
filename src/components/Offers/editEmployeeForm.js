@@ -11,6 +11,7 @@ const EditEmployeeForm = () => {
   const [email, setEmail] = useState();
   const [yesChecked, setYesChecked] = useState(true);
   const [noChecked, setNoChecked] = useState(false);
+  const [secondRef, setSecondRef] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [editButton, setEditButton] = useState(false);
   const [disabled, setDisabled] = useState(false);
@@ -25,8 +26,26 @@ const EditEmployeeForm = () => {
     candidateData,
     searchForEmp1,
     editCandidate,
+    searchEmpData1,
     searchForEmp2,
+    searchEmpData2,
   } = useContext(OfferContext);
+
+  useEffect(() => {
+    /* setRefEmail1(searchEmpData1 !== null ? 
+      (searchEmpData1.email !== undefined &&  searchEmpData1.email !== null ? searchEmpData1.email : ''):''); */
+      setRefEmail1(searchEmpData1 !== null ? 
+        (searchEmpData1.email !== undefined &&  searchEmpData1.email !== null ? searchEmpData1.email : ''):'');
+    setDesignation1(searchEmpData1 !== null ? 
+      (searchEmpData1.position !== undefined && searchEmpData1.position !== null ? searchEmpData1.position : ''):'');
+  }, [searchEmpData1]);
+
+  useEffect(() => {
+    setRefEmail2(searchEmpData2 !== null ? 
+      (searchEmpData2.email !== undefined && searchEmpData2.email !== null ? searchEmpData2.email : ''):'');
+    setDesignation2(searchEmpData2 !== null ?
+      (searchEmpData2.position !== undefined && searchEmpData2.position !== null ? searchEmpData2.position : ''):'' );
+  }, [searchEmpData2]);
 
   var candidateRefData =
     candidateData !== null &&
@@ -46,6 +65,19 @@ const EditEmployeeForm = () => {
   console.log("data2", data2);
 
   useEffect(() => {
+    if(data1.employeeName === ""){
+      setYesChecked(false);
+      setNoChecked(true);
+    }
+
+    if(data2.employeeName === ""){
+      setSecondRef(false)
+    }else{
+      setSecondRef(true)
+    }
+  },[data1, data2])
+
+  useEffect(() => {
     let candidateRefData =
       candidateData !== null &&
       candidateData !== undefined &&
@@ -56,19 +88,20 @@ const EditEmployeeForm = () => {
       setFirstName(candidateRefData.firstName);
       setLastName(candidateRefData.lastName);
       setEmail(candidateRefData.personalEmail);
+      console.log(" candidateRefData.candidateReferences", candidateRefData.candidateReferences);
 
-      /* candidateRefData.candidateReferences !== null &&
+     /*  if(candidateRefData.candidateReferences !== null &&
       candidateRefData.candidateReferences !== undefined &&
-      candidateRefData.candidateReferences.length > 0
-        ? (() => {
-            setYesChecked(true);
-            setNoChecked(false);
-          })
-        : (() => {
+      candidateRefData.candidateReferences[0].employeeName === ''){
+        
             setYesChecked(false);
             setNoChecked(true);
-          });
- */
+          }
+        else{ 
+            setYesChecked(true);
+            setNoChecked(false);
+          } */
+
       const data1 =
         candidateRefData.candidateReferences !== null &&
         candidateRefData.candidateReferences !== undefined &&
@@ -114,7 +147,7 @@ const EditEmployeeForm = () => {
           data2.designation !== undefined &&
           (data2.designation !== null ? data2.designation : "")
       );
-    }
+    } 
   }, [candidateData]);
 
   const firstNameChangeHandler = (e) => {
@@ -142,6 +175,23 @@ const EditEmployeeForm = () => {
       searchForEmp2(empName2);
     }
   };
+  const showOneMoreRefer = () => {
+    setSecondRef(true);
+  };
+  const hideOneMoreRefer = () => {
+    setSecondRef(false);
+    setEmpName2("");
+  };
+
+  const checkedYesHandler = () => {
+    setYesChecked(!yesChecked);
+    setNoChecked(yesChecked);
+  };
+  const checkedNoHandler = () => {
+    setNoChecked(!noChecked);
+    setYesChecked(noChecked);
+    setSecondRef(false);
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -157,11 +207,13 @@ const EditEmployeeForm = () => {
           designation: desgination1 !== null ? desgination1 : null,
           email: refEmail1 !== null ? refEmail1 : null,
           employeeName: empName1 !== null ? empName1 : null,
+          referenceId: data1.referenceId
         },
         {
           designation: desgination2 !== null ? desgination2 : null,
           email: refEmail2 !== null ? refEmail2 : null,
           employeeName: empName2 !== null ? empName2 : null,
+          referenceId: data2.referenceId
         },
       ],
       createdDate: candidateData.candidateInformation.createdDate,
@@ -186,6 +238,7 @@ const EditEmployeeForm = () => {
       verificationStatusDesc:
         candidateData.candidateInformation.verificationStatusDesc,
     };
+    console.log("candidate data",updateData.candidateReferences)
     editCandidate(updateData);
     setDisabled(true);
     setEditButton(true);
@@ -254,24 +307,38 @@ const EditEmployeeForm = () => {
             </Form.Group>
           </Col>
         </Row>
-       {/*  <Row>
+        <Row>
           <Col sm={4}>
             <p>Were you referred for this position?</p>
           </Col>
           <Col sm={4}>
-            Yes &nbsp;{" "}
-            <input type="checkbox" name="refrence" checked={yesChecked} />
+          Yes &nbsp;{" "}
+            <input
+              type="checkbox"
+              name="refrence"
+              checked={yesChecked}
+              onChange={checkedYesHandler}
+            />
             &nbsp; &nbsp;&nbsp; &nbsp; No &nbsp;{" "}
-            <input type="checkbox" name="refrence" checked={noChecked} />
+            <input
+              type="checkbox"
+              name="refrence"
+              checked={noChecked}
+              onChange={checkedNoHandler}
+            />
           </Col>
-        </Row> */}{/* 
-        {yesChecked === true ? ( */}
+        </Row>
+        {yesChecked === true ? ( 
           <Fragment>
-            {data1 !== null && data1 !== undefined && data1.employeeName !== '' ? (
+          <p>
+              State two reference(max two are allowed)
+              <span style={{ color: "red" }}>*</span>
+            </p>
+            {/* {data1 !== null && data1 !== undefined && data1.employeeName !== '' ? ( */}
               <Row>
                 <Col sm={4}>
                   <Form.Group>
-                    <Form.Label>Emp Name/Emp ID</Form.Label>
+                    <Form.Label>Emp Name/Emp ID <span style={{color:'red'}}>*</span></Form.Label>
                     <div className="faq-form">
                       <input
                         className="form-control searchButton"
@@ -280,6 +347,7 @@ const EditEmployeeForm = () => {
                         value={empName1}
                         placeholder="Search by Emp Name/Emp Id"
                         onChange={(e) => empName1Handler(e)}
+                        required
                       />
                       <Search
                         className="search-icon"
@@ -311,15 +379,22 @@ const EditEmployeeForm = () => {
                     />
                   </Form.Group>
                 </Col>
-              </Row>
-            ) : (
-              ""
-            )}
-            {data2 !== null && data2 !== undefined && data2.employeeName !== '' ? (
+                 <PlusCircle
+                style={{ color: "#376ebb" }}
+                onClick={showOneMoreRefer}
+                style={{ marginTop: "2rem", color: "#006EBB" }}
+              />
+            </Row>
+          </Fragment>
+        ) : (
+          ""
+        )}
+          {/*   {data2 !== null && data2 !== undefined && data2.employeeName !== '' ? ( */}
+            {secondRef === true && yesChecked === true ? (
               <Row> 
                 <Col sm={4}>
                   <Form.Group>
-                    <Form.Label>Emp Name/Emp ID</Form.Label>
+                    <Form.Label>Emp Name/Emp ID <span style={{color:'red'}}>*</span></Form.Label>
                     <div className="faq-form">
                       <input
                         className="form-control searchButton"
@@ -328,6 +403,7 @@ const EditEmployeeForm = () => {
                         value={empName2}
                         placeholder="Search by Emp Name/Emp Id"
                         onChange={(e) => empName2Handler(e)}
+                        required
                       />
                       <Search
                         className="search-icon"
@@ -358,15 +434,16 @@ const EditEmployeeForm = () => {
                       readOnly
                     />
                   </Form.Group>
-                </Col>
-              </Row>
-            ) : (
-              ""
-            )}
-          </Fragment>
-       {/*  ) : (
+                </Col> 
+                <MinusCircle
+              style={{ color: "#376ebb" }}
+              onClick={hideOneMoreRefer}
+              style={{ marginTop: "2rem", color: "#006EBB" }}
+            />
+          </Row>
+        ) : (
           ""
-        )} */}
+        )}
         <Row>
           <Col sm={4}></Col>
           <Col sm={2}>
