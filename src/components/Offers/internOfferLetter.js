@@ -29,8 +29,8 @@ const InternOfferLetter = () => {
 
           <p>
             We are pleased to offer internship programme for period of{" "}
-            {offerLetterData.probationPeriod} months from{" "}
-            {offerLetterData.internshipCandidateOffer.fromDate} to{" "}
+            {offerLetterData.internshipCandidateOffer.internshipPeriod} months
+            from {offerLetterData.internshipCandidateOffer.fromDate} to{" "}
             {offerLetterData.internshipCandidateOffer.toDate} at{" "}
             {offerLetterData.companyName} Pvt. Ltd. You will be provided stipend{" "}
             {offerLetterData.internshipCandidateOffer.stipend} per month.

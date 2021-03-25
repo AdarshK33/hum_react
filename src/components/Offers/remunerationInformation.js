@@ -16,6 +16,7 @@ const RemunerationInformation = (props) => {
   const [saveclick, setSaveclick] = useState(false);
   const [stipened, setStipened] = useState();
   const [stipenedError, setStipenedError] = useState(false);
+  const [viewApiCall, setViewApiCall] = useState(false);
 
   const {
     remunerationSave,
@@ -29,12 +30,22 @@ const RemunerationInformation = (props) => {
 
   useEffect(() => {
     console.log("candidateData remuneration1", createCandidateResponse);
-    if (createCandidateResponse && createCandidateResponse.candidateId) {
+    if (
+      createCandidateResponse &&
+      createCandidateResponse.candidateId &&
+      candidateData &&
+      candidateData.workInformation &&
+      candidateData.workInformation.contractType &&
+      viewApiCall === false
+    ) {
       viewCandidateId(createCandidateResponse.candidateId);
+      setViewApiCall(true);
+    } else {
+      setViewApiCall(false);
     }
     console.log("candidateData remuneration2", candidateData);
     console.log("user profile", user);
-  }, [candidateData]);
+  }, [candidateData.workInformation]);
 
   const submitHandler = (e) => {
     console.log("inside submit", candidateData);

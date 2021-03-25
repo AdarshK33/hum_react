@@ -16,6 +16,7 @@ const EditRemunerationInformation = (props) => {
   const [saveclick, setSaveclick] = useState(false);
   const [stipened, setStipened] = useState();
   const [stipenedError, setStipenedError] = useState(false);
+  const [viewApiCall, setViewApiCall] = useState(false);
 
   const {
     remunerationUpdate,
@@ -30,8 +31,18 @@ const EditRemunerationInformation = (props) => {
 
   useEffect(() => {
     console.log("candidateData remuneration", candidateData);
-    if (createCandidateResponse && createCandidateResponse.candidateId) {
+    if (
+      createCandidateResponse &&
+      createCandidateResponse.candidateId &&
+      candidateData &&
+      candidateData.workInformation &&
+      candidateData.workInformation.contractType &&
+      viewApiCall === false
+    ) {
       viewCandidateId(createCandidateResponse.candidateId);
+      setViewApiCall(true);
+    } else {
+      setViewApiCall(false);
     }
 
     let remunerationData =
@@ -43,7 +54,7 @@ const EditRemunerationInformation = (props) => {
       setFixedGross(remunerationData.fixedGross);
       setMonthlyBonus(remunerationData.monthlyBonus);
     }
-  }, [candidateData]);
+  }, [candidateData.workInformation]);
 
   const submitHandler = (e) => {
     console.log("inside edit submit", candidateData);
