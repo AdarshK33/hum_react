@@ -8,7 +8,7 @@ import PermanentOfferLetter from "./permanentOfferLetter";
 import InternOfferLetter from "./internOfferLetter";
 import { Link } from "react-router-dom";
 
-const GenerateOfferLetter = () => {
+const ViewOfferLetter = () => {
   const [showModal, setShow] = useState(false);
   const [showSignature, setShowSignature] = useState(false);
   const [saveLetter, setSaveLetter] = useState(false);
@@ -20,28 +20,35 @@ const GenerateOfferLetter = () => {
     createCandidateResponse,
     generateOfferLetter,
     offerLetterData,
+    candidateData,
     finalSubmitOfferLetter,
   } = useContext(OfferContext);
 
   const handleClose = () => setShow(false);
 
+  useEffect(() => {
+    let candidateRefData =
+      candidateData !== null &&
+      candidateData !== undefined &&
+      candidateData.candidateInformation;
+    console.log("view candidateRefData", candidateRefData);
+    // generateOfferLetter(candidateRefData.candidateId);
+  }, [candidateData]);
+
   const offerLetterClick = () => {
-    console.log("offer candidate id", createCandidateResponse.candidateId);
-    generateOfferLetter(createCandidateResponse.candidateId);
+    let candidateRefData =
+      candidateData !== null &&
+      candidateData !== undefined &&
+      candidateData.candidateInformation;
+    console.log("view offer candidate id", candidateData);
+    generateOfferLetter(candidateRefData.candidateId);
     console.log("offer letter response data", offerLetterData);
     handleShow();
   };
   const handleShow = () => {
     console.log("inside show moodal");
-    // if (offerLetterData.length > 0) {
     setShow(true);
     console.log("offer letter response", offerLetterData);
-    // }
-  };
-
-  const saveOfferLetter = () => {
-    setSaveLetter(true);
-    setShow(false);
   };
 
   const digitalSignature = () => {
@@ -49,60 +56,17 @@ const GenerateOfferLetter = () => {
     console.log("offer letter response sig", offerLetterData);
   };
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-  };
-
-  const submitOfferLetter = () => {
-    console.log("offer Letter id", createCandidateResponse.candidateId);
-    setSubmitLetter(true);
-    setLetterSent(true);
-    setShow(true);
-    finalSubmitOfferLetter(createCandidateResponse.candidateId);
-  };
-
-  const previewOfferLetter = () => {
-    generateOfferLetter(createCandidateResponse.candidateId);
-    console.log("offer letter response data", offerLetterData);
-    setSubmitLetter(false);
-    setPreviewLetter(true);
-    setShow(true);
-  };
   return (
     <Fragment>
-      <Form onSubmit={submitHandler}>
-        {!saveLetter ? (
-          <Row>
-            <Col sm={5}></Col>
-            <Col sm={2}>
-              <Button type="button" onClick={offerLetterClick}>
-                Generate Offer Letter
-              </Button>
-            </Col>
-          </Row>
-        ) : (
-          <div className="preview-section">
-            <Button type="button" onClick={previewOfferLetter}>
+      <Form>
+        <Row>
+          <Col sm={5}></Col>
+          <Col sm={2}>
+            <Button type="button" onClick={offerLetterClick}>
               Preview Offer Letter
             </Button>
-            <br></br>
-            <br></br>
-            <img src={calendarImage} alt="calendar" width="200px" />
-            <br></br>
-            <br></br>
-            {letterSent ? (
-              ""
-            ) : (
-              <Button
-                type="button"
-                onClick={submitOfferLetter}
-                style={{ textAlign: "center" }}
-              >
-                Submit
-              </Button>
-            )}
-          </div>
-        )}
+          </Col>
+        </Row>
       </Form>
 
       <Modal show={showModal} onHide={handleClose} size="lg">
@@ -121,6 +85,7 @@ const GenerateOfferLetter = () => {
           </Modal.Body>
         ) : previewLetter || showModal ? (
           <Modal.Body>
+            {}
             {offerLetterData &&
             offerLetterData.contractType !== undefined &&
             offerLetterData.contractType !== null &&
@@ -151,27 +116,17 @@ const GenerateOfferLetter = () => {
                 ) : (
                   <>
                     <p className="signature-text">Your signature</p>
-                    <Button variant="primary" onClick={digitalSignature}>
+                    <Button
+                      disabled
+                      variant="primary"
+                      onClick={digitalSignature}
+                    >
                       Add digital signature
                     </Button>
                   </>
                 )}
               </Col>
             </Row>
-            {showSignature && !previewLetter ? (
-              <Row>
-                <Col sm={4}></Col>
-                <Col sm={5}>
-                  <br></br>
-                  <br></br>
-                  <Button variant="primary" onClick={saveOfferLetter}>
-                    Save Changes
-                  </Button>
-                </Col>
-              </Row>
-            ) : (
-              ""
-            )}
           </Modal.Body>
         ) : (
           ""
@@ -181,4 +136,4 @@ const GenerateOfferLetter = () => {
   );
 };
 
-export default GenerateOfferLetter;
+export default ViewOfferLetter;

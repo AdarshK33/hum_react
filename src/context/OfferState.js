@@ -20,8 +20,9 @@ const initial_state = {
   remunerationViewData: {},
   offerLetterData: {},
   submitOfferLetter: {},
+  workInfoViewData: {},
   stateList: [],
-  cityList:[]
+  cityList: [],
 };
 
 export const OfferContext = createContext();
@@ -254,9 +255,14 @@ export const OfferProvider = (props) => {
     return client
       .post("/api/v1/candidate/remuneration/create", createData)
       .then((response) => {
-        state.remunerationData = response.data.data;
-        toast.info(response.data.message);
-        console.log("remuneration.message", state.remunerationData);
+        if (response.status === 200) {
+          state.remunerationData = response.data.data;
+          toast.info(response.data.message);
+          console.log("remuneration.message", state.remunerationData);
+        } else {
+          toast.info("Something went wrong");
+        }
+
         return dispatch({
           type: "REMUNERATION_DATA",
           payload: state.remunerationData,
@@ -342,34 +348,50 @@ export const OfferProvider = (props) => {
     );
   };
 
+  const workInfoView = (id) => {
+    console.log("work info id", id);
+    return client
+      .get("/api/v1/candidate/work-information/view/" + id)
+      .then((response) => {
+        state.workInfoViewData = response.data.data;
+        console.log("workInfoViewData.message", state.workInfoViewData);
+        return dispatch({
+          type: "WORK_INFO_VIEW",
+          payload: state.workInfoViewData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   //State api
   const stateData = () => {
     client
-    .get("/api/v1/city/view")
-    .then((response) => {
-      state.stateList = response.data.data;
-      console.log("state name", state.stateList);
-      return dispatch({ type: "STATE", payload: state.stateList });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  }
+      .get("/api/v1/city/view")
+      .then((response) => {
+        state.stateList = response.data.data;
+        console.log("state name", state.stateList);
+        return dispatch({ type: "STATE", payload: state.stateList });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   //City api
   const cityData = (stateId) => {
-    if(stateId !== undefined){
-    client
-    .get("/api/v1/city/view/city/stateId?stateId="+stateId)
-    .then((response) => {
-      state.cityList = response.data.data;
-      console.log("city name", state.cityList);
-      return dispatch({ type: "CITY", payload: state.cityList });
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  }
-  }
+    if (stateId !== undefined) {
+      client
+        .get("/api/v1/city/view/city/stateId?stateId=" + stateId)
+        .then((response) => {
+          state.cityList = response.data.data;
+          console.log("city name", state.cityList);
+          return dispatch({ type: "CITY", payload: state.cityList });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
 
   return (
     <OfferContext.Provider
@@ -391,6 +413,7 @@ export const OfferProvider = (props) => {
         remunerationView,
         generateOfferLetter,
         finalSubmitOfferLetter,
+        workInfoView,
         stateData,
         cityData,
         searchData: state.searchData,
@@ -408,8 +431,9 @@ export const OfferProvider = (props) => {
         remunerationViewData: state.remunerationViewData,
         offerLetterData: state.offerLetterData,
         submitOfferLetter: state.submitOfferLetter,
+        workInfoViewData: state.workInfoViewData,
         stateList: state.stateList,
-        cityList: state.cityList
+        cityList: state.cityList,
       }}
     >
       {props.children}
