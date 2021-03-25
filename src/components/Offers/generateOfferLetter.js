@@ -121,7 +121,6 @@ const GenerateOfferLetter = () => {
           </Modal.Body>
         ) : previewLetter || showModal ? (
           <Modal.Body>
-            {}
             {offerLetterData &&
             offerLetterData.contractType !== undefined &&
             offerLetterData.contractType !== null &&

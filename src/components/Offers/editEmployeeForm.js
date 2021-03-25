@@ -57,18 +57,18 @@ const EditEmployeeForm = () => {
       setLastName(candidateRefData.lastName);
       setEmail(candidateRefData.personalEmail);
 
-      candidateRefData.candidateReferences !== null &&
+      /* candidateRefData.candidateReferences !== null &&
       candidateRefData.candidateReferences !== undefined &&
       candidateRefData.candidateReferences.length > 0
         ? (() => {
             setYesChecked(true);
             setNoChecked(false);
-          })()
+          })
         : (() => {
             setYesChecked(false);
             setNoChecked(true);
-          })();
-
+          });
+ */
       const data1 =
         candidateRefData.candidateReferences !== null &&
         candidateRefData.candidateReferences !== undefined &&
@@ -254,7 +254,7 @@ const EditEmployeeForm = () => {
             </Form.Group>
           </Col>
         </Row>
-        <Row>
+       {/*  <Row>
           <Col sm={4}>
             <p>Were you referred for this position?</p>
           </Col>
@@ -264,10 +264,10 @@ const EditEmployeeForm = () => {
             &nbsp; &nbsp;&nbsp; &nbsp; No &nbsp;{" "}
             <input type="checkbox" name="refrence" checked={noChecked} />
           </Col>
-        </Row>
-        {yesChecked === true ? (
+        </Row> */}{/* 
+        {yesChecked === true ? ( */}
           <Fragment>
-            {data1 !== null && data1 !== undefined ? (
+            {data1 !== null && data1 !== undefined && data1.employeeName !== '' ? (
               <Row>
                 <Col sm={4}>
                   <Form.Group>
@@ -315,8 +315,8 @@ const EditEmployeeForm = () => {
             ) : (
               ""
             )}
-            {data2 !== null && data2 !== undefined ? (
-              <Row>
+            {data2 !== null && data2 !== undefined && data2.employeeName !== '' ? (
+              <Row> 
                 <Col sm={4}>
                   <Form.Group>
                     <Form.Label>Emp Name/Emp ID</Form.Label>
@@ -364,9 +364,9 @@ const EditEmployeeForm = () => {
               ""
             )}
           </Fragment>
-        ) : (
+       {/*  ) : (
           ""
-        )}
+        )} */}
         <Row>
           <Col sm={4}></Col>
           <Col sm={2}>

@@ -58,6 +58,13 @@ const GroupReducer = (state, action) => {
       return { ...state, submitOfferLetter: action.payload };
     case "WORK_INFO_VIEW":
       return { ...state, workInfoViewData: action.payload };
+
+    case "STATE":
+      return { ...state, stateList: action.payload };
+
+    case "CITY":
+      return { ...state, cityList: action.payload };
+
     default:
       return state;
   }
