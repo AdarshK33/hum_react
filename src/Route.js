@@ -63,6 +63,7 @@ import ManagerOfferRelease from "./components/Offers/managerOfferRelease";
 import OfferReleaseList from "./components/Offers/OfferReleaseList";
 import EditOfferRelease from "./components/Offers/editOfferRelease";
 import OfferAccept from "./components/Offers/OfferAcceptance/OfferAccept";
+import ViewOfferRelease from "./components/Offers/viewOfferRelease";
 
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
@@ -135,6 +136,10 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/onboard-offer`}
             component={OfferAccept}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/view-offer-release`}
+            component={ViewOfferRelease}
           />
           {state.MenuPermissionsRoute.map((e) => {
             return (

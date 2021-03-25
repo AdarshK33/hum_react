@@ -3,17 +3,13 @@ import { Row, Col, Form, Button } from "react-bootstrap";
 import { Search, PlusCircle, MinusCircle } from "react-feather";
 import "./offers.css";
 import { OfferContext } from "../../context/OfferState";
-import { useHistory } from "react-router-dom";
 
-const EditEmployeeForm = () => {
+const ViewEmployeeForm = () => {
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [email, setEmail] = useState();
   const [yesChecked, setYesChecked] = useState(true);
   const [noChecked, setNoChecked] = useState(false);
-  const [searchValue, setSearchValue] = useState("");
-  const [editButton, setEditButton] = useState(false);
-  const [disabled, setDisabled] = useState(false);
   const [empName1, setEmpName1] = useState("");
   const [empName2, setEmpName2] = useState("");
   const [refEmail1, setRefEmail1] = useState();
@@ -57,18 +53,18 @@ const EditEmployeeForm = () => {
       setLastName(candidateRefData.lastName);
       setEmail(candidateRefData.personalEmail);
 
-      /* candidateRefData.candidateReferences !== null &&
+      candidateRefData.candidateReferences !== null &&
       candidateRefData.candidateReferences !== undefined &&
       candidateRefData.candidateReferences.length > 0
         ? (() => {
             setYesChecked(true);
             setNoChecked(false);
-          })
+          })()
         : (() => {
             setYesChecked(false);
             setNoChecked(true);
-          });
- */
+          })();
+
       const data1 =
         candidateRefData.candidateReferences !== null &&
         candidateRefData.candidateReferences !== undefined &&
@@ -117,96 +113,9 @@ const EditEmployeeForm = () => {
     }
   }, [candidateData]);
 
-  const firstNameChangeHandler = (e) => {
-    setFirstName(e.target.value);
-  };
-  const lastNameChangeHandler = (e) => {
-    setLastName(e.target.value);
-  };
-  const emailChangeHandler = (e) => {
-    setEmail(e.target.value);
-  };
-  const empName1Handler = (e) => {
-    setEmpName1(e.target.value);
-  };
-  const empName2Handler = (e) => {
-    setEmpName2(e.target.value);
-  };
-  const empName1Search = () => {
-    if (empName1 !== "") {
-      searchForEmp1(empName1);
-    }
-  };
-  const empName2Search = () => {
-    if (empName2 !== "") {
-      searchForEmp2(empName2);
-    }
-  };
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-
-    const updateData = {
-      aadhaarDoc: null,
-      aadhaarName: null,
-      aadhaarNumber: candidateData.candidateInformation.aadhaarNumber,
-      bloodGroup: null,
-      candidateId: candidateData.candidateInformation.candidateId,
-      candidateReferences: [
-        {
-          designation: desgination1 !== null ? desgination1 : null,
-          email: refEmail1 !== null ? refEmail1 : null,
-          employeeName: empName1 !== null ? empName1 : null,
-        },
-        {
-          designation: desgination2 !== null ? desgination2 : null,
-          email: refEmail2 !== null ? refEmail2 : null,
-          employeeName: empName2 !== null ? empName2 : null,
-        },
-      ],
-      createdDate: candidateData.candidateInformation.createdDate,
-      dateOfBirth: null,
-      disability: null,
-      disabilityDoc: null,
-      fatherName: null,
-      firstName: firstName,
-      gender: null,
-      lastName: lastName,
-      lgbt: null,
-      maritalStatus: null,
-      nationality: null,
-      panDoc: null,
-      panNumber: null,
-      personalEmail: email,
-      photo: null,
-      referred: candidateData.candidateInformation.referred,
-      status: candidateData.candidateInformation.status,
-      statusDesc: candidateData.candidateInformation.statusDesc,
-      verificationStatus: candidateData.candidateInformation.verificationStatus,
-      verificationStatusDesc:
-        candidateData.candidateInformation.verificationStatusDesc,
-    };
-    editCandidate(updateData);
-    setDisabled(true);
-    setEditButton(true);
-  };
-  const editHandler = () => {
-    setDisabled(false);
-  };
   return (
     <Fragment>
-      <Form onSubmit={submitHandler}>
-        {/*  <Row style={{ marginBottom: '1rem' }}>
-                    <Col sm={4}>
-                        <Form.Group>
-                            <Form.Label>Search by Account Number/Aadhar Number</Form.Label>
-                            <div className="faq-form">
-                                <input className="form-control searchButton" type="text" readOnly
-                                value={ candidateData.candidateInformation.adharNumber || ''} />
-                            </div>
-                        </Form.Group>
-                    </Col>
-                </Row> */}
+      <Form>
         <Row>
           <Col sm={4}>
             <Form.Group>
@@ -216,10 +125,8 @@ const EditEmployeeForm = () => {
                 type="text"
                 name="firstName"
                 value={firstName}
-                onChange={firstNameChangeHandler}
-                required
                 placeholder="First Name"
-                disabled={disabled}
+                readOnly
               />
             </Form.Group>
           </Col>
@@ -231,10 +138,8 @@ const EditEmployeeForm = () => {
                 type="text"
                 name="lastName"
                 value={lastName}
-                onChange={lastNameChangeHandler}
-                required
                 placeholder="Last Name"
-                disabled={disabled}
+                readOnly
               />
             </Form.Group>
           </Col>
@@ -246,15 +151,13 @@ const EditEmployeeForm = () => {
                 className="form-input"
                 name="email"
                 value={email}
-                onChange={emailChangeHandler}
-                required
                 placeholder="Personal Email ID"
-                disabled={disabled}
+                readOnly
               />
             </Form.Group>
           </Col>
         </Row>
-       {/*  <Row>
+        <Row>
           <Col sm={4}>
             <p>Were you referred for this position?</p>
           </Col>
@@ -264,10 +167,10 @@ const EditEmployeeForm = () => {
             &nbsp; &nbsp;&nbsp; &nbsp; No &nbsp;{" "}
             <input type="checkbox" name="refrence" checked={noChecked} />
           </Col>
-        </Row> */}{/* 
-        {yesChecked === true ? ( */}
+        </Row>
+        {yesChecked === true ? (
           <Fragment>
-            {data1 !== null && data1 !== undefined && data1.employeeName !== '' ? (
+            {data1 !== null && data1 !== undefined ? (
               <Row>
                 <Col sm={4}>
                   <Form.Group>
@@ -276,15 +179,12 @@ const EditEmployeeForm = () => {
                       <input
                         className="form-control searchButton"
                         type="text"
-                        disabled={disabled}
                         value={empName1}
                         placeholder="Search by Emp Name/Emp Id"
-                        onChange={(e) => empName1Handler(e)}
                       />
                       <Search
                         className="search-icon"
                         style={{ color: "#313131" }}
-                        onClick={empName1Search}
                       />
                     </div>
                   </Form.Group>
@@ -315,8 +215,8 @@ const EditEmployeeForm = () => {
             ) : (
               ""
             )}
-            {data2 !== null && data2 !== undefined && data2.employeeName !== '' ? (
-              <Row> 
+            {data2 !== null && data2 !== undefined ? (
+              <Row>
                 <Col sm={4}>
                   <Form.Group>
                     <Form.Label>Emp Name/Emp ID</Form.Label>
@@ -324,15 +224,13 @@ const EditEmployeeForm = () => {
                       <input
                         className="form-control searchButton"
                         type="text"
-                        disabled={disabled}
                         value={empName2}
                         placeholder="Search by Emp Name/Emp Id"
-                        onChange={(e) => empName2Handler(e)}
+                        readOnly
                       />
                       <Search
                         className="search-icon"
                         style={{ color: "#313131" }}
-                        onClick={empName2Search}
                       />
                     </div>
                   </Form.Group>
@@ -364,25 +262,12 @@ const EditEmployeeForm = () => {
               ""
             )}
           </Fragment>
-       {/*  ) : (
+        ) : (
           ""
-        )} */}
-        <Row>
-          <Col sm={4}></Col>
-          <Col sm={2}>
-            <Button type="submit">Save</Button>
-          </Col>
-          {editButton === true ? (
-            <Col sm={2}>
-              <Button onClick={editHandler}>Edit</Button>
-            </Col>
-          ) : (
-            ""
-          )}
-        </Row>
+        )}
       </Form>
     </Fragment>
   );
 };
 
-export default EditEmployeeForm;
+export default ViewEmployeeForm;

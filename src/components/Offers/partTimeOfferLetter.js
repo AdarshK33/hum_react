@@ -14,7 +14,8 @@ const PartTimeOfferLetter = () => {
   //   console.log("today", moment().format("DD-MM-YYYY"));
   return (
     <Fragment>
-      {typeof offerLetterData.partTimeCandidateOffer !== "undefined" ? (
+      {typeof offerLetterData &&
+      offerLetterData.partTimeCandidateOffer !== undefined ? (
         <Fragment>
           <p className="offerHeader">OFFER LETTER</p>
           <br></br>
@@ -29,7 +30,7 @@ const PartTimeOfferLetter = () => {
           <p>
             We have the pleasure to offer you the position of{" "}
             <span className="boldText">{offerLetterData.position}</span> on
-            Part-Time Basis at Decathlon Sports India Pvt. Ltd.{" "}
+            Part-Time Basis at {offerLetterData.companyName} Pvt. Ltd.{" "}
           </p>
 
           <p className="offerSubHeader">1. Terms & Conditions</p>
@@ -67,7 +68,7 @@ const PartTimeOfferLetter = () => {
             forward the same to us.
           </p>
           <br></br>
-          <p>For Prodin Sporting Pvt Ltd</p>
+          <p>For {offerLetterData.companyName} Pvt. Ltd</p>
           <br></br>
         </Fragment>
       ) : (
