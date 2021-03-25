@@ -111,6 +111,7 @@ const WorkInformation = () => {
       createData = {
         candidateId: createCandidateResponse.candidateId,
         cityId: city,
+        collegeName: college,
         companyName: user.company,
         contractType: state.employmentType,
         costCentre: costCenter,
@@ -139,6 +140,7 @@ const WorkInformation = () => {
       createData = {
         candidateId: createCandidateResponse.candidateId,
         cityId: city,
+        collegeName: college,
         companyName: user.company,
         contractType: state.employmentType,
         costCentre: costCenter,
@@ -203,6 +205,7 @@ const WorkInformation = () => {
                 name="employmentType"
                 onChange={changeHandler}
                 disabled={disabled}
+                required
               >
                 <option value="">Select Employment Type</option>
                 {shiftContractNames !== null &&
@@ -235,6 +238,7 @@ const WorkInformation = () => {
                   selected={dateOfJoining}
                   required
                   onChange={(e) => dateOfJoiningHandler(e)}
+                  minDate={new Date()}
                   dateFormat="yyyy-MM-dd"
                   placeholderText="Date of Joining"
                   disabled={disabled}
@@ -252,6 +256,7 @@ const WorkInformation = () => {
                 name="department"
                 onChange={changeHandler}
                 disabled={disabled}
+                required
               >
                 {}
                 <option value="">Select Department</option>
@@ -278,6 +283,7 @@ const WorkInformation = () => {
                   onChange={(e) => setCollege(e.target.value)}
                   placeholder="Enter College Name"
                   className="form-input"
+                  required
                 />
               </Form.Group>
             ) : (
@@ -290,6 +296,7 @@ const WorkInformation = () => {
                   name="position"
                   onChange={changeHandler}
                   disabled={disabled}
+                  required
                 >
                   <option value="">Select Position</option>
                   {designationName !== null &&
@@ -324,6 +331,7 @@ const WorkInformation = () => {
                   name="designation"
                   onChange={changeHandler}
                   disabled={disabled}
+                  required
                 >
                   <option value="">Select Designation</option>
                   {designationName !== null &&
@@ -350,6 +358,7 @@ const WorkInformation = () => {
                 name="costCenter"
                 onChange={costCenterChangeHandler}
                 disabled={disabled}
+                required
               >
                 <option value="">Select Cost Center</option>
                 {costCenterList !== null &&
@@ -383,6 +392,7 @@ const WorkInformation = () => {
                   name="sports"
                   onChange={changeHandler}
                   disabled={disabled}
+                  required
                 >
                   <option value="">Select Sports</option>
                   {sportsNames !== null &&
@@ -408,6 +418,7 @@ const WorkInformation = () => {
                 className="form-input"
                 onChange={stateHandler}
                 disabled={disabled}
+                required
               >
                 <option value="">Select State</option>
                 {stateList.map((item, i) => {
@@ -429,6 +440,7 @@ const WorkInformation = () => {
                 className="form-input"
                 onChange={cityHandler}
                 disabled={disabled}
+                required
               >
                 <option value="">Select City</option>
                 {cityList !== null &&
@@ -453,9 +465,11 @@ const WorkInformation = () => {
                   selected={dateOfJoining}
                   required
                   onChange={(e) => dateOfJoiningHandler(e)}
+                  minDate={new Date()}
                   dateFormat="yyyy-MM-dd"
                   placeholderText="Date of Joining"
                   disabled={disabled}
+                  
                 />
               </Form.Group>
             ) : (
@@ -468,6 +482,7 @@ const WorkInformation = () => {
                   name="probation"
                   onChange={changeHandler}
                   disabled={disabled}
+                  required
                 >
                   <option value="">Select Probation</option>
                   <option value="1">1 Month</option>
@@ -486,6 +501,7 @@ const WorkInformation = () => {
                   selected={dateOfLeaving}
                   required
                   onChange={(e) => dateOfLeavingHandler(e)}
+                  minDate={dateOfJoining}
                   dateFormat="yyyy-MM-dd"
                   placeholderText="Date of Leaving"
                   disabled={disabled}
@@ -501,6 +517,7 @@ const WorkInformation = () => {
                   name="recuritment"
                   onChange={changeHandler}
                   disabled={disabled}
+                  required
                 >
                   <option value="">Select Recuritment Source</option>
                   <option>Employee Referral</option>
@@ -528,6 +545,7 @@ const WorkInformation = () => {
                   onChange={changeHandler}
                   name="ngoDetail"
                   placeholder="Enter NGO Detail"
+                  required
                 />
               </Form.Group>
             </Col>

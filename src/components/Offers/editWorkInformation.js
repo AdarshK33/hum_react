@@ -80,6 +80,7 @@ const EditWorkInformation = () => {
       setDateOFLeaving(new Date(workData.dateOfLeaving));
       setCostCenter(workData.costCentre);
       locationView(workData.costCentre);
+      setCollege(workData.collegeName)
     }
   }, [candidateData]);
 
@@ -129,6 +130,7 @@ const EditWorkInformation = () => {
     const updateData = {
       candidateId: candidateData.candidateInformation.candidateId,
       cityId: city,
+      collegeName: college,
       companyName: user.company,
       contractType: state.employmentType,
       costCentre: costCenter,
@@ -176,6 +178,7 @@ const EditWorkInformation = () => {
                 className="form-input"
                 name="company"
                 readOnly
+                
               />
             </Form.Group>
           </Col>
@@ -226,6 +229,7 @@ const EditWorkInformation = () => {
                   selected={dateOfJoining}
                   required
                   onChange={(e) => dateOfJoiningHandler(e)}
+                  minDate={new Date()}
                   dateFormat="yyyy-MM-dd"
                   placeholderText="Date of Joining"
                   disabled={disabled}
@@ -243,6 +247,7 @@ const EditWorkInformation = () => {
                 name="department"
                 onChange={changeHandler}
                 disabled={disabled}
+                required
               >
                 {departmentName !== null &&
                   departmentName !== undefined &&
@@ -267,6 +272,8 @@ const EditWorkInformation = () => {
                   onChange={(e) => setCollege(e.target.value)}
                   placeholder="Enter College Name"
                   className="form-input"
+                  disabled={disabled}
+                  required
                 />
               </Form.Group>
             ) : (
@@ -279,6 +286,7 @@ const EditWorkInformation = () => {
                   name="position"
                   onChange={changeHandler}
                   disabled={disabled}
+                  required
                 >
                   {designationName !== null &&
                     designationName !== undefined &&
@@ -312,6 +320,7 @@ const EditWorkInformation = () => {
                   name="designation"
                   onChange={changeHandler}
                   disabled={disabled}
+                  required
                 >
                   {designationName !== null &&
                     designationName !== undefined &&
@@ -337,6 +346,7 @@ const EditWorkInformation = () => {
                 name="costCenter"
                 onChange={costCenterChangeHandler}
                 disabled={disabled}
+                required
               >
                 {costCenterList !== null &&
                   costCenterList !== undefined &&
@@ -369,6 +379,7 @@ const EditWorkInformation = () => {
                   name="sports"
                   onChange={changeHandler}
                   disabled={disabled}
+                  required
                 >
                   {sportsNames !== null &&
                     sportsNames !== undefined &&
@@ -395,6 +406,7 @@ const EditWorkInformation = () => {
                 className="form-input"
                 onChange={stateHandler}
                 disabled={disabled}
+                required
               >
                 <option value="">Select State</option>
                 {stateList.map((item, i) => {
@@ -416,6 +428,7 @@ const EditWorkInformation = () => {
                 className="form-input"
                 onChange={cityHandler}
                 disabled={disabled}
+                required
               >
                 <option value="">Select City</option>
                 {cityList !== null &&
@@ -440,6 +453,7 @@ const EditWorkInformation = () => {
                   selected={dateOfJoining}
                   required
                   onChange={(e) => dateOfJoiningHandler(e)}
+                  minDate={dateOfJoining}
                   dateFormat="yyyy-MM-dd"
                   placeholderText="Date of Joining"
                   disabled={disabled}
@@ -455,6 +469,7 @@ const EditWorkInformation = () => {
                   name="probation"
                   onChange={changeHandler}
                   disabled={disabled}
+                  required
                 >
                   <option value="1">1 Month</option>
                   <option value="2">2 Month</option>
@@ -487,6 +502,7 @@ const EditWorkInformation = () => {
                   name="recuritment"
                   onChange={changeHandler}
                   disabled={disabled}
+                  required
                 >
                   <option>Employee Referral</option>
                   <option>LinkedIn</option>
@@ -513,6 +529,7 @@ const EditWorkInformation = () => {
                   onChange={changeHandler}
                   name="ngoDetail"
                   placeholder="Enter NGO Detail"
+                  required
                 />
               </Form.Group>
             </Col>

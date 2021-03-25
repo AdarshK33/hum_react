@@ -25,8 +25,26 @@ const EditEmployeeForm = () => {
     candidateData,
     searchForEmp1,
     editCandidate,
+    searchEmpData1,
     searchForEmp2,
+    searchEmpData2,
   } = useContext(OfferContext);
+
+  useEffect(() => {
+    /* setRefEmail1(searchEmpData1 !== null ? 
+      (searchEmpData1.email !== undefined &&  searchEmpData1.email !== null ? searchEmpData1.email : ''):''); */
+      setRefEmail1(searchEmpData1 !== null ? 
+        (searchEmpData1.email !== undefined &&  searchEmpData1.email !== null ? searchEmpData1.email : ''):'');
+    setDesignation1(searchEmpData1 !== null ? 
+      (searchEmpData1.position !== undefined && searchEmpData1.position !== null ? searchEmpData1.position : ''):'');
+  }, [searchEmpData1]);
+
+  useEffect(() => {
+    setRefEmail2(searchEmpData2 !== null ? 
+      (searchEmpData2.email !== undefined && searchEmpData2.email !== null ? searchEmpData2.email : ''):'');
+    setDesignation2(searchEmpData2 !== null ?
+      (searchEmpData2.position !== undefined && searchEmpData2.position !== null ? searchEmpData2.position : ''):'' );
+  }, [searchEmpData2]);
 
   var candidateRefData =
     candidateData !== null &&
@@ -56,19 +74,20 @@ const EditEmployeeForm = () => {
       setFirstName(candidateRefData.firstName);
       setLastName(candidateRefData.lastName);
       setEmail(candidateRefData.personalEmail);
+      console.log(" candidateRefData.candidateReferences", candidateRefData.candidateReferences);
 
-      /* candidateRefData.candidateReferences !== null &&
+      if(candidateRefData.candidateReferences !== null &&
       candidateRefData.candidateReferences !== undefined &&
-      candidateRefData.candidateReferences.length > 0
-        ? (() => {
-            setYesChecked(true);
-            setNoChecked(false);
-          })
-        : (() => {
+      candidateRefData.candidateReferences[0].employeeName === ''){
+        
             setYesChecked(false);
             setNoChecked(true);
-          });
- */
+          }
+        else{ 
+            setYesChecked(true);
+            setNoChecked(false);
+          }
+
       const data1 =
         candidateRefData.candidateReferences !== null &&
         candidateRefData.candidateReferences !== undefined &&
@@ -186,6 +205,7 @@ const EditEmployeeForm = () => {
       verificationStatusDesc:
         candidateData.candidateInformation.verificationStatusDesc,
     };
+    console.log("candidate data",updateData.candidateReferences)
     editCandidate(updateData);
     setDisabled(true);
     setEditButton(true);
@@ -254,7 +274,7 @@ const EditEmployeeForm = () => {
             </Form.Group>
           </Col>
         </Row>
-       {/*  <Row>
+        <Row>
           <Col sm={4}>
             <p>Were you referred for this position?</p>
           </Col>
@@ -264,9 +284,13 @@ const EditEmployeeForm = () => {
             &nbsp; &nbsp;&nbsp; &nbsp; No &nbsp;{" "}
             <input type="checkbox" name="refrence" checked={noChecked} />
           </Col>
-        </Row> */}{/* 
+        </Row>{/* 
         {yesChecked === true ? ( */}
           <Fragment>
+          <p>
+              State two reference(max two are allowed)
+              <span style={{ color: "red" }}>*</span>
+            </p>
             {data1 !== null && data1 !== undefined && data1.employeeName !== '' ? (
               <Row>
                 <Col sm={4}>

@@ -52,14 +52,14 @@ const EmployeeForm = (props) => {
         (searchEmpData1.email !== undefined &&  searchEmpData1.email !== null ? searchEmpData1.email : ''):'');
     setDesignation1(searchEmpData1 !== null ? 
       (searchEmpData1.position !== undefined && searchEmpData1.position !== null ? searchEmpData1.position : ''):'');
-  }, [searchEmpData1, empName1]);
+  }, [searchEmpData1]);
 
   useEffect(() => {
     setRefEmail2(searchEmpData2 !== null ? 
       (searchEmpData2.email !== undefined && searchEmpData2.email !== null ? searchEmpData2.email : ''):'');
     setDesignation2(searchEmpData2 !== null ?
       (searchEmpData2.position !== undefined && searchEmpData2.position !== null ? searchEmpData2.position : ''):'' );
-  }, [searchEmpData2, empName2]);
+  }, [searchEmpData2]);
 
   useEffect(() => {
     if (searchData !== null && Object.keys(searchData).length > 0) {
