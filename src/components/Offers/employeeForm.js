@@ -45,28 +45,28 @@ const EmployeeForm = (props) => {
   const handleClose = () => setModal(false);
   const handleShow = () => setModal(true);
 
-  /*  useEffect(() => {
+   useEffect(() => {
    
       setRefEmail1(searchEmpData1 !== null ? 
         (searchEmpData1.email !== undefined &&  searchEmpData1.email !== null ? searchEmpData1.email : ''):'');
     setDesignation1(searchEmpData1 !== null ? 
       (searchEmpData1.position !== undefined && searchEmpData1.position !== null ? searchEmpData1.position : ''):'');
-  }, [searchEmpData1]); */
-  useEffect(() => {
+  }, [searchEmpData1]);
+ /*  useEffect(() => {
     setRefEmail1(searchEmpData1.email);
     setDesignation1(searchEmpData1.position);
   }, [searchEmpData1]);
   useEffect(() => {
     setRefEmail2(searchEmpData2.email);
     setDesignation2(searchEmpData2.position);
-  }, [searchEmpData2]);
-  /* 
+  }, [searchEmpData2]); */
+  
   useEffect(() => {
     setRefEmail2(searchEmpData2 !== null ? 
       (searchEmpData2.email !== undefined && searchEmpData2.email !== null ? searchEmpData2.email : ''):'');
     setDesignation2(searchEmpData2 !== null ?
       (searchEmpData2.position !== undefined && searchEmpData2.position !== null ? searchEmpData2.position : ''):'' );
-  }, [searchEmpData2]); */
+  }, [searchEmpData2]);
 
   useEffect(() => {
     if (empName1 === "") {
@@ -122,6 +122,8 @@ const EmployeeForm = (props) => {
   const hideOneMoreRefer = () => {
     setSecondRef(false);
     setEmpName2("");
+    setRefEmail2('')
+    setDesignation2('')
   };
 
   const checkedYesHandler = () => {
