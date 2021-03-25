@@ -16,6 +16,7 @@ const EditRemunerationInformation = (props) => {
   const [saveclick, setSaveclick] = useState(false);
   const [stipened, setStipened] = useState();
   const [stipenedError, setStipenedError] = useState(false);
+  const [viewApiCall, setViewApiCall] = useState(false);
 
   const {
     remunerationUpdate,
@@ -30,8 +31,19 @@ const EditRemunerationInformation = (props) => {
 
   useEffect(() => {
     console.log("candidateData remuneration", candidateData);
-    if (createCandidateResponse && createCandidateResponse.candidateId) {
-      viewCandidateId(createCandidateResponse.candidateId);
+    if (
+      createCandidateResponse &&
+      createCandidateResponse.candidateId &&
+      candidateData &&
+      candidateData.workInformation &&
+      candidateData.workInformation.contractType &&
+      candidateData.candidateInformation &&
+      viewApiCall === false
+    ) {
+      viewCandidateId(candidateData.candidateInformation.candidateId);
+      setViewApiCall(true);
+    } else {
+      setViewApiCall(false);
     }
 
     let remunerationData =
@@ -42,8 +54,9 @@ const EditRemunerationInformation = (props) => {
     if (remunerationData !== null && remunerationData !== undefined) {
       setFixedGross(remunerationData.fixedGross);
       setMonthlyBonus(remunerationData.monthlyBonus);
+      setStipened(remunerationData.stipend);
     }
-  }, [candidateData]);
+  }, [candidateData.workInformation]);
 
   const submitHandler = (e) => {
     console.log("inside edit submit", candidateData);
@@ -100,7 +113,7 @@ const EditRemunerationInformation = (props) => {
         console.log("first click");
         setSaveclick(true);
         remunerationinfo = {
-          candidateId: createCandidateResponse.candidateId,
+          candidateId: candidateData.candidateInformation.candidateId,
           fixedGross:
             fixedGross === undefined || fixedGross === null ? 0 : fixedGross,
           monthlyBonus:
@@ -114,7 +127,7 @@ const EditRemunerationInformation = (props) => {
         };
       } else if (candidateData.remuneration && saveclick === true) {
         remunerationinfo = {
-          candidateId: createCandidateResponse.candidateId,
+          candidateId: candidateData.candidateInformation.candidateId,
           fixedGross: fixedGross,
           monthlyBonus: monthlyBonus,
           remunerationId: remunerationSubmitData.remunerationId,
@@ -128,7 +141,7 @@ const EditRemunerationInformation = (props) => {
 
       console.log("createCandidateResponse data", remunerationinfo);
       remunerationUpdate(remunerationinfo);
-      remunerationView(createCandidateResponse.candidateId);
+      remunerationView(candidateData.candidateInformation.candidateId);
       setDisabled(true);
       setEditButton(true);
     }

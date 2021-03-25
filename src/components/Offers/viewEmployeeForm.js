@@ -10,6 +10,7 @@ const ViewEmployeeForm = () => {
   const [email, setEmail] = useState();
   const [yesChecked, setYesChecked] = useState(true);
   const [noChecked, setNoChecked] = useState(false);
+  const [secondRef, setSecondRef] = useState(false);
   const [empName1, setEmpName1] = useState("");
   const [empName2, setEmpName2] = useState("");
   const [refEmail1, setRefEmail1] = useState();
@@ -42,6 +43,19 @@ const ViewEmployeeForm = () => {
   console.log("data2", data2);
 
   useEffect(() => {
+    if (data1.employeeName === "") {
+      setYesChecked(false);
+      setNoChecked(true);
+    }
+
+    if (data2.employeeName === "") {
+      setSecondRef(false);
+    } else {
+      setSecondRef(true);
+    }
+  }, [data1, data2]);
+
+  useEffect(() => {
     let candidateRefData =
       candidateData !== null &&
       candidateData !== undefined &&
@@ -53,17 +67,17 @@ const ViewEmployeeForm = () => {
       setLastName(candidateRefData.lastName);
       setEmail(candidateRefData.personalEmail);
 
-      candidateRefData.candidateReferences !== null &&
-      candidateRefData.candidateReferences !== undefined &&
-      candidateRefData.candidateReferences.length > 0
-        ? (() => {
-            setYesChecked(true);
-            setNoChecked(false);
-          })()
-        : (() => {
-            setYesChecked(false);
-            setNoChecked(true);
-          })();
+      // candidateRefData.candidateReferences !== null &&
+      // candidateRefData.candidateReferences !== undefined &&
+      // candidateRefData.candidateReferences.length > 0
+      //   ? (() => {
+      //       setYesChecked(true);
+      //       setNoChecked(false);
+      //     })()
+      //   : (() => {
+      //       setYesChecked(false);
+      //       setNoChecked(true);
+      //     })();
 
       const data1 =
         candidateRefData.candidateReferences !== null &&
@@ -168,103 +182,102 @@ const ViewEmployeeForm = () => {
             <input type="checkbox" name="refrence" checked={noChecked} />
           </Col>
         </Row>
-        {yesChecked === true ? (
-          <Fragment>
-            {data1 !== null && data1 !== undefined ? (
-              <Row>
-                <Col sm={4}>
-                  <Form.Group>
-                    <Form.Label>Emp Name/Emp ID</Form.Label>
-                    <div className="faq-form">
-                      <input
-                        className="form-control searchButton"
-                        type="text"
-                        value={empName1}
-                        placeholder="Search by Emp Name/Emp Id"
-                      />
-                      <Search
+        <Fragment>
+          {yesChecked === true ? (
+            <Row>
+              <Col sm={4}>
+                <Form.Group>
+                  <Form.Label>Emp Name/Emp ID</Form.Label>
+                  <div className="faq-form">
+                    <input
+                      className="form-control searchButton"
+                      type="text"
+                      value={empName1}
+                      placeholder="Search by Emp Name/Emp Id"
+                    />
+                    {/* <Search
                         className="search-icon"
                         style={{ color: "#313131" }}
-                      />
-                    </div>
-                  </Form.Group>
-                </Col>
-                <Col sm={4}>
-                  <Form.Group>
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                      className="form-input"
+                      /> */}
+                  </div>
+                </Form.Group>
+              </Col>
+              <Col sm={4}>
+                <Form.Group>
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    className="form-input"
+                    type="text"
+                    value={refEmail1}
+                    readOnly
+                  />
+                </Form.Group>
+              </Col>
+              <Col sm={4}>
+                <Form.Group>
+                  <Form.Label>Designation</Form.Label>
+                  <Form.Control
+                    className="form-input"
+                    type="text"
+                    value={desgination1}
+                    readOnly
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+          ) : (
+            ""
+          )}
+          {secondRef === true && yesChecked === true ? (
+            <Row>
+              <Col sm={4}>
+                <Form.Group>
+                  <Form.Label>Emp Name/Emp ID</Form.Label>
+                  <div className="faq-form">
+                    <input
+                      className="form-control searchButton"
                       type="text"
-                      value={refEmail1}
+                      value={empName2}
+                      placeholder="Search by Emp Name/Emp Id"
                       readOnly
                     />
-                  </Form.Group>
-                </Col>
-                <Col sm={3}>
-                  <Form.Group>
-                    <Form.Label>Designation</Form.Label>
-                    <Form.Control
-                      className="form-input"
-                      type="text"
-                      value={desgination1}
-                      readOnly
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
-            ) : (
-              ""
-            )}
-            {data2 !== null && data2 !== undefined ? (
-              <Row>
-                <Col sm={4}>
-                  <Form.Group>
-                    <Form.Label>Emp Name/Emp ID</Form.Label>
-                    <div className="faq-form">
-                      <input
-                        className="form-control searchButton"
-                        type="text"
-                        value={empName2}
-                        placeholder="Search by Emp Name/Emp Id"
-                        readOnly
-                      />
-                      <Search
+                    {/* <Search
                         className="search-icon"
                         style={{ color: "#313131" }}
-                      />
-                    </div>
-                  </Form.Group>
-                </Col>
-                <Col sm={4}>
-                  <Form.Group>
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                      className="form-input"
-                      type="text"
-                      readOnly
-                      value={empName2 === "" ? "" : refEmail2}
-                    />
-                  </Form.Group>
-                </Col>
-                <Col sm={3}>
-                  <Form.Group>
-                    <Form.Label>Designation</Form.Label>
-                    <Form.Control
-                      className="form-input"
-                      type="text"
-                      value={empName2 === "" ? "" : desgination2}
-                      readOnly
-                    />
-                  </Form.Group>
-                </Col>
-              </Row>
-            ) : (
-              ""
-            )}
-          </Fragment>
-        ) : (
+                      /> */}
+                  </div>
+                </Form.Group>
+              </Col>
+              <Col sm={4}>
+                <Form.Group>
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    className="form-input"
+                    type="text"
+                    readOnly
+                    value={empName2 === "" ? "" : refEmail2}
+                  />
+                </Form.Group>
+              </Col>
+              <Col sm={4}>
+                <Form.Group>
+                  <Form.Label>Designation</Form.Label>
+                  <Form.Control
+                    className="form-input"
+                    type="text"
+                    value={empName2 === "" ? "" : desgination2}
+                    readOnly
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+          ) : (
+            ""
+          )}
+        </Fragment>
+        {/* ) : (
           ""
-        )}
+        )} */}
       </Form>
     </Fragment>
   );
