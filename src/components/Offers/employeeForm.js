@@ -48,17 +48,17 @@ const EmployeeForm = (props) => {
   useEffect(() => {
     /* setRefEmail1(searchEmpData1 !== null ? 
       (searchEmpData1.email !== undefined &&  searchEmpData1.email !== null ? searchEmpData1.email : ''):''); */
-      setRefEmail1(empName1 === "" && searchEmpData1 === null ? "" :
-        (searchEmpData1.email !== undefined &&  searchEmpData1.email !== null ? searchEmpData1.email : ''));
-    setDesignation1(empName1 === '' && searchEmpData1 === null ? '' : 
-      (searchEmpData1.position !== undefined && searchEmpData1.position !== null ? searchEmpData1.position : ''));
+      setRefEmail1(searchEmpData1 !== null ? 
+        (searchEmpData1.email !== undefined &&  searchEmpData1.email !== null ? searchEmpData1.email : ''):'');
+    setDesignation1(searchEmpData1 !== null ? 
+      (searchEmpData1.position !== undefined && searchEmpData1.position !== null ? searchEmpData1.position : ''):'');
   }, [searchEmpData1, empName1]);
 
   useEffect(() => {
-    setRefEmail2(empName2 === '' && searchEmpData2 === null ? '' :
-      (searchEmpData2.email !== undefined && searchEmpData2.email !== null ? searchEmpData2.email : ''));
-    setDesignation2(empName2 === '' && searchEmpData2 === null ? '' :
-      (searchEmpData2.position !== undefined && searchEmpData2.position !== null ? searchEmpData2.position : '') );
+    setRefEmail2(searchEmpData2 !== null ? 
+      (searchEmpData2.email !== undefined && searchEmpData2.email !== null ? searchEmpData2.email : ''):'');
+    setDesignation2(searchEmpData2 !== null ?
+      (searchEmpData2.position !== undefined && searchEmpData2.position !== null ? searchEmpData2.position : ''):'' );
   }, [searchEmpData2, empName2]);
 
   useEffect(() => {
@@ -347,7 +347,7 @@ const EmployeeForm = (props) => {
             <Row>
               <Col sm={4}>
                 <Form.Group>
-                  <Form.Label>Emp Name/Emp ID</Form.Label>
+                  <Form.Label>Emp Name/Emp ID <span style={{color:'red'}}>*</span></Form.Label>
                   <div className="faq-form">
                     <input
                       className="form-control searchButton"
@@ -355,7 +355,7 @@ const EmployeeForm = (props) => {
                       disabled={disabled}
                       value={empName1}
                       placeholder="Search by Emp Name/Emp Id"
-                      onChange={(e) => empName1Handler(e)}
+                      onChange={(e) => empName1Handler(e)} required
                     />
                     <Search
                       className="search-icon"
@@ -404,7 +404,7 @@ const EmployeeForm = (props) => {
           <Row>
             <Col sm={4}>
               <Form.Group>
-                <Form.Label>Emp Name/Emp ID</Form.Label>
+                <Form.Label>Emp Name/Emp ID <span style={{color:'red'}}>*</span></Form.Label>
                 <div className="faq-form">
                   <input
                     className="form-control searchButton"
@@ -412,7 +412,7 @@ const EmployeeForm = (props) => {
                     disabled={disabled}
                     value={empName2}
                     placeholder="Search by Emp Name/Emp Id"
-                    onChange={(e) => empName2Handler(e)}
+                    onChange={(e) => empName2Handler(e)} required
                   />
                   <Search
                     className="search-icon"
