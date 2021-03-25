@@ -20,8 +20,8 @@ const EditWorkInformation = () => {
     probation: "",
     recuritment: "",
     ngoDetail: "",
-    internship:"",
-    noticePeriod:""
+    internship: "",
+    noticePeriod: "",
   });
   const [dateOfJoining, setDateOFJoining] = useState();
   const [dateOfLeaving, setDateOFLeaving] = useState();
@@ -78,14 +78,13 @@ const EditWorkInformation = () => {
         recuritment: workData.recruitmentSource,
         ngoDetail: workData.ngoDetails !== null ? workData.ngoDetails : "",
         internship: workData.internshipPeriod,
-        noticePeriod: workData.noticePeriod
-
+        noticePeriod: workData.noticePeriod,
       });
       setDateOFJoining(new Date(workData.dateOfJoin));
       setDateOFLeaving(new Date(workData.dateOfLeaving));
       setCostCenter(workData.costCentre);
       locationView(workData.costCentre);
-      setCollege(workData.collegeName)
+      setCollege(workData.collegeName);
     }
   }, [candidateData]);
 
@@ -149,7 +148,8 @@ const EditWorkInformation = () => {
       designation:
         state.employmentType === "Internship" ? "Intern" : state.designation,
       educationCertificate: null,
-      internshipPeriod:  state.employmentType === "Internship" ? state.internship : 0,
+      internshipPeriod:
+        state.employmentType === "Internship" ? state.internship : 0,
       locationId: locationName.locationId,
       managerId: user.employeeId,
       paySlip: null,
@@ -161,7 +161,8 @@ const EditWorkInformation = () => {
       relievingLetter: null,
       workId: candidateData.workInformation.workId,
       ngoDetails: state.ngoDetail,
-      noticePeriod: state.employmentType === "Internship" ? 0 : state.noticePeriod
+      noticePeriod:
+        state.employmentType === "Internship" ? 0 : state.noticePeriod,
     };
     console.log("update data", updateData);
     updateCandidateWork(updateData);
@@ -185,7 +186,6 @@ const EditWorkInformation = () => {
                 className="form-input"
                 name="company"
                 readOnly
-                
               />
             </Form.Group>
           </Col>
@@ -220,7 +220,7 @@ const EditWorkInformation = () => {
           <Col sm={3}>
             {state.employmentType === "Internship" ? (
               <Form.Group className="reactDate">
-                <Form.Label>Manager Id</Form.Label>
+                <Form.Label>Manager Name/Id</Form.Label>
                 <Form.Control
                   type="text"
                   value={user.managerId}
@@ -525,29 +525,29 @@ const EditWorkInformation = () => {
         </Row>
         <Row>
           <Col sm={3}>
-          {state.employmentType === "Internship" ? 
-           <Form.Group>
-           <Form.Label>Internship Duration</Form.Label>
-           <Form.Control
-             as="select"
-             value={state.internship}
-             className="form-input"
-             name="internship"
-             onChange={changeHandler}
-             disabled={disabled}
-             required
-           >
-             <option value="">Select Internship Duration</option>
-             <option value='1'>1 Month</option>
-             <option value='2'>2 Month</option>
-             <option value='3'>3 Month</option>
-             <option value='4'>4 Month</option>
-             <option value='5'>5 Month</option>
-             <option value='6'>6 Month</option>
-           </Form.Control>
-         </Form.Group>
-         :
-          <Form.Group>
+            {state.employmentType === "Internship" ? (
+              <Form.Group>
+                <Form.Label>Internship Duration</Form.Label>
+                <Form.Control
+                  as="select"
+                  value={state.internship}
+                  className="form-input"
+                  name="internship"
+                  onChange={changeHandler}
+                  disabled={disabled}
+                  required
+                >
+                  <option value="">Select Internship Duration</option>
+                  <option value="1">1 Month</option>
+                  <option value="2">2 Month</option>
+                  <option value="3">3 Month</option>
+                  <option value="4">4 Month</option>
+                  <option value="5">5 Month</option>
+                  <option value="6">6 Month</option>
+                </Form.Control>
+              </Form.Group>
+            ) : (
+              <Form.Group>
                 <Form.Label>Notice Period</Form.Label>
                 <Form.Control
                   as="select"
@@ -559,11 +559,12 @@ const EditWorkInformation = () => {
                   required
                 >
                   <option value="">Select Notice Period</option>
-                  <option value='1'>1 Month</option>
-                  <option value='2'>2 Month</option>
-                  <option value='3'>3 Month</option>
+                  <option value="1">1 Month</option>
+                  <option value="2">2 Month</option>
+                  <option value="3">3 Month</option>
                 </Form.Control>
-              </Form.Group>}
+              </Form.Group>
+            )}
           </Col>
         </Row>
         {state.recuritment === "NGO" ? (

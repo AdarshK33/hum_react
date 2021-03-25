@@ -21,13 +21,15 @@ const GenerateOfferLetter = () => {
     generateOfferLetter,
     offerLetterData,
     finalSubmitOfferLetter,
+    candidateData,
   } = useContext(OfferContext);
 
   const handleClose = () => setShow(false);
 
   const offerLetterClick = () => {
     console.log("offer candidate id", createCandidateResponse.candidateId);
-    generateOfferLetter(createCandidateResponse.candidateId);
+    console.log("candidateData id", candidateData);
+    generateOfferLetter(candidateData.candidateInformation.candidateId);
     console.log("offer letter response data", offerLetterData);
     handleShow();
   };

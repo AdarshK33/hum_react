@@ -12,7 +12,7 @@ const EmployeeForm = (props) => {
     lastName: "",
     email: "",
   });
-  
+
   const [yesChecked, setYesChecked] = useState(true);
   const [noChecked, setNoChecked] = useState(false);
   const [secondRef, setSecondRef] = useState(false);
@@ -45,7 +45,7 @@ const EmployeeForm = (props) => {
   const handleClose = () => setModal(false);
   const handleShow = () => setModal(true);
 
- /*  useEffect(() => {
+  /*  useEffect(() => {
    
       setRefEmail1(searchEmpData1 !== null ? 
         (searchEmpData1.email !== undefined &&  searchEmpData1.email !== null ? searchEmpData1.email : ''):'');
@@ -53,16 +53,14 @@ const EmployeeForm = (props) => {
       (searchEmpData1.position !== undefined && searchEmpData1.position !== null ? searchEmpData1.position : ''):'');
   }, [searchEmpData1]); */
   useEffect(() => {
-   
     setRefEmail1(searchEmpData1.email);
-  setDesignation1(searchEmpData1.position);
-}, [searchEmpData1]);
-useEffect(() => {
-   
-  setRefEmail2(searchEmpData2.email);
-setDesignation2(searchEmpData2.position);
-}, [searchEmpData2]);
-/* 
+    setDesignation1(searchEmpData1.position);
+  }, [searchEmpData1]);
+  useEffect(() => {
+    setRefEmail2(searchEmpData2.email);
+    setDesignation2(searchEmpData2.position);
+  }, [searchEmpData2]);
+  /* 
   useEffect(() => {
     setRefEmail2(searchEmpData2 !== null ? 
       (searchEmpData2.email !== undefined && searchEmpData2.email !== null ? searchEmpData2.email : ''):'');
@@ -71,15 +69,15 @@ setDesignation2(searchEmpData2.position);
   }, [searchEmpData2]); */
 
   useEffect(() => {
-    if(empName1 === ''){
-      setRefEmail1('')
-      setDesignation1('')
+    if (empName1 === "") {
+      setRefEmail1("");
+      setDesignation1("");
     }
-    if(empName2 === ''){
-      setRefEmail2('')
-      setDesignation2('')
+    if (empName2 === "") {
+      setRefEmail2("");
+      setDesignation2("");
     }
-  },[])
+  }, []);
 
   useEffect(() => {
     if (searchData !== null && Object.keys(searchData).length > 0) {
@@ -143,16 +141,16 @@ setDesignation2(searchEmpData2.position);
   };
   const empName1Handler = (e) => {
     setEmpName1(e.target.value);
-    if(e.target.value === ''){
-      setRefEmail1('')
-      setDesignation1('')
+    if (e.target.value === "") {
+      setRefEmail1("");
+      setDesignation1("");
     }
   };
   const empName2Handler = (e) => {
     setEmpName2(e.target.value);
-    if(e.target.value === ''){
-      setRefEmail2('')
-      setDesignation2('')
+    if (e.target.value === "") {
+      setRefEmail2("");
+      setDesignation2("");
     }
   };
   const empName1Search = () => {
@@ -165,15 +163,27 @@ setDesignation2(searchEmpData2.position);
       searchForEmp2(empName2);
     }
   };
- 
 
   const submitHandler = (e) => {
-    let CandidateInfo;
-    console.log("employee form id", createCandidateResponse.candidateId);
     e.preventDefault();
+    let CandidateInfo;
+    console.log(
+      "employee form id1",
+      typeof createCandidateResponse,
+      createCandidateResponse
+    );
     if (saveclick === false) {
       console.log("first click");
-      setSaveclick(true);
+      if (
+        // typeof createCandidateResponse !== "undefined" ||
+        typeof createCandidateResponse !== "object"
+        // || typeof createCandidateResponse.candidateId !== "null" ||
+        // createCandidateResponse.candidateId < 0
+      ) {
+        console.log("employee form id", createCandidateResponse.candidateId);
+        console.log("user not created");
+        setSaveclick(true);
+      }
       CandidateInfo = {
         aadhaarDoc: null,
         aadhaarName: null,
@@ -185,13 +195,13 @@ setDesignation2(searchEmpData2.position);
             designation: desgination1 !== null ? desgination1 : null,
             email: refEmail1 !== null ? refEmail1 : null,
             employeeName: empName1 !== null ? empName1 : null,
-            referenceId: 0
+            referenceId: 0,
           },
           {
             designation: desgination2 !== null ? desgination2 : null,
             email: refEmail2 !== null ? refEmail2 : null,
             employeeName: empName2 !== null ? empName2 : null,
-            referenceId: 0
+            referenceId: 0,
           },
         ],
         createdDate: null,
@@ -213,7 +223,7 @@ setDesignation2(searchEmpData2.position);
         status: 1,
         verificationStatus: 0,
       };
-    } else if (createCandidateResponse.candidateId && saveclick === true) {
+    } else if (createCandidateResponse && saveclick === true) {
       CandidateInfo = {
         aadhaarDoc: null,
         aadhaarName: null,
@@ -225,13 +235,13 @@ setDesignation2(searchEmpData2.position);
             designation: desgination1 !== null ? desgination1 : null,
             email: refEmail1 !== null ? refEmail1 : null,
             employeeName: empName1 !== null ? empName1 : null,
-            referenceId: 0
+            referenceId: 0,
           },
           {
             designation: desgination2 !== null ? desgination2 : null,
             email: refEmail2 !== null ? refEmail2 : null,
             employeeName: empName2 !== null ? empName2 : null,
-            referenceId: 0
+            referenceId: 0,
           },
         ],
         createdDate: null,
@@ -255,7 +265,13 @@ setDesignation2(searchEmpData2.position);
       };
     }
 
-    if (saveclick === true) {
+    console.log("CandidateInfo info", CandidateInfo);
+
+    if (
+      saveclick === true &&
+      createCandidateResponse &&
+      createCandidateResponse.candidateId
+    ) {
       editCandidate(CandidateInfo);
     } else {
       createCandidate(CandidateInfo);
@@ -299,7 +315,7 @@ setDesignation2(searchEmpData2.position);
           <RehiredModal
             modal={modal}
             handleClose={handleClose}
-           /*  callback={callback} */
+            /*  callback={callback} */
           />
         </Row>
         <Row>
@@ -379,7 +395,9 @@ setDesignation2(searchEmpData2.position);
             <Row>
               <Col sm={4}>
                 <Form.Group>
-                  <Form.Label>Emp Name/Emp ID <span style={{color:'red'}}>*</span></Form.Label>
+                  <Form.Label>
+                    Emp Name/Emp ID <span style={{ color: "red" }}>*</span>
+                  </Form.Label>
                   <div className="faq-form">
                     <input
                       className="form-control searchButton"
@@ -387,7 +405,8 @@ setDesignation2(searchEmpData2.position);
                       disabled={disabled}
                       value={empName1}
                       placeholder="Search by Emp Name/Emp Id"
-                      onChange={(e) => empName1Handler(e)} required
+                      onChange={(e) => empName1Handler(e)}
+                      required
                     />
                     <Search
                       className="search-icon"
@@ -403,8 +422,8 @@ setDesignation2(searchEmpData2.position);
                   <Form.Control
                     className="form-input"
                     type="text"
-                    value={empName1 === '' ? '' : refEmail1}
-                  /*  value={refEmail1} */
+                    value={empName1 === "" ? "" : refEmail1}
+                    /*  value={refEmail1} */
                     onChange={(e) => setRefEmail1(e.target.value)}
                     readOnly
                   />
@@ -416,8 +435,8 @@ setDesignation2(searchEmpData2.position);
                   <Form.Control
                     className="form-input"
                     type="text"
-                    value={empName1 === '' ? '' : desgination1}
-                   /*  value={desgination1} */
+                    value={empName1 === "" ? "" : desgination1}
+                    /*  value={desgination1} */
                     onChange={(e) => setDesignation1(e.target.value)}
                     readOnly
                   />
@@ -437,7 +456,9 @@ setDesignation2(searchEmpData2.position);
           <Row>
             <Col sm={4}>
               <Form.Group>
-                <Form.Label>Emp Name/Emp ID <span style={{color:'red'}}>*</span></Form.Label>
+                <Form.Label>
+                  Emp Name/Emp ID <span style={{ color: "red" }}>*</span>
+                </Form.Label>
                 <div className="faq-form">
                   <input
                     className="form-control searchButton"
@@ -445,7 +466,8 @@ setDesignation2(searchEmpData2.position);
                     disabled={disabled}
                     value={empName2}
                     placeholder="Search by Emp Name/Emp Id"
-                    onChange={(e) => empName2Handler(e)} required
+                    onChange={(e) => empName2Handler(e)}
+                    required
                   />
                   <Search
                     className="search-icon"
@@ -463,7 +485,7 @@ setDesignation2(searchEmpData2.position);
                   type="text"
                   readOnly
                   value={empName2 === "" ? "" : refEmail2}
-                 /*  value={refEmail2} */
+                  /*  value={refEmail2} */
                   onChange={(e) => setRefEmail2(e.target.value)}
                 />
               </Form.Group>
@@ -474,7 +496,7 @@ setDesignation2(searchEmpData2.position);
                 <Form.Control
                   className="form-input"
                   type="text"
-                  value={empName2 === "" ? "" : desgination2} 
+                  value={empName2 === "" ? "" : desgination2}
                   /* value={desgination2} */
                   onChange={(e) => setDesignation2(e.target.value)}
                   readOnly

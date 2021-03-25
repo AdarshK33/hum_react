@@ -10,6 +10,7 @@ const ViewEmployeeForm = () => {
   const [email, setEmail] = useState();
   const [yesChecked, setYesChecked] = useState(true);
   const [noChecked, setNoChecked] = useState(false);
+  const [secondRef, setSecondRef] = useState(false);
   const [empName1, setEmpName1] = useState("");
   const [empName2, setEmpName2] = useState("");
   const [refEmail1, setRefEmail1] = useState();
@@ -40,6 +41,19 @@ const ViewEmployeeForm = () => {
     candidateRefData.candidateReferences[1];
   console.log("data1", data1);
   console.log("data2", data2);
+
+  useEffect(() => {
+    if (data1.employeeName === "") {
+      setYesChecked(false);
+      setNoChecked(true);
+    }
+
+    if (data2.employeeName === "") {
+      setSecondRef(false);
+    } else {
+      setSecondRef(true);
+    }
+  }, [data1, data2]);
 
   useEffect(() => {
     let candidateRefData =
@@ -157,7 +171,7 @@ const ViewEmployeeForm = () => {
             </Form.Group>
           </Col>
         </Row>
-        {/* <Row>
+        <Row>
           <Col sm={4}>
             <p>Were you referred for this position?</p>
           </Col>
@@ -168,11 +182,8 @@ const ViewEmployeeForm = () => {
             <input type="checkbox" name="refrence" checked={noChecked} />
           </Col>
         </Row>
-        {yesChecked === true ? ( */}
         <Fragment>
-          {data1 !== null &&
-          data1 !== undefined &&
-          data1.employeeName !== "" ? (
+          {yesChecked === true ? (
             <Row>
               <Col sm={4}>
                 <Form.Group>
@@ -217,9 +228,7 @@ const ViewEmployeeForm = () => {
           ) : (
             ""
           )}
-          {data2 !== null &&
-          data2 !== undefined &&
-          data2.employeeName !== "" ? (
+          {secondRef === true && yesChecked === true ? (
             <Row>
               <Col sm={4}>
                 <Form.Group>

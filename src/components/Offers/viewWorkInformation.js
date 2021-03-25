@@ -19,6 +19,8 @@ const ViewWorkInformation = () => {
     probation: "",
     recuritment: "",
     ngoDetail: "",
+    internship: "",
+    noticePeriod: "",
   });
   const [dateOfJoining, setDateOFJoining] = useState();
   const [costCenter, setCostCenter] = useState("");
@@ -72,11 +74,14 @@ const ViewWorkInformation = () => {
         probation: workData.probationPeriod,
         recuritment: workData.recruitmentSource,
         ngoDetail: workData.ngoDetails !== null ? workData.ngoDetails : "",
+        internship: workData.internshipPeriod,
+        noticePeriod: workData.noticePeriod,
       });
       setDateOFJoining(new Date(workData.dateOfJoin));
       setDateOFLeaving(new Date(workData.dateOfLeaving));
       setCostCenter(workData.costCentre);
       locationView(workData.costCentre);
+      setCollege(workData.collegeName);
     }
   }, [candidateData]);
 
@@ -134,7 +139,7 @@ const ViewWorkInformation = () => {
           <Col sm={3}>
             {state.employmentType === "Internship" ? (
               <Form.Group className="reactDate">
-                <Form.Label>Manager Id</Form.Label>
+                <Form.Label>Manager Name/Id</Form.Label>
                 <Form.Control
                   type="text"
                   value={user.managerId}
@@ -186,9 +191,9 @@ const ViewWorkInformation = () => {
                 <Form.Control
                   type="text"
                   value={college}
-                  onChange={(e) => setCollege(e.target.value)}
                   placeholder="Enter College Name"
                   className="form-input"
+                  disabled="true"
                 />
               </Form.Group>
             ) : (
@@ -393,6 +398,47 @@ const ViewWorkInformation = () => {
                   <option>Others</option>
                   <option>Recruitment Agency</option>
                   <option>NGO</option>
+                </Form.Control>
+              </Form.Group>
+            )}
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={3}>
+            {state.employmentType === "Internship" ? (
+              <Form.Group>
+                <Form.Label>Internship Duration</Form.Label>
+                <Form.Control
+                  as="select"
+                  value={state.internship}
+                  className="form-input disable-arrow"
+                  name="internship"
+                  disabled="true"
+                  required
+                >
+                  <option value="">Select Internship Duration</option>
+                  <option value="1">1 Month</option>
+                  <option value="2">2 Month</option>
+                  <option value="3">3 Month</option>
+                  <option value="4">4 Month</option>
+                  <option value="5">5 Month</option>
+                  <option value="6">6 Month</option>
+                </Form.Control>
+              </Form.Group>
+            ) : (
+              <Form.Group>
+                <Form.Label>Notice Period</Form.Label>
+                <Form.Control
+                  as="select"
+                  value={state.noticePeriod}
+                  className="form-input disable-arrow"
+                  name="noticePeriod"
+                  disabled="true"
+                >
+                  <option value="">Select Notice Period</option>
+                  <option value="1">1 Month</option>
+                  <option value="2">2 Month</option>
+                  <option value="3">3 Month</option>
                 </Form.Control>
               </Form.Group>
             )}
