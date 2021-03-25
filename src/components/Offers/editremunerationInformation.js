@@ -151,7 +151,7 @@ const EditRemunerationInformation = (props) => {
             candidateData.workInformation.contractType !== "Internship" ? (
               <Col sm={6}>
                 <Form.Group as={Row} controlId="formHorizontalEmail">
-                  <Col sm={2}></Col>
+                  {/* <Col sm={2}></Col> */}
                   <Form.Label column sm={3}>
                     Fixed Gross
                   </Form.Label>
@@ -226,9 +226,8 @@ const EditRemunerationInformation = (props) => {
                   user.role === "ADMIN" ? (
                     <Col sm={6}>
                       <Form.Group as={Row} controlId="formHorizontalEmail">
-                        <Form.Label column sm={3}>
-                          Monthly Bonus ( % )
-                        </Form.Label>
+                        {/* <Form.Label column sm={3}> */}
+                        Monthly Bonus ( % ){/* </Form.Label> */}
                         <Col sm={6}>
                           <Form.Control
                             className="form-input"
@@ -257,9 +256,9 @@ const EditRemunerationInformation = (props) => {
                   ) : (
                     <Col sm={6}>
                       <Form.Group as={Row} controlId="formHorizontalEmail">
-                        <Form.Label column sm={3}>
-                          Monthly Bonus
-                        </Form.Label>
+                        {/* <Form.Label column sm={3}> */}
+                        Monthly Bonus
+                        {/* </Form.Label> */}
                         <Col sm={6}>
                           <Form.Control
                             className="form-input"

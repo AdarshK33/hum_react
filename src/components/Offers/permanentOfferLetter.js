@@ -45,8 +45,9 @@ const PermanentOfferLetter = () => {
             </li>
             <li>
               You may also receive a bonus on monthly basis and which would be
-              to a maximum of 20.0 % of your monthly gross salary.Your manager
-              will explain to you the calculation of such bonus
+              to a maximum of {offerLetterData.permanentCandidateOffer.bonus} %
+              of your monthly gross salary.Your manager will explain to you the
+              calculation of such bonus
             </li>
             <li>
               Please note that salary and bonus payments are made based on

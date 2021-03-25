@@ -112,6 +112,7 @@ const EditWorkInformation = () => {
       recruitmentSource: state.recuritment,
       relievingLetter: null,
       workId: candidateData.workInformation.workId,
+      ngoDetails: state.ngoDetail,
     };
     console.log("update data", updateData);
     updateCandidateWork(updateData);

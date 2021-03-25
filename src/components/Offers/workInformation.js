@@ -95,6 +95,7 @@ const WorkInformation = () => {
         recruitmentSource: state.recuritment,
         relievingLetter: null,
         workId: 0,
+        ngoDetails: state.ngoDetail,
       };
     } else if (createCandidateResponse.candidateId && saveclick === true) {
       createData = {
@@ -116,6 +117,7 @@ const WorkInformation = () => {
         recruitmentSource: state.recuritment,
         relievingLetter: null,
         workId: workInfoViewData.workId,
+        ngoDetails: state.ngoDetail,
       };
     }
     console.log("createData", createData);
