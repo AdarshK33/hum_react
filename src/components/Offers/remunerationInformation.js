@@ -27,14 +27,14 @@ const RemunerationInformation = (props) => {
   } = useContext(OfferContext);
   const { user } = useContext(AppContext);
 
-  useEffect(() => {
+ /*  useEffect(() => {
     console.log("candidateData remuneration1", createCandidateResponse);
     if (createCandidateResponse && createCandidateResponse.candidateId) {
       viewCandidateId(createCandidateResponse.candidateId);
     }
     console.log("candidateData remuneration2", candidateData);
     console.log("user profile", user);
-  }, [candidateData]);
+  }, [candidateData]); */
 
   const submitHandler = (e) => {
     console.log("inside submit", candidateData);
