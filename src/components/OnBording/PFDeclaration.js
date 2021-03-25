@@ -4,14 +4,20 @@ import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import "./OnBoard.css";
 
-const submitHandler = (e) => {
-  e.preventDefault();
-};
+const PFDeclaration = (props) => {
+  const submitHandler = (e) => {
+    const nextPage = props.NextStep;
+    nextPage();
+  };
 
-const PFDeclaration = () => {
+  const PrevStep = () => {
+    console.log("previous");
+    const back = props.PrevStep;
+    back();
+  };
   return (
     <Fragment>
-      <Form onSubmit={submitHandler}>
+      <Form>
         <Row style={{ marginBottom: "2rem" }}>
           <Col sm={5}>
             <div>
@@ -142,6 +148,14 @@ const PFDeclaration = () => {
             </div>
           </Col>
         </Row>
+        <div style={{ marginTop: "2rem", textAlign: "center" }}>
+          <button className="stepperButtons" onClick={PrevStep}>
+            Back
+          </button>
+          <button className="stepperButtons" onClick={submitHandler}>
+            Save & Next
+          </button>
+        </div>
       </Form>
     </Fragment>
   );

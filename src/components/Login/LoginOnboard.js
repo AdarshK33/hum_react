@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
-import { client } from '../../utils/axios';
+import { candidate } from '../../utils/canditateLogin';
 import { useEffect } from 'react';
 import { useHistory } from "react-router-dom";
+import { setDefaultCandidiateHeader } from "../../utils/canditateLogin";
 
 function LoginOnboard(props) {
     const [loginData,setLoginData] = useState({username:'',password:''})
@@ -13,10 +14,13 @@ function LoginOnboard(props) {
     const handleLogin =(e)=>{
             e.preventDefault()
         console.log("inside login");
-        client.post('/auth/candidate/login', loginData)
+        candidate.post('/auth/candidate/login', loginData)
         .then((response) => {
-            console.log(response, "loginonboARD")
-        return goToFom
+            console.log(response,"candidate login 333333333333")
+            const token = response.data.token
+            setDefaultCandidiateHeader(token);
+            console.log(response,response.data.token, "loginonboARD")
+        return goToFom()
 
         })
         .catch((error) => {

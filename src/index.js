@@ -26,6 +26,7 @@ import { OfferProvider } from "./context/OfferState";
 import { OnBoardProvider } from "./context/OnBoardState";
 import RoutePath from "./Route";
 import WithAxios from "./utils/axios";
+import CandidateWithAxios from "./utils/canditateLogin"
 import "bootstrap/dist/css/bootstrap.min.css";
 
 //firebase Auth
@@ -57,7 +58,9 @@ function Root() {
                                       <BrowserRouter basename={"/"}>
                                         <ScrollContext>
                                           <WithAxios>
+                                            <CandidateWithAxios>
                                             <RoutePath />
+                                            </CandidateWithAxios>
                                           </WithAxios>
                                         </ScrollContext>
                                       </BrowserRouter>

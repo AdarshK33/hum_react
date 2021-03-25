@@ -16,14 +16,6 @@ export const OnBoardProvider = (props) => {
     console.log("on statefile");
     return dispatch({ type: "UPDATING", payload: state.name });
   };
-
-  // const updatePersonalInfo = (data) => {
-  //   console.log("on update personal Info");
-  //   // state.Infodata: data;
-  //   console.log(data);
-  // };
-
-  // Personal Information update api
   const updatePersonalInfo = (updateData) => {
     console.log("Info data -----");
     console.log(updateData);

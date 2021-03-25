@@ -1,14 +1,23 @@
-import React, { Fragment, useState, useContext, useEffect } from "react";
+import React, {
+  Fragment,
+  useState,
+  useContext,
+  useEffect,
+  useMemo,
+} from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import "./OnBoard.css";
+import "./Documents.css";
 import { OnBoardContext } from "../../context/OnBoardState";
+import countryList from "react-select-country-list";
+import { candidate } from '../../utils/canditateLogin';
 
-const PersonalInformation = () => {
+const PersonalInformation = (props) => {
   const { updatePersonalInfo, Infodata } = useContext(OnBoardContext);
-  // const [InfoData, setInfo] = useState("");
+  const options = useMemo(() => countryList().getData(), []);
   const [isClicked, setIsClicked] = useState(false);
   const [disabled, setDisableState] = useState(false);
   const [DOB, setDOB] = useState();
@@ -20,6 +29,19 @@ const PersonalInformation = () => {
   const [maritalStatus, setMaritalStatus] = useState("");
   const [required, setRequired] = useState(true);
   const [statusRequired, setstatusRequired] = useState(true);
+  const [disabilityDoc, setDocName] = useState("");
+  const [panNumberError, setPanNumberError] = useState(false);
+  const [aadharNumberError, setAdharNumberError] = useState(false);
+  const [DOBError, setDOBError] = useState(false);
+  const [adharNameError, setAdharNameError] = useState(false);
+  const [fatherName, setFatherNameError] = useState(false);
+  const [disabilityError, setDisabilityError] = useState(false);
+  const [nationalityError, setNationalityError] = useState(false);
+  const [bloodGroupError, setBloodGroupError] = useState(false);
+  const [empName1Error, setEmpNam1Error] = useState(false);
+  const [empName2Error, setEmpNam2Error] = useState(false);
+  const [emp1EmailError, setEmp1EmailError] = useState(false);
+  const [emp2EmailError, setEmp2EmailError] = useState(false);
   const [state, setState] = useState({
     aadhaarName: "",
     fatherName: "",
@@ -29,44 +51,287 @@ const PersonalInformation = () => {
     nationality: "",
     disability: "",
     lgbt: "",
-    emp1Name: "",
+    empName1: "",
     emp1Eamil: "",
     emp1Designation: "",
-    emp2Name: "",
+    empName2: "",
     emp2Eamil: "",
     emp2Designation: "",
   });
-
+  useEffect(() => {
+    console.log( candidate.get('/api/v2/candidate/profile'),"personal")
+    candidate.get('/api/v2/candidate/profile')
+    .then((response) => {
+        console.log(response,"personal in 333333333333")
+    
+    })
+    .catch((error) => {
+        console.log(error)
+    })
+  },[])
+  useEffect(() => {
+    setState(Infodata);
+    console.log(Infodata);
+  }, [Infodata]);
+  const AdharNameValidation = () => {
+    const nameValid = /^[a-zA-Z\b]+$/;
+    if (state.aadhaarName !== "") {
+      setAdharNameError(false);
+      console.log("adharNAmeSuccess");
+      return true;
+    } else {
+      setAdharNameError(true);
+      console.log("AdharnameError");
+      return false;
+    }
+  };
+  const FatherNameValidation = () => {
+    const nameValid = /^[a-zA-Z\b]+$/;
+    if (
+      (state.fatherName !== "")) {
+      setFatherNameError(false);
+      console.log("fatherNAmeSuccess");
+      return true;
+    } else {
+      setFatherNameError(true);
+      console.log("fathernameError");
+      return false;
+    }
+  };
+  const PanNumberValidation = () => {
+    const panValid = /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/;
+    if ((state.panNumber !== "") & panValid.test(state.panNumber)) {
+      setPanNumberError(false);
+      console.log("pansucess");
+      return true;
+    } else {
+      setPanNumberError(true);
+      console.log("panerror");
+      return false;
+    }
+  };
+  const AadharNumberValidation = () => {
+    const aadharValid = /^[0-9\b]+$/;
+    console.log("adhar");
+    if ((state.aadhaarNumber !== "") & aadharValid.test(state.aadhaarNumber)) {
+      setAdharNumberError(false);
+      console.log("adharsucess");
+      return true;
+    } else {
+      setAdharNumberError(true);
+      console.log("adhaerror");
+      return false;
+    }
+  };
+  const DOBValidation = () => {
+    console.log("Dob");
+    let dob = new Date(DOB);
+    let now = new Date();
+    console.log(now - dob);
+    if (now - dob > 568024668000) {
+      console.log("DOBSuccess");
+      setDOBError(false);
+      setDOB(DOB);
+      console.log(DOB);
+      return true;
+    } else {
+      setDOBError(true);
+      console.log("DOBerror");
+      return false;
+    }
+  };
+  const disabilityValidation = () => {
+    if ((state.disability !== "") & (state.disability !== "Disability")) {
+      setDisabilityError(false);
+      console.log("disabilitySucess");
+      return true;
+    } else {
+      setDisabilityError(true);
+      console.log("disabilityFaill");
+      return false;
+    }
+  };
+  const nationalityValidation = () => {
+    if ((state.nationality !== "") & (state.nationality !== "Nationality")) {
+      setNationalityError(false);
+      console.log("nationalitySucess");
+      return true;
+    } else {
+      setNationalityError(true);
+      console.log("nationalityFaill");
+      return false;
+    }
+  };
+  const bloodGroupValidation = () => {
+    if (
+      (state.bloodGroup !== "") &
+      (state.bloodGroup !== "Select Blood Group")
+    ) {
+      setBloodGroupError(false);
+      console.log("nationalitySucess");
+      return true;
+    } else {
+      setBloodGroupError(true);
+      console.log("nationalityFaill");
+      return false;
+    }
+  };
+  const empName1Validation = () => {
+    const nameValid = /^[a-zA-Z\b]+$/;
+    if ((state.empName1 !== "") & nameValid.test(state.empName1)) {
+      setEmpNam1Error(false);
+      console.log("emp1Success");
+      return true;
+    } else {
+      setEmpNam1Error(true);
+      console.log("emp1NameFailure");
+      return false;
+    }
+  };
+  const empName2Validation = () => {
+    const nameValid = /^[a-zA-Z\b]+$/;
+    if ((state.empName2 !== "") & nameValid.test(state.empName2)) {
+      setEmpNam2Error(false);
+      console.log("emp2Success");
+      return true;
+    } else {
+      setEmpNam2Error(true);
+      console.log("emp2NameFailure");
+      return false;
+    }
+  };
+  const emp1EmailValidation = () => {
+    const emailValid = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    console.log("----------------");
+    if (state.emp1Eamil !== "") {
+      if (emailValid.test(state.emp1Eamil)) {
+        setEmp1EmailError(false);
+        console.log("email1sucess");
+        return true;
+      } else {
+        setEmp1EmailError(true);
+        console.log("email1Fail");
+        return false;
+      }
+    } else {
+      setEmp1EmailError(false);
+      console.log("email1sucess");
+      return true;
+    }
+  };
+  const emp2EmailValidation = () => {
+    const emailValid = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    console.log("----------------");
+    if (state.emp2Eamil !== "") {
+      if (emailValid.test(state.emp2Eamil)) {
+        setEmp2EmailError(false);
+        console.log("email2sucess");
+        return true;
+      } else {
+        setEmp2EmailError(true);
+        console.log("email2Fail");
+        return false;
+      }
+    } else {
+      setEmp2EmailError(false);
+      console.log("email2sucess");
+      return true;
+    }
+  };
+  const checkValidations = () => {
+    if (
+      (PanNumberValidation() === true) &
+      (AadharNumberValidation() === true) &
+      (DOBValidation() === true) &
+      (AdharNameValidation() === true) &
+      (FatherNameValidation() === true) &
+      (disabilityValidation() === true) &
+      (nationalityValidation() === true) &
+      (bloodGroupValidation() === true) &
+      (empName1Validation() === true) &
+      (emp1EmailValidation() === true)
+    ) {
+      if (isClicked === true) {
+        console.log("------");
+        if (
+          (empName2Validation() === true) &
+          (emp2EmailValidation() === true)
+        ) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return false;
+    }
+  };
   const submitHandler = (e) => {
+    const submited = props.NextStep; //next component
+    submited();
     e.preventDefault();
+    const value = checkValidations();
+    if (value === true) {
+      const InfoData = {
+        aadhaarDoc: null,
+        aadhaarName: state.aadhaarName,
+        aadhaarNumber: state.aadhaarNumber,
+        bloodGroup: state.bloodGroup,
+        candidateId: 0,
+        candidateReferences: [
+          {
+            designation:
+              state.emp1Designation !== null ? state.emp1Designation : null,
+            email: state.emp1Eamil !== null ? state.emp1Eamil : null,
+            employeeName: state.empName1 !== null ? state.empName1 : null,
+          },
+          {
+            designation:
+              state.emp2Designation !== null ? state.emp2Designation : null,
+            email: state.emp2Eamil !== null ? state.emp2Eamil : null,
+            employeeName: state.empName2 !== null ? state.empName2 : null,
+          },
+        ],
+        createdDate: null,
+        dateOfBirth: DOB,
+        disability: state.disability,
+        disabilityDoc: disabilityDoc,
+        fatherName: state.fatherName,
+        firstName: null,
+        gender: gender,
+        lastName: null,
+        lgbt: state.lgbt,
+        maritalStatus: maritalStatus,
+        nationality: state.nationality,
+        panDoc: null,
+        panNumber: state.panNumber,
+        personalEmail: null,
+        photo: null,
+        referred: true,
+        status: 0,
+        statusDesc: null,
+        verificationStatus: 0,
+        verificationStatusDesc: null,
+      };
+      console.log("onsubmit");
+      console.log(InfoData);
+      updatePersonalInfo(InfoData);
+    }
+    
+  };
+  const PrevStep = () => {
+    console.log("previous");
+    const back = props.PrevStep;
+    back();
+  };
 
-    const InfoData = {
-      adharName: state.aadhaarName,
-      fatherName: state.fatherName,
-      aadhaarNumber: state.aadhaarNumber,
-      panNumber: state.panNumber,
-      dateOfBirth: DOB,
-      bloodGroup: state.bloodGroup,
-      candidateReferences: [
-        {
-          designation:
-            state.emp1Designation !== null ? state.emp1Designation : null,
-          email: state.emp1Eamil !== null ? state.emp1Eamil : null,
-          employeeName: state.empName1 !== null ? state.empName1 : null,
-        },
-        {
-          designation:
-            state.emp2Designation !== null ? state.emp2Designation : null,
-          email: state.emp1Eamil !== null ? state.emp1Eamil : null,
-          employeeName: state.empName2 !== null ? state.empName2 : null,
-        },
-      ],
-      gender: gender,
-      maritalStatus: maritalStatus,
-    };
-    console.log("onsubmit");
-    console.log(InfoData);
-    updatePersonalInfo(InfoData);
+  const disabilityDocument = (e) => {
+    var files = e.target.files;
+    console.log(files[0].name);
+    setDocName(files[0].name);
+    console.log(state);
   };
 
   const changeHandler = (e) => {
@@ -78,7 +343,6 @@ const PersonalInformation = () => {
   };
   const dateOfBirthHandler = (date) => {
     setDOB(date);
-    console.log(DOB);
   };
 
   const handleMaleGenderCheckboxChange = (e) => {
@@ -143,7 +407,7 @@ const PersonalInformation = () => {
   };
   return (
     <Fragment>
-      <Form onSubmit={submitHandler}>
+      <Form>
         <Row style={{ marginBottom: "1rem" }}>
           <Col sm={8}>
             <Row style={{ marginBottom: "2rem" }}>
@@ -158,9 +422,16 @@ const PersonalInformation = () => {
                     value={state.aadhaarName}
                     onChange={changeHandler}
                     required
-                    placeholder="First Name"
+                    style={adharNameError ? { borderColor: "red" } : {}}
+                    placeholder="Name as per adhaar"
                     disabled={disabled}
                   />
+
+                  {adharNameError ? (
+                    <p style={{ color: "red" }}> Please enter valid name</p>
+                  ) : (
+                    <p></p>
+                  )}
                 </Form.Group>
               </div>
               <div className="col-sm-4">
@@ -176,7 +447,15 @@ const PersonalInformation = () => {
                     required
                     placeholder="Father's Name"
                     disabled={disabled}
+                    style={fatherName ? { borderColor: "red" } : {}}
                   />
+                  {fatherName ? (
+                    <p style={{ color: "red" }}>
+                      Please enter valid father's name
+                    </p>
+                  ) : (
+                    <p></p>
+                  )}
                 </Form.Group>
               </div>
               <div className="col-sm-4">
@@ -186,15 +465,21 @@ const PersonalInformation = () => {
                   </Form.Label>
                   <div className="onBoard-date">
                     <DatePicker
+                      style={DOBError ? { borderColor: "red" } : {}}
                       className="form-control onBoard-view"
                       selected={DOB}
                       required
                       onChange={(e) => dateOfBirthHandler(e)}
                       dateFormat="yyyy-MM-dd"
-                      placeholderText="Date Of Birth"
+                      placeholderText="YYYY-MM-DD"
                       disabled={disabled}
                     />
                   </div>
+                  {DOBError ? (
+                    <p style={{ color: "red" }}>Age should be above 18</p>
+                  ) : (
+                    <p></p>
+                  )}
                 </Form.Group>
               </div>
             </Row>
@@ -212,6 +497,7 @@ const PersonalInformation = () => {
                     onChange={changeHandler}
                     required
                     disabled={disabled}
+                    style={bloodGroupError ? { borderColor: "red" } : {}}
                   >
                     <option value="">Select Blood Group</option>
                     <option>A+</option>
@@ -223,6 +509,12 @@ const PersonalInformation = () => {
                     <option>AB+</option>
                     <option>AB-</option>
                   </Form.Control>
+
+                  {bloodGroupError ? (
+                    <p style={{ color: "red" }}>Please choose blood group</p>
+                  ) : (
+                    <p></p>
+                  )}
                 </Form.Group>
               </div>
               <div className="col-sm-4">
@@ -236,9 +528,18 @@ const PersonalInformation = () => {
                     value={state.aadhaarNumber}
                     onChange={changeHandler}
                     required
+                    maxLength="12"
                     placeholder="Aadhaar Number"
                     disabled={disabled}
+                    style={aadharNumberError ? { borderColor: "red" } : {}}
                   />
+                  {aadharNumberError ? (
+                    <p style={{ color: "red" }}>
+                      Please enter valid aadhar number
+                    </p>
+                  ) : (
+                    <p></p>
+                  )}
                 </Form.Group>
               </div>
               <div className="col-sm-4">
@@ -251,10 +552,20 @@ const PersonalInformation = () => {
                     name="panNumber"
                     value={state.panNumber}
                     onChange={changeHandler}
+                    maxLength="10"
                     required
                     placeholder="Pan Number"
                     disabled={disabled}
+                    style={panNumberError ? { borderColor: "red" } : {}}
                   />
+
+                  {panNumberError ? (
+                    <p style={{ color: "red" }}>
+                      Please enter valid pan number
+                    </p>
+                  ) : (
+                    <p></p>
+                  )}
                 </Form.Group>
               </div>
             </Row>
@@ -268,13 +579,25 @@ const PersonalInformation = () => {
                     as="select"
                     name="nationality"
                     value={state.nationality}
+                    options={options}
                     onChange={changeHandler}
                     required
                     disabled={disabled}
+                    style={nationalityError ? { borderColor: "red" } : {}}
                   >
-                    <option value="">Natonality</option>
-                    <option> one</option>
+                    <option value="">Nationality</option>
+                    {options.map((item) => {
+                      return <option key={item.value}>{item.label}</option>;
+                    })}
                   </Form.Control>
+
+                  {nationalityError ? (
+                    <p style={{ color: "red" }}>
+                      Please choose valid nationality
+                    </p>
+                  ) : (
+                    <p></p>
+                  )}
                 </Form.Group>
               </div>
               <div className="col-sm-4">
@@ -285,29 +608,35 @@ const PersonalInformation = () => {
                   <Form.Control
                     as="select"
                     name="disability"
-                    value={state.disablity}
+                    value={state.disability}
                     onChange={changeHandler}
                     required
                     disabled={disabled}
+                    style={disabilityError ? { borderColor: "red" } : {}}
                   >
                     <option value="">Disability</option>
                     <option> Yes</option>
                     <option> No</option>
                   </Form.Control>
+
+                  {disabilityError ? (
+                    <p style={{ color: "red" }}>
+                      Please choose disability option
+                    </p>
+                  ) : (
+                    <p></p>
+                  )}
                 </Form.Group>
               </div>
 
               <div className="col-sm-4">
                 <Form.Group>
-                  <Form.Label>
-                    LGBT<span style={{ color: "red" }}>*</span>
-                  </Form.Label>
+                  <Form.Label>LGBT</Form.Label>
                   <Form.Control
                     as="select"
                     name="lgbt"
                     value={state.lgbt}
                     onChange={changeHandler}
-                    required
                     disabled={disabled}
                   >
                     <option value="">LGBT</option>
@@ -402,6 +731,43 @@ const PersonalInformation = () => {
                 </Form.Group>
               </Col>
             </Row>
+            {state.disability === "Yes" ? (
+              <Row style={{ marginTop: "2rem" }}>
+                <Col sm={12}>
+                  <div className="FileInput">
+                    <label>Disability Document</label>
+                  </div>
+                  <div className="parentInput">
+                    <input
+                      className="fileInputField2"
+                      placeholder="Choose File"
+                      type="text"
+                      name="disabilityDoc"
+                      value={disabilityDoc}
+                    />
+                    <label
+                      className="custom-file-upload"
+                      style={{ fontSize: "16px" }}
+                    >
+                      <input
+                        type="file"
+                        className="custom_file_Upload_button"
+                        onChange={disabilityDocument}
+                      />
+                      {/* <i className="fa fa-cloud-upload" />  */}
+                      Upload
+                      {/* <i
+                      id="custom_file_upload_icon"
+                      class="fa fa-upload"
+                      aria-hidden="true"
+                    ></i> */}
+                    </label>
+                  </div>
+                </Col>
+              </Row>
+            ) : (
+              <div></div>
+            )}
           </Col>
         </Row>
         <Row style={{ marginBottom: "1rem" }}>
@@ -425,42 +791,48 @@ const PersonalInformation = () => {
                   </Form.Label>
                   <Form.Control
                     type="text"
-                    name="emp1Name"
-                    value={state.emp1Name}
+                    name="empName1"
+                    value={state.empName1}
                     onChange={changeHandler}
                     required
                     placeholder="Emp Name/ID"
                     disabled={disabled}
+                    style={empName1Error ? { borderColor: "red" } : {}}
                   />
+                  {empName1Error ? (
+                    <p style={{ color: "red" }}>Please enter valid name</p>
+                  ) : (
+                    <p></p>
+                  )}
                 </Form.Group>
               </div>
               <div className="col-sm-4">
                 <Form.Group>
-                  <Form.Label>
-                    Email ID<span style={{ color: "red" }}>*</span>
-                  </Form.Label>
+                  <Form.Label>Email ID</Form.Label>
                   <Form.Control
                     type="text"
-                    name="emp1Email"
-                    value={state.emp1Email}
+                    name="emp1Eamil"
+                    value={state.emp1Eamil}
                     onChange={changeHandler}
-                    required
                     placeholder="Email ID"
                     disabled={disabled}
+                    style={emp1EmailError ? { borderColor: "red" } : {}}
                   />
+                  {emp1EmailError ? (
+                    <p style={{ color: "red" }}>Please enter valid email</p>
+                  ) : (
+                    <p></p>
+                  )}
                 </Form.Group>
               </div>
               <div className="col-sm-4">
                 <Form.Group>
-                  <Form.Label>
-                    Designation<span style={{ color: "red" }}>*</span>
-                  </Form.Label>
+                  <Form.Label>Designation</Form.Label>
                   <Form.Control
                     type="text"
                     name="emp1Designation"
                     value={state.emp1Designation}
                     onChange={changeHandler}
-                    required
                     placeholder="Designation"
                     disabled={disabled}
                   />
@@ -494,42 +866,48 @@ const PersonalInformation = () => {
                     </Form.Label>
                     <Form.Control
                       type="text"
-                      name="emp2Name"
-                      value={state.emp2Name}
+                      name="empName2"
+                      value={state.empName2}
                       onChange={changeHandler}
                       required
                       placeholder="Emp Name/ID"
                       disabled={disabled}
+                      style={empName2Error ? { borderColor: "red" } : {}}
                     />
+                    {empName2Error ? (
+                      <p style={{ color: "red" }}>Please enter valid name</p>
+                    ) : (
+                      <p></p>
+                    )}
                   </Form.Group>
                 </div>
                 <div className="col-sm-4">
                   <Form.Group>
-                    <Form.Label>
-                      Email ID<span style={{ color: "red" }}>*</span>
-                    </Form.Label>
+                    <Form.Label>Email ID</Form.Label>
                     <Form.Control
                       type="text"
-                      name="emp2Email"
-                      value={state.emp2Email}
+                      name="emp2Eamil"
+                      value={state.emp2Eamil}
                       onChange={changeHandler}
-                      required
                       placeholder="Email ID"
                       disabled={disabled}
+                      style={emp2EmailError ? { borderColor: "red" } : {}}
                     />
+                    {emp2EmailError ? (
+                      <p style={{ color: "red" }}>Please enter valid email</p>
+                    ) : (
+                      <p></p>
+                    )}
                   </Form.Group>
                 </div>
                 <div className="col-sm-4">
                   <Form.Group>
-                    <Form.Label>
-                      Designation<span style={{ color: "red" }}>*</span>
-                    </Form.Label>
+                    <Form.Label>Designation</Form.Label>
                     <Form.Control
                       type="text"
                       name="emp2Designation"
                       value={state.emp2Designation}
                       onChange={changeHandler}
-                      required
                       placeholder="Designation"
                       disabled={disabled}
                     />
@@ -554,12 +932,14 @@ const PersonalInformation = () => {
         ) : (
           <div></div>
         )}
-        {/* <div style={{ marginTop: "2rem", textAlign: "center" }}>
-          <button className="stepperButtons">Back</button>
-          <button className="stepperButtons" type="submit">
+        <div style={{ marginTop: "2rem", textAlign: "center" }}>
+          <button className="stepperButtons" onClick={PrevStep}>
+            Back
+          </button>
+          <button className="stepperButtons" onClick={submitHandler}>
             Save & Next
           </button>
-        </div> */}
+        </div>
       </Form>
     </Fragment>
   );

@@ -4,14 +4,35 @@ import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import "./OnBoard.css";
 
-const submitHandler = (e) => {
-  e.preventDefault();
-};
+const BankDetails = (props) => {
+  const [disabled, setDisableState] = useState(false);
+  const [state, setState] = useState({
+    accountNumber: "",
+    bankId: 0,
+    bankName: "",
+    ifscCode: "",
+  });
 
-const BankDetails = () => {
+  const submitHandler = (e) => {
+    const nextPage = props.NextStep;
+    nextPage();
+  };
+
+  const PrevStep = () => {
+    console.log("previous");
+    const back = props.PrevStep;
+    back();
+  };
+  const changeHandler = (e) => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
+    console.log(state);
+  };
   return (
     <Fragment>
-      <Form onSubmit={submitHandler}>
+      <Form>
         <Row style={{ marginBottom: "2rem" }}>
           <div className="col-sm-4">
             <Form.Group>
@@ -20,8 +41,12 @@ const BankDetails = () => {
               </Form.Label>
               <Form.Control
                 type="text"
+                name="bankName"
+                value={state.bankName}
+                onChange={changeHandler}
+                required
                 placeholder="Bank Name"
-                required="required"
+                disabled={disabled}
               />
             </Form.Group>
           </div>
@@ -32,8 +57,12 @@ const BankDetails = () => {
               </Form.Label>
               <Form.Control
                 type="text"
+                name="accountNumber"
+                value={state.accountNumber}
+                onChange={changeHandler}
+                required
                 placeholder="Bank Account No"
-                required="required"
+                disabled={disabled}
               />
             </Form.Group>
           </div>
@@ -44,8 +73,12 @@ const BankDetails = () => {
               </Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Bank Account No"
-                required="required"
+                name="ifscCode"
+                value={state.ifscCode}
+                onChange={changeHandler}
+                required
+                placeholder="IFSC Code"
+                disabled={disabled}
               />
             </Form.Group>
           </div>
@@ -80,6 +113,14 @@ const BankDetails = () => {
             </div>
           </Col>
         </Row>
+        <div style={{ marginTop: "2rem", textAlign: "center" }}>
+          <button className="stepperButtons" onClick={PrevStep}>
+            Back
+          </button>
+          <button className="stepperButtons" onClick={submitHandler}>
+            Save & Next
+          </button>
+        </div>
       </Form>
     </Fragment>
   );
