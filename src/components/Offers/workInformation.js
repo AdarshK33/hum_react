@@ -404,9 +404,7 @@ const WorkInformation = () => {
           <Col sm={3}>
             <Form.Group>
               <Form.Label>Work Location state</Form.Label>
-              <Form.Control
-                as="select"
-                value={stateValue}
+              <Form.Control as='select' value={costCenter === '' ? '' : stateValue}
                 className="form-input"
                 onChange={stateHandler}
                 disabled={disabled}

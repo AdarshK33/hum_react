@@ -128,7 +128,7 @@ const EditWorkInformation = () => {
     console.log("candidateData work info", candidateData);
     const updateData = {
       candidateId: candidateData.candidateInformation.candidateId,
-      cityId: locationName.cityId,
+      cityId: city,
       companyName: user.company,
       contractType: state.employmentType,
       costCentre: costCenter,
