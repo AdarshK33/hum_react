@@ -206,6 +206,8 @@ const EditEmployeeForm = () => {
   const hideOneMoreRefer = () => {
     setSecondRef(false);
     setEmpName2("");
+    setRefEmail2('')
+    setDesignation2('')
   };
 
   const checkedYesHandler = () => {
