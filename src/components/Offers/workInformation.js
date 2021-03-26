@@ -235,7 +235,7 @@ const WorkInformation = () => {
                 <Form.Label>Manager Id</Form.Label>
                 <Form.Control
                   type="text"
-                  value={user.managerId}
+                  value={user.employeeId}
                   className="form-input"
                   readOnly
                 />
