@@ -64,6 +64,8 @@ import OfferReleaseList from "./components/Offers/OfferReleaseList";
 import EditOfferRelease from "./components/Offers/editOfferRelease";
 import OfferAccept from "./components/Offers/OfferAcceptance/OfferAccept";
 import LoginOnboard from "./components/Login/LoginOnboard";
+import ViewOfferRelease from "./components/Offers/viewOfferRelease";
+
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
   console.log(user, state, "route8888888888888");
@@ -86,11 +88,7 @@ const RoutePath = () => {
         path={`${process.env.PUBLIC_URL}/loginonboard`}
         component={LoginOnboard}
       />
-      <Route
-        //  {/*Rajasekhar */}
-        path={`${process.env.PUBLIC_URL}/onboard`}
-        component={OnBoardingStepper}
-      />
+
       <Fragment>
         <App>
           {/* dashboard menu */}
@@ -143,8 +141,17 @@ const RoutePath = () => {
             component={EditOfferRelease}
           />
           <Route
+            //  {/*Rajasekhar */}
+            path={`${process.env.PUBLIC_URL}/onboard`}
+            component={OnBoardingStepper}
+          />
+          <Route
             path={`${process.env.PUBLIC_URL}/onboard-offer`}
             component={OfferAccept}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/view-offer-release`}
+            component={ViewOfferRelease}
           />
           {state.MenuPermissionsRoute.map((e) => {
             return (
