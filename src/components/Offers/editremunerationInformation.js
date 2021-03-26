@@ -134,10 +134,10 @@ const EditRemunerationInformation = (props) => {
           stipend: stipened === undefined || stipened === null ? 0 : stipened,
         };
       }
-      console.log(
-        "remunerationViewData.remunerationId",
-        remunerationViewData.remunerationId
-      );
+      // console.log(
+      //   "remunerationViewData.remunerationId",
+      //   remunerationViewData.remunerationId
+      // );
 
       console.log("createCandidateResponse data", remunerationinfo);
       remunerationUpdate(remunerationinfo);
@@ -270,8 +270,7 @@ const EditRemunerationInformation = (props) => {
                     <Col sm={6}>
                       <Form.Group as={Row} controlId="formHorizontalEmail">
                         {/* <Form.Label column sm={3}> */}
-                        Monthly Bonus
-                        {/* </Form.Label> */}
+                        Monthly Bonus ( % ){/* </Form.Label> */}
                         <Col sm={6}>
                           <Form.Control
                             className="form-input"
