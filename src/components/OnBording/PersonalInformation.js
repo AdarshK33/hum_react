@@ -657,7 +657,7 @@ const PersonalInformation = (props) => {
               </Col>
               <Col sm={4} style={{ marginTop: "2rem" }}>
                 <Form.Group>
-                  <div className="boxField input">
+                  <div className="boxField_1 input">
                     <input
                       className="largerCheckbox"
                       type="checkbox"
@@ -672,7 +672,7 @@ const PersonalInformation = (props) => {
               </Col>
               <Col sm={5} style={{ marginTop: "2rem" }}>
                 <Form.Group>
-                  <div className="boxField input">
+                  <div className="boxField_1 input">
                     <input
                       className="largerCheckbox"
                       type="checkbox"
@@ -686,7 +686,7 @@ const PersonalInformation = (props) => {
                 </Form.Group>
               </Col>
             </Row>
-            <Row style={{ marginTop: "3rem" }}>
+            <Row style={{ marginTop: "4rem" }}>
               <Col sm={3}>
                 <Form.Group>
                   <div className="inputField">
@@ -698,7 +698,10 @@ const PersonalInformation = (props) => {
               </Col>
               <Col sm={4}>
                 <Form.Group>
-                  <div className="boxField input" style={{ marginTop: "1rem" }}>
+                  <div
+                    className="boxField_1 input"
+                    style={{ marginTop: "1rem" }}
+                  >
                     <input
                       className="largerCheckbox"
                       type="checkbox"
@@ -714,7 +717,7 @@ const PersonalInformation = (props) => {
               <Col sm={5}>
                 <Form.Group>
                   <div
-                    className="boxField input"
+                    className="boxField_1 input"
                     style={{ marginTop: "0.9rem" }}
                   >
                     <input
@@ -931,7 +934,13 @@ const PersonalInformation = (props) => {
         ) : (
           <div></div>
         )}
-        <div style={{ marginTop: "2rem", textAlign: "center" }}>
+        <div
+          style={{
+            marginTop: "2rem",
+            marginBottom: "2rem",
+            textAlign: "center",
+          }}
+        >
           <button className="stepperButtons" onClick={PrevStep}>
             Back
           </button>

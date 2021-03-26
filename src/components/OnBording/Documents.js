@@ -593,7 +593,9 @@ const Documents = (props) => {
           </Row>
         </Form>
       )}
-      <div style={{ marginTop: "2rem", textAlign: "center" }}>
+      <div
+        style={{ marginTop: "2rem", marginBottom: "2rem", textAlign: "center" }}
+      >
         <button className="stepperButtons" onClick={PrevStep}>
           Back
         </button>
