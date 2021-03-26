@@ -19,30 +19,108 @@ const PFDeclaration = (props) => {
   const [pfNominationHoldHealthNo, setPfNominationHoldHealthNo] = useState(
     false
   );
-
-  const [required, setRequired] = useState(true);
-
   const [state, setState] = useState({
     uanNumber: "",
   });
+  const [uanNumber, setUanNumber] = useState("");
+
+  const [required, setRequired] = useState(true);
+  const [firstJobError, setFirstJobError] = useState(false);
+  const [contributingPrevError, setContributingPrevError] = useState(false);
+  const [memberOfPensionSchemaError, setMemberOfPensionSchemaError] = useState(
+    false
+  );
+  const [
+    pfNominationHoldHealthError,
+    setPfNominationHoldHealthError,
+  ] = useState(false);
+  const [uanNumberError, setUanNumberError] = useState(false);
+
+  const validateCheckBoxes = (itemYes, itemNo, setError) => {
+    if ((itemYes === true) | (itemNo === true)) {
+      setError(false);
+      console.log(itemYes, itemNo);
+      return true;
+    } else {
+      setError(true);
+      return false;
+    }
+  };
+  const UanNumberValidation = () => {
+    if (state.uanNumber !== "") {
+      console.log("uan number");
+      setUanNumberError(false);
+      return true;
+    } else {
+      setUanNumberError(true);
+      return false;
+    }
+  };
+  const checkAllValidations = () => {
+    if (
+      validateCheckBoxes(firstJobYes, firstJobNo, setFirstJobError) === true
+    ) {
+      if (
+        (validateCheckBoxes(
+          pfNominationHoldHealthYes,
+          pfNominationHoldHealthNo,
+          setPfNominationHoldHealthError
+        ) ===
+          true) &
+        (validateCheckBoxes(
+          memberOfPensionSchemeYes,
+          memberOfPensionSchemeNo,
+          setMemberOfPensionSchemaError
+        ) ===
+          true) &
+        (validateCheckBoxes(
+          contributingPrevOrgYes,
+          contributingPrevOrgNo,
+          setContributingPrevError
+        ) ===
+          true)
+      ) {
+        if (firstJobNo === true) {
+          console.log("i am hear");
+          if (UanNumberValidation() === true) {
+            return true;
+          } else {
+            return false;
+          }
+        } else {
+          return true;
+        }
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  };
   const submitHandler = (e) => {
     const nextPage = props.NextStep;
     nextPage();
-    const PFInfo = {
-      candidateId: 0,
-      contributingPrevOrg: contributingPrevOrgYes ? true : false,
-      declarationId: 0,
-      epfPassbookCopy: " ",
-      firstJob: firstJobYes ? true : false,
-      memberOfPensionScheme: memberOfPensionSchemeYes ? true : false,
-      pfNominationHoldHealth: pfNominationHoldHealthYes ? true : false,
-      uanNumber: state.uanNumber,
-    };
-    console.log(PFInfo);
     e.preventDefault();
 
-    // const nextPage = props.NextStep;
-    // nextPage();
+    const value = checkAllValidations();
+    if (value === true) {
+      const nextPage = props.NextStep;
+      nextPage();
+      const PFInfo = {
+        candidateId: 0,
+        contributingPrevOrg: contributingPrevOrgYes ? true : false,
+        declarationId: 0,
+        epfPassbookCopy: " ",
+        firstJob: firstJobYes ? true : false,
+        memberOfPensionScheme: memberOfPensionSchemeYes ? true : false,
+        pfNominationHoldHealth: pfNominationHoldHealthYes ? true : false,
+        uanNumber: state.uanNumber,
+      };
+      console.log(PFInfo);
+
+      // const nextPage = props.NextStep;
+      // nextPage();
+    }
   };
 
   const PrevStep = () => {
@@ -53,6 +131,8 @@ const PFDeclaration = (props) => {
   const handleFirstJobYesChange = (e) => {
     setFirstJobYes(e.target.checked);
     setFirstJobNo(!e.target.checked);
+    setContributingPrevOrgNo(e.target.checked);
+    setMemberOfPensionSchemeNo(e.target.checked);
     {
       required ? setRequired(!required) : setRequired(required);
     }
@@ -60,6 +140,11 @@ const PFDeclaration = (props) => {
   const handleFirstJobNoChange = (e) => {
     setFirstJobNo(e.target.checked);
     setFirstJobYes(!e.target.checked);
+    setContributingPrevOrgNo(!e.target.checked);
+    setMemberOfPensionSchemeNo(!e.target.checked);
+    setContributingPrevOrgYes(!e.target.checked);
+
+    setMemberOfPensionSchemeYes(!e.target.checked);
     {
       required ? setRequired(!required) : setRequired(required);
     }
@@ -122,6 +207,14 @@ const PFDeclaration = (props) => {
           <Col sm={5}>
             <div>
               <label>Is this your first job ?</label>
+              {firstJobError ? (
+                <p style={{ color: "red" }}>
+                  {" "}
+                  *Please select one of the option
+                </p>
+              ) : (
+                <p></p>
+              )}
             </div>
           </Col>
           <Col sm={2}>
@@ -160,6 +253,14 @@ const PFDeclaration = (props) => {
             <div>
               <label>
                 Were you contributing in your previous organization ?
+                {contributingPrevError ? (
+                  <p style={{ color: "red" }}>
+                    {" "}
+                    *Please select one of the option
+                  </p>
+                ) : (
+                  <p></p>
+                )}
               </label>
             </div>
           </Col>
@@ -196,6 +297,11 @@ const PFDeclaration = (props) => {
           <Col sm={5}>
             <div>
               <label>Provide your UAN number</label>
+              {uanNumberError ? (
+                <p style={{ color: "red" }}> *Please enter your UAN number</p>
+              ) : (
+                <p></p>
+              )}
             </div>
           </Col>
           <Col sm={4}>
@@ -206,13 +312,13 @@ const PFDeclaration = (props) => {
                 required
                 name="uanNumber"
                 value={state.uanNumber}
-                onChange={changeHandler}
+                onChange={(e) => changeHandler(e)}
               />
             </Form.Group>
           </Col>
           <Col sm={2}>
             <div>
-              <label for=" ">
+              <label>
                 Fill <a href="~/address">EPF Form</a> here
               </label>
             </div>
@@ -226,6 +332,14 @@ const PFDeclaration = (props) => {
                 Are you a member of employer pension scheme in your previous
                 employement ?
               </label>
+              {memberOfPensionSchemaError ? (
+                <p style={{ color: "red" }}>
+                  {" "}
+                  *Please select one of the option
+                </p>
+              ) : (
+                <p></p>
+              )}
             </div>
           </Col>
           <Col sm={2}>
@@ -265,6 +379,14 @@ const PFDeclaration = (props) => {
               <label>
                 Does the PF nomination hold good in case of health ?
               </label>
+              {pfNominationHoldHealthError ? (
+                <p style={{ color: "red" }}>
+                  {" "}
+                  *Please select one of the option
+                </p>
+              ) : (
+                <p></p>
+              )}
             </div>
           </Col>
           <Col sm={2}>
@@ -299,7 +421,7 @@ const PFDeclaration = (props) => {
           </Col>
           <Col sm={2}>
             <div>
-              <label for=" ">
+              <label>
                 <a href="~/address">Add</a> Details here
               </label>
             </div>

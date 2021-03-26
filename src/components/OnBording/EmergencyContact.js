@@ -6,6 +6,16 @@ import "./OnBoard.css";
 
 const EmergencyContact = (props) => {
   const [disabled, setDisableState] = useState(false);
+  const [stateError, setStateError] = useState({
+    contactNameError: "",
+    addressLineError: "",
+    cityError: "",
+    countryError: "",
+    localityError: "",
+    phoneNumberError: "",
+    pinCodeError: "",
+    relationshipError: "",
+  });
   const [state, setState] = useState({
     contactName: "",
     addressLine: "",
@@ -16,9 +26,113 @@ const EmergencyContact = (props) => {
     pinCode: "",
     relationship: "",
   });
+
+  const validateForm = () => {
+    let fields = state;
+    let stateError = {};
+    let formIsValid = true;
+
+    if (!fields["contactName"]) {
+      formIsValid = false;
+      stateError["contactNameError"] = "*Please enter your name.";
+    }
+
+    if (typeof fields["contactName"] !== "undefined") {
+      if (!fields["contactName"].match(/^[a-zA-Z ]*$/)) {
+        formIsValid = false;
+        stateError["contactNameError"] =
+          "*Please enter alphabet characters only.";
+      }
+    }
+    if (!fields["addressLine"]) {
+      formIsValid = false;
+      stateError["addressLineError"] = "*Please enter your address.";
+    }
+
+    if (typeof fields["addressLine"] !== "undefined") {
+      if (
+        !fields["addressLine"].match(/^([0-9]{5}|[a-zA-Z][a-zA-Z ]{0,49})$/)
+      ) {
+        formIsValid = false;
+        stateError["addressLineError"] = "*Please enter valid address.";
+      }
+    }
+    if (!fields["city"]) {
+      formIsValid = false;
+      stateError["cityError"] = "*Please enter your city.";
+    }
+
+    if (typeof fields["city"] !== "undefined") {
+      if (!fields["city"].match(/^[a-zA-Z ]*$/)) {
+        formIsValid = false;
+        stateError["cityError"] = "*Please enter alphabet characters only.";
+      }
+    }
+    if (!fields["country"]) {
+      formIsValid = false;
+      stateError["countryError"] = "*Please enter your country.";
+    }
+
+    if (typeof fields["country"] !== "undefined") {
+      if (!fields["country"].match(/^[a-zA-Z ]*$/)) {
+        formIsValid = false;
+        stateError["countryError"] = "*Please enter alphabet characters only.";
+      }
+    }
+    if (!fields["locality"]) {
+      formIsValid = false;
+      stateError["localityError"] = "Please enter your locality.";
+    }
+
+    if (typeof fields["locality"] !== "undefined") {
+      if (!fields["locality"].match(/^[a-zA-Z ]*$/)) {
+        formIsValid = false;
+        stateError["localityError"] = "Please enter alphabet characters only.";
+      }
+    }
+    if (!fields["phoneNumber"]) {
+      formIsValid = false;
+      stateError["phoneNumberError"] = "*Please enter your mobile no.";
+    }
+
+    if (typeof fields["phoneNumber"] !== "undefined") {
+      if (!fields["phoneNumber"].match(/^[0-9]{10}$/)) {
+        formIsValid = false;
+        stateError["phoneNumberError"] = "*Please enter valid mobile number.";
+      }
+    }
+    if (!fields["pinCode"]) {
+      formIsValid = false;
+      stateError["pinCodeError"] = "*Please enter your pinCode.";
+    }
+
+    if (typeof fields["pinCode"] !== "undefined") {
+      if (!fields["pinCode"].match(/^[1-9]{1}[0-9]{2}\\s{0, 1}[0-9]{3}$/)) {
+        formIsValid = false;
+        stateError["pinCodeError"] = "*Please enter numbers only.";
+      }
+    }
+
+    if (!fields["relationship"]) {
+      formIsValid = false;
+      stateError["relationshipError"] = "*Please enter your relationship.";
+    }
+    if (typeof fields["relationship"] !== "undefined") {
+      if (!fields["relationship"].match(/^[a-zA-Z ]*$/)) {
+        formIsValid = false;
+        stateError["relationshipError"] =
+          "*Please enter alphabet characters only.";
+      }
+    }
+
+    setStateError(stateError);
+    return formIsValid;
+  };
   const submitHandler = (e) => {
     const nextPage = props.NextStep;
     nextPage();
+    if (validateForm()) {
+    }
   };
 
   const PrevStep = () => {
@@ -62,11 +176,14 @@ const EmergencyContact = (props) => {
                 placeholder="Name"
                 disabled={disabled}
               />
+              <p style={{ color: "red" }}>{stateError.contactNameError} </p>
             </Form.Group>
           </div>
           <div className="col-sm-3">
             <Form.Group>
-              <Form.Label>Relationship</Form.Label>
+              <Form.Label>
+                Relationships<span style={{ color: "red" }}>*</span>
+              </Form.Label>
               <Form.Control
                 as="select"
                 type="text"
@@ -76,8 +193,9 @@ const EmergencyContact = (props) => {
                 required
                 disabled={disabled}
               >
-                <option value="">Relationship</option>
+                <option value="">Relationships</option>
               </Form.Control>
+              <p style={{ color: "red" }}>{stateError.relationshipError} </p>
             </Form.Group>
           </div>
           <div className="col-sm-3">
@@ -94,6 +212,7 @@ const EmergencyContact = (props) => {
                 placeholder="Contact No"
                 disabled={disabled}
               />
+              <p style={{ color: "red" }}>{stateError.phoneNumberError} </p>
             </Form.Group>
           </div>
 
@@ -111,6 +230,7 @@ const EmergencyContact = (props) => {
                 placeholder="Address Line 1"
                 disabled={disabled}
               />
+              <p style={{ color: "red" }}>{stateError.addressLineError} </p>
             </Form.Group>
           </div>
           {/* </div> */}
@@ -129,10 +249,13 @@ const EmergencyContact = (props) => {
                 disabled={disabled}
               />
             </Form.Group>
+            <p style={{ color: "red" }}>{stateError.localityError} </p>
           </div>
           <div className="col-sm-3">
             <Form.Group>
-              <Form.Label>City</Form.Label>
+              <Form.Label>
+                City<span style={{ color: "red" }}>*</span>
+              </Form.Label>
               <Form.Control
                 type="text"
                 name="city"
@@ -142,11 +265,14 @@ const EmergencyContact = (props) => {
                 placeholder="City"
                 disabled={disabled}
               />
+              <span style={{ color: "red" }}>{stateError.cityError}</span>
             </Form.Group>
           </div>
           <div className="col-sm-3">
             <Form.Group>
-              <Form.Label>Country</Form.Label>
+              <Form.Label>
+                Country<span style={{ color: "red" }}>*</span>
+              </Form.Label>
               <Form.Control
                 type="text"
                 name="country"
@@ -157,6 +283,7 @@ const EmergencyContact = (props) => {
                 disabled={disabled}
               />
             </Form.Group>
+            <p style={{ color: "red" }}>{stateError.countryError} </p>
           </div>
 
           <div className="col-sm-3">
@@ -173,6 +300,7 @@ const EmergencyContact = (props) => {
                 placeholder="Pin Code"
                 disabled={disabled}
               />
+              <p style={{ color: "red" }}>{stateError.pinCodeError} </p>
             </Form.Group>
           </div>
         </Row>

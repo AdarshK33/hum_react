@@ -128,6 +128,14 @@ input.largerCheckbox {
   height: 34px;
   width: 130%;
 }
+.onBoard-date-error .react-datepicker-wrapper {
+  width: 80% !important;
+}
+.onBoard-date-error input.form-control.onBoard-view {
+  height: 34px;
+  width: 130%;
+  border: 1px solid red;
+}
 
 .inputField {
   position: relative;

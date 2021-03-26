@@ -460,7 +460,9 @@ const PersonalInformation = (props) => {
                   <Form.Label>
                     Date Of Birth<span style={{ color: "red" }}>*</span>
                   </Form.Label>
-                  <div className="onBoard-date">
+                  <div
+                    className={DOBError ? "onBoard-date-error" : "onBoard-date"}
+                  >
                     <DatePicker
                       style={DOBError ? { borderColor: "red" } : {}}
                       className="form-control onBoard-view"
