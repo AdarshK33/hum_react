@@ -1,34 +1,15 @@
-import React, {useState} from 'react';
-import { candidate } from '../../utils/canditateLogin';
-import { useEffect } from 'react';
-import { useHistory } from "react-router-dom";
-import { setDefaultCandidiateHeader } from "../../utils/canditateLogin";
-
+import React, {useState, useContext} from 'react';
+import { CandidateContext } from "../../context/CandidateState";
 function LoginOnboard(props) {
     const [loginData,setLoginData] = useState({username:'',password:''})
-    let history = useHistory();
-    const goToFom = () => {
-        
-        history.push('/onboard')
-    }
+    const  {candidateOnBoardLogin} = useContext(CandidateContext);
+
     const handleLogin =(e)=>{
             e.preventDefault()
         console.log("inside login");
-        candidate.post('/auth/candidate/login', loginData)
-        .then((response) => {
-            console.log(response,"candidate login 333333333333")
-            const token = response.data.token
-            setDefaultCandidiateHeader(token);
-            console.log(response,response.data.token, "loginonboARD")
-        return goToFom()
-
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+        candidateOnBoardLogin({...loginData,history:props.history})
+        
     }
-    useEffect(()=>{
-    },[])
   return(
         <div className="card col-12 col-lg-4 login-card mt-2 hv-center">
             <form>

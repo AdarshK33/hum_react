@@ -3,15 +3,13 @@ import Cookies from "js-cookie";
 import { useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 axios.defaults.baseURL = process.env.REACT_APP_BASEURL
-// axios.defaults.headers.common['Authorization'] = 'Bearer AUTH_TOKEN'
 export const candidate = axios
-let accessToken = "";
+let value = localStorage.getItem('candidate_access_token')
+let accessToken = (value!== null)? value:''
 
 export const setDefaultCandidiateHeader = (Token) => {
-    console.log(Token,"token")
     accessToken = Token;
     console.log(accessToken,"token candidate")
-    //  axios.defaults.headers.common['Authorization'] = 'Bearer  ' + access_token
 };
 
 const CandidateWithAxios = ({ children }) => {
@@ -29,20 +27,12 @@ const CandidateWithAxios = ({ children }) => {
     }
 
     useEffect(() => {
-
+        console.log("useeffect1")
         candidate.interceptors.request.use((config) => {
-            
             const refreshUrl = config.url.includes('/auth/token/refresh')
-
+            console.log(config,"candidate request")
             if (accessToken && !refreshUrl) {
-                if (window.location.pathname !== "/loginonboard") {
-                    let location = window.location.pathname;
-                    localStorage.setItem('candidate_access_token', accessToken)
-
-                }
-
                 config.headers["Authorization"] = `Bearer ${accessToken}`;
-                console.log(config.headers["Authorization"] = `Bearer ${accessToken}`,"candidate login" )
             }
             return config;
         });
@@ -52,7 +42,6 @@ const CandidateWithAxios = ({ children }) => {
                 return response;
             },
             (error) => {
-                console.log(error,"candidate status in interceptorrrrr candidateerror")
                 const {
                     config,
                     response: { status },
@@ -62,16 +51,7 @@ const CandidateWithAxios = ({ children }) => {
                     return getRefreshToken()
                         .then((response) => {
                             console.log("INSIDE THE INTERSECPECTOR ", response)
-                            const { data: {
-                                data: {
-                                    access_token
-                                }
-                            } } = response;
-                            // Cookies.set("APPAT", access_token);
-                            // Cookies.set("APPRT", refresh_token, { expires: 0.5 });
-                            accessToken = access_token;
-                            console.log(axios.defaults);
-                            config.headers.Authorization = `Bearer ${access_token}`;
+                            config.headers.Authorization = `Bearer ${accessToken}`;
                             config.__isRetryRequest = true;
                             return axios(config);
                         })

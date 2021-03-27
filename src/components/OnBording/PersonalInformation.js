@@ -59,16 +59,12 @@ const PersonalInformation = (props) => {
     emp2Designation: "",
   });
   useEffect(() => {
-    console.log( candidate.get('/api/v2/candidate/profile'),"personal")
-    candidate.get('/api/v2/candidate/profile')
-    .then((response) => {
+    candidate.get('/api/v2/candidate/profile').then((response)=>{
         console.log(response,"personal in 333333333333")
-    
-    })
-    .catch((error) => {
+    }).catch((error)=>{
         console.log(error)
     })
-  },[])
+  })
   useEffect(() => {
     setState(Infodata);
     console.log(Infodata);
