@@ -120,8 +120,8 @@ const EditRemunerationInformation = (props) => {
             monthlyBonus === undefined || monthlyBonus === null
               ? 0
               : monthlyBonus,
-          remunerationId: candidateData.remuneration.remunerationId
-            ? candidateData.remuneration.remunerationId
+          remunerationId: remunerationSubmitData
+            ? remunerationSubmitData.remunerationId
             : 0,
           stipend: stipened === undefined || stipened === null ? 0 : stipened,
         };
@@ -130,7 +130,9 @@ const EditRemunerationInformation = (props) => {
           candidateId: candidateData.candidateInformation.candidateId,
           fixedGross: fixedGross,
           monthlyBonus: monthlyBonus,
-          remunerationId: remunerationSubmitData.remunerationId,
+          remunerationId: remunerationSubmitData.remunerationId
+            ? remunerationSubmitData.remunerationId
+            : 0,
           stipend: stipened === undefined || stipened === null ? 0 : stipened,
         };
       }
