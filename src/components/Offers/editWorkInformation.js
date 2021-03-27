@@ -158,7 +158,7 @@ const EditWorkInformation = () => {
       paySlip: null,
       position: state.employmentType === "Internship" ? null : state.position,
       probationPeriod:
-        state.employmentType === "Internship" ? null : state.probation,
+        state.employmentType === "Internship" ? 0 : state.probation,
       recruitmentSource:
         state.employmentType === "Internship" ? null : state.recuritment,
       relievingLetter: null,

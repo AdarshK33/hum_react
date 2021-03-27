@@ -120,8 +120,8 @@ const EditRemunerationInformation = (props) => {
             monthlyBonus === undefined || monthlyBonus === null
               ? 0
               : monthlyBonus,
-          remunerationId: candidateData.remuneration.remunerationId
-            ? candidateData.remuneration.remunerationId
+          remunerationId: remunerationSubmitData
+            ? remunerationSubmitData.remunerationId
             : 0,
           stipend: stipened === undefined || stipened === null ? 0 : stipened,
         };
@@ -130,14 +130,16 @@ const EditRemunerationInformation = (props) => {
           candidateId: candidateData.candidateInformation.candidateId,
           fixedGross: fixedGross,
           monthlyBonus: monthlyBonus,
-          remunerationId: remunerationSubmitData.remunerationId,
+          remunerationId: remunerationSubmitData.remunerationId
+            ? remunerationSubmitData.remunerationId
+            : 0,
           stipend: stipened === undefined || stipened === null ? 0 : stipened,
         };
       }
-      console.log(
-        "remunerationViewData.remunerationId",
-        remunerationViewData.remunerationId
-      );
+      // console.log(
+      //   "remunerationViewData.remunerationId",
+      //   remunerationViewData.remunerationId
+      // );
 
       console.log("createCandidateResponse data", remunerationinfo);
       remunerationUpdate(remunerationinfo);
@@ -270,8 +272,7 @@ const EditRemunerationInformation = (props) => {
                     <Col sm={6}>
                       <Form.Group as={Row} controlId="formHorizontalEmail">
                         {/* <Form.Label column sm={3}> */}
-                        Monthly Bonus
-                        {/* </Form.Label> */}
+                        Monthly Bonus ( % ){/* </Form.Label> */}
                         <Col sm={6}>
                           <Form.Control
                             className="form-input"

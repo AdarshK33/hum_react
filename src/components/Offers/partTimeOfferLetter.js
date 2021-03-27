@@ -48,8 +48,10 @@ const PartTimeOfferLetter = () => {
             </li>
             <li>
               You may also receive a bonus on monthly basis and which would be
-              to a maximum of 20.0 % of your monthly gross salary.Your manager
-              will explain to you the calculation of such bonus
+              to a maximum of{" "}
+              <span className="boldText">{offerLetterData.bonus} %</span> of
+              your monthly gross salary.Your manager will explain to you the
+              calculation of such bonus
             </li>
             <li>
               Please note that salary and bonus payments are made based on
@@ -61,6 +63,16 @@ const PartTimeOfferLetter = () => {
               Company and will be subject to and be on the basis of your
               effective performance and results during your employment and other
               relevant criteria
+            </li>
+            <li>
+              You will be on probation for a period of{" "}
+              <span className="boldText">
+                {offerLetterData.probationPeriod} month(s)
+              </span>{" "}
+              from the date of your appointment. On completion of the probation
+              period, if the Company finds you to be suitable for the appointed
+              post, your appointment shall be confirmed and communicated to you
+              in writing
             </li>
           </ol>
           <p>

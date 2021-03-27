@@ -128,19 +128,21 @@ const WorkInformation = () => {
         designation:
           state.employmentType === "Internship" ? "Intern" : state.designation,
         educationCertificate: null,
-        internshipPeriod:  state.employmentType === "Internship" ? state.internship : 0,
+        internshipPeriod:
+          state.employmentType === "Internship" ? state.internship : 0,
         locationId: locationName.locationId,
         managerId: managerList === null ? user.employeeId : state.managerId,
         paySlip: null,
         position: state.employmentType === "Internship" ? null : state.position,
         probationPeriod:
-          state.employmentType === "Internship" ? null : state.probation,
+          state.employmentType === "Internship" ? 0 : state.probation,
         recruitmentSource:
           state.employmentType === "Internship" ? null : state.recuritment,
         relievingLetter: null,
         workId: 0,
         ngoDetails: state.ngoDetail,
-        noticePeriod: state.employmentType === "Internship" ? 0 : state.noticePeriod
+        noticePeriod:
+          state.employmentType === "Internship" ? 0 : state.noticePeriod,
       };
     } else if (createCandidateResponse.candidateId && saveclick === true) {
       createData = {
@@ -159,19 +161,21 @@ const WorkInformation = () => {
         designation:
           state.employmentType === "Internship" ? "Intern" : state.designation,
         educationCertificate: null,
-        internshipPeriod: state.employmentType === "Internship" ? state.internship : 0,
+        internshipPeriod:
+          state.employmentType === "Internship" ? state.internship : 0,
         locationId: locationName.locationId,
         managerId: managerList === null ? user.employeeId : state.managerId,
         paySlip: null,
         position: state.employmentType === "Internship" ? null : state.position,
         probationPeriod:
-          state.employmentType === "Internship" ? null : state.probation,
+          state.employmentType === "Internship" ? 0 : state.probation,
         recruitmentSource:
           state.employmentType === "Internship" ? null : state.recuritment,
         relievingLetter: null,
         workId: workInfoViewData.workId,
         ngoDetails: state.ngoDetail,
-        noticePeriod: state.employmentType === "Internship" ? 0 : state.noticePeriod
+        noticePeriod:
+          state.employmentType === "Internship" ? 0 : state.noticePeriod,
       };
     }
     console.log("createData", createData);
@@ -441,7 +445,9 @@ const WorkInformation = () => {
           <Col sm={3}>
             <Form.Group>
               <Form.Label>Work Location state</Form.Label>
-              <Form.Control as='select' value={costCenter === '' ? '' : stateValue}
+              <Form.Control
+                as="select"
+                value={costCenter === "" ? "" : stateValue}
                 className="form-input"
                 onChange={stateHandler}
                 disabled={disabled}
@@ -496,7 +502,6 @@ const WorkInformation = () => {
                   dateFormat="yyyy-MM-dd"
                   placeholderText="Date of Joining"
                   disabled={disabled}
-                  
                 />
               </Form.Group>
             ) : (
@@ -561,29 +566,29 @@ const WorkInformation = () => {
         </Row>
         <Row>
           <Col sm={3}>
-          {state.employmentType === "Internship" ? 
-           <Form.Group>
-           <Form.Label>Internship Duration</Form.Label>
-           <Form.Control
-             as="select"
-             value={state.internship}
-             className="form-input"
-             name="internship"
-             onChange={changeHandler}
-             disabled={disabled}
-             required
-           >
-             <option value="">Select Internship Duration</option>
-             <option value='1'>1 Month</option>
-             <option value='2'>2 Month</option>
-             <option value='3'>3 Month</option>
-             <option value='4'>4 Month</option>
-             <option value='5'>5 Month</option>
-             <option value='6'>6 Month</option>
-           </Form.Control>
-         </Form.Group>
-         :
-          <Form.Group>
+            {state.employmentType === "Internship" ? (
+              <Form.Group>
+                <Form.Label>Internship Duration</Form.Label>
+                <Form.Control
+                  as="select"
+                  value={state.internship}
+                  className="form-input"
+                  name="internship"
+                  onChange={changeHandler}
+                  disabled={disabled}
+                  required
+                >
+                  <option value="">Select Internship Duration</option>
+                  <option value="1">1 Month</option>
+                  <option value="2">2 Month</option>
+                  <option value="3">3 Month</option>
+                  <option value="4">4 Month</option>
+                  <option value="5">5 Month</option>
+                  <option value="6">6 Month</option>
+                </Form.Control>
+              </Form.Group>
+            ) : (
+              <Form.Group>
                 <Form.Label>Notice Period</Form.Label>
                 <Form.Control
                   as="select"
@@ -595,12 +600,12 @@ const WorkInformation = () => {
                   required
                 >
                   <option value="">Select Notice Period</option>
-                  <option value='1'>1 Month</option>
-                  <option value='2'>2 Month</option>
-                  <option value='3'>3 Month</option>
+                  <option value="1">1 Month</option>
+                  <option value="2">2 Month</option>
+                  <option value="3">3 Month</option>
                 </Form.Control>
               </Form.Group>
-              }
+            )}
           </Col>
         </Row>
         {state.recuritment === "NGO" ? (

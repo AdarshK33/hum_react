@@ -111,8 +111,7 @@ const ViewRemunerationInformation = (props) => {
                   <Col sm={6}>
                     <Form.Group as={Row} controlId="formHorizontalEmail">
                       {/* <Form.Label column sm={3}> */}
-                      Monthly Bonus
-                      {/* </Form.Label> */}
+                      Monthly Bonus ( % ){/* </Form.Label> */}
                       <Col sm={6}>
                         <Form.Control
                           className="form-input"

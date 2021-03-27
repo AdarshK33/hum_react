@@ -106,7 +106,7 @@ const ViewOfferLetter = () => {
                 <p>{offerLetterData.managerName}</p>
               </Col>
               <Col sm={6} className="signature-center-text">
-                {showSignature ? (
+                {/* {showSignature ? (
                   <img
                     src={calendarImage}
                     alt="calendar"
@@ -124,7 +124,17 @@ const ViewOfferLetter = () => {
                       Add digital signature
                     </Button>
                   </>
-                )}
+                )} */}
+
+                <>
+                  <p className="signature-text">Your signature</p>
+                  <img
+                    src={calendarImage}
+                    alt="calendar"
+                    width="50px"
+                    className="digital-signature"
+                  />
+                </>
               </Col>
             </Row>
           </Modal.Body>
