@@ -2,10 +2,13 @@ import axios from 'axios';
 import Cookies from "js-cookie";
 import { useEffect } from 'react';
 import { useHistory } from "react-router-dom";
-axios.defaults.baseURL = process.env.REACT_APP_BASEURL
-export const candidate = axios
+// axios.defaults.baseURL = process.env.REACT_APP_BASEURL
+// export const candidate = axios
+export const candidate = axios.create({
+    baseURL: process.env.REACT_APP_BASEURL
+  });
 let value = localStorage.getItem('candidate_access_token')
-let accessToken = (value!== null||value!==undefined)? value:''
+let accessToken = (value!== null||value!== undefined)? value:''
 
 export const setDefaultCandidiateHeader = (Token) => {
     accessToken = Token;
@@ -13,26 +16,24 @@ export const setDefaultCandidiateHeader = (Token) => {
 };
 
 const CandidateWithAxios = ({ children }) => {
-    let history = useHistory();
     
     const getRefreshToken = () => {
         console.log("INSIDE THE GET_REFRESH_TOKEN")
 
         let config = {
             method: "get",
-            url: candidate.defaults.baseURL + "auth/token/refresh?refresh_token=" + accessToken,
+            url: candidate.defaults.baseURL + "api/v2/refresh_token=" + accessToken,
 
         };
         return candidate(config)
     }
 
-    useEffect(() => {
         console.log("useeffect1")
         candidate.interceptors.request.use((config) => {
-            const refreshUrl = config.url.includes('/auth/token/refresh')
+            const refreshUrl = config.url.includes('/api/v2/refresh_token')
             console.log(config,"candidate request")
             if (accessToken && !refreshUrl) {
-                config.headers["Authorization"] = `Bearer ${accessToken}`;
+                config.headers["Authorization"] =`Bearer ${accessToken}`;
             }
             return config;
         });
@@ -68,7 +69,6 @@ const CandidateWithAxios = ({ children }) => {
                 }
             }
         );
-    }, [accessToken]);
     return children
 }
 export { accessToken };

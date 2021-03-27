@@ -16,13 +16,14 @@ export const CandidateProvider = ({ children  }) => {
     const formData = {username:data.username,password:data.password}
     candidate.post('/auth/candidate/login',formData).then((response)=> {
       console.log(response,"login candidate")
+      let accessTokenExist = localStorage.getItem('candidate_access_token')
       const token = response.data.token
       state.candidateData =response.data
       if (token !== "") {
       setDefaultCandidiateHeader(token);
       dispatch({ type: 'LOGIN', payload: state.candidateData });
        localStorage.setItem('candidate_access_token', token)
-       if(localStorage.getItem('candidate_access_token')){
+       if(accessTokenExist!==null||accessTokenExist!==undefined){
         data.history.push('/onboard')
        }
       }

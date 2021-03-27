@@ -60,12 +60,10 @@ const PersonalInformation = (props) => {
   });
   useEffect(() => {
     candidate.get('/api/v2/candidate/profile').then((response)=>{
-        console.log(response,"personal in 333333333333")
-    }).catch((error)=>{
-        console.log(error)
-    })
+      console.log(response,"personal in 333333333333")
+  }).catch((error)=>{
+      console.log(error)
   })
-  useEffect(() => {
     setState(Infodata);
     console.log(Infodata);
   }, [Infodata]);
