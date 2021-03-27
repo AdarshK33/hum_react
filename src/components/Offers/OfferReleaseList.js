@@ -144,28 +144,30 @@ const OfferReleaseList = () => {
                             <td>{item.createdDate}</td>
                             <td>{item.verificationStatusDesc}</td>
                             <td>{item.statusDesc}</td>
-                            
-                              <td>
-                              <Link to="/edit-offer-release">
-                                <Edit2
-                                  onClick={() => {
-                                    viewCandidateId(item.candidateId);
-                                  }}
-                                />
-                                 </Link>
-                              </td>
-                           
-                            
-                              <td>
+
+                            <td>
+                              {item.status !== 5 ? (
+                                <Link to="/edit-offer-release">
+                                  <Edit2
+                                    onClick={() => {
+                                      viewCandidateId(item.candidateId);
+                                    }}
+                                  />
+                                </Link>
+                              ) : (
+                                <Edit2 />
+                              )}
+                            </td>
+
+                            <td>
                               <Link to="/view-offer-release">
                                 <Eye
                                   onClick={() => {
                                     viewCandidateId(item.candidateId);
                                   }}
                                 />
-                                </Link>
-                              </td>
-                            
+                              </Link>
+                            </td>
                           </tr>
                         </tbody>
                       );
