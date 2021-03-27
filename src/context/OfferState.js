@@ -23,6 +23,7 @@ const initial_state = {
   workInfoViewData: {},
   stateList: [],
   cityList: [],
+  managerList:[]
 };
 
 export const OfferContext = createContext();
@@ -237,9 +238,17 @@ export const OfferProvider = (props) => {
       });
   };
   // location api for work information
-  const locationView = (costCenter) => {
-    client
-      .get("/api/v1/location/view/" + costCenter)
+  const locationView = async(costCenter) => {
+    const result1 = await client.get("/api/v1/location/view/" + costCenter)
+    const result2 = await client.get(`api/v1/employee/view/${costCenter}/managers`)
+    state.locationName = result1.data.data;
+    state.managerList = result2.data.data
+    console.log("locationName response", state.locationName);
+    return dispatch({ type: "LOCATION", payload: (state.locationName, state.managerList) });
+    
+    
+
+      /* .get("/api/v1/location/view/" + costCenter)
       .then((response) => {
         state.locationName = response.data.data;
         console.log("locationName response", state.locationName);
@@ -247,7 +256,7 @@ export const OfferProvider = (props) => {
       })
       .catch((error) => {
         console.log(error);
-      });
+      }); */
   };
 
   const remunerationSave = (createData) => {
@@ -381,7 +390,7 @@ export const OfferProvider = (props) => {
   const cityData = (stateId) => {
     if (stateId !== undefined) {
       client
-        .get("/api/v1/city/view/city/stateId?stateId=" + stateId)
+        .get("/api/v1/location/view/stateId?stateId=" + stateId)
         .then((response) => {
           state.cityList = response.data.data;
           console.log("city name", state.cityList);
@@ -434,6 +443,7 @@ export const OfferProvider = (props) => {
         workInfoViewData: state.workInfoViewData,
         stateList: state.stateList,
         cityList: state.cityList,
+        managerList: state.managerList
       }}
     >
       {props.children}
