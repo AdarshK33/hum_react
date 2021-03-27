@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 axios.defaults.baseURL = process.env.REACT_APP_BASEURL
 export const candidate = axios
 let value = localStorage.getItem('candidate_access_token')
-let accessToken = (value!== null)? value:''
+let accessToken = (value!== null||value!==undefined)? value:''
 
 export const setDefaultCandidiateHeader = (Token) => {
     accessToken = Token;
