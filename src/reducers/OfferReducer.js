@@ -40,7 +40,7 @@ const GroupReducer = (state, action) => {
       return { ...state, designationName: action.payload };
 
     case "LOCATION":
-      return { ...state, locationName: action.payload };
+      return { ...state, ...action.payload };
 
     case "REMUNERATION_DATA":
       return { ...state, remunerationData: action.payload };
