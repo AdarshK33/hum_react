@@ -85,12 +85,12 @@ const ViewWorkInformation = () => {
     }
   }, [candidateData]);
 
-  // useEffect(() => {
-  //   setStateValue(locationName.stateId);
-  //   setCity(locationName.cityId);
-  //   cityData(locationName.stateId);
-  //   console.log("state in useEffect", locationName);
-  // }, [locationName]);
+  useEffect(() => {
+    setStateValue(locationName.stateId);
+    setCity(locationName.cityId);
+    cityData(locationName.stateId);
+    console.log("state in useEffect", locationName);
+  }, [locationName]);
 
   return (
     <Fragment>
@@ -329,7 +329,7 @@ const ViewWorkInformation = () => {
               <Form.Label>Work Location City</Form.Label>
               <Form.Control
                 type="text"
-                // value={locationName.cityName}
+                value={locationName.cityName}
                 className="form-input"
                 readOnly
                 disabled="true"
