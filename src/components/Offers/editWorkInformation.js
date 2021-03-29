@@ -438,7 +438,7 @@ const EditWorkInformation = () => {
                 required
               >
                 <option value="">Select State</option>
-                {stateList.map((item, i) => {
+                {stateList !== null && stateList !== undefined && stateList.map((item, i) => {
                   return (
                     <option key={i} value={item.stateId}>
                       {item.stateName}
