@@ -1,15 +1,13 @@
+import React,{ useEffect } from 'react';
 import axios from 'axios';
 import Cookies from "js-cookie";
-import { useEffect } from 'react';
-import { useHistory } from "react-router-dom";
 // axios.defaults.baseURL = process.env.REACT_APP_BASEURL
 // export const candidate = axios
 export const candidate = axios.create({
     baseURL: process.env.REACT_APP_BASEURL
   });
 let value = localStorage.getItem('candidate_access_token')
-let accessToken = (value!== null||value!== undefined)? value:''
-
+let accessToken = (value!== null||value!== undefined)?value:''
 export const setDefaultCandidiateHeader = (Token) => {
     accessToken = Token;
     console.log(accessToken,"token candidate")
@@ -33,6 +31,7 @@ const CandidateWithAxios = ({ children }) => {
             const refreshUrl = config.url.includes('/api/v2/refresh_token')
             console.log(config,"candidate request")
             if (accessToken && !refreshUrl) {
+                config.headers['accept'] = "application/json";
                 config.headers["Authorization"] =`Bearer ${accessToken}`;
             }
             return config;
