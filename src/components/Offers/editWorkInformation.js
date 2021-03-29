@@ -154,7 +154,7 @@ const EditWorkInformation = () => {
       internshipPeriod:
         state.employmentType === "Internship" ? state.internship : 0,
       locationId: locationName.locationId,
-      managerId: state.employmentType === "Internship" ? user.employeeId : (managerList === null ? user.employeeId : state.managerId),
+      managerId: state.employmentType === "Internship" ? (managerList !== null ? state.managerId : user.employeeId) : user.employeeId,
       paySlip: null,
       position: state.employmentType === "Internship" ? null : state.position,
       probationPeriod:
