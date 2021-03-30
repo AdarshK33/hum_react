@@ -37,13 +37,13 @@ const OnBoardingStepper = (props) => {
   const currLabel = "CurrentLabelColour";
   const [stepCount, setStepNumber] = useState(0);
   const [stepArray, setStep] = useState([
-    { step: currStep, line: defaultLine, label: currLabel },
-    { step: defaultStep, line: defaultLine, label: defaultLabel },
-    { step: defaultStep, line: defaultLine, label: defaultLabel },
-    { step: defaultStep, line: defaultLine, label: defaultLabel },
-    { step: defaultStep, line: defaultLine, label: defaultLabel },
-    { step: defaultStep, line: defaultLine, label: defaultLabel },
-    { step: defaultStep, line: defaultLine, label: defaultLabel },
+    { step: currStep, line: defaultLine, label: currLabel ,idValue:0,fileSaved:false},
+    { step: defaultStep, line: defaultLine, label: defaultLabel,idValue:1,fileSaved:false},
+    { step: defaultStep, line: defaultLine, label: defaultLabel,idValue:2,fileSaved:false },
+    { step: defaultStep, line: defaultLine, label: defaultLabel,idValue:3,fileSaved:false},
+    { step: defaultStep, line: defaultLine, label: defaultLabel,idValue:4,fileSaved:false},
+    { step: defaultStep, line: defaultLine, label: defaultLabel,idValue:5,fileSaved:false},
+    { step: defaultStep, line: defaultLine, label: defaultLabel,idValue:6,fileSaved:false},
   ]);
   console.log(stepArray);
 

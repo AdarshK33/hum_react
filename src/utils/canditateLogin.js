@@ -20,9 +20,10 @@ const CandidateWithAxios = ({ children }) => {
 
         let config = {
             method: "get",
-            url: candidate.defaults.baseURL + "api/v2/refresh_token=" + accessToken,
-
+            url: candidate.defaults.baseURL + "api/v2/refresh_token",
         };
+        config.headers['accept'] = "application/json";
+        config.headers["Authorization"] =`Bearer ${accessToken}`;
         return candidate(config)
     }
 
