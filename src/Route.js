@@ -65,7 +65,7 @@ import EditOfferRelease from "./components/Offers/editOfferRelease";
 import OfferAccept from "./components/Offers/OfferAcceptance/OfferAccept";
 import LoginOnboard from "./components/Login/LoginOnboard";
 import ViewOfferRelease from "./components/Offers/viewOfferRelease";
-
+import Documents from "./components/OnBording/Documents";
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
   console.log(user, state, "route8888888888888");
@@ -88,7 +88,11 @@ const RoutePath = () => {
         path={`${process.env.PUBLIC_URL}/loginonboard`}
         component={LoginOnboard}
       />
-
+      <Route
+        // {/*sachin */}
+        path={`${process.env.PUBLIC_URL}/Documents`}
+        component={Documents}
+      />
       <Fragment>
         <App>
           {/* dashboard menu */}
