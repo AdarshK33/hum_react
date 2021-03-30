@@ -10,10 +10,14 @@ let accessToken = "";
 let refreshToken = "";
 
 export const setDefaultHeader = (Token, refresh_Token) => {
+    console.log(accessToken,refreshToken,"signintoken")
     accessToken = Token;
     refreshToken = refresh_Token;
+    console.log(accessToken,refreshToken,"signintoken")
+
     //  axios.defaults.headers.common['Authorization'] = 'Bearer  ' + access_token
 };
+console.log(accessToken,refreshToken,"signintoken")
 
 const WithAxios = ({ children }) => {
     let history = useHistory();

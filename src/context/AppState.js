@@ -125,6 +125,7 @@ export const AppProvider = ({ children, history }) => {
     localStorage.removeItem('flag')
     window.location.href = logOutUrl
     localStorage.removeItem('URL')
+    localStorage.removeItem('candidate_access_token')
     // window.open(
     //   loginUrl,
     //   '_blank' // <- This is what makes it open in a new window.

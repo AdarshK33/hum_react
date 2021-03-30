@@ -30,18 +30,18 @@ const OnBoardingStepper = (props) => {
   const currLabel = "CurrentLabelColour";
   const [stepCount, setStepNumber] = useState(0);
   const [stepArray, setStep] = useState([
-    { step: currStep, line: defaultLine, label: currLabel },
-    { step: defaultStep, line: defaultLine, label: defaultLabel },
-    { step: defaultStep, line: defaultLine, label: defaultLabel },
-    { step: defaultStep, line: defaultLine, label: defaultLabel },
-    { step: defaultStep, line: defaultLine, label: defaultLabel },
-    { step: defaultStep, line: defaultLine, label: defaultLabel },
-    { step: defaultStep, line: defaultLine, label: defaultLabel },
+    { step: currStep, line: defaultLine, label: currLabel ,idValue:0,fileSaved:false},
+    { step: defaultStep, line: defaultLine, label: defaultLabel,idValue:1,fileSaved:false},
+    { step: defaultStep, line: defaultLine, label: defaultLabel,idValue:2,fileSaved:false },
+    { step: defaultStep, line: defaultLine, label: defaultLabel,idValue:3,fileSaved:false},
+    { step: defaultStep, line: defaultLine, label: defaultLabel,idValue:4,fileSaved:false},
+    { step: defaultStep, line: defaultLine, label: defaultLabel,idValue:5,fileSaved:false},
+    { step: defaultStep, line: defaultLine, label: defaultLabel,idValue:6,fileSaved:false},
   ]);
   console.log(stepArray);
 
   const NextStep = () => {
-    console.log(stepCount);
+    console.log(stepCount,"NEXTSTEP");
     if (stepCount >= 0 && stepCount < 6) {
       let tempArray = [...stepArray];
       tempArray[stepCount].step = checkOk;
@@ -85,7 +85,7 @@ const OnBoardingStepper = (props) => {
                       <div>
                         <div className={stepArray[0].step}>
                           <div style={{ paddingTop: "1px", fontSize: "28px" }}>
-                            <i class="fa fa-user"></i>
+                            <i className="fa fa-user"></i>
                           </div>
                         </div>
                         <label
@@ -101,7 +101,7 @@ const OnBoardingStepper = (props) => {
                         <div className={stepArray[1].step}>
                           <div style={{ paddingTop: "4px", fontSize: "24px" }}>
                             <i
-                              class="fa fa-address-card-o"
+                              className="fa fa-address-card-o"
                               aria-hidden="true"
                             ></i>
                           </div>
@@ -118,7 +118,7 @@ const OnBoardingStepper = (props) => {
 
                         <div className={stepArray[2].step}>
                           <div style={{ paddingTop: "4px", fontSize: "23px" }}>
-                            <i class="fa fa-address-book"></i>
+                            <i className="fa fa-address-book"></i>
                           </div>
                         </div>
                         <label
@@ -133,7 +133,7 @@ const OnBoardingStepper = (props) => {
 
                         <div className={stepArray[3].step}>
                           <div style={{ paddingTop: "0px", fontSize: "31px" }}>
-                            <i class="fa fa-lock"></i>
+                            <i className="fa fa-lock"></i>
                           </div>
                         </div>
                         <label
@@ -148,7 +148,7 @@ const OnBoardingStepper = (props) => {
 
                         <div className={stepArray[4].step}>
                           <div style={{ paddingTop: "4px", fontSize: "27px" }}>
-                            <i class="fa fa-shield"></i>
+                            <i className="fa fa-shield"></i>
                           </div>
                         </div>
                         <label
@@ -163,7 +163,7 @@ const OnBoardingStepper = (props) => {
 
                         <div className={stepArray[5].step}>
                           <div style={{ paddingTop: "5px", fontSize: "22px" }}>
-                            <i class="fa fa-credit-card-alt"></i>
+                            <i className="fa fa-credit-card-alt"></i>
                           </div>
                         </div>
                         <label
@@ -178,7 +178,7 @@ const OnBoardingStepper = (props) => {
 
                         <div className={stepArray[6].step}>
                           <div style={{ paddingTop: "2px", fontSize: "26px" }}>
-                            <i class="fa fa-book"></i>
+                            <i className="fa fa-book"></i>
                           </div>
                         </div>
                         <label
@@ -286,7 +286,7 @@ const OnBoardingStepper = (props) => {
   //       <Col sm={1}>
   //         <div>
   //           <div className={stepArray[0].step}>
-  //             <i class="fa fa-user"></i>
+  //             <i className="fa fa-user"></i>
   //           </div>
   //           <label style={{ marginLeft: "15px", textAlign: "center" }}>
   //             {" "}
@@ -296,7 +296,7 @@ const OnBoardingStepper = (props) => {
   //           <span className={stepArray[0].line}></span>
 
   //           <div className={stepArray[1].step}>
-  //             <i class="fa fa-address-card-o" aria-hidden="true"></i>
+  //             <i className="fa fa-address-card-o" aria-hidden="true"></i>
   //           </div>
   //           <label style={{ marginLeft: "15px", textAlign: "center" }}>
   //             {" "}
@@ -306,7 +306,7 @@ const OnBoardingStepper = (props) => {
   //           <span className={stepArray[1].line}></span>
 
   //           <div className={stepArray[2].step}>
-  //             <i className="insideIcon" class="fa fa-address-book"></i>
+  //             <i className="insideIcon" className="fa fa-address-book"></i>
   //           </div>
   //           <label style={{ marginLeft: "15px", textAlign: "center" }}>
   //             {" "}
@@ -316,7 +316,7 @@ const OnBoardingStepper = (props) => {
   //           <span className={stepArray[2].line}></span>
 
   //           <div className={stepArray[3].step}>
-  //             <i className="insideIcon" class="fa fa-lock"></i>
+  //             <i className="insideIcon" className="fa fa-lock"></i>
   //           </div>
   //           <label style={{ marginLeft: "15px", textAlign: "center" }}>
   //             {" "}
@@ -326,7 +326,7 @@ const OnBoardingStepper = (props) => {
   //           <span className={stepArray[3].line}></span>
 
   //           <div className={stepArray[4].step}>
-  //             <i class="fa fa-shield"></i>
+  //             <i className="fa fa-shield"></i>
   //           </div>
   //           <label style={{ marginLeft: "15px", textAlign: "center" }}>
   //             {" "}
@@ -336,7 +336,7 @@ const OnBoardingStepper = (props) => {
   //           <span className={stepArray[4].line}></span>
 
   //           <div className={stepArray[5].step}>
-  //             <i class="fa fa-credit-card-alt"></i>
+  //             <i className="fa fa-credit-card-alt"></i>
   //           </div>
   //           <label style={{ marginLeft: "15px", textAlign: "center" }}>
   //             {" "}
@@ -346,7 +346,7 @@ const OnBoardingStepper = (props) => {
   //           <span className={stepArray[5].line}></span>
 
   //           <div className={stepArray[6].step}>
-  //             <i class="fa fa-book"></i>
+  //             <i className="fa fa-book"></i>
   //           </div>
   //           <label style={{ marginLeft: "15px", textAlign: "center" }}>
   //             Documents
