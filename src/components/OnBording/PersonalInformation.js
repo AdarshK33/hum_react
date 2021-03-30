@@ -13,6 +13,7 @@ import "./OnBoard.css";
 import "./Documents.css";
 import { OnBoardContext } from "../../context/OnBoardState";
 import countryList from "react-select-country-list";
+import { candidate } from "../../utils/canditateLogin";
 
 const PersonalInformation = (props) => {
   const {
@@ -91,10 +92,7 @@ const PersonalInformation = (props) => {
   };
   const FatherNameValidation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
-    if (
-      (state.fatherName !== "") &
-      nameValid.test(state.fatherName.replace(/ +/g, ""))
-    ) {
+    if (state.fatherName !== "") {
       setFatherNameError(false);
       console.log("fatherNAmeSuccess");
       return true;
@@ -321,7 +319,7 @@ const PersonalInformation = (props) => {
     }
   };
   const submitHandler = (e) => {
-    const submited = props.NextStep;
+    const submited = props.NextStep; //next component
     submited();
     e.preventDefault();
     const value = checkValidations();

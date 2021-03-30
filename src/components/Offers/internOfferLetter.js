@@ -11,7 +11,7 @@ const InternOfferLetter = () => {
     generateOfferLetter,
     offerLetterData,
   } = useContext(OfferContext);
-  //   console.log("today", moment().format("DD-MM-YYYY"));
+  //   connsole.log("today", moment().format("DD-MM-YYYY"));
   return (
     <Fragment>
       {typeof offerLetterData &&
