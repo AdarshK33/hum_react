@@ -16,7 +16,12 @@ import countryList from "react-select-country-list";
 import { candidate } from '../../utils/canditateLogin';
 
 const PersonalInformation = (props) => {
-  const { updatePersonalInfo, Infodata } = useContext(OnBoardContext);
+  const {
+    updatePersonalInfo,
+    Infodata,
+    CandidateProfile,
+    candidateData,
+  } = useContext(OnBoardContext);
   const options = useMemo(() => countryList().getData(), []);
   const [isClicked, setIsClicked] = useState(false);
   const [disabled, setDisableState] = useState(false);
@@ -59,14 +64,9 @@ const PersonalInformation = (props) => {
     emp2Designation: "",
   });
   useEffect(() => {
-    candidate.get('/api/v2/candidate/profile').then((response)=>{
-      console.log(response,"personal in 333333333333")
-  }).catch((error)=>{
-      console.log(error)
-  })
-    setState(Infodata);
-    console.log(Infodata);
-  }, [Infodata]);
+    CandidateProfile();
+  }, []);
+  console.log(candidateData);
   const AdharNameValidation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
     if (state.aadhaarName !== "") {
@@ -457,7 +457,9 @@ const PersonalInformation = (props) => {
                   <Form.Label>
                     Date Of Birth<span style={{ color: "red" }}>*</span>
                   </Form.Label>
-                  <div className="onBoard-date">
+                  <div
+                    className={DOBError ? "onBoard-date-error" : "onBoard-date"}
+                  >
                     <DatePicker
                       style={DOBError ? { borderColor: "red" } : {}}
                       className="form-control onBoard-view"
@@ -652,7 +654,7 @@ const PersonalInformation = (props) => {
               </Col>
               <Col sm={4} style={{ marginTop: "2rem" }}>
                 <Form.Group>
-                  <div className="boxField input">
+                  <div className="boxField_1 input">
                     <input
                       className="largerCheckbox"
                       type="checkbox"
@@ -667,7 +669,7 @@ const PersonalInformation = (props) => {
               </Col>
               <Col sm={5} style={{ marginTop: "2rem" }}>
                 <Form.Group>
-                  <div className="boxField input">
+                  <div className="boxField_1 input">
                     <input
                       className="largerCheckbox"
                       type="checkbox"
@@ -681,7 +683,7 @@ const PersonalInformation = (props) => {
                 </Form.Group>
               </Col>
             </Row>
-            <Row style={{ marginTop: "3rem" }}>
+            <Row style={{ marginTop: "4rem" }}>
               <Col sm={3}>
                 <Form.Group>
                   <div className="inputField">
@@ -693,7 +695,10 @@ const PersonalInformation = (props) => {
               </Col>
               <Col sm={4}>
                 <Form.Group>
-                  <div className="boxField input" style={{ marginTop: "1rem" }}>
+                  <div
+                    className="boxField_1 input"
+                    style={{ marginTop: "1rem" }}
+                  >
                     <input
                       className="largerCheckbox"
                       type="checkbox"
@@ -709,7 +714,7 @@ const PersonalInformation = (props) => {
               <Col sm={5}>
                 <Form.Group>
                   <div
-                    className="boxField input"
+                    className="boxField_1 input"
                     style={{ marginTop: "0.9rem" }}
                   >
                     <input
@@ -926,7 +931,13 @@ const PersonalInformation = (props) => {
         ) : (
           <div></div>
         )}
-        <div style={{ marginTop: "2rem", textAlign: "center" }}>
+        <div
+          style={{
+            marginTop: "2rem",
+            marginBottom: "2rem",
+            textAlign: "center",
+          }}
+        >
           <button className="stepperButtons" onClick={PrevStep}>
             Back
           </button>

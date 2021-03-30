@@ -33,15 +33,11 @@ function LoginOnboard(props) {
 
                     />
                 </div>
-                <button 
-                    type="submit" 
-                    className="btn btn-primary"
-                    onClick={handleLogin}
-                >
-                    Login
-                </button>
-            </form>
-        </div>
-    )
+                     <button type="submit" className="btn btn-primary" onClick={handleLogin}>
+          Login
+        </button>
+      </form>
+    </div>
+  );
 }
-export default LoginOnboard
+export default LoginOnboard;

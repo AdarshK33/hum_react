@@ -12,13 +12,7 @@ const EmployeeForm = (props) => {
     lastName: "",
     email: "",
   });
-  const [refState, setRefState] = useState([
-    {
-      empName: "monika",
-      refEmail: "monika@gmail.com ",
-      destination: "S.E.",
-    },
-  ]);
+
   const [yesChecked, setYesChecked] = useState(true);
   const [noChecked, setNoChecked] = useState(false);
   const [secondRef, setSecondRef] = useState(false);
@@ -27,11 +21,12 @@ const EmployeeForm = (props) => {
   const [disabled, setDisabled] = useState(false);
   const [empName1, setEmpName1] = useState("");
   const [empName2, setEmpName2] = useState("");
-  const [refEmail1, setRefEmail1] = useState();
-  const [refEmail2, setRefEmail2] = useState();
-  const [desgination1, setDesignation1] = useState();
-  const [desgination2, setDesignation2] = useState();
+  const [refEmail1, setRefEmail1] = useState("");
+  const [refEmail2, setRefEmail2] = useState("");
+  const [desgination1, setDesignation1] = useState("");
+  const [desgination2, setDesignation2] = useState("");
   const [modal, setModal] = useState(false);
+  const [saveclick, setSaveclick] = useState(false);
   let history = useHistory();
 
   const {
@@ -42,19 +37,47 @@ const EmployeeForm = (props) => {
     searchEmpData1,
     searchForEmp2,
     searchEmpData2,
+    createCandidateResponse,
+    editCandidate,
+    viewCandidateId,
   } = useContext(OfferContext);
 
   const handleClose = () => setModal(false);
   const handleShow = () => setModal(true);
 
-  useEffect(() => {
+   useEffect(() => {
+   
+      setRefEmail1(searchEmpData1 !== null ? 
+        (searchEmpData1.email !== undefined &&  searchEmpData1.email !== null ? searchEmpData1.email : ''):'');
+    setDesignation1(searchEmpData1 !== null ? 
+      (searchEmpData1.position !== undefined && searchEmpData1.position !== null ? searchEmpData1.position : ''):'');
+  }, [searchEmpData1]);
+ /*  useEffect(() => {
     setRefEmail1(searchEmpData1.email);
     setDesignation1(searchEmpData1.position);
   }, [searchEmpData1]);
   useEffect(() => {
     setRefEmail2(searchEmpData2.email);
     setDesignation2(searchEmpData2.position);
+  }, [searchEmpData2]); */
+  
+  useEffect(() => {
+    setRefEmail2(searchEmpData2 !== null ? 
+      (searchEmpData2.email !== undefined && searchEmpData2.email !== null ? searchEmpData2.email : ''):'');
+    setDesignation2(searchEmpData2 !== null ?
+      (searchEmpData2.position !== undefined && searchEmpData2.position !== null ? searchEmpData2.position : ''):'' );
   }, [searchEmpData2]);
+
+  useEffect(() => {
+    if (empName1 === "") {
+      setRefEmail1("");
+      setDesignation1("");
+    }
+    if (empName2 === "") {
+      setRefEmail2("");
+      setDesignation2("");
+    }
+  }, []);
 
   useEffect(() => {
     if (searchData !== null && Object.keys(searchData).length > 0) {
@@ -72,7 +95,7 @@ const EmployeeForm = (props) => {
       searchByAadhar(searchValue);
     }
   };
-  const callback = (yesValue) => {
+  /* const callback = (yesValue) => {
     console.log("yesValue", yesValue);
     setState({
       firstName: searchData.firstName,
@@ -91,7 +114,7 @@ const EmployeeForm = (props) => {
           setDesignation2(item[1].designation)
         );
       });
-  };
+  }; */
 
   const showOneMoreRefer = () => {
     setSecondRef(true);
@@ -99,6 +122,8 @@ const EmployeeForm = (props) => {
   const hideOneMoreRefer = () => {
     setSecondRef(false);
     setEmpName2("");
+    setRefEmail2('')
+    setDesignation2('')
   };
 
   const checkedYesHandler = () => {
@@ -118,9 +143,17 @@ const EmployeeForm = (props) => {
   };
   const empName1Handler = (e) => {
     setEmpName1(e.target.value);
+    if (e.target.value === "") {
+      setRefEmail1("");
+      setDesignation1("");
+    }
   };
   const empName2Handler = (e) => {
     setEmpName2(e.target.value);
+    if (e.target.value === "") {
+      setRefEmail2("");
+      setDesignation2("");
+    }
   };
   const empName1Search = () => {
     if (empName1 !== "") {
@@ -132,58 +165,128 @@ const EmployeeForm = (props) => {
       searchForEmp2(empName2);
     }
   };
-  let refArray = [];
-  refState.map((item) => {
-    return item.empName, item.refEmail, item.destination;
-  });
-  console.log("refState", refState);
 
   const submitHandler = (e) => {
     e.preventDefault();
+    let CandidateInfo;
+    console.log(
+      "employee form id1",
+      typeof createCandidateResponse,
+      createCandidateResponse
+    );
+    if (saveclick === false) {
+      console.log("first click");
+      if (
+        // typeof createCandidateResponse !== "undefined" ||
+        typeof createCandidateResponse !== "object"
+        // || typeof createCandidateResponse.candidateId !== "null" ||
+        // createCandidateResponse.candidateId < 0
+      ) {
+        console.log("employee form id", createCandidateResponse.candidateId);
+        console.log("user not created");
+        setSaveclick(true);
+      }
+      CandidateInfo = {
+        aadhaarDoc: null,
+        aadhaarName: null,
+        aadhaarNumber: searchValue,
+        bloodGroup: null,
+        candidateId: 0,
+        candidateReferences: [
+          {
+            designation: desgination1 !== null ? desgination1 : null,
+            email: refEmail1 !== null ? refEmail1 : null,
+            employeeName: empName1 !== null ? empName1 : null,
+            referenceId: 0,
+          },
+          {
+            designation: desgination2 !== null ? desgination2 : null,
+            email: refEmail2 !== null ? refEmail2 : null,
+            employeeName: empName2 !== null ? empName2 : null,
+            referenceId: 0,
+          },
+        ],
+        createdDate: null,
+        dateOfBirth: null,
+        disability: null,
+        disabilityDoc: null,
+        fatherName: null,
+        firstName: state.firstName,
+        gender: null,
+        lastName: state.lastName,
+        lgbt: null,
+        maritalStatus: null,
+        nationality: null,
+        panDoc: null,
+        panNumber: null,
+        personalEmail: state.email,
+        photo: null,
+        refered: true,
+        status: 1,
+        verificationStatus: 0,
+      };
+    } else if (createCandidateResponse && saveclick === true) {
+      CandidateInfo = {
+        aadhaarDoc: null,
+        aadhaarName: null,
+        aadhaarNumber: searchValue,
+        bloodGroup: null,
+        candidateId: createCandidateResponse.candidateId,
+        candidateReferences: [
+          {
+            designation: desgination1 !== null ? desgination1 : null,
+            email: refEmail1 !== null ? refEmail1 : null,
+            employeeName: empName1 !== null ? empName1 : null,
+            referenceId: 0,
+          },
+          {
+            designation: desgination2 !== null ? desgination2 : null,
+            email: refEmail2 !== null ? refEmail2 : null,
+            employeeName: empName2 !== null ? empName2 : null,
+            referenceId: 0,
+          },
+        ],
+        createdDate: null,
+        dateOfBirth: null,
+        disability: null,
+        disabilityDoc: null,
+        fatherName: null,
+        firstName: state.firstName,
+        gender: null,
+        lastName: state.lastName,
+        lgbt: null,
+        maritalStatus: null,
+        nationality: null,
+        panDoc: null,
+        panNumber: null,
+        personalEmail: state.email,
+        photo: null,
+        refered: true,
+        status: 1,
+        verificationStatus: 0,
+      };
+    }
 
-    const CandidateInfo = {
-      adharDoc: null,
-      adharName: null,
-      adharNumber: searchValue,
-      bloodGroup: null,
-      candidateId: 0,
-      candidateReferences: [
-        {
-          designation: desgination1 !== null ? desgination1 : null,
-          email: refEmail1 !== null ? refEmail1 : null,
-          employeeName: empName1 !== null ? empName1 : null,
-        },
-        {
-          designation: desgination2 !== null ? desgination2 : null,
-          email: refEmail2 !== null ? refEmail2 : null,
-          employeeName: empName2 !== null ? empName2 : null,
-        },
-      ],
-      createdDate: null,
-      dateOfBirth: null,
-      disability: null,
-      disabilityDoc: null,
-      fatherName: null,
-      firstName: state.firstName,
-      gender: null,
-      lastName: state.lastName,
-      lgbt: null,
-      maritalStatus: null,
-      nationality: null,
-      panDoc: null,
-      panNumber: null,
-      personalEmail: state.email,
-      photo: null,
-      refered: true,
-      status: 1,
-      verificationStatus: 0,
-    };
-    createCandidate(CandidateInfo);
+    console.log("CandidateInfo info", CandidateInfo);
+
+    if (
+      saveclick === true &&
+      createCandidateResponse &&
+      createCandidateResponse.candidateId
+    ) {
+      editCandidate(CandidateInfo);
+    } else {
+      createCandidate(CandidateInfo);
+    }
     setDisabled(true);
+    if (createCandidateResponse && createCandidateResponse.candidateId) {
+      viewCandidateId(createCandidateResponse.candidateId);
+    }
     setEditButton(true);
     const checkedInput = props.checkedHandler;
     checkedInput();
   };
+
   const editHandler = () => {
     setDisabled(false);
     console.log("state", state);
@@ -214,7 +317,7 @@ const EmployeeForm = (props) => {
           <RehiredModal
             modal={modal}
             handleClose={handleClose}
-            callback={callback}
+            /*  callback={callback} */
           />
         </Row>
         <Row>
@@ -294,7 +397,9 @@ const EmployeeForm = (props) => {
             <Row>
               <Col sm={4}>
                 <Form.Group>
-                  <Form.Label>Emp Name/Emp ID</Form.Label>
+                  <Form.Label>
+                    Emp Name/Emp ID <span style={{ color: "red" }}>*</span>
+                  </Form.Label>
                   <div className="faq-form">
                     <input
                       className="form-control searchButton"
@@ -303,6 +408,7 @@ const EmployeeForm = (props) => {
                       value={empName1}
                       placeholder="Search by Emp Name/Emp Id"
                       onChange={(e) => empName1Handler(e)}
+                      required
                     />
                     <Search
                       className="search-icon"
@@ -318,7 +424,9 @@ const EmployeeForm = (props) => {
                   <Form.Control
                     className="form-input"
                     type="text"
-                    value={refEmail1}
+                    value={empName1 === "" ? "" : refEmail1}
+                    /*  value={refEmail1} */
+                    onChange={(e) => setRefEmail1(e.target.value)}
                     readOnly
                   />
                 </Form.Group>
@@ -329,7 +437,9 @@ const EmployeeForm = (props) => {
                   <Form.Control
                     className="form-input"
                     type="text"
-                    value={desgination1}
+                    value={empName1 === "" ? "" : desgination1}
+                    /*  value={desgination1} */
+                    onChange={(e) => setDesignation1(e.target.value)}
                     readOnly
                   />
                 </Form.Group>
@@ -348,7 +458,9 @@ const EmployeeForm = (props) => {
           <Row>
             <Col sm={4}>
               <Form.Group>
-                <Form.Label>Emp Name/Emp ID</Form.Label>
+                <Form.Label>
+                  Emp Name/Emp ID <span style={{ color: "red" }}>*</span>
+                </Form.Label>
                 <div className="faq-form">
                   <input
                     className="form-control searchButton"
@@ -357,6 +469,7 @@ const EmployeeForm = (props) => {
                     value={empName2}
                     placeholder="Search by Emp Name/Emp Id"
                     onChange={(e) => empName2Handler(e)}
+                    required
                   />
                   <Search
                     className="search-icon"
@@ -374,6 +487,8 @@ const EmployeeForm = (props) => {
                   type="text"
                   readOnly
                   value={empName2 === "" ? "" : refEmail2}
+                  /*  value={refEmail2} */
+                  onChange={(e) => setRefEmail2(e.target.value)}
                 />
               </Form.Group>
             </Col>
@@ -384,6 +499,8 @@ const EmployeeForm = (props) => {
                   className="form-input"
                   type="text"
                   value={empName2 === "" ? "" : desgination2}
+                  /* value={desgination2} */
+                  onChange={(e) => setDesignation2(e.target.value)}
                   readOnly
                 />
               </Form.Group>

@@ -10,17 +10,17 @@ import {
 } from "react-accessible-accordion";
 import "react-accessible-accordion/dist/fancy-example.css";
 import "./offers.css";
-import EditEmployeeForm from "./editEmployeeForm";
-import EditWorkInformation from "./editWorkInformation";
-import EditRemunerationInformation from "./editremunerationInformation";
-import GenerateOfferLetter from "./generateOfferLetter";
+import ViewEmployeeForm from "./viewEmployeeForm";
+import ViewWorkInformation from "./viewWorkInformation";
+import ViewRemunerationInformation from "./viewRemunerationInformation";
+import ViewOfferLetter from "./viewOfferLetter";
 
-const EditOfferRelease = () => {
+const ViewOfferRelease = () => {
   return (
     <Fragment>
       <Container fluid className="container-accordion">
         <h5 style={{ marginTop: "1rem", fontWeight: "700" }}>
-          Edit Offer Initation
+          View Offer Letter
         </h5>
 
         <Accordion preExpanded={["a"]}>
@@ -31,7 +31,7 @@ const EditOfferRelease = () => {
               </AccordionItemButton>
             </AccordionItemHeading>
             <AccordionItemPanel>
-              <EditEmployeeForm />
+              <ViewEmployeeForm />
             </AccordionItemPanel>
           </AccordionItem>
 
@@ -42,7 +42,7 @@ const EditOfferRelease = () => {
               </AccordionItemButton>
             </AccordionItemHeading>
             <AccordionItemPanel>
-              <EditWorkInformation />
+              <ViewWorkInformation />
             </AccordionItemPanel>
           </AccordionItem>
 
@@ -53,18 +53,16 @@ const EditOfferRelease = () => {
               </AccordionItemButton>
             </AccordionItemHeading>
             <AccordionItemPanel>
-              <EditRemunerationInformation />
+              <ViewRemunerationInformation />
             </AccordionItemPanel>
           </AccordionItem>
 
           <AccordionItem>
             <AccordionItemHeading>
-              <AccordionItemButton>
-                Step 4: Generate Offer Letter
-              </AccordionItemButton>
+              <AccordionItemButton>Step 4: Offer Letter</AccordionItemButton>
             </AccordionItemHeading>
             <AccordionItemPanel>
-              <GenerateOfferLetter />
+              <ViewOfferLetter />
             </AccordionItemPanel>
           </AccordionItem>
         </Accordion>
@@ -74,4 +72,4 @@ const EditOfferRelease = () => {
   );
 };
 
-export default EditOfferRelease;
+export default ViewOfferRelease;

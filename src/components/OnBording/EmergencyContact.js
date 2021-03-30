@@ -6,7 +6,7 @@ import "./OnBoard.css";
 
 const EmergencyContact = (props) => {
   const [disabled, setDisableState] = useState(false);
-  const [stateError,setStateError] = useState({
+  const [stateError, setStateError] = useState({
     contactNameError: "",
     addressLineError: "",
     cityError: "",
@@ -15,7 +15,7 @@ const EmergencyContact = (props) => {
     phoneNumberError: "",
     pinCodeError: "",
     relationshipError: "",
-  })
+  });
   const [state, setState] = useState({
     contactName: "",
     addressLine: "",
@@ -27,9 +27,7 @@ const EmergencyContact = (props) => {
     relationship: "",
   });
 
-  
-  const validateForm =()=> {
-
+  const validateForm = () => {
     let fields = state;
     let stateError = {};
     let formIsValid = true;
@@ -42,16 +40,19 @@ const EmergencyContact = (props) => {
     if (typeof fields["contactName"] !== "undefined") {
       if (!fields["contactName"].match(/^[a-zA-Z ]*$/)) {
         formIsValid = false;
-        stateError["contactNameError"] = "*Please enter alphabet characters only.";
+        stateError["contactNameError"] =
+          "*Please enter alphabet characters only.";
       }
     }
     if (!fields["addressLine"]) {
       formIsValid = false;
       stateError["addressLineError"] = "*Please enter your address.";
     }
-   
+
     if (typeof fields["addressLine"] !== "undefined") {
-      if (!fields["addressLine"].match(/^([0-9]{5}|[a-zA-Z][a-zA-Z ]{0,49})$/)) {
+      if (
+        !fields["addressLine"].match(/^([0-9]{5}|[a-zA-Z][a-zA-Z ]{0,49})$/)
+      ) {
         formIsValid = false;
         stateError["addressLineError"] = "*Please enter valid address.";
       }
@@ -111,8 +112,8 @@ const EmergencyContact = (props) => {
         stateError["pinCodeError"] = "*Please enter numbers only.";
       }
     }
-   
-     if (!fields["relationship"]) {
+
+    if (!fields["relationship"]) {
       formIsValid = false;
       stateError["relationshipError"] = "*Please enter your relationship.";
     }
@@ -134,7 +135,6 @@ const EmergencyContact = (props) => {
     }
     const nextPage = props.NextStep;
     nextPage();
-
   };
 
   const PrevStep = () => {
@@ -183,7 +183,9 @@ const EmergencyContact = (props) => {
           </div>
           <div className="col-sm-3">
             <Form.Group>
-              <Form.Label>Relationships<span style={{ color: "red" }}>*</span></Form.Label>
+              <Form.Label>
+                Relationships<span style={{ color: "red" }}>*</span>
+              </Form.Label>
               <Form.Control
                 as="select"
                 type="text"
@@ -212,7 +214,7 @@ const EmergencyContact = (props) => {
                 placeholder="Contact No"
                 disabled={disabled}
               />
-                                  <p style={{ color: "red" }}>{stateError.phoneNumberError} </p>
+              <p style={{ color: "red" }}>{stateError.phoneNumberError} </p>
             </Form.Group>
           </div>
 
@@ -230,7 +232,7 @@ const EmergencyContact = (props) => {
                 placeholder="Address Line 1"
                 disabled={disabled}
               />
-               <p style={{ color: "red" }}>{stateError.addressLineError} </p>
+              <p style={{ color: "red" }}>{stateError.addressLineError} </p>
             </Form.Group>
           </div>
           {/* </div> */}
@@ -253,7 +255,9 @@ const EmergencyContact = (props) => {
           </div>
           <div className="col-sm-3">
             <Form.Group>
-              <Form.Label>City<span style={{ color: "red" }}>*</span></Form.Label>
+              <Form.Label>
+                City<span style={{ color: "red" }}>*</span>
+              </Form.Label>
               <Form.Control
                 type="text"
                 name="city"
@@ -263,13 +267,14 @@ const EmergencyContact = (props) => {
                 placeholder="City"
                 disabled={disabled}
               />
-                            <span style={{color:'red'}}>{stateError.cityError}</span>
-
+              <span style={{ color: "red" }}>{stateError.cityError}</span>
             </Form.Group>
           </div>
           <div className="col-sm-3">
             <Form.Group>
-              <Form.Label>Country<span style={{ color: "red" }}>*</span></Form.Label>
+              <Form.Label>
+                Country<span style={{ color: "red" }}>*</span>
+              </Form.Label>
               <Form.Control
                 type="text"
                 name="country"
@@ -297,11 +302,17 @@ const EmergencyContact = (props) => {
                 placeholder="Pin Code"
                 disabled={disabled}
               />
-                                  <p style={{ color: "red" }}>{stateError.pinCodeError} </p>
+              <p style={{ color: "red" }}>{stateError.pinCodeError} </p>
             </Form.Group>
           </div>
         </Row>
-        <div style={{ marginTop: "2rem", textAlign: "center" }}>
+        <div
+          style={{
+            marginTop: "2rem",
+            marginBottom: "2rem",
+            textAlign: "center",
+          }}
+        >
           <button className="stepperButtons" onClick={PrevStep}>
             Back
           </button>
