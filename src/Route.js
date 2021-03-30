@@ -55,6 +55,7 @@ import MasterCostCenter from "./components/MasterTables/MasterCostCenter";
 import CreateTicket from "./components/support/createTicket";
 
 import OnBoardingStepper from "./components/OnBording/OnBoardingStepper";
+import OnBoardingButton from "./components/OnBording/OnBoardingButton";
 
 import TicketListingPage from "./components/support/ticketListingPage";
 import ViewTicket from "./components/support/viewTicket";
@@ -84,11 +85,21 @@ const RoutePath = () => {
       component={OnBoardingStepper}
       /> */}
       <Route
-        // {/*sachin */}
-        path={`${process.env.PUBLIC_URL}/loginonboard`}
-        component={LoginOnboard}
-      />
-
+            //  {/*sachin */}
+            path={`${process.env.PUBLIC_URL}/loginonboard`}
+            component={LoginOnboard}
+          />
+          
+          <Route
+            path={`${process.env.PUBLIC_URL}/onboard`}
+            component={OnBoardingStepper}
+          />
+          
+          {/* <Route
+            path={`${process.env.PUBLIC_URL}/onboard`}
+            component={OnBoardingButton}
+          />
+           */}
       <Fragment>
         <App>
           {/* dashboard menu */}
