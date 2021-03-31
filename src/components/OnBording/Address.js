@@ -13,9 +13,14 @@ import countryList from "react-select-country-list";
 import { OnBoardContext } from "../../context/OnBoardState";
 
 const Address = (props) => {
-  const { stateList, StateList, cityList, CityList } = useContext(
-    OnBoardContext
-  );
+  const {
+    candidateCountryList,
+    candidateCountryData,
+    CandidateStateList,
+    candidateStateData,
+    candidateCityList,
+    candidateCityData,
+  } = useContext(OnBoardContext);
   const { CandidateProfile, candidateData } = useContext(OnBoardContext);
 
   const [isChecked, changeCheckState] = useState(false);
@@ -64,8 +69,10 @@ const Address = (props) => {
 
   useEffect(() => {
     CandidateProfile();
+    candidateCountryList();
   }, []);
   console.log("address candidate data", candidateData);
+  console.log("candidateCountryList data", candidateCountryData);
 
   const flatNumberValidation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
