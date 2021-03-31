@@ -16,18 +16,29 @@ function Dashboard() {
 
     const { user } = useContext(AppContext);
     const [startDate, setStartDate] = useState();
+    const [endDate, setEndDate] = useState();
     const [StoreType, setStoreType] = useState('');
     const [ClusterType, setClusterType] = useState('');
     const [ClusterName, setClusterName] = useState('');
     var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const today = new Date();
+    let dateValue = new Date()
+    const endDateValue = dateValue.setDate(dateValue.getDate() + 30)
     console.log("graphData0----------", graphData)
     const fromDateHandler = (e) => {
         setStartDate(e);
 
 
         if (StoreType !== "" && ClusterType !== "") {
-            viewData(e, StoreType, ClusterType)
+            viewData(e, endDate, StoreType, ClusterType)
+        }
+    }
+    const endDateHandler = (e) => {
+        setEndDate(e);
+
+
+        if (StoreType !== "" && ClusterType !== "") {
+            viewData(startDate, e, StoreType, ClusterType)
         }
     }
 
@@ -78,7 +89,8 @@ function Dashboard() {
 
     useEffect(() => {
         setStartDate(today)
-        //viewCluster()
+        setEndDate(endDateValue)
+        console.log("endDateValue",endDateValue)
         viewCostCentre()
 
     }, []);
@@ -125,7 +137,7 @@ function Dashboard() {
     useEffect(() => {
         // viewClusterCostCenter(StoreType)
         if (StoreType !== undefined && StoreType !== "" && ClusterType !== undefined && ClusterType !== "") {
-            viewData(startDate, StoreType, ClusterType);
+            viewData(startDate, endDate, StoreType, ClusterType);
         }
 
 
@@ -215,27 +227,34 @@ function Dashboard() {
 
         <div>
             <Row className="Row2" >
-                <Col>
+                <Col sm={4}>
                     <Row>
-                        <div className="col-sm-4">
-                            <div className="form-group" style={{ paddingTop: "35px" }}>
-                                Week no : {startDate !== undefined ? week_no(startDate) : 0}
+                        <Col sm={4}>
+                            <div className="form-group" style={{paddingTop:'10px'}} >
+                                <label className="name f-w-600">Week no</label>
+                                <div>
+                                {startDate !== undefined ? week_no(startDate) : 0}
+                                </div>
+                                
                             </div>
-                        </div>
-                        <div className="col-sm-4">
-                            <div className="form-group" style={{ paddingTop: "35px" }}>
-                                Day :  {startDate !== undefined ? days[startDate.getDay()] : 0}
+                        </Col>
+                        <Col sm={8}>
+                            <div className="form-group" style={{paddingTop:'10px'}}  >
+                                <label className="name f-w-600">Day</label>
+                                <div>
+                                {startDate !== undefined ? days[startDate.getDay()] : 0}
+                                </div>
                             </div>
-                        </div>
+                        </Col>
                     </Row>
 
                 </Col>
-                <Col xs={6}>
+                <Col sm={8}>
 
                     <Row>
-                        <div className="col-sm-4">
+                        <div className="col-sm-3">
                             <div className="form-group">
-                                <label className="name f-w-600"> Date<span style={{ color: 'red' }}>*</span> &nbsp;</label>
+                                <label className="name f-w-600">Start Date<span style={{ color: 'red' }}>*</span> &nbsp;</label>
                                 <DatePicker
                                     className="form-control Value"
                                     selected={startDate}
@@ -246,7 +265,20 @@ function Dashboard() {
                                 />
                             </div>
                         </div>
-                        <div className="col-sm-4">
+                        <div className="col-sm-3">
+                            <div className="form-group">
+                                <label className="name f-w-600">End Date<span style={{ color: 'red' }}>*</span> &nbsp;</label>
+                                <DatePicker
+                                    className="form-control Value"
+                                    selected={endDate}
+                                    dateFormat="yyyy-MM-dd"
+                                    // readOnly
+                                    required
+                                    onChange={(e) => endDateHandler(e)}
+                                />
+                            </div>
+                        </div>
+                        <div className="col-sm-3">
                             <div className="form-group">
                                 <label className="name f-w-600" >Select Store<span style={{ color: 'red' }}>*</span>&nbsp; </label>
                                 {/* <h1> {StoreType} </h1> */}
@@ -278,7 +310,7 @@ function Dashboard() {
                                 }
                             </div>
                         </div>
-                        <div className="col-sm-4">
+                        <div className="col-sm-3">
                             <div className="form-group">
                                 <label className="name f-w-600" >Select Cluster<span style={{ color: 'red' }}>*</span>&nbsp; </label>
                                 {/* {user.loginType === "1" || user.loginType === "9" || user.additionalRole === "1" || user.additionalRole === "9" ?

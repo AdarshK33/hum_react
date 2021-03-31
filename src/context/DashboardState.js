@@ -37,11 +37,15 @@ const initial_state = {
           });
       }
 
-      function viewData(date,store,clusterId) {
+      function viewData(startDate,endDate,store,clusterId) {
         
-        let dateValue = convert(date);
+        let startDateValue = convert(startDate);
+        console.log("startDate",startDateValue)
+        
+        let endDateValue = convert(endDate);
+        console.log("endDate",endDateValue)
 
-        client.get('/dashboard/view/'+dateValue+'/'+store+'/'+clusterId).then(function (response) {
+        client.get('/dashboard/view/'+startDateValue+'/'+endDateValue+'/'+store+'/'+clusterId).then(function (response) {
 
           if(response.data.data != null){
             state.graphData = response.data.data;
@@ -49,7 +53,7 @@ const initial_state = {
             toast.info(response.data.message);
             state.graphData = null;
           }          
-    
+    console.log("dashboard response",state.graphData)
           return dispatch({ type: 'FETCH_GRAPHDATA_LIST', payload: state.graphData });
         })
           .catch(function (error) {
