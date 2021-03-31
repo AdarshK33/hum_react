@@ -13,6 +13,7 @@ import "./OnBoard.css";
 import "./Documents.css";
 import { OnBoardContext } from "../../context/OnBoardState";
 import countryList from "react-select-country-list";
+import { candidate } from "../../utils/canditateLogin";
 
 const PersonalInformation = (props) => {
   const {
@@ -23,6 +24,10 @@ const PersonalInformation = (props) => {
   } = useContext(OnBoardContext);
   const options = useMemo(() => countryList().getData(), []);
   const [isClicked, setIsClicked] = useState(false);
+  const [fullTime, setFullTime] = useState(true);
+  const [partTime, setParTime] = useState(false);
+  const [localExpact, setLocalExpact] = useState(false);
+  const [internship, setInternship] = useState(false);
   const [disabled, setDisableState] = useState(false);
   const [DOB, setDOB] = useState();
   const [genderCheckM, setGenderM] = useState(false);
@@ -36,10 +41,12 @@ const PersonalInformation = (props) => {
   const [disabilityDoc, setDocName] = useState("");
   const [panNumberError, setPanNumberError] = useState(false);
   const [aadharNumberError, setAdharNumberError] = useState(false);
+  const [passPortNoError, setPassPortError] = useState(false);
   const [DOBError, setDOBError] = useState(false);
   const [adharNameError, setAdharNameError] = useState(false);
   const [fatherName, setFatherNameError] = useState(false);
   const [disabilityError, setDisabilityError] = useState(false);
+  const [disabilityDocError, setDisabilityDocError] = useState(false);
   const [nationalityError, setNationalityError] = useState(false);
   const [bloodGroupError, setBloodGroupError] = useState(false);
   const [empName1Error, setEmpNam1Error] = useState(false);
@@ -50,6 +57,7 @@ const PersonalInformation = (props) => {
     aadhaarName: "",
     fatherName: "",
     aadhaarNumber: "",
+    passPortNo: "",
     panNumber: "",
     bloodGroup: "",
     nationality: "",
@@ -68,6 +76,7 @@ const PersonalInformation = (props) => {
   console.log(candidateData);
   const AdharNameValidation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
+
     if (
       (state.aadhaarName !== "") &
       nameValid.test(state.aadhaarName.replace(/ +/g, ""))
@@ -83,10 +92,7 @@ const PersonalInformation = (props) => {
   };
   const FatherNameValidation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
-    if (
-      (state.fatherName !== "") &
-      nameValid.test(state.fatherName.replace(/ +/g, ""))
-    ) {
+    if (state.fatherName !== "") {
       setFatherNameError(false);
       console.log("fatherNAmeSuccess");
       return true;
@@ -98,27 +104,55 @@ const PersonalInformation = (props) => {
   };
   const PanNumberValidation = () => {
     const panValid = /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/;
-    if ((state.panNumber !== "") & panValid.test(state.panNumber)) {
-      setPanNumberError(false);
-      console.log("pansucess");
-      return true;
+    if (fullTime === true) {
+      if ((state.panNumber !== "") & panValid.test(state.panNumber)) {
+        setPanNumberError(false);
+        console.log("pansucess");
+        return true;
+      } else {
+        setPanNumberError(true);
+        console.log("panerror");
+        return false;
+      }
     } else {
-      setPanNumberError(true);
-      console.log("panerror");
-      return false;
+      return true;
     }
   };
   const AadharNumberValidation = () => {
     const aadharValid = /^[0-9\b]+$/;
     console.log("adhar");
-    if ((state.aadhaarNumber !== "") & aadharValid.test(state.aadhaarNumber)) {
-      setAdharNumberError(false);
-      console.log("adharsucess");
-      return true;
+    if ((fullTime === true) | (partTime === true)) {
+      if (
+        (state.aadhaarNumber !== "") &
+        aadharValid.test(state.aadhaarNumber)
+      ) {
+        setAdharNumberError(false);
+        console.log("adharsucess");
+        return true;
+      } else {
+        setAdharNumberError(true);
+        console.log("adhaerror");
+        return false;
+      }
     } else {
-      setAdharNumberError(true);
-      console.log("adhaerror");
-      return false;
+      return true;
+    }
+  };
+  const PassPortNumberValidations = () => {
+    const passPortValid = /^[0-9\b]+$/;
+    console.log("passPort");
+    if (localExpact === true) {
+      if ((state.passPortNo !== "") & passPortValid.test(state.passPortNo)) {
+        setPassPortError(false);
+        console.log("passPortsucess");
+        return true;
+      } else {
+        setPassPortError(true);
+        console.log("passPorterror");
+        return false;
+      }
+    } else {
+      return true;
     }
   };
   const DOBValidation = () => {
@@ -149,6 +183,21 @@ const PersonalInformation = (props) => {
       return false;
     }
   };
+  const disabilityDocValidation = () => {
+    if (state.disability === "Yes") {
+      if (state.disabilityDoc === "") {
+        setDisabilityDocError(false);
+        console.log("disabilityDocSucess");
+        return true;
+      } else {
+        setDisabilityDocError(true);
+        console.log("disabilityDocFaill");
+        return false;
+      }
+    } else {
+      return true;
+    }
+  };
   const nationalityValidation = () => {
     if ((state.nationality !== "") & (state.nationality !== "Nationality")) {
       setNationalityError(false);
@@ -160,6 +209,7 @@ const PersonalInformation = (props) => {
       return false;
     }
   };
+
   const bloodGroupValidation = () => {
     if (
       (state.bloodGroup !== "") &
@@ -247,7 +297,9 @@ const PersonalInformation = (props) => {
       (nationalityValidation() === true) &
       (bloodGroupValidation() === true) &
       (empName1Validation() === true) &
-      (emp1EmailValidation() === true)
+      (emp1EmailValidation() === true) &
+      (PassPortNumberValidations() === true) &
+      (disabilityDocValidation() === true)
     ) {
       if (isClicked === true) {
         console.log("------");
@@ -267,7 +319,7 @@ const PersonalInformation = (props) => {
     }
   };
   const submitHandler = (e) => {
-    const submited = props.NextStep;
+    const submited = props.NextStep; //next component
     submited();
     e.preventDefault();
     const value = checkValidations();
@@ -482,92 +534,6 @@ const PersonalInformation = (props) => {
                 </Form.Group>
               </div>
             </Row>
-
-            <Row style={{ marginBottom: "2rem" }}>
-              <div className="col-sm-4">
-                <Form.Group>
-                  <Form.Label>
-                    Blood Group<span style={{ color: "red" }}>*</span>
-                  </Form.Label>
-                  <Form.Control
-                    as="select"
-                    name="bloodGroup"
-                    value={state.bloodGroup}
-                    onChange={changeHandler}
-                    required
-                    disabled={disabled}
-                    style={bloodGroupError ? { borderColor: "red" } : {}}
-                  >
-                    <option value="">Select Blood Group</option>
-                    <option>A+</option>
-                    <option>A-</option>
-                    <option>B+</option>
-                    <option>B-</option>
-                    <option>O+</option>
-                    <option>O-</option>
-                    <option>AB+</option>
-                    <option>AB-</option>
-                  </Form.Control>
-
-                  {bloodGroupError ? (
-                    <p style={{ color: "red" }}>Please choose blood group</p>
-                  ) : (
-                    <p></p>
-                  )}
-                </Form.Group>
-              </div>
-              <div className="col-sm-4">
-                <Form.Group>
-                  <Form.Label>
-                    Aadhaar Number<span style={{ color: "red" }}>*</span>
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="aadhaarNumber"
-                    value={state.aadhaarNumber}
-                    onChange={changeHandler}
-                    required
-                    maxLength="12"
-                    placeholder="Aadhaar Number"
-                    disabled={disabled}
-                    style={aadharNumberError ? { borderColor: "red" } : {}}
-                  />
-                  {aadharNumberError ? (
-                    <p style={{ color: "red" }}>
-                      Please enter valid aadhar number
-                    </p>
-                  ) : (
-                    <p></p>
-                  )}
-                </Form.Group>
-              </div>
-              <div className="col-sm-4">
-                <Form.Group>
-                  <Form.Label>
-                    Pan Number<span style={{ color: "red" }}>*</span>
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="panNumber"
-                    value={state.panNumber}
-                    onChange={changeHandler}
-                    maxLength="10"
-                    required
-                    placeholder="Pan Number"
-                    disabled={disabled}
-                    style={panNumberError ? { borderColor: "red" } : {}}
-                  />
-
-                  {panNumberError ? (
-                    <p style={{ color: "red" }}>
-                      Please enter valid pan number
-                    </p>
-                  ) : (
-                    <p></p>
-                  )}
-                </Form.Group>
-              </div>
-            </Row>
             <Row style={{ marginBottom: "2rem" }}>
               <div className="col-sm-4">
                 <Form.Group>
@@ -645,6 +611,134 @@ const PersonalInformation = (props) => {
                 </Form.Group>
               </div>
             </Row>
+
+            <Row style={{ marginBottom: "2rem" }}>
+              <div className="col-sm-4">
+                <Form.Group>
+                  <Form.Label>
+                    Blood Group<span style={{ color: "red" }}>*</span>
+                  </Form.Label>
+                  <Form.Control
+                    as="select"
+                    name="bloodGroup"
+                    value={state.bloodGroup}
+                    onChange={changeHandler}
+                    required
+                    disabled={disabled}
+                    style={bloodGroupError ? { borderColor: "red" } : {}}
+                  >
+                    <option value="">Select Blood Group</option>
+                    <option>A+</option>
+                    <option>A-</option>
+                    <option>B+</option>
+                    <option>B-</option>
+                    <option>O+</option>
+                    <option>O-</option>
+                    <option>AB+</option>
+                    <option>AB-</option>
+                  </Form.Control>
+
+                  {bloodGroupError ? (
+                    <p style={{ color: "red" }}>Please choose blood group</p>
+                  ) : (
+                    <p></p>
+                  )}
+                </Form.Group>
+              </div>
+              <div className="col-sm-4">
+                {(fullTime === true) | (partTime === true) ? (
+                  <Form.Group>
+                    <Form.Label>
+                      Aadhaar Number
+                      <span style={{ color: "red" }}>
+                        {internship ? "" : "*"}
+                      </span>
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="aadhaarNumber"
+                      value={state.aadhaarNumber}
+                      onChange={changeHandler}
+                      required
+                      maxLength="12"
+                      placeholder="Aadhaar Number"
+                      disabled={disabled}
+                      style={aadharNumberError ? { borderColor: "red" } : {}}
+                    />
+                    {aadharNumberError ? (
+                      <p style={{ color: "red" }}>
+                        Please enter valid aadhar number
+                      </p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </Form.Group>
+                ) : (
+                  ""
+                )}
+                {localExpact === true ? (
+                  <Form.Group>
+                    <Form.Label>
+                      Pass Port Number<span style={{ color: "red" }}>*</span>
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="passPortNo"
+                      value={state.passPortNo}
+                      onChange={changeHandler}
+                      required
+                      maxLength="12"
+                      placeholder="Pass Port No"
+                      disabled={disabled}
+                      style={passPortNoError ? { borderColor: "red" } : {}}
+                    />
+                    {passPortNoError ? (
+                      <p style={{ color: "red" }}>
+                        Please enter valid passport number
+                      </p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </Form.Group>
+                ) : (
+                  ""
+                )}{" "}
+              </div>
+              <div className="col-sm-4">
+                {(partTime === true) | (fullTime === true) ? (
+                  <Form.Group>
+                    <Form.Label>
+                      Pan Number
+                      <span style={{ color: "red" }}>
+                        {" "}
+                        {fullTime ? "*" : ""}
+                      </span>
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="panNumber"
+                      value={state.panNumber}
+                      onChange={changeHandler}
+                      maxLength="10"
+                      required
+                      placeholder="Pan Number"
+                      disabled={disabled}
+                      style={panNumberError ? { borderColor: "red" } : {}}
+                    />
+
+                    {panNumberError ? (
+                      <p style={{ color: "red" }}>
+                        Please enter valid pan number
+                      </p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </Form.Group>
+                ) : (
+                  ""
+                )}
+              </div>
+            </Row>
           </Col>
           <Col sm={4}>
             <Row style={{ marginBottom: "1rem" }}>
@@ -706,7 +800,7 @@ const PersonalInformation = (props) => {
                       className="largerCheckbox"
                       type="checkbox"
                       value="Married"
-                      reuired={statusRequired}
+                      required={statusRequired}
                       checked={married}
                       onChange={handleMarriedCheckboxChange}
                     />
@@ -728,7 +822,7 @@ const PersonalInformation = (props) => {
                       checked={unMarried}
                       onChange={handleUnMarriedCheckboxChange}
                     />
-                    <label>UnMarried</label>
+                    <label>Unmarried</label>
                   </div>
                 </Form.Group>
               </Col>
@@ -765,6 +859,15 @@ const PersonalInformation = (props) => {
                     ></i> */}
                     </label>
                   </div>
+
+                  {disabilityDocError ? (
+                    <p style={{ color: "red" }}>
+                      &nbsp;&nbsp;&nbsp;&nbsp; Please upload the disability
+                      document
+                    </p>
+                  ) : (
+                    <p></p>
+                  )}
                 </Col>
               </Row>
             ) : (

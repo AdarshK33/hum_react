@@ -55,6 +55,7 @@ import MasterCostCenter from "./components/MasterTables/MasterCostCenter";
 import CreateTicket from "./components/support/createTicket";
 
 import OnBoardingStepper from "./components/OnBording/OnBoardingStepper";
+import OnBoardingButton from "./components/OnBording/OnBoardingButton";
 
 import TicketListingPage from "./components/support/ticketListingPage";
 import ViewTicket from "./components/support/viewTicket";
@@ -70,6 +71,7 @@ import ViewOfferRelease from "./components/Offers/viewOfferRelease";
 import CandidateVerification from "./components/CandidateVerification/ManageCandidates";
 import Verification from "./components/CandidateVerification/Verification";
 
+import Documents from "./components/OnBording/Documents";
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
   console.log(user, state, "route8888888888888");
@@ -88,11 +90,21 @@ const RoutePath = () => {
       component={OnBoardingStepper}
       /> */}
       <Route
-        // {/*sachin */}
+        //  {/*sachin */}
         path={`${process.env.PUBLIC_URL}/loginonboard`}
         component={LoginOnboard}
       />
 
+      <Route
+        path={`${process.env.PUBLIC_URL}/onboard`}
+        component={OnBoardingStepper}
+      />
+
+      {/* <Route
+            path={`${process.env.PUBLIC_URL}/onboard`}
+            component={OnBoardingButton}
+          />
+           */}
       <Fragment>
         <App>
           {/* dashboard menu */}

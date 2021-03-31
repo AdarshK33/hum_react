@@ -154,7 +154,7 @@ const EditWorkInformation = () => {
       internshipPeriod:
         state.employmentType === "Internship" ? state.internship : 0,
       locationId: locationName.locationId,
-      managerId: managerList === null ? user.employeeId : state.managerId,
+      managerId: managerList !== null ? state.managerId : user.employeeId,
       paySlip: null,
       position: state.employmentType === "Internship" ? null : state.position,
       probationPeriod:
@@ -346,7 +346,6 @@ const EditWorkInformation = () => {
             </Form.Group>
           </Col>
           <Col sm={3}>
-          {state.employmentType === "Internship" ? (
               <Form.Group className="reactDate">
                 <Form.Label>Manager Name/Id</Form.Label>
                 {managerList === null ?
@@ -373,22 +372,6 @@ const EditWorkInformation = () => {
                   })}
                 </Form.Control>}
               </Form.Group>
-            ) : (
-              <Form.Group className="reactDate">
-                <Form.Label>Date of Joining</Form.Label>
-                <DatePicker
-                  className="form-control form-input"
-                  selected={dateOfJoining}
-                  required
-                  onChange={(e) => dateOfJoiningHandler(e)}
-                  minDate={new Date()}
-                  dateFormat="yyyy-MM-dd"
-                  placeholderText="Date of Joining"
-                  disabled={disabled}
-                />
-              </Form.Group>
-            )}
-            
           </Col>
           <Col sm={3}>
             <Form.Group>
@@ -438,7 +421,7 @@ const EditWorkInformation = () => {
                 required
               >
                 <option value="">Select State</option>
-                {stateList.map((item, i) => {
+                {stateList !== null && stateList !== undefined && stateList.map((item, i) => {
                   return (
                     <option key={i} value={item.stateId}>
                       {item.stateName}
@@ -465,7 +448,7 @@ const EditWorkInformation = () => {
                   cityList.map((item, i) => {
                     return (
                       <option key={i} value={item.cityId}>
-                        {item.cityName}
+                        {item.locationName}/{item.cityName}
                       </option>
                     );
                   })}
@@ -474,7 +457,6 @@ const EditWorkInformation = () => {
           </Col>
 
           <Col sm={3}>
-            {state.employmentType === "Internship" ? (
               <Form.Group className="reactDate">
                 <Form.Label>Date of Joining</Form.Label>
                 <DatePicker
@@ -488,24 +470,6 @@ const EditWorkInformation = () => {
                   disabled={disabled}
                 />
               </Form.Group>
-            ) : (
-              <Form.Group>
-                <Form.Label>Probation Period</Form.Label>
-                <Form.Control
-                  as="select"
-                  value={state.probation}
-                  className="form-input"
-                  name="probation"
-                  onChange={changeHandler}
-                  disabled={disabled}
-                  required
-                >
-                  <option value="1">1 Month</option>
-                  <option value="2">2 Month</option>
-                  <option value="3">3 Month</option>
-                </Form.Control>
-              </Form.Group>
-            )}
           </Col>
           <Col sm={3}>
             {state.employmentType === "Internship" ? (
@@ -588,6 +552,26 @@ const EditWorkInformation = () => {
               </Form.Group>
             )}
           </Col>
+          {state.employmentType === "Internship" ? ''
+          :
+          <Col sm={3}>
+          <Form.Group>
+                <Form.Label>Probation Period</Form.Label>
+                <Form.Control
+                  as="select"
+                  value={state.probation}
+                  className="form-input"
+                  name="probation"
+                  onChange={changeHandler}
+                  disabled={disabled}
+                  required
+                >
+                  <option value="1">1 Month</option>
+                  <option value="2">2 Month</option>
+                  <option value="3">3 Month</option>
+                </Form.Control>
+              </Form.Group>
+          </Col>}
         </Row>
         {state.recuritment === "NGO" ? (
           <Row>

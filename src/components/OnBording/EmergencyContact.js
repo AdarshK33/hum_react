@@ -120,19 +120,21 @@ const EmergencyContact = (props) => {
     if (typeof fields["relationship"] !== "undefined") {
       if (!fields["relationship"].match(/^[a-zA-Z ]*$/)) {
         formIsValid = false;
-        stateError["relationshipError"] =
-          "*Please enter alphabet characters only.";
+        stateError["relationshipError"] = "*Please enter alphabet characters only.";
       }
     }
-
+  
     setStateError(stateError);
     return formIsValid;
-  };
+
+
+  }
   const submitHandler = (e) => {
+    if(validateForm()){
+
+    }
     const nextPage = props.NextStep;
     nextPage();
-    if (validateForm()) {
-    }
   };
 
   const PrevStep = () => {

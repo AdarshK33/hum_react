@@ -1,7 +1,7 @@
 import React, { createContext, useReducer, useState } from "react";
 import StateManager from "react-select";
 import OnBoardReducer from "../reducers/OnBoardReducer";
-import { client } from "../utils/axios";
+import { candidate } from "../utils/canditateLogin";
 import { toast } from "react-toastify";
 
 export const OnBoardContext = createContext();
@@ -17,7 +17,7 @@ export const OnBoardProvider = (props) => {
   const updatePersonalInfo = (updateData) => {
     console.log("Info data -----");
     console.log(updateData);
-    return client
+    return candidate
       .post("/api/v2/candidate/update", updateData)
       .then((response) => {
         toast.info(response.data.message);
@@ -32,8 +32,7 @@ export const OnBoardProvider = (props) => {
       });
   };
   const CandidateProfile = () => {
-    console.log("profile....");
-    client
+    candidate
       .get("/api/v2/candidate/profile")
       .then((response) => {
         state.candidateData = response.data.data;
@@ -49,7 +48,7 @@ export const OnBoardProvider = (props) => {
   };
 
   const StateList = (country) => {
-    client
+    candidate
       .get("/api/v2/candidate/address/view/state/" + country)
       .then((response) => {
         state.stateList = response.data.data;
@@ -64,7 +63,7 @@ export const OnBoardProvider = (props) => {
       });
   };
   const CityList = (stateItem) => {
-    client
+    candidate
       .get("/api/v2/candidate/address/view/city/" + stateItem)
       .then((response) => {
         state.CityList = response.data.data;
