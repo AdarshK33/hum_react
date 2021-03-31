@@ -23,7 +23,7 @@ const initial_state = {
   workInfoViewData: {},
   stateList: [],
   cityList: [],
-  managerList:[]
+  managerList: [],
 };
 
 export const OfferContext = createContext();
@@ -118,6 +118,7 @@ export const OfferProvider = (props) => {
       .post("/api/v1/candidate/work-information/create", createData)
       .then((response) => {
         toast.info(response.data.message);
+        state.workInformationData = response.data.data;
         return dispatch({
           type: "CREATE_CANDIDATE_WORK",
           payload: state.workInformationData,
@@ -134,6 +135,7 @@ export const OfferProvider = (props) => {
       .post("/api/v1/candidate/work-information/create", updateData)
       .then((response) => {
         toast.info(response.data.message);
+        state.workInformationData = response.data.data;
         return dispatch({
           type: "UPDATE_CANDIDATE_WORK",
           payload: state.workInformationData,
@@ -238,17 +240,20 @@ export const OfferProvider = (props) => {
       });
   };
   // location api for work information
-  const locationView = async(costCenter) => {
-    const result1 = await client.get("/api/v1/location/view/" + costCenter)
-    const result2 = await client.get(`api/v1/employee/view/${costCenter}/managers`)
+  const locationView = async (costCenter) => {
+    const result1 = await client.get("/api/v1/location/view/" + costCenter);
+    const result2 = await client.get(
+      `api/v1/employee/view/${costCenter}/managers`
+    );
     state.locationName = result1.data.data;
-    state.managerList = result2.data.data
+    state.managerList = result2.data.data;
     console.log("locationName response", state.locationName);
-    return dispatch({ type: "LOCATION", payload: (state.locationName, state.managerList) });
-    
-    
+    return dispatch({
+      type: "LOCATION",
+      payload: (state.locationName, state.managerList),
+    });
 
-      /* .get("/api/v1/location/view/" + costCenter)
+    /* .get("/api/v1/location/view/" + costCenter)
       .then((response) => {
         state.locationName = response.data.data;
         console.log("locationName response", state.locationName);
@@ -443,7 +448,8 @@ export const OfferProvider = (props) => {
         workInfoViewData: state.workInfoViewData,
         stateList: state.stateList,
         cityList: state.cityList,
-        managerList: state.managerList
+        managerList: state.managerList,
+        workInformationData: state.workInformationData,
       }}
     >
       {props.children}

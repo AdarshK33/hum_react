@@ -25,6 +25,9 @@ const RemunerationInformation = (props) => {
     viewCandidateId,
     remunerationView,
     remunerationViewData,
+    workInformationData,
+    workInfoViewData,
+    workInfoView,
   } = useContext(OfferContext);
   const { user } = useContext(AppContext);
 
@@ -39,11 +42,14 @@ const RemunerationInformation = (props) => {
       viewApiCall === false
     ) {
       viewCandidateId(createCandidateResponse.candidateId);
+      workInfoView(createCandidateResponse.candidateId);
       setViewApiCall(true);
     } else {
       setViewApiCall(false);
     }
     console.log("candidateData remuneration2", candidateData);
+    console.log("workInformationData remuneration", workInformationData);
+    console.log("workInfoViewData", workInfoViewData);
     console.log("user profile", user);
   }, [candidateData.workInformation]);
 
@@ -152,9 +158,8 @@ const RemunerationInformation = (props) => {
       <Form>
         <Row>
           <Fragment>
-            {candidateData &&
-            candidateData.workInformation &&
-            candidateData.workInformation.contractType !== "Internship" ? (
+            {workInfoViewData &&
+            workInfoViewData.contractType !== "Internship" ? (
               <Col sm={6}>
                 <Form.Group as={Row} controlId="formHorizontalEmail">
                   {/* <Col sm={2}></Col> */}
@@ -224,9 +229,8 @@ const RemunerationInformation = (props) => {
               </Col>
             )}
 
-            {candidateData &&
-            candidateData.workInformation &&
-            candidateData.workInformation.contractType !== "Internship" ? (
+            {workInfoViewData &&
+            workInfoViewData.contractType !== "Internship" ? (
               <Fragment>
                 {user ? (
                   user.role === "ADMIN" ? (
