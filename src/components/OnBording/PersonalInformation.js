@@ -934,20 +934,22 @@ const PersonalInformation = (props) => {
         ) : (
           <div></div>
         )}
-        <div
-          style={{
-            marginTop: "2rem",
-            marginBottom: "2rem",
-            textAlign: "center",
-          }}
-        >
-          <button className="stepperButtons" onClick={PrevStep}>
-            Back
-          </button>
-          <button className="stepperButtons" onClick={submitHandler}>
-            Save & Next
-          </button>
-        </div>
+        {!window.location.href.includes("verification") && (
+          <div
+            style={{
+              marginTop: "2rem",
+              marginBottom: "2rem",
+              textAlign: "center",
+            }}
+          >
+            <button className="stepperButtons" onClick={PrevStep}>
+              Back
+            </button>
+            <button className="stepperButtons" onClick={submitHandler}>
+              Save & Next
+            </button>
+          </div>
+        )}
       </Form>
     </Fragment>
   );

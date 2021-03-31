@@ -66,6 +66,10 @@ import OfferAccept from "./components/Offers/OfferAcceptance/OfferAccept";
 import LoginOnboard from "./components/Login/LoginOnboard";
 import ViewOfferRelease from "./components/Offers/viewOfferRelease";
 
+/*------------------- Candidate Verification -----------------------------------*/
+import CandidateVerification from "./components/CandidateVerification/ManageCandidates";
+import Verification from "./components/CandidateVerification/Verification";
+
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
   console.log(user, state, "route8888888888888");
@@ -145,6 +149,7 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/onboard`}
             component={OnBoardingStepper}
           />
+
           <Route
             path={`${process.env.PUBLIC_URL}/onboard-offer`}
             component={OfferAccept}
@@ -153,6 +158,16 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/view-offer-release`}
             component={ViewOfferRelease}
           />
+          <Route
+            path={`${process.env.PUBLIC_URL}/candidate-verification`}
+            component={CandidateVerification}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/verification/:candidateId`}
+            component={Verification}
+          />
+
           {state.MenuPermissionsRoute.map((e) => {
             return (
               <div>

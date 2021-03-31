@@ -32,6 +32,7 @@ export const OnBoardProvider = (props) => {
       });
   };
   const CandidateProfile = () => {
+    console.log("profile....");
     client
       .get("/api/v2/candidate/profile")
       .then((response) => {

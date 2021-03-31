@@ -24,6 +24,7 @@ import { SupportProvider } from "./context/SupportState";
 import { GroupProvider } from "./context/GroupState";
 import { OfferProvider } from "./context/OfferState";
 import { OnBoardProvider } from "./context/OnBoardState";
+import { DocsVerificationProvider } from "./context/DocverificationState";
 import RoutePath from "./Route";
 import WithAxios from "./utils/axios";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -54,13 +55,15 @@ function Root() {
                                 <GroupProvider>
                                   <OfferProvider>
                                     <OnBoardProvider>
-                                      <BrowserRouter basename={"/"}>
-                                        <ScrollContext>
-                                          <WithAxios>
-                                            <RoutePath />
-                                          </WithAxios>
-                                        </ScrollContext>
-                                      </BrowserRouter>
+                                      <DocsVerificationProvider>
+                                        <BrowserRouter basename={"/"}>
+                                          <ScrollContext>
+                                            <WithAxios>
+                                              <RoutePath />
+                                            </WithAxios>
+                                          </ScrollContext>
+                                        </BrowserRouter>
+                                      </DocsVerificationProvider>
                                     </OnBoardProvider>
                                   </OfferProvider>
                                   {/* //Support provider 14-12-20*/}

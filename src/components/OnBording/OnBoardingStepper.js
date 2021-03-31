@@ -16,6 +16,7 @@ import BankDetails from "./BankDetails";
 import InsuranceNomination from "./InsuranceNomination";
 import PFDeclaration from "./PFDeclaration";
 import Documents from "./Documents";
+import DocVerification from "../../components/CandidateVerification/DocVerification";
 import { OnBoardContext } from "../../context/OnBoardState";
 
 const OnBoardingStepper = (props) => {
@@ -239,12 +240,16 @@ const OnBoardingStepper = (props) => {
                               />
                             );
                           case 6:
-                            return (
-                              <Documents
-                                NextStep={NextStep}
-                                PrevStep={PrevStep}
-                              />
-                            );
+                            if (window.location.href.includes("verification")) {
+                              return <DocVerification />;
+                            } else {
+                              return (
+                                <Documents
+                                  NextStep={NextStep}
+                                  PrevStep={PrevStep}
+                                />
+                              );
+                            }
                           default:
                             return <div>OnBoarding</div>;
                         }
