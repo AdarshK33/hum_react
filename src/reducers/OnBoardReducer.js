@@ -16,6 +16,8 @@ const GroupReducer = (state, action) => {
     case "CITY_LIST":
       console.log("CityList");
       return { ...state, cityList: action.payload };
+    case "CANDIDATE_VIEW_INFO":
+      return { ...state, candidateViewInfo: action.payload };
     default:
       return state;
   }
