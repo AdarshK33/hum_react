@@ -11,6 +11,7 @@ const initial_state = {
   candidateData: {},
   stateList: [],
   cityList: [],
+  candidateViewInfo: {},
 };
 export const OnBoardProvider = (props) => {
   const [state, dispatch] = useReducer(OnBoardReducer, initial_state);
@@ -78,6 +79,22 @@ export const OnBoardProvider = (props) => {
       });
   };
 
+  const CandidateViewInformation = (candidateId) => {
+    candidate
+      .get("/api/v2/candidate/view/workInfo/" + candidateId)
+      .then((response) => {
+        state.candidateViewInfo = response.data.data;
+        console.log("CandidateView Response ", state.candidateViewInfo);
+        return dispatch({
+          type: "CANDIDATE_VIEW_INFO",
+          payload: state.candidateViewInfo,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <OnBoardContext.Provider
       value={{
@@ -85,11 +102,13 @@ export const OnBoardProvider = (props) => {
         CandidateProfile,
         StateList,
         CityList,
+        CandidateViewInformation,
         name: state.name,
         Infodata: state.Infodata,
         candidateData: state.candidateData,
         stateList: state.stateList,
         cityList: state.cityList,
+        candidateViewInfo: state.candidateViewInfo,
       }}
     >
       {props.children}

@@ -16,6 +16,8 @@ const Address = (props) => {
   const { stateList, StateList, cityList, CityList } = useContext(
     OnBoardContext
   );
+  const { CandidateProfile, candidateData } = useContext(OnBoardContext);
+
   const [isChecked, changeCheckState] = useState(false);
   const [disabled, setDisableState] = useState(false);
   const options = useMemo(() => countryList().getData(), []);
@@ -59,6 +61,12 @@ const Address = (props) => {
     permanentPinCode: "",
     permanentPhoneNumber: "",
   });
+
+  useEffect(() => {
+    CandidateProfile();
+  }, []);
+  console.log("address candidate data", candidateData);
+
   const flatNumberValidation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
     if (state.flatNumber !== "") {
@@ -330,12 +338,12 @@ const Address = (props) => {
         <Row style={{ marginBottom: "2rem" }}>
           {/* <div className="divContents"> */}
           <div className="col-sm-3">
-          <label for="validationCustom03" class="form-label">City</label>
+            {/* <label for="validationCustom03" class="form-label">City</label>
     <input type="text" class="form-control" id="validationCustom03" required/>
     <div class="invalid-feedback">
       Please provide a valid city.
-    </div>
-             <Form.Group>
+    </div> */}
+            <Form.Group>
               <Form.Label>
                 Flat/Plot No<span style={{ color: "red" }}>*</span>
               </Form.Label>
