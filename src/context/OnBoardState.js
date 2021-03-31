@@ -9,6 +9,8 @@ const initial_state = {
   name: " ",
   Infodata: [],
   candidateData: {},
+  searchEmpData1: [],
+  searchEmpData2: [],
   stateList: [],
   cityList: [],
 };
@@ -46,7 +48,48 @@ export const OnBoardProvider = (props) => {
         console.log(error);
       });
   };
-
+  //Search by reference emp name1 or emp id
+  const searchForEmp1 = (key) => {
+    candidate
+      .get("/api/v2/candidate/reference/search?key=" + key)
+      .then((response) => {
+        if (response.data.data === null) {
+          state.searchEmpData1 = response.data.data;
+          console.log("response.data.data", response.data.data);
+          toast.info(response.data.message);
+        } else {
+          state.searchEmpData1 = response.data.data[0];
+          console.log("response.data.data[0]", response.data.data[0]);
+        }
+        console.log("response", response);
+        console.log("search Emp response", state.searchEmpData1);
+        return dispatch({ type: "SEARCH_EMP1", payload: state.searchEmpData1 });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  //Search by reference emp name2 or emp id
+  const searchForEmp2 = (key) => {
+    candidate
+      .get("/api/v2/candidate/reference/search?key=" + key)
+      .then((response) => {
+        if (response.data.data === null) {
+          state.searchEmpData2 = response.data.data;
+          console.log("response.data.data", response.data.data);
+          toast.info(response.data.message);
+        } else {
+          state.searchEmpData2 = response.data.data[0];
+          console.log("response.data.data[0]", response.data.data[0]);
+        }
+        console.log("response", response);
+        console.log("search Emp response", state.searchEmpData2);
+        return dispatch({ type: "SEARCH_EMP2", payload: state.searchEmpData2 });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const StateList = (country) => {
     candidate
       .get("/api/v2/candidate/address/view/state/" + country)
@@ -85,6 +128,10 @@ export const OnBoardProvider = (props) => {
         CandidateProfile,
         StateList,
         CityList,
+        searchForEmp1,
+        searchForEmp2,
+        searchEmpData1: state.searchEmpData1,
+        searchEmpData2: state.searchEmpData2,
         name: state.name,
         Infodata: state.Infodata,
         candidateData: state.candidateData,

@@ -9,6 +9,8 @@ import { Row, Col, Form, Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
+import { Search, PlusCircle, MinusCircle } from "react-feather";
+// import "./offers.css";
 import "./OnBoard.css";
 import "./Documents.css";
 import { OnBoardContext } from "../../context/OnBoardState";
@@ -21,6 +23,10 @@ const PersonalInformation = (props) => {
     Infodata,
     CandidateProfile,
     candidateData,
+    searchForEmp1,
+    searchEmpData1,
+    searchForEmp2,
+    searchEmpData2,
   } = useContext(OnBoardContext);
   const options = useMemo(() => countryList().getData(), []);
   const [isClicked, setIsClicked] = useState(false);
@@ -30,6 +36,14 @@ const PersonalInformation = (props) => {
   const [internship, setInternship] = useState(false);
   const [disabled, setDisableState] = useState(false);
   const [DOB, setDOB] = useState();
+
+  const [empName1, setEmpName1] = useState("");
+  const [empName2, setEmpName2] = useState("");
+  const [refEmail1, setRefEmail1] = useState("");
+  const [refEmail2, setRefEmail2] = useState("");
+  const [desgination1, setDesignation1] = useState("");
+  const [desgination2, setDesignation2] = useState("");
+
   const [genderCheckM, setGenderM] = useState(false);
   const [genderCheckF, setGenderF] = useState(false);
   const [married, setMarried] = useState(false);
@@ -49,6 +63,8 @@ const PersonalInformation = (props) => {
   const [disabilityDocError, setDisabilityDocError] = useState(false);
   const [nationalityError, setNationalityError] = useState(false);
   const [bloodGroupError, setBloodGroupError] = useState(false);
+  const [genderError, setGenderError] = useState(false);
+  const [maritalStatusError, setMaritalStatusError] = useState(false);
   const [empName1Error, setEmpNam1Error] = useState(false);
   const [empName2Error, setEmpNam2Error] = useState(false);
   const [emp1EmailError, setEmp1EmailError] = useState(false);
@@ -63,17 +79,89 @@ const PersonalInformation = (props) => {
     nationality: "",
     disability: "",
     lgbt: "",
-    empName1: "",
-    emp1Eamil: "",
-    emp1Designation: "",
-    empName2: "",
-    emp2Eamil: "",
-    emp2Designation: "",
   });
   useEffect(() => {
     CandidateProfile();
   }, []);
+
+  useEffect(() => {
+    setRefEmail1(
+      searchEmpData1 !== null
+        ? searchEmpData1.email !== undefined && searchEmpData1.email !== null
+          ? searchEmpData1.email
+          : ""
+        : ""
+    );
+    setDesignation1(
+      searchEmpData1 !== null
+        ? searchEmpData1.position !== undefined &&
+          searchEmpData1.position !== null
+          ? searchEmpData1.position
+          : ""
+        : ""
+    );
+  }, [searchEmpData1]);
+
+  useEffect(() => {
+    setRefEmail2(
+      searchEmpData2 !== null
+        ? searchEmpData2.email !== undefined && searchEmpData2.email !== null
+          ? searchEmpData2.email
+          : ""
+        : ""
+    );
+    setDesignation2(
+      searchEmpData2 !== null
+        ? searchEmpData2.position !== undefined &&
+          searchEmpData2.position !== null
+          ? searchEmpData2.position
+          : ""
+        : ""
+    );
+  }, [searchEmpData2]);
+
+  useEffect(() => {
+    if (empName1 === "") {
+      setRefEmail1("");
+      setDesignation1("");
+    }
+    if (empName2 === "") {
+      setRefEmail2("");
+      setDesignation2("");
+    }
+  }, []);
+
   console.log(candidateData);
+
+  const empName1Handler = (e) => {
+    setEmpName1(e.target.value);
+    console.log(empName1);
+    if (e.target.value === "") {
+      setRefEmail1("");
+      setDesignation1("");
+    }
+  };
+  const empName2Handler = (e) => {
+    setEmpName2(e.target.value);
+    if (e.target.value === "") {
+      setRefEmail2("");
+      setDesignation2("");
+    }
+  };
+
+  const empName1Search = () => {
+    if (empName1 !== "") {
+      console.log("emp1");
+      searchForEmp1(empName1);
+    }
+  };
+  const empName2Search = () => {
+    if (empName2 !== "") {
+      console.log("emp2");
+      searchForEmp2(empName2);
+    }
+  };
+
   const AdharNameValidation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
 
@@ -224,6 +312,16 @@ const PersonalInformation = (props) => {
       return false;
     }
   };
+  const validateCheckBoxes = (itemYes, itemNo, setError) => {
+    if ((itemYes === true) | (itemNo === true)) {
+      setError(false);
+      console.log(itemYes, itemNo);
+      return true;
+    } else {
+      setError(true);
+      return false;
+    }
+  };
   const empName1Validation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
     if ((state.empName1 !== "") & nameValid.test(state.empName1)) {
@@ -299,7 +397,10 @@ const PersonalInformation = (props) => {
       (empName1Validation() === true) &
       (emp1EmailValidation() === true) &
       (PassPortNumberValidations() === true) &
-      (disabilityDocValidation() === true)
+      (disabilityDocValidation() === true) &
+      (validateCheckBoxes(genderCheckM, genderCheckF, setGenderError) ===
+        true) &
+      (validateCheckBoxes(married, unMarried, setMaritalStatusError) === true)
     ) {
       if (isClicked === true) {
         console.log("------");
@@ -332,16 +433,14 @@ const PersonalInformation = (props) => {
         candidateId: 0,
         candidateReferences: [
           {
-            designation:
-              state.emp1Designation !== null ? state.emp1Designation : null,
-            email: state.emp1Eamil !== null ? state.emp1Eamil : null,
-            employeeName: state.empName1 !== null ? state.empName1 : null,
+            designation: desgination1 !== null ? desgination1 : null,
+            email: refEmail1 !== null ? refEmail1 : null,
+            employeeName: empName1 !== null ? empName1 : null,
           },
           {
-            designation:
-              state.emp2Designation !== null ? state.emp2Designation : null,
-            email: state.emp2Eamil !== null ? state.emp2Eamil : null,
-            employeeName: state.empName2 !== null ? state.empName2 : null,
+            designation: desgination2 !== null ? desgination2 : null,
+            email: refEmail2 !== null ? refEmail2 : null,
+            employeeName: empName2 !== null ? empName2 : null,
           },
         ],
         createdDate: null,
@@ -367,7 +466,7 @@ const PersonalInformation = (props) => {
       };
       console.log("onsubmit");
       console.log(InfoData);
-      updatePersonalInfo(InfoData);
+      // updatePersonalInfo(InfoData);
     }
   };
   const PrevStep = () => {
@@ -755,12 +854,15 @@ const PersonalInformation = (props) => {
                     <input
                       className="largerCheckbox"
                       type="checkbox"
+                      style={genderError ? { borderColor: "red" } : {}}
                       value="Male"
                       checked={genderCheckM}
                       required={required}
                       onChange={handleMaleGenderCheckboxChange}
                     />
-                    <label>Male </label>
+                    <label style={genderError ? { color: "red" } : {}}>
+                      Male{" "}
+                    </label>
                   </div>
                 </Form.Group>
               </Col>
@@ -770,12 +872,15 @@ const PersonalInformation = (props) => {
                     <input
                       className="largerCheckbox"
                       type="checkbox"
+                      style={genderError ? { borderColor: "red" } : {}}
                       value="Female"
                       required={required}
                       checked={genderCheckF}
                       onChange={handleFemaleGenderCheckboxChange}
                     />
-                    <label>Female</label>
+                    <label style={genderError ? { color: "red" } : {}}>
+                      Female
+                    </label>
                   </div>
                 </Form.Group>
               </Col>
@@ -799,12 +904,15 @@ const PersonalInformation = (props) => {
                     <input
                       className="largerCheckbox"
                       type="checkbox"
+                      style={maritalStatusError ? { borderColor: "red" } : {}}
                       value="Married"
                       required={statusRequired}
                       checked={married}
                       onChange={handleMarriedCheckboxChange}
                     />
-                    <label>Married </label>
+                    <label style={maritalStatusError ? { color: "red" } : {}}>
+                      Married{" "}
+                    </label>
                   </div>
                 </Form.Group>
               </Col>
@@ -817,12 +925,15 @@ const PersonalInformation = (props) => {
                     <input
                       className="largerCheckbox"
                       type="checkbox"
+                      style={maritalStatusError ? { borderColor: "red" } : {}}
                       value="Unmarried"
                       required={statusRequired}
                       checked={unMarried}
                       onChange={handleUnMarriedCheckboxChange}
                     />
-                    <label>Unmarried</label>
+                    <label style={maritalStatusError ? { color: "red" } : {}}>
+                      Unmarried
+                    </label>
                   </div>
                 </Form.Group>
               </Col>
@@ -894,16 +1005,23 @@ const PersonalInformation = (props) => {
                   <Form.Label>
                     Emp Name/ID<span style={{ color: "red" }}>*</span>
                   </Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="empName1"
-                    value={state.empName1}
-                    onChange={changeHandler}
-                    required
-                    placeholder="Emp Name/ID"
-                    disabled={disabled}
-                    style={empName1Error ? { borderColor: "red" } : {}}
-                  />
+                  <div className="faq-form">
+                    <input
+                      className="form-control"
+                      type="text"
+                      disabled={disabled}
+                      value={empName1}
+                      style={{ borderRadius: "5px" }}
+                      placeholder="Search Emp Name/Id"
+                      onChange={(e) => empName1Handler(e)}
+                      required
+                    />
+                    <Search
+                      className="search-icon"
+                      style={{ color: "#313131" }}
+                      onClick={empName1Search}
+                    />
+                  </div>
                   {empName1Error ? (
                     <p style={{ color: "red" }}>Please enter valid name</p>
                   ) : (
@@ -917,10 +1035,13 @@ const PersonalInformation = (props) => {
                   <Form.Control
                     type="text"
                     name="emp1Eamil"
-                    value={state.emp1Eamil}
+                    // value={refEmail1}
                     onChange={changeHandler}
                     placeholder="Email ID"
                     disabled={disabled}
+                    value={empName1 === "" ? "" : refEmail1}
+                    onChange={(e) => setRefEmail1(e.target.value)}
+                    readOnly
                     style={emp1EmailError ? { borderColor: "red" } : {}}
                   />
                   {emp1EmailError ? (
@@ -935,11 +1056,9 @@ const PersonalInformation = (props) => {
                   <Form.Label>Designation</Form.Label>
                   <Form.Control
                     type="text"
-                    name="emp1Designation"
-                    value={state.emp1Designation}
-                    onChange={changeHandler}
+                    value={desgination1}
                     placeholder="Designation"
-                    disabled={disabled}
+                    readOnly
                   />
                 </Form.Group>
               </div>
@@ -969,16 +1088,23 @@ const PersonalInformation = (props) => {
                     <Form.Label>
                       Emp Name/ID<span style={{ color: "red" }}>*</span>
                     </Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="empName2"
-                      value={state.empName2}
-                      onChange={changeHandler}
-                      required
-                      placeholder="Emp Name/ID"
-                      disabled={disabled}
-                      style={empName2Error ? { borderColor: "red" } : {}}
-                    />
+                    <div className="faq-form">
+                      <input
+                        className="form-control"
+                        type="text"
+                        disabled={disabled}
+                        value={empName2}
+                        style={{ borderRadius: "5px" }}
+                        placeholder="Search Emp Name/Id"
+                        onChange={(e) => empName2Handler(e)}
+                        required
+                      />
+                      <Search
+                        className="search-icon"
+                        style={{ color: "#313131" }}
+                        onClick={empName2Search}
+                      />
+                    </div>
                     {empName2Error ? (
                       <p style={{ color: "red" }}>Please enter valid name</p>
                     ) : (
@@ -992,10 +1118,11 @@ const PersonalInformation = (props) => {
                     <Form.Control
                       type="text"
                       name="emp2Eamil"
-                      value={state.emp2Eamil}
+                      value={refEmail2}
                       onChange={changeHandler}
                       placeholder="Email ID"
                       disabled={disabled}
+                      readOnly
                       style={emp2EmailError ? { borderColor: "red" } : {}}
                     />
                     {emp2EmailError ? (
@@ -1011,9 +1138,10 @@ const PersonalInformation = (props) => {
                     <Form.Control
                       type="text"
                       name="emp2Designation"
-                      value={state.emp2Designation}
+                      value={desgination2}
                       onChange={changeHandler}
                       placeholder="Designation"
+                      readOnly
                       disabled={disabled}
                     />
                   </Form.Group>
