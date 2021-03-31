@@ -159,7 +159,33 @@ const RemunerationInformation = (props) => {
         <Row>
           <Fragment>
             {workInfoViewData &&
-            workInfoViewData.contractType !== "Internship" ? (
+            workInfoViewData.contractType === "Internship" ? (
+              <Col sm={6}>
+                <Form.Group as={Row} controlId="formHorizontalEmail">
+                  <Col sm={2}></Col>
+                  <Form.Label column sm={3}>
+                    Stipend
+                  </Form.Label>
+                  <Col sm={6}>
+                    <Form.Control
+                      className="form-input"
+                      type="number"
+                      name="stipend"
+                      placeholder="1000"
+                      value={stipened}
+                      onChange={(event) => setStipened(event.target.value)}
+                      required
+                      disabled={disabled}
+                    />
+                    {stipenedError ? (
+                      <p style={{ color: "red" }}>This field cannot be empty</p>
+                    ) : (
+                      ""
+                    )}
+                  </Col>
+                </Form.Group>
+              </Col>
+            ) : (
               <Col sm={6}>
                 <Form.Group as={Row} controlId="formHorizontalEmail">
                   {/* <Col sm={2}></Col> */}
@@ -201,36 +227,12 @@ const RemunerationInformation = (props) => {
                   </Col>
                 </Form.Group>
               </Col>
-            ) : (
-              <Col sm={6}>
-                <Form.Group as={Row} controlId="formHorizontalEmail">
-                  <Col sm={2}></Col>
-                  <Form.Label column sm={3}>
-                    Stipend
-                  </Form.Label>
-                  <Col sm={6}>
-                    <Form.Control
-                      className="form-input"
-                      type="number"
-                      name="stipend"
-                      placeholder="1000"
-                      value={stipened}
-                      onChange={(event) => setStipened(event.target.value)}
-                      required
-                      disabled={disabled}
-                    />
-                    {stipenedError ? (
-                      <p style={{ color: "red" }}>This field cannot be empty</p>
-                    ) : (
-                      ""
-                    )}
-                  </Col>
-                </Form.Group>
-              </Col>
             )}
 
             {workInfoViewData &&
-            workInfoViewData.contractType !== "Internship" ? (
+            workInfoViewData.contractType === "Internship" ? (
+              ""
+            ) : (
               <Fragment>
                 {user ? (
                   user.role === "ADMIN" ? (
@@ -292,8 +294,6 @@ const RemunerationInformation = (props) => {
                   ""
                 )}
               </Fragment>
-            ) : (
-              ""
             )}
           </Fragment>
         </Row>
