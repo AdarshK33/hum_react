@@ -13,4 +13,14 @@
   border: none;
   width: 5vw;
   height: 4vh;
+  border-radius: 10px !important;
+}
+.tableText {
+  color: #006ebb;
+}
+.docFontSize {
+  font-size: 20px;
+}
+.tableWrapper tr {
+  border: none !important;
 }

@@ -2,9 +2,11 @@ import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
-import "./OnBoard.css";
+import "../OnBording/OnBoard.css";
+import { DocsVerifyContext } from "../../context/DocverificationState";
+import { useParams } from "react-router-dom";
 
-const EmergencyContact = (props) => {
+const EditEmergencyContact = (props) => {
   const [disabled, setDisableState] = useState(false);
   const { emergencyInfo, contactInformation } = useContext(DocsVerifyContext);
   // acessing candidateId from params
@@ -31,7 +33,13 @@ const EmergencyContact = (props) => {
     pinCode: "",
     relationship: "",
   });
-
+  useEffect(() => {
+    if (window.location.href.includes("verification")) {
+      contactInformation(candidateId);
+      setState(emergencyInfo);
+      setDisableState(true);
+    }
+  }, []);
   const validateForm = () => {
     let fields = state;
     let stateError = {};
@@ -309,22 +317,8 @@ const EmergencyContact = (props) => {
             </Form.Group>
           </div>
         </Row>
-        <div
-          style={{
-            marginTop: "2rem",
-            marginBottom: "2rem",
-            textAlign: "center",
-          }}
-        >
-          <button className="stepperButtons" onClick={PrevStep}>
-            Back
-          </button>
-          <button className="stepperButtons" onClick={submitHandler}>
-            Save & Next
-          </button>
-        </div>
       </Form>
     </Fragment>
   );
 };
-export default EmergencyContact;
+export default EditEmergencyContact;

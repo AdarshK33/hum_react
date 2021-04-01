@@ -86,8 +86,12 @@ const CandidateList = () => {
           </div>
         </div>
         <div className="table-responsive">
-          <Table className="table table-hover">
-            <thead className="thead-light">
+          <Table id="table-to-xls" className="table table-hover">
+            <thead
+              className="thead-light"
+              style={{ backgroundColor: "#2f3c4e" }}
+            >
+              {" "}
               <tr>
                 <th scope="col">S. No</th>
                 <th scope="col">Candidate ID</th>

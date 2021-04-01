@@ -9,19 +9,24 @@ import { Row, Col, Form, Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
-import "./OnBoard.css";
-import "./Documents.css";
+import "../OnBording/OnBoard.css";
+import "../OnBording/Documents.css";
 import { OnBoardContext } from "../../context/OnBoardState";
 import countryList from "react-select-country-list";
 import { candidate } from "../../utils/canditateLogin";
-
-const PersonalInformation = (props) => {
+import { DocsVerifyContext } from "../../context/DocverificationState";
+import { useParams } from "react-router-dom";
+const EditPersonalInformation = (props) => {
   const {
     updatePersonalInfo,
     Infodata,
     CandidateProfile,
     candidateData,
   } = useContext(OnBoardContext);
+  const params = useParams();
+  const candidateId = params["candidateId"];
+
+  const { personalInfo, personalInfoData } = useContext(DocsVerifyContext);
 
   const options = useMemo(() => countryList().getData(), []);
   const [isClicked, setIsClicked] = useState(false);
@@ -72,7 +77,36 @@ const PersonalInformation = (props) => {
     emp2Designation: "",
   });
   useEffect(() => {
-    CandidateProfile();
+    if (window.location.href.includes("verification")) {
+      personalInfo(candidateId);
+      setState(personalInfoData);
+      if (personalInfoData.dateOfBirth !== undefined) {
+        var date = new Date(personalInfoData.dateOfBirth);
+        setDOB(date);
+      }
+      setDisableState(true);
+      if (
+        personalInfoData.gender !== undefined &&
+        personalInfoData.gender === "Female"
+      ) {
+        setGenderF(true);
+        setGenderM(false);
+      } else {
+        setGenderF(true);
+        setGenderM(false);
+      }
+      if (
+        personalInfoData.maritalStatus !== undefined &&
+        personalInfoData.maritalStatus === "Single"
+      ) {
+        setMarried(false);
+        setUnMarried(true);
+      } else {
+        setMarried(true);
+        setUnMarried(false);
+      }
+      // setDOB(personalInfoData.dateOfBirth);
+    }
   }, []);
   const AdharNameValidation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
@@ -390,6 +424,7 @@ const PersonalInformation = (props) => {
     });
   };
   const dateOfBirthHandler = (date) => {
+    console.log(date);
     setDOB(date);
   };
 
@@ -762,6 +797,7 @@ const PersonalInformation = (props) => {
                         value="Male"
                         checked={genderCheckM}
                         required={required}
+                        disabled={disabled}
                         onChange={handleMaleGenderCheckboxChange}
                       />
                       <label>Male </label>
@@ -777,6 +813,7 @@ const PersonalInformation = (props) => {
                         value="Female"
                         required={required}
                         checked={genderCheckF}
+                        disabled={disabled}
                         onChange={handleFemaleGenderCheckboxChange}
                       />
                       <label>Female</label>
@@ -806,6 +843,7 @@ const PersonalInformation = (props) => {
                         value="Married"
                         required={statusRequired}
                         checked={married}
+                        disabled={disabled}
                         onChange={handleMarriedCheckboxChange}
                       />
                       <label>Married </label>
@@ -824,6 +862,7 @@ const PersonalInformation = (props) => {
                         value="Unmarried"
                         required={statusRequired}
                         checked={unMarried}
+                        disabled={disabled}
                         onChange={handleUnMarriedCheckboxChange}
                       />
                       <label>Unmarried</label>
@@ -857,10 +896,10 @@ const PersonalInformation = (props) => {
                         {/* <i className="fa fa-cloud-upload" />  */}
                         Upload
                         {/* <i
-                      id="custom_file_upload_icon"
-                      class="fa fa-upload"
-                      aria-hidden="true"
-                    ></i> */}
+                        id="custom_file_upload_icon"
+                        class="fa fa-upload"
+                        aria-hidden="true"
+                      ></i> */}
                       </label>
                     </div>
 
@@ -950,19 +989,21 @@ const PersonalInformation = (props) => {
               </Row>
             </Col>
 
-            <Col sm={3} style={{ marginTop: "2rem" }}>
-              <Form.Group>
-                <div>
-                  <button
-                    className="buttonField  button"
-                    onClick={AddExtrReferenceClick}
-                    disabled={isClicked}
-                  >
-                    <b> Add + </b>
-                  </button>
-                </div>
-              </Form.Group>
-            </Col>
+            {!candidateId && (
+              <Col sm={3} style={{ marginTop: "2rem" }}>
+                <Form.Group>
+                  <div>
+                    <button
+                      className="buttonField  button"
+                      onClick={AddExtrReferenceClick}
+                      disabled={isClicked}
+                    >
+                      <b> Add + </b>
+                    </button>
+                  </div>
+                </Form.Group>
+              </Col>
+            )}
           </Row>
           {isClicked ? (
             <Row style={{ marginBottom: "1rem" }}>
@@ -1041,23 +1082,9 @@ const PersonalInformation = (props) => {
           ) : (
             <div></div>
           )}
-          <div
-            style={{
-              marginTop: "2rem",
-              marginBottom: "2rem",
-              textAlign: "center",
-            }}
-          >
-            <button className="stepperButtons" onClick={PrevStep}>
-              Back
-            </button>
-            <button className="stepperButtons" onClick={submitHandler}>
-              Save & Next
-            </button>
-          </div>
         </Form>
       </Fragment>
     )
   );
 };
-export default PersonalInformation;
+export default EditPersonalInformation;

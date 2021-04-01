@@ -8,13 +8,19 @@ import React, {
 import { Row, Col, Form, Button } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
-import "./OnBoard.css";
-import NomineeForm from "./NominForm";
+import "../OnBording/OnBoard.css";
+// import NomineeForm from "./NominForm";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
+import { DocsVerifyContext } from "../../context/DocverificationState";
+import { useParams } from "react-router-dom";
 
-const InsuranceNomination = (props) => {
+const EditInsuranceNomination = (props) => {
+  const params = useParams();
+  const candidateId = params["candidateId"];
+
   const [isChecked, changeCheckState] = useState(false);
+  const [disable, setDisable] = useState(false);
   const [count, setCount] = useState(0);
   const [NomineeCount, setNomineeCount] = useState(0);
   const [NominForm1, setNominForm1] = useState(false);
@@ -60,6 +66,11 @@ const InsuranceNomination = (props) => {
   const [nomineNameError_5, setNomineerror_5] = useState(false);
   const [relationshipError_5, setRelationshipError_5] = useState(false);
   const [DOBError_5, setDobError_5] = useState(false);
+
+  const { fetchNominationDetails, nominationDetails } = useContext(
+    DocsVerifyContext
+  );
+
   const [state, setState] = useState({
     age: "",
     bloodGroup: "",
@@ -101,6 +112,15 @@ const InsuranceNomination = (props) => {
     nominee5NominiName: "",
     nominee5Relationship: "",
   });
+
+  useEffect(() => {
+    if (window.location.href.includes("verification")) {
+      fetchNominationDetails(candidateId);
+      setState(nominationDetails);
+      console.log(nominationDetails);
+      setDisable(true); // setState(personalInfoData);
+    }
+  }, []);
   const validateInput = (itemState, setError) => {
     if (itemState !== "") {
       setError(false);
@@ -588,6 +608,7 @@ const InsuranceNomination = (props) => {
                 type="checkbox"
                 value="No"
                 checked={!isChecked}
+                disabled={disable}
                 onChange={handleNoCheckboxChange}
               />
               <label>Add New Nominee</label>
@@ -601,6 +622,7 @@ const InsuranceNomination = (props) => {
                 type="checkbox"
                 value="Yes"
                 checked={isChecked}
+                disabled={disable}
                 onChange={handleCheckboxChange}
               />
               <label>Edit Existing Nominees </label>
@@ -628,6 +650,7 @@ const InsuranceNomination = (props) => {
                         name="nominiName"
                         value={state.nominiName}
                         onChange={changeHandler}
+                        disabled={disable}
                         required
                         style={nomineNameError_1 ? { borderColor: "red" } : {}}
                         placeholder="Nominee Name"
@@ -651,6 +674,7 @@ const InsuranceNomination = (props) => {
                         as="select"
                         name="relationship"
                         value={state.relationship}
+                        disabled={disable}
                         onChange={changeHandler}
                         style={
                           relationshipError_1 ? { borderColor: "red" } : {}
@@ -678,6 +702,7 @@ const InsuranceNomination = (props) => {
                         placeholder="Gender"
                         required="required"
                         name="gender"
+                        disabled={disable}
                         value={state.gender}
                         onChange={changeHandler}
                         style={genderError_1 ? { borderColor: "red" } : {}}
@@ -711,6 +736,7 @@ const InsuranceNomination = (props) => {
                           className="form-control onBoard-view"
                           selected={Nominee1DOB}
                           required
+                          disabled={disable}
                           onChange={(e) => dateOfBirthHandler(e, "1")}
                           dateFormat="yyyy-MM-dd"
                           placeholderText="YYYY-MM-DD"
@@ -739,6 +765,7 @@ const InsuranceNomination = (props) => {
                         name="age"
                         value={state.age}
                         onChange={changeHandler}
+                        disabled={disable}
                         style={ageError_1 ? { borderColor: "red" } : {}}
                       />
                       {ageError_1 ? (
@@ -759,6 +786,7 @@ const InsuranceNomination = (props) => {
                         as="select"
                         name="bloodGroup"
                         value={state.bloodGroup}
+                        disabled={disable}
                         onChange={changeHandler}
                         style={bloodGroupError_1 ? { borderColor: "red" } : {}}
                       >
@@ -1554,84 +1582,72 @@ const InsuranceNomination = (props) => {
           )}
 
           {/* {(() => {
-            switch (NomineeCount) {
-              case 1:
-                return <NomineeForm />;
-              case 2:
-                return (
-                  <div>
-                    <NomineeForm />
-                    <NomineeForm />{" "}
-                  </div>
-                );
-              case 3:
-                return (
-                  <div>
-                    <NomineeForm />
-                    <NomineeForm />
-                    <NomineeForm />
-                  </div>
-                );
-              case 4:
-                return (
-                  <div>
-                    <NomineeForm />
-                    <NomineeForm />
-                    <NomineeForm />
-                    <NomineeForm />
-                  </div>
-                );
-              case 5:
-                return (
-                  <div>
-                    <NomineeForm />
-                    <NomineeForm />
-                    <NomineeForm />
-                    <NomineeForm />
-                    <NomineeForm />
-                  </div>
-                );
-              default:
-                return <div>Nominees.</div>;
-            }
-          })()} */}
+              switch (NomineeCount) {
+                case 1:
+                  return <NomineeForm />;
+                case 2:
+                  return (
+                    <div>
+                      <NomineeForm />
+                      <NomineeForm />{" "}
+                    </div>
+                  );
+                case 3:
+                  return (
+                    <div>
+                      <NomineeForm />
+                      <NomineeForm />
+                      <NomineeForm />
+                    </div>
+                  );
+                case 4:
+                  return (
+                    <div>
+                      <NomineeForm />
+                      <NomineeForm />
+                      <NomineeForm />
+                      <NomineeForm />
+                    </div>
+                  );
+                case 5:
+                  return (
+                    <div>
+                      <NomineeForm />
+                      <NomineeForm />
+                      <NomineeForm />
+                      <NomineeForm />
+                      <NomineeForm />
+                    </div>
+                  );
+                default:
+                  return <div>Nominees.</div>;
+              }
+            })()} */}
 
           <Row>
             <Col sm={4}></Col>
-            <Col sm={4} style={{ padding: "0px 0px 0px 35px" }}>
-              {/* style={{ padding: "0px 0px 0px 20px" }} */}
-              <Form.Group>
-                <div>
-                  <button
-                    className="buttonField  button"
-                    onClick={handleIncrement}
-                    disabled={false}
-                    style={{ width: "160px" }}
-                  >
-                    <b> Add New Nominee + </b>
-                  </button>
-                  {/* onClick={AddExtrReferenceClick} disabled={isClicked} */}
-                </div>
-              </Form.Group>
-            </Col>
+            {!candidateId && (
+              <Col sm={4} style={{ padding: "0px 0px 0px 35px" }}>
+                {/* style={{ padding: "0px 0px 0px 20px" }} */}
+                <Form.Group>
+                  <div>
+                    <button
+                      className="buttonField  button"
+                      onClick={handleIncrement}
+                      disabled={disable}
+                      style={{ width: "160px" }}
+                    >
+                      <b> Add New Nominee + </b>
+                    </button>
+                    {/* onClick={AddExtrReferenceClick} disabled={isClicked} */}
+                  </div>
+                </Form.Group>
+              </Col>
+            )}
           </Row>
         </div>
       )}
-      <div
-        style={{
-          marginTop: "2rem",
-          marginBottom: "2rem",
-          textAlign: "center",
-        }}
-      >
-        <button className="stepperButtons" onClick={PrevStep}>
-          Back
-        </button>
-        <button className="stepperButtons" onClick={submitHandler}>
-          Save & Next
-        </button>
-      </div>
     </Fragment>
   );
 };
-export default InsuranceNomination;
+export default EditInsuranceNomination;

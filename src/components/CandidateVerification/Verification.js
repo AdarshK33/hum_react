@@ -6,16 +6,23 @@ import React, {
   useRef,
 } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
-import PersonalInformation from "../OnBording/PersonalInformation";
-import Address from "../OnBording/Address";
-import EmergencyContact from "../OnBording/EmergencyContact";
-import BankDetails from "../OnBording/BankDetails";
-import InsuranceNomination from "../OnBording/InsuranceNomination";
-import PFDeclaration from "../OnBording/PFDeclaration";
+import EditPersonalInformation from "./EditPersonalInformation";
+import EditAddress from "./EditAddress";
+import EditEmergencyContact from "./EditEmergencyContact";
+import EditBankDetails from "./EditBankDetails";
+import EditInsuranceNomination from "./EditInsuranceNomination";
+import EditPFDeclaration from "./EditPFDeclaration";
 import DocVerification from "./DocVerification";
 import Breadcrumb from "../common/breadcrumb";
+import { DocsVerifyContext } from "../../context/DocverificationState";
+import { useParams } from "react-router-dom";
 
 const Verification = () => {
+  const params = useParams();
+  const candidateId = params["candidateId"];
+
+  const { personalInfo, personalInfoData } = useContext(DocsVerifyContext);
+
   const personalInfoRef = useRef();
   const checkOk = "OkCheckStep";
   const currStep = "CurrentCheckStep";
@@ -35,6 +42,9 @@ const Verification = () => {
     { step: checkOk, line: defaultLine, label: defaultLabel },
     { step: currStep, line: defaultLine, label: defaultLabel },
   ]);
+  useEffect(() => {
+    //personalInfo(candidateId);
+  }, []);
 
   const handleClick = (data) => {
     switch (data) {
@@ -92,7 +102,7 @@ const Verification = () => {
               </div>
               <label
                 className={stepArray[0].label}
-                style={{ marginLeft: "10px", textAlign: "center" }}
+                style={{ textAlign: "center" }}
               >
                 {" "}
                 Personal Information
@@ -129,7 +139,7 @@ const Verification = () => {
               </div>
               <label
                 className={stepArray[2].label}
-                style={{ marginLeft: "15px", textAlign: "center" }}
+                style={{ textAlign: "center" }}
               >
                 {" "}
                 Emergency Contact
@@ -159,7 +169,7 @@ const Verification = () => {
               </div>
               <label
                 className={stepArray[4].label}
-                style={{ marginLeft: "15px", textAlign: "center" }}
+                style={{ textAlign: "center" }}
               >
                 {" "}
                 Insurance Nomination
@@ -177,7 +187,7 @@ const Verification = () => {
               </div>
               <label
                 className={stepArray[5].label}
-                style={{ marginLeft: "15px", textAlign: "center" }}
+                style={{ textAlign: "center" }}
               >
                 {" "}
                 Provident Fund Declaration
@@ -202,18 +212,18 @@ const Verification = () => {
             {(() => {
               switch (stepCount) {
                 case 0:
-                  return <PersonalInformation />;
+                  return <EditPersonalInformation />;
 
                 case 1:
-                  return <Address />;
+                  return <EditAddress />;
                 case 2:
-                  return <EmergencyContact />;
+                  return <EditEmergencyContact />;
                 case 3:
-                  return <BankDetails />;
+                  return <EditBankDetails />;
                 case 4:
-                  return <InsuranceNomination />;
+                  return <EditInsuranceNomination />;
                 case 5:
-                  return <PFDeclaration />;
+                  return <EditPFDeclaration />;
                 case 6:
                   return <DocVerification />;
 

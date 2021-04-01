@@ -3,13 +3,17 @@ import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
-import "./OnBoard.css";
+import "../OnBording/OnBoard.css";
+import { DocsVerifyContext } from "../../context/DocverificationState";
+import { useParams } from "react-router-dom";
 
-const BankDetails = (props) => {
+const EditBankDetails = (props) => {
   const [disabled, setDisableState] = useState(false);
   const [accountNumberError, setAccountNumberError] = useState(false);
   const [bankNameError, setBankNameError] = useState(false);
   const [ifscCodeError, setIfscCodeError] = useState(false);
+  const params = useParams();
+  const candidateId = params["candidateId"];
 
   const [state, setState] = useState({
     accountNumber: "",
@@ -17,6 +21,17 @@ const BankDetails = (props) => {
     bankName: "",
     ifscCode: "",
   });
+  const { bankDetails, bankDetailsData } = useContext(DocsVerifyContext);
+
+  useEffect(() => {
+    if (window.location.href.includes("verification")) {
+      bankDetailsData(candidateId);
+      setState(bankDetails);
+      console.log(bankDetails);
+      setDisableState(true);
+      // setState(personalInfoData);
+    }
+  }, []);
 
   const BankNameErrorValidation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
@@ -197,22 +212,8 @@ const BankDetails = (props) => {
             </div>
           </Col>
         </Row>
-        <div
-          style={{
-            marginTop: "2rem",
-            marginBottom: "2rem",
-            textAlign: "center",
-          }}
-        >
-          <button className="stepperButtons" onClick={PrevStep}>
-            Back
-          </button>
-          <button className="stepperButtons" onClick={submitHandler}>
-            Save & Next
-          </button>
-        </div>
       </Form>
     </Fragment>
   );
 };
-export default BankDetails;
+export default EditBankDetails;

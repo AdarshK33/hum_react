@@ -8,13 +8,18 @@ import React, {
 import { Row, Col, Form, Button } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
-import "./OnBoard.css";
+import "../OnBording/OnBoard.css";
 import countryList from "react-select-country-list";
 import { OnBoardContext } from "../../context/OnBoardState";
+import { DocsVerifyContext } from "../../context/DocverificationState";
+import { useParams } from "react-router-dom";
 
-const Address = (props) => {
+const EditAddress = (props) => {
   const { stateList, StateList, cityList, CityList } = useContext(
     OnBoardContext
+  );
+  const { addressInfo, addressInfoData, loader } = useContext(
+    DocsVerifyContext
   );
   const [isChecked, changeCheckState] = useState(false);
   const [disabled, setDisableState] = useState(false);
@@ -39,6 +44,10 @@ const Address = (props) => {
   const [PermanentPinCodeError, setPermanentPinCodeError] = useState(false);
   const [PermanentPhoneNoError, setPermanentPhoneNoError] = useState(false);
 
+  // acessing candidateId from params
+  const params = useParams();
+  const candidateId = params["candidateId"];
+
   const [state, setState] = useState({
     flatNumber: "",
     street: "",
@@ -60,6 +69,13 @@ const Address = (props) => {
     permanentPhoneNumber: "",
   });
 
+  useEffect(() => {
+    if (window.location.href.includes("verification")) {
+      addressInfo(candidateId);
+      setState(addressInfoData);
+      setDisableState(true);
+    }
+  }, []);
   const flatNumberValidation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
     if (state.flatNumber !== "") {
@@ -318,14 +334,6 @@ const Address = (props) => {
   };
   return (
     <Fragment>
-      {loader === true && (
-        <div className="loader">
-          <div className="line bg-primary"></div>
-          <div className="line bg-primary"></div>
-          <div className="line bg-primary"></div>
-          <div className="line bg-primary"></div>
-        </div>
-      )}
       <Form>
         <Row style={{ marginBottom: "1rem" }}>
           <Col sm={6}>
@@ -347,6 +355,7 @@ const Address = (props) => {
               class="form-control"
               id="validationCustom03"
               required
+              disabled={disabled}
             />
             <div class="invalid-feedback">Please provide a valid city.</div>
             <Form.Group>
@@ -460,6 +469,7 @@ const Address = (props) => {
                 value={state.stateId}
                 style={stateError ? { borderColor: "red" } : {}}
                 onChange={changeHandler}
+                disabled={disabled}
               >
                 <option value="">State</option>
                 <option>one</option>
@@ -482,6 +492,7 @@ const Address = (props) => {
                 value={state.cityId}
                 style={cityError ? { borderColor: "red" } : {}}
                 onChange={changeHandler}
+                disabled={disabled}
               >
                 <option value="">City</option>
                 <option>one</option>
@@ -562,6 +573,7 @@ const Address = (props) => {
                   type="checkbox"
                   value="No"
                   checked={!isChecked}
+                  disabled={disabled}
                   onChange={handleNoCheckboxChange}
                 />
                 <label>No </label>
@@ -577,6 +589,7 @@ const Address = (props) => {
                   type="checkbox"
                   value="Yes"
                   checked={isChecked}
+                  disabled={disabled}
                   onChange={handleCheckboxChange}
                 />
                 <label>Yes</label>
@@ -798,22 +811,8 @@ const Address = (props) => {
             </Row>
           </div>
         )}
-        <div
-          style={{
-            marginTop: "2rem",
-            marginBottom: "2rem",
-            textAlign: "center",
-          }}
-        >
-          <button className="stepperButtons" onClick={PrevStep}>
-            Back
-          </button>
-          <button className="stepperButtons" onClick={submitHandler}>
-            Save & Next
-          </button>
-        </div>
       </Form>
     </Fragment>
   );
 };
-export default Address;
+export default EditAddress;
