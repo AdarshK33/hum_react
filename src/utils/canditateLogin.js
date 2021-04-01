@@ -20,7 +20,7 @@ const CandidateWithAxios = ({ children }) => {
 
         let config = {
             method: "get",
-            url: candidate.defaults.baseURL + "api/v2/refresh_token",
+            url: candidate.defaults.baseURL + "/api/v2/refresh_token",
         };
         config.headers['accept'] = "application/json";
         config.headers["Authorization"] =`Bearer ${accessToken}`;
@@ -48,7 +48,7 @@ const CandidateWithAxios = ({ children }) => {
                     response: { status },
                 } = error;
                 console.log(error, "status in interceptorrrrr candidate");
-                if (status === 401) {
+                if (status === 401||status === 403) {
                     return getRefreshToken()
                         .then((response) => {
                             console.log("INSIDE THE INTERSECPECTOR ", response)

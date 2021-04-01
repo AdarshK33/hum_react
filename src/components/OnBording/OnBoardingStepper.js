@@ -16,6 +16,7 @@ import BankDetails from "./BankDetails";
 import InsuranceNomination from "./InsuranceNomination";
 import PFDeclaration from "./PFDeclaration";
 import Documents from "./Documents";
+import { toast } from "react-toastify";
 import { OnBoardContext } from "../../context/OnBoardState";
 
 const OnBoardingStepper = (props) => {
@@ -39,11 +40,36 @@ const OnBoardingStepper = (props) => {
     { step: defaultStep, line: defaultLine, label: defaultLabel,idValue:6,fileSaved:false},
   ]);
   console.log(stepArray);
-
+  const handleIconChange = (data)=>{
+    let tempArray = [...stepArray];
+    tempArray.forEach((value,index)=>{
+if(index<data){
+  tempArray[index].step = checkOk;
+  tempArray[index].label = labelOk;
+  tempArray[index].line = lineOk;
+}else if(data>=index){
+  tempArray[index].line = defaultLine;
+  tempArray[index].label = currLabel;
+  tempArray[index].step = currStep;
+  setStepNumber(index );
+}if(index>data){
+  tempArray[index].line = defaultLine;
+  tempArray[index].step = defaultStep;
+  tempArray[index].label = defaultLabel;
+}else if(data<=index){
+  tempArray[index].line = defaultLine;
+  tempArray[index].step = currStep;
+  tempArray[index].label = currLabel;
+  setStepNumber(index );
+}
+    })
+      setStep(tempArray);
+   }
   const NextStep = () => {
     console.log(stepCount,"NEXTSTEP");
     if (stepCount >= 0 && stepCount < 6) {
       let tempArray = [...stepArray];
+      tempArray[stepCount].fileSaved = true
       tempArray[stepCount].step = checkOk;
       tempArray[stepCount].label = labelOk;
       tempArray[stepCount].line = lineOk;
@@ -59,6 +85,7 @@ const OnBoardingStepper = (props) => {
     console.log(stepCount);
     if (stepCount > 0 && stepCount <= 6) {
       let tempArray = [...stepArray];
+      tempArray[stepCount-1].fileSaved = false
       tempArray[stepCount].step = defaultStep;
       tempArray[stepCount].label = defaultLabel;
       tempArray[stepCount - 1].line = defaultLine;
@@ -68,6 +95,7 @@ const OnBoardingStepper = (props) => {
       setStepNumber(stepCount - 1);
     }
   };
+  console.log(stepCount,stepArray,"stepArray")
   return (
     <Fragment>
       <Breadcrumb title="onboard" parent="onboard" />
@@ -83,7 +111,7 @@ const OnBoardingStepper = (props) => {
                   <Row style={{ marginTop: "1rem" }}>
                     <Col sm={1} style={{ marginTop: "1rem" }}>
                       <div>
-                        <div className={stepArray[0].step}>
+                        <div  type="button" onClick={()=>{handleIconChange(stepArray[0].idValue)}} className={stepArray[0].step}>
                           <div style={{ paddingTop: "1px", fontSize: "28px" }}>
                             <i class="fa fa-user"></i>
                           </div>
@@ -98,7 +126,7 @@ const OnBoardingStepper = (props) => {
                         <br></br>
                         <span className={stepArray[0].line}></span>
 
-                        <div className={stepArray[1].step}>
+                        <div type="button" onClick={()=>{handleIconChange(stepArray[1].idValue)}} className={stepArray[1].step}>
                           <div style={{ paddingTop: "4px", fontSize: "24px" }}>
                             <i
                               class="fa fa-address-card-o"
@@ -116,7 +144,7 @@ const OnBoardingStepper = (props) => {
                         <br></br>
                         <span className={stepArray[1].line}></span>
 
-                        <div className={stepArray[2].step}>
+                        <div type="button" onClick={()=>{handleIconChange(stepArray[2].idValue)}} className={stepArray[2].step}>
                           <div style={{ paddingTop: "4px", fontSize: "23px" }}>
                             <i class="fa fa-address-book"></i>
                           </div>
@@ -131,7 +159,7 @@ const OnBoardingStepper = (props) => {
                         <br></br>
                         <span className={stepArray[2].line}></span>
 
-                        <div className={stepArray[3].step}>
+                        <div type="button" onClick={()=>{handleIconChange(stepArray[3].idValue)}} className={stepArray[3].step}>
                           <div style={{ paddingTop: "0px", fontSize: "31px" }}>
                             <i class="fa fa-lock"></i>
                           </div>
@@ -146,7 +174,7 @@ const OnBoardingStepper = (props) => {
                         <br></br>
                         <span className={stepArray[3].line}></span>
 
-                        <div className={stepArray[4].step}>
+                        <div type="button" onClick={()=>{handleIconChange(stepArray[4].idValue)}} className={stepArray[4].step}>
                           <div style={{ paddingTop: "4px", fontSize: "27px" }}>
                             <i class="fa fa-shield"></i>
                           </div>
@@ -161,7 +189,7 @@ const OnBoardingStepper = (props) => {
                         <br></br>
                         <span className={stepArray[4].line}></span>
 
-                        <div className={stepArray[5].step}>
+                        <div type="button" onClick={()=>{handleIconChange(stepArray[5].idValue)}} className={stepArray[5].step}>
                           <div style={{ paddingTop: "5px", fontSize: "22px" }}>
                             <i class="fa fa-credit-card-alt"></i>
                           </div>
@@ -176,7 +204,7 @@ const OnBoardingStepper = (props) => {
                         <br></br>
                         <span className={stepArray[5].line}></span>
 
-                        <div className={stepArray[6].step}>
+                        <div type="button" onClick={()=>{handleIconChange(stepArray[6].idValue)}} className={stepArray[6].step}>
                           <div style={{ paddingTop: "2px", fontSize: "26px" }}>
                             <i class="fa fa-book"></i>
                           </div>
@@ -272,122 +300,5 @@ const OnBoardingStepper = (props) => {
       </div>
     </Fragment>
   );
-
-  // return (
-  //   <Fragment>
-  //     <Breadcrumb title="onboard" parent="onboard" />
-  //     <div className="container-fluid"></div>
-  // <div>
-  //   <div className="OnBoardHeading">
-  //     <b>ONBOARDING</b>
-  //   </div>
-  //   <div>
-  //     <Row style={{ marginTop: "1rem" }}>
-  //       <Col sm={1}>
-  //         <div>
-  //           <div className={stepArray[0].step}>
-  //             <i class="fa fa-user"></i>
-  //           </div>
-  //           <label style={{ marginLeft: "15px", textAlign: "center" }}>
-  //             {" "}
-  //             Personal Information
-  //           </label>
-  //           <br></br>
-  //           <span className={stepArray[0].line}></span>
-
-  //           <div className={stepArray[1].step}>
-  //             <i class="fa fa-address-card-o" aria-hidden="true"></i>
-  //           </div>
-  //           <label style={{ marginLeft: "15px", textAlign: "center" }}>
-  //             {" "}
-  //             Address
-  //           </label>
-  //           <br></br>
-  //           <span className={stepArray[1].line}></span>
-
-  //           <div className={stepArray[2].step}>
-  //             <i className="insideIcon" class="fa fa-address-book"></i>
-  //           </div>
-  //           <label style={{ marginLeft: "15px", textAlign: "center" }}>
-  //             {" "}
-  //             Emergency Contact
-  //           </label>
-  //           <br></br>
-  //           <span className={stepArray[2].line}></span>
-
-  //           <div className={stepArray[3].step}>
-  //             <i className="insideIcon" class="fa fa-lock"></i>
-  //           </div>
-  //           <label style={{ marginLeft: "15px", textAlign: "center" }}>
-  //             {" "}
-  //             Bank Details
-  //           </label>
-  //           <br></br>
-  //           <span className={stepArray[3].line}></span>
-
-  //           <div className={stepArray[4].step}>
-  //             <i class="fa fa-shield"></i>
-  //           </div>
-  //           <label style={{ marginLeft: "15px", textAlign: "center" }}>
-  //             {" "}
-  //             Insurance Nomination
-  //           </label>
-  //           <br></br>
-  //           <span className={stepArray[4].line}></span>
-
-  //           <div className={stepArray[5].step}>
-  //             <i class="fa fa-credit-card-alt"></i>
-  //           </div>
-  //           <label style={{ marginLeft: "15px", textAlign: "center" }}>
-  //             {" "}
-  //             Provident Fund Declaration
-  //           </label>
-  //           <br></br>
-  //           <span className={stepArray[5].line}></span>
-
-  //           <div className={stepArray[6].step}>
-  //             <i class="fa fa-book"></i>
-  //           </div>
-  //           <label style={{ marginLeft: "15px", textAlign: "center" }}>
-  //             Documents
-  //           </label>
-  //         </div>
-  //       </Col>
-  //       <Col sm={10} style={{ marginTop: "2rem", marginLeft: "2rem" }}>
-  //         {(() => {
-  //           switch (stepCount) {
-  //             case 0:
-  //               return <PersonalInformation />;
-  //             case 1:
-  //               return <Address />;
-  //             case 2:
-  //               return <EmergencyContact />;
-  //             case 3:
-  //               return <BankDetails />;
-  //             case 4:
-  //               return <InsuranceNomination />;
-  //             case 5:
-  //               return <PFDeclaration />;
-  //             case 6:
-  //               return <Documents />;
-  //             default:
-  //               return <div>OnBoarding</div>;
-  //           }
-  //         })()}
-
-  //         <div style={{ marginLeft: "300px", marginTop: "30px" }}>
-  //           <button className="stepperButtons" onClick={PrevStep}>
-  //             Back
-  //           </button>
-  //           <button className="stepperButtons" onClick={NextStep}>
-  //             Save & Next
-  //           </button>
-  //         </div>
-  //       </Col>
-  //     </Row>
-  //   </div>
-  // </div>
-  //   </Fragment>
-  // );
 };
 export default OnBoardingStepper;
