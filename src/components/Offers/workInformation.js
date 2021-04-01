@@ -181,7 +181,6 @@ const WorkInformation = () => {
     console.log("createData", createData);
     createCandidateWork(createData);
     viewCandidateId(createCandidateResponse.candidateId);
-    workInfoView(createCandidateResponse.candidateId);
     setDisabled(true);
     setEditButton(true);
   };

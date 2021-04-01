@@ -316,10 +316,15 @@ const Address = (props) => {
     back();
   };
   const changeHandler = (e) => {
+    console.log("country value", e.target.value);
     setState({
       ...state,
       [e.target.name]: e.target.value,
     });
+    if (e.target.name === "countryId") {
+      console.log("country id", state.countryId);
+      CandidateStateList(state.countryId);
+    }
     console.log(state);
   };
   const handleCheckboxChange = (e) => {
@@ -432,16 +437,20 @@ const Address = (props) => {
                 as="select"
                 name="countryId"
                 value={state.countryId}
-                options={options}
                 onChange={changeHandler}
                 required
                 style={countryError ? { borderColor: "red" } : {}}
                 disabled={disabled}
               >
-                <option value="">Country</option>
-                {options.map((item) => {
-                  return <option key={item.value}>{item.label}</option>;
-                })}
+                <option value="">Select Country</option>
+                {candidateCountryData !== null &&
+                  candidateCountryData !== undefined &&
+                  candidateCountryData.length > 0 &&
+                  candidateCountryData.map((item) => {
+                    return (
+                      <option key={item.countryId}>{item.countryName}</option>
+                    );
+                  })}
               </Form.Control>
               {countryError ? (
                 <p style={{ color: "red" }}> Please choose country</p>
