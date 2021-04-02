@@ -7,12 +7,14 @@ import { toast } from "react-toastify";
 export const OnBoardContext = createContext();
 const initial_state = {
   name: " ",
-  Infodata: [],
+  PersonalInfoResponse: {},
   candidateData: {},
+  candidatePersonalInfoData: {},
   searchEmpData1: [],
   searchEmpData2: [],
   stateList: [],
   cityList: [],
+  candidateViewInfo: {},
 };
 export const OnBoardProvider = (props) => {
   const [state, dispatch] = useReducer(OnBoardReducer, initial_state);
@@ -22,11 +24,35 @@ export const OnBoardProvider = (props) => {
     return candidate
       .post("/api/v2/candidate/update", updateData)
       .then((response) => {
+        state.PersonalInfoResponse = response.data.data;
+        console.log(
+          "personal Information response--->",
+          state.PersonalInfoResponse
+        );
         toast.info(response.data.message);
         console.log(response.data.message);
         return dispatch({
           type: "UPDATE_PERSONAL_INFO",
-          payload: state.Infodata,
+          payload: state.PersonalInfoResponse,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const CandidatePersonalInfo = (candidateId) => {
+    candidate
+      .get("/api/v2/candidate/" + candidateId)
+      .then((response) => {
+        state.candidatePersonalInfoData = response.data.data;
+        console.log(
+          "Candidate Personal information  Response ",
+          state.candidatePersonalInfoData
+        );
+        return dispatch({
+          type: "CANDIDATE_PERSONAL_INFODATA",
+          payload: state.candidatePersonalInfoData,
         });
       })
       .catch((error) => {
@@ -121,6 +147,22 @@ export const OnBoardProvider = (props) => {
       });
   };
 
+  const CandidateViewInformation = (candidateId) => {
+    candidate
+      .get("/api/v2/candidate/view/workInfo/" + candidateId)
+      .then((response) => {
+        state.candidateViewInfo = response.data.data;
+        console.log("CandidateView Response ", state.candidateViewInfo);
+        return dispatch({
+          type: "CANDIDATE_VIEW_INFO",
+          payload: state.candidateViewInfo,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <OnBoardContext.Provider
       value={{
@@ -130,13 +172,17 @@ export const OnBoardProvider = (props) => {
         CityList,
         searchForEmp1,
         searchForEmp2,
+        CandidateViewInformation,
+        CandidatePersonalInfo,
         searchEmpData1: state.searchEmpData1,
         searchEmpData2: state.searchEmpData2,
         name: state.name,
-        Infodata: state.Infodata,
+        PersonalInfoResponse: state.PersonalInfoResponse,
+        candidatePersonalInfoData: state.candidatePersonalInfoData,
         candidateData: state.candidateData,
         stateList: state.stateList,
         cityList: state.cityList,
+        candidateViewInfo: state.candidateViewInfo,
       }}
     >
       {props.children}

@@ -19,6 +19,7 @@ import Documents from "./Documents";
 import { OnBoardContext } from "../../context/OnBoardState";
 
 const OnBoardingStepper = (props) => {
+  const { CandidateProfile, candidateData } = useContext(OnBoardContext);
   const personalInfoRef = useRef();
   const checkOk = "OkCheckStep";
   const currStep = "CurrentCheckStep";
@@ -30,18 +31,65 @@ const OnBoardingStepper = (props) => {
   const currLabel = "CurrentLabelColour";
   const [stepCount, setStepNumber] = useState(0);
   const [stepArray, setStep] = useState([
-    { step: currStep, line: defaultLine, label: currLabel ,idValue:0,fileSaved:false},
-    { step: defaultStep, line: defaultLine, label: defaultLabel,idValue:1,fileSaved:false},
-    { step: defaultStep, line: defaultLine, label: defaultLabel,idValue:2,fileSaved:false },
-    { step: defaultStep, line: defaultLine, label: defaultLabel,idValue:3,fileSaved:false},
-    { step: defaultStep, line: defaultLine, label: defaultLabel,idValue:4,fileSaved:false},
-    { step: defaultStep, line: defaultLine, label: defaultLabel,idValue:5,fileSaved:false},
-    { step: defaultStep, line: defaultLine, label: defaultLabel,idValue:6,fileSaved:false},
+    {
+      step: currStep,
+      line: defaultLine,
+      label: currLabel,
+      idValue: 0,
+      fileSaved: false,
+    },
+    {
+      step: defaultStep,
+      line: defaultLine,
+      label: defaultLabel,
+      idValue: 1,
+      fileSaved: false,
+    },
+    {
+      step: defaultStep,
+      line: defaultLine,
+      label: defaultLabel,
+      idValue: 2,
+      fileSaved: false,
+    },
+    {
+      step: defaultStep,
+      line: defaultLine,
+      label: defaultLabel,
+      idValue: 3,
+      fileSaved: false,
+    },
+    {
+      step: defaultStep,
+      line: defaultLine,
+      label: defaultLabel,
+      idValue: 4,
+      fileSaved: false,
+    },
+    {
+      step: defaultStep,
+      line: defaultLine,
+      label: defaultLabel,
+      idValue: 5,
+      fileSaved: false,
+    },
+    {
+      step: defaultStep,
+      line: defaultLine,
+      label: defaultLabel,
+      idValue: 6,
+      fileSaved: false,
+    },
   ]);
   console.log(stepArray);
 
+  useEffect(() => {
+    CandidateProfile();
+  }, []);
+  console.log("stepper candidate data", candidateData);
+
   const NextStep = () => {
-    console.log(stepCount,"NEXTSTEP");
+    console.log(stepCount, "NEXTSTEP");
     if (stepCount >= 0 && stepCount < 6) {
       let tempArray = [...stepArray];
       tempArray[stepCount].step = checkOk;

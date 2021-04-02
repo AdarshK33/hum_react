@@ -6,7 +6,7 @@ const GroupReducer = (state, action) => {
       return { ...state, name: action.payload };
     case "UPDATE_PERSONAL_INFO":
       console.log("info");
-      return { ...state, Infodata: action.payload };
+      return { ...state, PersonalInfoResponse: action.payload };
     case "CANDIDATE_PROFILE":
       console.log("profile");
       return { ...state, candidateData: action.payload };
@@ -21,6 +21,10 @@ const GroupReducer = (state, action) => {
 
     case "SEARCH_EMP2":
       return { ...state, searchEmpData2: action.payload };
+    case "CANDIDATE_VIEW_INFO":
+      return { ...state, candidateViewInfo: action.payload };
+    case "CANDIDATE_PERSONAL_INFODATA":
+      return { ...state, candidatePersonalInfoData: action.payload };
     default:
       return state;
   }
