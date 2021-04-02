@@ -6,6 +6,9 @@ import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
 import { Edit2, Eye, Search } from "react-feather";
 import Pagination from "react-js-pagination";
 import "./ManageCandidate.css";
+import { DocsVerifyContext } from "../../context/DocverificationState";
+import { candidate } from "../../utils/canditateLogin";
+
 const CandidateList = () => {
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
@@ -18,6 +21,16 @@ const CandidateList = () => {
     total,
     viewCandidateId,
   } = useContext(OfferContext);
+
+  const {
+    fetchNominationDetails,
+    nominationDetails,
+    addressInfo,
+    bankDetailsData,
+    contactInformation,
+    personalInfo,
+    fetchPfDetails,
+  } = useContext(DocsVerifyContext);
   useEffect(() => {
     candidateView("all", pageCount);
   }, []);
@@ -56,6 +69,14 @@ const CandidateList = () => {
     } else {
       candidateView("all", pageCount);
     }
+  };
+  const FetchCandidateData = (candidateId) => {
+    fetchNominationDetails(candidateId);
+    fetchPfDetails(candidateId);
+    bankDetailsData(candidateId);
+    contactInformation(candidateId);
+    addressInfo(candidateId);
+    personalInfo(candidateId);
   };
   return (
     <Fragment>
@@ -151,7 +172,7 @@ const CandidateList = () => {
                           <Link to={"/verification/" + item.candidateId}>
                             <Eye
                               onClick={() => {
-                                viewCandidateId(item.candidateId);
+                                FetchCandidateData(item.candidateId);
                               }}
                             />
                           </Link>

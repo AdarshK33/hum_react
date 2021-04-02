@@ -318,14 +318,6 @@ const Address = (props) => {
   };
   return (
     <Fragment>
-      {loader === true && (
-        <div className="loader">
-          <div className="line bg-primary"></div>
-          <div className="line bg-primary"></div>
-          <div className="line bg-primary"></div>
-          <div className="line bg-primary"></div>
-        </div>
-      )}
       <Form>
         <Row style={{ marginBottom: "1rem" }}>
           <Col sm={6}>

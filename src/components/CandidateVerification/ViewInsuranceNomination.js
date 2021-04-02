@@ -67,7 +67,7 @@ const EditInsuranceNomination = (props) => {
   const [relationshipError_5, setRelationshipError_5] = useState(false);
   const [DOBError_5, setDobError_5] = useState(false);
 
-  const { fetchNominationDetails, nominationDetails } = useContext(
+  const { fetchNominationDetails, nominationDetails, loader } = useContext(
     DocsVerifyContext
   );
 
@@ -117,8 +117,12 @@ const EditInsuranceNomination = (props) => {
     if (window.location.href.includes("verification")) {
       fetchNominationDetails(candidateId);
       setState(nominationDetails);
-      console.log(nominationDetails);
-      setDisable(true); // setState(personalInfoData);
+      setDisable(true);
+      if (nominationDetails.dateOfBirth !== undefined) {
+        var date = new Date(nominationDetails.dateOfBirth);
+        // var todayDate = moment(date).format("YYYY-MM-DD");
+        setNominee1DOB(date);
+      }
     }
   }, []);
   const validateInput = (itemState, setError) => {
@@ -349,63 +353,8 @@ const EditInsuranceNomination = (props) => {
           nominiName: state.nominiName,
           relationship: state.relationship,
         },
-
-        // NominForm1 == true
-        //   ? {
-        //       age: NominForm1 == true ? state.nominee2Age : 0,
-        //       bloodGroup: NominForm1 == true ? state.nominee2BloodGroup : null,
-        //       candidateId: NominForm1 == true ? 0 : 0,
-        //       dateOfBirth: NominForm1 == true ? Nominee2DOB : null,
-        //       gender: NominForm1 == true ? state.nominee2Gender : null,
-        //       nominiId: NominForm1 == true ? 0 : 0,
-        //       nominiName: NominForm1 == true ? state.nominee2NominiName : null,
-        //       relationship:
-        //         NominForm1 == true ? state.nominee2Relationship : null,
-        //     }
-        //   : null,
-        // NominForm2 == true
-        //   ? {
-        //       age: NominForm2 == true ? state.nominee3Age : 0,
-        //       bloodGroup: NominForm2 == true ? state.nominee3BloodGroup : null,
-        //       candidateId: NominForm2 == true ? 0 : 0,
-        //       dateOfBirth: NominForm2 == true ? Nominee3DOB : null,
-        //       gender: NominForm2 == true ? state.nominee3Gender : null,
-        //       nominiId: NominForm2 == true ? 0 : 0,
-        //       nominiName: NominForm2 == true ? state.nominee3NominiName : null,
-        //       relationship:
-        //         NominForm2 == true ? state.nominee3Relationship : null,
-        //     }
-        //   : null,
-        // NominForm3 == true
-        //   ? {
-        //       age: NominForm3 == true ? state.nominee4Age : 0,
-        //       bloodGroup: NominForm3 == true ? state.nominee4BloodGroup : null,
-        //       candidateId: NominForm3 == true ? 0 : 0,
-        //       dateOfBirth: NominForm3 == true ? Nominee4DOB : null,
-        //       gender: NominForm3 == true ? state.nominee4Gender : null,
-        //       nominiId: NominForm3 == true ? 0 : 0,
-        //       nominiName: NominForm3 == true ? state.nominee4NominiName : null,
-        //       relationship:
-        //         NominForm3 == true ? state.nominee4Relationship : null,
-        //     }
-        //   : null,
-        // NominForm4 == true
-        //   ? {
-        //       age: NominForm4 == true ? state.nominee5Age : 0,
-        //       bloodGroup: NominForm4 == true ? state.nominee5BloodGroup : null,
-        //       candidateId: NominForm4 == true ? 0 : 0,
-        //       dateOfBirth: NominForm4 == true ? Nominee5DOB : null,
-        //       gender: NominForm4 == true ? state.nominee5Gender : null,
-        //       nominiId: NominForm4 == true ? 0 : 0,
-        //       nominiName: NominForm4 == true ? state.nominee5NominiName : null,
-        //       relationship:
-        //         NominForm4 == true ? state.nominee5Relationship : null,
-        //     }
-        //   : null,
       ];
       console.log(NominiInfo);
-      // const nextPage = props.NextStep;
-      // nextPage();
     }
   };
 

@@ -24,3 +24,9 @@
 .tableWrapper tr {
   border: none !important;
 }
+.tableWrapper thead {
+  border: none !important;
+  border-color: #fff !important;
+  background-color: #fff !important;
+  text-decoration: underline !important;
+}

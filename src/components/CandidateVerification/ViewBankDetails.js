@@ -27,9 +27,7 @@ const EditBankDetails = (props) => {
     if (window.location.href.includes("verification")) {
       bankDetailsData(candidateId);
       setState(bankDetails);
-      console.log(bankDetails);
       setDisableState(true);
-      // setState(personalInfoData);
     }
   }, []);
 

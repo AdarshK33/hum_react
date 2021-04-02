@@ -5,11 +5,11 @@ import { toast } from "react-toastify";
 
 const initial_state = {
   docsToVerify: [],
-  personalInfoData: {},
+  personalInfoData: [],
   addressInfoData: {},
   emergencyInfo: {},
   bankDetails: {},
-  nominationDetails: {},
+  nominationDetails: [],
   pfDetails: {},
 };
 export const DocsVerifyContext = createContext();

@@ -40,7 +40,7 @@ const DocVerification = () => {
           <Table className="tableWrapper table table-borderless">
             <thead>
               <tr>
-                <th>Documents</th>
+                <th></th>
                 <th>Status</th>
                 <th>Remarks</th>
                 <th>Dates</th>
@@ -67,24 +67,86 @@ const DocVerification = () => {
                 </tr>
               </tbody>
             ) : docsToVerify !== undefined &&
+              !isChecked &&
               docsToVerify !== null &&
               docsToVerify.length > 0 ? (
               docsToVerify.map((item, i) => {
                 return (
                   <tbody key={i} className="tableText">
                     <tr>
-                      <td className="text-left mx-auto px-4 ">
-                        <p style={{ color: "black", fontSize: "20px" }}>
-                          {item.documentType === 0
-                            ? "PhotoID"
-                            : item.documentType === 1
-                            ? "AadhaarID"
-                            : item.documentType === 2
-                            ? "Pan number"
-                            : item.documentType === 3
-                            ? "Address Proof"
-                            : "Epfbook"}
-                          <span style={{ color: "red" }}>*</span>
+                      <td className="text-left">
+                        <p>
+                          {item.documentType === 0 ? (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "20px" }}
+                              >
+                                PhotoID
+                              </span>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </p>
+                          ) : item.documentType === 1 ? (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "20px" }}
+                              >
+                                AadhaarID
+                              </span>
+                              <span style={{ color: "red" }}>*</span>
+                              <span
+                                style={{
+                                  color: "#47ef47",
+                                  fontStyle: "italic",
+                                  fontSize: "20px",
+                                }}
+                              >
+                                (Upload the first and last page)
+                              </span>
+                            </p>
+                          ) : item.documentType === 2 ? (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "20px" }}
+                              >
+                                Pan Number
+                              </span>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </p>
+                          ) : item.documentType === 3 ? (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "20px" }}
+                              >
+                                Address Proof
+                              </span>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </p>
+                          ) : item.documentType === 4 ? (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "20px" }}
+                              >
+                                EPF Passbook
+                              </span>{" "}
+                              <span
+                                style={{
+                                  color: "#47ef47",
+                                  fontStyle: "italic",
+                                  fontSize: "20px",
+                                }}
+                              >
+                                (First page of the book)
+                              </span>
+                            </p>
+                          ) : (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "20px" }}
+                              >
+                                Cancelled Cheque
+                              </span>{" "}
+                            </p>
+                          )}
                         </p>
                         {item.documentName}
                       </td>
@@ -107,6 +169,93 @@ const DocVerification = () => {
                         <td>{item.verifiedDate}</td>
                       ) : (
                         <td>NA</td>
+                      )}
+                    </tr>
+                  </tbody>
+                );
+              })
+            ) : docsToVerify !== undefined &&
+              isChecked &&
+              docsToVerify !== null &&
+              docsToVerify.length > 0 ? (
+              docsToVerify.map((item, i) => {
+                return (
+                  <tbody key={i} className="tableText">
+                    <tr>
+                      <td className="text-left mx-auto px-4 ">
+                        <p>
+                          {item.documentType === 6 ? (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "20px" }}
+                              >
+                                PhotoID
+                              </span>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </p>
+                          ) : item.documentType === 7 ? (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "20px" }}
+                              >
+                                AadhaarID
+                              </span>
+                              <span style={{ color: "red" }}>*</span>
+                              <span
+                                style={{
+                                  color: "#47ef47",
+                                  fontStyle: "italic",
+                                  fontSize: "20px",
+                                }}
+                              >
+                                (Upload the first and last page)
+                              </span>
+                            </p>
+                          ) : item.documentType === 8 ? (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "20px" }}
+                              >
+                                Pan Number
+                              </span>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </p>
+                          ) : (
+                            item.documentType === 9 && (
+                              <p>
+                                <span
+                                  style={{ color: "black", fontSize: "20px" }}
+                                >
+                                  Address Proof
+                                </span>{" "}
+                                <span style={{ color: "red" }}>*</span>
+                              </p>
+                            )
+                          )}
+                        </p>
+                        {item.documentType > 5 && item.documentName}
+                      </td>
+                      {item.reviewStatus !== null && item.documentType > 5 ? (
+                        <td>{item.reviewStatus}</td>
+                      ) : (
+                        item.documentType > 5 && (
+                          <td className="row text-center">
+                            <button className="approveButton">Approve</button>
+                            <button className="approveButton ml-4">
+                              Disapprove
+                            </button>
+                          </td>
+                        )
+                      )}
+                      {item.remark !== null ? (
+                        <td>{item.documentType > 5 && item.remark}</td>
+                      ) : (
+                        item.documentType > 5 && <td>NA</td>
+                      )}
+                      {item.verifiedDate !== null ? (
+                        <td>{item.documentType > 5 && item.verifiedDate}</td>
+                      ) : (
+                        item.documentType > 5 && <td>NA</td>
                       )}
                     </tr>
                   </tbody>

@@ -6,12 +6,12 @@ import React, {
   useRef,
 } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
-import EditPersonalInformation from "./EditPersonalInformation";
-import EditAddress from "./EditAddress";
-import EditEmergencyContact from "./EditEmergencyContact";
-import EditBankDetails from "./EditBankDetails";
-import EditInsuranceNomination from "./EditInsuranceNomination";
-import EditPFDeclaration from "./EditPFDeclaration";
+import ViewPersonalInformation from "./ViewPersonalInformation";
+import ViewAddress from "./ViewAddress";
+import ViewEmergencyContact from "./ViewEmergencyContact";
+import ViewBankDetails from "./ViewBankDetails";
+import ViewInsuranceNomination from "./ViewInsuranceNomination";
+import ViewPFDeclaration from "./ViewPFDeclaration";
 import DocVerification from "./DocVerification";
 import Breadcrumb from "../common/breadcrumb";
 import { DocsVerifyContext } from "../../context/DocverificationState";
@@ -212,18 +212,18 @@ const Verification = () => {
             {(() => {
               switch (stepCount) {
                 case 0:
-                  return <EditPersonalInformation />;
+                  return <ViewPersonalInformation />;
 
                 case 1:
-                  return <EditAddress />;
+                  return <ViewAddress />;
                 case 2:
-                  return <EditEmergencyContact />;
+                  return <ViewEmergencyContact />;
                 case 3:
-                  return <EditBankDetails />;
+                  return <ViewBankDetails />;
                 case 4:
-                  return <EditInsuranceNomination />;
+                  return <ViewInsuranceNomination />;
                 case 5:
-                  return <EditPFDeclaration />;
+                  return <ViewPFDeclaration />;
                 case 6:
                   return <DocVerification />;
 

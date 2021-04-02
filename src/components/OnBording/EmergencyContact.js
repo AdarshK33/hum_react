@@ -6,10 +6,7 @@ import "./OnBoard.css";
 
 const EmergencyContact = (props) => {
   const [disabled, setDisableState] = useState(false);
-  const { emergencyInfo, contactInformation } = useContext(DocsVerifyContext);
   // acessing candidateId from params
-  const params = useParams();
-  const candidateId = params["candidateId"];
 
   const [stateError, setStateError] = useState({
     contactNameError: "",

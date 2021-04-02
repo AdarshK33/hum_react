@@ -46,7 +46,6 @@ const EditPFDeclaration = (props) => {
     if (window.location.href.includes("verification")) {
       fetchPfDetails(candidateId);
       setDisable(true);
-      console.log(pfDetails);
       if (pfDetails !== undefined) {
         if (pfDetails.uanNumber !== undefined) {
           setState(pfDetails.uanNumber);
