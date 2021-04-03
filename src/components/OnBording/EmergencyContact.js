@@ -3,8 +3,12 @@ import { Row, Col, Form, Button } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import "./OnBoard.css";
+import { OnBoardContext } from "../../context/OnBoardState";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const EmergencyContact = (props) => {
+  const { EmergencyContactCreate,EmergencyContactUpdate,EmergencyContactView,emergencyContactView,candidateData,emergencyContactData} = useContext(OnBoardContext);
   const [disabled, setDisableState] = useState(false);
   const [stateError, setStateError] = useState({
     contactNameError: "",
@@ -16,22 +20,45 @@ const EmergencyContact = (props) => {
     pinCodeError: "",
     relationshipError: "",
   });
+  const [dataExist,setDataExist]=useState({
+    exist:false
+  })
   const [state, setState] = useState({
     contactName: "",
     addressLine: "",
     city: "",
     country: "",
+  candidateId: (candidateData.candidateId!== undefined)?candidateData.candidateId:'',
     locality: "",
     phoneNumber: "",
     pinCode: "",
     relationship: "",
   });
-
+  useEffect(() => {
+    EmergencyContactView(candidateData.candidateId)
+    console.log(emergencyContactView,"emergencyContactView")
+    if(emergencyContactView){
+      console.log(emergencyContactView,"emergencyContactView3")
+    setState({
+      contactName: emergencyContactView.contactName,
+      addressLine: emergencyContactView.addressLine,
+      candidateId: emergencyContactView.candidateId,
+      city: emergencyContactView.city,
+      country: emergencyContactView.country,
+      locality: emergencyContactView.locality,
+      phoneNumber: emergencyContactView.phoneNumber,
+      pinCode: emergencyContactView.pinCode,
+      relationship: emergencyContactView.relationship,
+    });
+    setDataExist({exist:true})
+  }
+    console.log(state,"previous2")
+  },[emergencyContactView.candidateId])
   const validateForm = () => {
     let fields = state;
     let stateError = {};
     let formIsValid = true;
-
+console.log(state,"state in emergencyContact")
     if (!fields["contactName"]) {
       formIsValid = false;
       stateError["contactNameError"] = "*Please enter your name.";
@@ -107,7 +134,7 @@ const EmergencyContact = (props) => {
     }
 
     if (typeof fields["pinCode"] !== "undefined") {
-      if (!fields["pinCode"].match(/^[1-9]{1}[0-9]{2}\\s{0, 1}[0-9]{3}$/)) {
+      if (!fields["pinCode"].match(/^[0-9]{6}$/)) {
         formIsValid = false;
         stateError["pinCodeError"] = "*Please enter numbers only.";
       }
@@ -130,14 +157,23 @@ const EmergencyContact = (props) => {
 
   }
   const submitHandler = (e) => {
+    e.preventDefault()
+    console.log("next",state);
     if(validateForm()){
-
+      if(dataExist.exist == true){
+      EmergencyContactUpdate(state)
+      const nextPage = props.NextStep;
+      nextPage();
+    }else{
+      EmergencyContactCreate(state)
+      const nextPage = props.NextStep;
+      nextPage();
     }
-    const nextPage = props.NextStep;
-    nextPage();
+  }
   };
 
-  const PrevStep = () => {
+  const PrevStep = (e) => {
+    e.preventDefault()
     console.log("previous");
     const back = props.PrevStep;
     back();
@@ -196,6 +232,9 @@ const EmergencyContact = (props) => {
                 disabled={disabled}
               >
                 <option value="">Relationships</option>
+                <option value="brother">brother</option>
+                <option value="sister">sister</option>
+
               </Form.Control>
               <p style={{ color: "red" }}>{stateError.relationshipError} </p>
             </Form.Group>

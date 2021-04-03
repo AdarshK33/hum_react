@@ -22,8 +22,8 @@ const CandidateWithAxios = ({ children }) => {
             method: "get",
             url: candidate.defaults.baseURL + "/api/v2/refresh_token",
         };
-        config.headers['accept'] = "application/json";
-        config.headers["Authorization"] =`Bearer ${accessToken}`;
+        // config.headers['accept'] = "application/json";
+        // config.headers["Authorization"] =`Bearer ${accessToken}`;
         return candidate(config)
     }
 

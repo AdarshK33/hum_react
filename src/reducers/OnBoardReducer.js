@@ -16,6 +16,15 @@ const GroupReducer = (state, action) => {
     case "CITY_LIST":
       console.log("CityList");
       return { ...state, cityList: action.payload };
+      case "EMERGENCY_CONTACT_UPDATE":
+        console.log("EMERGENCY_CONTACT_UPDATE");
+      return { ...state, emergencyContactData: action.payload };
+      case "EMERGENCY_CONTACT_UPDATE":
+        console.log("EMERGENCY_CONTACT_UPDATE");
+      return { ...state,emergencyContactCreate:action.payload};
+      case "EMERGENCY_CONTACT_VIEW":
+      console.log("EMERGENCY_CONTACT_VIEW reducer",action.payload);
+      return { ...state,emergencyContactView:action.payload};
     default:
       return state;
   }

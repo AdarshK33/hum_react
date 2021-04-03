@@ -8,6 +8,9 @@ export const OnBoardContext = createContext();
 const initial_state = {
   name: " ",
   Infodata: [],
+  emergencyContactData:{},
+  emergencyContactCreate:{},
+  emergencyContactView:{},
   candidateData: {},
   stateList: [],
   cityList: [],
@@ -25,6 +28,55 @@ export const OnBoardProvider = (props) => {
         return dispatch({
           type: "UPDATE_PERSONAL_INFO",
           payload: state.Infodata,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const EmergencyContactCreate = (createData) => {
+    console.log("EmergencyContactCreate data -----");
+    console.log(createData);
+    return candidate
+      .post("/api/v2/candidate/contact/create", createData)
+      .then((response) => {
+        toast.info(response.data.message);
+        console.log(response.data.message);
+        return dispatch({
+          type: "EMERGENCY_CONTACT_CREATE",
+          payload: state.emergencyContactCreate,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const EmergencyContactUpdate = (updateData) => {
+    console.log("EmergencyContactUpdate data -----");
+    console.log(updateData);
+    return candidate
+      .post("/api/v2/candidate/contact/update", updateData)
+      .then((response) => {
+        toast.info(response.data.message);
+        console.log(response.data.message);
+        return dispatch({
+          type: "EMERGENCY_CONTACT_UPDATE",
+          payload: state.emergencyContactCreate,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const EmergencyContactView = (data) => {
+    candidate
+      .get(`/api/v2/candidate/contact/view/${data}`)
+      .then((response) => {
+        state.emergencyContactView = response.data.data;
+        console.log("EmergencyContactView Response ",response, state.emergencyContactView);
+        return dispatch({
+          type: "EMERGENCY_CONTACT_VIEW",
+          payload: state.emergencyContactView,
         });
       })
       .catch((error) => {
@@ -85,6 +137,12 @@ export const OnBoardProvider = (props) => {
         CandidateProfile,
         StateList,
         CityList,
+        EmergencyContactCreate,
+        EmergencyContactUpdate,
+        EmergencyContactView,
+        emergencyContactData:state.emergencyContactData,
+        emergencyContactCreate: state.emergencyContactCreate,
+        emergencyContactView: state.emergencyContactView,
         name: state.name,
         Infodata: state.Infodata,
         candidateData: state.candidateData,

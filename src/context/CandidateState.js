@@ -21,7 +21,7 @@ export const CandidateProvider = ({ children  }) => {
       const token = response.data.token
       state.candidateData =response.data
       if(token == null){
-        toast.error("User Invalid");
+        toast.error(response.data.message);
       }else if((token !== "")||(token !== null)){
       setDefaultCandidiateHeader(token);
       dispatch({ type: 'LOGIN', payload: state.candidateData });
