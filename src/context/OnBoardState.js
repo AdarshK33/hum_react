@@ -8,6 +8,8 @@ export const OnBoardContext = createContext();
 const initial_state = {
   name: " ",
   PersonalInfoResponse: {},
+  CreateNomineeResponse: {},
+  candidateInsuranceNominationData: {},
   candidateData: {},
   candidatePersonalInfoData: {},
   searchEmpData1: [],
@@ -116,6 +118,44 @@ export const OnBoardProvider = (props) => {
         console.log(error);
       });
   };
+  const CreateNominee = (createDate) => {
+    console.log("create nominee data -----");
+    console.log(createDate);
+    return candidate
+      .post("/api/v2/candidate/insurance-nomination/create", createDate)
+      .then((response) => {
+        state.CreateNomineeResponse = response.data.data;
+        console.log(response);
+        console.log("create nominee response--->", state.CreateNomineeResponse);
+        toast.info(response.data.message);
+        console.log(response.data.message);
+        return dispatch({
+          type: "CREATE_NOMINEE_DATA",
+          payload: state.CreateNomineeResponse,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const InsuranceNominationView = (candidateId) => {
+    candidate
+      .get("/api/v2/candidate/insurance-nomination/view/" + candidateId)
+      .then((response) => {
+        state.candidateInsuranceNominationData = response.data.data;
+        console.log(
+          "Candidate Insurance Nomination Data ",
+          state.candidateInsuranceNominationData
+        );
+        return dispatch({
+          type: "CANDIDATE_INSURANCE_NOMINEE_DATA",
+          payload: state.candidateInsuranceNominationData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const StateList = (country) => {
     candidate
       .get("/api/v2/candidate/address/view/state/" + country)
@@ -174,10 +214,15 @@ export const OnBoardProvider = (props) => {
         searchForEmp2,
         CandidateViewInformation,
         CandidatePersonalInfo,
+        CreateNominee,
+        InsuranceNominationView,
         searchEmpData1: state.searchEmpData1,
         searchEmpData2: state.searchEmpData2,
         name: state.name,
         PersonalInfoResponse: state.PersonalInfoResponse,
+        CreateNomineeResponse: state.CreateNomineeResponse,
+        candidateInsuranceNominationData:
+          state.candidateInsuranceNominationData,
         candidatePersonalInfoData: state.candidatePersonalInfoData,
         candidateData: state.candidateData,
         stateList: state.stateList,

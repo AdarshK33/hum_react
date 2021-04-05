@@ -190,7 +190,8 @@ const PersonalInformation = (props) => {
     // console.log("personal information view candidate", candidateData);
     if (
       (candidatePersonalInfoData !== null) &
-      (candidatePersonalInfoData !== undefined)
+      (candidatePersonalInfoData !== undefined) &
+      (Object.keys(candidatePersonalInfoData).length !== 0)
     ) {
       setState({
         aadhaarName: candidatePersonalInfoData.aadhaarName,
@@ -283,11 +284,18 @@ const PersonalInformation = (props) => {
 
     if (
       (state.aadhaarName !== "") &
-      nameValid.test(state.aadhaarName.replace(/ +/g, ""))
+      (state.aadhaarName !== null) &
+      (state.aadhaarName !== undefined)
     ) {
-      setAdharNameError(false);
-      console.log("adharNAmeSuccess");
-      return true;
+      if (nameValid.test(state.aadhaarName.replace(/ +/g, ""))) {
+        setAdharNameError(false);
+        console.log("adharNAmeSuccess");
+        return true;
+      } else {
+        setAdharNameError(true);
+        console.log("AdharnameError");
+        return false;
+      }
     } else {
       setAdharNameError(true);
       console.log("AdharnameError");
@@ -298,11 +306,18 @@ const PersonalInformation = (props) => {
     const nameValid = /^[a-zA-Z\b]+$/;
     if (
       (state.fatherName !== "") &
-      nameValid.test(state.fatherName.replace(/ +/g, ""))
+      (state.fatherName !== null) &
+      (state.fatherName !== undefined)
     ) {
-      setFatherNameError(false);
-      console.log("fatherNAmeSuccess");
-      return true;
+      if (nameValid.test(state.fatherName.replace(/ +/g, ""))) {
+        setFatherNameError(false);
+        console.log("fatherNAmeSuccess");
+        return true;
+      } else {
+        setFatherNameError(true);
+        console.log("fathernameError");
+        return false;
+      }
     } else {
       setFatherNameError(true);
       console.log("fathernameError");
@@ -314,9 +329,9 @@ const PersonalInformation = (props) => {
 
     if (candidateViewInfo.contractType === "Permanent") {
       if ((state.panNumber !== "") & panValid.test(state.panNumber)) {
+        var tempVar = state.panNumber.split("");
+        console.log(tempVar[3]);
         if (tempVar[3].toLocaleLowerCase() === "p") {
-          var tempVar = state.panNumber.split("");
-          console.log(tempVar[3]);
           setPanNumberError(false);
           console.log("pansucess");
           return true;
@@ -343,7 +358,8 @@ const PersonalInformation = (props) => {
     ) {
       if (
         (state.aadhaarNumber !== "") &
-        aadharValid.test(state.aadhaarNumber)
+        aadharValid.test(state.aadhaarNumber) &
+        (state.aadhaarNumber.length === 12)
       ) {
         setAdharNumberError(false);
         console.log("adharsucess");
@@ -619,7 +635,8 @@ const PersonalInformation = (props) => {
         console.log(InfoData);
         updatePersonalInfo(InfoData);
         // next page code should be here
-        // setSaveClick(true);
+        const submited = props.NextStep; //next component
+        submited();
       }
       // if (saveClick === true) {
       //   const InfoData = {
@@ -692,7 +709,10 @@ const PersonalInformation = (props) => {
     console.log(state);
   };
   const dateOfBirthHandler = (date) => {
-    setDOB(date);
+    var AdjusteddateValue = new Date(
+      date.getTime() - date.getTimezoneOffset() * 60000
+    );
+    setDOB(AdjusteddateValue);
   };
 
   const handleMaleGenderCheckboxChange = (e) => {
@@ -757,6 +777,7 @@ const PersonalInformation = (props) => {
   };
   return (
     <Fragment>
+      <ToastContainer />
       <Form>
         <Row style={{ marginBottom: "1rem" }}>
           <Col sm={8}>
@@ -1394,10 +1415,10 @@ const PersonalInformation = (props) => {
           <button className="stepperButtons" onClick={PrevStep}>
             Back
           </button>
+
           <button className="stepperButtons" onClick={submitHandler}>
             Save & Next
           </button>
-          <ToastContainer />
         </div>
       </Form>
     </Fragment>
