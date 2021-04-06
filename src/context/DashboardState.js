@@ -7,7 +7,9 @@ import {  toast } from "react-toastify";
 
 const initial_state = {
     cosCentreList: [],
-    graphData:[]
+    graphData:[],
+    weekList:[],
+    viewDateList:{}
   
   }
 
@@ -61,11 +63,55 @@ const initial_state = {
           });
       }
 
+      const weekData = (year) => {
+        client.get('/weekoff/weeks/'+year)
+        .then((response) => {
+          state.weekList = response.data.data
+          console.log("weekList", state.weekList)
+          return dispatch ({type:'WEEK_LIST', payload: state.weekList})
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+      }
+
+      const viewDates = (month, year, weekName) => {
+        console.log("weekName in context", weekName)
+        if(weekName !== undefined){
+          client.get('dashboard/view/dates/'+month+'/'+year+'?weekName='+weekName)
+          .then((response) => {
+            state.viewDateList = response.data.data
+            console.log("view list",state.viewDateList)
+            return dispatch ({type:'VIEW_DATE', payload: state.viewDateList})
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+        }else{
+          client.get('dashboard/view/dates/'+month+'/'+year)
+          .then((response) => {
+            state.viewDateList = response.data.data
+            console.log("view list",state.viewDateList)
+            return dispatch ({type:'VIEW_DATE', payload: state.viewDateList})
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+        }
+        
+        
+       
+      }
+
       return (<DashboardContext.Provider value={{        
         viewCostCentre, 
         viewData,       
+        weekData,
+        viewDates,
         cosCentreList: state.cosCentreList, 
-        graphData: state.graphData       
+        graphData: state.graphData     ,
+        weekList: state.weekList,
+        viewDateList: state.viewDateList
       }}>
         {children}
       </DashboardContext.Provider>);
