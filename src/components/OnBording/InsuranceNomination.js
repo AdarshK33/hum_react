@@ -28,7 +28,7 @@ const InsuranceNomination = (props) => {
   } = useContext(OnBoardContext);
   const [isChecked, changeCheckState] = useState(false);
   const [showEdit, SetShowEdit] = useState(false);
-  const [defaultNominee, setDefaultNominee] = useState(false);
+  const [defaultNominee, setDefaultNominee] = useState(true);
   const [count, setCount] = useState(0);
   const [NomineeCount, setNomineeCount] = useState(0);
   const [NominForm1, setNominForm1] = useState(false);
@@ -213,6 +213,56 @@ const InsuranceNomination = (props) => {
       (candidateInsuranceNominationData !== undefined) &
       (Object.keys(candidateInsuranceNominationData).length !== 0)
     ) {
+      if (
+        (candidateInsuranceNominationData[0] !== null) &
+        (candidateInsuranceNominationData[0] !== undefined) &
+        (Object.keys(candidateInsuranceNominationData[0]).length !== 0)
+      ) {
+        setDefaultNominee(true);
+        setNomineeCount(0);
+      } else {
+        setDefaultNominee(false);
+      }
+      if (
+        (candidateInsuranceNominationData[1] !== null) &
+        (candidateInsuranceNominationData[1] !== undefined) &
+        (Object.keys(candidateInsuranceNominationData[1]).length !== 0)
+      ) {
+        setNominForm1(true);
+        setNomineeCount(1);
+      } else {
+        setNominForm1(false);
+      }
+      if (
+        (candidateInsuranceNominationData[2] !== null) &
+        (candidateInsuranceNominationData[2] !== undefined) &
+        (Object.keys(candidateInsuranceNominationData[2]).length !== 0)
+      ) {
+        setNominForm2(true);
+        setNomineeCount(2);
+      } else {
+        setNominForm2(false);
+      }
+      if (
+        (candidateInsuranceNominationData[3] !== null) &
+        (candidateInsuranceNominationData[3] !== undefined) &
+        (Object.keys(candidateInsuranceNominationData[3]).length !== 0)
+      ) {
+        setNominForm3(true);
+        setNomineeCount(3);
+      } else {
+        setNominForm3(false);
+      }
+      if (
+        (candidateInsuranceNominationData[4] !== null) &
+        (candidateInsuranceNominationData[4] !== undefined) &
+        (Object.keys(candidateInsuranceNominationData[4]).length !== 0)
+      ) {
+        setNominForm4(true);
+        setNomineeCount(4);
+      } else {
+        setNominForm4(false);
+      }
       setState({
         age:
           (candidateInsuranceNominationData[0].age !== null) &
@@ -348,6 +398,30 @@ const InsuranceNomination = (props) => {
         (candidateInsuranceNominationData[0].dateOfBirth !== null) &
           (candidateInsuranceNominationData[0].dateOfBirth !== undefined)
           ? new Date(candidateInsuranceNominationData[0].dateOfBirth)
+          : ""
+      );
+      setNominee2DOB(
+        (candidateInsuranceNominationData[1].dateOfBirth !== null) &
+          (candidateInsuranceNominationData[1].dateOfBirth !== undefined)
+          ? new Date(candidateInsuranceNominationData[1].dateOfBirth)
+          : ""
+      );
+      setNominee3DOB(
+        (candidateInsuranceNominationData[2].dateOfBirth !== null) &
+          (candidateInsuranceNominationData[2].dateOfBirth !== undefined)
+          ? new Date(candidateInsuranceNominationData[2].dateOfBirth)
+          : ""
+      );
+      setNominee4DOB(
+        (candidateInsuranceNominationData[3].dateOfBirth !== null) &
+          (candidateInsuranceNominationData[3].dateOfBirth !== undefined)
+          ? new Date(candidateInsuranceNominationData[3].dateOfBirth)
+          : ""
+      );
+      setNominee5DOB(
+        (candidateInsuranceNominationData[4].dateOfBirth !== null) &
+          (candidateInsuranceNominationData[4].dateOfBirth !== undefined)
+          ? new Date(candidateInsuranceNominationData[4].dateOfBirth)
           : null
       );
     }
@@ -376,7 +450,7 @@ const InsuranceNomination = (props) => {
     const numValid = /^[0-9\b]+$/;
 
     if (state.itemState !== "") {
-      if (numValid.test(itemState) & (itemState.length === 2)) {
+      if (numValid.test(itemState)) {
         setError(false);
         console.log("ageNumberSucess");
         return true;
@@ -719,8 +793,8 @@ const InsuranceNomination = (props) => {
           : [];
       console.log(NominiInfo);
       CreateNominee(NominiInfo);
-      // const nextPage = props.NextStep;
-      // nextPage();
+      const nextPage = props.NextStep;
+      nextPage();
     }
   };
 
@@ -953,7 +1027,7 @@ const InsuranceNomination = (props) => {
           </Form.Group>
         </Col>
       </Row>
-      {(defaultNominee === true) & (isChecked === false) ? (
+      {defaultNominee === true ? (
         <div>
           {/* first Nominee */}
           <Row style={{ marginBottom: "2rem" }}>
@@ -1232,22 +1306,26 @@ const InsuranceNomination = (props) => {
                 </div>
               </Row>
             </Col>
-            <Col sm={1} style={{ marginLeft: "-2rem" }}>
-              <Form.Group>
-                <div>
-                  <button
-                    onClick={cancel}
-                    type="cancel"
-                    style={{ color: "white", border: " 2px solid#4466f2" }}
-                  >
-                    <i
-                      class="fa fa-close"
-                      style={{ fontSize: "20px", color: "red" }}
-                    ></i>
-                  </button>
-                </div>
-              </Form.Group>
-            </Col>
+            {isChecked === false ? (
+              <Col sm={1} style={{ marginLeft: "-2rem" }}>
+                <Form.Group>
+                  <div>
+                    <button
+                      onClick={cancel}
+                      type="cancel"
+                      style={{ color: "white", border: " 2px solid#4466f2" }}
+                    >
+                      <i
+                        class="fa fa-close"
+                        style={{ fontSize: "20px", color: "red" }}
+                      ></i>
+                    </button>
+                  </div>
+                </Form.Group>
+              </Col>
+            ) : (
+              ""
+            )}
           </Row>
           <Row style={{ marginBottom: "1rem" }}>
             <Col sm={11}>
@@ -1435,22 +1513,26 @@ const InsuranceNomination = (props) => {
                 </div>
               </Row>
             </Col>
-            <Col sm={1} style={{ marginLeft: "-2rem" }}>
-              <Form.Group>
-                <div>
-                  <button
-                    onClick={cancel}
-                    type="cancel"
-                    style={{ color: "white", border: " 2px solid#4466f2" }}
-                  >
-                    <i
-                      class="fa fa-close"
-                      style={{ fontSize: "20px", color: "red" }}
-                    ></i>
-                  </button>
-                </div>
-              </Form.Group>
-            </Col>
+            {isChecked === false ? (
+              <Col sm={1} style={{ marginLeft: "-2rem" }}>
+                <Form.Group>
+                  <div>
+                    <button
+                      onClick={cancel}
+                      type="cancel"
+                      style={{ color: "white", border: " 2px solid#4466f2" }}
+                    >
+                      <i
+                        class="fa fa-close"
+                        style={{ fontSize: "20px", color: "red" }}
+                      ></i>
+                    </button>
+                  </div>
+                </Form.Group>
+              </Col>
+            ) : (
+              ""
+            )}
           </Row>
           <Row style={{ marginBottom: "1rem" }}>
             <Col sm={11}>
@@ -1639,22 +1721,26 @@ const InsuranceNomination = (props) => {
                 </div>
               </Row>
             </Col>
-            <Col sm={1} style={{ marginLeft: "-2rem" }}>
-              <Form.Group>
-                <div>
-                  <button
-                    onClick={cancel}
-                    type="cancel"
-                    style={{ color: "white", border: " 2px solid#4466f2" }}
-                  >
-                    <i
-                      class="fa fa-close"
-                      style={{ fontSize: "20px", color: "red" }}
-                    ></i>
-                  </button>
-                </div>
-              </Form.Group>
-            </Col>
+            {isChecked === false ? (
+              <Col sm={1} style={{ marginLeft: "-2rem" }}>
+                <Form.Group>
+                  <div>
+                    <button
+                      onClick={cancel}
+                      type="cancel"
+                      style={{ color: "white", border: " 2px solid#4466f2" }}
+                    >
+                      <i
+                        class="fa fa-close"
+                        style={{ fontSize: "20px", color: "red" }}
+                      ></i>
+                    </button>
+                  </div>
+                </Form.Group>
+              </Col>
+            ) : (
+              ""
+            )}
           </Row>
           <Row style={{ marginBottom: "1rem" }}>
             <Col sm={11}>
@@ -1843,22 +1929,26 @@ const InsuranceNomination = (props) => {
                 </div>
               </Row>
             </Col>
-            <Col sm={1} style={{ marginLeft: "-2rem" }}>
-              <Form.Group>
-                <div>
-                  <button
-                    onClick={cancel}
-                    type="cancel"
-                    style={{ color: "white", border: " 2px solid#4466f2" }}
-                  >
-                    <i
-                      class="fa fa-close"
-                      style={{ fontSize: "20px", color: "red" }}
-                    ></i>
-                  </button>
-                </div>
-              </Form.Group>
-            </Col>
+            {isChecked === false ? (
+              <Col sm={1} style={{ marginLeft: "-2rem" }}>
+                <Form.Group>
+                  <div>
+                    <button
+                      onClick={cancel}
+                      type="cancel"
+                      style={{ color: "white", border: " 2px solid#4466f2" }}
+                    >
+                      <i
+                        class="fa fa-close"
+                        style={{ fontSize: "20px", color: "red" }}
+                      ></i>
+                    </button>
+                  </div>
+                </Form.Group>
+              </Col>
+            ) : (
+              ""
+            )}
           </Row>
           <Row style={{ marginBottom: "1rem" }}>
             <Col sm={11}>
@@ -2000,24 +2090,27 @@ const InsuranceNomination = (props) => {
                 return <div>Nominees.</div>;
             }
           })()} */}
-      {/* <Row>
-        <Col sm={4}></Col>
-        <Col sm={4} style={{ padding: "0px 0px 0px 35px" }}>
-          <Form.Group>
-            <div>
-              <button
-                className="buttonField  button"
-                onClick={handleIncrement}
-                disabled={false}
-                style={{ width: "160px" }}
-              >
-                <b> Add New Nominee + </b>
-              </button>
-              
-            </div>
-          </Form.Group>
-        </Col>
-      </Row> */}
+      {(isChecked === false) & (NomineeCount <= 3) ? (
+        <Row>
+          <Col sm={4}></Col>
+          <Col sm={4} style={{ padding: "0px 0px 0px 35px" }}>
+            <Form.Group>
+              <div>
+                <button
+                  className="buttonField  button"
+                  onClick={handleIncrement}
+                  disabled={false}
+                  style={{ width: "160px" }}
+                >
+                  <b> Add New Nominee + </b>
+                </button>
+              </div>
+            </Form.Group>
+          </Col>
+        </Row>
+      ) : (
+        ""
+      )}
       <div
         style={{ marginTop: "2rem", marginBottom: "2rem", textAlign: "center" }}
       >

@@ -9,9 +9,11 @@ import { Row, Col, Form, Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
+import { toast } from "react-toastify";
+
 import { Search, PlusCircle, MinusCircle } from "react-feather";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import { ToastContainer, toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 // import "./offers.css";
 import "./OnBoard.css";
 import "./Documents.css";
@@ -634,6 +636,7 @@ const PersonalInformation = (props) => {
         console.log("onsubmit");
         console.log(InfoData);
         updatePersonalInfo(InfoData);
+
         // next page code should be here
         const submited = props.NextStep; //next component
         submited();
@@ -777,7 +780,7 @@ const PersonalInformation = (props) => {
   };
   return (
     <Fragment>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <Form>
         <Row style={{ marginBottom: "1rem" }}>
           <Col sm={8}>
