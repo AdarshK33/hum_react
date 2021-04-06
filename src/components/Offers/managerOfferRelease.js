@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useContext } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import Breadcrumb from "../common/breadcrumb";
 import {
@@ -14,15 +14,40 @@ import EmployeeForm from "./employeeForm";
 import WorkInformation from "./workInformation";
 import RemunerationInformation from "./remunerationInformation";
 import GenerateOfferLetter from "./generateOfferLetter";
+import { OfferContext } from "../../context/OfferState";
 
 const ManagerOfferRelease = () => {
+  const {
+    remunerationSave,
+    candidateData,
+    createCandidateResponse,
+    viewCandidateId,
+    remunerationView,
+    remunerationViewData,
+    workInformationData,
+    workInfoViewData,
+    workInfoView,
+    remunerationData,
+  } = useContext(OfferContext);
+
   const [isChecked, setIsChecked] = useState(false);
   const checkedHandler = (e) => {
     setIsChecked(true);
   };
+
+  const remunarationClick = (e) => {
+    console.log("inside remunarationClick");
+    if (
+      createCandidateResponse !== null &&
+      createCandidateResponse != undefined
+    ) {
+      workInfoView(createCandidateResponse.candidateId);
+    }
+  };
+
   return (
     <Fragment>
-      <Container fluid className='container-accordion'>
+      <Container fluid className="container-accordion">
         <h5 style={{ marginTop: "1rem", fontWeight: "700" }}>
           New Offer Initation
         </h5>
@@ -36,7 +61,8 @@ const ManagerOfferRelease = () => {
                   checked={isChecked}
                   onChange={checkedHandler}
                 />
-                &nbsp; */} Step 1: Candidate Information
+                &nbsp; */}{" "}
+                Step 1: Candidate Information
               </AccordionItemButton>
             </AccordionItemHeading>
             <AccordionItemPanel>
@@ -46,7 +72,7 @@ const ManagerOfferRelease = () => {
               />
             </AccordionItemPanel>
           </AccordionItem>
-        {/* </Accordion>
+          {/* </Accordion>
         <Accordion preExpanded={["a"]}>
           <AccordionItem uuid="a">
             <AccordionItemHeading>
@@ -70,14 +96,14 @@ const ManagerOfferRelease = () => {
             </AccordionItemPanel>
           </AccordionItem>
 
-          <AccordionItem>
+          <AccordionItem onClick={remunarationClick}>
             <AccordionItemHeading>
               <AccordionItemButton>
                 Step 3: Remuneration Information
               </AccordionItemButton>
             </AccordionItemHeading>
             <AccordionItemPanel>
-              <RemunerationInformation />
+              <RemunerationInformation remunarationClick={remunarationClick} />
             </AccordionItemPanel>
           </AccordionItem>
 

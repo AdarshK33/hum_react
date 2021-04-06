@@ -4,16 +4,38 @@ import { Row, Col, Form, Button } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import "./OnBoard.css";
+import { OnBoardContext } from "../../context/OnBoardState";
 
 const BankDetails = (props) => {
+  const {
+    bankCreate,
+    bankSaveData,
+    CandidateProfile,
+    candidateData,
+    bankView,
+    bankViewData,
+    bankUpdate,
+    bankUpdateData,
+  } = useContext(OnBoardContext);
   const [disabled, setDisableState] = useState(false);
   const [accountNumberError, setAccountNumberError] = useState(false);
   const [bankNameError, setBankNameError] = useState(false);
   const [ifscCodeError, setIfscCodeError] = useState(false);
 
+  useEffect(() => {
+    CandidateProfile();
+    bankView(candidateData.candidateId);
+    if (bankViewData && bankViewData !== null && bankViewData !== undefined) {
+      setState({
+        accountNumber: bankViewData.accountNumber,
+        bankName: bankViewData.bankName,
+        ifscCode: bankViewData.ifscCode,
+      });
+    }
+    console.log("bankViewData", bankViewData);
+  }, []);
   const [state, setState] = useState({
     accountNumber: "",
-    bankId: 0,
     bankName: "",
     ifscCode: "",
   });
@@ -68,20 +90,36 @@ const BankDetails = (props) => {
   };
 
   const submitHandler = (e) => {
+    console.log("inside bank submit handler", bankSaveData);
     const nextPage = props.NextStep;
+    let bankValue;
     nextPage();
     e.preventDefault();
-
+    if (!bankSaveData || !bankViewData) {
+      bankValue = 0;
+    } else if (bankViewData || bankSaveData) {
+      bankValue = bankSaveData.bankId
+        ? bankSaveData.bankId
+        : bankViewData.bankId;
+    }
     const value = checkValidations();
     if (value === true) {
       const bankInfo = {
         accountNumber: state.accountNumber,
-        bankId: 0,
+        bankId: bankValue,
         bankName: state.bankName,
-        candidateId: 0,
+        candidateId: candidateData.candidateId,
         ifscCode: state.ifscCode,
       };
       console.log(bankInfo);
+      if (
+        (bankSaveData && bankSaveData.bankId) ||
+        (bankViewData && bankViewData.bankId)
+      ) {
+        bankUpdate(bankInfo);
+      } else {
+        bankCreate(bankInfo);
+      }
       const nextPage = props.NextStep;
       nextPage();
     }
