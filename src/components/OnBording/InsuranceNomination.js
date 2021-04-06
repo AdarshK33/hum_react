@@ -2112,7 +2112,11 @@ const InsuranceNomination = (props) => {
         ""
       )}
       <div
-        style={{ marginTop: "2rem", marginBottom: "2rem", textAlign: "center" }}
+        style={{
+          marginTop: "2rem",
+          marginBottom: "2rem",
+          textAlign: "center",
+        }}
       >
         <button className="stepperButtons" onClick={PrevStep}>
           Back

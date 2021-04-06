@@ -20,9 +20,9 @@ const WorkInformation = () => {
     probation: "",
     recuritment: "",
     ngoDetail: "",
-    internship:"",
-    noticePeriod:"",
-    managerId:null
+    internship: "",
+    noticePeriod: "",
+    managerId: null,
   });
   const [dateOfJoining, setDateOFJoining] = useState();
   const [dateOfLeaving, setDateOFLeaving] = useState();
@@ -51,7 +51,7 @@ const WorkInformation = () => {
     stateData,
     cityData,
     cityList,
-    managerList
+    managerList,
   } = useContext(OfferContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const { user } = useContext(AppContext);
@@ -232,7 +232,7 @@ const WorkInformation = () => {
             </Form.Group>
           </Col>
           <Col sm={3}>
-          <Form.Group>
+            <Form.Group>
               <Form.Label>Designation</Form.Label>
               {state.employmentType === "Internship" ? (
                 <Form.Control
@@ -265,7 +265,6 @@ const WorkInformation = () => {
                 </Form.Control>
               )}
             </Form.Group>
-           
           </Col>
           <Col sm={3}>
             <Form.Group>
@@ -335,7 +334,7 @@ const WorkInformation = () => {
             )}
           </Col>
           <Col sm={3}>
-          <Form.Group>
+            <Form.Group>
               <Form.Label>Cost Center</Form.Label>
               <Form.Control
                 as="select"
@@ -361,32 +360,36 @@ const WorkInformation = () => {
             </Form.Group>
           </Col>
           <Col sm={3}>
-              <Form.Group className="reactDate">
-                <Form.Label>Manager Name/Id</Form.Label>
-                {managerList === null ?
+            <Form.Group className="reactDate">
+              <Form.Label>Manager Name/Id</Form.Label>
+              {managerList === null ? (
                 <Form.Control
                   type="text"
                   value={user.employeeId}
                   className="form-input"
                   readOnly
                 />
-                : 
+              ) : (
                 <Form.Control
-                as="select"
-                value={state.managerId}
-                className="form-input"
-                name="managerId"
-                onChange={changeHandler}
-                disabled={disabled}
-                required>
-                  <option value=''>Select ManagerId</option>
-                  {managerList.map((item,i) => {
-                    return(
-                      <option key={i} value={item.employeeId}>{item.firstName}-{item.employeeId}</option>
-                    )
+                  as="select"
+                  value={state.managerId}
+                  className="form-input"
+                  name="managerId"
+                  onChange={changeHandler}
+                  disabled={disabled}
+                  required
+                >
+                  <option value="">Select ManagerId</option>
+                  {managerList.map((item, i) => {
+                    return (
+                      <option key={i} value={item.employeeId}>
+                        {item.firstName}-{item.employeeId}
+                      </option>
+                    );
                   })}
-                </Form.Control>}
-              </Form.Group>
+                </Form.Control>
+              )}
+            </Form.Group>
           </Col>
           <Col sm={3}>
             <Form.Group>
@@ -437,13 +440,15 @@ const WorkInformation = () => {
                 required
               >
                 <option value="">Select State</option>
-                {stateList !== null && stateList !== undefined && stateList.map((item, i) => {
-                  return (
-                    <option key={i} value={item.stateId}>
-                      {item.stateName}
-                    </option>
-                  );
-                })}
+                {stateList !== null &&
+                  stateList !== undefined &&
+                  stateList.map((item, i) => {
+                    return (
+                      <option key={i} value={item.stateId}>
+                        {item.stateName}
+                      </option>
+                    );
+                  })}
               </Form.Control>
             </Form.Group>
           </Col>
@@ -464,7 +469,7 @@ const WorkInformation = () => {
                   cityList.map((item, i) => {
                     return (
                       <option key={i} value={item.cityId}>
-                        {item.locationName}/{item.cityName} 
+                        {item.locationName}/{item.cityName}
                       </option>
                     );
                   })}
@@ -473,20 +478,19 @@ const WorkInformation = () => {
           </Col>
 
           <Col sm={3}>
-              <Form.Group className="reactDate">
-                <Form.Label>Date of Joining</Form.Label>
-                <DatePicker
-                  className="form-control form-input"
-                  selected={dateOfJoining}
-                  required
-                  onChange={(e) => dateOfJoiningHandler(e)}
-                  minDate={new Date()}
-                  dateFormat="yyyy-MM-dd"
-                  placeholderText="Date of Joining"
-                  disabled={disabled}
-                />
-              </Form.Group>
-              
+            <Form.Group className="reactDate">
+              <Form.Label>Date of Joining</Form.Label>
+              <DatePicker
+                className="form-control form-input"
+                selected={dateOfJoining}
+                required
+                onChange={(e) => dateOfJoiningHandler(e)}
+                minDate={new Date()}
+                dateFormat="yyyy-MM-dd"
+                placeholderText="Date of Joining"
+                disabled={disabled}
+              />
+            </Form.Group>
           </Col>
           <Col sm={3}>
             {state.employmentType === "Internship" ? (
@@ -571,10 +575,11 @@ const WorkInformation = () => {
               </Form.Group>
             )}
           </Col>
-          {state.employmentType === "Internship" ?  ''
-          :
-          <Col sm={3}>
-          <Form.Group>
+          {state.employmentType === "Internship" ? (
+            ""
+          ) : (
+            <Col sm={3}>
+              <Form.Group>
                 <Form.Label>Probation Period</Form.Label>
                 <Form.Control
                   as="select"
@@ -591,7 +596,8 @@ const WorkInformation = () => {
                   <option value="3">3 Month</option>
                 </Form.Control>
               </Form.Group>
-          </Col>}
+            </Col>
+          )}
         </Row>
         {state.recuritment === "NGO" ? (
           <Row>

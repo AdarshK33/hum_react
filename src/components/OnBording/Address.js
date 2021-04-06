@@ -13,9 +13,14 @@ import countryList from "react-select-country-list";
 import { OnBoardContext } from "../../context/OnBoardState";
 
 const Address = (props) => {
-  const { stateList, StateList, cityList, CityList } = useContext(
-    OnBoardContext
-  );
+  const {
+    candidateCountryList,
+    candidateCountryData,
+    CandidateStateList,
+    candidateStateData,
+    candidateCityList,
+    candidateCityData,
+  } = useContext(OnBoardContext);
   const { CandidateProfile, candidateData } = useContext(OnBoardContext);
 
   const [isChecked, changeCheckState] = useState(false);
@@ -64,8 +69,10 @@ const Address = (props) => {
 
   useEffect(() => {
     CandidateProfile();
+    candidateCountryList();
   }, []);
   console.log("address candidate data", candidateData);
+  console.log("candidateCountryList data", candidateCountryData);
 
   const flatNumberValidation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
@@ -309,10 +316,15 @@ const Address = (props) => {
     back();
   };
   const changeHandler = (e) => {
+    console.log("country value", e.target.value);
     setState({
       ...state,
       [e.target.name]: e.target.value,
     });
+    if (e.target.name === "countryId") {
+      console.log("country id", state.countryId);
+      CandidateStateList(state.countryId);
+    }
     console.log(state);
   };
   const handleCheckboxChange = (e) => {
@@ -425,16 +437,20 @@ const Address = (props) => {
                 as="select"
                 name="countryId"
                 value={state.countryId}
-                options={options}
                 onChange={changeHandler}
                 required
                 style={countryError ? { borderColor: "red" } : {}}
                 disabled={disabled}
               >
-                <option value="">Country</option>
-                {options.map((item) => {
-                  return <option key={item.value}>{item.label}</option>;
-                })}
+                <option value="">Select Country</option>
+                {candidateCountryData !== null &&
+                  candidateCountryData !== undefined &&
+                  candidateCountryData.length > 0 &&
+                  candidateCountryData.map((item) => {
+                    return (
+                      <option key={item.countryId}>{item.countryName}</option>
+                    );
+                  })}
               </Form.Control>
               {countryError ? (
                 <p style={{ color: "red" }}> Please choose country</p>
