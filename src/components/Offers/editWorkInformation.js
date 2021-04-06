@@ -195,7 +195,8 @@ const EditWorkInformation = () => {
           <Col sm={3}>
             <Form.Group className="reactDate">
               <Form.Label>Type of Employment</Form.Label>
-              {/*  <Form.Control
+              {candidateData.workInformation === null ?
+               <Form.Control
                 as="select"
                 value={state.employmentType}
                 className="form-input"
@@ -203,6 +204,7 @@ const EditWorkInformation = () => {
                 onChange={changeHandler}
                 disabled={disabled}
               >
+                <option value=''>Select Employment Type</option>
                 {shiftContractNames !== null &&
                   shiftContractNames !== undefined &&
                   shiftContractNames.length > 0 &&
@@ -211,13 +213,13 @@ const EditWorkInformation = () => {
                       <option key={item.typeId}>{item.contractType}</option>
                     );
                   })}
-              </Form.Control> */}
+              </Form.Control> :
               <Form.Control
                 type="text"
                 value={state.employmentType}
                 className="form-control form-input"
                 readOnly
-              />
+              />}
             </Form.Group>
           </Col>
           <Col sm={3}>
@@ -240,6 +242,7 @@ const EditWorkInformation = () => {
                   disabled={disabled}
                   required
                 >
+                  <option value=''>Select Designation</option>
                   {designationName !== null &&
                     designationName !== undefined &&
                     designationName.length > 0 &&
@@ -267,6 +270,7 @@ const EditWorkInformation = () => {
                 disabled={disabled}
                 required
               >
+                <option value=''>Select Department</option>
                 {departmentName !== null &&
                   departmentName !== undefined &&
                   departmentName.length > 0 &&
@@ -306,6 +310,7 @@ const EditWorkInformation = () => {
                   disabled={disabled}
                   required
                 >
+                  <option value=''>Select Position</option>
                   {designationName !== null &&
                     designationName !== undefined &&
                     designationName.length > 0 &&
@@ -332,6 +337,7 @@ const EditWorkInformation = () => {
                 disabled={disabled}
                 required
               >
+                <option value=''>Select Cost Center</option>
                 {costCenterList !== null &&
                   costCenterList !== undefined &&
                   costCenterList.length > 0 &&
@@ -393,6 +399,7 @@ const EditWorkInformation = () => {
                   disabled={disabled}
                   required
                 >
+                  <option value=''>Select Sports</option>
                   {sportsNames !== null &&
                     sportsNames !== undefined &&
                     sportsNames.length > 0 &&
@@ -497,6 +504,7 @@ const EditWorkInformation = () => {
                   disabled={disabled}
                   required
                 >
+                  <option value=''>Select Recuritment Source</option>
                   <option>Employee Referral</option>
                   <option>LinkedIn</option>
                   <option>Monster</option>
@@ -566,6 +574,7 @@ const EditWorkInformation = () => {
                   disabled={disabled}
                   required
                 >
+                  <option value=''>Select Probabtion Period</option>
                   <option value="1">1 Month</option>
                   <option value="2">2 Month</option>
                   <option value="3">3 Month</option>
