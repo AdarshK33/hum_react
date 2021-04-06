@@ -79,11 +79,6 @@ const EditPFDeclaration = (props) => {
           setPfNominationHoldHealthNo(false);
         }
       }
-
-      // setState(pfDetails);
-      // console.log(pfDetails);
-      // setDisableState(true);
-      // setState(personalInfoData);
     }
   }, []);
 
@@ -252,10 +247,8 @@ const EditPFDeclaration = (props) => {
     console.log(state);
   };
   return (
-    console.log(firstJobYes),
-    console.log("hloo"),
-    (
-      <Fragment>
+    <Fragment>
+      {pfDetails !== null && pfDetails !== undefined ? (
         <Form>
           <Row style={{ marginBottom: "2rem" }}>
             <Col sm={5}>
@@ -494,25 +487,11 @@ const EditPFDeclaration = (props) => {
               </Col>
             )}
           </Row>
-          {!window.location.href.includes("verification") && (
-            <div
-              style={{
-                marginTop: "2rem",
-                marginBottom: "2rem",
-                textAlign: "center",
-              }}
-            >
-              <button className="stepperButtons" onClick={PrevStep}>
-                Back
-              </button>
-              <button className="stepperButtons" onClick={submitHandler}>
-                Save & Next
-              </button>
-            </div>
-          )}
         </Form>
-      </Fragment>
-    )
+      ) : (
+        <div className="text-center">No Data Found</div>
+      )}
+    </Fragment>
   );
 };
 export default EditPFDeclaration;

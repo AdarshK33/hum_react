@@ -30,3 +30,12 @@
   background-color: #fff !important;
   text-decoration: underline !important;
 }
+.modalHeader {
+  border-bottom: none !important;
+  text-align: center;
+}
+.remarkText {
+  width: 18vw;
+  height: 10vh;
+  border-color: #006ebb;
+}

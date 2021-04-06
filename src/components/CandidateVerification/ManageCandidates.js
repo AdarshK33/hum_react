@@ -30,6 +30,7 @@ const CandidateList = () => {
     contactInformation,
     personalInfo,
     fetchPfDetails,
+    downloadDocument,
   } = useContext(DocsVerifyContext);
   useEffect(() => {
     candidateView("all", pageCount);
@@ -69,6 +70,9 @@ const CandidateList = () => {
     } else {
       candidateView("all", pageCount);
     }
+  };
+  const handleView = (photo) => {
+    window.open(photo);
   };
   const FetchCandidateData = (candidateId) => {
     fetchNominationDetails(candidateId);
@@ -158,7 +162,10 @@ const CandidateList = () => {
                         {item.firstName} {item.lastName}
                       </td>
                       <td>
-                        <a href={item.photo} style={{ cursor: "pointer" }}>
+                        <a
+                          onClick={() => downloadDocument(item.photo)}
+                          style={{ cursor: "pointer" }}
+                        >
                           view
                         </a>
                       </td>

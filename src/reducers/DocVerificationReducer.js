@@ -14,6 +14,12 @@ const GroupReducer = (state, action) => {
       return { ...state, nominationDetails: action.payload };
     case "PF_DETAILS_TO_VERIFY":
       return { ...state, pfDetails: action.payload };
+    case "GET_ACCEPT_STATUS":
+      return { ...state, acceptStatus: action.payload };
+    case "GET_REJECT_STATUS":
+      return { ...state, rejectStatus: action.payload };
+    case "DOWNLOAD_DOCU":
+      return { ...state, downloadedFile: action.payload };
   }
 };
 export default GroupReducer;

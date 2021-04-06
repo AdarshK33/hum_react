@@ -2,15 +2,21 @@ import React, { createContext, useReducer, useState } from "react";
 import { client } from "../utils/axios";
 import DocsVerificationReducer from "../reducers/DocVerificationReducer";
 import { toast } from "react-toastify";
+import Axios from "axios";
+import { access_token } from "../auth/signin";
+var fileDownload = require("js-file-download");
 
 const initial_state = {
   docsToVerify: [],
-  personalInfoData: [],
+  personalInfoData: {},
   addressInfoData: {},
   emergencyInfo: {},
   bankDetails: {},
-  nominationDetails: [],
+  nominationDetails: {},
   pfDetails: {},
+  acceptStatus: "",
+  rejectStatus: "",
+  downloadedFile: [],
 };
 export const DocsVerifyContext = createContext();
 export const DocsVerificationProvider = (props) => {
@@ -19,14 +25,11 @@ export const DocsVerificationProvider = (props) => {
 
   // fetching candidate documents for verification
   const verificationDocsView = (candidateId) => {
-    console.log("in state", candidateId);
     setLoader(true);
     client
       .get("/api/v1/candidate/document?candidateId=" + candidateId)
       .then((response) => {
-        console.log("response", response.data.data);
         state.docsToVerify = response.data.data;
-        console.log("Documents", response.data.data);
         setLoader(false);
 
         return dispatch({
@@ -63,7 +66,6 @@ export const DocsVerificationProvider = (props) => {
     client
       .get("/api/v1/candidate/" + candidateId + "/address")
       .then((response) => {
-        console.log("address...", response.data.data);
         state.addressInfoData = response.data.data;
         setLoader(false);
         return dispatch({
@@ -115,8 +117,8 @@ export const DocsVerificationProvider = (props) => {
     client
       .get("/api/v1/candidate/" + candidateId + "/nomination")
       .then((response) => {
-        state.nominationDetails = response.data.data;
         console.log(response.data.data);
+        state.nominationDetails = response.data.data;
         setLoader(false);
         return dispatch({
           type: "NOMINATION_DETAILS_TO_VERIFY",
@@ -134,7 +136,6 @@ export const DocsVerificationProvider = (props) => {
       .get("/api/v1/candidate/" + candidateId + "/pf")
       .then((response) => {
         state.pfDetails = response.data.data;
-        console.log(response.data.data);
         setLoader(false);
         return dispatch({
           type: "PF_DETAILS_TO_VERIFY",
@@ -144,6 +145,63 @@ export const DocsVerificationProvider = (props) => {
       .catch((error) => {
         console.log(error);
       });
+  };
+
+  const approveDocument = (docId) => {
+    setLoader(true);
+    client
+      .get("/api/v1/candidate/document/" + docId + "/accept")
+      .then((response) => {
+        state.acceptStatus = response.data.message;
+        setLoader(false);
+        return dispatch({
+          type: "GET_ACCEPT_STATUS",
+          payload: state.acceptStatus,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const disApproveDocument = (docId, candidateId, remarks) => {
+    setLoader(true);
+    client
+      .get(
+        "/api/v1/candidate/document/" +
+          docId +
+          "/reject?candidateId=" +
+          candidateId +
+          "&remark=" +
+          remarks
+      )
+      .then((response) => {
+        state.rejectStatus = response.data.message;
+        setLoader(false);
+        return dispatch({
+          type: "GET_REJECT_STATUS",
+          payload: state.rejectStatus,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const downloadDocument = (name) => {
+    Axios({
+      url: `${process.env.REACT_APP_BASEURL}api/v1/candidate/document/download?name=${name}`,
+      method: "GET",
+      responseType: "blob",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${access_token}`,
+      },
+    }).then((response) => {
+      console.log(response);
+      fileDownload(response.data, name);
+    });
   };
 
   return (
@@ -156,6 +214,9 @@ export const DocsVerificationProvider = (props) => {
         bankDetailsData,
         fetchNominationDetails,
         fetchPfDetails,
+        approveDocument,
+        disApproveDocument,
+        downloadDocument,
         docsToVerify: state.docsToVerify,
         personalInfoData: state.personalInfoData,
         addressInfoData: state.addressInfoData,
@@ -163,7 +224,10 @@ export const DocsVerificationProvider = (props) => {
         bankDetails: state.bankDetails,
         nominationDetails: state.nominationDetails,
         pfDetails: state.pfDetails,
+        acceptStatus: state.acceptStatus,
+        rejectStatus: state.rejectStatus,
         loader: loader,
+        downloadedFile: state.downloadedFile,
       }}
     >
       {" "}

@@ -484,1053 +484,1107 @@ const EditInsuranceNomination = (props) => {
 
   return (
     <Fragment>
-      {/* <Form onSubmit={submitHandler}>  */}
-      <Row style={{ marginBottom: "2rem" }} className="CheckBoxField">
-        <Col sm={2}>
-          <div>
-            <label>
-              <b>Employee Name:</b>
-            </label>
-            <label>
-              <b></b>
-            </label>
-          </div>
-        </Col>
-        <Col sm={2}>
-          <div>
-            <label>
-              <b>Gender:</b>
-            </label>
-            <label>
-              <b></b>
-            </label>
-          </div>
-        </Col>
-        <Col sm={2}>
-          <div>
-            <label>
-              <b>Date Of Birth:</b>
-            </label>
-            <label>
-              <b></b>
-            </label>
-          </div>
-        </Col>
-        <Col sm={2}>
-          <div>
-            <label>
-              <b>Age:</b>
-            </label>
-            <label>
-              <b></b>
-            </label>
-          </div>
-        </Col>
-        <Col sm={2}>
-          <div>
-            <label>
-              <b>Blood Group:</b>
-            </label>
-            <label>
-              <b></b>
-            </label>
-          </div>
-        </Col>
-      </Row>
-      <Row style={{ marginBottom: "1rem" }}>
-        <Col sm={5}>
-          <div>
-            <label>
-              <b>Enroll Dependents for Insurance Nomination</b>
-            </label>
-            <label>
-              <b></b>
-            </label>
-          </div>
-        </Col>
-      </Row>
-      <Row style={{ marginBottom: "2rem" }}>
-        <Col sm={3}>
-          <Form.Group>
-            <div className="boxField input">
-              <input
-                type="checkbox"
-                value="No"
-                checked={!isChecked}
-                disabled={disable}
-                onChange={handleNoCheckboxChange}
-              />
-              <label>Add New Nominee</label>
-            </div>
-          </Form.Group>
-        </Col>
-        <Col sm={3} style={{ marginLeft: "-6rem" }}>
-          <Form.Group>
-            <div className="boxField input">
-              <input
-                type="checkbox"
-                value="Yes"
-                checked={isChecked}
-                disabled={disable}
-                onChange={handleCheckboxChange}
-              />
-              <label>Edit Existing Nominees </label>
-            </div>
-          </Form.Group>
-        </Col>
-      </Row>
-      {isChecked ? (
-        <div></div>
-      ) : (
+      {nominationDetails !== null && nominationDetails !== undefined ? (
         <div>
-          <div>
-            {/* first Nominee */}
-            <Row style={{ marginBottom: "2rem" }}>
-              <Col sm={11}>
-                <Row>
-                  <div className="col-sm-4">
-                    <Form.Group>
-                      <Form.Label>
-                        Nominee Name
-                        <span style={{ color: "red" }}>*</span>
-                      </Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="nominiName"
-                        value={state.nominiName}
-                        onChange={changeHandler}
-                        disabled={disable}
-                        required
-                        style={nomineNameError_1 ? { borderColor: "red" } : {}}
-                        placeholder="Nominee Name"
-                      />
-                      {nomineNameError_1 ? (
-                        <p style={{ color: "red" }}>
-                          {" "}
-                          &nbsp; *Please enter valid name
-                        </p>
-                      ) : (
-                        <p></p>
-                      )}
-                    </Form.Group>
-                  </div>
-                  <div className="col-sm-4">
-                    <Form.Group>
-                      <Form.Label>
-                        Relationship <span style={{ color: "red" }}>*</span>
-                      </Form.Label>
-                      <Form.Control
-                        as="select"
-                        name="relationship"
-                        value={state.relationship}
-                        disabled={disable}
-                        onChange={changeHandler}
-                        style={
-                          relationshipError_1 ? { borderColor: "red" } : {}
-                        }
-                      >
-                        <option value="">Relationship</option>
-                      </Form.Control>
-                      {relationshipError_1 ? (
-                        <p style={{ color: "red" }}>
-                          {" "}
-                          &nbsp; *Please select relationship
-                        </p>
-                      ) : (
-                        <p></p>
-                      )}
-                    </Form.Group>
-                  </div>
-                  <div className="col-sm-4">
-                    <Form.Group>
-                      <Form.Label>
-                        Gender<span style={{ color: "red" }}>*</span>
-                      </Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Gender"
-                        required="required"
-                        name="gender"
-                        disabled={disable}
-                        value={state.gender}
-                        onChange={changeHandler}
-                        style={genderError_1 ? { borderColor: "red" } : {}}
-                      />
-                      {genderError_1 ? (
-                        <p style={{ color: "red" }}>
-                          &nbsp; * Please fill the gender
-                        </p>
-                      ) : (
-                        <p></p>
-                      )}
-                    </Form.Group>
-                  </div>
-                </Row>
-              </Col>
-            </Row>
-            <Row style={{ marginBottom: "1rem" }}>
-              <Col sm={11}>
-                <Row>
-                  <div className="col-sm-4">
-                    <Form.Group>
-                      <Form.Label>
-                        Datte Of Birth<span style={{ color: "red" }}>*</span>
-                      </Form.Label>
-                      <div
-                        className={
-                          DOBError_1 ? "onBoard-date-error" : "onBoard-date"
-                        }
-                      >
-                        <DatePicker
-                          className="form-control onBoard-view"
-                          selected={Nominee1DOB}
-                          required
-                          disabled={disable}
-                          onChange={(e) => dateOfBirthHandler(e, "1")}
-                          dateFormat="yyyy-MM-dd"
-                          placeholderText="YYYY-MM-DD"
-                          style={DOBError_1 ? { borderColor: "red" } : {}}
-                        />
+          {/* <Form onSubmit={submitHandler}>  */}
+          <Row style={{ marginBottom: "2rem" }} className="CheckBoxField">
+            <Col sm={2}>
+              <div>
+                <label>
+                  <b>Employee Name:</b>
+                </label>
+                <label>
+                  <b></b>
+                </label>
+              </div>
+            </Col>
+            <Col sm={2}>
+              <div>
+                <label>
+                  <b>Gender:</b>
+                </label>
+                <label>
+                  <b></b>
+                </label>
+              </div>
+            </Col>
+            <Col sm={2}>
+              <div>
+                <label>
+                  <b>Date Of Birth:</b>
+                </label>
+                <label>
+                  <b></b>
+                </label>
+              </div>
+            </Col>
+            <Col sm={2}>
+              <div>
+                <label>
+                  <b>Age:</b>
+                </label>
+                <label>
+                  <b></b>
+                </label>
+              </div>
+            </Col>
+            <Col sm={2}>
+              <div>
+                <label>
+                  <b>Blood Group:</b>
+                </label>
+                <label>
+                  <b></b>
+                </label>
+              </div>
+            </Col>
+          </Row>
+          <Row style={{ marginBottom: "1rem" }}>
+            <Col sm={5}>
+              <div>
+                <label>
+                  <b>Enroll Dependents for Insurance Nomination</b>
+                </label>
+                <label>
+                  <b></b>
+                </label>
+              </div>
+            </Col>
+          </Row>
+          <Row style={{ marginBottom: "2rem" }}>
+            <Col sm={3}>
+              <Form.Group>
+                <div className="boxField input">
+                  <input
+                    type="checkbox"
+                    value="No"
+                    checked={!isChecked}
+                    disabled={disable}
+                    onChange={handleNoCheckboxChange}
+                  />
+                  <label>Add New Nominee</label>
+                </div>
+              </Form.Group>
+            </Col>
+            <Col sm={3} style={{ marginLeft: "-6rem" }}>
+              <Form.Group>
+                <div className="boxField input">
+                  <input
+                    type="checkbox"
+                    value="Yes"
+                    checked={isChecked}
+                    disabled={disable}
+                    onChange={handleCheckboxChange}
+                  />
+                  <label>Edit Existing Nominees </label>
+                </div>
+              </Form.Group>
+            </Col>
+          </Row>
+          {isChecked ? (
+            <div></div>
+          ) : (
+            <div>
+              <div>
+                {/* first Nominee */}
+                <Row style={{ marginBottom: "2rem" }}>
+                  <Col sm={11}>
+                    <Row>
+                      <div className="col-sm-4">
+                        <Form.Group>
+                          <Form.Label>
+                            Nominee Name
+                            <span style={{ color: "red" }}>*</span>
+                          </Form.Label>
+                          <Form.Control
+                            type="text"
+                            name="nominiName"
+                            value={state.nominiName}
+                            onChange={changeHandler}
+                            disabled={disable}
+                            required
+                            style={
+                              nomineNameError_1 ? { borderColor: "red" } : {}
+                            }
+                            placeholder="Nominee Name"
+                          />
+                          {nomineNameError_1 ? (
+                            <p style={{ color: "red" }}>
+                              {" "}
+                              &nbsp; *Please enter valid name
+                            </p>
+                          ) : (
+                            <p></p>
+                          )}
+                        </Form.Group>
                       </div>
-                      {DOBError_1 ? (
-                        <p style={{ color: "red" }}>
-                          {" "}
-                          &nbsp; *Please select valid date
-                        </p>
-                      ) : (
-                        <p></p>
-                      )}
-                    </Form.Group>
-                  </div>
-                  <div className="col-sm-4">
-                    <Form.Group>
-                      <Form.Label>
-                        Age<span style={{ color: "red" }}>*</span>
-                      </Form.Label>
-                      <Form.Control
-                        type="text"
-                        placeholder="Age"
-                        required="required"
-                        name="age"
-                        value={state.age}
-                        onChange={changeHandler}
-                        disabled={disable}
-                        style={ageError_1 ? { borderColor: "red" } : {}}
-                      />
-                      {ageError_1 ? (
-                        <p style={{ color: "red" }}>
-                          &nbsp; * Please enter valid age
-                        </p>
-                      ) : (
-                        <p></p>
-                      )}
-                    </Form.Group>
-                  </div>
-                  <div className="col-sm-4">
-                    <Form.Group>
-                      <Form.Label>
-                        Blood Group <span style={{ color: "red" }}>*</span>
-                      </Form.Label>
-                      <Form.Control
-                        as="select"
-                        name="bloodGroup"
-                        value={state.bloodGroup}
-                        disabled={disable}
-                        onChange={changeHandler}
-                        style={bloodGroupError_1 ? { borderColor: "red" } : {}}
-                      >
-                        <option value="">Blood Group</option>
-                      </Form.Control>
-                      {bloodGroupError_1 ? (
-                        <p style={{ color: "red" }}>
-                          {" "}
-                          &nbsp; *Please select blood group
-                        </p>
-                      ) : (
-                        <p></p>
-                      )}
-                    </Form.Group>
-                  </div>
+                      <div className="col-sm-4">
+                        <Form.Group>
+                          <Form.Label>
+                            Relationship <span style={{ color: "red" }}>*</span>
+                          </Form.Label>
+                          <Form.Control
+                            as="select"
+                            name="relationship"
+                            value={state.relationship}
+                            disabled={disable}
+                            onChange={changeHandler}
+                            style={
+                              relationshipError_1 ? { borderColor: "red" } : {}
+                            }
+                          >
+                            <option value="">Relationship</option>
+                          </Form.Control>
+                          {relationshipError_1 ? (
+                            <p style={{ color: "red" }}>
+                              {" "}
+                              &nbsp; *Please select relationship
+                            </p>
+                          ) : (
+                            <p></p>
+                          )}
+                        </Form.Group>
+                      </div>
+                      <div className="col-sm-4">
+                        <Form.Group>
+                          <Form.Label>
+                            Gender<span style={{ color: "red" }}>*</span>
+                          </Form.Label>
+                          <Form.Control
+                            type="text"
+                            placeholder="Gender"
+                            required="required"
+                            name="gender"
+                            disabled={disable}
+                            value={state.gender}
+                            onChange={changeHandler}
+                            style={genderError_1 ? { borderColor: "red" } : {}}
+                          />
+                          {genderError_1 ? (
+                            <p style={{ color: "red" }}>
+                              &nbsp; * Please fill the gender
+                            </p>
+                          ) : (
+                            <p></p>
+                          )}
+                        </Form.Group>
+                      </div>
+                    </Row>
+                  </Col>
                 </Row>
-              </Col>
-              <Col sm={1}></Col>
-            </Row>
-          </div>
-          {NominForm1 === true ? (
-            <div>
-              {/* second Nominee */}
-              <Row style={{ marginBottom: "2rem" }}>
-                <Col sm={11}>
-                  <Row>
-                    <div className="col-sm-4">
-                      <Form.Group>
-                        <Form.Label>
-                          Second Nominee Name
-                          <span style={{ color: "red" }}>*</span>
-                        </Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="nominee2NominiName"
-                          value={state.nominee2NominiName}
-                          onChange={changeHandler}
-                          placeholder="Nominee Name"
-                          required="required"
-                          style={
-                            nomineNameError_2 ? { borderColor: "red" } : {}
-                          }
-                        />
-                        {nomineNameError_2 ? (
-                          <p style={{ color: "red" }}>
-                            {" "}
-                            &nbsp; *Please enter valid name
-                          </p>
-                        ) : (
-                          <p></p>
-                        )}
-                      </Form.Group>
-                    </div>
-                    <div className="col-sm-4">
-                      <Form.Group>
-                        <Form.Label>
-                          Relationship <span style={{ color: "red" }}>*</span>
-                        </Form.Label>
-                        <Form.Control
-                          as="select"
-                          name="nominee2Relationship"
-                          value={state.nominee2Relationship}
-                          onChange={changeHandler}
-                          style={
-                            relationshipError_2 ? { borderColor: "red" } : {}
-                          }
-                        >
-                          <option value="">Relationship</option>
-                        </Form.Control>
-                        {relationshipError_2 ? (
-                          <p style={{ color: "red" }}>
-                            {" "}
-                            &nbsp; *Please select relationship
-                          </p>
-                        ) : (
-                          <p></p>
-                        )}
-                      </Form.Group>
-                    </div>
-                    <div className="col-sm-4">
-                      <Form.Group>
-                        <Form.Label>
-                          Gender<span style={{ color: "red" }}>*</span>
-                        </Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="nominee2Gender"
-                          value={state.nominee2Gender}
-                          onChange={changeHandler}
-                          placeholder="Gender"
-                          required="required"
-                          style={genderError_2 ? { borderColor: "red" } : {}}
-                        />
-                        {genderError_2 ? (
-                          <p style={{ color: "red" }}>
-                            {" "}
-                            &nbsp; *Please fill the gender
-                          </p>
-                        ) : (
-                          <p></p>
-                        )}
-                      </Form.Group>
-                    </div>
-                  </Row>
-                </Col>
-                <Col sm={1} style={{ marginLeft: "-2rem" }}>
-                  <Form.Group>
-                    <div>
-                      <button
-                        onClick={cancel}
-                        type="cancel"
-                        style={{ color: "white", border: " 2px solid#4466f2" }}
-                      >
-                        <i
-                          class="fa fa-close"
-                          style={{ fontSize: "20px", color: "red" }}
-                        ></i>
-                      </button>
-                    </div>
-                  </Form.Group>
-                </Col>
-              </Row>
-              <Row style={{ marginBottom: "1rem" }}>
-                <Col sm={11}>
-                  <Row>
-                    <div className="col-sm-4">
-                      <Form.Group>
-                        <Form.Label>
-                          Datte Of Birth<span style={{ color: "red" }}>*</span>
-                        </Form.Label>
-                        <div
-                          className={
-                            DOBError_2 ? "onBoard-date-error" : "onBoard-date"
-                          }
-                        >
-                          <DatePicker
-                            className="form-control onBoard-view"
-                            selected={Nominee2DOB}
-                            required
-                            onChange={(e) => dateOfBirthHandler(e, "2")}
-                            dateFormat="yyyy-MM-dd"
-                            placeholderText="YYYY-MM-DD"
-                            style={DOBError_2 ? { borderColor: "red" } : {}}
+                <Row style={{ marginBottom: "1rem" }}>
+                  <Col sm={11}>
+                    <Row>
+                      <div className="col-sm-4">
+                        <Form.Group>
+                          <Form.Label>
+                            Datte Of Birth
+                            <span style={{ color: "red" }}>*</span>
+                          </Form.Label>
+                          <div
+                            className={
+                              DOBError_1 ? "onBoard-date-error" : "onBoard-date"
+                            }
+                          >
+                            <DatePicker
+                              className="form-control onBoard-view"
+                              selected={Nominee1DOB}
+                              required
+                              disabled={disable}
+                              onChange={(e) => dateOfBirthHandler(e, "1")}
+                              dateFormat="yyyy-MM-dd"
+                              placeholderText="YYYY-MM-DD"
+                              style={DOBError_1 ? { borderColor: "red" } : {}}
+                            />
+                          </div>
+                          {DOBError_1 ? (
+                            <p style={{ color: "red" }}>
+                              {" "}
+                              &nbsp; *Please select valid date
+                            </p>
+                          ) : (
+                            <p></p>
+                          )}
+                        </Form.Group>
+                      </div>
+                      <div className="col-sm-4">
+                        <Form.Group>
+                          <Form.Label>
+                            Age<span style={{ color: "red" }}>*</span>
+                          </Form.Label>
+                          <Form.Control
+                            type="text"
+                            placeholder="Age"
+                            required="required"
+                            name="age"
+                            value={state.age}
+                            onChange={changeHandler}
+                            disabled={disable}
+                            style={ageError_1 ? { borderColor: "red" } : {}}
                           />
+                          {ageError_1 ? (
+                            <p style={{ color: "red" }}>
+                              &nbsp; * Please enter valid age
+                            </p>
+                          ) : (
+                            <p></p>
+                          )}
+                        </Form.Group>
+                      </div>
+                      <div className="col-sm-4">
+                        <Form.Group>
+                          <Form.Label>
+                            Blood Group <span style={{ color: "red" }}>*</span>
+                          </Form.Label>
+                          <Form.Control
+                            as="select"
+                            name="bloodGroup"
+                            value={state.bloodGroup}
+                            disabled={disable}
+                            onChange={changeHandler}
+                            style={
+                              bloodGroupError_1 ? { borderColor: "red" } : {}
+                            }
+                          >
+                            <option value="">Blood Group</option>
+                          </Form.Control>
+                          {bloodGroupError_1 ? (
+                            <p style={{ color: "red" }}>
+                              {" "}
+                              &nbsp; *Please select blood group
+                            </p>
+                          ) : (
+                            <p></p>
+                          )}
+                        </Form.Group>
+                      </div>
+                    </Row>
+                  </Col>
+                  <Col sm={1}></Col>
+                </Row>
+              </div>
+              {NominForm1 === true ? (
+                <div>
+                  {/* second Nominee */}
+                  <Row style={{ marginBottom: "2rem" }}>
+                    <Col sm={11}>
+                      <Row>
+                        <div className="col-sm-4">
+                          <Form.Group>
+                            <Form.Label>
+                              Second Nominee Name
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="nominee2NominiName"
+                              value={state.nominee2NominiName}
+                              onChange={changeHandler}
+                              placeholder="Nominee Name"
+                              required="required"
+                              style={
+                                nomineNameError_2 ? { borderColor: "red" } : {}
+                              }
+                            />
+                            {nomineNameError_2 ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                &nbsp; *Please enter valid name
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
+                          </Form.Group>
                         </div>
-                        {DOBError_2 ? (
-                          <p style={{ color: "red" }}>
-                            {" "}
-                            &nbsp; *Please select valid date
-                          </p>
-                        ) : (
-                          <p></p>
-                        )}
-                      </Form.Group>
-                    </div>
-                    <div className="col-sm-4">
-                      <Form.Group>
-                        <Form.Label>
-                          Age<span style={{ color: "red" }}>*</span>
-                        </Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="nominee2Age"
-                          value={state.nominee2Age}
-                          onChange={changeHandler}
-                          placeholder="Age"
-                          required="required"
-                          style={ageError_2 ? { borderColor: "red" } : {}}
-                        />
-                        {ageError_2 ? (
-                          <p style={{ color: "red" }}>
-                            {" "}
-                            &nbsp; *Please enter valid age
-                          </p>
-                        ) : (
-                          <p></p>
-                        )}
-                      </Form.Group>
-                    </div>
-                    <div className="col-sm-4">
-                      <Form.Group>
-                        <Form.Label>
-                          Blood Group <span style={{ color: "red" }}>*</span>
-                        </Form.Label>
-                        <Form.Control
-                          as="select"
-                          name="nominee2BloodGroup"
-                          value={state.nominee2BloodGroup}
-                          onChange={changeHandler}
-                          style={
-                            bloodGroupError_2 ? { borderColor: "red" } : {}
-                          }
-                        >
-                          <option value="">Blood Group</option>
-                        </Form.Control>
-                        {bloodGroupError_2 ? (
-                          <p style={{ color: "red" }}>
-                            {" "}
-                            &nbsp; *Please select valid blood group
-                          </p>
-                        ) : (
-                          <p></p>
-                        )}
-                      </Form.Group>
-                    </div>
-                  </Row>
-                </Col>
-                <Col sm={1}></Col>
-              </Row>
-            </div>
-          ) : (
-            ""
-          )}
-          {NominForm2 === true ? (
-            <div>
-              {/* Third Nominee  */}
-              <Row style={{ marginBottom: "2rem" }}>
-                <Col sm={11}>
-                  <Row>
-                    <div className="col-sm-4">
-                      <Form.Group>
-                        <Form.Label>
-                          Third Nominee Name
-                          <span style={{ color: "red" }}>*</span>
-                        </Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="nominee3NominiName"
-                          value={state.nominee3NominiName}
-                          onChange={changeHandler}
-                          placeholder="Nominee Name"
-                          required="required"
-                          style={
-                            nomineNameError_3 ? { borderColor: "red" } : {}
-                          }
-                        />
-                        {nomineNameError_3 ? (
-                          <p style={{ color: "red" }}>
-                            {" "}
-                            &nbsp; *Please enter valid name
-                          </p>
-                        ) : (
-                          <p></p>
-                        )}
-                      </Form.Group>
-                    </div>
-                    <div className="col-sm-4">
-                      <Form.Group>
-                        <Form.Label>
-                          Relationship <span style={{ color: "red" }}>*</span>
-                        </Form.Label>
-                        <Form.Control
-                          as="select"
-                          name="nominee3Relationship"
-                          value={state.nominee3Relationship}
-                          onChange={changeHandler}
-                          style={
-                            relationshipError_3 ? { borderColor: "red" } : {}
-                          }
-                        >
-                          <option value="">Relationship</option>
-                        </Form.Control>
-                        {relationshipError_3 ? (
-                          <p style={{ color: "red" }}>
-                            {" "}
-                            &nbsp; *Please select relation ship
-                          </p>
-                        ) : (
-                          <p></p>
-                        )}
-                      </Form.Group>
-                    </div>
-                    <div className="col-sm-4">
-                      <Form.Group>
-                        <Form.Label>
-                          Gender<span style={{ color: "red" }}>*</span>
-                        </Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="nominee3Gender"
-                          value={state.nominee3Gender}
-                          onChange={changeHandler}
-                          placeholder="Gender"
-                          required="required"
-                          style={genderError_3 ? { borderColor: "red" } : {}}
-                        />
-                        {genderError_3 ? (
-                          <p style={{ color: "red" }}>
-                            {" "}
-                            &nbsp; *Please fill the gender
-                          </p>
-                        ) : (
-                          <p></p>
-                        )}
-                      </Form.Group>
-                    </div>
-                  </Row>
-                </Col>
-                <Col sm={1} style={{ marginLeft: "-2rem" }}>
-                  <Form.Group>
-                    <div>
-                      <button
-                        onClick={cancel}
-                        type="cancel"
-                        style={{ color: "white", border: " 2px solid#4466f2" }}
-                      >
-                        <i
-                          class="fa fa-close"
-                          style={{ fontSize: "20px", color: "red" }}
-                        ></i>
-                      </button>
-                    </div>
-                  </Form.Group>
-                </Col>
-              </Row>
-              <Row style={{ marginBottom: "1rem" }}>
-                <Col sm={11}>
-                  <Row>
-                    <div className="col-sm-4">
-                      <Form.Group>
-                        <Form.Label>
-                          Datte Of Birth<span style={{ color: "red" }}>*</span>
-                        </Form.Label>
-                        <div
-                          className={
-                            DOBError_3 ? "onBoard-date-error" : "onBoard-date"
-                          }
-                        >
-                          <DatePicker
-                            className="form-control onBoard-view"
-                            selected={Nominee3DOB}
-                            required
-                            onChange={(e) => dateOfBirthHandler(e, "3")}
-                            dateFormat="yyyy-MM-dd"
-                            placeholderText="YYYY-MM-DD"
-                            style={DOBError_3 ? { borderColor: "red" } : {}}
-                          />
+                        <div className="col-sm-4">
+                          <Form.Group>
+                            <Form.Label>
+                              Relationship{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
+                            <Form.Control
+                              as="select"
+                              name="nominee2Relationship"
+                              value={state.nominee2Relationship}
+                              onChange={changeHandler}
+                              style={
+                                relationshipError_2
+                                  ? { borderColor: "red" }
+                                  : {}
+                              }
+                            >
+                              <option value="">Relationship</option>
+                            </Form.Control>
+                            {relationshipError_2 ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                &nbsp; *Please select relationship
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
+                          </Form.Group>
                         </div>
-                        {DOBError_3 ? (
-                          <p style={{ color: "red" }}>
-                            {" "}
-                            &nbsp; *Please select valid date
-                          </p>
-                        ) : (
-                          <p></p>
-                        )}
-                      </Form.Group>
-                    </div>
-                    <div className="col-sm-4">
-                      <Form.Group>
-                        <Form.Label>
-                          Age<span style={{ color: "red" }}>*</span>
-                        </Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="nominee3Age"
-                          value={state.nominee3Age}
-                          onChange={changeHandler}
-                          placeholder="Age"
-                          required="required"
-                          style={ageError_3 ? { borderColor: "red" } : {}}
-                        />
-                        {ageError_3 ? (
-                          <p style={{ color: "red" }}>
-                            {" "}
-                            &nbsp; *Please enter valid age
-                          </p>
-                        ) : (
-                          <p></p>
-                        )}
-                      </Form.Group>
-                    </div>
-                    <div className="col-sm-4">
-                      <Form.Group>
-                        <Form.Label>
-                          Blood Group <span style={{ color: "red" }}>*</span>
-                        </Form.Label>
-                        <Form.Control
-                          as="select"
-                          name="nominee3BloodGroup"
-                          value={state.nominee3BloodGroup}
-                          onChange={changeHandler}
-                          style={
-                            bloodGroupError_3 ? { borderColor: "red" } : {}
-                          }
-                        >
-                          <option value="">Blood Group</option>
-                        </Form.Control>
-                        {bloodGroupError_3 ? (
-                          <p style={{ color: "red" }}>
-                            {" "}
-                            &nbsp; *Please enter valid blood group
-                          </p>
-                        ) : (
-                          <p></p>
-                        )}
-                      </Form.Group>
-                    </div>
-                  </Row>
-                </Col>
-                <Col sm={1}></Col>
-              </Row>
-            </div>
-          ) : (
-            ""
-          )}
-          {NominForm3 === true ? (
-            <div>
-              {/* fourth Nominee Name */}
-              <Row style={{ marginBottom: "2rem" }}>
-                <Col sm={11}>
-                  <Row>
-                    <div className="col-sm-4">
-                      <Form.Group>
-                        <Form.Label>
-                          Fourth Nominee Name
-                          <span style={{ color: "red" }}>*</span>
-                        </Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="nominee4NominiName"
-                          value={state.nominee4NominiName}
-                          onChange={changeHandler}
-                          placeholder="Nominee Name"
-                          required="required"
-                          style={
-                            nomineNameError_4 ? { borderColor: "red" } : {}
-                          }
-                        />
-                        {nomineNameError_4 ? (
-                          <p style={{ color: "red" }}>
-                            {" "}
-                            &nbsp; *Please enter valid name
-                          </p>
-                        ) : (
-                          <p></p>
-                        )}
-                      </Form.Group>
-                    </div>
-                    <div className="col-sm-4">
-                      <Form.Group>
-                        <Form.Label>
-                          Relationship <span style={{ color: "red" }}>*</span>
-                        </Form.Label>
-                        <Form.Control
-                          as="select"
-                          name="nominee4Relationship"
-                          value={state.nominee4Relationship}
-                          onChange={changeHandler}
-                          style={
-                            relationshipError_4 ? { borderColor: "red" } : {}
-                          }
-                        >
-                          <option value="">Relationship</option>
-                        </Form.Control>
-                        {relationshipError_4 ? (
-                          <p style={{ color: "red" }}>
-                            {" "}
-                            &nbsp; *Please select relationship
-                          </p>
-                        ) : (
-                          <p></p>
-                        )}
-                      </Form.Group>
-                    </div>
-                    <div className="col-sm-4">
-                      <Form.Group>
-                        <Form.Label>
-                          Gender<span style={{ color: "red" }}>*</span>
-                        </Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="nominee4Gender"
-                          value={state.nominee4Gender}
-                          onChange={changeHandler}
-                          placeholder="Gender"
-                          required="required"
-                          style={genderError_4 ? { borderColor: "red" } : {}}
-                        />
-                        {genderError_4 ? (
-                          <p style={{ color: "red" }}>
-                            {" "}
-                            &nbsp; *Please fill the gender
-                          </p>
-                        ) : (
-                          <p></p>
-                        )}
-                      </Form.Group>
-                    </div>
-                  </Row>
-                </Col>
-                <Col sm={1} style={{ marginLeft: "-2rem" }}>
-                  <Form.Group>
-                    <div>
-                      <button
-                        onClick={cancel}
-                        type="cancel"
-                        style={{ color: "white", border: " 2px solid#4466f2" }}
-                      >
-                        <i
-                          class="fa fa-close"
-                          style={{ fontSize: "20px", color: "red" }}
-                        ></i>
-                      </button>
-                    </div>
-                  </Form.Group>
-                </Col>
-              </Row>
-              <Row style={{ marginBottom: "1rem" }}>
-                <Col sm={11}>
-                  <Row>
-                    <div className="col-sm-4">
-                      <Form.Group>
-                        <Form.Label>
-                          &nbsp; *Datte Of Birth
-                          <span style={{ color: "red" }}>*</span>
-                        </Form.Label>
-                        <div
-                          className={
-                            DOBError_4 ? "onBoard-date-error" : "onBoard-date"
-                          }
-                        >
-                          <DatePicker
-                            className="form-control onBoard-view"
-                            selected={Nominee4DOB}
-                            required
-                            onChange={(e) => dateOfBirthHandler(e, "4")}
-                            dateFormat="yyyy-MM-dd"
-                            placeholderText="YYYY-MM-DD"
-                            style={DOBError_4 ? { borderColor: "red" } : {}}
-                          />
+                        <div className="col-sm-4">
+                          <Form.Group>
+                            <Form.Label>
+                              Gender<span style={{ color: "red" }}>*</span>
+                            </Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="nominee2Gender"
+                              value={state.nominee2Gender}
+                              onChange={changeHandler}
+                              placeholder="Gender"
+                              required="required"
+                              style={
+                                genderError_2 ? { borderColor: "red" } : {}
+                              }
+                            />
+                            {genderError_2 ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                &nbsp; *Please fill the gender
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
+                          </Form.Group>
                         </div>
-                        {DOBError_4 ? (
-                          <p style={{ color: "red" }}>
-                            {" "}
-                            &nbsp; *Please select valid date
-                          </p>
-                        ) : (
-                          <p></p>
-                        )}
-                      </Form.Group>
-                    </div>
-                    <div className="col-sm-4">
+                      </Row>
+                    </Col>
+                    <Col sm={1} style={{ marginLeft: "-2rem" }}>
                       <Form.Group>
-                        <Form.Label>
-                          Age<span style={{ color: "red" }}>*</span>
-                        </Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="nominee4Age"
-                          value={state.nominee4Age}
-                          onChange={changeHandler}
-                          placeholder="Age"
-                          required="required"
-                          style={ageError_4 ? { borderColor: "red" } : {}}
-                        />
-                        {ageError_4 ? (
-                          <p style={{ color: "red" }}>
-                            {" "}
-                            &nbsp; *Please enter valid age
-                          </p>
-                        ) : (
-                          <p></p>
-                        )}
-                      </Form.Group>
-                    </div>
-                    <div className="col-sm-4">
-                      <Form.Group>
-                        <Form.Label>
-                          Blood Group <span style={{ color: "red" }}>*</span>
-                        </Form.Label>
-                        <Form.Control
-                          as="select"
-                          name="nominee4BloodGroup"
-                          value={state.nominee4BloodGroup}
-                          onChange={changeHandler}
-                          style={
-                            bloodGroupError_4 ? { borderColor: "red" } : {}
-                          }
-                        >
-                          <option value="">Blood Group</option>
-                        </Form.Control>
-                        {bloodGroupError_4 ? (
-                          <p style={{ color: "red" }}>
-                            {" "}
-                            &nbsp; *Please select blood group
-                          </p>
-                        ) : (
-                          <p></p>
-                        )}
-                      </Form.Group>
-                    </div>
-                  </Row>
-                </Col>
-                <Col sm={1}></Col>
-              </Row>
-            </div>
-          ) : (
-            ""
-          )}
-          {NominForm4 === true ? (
-            <div>
-              {/* Fifth Nominee */}
-              <Row style={{ marginBottom: "2rem" }}>
-                <Col sm={11}>
-                  <Row>
-                    <div className="col-sm-4">
-                      <Form.Group>
-                        <Form.Label>
-                          Fifth Nominee Name
-                          <span style={{ color: "red" }}>*</span>
-                        </Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="nominee5NominiName"
-                          value={state.nominee5NominiName}
-                          onChange={changeHandler}
-                          placeholder="Nominee Name"
-                          required="required"
-                          style={
-                            nomineNameError_5 ? { borderColor: "red" } : {}
-                          }
-                        />
-                        {nomineNameError_5 ? (
-                          <p style={{ color: "red" }}>
-                            {" "}
-                            &nbsp; *Please enter valid name
-                          </p>
-                        ) : (
-                          <p></p>
-                        )}
-                      </Form.Group>
-                    </div>
-                    <div className="col-sm-4">
-                      <Form.Group>
-                        <Form.Label>
-                          Relationship <span style={{ color: "red" }}>*</span>
-                        </Form.Label>
-                        <Form.Control
-                          as="select"
-                          name="nominee5Relationship"
-                          value={state.nominee5Relationship}
-                          onChange={changeHandler}
-                          style={
-                            relationshipError_5 ? { borderColor: "red" } : {}
-                          }
-                        >
-                          <option value="">Relationship</option>
-                        </Form.Control>
-                        {relationshipError_5 ? (
-                          <p style={{ color: "red" }}>
-                            {" "}
-                            &nbsp; *Please select relationship
-                          </p>
-                        ) : (
-                          <p></p>
-                        )}
-                      </Form.Group>
-                    </div>
-                    <div className="col-sm-4">
-                      <Form.Group>
-                        <Form.Label>
-                          Gender<span style={{ color: "red" }}>*</span>
-                        </Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="nominee5Gender"
-                          value={state.nominee5Gender}
-                          onChange={changeHandler}
-                          placeholder="Gender"
-                          required="required"
-                          style={genderError_5 ? { borderColor: "red" } : {}}
-                        />
-                        {genderError_5 ? (
-                          <p style={{ color: "red" }}>
-                            {" "}
-                            &nbsp; *Please fill the gender
-                          </p>
-                        ) : (
-                          <p></p>
-                        )}
-                      </Form.Group>
-                    </div>
-                  </Row>
-                </Col>
-                <Col sm={1} style={{ marginLeft: "-2rem" }}>
-                  <Form.Group>
-                    <div>
-                      <button
-                        onClick={cancel}
-                        type="cancel"
-                        style={{ color: "white", border: " 2px solid#4466f2" }}
-                      >
-                        <i
-                          class="fa fa-close"
-                          style={{ fontSize: "20px", color: "red" }}
-                        ></i>
-                      </button>
-                    </div>
-                  </Form.Group>
-                </Col>
-              </Row>
-              <Row style={{ marginBottom: "1rem" }}>
-                <Col sm={11}>
-                  <Row>
-                    <div className="col-sm-4">
-                      <Form.Group>
-                        <Form.Label>
-                          Datte Of Birth<span style={{ color: "red" }}>*</span>
-                        </Form.Label>
-                        <div
-                          className={
-                            DOBError_5 ? "onBoard-date-error" : "onBoard-date"
-                          }
-                        >
-                          <DatePicker
-                            className="form-control onBoard-view"
-                            selected={Nominee5DOB}
-                            required
-                            onChange={(e) => dateOfBirthHandler(e, "5")}
-                            dateFormat="yyyy-MM-dd"
-                            placeholderText="YYYY-MM-DD"
-                            style={DOBError_5 ? { borderColor: "red" } : {}}
-                          />
+                        <div>
+                          <button
+                            onClick={cancel}
+                            type="cancel"
+                            style={{
+                              color: "white",
+                              border: " 2px solid#4466f2",
+                            }}
+                          >
+                            <i
+                              class="fa fa-close"
+                              style={{ fontSize: "20px", color: "red" }}
+                            ></i>
+                          </button>
                         </div>
-                        {DOBError_5 ? (
-                          <p style={{ color: "red" }}>
-                            {" "}
-                            &nbsp; *Please select valid date
-                          </p>
-                        ) : (
-                          <p></p>
-                        )}
                       </Form.Group>
-                    </div>
-                    <div className="col-sm-4">
-                      <Form.Group>
-                        <Form.Label>
-                          Age<span style={{ color: "red" }}>*</span>
-                        </Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="nominee5Age"
-                          value={state.nominee5Age}
-                          onChange={changeHandler}
-                          placeholder="Age"
-                          required="required"
-                          style={ageError_5 ? { borderColor: "red" } : {}}
-                        />
-                        {ageError_5 ? (
-                          <p style={{ color: "red" }}>
-                            {" "}
-                            &nbsp; *Please enter valid age
-                          </p>
-                        ) : (
-                          <p></p>
-                        )}
-                      </Form.Group>
-                    </div>
-                    <div className="col-sm-4">
-                      <Form.Group>
-                        <Form.Label>
-                          Blood Group <span style={{ color: "red" }}>*</span>
-                        </Form.Label>
-                        <Form.Control
-                          as="select"
-                          name="nominee5BloodGroup"
-                          value={state.nominee5BloodGroup}
-                          onChange={changeHandler}
-                          style={
-                            bloodGroupError_5 ? { borderColor: "red" } : {}
-                          }
-                        >
-                          <option value="">Blood Group</option>
-                        </Form.Control>
-                        {bloodGroupError_5 ? (
-                          <p style={{ color: "red" }}>
-                            {" "}
-                            &nbsp; *Please select blood group
-                          </p>
-                        ) : (
-                          <p></p>
-                        )}
-                      </Form.Group>
-                    </div>
+                    </Col>
                   </Row>
-                </Col>
-                <Col sm={1}></Col>
-              </Row>
-            </div>
-          ) : (
-            ""
-          )}
+                  <Row style={{ marginBottom: "1rem" }}>
+                    <Col sm={11}>
+                      <Row>
+                        <div className="col-sm-4">
+                          <Form.Group>
+                            <Form.Label>
+                              Datte Of Birth
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
+                            <div
+                              className={
+                                DOBError_2
+                                  ? "onBoard-date-error"
+                                  : "onBoard-date"
+                              }
+                            >
+                              <DatePicker
+                                className="form-control onBoard-view"
+                                selected={Nominee2DOB}
+                                required
+                                onChange={(e) => dateOfBirthHandler(e, "2")}
+                                dateFormat="yyyy-MM-dd"
+                                placeholderText="YYYY-MM-DD"
+                                style={DOBError_2 ? { borderColor: "red" } : {}}
+                              />
+                            </div>
+                            {DOBError_2 ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                &nbsp; *Please select valid date
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
+                          </Form.Group>
+                        </div>
+                        <div className="col-sm-4">
+                          <Form.Group>
+                            <Form.Label>
+                              Age<span style={{ color: "red" }}>*</span>
+                            </Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="nominee2Age"
+                              value={state.nominee2Age}
+                              onChange={changeHandler}
+                              placeholder="Age"
+                              required="required"
+                              style={ageError_2 ? { borderColor: "red" } : {}}
+                            />
+                            {ageError_2 ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                &nbsp; *Please enter valid age
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
+                          </Form.Group>
+                        </div>
+                        <div className="col-sm-4">
+                          <Form.Group>
+                            <Form.Label>
+                              Blood Group{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
+                            <Form.Control
+                              as="select"
+                              name="nominee2BloodGroup"
+                              value={state.nominee2BloodGroup}
+                              onChange={changeHandler}
+                              style={
+                                bloodGroupError_2 ? { borderColor: "red" } : {}
+                              }
+                            >
+                              <option value="">Blood Group</option>
+                            </Form.Control>
+                            {bloodGroupError_2 ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                &nbsp; *Please select valid blood group
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
+                          </Form.Group>
+                        </div>
+                      </Row>
+                    </Col>
+                    <Col sm={1}></Col>
+                  </Row>
+                </div>
+              ) : (
+                ""
+              )}
+              {NominForm2 === true ? (
+                <div>
+                  {/* Third Nominee  */}
+                  <Row style={{ marginBottom: "2rem" }}>
+                    <Col sm={11}>
+                      <Row>
+                        <div className="col-sm-4">
+                          <Form.Group>
+                            <Form.Label>
+                              Third Nominee Name
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="nominee3NominiName"
+                              value={state.nominee3NominiName}
+                              onChange={changeHandler}
+                              placeholder="Nominee Name"
+                              required="required"
+                              style={
+                                nomineNameError_3 ? { borderColor: "red" } : {}
+                              }
+                            />
+                            {nomineNameError_3 ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                &nbsp; *Please enter valid name
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
+                          </Form.Group>
+                        </div>
+                        <div className="col-sm-4">
+                          <Form.Group>
+                            <Form.Label>
+                              Relationship{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
+                            <Form.Control
+                              as="select"
+                              name="nominee3Relationship"
+                              value={state.nominee3Relationship}
+                              onChange={changeHandler}
+                              style={
+                                relationshipError_3
+                                  ? { borderColor: "red" }
+                                  : {}
+                              }
+                            >
+                              <option value="">Relationship</option>
+                            </Form.Control>
+                            {relationshipError_3 ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                &nbsp; *Please select relation ship
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
+                          </Form.Group>
+                        </div>
+                        <div className="col-sm-4">
+                          <Form.Group>
+                            <Form.Label>
+                              Gender<span style={{ color: "red" }}>*</span>
+                            </Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="nominee3Gender"
+                              value={state.nominee3Gender}
+                              onChange={changeHandler}
+                              placeholder="Gender"
+                              required="required"
+                              style={
+                                genderError_3 ? { borderColor: "red" } : {}
+                              }
+                            />
+                            {genderError_3 ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                &nbsp; *Please fill the gender
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
+                          </Form.Group>
+                        </div>
+                      </Row>
+                    </Col>
+                    <Col sm={1} style={{ marginLeft: "-2rem" }}>
+                      <Form.Group>
+                        <div>
+                          <button
+                            onClick={cancel}
+                            type="cancel"
+                            style={{
+                              color: "white",
+                              border: " 2px solid#4466f2",
+                            }}
+                          >
+                            <i
+                              class="fa fa-close"
+                              style={{ fontSize: "20px", color: "red" }}
+                            ></i>
+                          </button>
+                        </div>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row style={{ marginBottom: "1rem" }}>
+                    <Col sm={11}>
+                      <Row>
+                        <div className="col-sm-4">
+                          <Form.Group>
+                            <Form.Label>
+                              Datte Of Birth
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
+                            <div
+                              className={
+                                DOBError_3
+                                  ? "onBoard-date-error"
+                                  : "onBoard-date"
+                              }
+                            >
+                              <DatePicker
+                                className="form-control onBoard-view"
+                                selected={Nominee3DOB}
+                                required
+                                onChange={(e) => dateOfBirthHandler(e, "3")}
+                                dateFormat="yyyy-MM-dd"
+                                placeholderText="YYYY-MM-DD"
+                                style={DOBError_3 ? { borderColor: "red" } : {}}
+                              />
+                            </div>
+                            {DOBError_3 ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                &nbsp; *Please select valid date
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
+                          </Form.Group>
+                        </div>
+                        <div className="col-sm-4">
+                          <Form.Group>
+                            <Form.Label>
+                              Age<span style={{ color: "red" }}>*</span>
+                            </Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="nominee3Age"
+                              value={state.nominee3Age}
+                              onChange={changeHandler}
+                              placeholder="Age"
+                              required="required"
+                              style={ageError_3 ? { borderColor: "red" } : {}}
+                            />
+                            {ageError_3 ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                &nbsp; *Please enter valid age
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
+                          </Form.Group>
+                        </div>
+                        <div className="col-sm-4">
+                          <Form.Group>
+                            <Form.Label>
+                              Blood Group{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
+                            <Form.Control
+                              as="select"
+                              name="nominee3BloodGroup"
+                              value={state.nominee3BloodGroup}
+                              onChange={changeHandler}
+                              style={
+                                bloodGroupError_3 ? { borderColor: "red" } : {}
+                              }
+                            >
+                              <option value="">Blood Group</option>
+                            </Form.Control>
+                            {bloodGroupError_3 ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                &nbsp; *Please enter valid blood group
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
+                          </Form.Group>
+                        </div>
+                      </Row>
+                    </Col>
+                    <Col sm={1}></Col>
+                  </Row>
+                </div>
+              ) : (
+                ""
+              )}
+              {NominForm3 === true ? (
+                <div>
+                  {/* fourth Nominee Name */}
+                  <Row style={{ marginBottom: "2rem" }}>
+                    <Col sm={11}>
+                      <Row>
+                        <div className="col-sm-4">
+                          <Form.Group>
+                            <Form.Label>
+                              Fourth Nominee Name
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="nominee4NominiName"
+                              value={state.nominee4NominiName}
+                              onChange={changeHandler}
+                              placeholder="Nominee Name"
+                              required="required"
+                              style={
+                                nomineNameError_4 ? { borderColor: "red" } : {}
+                              }
+                            />
+                            {nomineNameError_4 ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                &nbsp; *Please enter valid name
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
+                          </Form.Group>
+                        </div>
+                        <div className="col-sm-4">
+                          <Form.Group>
+                            <Form.Label>
+                              Relationship{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
+                            <Form.Control
+                              as="select"
+                              name="nominee4Relationship"
+                              value={state.nominee4Relationship}
+                              onChange={changeHandler}
+                              style={
+                                relationshipError_4
+                                  ? { borderColor: "red" }
+                                  : {}
+                              }
+                            >
+                              <option value="">Relationship</option>
+                            </Form.Control>
+                            {relationshipError_4 ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                &nbsp; *Please select relationship
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
+                          </Form.Group>
+                        </div>
+                        <div className="col-sm-4">
+                          <Form.Group>
+                            <Form.Label>
+                              Gender<span style={{ color: "red" }}>*</span>
+                            </Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="nominee4Gender"
+                              value={state.nominee4Gender}
+                              onChange={changeHandler}
+                              placeholder="Gender"
+                              required="required"
+                              style={
+                                genderError_4 ? { borderColor: "red" } : {}
+                              }
+                            />
+                            {genderError_4 ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                &nbsp; *Please fill the gender
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
+                          </Form.Group>
+                        </div>
+                      </Row>
+                    </Col>
+                    <Col sm={1} style={{ marginLeft: "-2rem" }}>
+                      <Form.Group>
+                        <div>
+                          <button
+                            onClick={cancel}
+                            type="cancel"
+                            style={{
+                              color: "white",
+                              border: " 2px solid#4466f2",
+                            }}
+                          >
+                            <i
+                              class="fa fa-close"
+                              style={{ fontSize: "20px", color: "red" }}
+                            ></i>
+                          </button>
+                        </div>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row style={{ marginBottom: "1rem" }}>
+                    <Col sm={11}>
+                      <Row>
+                        <div className="col-sm-4">
+                          <Form.Group>
+                            <Form.Label>
+                              &nbsp; *Datte Of Birth
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
+                            <div
+                              className={
+                                DOBError_4
+                                  ? "onBoard-date-error"
+                                  : "onBoard-date"
+                              }
+                            >
+                              <DatePicker
+                                className="form-control onBoard-view"
+                                selected={Nominee4DOB}
+                                required
+                                onChange={(e) => dateOfBirthHandler(e, "4")}
+                                dateFormat="yyyy-MM-dd"
+                                placeholderText="YYYY-MM-DD"
+                                style={DOBError_4 ? { borderColor: "red" } : {}}
+                              />
+                            </div>
+                            {DOBError_4 ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                &nbsp; *Please select valid date
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
+                          </Form.Group>
+                        </div>
+                        <div className="col-sm-4">
+                          <Form.Group>
+                            <Form.Label>
+                              Age<span style={{ color: "red" }}>*</span>
+                            </Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="nominee4Age"
+                              value={state.nominee4Age}
+                              onChange={changeHandler}
+                              placeholder="Age"
+                              required="required"
+                              style={ageError_4 ? { borderColor: "red" } : {}}
+                            />
+                            {ageError_4 ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                &nbsp; *Please enter valid age
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
+                          </Form.Group>
+                        </div>
+                        <div className="col-sm-4">
+                          <Form.Group>
+                            <Form.Label>
+                              Blood Group{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
+                            <Form.Control
+                              as="select"
+                              name="nominee4BloodGroup"
+                              value={state.nominee4BloodGroup}
+                              onChange={changeHandler}
+                              style={
+                                bloodGroupError_4 ? { borderColor: "red" } : {}
+                              }
+                            >
+                              <option value="">Blood Group</option>
+                            </Form.Control>
+                            {bloodGroupError_4 ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                &nbsp; *Please select blood group
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
+                          </Form.Group>
+                        </div>
+                      </Row>
+                    </Col>
+                    <Col sm={1}></Col>
+                  </Row>
+                </div>
+              ) : (
+                ""
+              )}
+              {NominForm4 === true ? (
+                <div>
+                  {/* Fifth Nominee */}
+                  <Row style={{ marginBottom: "2rem" }}>
+                    <Col sm={11}>
+                      <Row>
+                        <div className="col-sm-4">
+                          <Form.Group>
+                            <Form.Label>
+                              Fifth Nominee Name
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="nominee5NominiName"
+                              value={state.nominee5NominiName}
+                              onChange={changeHandler}
+                              placeholder="Nominee Name"
+                              required="required"
+                              style={
+                                nomineNameError_5 ? { borderColor: "red" } : {}
+                              }
+                            />
+                            {nomineNameError_5 ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                &nbsp; *Please enter valid name
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
+                          </Form.Group>
+                        </div>
+                        <div className="col-sm-4">
+                          <Form.Group>
+                            <Form.Label>
+                              Relationship{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
+                            <Form.Control
+                              as="select"
+                              name="nominee5Relationship"
+                              value={state.nominee5Relationship}
+                              onChange={changeHandler}
+                              style={
+                                relationshipError_5
+                                  ? { borderColor: "red" }
+                                  : {}
+                              }
+                            >
+                              <option value="">Relationship</option>
+                            </Form.Control>
+                            {relationshipError_5 ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                &nbsp; *Please select relationship
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
+                          </Form.Group>
+                        </div>
+                        <div className="col-sm-4">
+                          <Form.Group>
+                            <Form.Label>
+                              Gender<span style={{ color: "red" }}>*</span>
+                            </Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="nominee5Gender"
+                              value={state.nominee5Gender}
+                              onChange={changeHandler}
+                              placeholder="Gender"
+                              required="required"
+                              style={
+                                genderError_5 ? { borderColor: "red" } : {}
+                              }
+                            />
+                            {genderError_5 ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                &nbsp; *Please fill the gender
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
+                          </Form.Group>
+                        </div>
+                      </Row>
+                    </Col>
+                    <Col sm={1} style={{ marginLeft: "-2rem" }}>
+                      <Form.Group>
+                        <div>
+                          <button
+                            onClick={cancel}
+                            type="cancel"
+                            style={{
+                              color: "white",
+                              border: " 2px solid#4466f2",
+                            }}
+                          >
+                            <i
+                              class="fa fa-close"
+                              style={{ fontSize: "20px", color: "red" }}
+                            ></i>
+                          </button>
+                        </div>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row style={{ marginBottom: "1rem" }}>
+                    <Col sm={11}>
+                      <Row>
+                        <div className="col-sm-4">
+                          <Form.Group>
+                            <Form.Label>
+                              Datte Of Birth
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
+                            <div
+                              className={
+                                DOBError_5
+                                  ? "onBoard-date-error"
+                                  : "onBoard-date"
+                              }
+                            >
+                              <DatePicker
+                                className="form-control onBoard-view"
+                                selected={Nominee5DOB}
+                                required
+                                onChange={(e) => dateOfBirthHandler(e, "5")}
+                                dateFormat="yyyy-MM-dd"
+                                placeholderText="YYYY-MM-DD"
+                                style={DOBError_5 ? { borderColor: "red" } : {}}
+                              />
+                            </div>
+                            {DOBError_5 ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                &nbsp; *Please select valid date
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
+                          </Form.Group>
+                        </div>
+                        <div className="col-sm-4">
+                          <Form.Group>
+                            <Form.Label>
+                              Age<span style={{ color: "red" }}>*</span>
+                            </Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="nominee5Age"
+                              value={state.nominee5Age}
+                              onChange={changeHandler}
+                              placeholder="Age"
+                              required="required"
+                              style={ageError_5 ? { borderColor: "red" } : {}}
+                            />
+                            {ageError_5 ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                &nbsp; *Please enter valid age
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
+                          </Form.Group>
+                        </div>
+                        <div className="col-sm-4">
+                          <Form.Group>
+                            <Form.Label>
+                              Blood Group{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
+                            <Form.Control
+                              as="select"
+                              name="nominee5BloodGroup"
+                              value={state.nominee5BloodGroup}
+                              onChange={changeHandler}
+                              style={
+                                bloodGroupError_5 ? { borderColor: "red" } : {}
+                              }
+                            >
+                              <option value="">Blood Group</option>
+                            </Form.Control>
+                            {bloodGroupError_5 ? (
+                              <p style={{ color: "red" }}>
+                                {" "}
+                                &nbsp; *Please select blood group
+                              </p>
+                            ) : (
+                              <p></p>
+                            )}
+                          </Form.Group>
+                        </div>
+                      </Row>
+                    </Col>
+                    <Col sm={1}></Col>
+                  </Row>
+                </div>
+              ) : (
+                ""
+              )}
 
-          {/* {(() => {
+              {/* {(() => {
               switch (NomineeCount) {
                 case 1:
                   return <NomineeForm />;
@@ -1573,28 +1627,32 @@ const EditInsuranceNomination = (props) => {
               }
             })()} */}
 
-          <Row>
-            <Col sm={4}></Col>
-            {!candidateId && (
-              <Col sm={4} style={{ padding: "0px 0px 0px 35px" }}>
-                {/* style={{ padding: "0px 0px 0px 20px" }} */}
-                <Form.Group>
-                  <div>
-                    <button
-                      className="buttonField  button"
-                      onClick={handleIncrement}
-                      disabled={disable}
-                      style={{ width: "160px" }}
-                    >
-                      <b> Add New Nominee + </b>
-                    </button>
-                    {/* onClick={AddExtrReferenceClick} disabled={isClicked} */}
-                  </div>
-                </Form.Group>
-              </Col>
-            )}
-          </Row>
+              <Row>
+                <Col sm={4}></Col>
+                {!candidateId && (
+                  <Col sm={4} style={{ padding: "0px 0px 0px 35px" }}>
+                    {/* style={{ padding: "0px 0px 0px 20px" }} */}
+                    <Form.Group>
+                      <div>
+                        <button
+                          className="buttonField  button"
+                          onClick={handleIncrement}
+                          disabled={disable}
+                          style={{ width: "160px" }}
+                        >
+                          <b> Add New Nominee + </b>
+                        </button>
+                        {/* onClick={AddExtrReferenceClick} disabled={isClicked} */}
+                      </div>
+                    </Form.Group>
+                  </Col>
+                )}
+              </Row>
+            </div>
+          )}
         </div>
+      ) : (
+        <div className="text-center">No Data Found</div>
       )}
     </Fragment>
   );

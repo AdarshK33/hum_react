@@ -114,103 +114,107 @@ const EditBankDetails = (props) => {
   };
   return (
     <Fragment>
-      <Form>
-        <Row style={{ marginBottom: "2rem" }}>
-          <div className="col-sm-4">
-            <Form.Group>
-              <Form.Label>
-                Bank Name<span style={{ color: "red" }}>*</span>
-              </Form.Label>
-              <Form.Control
-                type="text"
-                name="bankName"
-                value={state.bankName}
-                onChange={changeHandler}
-                required
-                placeholder="Bank Name"
-                disabled={disabled}
-              />
-              {bankNameError ? (
-                <p style={{ color: "red" }}> Please enter bank name</p>
-              ) : (
-                <p></p>
-              )}
-            </Form.Group>
-          </div>
-          <div className="col-sm-4">
-            <Form.Group>
-              <Form.Label>
-                Bank Account No<span style={{ color: "red" }}>*</span>
-              </Form.Label>
-              <Form.Control
-                type="text"
-                name="accountNumber"
-                value={state.accountNumber}
-                onChange={changeHandler}
-                required
-                placeholder="Bank Account No"
-                disabled={disabled}
-              />
-              {accountNumberError ? (
-                <p style={{ color: "red" }}> Please enter Account Number</p>
-              ) : (
-                <p></p>
-              )}
-            </Form.Group>
-          </div>
-          <div className="col-sm-4">
-            <Form.Group>
-              <Form.Label>
-                IFSC Code<span style={{ color: "red" }}>*</span>
-              </Form.Label>
-              <Form.Control
-                type="text"
-                name="ifscCode"
-                value={state.ifscCode}
-                onChange={changeHandler}
-                required
-                placeholder="IFSC Code"
-                disabled={disabled}
-              />
-              {ifscCodeError ? (
-                <p style={{ color: "red" }}> Please enter valid IFSC code</p>
-              ) : (
-                <p></p>
-              )}
-            </Form.Group>
-          </div>
-        </Row>
-        <Row style={{ marginBottom: "1rem" }}>
-          <Col sm={8}>
-            <div className="inputField">
-              <label>
-                <b>Guidelines for Bank Account</b>
-              </label>
+      {bankDetails !== null && bankDetailsData !== undefined ? (
+        <Form>
+          <Row style={{ marginBottom: "2rem" }}>
+            <div className="col-sm-4">
+              <Form.Group>
+                <Form.Label>
+                  Bank Name<span style={{ color: "red" }}>*</span>
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="bankName"
+                  value={state.bankName}
+                  onChange={changeHandler}
+                  required
+                  placeholder="Bank Name"
+                  disabled={disabled}
+                />
+                {bankNameError ? (
+                  <p style={{ color: "red" }}> Please enter bank name</p>
+                ) : (
+                  <p></p>
+                )}
+              </Form.Group>
             </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col sm={8}>
-            <div>
-              <br></br>
-              <label>
-                <b>1.</b>The Candidate's name sholud be upload on the cancelled
-                cheque.
-              </label>
-              <br></br>
-              <label>
-                <b>2.</b>If the name of the candidate is not present then you
-                can upload bank statments and passbook.
-              </label>
-              <br></br>
-              <label>
-                <b>3.</b>The candidate's name on the documents is mandatory
-                otherwise it will not be considered as valid proof.
-              </label>
+            <div className="col-sm-4">
+              <Form.Group>
+                <Form.Label>
+                  Bank Account No<span style={{ color: "red" }}>*</span>
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="accountNumber"
+                  value={state.accountNumber}
+                  onChange={changeHandler}
+                  required
+                  placeholder="Bank Account No"
+                  disabled={disabled}
+                />
+                {accountNumberError ? (
+                  <p style={{ color: "red" }}> Please enter Account Number</p>
+                ) : (
+                  <p></p>
+                )}
+              </Form.Group>
             </div>
-          </Col>
-        </Row>
-      </Form>
+            <div className="col-sm-4">
+              <Form.Group>
+                <Form.Label>
+                  IFSC Code<span style={{ color: "red" }}>*</span>
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="ifscCode"
+                  value={state.ifscCode}
+                  onChange={changeHandler}
+                  required
+                  placeholder="IFSC Code"
+                  disabled={disabled}
+                />
+                {ifscCodeError ? (
+                  <p style={{ color: "red" }}> Please enter valid IFSC code</p>
+                ) : (
+                  <p></p>
+                )}
+              </Form.Group>
+            </div>
+          </Row>
+          <Row style={{ marginBottom: "1rem" }}>
+            <Col sm={8}>
+              <div className="inputField">
+                <label>
+                  <b>Guidelines for Bank Account</b>
+                </label>
+              </div>
+            </Col>
+          </Row>
+          <Row>
+            <Col sm={8}>
+              <div>
+                <br></br>
+                <label>
+                  <b>1.</b>The Candidate's name sholud be upload on the
+                  cancelled cheque.
+                </label>
+                <br></br>
+                <label>
+                  <b>2.</b>If the name of the candidate is not present then you
+                  can upload bank statments and passbook.
+                </label>
+                <br></br>
+                <label>
+                  <b>3.</b>The candidate's name on the documents is mandatory
+                  otherwise it will not be considered as valid proof.
+                </label>
+              </div>
+            </Col>
+          </Row>
+        </Form>
+      ) : (
+        <div className="text-center">No Data Found</div>
+      )}
     </Fragment>
   );
 };

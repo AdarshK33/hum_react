@@ -3,116 +3,281 @@ import { Table } from "react-bootstrap";
 import { DocsVerifyContext } from "../../context/DocverificationState";
 import { useParams } from "react-router-dom";
 import "./ManageCandidate.css";
+import { Button, Container, Modal } from "react-bootstrap";
+// import { handleInputChange } from "react-select/src/utils";
+
 const DocVerification = () => {
   const [isChecked, changeState] = useState(false);
   const params = useParams();
   const candidateId = params["candidateId"];
-  const { verificationDocsView, docsToVerify, loader, setLoader } = useContext(
-    DocsVerifyContext
-  );
+  const [showModal, setModal] = useState(false);
+  const [remarks, setremarks] = useState("");
+  const [docId, setdocId] = useState("");
+  const [error, setError] = useState(false);
+  const {
+    verificationDocsView,
+    docsToVerify,
+    loader,
+    setLoader,
+    approveDocument,
+    disApproveDocument,
+    acceptStatus,
+    rejectStatus,
+    downloadDocument,
+    downloadedFile,
+  } = useContext(DocsVerifyContext);
   useEffect(() => {
     verificationDocsView(candidateId);
-  }, []);
+  }, [acceptStatus, rejectStatus]);
   const handleShifting = () => {
     changeState(!isChecked);
   };
+
+  const handleApproveDocument = (docId) => {
+    approveDocument(docId);
+  };
+  const handleDisApproveDocument = (docId) => {
+    setModal(true);
+    setdocId(docId);
+  };
+  const handleClose = () => setModal(false);
+  const handleChange = (e) => {
+    setremarks(e.target.value);
+    setError(false);
+  };
+  const handleSave = (docId, candidateId, remarks) => {
+    if (remarks !== "") {
+      disApproveDocument(docId, candidateId, remarks);
+      handleClose();
+    } else {
+      setError(true);
+    }
+  };
   return (
-    console.log(docsToVerify),
-    (
-      <Fragment>
-        <div className="parent">
-          <button
-            className="buttonField1 button"
-            disabled={!isChecked}
-            onClick={handleShifting}
-          >
-            Personal Documents
-          </button>
-          <button
-            className="buttonField2 button"
-            disabled={isChecked}
-            onClick={handleShifting}
-          >
-            Education & Work Documents
-          </button>
-        </div>
-        <div className="mt-5">
-          <Table className="tableWrapper table table-borderless">
-            <thead>
+    <Fragment>
+      <Modal show={showModal} onHide={() => handleClose()} centered>
+        <Container style={{ textAlign: "center", margin: "4rem 0 4rem 0" }}>
+          <Modal.Header closeButton className="modalHeader">
+            <Modal.Title>State remarks for disapproval</Modal.Title>
+          </Modal.Header>{" "}
+          <Modal.Body>
+            <textarea
+              className="remarkText rounded"
+              value={remarks}
+              placeholder="Write here.."
+              onChange={(e) => handleChange(e)}
+            />
+
+            {error && <p style={{ color: "red" }}>Please add your remarks</p>}
+            <div className="text-center mb-2">
+              <Button onClick={() => handleSave(docId, candidateId, remarks)}>
+                Save
+              </Button>
+            </div>
+          </Modal.Body>
+        </Container>
+      </Modal>
+      <div className="parent">
+        <button
+          className="buttonField1 button"
+          disabled={!isChecked}
+          onClick={handleShifting}
+        >
+          Personal Documents
+        </button>
+        <button
+          className="buttonField2 button"
+          disabled={isChecked}
+          onClick={handleShifting}
+        >
+          Education & Work Documents
+        </button>
+      </div>
+      <div className="mt-5">
+        <Table className="tableWrapper table table-borderless">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Status</th>
+              <th>Remarks</th>
+              <th>Dates</th>
+            </tr>
+          </thead>
+          {loader === true &&
+          docsToVerify !== undefined &&
+          docsToVerify !== null ? (
+            <tbody>
               <tr>
-                <th></th>
-                <th>Status</th>
-                <th>Remarks</th>
-                <th>Dates</th>
-              </tr>
-            </thead>
-            {loader === true &&
-            docsToVerify !== undefined &&
-            docsToVerify !== null ? (
-              <tbody>
-                <tr>
-                  <td colSpan="12">
-                    <div
-                      className="loader-box loader"
-                      style={{ width: "100% !important" }}
-                    >
-                      <div className="loader">
-                        <div className="line bg-primary"></div>
-                        <div className="line bg-primary"></div>
-                        <div className="line bg-primary"></div>
-                        <div className="line bg-primary"></div>
-                      </div>
+                <td colSpan="12">
+                  <div
+                    className="loader-box loader"
+                    style={{ width: "100% !important" }}
+                  >
+                    <div className="loader">
+                      <div className="line bg-primary"></div>
+                      <div className="line bg-primary"></div>
+                      <div className="line bg-primary"></div>
+                      <div className="line bg-primary"></div>
                     </div>
-                  </td>
-                </tr>
-              </tbody>
-            ) : docsToVerify !== undefined &&
-              !isChecked &&
-              docsToVerify !== null &&
-              docsToVerify.length > 0 ? (
-              docsToVerify.map((item, i) => {
-                return (
-                  <tbody key={i} className="tableText">
-                    <tr>
-                      <td className="text-left">
-                        <p>
-                          {item.documentType === 0 ? (
-                            <p>
-                              <span
-                                style={{ color: "black", fontSize: "20px" }}
-                              >
-                                PhotoID
-                              </span>{" "}
-                              <span style={{ color: "red" }}>*</span>
-                            </p>
-                          ) : item.documentType === 1 ? (
-                            <p>
-                              <span
-                                style={{ color: "black", fontSize: "20px" }}
-                              >
-                                AadhaarID
-                              </span>
-                              <span style={{ color: "red" }}>*</span>
-                              <span
-                                style={{
-                                  color: "#47ef47",
-                                  fontStyle: "italic",
-                                  fontSize: "20px",
-                                }}
-                              >
-                                (Upload the first and last page)
-                              </span>
-                            </p>
-                          ) : item.documentType === 2 ? (
-                            <p>
-                              <span
-                                style={{ color: "black", fontSize: "20px" }}
-                              >
-                                Pan Number
-                              </span>{" "}
-                              <span style={{ color: "red" }}>*</span>
-                            </p>
-                          ) : item.documentType === 3 ? (
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          ) : docsToVerify !== undefined &&
+            !isChecked &&
+            docsToVerify !== null &&
+            docsToVerify.length > 0 ? (
+            docsToVerify.map((item, i) => {
+              return (
+                <tbody key={i} className="tableText">
+                  <tr>
+                    <td className="text-left">
+                      <p>
+                        {item.documentType === 0 ? (
+                          <p>
+                            <span style={{ color: "black", fontSize: "20px" }}>
+                              PhotoID
+                            </span>{" "}
+                            <span style={{ color: "red" }}>*</span>
+                          </p>
+                        ) : item.documentType === 1 ? (
+                          <p>
+                            <span style={{ color: "black", fontSize: "20px" }}>
+                              AadhaarID
+                            </span>
+                            <span style={{ color: "red" }}>*</span>
+                            <span
+                              style={{
+                                color: "#47ef47",
+                                fontStyle: "italic",
+                                fontSize: "20px",
+                              }}
+                            >
+                              (Upload the first and last page)
+                            </span>
+                          </p>
+                        ) : item.documentType === 2 ? (
+                          <p>
+                            <span style={{ color: "black", fontSize: "20px" }}>
+                              Pan Number
+                            </span>{" "}
+                            <span style={{ color: "red" }}>*</span>
+                          </p>
+                        ) : item.documentType === 3 ? (
+                          <p>
+                            <span style={{ color: "black", fontSize: "20px" }}>
+                              Address Proof
+                            </span>{" "}
+                            <span style={{ color: "red" }}>*</span>
+                          </p>
+                        ) : item.documentType === 4 ? (
+                          <p>
+                            <span style={{ color: "black", fontSize: "20px" }}>
+                              EPF Passbook
+                            </span>{" "}
+                            <span
+                              style={{
+                                color: "#47ef47",
+                                fontStyle: "italic",
+                                fontSize: "20px",
+                              }}
+                            >
+                              (First page of the book)
+                            </span>
+                          </p>
+                        ) : (
+                          <p>
+                            <span style={{ color: "black", fontSize: "20px" }}>
+                              Cancelled Cheque
+                            </span>{" "}
+                          </p>
+                        )}
+                      </p>
+                      <p
+                        style={{ cursor: "pointer" }}
+                        onClick={() => downloadDocument(item.documentName)}
+                      >
+                        {downloadedFile && <img src={downloadedFile} alt="" />}
+                        {item.documentName}
+                      </p>
+                    </td>
+                    {item.statusDesc !== null &&
+                    item.statusDesc !== "Pending" ? (
+                      <td>{item.statusDesc}</td>
+                    ) : (
+                      <td className="row text-center">
+                        <button
+                          className="approveButton"
+                          onClick={() => handleApproveDocument(item.documentId)}
+                        >
+                          Approve
+                        </button>
+                        <button
+                          className="approveButton ml-4"
+                          onClick={() =>
+                            handleDisApproveDocument(item.documentId)
+                          }
+                        >
+                          Disapprove
+                        </button>
+                      </td>
+                    )}
+                    {item.remark !== null ? (
+                      <td>{item.remark}</td>
+                    ) : (
+                      <td>NA</td>
+                    )}
+                    {item.verifiedDate !== null ? (
+                      <td>{item.verifiedDate}</td>
+                    ) : (
+                      <td>NA</td>
+                    )}
+                  </tr>
+                </tbody>
+              );
+            })
+          ) : docsToVerify !== undefined &&
+            isChecked &&
+            docsToVerify !== null &&
+            docsToVerify.length > 0 ? (
+            docsToVerify.map((item, i) => {
+              return (
+                <tbody key={i} className="tableText">
+                  <tr>
+                    <td className="text-left mx-auto px-4 ">
+                      <p>
+                        {item.documentType === 6 ? (
+                          <p>
+                            <span style={{ color: "black", fontSize: "20px" }}>
+                              PhotoID
+                            </span>{" "}
+                            <span style={{ color: "red" }}>*</span>
+                          </p>
+                        ) : item.documentType === 7 ? (
+                          <p>
+                            <span style={{ color: "black", fontSize: "20px" }}>
+                              AadhaarID
+                            </span>
+                            <span style={{ color: "red" }}>*</span>
+                            <span
+                              style={{
+                                color: "#47ef47",
+                                fontStyle: "italic",
+                                fontSize: "20px",
+                              }}
+                            >
+                              (Upload the first and last page)
+                            </span>
+                          </p>
+                        ) : item.documentType === 8 ? (
+                          <p>
+                            <span style={{ color: "black", fontSize: "20px" }}>
+                              Pan Number
+                            </span>{" "}
+                            <span style={{ color: "red" }}>*</span>
+                          </p>
+                        ) : (
+                          item.documentType === 9 && (
                             <p>
                               <span
                                 style={{ color: "black", fontSize: "20px" }}
@@ -121,157 +286,47 @@ const DocVerification = () => {
                               </span>{" "}
                               <span style={{ color: "red" }}>*</span>
                             </p>
-                          ) : item.documentType === 4 ? (
-                            <p>
-                              <span
-                                style={{ color: "black", fontSize: "20px" }}
-                              >
-                                EPF Passbook
-                              </span>{" "}
-                              <span
-                                style={{
-                                  color: "#47ef47",
-                                  fontStyle: "italic",
-                                  fontSize: "20px",
-                                }}
-                              >
-                                (First page of the book)
-                              </span>
-                            </p>
-                          ) : (
-                            <p>
-                              <span
-                                style={{ color: "black", fontSize: "20px" }}
-                              >
-                                Cancelled Cheque
-                              </span>{" "}
-                            </p>
-                          )}
-                        </p>
-                        {item.documentName}
-                      </td>
-                      {item.reviewStatus !== null ? (
-                        <td>{item.reviewStatus}</td>
-                      ) : (
+                          )
+                        )}
+                      </p>
+                      {item.documentType > 5 && item.documentName}
+                    </td>
+                    {item.reviewStatus !== null && item.documentType > 5 ? (
+                      <td>{item.reviewStatus}</td>
+                    ) : (
+                      item.documentType > 5 && (
                         <td className="row text-center">
                           <button className="approveButton">Approve</button>
                           <button className="approveButton ml-4">
                             Disapprove
                           </button>
                         </td>
-                      )}
-                      {item.remark !== null ? (
-                        <td>{item.remark}</td>
-                      ) : (
-                        <td>NA</td>
-                      )}
-                      {item.verifiedDate !== null ? (
-                        <td>{item.verifiedDate}</td>
-                      ) : (
-                        <td>NA</td>
-                      )}
-                    </tr>
-                  </tbody>
-                );
-              })
-            ) : docsToVerify !== undefined &&
-              isChecked &&
-              docsToVerify !== null &&
-              docsToVerify.length > 0 ? (
-              docsToVerify.map((item, i) => {
-                return (
-                  <tbody key={i} className="tableText">
-                    <tr>
-                      <td className="text-left mx-auto px-4 ">
-                        <p>
-                          {item.documentType === 6 ? (
-                            <p>
-                              <span
-                                style={{ color: "black", fontSize: "20px" }}
-                              >
-                                PhotoID
-                              </span>{" "}
-                              <span style={{ color: "red" }}>*</span>
-                            </p>
-                          ) : item.documentType === 7 ? (
-                            <p>
-                              <span
-                                style={{ color: "black", fontSize: "20px" }}
-                              >
-                                AadhaarID
-                              </span>
-                              <span style={{ color: "red" }}>*</span>
-                              <span
-                                style={{
-                                  color: "#47ef47",
-                                  fontStyle: "italic",
-                                  fontSize: "20px",
-                                }}
-                              >
-                                (Upload the first and last page)
-                              </span>
-                            </p>
-                          ) : item.documentType === 8 ? (
-                            <p>
-                              <span
-                                style={{ color: "black", fontSize: "20px" }}
-                              >
-                                Pan Number
-                              </span>{" "}
-                              <span style={{ color: "red" }}>*</span>
-                            </p>
-                          ) : (
-                            item.documentType === 9 && (
-                              <p>
-                                <span
-                                  style={{ color: "black", fontSize: "20px" }}
-                                >
-                                  Address Proof
-                                </span>{" "}
-                                <span style={{ color: "red" }}>*</span>
-                              </p>
-                            )
-                          )}
-                        </p>
-                        {item.documentType > 5 && item.documentName}
-                      </td>
-                      {item.reviewStatus !== null && item.documentType > 5 ? (
-                        <td>{item.reviewStatus}</td>
-                      ) : (
-                        item.documentType > 5 && (
-                          <td className="row text-center">
-                            <button className="approveButton">Approve</button>
-                            <button className="approveButton ml-4">
-                              Disapprove
-                            </button>
-                          </td>
-                        )
-                      )}
-                      {item.remark !== null ? (
-                        <td>{item.documentType > 5 && item.remark}</td>
-                      ) : (
-                        item.documentType > 5 && <td>NA</td>
-                      )}
-                      {item.verifiedDate !== null ? (
-                        <td>{item.documentType > 5 && item.verifiedDate}</td>
-                      ) : (
-                        item.documentType > 5 && <td>NA</td>
-                      )}
-                    </tr>
-                  </tbody>
-                );
-              })
-            ) : (
-              <tbody>
-                <tr>
-                  <td colSpan="12">No Record Found</td>
-                </tr>
-              </tbody>
-            )}
-          </Table>
-        </div>
-      </Fragment>
-    )
+                      )
+                    )}
+                    {item.remark !== null ? (
+                      <td>{item.documentType > 5 && item.remark}</td>
+                    ) : (
+                      item.documentType > 5 && <td>NA</td>
+                    )}
+                    {item.verifiedDate !== null ? (
+                      <td>{item.documentType > 5 && item.verifiedDate}</td>
+                    ) : (
+                      item.documentType > 5 && <td>NA</td>
+                    )}
+                  </tr>
+                </tbody>
+              );
+            })
+          ) : (
+            <tbody>
+              <tr>
+                <td colSpan="12">No Record Found</td>
+              </tr>
+            </tbody>
+          )}
+        </Table>
+      </div>
+    </Fragment>
   );
 };
 export default DocVerification;

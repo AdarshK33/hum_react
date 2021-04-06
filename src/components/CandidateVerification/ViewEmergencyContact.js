@@ -163,161 +163,165 @@ const EditEmergencyContact = (props) => {
 
   return (
     <Fragment>
-      <Form>
-        <Row style={{ marginBottom: "1rem" }}>
-          <Col sm={6}>
-            <div>
-              <label>
-                <b>Present Address</b>
-              </label>
+      {emergencyInfo !== null && emergencyInfo !== undefined ? (
+        <Form>
+          <Row style={{ marginBottom: "1rem" }}>
+            <Col sm={6}>
+              <div>
+                <label>
+                  <b>Present Address</b>
+                </label>
+              </div>
+            </Col>
+          </Row>
+          <Row style={{ marginBottom: "2rem" }}>
+            {/* <div className="divContents"> */}
+            <div className="col-sm-3">
+              <Form.Group>
+                <Form.Label>
+                  Name<span style={{ color: "red" }}>*</span>
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="contactName"
+                  value={state.contactName}
+                  onChange={changeHandler}
+                  required
+                  placeholder="Name"
+                  disabled={disabled}
+                />
+                <p style={{ color: "red" }}>{stateError.contactNameError} </p>
+              </Form.Group>
             </div>
-          </Col>
-        </Row>
-        <Row style={{ marginBottom: "2rem" }}>
-          {/* <div className="divContents"> */}
-          <div className="col-sm-3">
-            <Form.Group>
-              <Form.Label>
-                Name<span style={{ color: "red" }}>*</span>
-              </Form.Label>
-              <Form.Control
-                type="text"
-                name="contactName"
-                value={state.contactName}
-                onChange={changeHandler}
-                required
-                placeholder="Name"
-                disabled={disabled}
-              />
-              <p style={{ color: "red" }}>{stateError.contactNameError} </p>
-            </Form.Group>
-          </div>
-          <div className="col-sm-3">
-            <Form.Group>
-              <Form.Label>
-                Relationships<span style={{ color: "red" }}>*</span>
-              </Form.Label>
-              <Form.Control
-                as="select"
-                type="text"
-                name="relationship"
-                value={state.relationship}
-                onChange={changeHandler}
-                required
-                disabled={disabled}
-              >
-                <option value="">Relationships</option>
-              </Form.Control>
-              <p style={{ color: "red" }}>{stateError.relationshipError} </p>
-            </Form.Group>
-          </div>
-          <div className="col-sm-3">
-            <Form.Group>
-              <Form.Label>
-                Contact No<span style={{ color: "red" }}>*</span>
-              </Form.Label>
-              <Form.Control
-                type="text"
-                name="phoneNumber"
-                value={state.phoneNumber}
-                onChange={changeHandler}
-                required
-                placeholder="Contact No"
-                disabled={disabled}
-              />
-              <p style={{ color: "red" }}>{stateError.phoneNumberError} </p>
-            </Form.Group>
-          </div>
+            <div className="col-sm-3">
+              <Form.Group>
+                <Form.Label>
+                  Relationships<span style={{ color: "red" }}>*</span>
+                </Form.Label>
+                <Form.Control
+                  as="select"
+                  type="text"
+                  name="relationship"
+                  value={state.relationship}
+                  onChange={changeHandler}
+                  required
+                  disabled={disabled}
+                >
+                  <option value="">Relationships</option>
+                </Form.Control>
+                <p style={{ color: "red" }}>{stateError.relationshipError} </p>
+              </Form.Group>
+            </div>
+            <div className="col-sm-3">
+              <Form.Group>
+                <Form.Label>
+                  Contact No<span style={{ color: "red" }}>*</span>
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="phoneNumber"
+                  value={state.phoneNumber}
+                  onChange={changeHandler}
+                  required
+                  placeholder="Contact No"
+                  disabled={disabled}
+                />
+                <p style={{ color: "red" }}>{stateError.phoneNumberError} </p>
+              </Form.Group>
+            </div>
 
-          <div className="col-sm-3">
-            <Form.Group>
-              <Form.Label>
-                Address Line 1<span style={{ color: "red" }}>*</span>
-              </Form.Label>
-              <Form.Control
-                type="text"
-                name="addressLine"
-                value={state.addressLine}
-                onChange={changeHandler}
-                required
-                placeholder="Address Line 1"
-                disabled={disabled}
-              />
-              <p style={{ color: "red" }}>{stateError.addressLineError} </p>
-            </Form.Group>
-          </div>
-          {/* </div> */}
-        </Row>
-        <Row style={{ marginBottom: "2rem" }}>
-          <div className="col-sm-3">
-            <Form.Group>
-              <Form.Label>Locality</Form.Label>
-              <Form.Control
-                type="text"
-                name="locality"
-                value={state.locality}
-                onChange={changeHandler}
-                required
-                placeholder="Locality"
-                disabled={disabled}
-              />
-            </Form.Group>
-            <p style={{ color: "red" }}>{stateError.localityError} </p>
-          </div>
-          <div className="col-sm-3">
-            <Form.Group>
-              <Form.Label>
-                City<span style={{ color: "red" }}>*</span>
-              </Form.Label>
-              <Form.Control
-                type="text"
-                name="city"
-                value={state.city}
-                onChange={changeHandler}
-                required
-                placeholder="City"
-                disabled={disabled}
-              />
-              <span style={{ color: "red" }}>{stateError.cityError}</span>
-            </Form.Group>
-          </div>
-          <div className="col-sm-3">
-            <Form.Group>
-              <Form.Label>
-                Country<span style={{ color: "red" }}>*</span>
-              </Form.Label>
-              <Form.Control
-                type="text"
-                name="country"
-                value={state.country}
-                onChange={changeHandler}
-                required
-                placeholder="Country"
-                disabled={disabled}
-              />
-            </Form.Group>
-            <p style={{ color: "red" }}>{stateError.countryError} </p>
-          </div>
+            <div className="col-sm-3">
+              <Form.Group>
+                <Form.Label>
+                  Address Line 1<span style={{ color: "red" }}>*</span>
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="addressLine"
+                  value={state.addressLine}
+                  onChange={changeHandler}
+                  required
+                  placeholder="Address Line 1"
+                  disabled={disabled}
+                />
+                <p style={{ color: "red" }}>{stateError.addressLineError} </p>
+              </Form.Group>
+            </div>
+            {/* </div> */}
+          </Row>
+          <Row style={{ marginBottom: "2rem" }}>
+            <div className="col-sm-3">
+              <Form.Group>
+                <Form.Label>Locality</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="locality"
+                  value={state.locality}
+                  onChange={changeHandler}
+                  required
+                  placeholder="Locality"
+                  disabled={disabled}
+                />
+              </Form.Group>
+              <p style={{ color: "red" }}>{stateError.localityError} </p>
+            </div>
+            <div className="col-sm-3">
+              <Form.Group>
+                <Form.Label>
+                  City<span style={{ color: "red" }}>*</span>
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="city"
+                  value={state.city}
+                  onChange={changeHandler}
+                  required
+                  placeholder="City"
+                  disabled={disabled}
+                />
+                <span style={{ color: "red" }}>{stateError.cityError}</span>
+              </Form.Group>
+            </div>
+            <div className="col-sm-3">
+              <Form.Group>
+                <Form.Label>
+                  Country<span style={{ color: "red" }}>*</span>
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="country"
+                  value={state.country}
+                  onChange={changeHandler}
+                  required
+                  placeholder="Country"
+                  disabled={disabled}
+                />
+              </Form.Group>
+              <p style={{ color: "red" }}>{stateError.countryError} </p>
+            </div>
 
-          <div className="col-sm-3">
-            <Form.Group>
-              <Form.Label>
-                PinCode<span style={{ color: "red" }}>*</span>
-              </Form.Label>
-              <Form.Control
-                type="text"
-                name="pinCode"
-                value={state.pinCode}
-                onChange={changeHandler}
-                required
-                placeholder="Pin Code"
-                disabled={disabled}
-              />
-              <p style={{ color: "red" }}>{stateError.pinCodeError} </p>
-            </Form.Group>
-          </div>
-        </Row>
-      </Form>
+            <div className="col-sm-3">
+              <Form.Group>
+                <Form.Label>
+                  PinCode<span style={{ color: "red" }}>*</span>
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="pinCode"
+                  value={state.pinCode}
+                  onChange={changeHandler}
+                  required
+                  placeholder="Pin Code"
+                  disabled={disabled}
+                />
+                <p style={{ color: "red" }}>{stateError.pinCodeError} </p>
+              </Form.Group>
+            </div>
+          </Row>
+        </Form>
+      ) : (
+        <div className="text-center">No Data Found</div>
+      )}
     </Fragment>
   );
 };
