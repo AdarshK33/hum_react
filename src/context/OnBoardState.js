@@ -7,8 +7,13 @@ import { toast } from "react-toastify";
 export const OnBoardContext = createContext();
 const initial_state = {
   name: " ",
-  Infodata: [],
+  PersonalInfoResponse: {},
+  CreateNomineeResponse: {},
+  candidateInsuranceNominationData: {},
   candidateData: {},
+  candidatePersonalInfoData: {},
+  searchEmpData1: [],
+  searchEmpData2: [],
   stateList: [],
   cityList: [],
   candidateViewInfo: {},
@@ -16,6 +21,7 @@ const initial_state = {
   candidateStateData: [],
   candidateCityData: [],
 };
+// git
 export const OnBoardProvider = (props) => {
   const [state, dispatch] = useReducer(OnBoardReducer, initial_state);
   const updatePersonalInfo = (updateData) => {
@@ -24,11 +30,35 @@ export const OnBoardProvider = (props) => {
     return candidate
       .post("/api/v2/candidate/update", updateData)
       .then((response) => {
+        state.PersonalInfoResponse = response.data.data;
+        console.log(
+          "personal Information response--->",
+          state.PersonalInfoResponse
+        );
         toast.info(response.data.message);
         console.log(response.data.message);
         return dispatch({
           type: "UPDATE_PERSONAL_INFO",
-          payload: state.Infodata,
+          payload: state.PersonalInfoResponse,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const CandidatePersonalInfo = (candidateId) => {
+    candidate
+      .get("/api/v2/candidate/" + candidateId)
+      .then((response) => {
+        state.candidatePersonalInfoData = response.data.data;
+        console.log(
+          "Candidate Personal information  Response ",
+          state.candidatePersonalInfoData
+        );
+        return dispatch({
+          type: "CANDIDATE_PERSONAL_INFODATA",
+          payload: state.candidatePersonalInfoData,
         });
       })
       .catch((error) => {
@@ -50,7 +80,86 @@ export const OnBoardProvider = (props) => {
         console.log(error);
       });
   };
-
+  //Search by reference emp name1 or emp id
+  const searchForEmp1 = (key) => {
+    candidate
+      .get("/api/v2/candidate/reference/search?key=" + key)
+      .then((response) => {
+        if (response.data.data === null) {
+          state.searchEmpData1 = response.data.data;
+          console.log("response.data.data", response.data.data);
+          toast.info(response.data.message);
+        } else {
+          state.searchEmpData1 = response.data.data[0];
+          console.log("response.data.data[0]", response.data.data[0]);
+        }
+        console.log("response", response);
+        console.log("search Emp response", state.searchEmpData1);
+        return dispatch({ type: "SEARCH_EMP1", payload: state.searchEmpData1 });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  //Search by reference emp name2 or emp id
+  const searchForEmp2 = (key) => {
+    candidate
+      .get("/api/v2/candidate/reference/search?key=" + key)
+      .then((response) => {
+        if (response.data.data === null) {
+          state.searchEmpData2 = response.data.data;
+          console.log("response.data.data", response.data.data);
+          toast.info(response.data.message);
+        } else {
+          state.searchEmpData2 = response.data.data[0];
+          console.log("response.data.data[0]", response.data.data[0]);
+        }
+        console.log("response", response);
+        console.log("search Emp response", state.searchEmpData2);
+        return dispatch({ type: "SEARCH_EMP2", payload: state.searchEmpData2 });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const CreateNominee = (createDate) => {
+    console.log("create nominee data -----");
+    console.log(createDate);
+    return candidate
+      .post("/api/v2/candidate/insurance-nomination/create", createDate)
+      .then((response) => {
+        state.CreateNomineeResponse = response.data.data;
+        console.log(response);
+        console.log("create nominee response--->", state.CreateNomineeResponse);
+        toast.info(response.data.message);
+        console.log(response.data.message);
+        return dispatch({
+          type: "CREATE_NOMINEE_DATA",
+          payload: state.CreateNomineeResponse,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const InsuranceNominationView = (candidateId) => {
+    candidate
+      .get("/api/v2/candidate/insurance-nomination/view/" + candidateId)
+      .then((response) => {
+        state.candidateInsuranceNominationData = response.data.data;
+        console.log(
+          "Candidate Insurance Nomination Data ",
+          state.candidateInsuranceNominationData
+        );
+        return dispatch({
+          type: "CANDIDATE_INSURANCE_NOMINEE_DATA",
+          payload: state.candidateInsuranceNominationData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const StateList = (country) => {
     candidate
       .get("/api/v2/candidate/address/view/state/" + country)
@@ -153,12 +262,23 @@ export const OnBoardProvider = (props) => {
         CandidateProfile,
         StateList,
         CityList,
+        searchForEmp1,
+        searchForEmp2,
         CandidateViewInformation,
+        CandidatePersonalInfo,
+        CreateNominee,
+        InsuranceNominationView,
+        searchEmpData1: state.searchEmpData1,
+        searchEmpData2: state.searchEmpData2,
         candidateCountryList,
         CandidateStateList,
         candidateCityList,
         name: state.name,
-        Infodata: state.Infodata,
+        PersonalInfoResponse: state.PersonalInfoResponse,
+        CreateNomineeResponse: state.CreateNomineeResponse,
+        candidateInsuranceNominationData:
+          state.candidateInsuranceNominationData,
+        candidatePersonalInfoData: state.candidatePersonalInfoData,
         candidateData: state.candidateData,
         stateList: state.stateList,
         cityList: state.cityList,
