@@ -5,6 +5,7 @@ import "./offers.css";
 import { OfferContext } from "../../context/OfferState";
 import { useHistory } from "react-router-dom";
 import RehiredModal from "./RehiredModal";
+import { toast } from "react-toastify";
 
 const EmployeeForm = (props) => {
   const [state, setState] = useState({
@@ -45,14 +46,24 @@ const EmployeeForm = (props) => {
   const handleClose = () => setModal(false);
   const handleShow = () => setModal(true);
 
-   useEffect(() => {
-   
-      setRefEmail1(searchEmpData1 !== null ? 
-        (searchEmpData1.email !== undefined &&  searchEmpData1.email !== null ? searchEmpData1.email : ''):'');
-    setDesignation1(searchEmpData1 !== null ? 
-      (searchEmpData1.position !== undefined && searchEmpData1.position !== null ? searchEmpData1.position : ''):'');
+  useEffect(() => {
+    setRefEmail1(
+      searchEmpData1 !== null
+        ? searchEmpData1.email !== undefined && searchEmpData1.email !== null
+          ? searchEmpData1.email
+          : ""
+        : ""
+    );
+    setDesignation1(
+      searchEmpData1 !== null
+        ? searchEmpData1.position !== undefined &&
+          searchEmpData1.position !== null
+          ? searchEmpData1.position
+          : ""
+        : ""
+    );
   }, [searchEmpData1]);
- /*  useEffect(() => {
+  /*  useEffect(() => {
     setRefEmail1(searchEmpData1.email);
     setDesignation1(searchEmpData1.position);
   }, [searchEmpData1]);
@@ -60,12 +71,23 @@ const EmployeeForm = (props) => {
     setRefEmail2(searchEmpData2.email);
     setDesignation2(searchEmpData2.position);
   }, [searchEmpData2]); */
-  
+
   useEffect(() => {
-    setRefEmail2(searchEmpData2 !== null ? 
-      (searchEmpData2.email !== undefined && searchEmpData2.email !== null ? searchEmpData2.email : ''):'');
-    setDesignation2(searchEmpData2 !== null ?
-      (searchEmpData2.position !== undefined && searchEmpData2.position !== null ? searchEmpData2.position : ''):'' );
+    setRefEmail2(
+      searchEmpData2 !== null
+        ? searchEmpData2.email !== undefined && searchEmpData2.email !== null
+          ? searchEmpData2.email
+          : ""
+        : ""
+    );
+    setDesignation2(
+      searchEmpData2 !== null
+        ? searchEmpData2.position !== undefined &&
+          searchEmpData2.position !== null
+          ? searchEmpData2.position
+          : ""
+        : ""
+    );
   }, [searchEmpData2]);
 
   useEffect(() => {
@@ -122,8 +144,8 @@ const EmployeeForm = (props) => {
   const hideOneMoreRefer = () => {
     setSecondRef(false);
     setEmpName2("");
-    setRefEmail2('')
-    setDesignation2('')
+    setRefEmail2("");
+    setDesignation2("");
   };
 
   const checkedYesHandler = () => {
@@ -169,11 +191,25 @@ const EmployeeForm = (props) => {
   const submitHandler = (e) => {
     e.preventDefault();
     let CandidateInfo;
+    let firstNameError;
+    let lastNameError;
     console.log(
       "employee form id1",
       typeof createCandidateResponse,
       createCandidateResponse
     );
+    if (state.firstName !== "" && !/^[a-zA-Z]*$/g.test(state.firstName)) {
+      firstNameError = true;
+    } else {
+      firstNameError = false;
+    }
+
+    if (state.lastName !== "" && !/^[a-zA-Z]*$/g.test(state.lastName)) {
+      lastNameError = true;
+    } else {
+      lastNameError = false;
+    }
+
     if (saveclick === false) {
       console.log("first click");
       if (
@@ -268,23 +304,27 @@ const EmployeeForm = (props) => {
     }
 
     console.log("CandidateInfo info", CandidateInfo);
-
-    if (
-      saveclick === true &&
-      createCandidateResponse &&
-      createCandidateResponse.candidateId
-    ) {
-      editCandidate(CandidateInfo);
+    console.log("firstNameError info", firstNameError, lastNameError);
+    if (firstNameError === false && lastNameError === false) {
+      if (
+        saveclick === true &&
+        createCandidateResponse &&
+        createCandidateResponse.candidateId
+      ) {
+        editCandidate(CandidateInfo);
+      } else {
+        createCandidate(CandidateInfo);
+      }
+      setDisabled(true);
+      if (createCandidateResponse && createCandidateResponse.candidateId) {
+        viewCandidateId(createCandidateResponse.candidateId);
+      }
+      setEditButton(true);
+      const checkedInput = props.checkedHandler;
+      checkedInput();
     } else {
-      createCandidate(CandidateInfo);
+      toast.info("Please Enter Valid Input");
     }
-    setDisabled(true);
-    if (createCandidateResponse && createCandidateResponse.candidateId) {
-      viewCandidateId(createCandidateResponse.candidateId);
-    }
-    setEditButton(true);
-    const checkedInput = props.checkedHandler;
-    checkedInput();
   };
 
   const editHandler = () => {

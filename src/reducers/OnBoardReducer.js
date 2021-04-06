@@ -35,6 +35,16 @@ const GroupReducer = (state, action) => {
       return { ...state, candidateStateData: action.payload };
     case "CANDIDATE_CITY_LIST":
       return { ...state, candidateCityData: action.payload };
+    case "CANDIDATE_ADDRESS_DATA":
+      return { ...state, addressSaveData: action.payload };
+    case "CANDIDATE_ADDRESS_VIEW_DATA":
+      return { ...state, addressViewData: action.payload };
+    case "CANDIDATE_BANK_DATA":
+      return { ...state, bankSaveData: action.payload };
+    case "CANDIDATE_BANK_VIEW_DATA":
+      return { ...state, bankViewData: action.payload };
+    case "CANDIDATE_BANK_UPDATE_DATA":
+      return { ...state, bankUpdateData: action.payload };
     default:
       return state;
   }

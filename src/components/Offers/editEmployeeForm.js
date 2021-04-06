@@ -4,6 +4,7 @@ import { Search, PlusCircle, MinusCircle } from "react-feather";
 import "./offers.css";
 import { OfferContext } from "../../context/OfferState";
 import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const EditEmployeeForm = () => {
   const [firstName, setFirstName] = useState();
@@ -206,8 +207,8 @@ const EditEmployeeForm = () => {
   const hideOneMoreRefer = () => {
     setSecondRef(false);
     setEmpName2("");
-    setRefEmail2('')
-    setDesignation2('')
+    setRefEmail2("");
+    setDesignation2("");
   };
 
   const checkedYesHandler = () => {
@@ -222,6 +223,20 @@ const EditEmployeeForm = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    let firstNameError;
+    let lastNameError;
+
+    if (firstName !== "" && !/^[a-zA-Z]*$/g.test(firstName)) {
+      firstNameError = true;
+    } else {
+      firstNameError = false;
+    }
+
+    if (lastName !== "" && !/^[a-zA-Z]*$/g.test(lastName)) {
+      lastNameError = true;
+    } else {
+      lastNameError = false;
+    }
 
     const updateData = {
       aadhaarDoc: null,
@@ -266,9 +281,13 @@ const EditEmployeeForm = () => {
         candidateData.candidateInformation.verificationStatusDesc,
     };
     console.log("candidate data", updateData.candidateReferences);
-    editCandidate(updateData);
-    setDisabled(true);
-    setEditButton(true);
+    if (firstNameError === false && lastNameError === false) {
+      editCandidate(updateData);
+      setDisabled(true);
+      setEditButton(true);
+    } else {
+      toast.info("Please Enter Valid Input");
+    }
   };
   const editHandler = () => {
     setDisabled(false);

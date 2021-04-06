@@ -3,8 +3,10 @@ import { Row, Col, Form, Button } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import "./OnBoard.css";
+import { OnBoardContext } from "../../context/OnBoardState";
 
 const EmergencyContact = (props) => {
+  const { candidateData, addressView } = useContext(OnBoardContext);
   const [disabled, setDisableState] = useState(false);
   // acessing candidateId from params
 
@@ -141,6 +143,7 @@ const EmergencyContact = (props) => {
     console.log("previous");
     const back = props.PrevStep;
     back();
+    addressView(candidateData.candidateId);
   };
   const changeHandler = (e) => {
     setState({
