@@ -92,61 +92,72 @@ const Address = (props) => {
 
   useEffect(() => {
     console.log("prefill data", addressViewData);
+    let countryvalue;
+    let stateValue;
+    let cityValue;
+    let permanentCountryvalue;
+    let permanentStatevalue;
+    let permanentCityValue;
+
     if (addressViewData !== undefined && addressViewData !== null) {
       if (addressViewData.addressType === 0) {
-        let countryvalue = candidateCountryData.filter(
+        countryvalue = candidateCountryData.filter(
           (i) => i.countryId === addressViewData.countryId
         );
         console.log("Countryvalue", countryvalue);
         setCountryName(countryvalue[0].countryName);
         setCountryId(countryvalue[0].countryId);
         CandidateStateList(countryvalue[0].countryName);
+
         console.log("candidateStateData", candidateStateData);
-        let stateValue = candidateStateData.filter(
+        stateValue = candidateStateData.filter(
           (i) => i.stateId === addressViewData.stateId
         );
         console.log("stateValue", stateValue);
         if (stateValue.length !== 0) {
           setStateId(stateValue[0].stateId);
           setStateName(stateValue[0].stateName);
-          candidateCityList(stateValue[0].stateId);
+          candidateCityList(addressViewData.stateId);
           console.log("stateName", stateName);
           console.log("candidateCityData", candidateCityData);
         }
 
-        let cityValue = candidateCityData.filter(
+        cityValue = candidateCityData.filter(
           (i) => i.cityId === addressViewData.cityId
         );
         console.log("cityValue", cityValue);
-
         if (cityValue.length !== 0) {
           setCityId(cityValue[0].cityId);
           setCityName(cityValue[0].cityName);
         }
-        let permanentCountryvalue = candidateCountryData.filter(
+
+        permanentCountryvalue = candidateCountryData.filter(
           (i) => i.countryId === addressViewData.permanentCountryId
         );
         console.log("permanentCountryvalue", permanentCountryvalue);
         setPermanentCountryId(permanentCountryvalue[0].countryId);
         setPermanentCountryName(permanentCountryvalue[0].countryName);
         CandidateStateList(permanentCountryvalue[0].countryName);
-        let permanentStatevalue = candidateStateData.filter(
+
+        permanentStatevalue = candidateStateData.filter(
           (i) => i.stateId === addressViewData.permanentStateId
         );
         console.log("permanentStatevalue", permanentStatevalue);
         if (permanentStatevalue.length !== 0) {
           setPermanentStateId(permanentStatevalue[0].stateId);
           setPermanentStateName(permanentStatevalue[0].stateName);
-          candidateCityList(permanentStatevalue[0].stateId);
+          candidateCityList(addressViewData.permanentStateId);
         }
-        let permanentCityValue = candidateCityData.filter(
-          (i) => i.countryId === addressViewData.permanentCityId
+
+        permanentCityValue = candidateCityData.filter(
+          (i) => i.cityId === addressViewData.permanentCityId
         );
         console.log("permanentCityValue", permanentCityValue);
         if (permanentCityValue.length !== 0) {
           setPermanentCityId(permanentCityValue[0].cityId);
           setPermanentCityName(permanentCityValue[0].cityName);
         }
+
         changeCheckState(false);
         setState({
           flatNumber: addressViewData.flatNumber,
@@ -163,24 +174,25 @@ const Address = (props) => {
           permanentPhoneNumber: addressViewData.permanentPhoneNumber,
         });
       } else if (addressViewData.addressType === 1) {
-        let countryvalue = candidateCountryData.filter(
+        countryvalue = candidateCountryData.filter(
           (i) => i.countryId === addressViewData.countryId
         );
         console.log("Countryvalue", countryvalue);
         setCountryName(countryvalue[0].countryName);
         setCountryId(countryvalue[0].countryId);
         CandidateStateList(countryvalue[0].countryName);
-        let stateValue = candidateStateData.filter(
+        stateValue = candidateStateData.filter(
           (i) => i.stateId === addressViewData.stateId
         );
         console.log("stateValue", stateValue);
+
         if (stateValue.length !== 0) {
           setStateId(stateValue[0].stateId);
           setStateName(stateValue[0].stateName);
           candidateCityList(stateValue[0].stateId);
         }
 
-        let cityValue = candidateCountryData.filter(
+        cityValue = candidateCityData.filter(
           (i) => i.cityId === addressViewData.cityId
         );
         console.log("cityValue addresstype 1", cityValue);
@@ -188,6 +200,7 @@ const Address = (props) => {
           setCityId(cityValue[0].cityId);
           setCityName(cityValue[0].cityName);
         }
+
         changeCheckState(true);
         setState({
           flatNumber: addressViewData.flatNumber,
