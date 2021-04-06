@@ -20,6 +20,7 @@ import DocVerification from "../../components/CandidateVerification/DocVerificat
 import { OnBoardContext } from "../../context/OnBoardState";
 
 const OnBoardingStepper = (props) => {
+  const { CandidateProfile, candidateData } = useContext(OnBoardContext);
   const personalInfoRef = useRef();
   const checkOk = "OkCheckStep";
   const currStep = "CurrentCheckStep";
@@ -82,6 +83,11 @@ const OnBoardingStepper = (props) => {
     },
   ]);
   console.log(stepArray);
+
+  useEffect(() => {
+    CandidateProfile();
+  }, []);
+  console.log("stepper candidate data", candidateData);
 
   const NextStep = () => {
     console.log(stepCount, "NEXTSTEP");

@@ -77,29 +77,38 @@ const EditRemunerationInformation = (props) => {
     );
     if (
       user.role === "ADMIN" &&
-      (typeof fixedGross === "undefined" || fixedGross === "") &&
-      (typeof monthlyBonus === "undefined" || monthlyBonus === "") &&
+      (typeof fixedGross === "undefined" ||
+        fixedGross === "" ||
+        fixedGross.includes(" ", "-", ".", "/", "+")) &&
+      (typeof monthlyBonus === "undefined" ||
+        monthlyBonus === "" ||
+        monthlyBonus.includes(" ", "-", ".", "/", "+")) &&
       candidateData.workInformation.contractType !== "Internship"
     ) {
       setFixedGrossError(true);
       setMonthlyBonusError(true);
       setStipenedError(false);
     } else if (
-      (typeof fixedGross === "undefined" || fixedGross === "") &&
+      (typeof fixedGross === "undefined" ||
+        fixedGross === "" ||
+        fixedGross.includes(" ", "-", ".", "/", "+")) &&
       candidateData.workInformation.contractType !== "Internship"
     ) {
       setFixedGrossError(true);
       setStipenedError(false);
     } else if (
       user.role === "ADMIN" &&
-      (typeof monthlyBonus === "undefined" || monthlyBonus === "") &&
+      (typeof monthlyBonus === "undefined" ||
+        monthlyBonus === "" ||
+        monthlyBonus.includes(" ", "-", ".", "/", "+")) &&
       candidateData.workInformation.contractType !== "Internship"
     ) {
       setMonthlyBonusError(true);
       setStipenedError(false);
     } else if (
-      user.role === "ADMIN" &&
-      (typeof stipened === "undefined" || stipened === "") &&
+      (typeof stipened === "undefined" ||
+        stipened === "" ||
+        stipened.includes(" ", "-", ".", "/", "+")) &&
       candidateData.workInformation.contractType === "Internship"
     ) {
       console.log("remuneration Info5", fixedGross, monthlyBonus, stipened);
@@ -129,7 +138,10 @@ const EditRemunerationInformation = (props) => {
         remunerationinfo = {
           candidateId: candidateData.candidateInformation.candidateId,
           fixedGross: fixedGross,
-          monthlyBonus: monthlyBonus,
+          monthlyBonus:
+            monthlyBonus === undefined || monthlyBonus === null
+              ? 0
+              : monthlyBonus,
           remunerationId: remunerationSubmitData.remunerationId
             ? remunerationSubmitData.remunerationId
             : 0,
@@ -142,10 +154,12 @@ const EditRemunerationInformation = (props) => {
       // );
 
       console.log("createCandidateResponse data", remunerationinfo);
-      remunerationUpdate(remunerationinfo);
-      remunerationView(candidateData.candidateInformation.candidateId);
-      setDisabled(true);
-      setEditButton(true);
+      if (!fixedGrossError && !monthlyBonusError && !stipenedError) {
+        remunerationUpdate(remunerationinfo);
+        remunerationView(candidateData.candidateInformation.candidateId);
+        setDisabled(true);
+        setEditButton(true);
+      }
     }
   };
   const editHandler = () => {
@@ -174,6 +188,7 @@ const EditRemunerationInformation = (props) => {
                     <Form.Control
                       className="form-input"
                       type="number"
+                      min="0"
                       name="fixedGross"
                       value={fixedGross}
                       onChange={(event) => setFixedGross(event.target.value)}
@@ -216,6 +231,7 @@ const EditRemunerationInformation = (props) => {
                     <Form.Control
                       className="form-input"
                       type="number"
+                      min="0"
                       name="stipend"
                       placeholder="1000"
                       value={stipened}
@@ -247,6 +263,7 @@ const EditRemunerationInformation = (props) => {
                           <Form.Control
                             className="form-input"
                             type="number"
+                            min="0"
                             name="monthlyBonus"
                             value={monthlyBonus}
                             onChange={(event) =>
@@ -277,6 +294,7 @@ const EditRemunerationInformation = (props) => {
                           <Form.Control
                             className="form-input"
                             type="nummber"
+                            min="0"
                             name="monthlyBonus"
                             readOnly
                             disabled={disabled}

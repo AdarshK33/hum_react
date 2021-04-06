@@ -21,6 +21,8 @@ const PersonalInformation = (props) => {
     Infodata,
     CandidateProfile,
     candidateData,
+    CandidateViewInformation,
+    candidateViewInfo,
   } = useContext(OnBoardContext);
 
   const options = useMemo(() => countryList().getData(), []);
@@ -72,8 +74,13 @@ const PersonalInformation = (props) => {
     emp2Designation: "",
   });
   useEffect(() => {
-    CandidateProfile();
-  }, []);
+    console.log("personal information view candidate", candidateData);
+    if (candidateData) {
+      CandidateViewInformation(candidateData.candidateId);
+    }
+  }, [candidateData]);
+  console.log("personal information candidateViewInfo", candidateViewInfo);
+
   const AdharNameValidation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
 

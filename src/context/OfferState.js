@@ -118,6 +118,7 @@ export const OfferProvider = (props) => {
       .post("/api/v1/candidate/work-information/create", createData)
       .then((response) => {
         toast.info(response.data.message);
+        state.workInformationData = response.data.data;
         return dispatch({
           type: "CREATE_CANDIDATE_WORK",
           payload: state.workInformationData,
@@ -134,6 +135,7 @@ export const OfferProvider = (props) => {
       .post("/api/v1/candidate/work-information/create", updateData)
       .then((response) => {
         toast.info(response.data.message);
+        state.workInformationData = response.data.data;
         return dispatch({
           type: "UPDATE_CANDIDATE_WORK",
           payload: state.workInformationData,
@@ -447,6 +449,7 @@ export const OfferProvider = (props) => {
         stateList: state.stateList,
         cityList: state.cityList,
         managerList: state.managerList,
+        workInformationData: state.workInformationData,
       }}
     >
       {props.children}
