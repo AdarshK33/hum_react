@@ -6,6 +6,8 @@ import "./OnBoard.css";
 
 const EmergencyContact = (props) => {
   const [disabled, setDisableState] = useState(false);
+  // acessing candidateId from params
+
   const [stateError, setStateError] = useState({
     contactNameError: "",
     addressLineError: "",
@@ -120,18 +122,16 @@ const EmergencyContact = (props) => {
     if (typeof fields["relationship"] !== "undefined") {
       if (!fields["relationship"].match(/^[a-zA-Z ]*$/)) {
         formIsValid = false;
-        stateError["relationshipError"] = "*Please enter alphabet characters only.";
+        stateError["relationshipError"] =
+          "*Please enter alphabet characters only.";
       }
     }
-  
+
     setStateError(stateError);
     return formIsValid;
-
-
-  }
+  };
   const submitHandler = (e) => {
-    if(validateForm()){
-
+    if (validateForm()) {
     }
     const nextPage = props.NextStep;
     nextPage();

@@ -34,6 +34,9 @@ export const OFFER_LETTER_DATA = "OFFER_LETTER_DATA";
 export const SUBMIT_OFFER_LETTER = "SUBMIT_OFFER_LETTER";
 export const WORK_INFO_VIEW = "WORK_INFO_VIEW";
 
+// verification Module
+
+export const DOCUMENSTS_TO_VERIFY = "DOCUMENSTS_TO_VERIFY";
 //onboard module
 export const CANDIDATE_VIEW_INFO = "CANDIDATE_VIEW_INFO";
 export const CANDIDATE_COUNTRY_LIST = "CANDIDATE_COUNTRY_LIST";
