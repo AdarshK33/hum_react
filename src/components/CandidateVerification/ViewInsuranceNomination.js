@@ -481,7 +481,9 @@ const EditInsuranceNomination = (props) => {
     });
     console.log(state);
   };
-
+  const selectedDate = (date) => {
+    return new Date(date);
+  };
   return (
     <Fragment>
       {nominationDetails !== null && nominationDetails !== undefined ? (
@@ -599,7 +601,11 @@ const EditInsuranceNomination = (props) => {
                           <Form.Control
                             type="text"
                             name="nominiName"
-                            value={state.nominiName}
+                            value={
+                              nominationDetails[0] !== undefined
+                                ? nominationDetails[0].nominiName
+                                : ""
+                            }
                             onChange={changeHandler}
                             disabled={disable}
                             required
@@ -626,7 +632,11 @@ const EditInsuranceNomination = (props) => {
                           <Form.Control
                             as="select"
                             name="relationship"
-                            value={state.relationship}
+                            value={
+                              nominationDetails[0] !== undefined
+                                ? nominationDetails[0].relationship
+                                : ""
+                            }
                             disabled={disable}
                             onChange={changeHandler}
                             style={
@@ -656,7 +666,11 @@ const EditInsuranceNomination = (props) => {
                             required="required"
                             name="gender"
                             disabled={disable}
-                            value={state.gender}
+                            value={
+                              nominationDetails[0] !== undefined
+                                ? nominationDetails[0].gender
+                                : ""
+                            }
                             onChange={changeHandler}
                             style={genderError_1 ? { borderColor: "red" } : {}}
                           />
@@ -688,7 +702,13 @@ const EditInsuranceNomination = (props) => {
                           >
                             <DatePicker
                               className="form-control onBoard-view"
-                              selected={Nominee1DOB}
+                              selected={
+                                nominationDetails[0] !== undefined
+                                  ? selectedDate(
+                                      nominationDetails[0].dateOfBirth
+                                    )
+                                  : Nominee1DOB
+                              }
                               required
                               disabled={disable}
                               onChange={(e) => dateOfBirthHandler(e, "1")}
@@ -717,7 +737,11 @@ const EditInsuranceNomination = (props) => {
                             placeholder="Age"
                             required="required"
                             name="age"
-                            value={state.age}
+                            value={
+                              nominationDetails[0] !== undefined
+                                ? nominationDetails[0].age
+                                : ""
+                            }
                             onChange={changeHandler}
                             disabled={disable}
                             style={ageError_1 ? { borderColor: "red" } : {}}
@@ -739,7 +763,11 @@ const EditInsuranceNomination = (props) => {
                           <Form.Control
                             as="select"
                             name="bloodGroup"
-                            value={state.bloodGroup}
+                            value={
+                              nominationDetails[0] !== undefined
+                                ? nominationDetails[0].bloodGroup
+                                : ""
+                            }
                             disabled={disable}
                             onChange={changeHandler}
                             style={
