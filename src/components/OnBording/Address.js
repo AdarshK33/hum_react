@@ -20,8 +20,13 @@ const Address = (props) => {
     candidateStateData,
     candidateCityList,
     candidateCityData,
+    addressCreate,
+    addressSaveData,
+    addressView,
+    addressViewData,
+    CandidateProfile,
+    candidateData,
   } = useContext(OnBoardContext);
-  const { CandidateProfile, candidateData } = useContext(OnBoardContext);
 
   const [isChecked, changeCheckState] = useState(false);
   const [disabled, setDisableState] = useState(false);
@@ -45,34 +50,156 @@ const Address = (props) => {
   const [PermanentCityError, setPermanentCityError] = useState(false);
   const [PermanentPinCodeError, setPermanentPinCodeError] = useState(false);
   const [PermanentPhoneNoError, setPermanentPhoneNoError] = useState(false);
+  const [saveclick, setSaveclick] = useState(false);
 
   const [state, setState] = useState({
     flatNumber: "",
     street: "",
     locality: "",
     addressLine: "",
-    countryId: "",
-    stateId: 0,
-    cityId: 0,
     pinCode: "",
     phoneNumber: "",
     permanentFlatNumber: "",
     permanentStreet: "",
     permanentLocality: "",
     permanentAddressLine: "",
-    permanentCountryId: "",
-    permanentStateId: 0,
-    permanentCityId: 0,
     permanentPinCode: "",
     permanentPhoneNumber: "",
   });
 
+  const [countryName, setCountryName] = useState();
+  const [stateName, setStateName] = useState();
+  const [cityName, setCityName] = useState();
+  const [permanentCountryName, setPermanentCountryName] = useState();
+  const [permanentStateName, setPermanentStateName] = useState();
+  const [permanentCityName, setPermanentCityName] = useState();
+
+  const [countryId, setCountryId] = useState();
+  const [stateId, setStateId] = useState();
+  const [cityId, setCityId] = useState();
+  const [permanentCountryId, setPermanentCountryId] = useState();
+  const [permanentStateId, setPermanentStateId] = useState();
+  const [permanentCityId, setPermanentCityId] = useState();
+
   useEffect(() => {
     CandidateProfile();
     candidateCountryList();
+    addressView(candidateData.candidateId);
   }, []);
   console.log("address candidate data", candidateData);
   console.log("candidateCountryList data", candidateCountryData);
+  console.log("addressViewData data", addressViewData);
+
+  useEffect(() => {
+    console.log("prefill data", addressViewData);
+    if (addressViewData !== undefined && addressViewData !== null) {
+      if (addressViewData.addressType === 0) {
+        let countryvalue = candidateCountryData.filter(
+          (i) => i.countryId === addressViewData.countryId
+        );
+        console.log("Countryvalue", countryvalue);
+        setCountryName(countryvalue[0].countryName);
+        setCountryId(countryvalue[0].countryId);
+        CandidateStateList(countryvalue[0].countryName);
+        console.log("candidateStateData", candidateStateData);
+        let stateValue = candidateStateData.filter(
+          (i) => i.stateId === addressViewData.stateId
+        );
+        console.log("stateValue", stateValue);
+        if (stateValue.length !== 0) {
+          setStateId(stateValue[0].stateId);
+          setStateName(stateValue[0].stateName);
+          candidateCityList(stateValue[0].stateId);
+          console.log("stateName", stateName);
+          console.log("candidateCityData", candidateCityData);
+        }
+
+        let cityValue = candidateCityData.filter(
+          (i) => i.cityId === addressViewData.cityId
+        );
+        console.log("cityValue", cityValue);
+
+        if (cityValue.length !== 0) {
+          setCityId(cityValue[0].cityId);
+          setCityName(cityValue[0].cityName);
+        }
+        let permanentCountryvalue = candidateCountryData.filter(
+          (i) => i.countryId === addressViewData.permanentCountryId
+        );
+        console.log("permanentCountryvalue", permanentCountryvalue);
+        setPermanentCountryId(permanentCountryvalue[0].countryId);
+        setPermanentCountryName(permanentCountryvalue[0].countryName);
+        CandidateStateList(permanentCountryvalue[0].countryName);
+        let permanentStatevalue = candidateStateData.filter(
+          (i) => i.stateId === addressViewData.permanentStateId
+        );
+        console.log("permanentStatevalue", permanentStatevalue);
+        if (permanentStatevalue.length !== 0) {
+          setPermanentStateId(permanentStatevalue[0].stateId);
+          setPermanentStateName(permanentStatevalue[0].stateName);
+          candidateCityList(permanentStatevalue[0].stateId);
+        }
+        let permanentCityValue = candidateCityData.filter(
+          (i) => i.countryId === addressViewData.permanentCityId
+        );
+        console.log("permanentCityValue", permanentCityValue);
+        if (permanentCityValue.length !== 0) {
+          setPermanentCityId(permanentCityValue[0].cityId);
+          setPermanentCityName(permanentCityValue[0].cityName);
+        }
+        changeCheckState(false);
+        setState({
+          flatNumber: addressViewData.flatNumber,
+          street: addressViewData.street,
+          locality: addressViewData.locality,
+          addressLine: addressViewData.addressLine,
+          pinCode: addressViewData.pinCode,
+          phoneNumber: addressViewData.phoneNumber,
+          permanentFlatNumber: addressViewData.permanentFlatNumber,
+          permanentStreet: addressViewData.permanentStreet,
+          permanentLocality: addressViewData.permanentLocality,
+          permanentAddressLine: addressViewData.permanentAddressLine,
+          permanentPinCode: addressViewData.permanentPinCode,
+          permanentPhoneNumber: addressViewData.permanentPhoneNumber,
+        });
+      } else if (addressViewData.addressType === 1) {
+        let countryvalue = candidateCountryData.filter(
+          (i) => i.countryId === addressViewData.countryId
+        );
+        console.log("Countryvalue", countryvalue);
+        setCountryName(countryvalue[0].countryName);
+        setCountryId(countryvalue[0].countryId);
+        CandidateStateList(countryvalue[0].countryName);
+        let stateValue = candidateStateData.filter(
+          (i) => i.stateId === addressViewData.stateId
+        );
+        console.log("stateValue", stateValue);
+        if (stateValue.length !== 0) {
+          setStateId(stateValue[0].stateId);
+          setStateName(stateValue[0].stateName);
+          candidateCityList(stateValue[0].stateId);
+        }
+
+        let cityValue = candidateCountryData.filter(
+          (i) => i.cityId === addressViewData.cityId
+        );
+        console.log("cityValue addresstype 1", cityValue);
+        if (cityValue.length !== 0) {
+          setCityId(cityValue[0].cityId);
+          setCityName(cityValue[0].cityName);
+        }
+        changeCheckState(true);
+        setState({
+          flatNumber: addressViewData.flatNumber,
+          street: addressViewData.street,
+          locality: addressViewData.locality,
+          addressLine: addressViewData.addressLine,
+          pinCode: addressViewData.pinCode,
+          phoneNumber: addressViewData.phoneNumber,
+        });
+      }
+    }
+  }, [addressViewData]);
 
   const flatNumberValidation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
@@ -272,39 +399,106 @@ const Address = (props) => {
       return false;
     }
   };
+  const countryHandler = (e) => {
+    console.log("countryHandler", e.target.value);
+    let filteredListOfCountry = candidateCountryData.filter(
+      (i) => i.countryName === e.target.value
+    );
+    console.log("filteredListOfCountry", filteredListOfCountry);
+    setCountryName(e.target.value);
+    setCountryId(filteredListOfCountry[0].countryId);
+    CandidateStateList(filteredListOfCountry[0].countryName);
+  };
+
+  const stateHandler = (e) => {
+    console.log("stateHandler", e.target.value);
+    let filteredListOfState = candidateStateData.filter(
+      (i) => i.stateName === e.target.value
+    );
+    console.log("filteredListOfState", filteredListOfState);
+    setStateName(e.target.value);
+    setStateId(filteredListOfState[0].stateId);
+    candidateCityList(filteredListOfState[0].stateId);
+  };
+
+  const cityHandler = (e) => {
+    let filteredListOfCity = candidateCityData.filter(
+      (i) => i.cityName === e.target.value
+    );
+    console.log("filteredListOfCity", filteredListOfCity);
+    setCityName(e.target.value);
+    setCityId(filteredListOfCity[0].cityId);
+  };
+
+  const permanentCountryHandler = (e) => {
+    let filteredListOfCountry = candidateCountryData.filter(
+      (i) => i.countryName === e.target.value
+    );
+    console.log("filteredListOfCountry", filteredListOfCountry);
+    setPermanentCountryName(e.target.value);
+    setPermanentCountryId(filteredListOfCountry[0].countryId);
+    CandidateStateList(filteredListOfCountry[0].countryName);
+  };
+
+  const permanentStateHandler = (e) => {
+    let filteredListOfState = candidateStateData.filter(
+      (i) => i.stateName === e.target.value
+    );
+    console.log("filteredListOfState", filteredListOfState);
+    setPermanentStateName(e.target.value);
+    setPermanentStateId(filteredListOfState[0].stateId);
+    candidateCityList(filteredListOfState[0].stateId);
+  };
+
+  const permanentCityHandler = (e) => {
+    let filteredListOfCity = candidateCityData.filter(
+      (i) => i.cityName === e.target.value
+    );
+    console.log("filteredListOfCity", filteredListOfCity);
+    setPermanentCityName(e.target.value);
+    setPermanentCityId(filteredListOfCity[0].cityId);
+  };
 
   const submitHandler = (e) => {
     const nextPage = props.NextStep;
+    let addressValue;
     nextPage();
     e.preventDefault();
+    if (saveclick === false) {
+      addressValue = 0;
+      setSaveclick(true);
+    } else if (addressSaveData && saveclick === true) {
+      addressValue = addressSaveData.addressId;
+    }
     const value = checkValidations();
     if (value === true) {
       const AddressInfo = {
-        addressId: 0,
+        addressId: addressValue,
         addressLine: state.addressLine,
         addressProof: " ",
-        addressType: 0,
-        candidateId: 0,
-        cityId: state.cityId,
-        countryId: state.countryId,
-        stateId: state.stateId,
+        addressType: isChecked ? 1 : 0,
+        candidateId: candidateData.candidateId,
+        cityId: cityId,
+        countryId: countryId,
+        stateId: stateId,
         flatNumber: state.flatNumber,
         locality: state.locality,
-        permanentAddressLine: state.permanentAddressLine,
+        permanentAddressLine: isChecked ? "" : state.permanentAddressLine,
         permanentAddressProof: " ",
-        permanentCityId: state.permanentCityId,
-        permanentCountryId: state.countryId,
-        permanentStateId: state.permanentStateId,
-        permanentFlatNumber: state.permanentFlatNumber,
-        permanentLocality: state.permanentLocality,
-        permanentPhoneNumber: state.permanentPhoneNumber,
-        permanentPinCode: state.permanentPinCode,
-        permanentStreet: state.permanentStreet,
+        permanentCityId: isChecked ? "" : permanentCityId,
+        permanentCountryId: isChecked ? "" : permanentCountryId,
+        permanentStateId: isChecked ? "" : permanentStateId,
+        permanentFlatNumber: isChecked ? "" : state.permanentFlatNumber,
+        permanentLocality: isChecked ? "" : state.permanentLocality,
+        permanentPhoneNumber: isChecked ? "" : state.permanentPhoneNumber,
+        permanentPinCode: isChecked ? "" : state.permanentPinCode,
+        permanentStreet: isChecked ? "" : state.permanentStreet,
         phoneNumber: state.phoneNumber,
         pinCode: state.pinCode,
         street: state.street,
       };
       console.log(AddressInfo);
+      // addressCreate(AddressInfo);
       const nextPage = props.NextStep;
       nextPage();
     }
@@ -316,17 +510,13 @@ const Address = (props) => {
     back();
   };
   const changeHandler = (e) => {
-    console.log("country value", e.target.value);
     setState({
       ...state,
       [e.target.name]: e.target.value,
     });
-    if (e.target.name === "countryId") {
-      console.log("country id", state.countryId);
-      CandidateStateList(state.countryId);
-    }
     console.log(state);
   };
+
   const handleCheckboxChange = (e) => {
     changeCheckState(e.target.checked);
     console.log(isChecked);
@@ -436,8 +626,8 @@ const Address = (props) => {
               <Form.Control
                 as="select"
                 name="countryId"
-                value={state.countryId}
-                onChange={changeHandler}
+                value={countryName}
+                onChange={(e) => countryHandler(e)}
                 required
                 style={countryError ? { borderColor: "red" } : {}}
                 disabled={disabled}
@@ -446,7 +636,7 @@ const Address = (props) => {
                 {candidateCountryData !== null &&
                   candidateCountryData !== undefined &&
                   candidateCountryData.length > 0 &&
-                  candidateCountryData.map((item) => {
+                  candidateCountryData.map((item, i) => {
                     return (
                       <option key={item.countryId}>{item.countryName}</option>
                     );
@@ -467,12 +657,17 @@ const Address = (props) => {
               <Form.Control
                 as="select"
                 name="stateId"
-                value={state.stateId}
+                value={stateName}
                 style={stateError ? { borderColor: "red" } : {}}
-                onChange={changeHandler}
+                onChange={(e) => stateHandler(e)}
               >
-                <option value="">State</option>
-                <option>one</option>
+                <option value="">Select State</option>
+                {candidateStateData !== null &&
+                  candidateStateData !== undefined &&
+                  candidateStateData.length > 0 &&
+                  candidateStateData.map((item, i) => {
+                    return <option key={item.stateId}>{item.stateName}</option>;
+                  })}
               </Form.Control>
               {stateError ? (
                 <p style={{ color: "red" }}> Please choose state</p>
@@ -489,12 +684,17 @@ const Address = (props) => {
               <Form.Control
                 as="select"
                 name="cityId"
-                value={state.cityId}
+                value={cityName}
                 style={cityError ? { borderColor: "red" } : {}}
-                onChange={changeHandler}
+                onChange={cityHandler}
               >
                 <option value="">City</option>
-                <option>one</option>
+                {candidateCityData !== null &&
+                  candidateCityData !== undefined &&
+                  candidateCityData.length > 0 &&
+                  candidateCityData.map((item, i) => {
+                    return <option key={item.cityId}>{item.cityName}</option>;
+                  })}
               </Form.Control>
               {cityError ? (
                 <p style={{ color: "red" }}> Please choose city</p>
@@ -697,17 +897,23 @@ const Address = (props) => {
                   <Form.Control
                     as="select"
                     name="permanentCountryId"
-                    value={state.permanentCountryId}
-                    options={options}
-                    onChange={changeHandler}
+                    value={permanentCountryName}
+                    onChange={permanentCountryHandler}
                     required
                     style={PermanentCountryError ? { borderColor: "red" } : {}}
                     disabled={disabled}
                   >
-                    <option value="">Country</option>
-                    {options.map((item) => {
-                      return <option key={item.value}>{item.label}</option>;
-                    })}
+                    <option value="">Select Country</option>
+                    {candidateCountryData !== null &&
+                      candidateCountryData !== undefined &&
+                      candidateCountryData.length > 0 &&
+                      candidateCountryData.map((item) => {
+                        return (
+                          <option key={item.countryId}>
+                            {item.countryName}
+                          </option>
+                        );
+                      })}
                   </Form.Control>
                   {PermanentCountryError ? (
                     <p style={{ color: "red" }}> Please choose country</p>
@@ -724,11 +930,19 @@ const Address = (props) => {
                   <Form.Control
                     as="select"
                     name="permanentStateId"
-                    value={state.permanentStateId}
+                    value={permanentStateName}
                     style={PermanentStateError ? { borderColor: "red" } : {}}
-                    onChange={changeHandler}
+                    onChange={permanentStateHandler}
                   >
-                    <option value="">State</option>
+                    <option value="">Select State</option>
+                    {candidateStateData !== null &&
+                      candidateStateData !== undefined &&
+                      candidateStateData.length > 0 &&
+                      candidateStateData.map((item) => {
+                        return (
+                          <option key={item.stateId}>{item.stateName}</option>
+                        );
+                      })}
                   </Form.Control>
                   {PermanentStateError ? (
                     <p style={{ color: "red" }}> Please choose state</p>
@@ -745,11 +959,19 @@ const Address = (props) => {
                   <Form.Control
                     as="select"
                     name="permanentCityId"
-                    value={state.permanentCityId}
+                    value={permanentCityName}
                     style={PermanentCityError ? { borderColor: "red" } : {}}
-                    onChange={changeHandler}
+                    onChange={permanentCityHandler}
                   >
-                    <option value="">City</option>
+                    <option value="">Select City</option>
+                    {candidateCityData !== null &&
+                      candidateCityData !== undefined &&
+                      candidateCityData.length > 0 &&
+                      candidateCityData.map((item) => {
+                        return (
+                          <option key={item.cityId}>{item.cityName}</option>
+                        );
+                      })}
                   </Form.Control>
                   {PermanentCityError ? (
                     <p style={{ color: "red" }}> Please choose city</p>

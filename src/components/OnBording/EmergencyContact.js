@@ -3,8 +3,10 @@ import { Row, Col, Form, Button } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import "./OnBoard.css";
+import { OnBoardContext } from "../../context/OnBoardState";
 
 const EmergencyContact = (props) => {
+  const { candidateData, addressView } = useContext(OnBoardContext);
   const [disabled, setDisableState] = useState(false);
   const [stateError, setStateError] = useState({
     contactNameError: "",
@@ -120,18 +122,16 @@ const EmergencyContact = (props) => {
     if (typeof fields["relationship"] !== "undefined") {
       if (!fields["relationship"].match(/^[a-zA-Z ]*$/)) {
         formIsValid = false;
-        stateError["relationshipError"] = "*Please enter alphabet characters only.";
+        stateError["relationshipError"] =
+          "*Please enter alphabet characters only.";
       }
     }
-  
+
     setStateError(stateError);
     return formIsValid;
-
-
-  }
+  };
   const submitHandler = (e) => {
-    if(validateForm()){
-
+    if (validateForm()) {
     }
     const nextPage = props.NextStep;
     nextPage();
@@ -141,6 +141,7 @@ const EmergencyContact = (props) => {
     console.log("previous");
     const back = props.PrevStep;
     back();
+    addressView(candidateData.candidateId);
   };
   const changeHandler = (e) => {
     setState({

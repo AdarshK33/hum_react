@@ -23,6 +23,7 @@ const PersonalInformation = (props) => {
     candidateData,
     CandidateViewInformation,
     candidateViewInfo,
+    addressView,
   } = useContext(OnBoardContext);
   const options = useMemo(() => countryList().getData(), []);
   const [isClicked, setIsClicked] = useState(false);
@@ -374,6 +375,7 @@ const PersonalInformation = (props) => {
       console.log("onsubmit");
       console.log(InfoData);
       updatePersonalInfo(InfoData);
+      // addressView(candidateData.candidateId);
     }
   };
   const PrevStep = () => {
