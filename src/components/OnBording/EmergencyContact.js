@@ -8,6 +8,8 @@ import { OnBoardContext } from "../../context/OnBoardState";
 const EmergencyContact = (props) => {
   const { candidateData, addressView } = useContext(OnBoardContext);
   const [disabled, setDisableState] = useState(false);
+  // acessing candidateId from params
+
   const [stateError, setStateError] = useState({
     contactNameError: "",
     addressLineError: "",
