@@ -21,6 +21,7 @@ const initial_state = {
   candidateStateData: [],
   candidateCityData: [],
 };
+// git
 export const OnBoardProvider = (props) => {
   const [state, dispatch] = useReducer(OnBoardReducer, initial_state);
   const updatePersonalInfo = (updateData) => {
