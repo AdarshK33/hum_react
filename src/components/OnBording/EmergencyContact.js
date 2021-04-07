@@ -28,21 +28,26 @@ const EmergencyContact = (props) => {
     addressLine: "",
     city: "",
     country: "",
-  candidateId: (candidateData.candidateId!== undefined)?candidateData.candidateId:'',
+    candidateId: (candidateData.candidateId!== undefined)?candidateData.candidateId:'',
+    contactId:0,
     locality: "",
     phoneNumber: "",
     pinCode: "",
     relationship: "",
   });
-  useEffect(() => {
+  useEffect(()=>{
     EmergencyContactView(candidateData.candidateId)
     console.log(emergencyContactView,"emergencyContactView")
-    if(emergencyContactView){
+  },[])
+  useEffect(() => {
+
+    if(emergencyContactView !== null){
       console.log(emergencyContactView,"emergencyContactView3")
     setState({
       contactName: emergencyContactView.contactName,
       addressLine: emergencyContactView.addressLine,
       candidateId: emergencyContactView.candidateId,
+      contactId: emergencyContactView.contactId,
       city: emergencyContactView.city,
       country: emergencyContactView.country,
       locality: emergencyContactView.locality,
@@ -53,7 +58,7 @@ const EmergencyContact = (props) => {
     setDataExist({exist:true})
   }
     console.log(state,"previous2")
-  },[emergencyContactView.candidateId])
+  },[emergencyContactView])
   const validateForm = () => {
     let fields = state;
     let stateError = {};
@@ -134,7 +139,7 @@ console.log(state,"state in emergencyContact")
     }
 
     if (typeof fields["pinCode"] !== "undefined") {
-      if (!fields["pinCode"].match(/^[0-9]{6}$/)) {
+      if (!/^[0-9]{6}$/g.test(fields["pinCode"])) {
         formIsValid = false;
         stateError["pinCodeError"] = "*Please enter numbers only.";
       }
@@ -232,8 +237,12 @@ console.log(state,"state in emergencyContact")
                 disabled={disabled}
               >
                 <option value="">Relationships</option>
-                <option value="brother">brother</option>
-                <option value="sister">sister</option>
+                <option value="Mother">Mother</option>
+                <option value="Father">Father</option>
+                <option value="Brother">Brother</option>
+                <option value="Sister">Sister</option>
+                <option value="Spouse">Spouse</option>
+\                <option value="Others">Others</option>
 
               </Form.Control>
               <p style={{ color: "red" }}>{stateError.relationshipError} </p>

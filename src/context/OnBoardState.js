@@ -11,6 +11,9 @@ const initial_state = {
   emergencyContactData:{},
   emergencyContactCreate:{},
   emergencyContactView:{},
+  pfDeclarationCreate:{},
+  pfDeclarationUpdate:{},
+  pfDeclarationView:{},
   candidateData: {},
   stateList: [],
   cityList: [],
@@ -83,6 +86,55 @@ export const OnBoardProvider = (props) => {
         console.log(error);
       });
   };
+  const PFDeclarationCreate = (createData) => {
+    console.log("PFDeclarationCreate data -----");
+    console.log(createData);
+    return candidate
+      .post("/api/v2/candidate/pf/create", createData)
+      .then((response) => {
+        toast.info(response.data.message);
+        console.log(response.data.message);
+        return dispatch({
+          type: "PFDECLARATION_CREATE",
+          payload: state.pfDeclarationCreate,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const PFDeclarationUpdate = (updateData) => {
+    console.log("PFDeclarationUpdate data -----");
+    console.log(updateData);
+    return candidate
+      .post("/api/v2/candidate/pf/update", updateData)
+      .then((response) => {
+        toast.info(response.data.message);
+        console.log(response.data.message);
+        return dispatch({
+          type: "PFDECLARATION_UPDATE",
+          payload: state.pfDeclarationUpdate,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const PFDeclarationView = (data) => {
+    candidate
+      .get(`/api/v2/candidate/pf/view/${data}`)
+      .then((response) => {
+        state.pfDeclarationView = response.data.data;
+        console.log("PFeclarationView Response ",response, state.pfDeclarationView);
+        return dispatch({
+          type: "PFDECLARATION_VIEW",
+          payload: state.pfDeclarationView,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const CandidateProfile = () => {
     candidate
       .get("/api/v2/candidate/profile")
@@ -140,9 +192,15 @@ export const OnBoardProvider = (props) => {
         EmergencyContactCreate,
         EmergencyContactUpdate,
         EmergencyContactView,
+        PFDeclarationCreate,
+        PFDeclarationUpdate,
+        PFDeclarationView,
         emergencyContactData:state.emergencyContactData,
         emergencyContactCreate: state.emergencyContactCreate,
         emergencyContactView: state.emergencyContactView,
+        pfDeclarationCreate:state.pfDeclarationCreate,
+        pfDeclarationUpdate:state.pfDeclarationUpdate,
+        pfDeclarationView:state.pfDeclarationView,
         name: state.name,
         Infodata: state.Infodata,
         candidateData: state.candidateData,
