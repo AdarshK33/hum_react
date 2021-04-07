@@ -4,11 +4,19 @@ import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import "./OnBoard.css";
 import { OnBoardContext } from "../../context/OnBoardState";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const EmergencyContact = (props) => {
-  const { EmergencyContactCreate,EmergencyContactUpdate,EmergencyContactView,addressView,emergencyContactView,candidateData,emergencyContactData} = useContext(OnBoardContext);
+  const {
+    EmergencyContactCreate,
+    EmergencyContactUpdate,
+    EmergencyContactView,
+    addressView,
+    emergencyContactView,
+    candidateData,
+    emergencyContactData,
+  } = useContext(OnBoardContext);
   const [disabled, setDisableState] = useState(false);
   // acessing candidateId from params
 
@@ -22,50 +30,53 @@ const EmergencyContact = (props) => {
     pinCodeError: "",
     relationshipError: "",
   });
-  const [dataExist,setDataExist]=useState({
-    exist:false
-  })
+  const [dataExist, setDataExist] = useState({
+    exist: false,
+  });
   const [state, setState] = useState({
     contactName: "",
     addressLine: "",
     city: "",
     country: "",
-    candidateId: (candidateData.candidateId!== undefined)?candidateData.candidateId:'',
-    contactId:0,
+    candidateId:
+      candidateData.candidateId !== undefined ? candidateData.candidateId : "",
+    contactId: 0,
     locality: "",
     phoneNumber: "",
     pinCode: "",
     relationship: "",
   });
-  useEffect(()=>{
-    EmergencyContactView(candidateData.candidateId)
-    console.log(emergencyContactView,"emergencyContactView")
-  },[])
   useEffect(() => {
-    console.log(emergencyContactView.length,"length")
-    if(emergencyContactView !== null && Object.keys(emergencyContactView).length !== 0){
-      console.log(emergencyContactView,"emergencyContactView3")
-    setState({
-      contactName: emergencyContactView.contactName,
-      addressLine: emergencyContactView.addressLine,
-      candidateId: emergencyContactView.candidateId,
-      contactId: emergencyContactView.contactId,
-      city: emergencyContactView.city,
-      country: emergencyContactView.country,
-      locality: emergencyContactView.locality,
-      phoneNumber: emergencyContactView.phoneNumber,
-      pinCode: emergencyContactView.pinCode,
-      relationship: emergencyContactView.relationship,
-    });
-    setDataExist({exist:true})
-  }
-    console.log(state,"previous2")
-  },[emergencyContactView])
+    EmergencyContactView(candidateData.candidateId);
+    console.log(emergencyContactView, "emergencyContactView");
+  }, []);
+  useEffect(() => {
+    if (
+      emergencyContactView !== null &&
+      Object.keys(emergencyContactView).length !== 0
+    ) {
+      console.log(emergencyContactView, "emergencyContactView3");
+      setState({
+        contactName: emergencyContactView.contactName,
+        addressLine: emergencyContactView.addressLine,
+        candidateId: emergencyContactView.candidateId,
+        contactId: emergencyContactView.contactId,
+        city: emergencyContactView.city,
+        country: emergencyContactView.country,
+        locality: emergencyContactView.locality,
+        phoneNumber: emergencyContactView.phoneNumber,
+        pinCode: emergencyContactView.pinCode,
+        relationship: emergencyContactView.relationship,
+      });
+      setDataExist({ exist: true });
+    }
+    console.log(state, "previous2");
+  }, [emergencyContactView]);
   const validateForm = () => {
     let fields = state;
     let stateError = {};
     let formIsValid = true;
-console.log(state,"state in emergencyContact")
+    console.log(state, "state in emergencyContact");
     if (!fields["contactName"]) {
       formIsValid = false;
       stateError["contactNameError"] = "*Please enter your name.";
@@ -163,23 +174,23 @@ console.log(state,"state in emergencyContact")
     return formIsValid;
   };
   const submitHandler = (e) => {
-    e.preventDefault()
-    console.log("next",state);
-    if(validateForm()){
-      if(dataExist.exist == true){
-      EmergencyContactUpdate(state)
-      const nextPage = props.NextStep;
-      nextPage();
-    }else{
-      EmergencyContactCreate(state)
-      const nextPage = props.NextStep;
-      nextPage();
+    e.preventDefault();
+    console.log("next", state);
+    if (validateForm()) {
+      if (dataExist.exist == true) {
+        EmergencyContactUpdate(state);
+        const nextPage = props.NextStep;
+        nextPage();
+      } else {
+        EmergencyContactCreate(state);
+        const nextPage = props.NextStep;
+        nextPage();
+      }
     }
-  }
   };
 
   const PrevStep = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     console.log("previous");
     const back = props.PrevStep;
     back();
@@ -243,9 +254,8 @@ console.log(state,"state in emergencyContact")
                 <option value="Father">Father</option>
                 <option value="Brother">Brother</option>
                 <option value="Sister">Sister</option>
-                <option value="Spouse">Spouse</option>
-\                <option value="Others">Others</option>
-
+                <option value="Spouse">Spouse</option>\{" "}
+                <option value="Others">Others</option>
               </Form.Control>
               <p style={{ color: "red" }}>{stateError.relationshipError} </p>
             </Form.Group>
