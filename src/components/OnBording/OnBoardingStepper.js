@@ -17,9 +17,11 @@ import InsuranceNomination from "./InsuranceNomination";
 import PFDeclaration from "./PFDeclaration";
 import Documents from "./Documents";
 import { toast } from "react-toastify";
+import DocVerification from "../../components/CandidateVerification/DocVerification";
 import { OnBoardContext } from "../../context/OnBoardState";
 
 const OnBoardingStepper = (props) => {
+  const { CandidateProfile, candidateData } = useContext(OnBoardContext);
   const personalInfoRef = useRef();
   const checkOk = "OkCheckStep";
   const currStep = "CurrentCheckStep";
@@ -31,13 +33,55 @@ const OnBoardingStepper = (props) => {
   const currLabel = "CurrentLabelColour";
   const [stepCount, setStepNumber] = useState(0);
   const [stepArray, setStep] = useState([
-    { step: currStep, line: defaultLine, label: currLabel ,idValue:0,fileSaved:false},
-    { step: defaultStep, line: defaultLine, label: defaultLabel,idValue:1,fileSaved:false},
-    { step: defaultStep, line: defaultLine, label: defaultLabel,idValue:2,fileSaved:false },
-    { step: defaultStep, line: defaultLine, label: defaultLabel,idValue:3,fileSaved:false},
-    { step: defaultStep, line: defaultLine, label: defaultLabel,idValue:4,fileSaved:false},
-    { step: defaultStep, line: defaultLine, label: defaultLabel,idValue:5,fileSaved:false},
-    { step: defaultStep, line: defaultLine, label: defaultLabel,idValue:6,fileSaved:false},
+    {
+      step: currStep,
+      line: defaultLine,
+      label: currLabel,
+      idValue: 0,
+      fileSaved: false,
+    },
+    {
+      step: defaultStep,
+      line: defaultLine,
+      label: defaultLabel,
+      idValue: 1,
+      fileSaved: false,
+    },
+    {
+      step: defaultStep,
+      line: defaultLine,
+      label: defaultLabel,
+      idValue: 2,
+      fileSaved: false,
+    },
+    {
+      step: defaultStep,
+      line: defaultLine,
+      label: defaultLabel,
+      idValue: 3,
+      fileSaved: false,
+    },
+    {
+      step: defaultStep,
+      line: defaultLine,
+      label: defaultLabel,
+      idValue: 4,
+      fileSaved: false,
+    },
+    {
+      step: defaultStep,
+      line: defaultLine,
+      label: defaultLabel,
+      idValue: 5,
+      fileSaved: false,
+    },
+    {
+      step: defaultStep,
+      line: defaultLine,
+      label: defaultLabel,
+      idValue: 6,
+      fileSaved: false,
+    },
   ]);
   console.log(stepArray);
   const handleIconChange = (data)=>{
@@ -65,8 +109,14 @@ if(index<data){
     })
       setStep(tempArray);
    }
+
+  useEffect(() => {
+    CandidateProfile();
+  }, []);
+  console.log("stepper candidate data", candidateData);
+
   const NextStep = () => {
-    console.log(stepCount,"NEXTSTEP");
+    console.log(stepCount, "NEXTSTEP");
     if (stepCount >= 0 && stepCount < 6) {
       let tempArray = [...stepArray];
       tempArray[stepCount].fileSaved = true
@@ -113,7 +163,7 @@ if(index<data){
                       <div>
                         <div  type="button" onClick={()=>{handleIconChange(stepArray[0].idValue)}} className={stepArray[0].step}>
                           <div style={{ paddingTop: "1px", fontSize: "28px" }}>
-                            <i class="fa fa-user"></i>
+                            <i className="fa fa-user"></i>
                           </div>
                         </div>
                         <label
@@ -129,7 +179,7 @@ if(index<data){
                         <div type="button" onClick={()=>{handleIconChange(stepArray[1].idValue)}} className={stepArray[1].step}>
                           <div style={{ paddingTop: "4px", fontSize: "24px" }}>
                             <i
-                              class="fa fa-address-card-o"
+                              className="fa fa-address-card-o"
                               aria-hidden="true"
                             ></i>
                           </div>
@@ -146,7 +196,7 @@ if(index<data){
 
                         <div type="button" onClick={()=>{handleIconChange(stepArray[2].idValue)}} className={stepArray[2].step}>
                           <div style={{ paddingTop: "4px", fontSize: "23px" }}>
-                            <i class="fa fa-address-book"></i>
+                            <i className="fa fa-address-book"></i>
                           </div>
                         </div>
                         <label
@@ -161,7 +211,7 @@ if(index<data){
 
                         <div type="button" onClick={()=>{handleIconChange(stepArray[3].idValue)}} className={stepArray[3].step}>
                           <div style={{ paddingTop: "0px", fontSize: "31px" }}>
-                            <i class="fa fa-lock"></i>
+                            <i className="fa fa-lock"></i>
                           </div>
                         </div>
                         <label
@@ -176,7 +226,7 @@ if(index<data){
 
                         <div type="button" onClick={()=>{handleIconChange(stepArray[4].idValue)}} className={stepArray[4].step}>
                           <div style={{ paddingTop: "4px", fontSize: "27px" }}>
-                            <i class="fa fa-shield"></i>
+                            <i className="fa fa-shield"></i>
                           </div>
                         </div>
                         <label
@@ -191,7 +241,7 @@ if(index<data){
 
                         <div type="button" onClick={()=>{handleIconChange(stepArray[5].idValue)}} className={stepArray[5].step}>
                           <div style={{ paddingTop: "5px", fontSize: "22px" }}>
-                            <i class="fa fa-credit-card-alt"></i>
+                            <i className="fa fa-credit-card-alt"></i>
                           </div>
                         </div>
                         <label
@@ -206,7 +256,7 @@ if(index<data){
 
                         <div type="button" onClick={()=>{handleIconChange(stepArray[6].idValue)}} className={stepArray[6].step}>
                           <div style={{ paddingTop: "2px", fontSize: "26px" }}>
-                            <i class="fa fa-book"></i>
+                            <i className="fa fa-book"></i>
                           </div>
                         </div>
                         <label
@@ -267,12 +317,16 @@ if(index<data){
                               />
                             );
                           case 6:
-                            return (
-                              <Documents
-                                NextStep={NextStep}
-                                PrevStep={PrevStep}
-                              />
-                            );
+                            if (window.location.href.includes("verification")) {
+                              return <DocVerification />;
+                            } else {
+                              return (
+                                <Documents
+                                  NextStep={NextStep}
+                                  PrevStep={PrevStep}
+                                />
+                              );
+                            }
                           default:
                             return <div>OnBoarding</div>;
                         }

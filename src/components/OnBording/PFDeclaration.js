@@ -62,7 +62,7 @@ useEffect(()=>{
     }
     return true;
 }
-  if(pfDeclarationView !== null&&!isEmpty(pfDeclarationView)){
+  if(pfDeclarationView !== null && Object.keys(pfDeclarationView).length !== 0){
     if(pfDeclarationView.firstJob !== undefined && pfDeclarationView.firstJob==true)
     setFirstJobYes(pfDeclarationView.firstJob)
     else if(pfDeclarationView.firstJob !== undefined && pfDeclarationView.firstJob==false){

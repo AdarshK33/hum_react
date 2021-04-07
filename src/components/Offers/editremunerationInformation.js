@@ -17,6 +17,9 @@ const EditRemunerationInformation = (props) => {
   const [stipened, setStipened] = useState();
   const [stipenedError, setStipenedError] = useState(false);
   const [viewApiCall, setViewApiCall] = useState(false);
+  const [parmanentGrossLimit, setParmanentGrossLimit] = useState(false);
+  const [partTimeGrossLimit, setPartTimeGrossLimit] = useState(false);
+  const [bonusLimit, setBonusLimit] = useState(false);
 
   const {
     remunerationUpdate,
@@ -25,6 +28,8 @@ const EditRemunerationInformation = (props) => {
     remunerationView,
     remunerationViewData,
     viewCandidateId,
+    workInfoView,
+    workInfoViewData,
   } = useContext(OfferContext);
 
   const { user } = useContext(AppContext);
@@ -42,6 +47,7 @@ const EditRemunerationInformation = (props) => {
     ) {
       viewCandidateId(candidateData.candidateInformation.candidateId);
       setViewApiCall(true);
+      workInfoView(candidateData.candidateInformation.candidateId);
     } else {
       setViewApiCall(false);
     }
@@ -71,36 +77,177 @@ const EditRemunerationInformation = (props) => {
       fixedGross,
       monthlyBonus,
       stipened,
-      candidateData.workInformation.contractType,
       user.role,
-      typeof stipened
+      typeof stipened,
+      typeof fixedGross,
+      typeof monthlyBonus
     );
     if (
       user.role === "ADMIN" &&
-      (typeof fixedGross === "undefined" || fixedGross === "") &&
-      (typeof monthlyBonus === "undefined" || monthlyBonus === "") &&
-      candidateData.workInformation.contractType !== "Internship"
+      (typeof fixedGross === "undefined" ||
+        fixedGross === "" ||
+        (fixedGross + "").includes(" ", "-", ".", "/", "+") ||
+        ((candidateData.workInformation.contractType === "Permanent" ||
+          workInfoViewData.contractType === "Permanent") &&
+          fixedGross < 18000) ||
+        ((candidateData.workInformation.contractType === "Parttime" ||
+          workInfoViewData.contractType === "Parttime") &&
+          (fixedGross < 90 || fixedGross > 200))) &&
+      (typeof monthlyBonus === "undefined" ||
+        monthlyBonus === "" ||
+        (monthlyBonus + "").includes(" ", "-", ".", "/", "+") ||
+        ((candidateData.workInformation.contractType === "Permanent" ||
+          workInfoViewData.contractType === "Permanent") &&
+          monthlyBonus > 20) ||
+        ((candidateData.workInformation.contractType === "Parttime" ||
+          workInfoViewData.contractType === "Parttime") &&
+          monthlyBonus > 20))
     ) {
       setFixedGrossError(true);
       setMonthlyBonusError(true);
       setStipenedError(false);
+      if (
+        (candidateData.workInformation.contractType === "Permanent" ||
+          workInfoViewData.contractType === "Permanent") &&
+        fixedGross <= 18000
+      ) {
+        setParmanentGrossLimit(true);
+        setFixedGrossError(false);
+        setPartTimeGrossLimit(false);
+      } else if (
+        (candidateData.workInformation.contractType === "Permanent" ||
+          workInfoViewData.contractType === "Permanent") &&
+        fixedGross > 18000
+      ) {
+        console.log("inside permanent");
+        setParmanentGrossLimit(false);
+        setFixedGrossError(false);
+        setPartTimeGrossLimit(false);
+      } else if (
+        (candidateData.workInformation.contractType === "Parttime" ||
+          workInfoViewData.contractType === "Parttime") &&
+        (fixedGross <= 90 || fixedGross > 200)
+      ) {
+        setPartTimeGrossLimit(true);
+        setFixedGrossError(false);
+        setParmanentGrossLimit(false);
+      } else if (
+        (candidateData.workInformation.contractType === "Parttime" ||
+          workInfoViewData.contractType === "Parttime") &&
+        fixedGross <= 200
+      ) {
+        console.log("inside part time");
+        setPartTimeGrossLimit(false);
+        setFixedGrossError(false);
+        setParmanentGrossLimit(false);
+      } else if (
+        (candidateData.workInformation.contractType === "Parttime" ||
+          candidateData.workInformation.contractType === "Permanent" ||
+          workInfoViewData.contractType === "Parttime" ||
+          workInfoViewData.contractType === "Permanent") &&
+        monthlyBonus > 20
+      ) {
+        setBonusLimit(true);
+        setMonthlyBonusError(false);
+      } else if (
+        (candidateData.workInformation.contractType === "Parttime" ||
+          candidateData.workInformation.contractType === "Permanent" ||
+          workInfoViewData.contractType === "Parttime" ||
+          workInfoViewData.contractType === "Permanent") &&
+        monthlyBonus < 20
+      ) {
+        setBonusLimit(false);
+        setMonthlyBonusError(false);
+      }
     } else if (
-      (typeof fixedGross === "undefined" || fixedGross === "") &&
-      candidateData.workInformation.contractType !== "Internship"
+      typeof fixedGross === "undefined" ||
+      fixedGross === "" ||
+      fixedGross.includes(" ", "-", ".", "/", "+") ||
+      ((candidateData.workInformation.contractType === "Permanent" ||
+        workInfoViewData.contractType === "Permanent") &&
+        fixedGross < 18000) ||
+      ((candidateData.workInformation.contractType === "Parttime" ||
+        workInfoViewData.contractType === "Parttime") &&
+        (fixedGross < 90 || fixedGross > 200))
     ) {
       setFixedGrossError(true);
       setStipenedError(false);
+      if (
+        (candidateData.workInformation.contractType === "Permanent" ||
+          workInfoViewData.contractType === "Permanent") &&
+        fixedGross <= 18000
+      ) {
+        console.log("inside permanent");
+        setParmanentGrossLimit(true);
+        setFixedGrossError(false);
+        setPartTimeGrossLimit(false);
+      } else if (
+        (candidateData.workInformation.contractType === "Permanent" ||
+          workInfoViewData.contractType === "Permanent") &&
+        fixedGross > 18000
+      ) {
+        console.log("inside permanent");
+        setParmanentGrossLimit(false);
+        setFixedGrossError(false);
+        setPartTimeGrossLimit(false);
+      } else if (
+        (candidateData.workInformation.contractType === "Parttime" ||
+          workInfoViewData.contractType === "Parttime") &&
+        (fixedGross <= 90 || fixedGross > 200)
+      ) {
+        console.log("inside part time");
+        setPartTimeGrossLimit(true);
+        setFixedGrossError(false);
+        setParmanentGrossLimit(false);
+      } else if (
+        (candidateData.workInformation.contractType === "Parttime" ||
+          workInfoViewData.contractType === "Parttime") &&
+        fixedGross <= 200
+      ) {
+        console.log("inside part time");
+        setPartTimeGrossLimit(false);
+        setFixedGrossError(false);
+        setParmanentGrossLimit(false);
+      }
     } else if (
       user.role === "ADMIN" &&
-      (typeof monthlyBonus === "undefined" || monthlyBonus === "") &&
-      candidateData.workInformation.contractType !== "Internship"
+      (typeof monthlyBonus === "undefined" ||
+        monthlyBonus === "" ||
+        (monthlyBonus + "").includes(" ", "-", ".", "/", "+") ||
+        ((candidateData.workInformation.contractType === "Permanent" ||
+          workInfoViewData.contractType === "Permanent") &&
+          monthlyBonus > 20) ||
+        ((candidateData.workInformation.contractType === "Parttime" ||
+          workInfoViewData.contractType === "Parttime") &&
+          monthlyBonus > 20))
     ) {
       setMonthlyBonusError(true);
       setStipenedError(false);
+      if (
+        (candidateData.workInformation.contractType === "Parttime" ||
+          candidateData.workInformation.contractType === "Permanent" ||
+          workInfoViewData.contractType === "Parttime" ||
+          workInfoViewData.contractType === "Permanent") &&
+        monthlyBonus > 20
+      ) {
+        setBonusLimit(true);
+        setMonthlyBonusError(false);
+      } else if (
+        (candidateData.workInformation.contractType === "Parttime" ||
+          candidateData.workInformation.contractType === "Permanent" ||
+          workInfoViewData.contractType === "Parttime" ||
+          workInfoViewData.contractType === "Permanent") &&
+        monthlyBonus < 20
+      ) {
+        setBonusLimit(false);
+        setMonthlyBonusError(false);
+      }
     } else if (
-      user.role === "ADMIN" &&
-      (typeof stipened === "undefined" || stipened === "") &&
-      candidateData.workInformation.contractType === "Internship"
+      (typeof stipened === "undefined" ||
+        stipened === "" ||
+        (stipened + "").includes(" ", "-", ".", "/", "+")) &&
+      (candidateData.workInformation.contractType === "Internship" ||
+        workInfoViewData.contractType === "Internship")
     ) {
       console.log("remuneration Info5", fixedGross, monthlyBonus, stipened);
       setStipenedError(true);
@@ -108,6 +255,9 @@ const EditRemunerationInformation = (props) => {
       setStipenedError(false);
       setFixedGrossError(false);
       setMonthlyBonusError(false);
+      setBonusLimit(false);
+      setParmanentGrossLimit(false);
+      setPartTimeGrossLimit(false);
       console.log("remuneration Info", fixedGross, monthlyBonus);
       if (saveclick === false) {
         console.log("first click");
@@ -129,7 +279,10 @@ const EditRemunerationInformation = (props) => {
         remunerationinfo = {
           candidateId: candidateData.candidateInformation.candidateId,
           fixedGross: fixedGross,
-          monthlyBonus: monthlyBonus,
+          monthlyBonus:
+            monthlyBonus === undefined || monthlyBonus === null
+              ? 0
+              : monthlyBonus,
           remunerationId: remunerationSubmitData.remunerationId
             ? remunerationSubmitData.remunerationId
             : 0,
@@ -142,10 +295,19 @@ const EditRemunerationInformation = (props) => {
       // );
 
       console.log("createCandidateResponse data", remunerationinfo);
-      remunerationUpdate(remunerationinfo);
-      remunerationView(candidateData.candidateInformation.candidateId);
-      setDisabled(true);
-      setEditButton(true);
+      if (
+        fixedGrossError === false &&
+        monthlyBonusError === false &&
+        stipenedError === false &&
+        parmanentGrossLimit === false &&
+        partTimeGrossLimit === false &&
+        bonusLimit === false
+      ) {
+        remunerationUpdate(remunerationinfo);
+        remunerationView(candidateData.candidateInformation.candidateId);
+        setDisabled(true);
+        setEditButton(true);
+      }
     }
   };
   const editHandler = () => {
@@ -161,9 +323,10 @@ const EditRemunerationInformation = (props) => {
       <Form>
         <Row>
           <Fragment>
-            {candidateData &&
-            candidateData.workInformation &&
-            candidateData.workInformation.contractType !== "Internship" ? (
+            {(candidateData &&
+              candidateData.workInformation &&
+              candidateData.workInformation.contractType !== "Internship") ||
+            workInfoViewData.contractType !== "Internship" ? (
               <Col sm={6}>
                 <Form.Group as={Row} controlId="formHorizontalEmail">
                   {/* <Col sm={2}></Col> */}
@@ -174,6 +337,7 @@ const EditRemunerationInformation = (props) => {
                     <Form.Control
                       className="form-input"
                       type="number"
+                      min="0"
                       name="fixedGross"
                       value={fixedGross}
                       onChange={(event) => setFixedGross(event.target.value)}
@@ -183,18 +347,20 @@ const EditRemunerationInformation = (props) => {
                     />
                     {fixedGrossError ? (
                       <p style={{ color: "red" }}>This field cannot be empty</p>
-                    ) : candidateData &&
-                      candidateData.workInformation &&
-                      candidateData.workInformation.contractType ===
-                        "Parttime" &&
+                    ) : ((candidateData &&
+                        candidateData.workInformation &&
+                        candidateData.workInformation.contractType ===
+                          "Parttime") ||
+                        workInfoViewData.contractType === "Parttime") &&
                       (fixedGross < 90 || fixedGross > 200) ? (
                       <p style={{ color: "red" }}>
                         Value should be between 90 - 200{" "}
                       </p>
-                    ) : candidateData &&
-                      candidateData.workInformation &&
-                      candidateData.workInformation.contractType ===
-                        "Permanent" &&
+                    ) : ((candidateData &&
+                        candidateData.workInformation &&
+                        candidateData.workInformation.contractType ===
+                          "Permanent") ||
+                        workInfoViewData.contractType === "Permanent") &&
                       fixedGross < 18000 ? (
                       <p style={{ color: "red" }}>
                         Value should be greater than 18000{" "}
@@ -216,6 +382,7 @@ const EditRemunerationInformation = (props) => {
                     <Form.Control
                       className="form-input"
                       type="number"
+                      min="0"
                       name="stipend"
                       placeholder="1000"
                       value={stipened}
@@ -233,9 +400,11 @@ const EditRemunerationInformation = (props) => {
               </Col>
             )}
 
-            {candidateData &&
-            candidateData.workInformation &&
-            candidateData.workInformation.contractType !== "Internship" ? (
+            {(candidateData &&
+              candidateData.workInformation &&
+              candidateData.workInformation.contractType !== "Internship") ||
+            (workInfoViewData &&
+              workInfoViewData.contractType !== "Internship") ? (
               <Fragment>
                 {user ? (
                   user.role === "ADMIN" ? (
@@ -247,6 +416,7 @@ const EditRemunerationInformation = (props) => {
                           <Form.Control
                             className="form-input"
                             type="number"
+                            min="0"
                             name="monthlyBonus"
                             value={monthlyBonus}
                             onChange={(event) =>
@@ -276,7 +446,8 @@ const EditRemunerationInformation = (props) => {
                         <Col sm={6}>
                           <Form.Control
                             className="form-input"
-                            type="nummber"
+                            type="number"
+                            min="0"
                             name="monthlyBonus"
                             readOnly
                             disabled={disabled}

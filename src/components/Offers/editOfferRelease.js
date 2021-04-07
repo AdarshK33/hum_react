@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useContext } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import Breadcrumb from "../common/breadcrumb";
 import {
@@ -14,8 +14,29 @@ import EditEmployeeForm from "./editEmployeeForm";
 import EditWorkInformation from "./editWorkInformation";
 import EditRemunerationInformation from "./editremunerationInformation";
 import GenerateOfferLetter from "./generateOfferLetter";
+import { OfferContext } from "../../context/OfferState";
 
 const EditOfferRelease = () => {
+  const {
+    remunerationSave,
+    candidateData,
+    createCandidateResponse,
+    viewCandidateId,
+    remunerationView,
+    remunerationViewData,
+    workInformationData,
+    workInfoViewData,
+    workInfoView,
+    remunerationData,
+  } = useContext(OfferContext);
+
+  const remunarationClick = (e) => {
+    console.log("inside remunarationClick");
+    if (candidateData !== null && candidateData != undefined) {
+      workInfoView(candidateData.candidateInformation.candidateId);
+    }
+  };
+
   return (
     <Fragment>
       <Container fluid className="container-accordion">
@@ -46,14 +67,16 @@ const EditOfferRelease = () => {
             </AccordionItemPanel>
           </AccordionItem>
 
-          <AccordionItem>
+          <AccordionItem onClick={remunarationClick}>
             <AccordionItemHeading>
               <AccordionItemButton>
                 Step 3: Remuneration Information
               </AccordionItemButton>
             </AccordionItemHeading>
             <AccordionItemPanel>
-              <EditRemunerationInformation />
+              <EditRemunerationInformation
+                remunarationClick={remunarationClick}
+              />
             </AccordionItemPanel>
           </AccordionItem>
 
