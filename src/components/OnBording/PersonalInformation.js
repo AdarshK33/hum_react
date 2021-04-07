@@ -192,8 +192,8 @@ const PersonalInformation = (props) => {
   useEffect(() => {
     // console.log("personal information view candidate", candidateData);
     if (
-      (candidatePersonalInfoData !== null) &
-      (candidatePersonalInfoData !== undefined) &
+      (candidatePersonalInfoData !== null) &&
+      (candidatePersonalInfoData !== undefined) &&
       (Object.keys(candidatePersonalInfoData).length !== 0)
     ) {
       setState({

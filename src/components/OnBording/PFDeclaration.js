@@ -2,10 +2,20 @@ import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
+import { OnBoardContext } from "../../context/OnBoardState";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import "./OnBoard.css";
 
 const PFDeclaration = (props) => {
+  const { PFDeclarationCreate,PFDeclarationUpdate,PFDeclarationView, pfDeclarationCreate,
+  pfDeclarationUpdate,candidateData,pfDeclarationView} = useContext(OnBoardContext);
+  const [dataExist,setDataExist]=useState({
+    exist:false
+  })
   const [firstJobYes, setFirstJobYes] = useState(false);
+        
+  const [declarationIdValue,setDeclarationIdValue] = useState(0)
   const [firstJobNo, setFirstJobNo] = useState(false);
   const [contributingPrevOrgYes, setContributingPrevOrgYes] = useState(false);
   const [contributingPrevOrgNo, setContributingPrevOrgNo] = useState(false);
@@ -13,17 +23,17 @@ const PFDeclaration = (props) => {
     false
   );
   const [memberOfPensionSchemeNo, setMemberOfPensionSchemeNo] = useState(false);
-  const [pfNominationHoldHealthYes, setPfNominationHoldHealthYes] = useState(
+  const [pfNominationHoldDeathYes, setPfNominationHoldDeathYes] = useState(
     false
   );
-  const [pfNominationHoldHealthNo, setPfNominationHoldHealthNo] = useState(
+  const [pfNominationHoldDeathNo, setPfNominationHoldDeathNo] = useState(
     false
   );
   const [state, setState] = useState({
     uanNumber: "",
   });
   const [uanNumber, setUanNumber] = useState("");
-
+  const [epfPassbookCopy,setEpfPassbookCopy] = useState('')
   const [required, setRequired] = useState(true);
   const [firstJobError, setFirstJobError] = useState(false);
   const [contributingPrevError, setContributingPrevError] = useState(false);
@@ -31,11 +41,64 @@ const PFDeclaration = (props) => {
     false
   );
   const [
-    pfNominationHoldHealthError,
-    setPfNominationHoldHealthError,
+    pfNominationHoldDeathError,
+    setPfNominationHoldDeathError,
   ] = useState(false);
   const [uanNumberError, setUanNumberError] = useState(false);
+  console.log(firstJobYes,contributingPrevOrgYes,memberOfPensionSchemeYes,pfNominationHoldDeathYes,uanNumber
+   ,epfPassbookCopy ,dataExist,"pfDeclarationView")
 
+  useEffect(() => {
+    PFDeclarationView(candidateData.candidateId)
+    console.log(pfDeclarationView,"pfDeclarationViewuse")
+    
+},[])
+useEffect(()=>{
+  console.log(pfDeclarationView,"pfDeclarationViewuse2")
+  function isEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
+  if(pfDeclarationView !== null && Object.keys(pfDeclarationView).length !== 0){
+    if(pfDeclarationView.firstJob !== undefined && pfDeclarationView.firstJob==true)
+    setFirstJobYes(pfDeclarationView.firstJob)
+    else if(pfDeclarationView.firstJob !== undefined && pfDeclarationView.firstJob==false){
+      setFirstJobNo(true)
+    }
+    if(pfDeclarationView.contributingPrevOrg !== undefined && pfDeclarationView.contributingPrevOrg==true){
+      setContributingPrevOrgYes(pfDeclarationView.contributingPrevOrg)
+    }else if(pfDeclarationView.contributingPrevOrg !== undefined && pfDeclarationView.contributingPrevOrg==false){ 
+      setContributingPrevOrgNo(true)
+    }
+    if(pfDeclarationView.memberOfPensionScheme !== undefined && pfDeclarationView.memberOfPensionScheme==true){
+      setMemberOfPensionSchemeYes(pfDeclarationView.memberOfPensionScheme)
+
+    }else if(pfDeclarationView.memberOfPensionScheme !== undefined && pfDeclarationView.memberOfPensionScheme==false){
+      setMemberOfPensionSchemeNo(true)
+
+    }
+    if(pfDeclarationView.pfNominationHoldDeath !== undefined && pfDeclarationView.pfNominationHoldDeath==true){
+      setPfNominationHoldDeathYes(pfDeclarationView.pfNominationHoldDeath)
+
+    }else if(pfDeclarationView.pfNominationHoldDeath !== undefined && pfDeclarationView.pfNominationHoldDeath==false){
+      setPfNominationHoldDeathNo(true)
+    }
+    else if(pfDeclarationView.epfPassbookCopy !== undefined){
+      setEpfPassbookCopy(pfDeclarationView.epfPassbookCopy)
+    }else if(pfDeclarationView.epfPassbookCopy !== undefined){
+      setDeclarationIdValue(pfDeclarationView.declarationId)
+    }else if(pfDeclarationView.uanNumber !== undefined){
+      setUanNumber(pfDeclarationView.uanNumber)
+    }
+  setDataExist({exist:true})
+}
+console.log(candidateData.candidateId,"pfdeclaration")
+},[pfDeclarationView])
+console.log(firstJobYes,contributingPrevOrgYes,contributingPrevOrgNo,memberOfPensionSchemeYes,memberOfPensionSchemeNo,pfNominationHoldDeathYes,pfNominationHoldDeathNo,uanNumber
+  ,epfPassbookCopy ,dataExist,"pfDeclarationView2")
   const validateCheckBoxes = (itemYes, itemNo, setError) => {
     if ((itemYes === true) | (itemNo === true)) {
       setError(false);
@@ -62,9 +125,9 @@ const PFDeclaration = (props) => {
     ) {
       if (
         (validateCheckBoxes(
-          pfNominationHoldHealthYes,
-          pfNominationHoldHealthNo,
-          setPfNominationHoldHealthError
+          pfNominationHoldDeathYes,
+          pfNominationHoldDeathNo,
+          setPfNominationHoldDeathError
         ) ===
           true) &
         (validateCheckBoxes(
@@ -98,28 +161,36 @@ const PFDeclaration = (props) => {
     }
   };
   const submitHandler = (e) => {
-    const nextPage = props.NextStep;
-    nextPage();
+    // const nextPage = props.NextStep;
+    // nextPage();
     e.preventDefault();
 
     const value = checkAllValidations();
     if (value === true) {
-      const nextPage = props.NextStep;
-      nextPage();
+      // const nextPage = props.NextStep;
+      // nextPage();
       const PFInfo = {
-        candidateId: 0,
+        candidateId:(candidateData.candidateId!== undefined)?candidateData.candidateId:'',
         contributingPrevOrg: contributingPrevOrgYes ? true : false,
-        declarationId: 0,
+        declarationId: declarationIdValue,
         epfPassbookCopy: " ",
         firstJob: firstJobYes ? true : false,
         memberOfPensionScheme: memberOfPensionSchemeYes ? true : false,
-        pfNominationHoldHealth: pfNominationHoldHealthYes ? true : false,
+        pfNominationHoldDeath: pfNominationHoldDeathYes ? true : false,
         uanNumber: state.uanNumber,
       };
-      console.log(PFInfo);
-
-      // const nextPage = props.NextStep;
-      // nextPage();
+      if(dataExist.exist == true){
+  
+      console.log(PFInfo,"update pf")
+      PFDeclarationUpdate(PFInfo)
+      const nextPage = props.NextStep;
+      nextPage();
+    }else{
+      console.log(PFInfo,"create pf")
+      PFDeclarationCreate(PFInfo)
+      const nextPage = props.NextStep;
+      nextPage();
+    }
     }
   };
 
@@ -178,16 +249,16 @@ const PFDeclaration = (props) => {
       required ? setRequired(!required) : setRequired(required);
     }
   };
-  const handlePfNominationHoldHealthYesChange = (e) => {
-    setPfNominationHoldHealthYes(e.target.checked);
-    setPfNominationHoldHealthNo(!e.target.checked);
+  const handlePfNominationHoldDeathYesChange = (e) => {
+    setPfNominationHoldDeathYes(e.target.checked);
+    setPfNominationHoldDeathNo(!e.target.checked);
     {
       required ? setRequired(!required) : setRequired(required);
     }
   };
-  const handlePfNominationHoldHealthNoChange = (e) => {
-    setPfNominationHoldHealthNo(e.target.checked);
-    setPfNominationHoldHealthYes(!e.target.checked);
+  const handlePfNominationHoldDeathNoChange = (e) => {
+    setPfNominationHoldDeathNo(e.target.checked);
+    setPfNominationHoldDeathYes(!e.target.checked);
 
     {
       required ? setRequired(!required) : setRequired(required);
@@ -319,7 +390,10 @@ const PFDeclaration = (props) => {
           <Col sm={2}>
             <div>
               <label>
-                Fill <a href="~/address">EPF Form</a> here
+                Fill <a href="https://drive.google.com/file/d/19MypZqnEn98-w7zpsiJUZaDeKzEkz9Cj/view" target="_blank" rel="noopener noreferrer" download>
+      <i className="fas fa-download"/>
+      EPF Form   
+      </a> here
               </label>
             </div>
           </Col>
@@ -379,7 +453,7 @@ const PFDeclaration = (props) => {
               <label>
                 Does the PF nomination hold good in case of health ?
               </label>
-              {pfNominationHoldHealthError ? (
+              {pfNominationHoldDeathError ? (
                 <p style={{ color: "red" }}>
                   {" "}
                   *Please select one of the option
@@ -396,9 +470,9 @@ const PFDeclaration = (props) => {
                   className="largerCheckbox"
                   type="checkbox"
                   value="yes"
-                  checked={pfNominationHoldHealthYes}
+                  checked={pfNominationHoldDeathYes}
                   required={required}
-                  onChange={handlePfNominationHoldHealthYesChange}
+                  onChange={handlePfNominationHoldDeathYesChange}
                 />
                 <label>Yes</label>
               </div>
@@ -411,9 +485,9 @@ const PFDeclaration = (props) => {
                   className="largerCheckbox"
                   type="checkbox"
                   value="no"
-                  checked={pfNominationHoldHealthNo}
+                  checked={pfNominationHoldDeathNo}
                   required={required}
-                  onChange={handlePfNominationHoldHealthNoChange}
+                  onChange={handlePfNominationHoldDeathNoChange}
                 />
                 <label>No </label>
               </div>

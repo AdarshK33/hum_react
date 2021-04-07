@@ -7,6 +7,13 @@ import { toast } from "react-toastify";
 export const OnBoardContext = createContext();
 const initial_state = {
   name: " ",
+  Infodata: [],
+  emergencyContactData:{},
+  emergencyContactCreate:{},
+  emergencyContactView:{},
+  pfDeclarationCreate:{},
+  pfDeclarationUpdate:{},
+  pfDeclarationView:{},
   PersonalInfoResponse: {},
   CreateNomineeResponse: {},
   candidateInsuranceNominationData: {},
@@ -64,6 +71,104 @@ export const OnBoardProvider = (props) => {
         return dispatch({
           type: "CANDIDATE_PERSONAL_INFODATA",
           payload: state.candidatePersonalInfoData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const EmergencyContactCreate = (createData) => {
+    console.log("EmergencyContactCreate data -----");
+    console.log(createData);
+    return candidate
+      .post("/api/v2/candidate/contact/create", createData)
+      .then((response) => {
+        toast.info(response.data.message);
+        console.log(response.data.message);
+        return dispatch({
+          type: "EMERGENCY_CONTACT_CREATE",
+          payload: state.emergencyContactCreate,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const EmergencyContactUpdate = (updateData) => {
+    console.log("EmergencyContactUpdate data -----");
+    console.log(updateData);
+    return candidate
+      .post("/api/v2/candidate/contact/update", updateData)
+      .then((response) => {
+        toast.info(response.data.message);
+        console.log(response.data.message);
+        return dispatch({
+          type: "EMERGENCY_CONTACT_UPDATE",
+          payload: state.emergencyContactCreate,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const EmergencyContactView = (data) => {
+    candidate
+      .get(`/api/v2/candidate/contact/view/${data}`)
+      .then((response) => {
+        state.emergencyContactView = response.data.data;
+        console.log("EmergencyContactView Response ",response, state.emergencyContactView);
+        return dispatch({
+          type: "EMERGENCY_CONTACT_VIEW",
+          payload: state.emergencyContactView,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const PFDeclarationCreate = (createData) => {
+    console.log("PFDeclarationCreate data -----");
+    console.log(createData);
+    return candidate
+      .post("/api/v2/candidate/pf/create", createData)
+      .then((response) => {
+        toast.info(response.data.message);
+        console.log(response.data.message);
+        return dispatch({
+          type: "PFDECLARATION_CREATE",
+          payload: state.pfDeclarationCreate,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const PFDeclarationUpdate = (updateData) => {
+    console.log("PFDeclarationUpdate data -----");
+    console.log(updateData);
+    return candidate
+      .post("/api/v2/candidate/pf/update", updateData)
+      .then((response) => {
+        toast.info(response.data.message);
+        console.log(response.data.message);
+        return dispatch({
+          type: "PFDECLARATION_UPDATE",
+          payload: state.pfDeclarationUpdate,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const PFDeclarationView = (data) => {
+    candidate
+      .get(`/api/v2/candidate/pf/view/${data}`)
+      .then((response) => {
+        state.pfDeclarationView = response.data.data;
+        console.log("PFeclarationView Response ",response, state.pfDeclarationView);
+        return dispatch({
+          type: "PFDECLARATION_VIEW",
+          payload: state.pfDeclarationView,
         });
       })
       .catch((error) => {
@@ -360,14 +465,18 @@ export const OnBoardProvider = (props) => {
         CandidateProfile,
         StateList,
         CityList,
+        EmergencyContactCreate,
+        EmergencyContactUpdate,
+        EmergencyContactView,
+        PFDeclarationCreate,
+        PFDeclarationUpdate,
+        PFDeclarationView,
         searchForEmp1,
         searchForEmp2,
         CandidateViewInformation,
         CandidatePersonalInfo,
         CreateNominee,
         InsuranceNominationView,
-        searchEmpData1: state.searchEmpData1,
-        searchEmpData2: state.searchEmpData2,
         candidateCountryList,
         CandidateStateList,
         candidateCityList,
@@ -376,6 +485,16 @@ export const OnBoardProvider = (props) => {
         bankCreate,
         bankView,
         bankUpdate,
+        emergencyContactData:state.emergencyContactData,
+        emergencyContactCreate: state.emergencyContactCreate,
+        emergencyContactView: state.emergencyContactView,
+        pfDeclarationCreate:state.pfDeclarationCreate,
+        pfDeclarationUpdate:state.pfDeclarationUpdate,
+        pfDeclarationView:state.pfDeclarationView,
+       
+        searchEmpData1: state.searchEmpData1,
+        searchEmpData2: state.searchEmpData2,
+        
         name: state.name,
         PersonalInfoResponse: state.PersonalInfoResponse,
         CreateNomineeResponse: state.CreateNomineeResponse,

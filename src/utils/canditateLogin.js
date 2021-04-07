@@ -17,14 +17,14 @@ const CandidateWithAxios = ({ children }) => {
   const getRefreshToken = () => {
     console.log("INSIDE THE GET_REFRESH_TOKEN");
 
-    let config = {
-      method: "get",
-      url: candidate.defaults.baseURL + "api/v2/refresh_token",
-    };
-    config.headers["accept"] = "application/json";
-    config.headers["Authorization"] = `Bearer ${accessToken}`;
-    return candidate(config);
-  };
+        let config = {
+            method: "get",
+            url: candidate.defaults.baseURL + "/api/v2/refresh_token",
+        };
+        config.headers['accept'] = "application/json";
+        config.headers["Authorization"] =`Bearer ${accessToken}`;
+        return candidate(config)
+    }
 
   console.log("useeffect1");
   candidate.interceptors.request.use((config) => {
@@ -37,38 +37,38 @@ const CandidateWithAxios = ({ children }) => {
     return config;
   });
 
-  candidate.interceptors.response.use(
-    (response) => {
-      return response;
-    },
-    (error) => {
-      const {
-        config,
-        response: { status },
-      } = error;
-      console.log(error, "status in interceptorrrrr candidate");
-      if (status === 401 || status === 403) {
-        return getRefreshToken()
-          .then((response) => {
-            console.log("INSIDE THE INTERSECPECTOR ", response);
-            config.headers.Authorization = `Bearer ${accessToken}`;
-            config.__isRetryRequest = true;
-            return axios(config);
-          })
-          .catch((error) => {
-            return error;
-          });
-      } else if (!error.response.data) {
-        let error = {};
-        error.status = 501;
-        error.error_description = "Please check internet connectivity.";
-        return error;
-      } else {
-        return error.response;
-      }
-    }
-  );
-  return children;
-};
+        candidate.interceptors.response.use(
+            (response) => {
+                return response;
+            },
+            (error) => {
+                const {
+                    config,
+                    response: { status },
+                } = error;
+                console.log(error, "status in interceptorrrrr candidate");
+                if (status === 401||status === 403) {
+                    return getRefreshToken()
+                        .then((response) => {
+                            console.log("INSIDE THE INTERSECPECTOR ", response)
+                            config.headers.Authorization = `Bearer ${accessToken}`;
+                            config.__isRetryRequest = true;
+                            return axios(config);
+                        })
+                        .catch((error) => {
+                            return error;
+                        });
+                } else if (!error.response.data) {
+                    let error = {};
+                    error.status = 501;
+                    error.error_description = "Please check internet connectivity.";
+                    return error;
+                } else {
+                    return error.response;
+                }
+            }
+        );
+    return children
+}
 export { accessToken };
 export default CandidateWithAxios;

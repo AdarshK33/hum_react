@@ -1,14 +1,19 @@
 import React, {useState, useContext} from 'react';
 import { CandidateContext } from "../../context/CandidateState";
+import { OnBoardContext } from "../../context/OnBoardState";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function LoginOnboard(props) {
     const [loginData,setLoginData] = useState({username:'',password:''})
     const  {candidateOnBoardLogin} = useContext(CandidateContext);
+    const {CandidateProfile,candidateData } = useContext(OnBoardContext);
 
     const handleLogin =(e)=>{
             e.preventDefault()
         console.log("inside login");
         candidateOnBoardLogin({...loginData,history:props.history})
-        
+        CandidateProfile()
     }
   return(
         <div className="card col-12 col-lg-4 login-card mt-2 hv-center">
@@ -36,6 +41,7 @@ function LoginOnboard(props) {
                      <button type="submit" className="btn btn-primary" onClick={handleLogin}>
           Login
         </button>
+        <ToastContainer />
       </form>
     </div>
   );
