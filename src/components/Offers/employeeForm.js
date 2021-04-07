@@ -28,6 +28,7 @@ const EmployeeForm = (props) => {
   const [desgination2, setDesignation2] = useState("");
   const [modal, setModal] = useState(false);
   const [saveclick, setSaveclick] = useState(false);
+
   let history = useHistory();
 
   const {
@@ -212,16 +213,7 @@ const EmployeeForm = (props) => {
 
     if (saveclick === false) {
       console.log("first click");
-      if (
-        // typeof createCandidateResponse !== "undefined" ||
-        typeof createCandidateResponse !== "object"
-        // || typeof createCandidateResponse.candidateId !== "null" ||
-        // createCandidateResponse.candidateId < 0
-      ) {
-        console.log("employee form id", createCandidateResponse.candidateId);
-        console.log("user not created");
-        setSaveclick(true);
-      }
+      setSaveclick(true);
       CandidateInfo = {
         aadhaarDoc: null,
         aadhaarName: null,
@@ -305,6 +297,8 @@ const EmployeeForm = (props) => {
 
     console.log("CandidateInfo info", CandidateInfo);
     console.log("firstNameError info", firstNameError, lastNameError);
+    console.log("saveclick", saveclick);
+    console.log("createCandidateResponse saveclick", createCandidateResponse);
     if (firstNameError === false && lastNameError === false) {
       if (
         saveclick === true &&

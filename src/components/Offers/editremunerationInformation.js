@@ -77,7 +77,6 @@ const EditRemunerationInformation = (props) => {
       fixedGross,
       monthlyBonus,
       stipened,
-      candidateData.workInformation.contractType,
       user.role,
       typeof stipened,
       typeof fixedGross,
@@ -405,7 +404,7 @@ const EditRemunerationInformation = (props) => {
               candidateData.workInformation &&
               candidateData.workInformation.contractType !== "Internship") ||
             (workInfoViewData &&
-              workInfoViewData.contractType === "Internship") ? (
+              workInfoViewData.contractType !== "Internship") ? (
               <Fragment>
                 {user ? (
                   user.role === "ADMIN" ? (
