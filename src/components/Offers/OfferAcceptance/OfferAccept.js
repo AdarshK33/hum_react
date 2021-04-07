@@ -1,26 +1,38 @@
-import React, { Fragment, useState } from "react";
-import { Button, Container, Row, Col } from "react-bootstrap";
-import Breadcrumb from "../../common/breadcrumb";
-import Switch from "react-switch";
-import "../offers.css";
-import AcceptModal from "./AcceptModal";
-import RejectModal from "./RejectModal";
+import React, { Fragment, useState ,useContext, useEffect} from 'react';
+import { Button, Container, Row, Col } from 'react-bootstrap'
+import Breadcrumb from '../../common/breadcrumb';
+import Switch from 'react-switch'
+import '../offers.css'
+import AcceptModal from './AcceptModal'
+import RejectModal from './RejectModal'
 //import {  Page } from 'react-pdf'
-import fileName from "../../../assets/file.pdf";
-import { Document, Page } from "react-pdf/dist/esm/entry.webpack";
-import { ChevronRight, ChevronLeft } from "react-feather";
+import fileName from '../../../assets/file.pdf'
+import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
+import {ChevronRight, ChevronLeft} from 'react-feather'
+import { OnBoardContext } from "../../../context/OnBoardState";
+import { CandidateContext } from "../../../context/CandidateState";
 
-const OfferAccept = () => {
-  const [showLetter, setShowLetter] = useState(false);
-  const [checked, setChecked] = useState(false);
-  const [modal, setModal] = useState(false);
-  const [rejectModal, setRejectModal] = useState(false);
-  const [numPages, setNumPages] = useState(null);
-  const [pageNumber, setPageNumber] = useState(1);
-  const [disabled, setDisabled] = useState(false);
+const OfferAccept = (props) => {
+    const [showLetter, setShowLetter] = useState(false)
+    const [checked, setChecked] = useState(false)
+    const [modal, setModal] = useState(false)
+    const [rejectModal, setRejectModal] = useState(false)
+    const [numPages, setNumPages] = useState(null);
+    const [pageNumber, setPageNumber] = useState(1);
+    const [disabled, setDisabled] = useState(false)
+    const {CandidateProfile,candidateData } = useContext(OnBoardContext);
+    const {candidateRejectOffer } = useContext(CandidateContext);
 
-  const handleClose = () => setModal(false);
-  const handleRejectClose = () => setRejectModal(false);
+    const handleClose = () => setModal(false)
+    const handleRejectClose = () => {
+        
+        setRejectModal(false)
+        candidateRejectOffer({Id:candidateData.candidateId,history:props.history})
+        window.location.reload()
+    }
+useEffect(() => {
+    CandidateProfile()
+},[])
 
   const showLetterClick = (e) => {
     setShowLetter(true);

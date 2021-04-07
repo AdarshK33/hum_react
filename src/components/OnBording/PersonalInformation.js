@@ -36,6 +36,7 @@ const PersonalInformation = (props) => {
     searchEmpData2,
     CandidateViewInformation,
     candidateViewInfo,
+    addressView,
   } = useContext(OnBoardContext);
   const options = useMemo(() => countryList().getData(), []);
   const [isClicked, setIsClicked] = useState(false);
