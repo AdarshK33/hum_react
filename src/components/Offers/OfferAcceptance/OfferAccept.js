@@ -28,7 +28,6 @@ const OfferAccept = (props) => {
         
         setRejectModal(false)
         candidateRejectOffer({Id:candidateData.candidateId,history:props.history})
-        window.location.reload()
     }
 useEffect(() => {
     CandidateProfile()
