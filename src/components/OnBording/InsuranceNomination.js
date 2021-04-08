@@ -689,6 +689,44 @@ const InsuranceNomination = (props) => {
         break;
     }
   };
+  if (
+    candidateInsuranceNominationData !== null &&
+    candidateInsuranceNominationData !== undefined &&
+    Object.keys(candidateInsuranceNominationData).length !== 0
+  ) {
+    var Data1_nominiId =
+      candidateInsuranceNominationData[0].nominiId !== null &&
+      candidateInsuranceNominationData[0].nominiId !== undefined
+        ? candidateInsuranceNominationData[0].nominiId
+        : 0;
+    var Data2_nominiId =
+      candidateInsuranceNominationData[1].nominiId !== null &&
+      candidateInsuranceNominationData[1].nominiId !== undefined
+        ? candidateInsuranceNominationData[1].nominiId
+        : 0;
+    var Data3_nominiId =
+      candidateInsuranceNominationData[2].nominiId !== null &&
+      candidateInsuranceNominationData[2].nominiId !== undefined
+        ? candidateInsuranceNominationData[2].nominiId
+        : 0;
+    var Data4_nominiId =
+      candidateInsuranceNominationData[3].nominiId !== null &&
+      candidateInsuranceNominationData[3].nominiId !== undefined
+        ? candidateInsuranceNominationData[3].nominiId
+        : 0;
+    var Data5_nominiId =
+      candidateInsuranceNominationData[4].nominiId !== null &&
+      candidateInsuranceNominationData[4].nominiId !== undefined
+        ? candidateInsuranceNominationData[4].nominiId
+        : 0;
+  } else {
+    var Data1_nominiId = 0;
+    var Data2_nominiId = 0;
+    var Data3_nominiId = 0;
+    var Data4_nominiId = 0;
+    var Data5_nominiId = 0;
+  }
+
   const submitHandler = (e) => {
     // const nextPage = props.NextStep;
     // nextPage();
@@ -701,11 +739,7 @@ const InsuranceNomination = (props) => {
           candidateData.candidateId !== null ? candidateData.candidateId : 0,
         dateOfBirth: Nominee1DOB !== null ? Nominee1DOB : null,
         gender: state.gender !== null ? state.gender : null,
-        nominiId:
-          candidateInsuranceNominationData[0].nominiId !== null &&
-          candidateInsuranceNominationData[0].nominiId !== undefined
-            ? candidateInsuranceNominationData[0].nominiId
-            : 0,
+        nominiId: Data1_nominiId,
         nominiName: state.nominiName !== null ? state.nominiName : null,
         relationship: state.relationship !== null ? state.relationship : null,
       };
@@ -716,11 +750,7 @@ const InsuranceNomination = (props) => {
           candidateData.candidateId !== null ? candidateData.candidateId : 0,
         dateOfBirth: Nominee2DOB,
         gender: state.nominee2Gender,
-        nominiId:
-          candidateInsuranceNominationData[0].nominiId !== null &&
-          candidateInsuranceNominationData[0].nominiId !== undefined
-            ? candidateInsuranceNominationData[0].nominiId
-            : 0,
+        nominiId: Data2_nominiId,
         nominiName: state.nominee2NominiName,
         relationship: state.nominee2Relationship,
       };
@@ -731,11 +761,7 @@ const InsuranceNomination = (props) => {
           candidateData.candidateId !== null ? candidateData.candidateId : 0,
         dateOfBirth: Nominee3DOB,
         gender: state.nominee3Gender,
-        nominiId:
-          candidateInsuranceNominationData[0].nominiId !== null &&
-          candidateInsuranceNominationData[0].nominiId !== undefined
-            ? candidateInsuranceNominationData[0].nominiId
-            : 0,
+        nominiId: Data3_nominiId,
         nominiName: state.nominee3NominiName,
         relationship: state.nominee3Relationship,
       };
@@ -746,11 +772,7 @@ const InsuranceNomination = (props) => {
           candidateData.candidateId !== null ? candidateData.candidateId : 0,
         dateOfBirth: Nominee4DOB,
         gender: state.nominee2Gender,
-        nominiId:
-          candidateInsuranceNominationData[0].nominiId !== null &&
-          candidateInsuranceNominationData[0].nominiId !== undefined
-            ? candidateInsuranceNominationData[0].nominiId
-            : 0,
+        nominiId: Data4_nominiId,
         nominiName: state.nominee4NominiName,
         relationship: state.nominee4Relationship,
       };
@@ -761,11 +783,7 @@ const InsuranceNomination = (props) => {
           candidateData.candidateId !== null ? candidateData.candidateId : 0,
         dateOfBirth: Nominee5DOB,
         gender: state.nominee5Gender,
-        nominiId:
-          candidateInsuranceNominationData[0].nominiId !== null &&
-          candidateInsuranceNominationData[0].nominiId !== undefined
-            ? candidateInsuranceNominationData[0].nominiId
-            : 0,
+        nominiId: Data5_nominiId,
         nominiName: state.nominee5NominiName,
         relationship: state.nominee5Relationship,
       };
