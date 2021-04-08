@@ -3,25 +3,32 @@ import { Row, Col, Form, Button } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import { OnBoardContext } from "../../context/OnBoardState";
-import { ToastContainer, toast } from 'react-toastify';
-import { Document, Page } from 'react-pdf';
-import Form11 from "../../forms/Form_11_UAN.pdf"
-import Form11View from "../../forms/Form_11_(PF_declaration)_Sample_copy.pdf"
-import Form2 from "../../forms/Form_2_EPF_Nomination.pdf"
-import Form2View from "../../forms/Form_2_(PF_nomination)_Sample_copy.pdf"
-import FormF from "../../forms/Form_F_Gratuity.pdf"
-import FormFView from "../../forms/Form_F_(Gratuity)_Sample_copy.pdf"
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import { Document, Page } from "react-pdf";
+import Form11 from "../../forms/Form_11_UAN.pdf";
+import Form11View from "../../forms/Form_11_(PF_declaration)_Sample_copy.pdf";
+import Form2 from "../../forms/Form_2_EPF_Nomination.pdf";
+import Form2View from "../../forms/Form_2_(PF_nomination)_Sample_copy.pdf";
+import FormF from "../../forms/Form_F_Gratuity.pdf";
+import FormFView from "../../forms/Form_F_(Gratuity)_Sample_copy.pdf";
+import "react-toastify/dist/ReactToastify.css";
 import "./OnBoard.css";
 const PFDeclaration = (props) => {
-  const { PFDeclarationCreate,PFDeclarationUpdate,PFDeclarationView, pfDeclarationCreate,
-  pfDeclarationUpdate,candidateData,pfDeclarationView} = useContext(OnBoardContext);
-  const [dataExist,setDataExist]=useState({
-    exist:false
-  })
+  const {
+    PFDeclarationCreate,
+    PFDeclarationUpdate,
+    PFDeclarationView,
+    pfDeclarationCreate,
+    pfDeclarationUpdate,
+    candidateData,
+    pfDeclarationView,
+  } = useContext(OnBoardContext);
+  const [dataExist, setDataExist] = useState({
+    exist: false,
+  });
   const [firstJobYes, setFirstJobYes] = useState(false);
-        
-  const [declarationIdValue,setDeclarationIdValue] = useState(0)
+
+  const [declarationIdValue, setDeclarationIdValue] = useState(0);
   const [firstJobNo, setFirstJobNo] = useState(false);
   const [contributingPrevOrgYes, setContributingPrevOrgYes] = useState(false);
   const [contributingPrevOrgNo, setContributingPrevOrgNo] = useState(false);
@@ -32,97 +39,142 @@ const PFDeclaration = (props) => {
   const [pfNominationHoldDeathYes, setPfNominationHoldDeathYes] = useState(
     false
   );
-  const [pfNominationHoldDeathNo, setPfNominationHoldDeathNo] = useState(
-    false
-  );
+  const [pfNominationHoldDeathNo, setPfNominationHoldDeathNo] = useState(false);
   const [state, setState] = useState({
     uanNumber: "",
   });
   const [uanNumber, setUanNumber] = useState("");
-  const [epfPassbookCopy,setEpfPassbookCopy] = useState('')
+  const [epfPassbookCopy, setEpfPassbookCopy] = useState("");
   const [required, setRequired] = useState(true);
   const [firstJobError, setFirstJobError] = useState(false);
   const [contributingPrevError, setContributingPrevError] = useState(false);
   const [memberOfPensionSchemaError, setMemberOfPensionSchemaError] = useState(
     false
   );
-  const [
-    pfNominationHoldDeathError,
-    setPfNominationHoldDeathError,
-  ] = useState(false);
+  const [pfNominationHoldDeathError, setPfNominationHoldDeathError] = useState(
+    false
+  );
   const [uanNumberError, setUanNumberError] = useState(false);
-  console.log(firstJobYes,contributingPrevOrgYes,memberOfPensionSchemeYes,pfNominationHoldDeathYes,uanNumber
-   ,epfPassbookCopy ,dataExist,"pfDeclarationView")
+  console.log(
+    firstJobYes,
+    contributingPrevOrgYes,
+    memberOfPensionSchemeYes,
+    pfNominationHoldDeathYes,
+    uanNumber,
+    epfPassbookCopy,
+    dataExist,
+    "pfDeclarationView"
+  );
 
   useEffect(() => {
-    PFDeclarationView(candidateData.candidateId)
-    console.log(pfDeclarationView,"pfDeclarationViewuse")
-    
-},[])
- const handleForm11 =()=>{
-  window.open(Form11);
-}
-const handleForm11View =()=>{
-  window.open(Form11View);
-}
-const handleForm2 =()=>{
-  window.open(Form2);
-}
-const handleForm2View =()=>{
-  window.open(Form2View);
-}
-const handleFormF =()=>{
-  window.open(FormF);
-}
-const handleFormFView =()=>{
-  window.open(FormFView);
-}
-useEffect(()=>{
-  console.log(pfDeclarationView,"pfDeclarationViewuse2")
-  function isEmpty(obj) {
-    for(var key in obj) {
-        if(obj.hasOwnProperty(key))
-            return false;
+    PFDeclarationView(candidateData.candidateId);
+    console.log(pfDeclarationView, "pfDeclarationViewuse");
+  }, []);
+  const handleForm11 = () => {
+    window.open(Form11);
+  };
+  const handleForm11View = () => {
+    window.open(Form11View);
+  };
+  const handleForm2 = () => {
+    window.open(Form2);
+  };
+  const handleForm2View = () => {
+    window.open(Form2View);
+  };
+  const handleFormF = () => {
+    window.open(FormF);
+  };
+  const handleFormFView = () => {
+    window.open(FormFView);
+  };
+  useEffect(() => {
+    console.log(pfDeclarationView, "pfDeclarationViewuse2");
+    function isEmpty(obj) {
+      for (var key in obj) {
+        if (obj.hasOwnProperty(key)) return false;
+      }
+      return true;
     }
-    return true;
-}
-  if(pfDeclarationView !== null && Object.keys(pfDeclarationView).length !== 0){
-    if(pfDeclarationView.firstJob !== undefined && pfDeclarationView.firstJob==true)
-    setFirstJobYes(pfDeclarationView.firstJob)
-    else if(pfDeclarationView.firstJob !== undefined && pfDeclarationView.firstJob==false){
-      setFirstJobNo(true)
+    if (
+      pfDeclarationView !== null &&
+      Object.keys(pfDeclarationView).length !== 0
+    ) {
+      if (
+        pfDeclarationView.firstJob !== undefined &&
+        pfDeclarationView.firstJob == true
+      )
+        setFirstJobYes(pfDeclarationView.firstJob);
+      else if (
+        pfDeclarationView.firstJob !== undefined &&
+        pfDeclarationView.firstJob == false
+      ) {
+        setFirstJobNo(true);
+      }
+      if (
+        pfDeclarationView.contributingPrevOrg !== undefined &&
+        pfDeclarationView.contributingPrevOrg == true
+      ) {
+        setContributingPrevOrgYes(pfDeclarationView.contributingPrevOrg);
+      } else if (
+        pfDeclarationView.contributingPrevOrg !== undefined &&
+        pfDeclarationView.contributingPrevOrg == false
+      ) {
+        setContributingPrevOrgNo(true);
+      }
+      if (
+        pfDeclarationView.memberOfPensionScheme !== undefined &&
+        pfDeclarationView.memberOfPensionScheme == true
+      ) {
+        setMemberOfPensionSchemeYes(pfDeclarationView.memberOfPensionScheme);
+      } else if (
+        pfDeclarationView.memberOfPensionScheme !== undefined &&
+        pfDeclarationView.memberOfPensionScheme == false
+      ) {
+        setMemberOfPensionSchemeNo(true);
+      }
+      if (
+        pfDeclarationView.pfNominationHoldDeath !== undefined &&
+        pfDeclarationView.pfNominationHoldDeath == true
+      ) {
+        setPfNominationHoldDeathYes(pfDeclarationView.pfNominationHoldDeath);
+        setPfNominationHoldDeathNo(false);
+      } else if (
+        pfDeclarationView.pfNominationHoldDeath !== undefined &&
+        pfDeclarationView.pfNominationHoldDeath == false
+      ) {
+        setPfNominationHoldDeathNo(true);
+        setPfNominationHoldDeathYes(false);
+      } else if (pfDeclarationView.epfPassbookCopy !== undefined) {
+        setEpfPassbookCopy(pfDeclarationView.epfPassbookCopy);
+      }
+      if (pfDeclarationView.declarationId !== undefined) {
+        console.log(
+          "pfDeclarationView.declarationId",
+          pfDeclarationView.declarationId
+        );
+        setDeclarationIdValue(pfDeclarationView.declarationId);
+      }
+      if (pfDeclarationView.uanNumber !== undefined) {
+        setUanNumber(pfDeclarationView.uanNumber);
+      }
+      setDataExist({ exist: true });
     }
-    if(pfDeclarationView.contributingPrevOrg !== undefined && pfDeclarationView.contributingPrevOrg==true){
-      setContributingPrevOrgYes(pfDeclarationView.contributingPrevOrg)
-    }else if(pfDeclarationView.contributingPrevOrg !== undefined && pfDeclarationView.contributingPrevOrg==false){ 
-      setContributingPrevOrgNo(true)
-    }
-    if(pfDeclarationView.memberOfPensionScheme !== undefined && pfDeclarationView.memberOfPensionScheme==true){
-      setMemberOfPensionSchemeYes(pfDeclarationView.memberOfPensionScheme)
-
-    }else if(pfDeclarationView.memberOfPensionScheme !== undefined && pfDeclarationView.memberOfPensionScheme==false){
-      setMemberOfPensionSchemeNo(true)
-
-    }
-    if(pfDeclarationView.pfNominationHoldDeath !== undefined && pfDeclarationView.pfNominationHoldDeath==true){
-      setPfNominationHoldDeathYes(pfDeclarationView.pfNominationHoldDeath)
-
-    }else if(pfDeclarationView.pfNominationHoldDeath !== undefined && pfDeclarationView.pfNominationHoldDeath==false){
-      setPfNominationHoldDeathNo(true)
-    }
-    else if(pfDeclarationView.epfPassbookCopy !== undefined){
-      setEpfPassbookCopy(pfDeclarationView.epfPassbookCopy)
-    }else if(pfDeclarationView.epfPassbookCopy !== undefined){
-      setDeclarationIdValue(pfDeclarationView.declarationId)
-    }else if(pfDeclarationView.uanNumber !== undefined){
-      setUanNumber(pfDeclarationView.uanNumber)
-    }
-  setDataExist({exist:true})
-}
-console.log(candidateData.candidateId,"pfdeclaration")
-},[pfDeclarationView])
-console.log(firstJobYes,contributingPrevOrgYes,contributingPrevOrgNo,memberOfPensionSchemeYes,memberOfPensionSchemeNo,pfNominationHoldDeathYes,pfNominationHoldDeathNo,uanNumber
-  ,epfPassbookCopy ,dataExist,"pfDeclarationView2")
+    console.log(candidateData.candidateId, "pfdeclaration");
+  }, [pfDeclarationView]);
+  console.log(
+    firstJobYes,
+    contributingPrevOrgYes,
+    contributingPrevOrgNo,
+    memberOfPensionSchemeYes,
+    memberOfPensionSchemeNo,
+    pfNominationHoldDeathYes,
+    pfNominationHoldDeathNo,
+    uanNumber,
+    epfPassbookCopy,
+    dataExist,
+    "pfDeclarationView2"
+  );
   const validateCheckBoxes = (itemYes, itemNo, setError) => {
     if ((itemYes === true) | (itemNo === true)) {
       setError(false);
@@ -193,28 +245,56 @@ console.log(firstJobYes,contributingPrevOrgYes,contributingPrevOrgNo,memberOfPen
     if (value === true) {
       // const nextPage = props.NextStep;
       // nextPage();
-      const PFInfo = {
-        candidateId:(candidateData.candidateId!== undefined)?candidateData.candidateId:'',
-        contributingPrevOrg: contributingPrevOrgYes ? true : false,
-        declarationId: declarationIdValue,
-        epfPassbookCopy: " ",
-        firstJob: firstJobYes ? true : false,
-        memberOfPensionScheme: memberOfPensionSchemeYes ? true : false,
-        pfNominationHoldDeath: pfNominationHoldDeathYes ? true : false,
-        uanNumber: state.uanNumber,
-      };
-      if(dataExist.exist == true){
-  
-      console.log(PFInfo,"update pf")
-      PFDeclarationUpdate(PFInfo)
-      const nextPage = props.NextStep;
-      nextPage();
-    }else{
-      console.log(PFInfo,"create pf")
-      PFDeclarationCreate(PFInfo)
-      const nextPage = props.NextStep;
-      nextPage();
-    }
+      // const PFInfo = {
+      //   candidateId:
+      //     candidateData.candidateId !== undefined
+      //       ? candidateData.candidateId
+      //       : "",
+      //   contributingPrevOrg: contributingPrevOrgYes ? true : false,
+      //   declarationId: declarationIdValue,
+      //   epfPassbookCopy: " ",
+      //   firstJob: firstJobYes ? true : false,
+      //   memberOfPensionScheme: memberOfPensionSchemeYes ? true : false,
+      //   pfNominationHoldDeath: pfNominationHoldDeathYes ? true : false,
+      //   uanNumber: state.uanNumber,
+      // };
+      if (dataExist.exist == true) {
+        const PFInfo = {
+          candidateId:
+            candidateData.candidateId !== undefined
+              ? candidateData.candidateId
+              : "",
+          contributingPrevOrg: contributingPrevOrgYes ? true : false,
+          declarationId: declarationIdValue,
+          epfPassbookCopy: " ",
+          firstJob: firstJobYes ? true : false,
+          memberOfPensionScheme: memberOfPensionSchemeYes ? true : false,
+          pfNominationHoldDeath: pfNominationHoldDeathYes ? true : false,
+          uanNumber: state.uanNumber,
+        };
+        console.log(PFInfo, "update pf");
+        PFDeclarationUpdate(PFInfo);
+        const nextPage = props.NextStep;
+        nextPage(true);
+      } else {
+        const PFInfo = {
+          candidateId:
+            candidateData.candidateId !== undefined
+              ? candidateData.candidateId
+              : "",
+          contributingPrevOrg: contributingPrevOrgYes ? true : false,
+          declarationId: declarationIdValue,
+          epfPassbookCopy: " ",
+          firstJob: firstJobYes ? true : false,
+          memberOfPensionScheme: memberOfPensionSchemeYes ? true : false,
+          pfNominationHoldDeath: pfNominationHoldDeathYes ? true : false,
+          uanNumber: state.uanNumber,
+        };
+        console.log(PFInfo, "create pf");
+        PFDeclarationCreate(PFInfo);
+        const nextPage = props.NextStep;
+        nextPage(true);
+      }
     }
   };
 
@@ -414,10 +494,12 @@ console.log(firstJobYes,contributingPrevOrgYes,contributingPrevOrgNo,memberOfPen
           <Col sm={2}>
             <div>
               <label>
-                Fill <a href='' target="_blank" rel="noopener noreferrer" download>
-      <i className="fas fa-download"/>
-      EPF Form   
-      </a> here
+                Fill{" "}
+                <a href="" target="_blank" rel="noopener noreferrer" download>
+                  <i className="fas fa-download" />
+                  EPF Form
+                </a>{" "}
+                here
               </label>
             </div>
           </Col>
@@ -525,23 +607,62 @@ console.log(firstJobYes,contributingPrevOrgYes,contributingPrevOrgNo,memberOfPen
             </div>
           </Col>
         </Row>
-        <label>Please fill the forms below</label><br/>
+        <label>Please fill the forms below</label>
+        <br />
         <Row>
-
-        <Col sm={5} >
-     
-            <a className="stepperA" href={require("../../forms/Form_11_UAN.pdf")} target="_blank">Download Form 11 Declaration</a><br/>
-            <a className="stepperA" href={require("../../forms/Form_2_EPF_Nomination.pdf")} target="_blank">Download Form 2 EPF nomination</a><br/>
-            <a className="stepperA" href={require("../../forms/Form_F_Gratuity.pdf")} target="_blank">Download Form F Gratuity</a><br/>
-        </Col>
           <Col sm={5}>
-
-<a className="stepperA" href={require("../../forms/Form_11_(PF_declaration)_Sample_copy.pdf")} target="_blank">Sample Form 11 Declaration</a><br/>
-<a className="stepperA" href={require("../../forms/Form_2_(PF_nomination)_Sample_copy.pdf")} target="_blank">Sample Form 2 EPF nomination</a><br/>
-<a className="stepperA" href={require("../../forms/Form_F_(Gratuity)_Sample_copy.pdf")} target="_blank">Sample Form F Gratuity</a><br/>
-
+            <a
+              className="stepperA"
+              href={require("../../forms/Form_11_UAN.pdf")}
+              target="_blank"
+            >
+              Download Form 11 Declaration
+            </a>
+            <br />
+            <a
+              className="stepperA"
+              href={require("../../forms/Form_2_EPF_Nomination.pdf")}
+              target="_blank"
+            >
+              Download Form 2 EPF nomination
+            </a>
+            <br />
+            <a
+              className="stepperA"
+              href={require("../../forms/Form_F_Gratuity.pdf")}
+              target="_blank"
+            >
+              Download Form F Gratuity
+            </a>
+            <br />
           </Col>
-          </Row>
+          <Col sm={5}>
+            <a
+              className="stepperA"
+              href={require("../../forms/Form_11_(PF_declaration)_Sample_copy.pdf")}
+              target="_blank"
+            >
+              Sample Form 11 Declaration
+            </a>
+            <br />
+            <a
+              className="stepperA"
+              href={require("../../forms/Form_2_(PF_nomination)_Sample_copy.pdf")}
+              target="_blank"
+            >
+              Sample Form 2 EPF nomination
+            </a>
+            <br />
+            <a
+              className="stepperA"
+              href={require("../../forms/Form_F_(Gratuity)_Sample_copy.pdf")}
+              target="_blank"
+            >
+              Sample Form F Gratuity
+            </a>
+            <br />
+          </Col>
+        </Row>
         <div
           style={{
             marginTop: "2rem",

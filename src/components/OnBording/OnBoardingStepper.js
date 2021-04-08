@@ -142,11 +142,11 @@ const OnBoardingStepper = (props) => {
   }, []);
   console.log("stepper candidate data", candidateData);
 
-  const NextStep = () => {
+  const NextStep = (value) => {
     console.log(stepCount, "NEXTSTEP");
     if (stepCount >= 0 && stepCount < 6) {
       let tempArray = [...stepArray];
-      tempArray[stepCount].fileSaved = true;
+      tempArray[stepCount].fileSaved = value;
       tempArray[stepCount].step = checkOk;
       tempArray[stepCount].label = labelOk;
       tempArray[stepCount].line = lineOk;
@@ -162,16 +162,38 @@ const OnBoardingStepper = (props) => {
     console.log(stepCount);
     if (stepCount > 0 && stepCount <= 6) {
       let tempArray = [...stepArray];
-      tempArray[stepCount - 1].fileSaved = false;
-      tempArray[stepCount].step = defaultStep;
-      tempArray[stepCount].label = defaultLabel;
-      tempArray[stepCount - 1].line = defaultLine;
-      tempArray[stepCount - 1].step = currStep;
-      tempArray[stepCount - 1].label = currLabel;
+      if (tempArray[stepCount].fileSaved === true) {
+        tempArray[stepCount].step = checkOk;
+        tempArray[stepCount].label = labelOk;
+        tempArray[stepCount].line = lineOk;
+        tempArray[stepCount - 1].line = defaultLine;
+        tempArray[stepCount - 1].step = currStep;
+        tempArray[stepCount - 1].label = currLabel;
+      } else {
+        tempArray[stepCount].step = defaultStep;
+        tempArray[stepCount].label = defaultLabel;
+        tempArray[stepCount - 1].line = defaultLine;
+        tempArray[stepCount - 1].step = currStep;
+        tempArray[stepCount - 1].label = currLabel;
+      }
       setStep(tempArray);
       setStepNumber(stepCount - 1);
     }
   };
+  // const PrevStep1 = () => {
+  //   console.log("prevStep");
+  //   console.log(stepCount);
+  //   if (stepCount > 0 && stepCount <= 6) {
+  //     let tempArray = [...stepArray];
+  //     tempArray[stepCount].step = defaultStep;
+  //     tempArray[stepCount].label = defaultLabel;
+  //     tempArray[stepCount - 1].line = defaultLine;
+  //     tempArray[stepCount - 1].step = currStep;
+  //     tempArray[stepCount - 1].label = currLabel;
+  //     setStep(tempArray);
+  //     setStepNumber(stepCount - 1);
+  //   }
+  // };
   console.log(stepCount, stepArray, "stepArray");
   return (
     <Fragment>

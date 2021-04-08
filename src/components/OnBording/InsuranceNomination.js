@@ -210,15 +210,17 @@ const InsuranceNomination = (props) => {
 
   useEffect(() => {
     if (
-      (candidateInsuranceNominationData !== null) &
-      (candidateInsuranceNominationData !== undefined) &
-      (Object.keys(candidateInsuranceNominationData).length !== 0)
+      candidateInsuranceNominationData &&
+      candidateInsuranceNominationData !== null &&
+      candidateInsuranceNominationData !== undefined &&
+      Object.keys(candidateInsuranceNominationData).length !== 0
     ) {
       console.log("12345678");
       if (
-        (candidateInsuranceNominationData[0] !== null) &
-        (candidateInsuranceNominationData[0] !== undefined) &
-        (Object.keys(candidateInsuranceNominationData[0]).length !== 0)
+        candidateInsuranceNominationData[0] &&
+        candidateInsuranceNominationData[0] !== null &&
+        candidateInsuranceNominationData[0] !== undefined &&
+        Object.keys(candidateInsuranceNominationData[0]).length !== 0
       ) {
         setDefaultNominee(true);
         setNomineeCount(0);
@@ -226,9 +228,10 @@ const InsuranceNomination = (props) => {
         setDefaultNominee(false);
       }
       if (
-        (candidateInsuranceNominationData[1] !== null) &
-        (candidateInsuranceNominationData[1] !== undefined) &
-        (Object.keys(candidateInsuranceNominationData[1]).length !== 0)
+        candidateInsuranceNominationData[1] &&
+        candidateInsuranceNominationData[1] !== null &&
+        candidateInsuranceNominationData[1] !== undefined &&
+        Object.keys(candidateInsuranceNominationData[1]).length !== 0
       ) {
         setNominForm1(true);
         setNomineeCount(1);
@@ -236,9 +239,10 @@ const InsuranceNomination = (props) => {
         setNominForm1(false);
       }
       if (
-        (candidateInsuranceNominationData[2] !== null) &
-        (candidateInsuranceNominationData[2] !== undefined) &
-        (Object.keys(candidateInsuranceNominationData[2]).length !== 0)
+        candidateInsuranceNominationData[2] &&
+        candidateInsuranceNominationData[2] !== null &&
+        candidateInsuranceNominationData[2] !== undefined &&
+        Object.keys(candidateInsuranceNominationData[2]).length !== 0
       ) {
         setNominForm2(true);
         setNomineeCount(2);
@@ -246,9 +250,10 @@ const InsuranceNomination = (props) => {
         setNominForm2(false);
       }
       if (
-        (candidateInsuranceNominationData[3] !== null) &
-        (candidateInsuranceNominationData[3] !== undefined) &
-        (Object.keys(candidateInsuranceNominationData[3]).length !== 0)
+        candidateInsuranceNominationData[3] &&
+        candidateInsuranceNominationData[3] !== null &&
+        candidateInsuranceNominationData[3] !== undefined &&
+        Object.keys(candidateInsuranceNominationData[3]).length !== 0
       ) {
         setNominForm3(true);
         setNomineeCount(3);
@@ -256,9 +261,10 @@ const InsuranceNomination = (props) => {
         setNominForm3(false);
       }
       if (
-        (candidateInsuranceNominationData[4] !== null) &
-        (candidateInsuranceNominationData[4] !== undefined) &
-        (Object.keys(candidateInsuranceNominationData[4]).length !== 0)
+        candidateInsuranceNominationData[4] &&
+        candidateInsuranceNominationData[4] !== null &&
+        candidateInsuranceNominationData[4] !== undefined &&
+        Object.keys(candidateInsuranceNominationData[4]).length !== 0
       ) {
         setNominForm4(true);
         setNomineeCount(4);
@@ -267,162 +273,192 @@ const InsuranceNomination = (props) => {
       }
       setState({
         age:
-          (candidateInsuranceNominationData[0].age !== null) &
-          (candidateInsuranceNominationData[0].age !== undefined)
+          candidateInsuranceNominationData[0] &&
+          candidateInsuranceNominationData[0].age !== null &&
+          candidateInsuranceNominationData[0].age !== undefined
             ? candidateInsuranceNominationData[0].age
             : "",
         bloodGroup:
-          (candidateInsuranceNominationData[0].bloodGroup !== null) &
-          (candidateInsuranceNominationData[0].bloodGroup !== undefined)
+          candidateInsuranceNominationData[0] &&
+          candidateInsuranceNominationData[0].bloodGroup !== null &&
+          candidateInsuranceNominationData[0].bloodGroup !== undefined
             ? candidateInsuranceNominationData[0].bloodGroup
             : "",
         gender:
-          (candidateInsuranceNominationData[0].gender !== null) &
-          (candidateInsuranceNominationData[0].gender !== undefined)
+          candidateInsuranceNominationData[0] &&
+          candidateInsuranceNominationData[0].gender !== null &&
+          candidateInsuranceNominationData[0].gender !== undefined
             ? candidateInsuranceNominationData[0].gender
             : "",
         nominiName:
-          (candidateInsuranceNominationData[0].nominiName !== null) &
-          (candidateInsuranceNominationData[0].nominiName !== undefined)
+          candidateInsuranceNominationData[0] &&
+          candidateInsuranceNominationData[0].nominiName !== null &&
+          candidateInsuranceNominationData[0].nominiName !== undefined
             ? candidateInsuranceNominationData[0].nominiName
             : "",
         relationship:
-          (candidateInsuranceNominationData[0].relationship !== null) &
-          (candidateInsuranceNominationData[0].relationship !== undefined)
+          candidateInsuranceNominationData[0] &&
+          candidateInsuranceNominationData[0].relationship !== null &&
+          candidateInsuranceNominationData[0].relationship !== undefined
             ? candidateInsuranceNominationData[0].relationship
             : "",
 
         nominee2Age:
-          (candidateInsuranceNominationData[1].age !== null) &
-          (candidateInsuranceNominationData[1].age !== undefined)
+          candidateInsuranceNominationData[1] &&
+          candidateInsuranceNominationData[1].age !== null &&
+          candidateInsuranceNominationData[1].age !== undefined
             ? candidateInsuranceNominationData[1].age
             : "",
         nominee2BloodGroup:
-          (candidateInsuranceNominationData[1].bloodGroup !== null) &
-          (candidateInsuranceNominationData[1].bloodGroup !== undefined)
+          candidateInsuranceNominationData[1] &&
+          candidateInsuranceNominationData[1].bloodGroup !== null &&
+          candidateInsuranceNominationData[1].bloodGroup !== undefined
             ? candidateInsuranceNominationData[1].bloodGroup
             : "",
         nominee2Gender:
-          (candidateInsuranceNominationData[1].gender !== null) &
-          (candidateInsuranceNominationData[1].gender !== undefined)
+          candidateInsuranceNominationData[1] &&
+          candidateInsuranceNominationData[1].gender !== null &&
+          candidateInsuranceNominationData[1].gender !== undefined
             ? candidateInsuranceNominationData[1].gender
             : "",
         nominee2NominiName:
-          (candidateInsuranceNominationData[1].nominiName !== null) &
-          (candidateInsuranceNominationData[1].nominiName !== undefined)
+          candidateInsuranceNominationData[1] &&
+          candidateInsuranceNominationData[1].nominiName !== null &&
+          candidateInsuranceNominationData[1].nominiName !== undefined
             ? candidateInsuranceNominationData[1].nominiName
             : "",
         nominee2Relationship:
-          (candidateInsuranceNominationData[1].relationship !== null) &
-          (candidateInsuranceNominationData[1].relationship !== undefined)
+          candidateInsuranceNominationData[1] &&
+          candidateInsuranceNominationData[1].relationship !== null &&
+          candidateInsuranceNominationData[1].relationship !== undefined
             ? candidateInsuranceNominationData[1].relationship
             : "",
 
         nominee3Age:
-          (candidateInsuranceNominationData[2].age !== null) &
-          (candidateInsuranceNominationData[2].age !== undefined)
+          candidateInsuranceNominationData[2] &&
+          candidateInsuranceNominationData[2].age !== null &&
+          candidateInsuranceNominationData[2].age !== undefined
             ? candidateInsuranceNominationData[2].age
             : "",
         nominee3BloodGroup:
-          (candidateInsuranceNominationData[2].bloodGroup !== null) &
-          (candidateInsuranceNominationData[2].bloodGroup !== undefined)
+          candidateInsuranceNominationData[2] &&
+          candidateInsuranceNominationData[2].bloodGroup !== null &&
+          candidateInsuranceNominationData[2].bloodGroup !== undefined
             ? candidateInsuranceNominationData[2].bloodGroup
             : "",
         nominee3Gender:
-          (candidateInsuranceNominationData[2].gender !== null) &
-          (candidateInsuranceNominationData[2].gender !== undefined)
+          candidateInsuranceNominationData[2] &&
+          candidateInsuranceNominationData[2].gender !== null &&
+          candidateInsuranceNominationData[2].gender !== undefined
             ? candidateInsuranceNominationData[2].gender
             : "",
         nominee3NominiName:
-          (candidateInsuranceNominationData[2].nominiName !== null) &
-          (candidateInsuranceNominationData[2].nominiName !== undefined)
+          candidateInsuranceNominationData[2] &&
+          candidateInsuranceNominationData[2].nominiName !== null &&
+          candidateInsuranceNominationData[2].nominiName !== undefined
             ? candidateInsuranceNominationData[2].nominiName
             : "",
         nominee3Relationship:
-          (candidateInsuranceNominationData[2].relationship !== null) &
-          (candidateInsuranceNominationData[2].relationship !== undefined)
+          candidateInsuranceNominationData[2] &&
+          candidateInsuranceNominationData[2].relationship !== null &&
+          candidateInsuranceNominationData[2].relationship !== undefined
             ? candidateInsuranceNominationData[2].relationship
             : "",
 
         nominee4Age:
-          (candidateInsuranceNominationData[3].age !== null) &
-          (candidateInsuranceNominationData[3].age !== undefined)
+          candidateInsuranceNominationData[3] &&
+          candidateInsuranceNominationData[3].age !== null &&
+          candidateInsuranceNominationData[3].age !== undefined
             ? candidateInsuranceNominationData[3].age
             : "",
         nominee4BloodGroup:
-          (candidateInsuranceNominationData[3].bloodGroup !== null) &
-          (candidateInsuranceNominationData[3].bloodGroup !== undefined)
+          candidateInsuranceNominationData[3] &&
+          candidateInsuranceNominationData[3].bloodGroup !== null &&
+          candidateInsuranceNominationData[3].bloodGroup !== undefined
             ? candidateInsuranceNominationData[3].bloodGroup
             : "",
         nominee4Gender:
-          (candidateInsuranceNominationData[3].gender !== null) &
-          (candidateInsuranceNominationData[3].gender !== undefined)
+          candidateInsuranceNominationData[3] &&
+          candidateInsuranceNominationData[3].gender !== null &&
+          candidateInsuranceNominationData[3].gender !== undefined
             ? candidateInsuranceNominationData[3].gender
             : "",
         nominee4NominiName:
-          (candidateInsuranceNominationData[3].nominiName !== null) &
-          (candidateInsuranceNominationData[3].nominiName !== undefined)
+          candidateInsuranceNominationData[3] &&
+          candidateInsuranceNominationData[3].nominiName !== null &&
+          candidateInsuranceNominationData[3].nominiName !== undefined
             ? candidateInsuranceNominationData[3].nominiName
             : "",
         nominee4Relationship:
-          (candidateInsuranceNominationData[3].relationship !== null) &
-          (candidateInsuranceNominationData[3].relationship !== undefined)
+          candidateInsuranceNominationData[3] &&
+          candidateInsuranceNominationData[3].relationship !== null &&
+          candidateInsuranceNominationData[3].relationship !== undefined
             ? candidateInsuranceNominationData[3].relationship
             : "",
 
         nominee5Age:
-          (candidateInsuranceNominationData[4].age !== null) &
-          (candidateInsuranceNominationData[4].age !== undefined)
+          candidateInsuranceNominationData[4] &&
+          candidateInsuranceNominationData[4].age !== null &&
+          candidateInsuranceNominationData[4].age !== undefined
             ? candidateInsuranceNominationData[4].age
             : "",
         nominee5BloodGroup:
-          (candidateInsuranceNominationData[4].bloodGroup !== null) &
-          (candidateInsuranceNominationData[4].bloodGroup !== undefined)
+          candidateInsuranceNominationData[4] &&
+          candidateInsuranceNominationData[4].bloodGroup !== null &&
+          candidateInsuranceNominationData[4].bloodGroup !== undefined
             ? candidateInsuranceNominationData[4].bloodGroup
             : "",
         nominee5Gender:
-          (candidateInsuranceNominationData[4].gender !== null) &
-          (candidateInsuranceNominationData[4].gender !== undefined)
+          candidateInsuranceNominationData[4] &&
+          candidateInsuranceNominationData[4].gender !== null &&
+          candidateInsuranceNominationData[4].gender !== undefined
             ? candidateInsuranceNominationData[4].gender
             : "",
         nominee5NominiName:
-          (candidateInsuranceNominationData[4].nominiName !== null) &
-          (candidateInsuranceNominationData[4].nominiName !== undefined)
+          candidateInsuranceNominationData[4] &&
+          candidateInsuranceNominationData[4].nominiName !== null &&
+          candidateInsuranceNominationData[4].nominiName !== undefined
             ? candidateInsuranceNominationData[4].nominiName
             : "",
         nominee5Relationship:
-          (candidateInsuranceNominationData[4].relationship !== null) &
-          (candidateInsuranceNominationData[4].relationship !== undefined)
+          candidateInsuranceNominationData[4] &&
+          candidateInsuranceNominationData[4].relationship !== null &&
+          candidateInsuranceNominationData[4].relationship !== undefined
             ? candidateInsuranceNominationData[4].relationship
             : "",
       });
       setNominee1DOB(
-        (candidateInsuranceNominationData[0].dateOfBirth !== null) &
-          (candidateInsuranceNominationData[0].dateOfBirth !== undefined)
+        candidateInsuranceNominationData[0] &&
+          candidateInsuranceNominationData[0].dateOfBirth !== null &&
+          candidateInsuranceNominationData[0].dateOfBirth !== undefined
           ? new Date(candidateInsuranceNominationData[0].dateOfBirth)
           : ""
       );
       setNominee2DOB(
-        (candidateInsuranceNominationData[1].dateOfBirth !== null) &
-          (candidateInsuranceNominationData[1].dateOfBirth !== undefined)
+        candidateInsuranceNominationData[1] &&
+          candidateInsuranceNominationData[1].dateOfBirth !== null &&
+          candidateInsuranceNominationData[1].dateOfBirth !== undefined
           ? new Date(candidateInsuranceNominationData[1].dateOfBirth)
           : ""
       );
       setNominee3DOB(
-        (candidateInsuranceNominationData[2].dateOfBirth !== null) &
-          (candidateInsuranceNominationData[2].dateOfBirth !== undefined)
+        candidateInsuranceNominationData[2] &&
+          candidateInsuranceNominationData[2].dateOfBirth !== null &&
+          candidateInsuranceNominationData[2].dateOfBirth !== undefined
           ? new Date(candidateInsuranceNominationData[2].dateOfBirth)
           : ""
       );
       setNominee4DOB(
-        (candidateInsuranceNominationData[3].dateOfBirth !== null) &
-          (candidateInsuranceNominationData[3].dateOfBirth !== undefined)
+        candidateInsuranceNominationData[3] &&
+          candidateInsuranceNominationData[3].dateOfBirth !== null &&
+          candidateInsuranceNominationData[3].dateOfBirth !== undefined
           ? new Date(candidateInsuranceNominationData[3].dateOfBirth)
           : ""
       );
       setNominee5DOB(
-        (candidateInsuranceNominationData[4].dateOfBirth !== null) &
-          (candidateInsuranceNominationData[4].dateOfBirth !== undefined)
+        candidateInsuranceNominationData[4] &&
+          candidateInsuranceNominationData[4].dateOfBirth !== null &&
+          candidateInsuranceNominationData[4].dateOfBirth !== undefined
           ? new Date(candidateInsuranceNominationData[4].dateOfBirth)
           : null
       );
@@ -695,26 +731,31 @@ const InsuranceNomination = (props) => {
     Object.keys(candidateInsuranceNominationData).length !== 0
   ) {
     var Data1_nominiId =
+      candidateInsuranceNominationData[0] &&
       candidateInsuranceNominationData[0].nominiId !== null &&
       candidateInsuranceNominationData[0].nominiId !== undefined
         ? candidateInsuranceNominationData[0].nominiId
         : 0;
     var Data2_nominiId =
+      candidateInsuranceNominationData[1] &&
       candidateInsuranceNominationData[1].nominiId !== null &&
       candidateInsuranceNominationData[1].nominiId !== undefined
         ? candidateInsuranceNominationData[1].nominiId
         : 0;
     var Data3_nominiId =
+      candidateInsuranceNominationData[2] &&
       candidateInsuranceNominationData[2].nominiId !== null &&
       candidateInsuranceNominationData[2].nominiId !== undefined
         ? candidateInsuranceNominationData[2].nominiId
         : 0;
     var Data4_nominiId =
+      candidateInsuranceNominationData[3] &&
       candidateInsuranceNominationData[3].nominiId !== null &&
       candidateInsuranceNominationData[3].nominiId !== undefined
         ? candidateInsuranceNominationData[3].nominiId
         : 0;
     var Data5_nominiId =
+      candidateInsuranceNominationData[4] &&
       candidateInsuranceNominationData[4].nominiId !== null &&
       candidateInsuranceNominationData[4].nominiId !== undefined
         ? candidateInsuranceNominationData[4].nominiId
@@ -814,7 +855,7 @@ const InsuranceNomination = (props) => {
       console.log(NominiInfo);
       CreateNominee(NominiInfo);
       const nextPage = props.NextStep;
-      nextPage();
+      nextPage(true);
     }
   };
 

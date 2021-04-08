@@ -654,7 +654,7 @@ const PersonalInformation = (props) => {
 
         // next page code should be here
         const submited = props.NextStep; //next component
-        submited();
+        submited(true);
       }
       // if (saveClick === true) {
       //   const InfoData = {
@@ -1430,9 +1430,9 @@ const PersonalInformation = (props) => {
             textAlign: "center",
           }}
         >
-          <button className="stepperButtons" onClick={PrevStep}>
+          {/* <button className="stepperButtons" onClick={PrevStep}>
             Back
-          </button>
+          </button> */}
 
           <button className="stepperButtons" onClick={submitHandler}>
             Save & Next

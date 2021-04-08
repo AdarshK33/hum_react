@@ -80,6 +80,7 @@ const Address = (props) => {
   const [permanentCountryId, setPermanentCountryId] = useState();
   const [permanentStateId, setPermanentStateId] = useState();
   const [permanentCityId, setPermanentCityId] = useState();
+  const [addressValue, setAddressValue] = useState(0);
 
   useEffect(() => {
     CandidateProfile();
@@ -101,6 +102,7 @@ const Address = (props) => {
 
     if (addressViewData !== undefined && addressViewData !== null) {
       if (addressViewData.addressType === 0) {
+        setAddressValue(addressViewData.addressId);
         countryvalue = candidateCountryData.filter(
           (i) => i.countryId === addressViewData.countryId
         );
@@ -174,6 +176,7 @@ const Address = (props) => {
           permanentPhoneNumber: addressViewData.permanentPhoneNumber,
         });
       } else if (addressViewData.addressType === 1) {
+        setAddressValue(addressViewData.addressId);
         countryvalue = candidateCountryData.filter(
           (i) => i.countryId === addressViewData.countryId
         );
@@ -474,19 +477,21 @@ const Address = (props) => {
 
   const submitHandler = (e) => {
     const nextPage = props.NextStep;
-    let addressValue;
+    // let addressValue;
     nextPage();
     e.preventDefault();
-    if (saveclick === false) {
-      addressValue = 0;
-      setSaveclick(true);
-    } else if ((addressSaveData || addressViewData) && saveclick === true) {
-      addressValue = addressSaveData.addressId
-        ? addressSaveData.addressId
-        : addressViewData.addressId;
-    }
+    console.log("addressViewData", addressViewData, addressSaveData, saveclick);
+    // if (saveclick === false) {
+    //   addressValue = 0;
+    //   setSaveclick(true);
+    // } else if (addressSaveData || addressViewData || saveclick === true) {
+    //   addressValue = addressSaveData.addressId
+    //     ? addressSaveData.addressId
+    //     : addressViewData.addressId;
+    // }
     const value = checkValidations();
     if (value === true) {
+      // setSaveclick(true);
       const AddressInfo = {
         addressId: addressValue,
         addressLine: state.addressLine,
@@ -515,7 +520,7 @@ const Address = (props) => {
       console.log("address payload", AddressInfo);
       addressCreate(AddressInfo);
       const nextPage = props.NextStep;
-      nextPage();
+      nextPage(true);
     }
   };
 
