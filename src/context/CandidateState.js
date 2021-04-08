@@ -44,7 +44,7 @@ export const CandidateProvider = ({ children }) => {
       .then((response) => {
         localStorage.removeItem("candidate_access_token");
         console.log(response.config, data, "reject");
-        data.history.push("/loginonboard");
+        data.history.push("/onboard-offer");
       })
       .catch((error) => {
         console.log(error);
