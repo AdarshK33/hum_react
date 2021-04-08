@@ -55,7 +55,6 @@ import MasterCostCenter from "./components/MasterTables/MasterCostCenter";
 import CreateTicket from "./components/support/createTicket";
 
 import OnBoardingStepper from "./components/OnBording/OnBoardingStepper";
-import OnBoardingButton from "./components/OnBording/OnBoardingButton";
 
 import TicketListingPage from "./components/support/ticketListingPage";
 import ViewTicket from "./components/support/viewTicket";
@@ -70,6 +69,8 @@ import ViewOfferRelease from "./components/Offers/viewOfferRelease";
 /*------------------- Candidate Verification -----------------------------------*/
 import CandidateVerification from "./components/CandidateVerification/ManageCandidates";
 import Verification from "./components/CandidateVerification/Verification";
+
+import ViewEditRelease from "./components/OfferReleaseandOnboarding/ViewOfferRelease";
 
 import Documents from "./components/OnBording/Documents";
 const RoutePath = () => {
@@ -100,11 +101,16 @@ const RoutePath = () => {
         component={OnBoardingStepper}
       />
 
+      <Route
+        path={`${process.env.PUBLIC_URL}/offer-relase-and-onboard`}
+        component={ViewEditRelease}
+      />
+
       {/* <Route
             path={`${process.env.PUBLIC_URL}/onboard`}
-            component={OnBoardingButton}
-          />
-           */}
+            component={OnBoardingStepper}
+      /> */}
+
       <Fragment>
         <App>
           {/* dashboard menu */}
@@ -178,6 +184,10 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/verification/:candidateId`}
             component={Verification}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/offer-relase-and-onboard`}
+            component={ViewEditRelease}
           />
 
           {state.MenuPermissionsRoute.map((e) => {
