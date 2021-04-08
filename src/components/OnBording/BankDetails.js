@@ -25,6 +25,9 @@ const BankDetails = (props) => {
   useEffect(() => {
     CandidateProfile();
     bankView(candidateData.candidateId);
+  }, []);
+
+  useEffect(() => {
     if (bankViewData && bankViewData !== null && bankViewData !== undefined) {
       setState({
         accountNumber: bankViewData.accountNumber,
@@ -33,7 +36,8 @@ const BankDetails = (props) => {
       });
     }
     console.log("bankViewData", bankViewData);
-  }, []);
+  }, [bankViewData]);
+
   const [state, setState] = useState({
     accountNumber: "",
     bankName: "",
