@@ -70,6 +70,8 @@ import ViewOfferRelease from "./components/Offers/viewOfferRelease";
 import CandidateVerification from "./components/CandidateVerification/ManageCandidates";
 import Verification from "./components/CandidateVerification/Verification";
 
+import ViewEditRelease from "./components/OfferReleaseandOnboarding/ViewOfferRelease";
+
 import Documents from "./components/OnBording/Documents";
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
@@ -89,17 +91,26 @@ const RoutePath = () => {
       component={OnBoardingStepper}
       /> */}
       <Route
-            //  {/*sachin */}
-            path={`${process.env.PUBLIC_URL}/loginonboard`}
-            component={LoginOnboard}
-          />
-          
-          <Route
+        //  {/*sachin */}
+        path={`${process.env.PUBLIC_URL}/loginonboard`}
+        component={LoginOnboard}
+      />
+
+      <Route
+        path={`${process.env.PUBLIC_URL}/onboard`}
+        component={OnBoardingStepper}
+      />
+
+      <Route
+        path={`${process.env.PUBLIC_URL}/offer-relase-and-onboard`}
+        component={ViewEditRelease}
+      />
+
+      {/* <Route
             path={`${process.env.PUBLIC_URL}/onboard`}
             component={OnBoardingStepper}
-          />
-          
-          
+      /> */}
+
       <Fragment>
         <App>
           {/* dashboard menu */}
@@ -173,6 +184,10 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/verification/:candidateId`}
             component={Verification}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/offer-relase-and-onboard`}
+            component={ViewEditRelease}
           />
 
           {state.MenuPermissionsRoute.map((e) => {
