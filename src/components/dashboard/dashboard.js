@@ -140,7 +140,7 @@ function Dashboard() {
         }
     }, [user.costCentre, cosCentreList, clusterCostCenterList]);
 
-    useEffect(() => {
+    useEffect(() => { 
         // viewClusterCostCenter(StoreType)
        
         if(viewDateList !== null && viewDateList !== undefined && Object.keys(viewDateList).length !== 0 && StoreType !== undefined &&
