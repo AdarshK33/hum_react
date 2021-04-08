@@ -438,6 +438,7 @@ export const OnBoardProvider = (props) => {
       .post("/api/v2/candidate/bank/update", bankInfo)
       .then((response) => {
         state.bankUpdateData = response.data.data;
+        toast.info(response.data.message);
         console.log("bankUpdateData", state.bankUpdateData);
         return dispatch({
           type: "CANDIDATE_BANK_UPDATE_DATA",
