@@ -31,6 +31,7 @@ const InsuranceNomination = (props) => {
   const [defaultNominee, setDefaultNominee] = useState(true);
   const [count, setCount] = useState(0);
   const [NomineeCount, setNomineeCount] = useState(0);
+  const [AddNewCount, setAddNewCount] = useState(0);
   const [NominForm1, setNominForm1] = useState(false);
   const [NominForm2, setNominForm2] = useState(false);
   const [NominForm3, setNominForm3] = useState(false);
@@ -213,6 +214,7 @@ const InsuranceNomination = (props) => {
       (candidateInsuranceNominationData !== undefined) &
       (Object.keys(candidateInsuranceNominationData).length !== 0)
     ) {
+      console.log("12345678");
       if (
         (candidateInsuranceNominationData[0] !== null) &
         (candidateInsuranceNominationData[0] !== undefined) &
@@ -1113,30 +1115,31 @@ const InsuranceNomination = (props) => {
         break;
     }
   };
-  const cancel = () => {
+  const cancel = (num) => {
     if (NomineeCount >= 0) {
       console.log(NomineeCount);
+      console.log(num);
       switch (NomineeCount) {
         case 1:
-          console.log("11111");
+          console.log(" cancel-11111");
           setNominForm1(false);
           setNomineeCount(NomineeCount - 1);
           return;
           break;
         case 2:
-          console.log("22222");
+          console.log("cancel-22222");
           setNominForm2(false);
           setNomineeCount(NomineeCount - 1);
           return;
           break;
         case 3:
-          console.log("3333");
+          console.log("cancel-3333");
           setNominForm3(false);
           setNomineeCount(NomineeCount - 1);
           return;
           break;
         case 4:
-          console.log("4444");
+          console.log("cancel-4444");
           setNominForm4(false);
           setNomineeCount(NomineeCount - 1);
           return;
@@ -1149,7 +1152,54 @@ const InsuranceNomination = (props) => {
     console.log(NomineeCount);
   };
 
-  const handleIncrement = () => {
+  // const cancel = (num) => {
+  //   if (num == 1) {
+  //     setNominForm1(false);
+  //     setNomineeCount(NomineeCount - 1);
+  //     setAddNewCount(AddNewCount - num);
+  //   }
+  //   if (num == 2) {
+  //     setNominForm2(false);
+  //     setNomineeCount(NomineeCount - 1);
+  //     setAddNewCount(AddNewCount - num);
+  //   }
+  //   if (num == 3) {
+  //     setNominForm3(false);
+  //     setNomineeCount(NomineeCount - 1);
+  //     setAddNewCount(AddNewCount - num);
+  //   }
+  //   if (num == 4) {
+  //     setNominForm4(false);
+  //     setNomineeCount(NomineeCount - 1);
+  //     setAddNewCount(AddNewCount - num);
+  //   }
+  //   console.log("nominee Count", NomineeCount);
+  // };
+  // const handleIncrement = (num) => {
+  //   if (num == 0) {
+  //     setNominForm1(true);
+  //     setNomineeCount(NomineeCount + 1);
+  //     setAddNewCount(AddNewCount + 1);
+  //   }
+  //   if (num == 1) {
+  //     setNominForm2(true);
+  //     setNomineeCount(NomineeCount + 1);
+  //     setAddNewCount(AddNewCount + 1);
+  //   }
+  //   if (num == 2) {
+  //     setNominForm3(true);
+  //     setNomineeCount(NomineeCount + 1);
+  //     setAddNewCount(AddNewCount + 1);
+  //   }
+  //   if (num == 3) {
+  //     setNominForm4(true);
+  //     setNomineeCount(NomineeCount + 1);
+  //     setAddNewCount(AddNewCount + 1);
+  //   }
+  //   console.log("nominee Count", NomineeCount);
+  // };
+
+  const handleIncrement = (num) => {
     if (NomineeCount <= 4) {
       console.log(NomineeCount);
 
@@ -1202,7 +1252,7 @@ const InsuranceNomination = (props) => {
     });
     console.log(state);
   };
-
+  console.log("----------->", NominForm1);
   return (
     <Fragment>
       {/* <Form onSubmit={submitHandler}>  */}
@@ -1583,7 +1633,9 @@ const InsuranceNomination = (props) => {
                 <Form.Group>
                   <div>
                     <button
-                      onClick={cancel}
+                      onClick={() => {
+                        cancel(1);
+                      }}
                       type="cancel"
                       style={{ color: "white", border: " 2px solid#4466f2" }}
                     >
@@ -1790,7 +1842,9 @@ const InsuranceNomination = (props) => {
                 <Form.Group>
                   <div>
                     <button
-                      onClick={cancel}
+                      onClick={() => {
+                        cancel(2);
+                      }}
                       type="cancel"
                       style={{ color: "white", border: " 2px solid#4466f2" }}
                     >
@@ -1998,7 +2052,9 @@ const InsuranceNomination = (props) => {
                 <Form.Group>
                   <div>
                     <button
-                      onClick={cancel}
+                      onClick={() => {
+                        cancel(3);
+                      }}
                       type="cancel"
                       style={{ color: "white", border: " 2px solid#4466f2" }}
                     >
@@ -2206,7 +2262,9 @@ const InsuranceNomination = (props) => {
                 <Form.Group>
                   <div>
                     <button
-                      onClick={cancel}
+                      onClick={() => {
+                        cancel(4);
+                      }}
                       type="cancel"
                       style={{ color: "white", border: " 2px solid#4466f2" }}
                     >
@@ -2370,7 +2428,9 @@ const InsuranceNomination = (props) => {
               <div>
                 <button
                   className="buttonField  button"
-                  onClick={handleIncrement}
+                  onClick={() => {
+                    handleIncrement(AddNewCount);
+                  }}
                   disabled={false}
                   style={{ width: "160px" }}
                 >

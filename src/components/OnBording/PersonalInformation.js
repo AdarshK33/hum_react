@@ -191,13 +191,14 @@ const PersonalInformation = (props) => {
 
   useEffect(() => {
     // console.log("personal information view candidate", candidateData);
-    
+
     if (
       candidatePersonalInfoData !== null &&
       candidatePersonalInfoData !== undefined &&
-      Object.keys(candidatePersonalInfoData).length !== 0
+      Object.keys(candidatePersonalInfoData).length !== 0 &&
+      candidatePersonalInfoData.aadhaarName !== null
     ) {
-      console.log("rajsekhar",candidatePersonalInfoData);
+      console.log("rajsekhar", candidatePersonalInfoData);
       setState({
         aadhaarName: candidatePersonalInfoData.aadhaarName,
         fatherName: candidatePersonalInfoData.fatherName,
@@ -225,7 +226,7 @@ const PersonalInformation = (props) => {
         candidatePersonalInfoData.dateOfBirth !== null &&
           candidatePersonalInfoData.dateOfBirth !== undefined
           ? new Date(candidatePersonalInfoData.dateOfBirth)
-          : null
+          : ""
       );
       if (
         candidatePersonalInfoData.gender !== null &&
@@ -235,10 +236,17 @@ const PersonalInformation = (props) => {
         setGenderM(true);
         setGenderF(false);
         setGender("Male");
-      } else {
+      } else if (
+        candidatePersonalInfoData.gender !== null &&
+        candidatePersonalInfoData.gender !== undefined &&
+        candidatePersonalInfoData.gender === "Female"
+      ) {
         setGenderF(true);
         setGenderM(false);
         setGender("Female");
+      } else {
+        setGenderF(false);
+        setGenderM(false);
       }
       if (
         candidatePersonalInfoData.maritalStatus !== null &&
@@ -248,11 +256,19 @@ const PersonalInformation = (props) => {
         setMarried(true);
         setUnMarried(false);
         setMaritalStatus("Married");
-      } else {
+      } else if (
+        candidatePersonalInfoData.maritalStatus !== null &&
+        candidatePersonalInfoData.maritalStatus !== undefined &&
+        candidatePersonalInfoData.maritalStatus === "Unmarried"
+      ) {
         setUnMarried(true);
         setMarried(false);
         setMaritalStatus("Unmarried");
+      } else {
+        setUnMarried(false);
+        setMarried(false);
       }
+
       if (
         candidateData !== undefined &&
         candidateData.candidateReferences !== null &&
@@ -533,8 +549,8 @@ const PersonalInformation = (props) => {
     }
   };
   const submitHandler = (e) => {
-    const submited = props.NextStep; //next component
-    submited();
+    // const submited = props.NextStep; //next component
+    // submited();
     e.preventDefault();
     const value = checkValidations();
     if (value === true) {
