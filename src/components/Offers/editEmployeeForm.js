@@ -4,6 +4,7 @@ import { Search, PlusCircle, MinusCircle } from "react-feather";
 import "./offers.css";
 import { OfferContext } from "../../context/OfferState";
 import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const EditEmployeeForm = () => {
   const [firstName, setFirstName] = useState();
@@ -83,16 +84,18 @@ const EditEmployeeForm = () => {
     candidateRefData.candidateReferences !== null &&
     candidateRefData.candidateReferences !== undefined &&
     candidateRefData.candidateReferences[1];
-  console.log("data1", data1);
-  console.log("data2", data2);
+ /*  console.log("data1", data1);
+  console.log("data2", data2); */
 
   useEffect(() => {
-    if (data1.employeeName === "") {
+    if (candidateRefData !==null && candidateRefData !== undefined && data1 !== undefined && data1 !== null &&
+       data1.employeeName === "") {
       setYesChecked(false);
       setNoChecked(true);
     }
 
-    if (data2.employeeName === "") {
+    if (candidateRefData !==null && candidateRefData !== undefined && 
+      data2 !== undefined && data2 !== null && data2.employeeName === "") {
       setSecondRef(false);
     } else {
       setSecondRef(true);
@@ -206,8 +209,8 @@ const EditEmployeeForm = () => {
   const hideOneMoreRefer = () => {
     setSecondRef(false);
     setEmpName2("");
-    setRefEmail2('')
-    setDesignation2('')
+    setRefEmail2("");
+    setDesignation2("");
   };
 
   const checkedYesHandler = () => {
@@ -222,6 +225,20 @@ const EditEmployeeForm = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    let firstNameError;
+    let lastNameError;
+
+    if (firstName !== "" && !/^[a-zA-Z]*$/g.test(firstName)) {
+      firstNameError = true;
+    } else {
+      firstNameError = false;
+    }
+
+    if (lastName !== "" && !/^[a-zA-Z]*$/g.test(lastName)) {
+      lastNameError = true;
+    } else {
+      lastNameError = false;
+    }
 
     const updateData = {
       aadhaarDoc: null,
@@ -266,9 +283,13 @@ const EditEmployeeForm = () => {
         candidateData.candidateInformation.verificationStatusDesc,
     };
     console.log("candidate data", updateData.candidateReferences);
-    editCandidate(updateData);
-    setDisabled(true);
-    setEditButton(true);
+    if (firstNameError === false && lastNameError === false) {
+      editCandidate(updateData);
+      setDisabled(true);
+      setEditButton(true);
+    } else {
+      toast.info("Please Enter Valid Input");
+    }
   };
   const editHandler = () => {
     setDisabled(false);
