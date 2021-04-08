@@ -283,17 +283,26 @@ const DocVerification = () => {
                           >
                             Approve
                           </button>
-                          {(user.role === "ADMIN" && item.documentType === 1) ||
-                            (user.role === "MANAGER" && (
-                              <button
-                                className="approveButton ml-4"
-                                onClick={() =>
-                                  handleDisApproveDocument(item.documentId)
-                                }
-                              >
-                                Disapprove
-                              </button>
-                            ))}
+                          {user.role === "ADMIN" && item.documentType === 1 && (
+                            <button
+                              className="approveButton ml-4"
+                              onClick={() =>
+                                handleDisApproveDocument(item.documentId)
+                              }
+                            >
+                              Disapprove
+                            </button>
+                          )}
+                          {user.role === "MANAGER" && (
+                            <button
+                              className="approveButton ml-4"
+                              onClick={() =>
+                                handleDisApproveDocument(item.documentId)
+                              }
+                            >
+                              Disapprove
+                            </button>
+                          )}
                         </td>
                       )}
                       {item.remark !== null ? (
