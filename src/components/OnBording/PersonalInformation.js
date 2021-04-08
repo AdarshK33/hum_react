@@ -193,9 +193,9 @@ const PersonalInformation = (props) => {
     // console.log("personal information view candidate", candidateData);
     
     if (
-      (candidatePersonalInfoData !== null) &&
-      (candidatePersonalInfoData !== undefined) &&
-      (Object.keys(candidatePersonalInfoData).length !== 0)
+      candidatePersonalInfoData !== null &&
+      candidatePersonalInfoData !== undefined &&
+      Object.keys(candidatePersonalInfoData).length !== 0
     ) {
       console.log("rajsekhar",candidatePersonalInfoData);
       setState({
@@ -228,9 +228,9 @@ const PersonalInformation = (props) => {
           : null
       );
       if (
-        (candidatePersonalInfoData.gender !== null) &&
-        (candidatePersonalInfoData.gender !== undefined) &&
-        (candidatePersonalInfoData.gender === "Male")
+        candidatePersonalInfoData.gender !== null &&
+        candidatePersonalInfoData.gender !== undefined &&
+        candidatePersonalInfoData.gender === "Male"
       ) {
         setGenderM(true);
         setGenderF(false);
@@ -241,9 +241,9 @@ const PersonalInformation = (props) => {
         setGender("Female");
       }
       if (
-        (candidatePersonalInfoData.maritalStatus !== null) &&
-        (candidatePersonalInfoData.maritalStatus !== undefined) &&
-        (candidatePersonalInfoData.maritalStatus === "Married")
+        candidatePersonalInfoData.maritalStatus !== null &&
+        candidatePersonalInfoData.maritalStatus !== undefined &&
+        candidatePersonalInfoData.maritalStatus === "Married"
       ) {
         setMarried(true);
         setUnMarried(false);
@@ -288,9 +288,9 @@ const PersonalInformation = (props) => {
     const nameValid = /^[a-zA-Z\b]+$/;
 
     if (
-      (state.aadhaarName !== "") &
-      (state.aadhaarName !== null) &
-      (state.aadhaarName !== undefined)
+      state.aadhaarName !== "" &&
+      state.aadhaarName !== null &&
+      state.aadhaarName !== undefined
     ) {
       if (nameValid.test(state.aadhaarName.replace(/ +/g, ""))) {
         setAdharNameError(false);
@@ -310,9 +310,9 @@ const PersonalInformation = (props) => {
   const FatherNameValidation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
     if (
-      (state.fatherName !== "") &
-      (state.fatherName !== null) &
-      (state.fatherName !== undefined)
+      state.fatherName !== "" &&
+      state.fatherName !== null &&
+      state.fatherName !== undefined
     ) {
       if (nameValid.test(state.fatherName.replace(/ +/g, ""))) {
         setFatherNameError(false);
@@ -362,9 +362,9 @@ const PersonalInformation = (props) => {
       (candidateViewInfo.contractType === "Parttime")
     ) {
       if (
-        (state.aadhaarNumber !== "") &
-        aadharValid.test(state.aadhaarNumber) &
-        (state.aadhaarNumber.length === 12)
+        state.aadhaarNumber !== "" &&
+        aadharValid.test(state.aadhaarNumber) &&
+        state.aadhaarNumber.length === 12
       ) {
         setAdharNumberError(false);
         console.log("adharsucess");
@@ -382,7 +382,7 @@ const PersonalInformation = (props) => {
     const passPortValid = /^[0-9\b]+$/;
     console.log("passPort");
     if (candidateViewInfo.contractType === "Localexpact") {
-      if ((state.passPortNo !== "") & passPortValid.test(state.passPortNo)) {
+      if (state.passPortNo !== "" && passPortValid.test(state.passPortNo)) {
         setPassPortError(false);
         console.log("passPortsucess");
         return true;
@@ -413,7 +413,7 @@ const PersonalInformation = (props) => {
     }
   };
   const disabilityValidation = () => {
-    if ((state.disability !== "") & (state.disability !== "Disability")) {
+    if (state.disability !== "" && state.disability !== "Disability") {
       setDisabilityError(false);
       console.log("disabilitySucess");
       return true;
@@ -439,7 +439,7 @@ const PersonalInformation = (props) => {
     }
   };
   const nationalityValidation = () => {
-    if ((state.nationality !== "") & (state.nationality !== "Nationality")) {
+    if (state.nationality !== "" && state.nationality !== "Nationality") {
       setNationalityError(false);
       console.log("nationalitySucess");
       return true;
@@ -451,10 +451,7 @@ const PersonalInformation = (props) => {
   };
 
   const bloodGroupValidation = () => {
-    if (
-      (state.bloodGroup !== "") &
-      (state.bloodGroup !== "Select Blood Group")
-    ) {
+    if (state.bloodGroup !== "" && state.bloodGroup !== "Select Blood Group") {
       setBloodGroupError(false);
       console.log("nationalitySucess");
       return true;
@@ -476,7 +473,7 @@ const PersonalInformation = (props) => {
   };
   const empName1Validation = () => {
     if (!data2) {
-      if ((empName1 !== "") & (desgination1 !== "")) {
+      if (empName1 !== "" && desgination1 !== "") {
         setEmpNam1Error(false);
         console.log("emp1Success");
         return true;
@@ -491,7 +488,7 @@ const PersonalInformation = (props) => {
   };
   const empName2Validation = () => {
     if (!data1) {
-      if ((empName2 !== "") & (desgination2 !== "")) {
+      if (empName2 !== "" && desgination2 !== "") {
         setEmpNam2Error(false);
         console.log("emp2Success");
         return true;
@@ -507,20 +504,19 @@ const PersonalInformation = (props) => {
 
   const checkValidations = () => {
     if (
-      (PanNumberValidation() === true) &
-      (AadharNumberValidation() === true) &
-      (DOBValidation() === true) &
-      (AdharNameValidation() === true) &
-      (FatherNameValidation() === true) &
-      (disabilityValidation() === true) &
-      (nationalityValidation() === true) &
-      (bloodGroupValidation() === true) &
-      (empName1Validation() === true) &
-      (PassPortNumberValidations() === true) &
-      (disabilityDocValidation() === true) &
-      (validateCheckBoxes(genderCheckM, genderCheckF, setGenderError) ===
-        true) &
-      (validateCheckBoxes(married, unMarried, setMaritalStatusError) === true)
+      PanNumberValidation() === true &&
+      AadharNumberValidation() === true &&
+      DOBValidation() === true &&
+      AdharNameValidation() === true &&
+      FatherNameValidation() === true &&
+      disabilityValidation() === true &&
+      nationalityValidation() === true &&
+      bloodGroupValidation() === true &&
+      empName1Validation() === true &&
+      PassPortNumberValidations() === true &&
+      disabilityDocValidation() === true &&
+      validateCheckBoxes(genderCheckM, genderCheckF, setGenderError) === true &&
+      validateCheckBoxes(married, unMarried, setMaritalStatusError) === true
     ) {
       if (isClicked === true) {
         console.log("------");

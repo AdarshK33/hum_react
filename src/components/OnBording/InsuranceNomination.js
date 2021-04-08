@@ -169,9 +169,9 @@ const InsuranceNomination = (props) => {
   useEffect(() => {
     // console.log("personal information view candidate", candidateData);
     if (
-      (candidatePersonalInfoData !== null) &
-      (candidatePersonalInfoData !== undefined) &
-      (Object.keys(candidatePersonalInfoData).length !== 0)
+      candidatePersonalInfoData !== null &&
+      candidatePersonalInfoData !== undefined &&
+      Object.keys(candidatePersonalInfoData).length !== 0
     ) {
       console.log(
         "----------------------------------------------",
@@ -185,20 +185,20 @@ const InsuranceNomination = (props) => {
       });
 
       if (
-        (candidatePersonalInfoData.dateOfBirth !== null) &
-        (candidatePersonalInfoData.dateOfBirth !== undefined)
+        candidatePersonalInfoData.dateOfBirth !== null &&
+        candidatePersonalInfoData.dateOfBirth !== undefined
       ) {
         var ageDifMs =
           Date.now() -
           new Date(candidatePersonalInfoData.dateOfBirth).getTime();
         var ageDate = new Date(ageDifMs);
         var finalAge = Math.abs(ageDate.getUTCFullYear() - 1970);
-        setAge((finalAge !== null) & (finalAge !== undefined) ? finalAge : "");
+        setAge(finalAge !== null && finalAge !== undefined ? finalAge : "");
       }
       if (
-        (candidatePersonalInfoData.maritalStatus !== null) &
-        (candidatePersonalInfoData.maritalStatus !== undefined) &
-        (candidatePersonalInfoData.maritalStatus === "Married")
+        candidatePersonalInfoData.maritalStatus !== null &&
+        candidatePersonalInfoData.maritalStatus !== undefined &&
+        candidatePersonalInfoData.maritalStatus === "Married"
       ) {
         setRelativeType(true);
       } else {
@@ -803,18 +803,290 @@ const InsuranceNomination = (props) => {
     const back = props.PrevStep;
     back();
   };
-  const handleCheckboxChange = (e) => {
-    changeCheckState(e.target.checked);
-    console.log(isChecked);
-  };
-  const handleNoCheckboxChange = (e) => {
-    changeCheckState(!e.target.checked);
-    console.log(isChecked);
-  };
+  // const handleCheckboxChange = (e) => {
+  //   if (isChecked === false) {
+  //     changeCheckState(true);
+  //     if (
+  //       (candidateInsuranceNominationData !== null) &
+  //       (candidateInsuranceNominationData !== undefined) &
+  //       (Object.keys(candidateInsuranceNominationData).length !== 0)
+  //     ) {
+  //       if (
+  //         (candidateInsuranceNominationData[0] !== null) &
+  //         (candidateInsuranceNominationData[0] !== undefined) &
+  //         (Object.keys(candidateInsuranceNominationData[0]).length !== 0)
+  //       ) {
+  //         setDefaultNominee(true);
+  //         setNomineeCount(0);
+  //       } else {
+  //         setDefaultNominee(false);
+  //       }
+  //       if (
+  //         (candidateInsuranceNominationData[1] !== null) &
+  //         (candidateInsuranceNominationData[1] !== undefined) &
+  //         (Object.keys(candidateInsuranceNominationData[1]).length !== 0)
+  //       ) {
+  //         setNominForm1(true);
+  //         setNomineeCount(1);
+  //       } else {
+  //         setNominForm1(false);
+  //       }
+  //       if (
+  //         (candidateInsuranceNominationData[2] !== null) &
+  //         (candidateInsuranceNominationData[2] !== undefined) &
+  //         (Object.keys(candidateInsuranceNominationData[2]).length !== 0)
+  //       ) {
+  //         setNominForm2(true);
+  //         setNomineeCount(2);
+  //       } else {
+  //         setNominForm2(false);
+  //       }
+  //       if (
+  //         (candidateInsuranceNominationData[3] !== null) &
+  //         (candidateInsuranceNominationData[3] !== undefined) &
+  //         (Object.keys(candidateInsuranceNominationData[3]).length !== 0)
+  //       ) {
+  //         setNominForm3(true);
+  //         setNomineeCount(3);
+  //       } else {
+  //         setNominForm3(false);
+  //       }
+  //       if (
+  //         (candidateInsuranceNominationData[4] !== null) &
+  //         (candidateInsuranceNominationData[4] !== undefined) &
+  //         (Object.keys(candidateInsuranceNominationData[4]).length !== 0)
+  //       ) {
+  //         setNominForm4(true);
+  //         setNomineeCount(4);
+  //       } else {
+  //         setNominForm4(false);
+  //       }
+  //       setState({
+  //         age:
+  //           (candidateInsuranceNominationData[0].age !== null) &
+  //           (candidateInsuranceNominationData[0].age !== undefined)
+  //             ? candidateInsuranceNominationData[0].age
+  //             : "",
+  //         bloodGroup:
+  //           (candidateInsuranceNominationData[0].bloodGroup !== null) &
+  //           (candidateInsuranceNominationData[0].bloodGroup !== undefined)
+  //             ? candidateInsuranceNominationData[0].bloodGroup
+  //             : "",
+  //         gender:
+  //           (candidateInsuranceNominationData[0].gender !== null) &
+  //           (candidateInsuranceNominationData[0].gender !== undefined)
+  //             ? candidateInsuranceNominationData[0].gender
+  //             : "",
+  //         nominiName:
+  //           (candidateInsuranceNominationData[0].nominiName !== null) &
+  //           (candidateInsuranceNominationData[0].nominiName !== undefined)
+  //             ? candidateInsuranceNominationData[0].nominiName
+  //             : "",
+  //         relationship:
+  //           (candidateInsuranceNominationData[0].relationship !== null) &
+  //           (candidateInsuranceNominationData[0].relationship !== undefined)
+  //             ? candidateInsuranceNominationData[0].relationship
+  //             : "",
+
+  //         nominee2Age:
+  //           (candidateInsuranceNominationData[1].age !== null) &
+  //           (candidateInsuranceNominationData[1].age !== undefined)
+  //             ? candidateInsuranceNominationData[1].age
+  //             : "",
+  //         nominee2BloodGroup:
+  //           (candidateInsuranceNominationData[1].bloodGroup !== null) &
+  //           (candidateInsuranceNominationData[1].bloodGroup !== undefined)
+  //             ? candidateInsuranceNominationData[1].bloodGroup
+  //             : "",
+  //         nominee2Gender:
+  //           (candidateInsuranceNominationData[1].gender !== null) &
+  //           (candidateInsuranceNominationData[1].gender !== undefined)
+  //             ? candidateInsuranceNominationData[1].gender
+  //             : "",
+  //         nominee2NominiName:
+  //           (candidateInsuranceNominationData[1].nominiName !== null) &
+  //           (candidateInsuranceNominationData[1].nominiName !== undefined)
+  //             ? candidateInsuranceNominationData[1].nominiName
+  //             : "",
+  //         nominee2Relationship:
+  //           (candidateInsuranceNominationData[1].relationship !== null) &
+  //           (candidateInsuranceNominationData[1].relationship !== undefined)
+  //             ? candidateInsuranceNominationData[1].relationship
+  //             : "",
+
+  //         nominee3Age:
+  //           (candidateInsuranceNominationData[2].age !== null) &
+  //           (candidateInsuranceNominationData[2].age !== undefined)
+  //             ? candidateInsuranceNominationData[2].age
+  //             : "",
+  //         nominee3BloodGroup:
+  //           (candidateInsuranceNominationData[2].bloodGroup !== null) &
+  //           (candidateInsuranceNominationData[2].bloodGroup !== undefined)
+  //             ? candidateInsuranceNominationData[2].bloodGroup
+  //             : "",
+  //         nominee3Gender:
+  //           (candidateInsuranceNominationData[2].gender !== null) &
+  //           (candidateInsuranceNominationData[2].gender !== undefined)
+  //             ? candidateInsuranceNominationData[2].gender
+  //             : "",
+  //         nominee3NominiName:
+  //           (candidateInsuranceNominationData[2].nominiName !== null) &
+  //           (candidateInsuranceNominationData[2].nominiName !== undefined)
+  //             ? candidateInsuranceNominationData[2].nominiName
+  //             : "",
+  //         nominee3Relationship:
+  //           (candidateInsuranceNominationData[2].relationship !== null) &
+  //           (candidateInsuranceNominationData[2].relationship !== undefined)
+  //             ? candidateInsuranceNominationData[2].relationship
+  //             : "",
+
+  //         nominee4Age:
+  //           (candidateInsuranceNominationData[3].age !== null) &
+  //           (candidateInsuranceNominationData[3].age !== undefined)
+  //             ? candidateInsuranceNominationData[3].age
+  //             : "",
+  //         nominee4BloodGroup:
+  //           (candidateInsuranceNominationData[3].bloodGroup !== null) &
+  //           (candidateInsuranceNominationData[3].bloodGroup !== undefined)
+  //             ? candidateInsuranceNominationData[3].bloodGroup
+  //             : "",
+  //         nominee4Gender:
+  //           (candidateInsuranceNominationData[3].gender !== null) &
+  //           (candidateInsuranceNominationData[3].gender !== undefined)
+  //             ? candidateInsuranceNominationData[3].gender
+  //             : "",
+  //         nominee4NominiName:
+  //           (candidateInsuranceNominationData[3].nominiName !== null) &
+  //           (candidateInsuranceNominationData[3].nominiName !== undefined)
+  //             ? candidateInsuranceNominationData[3].nominiName
+  //             : "",
+  //         nominee4Relationship:
+  //           (candidateInsuranceNominationData[3].relationship !== null) &
+  //           (candidateInsuranceNominationData[3].relationship !== undefined)
+  //             ? candidateInsuranceNominationData[3].relationship
+  //             : "",
+
+  //         nominee5Age:
+  //           (candidateInsuranceNominationData[4].age !== null) &
+  //           (candidateInsuranceNominationData[4].age !== undefined)
+  //             ? candidateInsuranceNominationData[4].age
+  //             : "",
+  //         nominee5BloodGroup:
+  //           (candidateInsuranceNominationData[4].bloodGroup !== null) &
+  //           (candidateInsuranceNominationData[4].bloodGroup !== undefined)
+  //             ? candidateInsuranceNominationData[4].bloodGroup
+  //             : "",
+  //         nominee5Gender:
+  //           (candidateInsuranceNominationData[4].gender !== null) &
+  //           (candidateInsuranceNominationData[4].gender !== undefined)
+  //             ? candidateInsuranceNominationData[4].gender
+  //             : "",
+  //         nominee5NominiName:
+  //           (candidateInsuranceNominationData[4].nominiName !== null) &
+  //           (candidateInsuranceNominationData[4].nominiName !== undefined)
+  //             ? candidateInsuranceNominationData[4].nominiName
+  //             : "",
+  //         nominee5Relationship:
+  //           (candidateInsuranceNominationData[4].relationship !== null) &
+  //           (candidateInsuranceNominationData[4].relationship !== undefined)
+  //             ? candidateInsuranceNominationData[4].relationship
+  //             : "",
+  //       });
+  //       setNominee1DOB(
+  //         (candidateInsuranceNominationData[0].dateOfBirth !== null) &
+  //           (candidateInsuranceNominationData[0].dateOfBirth !== undefined)
+  //           ? new Date(candidateInsuranceNominationData[0].dateOfBirth)
+  //           : ""
+  //       );
+  //       setNominee2DOB(
+  //         (candidateInsuranceNominationData[1].dateOfBirth !== null) &
+  //           (candidateInsuranceNominationData[1].dateOfBirth !== undefined)
+  //           ? new Date(candidateInsuranceNominationData[1].dateOfBirth)
+  //           : ""
+  //       );
+  //       setNominee3DOB(
+  //         (candidateInsuranceNominationData[2].dateOfBirth !== null) &
+  //           (candidateInsuranceNominationData[2].dateOfBirth !== undefined)
+  //           ? new Date(candidateInsuranceNominationData[2].dateOfBirth)
+  //           : ""
+  //       );
+  //       setNominee4DOB(
+  //         (candidateInsuranceNominationData[3].dateOfBirth !== null) &
+  //           (candidateInsuranceNominationData[3].dateOfBirth !== undefined)
+  //           ? new Date(candidateInsuranceNominationData[3].dateOfBirth)
+  //           : ""
+  //       );
+  //       setNominee5DOB(
+  //         (candidateInsuranceNominationData[4].dateOfBirth !== null) &
+  //           (candidateInsuranceNominationData[4].dateOfBirth !== undefined)
+  //           ? new Date(candidateInsuranceNominationData[4].dateOfBirth)
+  //           : null
+  //       );
+  //     }
+  //     console.log(isChecked);
+  //   } else {
+  //     console.log("rajj");
+  //   }
+  // };
+  // const handleNoCheckboxChange = (e) => {
+  //   if (isChecked === true) {
+  //     changeCheckState(!e.target.checked);
+  //     setNominForm1(false);
+  //     setNominForm2(false);
+  //     setNominForm3(false);
+  //     setNominForm4(false);
+  //     console.log(isChecked);
+  //     setState({
+  //       age: "",
+  //       bloodGroup: "",
+  //       gender: "",
+  //       nominiId: 0,
+  //       nominiName: "",
+  //       relationship: "",
+
+  //       nominee2Age: "",
+  //       nominee2BloodGroup: "",
+  //       nominee2Gender: "",
+  //       nominee2NominiId: 0,
+  //       nominee2NominiName: "",
+  //       nominee2Relationship: "",
+
+  //       nominee3Age: "",
+  //       nominee3BloodGroup: "",
+  //       nominee3Gender: "",
+  //       nominee3NominiId: 0,
+  //       nominee3NominiName: "",
+  //       nominee3Relationship: "",
+
+  //       nominee4Age: "",
+  //       nominee4BloodGroup: "",
+  //       nominee4Gender: "",
+  //       nominee4NominiId: 0,
+  //       nominee4NominiName: "",
+  //       nominee4Relationship: "",
+
+  //       nominee5Age: "",
+  //       nominee5BloodGroup: "",
+  //       nominee5Gender: "",
+  //       nominee5NominiId: 0,
+  //       nominee5NominiName: "",
+  //       nominee5Relationship: "",
+  //     });
+  //     setNominee1DOB("");
+  //     setNominee2DOB("");
+  //     setNominee3DOB("");
+  //     setNominee4DOB("");
+  //     setNominee5DOB("");
+  //   }
+  // };
   const dateOfBirthHandler = (date, key) => {
-    var AdjusteddateValue = new Date(
-      date.getTime() - date.getTimezoneOffset() * 60000
-    );
+    if (date !== null) {
+      var AdjusteddateValue = new Date(
+        date.getTime() - date.getTimezoneOffset() * 60000
+      );
+    } else {
+      var AdjusteddateValue = "";
+    }
     switch (key) {
       case "1":
         setNominee1DOB(AdjusteddateValue);
@@ -999,7 +1271,7 @@ const InsuranceNomination = (props) => {
           </div>
         </Col>
       </Row>
-      <Row style={{ marginBottom: "2rem" }}>
+      {/* <Row style={{ marginBottom: "2rem" }}>
         <Col sm={3}>
           <Form.Group>
             <div className="boxField input">
@@ -1026,7 +1298,7 @@ const InsuranceNomination = (props) => {
             </div>
           </Form.Group>
         </Col>
-      </Row>
+      </Row> */}
       {defaultNominee === true ? (
         <div>
           {/* first Nominee */}
@@ -2090,7 +2362,7 @@ const InsuranceNomination = (props) => {
                 return <div>Nominees.</div>;
             }
           })()} */}
-      {(isChecked === false) & (NomineeCount <= 3) ? (
+      {isChecked === false && NomineeCount <= 3 ? (
         <Row>
           <Col sm={4}></Col>
           <Col sm={4} style={{ padding: "0px 0px 0px 35px" }}>
