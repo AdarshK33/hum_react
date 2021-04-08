@@ -27,7 +27,7 @@ export const CandidateProvider = ({ children  }) => {
       dispatch({ type: 'LOGIN', payload: state.candidateData });
       localStorage.setItem('candidate_access_token', token)
        if(accessTokenExist !== null||accessTokenExist !== undefined){
-        data.history.push('/onboard-offer')
+        data.history.push('/offer')
        }else{
         toast.error("Bad Credentials");
        }
