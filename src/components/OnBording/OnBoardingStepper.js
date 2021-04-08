@@ -175,7 +175,7 @@ const OnBoardingStepper = (props) => {
   console.log(stepCount, stepArray, "stepArray");
   return (
     <Fragment>
-      <Breadcrumb title="onboard" parent="onboard" />
+      <Breadcrumb title="OnBoard" parent="Candidate OnBoard" />
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">

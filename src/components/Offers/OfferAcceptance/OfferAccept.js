@@ -25,10 +25,10 @@ const OfferAccept = (props) => {
 
     const handleClose = () => setModal(false)
     const handleRejectClose = () => {
-        
         setRejectModal(false)
-        candidateRejectOffer({Id:candidateData.candidateId,history:props.history})
-        window.location.reload()
+    }
+    const handleOk = () => {
+      candidateRejectOffer({Id:candidateData.candidateId,history:props.history})
     }
 useEffect(() => {
     CandidateProfile()
@@ -57,12 +57,12 @@ useEffect(() => {
 
   return (
     <Fragment>
-      <Breadcrumb title="OnBoard" parent="onBoard" />
+      <Breadcrumb title="CANDIDATE OFFER ACCEPTANCE" parent="onboard-offer" />
       <Container className="main-container">
         <h5 className="offerHeading">Candidate Offer Acceptance</h5>
         <Container className="middle-container">
           <h6>Congrats!</h6>
-          <h6>Welcome to Decathlone</h6>
+          <h6>Welcome to Decathlon</h6>
           <div style={{ marginTop: "3rem", marginBottom: "2rem" }}>
             <span style={{ marginRight: "1rem" }}>View Your Offer Letter</span>
             <Button onClick={showLetterClick}>Show</Button>
@@ -138,6 +138,7 @@ useEffect(() => {
         <RejectModal
           rejectModal={rejectModal}
           handleRejectClose={handleRejectClose}
+          handleOk={handleOk}
         />
       </Container>
     </Fragment>

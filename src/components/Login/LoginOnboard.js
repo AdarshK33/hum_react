@@ -2,7 +2,10 @@ import React, {useState, useContext} from 'react';
 import { CandidateContext } from "../../context/CandidateState";
 import { OnBoardContext } from "../../context/OnBoardState";
 import { ToastContainer, toast } from 'react-toastify';
+import Button from "react-bootstrap/Button";
+import "./Login.css";
 import 'react-toastify/dist/ReactToastify.css';
+import { AlignCenter } from 'react-feather';
 
 function LoginOnboard(props) {
     const [loginData,setLoginData] = useState({username:'',password:''})
@@ -16,8 +19,9 @@ function LoginOnboard(props) {
         CandidateProfile()
     }
   return(
-        <div className="card col-12 col-lg-4 login-card mt-2 hv-center">
+        <div className="Login">
             <form>
+              <h3 className="header">CANDIDATE LOGIN</h3><br/>
                 <div className="form-group text-left">
                 <label htmlFor="exampleInputEmail1">Username</label>
                 <input type="text" 
@@ -38,12 +42,11 @@ function LoginOnboard(props) {
 
                     />
                 </div>
-                     <button type="submit" className="btn btn-primary" onClick={handleLogin}>
-          Login
-        </button>
+                <Button block size="lg" type="submit" onClick={handleLogin}>Login </Button>
         <ToastContainer />
       </form>
     </div>
   );
 }
 export default LoginOnboard;
+
