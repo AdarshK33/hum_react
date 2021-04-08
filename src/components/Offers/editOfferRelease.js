@@ -34,6 +34,7 @@ const EditOfferRelease = () => {
     console.log("inside remunarationClick");
     if (candidateData !== null && candidateData != undefined) {
       workInfoView(candidateData.candidateInformation.candidateId);
+      remunerationView(candidateData.candidateInformation.candidateId);
     }
   };
 

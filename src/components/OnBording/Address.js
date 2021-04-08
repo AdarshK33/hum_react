@@ -480,8 +480,10 @@ const Address = (props) => {
     if (saveclick === false) {
       addressValue = 0;
       setSaveclick(true);
-    } else if (addressSaveData && saveclick === true) {
-      addressValue = addressSaveData.addressId;
+    } else if ((addressSaveData || addressViewData) && saveclick === true) {
+      addressValue = addressSaveData.addressId
+        ? addressSaveData.addressId
+        : addressViewData.addressId;
     }
     const value = checkValidations();
     if (value === true) {
@@ -510,8 +512,8 @@ const Address = (props) => {
         pinCode: state.pinCode,
         street: state.street,
       };
-      console.log(AddressInfo);
-      // addressCreate(AddressInfo);
+      console.log("address payload", AddressInfo);
+      addressCreate(AddressInfo);
       const nextPage = props.NextStep;
       nextPage();
     }
