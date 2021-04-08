@@ -191,14 +191,14 @@ const PersonalInformation = (props) => {
 
   useEffect(() => {
     // console.log("personal information view candidate", candidateData);
-    
+
     if (
       candidatePersonalInfoData !== null &&
       candidatePersonalInfoData !== undefined &&
       Object.keys(candidatePersonalInfoData).length !== 0 &&
       candidatePersonalInfoData.aadhaarName !== null
     ) {
-      console.log("rajsekhar",candidatePersonalInfoData);
+      console.log("rajsekhar", candidatePersonalInfoData);
       setState({
         aadhaarName: candidatePersonalInfoData.aadhaarName,
         fatherName: candidatePersonalInfoData.fatherName,
@@ -549,8 +549,8 @@ const PersonalInformation = (props) => {
     }
   };
   const submitHandler = (e) => {
-    const submited = props.NextStep; //next component
-    submited();
+    // const submited = props.NextStep; //next component
+    // submited();
     e.preventDefault();
     const value = checkValidations();
     if (value === true) {
