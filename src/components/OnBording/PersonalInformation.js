@@ -191,12 +191,13 @@ const PersonalInformation = (props) => {
 
   useEffect(() => {
     // console.log("personal information view candidate", candidateData);
-    console.log(Object.keys(candidatePersonalInfoData).length);
+    
     if (
       candidatePersonalInfoData !== null &&
       candidatePersonalInfoData !== undefined &&
       Object.keys(candidatePersonalInfoData).length !== 0
     ) {
+      console.log("rajsekhar",candidatePersonalInfoData);
       setState({
         aadhaarName: candidatePersonalInfoData.aadhaarName,
         fatherName: candidatePersonalInfoData.fatherName,

@@ -10,6 +10,10 @@
 .errorBorder {
   border-color: red;
 }
+.stepperA {
+  width: 100%;
+  margin-left: 40px;
+}
 .defaultLabelColour {
   color: black;
   font-size: 0.8rem;

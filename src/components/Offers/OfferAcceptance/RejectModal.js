@@ -12,7 +12,8 @@ const RejectModal = (props) => {
                 <Container style={{textAlign:'center', margin:'4rem 0 4rem 0'}}>
                     <Modal.Body>
                         <h6 style={{marginBottom:'1rem'}}>You have declined your Offer Letter, returning back to the portal</h6>
-                        <Button onClick={props.handleRejectClose}>Close</Button>
+                        <Button onClick={props.handleOk}>Yes</Button>
+                        <Button style={{marginLeft:"30px"}} onClick={props.handleRejectClose}>No</Button>
                     </Modal.Body>
                 </Container>
             </Modal>

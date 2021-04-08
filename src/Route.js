@@ -86,31 +86,17 @@ const RoutePath = () => {
     <Switch>
       <Route path={`${process.env.PUBLIC_URL}/signin`} component={Signin} />
       <Route path={`${process.env.PUBLIC_URL}/login`} component={Login} />
-      {/* <Route
-      path={`${process.env.PUBLIC_URL}/onboarding`}
+      <Route
+      path={`${process.env.PUBLIC_URL}/onboard`}
       component={OnBoardingStepper}
-      /> */}
-      <Route
-        //  {/*sachin */}
-        path={`${process.env.PUBLIC_URL}/loginonboard`}
-        component={LoginOnboard}
       />
-
+{/* 
       <Route
-        path={`${process.env.PUBLIC_URL}/onboard`}
-        component={OnBoardingStepper}
-      />
-
-      <Route
-        path={`${process.env.PUBLIC_URL}/offer-relase-and-onboard`}
-        component={ViewEditRelease}
-      />
-
-      {/* <Route
-            path={`${process.env.PUBLIC_URL}/onboard`}
-            component={OnBoardingStepper}
-      /> */}
-
+            path={`${process.env.PUBLIC_URL}/loginonboard`}
+            component={LoginOnboard}
+          />
+           */}
+          
       <Fragment>
         <App>
           {/* dashboard menu */}
@@ -170,6 +156,10 @@ const RoutePath = () => {
 
           <Route
             path={`${process.env.PUBLIC_URL}/onboard-offer`}
+            component={LoginOnboard}
+          />
+            <Route
+            path={`${process.env.PUBLIC_URL}/offer`}
             component={OfferAccept}
           />
           <Route

@@ -4,9 +4,15 @@ import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import { OnBoardContext } from "../../context/OnBoardState";
 import { ToastContainer, toast } from 'react-toastify';
+import { Document, Page } from 'react-pdf';
+import Form11 from "../../forms/Form_11_UAN.pdf"
+import Form11View from "../../forms/Form_11_(PF_declaration)_Sample_copy.pdf"
+import Form2 from "../../forms/Form_2_EPF_Nomination.pdf"
+import Form2View from "../../forms/Form_2_(PF_nomination)_Sample_copy.pdf"
+import FormF from "../../forms/Form_F_Gratuity.pdf"
+import FormFView from "../../forms/Form_F_(Gratuity)_Sample_copy.pdf"
 import 'react-toastify/dist/ReactToastify.css';
 import "./OnBoard.css";
-
 const PFDeclaration = (props) => {
   const { PFDeclarationCreate,PFDeclarationUpdate,PFDeclarationView, pfDeclarationCreate,
   pfDeclarationUpdate,candidateData,pfDeclarationView} = useContext(OnBoardContext);
@@ -53,6 +59,24 @@ const PFDeclaration = (props) => {
     console.log(pfDeclarationView,"pfDeclarationViewuse")
     
 },[])
+ const handleForm11 =()=>{
+  window.open(Form11);
+}
+const handleForm11View =()=>{
+  window.open(Form11View);
+}
+const handleForm2 =()=>{
+  window.open(Form2);
+}
+const handleForm2View =()=>{
+  window.open(Form2View);
+}
+const handleFormF =()=>{
+  window.open(FormF);
+}
+const handleFormFView =()=>{
+  window.open(FormFView);
+}
 useEffect(()=>{
   console.log(pfDeclarationView,"pfDeclarationViewuse2")
   function isEmpty(obj) {
@@ -390,7 +414,7 @@ console.log(firstJobYes,contributingPrevOrgYes,contributingPrevOrgNo,memberOfPen
           <Col sm={2}>
             <div>
               <label>
-                Fill <a href="https://drive.google.com/file/d/19MypZqnEn98-w7zpsiJUZaDeKzEkz9Cj/view" target="_blank" rel="noopener noreferrer" download>
+                Fill <a href='' target="_blank" rel="noopener noreferrer" download>
       <i className="fas fa-download"/>
       EPF Form   
       </a> here
@@ -501,6 +525,23 @@ console.log(firstJobYes,contributingPrevOrgYes,contributingPrevOrgNo,memberOfPen
             </div>
           </Col>
         </Row>
+        <label>Please fill the forms below</label><br/>
+        <Row>
+
+        <Col sm={5} >
+     
+            <a className="stepperA" href={require("../../forms/Form_11_UAN.pdf")} target="_blank">Download Form 11 Declaration</a><br/>
+            <a className="stepperA" href={require("../../forms/Form_2_EPF_Nomination.pdf")} target="_blank">Download Form 2 EPF nomination</a><br/>
+            <a className="stepperA" href={require("../../forms/Form_F_Gratuity.pdf")} target="_blank">Download Form F Gratuity</a><br/>
+        </Col>
+          <Col sm={5}>
+
+<a className="stepperA" href={require("../../forms/Form_11_(PF_declaration)_Sample_copy.pdf")} target="_blank">Sample Form 11 Declaration</a><br/>
+<a className="stepperA" href={require("../../forms/Form_2_(PF_nomination)_Sample_copy.pdf")} target="_blank">Sample Form 2 EPF nomination</a><br/>
+<a className="stepperA" href={require("../../forms/Form_F_(Gratuity)_Sample_copy.pdf")} target="_blank">Sample Form F Gratuity</a><br/>
+
+          </Col>
+          </Row>
         <div
           style={{
             marginTop: "2rem",
