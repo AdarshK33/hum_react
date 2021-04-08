@@ -96,6 +96,11 @@ const RoutePath = () => {
             component={LoginOnboard}
           />
            */}
+      <Route
+        //  {/*Rajasekhar */}
+        path={`${process.env.PUBLIC_URL}/onboard`}
+        component={OnBoardingStepper}
+      />
 
       <Fragment>
         <App>
@@ -147,11 +152,6 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/edit-offer-release`}
             component={EditOfferRelease}
-          />
-          <Route
-            //  {/*Rajasekhar */}
-            path={`${process.env.PUBLIC_URL}/onboard`}
-            component={OnBoardingStepper}
           />
 
           <Route
