@@ -654,7 +654,7 @@ const PersonalInformation = (props) => {
 
         // next page code should be here
         const submited = props.NextStep; //next component
-        submited();
+        submited(true);
       }
       // if (saveClick === true) {
       //   const InfoData = {

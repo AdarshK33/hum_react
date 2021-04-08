@@ -345,7 +345,7 @@ const Documents = (props) => {
     if (value === true) {
       console.log(state);
       const nextPage = props.NextStep;
-      nextPage();
+      nextPage(true);
     }
   };
 

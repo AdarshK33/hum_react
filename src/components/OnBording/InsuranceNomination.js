@@ -855,7 +855,7 @@ const InsuranceNomination = (props) => {
       console.log(NominiInfo);
       CreateNominee(NominiInfo);
       const nextPage = props.NextStep;
-      nextPage();
+      nextPage(true);
     }
   };
 

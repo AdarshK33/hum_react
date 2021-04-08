@@ -97,9 +97,9 @@ const BankDetails = (props) => {
 
   const submitHandler = (e) => {
     console.log("inside bank submit handler", bankSaveData);
-    const nextPage = props.NextStep;
-    // let bankValue;
-    nextPage();
+    // const nextPage = props.NextStep;
+    // // let bankValue;
+    // nextPage();
     e.preventDefault();
     // if (!bankSaveData || !bankViewData) {
     //   bankValue = 0;
@@ -127,7 +127,7 @@ const BankDetails = (props) => {
         bankCreate(bankInfo);
       }
       const nextPage = props.NextStep;
-      nextPage();
+      nextPage(true);
     }
   };
 

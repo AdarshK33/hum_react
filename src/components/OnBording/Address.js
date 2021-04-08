@@ -520,7 +520,7 @@ const Address = (props) => {
       console.log("address payload", AddressInfo);
       addressCreate(AddressInfo);
       const nextPage = props.NextStep;
-      nextPage();
+      nextPage(true);
     }
   };
 

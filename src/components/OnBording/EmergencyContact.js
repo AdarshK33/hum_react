@@ -180,11 +180,11 @@ const EmergencyContact = (props) => {
       if (dataExist.exist == true) {
         EmergencyContactUpdate(state);
         const nextPage = props.NextStep;
-        nextPage();
+        nextPage(true);
       } else {
         EmergencyContactCreate(state);
         const nextPage = props.NextStep;
-        nextPage();
+        nextPage(true);
       }
     }
   };

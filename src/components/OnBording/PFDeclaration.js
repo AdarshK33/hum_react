@@ -275,7 +275,7 @@ const PFDeclaration = (props) => {
         console.log(PFInfo, "update pf");
         PFDeclarationUpdate(PFInfo);
         const nextPage = props.NextStep;
-        nextPage();
+        nextPage(true);
       } else {
         const PFInfo = {
           candidateId:
@@ -293,7 +293,7 @@ const PFDeclaration = (props) => {
         console.log(PFInfo, "create pf");
         PFDeclarationCreate(PFInfo);
         const nextPage = props.NextStep;
-        nextPage();
+        nextPage(true);
       }
     }
   };
