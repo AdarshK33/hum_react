@@ -2,15 +2,15 @@ import React, { createContext, useReducer } from "react";
 import { client } from "../utils/axios";
 import AppReducer from "../reducers/AppReducer";
 import { toast } from "react-toastify";
+import { File } from "react-feather";
 import {
-  File,
-
-
-} from 'react-feather';
-import { SET_ACCESS_TOKEN_FAIL, SET_ACCESS_TOKEN_SUCCESS, AUTHENTICATE_USER } from "../constant/actionTypes";
+  SET_ACCESS_TOKEN_FAIL,
+  SET_ACCESS_TOKEN_SUCCESS,
+  AUTHENTICATE_USER,
+} from "../constant/actionTypes";
 
 // utils
-import Cookies from '../utils/cookies';
+import Cookies from "../utils/cookies";
 
 const initialState = {
   sportsNames: [],
@@ -20,12 +20,12 @@ const initialState = {
   userInfoDetails: [],
   app: {
     loaded: false,
-    isLoggedin: false
+    isLoggedin: false,
   },
   MENUITEMS: [],
   user: {},
   flag: 0,
-  MenuPermissionsRoute: []
+  MenuPermissionsRoute: [],
 };
 // const loginUrl = `${process.env.REACT_APP_FEDID_AUTH_URL}?response_type=code&client_id=${process.env.REACT_APP_FEDID_CLIENTID}&scope=openid%20profile&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}`;
 export const AppContext = createContext();
@@ -34,12 +34,10 @@ export const AppProvider = ({ children, history }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   const authenticateUser = (result) => {
-
     return dispatch({ type: AUTHENTICATE_USER, payload: result });
-  }
+  };
 
   const accessToken = (code) => {
-
     let data = {
       grant_type: "authorization_code",
       client_id: process.env.REACT_APP_FEDID_CLIENTID,
@@ -47,16 +45,21 @@ export const AppProvider = ({ children, history }) => {
       redirect_uri: process.env.REACT_APP_REDIRECT_URL,
     };
 
-    client.get('auth/token?code=' + code)
+    client
+      .get("auth/token?code=" + code)
 
       .then((resp) => {
-
-        const { status, data: { data: { access_token, refresh_token, id_token } } } = resp;
+        const {
+          status,
+          data: {
+            data: { access_token, refresh_token, id_token },
+          },
+        } = resp;
         // console.log('GOt resp', resp)
         if (status === 200) {
-          localStorage.setItem('APPID', id_token)
-          Cookies.set('APPAT', access_token)
-          Cookies.set('APPRT', refresh_token)
+          localStorage.setItem("APPID", id_token);
+          Cookies.set("APPAT", access_token);
+          Cookies.set("APPRT", refresh_token);
 
           // const { data, data: { refresh_token, access_token } } = resp;
 
@@ -67,14 +70,14 @@ export const AppProvider = ({ children, history }) => {
           // setDefaultHeader(resp.data.data.access_token)
 
           return dispatch({ type: SET_ACCESS_TOKEN_SUCCESS, payload: data });
-        }
-        else {
-          toast.error("Unable to process the request. Please try again later")
-          setTimeout(function () { userLogout(); }, 4000);
+        } else {
+          toast.error("Unable to process the request. Please try again later");
+          setTimeout(function () {
+            userLogout();
+          }, 4000);
         }
       })
       .catch((err) => {
-
         setTimeout(() => {
           toast.error("Unable to process the request. Please try again later");
         }, 200);
@@ -82,50 +85,54 @@ export const AppProvider = ({ children, history }) => {
       });
   };
 
-
-
   //GET USER INFO
 
   const getUserInfo = () => {
     // state.MENUITEMS = [];
-    client.get('/api/v1/employee/profile')
+    client
+      .get("/api/v1/employee/profile")
       .then((response) => {
-        state.user = response.data.data
+        state.user = response.data.data;
         if (response.data.data === {}) {
           toast.error("User does not exist");
-        }
-        else if (response.data.data === null) {
-          toast.error("This user is not active")
-          setTimeout(function () { userLogout(); }, 4000);
-        }
-        else {
-          return dispatch({ type: 'FETCH_USER_INFO', payload: state.user });
+        } else if (response.data.data === null) {
+          toast.error("This user is not active");
+          setTimeout(function () {
+            userLogout();
+          }, 4000);
+        } else {
+          return dispatch({ type: "FETCH_USER_INFO", payload: state.user });
         }
       })
       .catch((error) => {
-        console.log(error)
-        setTimeout(function () { userLogout(); }, 4000);
+        console.log(error);
+        setTimeout(function () {
+          userLogout();
+        }, 4000);
         toast.error("User does not exist");
         //4 sec
-      })
-  }
-
+      });
+  };
 
   const userLogout = () => {
-    console.log("*********** ", localStorage.getItem('APPID'));
-    const logOutUrl = `${process.env.REACT_APP_FEDID_LOGOUT_URL}?id_token_hint=${localStorage.getItem('APPID')}&post_logout_redirect_uri=${process.env.REACT_APP_LOGOUTREDIRECT_URL}`;
+    console.log("*********** ", localStorage.getItem("APPID"));
+    const logOutUrl = `${
+      process.env.REACT_APP_FEDID_LOGOUT_URL
+    }?id_token_hint=${localStorage.getItem("APPID")}&post_logout_redirect_uri=${
+      process.env.REACT_APP_LOGOUTREDIRECT_URL
+    }`;
     // client.get('/auth/logout?id_token=' + localStorage.getItem('APPID'))
     //   .then((response) => {
     //     console.log(response)
     //     if (response.status === 201) {
-    Cookies.remove('APPAT')
-    Cookies.remove('APPRT')
-    localStorage.removeItem('APPID')
-    localStorage.removeItem('type')
-    localStorage.removeItem('flag')
-    window.location.href = logOutUrl
-    localStorage.removeItem('URL')
-    localStorage.removeItem('candidate_access_token')
+    Cookies.remove("APPAT");
+    Cookies.remove("APPRT");
+    localStorage.removeItem("APPID");
+    localStorage.removeItem("type");
+    localStorage.removeItem("flag");
+    window.location.href = logOutUrl;
+    localStorage.removeItem("URL");
+    localStorage.removeItem("candidate_access_token");
     // window.open(
     //   loginUrl,
     //   '_blank' // <- This is what makes it open in a new window.
@@ -139,12 +146,7 @@ export const AppProvider = ({ children, history }) => {
     // .catch((error) => {
     //   console.log(error)
     // })
-  }
-
-
-
-
-
+  };
 
   const getUserMenu = (menus, type, user) => {
     state.MENUITEMS = [];
@@ -153,18 +155,50 @@ export const AppProvider = ({ children, history }) => {
       state.flag = 1;
       for (let i = 0; i < menus.length; i++) {
         if (type === "profile" && user.department !== "Retail") {
-          if (menus[i].hasChild === true && menus[i].menuUrl !== "/leaves/viewleave" && menus[i].menuUrl !== "/roster/teamroster") {
-            state.MENUITEMS.push({ title: menus[i].menuName, icon: File, type: 'link', path: menus[i].menuUrl, active: false, children: [] })
-
-          } else if (menus[i].child === false && menus[i].menuUrl !== "/leaves/viewleave" && menus[i].menuUrl !== "/roster/teamroster") {
-            state.MENUITEMS.push({ path: menus[i].menuUrl, title: menus[i].menuName, icon: File, type: 'link', active: false })
+          if (
+            menus[i].hasChild === true &&
+            menus[i].menuUrl !== "/leaves/viewleave" &&
+            menus[i].menuUrl !== "/roster/teamroster"
+          ) {
+            state.MENUITEMS.push({
+              title: menus[i].menuName,
+              icon: File,
+              type: "link",
+              path: menus[i].menuUrl,
+              active: false,
+              children: [],
+            });
+          } else if (
+            menus[i].child === false &&
+            menus[i].menuUrl !== "/leaves/viewleave" &&
+            menus[i].menuUrl !== "/roster/teamroster"
+          ) {
+            state.MENUITEMS.push({
+              path: menus[i].menuUrl,
+              title: menus[i].menuName,
+              icon: File,
+              type: "link",
+              active: false,
+            });
           }
         } else {
           if (menus[i].hasChild === true) {
-            state.MENUITEMS.push({ title: menus[i].menuName, icon: File, type: 'link', path: menus[i].menuUrl, active: false, children: [] })
-
+            state.MENUITEMS.push({
+              title: menus[i].menuName,
+              icon: File,
+              type: "link",
+              path: menus[i].menuUrl,
+              active: false,
+              children: [],
+            });
           } else if (menus[i].child === false) {
-            state.MENUITEMS.push({ path: menus[i].menuUrl, title: menus[i].menuName, icon: File, type: 'link', active: false })
+            state.MENUITEMS.push({
+              path: menus[i].menuUrl,
+              title: menus[i].menuName,
+              icon: File,
+              type: "link",
+              active: false,
+            });
           }
         }
 
@@ -173,17 +207,16 @@ export const AppProvider = ({ children, history }) => {
       for (let i = 0; i < state.MENUITEMS.length; i++) {
         for (let j = 0; j < menus.length; j++) {
           if (state.MENUITEMS[i].path === menus[j].parentUrl) {
-            state.MENUITEMS[i].children.push({ path: menus[j].menuUrl, title: menus[j].menuName, type: 'link' })
+            state.MENUITEMS[i].children.push({
+              path: menus[j].menuUrl,
+              title: menus[j].menuName,
+              type: "link",
+            });
           }
-
         }
       }
     }
-
-  }
-
-
-
+  };
 
   return (
     <AppContext.Provider
@@ -198,11 +231,10 @@ export const AppProvider = ({ children, history }) => {
         MENUITEMS: state.MENUITEMS,
         flag: state.flag,
         app: state.app,
-        MenuPermissionsRoute: state.MenuPermissionsRoute
+        MenuPermissionsRoute: state.MenuPermissionsRoute,
       }}
     >
       {children}
     </AppContext.Provider>
   );
 };
-

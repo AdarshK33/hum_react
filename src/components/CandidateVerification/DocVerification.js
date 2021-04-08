@@ -1,9 +1,18 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
-import { Table } from "react-bootstrap";
 import { DocsVerifyContext } from "../../context/DocverificationState";
+import { AppContext } from "../../context/AppState";
 import { useParams } from "react-router-dom";
 import "./ManageCandidate.css";
-import { Button, Container, Modal } from "react-bootstrap";
+import {
+  Button,
+  Container,
+  Modal,
+  Row,
+  Col,
+  Form,
+  Table,
+} from "react-bootstrap";
+
 // import { handleInputChange } from "react-select/src/utils";
 
 const DocVerification = () => {
@@ -16,6 +25,9 @@ const DocVerification = () => {
   const [error, setError] = useState(false);
   const [state, setState] = useState({});
   const [onBoardPopup, setOnboardPopup] = useState(false);
+  const [UANYes, setYes] = useState(false);
+  const [UANNo, setNo] = useState(false);
+  const [uanNumber, setUanNumber] = useState("");
   const {
     verificationDocsView,
     docsToVerify,
@@ -30,15 +42,32 @@ const DocVerification = () => {
     personalInfoData,
     personalInfo,
   } = useContext(DocsVerifyContext);
+  const { getUserInfo, user } = useContext(AppContext);
   useEffect(() => {
     verificationDocsView(candidateId);
     personalInfo(candidateId);
     setState(personalInfoData);
   }, [acceptStatus, rejectStatus]);
+  useEffect(() => {
+    getUserInfo();
+  }, []);
   const handleShifting = () => {
     changeState(!isChecked);
   };
 
+  const handleUANYes = (e) => {
+    setYes(true);
+    setNo(false);
+  };
+
+  const handleUANNo = (e) => {
+    setNo(true);
+    setYes(false);
+  };
+
+  const handleUANNumber = (e) => {
+    setUanNumber(e.target.value);
+  };
   const handleApproveDocument = (docId) => {
     approveDocument(docId);
   };
@@ -64,7 +93,7 @@ const DocVerification = () => {
     setOnboardPopup(true);
   };
   return (
-    console.log("state", state.verificationStatus),
+    console.log("state", user),
     (
       <Fragment>
         <Modal show={showModal} onHide={() => handleClose()} centered>
@@ -167,7 +196,8 @@ const DocVerification = () => {
                               </span>{" "}
                               <span style={{ color: "red" }}>*</span>
                             </p>
-                          ) : item.documentType === 1 ? (
+                          ) : item.documentType === 1 &&
+                            user.role === "ADMIN" ? (
                             <p>
                               <span
                                 style={{ color: "black", fontSize: "20px" }}
@@ -253,14 +283,17 @@ const DocVerification = () => {
                           >
                             Approve
                           </button>
-                          <button
-                            className="approveButton ml-4"
-                            onClick={() =>
-                              handleDisApproveDocument(item.documentId)
-                            }
-                          >
-                            Disapprove
-                          </button>
+                          {(user.role === "ADMIN" && item.documentType === 1) ||
+                            (user.role === "MANAGER" && (
+                              <button
+                                className="approveButton ml-4"
+                                onClick={() =>
+                                  handleDisApproveDocument(item.documentId)
+                                }
+                              >
+                                Disapprove
+                              </button>
+                            ))}
                         </td>
                       )}
                       {item.remark !== null ? (
@@ -292,7 +325,7 @@ const DocVerification = () => {
                               <span
                                 style={{ color: "black", fontSize: "20px" }}
                               >
-                                PhotoID
+                                Highest Education
                               </span>{" "}
                               <span style={{ color: "red" }}>*</span>
                             </p>
@@ -301,7 +334,7 @@ const DocVerification = () => {
                               <span
                                 style={{ color: "black", fontSize: "20px" }}
                               >
-                                AadhaarID
+                                Relieving Letter
                               </span>
                               <span style={{ color: "red" }}>*</span>
                               <span
@@ -314,22 +347,13 @@ const DocVerification = () => {
                                 (Upload the first and last page)
                               </span>
                             </p>
-                          ) : item.documentType === 8 ? (
-                            <p>
-                              <span
-                                style={{ color: "black", fontSize: "20px" }}
-                              >
-                                Pan Number
-                              </span>{" "}
-                              <span style={{ color: "red" }}>*</span>
-                            </p>
                           ) : (
-                            item.documentType === 9 && (
+                            item.documentType === 8 && (
                               <p>
                                 <span
                                   style={{ color: "black", fontSize: "20px" }}
                                 >
-                                  Address Proof
+                                  Latest play slip
                                 </span>{" "}
                                 <span style={{ color: "red" }}>*</span>
                               </p>
@@ -344,9 +368,11 @@ const DocVerification = () => {
                         item.documentType > 5 && (
                           <td className="row text-center">
                             <button className="approveButton">Approve</button>
-                            <button className="approveButton ml-4">
-                              Disapprove
-                            </button>
+                            {user.role === "MANAGER" && (
+                              <button className="approveButton ml-4">
+                                Disapprove
+                              </button>
+                            )}
                           </td>
                         )
                       )}
@@ -373,6 +399,60 @@ const DocVerification = () => {
             )}
           </Table>
         </div>
+        {user.role === "ADMIN" && (
+          <Row className="mx-2">
+            <label>Is UAN Number Generated ?</label>
+            <Col sm={2}>
+              <Form.Group>
+                <div className="boxField input">
+                  <input
+                    className="largerCheckbox"
+                    type="checkbox"
+                    value="yes"
+                    checked={UANYes}
+                    // required={required}
+                    onChange={(e) => handleUANYes(e)}
+                  />
+                  <label>Yes</label>
+                </div>
+              </Form.Group>
+            </Col>
+            <Col sm={2}>
+              <Form.Group>
+                <div className="boxField input">
+                  <input
+                    className="largerCheckbox"
+                    type="checkbox"
+                    value="no"
+                    checked={UANNo}
+                    // required={required}
+                    onChange={(e) => handleUANNo(e)}
+                  />
+                  <label>No </label>
+                </div>
+              </Form.Group>
+            </Col>
+          </Row>
+        )}
+        {UANNo && (
+          <Row>
+            <Col sm={6}>
+              <Form.Group>
+                <div className="boxField input">
+                  <label>Enter UAN Number</label>
+                  <input
+                    className="mx-2"
+                    type="text"
+                    name="uannbr"
+                    value={uanNumber}
+                    // required={required}
+                    onChange={(e) => handleUANNumber(e)}
+                  />
+                </div>
+              </Form.Group>
+            </Col>
+          </Row>
+        )}
         {state !== undefined && state.verificationStatus === 1 && (
           <div className="text-center ">
             <button
