@@ -191,11 +191,13 @@ const PersonalInformation = (props) => {
 
   useEffect(() => {
     // console.log("personal information view candidate", candidateData);
+    
     if (
       (candidatePersonalInfoData !== null) &&
       (candidatePersonalInfoData !== undefined) &&
       (Object.keys(candidatePersonalInfoData).length !== 0)
     ) {
+      console.log("rajsekhar",candidatePersonalInfoData);
       setState({
         aadhaarName: candidatePersonalInfoData.aadhaarName,
         fatherName: candidatePersonalInfoData.fatherName,
@@ -226,8 +228,8 @@ const PersonalInformation = (props) => {
           : null
       );
       if (
-        (candidatePersonalInfoData.gender !== null) &
-        (candidatePersonalInfoData.gender !== undefined) &
+        (candidatePersonalInfoData.gender !== null) &&
+        (candidatePersonalInfoData.gender !== undefined) &&
         (candidatePersonalInfoData.gender === "Male")
       ) {
         setGenderM(true);
@@ -239,8 +241,8 @@ const PersonalInformation = (props) => {
         setGender("Female");
       }
       if (
-        (candidatePersonalInfoData.maritalStatus !== null) &
-        (candidatePersonalInfoData.maritalStatus !== undefined) &
+        (candidatePersonalInfoData.maritalStatus !== null) &&
+        (candidatePersonalInfoData.maritalStatus !== undefined) &&
         (candidatePersonalInfoData.maritalStatus === "Married")
       ) {
         setMarried(true);

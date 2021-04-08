@@ -1,0 +1,25 @@
+/* @media all and (min-width: 480px) {
+    .Login {
+      padding: 60px 0;
+    }
+  
+    .Login form {
+      margin: 0 auto;
+      max-width: 320px;
+    }
+  } */
+  .header{
+    text-align: center;
+  }
+  .Login{
+    /* border:10px solid blue; */
+    background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+    margin: 0 auto;
+    margin-top: 70px;
+    max-width: 400px;
+    padding: 40px 40px;
+    background: #fff
+  }
