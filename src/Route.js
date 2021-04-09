@@ -101,11 +101,6 @@ const RoutePath = () => {
         component={OnBoardingStepper}
       />
 
-      <Route
-        path={`${process.env.PUBLIC_URL}/offer-relase-and-onboard`}
-        component={ViewEditRelease}
-      />
-
       {/* <Route
             path={`${process.env.PUBLIC_URL}/onboard`}
             component={OnBoardingStepper}
@@ -180,14 +175,13 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/candidate-verification`}
             component={CandidateVerification}
           />
-
-          <Route
-            path={`${process.env.PUBLIC_URL}/verification/:candidateId`}
-            component={Verification}
-          />
           <Route
             path={`${process.env.PUBLIC_URL}/offer-relase-and-onboard`}
             component={ViewEditRelease}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/verification/:candidateId`}
+            component={Verification}
           />
 
           {state.MenuPermissionsRoute.map((e) => {

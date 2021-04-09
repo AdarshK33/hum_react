@@ -6,6 +6,7 @@ import { Edit2, Eye, Search } from "react-feather";
 import { OfferContext } from "../../context/OfferState";
 import Pagination from "react-js-pagination";
 import "react-confirm-alert/src/react-confirm-alert.css";
+import { DocsVerifyContext } from "../../context/DocverificationState";
 
 const OfferReleaseList = () => {
   const {
@@ -15,7 +16,7 @@ const OfferReleaseList = () => {
     total,
     viewCandidateId,
   } = useContext(OfferContext);
-
+  const { verificationDocsView, docsToVerify } = useContext(DocsVerifyContext);
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [searchValue, setSearchValue] = useState("");
@@ -63,6 +64,10 @@ const OfferReleaseList = () => {
     }
   };
 
+  const fetchCandidateDetails = (candidateId) => {
+    viewCandidateId(candidateId);
+    verificationDocsView(candidateId);
+  };
   return (
     <Fragment>
       <Breadcrumb title="Offers" parent="Offer Release" />
@@ -107,6 +112,7 @@ const OfferReleaseList = () => {
                       <th scope="col">Overall Status</th>
                       <th scope="col">Edit</th>
                       <th scope="col">View</th>
+                      <th scope="col">Action</th>
                     </tr>
                   </thead>
                   {loader === true &&
@@ -164,6 +170,15 @@ const OfferReleaseList = () => {
                                 <Eye
                                   onClick={() => {
                                     viewCandidateId(item.candidateId);
+                                  }}
+                                />
+                              </Link>
+                            </td>
+                            <td>
+                              <Link to="/offer-relase-and-onboard">
+                                <Eye
+                                  onClick={() => {
+                                    fetchCandidateDetails(item.candidateId);
                                   }}
                                 />
                               </Link>

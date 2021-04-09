@@ -175,15 +175,13 @@ const CandidateList = () => {
                       <td>{item.statusDesc}</td>
 
                       <td>
-                        {item.status !== 5 && (
-                          <Link to={"/verification/" + item.candidateId}>
-                            <Eye
-                              onClick={() => {
-                                FetchCandidateData(item.candidateId);
-                              }}
-                            />
-                          </Link>
-                        )}
+                        <Link to={"/verification/" + item.candidateId}>
+                          <Eye
+                            onClick={() => {
+                              FetchCandidateData(item.candidateId);
+                            }}
+                          />
+                        </Link>
                       </td>
                     </tr>
                   </tbody>
