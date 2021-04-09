@@ -168,6 +168,12 @@ const CandidateOnboarding = () => {
               style={{ marginTop: "2rem", color: "#006EBB" }}
             />
           </Row>
+          <Row className="mt-5">
+            <Col sm={3}></Col>
+            <Col sm={4} className="text-center">
+              <Button className="px-5">Save</Button>
+            </Col>
+          </Row>
         </div>
         <div className="px-5 mx-auto mt-5">
           <h5>
