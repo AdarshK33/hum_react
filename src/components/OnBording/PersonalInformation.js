@@ -191,12 +191,14 @@ const PersonalInformation = (props) => {
 
   useEffect(() => {
     // console.log("personal information view candidate", candidateData);
-    console.log(Object.keys(candidatePersonalInfoData).length);
+
     if (
       candidatePersonalInfoData !== null &&
       candidatePersonalInfoData !== undefined &&
-      Object.keys(candidatePersonalInfoData).length !== 0
+      Object.keys(candidatePersonalInfoData).length !== 0 &&
+      candidatePersonalInfoData.aadhaarName !== null
     ) {
+      console.log("rajsekhar", candidatePersonalInfoData);
       setState({
         aadhaarName: candidatePersonalInfoData.aadhaarName,
         fatherName: candidatePersonalInfoData.fatherName,
@@ -224,7 +226,7 @@ const PersonalInformation = (props) => {
         candidatePersonalInfoData.dateOfBirth !== null &&
           candidatePersonalInfoData.dateOfBirth !== undefined
           ? new Date(candidatePersonalInfoData.dateOfBirth)
-          : null
+          : ""
       );
       if (
         candidatePersonalInfoData.gender !== null &&
@@ -234,10 +236,17 @@ const PersonalInformation = (props) => {
         setGenderM(true);
         setGenderF(false);
         setGender("Male");
-      } else {
+      } else if (
+        candidatePersonalInfoData.gender !== null &&
+        candidatePersonalInfoData.gender !== undefined &&
+        candidatePersonalInfoData.gender === "Female"
+      ) {
         setGenderF(true);
         setGenderM(false);
         setGender("Female");
+      } else {
+        setGenderF(false);
+        setGenderM(false);
       }
       if (
         candidatePersonalInfoData.maritalStatus !== null &&
@@ -247,11 +256,19 @@ const PersonalInformation = (props) => {
         setMarried(true);
         setUnMarried(false);
         setMaritalStatus("Married");
-      } else {
+      } else if (
+        candidatePersonalInfoData.maritalStatus !== null &&
+        candidatePersonalInfoData.maritalStatus !== undefined &&
+        candidatePersonalInfoData.maritalStatus === "Unmarried"
+      ) {
         setUnMarried(true);
         setMarried(false);
         setMaritalStatus("Unmarried");
+      } else {
+        setUnMarried(false);
+        setMarried(false);
       }
+
       if (
         candidateData !== undefined &&
         candidateData.candidateReferences !== null &&
@@ -532,8 +549,8 @@ const PersonalInformation = (props) => {
     }
   };
   const submitHandler = (e) => {
-    const submited = props.NextStep; //next component
-    submited();
+    // const submited = props.NextStep; //next component
+    // submited();
     e.preventDefault();
     const value = checkValidations();
     if (value === true) {
@@ -637,7 +654,7 @@ const PersonalInformation = (props) => {
 
         // next page code should be here
         const submited = props.NextStep; //next component
-        submited();
+        submited(true);
       }
       // if (saveClick === true) {
       //   const InfoData = {
@@ -1140,7 +1157,13 @@ const PersonalInformation = (props) => {
                       checked={married}
                       onChange={handleMarriedCheckboxChange}
                     />
-                    <label style={maritalStatusError ? { color: "red" } : {}}>
+                    <label
+                      style={
+                        maritalStatusError
+                          ? { marginLeft: "2px", color: "red" }
+                          : { marginLeft: "2px" }
+                      }
+                    >
                       Married{" "}
                     </label>
                   </div>
@@ -1169,48 +1192,49 @@ const PersonalInformation = (props) => {
               </Col>
             </Row>
             {state.disability === "Yes" ? (
-              <Row style={{ marginTop: "2rem" }}>
-                <Col sm={12}>
-                  <div className="FileInput">
-                    <label>Disability Document</label>
-                  </div>
-                  <div className="parentInput">
-                    <input
-                      className="fileInputField2"
-                      placeholder="Choose File"
-                      type="text"
-                      name="disabilityDoc"
-                      value={disabilityDoc}
-                    />
-                    <label
-                      className="custom-file-upload"
-                      style={{ fontSize: "16px" }}
-                    >
-                      <input
-                        type="file"
-                        className="custom_file_Upload_button"
-                        onChange={disabilityDocument}
-                      />
-                      {/* <i className="fa fa-cloud-upload" />  */}
-                      Upload
-                      {/* <i
+              // <Row style={{ marginTop: "2rem" }}>
+              //   <Col sm={12}>
+              //     <div className="FileInput">
+              //       <label>Disability Document</label>
+              //     </div>
+              //     <div className="parentInput">
+              //       <input
+              //         className="fileInputField2"
+              //         placeholder="Choose File"
+              //         type="text"
+              //         name="disabilityDoc"
+              //         value={disabilityDoc}
+              //       />
+              //       <label
+              //         className="custom-file-upload"
+              //         style={{ fontSize: "16px" }}
+              //       >
+              //         <input
+              //           type="file"
+              //           className="custom_file_Upload_button"
+              //           onChange={disabilityDocument}
+              //         />
+              /* <i className="fa fa-cloud-upload" />  */
+              /* Upload */
+              /* <i
                       id="custom_file_upload_icon"
                       class="fa fa-upload"
                       aria-hidden="true"
-                    ></i> */}
-                    </label>
+                    ></i> */
+              /* </label>
                   </div>
 
                   {disabilityDocError ? (
                     <p style={{ color: "red" }}>
                       &nbsp;&nbsp;&nbsp;&nbsp; Please upload the disability
                       document
-                    </p>
-                  ) : (
-                    <p></p>
-                  )}
-                </Col>
-              </Row>
+                    </p> */
+
+              // <p></p>
+
+              /* </Col>
+              </Row> */
+              ""
             ) : (
               <div></div>
             )}
@@ -1413,9 +1437,9 @@ const PersonalInformation = (props) => {
             textAlign: "center",
           }}
         >
-          <button className="stepperButtons" onClick={PrevStep}>
+          {/* <button className="stepperButtons" onClick={PrevStep}>
             Back
-          </button>
+          </button> */}
 
           <button className="stepperButtons" onClick={submitHandler}>
             Save & Next

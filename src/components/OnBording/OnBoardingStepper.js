@@ -84,42 +84,69 @@ const OnBoardingStepper = (props) => {
     },
   ]);
   console.log(stepArray);
-  const handleIconChange = (data)=>{
-    let tempArray = [...stepArray];
-    tempArray.forEach((value,index)=>{
-if(index<data){
-  tempArray[index].step = checkOk;
-  tempArray[index].label = labelOk;
-  tempArray[index].line = lineOk;
-}else if(data>=index){
-  tempArray[index].line = defaultLine;
-  tempArray[index].label = currLabel;
-  tempArray[index].step = currStep;
-  setStepNumber(index );
-}if(index>data){
-  tempArray[index].line = defaultLine;
-  tempArray[index].step = defaultStep;
-  tempArray[index].label = defaultLabel;
-}else if(data<=index){
-  tempArray[index].line = defaultLine;
-  tempArray[index].step = currStep;
-  tempArray[index].label = currLabel;
-  setStepNumber(index );
-}
-    })
+  // const handleIconChange1 = (data) => {
+  //   let tempArray = [...stepArray];
+  //   tempArray.forEach((value, index) => {
+  //     if (index < data) {
+  //       tempArray[index].step = checkOk;
+  //       tempArray[index].label = labelOk;
+  //       tempArray[index].line = lineOk;
+  //     } else if (data >= index) {
+  //       tempArray[index].line = defaultLine;
+  //       tempArray[index].label = currLabel;
+  //       tempArray[index].step = currStep;
+  //       setStepNumber(index);
+  //     }
+  //     if (index > data) {
+  //       tempArray[index].line = defaultLine;
+  //       tempArray[index].step = defaultStep;
+  //       tempArray[index].label = defaultLabel;
+  //     } else if (data <= index) {
+  //       tempArray[index].line = defaultLine;
+  //       tempArray[index].step = currStep;
+  //       tempArray[index].label = currLabel;
+  //       setStepNumber(index);
+  //     }
+  //   });
+  //   setStep(tempArray);
+  // };
+
+  const handleIconChange = (num) => {
+    if (num >= 0 && num <= 6) {
+      let tempArray = [...stepArray];
+      console.log("---------------------------", num);
+      tempArray.forEach((value, index) => {
+        if (tempArray[index].fileSaved === true) {
+          tempArray[index].step = checkOk;
+          tempArray[index].label = labelOk;
+          if (index > 0) {
+            tempArray[index - 1].line = lineOk;
+          }
+        } else {
+          tempArray[index].step = defaultStep;
+          tempArray[index].label = defaultLabel;
+          if (index > 0) {
+            tempArray[index - 1].line = defaultLine;
+          }
+        }
+        tempArray[num].step = currStep;
+        tempArray[num].label = currLabel;
+      });
+      setStepNumber(num);
       setStep(tempArray);
-   }
+    }
+  };
 
   useEffect(() => {
     CandidateProfile();
   }, []);
   console.log("stepper candidate data", candidateData);
 
-  const NextStep = () => {
+  const NextStep = (value) => {
     console.log(stepCount, "NEXTSTEP");
     if (stepCount >= 0 && stepCount < 6) {
       let tempArray = [...stepArray];
-      tempArray[stepCount].fileSaved = true
+      tempArray[stepCount].fileSaved = value;
       tempArray[stepCount].step = checkOk;
       tempArray[stepCount].label = labelOk;
       tempArray[stepCount].line = lineOk;
@@ -135,20 +162,42 @@ if(index<data){
     console.log(stepCount);
     if (stepCount > 0 && stepCount <= 6) {
       let tempArray = [...stepArray];
-      tempArray[stepCount-1].fileSaved = false
-      tempArray[stepCount].step = defaultStep;
-      tempArray[stepCount].label = defaultLabel;
-      tempArray[stepCount - 1].line = defaultLine;
-      tempArray[stepCount - 1].step = currStep;
-      tempArray[stepCount - 1].label = currLabel;
+      if (tempArray[stepCount].fileSaved === true) {
+        tempArray[stepCount].step = checkOk;
+        tempArray[stepCount].label = labelOk;
+        tempArray[stepCount].line = lineOk;
+        tempArray[stepCount - 1].line = defaultLine;
+        tempArray[stepCount - 1].step = currStep;
+        tempArray[stepCount - 1].label = currLabel;
+      } else {
+        tempArray[stepCount].step = defaultStep;
+        tempArray[stepCount].label = defaultLabel;
+        tempArray[stepCount - 1].line = defaultLine;
+        tempArray[stepCount - 1].step = currStep;
+        tempArray[stepCount - 1].label = currLabel;
+      }
       setStep(tempArray);
       setStepNumber(stepCount - 1);
     }
   };
-  console.log(stepCount,stepArray,"stepArray")
+  // const PrevStep1 = () => {
+  //   console.log("prevStep");
+  //   console.log(stepCount);
+  //   if (stepCount > 0 && stepCount <= 6) {
+  //     let tempArray = [...stepArray];
+  //     tempArray[stepCount].step = defaultStep;
+  //     tempArray[stepCount].label = defaultLabel;
+  //     tempArray[stepCount - 1].line = defaultLine;
+  //     tempArray[stepCount - 1].step = currStep;
+  //     tempArray[stepCount - 1].label = currLabel;
+  //     setStep(tempArray);
+  //     setStepNumber(stepCount - 1);
+  //   }
+  // };
+  console.log(stepCount, stepArray, "stepArray");
   return (
     <Fragment>
-      <Breadcrumb title="onboard" parent="onboard" />
+      <Breadcrumb title="OnBoard" parent="Candidate OnBoard" />
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
@@ -161,7 +210,13 @@ if(index<data){
                   <Row style={{ marginTop: "1rem" }}>
                     <Col sm={1} style={{ marginTop: "1rem" }}>
                       <div>
-                        <div  type="button" onClick={()=>{handleIconChange(stepArray[0].idValue)}} className={stepArray[0].step}>
+                        <div
+                          type="button"
+                          onClick={() => {
+                            handleIconChange(stepArray[0].idValue);
+                          }}
+                          className={stepArray[0].step}
+                        >
                           <div style={{ paddingTop: "1px", fontSize: "28px" }}>
                             <i className="fa fa-user"></i>
                           </div>
@@ -176,7 +231,13 @@ if(index<data){
                         <br></br>
                         <span className={stepArray[0].line}></span>
 
-                        <div type="button" onClick={()=>{handleIconChange(stepArray[1].idValue)}} className={stepArray[1].step}>
+                        <div
+                          type="button"
+                          onClick={() => {
+                            handleIconChange(stepArray[1].idValue);
+                          }}
+                          className={stepArray[1].step}
+                        >
                           <div style={{ paddingTop: "4px", fontSize: "24px" }}>
                             <i
                               className="fa fa-address-card-o"
@@ -194,7 +255,13 @@ if(index<data){
                         <br></br>
                         <span className={stepArray[1].line}></span>
 
-                        <div type="button" onClick={()=>{handleIconChange(stepArray[2].idValue)}} className={stepArray[2].step}>
+                        <div
+                          type="button"
+                          onClick={() => {
+                            handleIconChange(stepArray[2].idValue);
+                          }}
+                          className={stepArray[2].step}
+                        >
                           <div style={{ paddingTop: "4px", fontSize: "23px" }}>
                             <i className="fa fa-address-book"></i>
                           </div>
@@ -209,7 +276,13 @@ if(index<data){
                         <br></br>
                         <span className={stepArray[2].line}></span>
 
-                        <div type="button" onClick={()=>{handleIconChange(stepArray[3].idValue)}} className={stepArray[3].step}>
+                        <div
+                          type="button"
+                          onClick={() => {
+                            handleIconChange(stepArray[3].idValue);
+                          }}
+                          className={stepArray[3].step}
+                        >
                           <div style={{ paddingTop: "0px", fontSize: "31px" }}>
                             <i className="fa fa-lock"></i>
                           </div>
@@ -224,7 +297,13 @@ if(index<data){
                         <br></br>
                         <span className={stepArray[3].line}></span>
 
-                        <div type="button" onClick={()=>{handleIconChange(stepArray[4].idValue)}} className={stepArray[4].step}>
+                        <div
+                          type="button"
+                          onClick={() => {
+                            handleIconChange(stepArray[4].idValue);
+                          }}
+                          className={stepArray[4].step}
+                        >
                           <div style={{ paddingTop: "4px", fontSize: "27px" }}>
                             <i className="fa fa-shield"></i>
                           </div>
@@ -239,7 +318,13 @@ if(index<data){
                         <br></br>
                         <span className={stepArray[4].line}></span>
 
-                        <div type="button" onClick={()=>{handleIconChange(stepArray[5].idValue)}} className={stepArray[5].step}>
+                        <div
+                          type="button"
+                          onClick={() => {
+                            handleIconChange(stepArray[5].idValue);
+                          }}
+                          className={stepArray[5].step}
+                        >
                           <div style={{ paddingTop: "5px", fontSize: "22px" }}>
                             <i className="fa fa-credit-card-alt"></i>
                           </div>
@@ -254,7 +339,13 @@ if(index<data){
                         <br></br>
                         <span className={stepArray[5].line}></span>
 
-                        <div type="button" onClick={()=>{handleIconChange(stepArray[6].idValue)}} className={stepArray[6].step}>
+                        <div
+                          type="button"
+                          onClick={() => {
+                            handleIconChange(stepArray[6].idValue);
+                          }}
+                          className={stepArray[6].step}
+                        >
                           <div style={{ paddingTop: "2px", fontSize: "26px" }}>
                             <i className="fa fa-book"></i>
                           </div>

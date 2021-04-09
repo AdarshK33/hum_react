@@ -67,13 +67,24 @@ const RemunerationInformation = (props) => {
       monthlyBonus,
       stipened,
       user.role,
-      typeof stipened
+      typeof stipened,
+      workInfoViewData
     );
     if (
-      user.role === "ADMIN" &&
-      (typeof fixedGross === "undefined" ||
-        fixedGross === "" ||
-        fixedGross.includes(" ", "-", ".", "/", "+") ||
+      typeof stipened === "undefined" ||
+      stipened === "" ||
+      (stipened + "").includes(" ", "-", ".", "/", "+") ||
+      (workInfoViewData.contractType === "Internship" && stipened <= 0)
+    ) {
+      console.log("remuneration Info5", fixedGross, monthlyBonus, stipened);
+      setStipenedError(true);
+    } else if (
+      ((user.role === "ADMIN" &&
+        workInfoViewData.contractType !== "Internship" &&
+        (typeof fixedGross === "undefined" ||
+          fixedGross === "" ||
+          stipened <= 0 ||
+          fixedGross.includes(" ", "-", ".", "/", "+"))) ||
         (workInfoViewData.contractType === "Permanent" && fixedGross < 18000) ||
         (workInfoViewData.contractType === "Parttime" &&
           (fixedGross < 90 || fixedGross > 200))) &&
@@ -133,12 +144,13 @@ const RemunerationInformation = (props) => {
         setMonthlyBonusError(false);
       }
     } else if (
-      typeof fixedGross === "undefined" ||
-      fixedGross === "" ||
-      fixedGross.includes(" ", "-", ".", "/", "+") ||
-      (workInfoViewData.contractType === "Permanent" && fixedGross < 18000) ||
-      (workInfoViewData.contractType === "Parttime" &&
-        (fixedGross < 90 || fixedGross > 200))
+      workInfoViewData.contractType !== "Internship" &&
+      (typeof fixedGross === "undefined" ||
+        fixedGross === "" ||
+        fixedGross.includes(" ", "-", ".", "/", "+") ||
+        (workInfoViewData.contractType === "Permanent" && fixedGross < 18000) ||
+        (workInfoViewData.contractType === "Parttime" &&
+          (fixedGross < 90 || fixedGross > 200)))
     ) {
       console.log("remuneration Info3", fixedGross, monthlyBonus, stipened);
       console.log(
@@ -182,6 +194,7 @@ const RemunerationInformation = (props) => {
       }
     } else if (
       user.role === "ADMIN" &&
+      workInfoViewData.contractType !== "Internship" &&
       (typeof monthlyBonus === "undefined" ||
         monthlyBonus === "" ||
         monthlyBonus.includes(" ", "-", ".", "/", "+") ||
@@ -206,14 +219,6 @@ const RemunerationInformation = (props) => {
         setBonusLimit(false);
         setMonthlyBonusError(false);
       }
-    } else if (
-      (typeof stipened === "undefined" ||
-        stipened === "" ||
-        (stipened + "").includes(" ", "-", ".", "/", "+")) &&
-      workInfoViewData.contractType === "Internship"
-    ) {
-      console.log("remuneration Info5", fixedGross, monthlyBonus, stipened);
-      setStipenedError(true);
     } else {
       console.log("remuneration Info6", fixedGross, monthlyBonus, stipened);
       setStipenedError(false);

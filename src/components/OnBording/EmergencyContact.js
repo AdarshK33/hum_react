@@ -89,52 +89,52 @@ const EmergencyContact = (props) => {
           "*Please enter alphabet characters only.";
       }
     }
-    if (!fields["addressLine"]) {
-      formIsValid = false;
-      stateError["addressLineError"] = "*Please enter your address.";
-    }
+    // if (!fields["addressLine"]) {
+    //   formIsValid = false;
+    //   stateError["addressLineError"] = "*Please enter your address.";
+    // }
 
-    if (typeof fields["addressLine"] !== "undefined") {
-      if (
-        !fields["addressLine"].match(/^([0-9]{5}|[a-zA-Z][a-zA-Z ]{0,49})$/)
-      ) {
-        formIsValid = false;
-        stateError["addressLineError"] = "*Please enter valid address.";
-      }
-    }
-    if (!fields["city"]) {
-      formIsValid = false;
-      stateError["cityError"] = "*Please enter your city.";
-    }
+    // if (typeof fields["addressLine"] !== "undefined") {
+    //   if (
+    //     !fields["addressLine"].match(/^([0-9]{5}|[a-zA-Z][a-zA-Z ]{0,49})$/)
+    //   ) {
+    //     formIsValid = false;
+    //     stateError["addressLineError"] = "*Please enter valid address.";
+    //   }
+    // }
+    // if (!fields["city"]) {
+    //   formIsValid = false;
+    //   stateError["cityError"] = "*Please enter your city.";
+    // }
 
-    if (typeof fields["city"] !== "undefined") {
-      if (!fields["city"].match(/^[a-zA-Z ]*$/)) {
-        formIsValid = false;
-        stateError["cityError"] = "*Please enter alphabet characters only.";
-      }
-    }
-    if (!fields["country"]) {
-      formIsValid = false;
-      stateError["countryError"] = "*Please enter your country.";
-    }
+    // if (typeof fields["city"] !== "undefined") {
+    //   if (!fields["city"].match(/^[a-zA-Z ]*$/)) {
+    //     formIsValid = false;
+    //     stateError["cityError"] = "*Please enter alphabet characters only.";
+    //   }
+    // }
+    // if (!fields["country"]) {
+    //   formIsValid = false;
+    //   stateError["countryError"] = "*Please enter your country.";
+    // }
 
-    if (typeof fields["country"] !== "undefined") {
-      if (!fields["country"].match(/^[a-zA-Z ]*$/)) {
-        formIsValid = false;
-        stateError["countryError"] = "*Please enter alphabet characters only.";
-      }
-    }
-    if (!fields["locality"]) {
-      formIsValid = false;
-      stateError["localityError"] = "Please enter your locality.";
-    }
+    // if (typeof fields["country"] !== "undefined") {
+    //   if (!fields["country"].match(/^[a-zA-Z ]*$/)) {
+    //     formIsValid = false;
+    //     stateError["countryError"] = "*Please enter alphabet characters only.";
+    //   }
+    // }
+    // if (!fields["locality"]) {
+    //   formIsValid = false;
+    //   stateError["localityError"] = "Please enter your locality.";
+    // }
 
-    if (typeof fields["locality"] !== "undefined") {
-      if (!fields["locality"].match(/^[a-zA-Z ]*$/)) {
-        formIsValid = false;
-        stateError["localityError"] = "Please enter alphabet characters only.";
-      }
-    }
+    // if (typeof fields["locality"] !== "undefined") {
+    //   if (!fields["locality"].match(/^[a-zA-Z ]*$/)) {
+    //     formIsValid = false;
+    //     stateError["localityError"] = "Please enter alphabet characters only.";
+    //   }
+    // }
     if (!fields["phoneNumber"]) {
       formIsValid = false;
       stateError["phoneNumberError"] = "*Please enter your mobile no.";
@@ -146,17 +146,17 @@ const EmergencyContact = (props) => {
         stateError["phoneNumberError"] = "*Please enter valid mobile number.";
       }
     }
-    if (!fields["pinCode"]) {
-      formIsValid = false;
-      stateError["pinCodeError"] = "*Please enter your pinCode.";
-    }
+    // if (!fields["pinCode"]) {
+    //   formIsValid = false;
+    //   stateError["pinCodeError"] = "*Please enter your pinCode.";
+    // }
 
-    if (typeof fields["pinCode"] !== "undefined") {
-      if (!/^[0-9]{6}$/g.test(fields["pinCode"])) {
-        formIsValid = false;
-        stateError["pinCodeError"] = "*Please enter numbers only.";
-      }
-    }
+    // if (typeof fields["pinCode"] !== "undefined") {
+    //   if (!/^[0-9]{6}$/g.test(fields["pinCode"])) {
+    //     formIsValid = false;
+    //     stateError["pinCodeError"] = "*Please enter numbers only.";
+    //   }
+    // }
 
     if (!fields["relationship"]) {
       formIsValid = false;
@@ -180,11 +180,11 @@ const EmergencyContact = (props) => {
       if (dataExist.exist == true) {
         EmergencyContactUpdate(state);
         const nextPage = props.NextStep;
-        nextPage();
+        nextPage(true);
       } else {
         EmergencyContactCreate(state);
         const nextPage = props.NextStep;
-        nextPage();
+        nextPage(true);
       }
     }
   };
@@ -281,7 +281,7 @@ const EmergencyContact = (props) => {
           <div className="col-sm-3">
             <Form.Group>
               <Form.Label>
-                Address Line 1<span style={{ color: "red" }}>*</span>
+                Address Line 1<span style={{ color: "red" }}></span>
               </Form.Label>
               <Form.Control
                 type="text"
@@ -316,7 +316,7 @@ const EmergencyContact = (props) => {
           <div className="col-sm-3">
             <Form.Group>
               <Form.Label>
-                City<span style={{ color: "red" }}>*</span>
+                City<span style={{ color: "red" }}></span>
               </Form.Label>
               <Form.Control
                 type="text"
@@ -333,7 +333,7 @@ const EmergencyContact = (props) => {
           <div className="col-sm-3">
             <Form.Group>
               <Form.Label>
-                Country<span style={{ color: "red" }}>*</span>
+                Country<span style={{ color: "red" }}></span>
               </Form.Label>
               <Form.Control
                 type="text"
@@ -351,7 +351,7 @@ const EmergencyContact = (props) => {
           <div className="col-sm-3">
             <Form.Group>
               <Form.Label>
-                PinCode<span style={{ color: "red" }}>*</span>
+                PinCode<span style={{ color: "red" }}></span>
               </Form.Label>
               <Form.Control
                 type="text"

@@ -87,16 +87,17 @@ const RoutePath = () => {
       <Route path={`${process.env.PUBLIC_URL}/signin`} component={Signin} />
       <Route path={`${process.env.PUBLIC_URL}/login`} component={Login} />
       {/* <Route
-      path={`${process.env.PUBLIC_URL}/onboarding`}
+      path={`${process.env.PUBLIC_URL}/onboard`}
       component={OnBoardingStepper}
       /> */}
+      {/* 
       <Route
-        //  {/*sachin */}
-        path={`${process.env.PUBLIC_URL}/loginonboard`}
-        component={LoginOnboard}
-      />
-
+            path={`${process.env.PUBLIC_URL}/loginonboard`}
+            component={LoginOnboard}
+          />
+           */}
       <Route
+        //  {/*Rajasekhar */}
         path={`${process.env.PUBLIC_URL}/onboard`}
         component={OnBoardingStepper}
       />
@@ -157,14 +158,13 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/edit-offer-release`}
             component={EditOfferRelease}
           />
-          <Route
-            //  {/*Rajasekhar */}
-            path={`${process.env.PUBLIC_URL}/onboard`}
-            component={OnBoardingStepper}
-          />
 
           <Route
             path={`${process.env.PUBLIC_URL}/onboard-offer`}
+            component={LoginOnboard}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/offer`}
             component={OfferAccept}
           />
           <Route

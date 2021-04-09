@@ -345,7 +345,7 @@ const Documents = (props) => {
     if (value === true) {
       console.log(state);
       const nextPage = props.NextStep;
-      nextPage();
+      nextPage(true);
     }
   };
 
@@ -789,6 +789,54 @@ const Documents = (props) => {
         ) : (
           ""
         )}
+
+        {(isChecked === false) &
+        (localExpact === false) &
+        (internship === false) ? (
+          // required in full time and part time
+          //no need on localexact and internship
+          <Row>
+            <Col>
+              <Form.Group>
+                <div
+                  className={
+                    FandP_Time_Required[0].ReqEpfPassBook
+                      ? "FileInput"
+                      : "FileInputWithOutStar"
+                  }
+                >
+                  <label>Disability Document</label>
+                </div>
+                <div className="parentInput">
+                  <input
+                    className="fileInputField"
+                    placeholder="Choose File"
+                    type="text"
+                    value={state.epfPassBook}
+                    readOnly
+                  />
+                  <label className="custom-file-upload">
+                    <input
+                      type="file"
+                      name="epfPassBook"
+                      className="custom_file_Upload_button"
+                      onChange={changeHandler}
+                    />
+                    {/* <i className="fa fa-cloud-upload" />  */}
+                    Upload File{" "}
+                    <i
+                      id="custom_file_upload_icon"
+                      className="fa fa-upload"
+                      aria-hidden="true"
+                    ></i>
+                  </label>
+                </div>
+              </Form.Group>
+            </Col>
+          </Row>
+        ) : (
+          ""
+        )}
         {(isChecked === false) |
         (localExpact === true) |
         (internship === true) ? (
@@ -1075,6 +1123,134 @@ const Documents = (props) => {
                   <p style={{ color: "red" }}>
                     {" "}
                     &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the latest payslips
+                  </p>
+                ) : (
+                  <p></p>
+                )}
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Group>
+                <div className="FileInput">
+                  <label>Form 11 Declaration</label>
+                </div>
+                <div className="parentInput">
+                  <input
+                    className="fileInputField"
+                    placeholder="Choose File"
+                    type="text"
+                    style={relievingLetterError ? { borderColor: "red" } : {}}
+                    value={state.relievingLetter}
+                    readOnly
+                  />
+                  <label className="custom-file-upload">
+                    <input
+                      type="file"
+                      name="relievingLetter"
+                      className="custom_file_Upload_button"
+                      onChange={changeHandler}
+                    />
+                    {/* <i className="fa fa-cloud-upload" />  */}
+                    Upload File{" "}
+                    <i
+                      id="custom_file_upload_icon"
+                      className="fa fa-upload"
+                      aria-hidden="true"
+                    ></i>
+                  </label>
+                </div>
+                {relievingLetterError ? (
+                  <p style={{ color: "red" }}>
+                    {" "}
+                    &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the Form 11
+                    Declaration
+                  </p>
+                ) : (
+                  <p></p>
+                )}
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Group>
+                <div className="FileInput">
+                  <label>Form 2 EPF Nomination</label>
+                </div>
+                <div className="parentInput">
+                  <input
+                    className="fileInputField"
+                    placeholder="Choose File"
+                    type="text"
+                    style={relievingLetterError ? { borderColor: "red" } : {}}
+                    value={state.relievingLetter}
+                    readOnly
+                  />
+                  <label className="custom-file-upload">
+                    <input
+                      type="file"
+                      name="relievingLetter"
+                      className="custom_file_Upload_button"
+                      onChange={changeHandler}
+                    />
+                    {/* <i className="fa fa-cloud-upload" />  */}
+                    Upload File{" "}
+                    <i
+                      id="custom_file_upload_icon"
+                      className="fa fa-upload"
+                      aria-hidden="true"
+                    ></i>
+                  </label>
+                </div>
+                {relievingLetterError ? (
+                  <p style={{ color: "red" }}>
+                    {" "}
+                    &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the Form 2 EPF
+                    Nomination
+                  </p>
+                ) : (
+                  <p></p>
+                )}
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Form.Group>
+                <div className="FileInput">
+                  <label>Form F Gratuity</label>
+                </div>
+                <div className="parentInput">
+                  <input
+                    className="fileInputField"
+                    placeholder="Choose File"
+                    type="text"
+                    style={relievingLetterError ? { borderColor: "red" } : {}}
+                    value={state.relievingLetter}
+                    readOnly
+                  />
+                  <label className="custom-file-upload">
+                    <input
+                      type="file"
+                      name="relievingLetter"
+                      className="custom_file_Upload_button"
+                      onChange={changeHandler}
+                    />
+                    {/* <i className="fa fa-cloud-upload" />  */}
+                    Upload File{" "}
+                    <i
+                      id="custom_file_upload_icon"
+                      className="fa fa-upload"
+                      aria-hidden="true"
+                    ></i>
+                  </label>
+                </div>
+                {relievingLetterError ? (
+                  <p style={{ color: "red" }}>
+                    {" "}
+                    &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the Form F Gratuity
                   </p>
                 ) : (
                   <p></p>

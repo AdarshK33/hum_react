@@ -21,19 +21,25 @@ const BankDetails = (props) => {
   const [accountNumberError, setAccountNumberError] = useState(false);
   const [bankNameError, setBankNameError] = useState(false);
   const [ifscCodeError, setIfscCodeError] = useState(false);
+  const [bankIdValue, setBankIdVlue] = useState(0);
 
   useEffect(() => {
     CandidateProfile();
     bankView(candidateData.candidateId);
+  }, []);
+
+  useEffect(() => {
     if (bankViewData && bankViewData !== null && bankViewData !== undefined) {
       setState({
         accountNumber: bankViewData.accountNumber,
         bankName: bankViewData.bankName,
         ifscCode: bankViewData.ifscCode,
       });
+      setBankIdVlue(bankViewData.bankId);
     }
     console.log("bankViewData", bankViewData);
-  }, []);
+  }, [bankViewData]);
+
   const [state, setState] = useState({
     accountNumber: "",
     bankName: "",
@@ -67,7 +73,7 @@ const BankDetails = (props) => {
 
   const IfscCodeErrorValidation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
-    if ((state.ifscCode !== "") & (state.ifscCode.length >= 12)) {
+    if ((state.ifscCode !== "") & (state.ifscCode.length >= 11)) {
       setIfscCodeError(false);
       console.log("ifscCodeSuccess");
       return true;
@@ -91,27 +97,27 @@ const BankDetails = (props) => {
 
   const submitHandler = (e) => {
     console.log("inside bank submit handler", bankSaveData);
-    const nextPage = props.NextStep;
-    let bankValue;
-    nextPage();
+    // const nextPage = props.NextStep;
+    // // let bankValue;
+    // nextPage();
     e.preventDefault();
-    if (!bankSaveData || !bankViewData) {
-      bankValue = 0;
-    } else if (bankViewData || bankSaveData) {
-      bankValue = bankSaveData.bankId
-        ? bankSaveData.bankId
-        : bankViewData.bankId;
-    }
+    // if (!bankSaveData || !bankViewData) {
+    //   bankValue = 0;
+    // } else if (bankViewData || bankSaveData) {
+    //   bankValue = bankSaveData.bankId
+    //     ? bankSaveData.bankId
+    //     : bankViewData.bankId;
+    // }
     const value = checkValidations();
     if (value === true) {
       const bankInfo = {
         accountNumber: state.accountNumber,
-        bankId: bankValue,
+        bankId: bankIdValue,
         bankName: state.bankName,
         candidateId: candidateData.candidateId,
         ifscCode: state.ifscCode,
       };
-      console.log(bankInfo);
+      console.log("bank payload", bankInfo);
       if (
         (bankSaveData && bankSaveData.bankId) ||
         (bankViewData && bankViewData.bankId)
@@ -121,7 +127,7 @@ const BankDetails = (props) => {
         bankCreate(bankInfo);
       }
       const nextPage = props.NextStep;
-      nextPage();
+      nextPage(true);
     }
   };
 
@@ -219,18 +225,18 @@ const BankDetails = (props) => {
             <div>
               <br></br>
               <label>
-                <b>1.</b>The Candidate's name sholud be upload on the cancelled
+                1. The Candidate's name sholud be upload on the cancelled
                 cheque.
               </label>
               <br></br>
               <label>
-                <b>2.</b>If the name of the candidate is not present then you
-                can upload bank statments and passbook.
+                2. If the name of the candidate is not present then you can
+                upload bank statments and passbook.
               </label>
               <br></br>
               <label>
-                <b>3.</b>The candidate's name on the documents is mandatory
-                otherwise it will not be considered as valid proof.
+                3. The candidate's name on the documents is mandatory otherwise
+                it will not be considered as valid proof.
               </label>
             </div>
           </Col>

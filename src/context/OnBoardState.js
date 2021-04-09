@@ -8,12 +8,12 @@ export const OnBoardContext = createContext();
 const initial_state = {
   name: " ",
   Infodata: [],
-  emergencyContactData:{},
-  emergencyContactCreate:{},
-  emergencyContactView:{},
-  pfDeclarationCreate:{},
-  pfDeclarationUpdate:{},
-  pfDeclarationView:{},
+  emergencyContactData: {},
+  emergencyContactCreate: {},
+  emergencyContactView: {},
+  pfDeclarationCreate: {},
+  pfDeclarationUpdate: {},
+  pfDeclarationView: {},
   PersonalInfoResponse: {},
   CreateNomineeResponse: {},
   candidateInsuranceNominationData: {},
@@ -116,7 +116,11 @@ export const OnBoardProvider = (props) => {
       .get(`/api/v2/candidate/contact/view/${data}`)
       .then((response) => {
         state.emergencyContactView = response.data.data;
-        console.log("EmergencyContactView Response ",response, state.emergencyContactView);
+        console.log(
+          "EmergencyContactView Response ",
+          response,
+          state.emergencyContactView
+        );
         return dispatch({
           type: "EMERGENCY_CONTACT_VIEW",
           payload: state.emergencyContactView,
@@ -165,7 +169,11 @@ export const OnBoardProvider = (props) => {
       .get(`/api/v2/candidate/pf/view/${data}`)
       .then((response) => {
         state.pfDeclarationView = response.data.data;
-        console.log("PFeclarationView Response ",response, state.pfDeclarationView);
+        console.log(
+          "PFeclarationView Response ",
+          response,
+          state.pfDeclarationView
+        );
         return dispatch({
           type: "PFDECLARATION_VIEW",
           payload: state.pfDeclarationView,
@@ -430,6 +438,7 @@ export const OnBoardProvider = (props) => {
       .post("/api/v2/candidate/bank/update", bankInfo)
       .then((response) => {
         state.bankUpdateData = response.data.data;
+        toast.info(response.data.message);
         console.log("bankUpdateData", state.bankUpdateData);
         return dispatch({
           type: "CANDIDATE_BANK_UPDATE_DATA",
@@ -485,16 +494,16 @@ export const OnBoardProvider = (props) => {
         bankCreate,
         bankView,
         bankUpdate,
-        emergencyContactData:state.emergencyContactData,
+        emergencyContactData: state.emergencyContactData,
         emergencyContactCreate: state.emergencyContactCreate,
         emergencyContactView: state.emergencyContactView,
-        pfDeclarationCreate:state.pfDeclarationCreate,
-        pfDeclarationUpdate:state.pfDeclarationUpdate,
-        pfDeclarationView:state.pfDeclarationView,
-       
+        pfDeclarationCreate: state.pfDeclarationCreate,
+        pfDeclarationUpdate: state.pfDeclarationUpdate,
+        pfDeclarationView: state.pfDeclarationView,
+
         searchEmpData1: state.searchEmpData1,
         searchEmpData2: state.searchEmpData2,
-        
+
         name: state.name,
         PersonalInfoResponse: state.PersonalInfoResponse,
         CreateNomineeResponse: state.CreateNomineeResponse,
