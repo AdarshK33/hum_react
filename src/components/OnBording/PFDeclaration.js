@@ -491,7 +491,7 @@ const PFDeclaration = (props) => {
               />
             </Form.Group>
           </Col>
-          <Col sm={2}>
+          {/* <Col sm={2}>
             <div>
               <label>
                 Fill{" "}
@@ -502,7 +502,7 @@ const PFDeclaration = (props) => {
                 here
               </label>
             </div>
-          </Col>
+          </Col> */}
         </Row>
 
         <Row style={{ marginBottom: "2rem" }}>
@@ -599,28 +599,22 @@ const PFDeclaration = (props) => {
               </div>
             </Form.Group>
           </Col>
-          <Col sm={2}>
+          {/* <Col sm={2}>
             <div>
               <label>
                 <a href="~/address">Add</a> Details here
               </label>
             </div>
-          </Col>
-        </Row>
-        <label>Please fill the forms below</label>
-        <br />
-        <Row>
+          </Col> */}
+
           <Col sm={5}>
-            <a
-              className="stepperA"
-              href={require("../../forms/Form_11_UAN.pdf")}
-              target="_blank"
-            >
+            <label>Please fill the forms below</label>
+            <br />
+            <a href={require("../../forms/Form_11_UAN.pdf")} target="_blank">
               Download Form 11 Declaration
             </a>
             <br />
             <a
-              className="stepperA"
               href={require("../../forms/Form_2_EPF_Nomination.pdf")}
               target="_blank"
             >
@@ -628,7 +622,6 @@ const PFDeclaration = (props) => {
             </a>
             <br />
             <a
-              className="stepperA"
               href={require("../../forms/Form_F_Gratuity.pdf")}
               target="_blank"
             >
@@ -637,8 +630,9 @@ const PFDeclaration = (props) => {
             <br />
           </Col>
           <Col sm={5}>
+            <label></label>
+            <br />
             <a
-              className="stepperA"
               href={require("../../forms/Form_11_(PF_declaration)_Sample_copy.pdf")}
               target="_blank"
             >
@@ -646,7 +640,6 @@ const PFDeclaration = (props) => {
             </a>
             <br />
             <a
-              className="stepperA"
               href={require("../../forms/Form_2_(PF_nomination)_Sample_copy.pdf")}
               target="_blank"
             >
@@ -654,7 +647,6 @@ const PFDeclaration = (props) => {
             </a>
             <br />
             <a
-              className="stepperA"
               href={require("../../forms/Form_F_(Gratuity)_Sample_copy.pdf")}
               target="_blank"
             >

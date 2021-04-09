@@ -1506,7 +1506,7 @@ const InsuranceNomination = (props) => {
                 <div className="col-sm-4">
                   <Form.Group>
                     <Form.Label>
-                      Datte Of Birth<span style={{ color: "red" }}>*</span>
+                      Date Of Birth<span style={{ color: "red" }}>*</span>
                     </Form.Label>
                     <div
                       className={
@@ -1599,6 +1599,9 @@ const InsuranceNomination = (props) => {
 
       {NominForm1 === true ? (
         <div>
+          <label>
+            <b>Second Nominee</b>
+          </label>
           {/* second Nominee */}
           <Row style={{ marginBottom: "2rem" }}>
             <Col sm={11}>
@@ -1716,7 +1719,7 @@ const InsuranceNomination = (props) => {
                 <div className="col-sm-4">
                   <Form.Group>
                     <Form.Label>
-                      Datte Of Birth<span style={{ color: "red" }}>*</span>
+                      Date Of Birth<span style={{ color: "red" }}>*</span>
                     </Form.Label>
                     <div
                       className={
@@ -1810,6 +1813,9 @@ const InsuranceNomination = (props) => {
       {NominForm2 === true ? (
         <div>
           {/* Third Nominee  */}
+          <label>
+            <b>Third Nominee</b>
+          </label>
           <Row style={{ marginBottom: "2rem" }}>
             <Col sm={11}>
               <Row>
@@ -1925,7 +1931,7 @@ const InsuranceNomination = (props) => {
                 <div className="col-sm-4">
                   <Form.Group>
                     <Form.Label>
-                      Datte Of Birth<span style={{ color: "red" }}>*</span>
+                      Date Of Birth<span style={{ color: "red" }}>*</span>
                     </Form.Label>
                     <div
                       className={
@@ -2019,6 +2025,9 @@ const InsuranceNomination = (props) => {
       {NominForm3 === true ? (
         <div>
           {/* fourth Nominee Name */}
+          <label>
+            <b>Fourth Nominee</b>
+          </label>
           <Row style={{ marginBottom: "2rem" }}>
             <Col sm={11}>
               <Row>
@@ -2135,7 +2144,7 @@ const InsuranceNomination = (props) => {
                 <div className="col-sm-4">
                   <Form.Group>
                     <Form.Label>
-                      &nbsp; *Datte Of Birth
+                      &nbsp; Date Of Birth
                       <span style={{ color: "red" }}>*</span>
                     </Form.Label>
                     <div
@@ -2230,6 +2239,9 @@ const InsuranceNomination = (props) => {
       {NominForm4 === true ? (
         <div>
           {/* Fifth Nominee */}
+          <label>
+            <b>Fifth Nominee</b>
+          </label>
           <Row style={{ marginBottom: "2rem" }}>
             <Col sm={11}>
               <Row>
@@ -2345,7 +2357,7 @@ const InsuranceNomination = (props) => {
                 <div className="col-sm-4">
                   <Form.Group>
                     <Form.Label>
-                      Datte Of Birth<span style={{ color: "red" }}>*</span>
+                      Date Of Birth<span style={{ color: "red" }}>*</span>
                     </Form.Label>
                     <div
                       className={
