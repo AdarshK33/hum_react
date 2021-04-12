@@ -53,7 +53,7 @@ const AdminRoster = () => {
     }
     useEffect(() => {
         viewContractTypes()
-        setContractType("Permanent")
+        setContractType("all")
         costCenter()
         calcWeek()
 
@@ -70,11 +70,13 @@ const AdminRoster = () => {
 
     const handleClose = () => setAdminModal(false)
     const handleShow = (item, name, ctype, weekId, cid) => {
+        console.log("contract type", ctype)
         setshiftDate(item.weekId)
         setAdminModal(true)
         setDate(item)
         setFirstName(name);
-        adminRosterAvailableShift(contractType, costCenter1)
+        adminRosterAvailableShift(ctype, costCenter1)
+        setContractType(ctype)
 
         // getallWeeks()
     }
@@ -118,7 +120,6 @@ const AdminRoster = () => {
 
 
     const checkCondition = (item, name, ctype, costCentreName, weekId) => {
-
 
         if (item.roster == null) {
             return <button className="btn btn-square bg-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item, name, ctype, costCentreName, weekId)}>+</button>
@@ -357,7 +358,9 @@ const AdminRoster = () => {
 
                                                                 //  console.log(newData.getDay(), "day")
 
-                                                                return <td>{item.weekName}<br />{data.date}<br /> {checkCondition(data, item.firstName, item.contractType, item.costCentreName)}</td>
+                                                                return <td>{item.weekName}<br />{data.date}<br /> {checkCondition(data, item.firstName, item.contractType, item.costCentreName)}
+                                                                </td>
+
                                                             })}
                                                         </tr>
                                                     )
@@ -385,7 +388,7 @@ const AdminRoster = () => {
                         </div>
                     </div>
                 </div>
-                {adminModal &&
+                 {adminModal &&
                     <AdminShiftModal
                         handleClose={handleClose}
                         contractType={contractType}

@@ -494,11 +494,13 @@ function Dashboard() {
 
             <div>
                 <Row style={{ margin: '7% 0%' }}>
-                    <Col><Graph name="Cluster - Daily Qty vs No. of hours Planned" hours={dpshoursCluster} Qty={dpsQtyCluster} /></Col>
+                    <Col><Graph name="Cluster - Daily Qty vs No. of hours Planned" hours={dpshoursCluster} 
+                    Qty={dpsQtyCluster} dayWeekMonth={dayWeekMonth} /></Col>
 
                 </Row>
                 <Row style={{ margin: '7% 0%', textAlign: "center" }}>
-                    <Col><Graph name="Store - Daily Qty vs No. of hours Planned" hours={dpshoursStore} Qty={dpsQtyStore} /></Col>
+                    <Col><Graph name="Store - Daily Qty vs No. of hours Planned" hours={dpshoursStore} 
+                    Qty={dpsQtyStore} dayWeekMonth={dayWeekMonth} /></Col>
 
                 </Row>
             </div>
