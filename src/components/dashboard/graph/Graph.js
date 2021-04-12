@@ -26,12 +26,12 @@ class Graph extends Component {
 	createPareto(){
 		
 		var chart = this.chart;
-		
+		console.log("chart data",chart.data[0].dataPoints)
 		var  yTotal = 0;
 		
 		for(var i = 0; i < chart.data[0].dataPoints.length; i++)
 			yTotal += chart.data[0].dataPoints[i].y;
-	
+	console.log("yTotal",yTotal)
 		chart.creditText = "";
 		chart.addTo("data",{type:"line",showInLegend: true, name: "Qty Target", yValueFormatString: "0.##"%"", lineDashType: "dash", dataPoints: this.props.Qty});
 		chart.data[1].set("axisYType", "secondary", false);
@@ -39,7 +39,7 @@ class Graph extends Component {
 		chart.axisY2[0].set("maximum", 200);
 		chart.axisY2[0].set("minimum", 0);
 		
-		
+		console.log("this.props.Qty", this.props.Qty)
 		
 	}
 	render() {

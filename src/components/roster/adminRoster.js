@@ -7,7 +7,7 @@ import DatePicker from "react-datepicker";
 import Select from 'react-select'
 import "react-datepicker/dist/react-datepicker.css";
 import AdminShiftModal from "./adminShiftModal";
-
+import './roster.css'
 import moment from 'moment'
 
 const AdminRoster = () => {
@@ -121,7 +121,7 @@ const AdminRoster = () => {
 
 
         if (item.roster == null) {
-            return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item, name, ctype, costCentreName, weekId)}>+</button>
+            return <button className="btn btn-square bg-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item, name, ctype, costCentreName, weekId)}>+</button>
         }
         else if (item.roster.leave !== "" && item.roster.leave !== null) {
             return <button className="btn btn-square btn-danger btn-sm" onClick={() => handleShow(item, name, ctype, costCentreName, weekId)} type="button">Leave</button>
@@ -135,7 +135,7 @@ const AdminRoster = () => {
         else if (item.roster.shiftName !== "" && item.roster.shiftName !== null) {
             return <button className="btn btn-square btn-success  btn-sm" onClick={() => handleShow(item, name, ctype, costCentreName, weekId)} type="button">{item.roster.shiftName}</button>
         } else {
-            return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item, name, ctype, costCentreName, weekId)}>+</button>
+            return <button className="btn btn-square bg-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item, name, ctype, costCentreName, weekId)}>+</button>
         }
     }
     return (
@@ -241,6 +241,7 @@ const AdminRoster = () => {
                                                     }>
 
                                                     <option value="">Select Employee Type</option>
+                                                    <option value='all'>All</option>
                                                     {shiftContractNames !== null && shiftContractNames.map((e, i) => {
                                                         return (
                                                             <option key={e.typeId} value={e.contractType}>
@@ -271,6 +272,7 @@ const AdminRoster = () => {
                                                         })
                                                     } */}
                                                     <option value="">Select Cluster</option>
+                                                    <option value='0'>All</option>
                                                     {clusterCostCenterList !== null && clusterCostCenterList.map((e, i) => {
                                                         return (
                                                             <option key={i + 1} value={e.clusterId} >{e.clusterName}</option>

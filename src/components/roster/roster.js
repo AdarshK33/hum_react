@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import ShiftModal from "./shiftModal";
 import { AppContext } from "../../context/AppState";
 import moment from 'moment'
+import './roster.css'
 
 const Roster = () => {
   const [startDate, setStartDate] = useState(moment());
@@ -43,7 +44,7 @@ const Roster = () => {
   const checkCondition = (item, weekId , weekName) => {
     //console.log(item, "che")
     if (item.roster == null) {
-      return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item, weekId, weekName)}>+</button>
+      return <button className="btn btn-square bg-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item, weekId, weekName)}>+</button>
 
     }
     else if (item.roster.leave !== "" && item.roster.leave !== null) {
@@ -57,7 +58,7 @@ const Roster = () => {
     } else if (item.roster.shiftName !== "" && item.roster.shiftName !== null) {
       return <button className="btn btn-square btn-success  btn-sm" type="button" onClick={() => handleShow(item, weekId, weekName)}>{item.roster.shiftName}</button>
     } else {
-      return <button className="btn btn-square bg-gradient-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item, weekId, weekName)}>+</button>
+      return <button className="btn btn-square bg-secondary btn-sm pl-5 pr-5" onClick={() => handleShow(item, weekId, weekName)}>+</button>
     }
   }
   return (

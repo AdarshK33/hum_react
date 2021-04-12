@@ -306,7 +306,7 @@ export const RosterProvider = ({ children }) => {
     setLoader(true)
     console.log("My data" + endDate, startDate, contract, weekid, empId, clusterId)
     if (contract === "") {
-      contract = "permanent"
+      contract = "all"
     }
     if (weekid === undefined) {
       weekid = 0
@@ -342,7 +342,7 @@ export const RosterProvider = ({ children }) => {
     let flag = localStorage.getItem('flag')
 
     if (contract === "") {
-      contract = "permanent"
+      contract = "all"
     }
     if (weekid === undefined) {
       weekid = 0
