@@ -25,7 +25,7 @@ const Address = (props) => {
     addressView,
     addressViewData,
     CandidateProfile,
-    candidateData,
+    candidateProfileData,
   } = useContext(OnBoardContext);
 
   const [isChecked, changeCheckState] = useState(false);
@@ -85,12 +85,24 @@ const Address = (props) => {
   useEffect(() => {
     CandidateProfile();
     candidateCountryList();
-    addressView(candidateData.candidateId);
+    addressView(candidateProfileData.candidateId);
   }, []);
-  console.log("address candidate data", candidateData);
+  console.log("address candidate data", candidateProfileData);
   console.log("candidateCountryList data", candidateCountryData);
   console.log("addressViewData data", addressViewData);
-
+  useEffect(() => {
+    if (
+      candidateCountryData !== undefined &&
+      candidateCountryData !== null &&
+      countryName === ""
+    ) {
+      const countryvalue = candidateCountryData.filter(
+        (i) => i.countryId === addressViewData.countryId
+      );
+      console.log("Countryvalue", countryvalue);
+      setCountryName(countryvalue[0].countryName);
+    }
+  }, [candidateCountryData]);
   useEffect(() => {
     console.log("prefill data", addressViewData);
     let countryvalue;
@@ -497,7 +509,7 @@ const Address = (props) => {
         addressLine: state.addressLine,
         addressProof: " ",
         addressType: isChecked ? 1 : 0,
-        candidateId: candidateData.candidateId,
+        candidateId: candidateProfileData.candidateId,
         cityId: cityId,
         countryId: countryId,
         stateId: stateId,
