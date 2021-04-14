@@ -126,7 +126,7 @@ const CandidateList = () => {
                 <th scope="col">Document Verification Status</th>
                 <th scope="col">UAN Verification Status</th>
                 <th scope="col">Overall Status</th>
-                <th scope="col">View</th>
+                <th scope="col">Action</th>
               </tr>
             </thead>
             {loader === true &&
@@ -175,15 +175,13 @@ const CandidateList = () => {
                       <td>{item.statusDesc}</td>
 
                       <td>
-                        {item.status !== 5 && (
-                          <Link to={"/verification/" + item.candidateId}>
-                            <Eye
-                              onClick={() => {
-                                FetchCandidateData(item.candidateId);
-                              }}
-                            />
-                          </Link>
-                        )}
+                        <Link to={"/verification/" + item.candidateId}>
+                          <Edit2
+                            onClick={() => {
+                              FetchCandidateData(item.candidateId);
+                            }}
+                          />
+                        </Link>
                       </td>
                     </tr>
                   </tbody>

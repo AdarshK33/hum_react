@@ -10,11 +10,12 @@ import {
 } from "react-accessible-accordion";
 import "react-accessible-accordion/dist/fancy-example.css";
 import "../Offers/offers.css";
-// import EditEmployeeForm from "./editEmployeeForm";
-// import EditWorkInformation from "./editWorkInformation";
-// import EditRemunerationInformation from "./editremunerationInformation";
-// import GenerateOfferLetter from "./generateOfferLetter";
-
+import ViewEmployeeForm from "./viewEmployeeForm";
+import ViewWorkInformation from "./viewWorkInformationForm";
+import ViewRemunerationInformation from "./viewRemunerationInformation";
+import CandidateOfferLetter from "./candidateOfferLetter";
+import VerifyCandidateDocs from "./verifyCandidateDocs";
+import CandidateOnboarding from "./candidateOnboarding";
 const ViewOfferRelease = () => {
   return (
     <Fragment>
@@ -32,40 +33,61 @@ const ViewOfferRelease = () => {
               </AccordionItemButton>
             </AccordionItemHeading>
             <AccordionItemPanel>
-              {/* <EditEmployeeForm /> */}
+              <ViewEmployeeForm />
             </AccordionItemPanel>
           </AccordionItem>
 
           <AccordionItem>
             <AccordionItemHeading>
               <AccordionItemButton>
-                Step 2: Work Information
+                Step 2: Candidate Work Information
               </AccordionItemButton>
             </AccordionItemHeading>
             <AccordionItemPanel>
-              {/* <EditWorkInformation /> */}
+              <ViewWorkInformation />
             </AccordionItemPanel>
           </AccordionItem>
 
           <AccordionItem>
             <AccordionItemHeading>
               <AccordionItemButton>
-                Step 3: Remuneration Information
+                Step 3:Candidate Remuneration Information
               </AccordionItemButton>
             </AccordionItemHeading>
             <AccordionItemPanel>
-              {/* <EditRemunerationInformation /> */}
+              <ViewRemunerationInformation />
             </AccordionItemPanel>
           </AccordionItem>
 
           <AccordionItem>
             <AccordionItemHeading>
               <AccordionItemButton>
-                Step 4: Generate Offer Letter
+                Step 4: Generate Candidate Offer Letter
               </AccordionItemButton>
             </AccordionItemHeading>
             <AccordionItemPanel>
-              {/* <GenerateOfferLetter /> */}
+              <CandidateOfferLetter />
+            </AccordionItemPanel>
+          </AccordionItem>
+
+          <AccordionItem>
+            <AccordionItemHeading>
+              <AccordionItemButton>
+                Step 5: Verify Candidate Documents
+              </AccordionItemButton>
+            </AccordionItemHeading>
+            <AccordionItemPanel>
+              <VerifyCandidateDocs />
+            </AccordionItemPanel>
+          </AccordionItem>
+          <AccordionItem>
+            <AccordionItemHeading>
+              <AccordionItemButton>
+                Step 6: Candidate Onboarding
+              </AccordionItemButton>
+            </AccordionItemHeading>
+            <AccordionItemPanel>
+              <CandidateOnboarding />
             </AccordionItemPanel>
           </AccordionItem>
         </Accordion>
