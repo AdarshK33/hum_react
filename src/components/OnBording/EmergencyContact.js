@@ -14,7 +14,7 @@ const EmergencyContact = (props) => {
     EmergencyContactView,
     addressView,
     emergencyContactView,
-    candidateData,
+    candidateProfileData,
     emergencyContactData,
   } = useContext(OnBoardContext);
   const [disabled, setDisableState] = useState(false);
@@ -39,7 +39,9 @@ const EmergencyContact = (props) => {
     city: "",
     country: "",
     candidateId:
-      candidateData.candidateId !== undefined ? candidateData.candidateId : "",
+      candidateProfileData.candidateId !== undefined
+        ? candidateProfileData.candidateId
+        : "",
     contactId: 0,
     locality: "",
     phoneNumber: "",
@@ -47,7 +49,7 @@ const EmergencyContact = (props) => {
     relationship: "",
   });
   useEffect(() => {
-    EmergencyContactView(candidateData.candidateId);
+    EmergencyContactView(candidateProfileData.candidateId);
     console.log(emergencyContactView, "emergencyContactView");
   }, []);
   useEffect(() => {
@@ -194,7 +196,7 @@ const EmergencyContact = (props) => {
     console.log("previous");
     const back = props.PrevStep;
     back();
-    addressView(candidateData.candidateId);
+    addressView(candidateProfileData.candidateId);
   };
   const changeHandler = (e) => {
     setState({

@@ -11,7 +11,7 @@ const BankDetails = (props) => {
     bankCreate,
     bankSaveData,
     CandidateProfile,
-    candidateData,
+    candidateProfileData,
     bankView,
     bankViewData,
     bankUpdate,
@@ -25,7 +25,7 @@ const BankDetails = (props) => {
 
   useEffect(() => {
     CandidateProfile();
-    bankView(candidateData.candidateId);
+    bankView(candidateProfileData.candidateId);
   }, []);
 
   useEffect(() => {
@@ -114,7 +114,7 @@ const BankDetails = (props) => {
         accountNumber: state.accountNumber,
         bankId: bankIdValue,
         bankName: state.bankName,
-        candidateId: candidateData.candidateId,
+        candidateId: candidateProfileData.candidateId,
         ifscCode: state.ifscCode,
       };
       console.log("bank payload", bankInfo);

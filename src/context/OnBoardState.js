@@ -17,7 +17,7 @@ const initial_state = {
   PersonalInfoResponse: {},
   CreateNomineeResponse: {},
   candidateInsuranceNominationData: {},
-  candidateData: {},
+  candidateProfileData: {},
   candidatePersonalInfoData: {},
   searchEmpData1: [],
   searchEmpData2: [],
@@ -187,11 +187,11 @@ export const OnBoardProvider = (props) => {
     candidate
       .get("/api/v2/candidate/profile")
       .then((response) => {
-        state.candidateData = response.data.data;
-        console.log("CandidateProfile Response ", state.candidateData);
+        state.candidateProfileData = response.data.data;
+        console.log("CandidateProfile Response ", state.candidateProfileData);
         return dispatch({
           type: "CANDIDATE_PROFILE",
-          payload: state.candidateData,
+          payload: state.candidateProfileData,
         });
       })
       .catch((error) => {
@@ -467,6 +467,25 @@ export const OnBoardProvider = (props) => {
       });
   };
 
+  const uploadFile = (fileInfo) => {
+    console.log("uploadFile state", fileInfo);
+    const photoFile = fileInfo.file;
+    const formData = new FormData();
+    formData.append("file", photoFile, photoFile.name);
+    formData.append("candidateId", fileInfo.candidateId);
+    formData.append("fileType", fileInfo.fileType);
+    console.log("uploadFile", photoFile);
+    return candidate
+      .post("/api/v2/candidate/documents/upload", formData)
+      .then((response) => {
+        console.log(response, "res uploadFile");
+        toast.info(response.data.message);
+      })
+      .catch((error) => {
+        toast.info("Please upload a valid file");
+        console.log(error);
+      });
+  };
   return (
     <OnBoardContext.Provider
       value={{
@@ -494,6 +513,7 @@ export const OnBoardProvider = (props) => {
         bankCreate,
         bankView,
         bankUpdate,
+        uploadFile,
         emergencyContactData: state.emergencyContactData,
         emergencyContactCreate: state.emergencyContactCreate,
         emergencyContactView: state.emergencyContactView,
@@ -510,7 +530,7 @@ export const OnBoardProvider = (props) => {
         candidateInsuranceNominationData:
           state.candidateInsuranceNominationData,
         candidatePersonalInfoData: state.candidatePersonalInfoData,
-        candidateData: state.candidateData,
+        candidateProfileData: state.candidateProfileData,
         stateList: state.stateList,
         cityList: state.cityList,
         candidateViewInfo: state.candidateViewInfo,
