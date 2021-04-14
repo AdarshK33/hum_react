@@ -457,7 +457,8 @@ const PersonalInformation = (props) => {
   };
   const disabilityDocValidation = () => {
     if (state.disability === "Yes") {
-      if (state.disabilityDoc === "") {
+      if (disabilityDoc !== "") {
+        console.log("------------->", disabilityDoc);
         setDisabilityDocError(false);
         console.log("disabilityDocSucess");
         return true;
@@ -592,6 +593,9 @@ const PersonalInformation = (props) => {
     const value = checkValidations();
     if (value === true) {
       if (saveClick === false) {
+        const formData = new FormData();
+        formData.append("file", disabilityDoc);
+
         const ReferenceData2 = [
           {
             designation: desgination1 !== null ? desgination1 : null,
@@ -659,7 +663,7 @@ const PersonalInformation = (props) => {
               : null,
           dateOfBirth: DOB,
           disability: state.disability,
-          disabilityDoc: disabilityDoc,
+          disabilityDoc: formData,
           fatherName: state.fatherName,
           firstName:
             candidateData.firstName !== null ? candidateData.firstName : null,
@@ -758,7 +762,8 @@ const PersonalInformation = (props) => {
     var files = e.target.files;
     console.log(files[0].name);
     setDocName(files[0].name);
-    console.log(state);
+
+    console.log("---------->", disabilityDoc);
   };
 
   const changeHandler = (e) => {
@@ -1245,53 +1250,57 @@ const PersonalInformation = (props) => {
           </Col>
 
           {state.disability === "Yes" ? (
-            // <Row style={{ marginTop: "2rem" }}>
-            //   <Col sm={12}>
-            //     <div className="FileInput">
-            //       <label>Disability Document</label>
-            //     </div>
-            //     <div className="parentInput">
-            //       <input
-            //         className="fileInputField2"
-            //         placeholder="Choose File"
-            //         type="text"
-            //         name="disabilityDoc"
-            //         value={disabilityDoc}
-            //       />
-            //       <label
-            //         className="custom-file-upload"
-            //         style={{ fontSize: "16px" }}
-            //       >
-            //         <input
-            //           type="file"
-            //           className="custom_file_Upload_button"
-            //           onChange={disabilityDocument}
-            //         />
-            /* <i className="fa fa-cloud-upload" />  */
-            /* Upload */
-            /* <i
-                      id="custom_file_upload_icon"
-                      class="fa fa-upload"
-                      aria-hidden="true"
-                    ></i> */
-            /* </label>
-                  </div>
+            <div style={{ width: "100%" }}>
+              <Row>
+                <Col>
+                  <Form.Group>
+                    <div className="FileInput">
+                      <label>Disability Document</label>
+                    </div>
+                    <div className="parentInput">
+                      <input
+                        className="fileInputField"
+                        placeholder="Choose File"
+                        type="text"
+                        name="disabilityDoc"
+                        value={disabilityDoc}
+                        readOnly
+                      />
+                      <label className="custom-file-upload">
+                        <input
+                          type="file"
+                          name="epfPassBook"
+                          accept="application/pdf,image/jpeg"
+                          className="custom_file_Upload_button"
+                          onChange={disabilityDocument}
+                        />
+                        {/* <i className="fa fa-cloud-upload" />  */}
+                        Upload File{" "}
+                        <i
+                          id="custom_file_upload_icon"
+                          className="fa fa-upload"
+                          aria-hidden="true"
+                        ></i>
+                      </label>
+                    </div>
 
-                  {disabilityDocError ? (
-                    <p style={{ color: "red" }}>
-                      &nbsp;&nbsp;&nbsp;&nbsp; Please upload the disability
-                      document
-                    </p> */
-
-            // <p></p>
-
-            /* </Col>
-              </Row> */
-            ""
+                    {disabilityDocError ? (
+                      <p style={{ color: "red" }}>
+                        &nbsp;&nbsp;&nbsp;&nbsp; Please upload the disability
+                        document
+                      </p>
+                    ) : (
+                      ""
+                    )}
+                  </Form.Group>
+                </Col>
+              </Row>
+            </div>
           ) : (
-            <div></div>
+            " "
           )}
         </Row>
+
         {!data2 ? (
           <div>
             <Row style={{ marginBottom: "1rem" }}>

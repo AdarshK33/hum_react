@@ -212,269 +212,273 @@ const InsuranceNomination = (props) => {
       ) {
         setRelativeType(true);
         setInlawCheck(true);
+        state.relationship = "Spouse";
+        state.nominee2Relationship = "Child 1";
       } else {
         setRelativeType(false);
         setParentCheck(true);
+        state.relationship = "Father";
+        state.nominee2Relationship = "Mother";
       }
     }
   }, [candidatePersonalInfoData]);
 
-  //   useEffect(() => {
-  //     if (
-  //       candidateInsuranceNominationData &&
-  //       candidateInsuranceNominationData !== null &&
-  //       candidateInsuranceNominationData !== undefined &&
-  //       Object.keys(candidateInsuranceNominationData).length !== 0
-  //     ) {
-  //       console.log("12345678");
-  //       if (
-  //         candidateInsuranceNominationData[0] &&
-  //         candidateInsuranceNominationData[0] !== null &&
-  //         candidateInsuranceNominationData[0] !== undefined &&
-  //         Object.keys(candidateInsuranceNominationData[0]).length !== 0
-  //       ) {
-  //         setAddFirst(true);
-  //         setNomineeCount(0);
-  //       } else {
-  //         setAddFirst(false);
-  //       }
-  //       if (
-  //         candidateInsuranceNominationData[1] &&
-  //         candidateInsuranceNominationData[1] !== null &&
-  //         candidateInsuranceNominationData[1] !== undefined &&
-  //         Object.keys(candidateInsuranceNominationData[1]).length !== 0
-  //       ) {
-  //         setAddSecond(true);
-  //         setNomineeCount(1);
-  //       } else {
-  //         setAddSecond(false);
-  //       }
-  //       if (
-  //         candidateInsuranceNominationData[2] &&
-  //         candidateInsuranceNominationData[2] !== null &&
-  //         candidateInsuranceNominationData[2] !== undefined &&
-  //         Object.keys(candidateInsuranceNominationData[2]).length !== 0
-  //       ) {
-  //         setAddOne(true);
-  //         setNomineeCount(2);
-  //       } else {
-  //         setAddOne(false);
-  //       }
-  //       if (
-  //         candidateInsuranceNominationData[3] &&
-  //         candidateInsuranceNominationData[3] !== null &&
-  //         candidateInsuranceNominationData[3] !== undefined &&
-  //         Object.keys(candidateInsuranceNominationData[3]).length !== 0
-  //       ) {
-  //         setAddTwo(true);
-  //         setNomineeCount(3);
-  //       } else {
-  //         setAddTwo(false);
-  //       }
-  //       if (
-  //         candidateInsuranceNominationData[4] &&
-  //         candidateInsuranceNominationData[4] !== null &&
-  //         candidateInsuranceNominationData[4] !== undefined &&
-  //         Object.keys(candidateInsuranceNominationData[4]).length !== 0
-  //       ) {
-  //         setAddThird(true);
-  //         setNomineeCount(4);
-  //       } else {
-  //         setAddThird(false);
-  //       }
-  //       setState({
-  //         age:
-  //           candidateInsuranceNominationData[0] &&
-  //           candidateInsuranceNominationData[0].age !== null &&
-  //           candidateInsuranceNominationData[0].age !== undefined
-  //             ? candidateInsuranceNominationData[0].age
-  //             : "",
-  //         bloodGroup:
-  //           candidateInsuranceNominationData[0] &&
-  //           candidateInsuranceNominationData[0].bloodGroup !== null &&
-  //           candidateInsuranceNominationData[0].bloodGroup !== undefined
-  //             ? candidateInsuranceNominationData[0].bloodGroup
-  //             : "",
-  //         gender:
-  //           candidateInsuranceNominationData[0] &&
-  //           candidateInsuranceNominationData[0].gender !== null &&
-  //           candidateInsuranceNominationData[0].gender !== undefined
-  //             ? candidateInsuranceNominationData[0].gender
-  //             : "",
-  //         nominiName:
-  //           candidateInsuranceNominationData[0] &&
-  //           candidateInsuranceNominationData[0].nominiName !== null &&
-  //           candidateInsuranceNominationData[0].nominiName !== undefined
-  //             ? candidateInsuranceNominationData[0].nominiName
-  //             : "",
-  //         relationship:
-  //           candidateInsuranceNominationData[0] &&
-  //           candidateInsuranceNominationData[0].relationship !== null &&
-  //           candidateInsuranceNominationData[0].relationship !== undefined
-  //             ? candidateInsuranceNominationData[0].relationship
-  //             : "",
+  useEffect(() => {
+    if (
+      candidateInsuranceNominationData &&
+      candidateInsuranceNominationData !== null &&
+      candidateInsuranceNominationData !== undefined &&
+      Object.keys(candidateInsuranceNominationData).length !== 0
+    ) {
+      console.log("12345678");
+      if (
+        candidateInsuranceNominationData[0] &&
+        candidateInsuranceNominationData[0] !== null &&
+        candidateInsuranceNominationData[0] !== undefined &&
+        Object.keys(candidateInsuranceNominationData[0]).length !== 0
+      ) {
+        setAddFirst(true);
+        setNomineeCount(0);
+      } else {
+        setAddFirst(false);
+      }
+      if (
+        candidateInsuranceNominationData[1] &&
+        candidateInsuranceNominationData[1] !== null &&
+        candidateInsuranceNominationData[1] !== undefined &&
+        Object.keys(candidateInsuranceNominationData[1]).length !== 0
+      ) {
+        setAddSecond(true);
+        setNomineeCount(1);
+      } else {
+        setAddSecond(false);
+      }
+      if (
+        candidateInsuranceNominationData[2] &&
+        candidateInsuranceNominationData[2] !== null &&
+        candidateInsuranceNominationData[2] !== undefined &&
+        Object.keys(candidateInsuranceNominationData[2]).length !== 0
+      ) {
+        setAddOne(true);
+        setNomineeCount(2);
+      } else {
+        setAddOne(false);
+      }
+      if (
+        candidateInsuranceNominationData[3] &&
+        candidateInsuranceNominationData[3] !== null &&
+        candidateInsuranceNominationData[3] !== undefined &&
+        Object.keys(candidateInsuranceNominationData[3]).length !== 0
+      ) {
+        setAddTwo(true);
+        setNomineeCount(3);
+      } else {
+        setAddTwo(false);
+      }
+      if (
+        candidateInsuranceNominationData[4] &&
+        candidateInsuranceNominationData[4] !== null &&
+        candidateInsuranceNominationData[4] !== undefined &&
+        Object.keys(candidateInsuranceNominationData[4]).length !== 0
+      ) {
+        setAddThird(true);
+        setNomineeCount(4);
+      } else {
+        setAddThird(false);
+      }
+      setState({
+        age:
+          candidateInsuranceNominationData[0] &&
+          candidateInsuranceNominationData[0].age !== null &&
+          candidateInsuranceNominationData[0].age !== undefined
+            ? candidateInsuranceNominationData[0].age
+            : "",
+        bloodGroup:
+          candidateInsuranceNominationData[0] &&
+          candidateInsuranceNominationData[0].bloodGroup !== null &&
+          candidateInsuranceNominationData[0].bloodGroup !== undefined
+            ? candidateInsuranceNominationData[0].bloodGroup
+            : "",
+        gender:
+          candidateInsuranceNominationData[0] &&
+          candidateInsuranceNominationData[0].gender !== null &&
+          candidateInsuranceNominationData[0].gender !== undefined
+            ? candidateInsuranceNominationData[0].gender
+            : "",
+        nominiName:
+          candidateInsuranceNominationData[0] &&
+          candidateInsuranceNominationData[0].nominiName !== null &&
+          candidateInsuranceNominationData[0].nominiName !== undefined
+            ? candidateInsuranceNominationData[0].nominiName
+            : "",
+        relationship:
+          candidateInsuranceNominationData[0] &&
+          candidateInsuranceNominationData[0].relationship !== null &&
+          candidateInsuranceNominationData[0].relationship !== undefined
+            ? candidateInsuranceNominationData[0].relationship
+            : "",
 
-  //         nominee2Age:
-  //           candidateInsuranceNominationData[1] &&
-  //           candidateInsuranceNominationData[1].age !== null &&
-  //           candidateInsuranceNominationData[1].age !== undefined
-  //             ? candidateInsuranceNominationData[1].age
-  //             : "",
-  //         nominee2BloodGroup:
-  //           candidateInsuranceNominationData[1] &&
-  //           candidateInsuranceNominationData[1].bloodGroup !== null &&
-  //           candidateInsuranceNominationData[1].bloodGroup !== undefined
-  //             ? candidateInsuranceNominationData[1].bloodGroup
-  //             : "",
-  //         nominee2Gender:
-  //           candidateInsuranceNominationData[1] &&
-  //           candidateInsuranceNominationData[1].gender !== null &&
-  //           candidateInsuranceNominationData[1].gender !== undefined
-  //             ? candidateInsuranceNominationData[1].gender
-  //             : "",
-  //         nominee2NominiName:
-  //           candidateInsuranceNominationData[1] &&
-  //           candidateInsuranceNominationData[1].nominiName !== null &&
-  //           candidateInsuranceNominationData[1].nominiName !== undefined
-  //             ? candidateInsuranceNominationData[1].nominiName
-  //             : "",
-  //         nominee2Relationship:
-  //           candidateInsuranceNominationData[1] &&
-  //           candidateInsuranceNominationData[1].relationship !== null &&
-  //           candidateInsuranceNominationData[1].relationship !== undefined
-  //             ? candidateInsuranceNominationData[1].relationship
-  //             : "",
+        nominee2Age:
+          candidateInsuranceNominationData[1] &&
+          candidateInsuranceNominationData[1].age !== null &&
+          candidateInsuranceNominationData[1].age !== undefined
+            ? candidateInsuranceNominationData[1].age
+            : "",
+        nominee2BloodGroup:
+          candidateInsuranceNominationData[1] &&
+          candidateInsuranceNominationData[1].bloodGroup !== null &&
+          candidateInsuranceNominationData[1].bloodGroup !== undefined
+            ? candidateInsuranceNominationData[1].bloodGroup
+            : "",
+        nominee2Gender:
+          candidateInsuranceNominationData[1] &&
+          candidateInsuranceNominationData[1].gender !== null &&
+          candidateInsuranceNominationData[1].gender !== undefined
+            ? candidateInsuranceNominationData[1].gender
+            : "",
+        nominee2NominiName:
+          candidateInsuranceNominationData[1] &&
+          candidateInsuranceNominationData[1].nominiName !== null &&
+          candidateInsuranceNominationData[1].nominiName !== undefined
+            ? candidateInsuranceNominationData[1].nominiName
+            : "",
+        nominee2Relationship:
+          candidateInsuranceNominationData[1] &&
+          candidateInsuranceNominationData[1].relationship !== null &&
+          candidateInsuranceNominationData[1].relationship !== undefined
+            ? candidateInsuranceNominationData[1].relationship
+            : "",
 
-  //         nominee3Age:
-  //           candidateInsuranceNominationData[2] &&
-  //           candidateInsuranceNominationData[2].age !== null &&
-  //           candidateInsuranceNominationData[2].age !== undefined
-  //             ? candidateInsuranceNominationData[2].age
-  //             : "",
-  //         nominee3BloodGroup:
-  //           candidateInsuranceNominationData[2] &&
-  //           candidateInsuranceNominationData[2].bloodGroup !== null &&
-  //           candidateInsuranceNominationData[2].bloodGroup !== undefined
-  //             ? candidateInsuranceNominationData[2].bloodGroup
-  //             : "",
-  //         nominee3Gender:
-  //           candidateInsuranceNominationData[2] &&
-  //           candidateInsuranceNominationData[2].gender !== null &&
-  //           candidateInsuranceNominationData[2].gender !== undefined
-  //             ? candidateInsuranceNominationData[2].gender
-  //             : "",
-  //         nominee3NominiName:
-  //           candidateInsuranceNominationData[2] &&
-  //           candidateInsuranceNominationData[2].nominiName !== null &&
-  //           candidateInsuranceNominationData[2].nominiName !== undefined
-  //             ? candidateInsuranceNominationData[2].nominiName
-  //             : "",
-  //         nominee3Relationship:
-  //           candidateInsuranceNominationData[2] &&
-  //           candidateInsuranceNominationData[2].relationship !== null &&
-  //           candidateInsuranceNominationData[2].relationship !== undefined
-  //             ? candidateInsuranceNominationData[2].relationship
-  //             : "",
+        nominee3Age:
+          candidateInsuranceNominationData[2] &&
+          candidateInsuranceNominationData[2].age !== null &&
+          candidateInsuranceNominationData[2].age !== undefined
+            ? candidateInsuranceNominationData[2].age
+            : "",
+        nominee3BloodGroup:
+          candidateInsuranceNominationData[2] &&
+          candidateInsuranceNominationData[2].bloodGroup !== null &&
+          candidateInsuranceNominationData[2].bloodGroup !== undefined
+            ? candidateInsuranceNominationData[2].bloodGroup
+            : "",
+        nominee3Gender:
+          candidateInsuranceNominationData[2] &&
+          candidateInsuranceNominationData[2].gender !== null &&
+          candidateInsuranceNominationData[2].gender !== undefined
+            ? candidateInsuranceNominationData[2].gender
+            : "",
+        nominee3NominiName:
+          candidateInsuranceNominationData[2] &&
+          candidateInsuranceNominationData[2].nominiName !== null &&
+          candidateInsuranceNominationData[2].nominiName !== undefined
+            ? candidateInsuranceNominationData[2].nominiName
+            : "",
+        nominee3Relationship:
+          candidateInsuranceNominationData[2] &&
+          candidateInsuranceNominationData[2].relationship !== null &&
+          candidateInsuranceNominationData[2].relationship !== undefined
+            ? candidateInsuranceNominationData[2].relationship
+            : "",
 
-  //         nominee4Age:
-  //           candidateInsuranceNominationData[3] &&
-  //           candidateInsuranceNominationData[3].age !== null &&
-  //           candidateInsuranceNominationData[3].age !== undefined
-  //             ? candidateInsuranceNominationData[3].age
-  //             : "",
-  //         nominee4BloodGroup:
-  //           candidateInsuranceNominationData[3] &&
-  //           candidateInsuranceNominationData[3].bloodGroup !== null &&
-  //           candidateInsuranceNominationData[3].bloodGroup !== undefined
-  //             ? candidateInsuranceNominationData[3].bloodGroup
-  //             : "",
-  //         nominee4Gender:
-  //           candidateInsuranceNominationData[3] &&
-  //           candidateInsuranceNominationData[3].gender !== null &&
-  //           candidateInsuranceNominationData[3].gender !== undefined
-  //             ? candidateInsuranceNominationData[3].gender
-  //             : "",
-  //         nominee4NominiName:
-  //           candidateInsuranceNominationData[3] &&
-  //           candidateInsuranceNominationData[3].nominiName !== null &&
-  //           candidateInsuranceNominationData[3].nominiName !== undefined
-  //             ? candidateInsuranceNominationData[3].nominiName
-  //             : "",
-  //         nominee4Relationship:
-  //           candidateInsuranceNominationData[3] &&
-  //           candidateInsuranceNominationData[3].relationship !== null &&
-  //           candidateInsuranceNominationData[3].relationship !== undefined
-  //             ? candidateInsuranceNominationData[3].relationship
-  //             : "",
+        nominee4Age:
+          candidateInsuranceNominationData[3] &&
+          candidateInsuranceNominationData[3].age !== null &&
+          candidateInsuranceNominationData[3].age !== undefined
+            ? candidateInsuranceNominationData[3].age
+            : "",
+        nominee4BloodGroup:
+          candidateInsuranceNominationData[3] &&
+          candidateInsuranceNominationData[3].bloodGroup !== null &&
+          candidateInsuranceNominationData[3].bloodGroup !== undefined
+            ? candidateInsuranceNominationData[3].bloodGroup
+            : "",
+        nominee4Gender:
+          candidateInsuranceNominationData[3] &&
+          candidateInsuranceNominationData[3].gender !== null &&
+          candidateInsuranceNominationData[3].gender !== undefined
+            ? candidateInsuranceNominationData[3].gender
+            : "",
+        nominee4NominiName:
+          candidateInsuranceNominationData[3] &&
+          candidateInsuranceNominationData[3].nominiName !== null &&
+          candidateInsuranceNominationData[3].nominiName !== undefined
+            ? candidateInsuranceNominationData[3].nominiName
+            : "",
+        nominee4Relationship:
+          candidateInsuranceNominationData[3] &&
+          candidateInsuranceNominationData[3].relationship !== null &&
+          candidateInsuranceNominationData[3].relationship !== undefined
+            ? candidateInsuranceNominationData[3].relationship
+            : "",
 
-  //         nominee5Age:
-  //           candidateInsuranceNominationData[4] &&
-  //           candidateInsuranceNominationData[4].age !== null &&
-  //           candidateInsuranceNominationData[4].age !== undefined
-  //             ? candidateInsuranceNominationData[4].age
-  //             : "",
-  //         nominee5BloodGroup:
-  //           candidateInsuranceNominationData[4] &&
-  //           candidateInsuranceNominationData[4].bloodGroup !== null &&
-  //           candidateInsuranceNominationData[4].bloodGroup !== undefined
-  //             ? candidateInsuranceNominationData[4].bloodGroup
-  //             : "",
-  //         nominee5Gender:
-  //           candidateInsuranceNominationData[4] &&
-  //           candidateInsuranceNominationData[4].gender !== null &&
-  //           candidateInsuranceNominationData[4].gender !== undefined
-  //             ? candidateInsuranceNominationData[4].gender
-  //             : "",
-  //         nominee5NominiName:
-  //           candidateInsuranceNominationData[4] &&
-  //           candidateInsuranceNominationData[4].nominiName !== null &&
-  //           candidateInsuranceNominationData[4].nominiName !== undefined
-  //             ? candidateInsuranceNominationData[4].nominiName
-  //             : "",
-  //         nominee5Relationship:
-  //           candidateInsuranceNominationData[4] &&
-  //           candidateInsuranceNominationData[4].relationship !== null &&
-  //           candidateInsuranceNominationData[4].relationship !== undefined
-  //             ? candidateInsuranceNominationData[4].relationship
-  //             : "",
-  //       });
-  //       setNominee1DOB(
-  //         candidateInsuranceNominationData[0] &&
-  //           candidateInsuranceNominationData[0].dateOfBirth !== null &&
-  //           candidateInsuranceNominationData[0].dateOfBirth !== undefined
-  //           ? new Date(candidateInsuranceNominationData[0].dateOfBirth)
-  //           : ""
-  //       );
-  //       setNominee2DOB(
-  //         candidateInsuranceNominationData[1] &&
-  //           candidateInsuranceNominationData[1].dateOfBirth !== null &&
-  //           candidateInsuranceNominationData[1].dateOfBirth !== undefined
-  //           ? new Date(candidateInsuranceNominationData[1].dateOfBirth)
-  //           : ""
-  //       );
-  //       setNominee3DOB(
-  //         candidateInsuranceNominationData[2] &&
-  //           candidateInsuranceNominationData[2].dateOfBirth !== null &&
-  //           candidateInsuranceNominationData[2].dateOfBirth !== undefined
-  //           ? new Date(candidateInsuranceNominationData[2].dateOfBirth)
-  //           : ""
-  //       );
-  //       setNominee4DOB(
-  //         candidateInsuranceNominationData[3] &&
-  //           candidateInsuranceNominationData[3].dateOfBirth !== null &&
-  //           candidateInsuranceNominationData[3].dateOfBirth !== undefined
-  //           ? new Date(candidateInsuranceNominationData[3].dateOfBirth)
-  //           : ""
-  //       );
-  //       setNominee5DOB(
-  //         candidateInsuranceNominationData[4] &&
-  //           candidateInsuranceNominationData[4].dateOfBirth !== null &&
-  //           candidateInsuranceNominationData[4].dateOfBirth !== undefined
-  //           ? new Date(candidateInsuranceNominationData[4].dateOfBirth)
-  //           : null
-  //       );
-  //     }
-  //   }, [candidateInsuranceNominationData]);
+        nominee5Age:
+          candidateInsuranceNominationData[4] &&
+          candidateInsuranceNominationData[4].age !== null &&
+          candidateInsuranceNominationData[4].age !== undefined
+            ? candidateInsuranceNominationData[4].age
+            : "",
+        nominee5BloodGroup:
+          candidateInsuranceNominationData[4] &&
+          candidateInsuranceNominationData[4].bloodGroup !== null &&
+          candidateInsuranceNominationData[4].bloodGroup !== undefined
+            ? candidateInsuranceNominationData[4].bloodGroup
+            : "",
+        nominee5Gender:
+          candidateInsuranceNominationData[4] &&
+          candidateInsuranceNominationData[4].gender !== null &&
+          candidateInsuranceNominationData[4].gender !== undefined
+            ? candidateInsuranceNominationData[4].gender
+            : "",
+        nominee5NominiName:
+          candidateInsuranceNominationData[4] &&
+          candidateInsuranceNominationData[4].nominiName !== null &&
+          candidateInsuranceNominationData[4].nominiName !== undefined
+            ? candidateInsuranceNominationData[4].nominiName
+            : "",
+        nominee5Relationship:
+          candidateInsuranceNominationData[4] &&
+          candidateInsuranceNominationData[4].relationship !== null &&
+          candidateInsuranceNominationData[4].relationship !== undefined
+            ? candidateInsuranceNominationData[4].relationship
+            : "",
+      });
+      setNominee1DOB(
+        candidateInsuranceNominationData[0] &&
+          candidateInsuranceNominationData[0].dateOfBirth !== null &&
+          candidateInsuranceNominationData[0].dateOfBirth !== undefined
+          ? new Date(candidateInsuranceNominationData[0].dateOfBirth)
+          : ""
+      );
+      setNominee2DOB(
+        candidateInsuranceNominationData[1] &&
+          candidateInsuranceNominationData[1].dateOfBirth !== null &&
+          candidateInsuranceNominationData[1].dateOfBirth !== undefined
+          ? new Date(candidateInsuranceNominationData[1].dateOfBirth)
+          : ""
+      );
+      setNominee3DOB(
+        candidateInsuranceNominationData[2] &&
+          candidateInsuranceNominationData[2].dateOfBirth !== null &&
+          candidateInsuranceNominationData[2].dateOfBirth !== undefined
+          ? new Date(candidateInsuranceNominationData[2].dateOfBirth)
+          : ""
+      );
+      setNominee4DOB(
+        candidateInsuranceNominationData[3] &&
+          candidateInsuranceNominationData[3].dateOfBirth !== null &&
+          candidateInsuranceNominationData[3].dateOfBirth !== undefined
+          ? new Date(candidateInsuranceNominationData[3].dateOfBirth)
+          : ""
+      );
+      setNominee5DOB(
+        candidateInsuranceNominationData[4] &&
+          candidateInsuranceNominationData[4].dateOfBirth !== null &&
+          candidateInsuranceNominationData[4].dateOfBirth !== undefined
+          ? new Date(candidateInsuranceNominationData[4].dateOfBirth)
+          : null
+      );
+    }
+  }, [candidateInsuranceNominationData]);
 
   const NomineeNameValidation = (itemState, setError) => {
     const nameValid = /^[a-zA-Z\b]+$/;
@@ -525,6 +529,7 @@ const InsuranceNomination = (props) => {
     }
   };
   const validateSelectInput = (itemState, setError, condition) => {
+    console.log("Relatio nshipItem---->", itemState);
     if (itemState !== "") {
       setError(false);
       return true;
@@ -608,7 +613,8 @@ const InsuranceNomination = (props) => {
     }
   };
   const CheckValidationsNomine_3 = () => {
-    if (addOne === true) {
+    if (addOne === true && NAcheck === false) {
+      console.log("AddONEEEEEEEEEEEEEEE", addOne);
       if (
         (AgeErrorValidation(state.nominee3Age, setageError_3) === true) &
         (NomineeNameValidation(state.nominee3NominiName, setNomineerror_3) ===
@@ -642,7 +648,7 @@ const InsuranceNomination = (props) => {
     }
   };
   const CheckValidationsNomine_4 = () => {
-    if (addTwo === true) {
+    if (addTwo === true && NAcheck === false) {
       if (
         (AgeErrorValidation(state.nominee4Age, setageError_4) === true) &
         (NomineeNameValidation(state.nominee4NominiName, setNomineerror_4) ===
@@ -769,6 +775,16 @@ const InsuranceNomination = (props) => {
   const submitHandler = (e) => {
     // const nextPage = props.NextStep;
     // nextPage();
+    if (parentsCheck === true) {
+      state.nominee3Relationship = "Father";
+      state.nominee4Relationship = "Mother";
+    } else if (InlawCheck === true) {
+      state.nominee3Relationship = "Father In-Law";
+      state.nominee4Relationship = "Mother In-Law";
+    } else if (NAcheck === true) {
+      state.nominee3Relationship = "";
+      state.nominee4Relationship = "";
+    }
     if (checkAllValidations() === true) {
       const CountOFNominees = NomineeCount;
       const first_nomine_info = {
@@ -837,10 +853,10 @@ const InsuranceNomination = (props) => {
       if (addThird === true) {
         NominiInfo.push(...NominiInfo, fifth_nomine_info);
       }
-      if (addOne === true) {
+      if ((addOne === true) & (NAcheck === false)) {
         NominiInfo.push(...NominiInfo, third_nomine_info);
       }
-      if (addTwo === true) {
+      if ((addTwo === true) & (NAcheck === false)) {
         NominiInfo.push(...NominiInfo, fourth_nomine_info);
       }
 
@@ -1038,6 +1054,12 @@ const InsuranceNomination = (props) => {
     });
     console.log(state);
   };
+  const RelChangeHandler = (name, val) => {
+    setState({
+      ...state,
+      [name]: val,
+    });
+  };
 
   console.log("----------->", NominForm1);
 
@@ -1178,16 +1200,15 @@ const InsuranceNomination = (props) => {
                       as="select"
                       name="relationship"
                       value={state.relationship}
-                      options={
-                        relativeInLaw ? inLawRelativesList : relativesList
-                      }
+                      defaultValue={"Spouse"}
+                      //   onChange={}
                       onChange={changeHandler}
                       style={relationshipError_1 ? { borderColor: "red" } : {}}
                     >
                       {relativeInLaw === true ? (
-                        <option value="">Spouse</option>
+                        <option value="Spouse">Spouse</option>
                       ) : (
-                        <option value="">Father</option>
+                        <option value="Father">Father</option>
                       )}
                     </Form.Control>
                     {relationshipError_1 ? (

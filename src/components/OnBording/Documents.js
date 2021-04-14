@@ -896,52 +896,50 @@ const Documents = (props) => {
         {(isChecked === false) & (internship === true) ? (
           // only on internship and required
           <Row>
-            <Col>
-              <Form.Group>
-                <div
-                  className={
-                    FandP_Time_Required[0].ReqCollegeLetter
-                      ? "FileInput"
-                      : "FileInputWithOutStar"
-                  }
-                >
-                  <label>College Letter</label>
-                </div>
-                <div className="parentInput">
+            <Form.Group>
+              <div
+                className={
+                  FandP_Time_Required[0].ReqCollegeLetter
+                    ? "FileInput"
+                    : "FileInputWithOutStar"
+                }
+              >
+                <label>College Letter</label>
+              </div>
+              <div className="parentInput">
+                <input
+                  className="fileInputField"
+                  placeholder="Choose File"
+                  type="text"
+                  style={collegeLetterError ? { borderColor: "red" } : {}}
+                  value={state.collegeLetter}
+                  readOnly
+                />
+                <label className="custom-file-upload">
                   <input
-                    className="fileInputField"
-                    placeholder="Choose File"
-                    type="text"
-                    style={collegeLetterError ? { borderColor: "red" } : {}}
-                    value={state.collegeLetter}
-                    readOnly
+                    type="file"
+                    name="collegeLetter"
+                    className="custom_file_Upload_button"
+                    onChange={changeHandler}
                   />
-                  <label className="custom-file-upload">
-                    <input
-                      type="file"
-                      name="collegeLetter"
-                      className="custom_file_Upload_button"
-                      onChange={changeHandler}
-                    />
-                    {/* <i className="fa fa-cloud-upload" />  */}
-                    Upload File{" "}
-                    <i
-                      id="custom_file_upload_icon"
-                      className="fa fa-upload"
-                      aria-hidden="true"
-                    ></i>
-                  </label>
-                </div>
-                {collegeLetterError ? (
-                  <p style={{ color: "red" }}>
-                    {" "}
-                    &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the college letter
-                  </p>
-                ) : (
-                  <p></p>
-                )}
-              </Form.Group>
-            </Col>
+                  {/* <i className="fa fa-cloud-upload" />  */}
+                  Upload File{" "}
+                  <i
+                    id="custom_file_upload_icon"
+                    className="fa fa-upload"
+                    aria-hidden="true"
+                  ></i>
+                </label>
+              </div>
+              {collegeLetterError ? (
+                <p style={{ color: "red" }}>
+                  {" "}
+                  &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the college letter
+                </p>
+              ) : (
+                <p></p>
+              )}
+            </Form.Group>
           </Row>
         ) : (
           ""
