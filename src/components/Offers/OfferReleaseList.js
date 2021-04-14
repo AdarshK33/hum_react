@@ -7,6 +7,8 @@ import { OfferContext } from "../../context/OfferState";
 import Pagination from "react-js-pagination";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { DocsVerifyContext } from "../../context/DocverificationState";
+import { RoleManagementContext } from "../../context/RoleManagementState";
+import { AdminContext } from "../../context/AdminState";
 
 const OfferReleaseList = () => {
   const {
@@ -20,7 +22,8 @@ const OfferReleaseList = () => {
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [searchValue, setSearchValue] = useState("");
-
+  const { RoleList, viewRole } = useContext(RoleManagementContext);
+  const { costCenterList, CostCenter } = useContext(AdminContext);
   useEffect(() => {
     candidateView("all", pageCount);
   }, []);
@@ -67,6 +70,8 @@ const OfferReleaseList = () => {
   const fetchCandidateDetails = (candidateId) => {
     viewCandidateId(candidateId);
     verificationDocsView(candidateId);
+    viewRole();
+    CostCenter();
   };
   return (
     <Fragment>
@@ -176,7 +181,7 @@ const OfferReleaseList = () => {
                             </td>
                             <td>
                               <Link to="/offer-relase-and-onboard">
-                                <Eye
+                                <Edit2
                                   onClick={() => {
                                     fetchCandidateDetails(item.candidateId);
                                   }}

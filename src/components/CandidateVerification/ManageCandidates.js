@@ -126,7 +126,7 @@ const CandidateList = () => {
                 <th scope="col">Document Verification Status</th>
                 <th scope="col">UAN Verification Status</th>
                 <th scope="col">Overall Status</th>
-                <th scope="col">View</th>
+                <th scope="col">Action</th>
               </tr>
             </thead>
             {loader === true &&
@@ -176,7 +176,7 @@ const CandidateList = () => {
 
                       <td>
                         <Link to={"/verification/" + item.candidateId}>
-                          <Eye
+                          <Edit2
                             onClick={() => {
                               FetchCandidateData(item.candidateId);
                             }}

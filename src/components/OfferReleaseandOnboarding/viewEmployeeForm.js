@@ -119,16 +119,10 @@ const ViewEmployeeForm = () => {
       candidateData !== null &&
       candidateData !== undefined &&
       candidateData.candidateInformation;
-    console.log("candidateData outside", candidateRefData);
     if (candidateRefData !== null && candidateRefData !== undefined) {
-      console.log("candidateData", candidateRefData);
       setFirstName(candidateRefData.firstName);
       setLastName(candidateRefData.lastName);
       setEmail(candidateRefData.personalEmail);
-      console.log(
-        " candidateRefData.candidateReferences",
-        candidateRefData.candidateReferences
-      );
 
       /*  if(candidateRefData.candidateReferences !== null &&
       candidateRefData.candidateReferences !== undefined &&
@@ -152,7 +146,6 @@ const ViewEmployeeForm = () => {
           data1.employeeName !== undefined &&
           (data1.employeeName !== "" ? data1.employeeName : "")
       );
-      console.log("empName", data1.employeeName);
       setRefEmail1(
         data1 !== null &&
           data1 !== undefined &&
@@ -294,7 +287,6 @@ const ViewEmployeeForm = () => {
       verificationStatusDesc:
         candidateData.candidateInformation.verificationStatusDesc,
     };
-    console.log("candidate data", updateData.candidateReferences);
     if (firstNameError === false && lastNameError === false) {
       editCandidate(updateData);
       setDisabled(true);
@@ -312,88 +304,82 @@ const ViewEmployeeForm = () => {
         <Row>
           <Col sm={3}>
             <Form.Group>
-              <h5>First Name</h5>
-              <h5 className="headingColor">{firstName}</h5>
+              <Form.Label>First Name</Form.Label>
+              <br></br>
+              <Form.Label className="headingColor">{firstName}</Form.Label>
             </Form.Group>
           </Col>
           <Col sm={3}>
             <Form.Group>
-              <h5>Last Name</h5>
-              <h5 className="headingColor">{lastName}</h5>
+              <Form.Label>Last Name</Form.Label>
+              <br></br>
+              <Form.Label className="headingColor">{lastName}</Form.Label>
             </Form.Group>
           </Col>
           <Col sm={3}>
             <Form.Group>
-              <h5>Date of joining</h5>
-              <h5 className="headingColor">
+              <Form.Label>Date of joining</Form.Label>
+              <br></br>
+              <Form.Label className="headingColor">
                 {candidateData !== undefined &&
                 candidateData.workInformation !== undefined
                   ? moment(candidateData.workInformation.dateOfJoin).format(
                       "YYYY-MM-DD"
                     )
                   : ""}
-              </h5>
-              {/* <h6>{lastName}</h6> */}
+              </Form.Label>
             </Form.Group>
           </Col>
           <Col sm={3}>
             <Form.Group>
-              <h5>Personal Email ID</h5>
-              <h5 className="headingColor">{email}</h5>
+              <Form.Label>Personal Email ID</Form.Label>
+              <br></br>
+              <Form.Label className="headingColor">{email}</Form.Label>
             </Form.Group>
           </Col>
         </Row>
         <Row className="mt-4 mb-4">
           <Col sm={4}>
-            <h5>Were you referred for this position?</h5>
+            <Form.Label>Were you referred for this position?</Form.Label>
           </Col>
           <Col sm={4}>
             {yesChecked === true ? (
-              <h5 className="headingColor"> Yes</h5>
+              <Form.Label className="headingColor"> Yes</Form.Label>
             ) : (
-              <h5 className="headingColor">No</h5>
+              <Form.Label className="headingColor">No</Form.Label>
             )}
-            {/* Yes &nbsp;{" "}
-            <input
-              type="checkbox"
-              name="refrence"
-              checked={yesChecked}
-              onChange={checkedYesHandler}
-            />
-            &nbsp; &nbsp;&nbsp; &nbsp; No &nbsp;{" "}
-            <input
-              type="checkbox"
-              name="refrence"
-              checked={noChecked}
-              onChange={checkedNoHandler}
-            /> */}
           </Col>
         </Row>
         {yesChecked === true ? (
           <Fragment>
-            <h5>
+            <Form.Label>
               State two reference(max two are allowed){" "}
               <span style={{ color: "red" }}>*</span>
-            </h5>
+            </Form.Label>
             {/* <span style={{ color: "red" }}>*</span> */}
             {/* {data1 !== null && data1 !== undefined && data1.employeeName !== '' ? ( */}
             <Row className="mt-4">
               <Col sm={4}>
                 <Form.Group>
-                  <h5>Emp Name/Emp ID</h5>
-                  <h5 className="headingColor">{empName1}</h5>
+                  <Form.Label>Emp Name/Emp ID</Form.Label>
+                  <br></br>
+                  <Form.Label className="headingColor">{empName1}</Form.Label>
                 </Form.Group>
               </Col>
               <Col sm={3}>
                 <Form.Group>
-                  <h5>Designation</h5>
-                  <h5 className="headingColor">{desgination1}</h5>
+                  <Form.Label>Designation</Form.Label>
+                  <br></br>
+                  <Form.Label className="headingColor">
+                    {desgination1}
+                  </Form.Label>
                 </Form.Group>
               </Col>
               <Col sm={4}>
                 <Form.Group>
-                  <h5>Email</h5>
-                  <h5 className="headingColor">{refEmail1}</h5>
+                  <Form.Label>Email</Form.Label>
+                  <br></br>
+                  <Form.Label className="headingColor">{refEmail1}</Form.Label>
                 </Form.Group>
               </Col>
             </Row>
@@ -406,25 +392,28 @@ const ViewEmployeeForm = () => {
           <Row className="mt-4">
             <Col sm={4}>
               <Form.Group>
-                <h5>Emp Name/Emp ID</h5>
-                <h5 className="headingColor">{empName2}</h5>
+                <Form.Label>Emp Name/Emp ID</Form.Label>
+                <br></br>
+                <Form.Label className="headingColor">{empName2}</Form.Label>
               </Form.Group>
             </Col>
 
             <Col sm={3}>
               <Form.Group>
-                <h5>Designation</h5>
-                <h5 className="headingColor">
+                <Form.Label>Designation</Form.Label>
+                <br></br>
+                <Form.Label className="headingColor">
                   {empName2 === "" ? "" : desgination2}
-                </h5>
+                </Form.Label>
               </Form.Group>
             </Col>
             <Col sm={4}>
               <Form.Group>
-                <h5>Email</h5>
-                <h5 className="headingColor">
+                <Form.Label>Email</Form.Label>
+                <br></br>
+                <Form.Label className="headingColor">
                   {empName2 === "" ? "" : refEmail2}
-                </h5>
+                </Form.Label>
               </Form.Group>
             </Col>
           </Row>

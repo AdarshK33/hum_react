@@ -36,7 +36,6 @@ const ViewRemunerationInformation = (props) => {
   const { user } = useContext(AppContext);
 
   useEffect(() => {
-    console.log("candidateData remuneration", candidateData);
     if (
       createCandidateResponse &&
       createCandidateResponse.candidateId &&
@@ -66,23 +65,12 @@ const ViewRemunerationInformation = (props) => {
   }, [candidateData.workInformation]);
 
   const submitHandler = (e) => {
-    console.log("inside edit submit", candidateData);
     let remunerationinfo;
     let remunerationSubmitData =
       candidateData !== null &&
       candidateData !== undefined &&
       candidateData.remuneration;
     e.preventDefault();
-    console.log(
-      "remuneration Info1",
-      fixedGross,
-      monthlyBonus,
-      stipened,
-      user.role,
-      typeof stipened,
-      typeof fixedGross,
-      typeof monthlyBonus
-    );
     if (
       user.role === "ADMIN" &&
       (typeof fixedGross === "undefined" ||
@@ -120,7 +108,6 @@ const ViewRemunerationInformation = (props) => {
           workInfoViewData.contractType === "Permanent") &&
         fixedGross > 18000
       ) {
-        console.log("inside permanent");
         setParmanentGrossLimit(false);
         setFixedGrossError(false);
         setPartTimeGrossLimit(false);
@@ -137,7 +124,6 @@ const ViewRemunerationInformation = (props) => {
           workInfoViewData.contractType === "Parttime") &&
         fixedGross <= 200
       ) {
-        console.log("inside part time");
         setPartTimeGrossLimit(false);
         setFixedGrossError(false);
         setParmanentGrossLimit(false);
@@ -178,7 +164,6 @@ const ViewRemunerationInformation = (props) => {
           workInfoViewData.contractType === "Permanent") &&
         fixedGross <= 18000
       ) {
-        console.log("inside permanent");
         setParmanentGrossLimit(true);
         setFixedGrossError(false);
         setPartTimeGrossLimit(false);
@@ -187,7 +172,6 @@ const ViewRemunerationInformation = (props) => {
           workInfoViewData.contractType === "Permanent") &&
         fixedGross > 18000
       ) {
-        console.log("inside permanent");
         setParmanentGrossLimit(false);
         setFixedGrossError(false);
         setPartTimeGrossLimit(false);
@@ -196,7 +180,6 @@ const ViewRemunerationInformation = (props) => {
           workInfoViewData.contractType === "Parttime") &&
         (fixedGross <= 90 || fixedGross > 200)
       ) {
-        console.log("inside part time");
         setPartTimeGrossLimit(true);
         setFixedGrossError(false);
         setParmanentGrossLimit(false);
@@ -205,7 +188,6 @@ const ViewRemunerationInformation = (props) => {
           workInfoViewData.contractType === "Parttime") &&
         fixedGross <= 200
       ) {
-        console.log("inside part time");
         setPartTimeGrossLimit(false);
         setFixedGrossError(false);
         setParmanentGrossLimit(false);
@@ -250,7 +232,6 @@ const ViewRemunerationInformation = (props) => {
       (candidateData.workInformation.contractType === "Internship" ||
         workInfoViewData.contractType === "Internship")
     ) {
-      console.log("remuneration Info5", fixedGross, monthlyBonus, stipened);
       setStipenedError(true);
     } else {
       setStipenedError(false);
@@ -259,9 +240,7 @@ const ViewRemunerationInformation = (props) => {
       setBonusLimit(false);
       setParmanentGrossLimit(false);
       setPartTimeGrossLimit(false);
-      console.log("remuneration Info", fixedGross, monthlyBonus);
       if (saveclick === false) {
-        console.log("first click");
         setSaveclick(true);
         remunerationinfo = {
           candidateId: candidateData.candidateInformation.candidateId,
@@ -290,12 +269,7 @@ const ViewRemunerationInformation = (props) => {
           stipend: stipened === undefined || stipened === null ? 0 : stipened,
         };
       }
-      // console.log(
-      //   "remunerationViewData.remunerationId",
-      //   remunerationViewData.remunerationId
-      // );
 
-      console.log("createCandidateResponse data", remunerationinfo);
       if (
         fixedGrossError === false &&
         monthlyBonusError === false &&
@@ -312,9 +286,7 @@ const ViewRemunerationInformation = (props) => {
     }
   };
   const editHandler = () => {
-    console.log("view cadidate id ", createCandidateResponse.candidateId);
     setDisabled(false);
-    console.log("remunerationViewData", remunerationViewData);
     // setFixedGross(remunerationViewData.fixedGross);
     // setMonthlyBonus(remunerationViewData.monthlyBonus);
   };
@@ -331,14 +303,14 @@ const ViewRemunerationInformation = (props) => {
               <Col sm={6}>
                 <Form.Group as={Row} controlId="formHorizontalEmail">
                   {/* <Col sm={2}></Col> */}
-                  <h5>Fixed Gross</h5>
+                  <Form.Label>Fixed Gross</Form.Label>
                   <Col sm={6}>
-                    <h5 className="headingColor">
+                    <Form.Label className="headingColor">
                       {candidateData.remuneration !== null &&
                       candidateData.candidateData !== undefined
                         ? fixedGross
                         : "N/A"}
-                    </h5>
+                    </Form.Label>
 
                     {fixedGrossError ? (
                       <p style={{ color: "red" }}>This field cannot be empty</p>
@@ -370,9 +342,9 @@ const ViewRemunerationInformation = (props) => {
               <Col sm={6}>
                 <Form.Group as={Row} controlId="formHorizontalEmail">
                   <Col sm={2}></Col>
-                  <h5 column sm={3}>
+                  <Form.Label column sm={3}>
                     Stipend
-                  </h5>
+                  </Form.Label>
                   <Col sm={6}>
                     {stipened}
 
@@ -399,12 +371,12 @@ const ViewRemunerationInformation = (props) => {
                         {/* <Form.Label column sm={3}> */}
                         Monthly Bonus ( % ){/* </Form.Label> */}
                         <Col sm={6}>
-                          <h5 className="headingColor">
+                          <Form.Label className="headingColor">
                             {candidateData.remuneration !== null &&
                             candidateData.remuneration !== undefined
                               ? monthlyBonus
                               : "N/A"}
-                          </h5>
+                          </Form.Label>
 
                           {monthlyBonusError ? (
                             <p style={{ color: "red" }}>

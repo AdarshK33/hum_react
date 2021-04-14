@@ -1,3 +1,30 @@
 .headingColor {
   color: #006ebb;
 }
+.addButtonWrapper {
+  margin-right: 310px;
+}
+.addButtonField {
+  width: 90px !important;
+  height: 30px;
+  background-color: white;
+  color: #006ebb;
+  border: 1px solid #006ebb;
+}
+.previewButton {
+  background-color: #006ebb !important;
+}
+.appointmentHeader {
+  border: none !important;
+}
+.modal-content {
+  width: 150% !important;
+}
+.signatureButtons {
+  background-color: #006ebb !important;
+  color: white;
+  border: 1px solid #006ebb;
+}
+.appointmentLetter .modal-backdrop .show {
+  opacity: 0 !important;
+}
