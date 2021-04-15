@@ -4,6 +4,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 // import './OnBoard.css'
 import "./Documents.css";
+import { toast } from "react-toastify";
+import { OnBoardContext } from "../../context/OnBoardState";
+import { OfferContext } from "../../context/OfferState";
 // File Type list:
 // Photo = 0
 // Aadhaar = 1
@@ -17,7 +20,9 @@ import "./Documents.css";
 // OfferLetter = 9
 
 const Documents = (props) => {
-  const [FileName, setFileName] = useState("");
+  const { uploadFile, candidateProfileData } = useContext(OnBoardContext);
+  const { candidateData } = useContext(OfferContext);
+  const [fileName, setFileName] = useState("");
   const [fullTime, setFullTime] = useState(true);
   const [partTime, setParTime] = useState(false);
   const [localExpact, setLocalExpact] = useState(false);
@@ -35,12 +40,61 @@ const Documents = (props) => {
   const [passportError, setPassPortError] = useState(false);
   const [collegeIdError, setCollegeError] = useState(false);
   const [collegeLetterError, setCollegeLetterError] = useState(false);
+  // const [fileUpload, setFileUpload] = useState();
+  const [workInfoData, setWorkInfoData] = useState();
+  useEffect(() => {
+    console.log("candidateProfileData", candidateProfileData);
+    console.log("candidateData", candidateData);
+  }, [candidateProfileData]);
+  useEffect(() => {
+    if (
+      candidateData !== null &&
+      candidateData !== undefined &&
+      candidateData.workInformation
+    ) {
+      setWorkInfoData(candidateData.workInformation);
+    }
+  }, [candidateData]);
+  console.log("contractType", workInfoData);
 
+  useEffect(() => {
+    if (
+      workInfoData !== null &&
+      workInfoData !== undefined &&
+      Object.keys(workInfoData).length !== 0 &&
+      workInfoData.contractType !== null
+    ) {
+      if (workInfoData.contractType === "Permanent") {
+        console.log("permanent");
+        setFullTime(true);
+        setParTime(false);
+        setInternship(false);
+        setLocalExpact(false);
+      } else if (workInfoData.contractType === "Parttime") {
+        console.log("Parttime");
+        setParTime(true);
+        setFullTime(false);
+        setInternship(false);
+        setLocalExpact(false);
+      } else if (workInfoData.contractType === "Internship") {
+        setInternship(true);
+        setParTime(false);
+        setFullTime(false);
+        setLocalExpact(false);
+      } else if (workInfoData.contractType === "Others") {
+        setLocalExpact(true);
+        setParTime(false);
+        setFullTime(false);
+        setInternship(false);
+      }
+    }
+  }, [workInfoData]);
   const [state, setState] = useState({
     photoId: "",
     aadharId: "",
     panId: "",
     addressProof: "",
+    passport: "",
     epfPassBook: "",
     cancelledCheque: "",
     educationCertificate: "",
@@ -50,6 +104,10 @@ const Documents = (props) => {
     passport: "",
     collegeId: "",
     collegeLetter: "",
+    disabilityDocument: "",
+    form11: "",
+    form2epf: "",
+    formf: "",
   });
 
   const [FandP_Time_Required, setFandP_Required] = useState([
@@ -359,21 +417,95 @@ const Documents = (props) => {
     changeState(!isChecked);
     console.log(!isChecked);
   };
-  const changeHandler = (e) => {
-    let fileObj = e.target.files;
+  // const changeHandler = (e) => {
+  //   let fileObj = e.target.files;
+  // setState({
+  //   ...state,
+  //   [e.target.name]: fileObj[0].name,
+  // });
+  //   console.log(state);
+  // };
+
+  const changeHandler = (event) => {
+    console.log("changeHandler", event.target.name);
+    let fileObj = event.target.files[0];
+    console.log("photoIdChangeHandler", fileObj);
     setState({
       ...state,
-      [e.target.name]: fileObj[0].name,
+      [event.target.name]: fileObj,
     });
-    console.log(state);
+    // setFileUpload(fileObj);
   };
 
-  const onChange = (e) => {
-    var files = e.target.files;
-    console.log(files[0].name);
-    // var filesArr = Array.prototype.slice.call(files);
-    // console.log(filesArr);
-    setFileName(files[0].name);
+  const handleUpload = (event) => {
+    console.log("changeHandler", event.target.name);
+    let fileType;
+    let fileUpload;
+
+    if (event.target.name === "photoId") {
+      fileUpload = state.photoId;
+      fileType = 0;
+    } else if (event.target.name === "aadharId") {
+      fileUpload = state.aadharId;
+      fileType = 1;
+    } else if (event.target.name === "panId") {
+      fileUpload = state.panId;
+      fileType = 2;
+    } else if (event.target.name === "addressProof") {
+      fileUpload = state.addressProof;
+      fileType = 3;
+    } else if (event.target.name === "passport") {
+      fileUpload = state.passport;
+      fileType = 0;
+    } else if (event.target.name === "frro") {
+      fileUpload = state.frro;
+      fileType = 0;
+    } else if (event.target.name === "epfPassBook") {
+      fileUpload = state.epfPassBook;
+      fileType = 4;
+    } else if (event.target.name === "disabilityDocument") {
+      fileUpload = state.disabilityDocument;
+      fileType = 0;
+    } else if (event.target.name === "cancelledCheque") {
+      fileUpload = state.cancelledCheque;
+      fileType = 5;
+    } else if (event.target.name === "collegeLetter") {
+      fileUpload = state.collegeLetter;
+      fileType = 0;
+    } else if (event.target.name === "collegeId") {
+      fileUpload = state.collegeId;
+      fileType = 0;
+    } else if (event.target.name === "educationCertificate") {
+      fileUpload = state.educationCertificate;
+      fileType = 6;
+    } else if (event.target.name === "relievingLetter") {
+      fileUpload = state.relievingLetter;
+      fileType = 7;
+    } else if (event.target.name === "latestPaySlips") {
+      fileUpload = state.latestPaySlips;
+      fileType = 8;
+    } else if (event.target.name === "form11") {
+      fileUpload = state.form11;
+      fileType = 10;
+    } else if (event.target.name === "form2epf") {
+      fileUpload = state.form2epf;
+      fileType = 11;
+    } else if (event.target.name === "formf") {
+      fileUpload = state.formf;
+      fileType = 12;
+    }
+    if (fileUpload) {
+      console.log("inside file info", fileUpload, fileType);
+      const fileInfo = {
+        candidateId: candidateProfileData.candidateId,
+        file: fileUpload,
+        fileType: fileType,
+      };
+      console.log("handleUpload", fileInfo);
+      uploadFile(fileInfo);
+    } else {
+      toast.info("Something went wrong");
+    }
   };
 
   return (
@@ -422,17 +554,23 @@ const Documents = (props) => {
                   <input
                     className="fileInputField"
                     placeholder="Choose File"
-                    type="text"
-                    value={state.photoId}
+                    name="photoId"
+                    type="file"
+                    accept="image/jpeg,.pdf"
+                    onChange={(e) => {
+                      changeHandler(e);
+                    }}
                     style={photoIdError ? { borderColor: "red" } : {}}
                     readOnly
                   />
                   <label className="custom-file-upload">
                     <input
-                      type="file"
+                      type="button"
                       className="custom_file_Upload_button"
                       name="photoId"
-                      onChange={changeHandler}
+                      onClick={(e) => {
+                        handleUpload(e);
+                      }}
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
@@ -483,17 +621,23 @@ const Documents = (props) => {
                   <input
                     className="fileInputField"
                     placeholder="Choose File"
-                    type="text"
+                    type="file"
+                    name="aadharId"
+                    accept="image/jpeg,.pdf"
+                    onChange={(e) => {
+                      changeHandler(e);
+                    }}
                     style={aadharIdError ? { borderColor: "red" } : {}}
-                    value={state.aadharId}
                     readOnly
                   />
                   <label className="custom-file-upload">
                     <input
-                      type="file"
+                      type="button"
                       name="aadharId"
                       className="custom_file_Upload_button"
-                      onChange={changeHandler}
+                      onClick={(e) => {
+                        handleUpload(e);
+                      }}
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
@@ -539,17 +683,23 @@ const Documents = (props) => {
                   <input
                     className="fileInputField"
                     placeholder="Choose File"
-                    type="text"
+                    type="file"
+                    name="panId"
+                    accept="image/jpeg,.pdf"
+                    onChange={(e) => {
+                      changeHandler(e);
+                    }}
                     style={panIdError ? { borderColor: "red" } : {}}
-                    value={state.panId}
                     readOnly
                   />
                   <label className="custom-file-upload">
                     <input
-                      type="file"
+                      type="button"
                       name="panId"
                       className="custom_file_Upload_button"
-                      onChange={changeHandler}
+                      onClick={(e) => {
+                        handleUpload(e);
+                      }}
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
@@ -594,17 +744,23 @@ const Documents = (props) => {
                   <input
                     className="fileInputField"
                     placeholder="Choose File"
-                    type="text"
+                    type="file"
+                    accept="image/jpeg,.pdf"
+                    onChange={(e) => {
+                      changeHandler(e);
+                    }}
+                    name="addressProof"
                     style={addressProofError ? { borderColor: "red" } : {}}
-                    value={state.addressProof}
                     readOnly
                   />
                   <label className="custom-file-upload">
                     <input
-                      type="file"
+                      type="button"
                       name="addressProof"
                       className="custom_file_Upload_button"
-                      onChange={changeHandler}
+                      onClick={(e) => {
+                        handleUpload(e);
+                      }}
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
@@ -647,17 +803,23 @@ const Documents = (props) => {
                   <input
                     className="fileInputField"
                     placeholder="Choose File"
-                    type="text"
+                    type="file"
+                    accept="image/jpeg,.pdf"
+                    onChange={(e) => {
+                      changeHandler(e);
+                    }}
+                    name="passport"
                     style={passportError ? { borderColor: "red" } : {}}
-                    value={state.passport}
                     readOnly
                   />
                   <label className="custom-file-upload">
                     <input
-                      type="file"
+                      type="button"
                       name="passport"
                       className="custom_file_Upload_button"
-                      onChange={changeHandler}
+                      onClick={(e) => {
+                        handleUpload(e);
+                      }}
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
@@ -701,17 +863,23 @@ const Documents = (props) => {
                   <input
                     className="fileInputField"
                     placeholder="Choose File"
-                    type="text"
+                    type="file"
+                    accept="image/jpeg,.pdf"
+                    onChange={(e) => {
+                      changeHandler(e);
+                    }}
+                    name="frro"
                     style={frroError ? { borderColor: "red" } : {}}
-                    value={state.frro}
                     readOnly
                   />
                   <label className="custom-file-upload">
                     <input
-                      type="file"
+                      type="button"
                       name="frro"
                       className="custom_file_Upload_button"
-                      onChange={changeHandler}
+                      onClick={(e) => {
+                        handleUpload(e);
+                      }}
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
@@ -763,16 +931,22 @@ const Documents = (props) => {
                   <input
                     className="fileInputField"
                     placeholder="Choose File"
-                    type="text"
-                    value={state.epfPassBook}
+                    type="file"
+                    name="epfPassBook"
+                    accept="image/jpeg,.pdf"
+                    onChange={(e) => {
+                      changeHandler(e);
+                    }}
                     readOnly
                   />
                   <label className="custom-file-upload">
                     <input
-                      type="file"
+                      type="button"
                       name="epfPassBook"
                       className="custom_file_Upload_button"
-                      onChange={changeHandler}
+                      onClick={(e) => {
+                        handleUpload(e);
+                      }}
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
@@ -794,7 +968,7 @@ const Documents = (props) => {
         (localExpact === false) &
         (internship === false) ? (
           // required in full time and part time
-          //no need on localexact and internship
+          // no need on localexact and internship
           <Row>
             <Col>
               <Form.Group>
@@ -811,16 +985,23 @@ const Documents = (props) => {
                   <input
                     className="fileInputField"
                     placeholder="Choose File"
-                    type="text"
-                    value={state.epfPassBook}
+                    name="disabilityDocument"
+                    type="file"
+                    accept="image/jpeg,.pdf"
+                    onChange={(e) => {
+                      changeHandler(e);
+                    }}
+                    // value={state.epfPassBook}
                     readOnly
                   />
                   <label className="custom-file-upload">
                     <input
-                      type="file"
-                      name="epfPassBook"
+                      type="button"
+                      name="disabilityDocument"
                       className="custom_file_Upload_button"
-                      onChange={changeHandler}
+                      onClick={(e) => {
+                        handleUpload(e);
+                      }}
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
@@ -837,6 +1018,7 @@ const Documents = (props) => {
         ) : (
           ""
         )}
+
         {(isChecked === false) |
         (localExpact === true) |
         (internship === true) ? (
@@ -858,16 +1040,22 @@ const Documents = (props) => {
                   <input
                     className="fileInputField"
                     placeholder="Choose File"
-                    type="text"
-                    value={state.cancelledCheque}
+                    type="file"
+                    name="cancelledCheque"
+                    accept="image/jpeg,.pdf"
+                    onChange={(e) => {
+                      changeHandler(e);
+                    }}
                     readOnly
                   />
                   <label className="custom-file-upload">
                     <input
-                      type="file"
+                      type="button"
                       name="cancelledCheque"
                       className="custom_file_Upload_button"
-                      onChange={changeHandler}
+                      onClick={(e) => {
+                        handleUpload(e);
+                      }}
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
@@ -896,50 +1084,58 @@ const Documents = (props) => {
         {(isChecked === false) & (internship === true) ? (
           // only on internship and required
           <Row>
-            <Form.Group>
-              <div
-                className={
-                  FandP_Time_Required[0].ReqCollegeLetter
-                    ? "FileInput"
-                    : "FileInputWithOutStar"
-                }
-              >
-                <label>College Letter</label>
-              </div>
-              <div className="parentInput">
-                <input
-                  className="fileInputField"
-                  placeholder="Choose File"
-                  type="text"
-                  style={collegeLetterError ? { borderColor: "red" } : {}}
-                  value={state.collegeLetter}
-                  readOnly
-                />
-                <label className="custom-file-upload">
+            <Col>
+              <Form.Group>
+                <div
+                  className={
+                    FandP_Time_Required[0].ReqCollegeLetter
+                      ? "FileInput"
+                      : "FileInputWithOutStar"
+                  }
+                >
+                  <label>College Letter</label>
+                </div>
+                <div className="parentInput">
                   <input
+                    className="fileInputField"
+                    placeholder="Choose File"
                     type="file"
                     name="collegeLetter"
-                    className="custom_file_Upload_button"
-                    onChange={changeHandler}
+                    accept="image/jpeg,.pdf"
+                    onChange={(e) => {
+                      changeHandler(e);
+                    }}
+                    style={collegeLetterError ? { borderColor: "red" } : {}}
+                    readOnly
                   />
-                  {/* <i className="fa fa-cloud-upload" />  */}
-                  Upload File{" "}
-                  <i
-                    id="custom_file_upload_icon"
-                    className="fa fa-upload"
-                    aria-hidden="true"
-                  ></i>
-                </label>
-              </div>
-              {collegeLetterError ? (
-                <p style={{ color: "red" }}>
-                  {" "}
-                  &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the college letter
-                </p>
-              ) : (
-                <p></p>
-              )}
-            </Form.Group>
+                  <label className="custom-file-upload">
+                    <input
+                      type="button"
+                      name="collegeLetter"
+                      className="custom_file_Upload_button"
+                      onClick={(e) => {
+                        handleUpload(e);
+                      }}
+                    />
+                    {/* <i className="fa fa-cloud-upload" />  */}
+                    Upload File{" "}
+                    <i
+                      id="custom_file_upload_icon"
+                      className="fa fa-upload"
+                      aria-hidden="true"
+                    ></i>
+                  </label>
+                </div>
+                {collegeLetterError ? (
+                  <p style={{ color: "red" }}>
+                    {" "}
+                    &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the college letter
+                  </p>
+                ) : (
+                  <p></p>
+                )}
+              </Form.Group>
+            </Col>
           </Row>
         ) : (
           ""
@@ -963,17 +1159,24 @@ const Documents = (props) => {
                   <input
                     className="fileInputField"
                     placeholder="Choose File"
-                    type="text"
+                    type="file"
+                    accept="image/jpeg,.pdf"
+                    name="collegeId"
+                    onChange={(e) => {
+                      changeHandler(e);
+                    }}
                     style={collegeIdError ? { borderColor: "red" } : {}}
-                    value={state.collegeId}
+                    // value={state.collegeId}
                     readOnly
                   />
                   <label className="custom-file-upload">
                     <input
-                      type="file"
+                      type="button"
                       name="collegeId"
                       className="custom_file_Upload_button"
-                      onChange={changeHandler}
+                      onClick={(e) => {
+                        handleUpload(e);
+                      }}
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
@@ -1011,17 +1214,24 @@ const Documents = (props) => {
                   <input
                     className="fileInputField"
                     placeholder="Choose File"
-                    type="text"
+                    type="file"
+                    name="educationCertificate"
+                    accept="image/jpeg,.pdf"
+                    onChange={(e) => {
+                      changeHandler(e);
+                    }}
                     style={eduCertificatesError ? { borderColor: "red" } : {}}
-                    value={state.educationCertificate}
+                    // value={state.educationCertificate}
                     readOnly
                   />
                   <label className="custom-file-upload">
                     <input
-                      type="file"
+                      type="button"
                       name="educationCertificate"
                       className="custom_file_Upload_button"
-                      onChange={changeHandler}
+                      onClick={(e) => {
+                        handleUpload(e);
+                      }}
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
@@ -1054,17 +1264,24 @@ const Documents = (props) => {
                   <input
                     className="fileInputField"
                     placeholder="Choose File"
-                    type="text"
+                    type="file"
+                    name="relievingLetter"
+                    accept="image/jpeg,.pdf"
+                    onChange={(e) => {
+                      changeHandler(e);
+                    }}
                     style={relievingLetterError ? { borderColor: "red" } : {}}
-                    value={state.relievingLetter}
+                    // value={state.relievingLetter}
                     readOnly
                   />
                   <label className="custom-file-upload">
                     <input
-                      type="file"
+                      type="button"
                       name="relievingLetter"
                       className="custom_file_Upload_button"
-                      onChange={changeHandler}
+                      onClick={(e) => {
+                        handleUpload(e);
+                      }}
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
@@ -1096,17 +1313,24 @@ const Documents = (props) => {
                   <input
                     className="fileInputField"
                     placeholder="Choose File"
-                    type="text"
+                    type="file"
+                    name="latestPaySlips"
+                    accept="image/jpeg,.pdf"
+                    onChange={(e) => {
+                      changeHandler(e);
+                    }}
                     style={latestPaySlipsError ? { borderColor: "red" } : {}}
-                    value={state.latestPaySlips}
+                    // value={state.latestPaySlips}
                     readOnly
                   />
                   <label className="custom-file-upload">
                     <input
-                      type="file"
+                      type="button"
                       name="latestPaySlips"
                       className="custom_file_Upload_button"
-                      onChange={changeHandler}
+                      onClick={(e) => {
+                        handleUpload(e);
+                      }}
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
@@ -1138,17 +1362,24 @@ const Documents = (props) => {
                   <input
                     className="fileInputField"
                     placeholder="Choose File"
-                    type="text"
+                    type="file"
+                    name="form11"
+                    accept="image/jpeg,.pdf"
+                    onChange={(e) => {
+                      changeHandler(e);
+                    }}
                     style={relievingLetterError ? { borderColor: "red" } : {}}
-                    value={state.relievingLetter}
+                    // value={state.relievingLetter}
                     readOnly
                   />
                   <label className="custom-file-upload">
                     <input
-                      type="file"
-                      name="relievingLetter"
+                      type="button"
+                      name="form11"
                       className="custom_file_Upload_button"
-                      onChange={changeHandler}
+                      onClick={(e) => {
+                        handleUpload(e);
+                      }}
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
@@ -1181,17 +1412,24 @@ const Documents = (props) => {
                   <input
                     className="fileInputField"
                     placeholder="Choose File"
-                    type="text"
+                    type="file"
+                    name="form2epf"
+                    accept="image/jpeg,.pdf"
+                    onChange={(e) => {
+                      changeHandler(e);
+                    }}
                     style={relievingLetterError ? { borderColor: "red" } : {}}
-                    value={state.relievingLetter}
+                    // value={state.relievingLetter}
                     readOnly
                   />
                   <label className="custom-file-upload">
                     <input
-                      type="file"
-                      name="relievingLetter"
+                      type="button"
+                      name="form2epf"
                       className="custom_file_Upload_button"
-                      onChange={changeHandler}
+                      onClick={(e) => {
+                        handleUpload(e);
+                      }}
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
@@ -1224,17 +1462,24 @@ const Documents = (props) => {
                   <input
                     className="fileInputField"
                     placeholder="Choose File"
-                    type="text"
+                    type="file"
+                    name="formf"
+                    accept="image/jpeg,.pdf"
+                    onChange={(e) => {
+                      changeHandler(e);
+                    }}
                     style={relievingLetterError ? { borderColor: "red" } : {}}
-                    value={state.relievingLetter}
+                    // value={state.relievingLetter}
                     readOnly
                   />
                   <label className="custom-file-upload">
                     <input
-                      type="file"
-                      name="relievingLetter"
+                      type="button"
+                      name="formf"
                       className="custom_file_Upload_button"
-                      onChange={changeHandler}
+                      onClick={(e) => {
+                        handleUpload(e);
+                      }}
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}

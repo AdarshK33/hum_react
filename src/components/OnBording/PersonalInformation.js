@@ -29,7 +29,7 @@ const PersonalInformation = (props) => {
     candidatePersonalInfoData,
     PersonalInfoResponse,
     CandidateProfile,
-    candidateData,
+    candidateProfileData,
     searchForEmp1,
     searchEmpData1,
     searchForEmp2,
@@ -37,6 +37,7 @@ const PersonalInformation = (props) => {
     CandidateViewInformation,
     candidateViewInfo,
     addressView,
+    uploadFile,
   } = useContext(OnBoardContext);
   const options = useMemo(() => countryList().getData(), []);
   const [isClicked, setIsClicked] = useState(false);
@@ -142,7 +143,7 @@ const PersonalInformation = (props) => {
     }
   }, []);
 
-  console.log(candidateData);
+  console.log(candidateProfileData);
 
   const empName1Handler = (e) => {
     setEmpName1(e.target.value);
@@ -173,25 +174,25 @@ const PersonalInformation = (props) => {
     }
   };
   useEffect(() => {
-    console.log("personal information view candidate", candidateData);
-    if (candidateData) {
-      CandidateViewInformation(candidateData.candidateId);
+    console.log("personal information view candidate", candidateProfileData);
+    if (candidateProfileData) {
+      CandidateViewInformation(candidateProfileData.candidateId);
     }
-  }, [candidateData]);
+  }, [candidateProfileData]);
   console.log("personal information candidateViewInfo-->", candidateViewInfo);
-  console.log("contract type-->", candidateViewInfo.contractType);
+  // console.log("contract type-->", candidateViewInfo.contractType);
 
   useEffect(() => {
-    // console.log("personal information view candidate", candidateData);
-    if (candidateData) {
-      CandidatePersonalInfo(candidateData.candidateId);
+    // console.log("personal information view candidate", candidateProfileData);
+    if (candidateProfileData) {
+      CandidatePersonalInfo(candidateProfileData.candidateId);
     }
-  }, [candidateData]);
+  }, [candidateProfileData]);
 
   console.log("Candiate personal information data", candidatePersonalInfoData);
 
   useEffect(() => {
-    // console.log("personal information view candidate", candidateData);
+    // console.log("personal information view candidate", candidateProfileData);
 
     if (
       candidatePersonalInfoData !== null &&
@@ -286,32 +287,34 @@ const PersonalInformation = (props) => {
       }
 
       if (
-        candidateData !== undefined &&
-        candidateData.candidateReferences !== null &&
-        candidateData.candidateReferences !== undefined &&
-        candidateData.candidateReferences[0].employeeName !== null &&
-        candidateData.candidateReferences[0].employeeName !== undefined
+        candidateProfileData !== undefined &&
+        candidateProfileData.candidateReferences !== null &&
+        candidateProfileData.candidateReferences !== undefined &&
+        candidateProfileData.candidateReferences[0].employeeName !== null &&
+        candidateProfileData.candidateReferences[0].employeeName !== undefined
       ) {
-        setEmpName1(candidateData.candidateReferences[0].employeeName);
-        setDesignation1(candidateData.candidateReferences[0].designation);
-        setRefEmail1(candidateData.candidateReferences[0].email);
+        setEmpName1(candidateProfileData.candidateReferences[0].employeeName);
+        setDesignation1(
+          candidateProfileData.candidateReferences[0].designation
+        );
+        setRefEmail1(candidateProfileData.candidateReferences[0].email);
       }
     }
   }, [candidatePersonalInfoData]);
-  console.log("datya of birth", candidatePersonalInfoData.dateOfBirth);
+  // console.log("datya of birth", candidatePersonalInfoData.dateOfBirth);
 
   var data1 =
-    candidateData !== undefined &&
-    candidateData.candidateReferences !== null &&
-    candidateData.candidateReferences !== undefined &&
-    candidateData.candidateReferences[0];
+    candidateProfileData !== undefined &&
+    candidateProfileData.candidateReferences !== null &&
+    candidateProfileData.candidateReferences !== undefined &&
+    candidateProfileData.candidateReferences[0];
   // var data1 = 768;
 
   var data2 =
-    candidateData !== undefined &&
-    candidateData.candidateReferences !== null &&
-    candidateData.candidateReferences !== undefined &&
-    candidateData.candidateReferences[1];
+    candidateProfileData !== undefined &&
+    candidateProfileData.candidateReferences !== null &&
+    candidateProfileData.candidateReferences !== undefined &&
+    candidateProfileData.candidateReferences[1];
 
   console.log("data1-->", data1);
   console.log("data2-->", data2);
@@ -593,18 +596,15 @@ const PersonalInformation = (props) => {
     const value = checkValidations();
     if (value === true) {
       if (saveClick === false) {
-        const formData = new FormData();
-        formData.append("file", disabilityDoc);
-
         const ReferenceData2 = [
           {
             designation: desgination1 !== null ? desgination1 : null,
             email: refEmail1 !== null ? refEmail1 : null,
             employeeName: empName1 !== null ? empName1 : null,
             referenceId:
-              candidateData.candidateReferences[0] !== null &&
-              candidateData.candidateReferences[0] !== undefined
-                ? candidateData.candidateReferences[0].referenceId
+              candidateProfileData.candidateReferences[0] !== null &&
+              candidateProfileData.candidateReferences[0] !== undefined
+                ? candidateProfileData.candidateReferences[0].referenceId
                 : 0,
           },
           {
@@ -612,9 +612,9 @@ const PersonalInformation = (props) => {
             email: refEmail2 !== null ? refEmail2 : null,
             employeeName: empName2 !== null ? empName2 : null,
             referenceId:
-              candidateData.candidateReferences[1] !== null &&
-              candidateData.candidateReferences[1] !== undefined
-                ? candidateData.candidateReferences[1].referenceId
+              candidateProfileData.candidateReferences[1] !== null &&
+              candidateProfileData.candidateReferences[1] !== undefined
+                ? candidateProfileData.candidateReferences[1].referenceId
                 : 0,
           },
         ];
@@ -624,9 +624,9 @@ const PersonalInformation = (props) => {
             email: refEmail1 !== null ? refEmail1 : null,
             employeeName: empName1 !== null ? empName1 : null,
             referenceId:
-              candidateData.candidateReferences[1] !== null &&
-              candidateData.candidateReferences[1] !== undefined
-                ? candidateData.candidateReferences[1].referenceId
+              candidateProfileData.candidateReferences[1] !== null &&
+              candidateProfileData.candidateReferences[1] !== undefined
+                ? candidateProfileData.candidateReferences[1].referenceId
                 : 0,
           },
         ];
@@ -636,9 +636,9 @@ const PersonalInformation = (props) => {
             email: refEmail1 !== null ? refEmail1 : null,
             employeeName: empName1 !== null ? empName1 : null,
             referenceId:
-              candidateData.candidateReferences[0] !== null &&
-              candidateData.candidateReferences[0] !== undefined
-                ? candidateData.candidateReferences[0].referenceId
+              candidateProfileData.candidateReferences[0] !== null &&
+              candidateProfileData.candidateReferences[0] !== undefined
+                ? candidateProfileData.candidateReferences[0].referenceId
                 : 0,
           },
         ];
@@ -648,7 +648,9 @@ const PersonalInformation = (props) => {
           aadhaarNumber: state.aadhaarNumber,
           bloodGroup: state.bloodGroup,
           candidateId:
-            candidateData.candidateId !== null ? candidateData.candidateId : 0,
+            candidateProfileData.candidateId !== null
+              ? candidateProfileData.candidateId
+              : 0,
           candidateReferences:
             !data2 && !data1 && empName2 !== null && empName1 !== null
               ? ReferenceData2
@@ -658,15 +660,17 @@ const PersonalInformation = (props) => {
               ? ReferenceData1
               : [],
           createdDate:
-            candidateData.createdDate !== null
-              ? candidateData.createdDate
+            candidateProfileData.createdDate !== null
+              ? candidateProfileData.createdDate
               : null,
           dateOfBirth: DOB,
           disability: state.disability,
-          disabilityDoc: formData,
+          disabilityDoc: null,
           fatherName: state.fatherName,
           firstName:
-            candidateData.firstName !== null ? candidateData.firstName : null,
+            candidateProfileData.firstName !== null
+              ? candidateProfileData.firstName
+              : null,
           gender:
             genderCheckF === true
               ? "Female"
@@ -674,23 +678,28 @@ const PersonalInformation = (props) => {
               ? "Male"
               : "Other",
           lastName:
-            candidateData.lastName !== null ? candidateData.lastName : null,
+            candidateProfileData.lastName !== null
+              ? candidateProfileData.lastName
+              : null,
           lgbt: state.lgbt,
           maritalStatus: maritalStatus,
           nationality: state.nationality,
           panDoc: null,
           panNumber: state.panNumber !== null ? state.panNumber : null,
           personalEmail:
-            candidateData.personalEmail !== null
-              ? candidateData.personalEmail
+            candidateProfileData.personalEmail !== null
+              ? candidateProfileData.personalEmail
               : null,
           photo: null,
           referred: true,
-          status: candidateData.status !== null ? candidateData.status : 0,
+          status:
+            candidateProfileData.status !== null
+              ? candidateProfileData.status
+              : 0,
           statusDesc: null,
           verificationStatus:
-            candidateData.verificationStatus !== null
-              ? candidateData.verificationStatus
+            candidateProfileData.verificationStatus !== null
+              ? candidateProfileData.verificationStatus
               : 0,
           verificationStatusDesc: null,
         };
@@ -709,7 +718,7 @@ const PersonalInformation = (props) => {
       //     aadhaarNumber: state.aadhaarNumber,
       //     bloodGroup: state.bloodGroup,
       //     candidateId:
-      //       candidateData.candidateId !== null ? candidateData.candidateId : 0,
+      //       candidateProfileData.candidateId !== null ? candidateProfileData.candidateId : 0,
       //     candidateReferences: [
       //       {
       //         designation: desgination1 !== null ? desgination1 : null,
@@ -765,6 +774,31 @@ const PersonalInformation = (props) => {
 
     console.log("---------->", disabilityDoc);
   };
+  const handleUpload = (event) => {
+    if (disabilityDocValidation() === true) {
+      let fileType = 13;
+      let fileUpload = disabilityDoc;
+      if (fileUpload) {
+        console.log("inside file info", fileUpload, fileType);
+        const fileInfo = {
+          candidateId: candidateProfileData.candidateId,
+          file: fileUpload,
+          fileType: fileType,
+        };
+        console.log("handleUpload", fileInfo);
+        uploadFile(fileInfo);
+      } else {
+        toast.info("Something went wrong");
+      }
+    }
+  };
+
+  const DisabilityDocChange = (e) => {
+    console.log("changeHandler");
+    let fileObj = e.target.files[0];
+    console.log("photoIdChangeHandler", fileObj);
+    setDocName(fileObj);
+  };
 
   const changeHandler = (e) => {
     setState({
@@ -773,6 +807,7 @@ const PersonalInformation = (props) => {
     });
     console.log(state);
   };
+
   const dateOfBirthHandler = (date) => {
     var AdjusteddateValue = new Date(
       date.getTime() - date.getTimezoneOffset() * 60000
@@ -1254,25 +1289,41 @@ const PersonalInformation = (props) => {
               <Row>
                 <Col>
                   <Form.Group>
-                    <div className="FileInput">
+                    <div className={"FileInput"}>
                       <label>Disability Document</label>
                     </div>
                     <div className="parentInput">
-                      <input
+                      <label
                         className="fileInputField"
-                        placeholder="Choose File"
-                        type="text"
-                        name="disabilityDoc"
-                        value={disabilityDoc}
-                        readOnly
-                      />
+                        style={{ marginTop: "0.5rem" }}
+                      >
+                        &nbsp;&nbsp;
+                        {disabilityDoc !== ""
+                          ? disabilityDoc.name
+                          : "Select File Here"}
+                        <input
+                          // className="fileInputField"
+                          // placeholder="Choose File"
+                          // name="disabilityDocument"
+                          type="file"
+                          accept="image/jpeg,.pdf"
+                          style={{ display: "none" }}
+                          onChange={(e) => {
+                            DisabilityDocChange(e);
+                          }}
+                          // value={state.epfPassBook}
+                          readOnly
+                        />
+                      </label>
+
                       <label className="custom-file-upload">
                         <input
-                          type="file"
-                          name="epfPassBook"
-                          accept="application/pdf,image/jpeg"
+                          type="button"
+                          name="disabilityDocument"
                           className="custom_file_Upload_button"
-                          onChange={disabilityDocument}
+                          onClick={(e) => {
+                            handleUpload(e);
+                          }}
                         />
                         {/* <i className="fa fa-cloud-upload" />  */}
                         Upload File{" "}

@@ -20,9 +20,11 @@ import Documents from "./Documents";
 import { toast } from "react-toastify";
 import DocVerification from "../../components/CandidateVerification/DocVerification";
 import { OnBoardContext } from "../../context/OnBoardState";
+import { OfferContext } from "../../context/OfferState";
 
 const OnBoardingStepper = (props) => {
-  const { CandidateProfile, candidateData } = useContext(OnBoardContext);
+  const { CandidateProfile, candidateProfileData } = useContext(OnBoardContext);
+  const { viewCandidateId, candidateData } = useContext(OfferContext);
   const personalInfoRef = useRef();
   const checkOk = "OkCheckStep";
   const currStep = "CurrentCheckStep";
@@ -141,7 +143,11 @@ const OnBoardingStepper = (props) => {
   useEffect(() => {
     CandidateProfile();
   }, []);
-  console.log("stepper candidate data", candidateData);
+  useEffect(() => {
+    viewCandidateId(candidateProfileData.candidateId);
+  }, []);
+  console.log("stepper candidate data", candidateProfileData);
+  console.log("candidate data", candidateData);
 
   const NextStep = (value) => {
     console.log(stepCount, "NEXTSTEP");
