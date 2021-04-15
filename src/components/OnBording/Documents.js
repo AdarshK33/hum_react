@@ -423,25 +423,25 @@ const Documents = (props) => {
       fileType = 3;
     } else if (event.target.name === "passport") {
       fileUpload = state.passport;
-      fileType = 0;
+      fileType = 14;
     } else if (event.target.name === "frro") {
       fileUpload = state.frro;
-      fileType = 0;
+      fileType = 17;
     } else if (event.target.name === "epfPassBook") {
       fileUpload = state.epfPassBook;
       fileType = 4;
     } else if (event.target.name === "disabilityDocument") {
       fileUpload = state.disabilityDocument;
-      fileType = 0;
+      fileType = 13;
     } else if (event.target.name === "cancelledCheque") {
       fileUpload = state.cancelledCheque;
       fileType = 5;
     } else if (event.target.name === "collegeLetter") {
       fileUpload = state.collegeLetter;
-      fileType = 0;
+      fileType = 15;
     } else if (event.target.name === "collegeId") {
       fileUpload = state.collegeId;
-      fileType = 0;
+      fileType = 16;
     } else if (event.target.name === "educationCertificate") {
       fileUpload = state.educationCertificate;
       fileType = 6;
