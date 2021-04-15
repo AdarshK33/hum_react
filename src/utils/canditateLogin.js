@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useHistory } from "react-router-dom";
 // axios.defaults.baseURL = process.env.REACT_APP_BASEURL
 // export const candidate = axios
 export const candidate = axios.create({
@@ -13,7 +14,8 @@ export const setDefaultCandidiateHeader = (Token) => {
   console.log(accessToken, "token candidate");
 };
 
-const CandidateWithAxios = ({ children }) => {
+const CandidateWithAxios = ({ children ,props}) => {
+    let history = useHistory();
   const getRefreshToken = () => {
     console.log("INSIDE THE GET_REFRESH_TOKEN");
 
@@ -42,12 +44,17 @@ const CandidateWithAxios = ({ children }) => {
                 return response;
             },
             (error) => {
+               console.log({...error},JSON.stringify(error),"data")
+               if(error.message == "Network Error"){
+                // localStorage.removeItem("candidate_access_token");
+                // history.push("/onboard-offer")   
+               }
                 const {
                     config,
                     response: { status },
                 } = error;
-                console.log(error, "status in interceptorrrrr candidate");
-                if (status === 401||status === 403) {
+                console.log({...error}, "status  candidate");
+                if (status === 401) {
                     return getRefreshToken()
                         .then((response) => {
                             console.log("INSIDE THE INTERSECPECTOR ", response)
@@ -58,7 +65,10 @@ const CandidateWithAxios = ({ children }) => {
                         .catch((error) => {
                             return error;
                         });
-                } else if (!error.response.data) {
+                } else if(status == 403){
+                    localStorage.removeItem("candidate_access_token");
+                    history.push("/onboard-offer")
+                }else if (!error.response.data) {
                     let error = {};
                     error.status = 501;
                     error.error_description = "Please check internet connectivity.";
