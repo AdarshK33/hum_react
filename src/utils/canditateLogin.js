@@ -45,7 +45,7 @@ const CandidateWithAxios = ({ children ,props}) => {
             },
             (error) => {
                 console.log(error, "status in interceptorrrrr candidate");
-                if(error.config.url.includes("/v2/candidate/undefined")){
+                if(error.message == "Network Error"){
                     // localStorage.removeItem("candidate_access_token");
                     // history.push("/onboard-offer")
                 }else{               
