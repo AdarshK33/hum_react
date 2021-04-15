@@ -37,6 +37,7 @@ const PersonalInformation = (props) => {
     CandidateViewInformation,
     candidateViewInfo,
     addressView,
+    uploadFile,
   } = useContext(OnBoardContext);
   const options = useMemo(() => countryList().getData(), []);
   const [isClicked, setIsClicked] = useState(false);
@@ -56,6 +57,7 @@ const PersonalInformation = (props) => {
 
   const [genderCheckM, setGenderM] = useState(false);
   const [genderCheckF, setGenderF] = useState(false);
+  const [genderCheckOther, setGenderOther] = useState(false);
   const [married, setMarried] = useState(false);
   const [unMarried, setUnMarried] = useState(false);
   const [gender, setGender] = useState("");
@@ -235,18 +237,32 @@ const PersonalInformation = (props) => {
       ) {
         setGenderM(true);
         setGenderF(false);
+        setGenderOther(false);
         setGender("Male");
       } else if (
         candidatePersonalInfoData.gender !== null &&
         candidatePersonalInfoData.gender !== undefined &&
-        candidatePersonalInfoData.gender === "Female"
+        (candidatePersonalInfoData.gender === "Female") |
+          (candidatePersonalInfoData.gender === "FeMale")
       ) {
         setGenderF(true);
         setGenderM(false);
         setGender("Female");
+        setGenderOther(false);
+      } else if (
+        candidatePersonalInfoData.gender !== null &&
+        candidatePersonalInfoData.gender !== undefined &&
+        candidatePersonalInfoData.gender === "Other"
+      ) {
+        setGenderOther(true);
+        setGenderM(false);
+        setGenderF(false);
+
+        setGender("Male");
       } else {
         setGenderF(false);
         setGenderM(false);
+        setGenderOther(false);
       }
       if (
         candidatePersonalInfoData.maritalStatus !== null &&
@@ -259,7 +275,8 @@ const PersonalInformation = (props) => {
       } else if (
         candidatePersonalInfoData.maritalStatus !== null &&
         candidatePersonalInfoData.maritalStatus !== undefined &&
-        candidatePersonalInfoData.maritalStatus === "Unmarried"
+        (candidatePersonalInfoData.maritalStatus === "Unmarried") |
+          (candidatePersonalInfoData.maritalStatus === "UnMarried")
       ) {
         setUnMarried(true);
         setMarried(false);
@@ -443,7 +460,8 @@ const PersonalInformation = (props) => {
   };
   const disabilityDocValidation = () => {
     if (state.disability === "Yes") {
-      if (state.disabilityDoc === "") {
+      if (disabilityDoc !== "") {
+        console.log("------------->", disabilityDoc);
         setDisabilityDocError(false);
         console.log("disabilityDocSucess");
         return true;
@@ -476,6 +494,21 @@ const PersonalInformation = (props) => {
     } else {
       setBloodGroupError(true);
       console.log("nationalityFaill");
+      return false;
+    }
+  };
+  const validateCheckBoxesForGender = (
+    itemOne,
+    itemTwo,
+    itemThree,
+    setError
+  ) => {
+    if ((itemOne === true) | (itemTwo === true) | (itemThree === true)) {
+      setError(false);
+      console.log(itemOne, itemTwo, itemThree);
+      return true;
+    } else {
+      setError(true);
       return false;
     }
   };
@@ -522,19 +555,25 @@ const PersonalInformation = (props) => {
 
   const checkValidations = () => {
     if (
-      PanNumberValidation() === true &&
-      AadharNumberValidation() === true &&
-      DOBValidation() === true &&
-      AdharNameValidation() === true &&
-      FatherNameValidation() === true &&
-      disabilityValidation() === true &&
-      nationalityValidation() === true &&
-      bloodGroupValidation() === true &&
-      empName1Validation() === true &&
-      PassPortNumberValidations() === true &&
-      disabilityDocValidation() === true &&
-      validateCheckBoxes(genderCheckM, genderCheckF, setGenderError) === true &&
-      validateCheckBoxes(married, unMarried, setMaritalStatusError) === true
+      (PanNumberValidation() === true) &
+      (AadharNumberValidation() === true) &
+      (DOBValidation() === true) &
+      (AdharNameValidation() === true) &
+      (FatherNameValidation() === true) &
+      (disabilityValidation() === true) &
+      (nationalityValidation() === true) &
+      (bloodGroupValidation() === true) &
+      (empName1Validation() === true) &
+      (PassPortNumberValidations() === true) &
+      (disabilityDocValidation() === true) &
+      (validateCheckBoxesForGender(
+        genderCheckM,
+        genderCheckF,
+        genderCheckOther,
+        setGenderError
+      ) ===
+        true) &
+      (validateCheckBoxes(married, unMarried, setMaritalStatusError) === true)
     ) {
       if (isClicked === true) {
         console.log("------");
@@ -626,13 +665,18 @@ const PersonalInformation = (props) => {
               : null,
           dateOfBirth: DOB,
           disability: state.disability,
-          disabilityDoc: disabilityDoc,
+          disabilityDoc: null,
           fatherName: state.fatherName,
           firstName:
             candidateProfileData.firstName !== null
               ? candidateProfileData.firstName
               : null,
-          gender: gender,
+          gender:
+            genderCheckF === true
+              ? "Female"
+              : genderCheckM === true
+              ? "Male"
+              : "Other",
           lastName:
             candidateProfileData.lastName !== null
               ? candidateProfileData.lastName
@@ -727,7 +771,33 @@ const PersonalInformation = (props) => {
     var files = e.target.files;
     console.log(files[0].name);
     setDocName(files[0].name);
-    console.log(state);
+
+    console.log("---------->", disabilityDoc);
+  };
+  const handleUpload = (event) => {
+    if (disabilityDocValidation() === true) {
+      let fileType = 13;
+      let fileUpload = disabilityDoc;
+      if (fileUpload) {
+        console.log("inside file info", fileUpload, fileType);
+        const fileInfo = {
+          candidateId: candidateProfileData.candidateId,
+          file: fileUpload,
+          fileType: fileType,
+        };
+        console.log("handleUpload", fileInfo);
+        uploadFile(fileInfo);
+      } else {
+        toast.info("Something went wrong");
+      }
+    }
+  };
+
+  const DisabilityDocChange = (e) => {
+    console.log("changeHandler");
+    let fileObj = e.target.files[0];
+    console.log("photoIdChangeHandler", fileObj);
+    setDocName(fileObj);
   };
 
   const changeHandler = (e) => {
@@ -737,6 +807,7 @@ const PersonalInformation = (props) => {
     });
     console.log(state);
   };
+
   const dateOfBirthHandler = (date) => {
     var AdjusteddateValue = new Date(
       date.getTime() - date.getTimezoneOffset() * 60000
@@ -745,31 +816,42 @@ const PersonalInformation = (props) => {
   };
 
   const handleMaleGenderCheckboxChange = (e) => {
-    setGenderM(e.target.checked);
-    setGenderF(!e.target.checked);
-    {
-      required ? setRequired(!required) : setRequired(required);
+    if (genderCheckF === true) {
+      setGenderF(false);
     }
-    {
-      genderCheckM ? setGender("FeMale") : setGender("Male");
+    if (genderCheckM === true) {
+      setGenderM(false);
     }
-    console.log(genderCheckM);
-    console.log("---");
-    console.log(gender);
+    if (genderCheckOther === true) {
+      setGenderOther(false);
+    }
+    setGenderM(true);
   };
   const handleFemaleGenderCheckboxChange = (e) => {
-    setGenderF(e.target.checked);
-    setGenderM(!e.target.checked);
-    {
-      required ? setRequired(!required) : setRequired(required);
+    if (genderCheckF === true) {
+      setGenderF(false);
     }
-    {
-      genderCheckF ? setGender("Male") : setGender("FeMale");
+    if (genderCheckM === true) {
+      setGenderM(false);
     }
-    console.log(genderCheckF);
-    console.log("---");
-    console.log(gender);
+    if (genderCheckOther === true) {
+      setGenderOther(false);
+    }
+    setGenderF(true);
   };
+  const handleOtherGenderCheckboxChange = (e) => {
+    if (genderCheckF === true) {
+      setGenderF(false);
+    }
+    if (genderCheckM === true) {
+      setGenderM(false);
+    }
+    if (genderCheckOther === true) {
+      setGenderOther(false);
+    }
+    setGenderOther(true);
+  };
+
   const handleMarriedCheckboxChange = (e) => {
     setMarried(e.target.checked);
     setUnMarried(!e.target.checked);
@@ -808,449 +890,468 @@ const PersonalInformation = (props) => {
     <Fragment>
       {/* <ToastContainer /> */}
       <Form>
-        <Row style={{ marginBottom: "1rem" }}>
-          <Col sm={8}>
-            <Row style={{ marginBottom: "2rem" }}>
-              <div className="col-sm-4">
-                <Form.Group>
-                  <Form.Label>
-                    Name as per Aadhaar<span style={{ color: "red" }}>*</span>
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="aadhaarName"
-                    value={state.aadhaarName}
-                    onChange={changeHandler}
-                    required
-                    style={adharNameError ? { borderColor: "red" } : {}}
-                    placeholder="Name as per adhaar"
-                    disabled={disabled}
-                  />
+        <Row style={{ marginBottom: "2rem" }}>
+          <div className="col-sm-4">
+            <Form.Group>
+              <Form.Label>
+                Name as per Aadhaar<span style={{ color: "red" }}>*</span>
+              </Form.Label>
+              <Form.Control
+                type="text"
+                name="aadhaarName"
+                value={state.aadhaarName}
+                onChange={changeHandler}
+                required
+                style={adharNameError ? { borderColor: "red" } : {}}
+                placeholder="Name as per adhaar"
+                disabled={disabled}
+              />
 
-                  {adharNameError ? (
-                    <p style={{ color: "red" }}> Please enter valid name</p>
-                  ) : (
-                    <p></p>
-                  )}
-                </Form.Group>
+              {adharNameError ? (
+                <p style={{ color: "red" }}> Please enter valid name</p>
+              ) : (
+                <p></p>
+              )}
+            </Form.Group>
+          </div>
+          <div className="col-sm-4">
+            <Form.Group>
+              <Form.Label>
+                Father's Name<span style={{ color: "red" }}>*</span>
+              </Form.Label>
+              <Form.Control
+                type="text"
+                name="fatherName"
+                value={state.fatherName}
+                onChange={changeHandler}
+                required
+                placeholder="Father's Name"
+                disabled={disabled}
+                style={fatherName ? { borderColor: "red" } : {}}
+              />
+              {fatherName ? (
+                <p style={{ color: "red" }}>Please enter valid father's name</p>
+              ) : (
+                <p></p>
+              )}
+            </Form.Group>
+          </div>
+          <div className="col-sm-4">
+            <Form.Group>
+              <Form.Label>
+                Date Of Birth<span style={{ color: "red" }}>*</span>
+              </Form.Label>
+              <div className={DOBError ? "onBoard-date-error" : "onBoard-date"}>
+                <DatePicker
+                  style={DOBError ? { borderColor: "red" } : {}}
+                  className="form-control onBoard-view"
+                  selected={DOB}
+                  required
+                  onChange={(e) => dateOfBirthHandler(e)}
+                  dateFormat="yyyy-MM-dd"
+                  placeholderText="YYYY-MM-DD"
+                  disabled={disabled}
+                />
               </div>
-              <div className="col-sm-4">
-                <Form.Group>
-                  <Form.Label>
-                    Father's Name<span style={{ color: "red" }}>*</span>
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="fatherName"
-                    value={state.fatherName}
-                    onChange={changeHandler}
-                    required
-                    placeholder="Father's Name"
-                    disabled={disabled}
-                    style={fatherName ? { borderColor: "red" } : {}}
-                  />
-                  {fatherName ? (
-                    <p style={{ color: "red" }}>
-                      Please enter valid father's name
-                    </p>
-                  ) : (
-                    <p></p>
-                  )}
-                </Form.Group>
-              </div>
-              <div className="col-sm-4">
-                <Form.Group>
-                  <Form.Label>
-                    Date Of Birth<span style={{ color: "red" }}>*</span>
-                  </Form.Label>
-                  <div
-                    className={DOBError ? "onBoard-date-error" : "onBoard-date"}
-                  >
-                    <DatePicker
-                      style={DOBError ? { borderColor: "red" } : {}}
-                      className="form-control onBoard-view"
-                      selected={DOB}
-                      required
-                      onChange={(e) => dateOfBirthHandler(e)}
-                      dateFormat="yyyy-MM-dd"
-                      placeholderText="YYYY-MM-DD"
-                      disabled={disabled}
-                    />
-                  </div>
-                  {DOBError ? (
-                    <p style={{ color: "red" }}>Age should be above 18</p>
-                  ) : (
-                    <p></p>
-                  )}
-                </Form.Group>
-              </div>
-            </Row>
-            <Row style={{ marginBottom: "2rem" }}>
-              <div className="col-sm-4">
-                <Form.Group>
-                  <Form.Label>
-                    Natonality<span style={{ color: "red" }}>*</span>
-                  </Form.Label>
-                  <Form.Control
-                    as="select"
-                    name="nationality"
-                    value={state.nationality}
-                    options={options}
-                    onChange={changeHandler}
-                    required
-                    disabled={disabled}
-                    style={nationalityError ? { borderColor: "red" } : {}}
-                  >
-                    <option value="">Nationality</option>
-                    {options.map((item) => {
-                      return <option key={item.value}>{item.label}</option>;
-                    })}
-                  </Form.Control>
-
-                  {nationalityError ? (
-                    <p style={{ color: "red" }}>
-                      Please choose valid nationality
-                    </p>
-                  ) : (
-                    <p></p>
-                  )}
-                </Form.Group>
-              </div>
-              <div className="col-sm-4">
-                <Form.Group>
-                  <Form.Label>
-                    Disability<span style={{ color: "red" }}>*</span>
-                  </Form.Label>
-                  <Form.Control
-                    as="select"
-                    name="disability"
-                    value={state.disability}
-                    onChange={changeHandler}
-                    required
-                    disabled={disabled}
-                    style={disabilityError ? { borderColor: "red" } : {}}
-                  >
-                    <option value="">Disability</option>
-                    <option> Yes</option>
-                    <option> No</option>
-                  </Form.Control>
-
-                  {disabilityError ? (
-                    <p style={{ color: "red" }}>
-                      Please choose disability option
-                    </p>
-                  ) : (
-                    <p></p>
-                  )}
-                </Form.Group>
-              </div>
-
-              <div className="col-sm-4">
-                <Form.Group>
-                  <Form.Label>LGBT</Form.Label>
-                  <Form.Control
-                    as="select"
-                    name="lgbt"
-                    value={state.lgbt}
-                    onChange={changeHandler}
-                    disabled={disabled}
-                  >
-                    <option value="">LGBT</option>
-                    <option> Yes</option>
-                    <option> No</option>
-                  </Form.Control>
-                </Form.Group>
-              </div>
-            </Row>
-
-            <Row style={{ marginBottom: "2rem" }}>
-              <div className="col-sm-4">
-                <Form.Group>
-                  <Form.Label>
-                    Blood Group<span style={{ color: "red" }}>*</span>
-                  </Form.Label>
-                  <Form.Control
-                    as="select"
-                    name="bloodGroup"
-                    value={state.bloodGroup}
-                    onChange={changeHandler}
-                    required
-                    disabled={disabled}
-                    style={bloodGroupError ? { borderColor: "red" } : {}}
-                  >
-                    <option value="">Select Blood Group</option>
-                    <option>A+</option>
-                    <option>A-</option>
-                    <option>B+</option>
-                    <option>B-</option>
-                    <option>O+</option>
-                    <option>O-</option>
-                    <option>AB+</option>
-                    <option>AB-</option>
-                  </Form.Control>
-
-                  {bloodGroupError ? (
-                    <p style={{ color: "red" }}>Please choose blood group</p>
-                  ) : (
-                    <p></p>
-                  )}
-                </Form.Group>
-              </div>
-              <div className="col-sm-4">
-                {(candidateViewInfo.contractType === "Parttime") |
-                (candidateViewInfo.contractType === "Permanent") ? (
-                  <Form.Group>
-                    <Form.Label>
-                      Aadhaar Number
-                      <span style={{ color: "red" }}>
-                        {candidateViewInfo.contractType === "Internship"
-                          ? ""
-                          : "*"}
-                      </span>
-                    </Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="aadhaarNumber"
-                      value={state.aadhaarNumber}
-                      onChange={changeHandler}
-                      required
-                      maxLength="12"
-                      placeholder="Aadhaar Number"
-                      disabled={disabled}
-                      style={aadharNumberError ? { borderColor: "red" } : {}}
-                    />
-                    {aadharNumberError ? (
-                      <p style={{ color: "red" }}>
-                        Please enter valid aadhar number
-                      </p>
-                    ) : (
-                      <p></p>
-                    )}
-                  </Form.Group>
-                ) : (
-                  ""
-                )}
-                {candidateViewInfo.contractType === "Localexpact" ? (
-                  <Form.Group>
-                    <Form.Label>
-                      Pass Port Number<span style={{ color: "red" }}>*</span>
-                    </Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="passPortNo"
-                      value={state.passPortNo}
-                      onChange={changeHandler}
-                      required
-                      maxLength="12"
-                      placeholder="Pass Port No"
-                      disabled={disabled}
-                      style={passPortNoError ? { borderColor: "red" } : {}}
-                    />
-                    {passPortNoError ? (
-                      <p style={{ color: "red" }}>
-                        Please enter valid passport number
-                      </p>
-                    ) : (
-                      <p></p>
-                    )}
-                  </Form.Group>
-                ) : (
-                  ""
-                )}{" "}
-              </div>
-              <div className="col-sm-4">
-                {(candidateViewInfo.contractType === "Parttime") |
-                (candidateViewInfo.contractType === "Permanent") ? (
-                  <Form.Group>
-                    <Form.Label>
-                      Pan Number
-                      <span style={{ color: "red" }}>
-                        {" "}
-                        {candidateViewInfo.contractType === "Permanent"
-                          ? "*"
-                          : ""}
-                      </span>
-                    </Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="panNumber"
-                      value={state.panNumber}
-                      onChange={changeHandler}
-                      maxLength="10"
-                      required
-                      placeholder="Pan Number"
-                      disabled={disabled}
-                      style={panNumberError ? { borderColor: "red" } : {}}
-                    />
-
-                    {panNumberError ? (
-                      <p style={{ color: "red" }}>
-                        Please enter valid pan number
-                      </p>
-                    ) : (
-                      <p></p>
-                    )}
-                  </Form.Group>
-                ) : (
-                  ""
-                )}
-              </div>
-            </Row>
-          </Col>
-          <Col sm={4}>
-            <Row style={{ marginBottom: "1rem" }}>
-              <Col sm={3} style={{ marginTop: "1.8rem" }}>
-                <Form.Group>
-                  <div className="inputField">
-                    <label>Gender</label>
-                  </div>
-                </Form.Group>
-              </Col>
-              <Col sm={4} style={{ marginTop: "2rem" }}>
-                <Form.Group>
-                  <div className="boxField_1 input">
-                    <input
-                      className="largerCheckbox"
-                      type="checkbox"
-                      style={genderError ? { borderColor: "red" } : {}}
-                      value="Male"
-                      checked={genderCheckM}
-                      required={required}
-                      onChange={handleMaleGenderCheckboxChange}
-                    />
-                    <label style={genderError ? { color: "red" } : {}}>
-                      Male{" "}
-                    </label>
-                  </div>
-                </Form.Group>
-              </Col>
-              <Col sm={5} style={{ marginTop: "2rem" }}>
-                <Form.Group>
-                  <div className="boxField_1 input">
-                    <input
-                      className="largerCheckbox"
-                      type="checkbox"
-                      style={genderError ? { borderColor: "red" } : {}}
-                      value="Female"
-                      required={required}
-                      checked={genderCheckF}
-                      onChange={handleFemaleGenderCheckboxChange}
-                    />
-                    <label style={genderError ? { color: "red" } : {}}>
-                      Female
-                    </label>
-                  </div>
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row style={{ marginTop: "4rem" }}>
-              <Col sm={3}>
-                <Form.Group>
-                  <div className="inputField">
-                    <label>
-                      Marital<br></br>Status
-                    </label>
-                  </div>
-                </Form.Group>
-              </Col>
-              <Col sm={4}>
-                <Form.Group>
-                  <div
-                    className="boxField_1 input"
-                    style={{ marginTop: "1rem" }}
-                  >
-                    <input
-                      className="largerCheckbox"
-                      type="checkbox"
-                      style={maritalStatusError ? { borderColor: "red" } : {}}
-                      value="Married"
-                      required={statusRequired}
-                      checked={married}
-                      onChange={handleMarriedCheckboxChange}
-                    />
-                    <label
-                      style={
-                        maritalStatusError
-                          ? { marginLeft: "2px", color: "red" }
-                          : { marginLeft: "2px" }
-                      }
-                    >
-                      Married{" "}
-                    </label>
-                  </div>
-                </Form.Group>
-              </Col>
-              <Col sm={5}>
-                <Form.Group>
-                  <div
-                    className="boxField_1 input"
-                    style={{ marginTop: "0.9rem" }}
-                  >
-                    <input
-                      className="largerCheckbox"
-                      type="checkbox"
-                      style={maritalStatusError ? { borderColor: "red" } : {}}
-                      value="Unmarried"
-                      required={statusRequired}
-                      checked={unMarried}
-                      onChange={handleUnMarriedCheckboxChange}
-                    />
-                    <label style={maritalStatusError ? { color: "red" } : {}}>
-                      Unmarried
-                    </label>
-                  </div>
-                </Form.Group>
-              </Col>
-            </Row>
-            {state.disability === "Yes" ? (
-              // <Row style={{ marginTop: "2rem" }}>
-              //   <Col sm={12}>
-              //     <div className="FileInput">
-              //       <label>Disability Document</label>
-              //     </div>
-              //     <div className="parentInput">
-              //       <input
-              //         className="fileInputField2"
-              //         placeholder="Choose File"
-              //         type="text"
-              //         name="disabilityDoc"
-              //         value={disabilityDoc}
-              //       />
-              //       <label
-              //         className="custom-file-upload"
-              //         style={{ fontSize: "16px" }}
-              //       >
-              //         <input
-              //           type="file"
-              //           className="custom_file_Upload_button"
-              //           onChange={disabilityDocument}
-              //         />
-              /* <i className="fa fa-cloud-upload" />  */
-              /* Upload */
-              /* <i
-                      id="custom_file_upload_icon"
-                      class="fa fa-upload"
-                      aria-hidden="true"
-                    ></i> */
-              /* </label>
-                  </div>
-
-                  {disabilityDocError ? (
-                    <p style={{ color: "red" }}>
-                      &nbsp;&nbsp;&nbsp;&nbsp; Please upload the disability
-                      document
-                    </p> */
-
-              // <p></p>
-
-              /* </Col>
-              </Row> */
-              ""
-            ) : (
-              <div></div>
-            )}
-          </Col>
+              {DOBError ? (
+                <p style={{ color: "red" }}>Age should be above 18</p>
+              ) : (
+                <p></p>
+              )}
+            </Form.Group>
+          </div>
         </Row>
+        <Row style={{ marginBottom: "2rem" }}>
+          <div className="col-sm-4">
+            <Form.Group>
+              <Form.Label>
+                Natonality<span style={{ color: "red" }}>*</span>
+              </Form.Label>
+              <Form.Control
+                as="select"
+                name="nationality"
+                value={state.nationality}
+                options={options}
+                onChange={changeHandler}
+                required
+                disabled={disabled}
+                style={nationalityError ? { borderColor: "red" } : {}}
+              >
+                <option value="">Nationality</option>
+                {options.map((item) => {
+                  return <option key={item.value}>{item.label}</option>;
+                })}
+              </Form.Control>
+
+              {nationalityError ? (
+                <p style={{ color: "red" }}>Please choose valid nationality</p>
+              ) : (
+                <p></p>
+              )}
+            </Form.Group>
+          </div>
+          <div className="col-sm-4">
+            <Form.Group>
+              <Form.Label>
+                Disability<span style={{ color: "red" }}>*</span>
+              </Form.Label>
+              <Form.Control
+                as="select"
+                name="disability"
+                value={state.disability}
+                onChange={changeHandler}
+                required
+                disabled={disabled}
+                style={disabilityError ? { borderColor: "red" } : {}}
+              >
+                <option value="">Disability</option>
+                <option> Yes</option>
+                <option> No</option>
+              </Form.Control>
+
+              {disabilityError ? (
+                <p style={{ color: "red" }}>Please choose disability option</p>
+              ) : (
+                <p></p>
+              )}
+            </Form.Group>
+          </div>
+
+          <div className="col-sm-4">
+            <Form.Group>
+              <Form.Label>LGBT</Form.Label>
+              <Form.Control
+                as="select"
+                name="lgbt"
+                value={state.lgbt}
+                onChange={changeHandler}
+                disabled={disabled}
+              >
+                <option value="">LGBT</option>
+                <option> Yes</option>
+                <option> No</option>
+              </Form.Control>
+            </Form.Group>
+          </div>
+        </Row>
+
+        <Row style={{ marginBottom: "2rem" }}>
+          <div className="col-sm-4">
+            <Form.Group>
+              <Form.Label>
+                Blood Group<span style={{ color: "red" }}>*</span>
+              </Form.Label>
+              <Form.Control
+                as="select"
+                name="bloodGroup"
+                value={state.bloodGroup}
+                onChange={changeHandler}
+                required
+                disabled={disabled}
+                style={bloodGroupError ? { borderColor: "red" } : {}}
+              >
+                <option value="">Select Blood Group</option>
+                <option>A+</option>
+                <option>A-</option>
+                <option>B+</option>
+                <option>B-</option>
+                <option>O+</option>
+                <option>O-</option>
+                <option>AB+</option>
+                <option>AB-</option>
+              </Form.Control>
+
+              {bloodGroupError ? (
+                <p style={{ color: "red" }}>Please choose blood group</p>
+              ) : (
+                <p></p>
+              )}
+            </Form.Group>
+          </div>
+          <div className="col-sm-4">
+            {(candidateViewInfo.contractType === "Parttime") |
+            (candidateViewInfo.contractType === "Permanent") ? (
+              <Form.Group>
+                <Form.Label>
+                  Aadhaar Number
+                  <span style={{ color: "red" }}>
+                    {candidateViewInfo.contractType === "Internship" ? "" : "*"}
+                  </span>
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="aadhaarNumber"
+                  value={state.aadhaarNumber}
+                  onChange={changeHandler}
+                  required
+                  maxLength="12"
+                  placeholder="Aadhaar Number"
+                  disabled={disabled}
+                  style={aadharNumberError ? { borderColor: "red" } : {}}
+                />
+                {aadharNumberError ? (
+                  <p style={{ color: "red" }}>
+                    Please enter valid aadhar number
+                  </p>
+                ) : (
+                  <p></p>
+                )}
+              </Form.Group>
+            ) : (
+              ""
+            )}
+            {candidateViewInfo.contractType === "Localexpact" ? (
+              <Form.Group>
+                <Form.Label>
+                  Pass Port Number<span style={{ color: "red" }}>*</span>
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="passPortNo"
+                  value={state.passPortNo}
+                  onChange={changeHandler}
+                  required
+                  maxLength="12"
+                  placeholder="Pass Port No"
+                  disabled={disabled}
+                  style={passPortNoError ? { borderColor: "red" } : {}}
+                />
+                {passPortNoError ? (
+                  <p style={{ color: "red" }}>
+                    Please enter valid passport number
+                  </p>
+                ) : (
+                  <p></p>
+                )}
+              </Form.Group>
+            ) : (
+              ""
+            )}{" "}
+          </div>
+          <div className="col-sm-4">
+            {(candidateViewInfo.contractType === "Parttime") |
+            (candidateViewInfo.contractType === "Permanent") ? (
+              <Form.Group>
+                <Form.Label>
+                  Pan Number
+                  <span style={{ color: "red" }}>
+                    {" "}
+                    {candidateViewInfo.contractType === "Permanent" ? "*" : ""}
+                  </span>
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="panNumber"
+                  value={state.panNumber}
+                  onChange={changeHandler}
+                  maxLength="10"
+                  required
+                  placeholder="Pan Number"
+                  disabled={disabled}
+                  style={panNumberError ? { borderColor: "red" } : {}}
+                />
+
+                {panNumberError ? (
+                  <p style={{ color: "red" }}>Please enter valid pan number</p>
+                ) : (
+                  <p></p>
+                )}
+              </Form.Group>
+            ) : (
+              ""
+            )}
+          </div>
+        </Row>
+
+        <Row
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginBottom: "2rem",
+          }}
+        >
+          <Col sm={1} style={{ marginTop: "1.4rem" }}>
+            <Form.Group>
+              <div className="inputField">
+                <label>
+                  <b>Gender</b>
+                </label>
+              </div>
+            </Form.Group>
+          </Col>
+          <Col sm={2} style={{ marginTop: "2rem" }}>
+            <Form.Group>
+              <div className="boxField_1 input">
+                <input
+                  className="largerCheckbox"
+                  type="checkbox"
+                  style={genderError ? { borderColor: "red" } : {}}
+                  value="Male"
+                  checked={genderCheckM}
+                  required={required}
+                  onChange={handleMaleGenderCheckboxChange}
+                />
+                <label style={genderError ? { color: "red" } : {}}>Male </label>
+              </div>
+            </Form.Group>
+          </Col>
+          <Col sm={2} style={{ marginTop: "2rem" }}>
+            <Form.Group>
+              <div className="boxField_1 input">
+                <input
+                  className="largerCheckbox"
+                  type="checkbox"
+                  style={genderError ? { borderColor: "red" } : {}}
+                  value="Female"
+                  required={required}
+                  checked={genderCheckF}
+                  onChange={handleFemaleGenderCheckboxChange}
+                />
+                <label style={genderError ? { color: "red" } : {}}>
+                  Female
+                </label>
+              </div>
+            </Form.Group>
+          </Col>
+          <Col sm={2} style={{ marginTop: "2rem" }}>
+            <Form.Group>
+              <div className="boxField_1 input">
+                <input
+                  className="largerCheckbox"
+                  type="checkbox"
+                  style={genderError ? { borderColor: "red" } : {}}
+                  value="Other"
+                  required={required}
+                  checked={genderCheckOther}
+                  onChange={handleOtherGenderCheckboxChange}
+                />
+                <label style={genderError ? { color: "red" } : {}}>Other</label>
+              </div>
+            </Form.Group>
+          </Col>
+
+          <Col sm={1} style={{ marginTop: "1rem" }}>
+            <Form.Group>
+              <div className="inputField">
+                <label>
+                  <b>
+                    Marital<br></br>Status
+                  </b>
+                </label>
+              </div>
+            </Form.Group>
+          </Col>
+          <Col sm={2}>
+            <Form.Group>
+              <div className="boxField_1 input" style={{ marginTop: "2rem" }}>
+                <input
+                  className="largerCheckbox"
+                  type="checkbox"
+                  style={maritalStatusError ? { borderColor: "red" } : {}}
+                  value="Married"
+                  required={statusRequired}
+                  checked={married}
+                  onChange={handleMarriedCheckboxChange}
+                />
+                <label
+                  style={
+                    maritalStatusError
+                      ? { marginLeft: "2px", color: "red" }
+                      : { marginLeft: "2px" }
+                  }
+                >
+                  Married{" "}
+                </label>
+              </div>
+            </Form.Group>
+          </Col>
+          <Col sm={2}>
+            <Form.Group>
+              <div className="boxField_1 input" style={{ marginTop: "2rem" }}>
+                <input
+                  className="largerCheckbox"
+                  type="checkbox"
+                  style={maritalStatusError ? { borderColor: "red" } : {}}
+                  value="Unmarried"
+                  required={statusRequired}
+                  checked={unMarried}
+                  onChange={handleUnMarriedCheckboxChange}
+                />
+                <label style={maritalStatusError ? { color: "red" } : {}}>
+                  Unmarried
+                </label>
+              </div>
+            </Form.Group>
+          </Col>
+
+          {state.disability === "Yes" ? (
+            <div style={{ width: "100%" }}>
+              <Row>
+                <Col>
+                  <Form.Group>
+                    <div className={"FileInput"}>
+                      <label>Disability Document</label>
+                    </div>
+                    <div className="parentInput">
+                      <label
+                        className="fileInputField"
+                        style={{ marginTop: "0.5rem" }}
+                      >
+                        &nbsp;&nbsp;
+                        {disabilityDoc !== ""
+                          ? disabilityDoc.name
+                          : "Select File Here"}
+                        <input
+                          // className="fileInputField"
+                          // placeholder="Choose File"
+                          // name="disabilityDocument"
+                          type="file"
+                          accept="image/jpeg,.pdf"
+                          style={{ display: "none" }}
+                          onChange={(e) => {
+                            DisabilityDocChange(e);
+                          }}
+                          // value={state.epfPassBook}
+                          readOnly
+                        />
+                      </label>
+
+                      <label className="custom-file-upload">
+                        <input
+                          type="button"
+                          name="disabilityDocument"
+                          className="custom_file_Upload_button"
+                          onClick={(e) => {
+                            handleUpload(e);
+                          }}
+                        />
+                        {/* <i className="fa fa-cloud-upload" />  */}
+                        Upload File{" "}
+                        <i
+                          id="custom_file_upload_icon"
+                          className="fa fa-upload"
+                          aria-hidden="true"
+                        ></i>
+                      </label>
+                    </div>
+
+                    {disabilityDocError ? (
+                      <p style={{ color: "red" }}>
+                        &nbsp;&nbsp;&nbsp;&nbsp; Please upload the disability
+                        document
+                      </p>
+                    ) : (
+                      ""
+                    )}
+                  </Form.Group>
+                </Col>
+              </Row>
+            </div>
+          ) : (
+            " "
+          )}
+        </Row>
+
         {!data2 ? (
           <div>
             <Row style={{ marginBottom: "1rem" }}>

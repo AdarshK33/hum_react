@@ -56,6 +56,39 @@ const Documents = (props) => {
     }
   }, [candidateData]);
   console.log("contractType", workInfoData);
+
+  useEffect(() => {
+    if (
+      workInfoData !== null &&
+      workInfoData !== undefined &&
+      Object.keys(workInfoData).length !== 0 &&
+      workInfoData.contractType !== null
+    ) {
+      if (workInfoData.contractType === "Permanent") {
+        console.log("permanent");
+        setFullTime(true);
+        setParTime(false);
+        setInternship(false);
+        setLocalExpact(false);
+      } else if (workInfoData.contractType === "Parttime") {
+        console.log("Parttime");
+        setParTime(true);
+        setFullTime(false);
+        setInternship(false);
+        setLocalExpact(false);
+      } else if (workInfoData.contractType === "Internship") {
+        setInternship(true);
+        setParTime(false);
+        setFullTime(false);
+        setLocalExpact(false);
+      } else if (workInfoData.contractType === "Others") {
+        setLocalExpact(true);
+        setParTime(false);
+        setFullTime(false);
+        setInternship(false);
+      }
+    }
+  }, [workInfoData]);
   const [state, setState] = useState({
     photoId: "",
     aadharId: "",
