@@ -69,7 +69,7 @@ import ViewOfferRelease from "./components/Offers/viewOfferRelease";
 /*------------------- Candidate Verification -----------------------------------*/
 import CandidateVerification from "./components/CandidateVerification/ManageCandidates";
 import Verification from "./components/CandidateVerification/Verification";
-
+import NoDueClearance from "./components/Separation/NoDueClearance"
 import ViewEditRelease from "./components/OfferReleaseandOnboarding/ViewOfferRelease";
 
 import Documents from "./components/OnBording/Documents";
@@ -90,12 +90,12 @@ const RoutePath = () => {
       path={`${process.env.PUBLIC_URL}/onboard`}
       component={OnBoardingStepper}
       /> */}
-      {/* 
+      
       <Route
-            path={`${process.env.PUBLIC_URL}/loginonboard`}
-            component={LoginOnboard}
+            path={`${process.env.PUBLIC_URL}/no_due_clearance`}
+            component={NoDueClearance}
           />
-           */}
+          
       <Route
         //  {/*Rajasekhar */}
         path={`${process.env.PUBLIC_URL}/onboard`}
