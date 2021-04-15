@@ -1293,25 +1293,18 @@ const PersonalInformation = (props) => {
                       <label>Disability Document</label>
                     </div>
                     <div className="parentInput">
-                      <label
-                        className="fileInputField"
-                        style={{ marginTop: "0.5rem" }}
-                      >
+                      <label className="fileInputField">
                         &nbsp;&nbsp;
                         {disabilityDoc !== ""
                           ? disabilityDoc.name
                           : "Select File Here"}
                         <input
-                          // className="fileInputField"
-                          // placeholder="Choose File"
-                          // name="disabilityDocument"
                           type="file"
                           accept="image/jpeg,.pdf"
                           style={{ display: "none" }}
                           onChange={(e) => {
                             DisabilityDocChange(e);
                           }}
-                          // value={state.epfPassBook}
                           readOnly
                         />
                       </label>

@@ -35,6 +35,7 @@ const Documents = (props) => {
   const [cancelledChequeError, setCancelledChequeError] = useState(false);
   const [eduCertificatesError, setEduCertificatesError] = useState(false);
   const [relievingLetterError, setRelievingLetterError] = useState(false);
+  const [EPFError, setEPFError] = useState(false);
   const [latestPaySlipsError, setLatestPaySlipsError] = useState(false);
   const [frroError, setFrroError] = useState(false);
   const [passportError, setPassPortError] = useState(false);
@@ -123,6 +124,24 @@ const Documents = (props) => {
       ReqPassport: false,
       ReqCollegeId: false,
       ReqCollegeLetter: false,
+    },
+  ]);
+
+  const [UploadedArray, setUploadedError] = useState([
+    {
+      ULPhotoId: false,
+      ULAdharId: false,
+      ULPanId: false,
+      ULAddressProof: false,
+      ULEpfPassBook: false,
+      ULCancelledCheque: false,
+      ULFrro: false,
+      ULPassport: false,
+      ULCollegeId: false,
+      ULCollegeLetter: false,
+      ULEducationCer: false,
+      ULRelivingLetter: false,
+      ULLatestPaySlip: false,
     },
   ]);
 
@@ -261,6 +280,17 @@ const Documents = (props) => {
       return true;
     }
   };
+  const EPFValidation = () => {
+    if (state.epfPassBook !== "") {
+      setEPFError(false);
+      console.log("passportSuccess");
+      return true;
+    } else {
+      setEPFError(true);
+      console.log("passportFail");
+      return false;
+    }
+  };
   const FrroValidation = () => {
     if (FandP_Time_Required[0].ReqFrro === true) {
       if (state.frro !== "") {
@@ -341,18 +371,233 @@ const Documents = (props) => {
     }
   };
 
-  const checkValidations = () => {
+  // UPLOAD VALIDATIONS
+
+  const PhotoIdUploadValidation = () => {
+    if (FandP_Time_Required[0].ReqPhotoId === true) {
+      if (UploadedArray[0].ULPhotoId === false) {
+        if (PhotoIdErrorValidation() === true) {
+          setPhotoIdError(true);
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
+  const AadharIdUploadValidation = () => {
+    if (FandP_Time_Required[0].ReqAdharId === true) {
+      if (UploadedArray[0].ULAdharId === false) {
+        if (AadharIdErrorValidation() === true) {
+          setAadharIdError(true);
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
+  const PanIdUploadValidation = () => {
+    if (FandP_Time_Required[0].ReqPanId === true) {
+      if (UploadedArray[0].ULPanId === false) {
+        if (PanIdErrorValidation() === true) {
+          setPanIdError(true);
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
+
+  const AddressProfUploadValidation = () => {
+    if (FandP_Time_Required[0].ReqAddressProof === true) {
+      if (UploadedArray[0].ULAddressProof === false) {
+        if (AddressProofValidation() === true) {
+          setAddressProofError(true);
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
+  const EpfPassBookUploadValidation = () => {
+    if (FandP_Time_Required[0].ReqEpfPassBook === true) {
+      if (UploadedArray[0].ULEpfPassBook === false) {
+        if (EPFValidation() === true) {
+          setEPFError(true);
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
+  const CancelledChequeUploadValidation = () => {
+    if (FandP_Time_Required[0].ReqCancelledCheque === true) {
+      if (UploadedArray[0].ULCancelledCheque === false) {
+        if (CancelledChequeValidation() === true) {
+          setCancelledChequeError(true);
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
+  const FrroUploadValidation = () => {
+    if (FandP_Time_Required[0].ReqFrro === true) {
+      if (UploadedArray[0].ULFrro === false) {
+        if (FrroValidation() === true) {
+          setFrroError(true);
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
+  const PassPortUploadValidation = () => {
+    if (FandP_Time_Required[0].ReqPassport === true) {
+      if (UploadedArray[0].ULPassport === false) {
+        if (PassPortValidation() === true) {
+          setPassPortError(true);
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
+  const CollegeIdUploadValidation = () => {
+    if (FandP_Time_Required[0].ReqCollegeId === true) {
+      if (UploadedArray[0].ULCollegeId === false) {
+        if (CollegeIdValidation() === true) {
+          setCollegeError(true);
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
+  const CollegeLetterUploadValidation = () => {
+    if (FandP_Time_Required[0].ReqCollegeLetter === true) {
+      if (UploadedArray[0].ULCollegeLetter === false) {
+        if (CollegeLetterValidation() === true) {
+          setCollegeLetterError(true);
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
+
+  const EduCetificateUploadValidation = () => {
+    if (isChecked === true) {
+      if (UploadedArray[0].ULEducationCer === false) {
+        if (EducationCertificatesValidation() === true) {
+          setEduCertificatesError(true);
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
+  const RelivingLetterUploadValidation = () => {
+    if (isChecked === true) {
+      if (UploadedArray[0].ULRelivingLetter === false) {
+        if (RelievingLetterValidation() === true) {
+          setRelievingLetterError(true);
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
+  const LatestPaySlipsUploadValidation = () => {
+    if (isChecked === true) {
+      if (UploadedArray[0].ULLatestPaySlip === false) {
+        if (PaySlipsValidation() === true) {
+          setLatestPaySlipsError(true);
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
+
+  const isAllFilesUploaded1 = () => {
+    if (
+      (PhotoIdUploadValidation() === true) &
+      (AadharIdUploadValidation() === true) &
+      (PanIdUploadValidation() === true) &
+      (AddressProfUploadValidation() === true) &
+      (EpfPassBookUploadValidation() === true) &
+      (CancelledChequeUploadValidation() === true) &
+      (FrroUploadValidation() === true) &
+      (PassPortUploadValidation() === true) &
+      (CollegeIdUploadValidation() === true) &
+      (CollegeLetterUploadValidation() === true) &
+      (EduCetificateUploadValidation() === true) &
+      (RelivingLetterUploadValidation() === true) &
+      (LatestPaySlipsUploadValidation() === true)
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const isAllFilesUploaded = () => {
     if ((partTime === true) | (fullTime === true)) {
       if (
-        (PhotoIdErrorValidation() === true) &
-        (AadharIdErrorValidation() === true) &
-        (PanIdErrorValidation() === true) &
-        (AddressProofValidation() === true)
+        (PhotoIdUploadValidation() === true) &
+        (AadharIdUploadValidation() === true) &
+        (PanIdUploadValidation() === true) &
+        (AddressProfUploadValidation() === true) &
+        (EpfPassBookUploadValidation() === true) &
+        (CancelledChequeUploadValidation() === true) &
+        (FrroUploadValidation() === true) &
+        (PassPortUploadValidation() === true) &
+        (CollegeIdUploadValidation() === true) &
+        (CollegeLetterUploadValidation() === true)
       ) {
         if (
-          (EducationCertificatesValidation() === true) &
-          (RelievingLetterValidation() === true) &
-          (PaySlipsValidation() === true)
+          (EduCetificateUploadValidation() === true) &
+          (RelivingLetterUploadValidation() === true) &
+          (LatestPaySlipsUploadValidation() === true)
         ) {
           return true;
         } else {
@@ -361,15 +606,21 @@ const Documents = (props) => {
           return false;
         }
       } else if (
-        (EducationCertificatesValidation() === true) &
-        (RelievingLetterValidation() === true) &
-        (PaySlipsValidation() === true)
+        (EduCetificateUploadValidation() === true) &
+        (RelivingLetterUploadValidation() === true) &
+        (LatestPaySlipsUploadValidation() === true)
       )
         if (
-          (PhotoIdErrorValidation() === true) &
-          (AadharIdErrorValidation() === true) &
-          (PanIdErrorValidation() === true) &
-          (AddressProofValidation() === true)
+          (PhotoIdUploadValidation() === true) &
+          (AadharIdUploadValidation() === true) &
+          (PanIdUploadValidation() === true) &
+          (AddressProfUploadValidation() === true) &
+          (EpfPassBookUploadValidation() === true) &
+          (CancelledChequeUploadValidation() === true) &
+          (FrroUploadValidation() === true) &
+          (PassPortUploadValidation() === true) &
+          (CollegeIdUploadValidation() === true) &
+          (CollegeLetterUploadValidation() === true)
         ) {
           return true;
         } else {
@@ -400,7 +651,8 @@ const Documents = (props) => {
   };
 
   const submitHandler = (e) => {
-    const value = checkValidations();
+    // const value = checkValidations();
+    const value = isAllFilesUploaded();
     if (value === true) {
       console.log(state);
       const nextPage = props.NextStep;
@@ -444,56 +696,80 @@ const Documents = (props) => {
     let fileUpload;
 
     if (event.target.name === "photoId") {
-      fileUpload = state.photoId;
-      fileType = 0;
+      if (PhotoIdErrorValidation() === true) {
+        fileUpload = state.photoId;
+        fileType = 0;
+        UploadedArray[0].ULPhotoId = true;
+      }
     } else if (event.target.name === "aadharId") {
-      fileUpload = state.aadharId;
-      fileType = 1;
+      if (AadharIdErrorValidation() === true) {
+        fileUpload = state.aadharId;
+        fileType = 1;
+        UploadedArray[0].ULAdharId = true;
+      }
     } else if (event.target.name === "panId") {
-      fileUpload = state.panId;
-      fileType = 2;
+      if (PanIdErrorValidation() === true) {
+        fileUpload = state.panId;
+        fileType = 2;
+        UploadedArray[0].ULPanId = true;
+      }
     } else if (event.target.name === "addressProof") {
-      fileUpload = state.addressProof;
-      fileType = 3;
+      if (AddressProofValidation() === true) {
+        fileUpload = state.addressProof;
+        fileType = 3;
+        UploadedArray[0].ULAddressProof = true;
+      }
     } else if (event.target.name === "passport") {
-      fileUpload = state.passport;
-      fileType = 0;
+      if (PassPortValidation() === true) {
+        fileUpload = state.passport;
+        fileType = 0;
+        UploadedArray[0].ULPassport = true;
+      }
     } else if (event.target.name === "frro") {
-      fileUpload = state.frro;
-      fileType = 0;
+      if (FrroValidation() === true) {
+        fileUpload = state.frro;
+        fileType = 0;
+        UploadedArray[0].ULFrro = true;
+      }
     } else if (event.target.name === "epfPassBook") {
-      fileUpload = state.epfPassBook;
-      fileType = 4;
-    } else if (event.target.name === "disabilityDocument") {
-      fileUpload = state.disabilityDocument;
-      fileType = 0;
+      if (EPFValidation() === true) {
+        fileUpload = state.epfPassBook;
+        fileType = 4;
+        UploadedArray[0].ULEpfPassBook = true;
+      }
     } else if (event.target.name === "cancelledCheque") {
-      fileUpload = state.cancelledCheque;
-      fileType = 5;
+      if (CancelledChequeValidation() === true) {
+        fileUpload = state.cancelledCheque;
+        fileType = 5;
+        UploadedArray[0].ULCancelledCheque = true;
+      }
     } else if (event.target.name === "collegeLetter") {
-      fileUpload = state.collegeLetter;
-      fileType = 0;
+      if (CollegeLetterValidation() === true) {
+        fileUpload = state.collegeLetter;
+        fileType = 0;
+        UploadedArray[0].ULCollegeLetter = true;
+      }
     } else if (event.target.name === "collegeId") {
-      fileUpload = state.collegeId;
-      fileType = 0;
+      if (CollegeIdValidation() === true) {
+        fileUpload = state.collegeId;
+        fileType = 0;
+        UploadedArray[0].ULCollegeId = true;
+      }
     } else if (event.target.name === "educationCertificate") {
-      fileUpload = state.educationCertificate;
-      fileType = 6;
+      if (EducationCertificatesValidation() === true) {
+        fileUpload = state.educationCertificate;
+        fileType = 6;
+      }
     } else if (event.target.name === "relievingLetter") {
-      fileUpload = state.relievingLetter;
-      fileType = 7;
+      if (RelievingLetterValidation() === true) {
+        fileUpload = state.relievingLetter;
+        fileType = 7;
+      }
     } else if (event.target.name === "latestPaySlips") {
-      fileUpload = state.latestPaySlips;
-      fileType = 8;
-    } else if (event.target.name === "form11") {
-      fileUpload = state.form11;
-      fileType = 10;
-    } else if (event.target.name === "form2epf") {
-      fileUpload = state.form2epf;
-      fileType = 11;
-    } else if (event.target.name === "formf") {
-      fileUpload = state.formf;
-      fileType = 12;
+      if (latestPaySlipsError() === true) {
+        fileUpload = state.latestPaySlips;
+        fileType = 8;
+      }
     }
     if (fileUpload) {
       console.log("inside file info", fileUpload, fileType);
@@ -552,10 +828,7 @@ const Documents = (props) => {
                   <label>Photo ID</label>
                 </div>
                 <div className="parentInput">
-                  <label
-                    className="fileInputField"
-                    style={{ marginTop: "0.5rem" }}
-                  >
+                  <label className="fileInputField">
                     &nbsp;&nbsp;
                     {state.photoId !== ""
                       ? state.photoId.name
@@ -627,10 +900,7 @@ const Documents = (props) => {
                   </label>
                 </div>
                 <div className="parentInput">
-                  <label
-                    className="fileInputField"
-                    style={{ marginTop: "0.5rem" }}
-                  >
+                  <label className="fileInputField">
                     &nbsp;&nbsp;
                     {state.aadharId !== ""
                       ? state.aadharId.name
@@ -697,10 +967,7 @@ const Documents = (props) => {
                   <label>PAN ID</label>
                 </div>
                 <div className="parentInput">
-                  <label
-                    className="fileInputField"
-                    style={{ marginTop: "0.5rem" }}
-                  >
+                  <label className="fileInputField">
                     &nbsp;&nbsp;
                     {state.panId !== "" ? state.panId.name : "Select File Here"}
                     <input
@@ -764,10 +1031,7 @@ const Documents = (props) => {
                   <label>Address Proof</label>
                 </div>
                 <div className="parentInput">
-                  <label
-                    className="fileInputField"
-                    style={{ marginTop: "0.5rem" }}
-                  >
+                  <label className="fileInputField">
                     &nbsp;&nbsp;
                     {state.addressProof !== ""
                       ? state.addressProof.name
@@ -831,10 +1095,7 @@ const Documents = (props) => {
                   <label>Pass Port</label>
                 </div>
                 <div className="parentInput">
-                  <label
-                    className="fileInputField"
-                    style={{ marginTop: "0.5rem" }}
-                  >
+                  <label className="fileInputField">
                     &nbsp;&nbsp;
                     {state.passport !== ""
                       ? state.passport.name
@@ -899,10 +1160,7 @@ const Documents = (props) => {
                   <label>FRRO</label>
                 </div>
                 <div className="parentInput">
-                  <label
-                    className="fileInputField"
-                    style={{ marginTop: "0.5rem" }}
-                  >
+                  <label className="fileInputField">
                     &nbsp;&nbsp;
                     {state.frro !== "" ? state.frro.name : "Select File Here"}
                     <input
@@ -973,10 +1231,7 @@ const Documents = (props) => {
                   </label>
                 </div>
                 <div className="parentInput">
-                  <label
-                    className="fileInputField"
-                    style={{ marginTop: "0.5rem" }}
-                  >
+                  <label className="fileInputField">
                     &nbsp;&nbsp;
                     {state.epfPassBook !== ""
                       ? state.epfPassBook.name
@@ -1011,6 +1266,14 @@ const Documents = (props) => {
                     ></i>
                   </label>
                 </div>
+                {EPFError ? (
+                  <p style={{ color: "red" }}>
+                    {" "}
+                    &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the EPF Pass book
+                  </p>
+                ) : (
+                  <p></p>
+                )}
               </Form.Group>
             </Col>
           </Row>
@@ -1036,10 +1299,7 @@ const Documents = (props) => {
                   <label>Cancelled Cheque</label>
                 </div>
                 <div className="parentInput">
-                  <label
-                    className="fileInputField"
-                    style={{ marginTop: "0.5rem" }}
-                  >
+                  <label className="fileInputField">
                     &nbsp;&nbsp;
                     {state.cancelledCheque !== ""
                       ? state.cancelledCheque.name
@@ -1104,10 +1364,7 @@ const Documents = (props) => {
                   <label>College Letter</label>
                 </div>
                 <div className="parentInput">
-                  <label
-                    className="fileInputField"
-                    style={{ marginTop: "0.5rem" }}
-                  >
+                  <label className="fileInputField">
                     &nbsp;&nbsp;
                     {state.collegeLetter !== ""
                       ? state.collegeLetter.name
@@ -1172,10 +1429,7 @@ const Documents = (props) => {
                   <label>College Id</label>
                 </div>
                 <div className="parentInput">
-                  <label
-                    className="fileInputField"
-                    style={{ marginTop: "0.5rem" }}
-                  >
+                  <label className="fileInputField">
                     &nbsp;&nbsp;
                     {state.collegeId !== ""
                       ? state.collegeId.name
@@ -1234,10 +1488,7 @@ const Documents = (props) => {
                   <label>Highest education certification</label>
                 </div>
                 <div className="parentInput">
-                  <label
-                    className="fileInputField"
-                    style={{ marginTop: "0.5rem" }}
-                  >
+                  <label className="fileInputField">
                     &nbsp;&nbsp;
                     {state.educationCertificate !== ""
                       ? state.educationCertificate.name
@@ -1291,10 +1542,7 @@ const Documents = (props) => {
                   <label>Relieving Letter</label>
                 </div>
                 <div className="parentInput">
-                  <label
-                    className="fileInputField"
-                    style={{ marginTop: "0.5rem" }}
-                  >
+                  <label className="fileInputField">
                     &nbsp;&nbsp;
                     {state.relievingLetter !== ""
                       ? state.relievingLetter.name
@@ -1347,10 +1595,7 @@ const Documents = (props) => {
                   <label>Latest Payslips</label>
                 </div>
                 <div className="parentInput">
-                  <label
-                    className="fileInputField"
-                    style={{ marginTop: "0.5rem" }}
-                  >
+                  <label className="fileInputField">
                     &nbsp;&nbsp;
                     {state.latestPaySlips !== ""
                       ? state.latestPaySlips.name
