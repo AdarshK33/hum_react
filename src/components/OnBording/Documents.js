@@ -87,6 +87,7 @@ const Documents = (props) => {
         setFullTime(false);
         setInternship(false);
       }
+      whichOneIsRequired();
     }
   }, [workInfoData]);
   const [state, setState] = useState({
@@ -551,18 +552,26 @@ const Documents = (props) => {
                   <label>Photo ID</label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    name="photoId"
-                    type="file"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={photoIdError ? { borderColor: "red" } : {}}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.photoId !== ""
+                      ? state.photoId.name
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="photoId"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -618,18 +627,26 @@ const Documents = (props) => {
                   </label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="aadharId"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={aadharIdError ? { borderColor: "red" } : {}}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.aadharId !== ""
+                      ? state.aadharId.name
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="aadharId"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -680,18 +697,24 @@ const Documents = (props) => {
                   <label>PAN ID</label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="panId"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={panIdError ? { borderColor: "red" } : {}}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.panId !== "" ? state.panId.name : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="panId"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -741,18 +764,26 @@ const Documents = (props) => {
                   <label>Address Proof</label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    name="addressProof"
-                    style={addressProofError ? { borderColor: "red" } : {}}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.addressProof !== ""
+                      ? state.addressProof.name
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="addressProof"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -800,18 +831,26 @@ const Documents = (props) => {
                   <label>Pass Port</label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    name="passport"
-                    style={passportError ? { borderColor: "red" } : {}}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.passport !== ""
+                      ? state.passport.name
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="passport"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -860,18 +899,24 @@ const Documents = (props) => {
                   <label>FRRO</label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    name="frro"
-                    style={frroError ? { borderColor: "red" } : {}}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.frro !== "" ? state.frro.name : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="frro"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -928,76 +973,30 @@ const Documents = (props) => {
                   </label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="epfPassBook"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.epfPassBook !== ""
+                      ? state.epfPassBook.name
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="epfPassBook"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
                       name="epfPassBook"
-                      className="custom_file_Upload_button"
-                      onClick={(e) => {
-                        handleUpload(e);
-                      }}
-                    />
-                    {/* <i className="fa fa-cloud-upload" />  */}
-                    Upload File{" "}
-                    <i
-                      id="custom_file_upload_icon"
-                      className="fa fa-upload"
-                      aria-hidden="true"
-                    ></i>
-                  </label>
-                </div>
-              </Form.Group>
-            </Col>
-          </Row>
-        ) : (
-          ""
-        )}
-
-        {(isChecked === false) &
-        (localExpact === false) &
-        (internship === false) ? (
-          // required in full time and part time
-          // no need on localexact and internship
-          <Row>
-            <Col>
-              <Form.Group>
-                <div
-                  className={
-                    FandP_Time_Required[0].ReqEpfPassBook
-                      ? "FileInput"
-                      : "FileInputWithOutStar"
-                  }
-                >
-                  <label>Disability Document</label>
-                </div>
-                <div className="parentInput">
-                  <input
-                    className="fileInputField"
-                    placeholder="Choose File"
-                    name="disabilityDocument"
-                    type="file"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    // value={state.epfPassBook}
-                    readOnly
-                  />
-                  <label className="custom-file-upload">
-                    <input
-                      type="button"
-                      name="disabilityDocument"
                       className="custom_file_Upload_button"
                       onClick={(e) => {
                         handleUpload(e);
@@ -1037,17 +1036,26 @@ const Documents = (props) => {
                   <label>Cancelled Cheque</label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="cancelledCheque"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.cancelledCheque !== ""
+                      ? state.cancelledCheque.name
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="cancelledCheque"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -1096,18 +1104,26 @@ const Documents = (props) => {
                   <label>College Letter</label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="collegeLetter"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={collegeLetterError ? { borderColor: "red" } : {}}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.collegeLetter !== ""
+                      ? state.collegeLetter.name
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="collegeLetter"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -1156,19 +1172,26 @@ const Documents = (props) => {
                   <label>College Id</label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    accept="image/jpeg,.pdf"
-                    name="collegeId"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={collegeIdError ? { borderColor: "red" } : {}}
-                    // value={state.collegeId}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.collegeId !== ""
+                      ? state.collegeId.name
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="collegeId"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -1211,19 +1234,26 @@ const Documents = (props) => {
                   <label>Highest education certification</label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="educationCertificate"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={eduCertificatesError ? { borderColor: "red" } : {}}
-                    // value={state.educationCertificate}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.educationCertificate !== ""
+                      ? state.educationCertificate.name
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="educationCertificate"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -1261,19 +1291,26 @@ const Documents = (props) => {
                   <label>Relieving Letter</label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="relievingLetter"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={relievingLetterError ? { borderColor: "red" } : {}}
-                    // value={state.relievingLetter}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.relievingLetter !== ""
+                      ? state.relievingLetter.name
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="relievingLetter"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -1310,19 +1347,26 @@ const Documents = (props) => {
                   <label>Latest Payslips</label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="latestPaySlips"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={latestPaySlipsError ? { borderColor: "red" } : {}}
-                    // value={state.latestPaySlips}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.latestPaySlips !== ""
+                      ? state.latestPaySlips.name
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="latestPaySlips"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -1352,26 +1396,33 @@ const Documents = (props) => {
               </Form.Group>
             </Col>
           </Row>
-          <Row>
+          {/* <Row>
             <Col>
               <Form.Group>
                 <div className="FileInput">
                   <label>Form 11 Declaration</label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="form11"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={relievingLetterError ? { borderColor: "red" } : {}}
-                    // value={state.relievingLetter}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;                                
+                    {state.form11 !== ""
+                      ? state.form11.name
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="form11"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -1381,7 +1432,7 @@ const Documents = (props) => {
                         handleUpload(e);
                       }}
                     />
-                    {/* <i className="fa fa-cloud-upload" />  */}
+                   
                     Upload File{" "}
                     <i
                       id="custom_file_upload_icon"
@@ -1401,27 +1452,34 @@ const Documents = (props) => {
                 )}
               </Form.Group>
             </Col>
-          </Row>
-          <Row>
+          </Row> */}
+          {/* <Row>
             <Col>
               <Form.Group>
                 <div className="FileInput">
                   <label>Form 2 EPF Nomination</label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="form2epf"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={relievingLetterError ? { borderColor: "red" } : {}}
-                    // value={state.relievingLetter}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.form2epf !== ""
+                      ? state.form2epf.name
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="form2epf"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -1431,7 +1489,7 @@ const Documents = (props) => {
                         handleUpload(e);
                       }}
                     />
-                    {/* <i className="fa fa-cloud-upload" />  */}
+                    
                     Upload File{" "}
                     <i
                       id="custom_file_upload_icon"
@@ -1451,27 +1509,32 @@ const Documents = (props) => {
                 )}
               </Form.Group>
             </Col>
-          </Row>
-          <Row>
+          </Row> */}
+          {/* <Row>
             <Col>
               <Form.Group>
                 <div className="FileInput">
                   <label>Form F Gratuity</label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="formf"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={relievingLetterError ? { borderColor: "red" } : {}}
-                    // value={state.relievingLetter}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.formf !== "" ? state.formf.name : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="formf"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -1481,7 +1544,7 @@ const Documents = (props) => {
                         handleUpload(e);
                       }}
                     />
-                    {/* <i className="fa fa-cloud-upload" />  */}
+                    
                     Upload File{" "}
                     <i
                       id="custom_file_upload_icon"
@@ -1500,7 +1563,7 @@ const Documents = (props) => {
                 )}
               </Form.Group>
             </Col>
-          </Row>
+          </Row> */}
         </Form>
       ) : (
         ""
