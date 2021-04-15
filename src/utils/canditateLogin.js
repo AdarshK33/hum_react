@@ -13,24 +13,32 @@ export const setDefaultCandidiateHeader = (Token) => {
   accessToken = Token;
   console.log(accessToken, "token candidate");
 };
-
-const CandidateWithAxios = ({ children ,props}) => {
-    let history = useHistory();
-  const getRefreshToken = () => {
+export const getRefreshToken = () => {
     console.log("INSIDE THE GET_REFRESH_TOKEN");
 
         let config = {
             method: "get",
-            url: candidate.defaults.baseURL + "/api/v2/refresh_token",
+            url: candidate.defaults.baseURL + "api/v2/refresh_token",
+            headers: {
+                "Host":"<calculated when request is sent>",
+                "Accept":"*/*",
+                "Accept-Encoding":"gzip, deflate, br",
+                "Connection":"keep-alive",
+                "accept": "application/json",
+                "Authorization":`Bearer ${accessToken}`
+            }
         };
-        config.headers['accept'] = "application/json";
-        config.headers["Authorization"] =`Bearer ${accessToken}`;
+        // config.headers['accept'] = "application/json";
+        // config.headers["Authorization"] =`Bearer ${accessToken}`;
         return candidate(config)
     }
 
+const CandidateWithAxios = ({ children ,props}) => {
+    let history = useHistory();
+ 
   console.log("useeffect1");
   candidate.interceptors.request.use((config) => {
-    const refreshUrl = config.url.includes("/api/v2/refresh_token");
+    const refreshUrl = config.url.includes("api/v2/refresh_token");
     console.log(config, "candidate request");
     if (accessToken && !refreshUrl) {
       config.headers["accept"] = "application/json";
@@ -43,12 +51,7 @@ const CandidateWithAxios = ({ children ,props}) => {
             (response) => {
                 return response;
             },
-            (error) => {
-                console.log(error, "status in interceptorrrrr candidate");
-                if(error.message == "Network Error"){
-                    // localStorage.removeItem("candidate_access_token");
-                    // history.push("/onboard-offer")
-                }else{               
+            (error) => {            
                 const {
                     config,
                     response: { status },
@@ -58,8 +61,6 @@ const CandidateWithAxios = ({ children ,props}) => {
                     return getRefreshToken()
                         .then((response) => {
                             console.log("INSIDE THE INTERSECPECTOR ", response)
-                            config.headers.Authorization = `Bearer ${accessToken}`;
-                            config.__isRetryRequest = true;
                             return axios(config);
                         })
                         .catch((error) => {
@@ -77,7 +78,6 @@ const CandidateWithAxios = ({ children ,props}) => {
                 } else {
                     return error.response;
                 }
-            }
         }
         );
     return children

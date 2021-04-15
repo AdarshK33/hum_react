@@ -10,7 +10,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import { toast } from "react-toastify";
-
+import { useHistory } from "react-router-dom";
 import { Search, PlusCircle, MinusCircle } from "react-feather";
 // import { ToastContainer, toast } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
@@ -19,7 +19,7 @@ import "./OnBoard.css";
 import "./Documents.css";
 import { OnBoardContext } from "../../context/OnBoardState";
 import countryList from "react-select-country-list";
-import { candidate } from "../../utils/canditateLogin";
+import { candidate ,getRefreshToken} from "../../utils/canditateLogin";
 import moment from "moment";
 
 const PersonalInformation = (props) => {
@@ -93,8 +93,18 @@ const PersonalInformation = (props) => {
     disability: "",
     lgbt: "",
   });
+  let history = useHistory();
   useEffect(() => {
     CandidateProfile();
+    getRefreshToken().then((response)=>{
+      const token = response.data.token;
+      localStorage.setItem("candidate_access_token", token);
+    }).catch((error)=>{
+      if(error.message == "Cannot read property 'data' of undefined"){
+          localStorage.removeItem("candidate_access_token");
+          history.push("/onboard-offer")
+      }
+    })
   }, []);
   useEffect(() => {
     setRefEmail1(
