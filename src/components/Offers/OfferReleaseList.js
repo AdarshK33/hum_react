@@ -6,6 +6,9 @@ import { Edit2, Eye, Search } from "react-feather";
 import { OfferContext } from "../../context/OfferState";
 import Pagination from "react-js-pagination";
 import "react-confirm-alert/src/react-confirm-alert.css";
+import { DocsVerifyContext } from "../../context/DocverificationState";
+import { RoleManagementContext } from "../../context/RoleManagementState";
+import { AdminContext } from "../../context/AdminState";
 
 const OfferReleaseList = () => {
   const {
@@ -15,11 +18,12 @@ const OfferReleaseList = () => {
     total,
     viewCandidateId,
   } = useContext(OfferContext);
-
+  const { verificationDocsView, docsToVerify } = useContext(DocsVerifyContext);
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [searchValue, setSearchValue] = useState("");
-
+  const { RoleList, viewRole } = useContext(RoleManagementContext);
+  const { costCenterList, CostCenter } = useContext(AdminContext);
   useEffect(() => {
     candidateView("all", pageCount);
   }, []);
@@ -63,6 +67,12 @@ const OfferReleaseList = () => {
     }
   };
 
+  const fetchCandidateDetails = (candidateId) => {
+    viewCandidateId(candidateId);
+    verificationDocsView(candidateId);
+    viewRole();
+    CostCenter();
+  };
   return (
     <Fragment>
       <Breadcrumb title="Offers" parent="Offer Release" />
@@ -107,6 +117,7 @@ const OfferReleaseList = () => {
                       <th scope="col">Overall Status</th>
                       <th scope="col">Edit</th>
                       <th scope="col">View</th>
+                      <th scope="col">Action</th>
                     </tr>
                   </thead>
                   {loader === true &&
@@ -164,6 +175,15 @@ const OfferReleaseList = () => {
                                 <Eye
                                   onClick={() => {
                                     viewCandidateId(item.candidateId);
+                                  }}
+                                />
+                              </Link>
+                            </td>
+                            <td>
+                              <Link to="/offer-relase-and-onboard">
+                                <Edit2
+                                  onClick={() => {
+                                    fetchCandidateDetails(item.candidateId);
                                   }}
                                 />
                               </Link>
