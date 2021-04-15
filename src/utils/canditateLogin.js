@@ -44,16 +44,16 @@ const CandidateWithAxios = ({ children ,props}) => {
                 return response;
             },
             (error) => {
-               console.log({...error},JSON.stringify(error),"data")
-               if(error.message == "Network Error"){
-                // localStorage.removeItem("candidate_access_token");
-                // history.push("/onboard-offer")   
-               }
+                console.log(error, "status in interceptorrrrr candidate");
+                if(error.config.url.includes("/v2/candidate/undefined")){
+                    // localStorage.removeItem("candidate_access_token");
+                    // history.push("/onboard-offer")
+                }else{               
                 const {
                     config,
                     response: { status },
                 } = error;
-                console.log({...error}, "status  candidate");
+                console.log(error, "status  candidate");
                 if (status === 401) {
                     return getRefreshToken()
                         .then((response) => {
@@ -67,7 +67,8 @@ const CandidateWithAxios = ({ children ,props}) => {
                         });
                 } else if(status == 403){
                     localStorage.removeItem("candidate_access_token");
-                    history.push("/onboard-offer")
+                    props.history.push("/onboard-offer")
+
                 }else if (!error.response.data) {
                     let error = {};
                     error.status = 501;
@@ -77,6 +78,7 @@ const CandidateWithAxios = ({ children ,props}) => {
                     return error.response;
                 }
             }
+        }
         );
     return children
 }

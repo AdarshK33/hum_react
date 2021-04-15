@@ -27,8 +27,9 @@
 .tableWrapper thead {
   border: none !important;
   border-color: #fff !important;
-  background-color: #fff !important;
-  text-decoration: underline !important;
+  background-color: #006ebb !important;
+  color: white !important;
+  /* text-decoration: underline !important; */
 }
 .modalHeader {
   border-bottom: none !important;
@@ -42,7 +43,17 @@
 .onboardButton {
   background-color: #006ebb;
   color: white;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  border: none;
+  width: 200px;
+  height: 30px;
+  /* border-top-left-radius: 10px; */
+  /* border-top-right-radius: 10px; */
+  border: 1px solid #006ebb;
+  margin-left: 40px;
+}
+.buttonMargin {
+  margin-top: 35px !important;
+}
+.buttonMargin1 {
+  margin-top: 45px !important;
+  padding-top: 55px !important;
 }

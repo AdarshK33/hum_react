@@ -20,7 +20,7 @@ const PFDeclaration = (props) => {
     PFDeclarationView,
     pfDeclarationCreate,
     pfDeclarationUpdate,
-    candidateData,
+    candidateProfileData,
     pfDeclarationView,
   } = useContext(OnBoardContext);
   const [dataExist, setDataExist] = useState({
@@ -56,7 +56,7 @@ const PFDeclaration = (props) => {
   const [uanNumberError, setUanNumberError] = useState(false);
 
   useEffect(() => {
-    PFDeclarationView(candidateData.candidateId);
+    PFDeclarationView(candidateProfileData.candidateId);
     console.log(pfDeclarationView, "pfDeclarationViewuse");
   }, []);
   
@@ -139,7 +139,7 @@ const PFDeclaration = (props) => {
       }
       setDataExist({ exist: true });
     }
-    console.log(candidateData.candidateId, "pfdeclaration");
+    console.log(candidateProfileData.candidateId, "pfdeclaration");
   }, [pfDeclarationView]);
  
   const validateCheckBoxes = (itemYes, itemNo, setError) => {
@@ -214,8 +214,8 @@ const PFDeclaration = (props) => {
       // nextPage();
       // const PFInfo = {
       //   candidateId:
-      //     candidateData.candidateId !== undefined
-      //       ? candidateData.candidateId
+      //     candidateProfileData.candidateId !== undefined
+      //       ? candidateProfileData.candidateId
       //       : "",
       //   contributingPrevOrg: contributingPrevOrgYes ? true : false,
       //   declarationId: declarationIdValue,
@@ -228,8 +228,8 @@ const PFDeclaration = (props) => {
       if (dataExist.exist == true) {
         const PFInfo = {
           candidateId:
-            candidateData.candidateId !== undefined
-              ? candidateData.candidateId
+            candidateProfileData.candidateId !== undefined
+              ? candidateProfileData.candidateId
               : "",
           contributingPrevOrg: contributingPrevOrgYes ? true : false,
           declarationId: declarationIdValue,
@@ -246,8 +246,8 @@ const PFDeclaration = (props) => {
       } else {
         const PFInfo = {
           candidateId:
-            candidateData.candidateId !== undefined
-              ? candidateData.candidateId
+            candidateProfileData.candidateId !== undefined
+              ? candidateProfileData.candidateId
               : "",
           contributingPrevOrg: contributingPrevOrgYes ? true : false,
           declarationId: declarationIdValue,
