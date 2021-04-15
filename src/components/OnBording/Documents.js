@@ -20,7 +20,12 @@ import { OfferContext } from "../../context/OfferState";
 // OfferLetter = 9
 
 const Documents = (props) => {
-  const { uploadFile, candidateProfileData } = useContext(OnBoardContext);
+  const {
+    uploadFile,
+    candidateProfileData,
+    documentView,
+    documentViewData,
+  } = useContext(OnBoardContext);
   const { candidateData } = useContext(OfferContext);
   const [fileName, setFileName] = useState("");
   const [fullTime, setFullTime] = useState(true);
@@ -56,6 +61,11 @@ const Documents = (props) => {
     }
   }, [candidateData]);
   console.log("contractType", workInfoData);
+
+  useEffect(() => {
+    documentView(candidateProfileData.candidateId);
+  }, []);
+  console.log("documentViewData", documentViewData);
 
   useEffect(() => {
     if (
@@ -109,7 +119,18 @@ const Documents = (props) => {
     form2epf: "",
     formf: "",
   });
-
+  useEffect(() => {
+    if (documentViewData !== null && documentViewData !== undefined) {
+      documentViewData.map((item) => {
+        if (item.documentType === 0) {
+          setState({
+            photoId: item.documentName,
+          });
+        }
+      });
+    }
+  }, [documentViewData]);
+  console.log("state.photoId", state, state.photoId);
   const [FandP_Time_Required, setFandP_Required] = useState([
     {
       ReqPhotoId: false,

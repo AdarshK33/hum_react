@@ -32,6 +32,7 @@ const initial_state = {
   bankSaveData: {},
   bankViewData: [],
   bankUpdateData: {},
+  documentViewData: [],
 };
 // git
 export const OnBoardProvider = (props) => {
@@ -467,6 +468,23 @@ export const OnBoardProvider = (props) => {
       });
   };
 
+  const documentView = (candidateId) => {
+    console.log("documentView", candidateId);
+    candidate
+      .get("/api/v2/candidate/documents/view/" + candidateId)
+      .then((response) => {
+        state.documentViewData = response.data.data;
+        console.log("documentViewData", state.documentViewData);
+        return dispatch({
+          type: "CANDIDATE_DOCUMENT_VIEW_DATA",
+          payload: state.documentViewData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const uploadFile = (fileInfo) => {
     console.log("uploadFile state", fileInfo);
     const photoFile = fileInfo.file;
@@ -514,16 +532,15 @@ export const OnBoardProvider = (props) => {
         bankView,
         bankUpdate,
         uploadFile,
+        documentView,
         emergencyContactData: state.emergencyContactData,
         emergencyContactCreate: state.emergencyContactCreate,
         emergencyContactView: state.emergencyContactView,
         pfDeclarationCreate: state.pfDeclarationCreate,
         pfDeclarationUpdate: state.pfDeclarationUpdate,
         pfDeclarationView: state.pfDeclarationView,
-
         searchEmpData1: state.searchEmpData1,
         searchEmpData2: state.searchEmpData2,
-
         name: state.name,
         PersonalInfoResponse: state.PersonalInfoResponse,
         CreateNomineeResponse: state.CreateNomineeResponse,
@@ -542,6 +559,7 @@ export const OnBoardProvider = (props) => {
         bankSaveData: state.bankSaveData,
         bankViewData: state.bankViewData,
         bankUpdateData: state.bankUpdateData,
+        documentViewData: state.documentViewData,
       }}
     >
       {props.children}

@@ -22,6 +22,8 @@ const PFDeclaration = (props) => {
     pfDeclarationUpdate,
     candidateProfileData,
     pfDeclarationView,
+    documentView,
+    documentViewData,
   } = useContext(OnBoardContext);
   const [dataExist, setDataExist] = useState({
     exist: false,
@@ -276,6 +278,7 @@ const PFDeclaration = (props) => {
         PFDeclarationUpdate(PFInfo);
         const nextPage = props.NextStep;
         nextPage(true);
+        documentView(candidateProfileData.candidateId);
       } else {
         const PFInfo = {
           candidateId:
@@ -294,6 +297,7 @@ const PFDeclaration = (props) => {
         PFDeclarationCreate(PFInfo);
         const nextPage = props.NextStep;
         nextPage(true);
+        documentView(candidateProfileData.candidateId);
       }
     }
   };
