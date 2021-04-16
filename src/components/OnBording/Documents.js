@@ -112,22 +112,138 @@ const Documents = (props) => {
     relievingLetter: "",
     latestPaySlips: "",
     frro: "",
-    passport: "",
     collegeId: "",
     collegeLetter: "",
     disabilityDocument: "",
     form11: "",
     form2epf: "",
     formf: "",
+    photoIdName: "",
+    aadharIdName: "",
+    panIdName: "",
+    addressProofName: "",
+    passportName: "",
+    epfPassBookName: "",
+    cancelledChequeeName: "",
+    educationCertificateName: "",
+    relievingLetterName: "",
+    latestPaySlipsName: "",
+    frroName: "",
+    collegeIdName: "",
+    collegeLetterName: "",
+    disabilityDocumentName: "",
+    form11Name: "",
+    form2epfName: "",
+    formfName: "",
   });
   useEffect(() => {
     if (documentViewData !== null && documentViewData !== undefined) {
+      let photo = "";
+      let aadhar = "";
+      let pan = "";
+      let address = "";
+      let passportDoc = "";
+      let epfPassBookDoc = "";
+      let cancelledChequeDoc = "";
+      let educationCertificateDoc = "";
+      let relievingLetterDoc = "";
+      let latestPaySlipsDoc = "";
+      let frroDoc = "";
+      let collegeIdDoc = "";
+      let collegeLetterDoc = "";
+      let disabilityDocumentFile = "";
+      let form11Doc = "";
+      let form2epfDoc = "";
+      let formfDoc = "";
       documentViewData.map((item) => {
+        console.log("item.documentType", item.documentType, item);
         if (item.documentType === 0) {
-          setState({
-            photoId: item.documentName,
-          });
+          photo = item.documentName ? item.documentName : "";
         }
+
+        if (item.documentType === 1) {
+          aadhar = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 2) {
+          pan = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 3) {
+          address = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 14) {
+          passportDoc = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 17) {
+          frroDoc = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 4) {
+          epfPassBookDoc = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 13) {
+          disabilityDocumentFile = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 5) {
+          cancelledChequeDoc = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 15) {
+          collegeLetterDoc = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 16) {
+          collegeIdDoc = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 6) {
+          educationCertificateDoc = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 7) {
+          relievingLetterDoc = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 8) {
+          latestPaySlipsDoc = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 10) {
+          form11Doc = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 11) {
+          form2epfDoc = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 12) {
+          formfDoc = item.documentName ? item.documentName : "";
+        }
+
+        setState({
+          photoIdName: photo,
+          aadharIdName: aadhar,
+          panIdName: pan,
+          addressProofName: address,
+          passportName: passportDoc,
+          epfPassBookName: epfPassBookDoc,
+          cancelledChequeName: cancelledChequeDoc,
+          educationCertificateName: educationCertificateDoc,
+          relievingLetterName: relievingLetterDoc,
+          latestPaySlipsName: latestPaySlipsDoc,
+          frroName: frroDoc,
+          collegeIdName: collegeIdDoc,
+          collegeLetterName: collegeLetterDoc,
+          disabilityDocumentName: disabilityDocumentFile,
+          form11Name: form11Doc,
+          form2epfName: form2epfDoc,
+          formfName: formfDoc,
+        });
       });
     }
   }, [documentViewData]);
@@ -450,8 +566,14 @@ const Documents = (props) => {
 
   const changeHandler = (event) => {
     console.log("changeHandler", event.target.name);
+    if (event.target.name === "photoId") {
+      setState({
+        photoIdName: event.target.files[0].name,
+      });
+    }
     let fileObj = event.target.files[0];
     console.log("photoIdChangeHandler", fileObj);
+    console.log("photoIdName", state.photoIdName);
     setState({
       ...state,
       [event.target.name]: fileObj,
@@ -578,8 +700,8 @@ const Documents = (props) => {
                     style={{ marginTop: "0.5rem" }}
                   >
                     &nbsp;&nbsp;
-                    {state.photoId !== ""
-                      ? state.photoId.name
+                    {state.photoIdName !== ""
+                      ? state.photoIdName
                       : "Select File Here"}
                     <input
                       type="file"
@@ -653,8 +775,8 @@ const Documents = (props) => {
                     style={{ marginTop: "0.5rem" }}
                   >
                     &nbsp;&nbsp;
-                    {state.aadharId !== ""
-                      ? state.aadharId.name
+                    {state.aadharIdName !== ""
+                      ? state.aadharIdName
                       : "Select File Here"}
                     <input
                       type="file"
@@ -723,7 +845,9 @@ const Documents = (props) => {
                     style={{ marginTop: "0.5rem" }}
                   >
                     &nbsp;&nbsp;
-                    {state.panId !== "" ? state.panId.name : "Select File Here"}
+                    {state.panIdName !== ""
+                      ? state.panIdName
+                      : "Select File Here"}
                     <input
                       type="file"
                       accept="image/jpeg,.pdf"
@@ -790,8 +914,8 @@ const Documents = (props) => {
                     style={{ marginTop: "0.5rem" }}
                   >
                     &nbsp;&nbsp;
-                    {state.addressProof !== ""
-                      ? state.addressProof.name
+                    {state.addressProofName !== ""
+                      ? state.addressProofName
                       : "Select File Here"}
                     <input
                       type="file"
@@ -857,8 +981,8 @@ const Documents = (props) => {
                     style={{ marginTop: "0.5rem" }}
                   >
                     &nbsp;&nbsp;
-                    {state.passport !== ""
-                      ? state.passport.name
+                    {state.passportName !== ""
+                      ? state.passportName
                       : "Select File Here"}
                     <input
                       type="file"
@@ -925,7 +1049,9 @@ const Documents = (props) => {
                     style={{ marginTop: "0.5rem" }}
                   >
                     &nbsp;&nbsp;
-                    {state.frro !== "" ? state.frro.name : "Select File Here"}
+                    {state.frroName !== ""
+                      ? state.frroName
+                      : "Select File Here"}
                     <input
                       type="file"
                       accept="image/jpeg,.pdf"
@@ -999,8 +1125,8 @@ const Documents = (props) => {
                     style={{ marginTop: "0.5rem" }}
                   >
                     &nbsp;&nbsp;
-                    {state.epfPassBook !== ""
-                      ? state.epfPassBook.name
+                    {state.epfPassBookName !== ""
+                      ? state.epfPassBookName
                       : "Select File Here"}
                     <input
                       type="file"
@@ -1062,8 +1188,8 @@ const Documents = (props) => {
                     style={{ marginTop: "0.5rem" }}
                   >
                     &nbsp;&nbsp;
-                    {state.cancelledCheque !== ""
-                      ? state.cancelledCheque.name
+                    {state.cancelledChequeName !== ""
+                      ? state.cancelledChequeName
                       : "Select File Here"}
                     <input
                       type="file"
@@ -1130,8 +1256,8 @@ const Documents = (props) => {
                     style={{ marginTop: "0.5rem" }}
                   >
                     &nbsp;&nbsp;
-                    {state.collegeLetter !== ""
-                      ? state.collegeLetter.name
+                    {state.collegeLetterName !== ""
+                      ? state.collegeLetterName
                       : "Select File Here"}
                     <input
                       type="file"
@@ -1198,8 +1324,8 @@ const Documents = (props) => {
                     style={{ marginTop: "0.5rem" }}
                   >
                     &nbsp;&nbsp;
-                    {state.collegeId !== ""
-                      ? state.collegeId.name
+                    {state.collegeIdName !== ""
+                      ? state.collegeIdName
                       : "Select File Here"}
                     <input
                       type="file"
@@ -1260,8 +1386,8 @@ const Documents = (props) => {
                     style={{ marginTop: "0.5rem" }}
                   >
                     &nbsp;&nbsp;
-                    {state.educationCertificate !== ""
-                      ? state.educationCertificate.name
+                    {state.educationCertificateName !== ""
+                      ? state.educationCertificateName
                       : "Select File Here"}
                     <input
                       type="file"
@@ -1317,8 +1443,8 @@ const Documents = (props) => {
                     style={{ marginTop: "0.5rem" }}
                   >
                     &nbsp;&nbsp;
-                    {state.relievingLetter !== ""
-                      ? state.relievingLetter.name
+                    {state.relievingLetterName !== ""
+                      ? state.relievingLetterName
                       : "Select File Here"}
                     <input
                       type="file"
@@ -1373,8 +1499,8 @@ const Documents = (props) => {
                     style={{ marginTop: "0.5rem" }}
                   >
                     &nbsp;&nbsp;
-                    {state.latestPaySlips !== ""
-                      ? state.latestPaySlips.name
+                    {state.latestPaySlipsName !== ""
+                      ? state.latestPaySlipsName
                       : "Select File Here"}
                     <input
                       type="file"
@@ -1430,7 +1556,7 @@ const Documents = (props) => {
                   >
                     &nbsp;&nbsp;                                
                     {state.form11 !== ""
-                      ? state.form11.name
+                      ? state.form11
                       : "Select File Here"}
                     <input
                       type="file"
@@ -1487,7 +1613,7 @@ const Documents = (props) => {
                   >
                     &nbsp;&nbsp;
                     {state.form2epf !== ""
-                      ? state.form2epf.name
+                      ? state.form2epf
                       : "Select File Here"}
                     <input
                       type="file"
@@ -1543,7 +1669,7 @@ const Documents = (props) => {
                     style={{ marginTop: "0.5rem" }}
                   >
                     &nbsp;&nbsp;
-                    {state.formf !== "" ? state.formf.name : "Select File Here"}
+                    {state.formf !== "" ? state.formf : "Select File Here"}
                     <input
                       type="file"
                       accept="image/jpeg,.pdf"
