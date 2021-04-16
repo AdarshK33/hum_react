@@ -73,6 +73,8 @@ import Verification from "./components/CandidateVerification/Verification";
 import ViewEditRelease from "./components/OfferReleaseandOnboarding/ViewOfferRelease";
 
 import Documents from "./components/OnBording/Documents";
+/*------------------------------------Finance Clearance----------------------------------*/
+import FinanceClearanceList from "./components/FinanceClearance/ClearanceList";
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
   console.log(user, state, "route8888888888888");
@@ -103,6 +105,11 @@ const RoutePath = () => {
       />
 
       {/* <Route
+        path={`${process.env.PUBLIC_URL}/finance-clearance`}
+        component={FinanceClearanceList}
+      /> */}
+
+      {/* <Route
             path={`${process.env.PUBLIC_URL}/onboard`}
             component={OnBoardingStepper}
       /> */}
@@ -119,6 +126,10 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/profileEdit`}
             component={ProfileEdit}
           /> */}
+          <Route
+            path={`${process.env.PUBLIC_URL}/finance-clearance`}
+            component={FinanceClearanceList}
+          />
           <Route
             path={`${process.env.PUBLIC_URL}/dashboard/storedashboard`}
             component={Default}
