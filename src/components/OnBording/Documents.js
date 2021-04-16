@@ -20,7 +20,12 @@ import { OfferContext } from "../../context/OfferState";
 // OfferLetter = 9
 
 const Documents = (props) => {
-  const { uploadFile, candidateProfileData } = useContext(OnBoardContext);
+  const {
+    uploadFile,
+    candidateProfileData,
+    documentView,
+    documentViewData,
+  } = useContext(OnBoardContext);
   const { candidateData } = useContext(OfferContext);
   const [fileName, setFileName] = useState("");
   const [fullTime, setFullTime] = useState(true);
@@ -56,6 +61,45 @@ const Documents = (props) => {
     }
   }, [candidateData]);
   console.log("contractType", workInfoData);
+
+  useEffect(() => {
+    documentView(candidateProfileData.candidateId);
+  }, []);
+  console.log("documentViewData", documentViewData);
+
+  useEffect(() => {
+    if (
+      workInfoData !== null &&
+      workInfoData !== undefined &&
+      Object.keys(workInfoData).length !== 0 &&
+      workInfoData.contractType !== null
+    ) {
+      if (workInfoData.contractType === "Permanent") {
+        console.log("permanent");
+        setFullTime(true);
+        setParTime(false);
+        setInternship(false);
+        setLocalExpact(false);
+      } else if (workInfoData.contractType === "Parttime") {
+        console.log("Parttime");
+        setParTime(true);
+        setFullTime(false);
+        setInternship(false);
+        setLocalExpact(false);
+      } else if (workInfoData.contractType === "Internship") {
+        setInternship(true);
+        setParTime(false);
+        setFullTime(false);
+        setLocalExpact(false);
+      } else if (workInfoData.contractType === "Others") {
+        setLocalExpact(true);
+        setParTime(false);
+        setFullTime(false);
+        setInternship(false);
+      }
+      whichOneIsRequired();
+    }
+  }, [workInfoData]);
   const [state, setState] = useState({
     photoId: "",
     aadharId: "",
@@ -68,15 +112,142 @@ const Documents = (props) => {
     relievingLetter: "",
     latestPaySlips: "",
     frro: "",
-    passport: "",
     collegeId: "",
     collegeLetter: "",
     disabilityDocument: "",
     form11: "",
     form2epf: "",
     formf: "",
+    photoIdName: "",
+    aadharIdName: "",
+    panIdName: "",
+    addressProofName: "",
+    passportName: "",
+    epfPassBookName: "",
+    cancelledChequeeName: "",
+    educationCertificateName: "",
+    relievingLetterName: "",
+    latestPaySlipsName: "",
+    frroName: "",
+    collegeIdName: "",
+    collegeLetterName: "",
+    disabilityDocumentName: "",
+    form11Name: "",
+    form2epfName: "",
+    formfName: "",
   });
+  useEffect(() => {
+    if (documentViewData !== null && documentViewData !== undefined) {
+      let photo = "";
+      let aadhar = "";
+      let pan = "";
+      let address = "";
+      let passportDoc = "";
+      let epfPassBookDoc = "";
+      let cancelledChequeDoc = "";
+      let educationCertificateDoc = "";
+      let relievingLetterDoc = "";
+      let latestPaySlipsDoc = "";
+      let frroDoc = "";
+      let collegeIdDoc = "";
+      let collegeLetterDoc = "";
+      let disabilityDocumentFile = "";
+      let form11Doc = "";
+      let form2epfDoc = "";
+      let formfDoc = "";
+      documentViewData.map((item) => {
+        console.log("item.documentType", item.documentType, item);
+        if (item.documentType === 0) {
+          photo = item.documentName ? item.documentName : "";
+        }
 
+        if (item.documentType === 1) {
+          aadhar = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 2) {
+          pan = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 3) {
+          address = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 14) {
+          passportDoc = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 17) {
+          frroDoc = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 4) {
+          epfPassBookDoc = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 13) {
+          disabilityDocumentFile = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 5) {
+          cancelledChequeDoc = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 15) {
+          collegeLetterDoc = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 16) {
+          collegeIdDoc = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 6) {
+          educationCertificateDoc = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 7) {
+          relievingLetterDoc = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 8) {
+          latestPaySlipsDoc = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 10) {
+          form11Doc = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 11) {
+          form2epfDoc = item.documentName ? item.documentName : "";
+        }
+
+        if (item.documentType === 12) {
+          formfDoc = item.documentName ? item.documentName : "";
+        }
+
+        setState({
+          photoIdName: photo,
+          aadharIdName: aadhar,
+          panIdName: pan,
+          addressProofName: address,
+          passportName: passportDoc,
+          epfPassBookName: epfPassBookDoc,
+          cancelledChequeName: cancelledChequeDoc,
+          educationCertificateName: educationCertificateDoc,
+          relievingLetterName: relievingLetterDoc,
+          latestPaySlipsName: latestPaySlipsDoc,
+          frroName: frroDoc,
+          collegeIdName: collegeIdDoc,
+          collegeLetterName: collegeLetterDoc,
+          disabilityDocumentName: disabilityDocumentFile,
+          form11Name: form11Doc,
+          form2epfName: form2epfDoc,
+          formfName: formfDoc,
+        });
+      });
+    }
+  }, [documentViewData]);
+  console.log("state.photoId", state, state.photoId);
   const [FandP_Time_Required, setFandP_Required] = useState([
     {
       ReqPhotoId: false,
@@ -395,8 +566,14 @@ const Documents = (props) => {
 
   const changeHandler = (event) => {
     console.log("changeHandler", event.target.name);
+    if (event.target.name === "photoId") {
+      setState({
+        photoIdName: event.target.files[0].name,
+      });
+    }
     let fileObj = event.target.files[0];
     console.log("photoIdChangeHandler", fileObj);
+    console.log("photoIdName", state.photoIdName);
     setState({
       ...state,
       [event.target.name]: fileObj,
@@ -423,25 +600,25 @@ const Documents = (props) => {
       fileType = 3;
     } else if (event.target.name === "passport") {
       fileUpload = state.passport;
-      fileType = 0;
+      fileType = 14;
     } else if (event.target.name === "frro") {
       fileUpload = state.frro;
-      fileType = 0;
+      fileType = 17;
     } else if (event.target.name === "epfPassBook") {
       fileUpload = state.epfPassBook;
       fileType = 4;
     } else if (event.target.name === "disabilityDocument") {
       fileUpload = state.disabilityDocument;
-      fileType = 0;
+      fileType = 13;
     } else if (event.target.name === "cancelledCheque") {
       fileUpload = state.cancelledCheque;
       fileType = 5;
     } else if (event.target.name === "collegeLetter") {
       fileUpload = state.collegeLetter;
-      fileType = 0;
+      fileType = 15;
     } else if (event.target.name === "collegeId") {
       fileUpload = state.collegeId;
-      fileType = 0;
+      fileType = 16;
     } else if (event.target.name === "educationCertificate") {
       fileUpload = state.educationCertificate;
       fileType = 6;
@@ -518,18 +695,26 @@ const Documents = (props) => {
                   <label>Photo ID</label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    name="photoId"
-                    type="file"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={photoIdError ? { borderColor: "red" } : {}}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.photoIdName !== ""
+                      ? state.photoIdName
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="photoId"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -585,18 +770,26 @@ const Documents = (props) => {
                   </label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="aadharId"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={aadharIdError ? { borderColor: "red" } : {}}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.aadharIdName !== ""
+                      ? state.aadharIdName
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="aadharId"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -647,18 +840,26 @@ const Documents = (props) => {
                   <label>PAN ID</label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="panId"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={panIdError ? { borderColor: "red" } : {}}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.panIdName !== ""
+                      ? state.panIdName
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="panId"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -708,18 +909,26 @@ const Documents = (props) => {
                   <label>Address Proof</label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    name="addressProof"
-                    style={addressProofError ? { borderColor: "red" } : {}}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.addressProofName !== ""
+                      ? state.addressProofName
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="addressProof"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -767,18 +976,26 @@ const Documents = (props) => {
                   <label>Pass Port</label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    name="passport"
-                    style={passportError ? { borderColor: "red" } : {}}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.passportName !== ""
+                      ? state.passportName
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="passport"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -827,18 +1044,26 @@ const Documents = (props) => {
                   <label>FRRO</label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    name="frro"
-                    style={frroError ? { borderColor: "red" } : {}}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.frroName !== ""
+                      ? state.frroName
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="frro"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -895,76 +1120,30 @@ const Documents = (props) => {
                   </label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="epfPassBook"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.epfPassBookName !== ""
+                      ? state.epfPassBookName
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="epfPassBook"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
                       name="epfPassBook"
-                      className="custom_file_Upload_button"
-                      onClick={(e) => {
-                        handleUpload(e);
-                      }}
-                    />
-                    {/* <i className="fa fa-cloud-upload" />  */}
-                    Upload File{" "}
-                    <i
-                      id="custom_file_upload_icon"
-                      className="fa fa-upload"
-                      aria-hidden="true"
-                    ></i>
-                  </label>
-                </div>
-              </Form.Group>
-            </Col>
-          </Row>
-        ) : (
-          ""
-        )}
-
-        {(isChecked === false) &
-        (localExpact === false) &
-        (internship === false) ? (
-          // required in full time and part time
-          // no need on localexact and internship
-          <Row>
-            <Col>
-              <Form.Group>
-                <div
-                  className={
-                    FandP_Time_Required[0].ReqEpfPassBook
-                      ? "FileInput"
-                      : "FileInputWithOutStar"
-                  }
-                >
-                  <label>Disability Document</label>
-                </div>
-                <div className="parentInput">
-                  <input
-                    className="fileInputField"
-                    placeholder="Choose File"
-                    name="disabilityDocument"
-                    type="file"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    // value={state.epfPassBook}
-                    readOnly
-                  />
-                  <label className="custom-file-upload">
-                    <input
-                      type="button"
-                      name="disabilityDocument"
                       className="custom_file_Upload_button"
                       onClick={(e) => {
                         handleUpload(e);
@@ -1004,17 +1183,26 @@ const Documents = (props) => {
                   <label>Cancelled Cheque</label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="cancelledCheque"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.cancelledChequeName !== ""
+                      ? state.cancelledChequeName
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="cancelledCheque"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -1063,18 +1251,26 @@ const Documents = (props) => {
                   <label>College Letter</label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="collegeLetter"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={collegeLetterError ? { borderColor: "red" } : {}}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.collegeLetterName !== ""
+                      ? state.collegeLetterName
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="collegeLetter"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -1123,19 +1319,26 @@ const Documents = (props) => {
                   <label>College Id</label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    accept="image/jpeg,.pdf"
-                    name="collegeId"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={collegeIdError ? { borderColor: "red" } : {}}
-                    // value={state.collegeId}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.collegeIdName !== ""
+                      ? state.collegeIdName
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="collegeId"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -1178,19 +1381,26 @@ const Documents = (props) => {
                   <label>Highest education certification</label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="educationCertificate"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={eduCertificatesError ? { borderColor: "red" } : {}}
-                    // value={state.educationCertificate}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.educationCertificateName !== ""
+                      ? state.educationCertificateName
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="educationCertificate"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -1228,19 +1438,26 @@ const Documents = (props) => {
                   <label>Relieving Letter</label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="relievingLetter"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={relievingLetterError ? { borderColor: "red" } : {}}
-                    // value={state.relievingLetter}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.relievingLetterName !== ""
+                      ? state.relievingLetterName
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="relievingLetter"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -1277,19 +1494,26 @@ const Documents = (props) => {
                   <label>Latest Payslips</label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="latestPaySlips"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={latestPaySlipsError ? { borderColor: "red" } : {}}
-                    // value={state.latestPaySlips}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.latestPaySlipsName !== ""
+                      ? state.latestPaySlipsName
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="latestPaySlips"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -1319,26 +1543,33 @@ const Documents = (props) => {
               </Form.Group>
             </Col>
           </Row>
-          <Row>
+          {/* <Row>
             <Col>
               <Form.Group>
                 <div className="FileInput">
                   <label>Form 11 Declaration</label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="form11"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={relievingLetterError ? { borderColor: "red" } : {}}
-                    // value={state.relievingLetter}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;                                
+                    {state.form11 !== ""
+                      ? state.form11
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="form11"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -1348,7 +1579,7 @@ const Documents = (props) => {
                         handleUpload(e);
                       }}
                     />
-                    {/* <i className="fa fa-cloud-upload" />  */}
+                   
                     Upload File{" "}
                     <i
                       id="custom_file_upload_icon"
@@ -1368,27 +1599,34 @@ const Documents = (props) => {
                 )}
               </Form.Group>
             </Col>
-          </Row>
-          <Row>
+          </Row> */}
+          {/* <Row>
             <Col>
               <Form.Group>
                 <div className="FileInput">
                   <label>Form 2 EPF Nomination</label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="form2epf"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={relievingLetterError ? { borderColor: "red" } : {}}
-                    // value={state.relievingLetter}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.form2epf !== ""
+                      ? state.form2epf
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="form2epf"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -1398,7 +1636,7 @@ const Documents = (props) => {
                         handleUpload(e);
                       }}
                     />
-                    {/* <i className="fa fa-cloud-upload" />  */}
+                    
                     Upload File{" "}
                     <i
                       id="custom_file_upload_icon"
@@ -1418,27 +1656,32 @@ const Documents = (props) => {
                 )}
               </Form.Group>
             </Col>
-          </Row>
-          <Row>
+          </Row> */}
+          {/* <Row>
             <Col>
               <Form.Group>
                 <div className="FileInput">
                   <label>Form F Gratuity</label>
                 </div>
                 <div className="parentInput">
-                  <input
+                  <label
                     className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="formf"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={relievingLetterError ? { borderColor: "red" } : {}}
-                    // value={state.relievingLetter}
-                    readOnly
-                  />
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.formf !== "" ? state.formf : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="formf"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -1448,7 +1691,7 @@ const Documents = (props) => {
                         handleUpload(e);
                       }}
                     />
-                    {/* <i className="fa fa-cloud-upload" />  */}
+                    
                     Upload File{" "}
                     <i
                       id="custom_file_upload_icon"
@@ -1467,7 +1710,7 @@ const Documents = (props) => {
                 )}
               </Form.Group>
             </Col>
-          </Row>
+          </Row> */}
         </Form>
       ) : (
         ""

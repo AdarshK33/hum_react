@@ -22,6 +22,8 @@ const PFDeclaration = (props) => {
     pfDeclarationUpdate,
     candidateProfileData,
     pfDeclarationView,
+    documentView,
+    documentViewData,
   } = useContext(OnBoardContext);
   const [dataExist, setDataExist] = useState({
     exist: false,
@@ -43,7 +45,6 @@ const PFDeclaration = (props) => {
   const [state, setState] = useState({
     uanNumber: "",
   });
-  const [uanNumber, setUanNumber] = useState("");
   const [epfPassbookCopy, setEpfPassbookCopy] = useState("");
   const [required, setRequired] = useState(true);
   const [firstJobError, setFirstJobError] = useState(false);
@@ -55,39 +56,12 @@ const PFDeclaration = (props) => {
     false
   );
   const [uanNumberError, setUanNumberError] = useState(false);
-  console.log(
-    firstJobYes,
-    contributingPrevOrgYes,
-    memberOfPensionSchemeYes,
-    pfNominationHoldDeathYes,
-    uanNumber,
-    epfPassbookCopy,
-    dataExist,
-    "pfDeclarationView"
-  );
 
   useEffect(() => {
     PFDeclarationView(candidateProfileData.candidateId);
     console.log(pfDeclarationView, "pfDeclarationViewuse");
   }, []);
-  const handleForm11 = () => {
-    window.open(Form11);
-  };
-  const handleForm11View = () => {
-    window.open(Form11View);
-  };
-  const handleForm2 = () => {
-    window.open(Form2);
-  };
-  const handleForm2View = () => {
-    window.open(Form2View);
-  };
-  const handleFormF = () => {
-    window.open(FormF);
-  };
-  const handleFormFView = () => {
-    window.open(FormFView);
-  };
+  
   useEffect(() => {
     console.log(pfDeclarationView, "pfDeclarationViewuse2");
     function isEmpty(obj) {
@@ -103,34 +77,40 @@ const PFDeclaration = (props) => {
       if (
         pfDeclarationView.firstJob !== undefined &&
         pfDeclarationView.firstJob == true
-      )
+      ){
         setFirstJobYes(pfDeclarationView.firstJob);
-      else if (
+        setFirstJobNo(false);
+      }else if (
         pfDeclarationView.firstJob !== undefined &&
         pfDeclarationView.firstJob == false
       ) {
         setFirstJobNo(true);
+        setFirstJobYes(false);
       }
       if (
         pfDeclarationView.contributingPrevOrg !== undefined &&
         pfDeclarationView.contributingPrevOrg == true
       ) {
         setContributingPrevOrgYes(pfDeclarationView.contributingPrevOrg);
+        setContributingPrevOrgNo(false);
       } else if (
         pfDeclarationView.contributingPrevOrg !== undefined &&
         pfDeclarationView.contributingPrevOrg == false
       ) {
         setContributingPrevOrgNo(true);
+        setContributingPrevOrgYes(false)
       }
       if (
         pfDeclarationView.memberOfPensionScheme !== undefined &&
         pfDeclarationView.memberOfPensionScheme == true
       ) {
         setMemberOfPensionSchemeYes(pfDeclarationView.memberOfPensionScheme);
+        setMemberOfPensionSchemeNo(false)
       } else if (
         pfDeclarationView.memberOfPensionScheme !== undefined &&
         pfDeclarationView.memberOfPensionScheme == false
       ) {
+        setMemberOfPensionSchemeYes(false)
         setMemberOfPensionSchemeNo(true);
       }
       if (
@@ -156,25 +136,14 @@ const PFDeclaration = (props) => {
         setDeclarationIdValue(pfDeclarationView.declarationId);
       }
       if (pfDeclarationView.uanNumber !== undefined) {
-        setUanNumber(pfDeclarationView.uanNumber);
+        console.log("uab number")
+        setState({uanNumber:pfDeclarationView.uanNumber});
       }
       setDataExist({ exist: true });
     }
     console.log(candidateProfileData.candidateId, "pfdeclaration");
   }, [pfDeclarationView]);
-  console.log(
-    firstJobYes,
-    contributingPrevOrgYes,
-    contributingPrevOrgNo,
-    memberOfPensionSchemeYes,
-    memberOfPensionSchemeNo,
-    pfNominationHoldDeathYes,
-    pfNominationHoldDeathNo,
-    uanNumber,
-    epfPassbookCopy,
-    dataExist,
-    "pfDeclarationView2"
-  );
+ 
   const validateCheckBoxes = (itemYes, itemNo, setError) => {
     if ((itemYes === true) | (itemNo === true)) {
       setError(false);
@@ -186,7 +155,7 @@ const PFDeclaration = (props) => {
     }
   };
   const UanNumberValidation = () => {
-    if (state.uanNumber !== "") {
+    if (state.uanNumber !== "" && state.uanNumber.length == 12) {
       console.log("uan number");
       setUanNumberError(false);
       return true;
@@ -276,6 +245,7 @@ const PFDeclaration = (props) => {
         PFDeclarationUpdate(PFInfo);
         const nextPage = props.NextStep;
         nextPage(true);
+        documentView(candidateProfileData.candidateId);
       } else {
         const PFInfo = {
           candidateId:
@@ -294,6 +264,7 @@ const PFDeclaration = (props) => {
         PFDeclarationCreate(PFInfo);
         const nextPage = props.NextStep;
         nextPage(true);
+        documentView(candidateProfileData.candidateId);
       }
     }
   };
@@ -308,6 +279,9 @@ const PFDeclaration = (props) => {
     setFirstJobNo(!e.target.checked);
     setContributingPrevOrgNo(e.target.checked);
     setMemberOfPensionSchemeNo(e.target.checked);
+    setContributingPrevOrgYes(!e.target.checked);
+    setState({uanNumber:''});
+    setMemberOfPensionSchemeYes(!e.target.checked);
     {
       required ? setRequired(!required) : setRequired(required);
     }
@@ -317,9 +291,9 @@ const PFDeclaration = (props) => {
     setFirstJobYes(!e.target.checked);
     setContributingPrevOrgNo(!e.target.checked);
     setMemberOfPensionSchemeNo(!e.target.checked);
-    setContributingPrevOrgYes(!e.target.checked);
+    setContributingPrevOrgYes(false);
 
-    setMemberOfPensionSchemeYes(!e.target.checked);
+    setMemberOfPensionSchemeYes(false);
     {
       required ? setRequired(!required) : setRequired(required);
     }
@@ -334,6 +308,7 @@ const PFDeclaration = (props) => {
   const handleContributingPrevOrgNoChange = (e) => {
     setContributingPrevOrgNo(e.target.checked);
     setContributingPrevOrgYes(!e.target.checked);
+    setState({uanNumber:''});
     {
       required ? setRequired(!required) : setRequired(required);
     }
@@ -485,6 +460,7 @@ const PFDeclaration = (props) => {
                 type="text"
                 placeholder="UAN number"
                 required
+                disabled={contributingPrevOrgNo}
                 name="uanNumber"
                 value={state.uanNumber}
                 onChange={(e) => changeHandler(e)}
@@ -557,7 +533,7 @@ const PFDeclaration = (props) => {
           <Col sm={5}>
             <div>
               <label>
-                Does the PF nomination hold good in case of health ?
+                Does the PF nomination hold good in case of Death ?
               </label>
               {pfNominationHoldDeathError ? (
                 <p style={{ color: "red" }}>
