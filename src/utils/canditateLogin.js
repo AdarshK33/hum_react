@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useHistory } from "react-router-dom";
 // axios.defaults.baseURL = process.env.REACT_APP_BASEURL
 // export const candidate = axios
 export const candidate = axios.create({
@@ -12,23 +13,32 @@ export const setDefaultCandidiateHeader = (Token) => {
   accessToken = Token;
   console.log(accessToken, "token candidate");
 };
-
-const CandidateWithAxios = ({ children }) => {
-  const getRefreshToken = () => {
+export const getRefreshToken = () => {
     console.log("INSIDE THE GET_REFRESH_TOKEN");
 
         let config = {
             method: "get",
-            url: candidate.defaults.baseURL + "/api/v2/refresh_token",
+            url: candidate.defaults.baseURL + "api/v2/refresh_token",
+            headers: {
+                "Host":"<calculated when request is sent>",
+                "Accept":"*/*",
+                "Accept-Encoding":"gzip, deflate, br",
+                "Connection":"keep-alive",
+                "accept": "application/json",
+                "Authorization":`Bearer ${accessToken}`
+            }
         };
-        config.headers['accept'] = "application/json";
-        config.headers["Authorization"] =`Bearer ${accessToken}`;
+        // config.headers['accept'] = "application/json";
+        // config.headers["Authorization"] =`Bearer ${accessToken}`;
         return candidate(config)
     }
 
+const CandidateWithAxios = ({ children ,props}) => {
+    let history = useHistory();
+ 
   console.log("useeffect1");
   candidate.interceptors.request.use((config) => {
-    const refreshUrl = config.url.includes("/api/v2/refresh_token");
+    const refreshUrl = config.url.includes("api/v2/refresh_token");
     console.log(config, "candidate request");
     if (accessToken && !refreshUrl) {
       config.headers["accept"] = "application/json";
@@ -41,24 +51,26 @@ const CandidateWithAxios = ({ children }) => {
             (response) => {
                 return response;
             },
-            (error) => {
+            (error) => {            
                 const {
                     config,
                     response: { status },
                 } = error;
-                console.log(error, "status in interceptorrrrr candidate");
-                if (status === 401||status === 403) {
+                console.log(error, "status  candidate");
+                if (status === 401) {
                     return getRefreshToken()
                         .then((response) => {
                             console.log("INSIDE THE INTERSECPECTOR ", response)
-                            config.headers.Authorization = `Bearer ${accessToken}`;
-                            config.__isRetryRequest = true;
                             return axios(config);
                         })
                         .catch((error) => {
                             return error;
                         });
-                } else if (!error.response.data) {
+                } else if(status == 403){
+                    localStorage.removeItem("candidate_access_token");
+                    props.history.push("/onboard-offer")
+
+                }else if (!error.response.data) {
                     let error = {};
                     error.status = 501;
                     error.error_description = "Please check internet connectivity.";
@@ -66,7 +78,7 @@ const CandidateWithAxios = ({ children }) => {
                 } else {
                     return error.response;
                 }
-            }
+        }
         );
     return children
 }
