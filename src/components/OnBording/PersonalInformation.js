@@ -65,6 +65,8 @@ const PersonalInformation = (props) => {
   const [required, setRequired] = useState(true);
   const [statusRequired, setstatusRequired] = useState(true);
   const [disabilityDoc, setDocName] = useState("");
+  const [disabilityDocObj, setDisabilityDocObj] = useState("");
+  const [isDisabilityUploaded, setDisabilityUploaded] = useState(false);
   const [panNumberError, setPanNumberError] = useState(false);
   const [aadharNumberError, setAdharNumberError] = useState(false);
   const [passPortNoError, setPassPortError] = useState(false);
@@ -474,6 +476,21 @@ const PersonalInformation = (props) => {
       return true;
     }
   };
+
+  const disabilityDocUploadValidation = () => {
+    if (state.disability === "Yes") {
+      if (isDisabilityUploaded === false) {
+        if (disabilityDocValidation() === true) {
+          setDisabilityDocError(true);
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
   const nationalityValidation = () => {
     if (state.nationality !== "" && state.nationality !== "Nationality") {
       setNationalityError(false);
@@ -573,7 +590,8 @@ const PersonalInformation = (props) => {
         setGenderError
       ) ===
         true) &
-      (validateCheckBoxes(married, unMarried, setMaritalStatusError) === true)
+      (validateCheckBoxes(married, unMarried, setMaritalStatusError) === true) &
+      (disabilityDocUploadValidation() === true)
     ) {
       if (isClicked === true) {
         console.log("------");
@@ -777,7 +795,8 @@ const PersonalInformation = (props) => {
   const handleUpload = (event) => {
     if (disabilityDocValidation() === true) {
       let fileType = 13;
-      let fileUpload = disabilityDoc;
+      let fileUpload = disabilityDocObj;
+      setDisabilityUploaded(true);
       if (fileUpload) {
         console.log("inside file info", fileUpload, fileType);
         const fileInfo = {
@@ -796,8 +815,11 @@ const PersonalInformation = (props) => {
   const DisabilityDocChange = (e) => {
     console.log("changeHandler");
     let fileObj = e.target.files[0];
+    console.log("fileObject", fileObj);
     console.log("photoIdChangeHandler", fileObj);
-    setDocName(fileObj);
+    setDocName(fileObj.name);
+
+    setDisabilityDocObj(fileObj);
   };
 
   const changeHandler = (e) => {
@@ -1296,7 +1318,7 @@ const PersonalInformation = (props) => {
                       <label className="fileInputField">
                         &nbsp;&nbsp;
                         {disabilityDoc !== ""
-                          ? disabilityDoc.name
+                          ? disabilityDoc
                           : "Select File Here"}
                         <input
                           type="file"

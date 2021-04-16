@@ -22,11 +22,18 @@ const PFDeclaration = (props) => {
     pfDeclarationUpdate,
     candidateProfileData,
     pfDeclarationView,
+    uploadFile,
   } = useContext(OnBoardContext);
   const [dataExist, setDataExist] = useState({
     exist: false,
   });
   const [firstJobYes, setFirstJobYes] = useState(false);
+  const [Form11Error, setForm11Error] = useState(false);
+  const [Form2EpfError, setForm2EpfError] = useState(false);
+  const [FormFError, setFormFError] = useState(false);
+  const [Form11uploade, setForm11Uploade] = useState(false);
+  const [Form2Epfuploade, setForm2EpfUploade] = useState(false);
+  const [FormFuploade, setFormFUploade] = useState(false);
 
   const [declarationIdValue, setDeclarationIdValue] = useState(0);
   const [firstJobNo, setFirstJobNo] = useState(false);
@@ -42,6 +49,14 @@ const PFDeclaration = (props) => {
   const [pfNominationHoldDeathNo, setPfNominationHoldDeathNo] = useState(false);
   const [state, setState] = useState({
     uanNumber: "",
+    form11: "",
+    form2epf: "",
+    formf: "",
+  });
+  const [ObjState, setObjState] = useState({
+    form11: "",
+    form2epf: "",
+    formf: "",
   });
   const [uanNumber, setUanNumber] = useState("");
   const [epfPassbookCopy, setEpfPassbookCopy] = useState("");
@@ -217,7 +232,10 @@ const PFDeclaration = (props) => {
           contributingPrevOrgNo,
           setContributingPrevError
         ) ===
-          true)
+          true) &
+        (Form11UploadValidation() === true) &
+        (Form2EpfUploadValidation() === true) &
+        (FormFUploadValidation() === true)
       ) {
         if (firstJobNo === true) {
           console.log("i am hear");
@@ -374,6 +392,133 @@ const PFDeclaration = (props) => {
       [e.target.name]: e.target.value,
     });
     console.log(state);
+  };
+
+  const Form11Validation = () => {
+    if (state.form11 !== "") {
+      setForm11Error(false);
+      console.log("Form11Sucess");
+      return true;
+    } else {
+      setForm11Error(true);
+      console.log("Form11Fail");
+      return false;
+    }
+  };
+  const Form2EpfValidation = () => {
+    if (state.form2epf !== "") {
+      setForm2EpfError(false);
+      console.log("Form2Sucess");
+      return true;
+    } else {
+      setForm2EpfError(true);
+      console.log("Form2Fail");
+      return false;
+    }
+  };
+
+  const FormFValidation = () => {
+    if (state.formf !== "") {
+      setFormFError(false);
+      console.log("FormFSucess");
+      return true;
+    } else {
+      setFormFError(true);
+      console.log("FormFFail");
+      return false;
+    }
+  };
+  const Form11UploadValidation = () => {
+    if ((pfNominationHoldDeathNo === true) | (state.form11 !== "")) {
+      if (Form11uploade === false) {
+        if (Form11Validation() === true) {
+          setForm11Error(true);
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
+  const Form2EpfUploadValidation = () => {
+    if ((pfNominationHoldDeathNo === true) | (state.form2epf !== "")) {
+      if (Form2Epfuploade === false) {
+        if (Form2EpfValidation() === true) {
+          setForm2EpfError(true);
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
+  const FormFUploadValidation = () => {
+    if ((pfNominationHoldDeathNo === true) | (state.FormF !== "")) {
+      if (FormFuploade === false) {
+        if (FormFValidation() === true) {
+          setFormFError(true);
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
+
+  const DocChangeHandler = (event) => {
+    console.log("changeHandler", event.target.name);
+    let fileObj = event.target.files[0];
+    console.log("photoIdChangeHandler", fileObj);
+    setState({
+      ...state,
+      [event.target.name]: fileObj.name,
+    });
+    setObjState({
+      ...ObjState,
+      [event.target.name]: fileObj,
+    });
+    // setFileUpload(fileObj);
+  };
+
+  const handleUpload = (event) => {
+    console.log("changeHandler", event.target.name);
+    let fileType;
+    let fileUpload;
+    if (event.target.name === "form11") {
+      if (Form11Validation() === true) {
+        fileUpload = ObjState.form11;
+        fileType = 10;
+      }
+    } else if (event.target.name === "form2epf") {
+      if (Form2EpfValidation() === true) {
+        fileUpload = ObjState.form2epf;
+        fileType = 11;
+      }
+    } else if (event.target.name === "formf") {
+      if (FormFValidation() === true) {
+        fileUpload = ObjState.formf;
+        fileType = 12;
+      }
+    }
+
+    if (fileUpload) {
+      console.log("inside file info", fileUpload, fileType);
+      const fileInfo = {
+        candidateId: candidateProfileData.candidateId,
+        file: fileUpload,
+        fileType: fileType,
+      };
+      console.log("handleUpload", fileInfo);
+      uploadFile(fileInfo);
+    } else {
+      toast.info("Something went wrong");
+    }
   };
   return (
     <Fragment>
@@ -655,6 +800,167 @@ const PFDeclaration = (props) => {
             <br />
           </Col>
         </Row>
+        <Row style={{ marginLeft: "-2rem" }}>
+          <Col>
+            <Form.Group>
+              <div className="FileInput">
+                <label>Form 11 Declaration</label>
+              </div>
+              <div className="parentInput">
+                <label
+                  className="fileInputField"
+                  style={{ marginTop: "0.5rem" }}
+                >
+                  &nbsp;&nbsp;
+                  {state.form11 !== "" ? state.form11 : "Select File Here"}
+                  <input
+                    type="file"
+                    accept="image/jpeg,.pdf"
+                    name="form11"
+                    style={{ display: "none" }}
+                    onChange={(e) => {
+                      DocChangeHandler(e);
+                    }}
+                    readOnly
+                  />
+                </label>
+
+                <label className="custom-file-upload">
+                  <input
+                    type="button"
+                    name="form11"
+                    className="custom_file_Upload_button"
+                    onClick={(e) => {
+                      handleUpload(e);
+                    }}
+                  />
+                  Upload File{" "}
+                  <i
+                    id="custom_file_upload_icon"
+                    className="fa fa-upload"
+                    aria-hidden="true"
+                  ></i>
+                </label>
+              </div>
+              {Form11Error ? (
+                <p style={{ color: "red" }}>
+                  {" "}
+                  &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the Form 11 Declaration
+                </p>
+              ) : (
+                <p></p>
+              )}
+            </Form.Group>
+          </Col>
+        </Row>
+        <Row style={{ marginLeft: "-2rem" }}>
+          <Col>
+            <Form.Group>
+              <div className="FileInput">
+                <label>Form 2 EPF Nomination</label>
+              </div>
+              <div className="parentInput">
+                <label
+                  className="fileInputField"
+                  style={{ marginTop: "0.5rem" }}
+                >
+                  &nbsp;&nbsp;
+                  {state.form2epf !== "" ? state.form2epf : "Select File Here"}
+                  <input
+                    type="file"
+                    accept="image/jpeg,.pdf"
+                    name="form2epf"
+                    style={{ display: "none" }}
+                    onChange={(e) => {
+                      DocChangeHandler(e);
+                    }}
+                    readOnly
+                  />
+                </label>
+
+                <label className="custom-file-upload">
+                  <input
+                    type="button"
+                    name="form2epf"
+                    className="custom_file_Upload_button"
+                    onClick={(e) => {
+                      handleUpload(e);
+                    }}
+                  />
+                  Upload File{" "}
+                  <i
+                    id="custom_file_upload_icon"
+                    className="fa fa-upload"
+                    aria-hidden="true"
+                  ></i>
+                </label>
+              </div>
+              {Form2EpfError ? (
+                <p style={{ color: "red" }}>
+                  {" "}
+                  &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the Form 2 EPF
+                  Nomination
+                </p>
+              ) : (
+                <p></p>
+              )}
+            </Form.Group>
+          </Col>
+        </Row>
+        <Row style={{ marginLeft: "-2rem" }}>
+          <Col>
+            <Form.Group>
+              <div className="FileInput">
+                <label>Form F Gratuity</label>
+              </div>
+              <div className="parentInput">
+                <label
+                  className="fileInputField"
+                  style={{ marginTop: "0.5rem" }}
+                >
+                  &nbsp;&nbsp;
+                  {state.formf !== "" ? state.formf : "Select File Here"}
+                  <input
+                    type="file"
+                    accept="image/jpeg,.pdf"
+                    name="formf"
+                    style={{ display: "none" }}
+                    onChange={(e) => {
+                      DocChangeHandler(e);
+                    }}
+                    readOnly
+                  />
+                </label>
+
+                <label className="custom-file-upload">
+                  <input
+                    type="button"
+                    name="formf"
+                    className="custom_file_Upload_button"
+                    onClick={(e) => {
+                      handleUpload(e);
+                    }}
+                  />
+                  Upload File{" "}
+                  <i
+                    id="custom_file_upload_icon"
+                    className="fa fa-upload"
+                    aria-hidden="true"
+                  ></i>
+                </label>
+              </div>
+              {FormFError ? (
+                <p style={{ color: "red" }}>
+                  {" "}
+                  &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the Form F Gratuity
+                </p>
+              ) : (
+                <p></p>
+              )}
+            </Form.Group>
+          </Col>
+        </Row>
+
         <div
           style={{
             marginTop: "2rem",

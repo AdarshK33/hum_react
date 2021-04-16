@@ -633,15 +633,16 @@ const Documents = (props) => {
       }
     } else {
       if (
-        (PhotoIdErrorValidation() === true) &
-        (AadharIdErrorValidation() === true) &
-        (PanIdErrorValidation() === true) &
-        (AddressProofValidation() === true) &
-        (CancelledChequeValidation() === true) &
-        (PassPortValidation() === true) &
-        (FrroValidation() === true) &
-        (CollegeLetterValidation() === true) &
-        (CollegeIdValidation() === true)
+        (PhotoIdUploadValidation() === true) &
+        (AadharIdUploadValidation() === true) &
+        (PanIdUploadValidation() === true) &
+        (AddressProfUploadValidation() === true) &
+        (EpfPassBookUploadValidation() === true) &
+        (CancelledChequeUploadValidation() === true) &
+        (FrroUploadValidation() === true) &
+        (PassPortUploadValidation() === true) &
+        (CollegeIdUploadValidation() === true) &
+        (CollegeLetterUploadValidation() === true)
       ) {
         return true;
       } else {
@@ -1641,174 +1642,6 @@ const Documents = (props) => {
               </Form.Group>
             </Col>
           </Row>
-          {/* <Row>
-            <Col>
-              <Form.Group>
-                <div className="FileInput">
-                  <label>Form 11 Declaration</label>
-                </div>
-                <div className="parentInput">
-                  <label
-                    className="fileInputField"
-                    style={{ marginTop: "0.5rem" }}
-                  >
-                    &nbsp;&nbsp;                                
-                    {state.form11 !== ""
-                      ? state.form11.name
-                      : "Select File Here"}
-                    <input
-                      type="file"
-                      accept="image/jpeg,.pdf"
-                      name="form11"
-                      style={{ display: "none" }}
-                      onChange={(e) => {
-                        changeHandler(e);
-                      }}
-                      readOnly
-                    />
-                  </label>
-
-                  <label className="custom-file-upload">
-                    <input
-                      type="button"
-                      name="form11"
-                      className="custom_file_Upload_button"
-                      onClick={(e) => {
-                        handleUpload(e);
-                      }}
-                    />
-                   
-                    Upload File{" "}
-                    <i
-                      id="custom_file_upload_icon"
-                      className="fa fa-upload"
-                      aria-hidden="true"
-                    ></i>
-                  </label>
-                </div>
-                {relievingLetterError ? (
-                  <p style={{ color: "red" }}>
-                    {" "}
-                    &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the Form 11
-                    Declaration
-                  </p>
-                ) : (
-                  <p></p>
-                )}
-              </Form.Group>
-            </Col>
-          </Row> */}
-          {/* <Row>
-            <Col>
-              <Form.Group>
-                <div className="FileInput">
-                  <label>Form 2 EPF Nomination</label>
-                </div>
-                <div className="parentInput">
-                  <label
-                    className="fileInputField"
-                    style={{ marginTop: "0.5rem" }}
-                  >
-                    &nbsp;&nbsp;
-                    {state.form2epf !== ""
-                      ? state.form2epf.name
-                      : "Select File Here"}
-                    <input
-                      type="file"
-                      accept="image/jpeg,.pdf"
-                      name="form2epf"
-                      style={{ display: "none" }}
-                      onChange={(e) => {
-                        changeHandler(e);
-                      }}
-                      readOnly
-                    />
-                  </label>
-
-                  <label className="custom-file-upload">
-                    <input
-                      type="button"
-                      name="form2epf"
-                      className="custom_file_Upload_button"
-                      onClick={(e) => {
-                        handleUpload(e);
-                      }}
-                    />
-                    
-                    Upload File{" "}
-                    <i
-                      id="custom_file_upload_icon"
-                      className="fa fa-upload"
-                      aria-hidden="true"
-                    ></i>
-                  </label>
-                </div>
-                {relievingLetterError ? (
-                  <p style={{ color: "red" }}>
-                    {" "}
-                    &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the Form 2 EPF
-                    Nomination
-                  </p>
-                ) : (
-                  <p></p>
-                )}
-              </Form.Group>
-            </Col>
-          </Row> */}
-          {/* <Row>
-            <Col>
-              <Form.Group>
-                <div className="FileInput">
-                  <label>Form F Gratuity</label>
-                </div>
-                <div className="parentInput">
-                  <label
-                    className="fileInputField"
-                    style={{ marginTop: "0.5rem" }}
-                  >
-                    &nbsp;&nbsp;
-                    {state.formf !== "" ? state.formf.name : "Select File Here"}
-                    <input
-                      type="file"
-                      accept="image/jpeg,.pdf"
-                      name="formf"
-                      style={{ display: "none" }}
-                      onChange={(e) => {
-                        changeHandler(e);
-                      }}
-                      readOnly
-                    />
-                  </label>
-
-                  <label className="custom-file-upload">
-                    <input
-                      type="button"
-                      name="formf"
-                      className="custom_file_Upload_button"
-                      onClick={(e) => {
-                        handleUpload(e);
-                      }}
-                    />
-                    
-                    Upload File{" "}
-                    <i
-                      id="custom_file_upload_icon"
-                      className="fa fa-upload"
-                      aria-hidden="true"
-                    ></i>
-                  </label>
-                </div>
-                {relievingLetterError ? (
-                  <p style={{ color: "red" }}>
-                    {" "}
-                    &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the Form F Gratuity
-                  </p>
-                ) : (
-                  <p></p>
-                )}
-              </Form.Group>
-            </Col>
-          </Row> */}
         </Form>
       ) : (
         ""
