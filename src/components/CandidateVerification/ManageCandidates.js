@@ -175,12 +175,15 @@ const CandidateList = () => {
                       <td>{item.statusDesc}</td>
 
                       <td>
-                        <Link to={"/verification/" + item.candidateId}>
+                        {/* <Link to={"/verification/" + item.candidateId}>
                           <Edit2
                             onClick={() => {
                               FetchCandidateData(item.candidateId);
                             }}
                           />
+                        </Link> */}
+                        <Link to={"/finance-clearance"}>
+                          <Edit2 />
                         </Link>
                       </td>
                     </tr>

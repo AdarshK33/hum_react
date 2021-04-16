@@ -46,11 +46,26 @@ const CandidateOnboarding = () => {
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
+    // validateEmail(e.target.value);
   };
   const handleFedChange = (e) => {
     setFedId(e.target.value);
   };
-
+  const validateEmail = (email) => {
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (re.test(email)) {
+      if (
+        email.indexOf(
+          "@decathlon.com",
+          email.length - "@decathlon.com".length
+        ) !== -1
+      ) {
+        console.log("VALID");
+      } else {
+        console.log("error");
+      }
+    }
+  };
   const handleIncrement = (key) => {
     if (count <= 5) {
       switch (count) {
