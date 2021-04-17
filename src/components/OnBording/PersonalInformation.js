@@ -10,7 +10,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import { toast } from "react-toastify";
-
+import { useHistory } from "react-router-dom";
 import { Search, PlusCircle, MinusCircle } from "react-feather";
 // import { ToastContainer, toast } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
@@ -19,7 +19,7 @@ import "./OnBoard.css";
 import "./Documents.css";
 import { OnBoardContext } from "../../context/OnBoardState";
 import countryList from "react-select-country-list";
-import { candidate } from "../../utils/canditateLogin";
+import { candidate, getRefreshToken } from "../../utils/canditateLogin";
 import moment from "moment";
 
 const PersonalInformation = (props) => {
@@ -38,6 +38,8 @@ const PersonalInformation = (props) => {
     candidateViewInfo,
     addressView,
     uploadFile,
+    documentView,
+    documentViewData,
   } = useContext(OnBoardContext);
   const options = useMemo(() => countryList().getData(), []);
   const [isClicked, setIsClicked] = useState(false);
@@ -95,8 +97,20 @@ const PersonalInformation = (props) => {
     disability: "",
     lgbt: "",
   });
+  let history = useHistory();
   useEffect(() => {
     CandidateProfile();
+    getRefreshToken()
+      .then((response) => {
+        const token = response.data.token;
+        localStorage.setItem("candidate_access_token", token);
+      })
+      .catch((error) => {
+        if (error.message == "Cannot read property 'data' of undefined") {
+          localStorage.removeItem("candidate_access_token");
+          history.push("/onboard-offer");
+        }
+      });
   }, []);
   useEffect(() => {
     setRefEmail1(
@@ -303,7 +317,22 @@ const PersonalInformation = (props) => {
       }
     }
   }, [candidatePersonalInfoData]);
-  // console.log("datya of birth", candidatePersonalInfoData.dateOfBirth);
+  useEffect(() => {
+    documentView(candidateProfileData.candidateId);
+  }, [candidateProfileData]);
+  console.log("documentViewData", documentViewData);
+
+  useEffect(() => {
+    if (documentViewData !== null && documentViewData !== undefined) {
+      documentViewData.map((item) => {
+        console.log("item.documentType", item.documentType, item);
+        if (item.documentType === 13 && item.documentName) {
+          setDocName(item.documentName ? item.documentName : "");
+          setDisabilityUploaded(true);
+        }
+      });
+    }
+  }, [documentViewData]);
 
   var data1 =
     candidateProfileData !== undefined &&
@@ -818,7 +847,7 @@ const PersonalInformation = (props) => {
     console.log("fileObject", fileObj);
     console.log("photoIdChangeHandler", fileObj);
     setDocName(fileObj.name);
-
+    setDisabilityUploaded(false);
     setDisabilityDocObj(fileObj);
   };
 
@@ -1352,8 +1381,8 @@ const PersonalInformation = (props) => {
 
                     {disabilityDocError ? (
                       <p style={{ color: "red" }}>
-                        &nbsp;&nbsp;&nbsp;&nbsp; Please upload the disability
-                        document
+                        &nbsp;&nbsp;&nbsp;&nbsp; Please select & upload the
+                        disability document
                       </p>
                     ) : (
                       ""
@@ -1367,7 +1396,8 @@ const PersonalInformation = (props) => {
           )}
         </Row>
 
-        {!data2 ? (
+        {/* {!data2 ? ( */}
+        {false ? (
           <div>
             <Row style={{ marginBottom: "1rem" }}>
               <Col sm={5}>
@@ -1448,7 +1478,7 @@ const PersonalInformation = (props) => {
                   </div>
                 </Row>
               </Col>
-              {!data1 ? (
+              {false ? (
                 <Col sm={3} style={{ marginTop: "2rem" }}>
                   <Form.Group>
                     <div>

@@ -176,7 +176,7 @@ export const DocsVerificationProvider = (props) => {
           remarks
       )
       .then((response) => {
-        state.rejectStatus = response.data.message;
+        state.rejectStatus = response.data.status;
         setLoader(false);
         return dispatch({
           type: "GET_REJECT_STATUS",
