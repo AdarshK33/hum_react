@@ -59,16 +59,17 @@
 .fileInputField {
   flex-grow: 1;
   height: 33px;
-  border: 1px solid black;
+  border: 1px solid #aaa;
+  margin-top: 0.5rem;
   border-top-left-radius: 12px;
   border-bottom-left-radius: 12px;
 }
 .fileInputField2 {
-flex-grow: 1;
-height: 35px;
-border: 1px solid #00000052;
-border-top-left-radius: 7px;
-border-bottom-left-radius: 7px;
+  flex-grow: 1;
+  height: 35px;
+  border: 1px solid #00000052;
+  border-top-left-radius: 7px;
+  border-bottom-left-radius: 7px;
 }
 .custom-file-upload {
   display: flex;
