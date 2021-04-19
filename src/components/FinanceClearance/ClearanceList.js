@@ -51,25 +51,16 @@ const FinanceClearanceList = () => {
     return (
       <div>
         <select>
-          <option value="Due"> Due </option>
-          <option value="No Due"> No Due </option>
-          <option value=" On Hold"> On Hold </option>
+          <option value="0"> Due </option>
+          <option value="1"> No Due </option>
+          <option value="2"> On Hold </option>
         </select>
       </div>
     );
   };
-  const onGridReady = (params) => {
-    setGridApi(params.api);
-    setGridColumnApi(params.columnApi);
-  };
 
-  // const handleInputChange = (e) => {
-  //   console.log(e.target.name);
-  //   console.log(e.target.value);
-  //   setCleranceData({ ...clearanceData, [e.target.name]: e.target.value });
-  // };
   const handleSave = () => {
-    console.log(data);
+    // onSelectionChanged();
   };
   useEffect(() => {
     separationListView("all", pageCount);
@@ -106,10 +97,42 @@ const FinanceClearanceList = () => {
     let selectedRows = gridApi.getSelectedRows();
     let selectedData =
       selectedRows !== null && selectedRows.length === 1 ? selectedRows[0] : "";
+    console.log(selectedData);
     setData(selectedData);
     // setData(selectedData);
     // return selectedData;
   };
+
+  const onCellClicked = (params) => {
+    if (params.column.colId === "action") {
+      console.log(params.node.data);
+    }
+    // if (
+    //   params.column.colId === "action" &&
+    //   params.event.target.dataset.action
+    // ) {
+    //   let action = params.event.target.dataset.action;
+    //   if (action === "edit") {
+    //     params.api.startEditingCell({
+    //       rowIndex: params.node.rowIndex,
+    //       // gets the first columnKey
+    //       colKey: params.columnApi.getDisplayedCenterColumns()[0].colId,
+    //     });
+    //   }
+    //   if (action === "delete") {
+    //     params.api.applyTransaction({
+    //       remove: [params.node.data],
+    //     });
+    //   }
+    //   if (action === "update") {
+    //     params.api.stopEditing(false);
+    //   }
+    //   if (action === "cancel") {
+    //     params.api.stopEditing(true);
+    //   }
+    // }
+  };
+
   // const renderList = (clearanceData) => {
   //   return (
   //     <tbody key={clearanceData.exitId}>
@@ -225,18 +248,32 @@ const FinanceClearanceList = () => {
         <div className="ag-theme-alpine" style={{ height: 400, width: 1450 }}>
           <AgGridReact
             rowData={separationList}
-            rowSelection="single"
-            onGridReady={onGridReady}
+            // rowSelection="single"
+            onGridReady={(params) => setGridApi(params.api)}
+            // editType="fullRow"
+            // onSelectionChanged={onSelectionChanged}
+            onCellClicked={onCellClicked}
+
+            // onGridReady={onGridReady}
           >
             <AgGridColumn field="employeeId"></AgGridColumn>
             <AgGridColumn field="empName"></AgGridColumn>
             <AgGridColumn field="costCentre"></AgGridColumn>
             <AgGridColumn field="managerName"></AgGridColumn>
             <AgGridColumn field="joiningDate"></AgGridColumn>
-            <AgGridColumn field="lastWorkingDate"></AgGridColumn>
-            <AgGridColumn field="financeAmount"></AgGridColumn>
+            <AgGridColumn
+              field="lastWorkingDate"
+              headerName="Last working Day"
+            ></AgGridColumn>
+            <AgGridColumn
+              field="financeAmount"
+              headerName="Finance Amount to be Recovered"
+              editable={true}
+              singleClickEdit={true}
+            ></AgGridColumn>
             <AgGridColumn
               field="financeClearanceStatus"
+              headerName="Finance Clearance"
               editable={true}
               cellRendererFramework={renderStatusOptions}
               cellEditorParams={{
@@ -244,10 +281,20 @@ const FinanceClearanceList = () => {
                 cellRenderer: { statusRender },
               }}
             ></AgGridColumn>
-            <AgGridColumn field="financeRemarks" editable={true}></AgGridColumn>
-            <AgGridColumn field="financeClearanceUpdatedBy"></AgGridColumn>
+            <AgGridColumn
+              field="financeRemarks"
+              headerName="Finance Clearance Remarks"
+              editable={true}
+              singleClickEdit={true}
+            ></AgGridColumn>
+            <AgGridColumn
+              field="financeClearanceUpdatedBy"
+              editable={true}
+              singleClickEdit={true}
+            ></AgGridColumn>
             <AgGridColumn
               field="Action"
+              colId="action"
               cellRendererFramework={() => renderButton()}
             ></AgGridColumn>
           </AgGridReact>
