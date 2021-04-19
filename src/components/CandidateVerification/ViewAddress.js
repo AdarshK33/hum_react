@@ -15,9 +15,14 @@ import { DocsVerifyContext } from "../../context/DocverificationState";
 import { useParams } from "react-router-dom";
 
 const EditAddress = (props) => {
-  const { stateList, StateList, cityList, CityList } = useContext(
-    OnBoardContext
-  );
+  const {
+    candidateCountryList,
+    candidateCountryData,
+    CandidateStateList,
+    candidateStateData,
+    candidateCityList,
+    candidateCityData,
+  } = useContext(OnBoardContext);
   const { addressInfo, addressInfoData, loader } = useContext(
     DocsVerifyContext
   );
@@ -70,11 +75,11 @@ const EditAddress = (props) => {
   });
 
   useEffect(() => {
-    if (window.location.href.includes("verification")) {
-      addressInfo(candidateId);
-      setState(addressInfoData);
-      setDisableState(true);
-    }
+    addressInfo(candidateId);
+    setState(addressInfoData);
+    candidateCountryList();
+
+    setDisableState(true);
   }, []);
   const flatNumberValidation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
@@ -318,23 +323,30 @@ const EditAddress = (props) => {
     changeCheckState(!e.target.checked);
     console.log(isChecked);
   };
+  var countryvalue = candidateCountryData.filter(
+    (i) => i.countryId === state.countryId
+  );
+
   return (
-    <Fragment>
-      {addressInfoData !== null && addressInfoData !== undefined ? (
-        <Form>
-          <Row style={{ marginBottom: "1rem" }}>
-            <Col sm={6}>
-              <div>
-                <label>
-                  <b>Present Address</b>
-                </label>
-              </div>
-            </Col>
-          </Row>
-          <Row style={{ marginBottom: "2rem" }}>
-            {/* <div className="divContents"> */}
-            <div className="col-sm-3">
-              <label for="validationCustom03" class="form-label">
+    console.log(countryvalue),
+    console.log("candidateCountryList data", candidateCountryData),
+    (
+      <Fragment>
+        {addressInfoData !== null && addressInfoData !== undefined ? (
+          <Form>
+            <Row style={{ marginBottom: "1rem" }}>
+              <Col sm={6}>
+                <div>
+                  <label>
+                    <b>Present Address</b>
+                  </label>
+                </div>
+              </Col>
+            </Row>
+            <Row style={{ marginBottom: "2rem" }}>
+              {/* <div className="divContents"> */}
+              <div className="col-sm-3">
+                {/* <label for="validationCustom03" class="form-label">
                 City
               </label>
               <input
@@ -344,474 +356,492 @@ const EditAddress = (props) => {
                 required
                 disabled={disabled}
               />
-              <div class="invalid-feedback">Please provide a valid city.</div>
-              <Form.Group>
-                <Form.Label>
-                  Flat/Plot No<span style={{ color: "red" }}>*</span>
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  name="flatNumber"
-                  value={state.flatNumber}
-                  onChange={changeHandler}
-                  required
-                  style={flatNumberErro ? { borderColor: "red" } : {}}
-                  placeholder="Flat/Plot No"
-                  disabled={disabled}
-                />
-                {flatNumberErro ? (
-                  <p style={{ color: "red" }}> Please enter flat/plot no</p>
-                ) : (
-                  <p></p>
-                )}
-              </Form.Group>
-            </div>
-            <div className="col-sm-3">
-              <Form.Group>
-                <Form.Label>Street</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="street"
-                  value={state.street}
-                  onChange={changeHandler}
-                  placeholder="Street"
-                  disabled={disabled}
-                />
-              </Form.Group>
-            </div>
-            <div className="col-sm-3">
-              <Form.Group>
-                <Form.Label>Locality</Form.Label>
-
-                <Form.Control
-                  type="text"
-                  name="locality"
-                  value={state.locality}
-                  onChange={changeHandler}
-                  placeholder="Locality"
-                  disabled={disabled}
-                />
-              </Form.Group>
-            </div>
-            <div className="col-sm-3">
-              <Form.Group>
-                <Form.Label>
-                  Address Line 1<span style={{ color: "red" }}>*</span>
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  name="addressLine"
-                  value={state.addressLine}
-                  onChange={changeHandler}
-                  required
-                  style={addressLineError ? { borderColor: "red" } : {}}
-                  placeholder="Address Line 1"
-                  disabled={disabled}
-                />
-                {addressLineError ? (
-                  <p style={{ color: "red" }}> Please enter address line1</p>
-                ) : (
-                  <p></p>
-                )}
-              </Form.Group>
-            </div>
-            {/* </div> */}
-          </Row>
-          <Row style={{ marginBottom: "2rem" }}>
-            <div className="col-sm-3">
-              <Form.Group>
-                <Form.Label>
-                  Country <span style={{ color: "red" }}>*</span>
-                </Form.Label>
-                <Form.Control
-                  as="select"
-                  name="countryId"
-                  value={state.countryId}
-                  options={options}
-                  onChange={changeHandler}
-                  required
-                  style={countryError ? { borderColor: "red" } : {}}
-                  disabled={disabled}
-                >
-                  <option value="">Country</option>
-                  {options.map((item) => {
-                    return <option key={item.value}>{item.label}</option>;
-                  })}
-                </Form.Control>
-                {countryError ? (
-                  <p style={{ color: "red" }}> Please choose country</p>
-                ) : (
-                  <p></p>
-                )}
-              </Form.Group>
-            </div>
-            <div className="col-sm-3">
-              <Form.Group>
-                <Form.Label>
-                  State <span style={{ color: "red" }}>*</span>
-                </Form.Label>
-                <Form.Control
-                  as="select"
-                  name="stateId"
-                  value={state.stateId}
-                  style={stateError ? { borderColor: "red" } : {}}
-                  onChange={changeHandler}
-                  disabled={disabled}
-                >
-                  <option value="">State</option>
-                  <option>one</option>
-                </Form.Control>
-                {stateError ? (
-                  <p style={{ color: "red" }}> Please choose state</p>
-                ) : (
-                  <p></p>
-                )}
-              </Form.Group>
-            </div>
-            <div className="col-sm-3">
-              <Form.Group>
-                <Form.Label>
-                  City <span style={{ color: "red" }}>*</span>
-                </Form.Label>
-                <Form.Control
-                  as="select"
-                  name="cityId"
-                  value={state.cityId}
-                  style={cityError ? { borderColor: "red" } : {}}
-                  onChange={changeHandler}
-                  disabled={disabled}
-                >
-                  <option value="">City</option>
-                  <option>one</option>
-                </Form.Control>
-                {cityError ? (
-                  <p style={{ color: "red" }}> Please choose city</p>
-                ) : (
-                  <p></p>
-                )}
-              </Form.Group>
-            </div>
-
-            <div className="col-sm-3">
-              <Form.Group>
-                <Form.Label>
-                  PinCode<span style={{ color: "red" }}>*</span>
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  name="pinCode"
-                  value={state.pinCode}
-                  onChange={changeHandler}
-                  required
-                  style={pinCodeError ? { borderColor: "red" } : {}}
-                  placeholder="Pin Code"
-                  disabled={disabled}
-                />
-                {pinCodeError ? (
-                  <p style={{ color: "red" }}> Please enter pin code</p>
-                ) : (
-                  <p></p>
-                )}
-              </Form.Group>
-            </div>
-          </Row>
-          <Row style={{ marginBottom: "2rem" }}>
-            <div className="col-sm-3">
-              <Form.Group>
-                <Form.Label>
-                  Phone No<span style={{ color: "red" }}>*</span>
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  name="phoneNumber"
-                  value={state.phoneNumber}
-                  onChange={changeHandler}
-                  required
-                  style={phoneNoError ? { borderColor: "red" } : {}}
-                  placeholder="Phone No"
-                  disabled={disabled}
-                />
-                {phoneNoError ? (
-                  <p style={{ color: "red" }}>
-                    {" "}
-                    Please enter valid phone number{" "}
-                  </p>
-                ) : (
-                  <p></p>
-                )}
-              </Form.Group>
-            </div>
-          </Row>
-          <Row style={{ marginBottom: "2rem" }}>
-            <Col sm={5}>
-              <div>
-                <label>
-                  <b>Is permanent address same as present address ?</b>
-                </label>
+              <div class="invalid-feedback">Please provide a valid city.</div> */}
+                <Form.Group>
+                  <Form.Label>
+                    Flat/Plot No<span style={{ color: "red" }}>*</span>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="flatNumber"
+                    value={state.flatNumber}
+                    onChange={changeHandler}
+                    required
+                    style={flatNumberErro ? { borderColor: "red" } : {}}
+                    placeholder="Flat/Plot No"
+                    disabled={disabled}
+                  />
+                  {flatNumberErro ? (
+                    <p style={{ color: "red" }}> Please enter flat/plot no</p>
+                  ) : (
+                    <p></p>
+                  )}
+                </Form.Group>
               </div>
-            </Col>
-            <Col sm={2}>
-              <Form.Group>
-                <div className="boxField input">
-                  {/* className="CheckBoxField" */}
+              <div className="col-sm-3">
+                <Form.Group>
+                  <Form.Label>Street</Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="street"
+                    value={state.street}
+                    onChange={changeHandler}
+                    placeholder="Street"
+                    disabled={disabled}
+                  />
+                </Form.Group>
+              </div>
+              <div className="col-sm-3">
+                <Form.Group>
+                  <Form.Label>Locality</Form.Label>
 
-                  {/* <input  className="largerCheckbox" type="checkbox" value="No" /> */}
-                  <input
-                    type="checkbox"
-                    value="No"
-                    checked={!isChecked}
+                  <Form.Control
+                    type="text"
+                    name="locality"
+                    value={state.locality}
+                    onChange={changeHandler}
+                    placeholder="Locality"
                     disabled={disabled}
-                    onChange={handleNoCheckboxChange}
                   />
-                  <label>No </label>
-                </div>
-              </Form.Group>
-            </Col>
-            <Col sm={2}>
-              <Form.Group>
-                <div className="boxField input">
-                  {/* <label>Yes</label> */}
-                  {/* <input  className="largerCheckbox" type="checkbox" value="Yes" /> */}
-                  <input
-                    type="checkbox"
-                    value="Yes"
-                    checked={isChecked}
+                </Form.Group>
+              </div>
+              <div className="col-sm-3">
+                <Form.Group>
+                  <Form.Label>
+                    Address Line 1<span style={{ color: "red" }}>*</span>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="addressLine"
+                    value={state.addressLine}
+                    onChange={changeHandler}
+                    required
+                    style={addressLineError ? { borderColor: "red" } : {}}
+                    placeholder="Address Line 1"
                     disabled={disabled}
-                    onChange={handleCheckboxChange}
                   />
-                  <label>Yes</label>
+                  {addressLineError ? (
+                    <p style={{ color: "red" }}> Please enter address line1</p>
+                  ) : (
+                    <p></p>
+                  )}
+                </Form.Group>
+              </div>
+              {/* </div> */}
+            </Row>
+            <Row style={{ marginBottom: "2rem" }}>
+              <div className="col-sm-3">
+                <Form.Group>
+                  <Form.Label>
+                    Country <span style={{ color: "red" }}>*</span>
+                  </Form.Label>
+                  {/* <br></br> */}
+                  <Form.Label className="headingColor">
+                    {countryvalue !== undefined &&
+                      countryvalue[0] !== undefined &&
+                      countryvalue[0].countryName}
+                  </Form.Label>
+                  <Form.Control
+                    as="select"
+                    name="countryId"
+                    value={state.countryId}
+                    options={options}
+                    onChange={changeHandler}
+                    required
+                    style={countryError ? { borderColor: "red" } : {}}
+                    disabled={disabled}
+                  >
+                    {" "}
+                    {options.filter((item) => item.value === state.countryId)}
+                    <option value="">Country</option>
+                    {options.map((item) => {
+                      return <option key={item.value}>{item.label}</option>;
+                    })}
+                  </Form.Control>
+                  {countryError ? (
+                    <p style={{ color: "red" }}> Please choose country</p>
+                  ) : (
+                    <p></p>
+                  )}
+                </Form.Group>
+              </div>
+              <div className="col-sm-3">
+                <Form.Group>
+                  <Form.Label>
+                    State <span style={{ color: "red" }}>*</span>
+                  </Form.Label>
+                  <Form.Control
+                    as="select"
+                    name="stateId"
+                    value={state.stateId}
+                    style={stateError ? { borderColor: "red" } : {}}
+                    onChange={changeHandler}
+                    disabled={disabled}
+                  >
+                    <option value="">State</option>
+                    <option>one</option>
+                  </Form.Control>
+                  {stateError ? (
+                    <p style={{ color: "red" }}> Please choose state</p>
+                  ) : (
+                    <p></p>
+                  )}
+                </Form.Group>
+              </div>
+              <div className="col-sm-3">
+                <Form.Group>
+                  <Form.Label>
+                    City <span style={{ color: "red" }}>*</span>
+                  </Form.Label>
+                  <Form.Control
+                    as="select"
+                    name="cityId"
+                    value={state.cityId}
+                    style={cityError ? { borderColor: "red" } : {}}
+                    onChange={changeHandler}
+                    disabled={disabled}
+                  >
+                    <option value="">City</option>
+                    <option>one</option>
+                  </Form.Control>
+                  {cityError ? (
+                    <p style={{ color: "red" }}> Please choose city</p>
+                  ) : (
+                    <p></p>
+                  )}
+                </Form.Group>
+              </div>
+
+              <div className="col-sm-3">
+                <Form.Group>
+                  <Form.Label>
+                    PinCode<span style={{ color: "red" }}>*</span>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="pinCode"
+                    value={state.pinCode}
+                    onChange={changeHandler}
+                    required
+                    style={pinCodeError ? { borderColor: "red" } : {}}
+                    placeholder="Pin Code"
+                    disabled={disabled}
+                  />
+                  {pinCodeError ? (
+                    <p style={{ color: "red" }}> Please enter pin code</p>
+                  ) : (
+                    <p></p>
+                  )}
+                </Form.Group>
+              </div>
+            </Row>
+            <Row style={{ marginBottom: "2rem" }}>
+              <div className="col-sm-3">
+                <Form.Group>
+                  <Form.Label>
+                    Phone No<span style={{ color: "red" }}>*</span>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    name="phoneNumber"
+                    value={state.phoneNumber}
+                    onChange={changeHandler}
+                    required
+                    style={phoneNoError ? { borderColor: "red" } : {}}
+                    placeholder="Phone No"
+                    disabled={disabled}
+                  />
+                  {phoneNoError ? (
+                    <p style={{ color: "red" }}>
+                      {" "}
+                      Please enter valid phone number{" "}
+                    </p>
+                  ) : (
+                    <p></p>
+                  )}
+                </Form.Group>
+              </div>
+            </Row>
+            <Row style={{ marginBottom: "2rem" }}>
+              <Col sm={5}>
+                <div>
+                  <label>
+                    <b>Is permanent address same as present address ?</b>
+                  </label>
                 </div>
-              </Form.Group>
-            </Col>
-          </Row>
-          {isChecked ? (
-            <div></div>
-          ) : (
-            <div>
-              <Row style={{ marginBottom: "1rem" }}>
-                <Col sm={6}>
-                  <div>
-                    <label>
-                      <b>Permanent Address</b>
-                    </label>
+              </Col>
+              <Col sm={2}>
+                <Form.Group>
+                  <div className="boxField input">
+                    {/* className="CheckBoxField" */}
+                    {/* <input  className="largerCheckbox" type="checkbox" value="No" /> */}
+                    <input
+                      type="checkbox"
+                      value="No"
+                      checked={!isChecked}
+                      disabled={disabled}
+                      onChange={handleNoCheckboxChange}
+                    />
+                    <label>No </label>
                   </div>
-                </Col>
-              </Row>
-              <Row style={{ marginBottom: "2rem" }}>
-                {/* <div className="divContents"> */}
-                <div className="col-sm-3">
-                  <Form.Group>
-                    <Form.Label>
-                      Flat/Plot No<span style={{ color: "red" }}>*</span>
-                    </Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="permanentFlatNumber"
-                      value={state.permanentFlatNumber}
-                      onChange={changeHandler}
-                      required
-                      style={
-                        PermanentFlatNumberError ? { borderColor: "red" } : {}
-                      }
-                      placeholder="Flat/Plot No"
+                </Form.Group>
+              </Col>
+              <Col sm={2}>
+                <Form.Group>
+                  <div className="boxField input">
+                    {/* <label>Yes</label> */}
+                    {/* <input  className="largerCheckbox" type="checkbox" value="Yes" /> */}
+                    <input
+                      type="checkbox"
+                      value="Yes"
+                      checked={isChecked}
                       disabled={disabled}
+                      onChange={handleCheckboxChange}
                     />
-                    {PermanentFlatNumberError ? (
-                      <p style={{ color: "red" }}> Please enter flat/plot no</p>
-                    ) : (
-                      <p></p>
-                    )}
-                  </Form.Group>
-                </div>
-                <div className="col-sm-3">
-                  <Form.Group>
-                    <Form.Label>Street</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="permanentStreet"
-                      value={state.permanentStreet}
-                      onChange={changeHandler}
-                      required
-                      placeholder="Street"
-                      disabled={disabled}
-                    />
-                  </Form.Group>
-                </div>
-                <div className="col-sm-3">
-                  <Form.Group>
-                    <Form.Label>Locality</Form.Label>
+                    <label>Yes</label>
+                  </div>
+                </Form.Group>
+              </Col>
+            </Row>
+            {isChecked ? (
+              <div></div>
+            ) : (
+              <div>
+                <Row style={{ marginBottom: "1rem" }}>
+                  <Col sm={6}>
+                    <div>
+                      <label>
+                        <b>Permanent Address</b>
+                      </label>
+                    </div>
+                  </Col>
+                </Row>
+                <Row style={{ marginBottom: "2rem" }}>
+                  {/* <div className="divContents"> */}
+                  <div className="col-sm-3">
+                    <Form.Group>
+                      <Form.Label>
+                        Flat/Plot No<span style={{ color: "red" }}>*</span>
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="permanentFlatNumber"
+                        value={state.permanentFlatNumber}
+                        onChange={changeHandler}
+                        required
+                        style={
+                          PermanentFlatNumberError ? { borderColor: "red" } : {}
+                        }
+                        placeholder="Flat/Plot No"
+                        disabled={disabled}
+                      />
+                      {PermanentFlatNumberError ? (
+                        <p style={{ color: "red" }}>
+                          {" "}
+                          Please enter flat/plot no
+                        </p>
+                      ) : (
+                        <p></p>
+                      )}
+                    </Form.Group>
+                  </div>
+                  <div className="col-sm-3">
+                    <Form.Group>
+                      <Form.Label>Street</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="permanentStreet"
+                        value={state.permanentStreet}
+                        onChange={changeHandler}
+                        required
+                        placeholder="Street"
+                        disabled={disabled}
+                      />
+                    </Form.Group>
+                  </div>
+                  <div className="col-sm-3">
+                    <Form.Group>
+                      <Form.Label>Locality</Form.Label>
 
-                    <Form.Control
-                      type="text"
-                      name="permanentLocality"
-                      value={state.permanentLocality}
-                      onChange={changeHandler}
-                      required
-                      placeholder="Locality"
-                      disabled={disabled}
-                    />
-                  </Form.Group>
-                </div>
-                <div className="col-sm-3">
-                  <Form.Group>
-                    <Form.Label>
-                      Address Line 1<span style={{ color: "red" }}>*</span>
-                    </Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="permanentAddressLine"
-                      value={state.permanentAddressLine}
-                      onChange={changeHandler}
-                      required
-                      style={
-                        PermanentAddressLineError ? { borderColor: "red" } : {}
-                      }
-                      placeholder="Address Line 1"
-                      disabled={disabled}
-                    />
-                    {PermanentAddressLineError ? (
-                      <p style={{ color: "red" }}>
-                        {" "}
-                        Please enter address line1
-                      </p>
-                    ) : (
-                      <p></p>
-                    )}
-                  </Form.Group>
-                </div>
-                {/* </div> */}
-              </Row>
-              <Row style={{ marginBottom: "2rem" }}>
-                <div className="col-sm-3">
-                  <Form.Group>
-                    <Form.Label>
-                      Country <span style={{ color: "red" }}>*</span>
-                    </Form.Label>
-                    <Form.Control
-                      as="select"
-                      name="permanentCountryId"
-                      value={state.permanentCountryId}
-                      options={options}
-                      onChange={changeHandler}
-                      required
-                      style={
-                        PermanentCountryError ? { borderColor: "red" } : {}
-                      }
-                      disabled={disabled}
-                    >
-                      <option value="">Country</option>
-                      {options.map((item) => {
-                        return <option key={item.value}>{item.label}</option>;
-                      })}
-                    </Form.Control>
-                    {PermanentCountryError ? (
-                      <p style={{ color: "red" }}> Please choose country</p>
-                    ) : (
-                      <p></p>
-                    )}
-                  </Form.Group>
-                </div>
-                <div className="col-sm-3">
-                  <Form.Group>
-                    <Form.Label>
-                      State <span style={{ color: "red" }}>*</span>
-                    </Form.Label>
-                    <Form.Control
-                      as="select"
-                      name="permanentStateId"
-                      value={state.permanentStateId}
-                      style={PermanentStateError ? { borderColor: "red" } : {}}
-                      onChange={changeHandler}
-                    >
-                      <option value="">State</option>
-                    </Form.Control>
-                    {PermanentStateError ? (
-                      <p style={{ color: "red" }}> Please choose state</p>
-                    ) : (
-                      <p></p>
-                    )}
-                  </Form.Group>
-                </div>
-                <div className="col-sm-3">
-                  <Form.Group>
-                    <Form.Label>
-                      City <span style={{ color: "red" }}>*</span>
-                    </Form.Label>
-                    <Form.Control
-                      as="select"
-                      name="permanentCityId"
-                      value={state.permanentCityId}
-                      style={PermanentCityError ? { borderColor: "red" } : {}}
-                      onChange={changeHandler}
-                    >
-                      <option value="">City</option>
-                    </Form.Control>
-                    {PermanentCityError ? (
-                      <p style={{ color: "red" }}> Please choose city</p>
-                    ) : (
-                      <p></p>
-                    )}
-                  </Form.Group>
-                </div>
+                      <Form.Control
+                        type="text"
+                        name="permanentLocality"
+                        value={state.permanentLocality}
+                        onChange={changeHandler}
+                        required
+                        placeholder="Locality"
+                        disabled={disabled}
+                      />
+                    </Form.Group>
+                  </div>
+                  <div className="col-sm-3">
+                    <Form.Group>
+                      <Form.Label>
+                        Address Line 1<span style={{ color: "red" }}>*</span>
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="permanentAddressLine"
+                        value={state.permanentAddressLine}
+                        onChange={changeHandler}
+                        required
+                        style={
+                          PermanentAddressLineError
+                            ? { borderColor: "red" }
+                            : {}
+                        }
+                        placeholder="Address Line 1"
+                        disabled={disabled}
+                      />
+                      {PermanentAddressLineError ? (
+                        <p style={{ color: "red" }}>
+                          {" "}
+                          Please enter address line1
+                        </p>
+                      ) : (
+                        <p></p>
+                      )}
+                    </Form.Group>
+                  </div>
+                  {/* </div> */}
+                </Row>
+                <Row style={{ marginBottom: "2rem" }}>
+                  <div className="col-sm-3">
+                    <Form.Group>
+                      <Form.Label>
+                        Country <span style={{ color: "red" }}>*</span>
+                      </Form.Label>
+                      <Form.Control
+                        as="select"
+                        name="permanentCountryId"
+                        value={state.permanentCountryId}
+                        options={options}
+                        onChange={changeHandler}
+                        required
+                        style={
+                          PermanentCountryError ? { borderColor: "red" } : {}
+                        }
+                        disabled={disabled}
+                      >
+                        <option value="">Country</option>
+                        {options.map((item) => {
+                          return <option key={item.value}>{item.label}</option>;
+                        })}
+                      </Form.Control>
+                      {PermanentCountryError ? (
+                        <p style={{ color: "red" }}> Please choose country</p>
+                      ) : (
+                        <p></p>
+                      )}
+                    </Form.Group>
+                  </div>
+                  <div className="col-sm-3">
+                    <Form.Group>
+                      <Form.Label>
+                        State <span style={{ color: "red" }}>*</span>
+                      </Form.Label>
+                      <Form.Control
+                        as="select"
+                        name="permanentStateId"
+                        value={state.permanentStateId}
+                        style={
+                          PermanentStateError ? { borderColor: "red" } : {}
+                        }
+                        onChange={changeHandler}
+                      >
+                        <option value="">State</option>
+                      </Form.Control>
+                      {PermanentStateError ? (
+                        <p style={{ color: "red" }}> Please choose state</p>
+                      ) : (
+                        <p></p>
+                      )}
+                    </Form.Group>
+                  </div>
+                  <div className="col-sm-3">
+                    <Form.Group>
+                      <Form.Label>
+                        City <span style={{ color: "red" }}>*</span>
+                      </Form.Label>
+                      <Form.Control
+                        as="select"
+                        name="permanentCityId"
+                        value={state.permanentCityId}
+                        style={PermanentCityError ? { borderColor: "red" } : {}}
+                        onChange={changeHandler}
+                      >
+                        <option value="">City</option>
+                      </Form.Control>
+                      {PermanentCityError ? (
+                        <p style={{ color: "red" }}> Please choose city</p>
+                      ) : (
+                        <p></p>
+                      )}
+                    </Form.Group>
+                  </div>
 
-                <div className="col-sm-3">
-                  <Form.Group>
-                    <Form.Label>
-                      PinCode<span style={{ color: "red" }}>*</span>
-                    </Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="permanentPinCode"
-                      value={state.permanentPinCode}
-                      onChange={changeHandler}
-                      required
-                      style={
-                        PermanentPinCodeError ? { borderColor: "red" } : {}
-                      }
-                      placeholder="Pin Code"
-                      disabled={disabled}
-                    />
-                    {PermanentPinCodeError ? (
-                      <p style={{ color: "red" }}> Please enter pin code</p>
-                    ) : (
-                      <p></p>
-                    )}
-                  </Form.Group>
-                </div>
-              </Row>
-              <Row style={{ marginBottom: "2rem" }}>
-                <div className="col-sm-3">
-                  <Form.Group>
-                    <Form.Label>
-                      Phone No<span style={{ color: "red" }}>*</span>
-                    </Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="permanentPhoneNumber"
-                      value={state.permanentPhoneNumber}
-                      onChange={changeHandler}
-                      required
-                      style={
-                        PermanentPhoneNoError ? { borderColor: "red" } : {}
-                      }
-                      placeholder="Phone No"
-                      disabled={disabled}
-                    />
-                    {PermanentPhoneNoError ? (
-                      <p style={{ color: "red" }}> Please enter phone number</p>
-                    ) : (
-                      <p></p>
-                    )}
-                  </Form.Group>
-                </div>
-              </Row>
-            </div>
-          )}
-        </Form>
-      ) : (
-        <div className="text-center">No Data Found</div>
-      )}
-    </Fragment>
+                  <div className="col-sm-3">
+                    <Form.Group>
+                      <Form.Label>
+                        PinCode<span style={{ color: "red" }}>*</span>
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="permanentPinCode"
+                        value={state.permanentPinCode}
+                        onChange={changeHandler}
+                        required
+                        style={
+                          PermanentPinCodeError ? { borderColor: "red" } : {}
+                        }
+                        placeholder="Pin Code"
+                        disabled={disabled}
+                      />
+                      {PermanentPinCodeError ? (
+                        <p style={{ color: "red" }}> Please enter pin code</p>
+                      ) : (
+                        <p></p>
+                      )}
+                    </Form.Group>
+                  </div>
+                </Row>
+                <Row style={{ marginBottom: "2rem" }}>
+                  <div className="col-sm-3">
+                    <Form.Group>
+                      <Form.Label>
+                        Phone No<span style={{ color: "red" }}>*</span>
+                      </Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="permanentPhoneNumber"
+                        value={state.permanentPhoneNumber}
+                        onChange={changeHandler}
+                        required
+                        style={
+                          PermanentPhoneNoError ? { borderColor: "red" } : {}
+                        }
+                        placeholder="Phone No"
+                        disabled={disabled}
+                      />
+                      {PermanentPhoneNoError ? (
+                        <p style={{ color: "red" }}>
+                          {" "}
+                          Please enter phone number
+                        </p>
+                      ) : (
+                        <p></p>
+                      )}
+                    </Form.Group>
+                  </div>
+                </Row>
+              </div>
+            )}
+          </Form>
+        ) : (
+          <div className="text-center">No Data Found</div>
+        )}
+      </Fragment>
+    )
   );
 };
 export default EditAddress;

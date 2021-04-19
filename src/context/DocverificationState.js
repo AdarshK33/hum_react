@@ -152,7 +152,7 @@ export const DocsVerificationProvider = (props) => {
     client
       .get("/api/v1/candidate/document/" + docId + "/accept")
       .then((response) => {
-        state.acceptStatus = response.data.message;
+        state.acceptStatus = response.data.status;
         setLoader(false);
         return dispatch({
           type: "GET_ACCEPT_STATUS",

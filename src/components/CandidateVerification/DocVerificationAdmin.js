@@ -104,7 +104,9 @@ const DocVerification = () => {
     docsToVerify !== undefined &&
     docsToVerify !== null &&
     docsToVerify
-      .filter((personal) => personal.documentType > 5)
+      .filter(
+        (personal) => personal.documentType > 5 && personal.documentType <= 8
+      )
       .map((filteredResult) => {
         return filteredResult;
       });
@@ -269,8 +271,9 @@ const DocVerification = () => {
                       </p>
                     </td>
                     {item.statusDesc !== null &&
+                    item.documentType === 1 &&
                     item.statusDesc !== "Pending" ? (
-                      <td>{item.statusDesc}</td>
+                      <td className="buttonMargin1">{item.statusDesc}</td>
                     ) : (
                       <td className="row text-center buttonMargin">
                         {user.role === "ADMIN" && item.documentType === 1 && (
@@ -367,32 +370,23 @@ const DocVerification = () => {
                           )
                         )}
                       </p>
-                      {item.documentType > 5 && item.documentName}
+                      {item.documentType > 5 &&
+                        item.documentType <= 9 &&
+                        item.documentName}
                     </td>
-                    {item.reviewStatus !== null && item.documentType > 5 ? (
+                    {item.reviewStatus !== null && item.documentType > 5 && (
                       <td>{item.reviewStatus}</td>
-                    ) : (
-                      item.documentType > 5 && (
-                        <td className="row text-center">
-                          <button className="approveButton">Approve</button>
-                          {user.role === "MANAGER" && (
-                            <button className="approveButton ml-4">
-                              Disapprove
-                            </button>
-                          )}
-                        </td>
-                      )
                     )}
-                    {item.remark !== null ? (
-                      <td>{item.documentType > 5 && item.remark}</td>
-                    ) : (
-                      item.documentType > 5 && <td>NA</td>
-                    )}
-                    {item.verifiedDate !== null ? (
-                      <td>{item.documentType > 5 && item.verifiedDate}</td>
-                    ) : (
-                      item.documentType > 5 && <td>NA</td>
-                    )}
+                    <td>
+                      {item.remark !== null &&
+                        item.documentType > 5 &&
+                        item.remark}
+                    </td>
+                    <td>
+                      {item.verifiedDate !== null &&
+                        item.documentType > 5 &&
+                        item.verifiedDate}
+                    </td>
                   </tr>
                 </tbody>
               );
