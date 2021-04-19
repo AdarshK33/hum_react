@@ -1249,7 +1249,8 @@ const InsuranceNomination = (props) => {
                 </div>
               </Row>
             </Col>
-            {relativeInLaw === false ? (
+            {/* {relativeInLaw === false ? ( */}
+            {false ? (
               <Col sm={1} style={{ marginLeft: "-2rem" }}>
                 <Form.Group>
                   <div>
@@ -1463,7 +1464,8 @@ const InsuranceNomination = (props) => {
                 </div>
               </Row>
             </Col>
-            {isChecked === false ? (
+            {/* {isChecked === false ? ( */}
+            {false ? (
               <Col sm={1} style={{ marginLeft: "-2rem" }}>
                 <Form.Group>
                   <div>
@@ -1682,7 +1684,8 @@ const InsuranceNomination = (props) => {
                 </div>
               </Row>
             </Col>
-            {isChecked === false ? (
+            {/* {isChecked === false ? ( */}
+            {false ? (
               <Col sm={1} style={{ marginLeft: "-2rem" }}>
                 <Form.Group>
                   <div>
@@ -2016,7 +2019,8 @@ const InsuranceNomination = (props) => {
                 </div>
               </Row>
             </Col>
-            {isChecked === false ? (
+            {/* {isChecked === false ? ( */}
+            {false ? (
               <Col sm={1} style={{ marginLeft: "-2rem" }}>
                 <Form.Group>
                   <div>
@@ -2230,7 +2234,8 @@ const InsuranceNomination = (props) => {
                 </div>
               </Row>
             </Col>
-            {isChecked === false ? (
+            {/* {isChecked === false ? ( */}
+            {false ? (
               <Col sm={1} style={{ marginLeft: "-2rem" }}>
                 <Form.Group>
                   <div>

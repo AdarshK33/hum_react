@@ -38,6 +38,8 @@ const PersonalInformation = (props) => {
     candidateViewInfo,
     addressView,
     uploadFile,
+    documentView,
+    documentViewData,
   } = useContext(OnBoardContext);
   const options = useMemo(() => countryList().getData(), []);
   const [isClicked, setIsClicked] = useState(false);
@@ -65,6 +67,8 @@ const PersonalInformation = (props) => {
   const [required, setRequired] = useState(true);
   const [statusRequired, setstatusRequired] = useState(true);
   const [disabilityDoc, setDocName] = useState("");
+  const [disabilityDocObj, setDisabilityDocObj] = useState("");
+  const [isDisabilityUploaded, setDisabilityUploaded] = useState(false);
   const [panNumberError, setPanNumberError] = useState(false);
   const [aadharNumberError, setAdharNumberError] = useState(false);
   const [passPortNoError, setPassPortError] = useState(false);
@@ -313,7 +317,22 @@ const PersonalInformation = (props) => {
       }
     }
   }, [candidatePersonalInfoData]);
-  // console.log("datya of birth", candidatePersonalInfoData.dateOfBirth);
+  useEffect(() => {
+    documentView(candidateProfileData.candidateId);
+  }, [candidateProfileData]);
+  console.log("documentViewData", documentViewData);
+
+  useEffect(() => {
+    if (documentViewData !== null && documentViewData !== undefined) {
+      documentViewData.map((item) => {
+        console.log("item.documentType", item.documentType, item);
+        if (item.documentType === 13 && item.documentName) {
+          setDocName(item.documentName ? item.documentName : "");
+          setDisabilityUploaded(true);
+        }
+      });
+    }
+  }, [documentViewData]);
 
   var data1 =
     candidateProfileData !== undefined &&
@@ -486,6 +505,21 @@ const PersonalInformation = (props) => {
       return true;
     }
   };
+
+  const disabilityDocUploadValidation = () => {
+    if (state.disability === "Yes") {
+      if (isDisabilityUploaded === false) {
+        if (disabilityDocValidation() === true) {
+          setDisabilityDocError(true);
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
   const nationalityValidation = () => {
     if (state.nationality !== "" && state.nationality !== "Nationality") {
       setNationalityError(false);
@@ -585,7 +619,8 @@ const PersonalInformation = (props) => {
         setGenderError
       ) ===
         true) &
-      (validateCheckBoxes(married, unMarried, setMaritalStatusError) === true)
+      (validateCheckBoxes(married, unMarried, setMaritalStatusError) === true) &
+      (disabilityDocUploadValidation() === true)
     ) {
       if (isClicked === true) {
         console.log("------");
@@ -789,7 +824,8 @@ const PersonalInformation = (props) => {
   const handleUpload = (event) => {
     if (disabilityDocValidation() === true) {
       let fileType = 13;
-      let fileUpload = disabilityDoc;
+      let fileUpload = disabilityDocObj;
+      setDisabilityUploaded(true);
       if (fileUpload) {
         console.log("inside file info", fileUpload, fileType);
         const fileInfo = {
@@ -808,8 +844,11 @@ const PersonalInformation = (props) => {
   const DisabilityDocChange = (e) => {
     console.log("changeHandler");
     let fileObj = e.target.files[0];
+    console.log("fileObject", fileObj);
     console.log("photoIdChangeHandler", fileObj);
-    setDocName(fileObj);
+    setDocName(fileObj.name);
+    setDisabilityUploaded(false);
+    setDisabilityDocObj(fileObj);
   };
 
   const changeHandler = (e) => {
@@ -1305,25 +1344,18 @@ const PersonalInformation = (props) => {
                       <label>Disability Document</label>
                     </div>
                     <div className="parentInput">
-                      <label
-                        className="fileInputField"
-                        style={{ marginTop: "0.5rem" }}
-                      >
+                      <label className="fileInputField">
                         &nbsp;&nbsp;
                         {disabilityDoc !== ""
-                          ? disabilityDoc.name
+                          ? disabilityDoc
                           : "Select File Here"}
                         <input
-                          // className="fileInputField"
-                          // placeholder="Choose File"
-                          // name="disabilityDocument"
                           type="file"
                           accept="image/jpeg,.pdf"
                           style={{ display: "none" }}
                           onChange={(e) => {
                             DisabilityDocChange(e);
                           }}
-                          // value={state.epfPassBook}
                           readOnly
                         />
                       </label>
@@ -1349,8 +1381,8 @@ const PersonalInformation = (props) => {
 
                     {disabilityDocError ? (
                       <p style={{ color: "red" }}>
-                        &nbsp;&nbsp;&nbsp;&nbsp; Please upload the disability
-                        document
+                        &nbsp;&nbsp;&nbsp;&nbsp; Please select & upload the
+                        disability document
                       </p>
                     ) : (
                       ""
@@ -1364,7 +1396,8 @@ const PersonalInformation = (props) => {
           )}
         </Row>
 
-        {!data2 ? (
+        {/* {!data2 ? ( */}
+        {false ? (
           <div>
             <Row style={{ marginBottom: "1rem" }}>
               <Col sm={5}>
@@ -1445,7 +1478,7 @@ const PersonalInformation = (props) => {
                   </div>
                 </Row>
               </Col>
-              {!data1 ? (
+              {false ? (
                 <Col sm={3} style={{ marginTop: "2rem" }}>
                   <Form.Group>
                     <div>
