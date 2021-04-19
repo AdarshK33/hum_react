@@ -103,6 +103,11 @@ const RoutePath = () => {
       />
 
       {/* <Route
+        path={`${process.env.PUBLIC_URL}/finance-clearance`}
+        component={FinanceClearanceList}
+      /> */}
+
+      {/* <Route
             path={`${process.env.PUBLIC_URL}/onboard`}
             component={OnBoardingStepper}
       /> */}
@@ -119,6 +124,10 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/profileEdit`}
             component={ProfileEdit}
           /> */}
+          <Route
+            path={`${process.env.PUBLIC_URL}/finance-clearance`}
+            component={FinanceClearanceList}
+          />
           <Route
             path={`${process.env.PUBLIC_URL}/dashboard/storedashboard`}
             component={Default}

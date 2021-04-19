@@ -20,7 +20,12 @@ import { OfferContext } from "../../context/OfferState";
 // OfferLetter = 9
 
 const Documents = (props) => {
-  const { uploadFile, candidateProfileData } = useContext(OnBoardContext);
+  const {
+    uploadFile,
+    candidateProfileData,
+    documentView,
+    documentViewData,
+  } = useContext(OnBoardContext);
   const { candidateData } = useContext(OfferContext);
   const [fileName, setFileName] = useState("");
   const [fullTime, setFullTime] = useState(true);
@@ -35,6 +40,7 @@ const Documents = (props) => {
   const [cancelledChequeError, setCancelledChequeError] = useState(false);
   const [eduCertificatesError, setEduCertificatesError] = useState(false);
   const [relievingLetterError, setRelievingLetterError] = useState(false);
+  const [EPFError, setEPFError] = useState(false);
   const [latestPaySlipsError, setLatestPaySlipsError] = useState(false);
   const [frroError, setFrroError] = useState(false);
   const [passportError, setPassPortError] = useState(false);
@@ -56,6 +62,11 @@ const Documents = (props) => {
     }
   }, [candidateData]);
   console.log("contractType", workInfoData);
+
+  useEffect(() => {
+    documentView(candidateProfileData.candidateId);
+  }, []);
+  console.log("documentViewData", documentViewData);
 
   useEffect(() => {
     if (
@@ -87,6 +98,7 @@ const Documents = (props) => {
         setFullTime(false);
         setInternship(false);
       }
+      whichOneIsRequired();
     }
   }, [workInfoData]);
   const [state, setState] = useState({
@@ -101,7 +113,6 @@ const Documents = (props) => {
     relievingLetter: "",
     latestPaySlips: "",
     frro: "",
-    passport: "",
     collegeId: "",
     collegeLetter: "",
     disabilityDocument: "",
@@ -109,7 +120,144 @@ const Documents = (props) => {
     form2epf: "",
     formf: "",
   });
+  const [stateOfName, setStateOfNames] = useState({
+    photoId: "",
+    aadharId: "",
+    panId: "",
+    addressProof: "",
+    passport: "",
+    epfPassBook: "",
+    cancelledCheque: "",
+    educationCertificate: "",
+    relievingLetter: "",
+    latestPaySlips: "",
+    frro: "",
+    collegeId: "",
+    collegeLetter: "",
+  });
+  const [UploadedArray, setUploadedError] = useState([
+    {
+      ULPhotoId: false,
+      ULAdharId: false,
+      ULPanId: false,
+      ULAddressProof: false,
+      ULEpfPassBook: false,
+      ULCancelledCheque: false,
+      ULFrro: false,
+      ULPassport: false,
+      ULCollegeId: false,
+      ULCollegeLetter: false,
+      ULEducationCer: false,
+      ULRelivingLetter: false,
+      ULLatestPaySlip: false,
+    },
+  ]);
 
+  useEffect(() => {
+    if (documentViewData !== null && documentViewData !== undefined) {
+      let photo = "";
+      let aadhar = "";
+      let pan = "";
+      let address = "";
+      let passportDoc = "";
+      let epfPassBookDoc = "";
+      let cancelledChequeDoc = "";
+      let educationCertificateDoc = "";
+      let relievingLetterDoc = "";
+      let latestPaySlipsDoc = "";
+      let frroDoc = "";
+      let collegeIdDoc = "";
+      let collegeLetterDoc = "";
+
+      let tempArray = [...UploadedArray];
+
+      documentViewData.map((item) => {
+        console.log("item.documentType", item.documentType, item);
+        if (item.documentType === 0 && item.documentName) {
+          photo = item.documentName ? item.documentName : "";
+          tempArray[0].ULPhotoId = true;
+        }
+
+        if (item.documentType === 1 && item.documentName) {
+          aadhar = item.documentName ? item.documentName : "";
+          tempArray[0].ULAdharId = true;
+        }
+
+        if (item.documentType === 2 && item.documentName) {
+          pan = item.documentName ? item.documentName : "";
+          tempArray[0].ULPanId = true;
+        }
+
+        if (item.documentType === 3 && item.documentName) {
+          address = item.documentName ? item.documentName : "";
+          tempArray[0].ULAddressProof = true;
+        }
+
+        if (item.documentType === 14 && item.documentName) {
+          passportDoc = item.documentName ? item.documentName : "";
+          tempArray[0].ULPassport = true;
+        }
+
+        if (item.documentType === 17 && item.documentName) {
+          frroDoc = item.documentName ? item.documentName : "";
+          tempArray[0].ULFrro = true;
+        }
+
+        if (item.documentType === 4 && item.documentName) {
+          epfPassBookDoc = item.documentName ? item.documentName : "";
+          tempArray[0].ULEpfPassBook = true;
+        }
+
+        if (item.documentType === 5 && item.documentName) {
+          cancelledChequeDoc = item.documentName ? item.documentName : "";
+          tempArray[0].ULCancelledCheque = true;
+        }
+
+        if (item.documentType === 15 && item.documentName) {
+          collegeLetterDoc = item.documentName ? item.documentName : "";
+          tempArray[0].ULCollegeLetter = true;
+        }
+
+        if (item.documentType === 16 && item.documentName) {
+          collegeIdDoc = item.documentName ? item.documentName : "";
+          tempArray[0].ULCollegeId = true;
+        }
+
+        if (item.documentType === 6 && item.documentName) {
+          educationCertificateDoc = item.documentName ? item.documentName : "";
+          tempArray[0].ULEducationCer = true;
+        }
+
+        if (item.documentType === 7 && item.documentName) {
+          relievingLetterDoc = item.documentName ? item.documentName : "";
+          tempArray[0].ULRelivingLetter = true;
+        }
+
+        if (item.documentType === 8 && item.documentName) {
+          latestPaySlipsDoc = item.documentName ? item.documentName : "";
+          tempArray[0].ULLatestPaySlip = true;
+        }
+      });
+      setStateOfNames({
+        photoId: photo,
+        aadharId: aadhar,
+        panId: pan,
+        addressProof: address,
+        passport: passportDoc,
+        epfPassBook: epfPassBookDoc,
+        cancelledCheque: cancelledChequeDoc,
+        educationCertificate: educationCertificateDoc,
+        relievingLetter: relievingLetterDoc,
+        latestPaySlips: latestPaySlipsDoc,
+        frro: frroDoc,
+        collegeId: collegeIdDoc,
+        collegeLetter: collegeLetterDoc,
+      });
+      setUploadedError(tempArray);
+    }
+  }, [documentViewData]);
+
+  console.log("state.photoId", state, state.photoId);
   const [FandP_Time_Required, setFandP_Required] = useState([
     {
       ReqPhotoId: false,
@@ -170,144 +318,119 @@ const Documents = (props) => {
   // whichOneIsRequired();
   // console.log(FandP_Time_Required);
   const PhotoIdErrorValidation = () => {
-    if (FandP_Time_Required[0].ReqPhotoId === true) {
-      if (state.photoId !== "") {
-        setPhotoIdError(false);
-        console.log("photoSuccess");
-        return true;
-      } else {
-        setPhotoIdError(true);
-        console.log("photoFail");
-        return false;
-      }
-    } else {
+    if (stateOfName.photoId !== "") {
+      setPhotoIdError(false);
+      console.log("photoSuccess");
       return true;
+    } else {
+      setPhotoIdError(true);
+      console.log("photoFail");
+      return false;
     }
   };
   const AadharIdErrorValidation = () => {
-    if (FandP_Time_Required[0].ReqAdharId === true) {
-      if (state.aadharId !== "") {
-        setAadharIdError(false);
-        console.log("aadharSuccess");
-        return true;
-      } else {
-        setAadharIdError(true);
-        console.log("aadharFail");
-        return false;
-      }
-    } else {
+    if (stateOfName.aadharId !== "") {
+      setAadharIdError(false);
+      console.log("aadharSuccess");
       return true;
+    } else {
+      setAadharIdError(true);
+      console.log("aadharFail");
+      return false;
     }
   };
   const PanIdErrorValidation = () => {
-    if (FandP_Time_Required[0].ReqPanId === true) {
-      if (state.panId !== "") {
-        setPanIdError(false);
-        console.log("panSuccess");
-        return true;
-      } else {
-        setPanIdError(true);
-        console.log("panFail");
-        return false;
-      }
-    } else {
+    if (stateOfName.panId !== "") {
+      setPanIdError(false);
+      console.log("panSuccess");
       return true;
+    } else {
+      setPanIdError(true);
+      console.log("panFail");
+      return false;
     }
   };
   const AddressProofValidation = () => {
-    if (FandP_Time_Required[0].ReqAddressProof === true) {
-      if (state.addressProof !== "") {
-        setAddressProofError(false);
-        console.log("addressSuccess");
-        return true;
-      } else {
-        setAddressProofError(true);
-        console.log("addressFail");
-        return false;
-      }
-    } else {
+    if (stateOfName.addressProof !== "") {
+      setAddressProofError(false);
+      console.log("addressSuccess");
       return true;
+    } else {
+      setAddressProofError(true);
+      console.log("addressFail");
+      return false;
     }
   };
 
   const CancelledChequeValidation = () => {
-    if (FandP_Time_Required[0].ReqCancelledCheque === true) {
-      if (state.cancelledCheque !== "") {
-        setCancelledChequeError(false);
-        console.log("cancelledchequeSuccess");
-        return true;
-      } else {
-        setCancelledChequeError(true);
-        console.log("cancelledcheqFail");
-        return false;
-      }
-    } else {
+    if (stateOfName.cancelledCheque !== "") {
+      setCancelledChequeError(false);
+      console.log("cancelledchequeSuccess");
       return true;
+    } else {
+      setCancelledChequeError(true);
+      console.log("cancelledcheqFail");
+      return false;
     }
   };
   const PassPortValidation = () => {
-    if (FandP_Time_Required[0].ReqPassport === true) {
-      if (state.passport !== "") {
-        setPassPortError(false);
-        console.log("passportSuccess");
-        return true;
-      } else {
-        setPassPortError(true);
-        console.log("passportFail");
-        return false;
-      }
-    } else {
+    if (stateOfName.passport !== "") {
+      setPassPortError(false);
+      console.log("passportSuccess");
       return true;
+    } else {
+      setPassPortError(true);
+      console.log("passportFail");
+      return false;
+    }
+  };
+  const EPFValidation = () => {
+    if (stateOfName.epfPassBook !== "") {
+      setEPFError(false);
+      console.log("passportSuccess");
+      return true;
+    } else {
+      setEPFError(true);
+      console.log("passportFail");
+      return false;
     }
   };
   const FrroValidation = () => {
-    if (FandP_Time_Required[0].ReqFrro === true) {
-      if (state.frro !== "") {
-        setFrroError(false);
-        console.log("frroSuccess");
-        return true;
-      } else {
-        setFrroError(true);
-        console.log("frroFail");
-        return false;
-      }
-    } else {
+    if (stateOfName.frro !== "") {
+      setFrroError(false);
+      console.log("frroSuccess");
       return true;
+    } else {
+      setFrroError(true);
+      console.log("frroFail");
+      return false;
     }
   };
   const CollegeLetterValidation = () => {
-    if (FandP_Time_Required[0].ReqCollegeLetter === true) {
-      if (state.collegeLetter !== "") {
-        setCollegeLetterError(false);
-        console.log("collegeLetterSuccess");
-        return true;
-      } else {
-        setCollegeLetterError(true);
-        console.log("collegeLetterFail");
-        return false;
-      }
-    } else {
+    if (stateOfName.collegeLetter !== "") {
+      setCollegeLetterError(false);
+      console.log("collegeLetterSuccess");
       return true;
+    } else {
+      setCollegeLetterError(true);
+      console.log("collegeLetterFail");
+      return false;
     }
   };
   const CollegeIdValidation = () => {
-    if (FandP_Time_Required[0].ReqCollegeId === true) {
-      if (state.collegeId !== "") {
-        setCollegeError(false);
-        console.log("collegeIdSuccess");
-        return true;
-      } else {
-        setCollegeError(true);
-        console.log("collegeIdFail");
-        return false;
-      }
-    } else {
+    if (stateOfName.collegeId !== "") {
+      setCollegeError(false);
+      console.log("collegeIdSuccess");
       return true;
+    } else {
+      setCollegeError(true);
+      console.log("collegeIdFail");
+      return false;
     }
   };
 
   const EducationCertificatesValidation = () => {
-    if (state.educationCertificate !== "") {
+    if (stateOfName.educationCertificate !== "") {
       setEduCertificatesError(false);
       console.log("eduSuccess");
       return true;
@@ -318,7 +441,7 @@ const Documents = (props) => {
     }
   };
   const RelievingLetterValidation = () => {
-    if (state.relievingLetter !== "") {
+    if (stateOfName.relievingLetter !== "") {
       setRelievingLetterError(false);
       console.log("releivingSuccess");
       return true;
@@ -329,7 +452,7 @@ const Documents = (props) => {
     }
   };
   const PaySlipsValidation = () => {
-    if (state.relievingLetter !== "") {
+    if (stateOfName.relievingLetter !== "") {
       setLatestPaySlipsError(false);
       console.log("payslipsSuccess");
       return true;
@@ -340,18 +463,221 @@ const Documents = (props) => {
     }
   };
 
-  const checkValidations = () => {
+  // UPLOAD VALIDATIONS
+
+  const PhotoIdUploadValidation = () => {
+    if (FandP_Time_Required[0].ReqPhotoId === true) {
+      if (UploadedArray[0].ULPhotoId === false) {
+        if (PhotoIdErrorValidation() === true) {
+          setPhotoIdError(true);
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
+  const AadharIdUploadValidation = () => {
+    if (FandP_Time_Required[0].ReqAdharId === true) {
+      if (UploadedArray[0].ULAdharId === false) {
+        if (AadharIdErrorValidation() === true) {
+          setAadharIdError(true);
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
+  const PanIdUploadValidation = () => {
+    if (FandP_Time_Required[0].ReqPanId === true) {
+      if (UploadedArray[0].ULPanId === false) {
+        if (PanIdErrorValidation() === true) {
+          setPanIdError(true);
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
+
+  const AddressProfUploadValidation = () => {
+    if (FandP_Time_Required[0].ReqAddressProof === true) {
+      if (UploadedArray[0].ULAddressProof === false) {
+        if (AddressProofValidation() === true) {
+          setAddressProofError(true);
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
+  const EpfPassBookUploadValidation = () => {
+    if (FandP_Time_Required[0].ReqEpfPassBook === true) {
+      if (UploadedArray[0].ULEpfPassBook === false) {
+        if (EPFValidation() === true) {
+          setEPFError(true);
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
+  const CancelledChequeUploadValidation = () => {
+    if (FandP_Time_Required[0].ReqCancelledCheque === true) {
+      if (UploadedArray[0].ULCancelledCheque === false) {
+        if (CancelledChequeValidation() === true) {
+          setCancelledChequeError(true);
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
+  const FrroUploadValidation = () => {
+    if (FandP_Time_Required[0].ReqFrro === true) {
+      if (UploadedArray[0].ULFrro === false) {
+        if (FrroValidation() === true) {
+          setFrroError(true);
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
+  const PassPortUploadValidation = () => {
+    if (FandP_Time_Required[0].ReqPassport === true) {
+      if (UploadedArray[0].ULPassport === false) {
+        if (PassPortValidation() === true) {
+          setPassPortError(true);
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
+  const CollegeIdUploadValidation = () => {
+    if (FandP_Time_Required[0].ReqCollegeId === true) {
+      if (UploadedArray[0].ULCollegeId === false) {
+        if (CollegeIdValidation() === true) {
+          setCollegeError(true);
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
+  const CollegeLetterUploadValidation = () => {
+    if (FandP_Time_Required[0].ReqCollegeLetter === true) {
+      if (UploadedArray[0].ULCollegeLetter === false) {
+        if (CollegeLetterValidation() === true) {
+          setCollegeLetterError(true);
+          return false;
+        }
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
+
+  const EduCetificateUploadValidation = () => {
+    if (UploadedArray[0].ULEducationCer === false) {
+      if (EducationCertificatesValidation() === true) {
+        setEduCertificatesError(true);
+        return false;
+      }
+    } else {
+      return true;
+    }
+  };
+  const RelivingLetterUploadValidation = () => {
+    if (UploadedArray[0].ULRelivingLetter === false) {
+      if (RelievingLetterValidation() === true) {
+        setRelievingLetterError(true);
+        return false;
+      }
+    } else {
+      return true;
+    }
+  };
+  const LatestPaySlipsUploadValidation = () => {
+    if (UploadedArray[0].ULLatestPaySlip === false) {
+      if (PaySlipsValidation() === true) {
+        setLatestPaySlipsError(true);
+        return false;
+      }
+    } else {
+      return true;
+    }
+  };
+
+  const isAllFilesUploaded1 = () => {
+    if (
+      (PhotoIdUploadValidation() === true) &
+      (AadharIdUploadValidation() === true) &
+      (PanIdUploadValidation() === true) &
+      (AddressProfUploadValidation() === true) &
+      (EpfPassBookUploadValidation() === true) &
+      (CancelledChequeUploadValidation() === true) &
+      (FrroUploadValidation() === true) &
+      (PassPortUploadValidation() === true) &
+      (CollegeIdUploadValidation() === true) &
+      (CollegeLetterUploadValidation() === true) &
+      (EduCetificateUploadValidation() === true) &
+      (RelivingLetterUploadValidation() === true) &
+      (LatestPaySlipsUploadValidation() === true)
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const isAllFilesUploaded = () => {
     if ((partTime === true) | (fullTime === true)) {
       if (
-        (PhotoIdErrorValidation() === true) &
-        (AadharIdErrorValidation() === true) &
-        (PanIdErrorValidation() === true) &
-        (AddressProofValidation() === true)
+        (PhotoIdUploadValidation() === true) &
+        (AadharIdUploadValidation() === true) &
+        (PanIdUploadValidation() === true) &
+        (AddressProfUploadValidation() === true) &
+        (EpfPassBookUploadValidation() === true) &
+        (CancelledChequeUploadValidation() === true) &
+        (FrroUploadValidation() === true) &
+        (PassPortUploadValidation() === true) &
+        (CollegeIdUploadValidation() === true) &
+        (CollegeLetterUploadValidation() === true)
       ) {
         if (
-          (EducationCertificatesValidation() === true) &
-          (RelievingLetterValidation() === true) &
-          (PaySlipsValidation() === true)
+          (EduCetificateUploadValidation() === true) &
+          (RelivingLetterUploadValidation() === true) &
+          (LatestPaySlipsUploadValidation() === true)
         ) {
           return true;
         } else {
@@ -360,15 +686,21 @@ const Documents = (props) => {
           return false;
         }
       } else if (
-        (EducationCertificatesValidation() === true) &
-        (RelievingLetterValidation() === true) &
-        (PaySlipsValidation() === true)
+        (EduCetificateUploadValidation() === true) &
+        (RelivingLetterUploadValidation() === true) &
+        (LatestPaySlipsUploadValidation() === true)
       )
         if (
-          (PhotoIdErrorValidation() === true) &
-          (AadharIdErrorValidation() === true) &
-          (PanIdErrorValidation() === true) &
-          (AddressProofValidation() === true)
+          (PhotoIdUploadValidation() === true) &
+          (AadharIdUploadValidation() === true) &
+          (PanIdUploadValidation() === true) &
+          (AddressProfUploadValidation() === true) &
+          (EpfPassBookUploadValidation() === true) &
+          (CancelledChequeUploadValidation() === true) &
+          (FrroUploadValidation() === true) &
+          (PassPortUploadValidation() === true) &
+          (CollegeIdUploadValidation() === true) &
+          (CollegeLetterUploadValidation() === true)
         ) {
           return true;
         } else {
@@ -381,15 +713,16 @@ const Documents = (props) => {
       }
     } else {
       if (
-        (PhotoIdErrorValidation() === true) &
-        (AadharIdErrorValidation() === true) &
-        (PanIdErrorValidation() === true) &
-        (AddressProofValidation() === true) &
-        (CancelledChequeValidation() === true) &
-        (PassPortValidation() === true) &
-        (FrroValidation() === true) &
-        (CollegeLetterValidation() === true) &
-        (CollegeIdValidation() === true)
+        (PhotoIdUploadValidation() === true) &
+        (AadharIdUploadValidation() === true) &
+        (PanIdUploadValidation() === true) &
+        (AddressProfUploadValidation() === true) &
+        (EpfPassBookUploadValidation() === true) &
+        (CancelledChequeUploadValidation() === true) &
+        (FrroUploadValidation() === true) &
+        (PassPortUploadValidation() === true) &
+        (CollegeIdUploadValidation() === true) &
+        (CollegeLetterUploadValidation() === true)
       ) {
         return true;
       } else {
@@ -399,7 +732,8 @@ const Documents = (props) => {
   };
 
   const submitHandler = (e) => {
-    const value = checkValidations();
+    // const value = checkValidations();
+    const value = isAllFilesUploaded();
     if (value === true) {
       console.log(state);
       const nextPage = props.NextStep;
@@ -434,7 +768,32 @@ const Documents = (props) => {
       ...state,
       [event.target.name]: fileObj,
     });
-    // setFileUpload(fileObj);
+    setStateOfNames({
+      ...stateOfName,
+      [event.target.name]: fileObj.name,
+    });
+
+    if (event.target.name === "photoId") {
+      UploadedArray[0].ULPhotoId = false;
+    } else if (event.target.name === "aadharId") {
+      UploadedArray[0].ULAdharId = false;
+    } else if (event.target.name === "panId") {
+      UploadedArray[0].ULPanId = false;
+    } else if (event.target.name === "addressProof") {
+      UploadedArray[0].ULAddressProof = false;
+    } else if (event.target.name === "passport") {
+      UploadedArray[0].ULPassport = false;
+    } else if (event.target.name === "frro") {
+      UploadedArray[0].ULFrro = false;
+    } else if (event.target.name === "epfPassBook") {
+      UploadedArray[0].ULEpfPassBook = false;
+    } else if (event.target.name === "cancelledCheque") {
+      UploadedArray[0].ULCancelledCheque = false;
+    } else if (event.target.name === "collegeLetter") {
+      UploadedArray[0].ULCollegeLetter = false;
+    } else if (event.target.name === "collegeId") {
+      UploadedArray[0].ULCollegeId = false;
+    }
   };
 
   const handleUpload = (event) => {
@@ -443,56 +802,80 @@ const Documents = (props) => {
     let fileUpload;
 
     if (event.target.name === "photoId") {
-      fileUpload = state.photoId;
-      fileType = 0;
+      if (PhotoIdErrorValidation() === true) {
+        fileUpload = state.photoId;
+        fileType = 0;
+        UploadedArray[0].ULPhotoId = true;
+      }
     } else if (event.target.name === "aadharId") {
-      fileUpload = state.aadharId;
-      fileType = 1;
+      if (AadharIdErrorValidation() === true) {
+        fileUpload = state.aadharId;
+        fileType = 1;
+        UploadedArray[0].ULAdharId = true;
+      }
     } else if (event.target.name === "panId") {
-      fileUpload = state.panId;
-      fileType = 2;
+      if (PanIdErrorValidation() === true) {
+        fileUpload = state.panId;
+        fileType = 2;
+        UploadedArray[0].ULPanId = true;
+      }
     } else if (event.target.name === "addressProof") {
-      fileUpload = state.addressProof;
-      fileType = 3;
+      if (AddressProofValidation() === true) {
+        fileUpload = state.addressProof;
+        fileType = 3;
+        UploadedArray[0].ULAddressProof = true;
+      }
     } else if (event.target.name === "passport") {
-      fileUpload = state.passport;
-      fileType = 0;
+      if (PassPortValidation() === true) {
+        fileUpload = state.passport;
+        fileType = 0;
+        UploadedArray[0].ULPassport = true;
+      }
     } else if (event.target.name === "frro") {
-      fileUpload = state.frro;
-      fileType = 0;
+      if (FrroValidation() === true) {
+        fileUpload = state.frro;
+        fileType = 0;
+        UploadedArray[0].ULFrro = true;
+      }
     } else if (event.target.name === "epfPassBook") {
-      fileUpload = state.epfPassBook;
-      fileType = 4;
-    } else if (event.target.name === "disabilityDocument") {
-      fileUpload = state.disabilityDocument;
-      fileType = 0;
+      if (EPFValidation() === true) {
+        fileUpload = state.epfPassBook;
+        fileType = 4;
+        UploadedArray[0].ULEpfPassBook = true;
+      }
     } else if (event.target.name === "cancelledCheque") {
-      fileUpload = state.cancelledCheque;
-      fileType = 5;
+      if (CancelledChequeValidation() === true) {
+        fileUpload = state.cancelledCheque;
+        fileType = 5;
+        UploadedArray[0].ULCancelledCheque = true;
+      }
     } else if (event.target.name === "collegeLetter") {
-      fileUpload = state.collegeLetter;
-      fileType = 0;
+      if (CollegeLetterValidation() === true) {
+        fileUpload = state.collegeLetter;
+        fileType = 0;
+        UploadedArray[0].ULCollegeLetter = true;
+      }
     } else if (event.target.name === "collegeId") {
-      fileUpload = state.collegeId;
-      fileType = 0;
+      if (CollegeIdValidation() === true) {
+        fileUpload = state.collegeId;
+        fileType = 0;
+        UploadedArray[0].ULCollegeId = true;
+      }
     } else if (event.target.name === "educationCertificate") {
-      fileUpload = state.educationCertificate;
-      fileType = 6;
+      if (EducationCertificatesValidation() === true) {
+        fileUpload = state.educationCertificate;
+        fileType = 6;
+      }
     } else if (event.target.name === "relievingLetter") {
-      fileUpload = state.relievingLetter;
-      fileType = 7;
+      if (RelievingLetterValidation() === true) {
+        fileUpload = state.relievingLetter;
+        fileType = 7;
+      }
     } else if (event.target.name === "latestPaySlips") {
-      fileUpload = state.latestPaySlips;
-      fileType = 8;
-    } else if (event.target.name === "form11") {
-      fileUpload = state.form11;
-      fileType = 10;
-    } else if (event.target.name === "form2epf") {
-      fileUpload = state.form2epf;
-      fileType = 11;
-    } else if (event.target.name === "formf") {
-      fileUpload = state.formf;
-      fileType = 12;
+      if (latestPaySlipsError() === true) {
+        fileUpload = state.latestPaySlips;
+        fileType = 8;
+      }
     }
     if (fileUpload) {
       console.log("inside file info", fileUpload, fileType);
@@ -551,18 +934,23 @@ const Documents = (props) => {
                   <label>Photo ID</label>
                 </div>
                 <div className="parentInput">
-                  <input
-                    className="fileInputField"
-                    placeholder="Choose File"
-                    name="photoId"
-                    type="file"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={photoIdError ? { borderColor: "red" } : {}}
-                    readOnly
-                  />
+                  <label className="fileInputField">
+                    &nbsp;&nbsp;
+                    {stateOfName.photoId !== ""
+                      ? stateOfName.photoId
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="photoId"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -584,7 +972,7 @@ const Documents = (props) => {
                 {photoIdError ? (
                   <p style={{ color: "red" }}>
                     {" "}
-                    &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the photo id
+                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the photo id
                   </p>
                 ) : (
                   <p></p>
@@ -618,18 +1006,23 @@ const Documents = (props) => {
                   </label>
                 </div>
                 <div className="parentInput">
-                  <input
-                    className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="aadharId"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={aadharIdError ? { borderColor: "red" } : {}}
-                    readOnly
-                  />
+                  <label className="fileInputField">
+                    &nbsp;&nbsp;
+                    {stateOfName.aadharId !== ""
+                      ? stateOfName.aadharId
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="aadharId"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -651,7 +1044,8 @@ const Documents = (props) => {
                 {aadharIdError ? (
                   <p style={{ color: "red" }}>
                     {" "}
-                    &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the aadhaar id
+                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the aadhaar
+                    id
                   </p>
                 ) : (
                   <p></p>
@@ -680,18 +1074,23 @@ const Documents = (props) => {
                   <label>PAN ID</label>
                 </div>
                 <div className="parentInput">
-                  <input
-                    className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="panId"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={panIdError ? { borderColor: "red" } : {}}
-                    readOnly
-                  />
+                  <label className="fileInputField">
+                    &nbsp;&nbsp;
+                    {stateOfName.panId !== ""
+                      ? stateOfName.panId
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="panId"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -713,7 +1112,7 @@ const Documents = (props) => {
                 {panIdError ? (
                   <p style={{ color: "red" }}>
                     {" "}
-                    &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the PAN id
+                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the PAN id
                   </p>
                 ) : (
                   <p></p>
@@ -741,18 +1140,23 @@ const Documents = (props) => {
                   <label>Address Proof</label>
                 </div>
                 <div className="parentInput">
-                  <input
-                    className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    name="addressProof"
-                    style={addressProofError ? { borderColor: "red" } : {}}
-                    readOnly
-                  />
+                  <label className="fileInputField">
+                    &nbsp;&nbsp;
+                    {stateOfName.addressProof !== ""
+                      ? stateOfName.addressProof
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="addressProof"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -774,7 +1178,8 @@ const Documents = (props) => {
                 {addressProofError ? (
                   <p style={{ color: "red" }}>
                     {" "}
-                    &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the address Proof
+                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the address
+                    Proof
                   </p>
                 ) : (
                   <p></p>
@@ -800,18 +1205,23 @@ const Documents = (props) => {
                   <label>Pass Port</label>
                 </div>
                 <div className="parentInput">
-                  <input
-                    className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    name="passport"
-                    style={passportError ? { borderColor: "red" } : {}}
-                    readOnly
-                  />
+                  <label className="fileInputField">
+                    &nbsp;&nbsp;
+                    {stateOfName.passport !== ""
+                      ? stateOfName.passport
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="passport"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -833,7 +1243,7 @@ const Documents = (props) => {
                 {passportError ? (
                   <p style={{ color: "red" }}>
                     {" "}
-                    &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the passport
+                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the passport
                   </p>
                 ) : (
                   <p></p>
@@ -860,18 +1270,23 @@ const Documents = (props) => {
                   <label>FRRO</label>
                 </div>
                 <div className="parentInput">
-                  <input
-                    className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    name="frro"
-                    style={frroError ? { borderColor: "red" } : {}}
-                    readOnly
-                  />
+                  <label className="fileInputField">
+                    &nbsp;&nbsp;
+                    {stateOfName.frro !== ""
+                      ? stateOfName.frro
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="frro"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -893,7 +1308,7 @@ const Documents = (props) => {
                 {frroError ? (
                   <p style={{ color: "red" }}>
                     {" "}
-                    &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the FRRO
+                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the FRRO
                   </p>
                 ) : (
                   <p></p>
@@ -928,17 +1343,23 @@ const Documents = (props) => {
                   </label>
                 </div>
                 <div className="parentInput">
-                  <input
-                    className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="epfPassBook"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    readOnly
-                  />
+                  <label className="fileInputField">
+                    &nbsp;&nbsp;
+                    {stateOfName.epfPassBook !== ""
+                      ? stateOfName.epfPassBook
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="epfPassBook"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -957,61 +1378,15 @@ const Documents = (props) => {
                     ></i>
                   </label>
                 </div>
-              </Form.Group>
-            </Col>
-          </Row>
-        ) : (
-          ""
-        )}
-
-        {(isChecked === false) &
-        (localExpact === false) &
-        (internship === false) ? (
-          // required in full time and part time
-          // no need on localexact and internship
-          <Row>
-            <Col>
-              <Form.Group>
-                <div
-                  className={
-                    FandP_Time_Required[0].ReqEpfPassBook
-                      ? "FileInput"
-                      : "FileInputWithOutStar"
-                  }
-                >
-                  <label>Disability Document</label>
-                </div>
-                <div className="parentInput">
-                  <input
-                    className="fileInputField"
-                    placeholder="Choose File"
-                    name="disabilityDocument"
-                    type="file"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    // value={state.epfPassBook}
-                    readOnly
-                  />
-                  <label className="custom-file-upload">
-                    <input
-                      type="button"
-                      name="disabilityDocument"
-                      className="custom_file_Upload_button"
-                      onClick={(e) => {
-                        handleUpload(e);
-                      }}
-                    />
-                    {/* <i className="fa fa-cloud-upload" />  */}
-                    Upload File{" "}
-                    <i
-                      id="custom_file_upload_icon"
-                      className="fa fa-upload"
-                      aria-hidden="true"
-                    ></i>
-                  </label>
-                </div>
+                {EPFError ? (
+                  <p style={{ color: "red" }}>
+                    {" "}
+                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the EPF Pass
+                    book
+                  </p>
+                ) : (
+                  <p></p>
+                )}
               </Form.Group>
             </Col>
           </Row>
@@ -1037,17 +1412,23 @@ const Documents = (props) => {
                   <label>Cancelled Cheque</label>
                 </div>
                 <div className="parentInput">
-                  <input
-                    className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="cancelledCheque"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    readOnly
-                  />
+                  <label className="fileInputField">
+                    &nbsp;&nbsp;
+                    {stateOfName.cancelledCheque !== ""
+                      ? stateOfName.cancelledCheque
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="cancelledCheque"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -1070,7 +1451,8 @@ const Documents = (props) => {
                 {cancelledChequeError ? (
                   <p style={{ color: "red" }}>
                     {" "}
-                    &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the cancelled cheque
+                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the
+                    cancelled cheque
                   </p>
                 ) : (
                   <p></p>
@@ -1096,18 +1478,23 @@ const Documents = (props) => {
                   <label>College Letter</label>
                 </div>
                 <div className="parentInput">
-                  <input
-                    className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="collegeLetter"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={collegeLetterError ? { borderColor: "red" } : {}}
-                    readOnly
-                  />
+                  <label className="fileInputField">
+                    &nbsp;&nbsp;
+                    {stateOfName.collegeLetter !== ""
+                      ? stateOfName.collegeLetter
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="collegeLetter"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -1129,7 +1516,8 @@ const Documents = (props) => {
                 {collegeLetterError ? (
                   <p style={{ color: "red" }}>
                     {" "}
-                    &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the college letter
+                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the college
+                    letter
                   </p>
                 ) : (
                   <p></p>
@@ -1156,19 +1544,23 @@ const Documents = (props) => {
                   <label>College Id</label>
                 </div>
                 <div className="parentInput">
-                  <input
-                    className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    accept="image/jpeg,.pdf"
-                    name="collegeId"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={collegeIdError ? { borderColor: "red" } : {}}
-                    // value={state.collegeId}
-                    readOnly
-                  />
+                  <label className="fileInputField">
+                    &nbsp;&nbsp;
+                    {stateOfName.collegeId !== ""
+                      ? stateOfName.collegeId
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="collegeId"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -1190,7 +1582,8 @@ const Documents = (props) => {
                 {collegeIdError ? (
                   <p style={{ color: "red" }}>
                     {" "}
-                    &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the college id
+                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the college
+                    id
                   </p>
                 ) : (
                   <p></p>
@@ -1211,19 +1604,23 @@ const Documents = (props) => {
                   <label>Highest education certification</label>
                 </div>
                 <div className="parentInput">
-                  <input
-                    className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="educationCertificate"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={eduCertificatesError ? { borderColor: "red" } : {}}
-                    // value={state.educationCertificate}
-                    readOnly
-                  />
+                  <label className="fileInputField">
+                    &nbsp;&nbsp;
+                    {stateOfName.educationCertificate !== ""
+                      ? stateOfName.educationCertificate
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="educationCertificate"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -1245,8 +1642,8 @@ const Documents = (props) => {
                 {eduCertificatesError ? (
                   <p style={{ color: "red" }}>
                     {" "}
-                    &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the highest education
-                    certification
+                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the highest
+                    education certification
                   </p>
                 ) : (
                   <p></p>
@@ -1261,19 +1658,23 @@ const Documents = (props) => {
                   <label>Relieving Letter</label>
                 </div>
                 <div className="parentInput">
-                  <input
-                    className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="relievingLetter"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={relievingLetterError ? { borderColor: "red" } : {}}
-                    // value={state.relievingLetter}
-                    readOnly
-                  />
+                  <label className="fileInputField">
+                    &nbsp;&nbsp;
+                    {stateOfName.relievingLetter !== ""
+                      ? stateOfName.relievingLetter
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="relievingLetter"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -1295,7 +1696,8 @@ const Documents = (props) => {
                 {relievingLetterError ? (
                   <p style={{ color: "red" }}>
                     {" "}
-                    &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the relieving letter
+                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the
+                    relieving letter
                   </p>
                 ) : (
                   <p></p>
@@ -1310,19 +1712,23 @@ const Documents = (props) => {
                   <label>Latest Payslips</label>
                 </div>
                 <div className="parentInput">
-                  <input
-                    className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="latestPaySlips"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={latestPaySlipsError ? { borderColor: "red" } : {}}
-                    // value={state.latestPaySlips}
-                    readOnly
-                  />
+                  <label className="fileInputField">
+                    &nbsp;&nbsp;
+                    {stateOfName.latestPaySlips !== ""
+                      ? stateOfName.latestPaySlips
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="latestPaySlips"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        changeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
                   <label className="custom-file-upload">
                     <input
                       type="button"
@@ -1344,156 +1750,8 @@ const Documents = (props) => {
                 {latestPaySlipsError ? (
                   <p style={{ color: "red" }}>
                     {" "}
-                    &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the latest payslips
-                  </p>
-                ) : (
-                  <p></p>
-                )}
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Form.Group>
-                <div className="FileInput">
-                  <label>Form 11 Declaration</label>
-                </div>
-                <div className="parentInput">
-                  <input
-                    className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="form11"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={relievingLetterError ? { borderColor: "red" } : {}}
-                    // value={state.relievingLetter}
-                    readOnly
-                  />
-                  <label className="custom-file-upload">
-                    <input
-                      type="button"
-                      name="form11"
-                      className="custom_file_Upload_button"
-                      onClick={(e) => {
-                        handleUpload(e);
-                      }}
-                    />
-                    {/* <i className="fa fa-cloud-upload" />  */}
-                    Upload File{" "}
-                    <i
-                      id="custom_file_upload_icon"
-                      className="fa fa-upload"
-                      aria-hidden="true"
-                    ></i>
-                  </label>
-                </div>
-                {relievingLetterError ? (
-                  <p style={{ color: "red" }}>
-                    {" "}
-                    &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the Form 11
-                    Declaration
-                  </p>
-                ) : (
-                  <p></p>
-                )}
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Form.Group>
-                <div className="FileInput">
-                  <label>Form 2 EPF Nomination</label>
-                </div>
-                <div className="parentInput">
-                  <input
-                    className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="form2epf"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={relievingLetterError ? { borderColor: "red" } : {}}
-                    // value={state.relievingLetter}
-                    readOnly
-                  />
-                  <label className="custom-file-upload">
-                    <input
-                      type="button"
-                      name="form2epf"
-                      className="custom_file_Upload_button"
-                      onClick={(e) => {
-                        handleUpload(e);
-                      }}
-                    />
-                    {/* <i className="fa fa-cloud-upload" />  */}
-                    Upload File{" "}
-                    <i
-                      id="custom_file_upload_icon"
-                      className="fa fa-upload"
-                      aria-hidden="true"
-                    ></i>
-                  </label>
-                </div>
-                {relievingLetterError ? (
-                  <p style={{ color: "red" }}>
-                    {" "}
-                    &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the Form 2 EPF
-                    Nomination
-                  </p>
-                ) : (
-                  <p></p>
-                )}
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Form.Group>
-                <div className="FileInput">
-                  <label>Form F Gratuity</label>
-                </div>
-                <div className="parentInput">
-                  <input
-                    className="fileInputField"
-                    placeholder="Choose File"
-                    type="file"
-                    name="formf"
-                    accept="image/jpeg,.pdf"
-                    onChange={(e) => {
-                      changeHandler(e);
-                    }}
-                    style={relievingLetterError ? { borderColor: "red" } : {}}
-                    // value={state.relievingLetter}
-                    readOnly
-                  />
-                  <label className="custom-file-upload">
-                    <input
-                      type="button"
-                      name="formf"
-                      className="custom_file_Upload_button"
-                      onClick={(e) => {
-                        handleUpload(e);
-                      }}
-                    />
-                    {/* <i className="fa fa-cloud-upload" />  */}
-                    Upload File{" "}
-                    <i
-                      id="custom_file_upload_icon"
-                      className="fa fa-upload"
-                      aria-hidden="true"
-                    ></i>
-                  </label>
-                </div>
-                {relievingLetterError ? (
-                  <p style={{ color: "red" }}>
-                    {" "}
-                    &nbsp;&nbsp;&nbsp;&nbsp;*Please upload the Form F Gratuity
+                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the latest
+                    payslips
                   </p>
                 ) : (
                   <p></p>
