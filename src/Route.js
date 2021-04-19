@@ -65,13 +65,12 @@ import EditOfferRelease from "./components/Offers/editOfferRelease";
 import OfferAccept from "./components/Offers/OfferAcceptance/OfferAccept";
 import LoginOnboard from "./components/Login/LoginOnboard";
 import ViewOfferRelease from "./components/Offers/viewOfferRelease";
-
+import FinanceClearanceList from "./components/FinanceClearance/ClearanceList"
 /*------------------- Candidate Verification -----------------------------------*/
 import CandidateVerification from "./components/CandidateVerification/ManageCandidates";
 import Verification from "./components/CandidateVerification/Verification";
 import NoDueClearance from "./components/Separation/NoDueClearance"
 import ViewEditRelease from "./components/OfferReleaseandOnboarding/ViewOfferRelease";
-
 import Documents from "./components/OnBording/Documents";
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
