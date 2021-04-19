@@ -8,6 +8,10 @@ const GroupReducer = (state, action) => {
         data: action.data,
         total: action.total,
       };
+      case "FETCH_SEPARATION_LIST":
+        return { ...state, candidate: action.payload };
+      default:
+        return state;
   }
 };
 export default GroupReducer;

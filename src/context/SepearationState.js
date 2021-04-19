@@ -6,6 +6,7 @@ import Axios from "axios";
 import { access_token } from "../auth/signin";
 
 const initial_state = {
+  noDueClearanceList:[],
   separationList: [],
   total: {},
   data: [],
@@ -44,11 +45,30 @@ export const SeparationProvider = (props) => {
         console.log(error);
       });
   };
+  const viewITClearanceList = (key, page) => {
+    client.get( "/api/v1/separation/it-clearance/view?key=" +
+          key +
+          "&page=" +
+          page +
+          "&size=" +
+          10)
+      .then((response) => {
+        state.noDueClearanceList = response.data.data.data
+        console.log("=====GET Admin separation API response=====", state.noDueClearanceList)
+
+        return dispatch({ type: 'FETCH_SEPARATION_LIST', payload: state.noDueClearanceList })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
   return (
     <SeparationContext.Provider
       value={{
         separationListView,
+        viewITClearanceList,
         setLoader,
+        noDueClearanceList:state.noDueClearanceList,
         separationList: state.separationList,
         loader: state.loader,
       }}

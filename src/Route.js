@@ -94,7 +94,10 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/no_due_clearance`}
             component={NoDueClearance}
           />
-          
+            <Route
+            path={`${process.env.PUBLIC_URL}/finance-clearance`}
+            component={FinanceClearanceList}
+          />
       <Route
         //  {/*Rajasekhar */}
         path={`${process.env.PUBLIC_URL}/onboard`}

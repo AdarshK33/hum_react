@@ -182,7 +182,7 @@ const CandidateList = () => {
                             }}
                           />
                         </Link> */}
-                        <Link to={"/finance-clearance"}>
+                        <Link to={"/no_due_clearance"}>
                           <Edit2 />
                         </Link>
                       </td>

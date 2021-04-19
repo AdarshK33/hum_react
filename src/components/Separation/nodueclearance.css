@@ -58,3 +58,12 @@ thead th {
 .shift-date input.form-control.shift-view {
     height: 40px;
 }
+.inputWrapper {
+    border: none;
+    box-shadow: none !important;
+  }
+  ::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
+  
