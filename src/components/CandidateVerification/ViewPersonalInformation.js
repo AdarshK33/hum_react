@@ -788,91 +788,122 @@ const EditPersonalInformation = (props) => {
                     )}
                   </div>
                 </Row>
-              </Col>
-              <Col sm={4}>
-                <Row style={{ marginBottom: "1rem" }}>
-                  <Col sm={3} style={{ marginTop: "1.8rem" }}>
+                <Row
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    marginBottom: "2rem",
+                  }}
+                >
+                  <Col sm={1} style={{ marginTop: "1.4rem" }}>
                     <Form.Group>
                       <div className="inputField">
-                        <label>Gender</label>
+                        <label>
+                          <b>Gender</b>
+                        </label>
                       </div>
                     </Form.Group>
                   </Col>
-                  <Col sm={4} style={{ marginTop: "2rem" }}>
+                  <Col sm={2} style={{ marginTop: "2rem" }}>
                     <Form.Group>
                       <div className="boxField_1 input">
                         <input
                           className="largerCheckbox"
                           type="checkbox"
+                          disabled={true}
+                          // style={genderError ? { borderColor: "red" } : {}}
                           value="Male"
                           checked={genderCheckM}
                           required={required}
-                          disabled={disabled}
                           onChange={handleMaleGenderCheckboxChange}
                         />
                         <label>Male </label>
                       </div>
                     </Form.Group>
                   </Col>
-                  <Col sm={5} style={{ marginTop: "2rem" }}>
+                  <Col sm={2} style={{ marginTop: "2rem" }}>
                     <Form.Group>
                       <div className="boxField_1 input">
                         <input
                           className="largerCheckbox"
                           type="checkbox"
+                          // style={genderError ? { borderColor: "red" } : {}}
                           value="Female"
+                          disabled={true}
                           required={required}
                           checked={genderCheckF}
-                          disabled={disabled}
                           onChange={handleFemaleGenderCheckboxChange}
                         />
                         <label>Female</label>
                       </div>
                     </Form.Group>
                   </Col>
-                </Row>
-                <Row style={{ marginTop: "4rem" }}>
-                  <Col sm={3}>
+                  <Col sm={2} style={{ marginTop: "2rem" }}>
+                    <Form.Group>
+                      <div className="boxField_1 input">
+                        <input
+                          className="largerCheckbox"
+                          type="checkbox"
+                          disabled={true}
+                          // style={genderError ? { borderColor: "red" } : {}}
+                          value="Other"
+                          required={required}
+                          // checked={genderCheckOther}
+                          // onChange={handleOtherGenderCheckboxChange}
+                        />
+                        <label>Other</label>
+                      </div>
+                    </Form.Group>
+                  </Col>
+                  <Col sm={1} style={{ marginTop: "1rem" }}>
                     <Form.Group>
                       <div className="inputField">
                         <label>
-                          Marital<br></br>Status
+                          <b>
+                            Marital<br></br>Status
+                          </b>
                         </label>
                       </div>
                     </Form.Group>
                   </Col>
-                  <Col sm={4}>
+                  <Col sm={2}>
                     <Form.Group>
                       <div
                         className="boxField_1 input"
-                        style={{ marginTop: "1rem" }}
+                        style={{ marginTop: "2rem" }}
                       >
                         <input
                           className="largerCheckbox"
                           type="checkbox"
+                          disabled={true}
+                          // style={
+                          //   maritalStatusError ? { borderColor: "red" } : {}
+                          // }
                           value="Married"
                           required={statusRequired}
                           checked={married}
-                          disabled={disabled}
                           onChange={handleMarriedCheckboxChange}
                         />
                         <label>Married </label>
                       </div>
                     </Form.Group>
                   </Col>
-                  <Col sm={5}>
+                  <Col sm={2}>
                     <Form.Group>
                       <div
                         className="boxField_1 input"
-                        style={{ marginTop: "0.9rem" }}
+                        style={{ marginTop: "2rem" }}
                       >
                         <input
                           className="largerCheckbox"
                           type="checkbox"
+                          disabled={true}
+                          // style={
+                          //   maritalStatusError ? { borderColor: "red" } : {}
+                          // }
                           value="Unmarried"
                           required={statusRequired}
                           checked={unMarried}
-                          disabled={disabled}
                           onChange={handleUnMarriedCheckboxChange}
                         />
                         <label>Unmarried</label>
@@ -880,6 +911,7 @@ const EditPersonalInformation = (props) => {
                     </Form.Group>
                   </Col>
                 </Row>
+                {/* </Col> */}
                 {state.disability === "Yes" ? (
                   <Row style={{ marginTop: "2rem" }}>
                     <Col sm={12}>
@@ -928,150 +960,6 @@ const EditPersonalInformation = (props) => {
                 )}
               </Col>
             </Row>
-            <Row style={{ marginBottom: "1rem" }}>
-              <Col sm={5}>
-                <div>
-                  {/* style={{ backgroundColor: "#006ebb" }} */}
-                  <label>
-                    <b>State References:</b>
-                    <b>(Max: Only 2)</b>
-                  </label>
-                </div>
-              </Col>
-            </Row>
-            {references !== undefined &&
-              references.map((ele, i) => {
-                return (
-                  <Row style={{ marginBottom: "1rem" }}>
-                    <Col sm={8}>
-                      <Row style={{ marginBottom: "2rem" }}>
-                        <div className="col-sm-4">
-                          <Form.Group>
-                            <Form.Label>
-                              Emp Name/ID<span style={{ color: "red" }}>*</span>
-                            </Form.Label>
-                            <Form.Control
-                              type="text"
-                              name="empName1"
-                              value={ele.employeeName}
-                              required
-                              placeholder="Emp Name/ID"
-                              disabled={disabled}
-                              style={
-                                empName1Error ? { borderColor: "red" } : {}
-                              }
-                            />
-                            {empName1Error ? (
-                              <p style={{ color: "red" }}>
-                                Please enter valid name
-                              </p>
-                            ) : (
-                              <p></p>
-                            )}
-                          </Form.Group>
-                        </div>
-                        <div className="col-sm-4">
-                          <Form.Group>
-                            <Form.Label>Email ID</Form.Label>
-                            <Form.Control
-                              type="text"
-                              name="emp1Eamil"
-                              value={ele.email}
-                              placeholder="Email ID"
-                              disabled={disabled}
-                              style={
-                                emp1EmailError ? { borderColor: "red" } : {}
-                              }
-                            />
-                            {emp1EmailError ? (
-                              <p style={{ color: "red" }}>
-                                Please enter valid email
-                              </p>
-                            ) : (
-                              <p></p>
-                            )}
-                          </Form.Group>
-                        </div>
-                        <div className="col-sm-4">
-                          <Form.Group>
-                            <Form.Label>Designation</Form.Label>
-                            <Form.Control
-                              type="text"
-                              name="emp1Designation"
-                              value={ele.designation}
-                              placeholder="Designation"
-                              disabled={disabled}
-                            />
-                          </Form.Group>
-                        </div>
-                      </Row>
-                    </Col>
-                  </Row>
-                );
-              })}
-
-            {/* {references !== undefined && (
-            <Row style={{ marginBottom: "1rem" }}>
-              <Col sm={8}>
-                <Row style={{ marginBottom: "2rem" }}>
-                  <div className="col-sm-4">
-                    <Form.Group>
-                      <Form.Label>
-                        Emp Name/ID<span style={{ color: "red" }}>*</span>
-                      </Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="empName1"
-                        value={references.employeeName}
-                        onChange={changeHandler}
-                        required
-                        placeholder="Emp Name/ID"
-                        disabled={disabled}
-                        style={empName1Error ? { borderColor: "red" } : {}}
-                      />
-                      {empName1Error ? (
-                        <p style={{ color: "red" }}>Please enter valid name</p>
-                      ) : (
-                        <p></p>
-                      )}
-                    </Form.Group>
-                  </div>
-                  <div className="col-sm-4">
-                    <Form.Group>
-                      <Form.Label>Email ID</Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="emp1Eamil"
-                        value={references.email}
-                        onChange={changeHandler}
-                        placeholder="Email ID"
-                        disabled={disabled}
-                        style={emp1EmailError ? { borderColor: "red" } : {}}
-                      />
-                      {emp1EmailError ? (
-                        <p style={{ color: "red" }}>Please enter valid email</p>
-                      ) : (
-                        <p></p>
-                      )}
-                    </Form.Group>
-                  </div>
-                  <div className="col-sm-4">
-                    <Form.Group>
-                      <Form.Label>Designation</Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="emp1Designation"
-                        value={references.designation}
-                        onChange={changeHandler}
-                        placeholder="Designation"
-                        disabled={disabled}
-                      />
-                    </Form.Group>
-                  </div>
-                </Row>
-              </Col>
-            </Row>
-          )} */}
           </Form>
         ) : (
           <div className="text-center">No Data Found</div>

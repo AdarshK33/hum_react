@@ -111,7 +111,9 @@ const DocVerification = () => {
     docsToVerify !== undefined &&
     docsToVerify !== null &&
     docsToVerify
-      .filter((personal) => personal.documentType > 5)
+      .filter(
+        (personal) => personal.documentType > 5 && personal.documentType <= 8
+      )
       .map((filteredResult) => {
         return filteredResult;
       });
@@ -268,7 +270,9 @@ const DocVerification = () => {
                     </td>
                     {item.statusDesc !== null &&
                     item.statusDesc !== "Pending" ? (
-                      <td>{item.documentType !== 1 && item.statusDesc}</td>
+                      <td className="buttonMargin1">
+                        {item.documentType !== 1 && item.statusDesc}
+                      </td>
                     ) : (
                       <td className="row text-center buttonMargin">
                         {user.role === "MANAGER" && item.documentType !== 1 && (
