@@ -8,6 +8,8 @@ const GroupReducer = (state, action) => {
         data: action.data,
         total: action.total,
       };
+    case "SAVE_FINANCE_LIST":
+      return { ...state, financeList: action.payload };
   }
 };
 export default GroupReducer;

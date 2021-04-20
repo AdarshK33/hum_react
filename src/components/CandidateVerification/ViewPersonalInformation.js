@@ -918,41 +918,7 @@ const EditPersonalInformation = (props) => {
                       <div className="FileInput">
                         <label>Disability Document</label>
                       </div>
-                      <div className="parentInput">
-                        <input
-                          className="fileInputField2"
-                          placeholder="Choose File"
-                          type="text"
-                          name="disabilityDoc"
-                          value={disabilityDoc}
-                        />
-                        <label
-                          className="custom-file-upload"
-                          style={{ fontSize: "16px" }}
-                        >
-                          <input
-                            type="file"
-                            className="custom_file_Upload_button"
-                            onChange={disabilityDocument}
-                          />
-                          {/* <i className="fa fa-cloud-upload" />  */}
-                          Upload
-                          {/* <i
-                        id="custom_file_upload_icon"
-                        class="fa fa-upload"
-                        aria-hidden="true"
-                      ></i> */}
-                        </label>
-                      </div>
-
-                      {disabilityDocError ? (
-                        <p style={{ color: "red" }}>
-                          &nbsp;&nbsp;&nbsp;&nbsp; Please upload the disability
-                          document
-                        </p>
-                      ) : (
-                        <p></p>
-                      )}
+                      <label>{state.disabilityDoc}</label>
                     </Col>
                   </Row>
                 ) : (
