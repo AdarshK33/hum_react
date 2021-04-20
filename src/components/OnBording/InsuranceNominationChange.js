@@ -1590,7 +1590,7 @@ const InsuranceNomination = (props) => {
         <div>
           {/* Fifth Nominee */}
           <label>
-            <b>Fifth Nominee</b>
+            <b>Third Dependent</b>
           </label>
           <Row style={{ marginBottom: "2rem" }}>
             <Col sm={11}>

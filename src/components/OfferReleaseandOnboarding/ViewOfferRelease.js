@@ -29,7 +29,7 @@ const ViewOfferRelease = () => {
           <AccordionItem uuid="a">
             <AccordionItemHeading>
               <AccordionItemButton>
-                Step 1: Candidate Information
+                Step 11111: Candidate Information
               </AccordionItemButton>
             </AccordionItemHeading>
             <AccordionItemPanel>
