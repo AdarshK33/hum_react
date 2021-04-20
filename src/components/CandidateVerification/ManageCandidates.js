@@ -121,7 +121,7 @@ const CandidateList = () => {
                 <th scope="col">S. No</th>
                 <th scope="col">Candidate ID</th>
                 <th scope="col">Candidate Name</th>
-                <th scope="col">Candidate Profile</th>
+                {/* <th scope="col">Candidate Profile</th> */}
                 <th scope="col">Application Date</th>
                 <th scope="col">Document Verification Status</th>
                 <th scope="col">UAN Verification Status</th>
@@ -161,14 +161,14 @@ const CandidateList = () => {
                       <td>
                         {item.firstName} {item.lastName}
                       </td>
-                      <td>
+                      {/* <td>
                         <a
                           onClick={() => downloadDocument(item.photo)}
                           style={{ cursor: "pointer" }}
                         >
                           view
                         </a>
-                      </td>
+                      </td> */}
                       <td>{item.createdDate}</td>
                       <td>{item.verificationStatusDesc}</td>
                       <td>{item.statusDesc}</td>
@@ -182,6 +182,9 @@ const CandidateList = () => {
                             }}
                           />
                         </Link>
+                        {/* <Link to={"/finance-clearance"}>
+                          <Edit2 />
+                        </Link> */}
                       </td>
                     </tr>
                   </tbody>

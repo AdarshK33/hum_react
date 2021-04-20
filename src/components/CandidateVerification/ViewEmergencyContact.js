@@ -208,6 +208,12 @@ const EditEmergencyContact = (props) => {
                   disabled={disabled}
                 >
                   <option value="">Relationships</option>
+                  <option value="Mother">Mother</option>
+                  <option value="Father">Father</option>
+                  <option value="Brother">Brother</option>
+                  <option value="Sister">Sister</option>
+                  <option value="Spouse">Spouse</option>\{" "}
+                  <option value="Others">Others</option>{" "}
                 </Form.Control>
                 <p style={{ color: "red" }}>{stateError.relationshipError} </p>
               </Form.Group>

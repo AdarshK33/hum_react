@@ -205,7 +205,9 @@ const EditWorkInformation = () => {
               {state.employmentType === "Internship" ? (
                 <Form.Label className="headingColor">Intern</Form.Label>
               ) : (
-                <Form.Label>{state.designation}</Form.Label>
+                <Form.Label className="headingColor">
+                  {state.designation}
+                </Form.Label>
               )}
             </Form.Group>
           </Col>
