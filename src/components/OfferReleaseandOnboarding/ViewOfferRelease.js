@@ -16,6 +16,7 @@ import ViewRemunerationInformation from "./viewRemunerationInformation";
 import CandidateOfferLetter from "./candidateOfferLetter";
 import VerifyCandidateDocs from "./verifyCandidateDocs";
 import CandidateOnboarding from "./candidateOnboarding";
+
 const ViewOfferRelease = () => {
   return (
     <Fragment>
@@ -29,7 +30,17 @@ const ViewOfferRelease = () => {
           <AccordionItem uuid="a">
             <AccordionItemHeading>
               <AccordionItemButton>
-                Step 11111: Candidate Information
+                <i
+                  style={{
+                    color: "green",
+                    backgroundColor: "white",
+                    borderRadius: "50%",
+                    fontSize: "19px",
+                  }}
+                  className="fa fa-check-circle"
+                  aria-hidden="true"
+                ></i>
+                Step 1: Candidate Information
               </AccordionItemButton>
             </AccordionItemHeading>
             <AccordionItemPanel>
@@ -40,6 +51,16 @@ const ViewOfferRelease = () => {
           <AccordionItem>
             <AccordionItemHeading>
               <AccordionItemButton>
+                <i
+                  style={{
+                    color: "green",
+                    backgroundColor: "white",
+                    borderRadius: "50%",
+                    fontSize: "19px",
+                  }}
+                  className="fa fa-check-circle"
+                  aria-hidden="true"
+                ></i>
                 Step 2: Candidate Work Information
               </AccordionItemButton>
             </AccordionItemHeading>
@@ -51,6 +72,16 @@ const ViewOfferRelease = () => {
           <AccordionItem>
             <AccordionItemHeading>
               <AccordionItemButton>
+                <i
+                  style={{
+                    color: "green",
+                    backgroundColor: "white",
+                    borderRadius: "50%",
+                    fontSize: "19px",
+                  }}
+                  className="fa fa-check-circle"
+                  aria-hidden="true"
+                ></i>
                 Step 3:Candidate Remuneration Information
               </AccordionItemButton>
             </AccordionItemHeading>
@@ -62,6 +93,16 @@ const ViewOfferRelease = () => {
           <AccordionItem>
             <AccordionItemHeading>
               <AccordionItemButton>
+                <i
+                  style={{
+                    color: "green",
+                    backgroundColor: "white",
+                    borderRadius: "50%",
+                    fontSize: "19px",
+                  }}
+                  className="fa fa-check-circle"
+                  aria-hidden="true"
+                ></i>
                 Step 4: Generate Candidate Offer Letter
               </AccordionItemButton>
             </AccordionItemHeading>
@@ -72,7 +113,7 @@ const ViewOfferRelease = () => {
 
           <AccordionItem>
             <AccordionItemHeading>
-              <AccordionItemButton>
+              <AccordionItemButton style={{ background: "#aaa" }}>
                 Step 5: Verify Candidate Documents
               </AccordionItemButton>
             </AccordionItemHeading>
@@ -82,7 +123,7 @@ const ViewOfferRelease = () => {
           </AccordionItem>
           <AccordionItem>
             <AccordionItemHeading>
-              <AccordionItemButton>
+              <AccordionItemButton style={{ background: "#aaa" }}>
                 Step 6: Candidate Onboarding
               </AccordionItemButton>
             </AccordionItemHeading>
