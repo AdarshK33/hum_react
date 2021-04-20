@@ -29,7 +29,8 @@ const AdminRoster = () => {
     const { user } = useContext(AppContext);
 
 
-    const { adminWeekOffDataEmp, viewContractTypes, shiftContractNames, costCenterList, adminWeekOffDataListHeader, adminWeekOffDataList, adminCalculateWeek, adminCalculateWeekResult, adminRosterAvailableShift, costCenter, rosterExport } = useContext(RosterContext);
+    const { adminWeekOffDataEmp, viewContractTypes, shiftContractNames, costCenterList, adminWeekOffDataListHeader,
+         adminWeekOffDataList, adminCalculateWeek, adminCalculateWeekResult, adminRosterAvailableShift, costCenter, rosterExport } = useContext(RosterContext);
     const { viewClusterCostCenter, clusterCostCenterList, } = useContext(ClusterContext);
 
 

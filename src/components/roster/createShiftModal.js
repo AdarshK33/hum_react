@@ -15,8 +15,8 @@ const CreateShiftModal = (props) => {
     viewContractTypes()
   }, [])
 
-  const [startTime, setStartTime] = useState(null);
-  const [endTime, setEndTime] = useState(null);
+  const [startTime, setStartTime] = useState();
+  const [endTime, setEndTime] = useState();
   const [workingHours, setWorkingHour] = useState('');
   const [contractType, setContractType] = useState('');
   const [breakStartTime, setStartBreakTime] = useState(null);
@@ -43,6 +43,7 @@ const CreateShiftModal = (props) => {
     costCenter()
   }, []);
 
+    
   const setClear = () => {
     setStartTime('')
     setEndTime('')
@@ -68,13 +69,13 @@ const CreateShiftModal = (props) => {
 
     var ctime = stime.replace(/:/g, ".");
     var dtime = etime.replace(/:/g, ".");
-    //  alert(ctime+ " "+dtime);
-    if (ctime === 0.00 || dtime === 0.00 ) {
+    //alert(ctime+ " "+dtime);
+    if (ctime === 0.00 || dtime === 0.00) {
       /* setWorkingHour('00.00'); */
       setShiftButton(false)
-        setErrorMsg('')
-    }else{
-      if (ctime != 0.00 && dtime != 0.00 &&  ctime === dtime || dtime < ctime ) {
+      setErrorMsg('')
+    } else {
+      if (ctime != 0.00 && dtime != 0.00 && ctime === dtime || dtime < ctime) {
         setErrorMsg("Invalid Shift Time");
         setShiftButton(true)
       }
@@ -83,11 +84,11 @@ const CreateShiftModal = (props) => {
         setErrorMsg(false)
       }
     }
-   
+
     const result = moment.utc(moment(etime, "HH:mm:ss").diff(moment(stime, "HH:mm:ss"))).format("HH:mm:ss")
 
     var workingHours = result.replace(/:/g, ".");
-    console.log("workingHours",workingHours)
+    console.log("workingHours", workingHours)
     setWorkingHour(workingHours);
     checkTimeValidation();
     setInvalidText(false)
@@ -159,7 +160,7 @@ const CreateShiftModal = (props) => {
 
   const setShiftTypeHandler = (e) => {
     setShiftType(e.target.value)
-    console.log("shift type value",e.target.value)
+    console.log("shift type value", e.target.value)
   }
 
   const callTimer = () => {
@@ -214,8 +215,8 @@ const CreateShiftModal = (props) => {
 
 
         const newShift = {
-          startTime: moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
-          endTime: moment(endTime, ["h:mm A"]).format("HH:mm:ss"),
+          startTime: shiftType === 'NA' ? "00:00:00" : moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
+          endTime: shiftType === 'NA' ? "00:00:00" : moment(endTime, ["h:mm A"]).format("HH:mm:ss"),
           contractType,
           shiftMasterId: 0,
           shiftType,
@@ -239,15 +240,15 @@ const CreateShiftModal = (props) => {
 
         const newShift = {
 
-          startTime: moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
-          endTime: moment(endTime, ["h:mm A"]).format("HH:mm:ss"),
+          startTime: shiftType === 'NA' ? "00:00:00" : moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
+          endTime: shiftType === 'NA' ? "00:00:00" : moment(endTime, ["h:mm A"]).format("HH:mm:ss"),
           contractType,
           shiftMasterId: 0,
           shiftType,
           workingHours: 0,
           storeId: storeId,
-          breakStartTime: moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
-          breakEndTime: moment(breakStartTime).add(1, 'hours').format('HH:mm:ss'),
+          breakStartTime: shiftType === 'NA' ? 0 : moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
+          breakEndTime: shiftType === 'NA' ? 0 : moment(breakStartTime).add(1, 'hours').format('HH:mm:ss'),
           status: 0
         }
         console.log("new shift data else", newShift)
@@ -265,8 +266,8 @@ const CreateShiftModal = (props) => {
         const validate = validation();
 
         const newShift = {
-          startTime: moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
-          endTime: moment(endTime, ["h:mm A"]).format("HH:mm:ss"),
+          startTime: shiftType === 'NA' ? "00:00:00" : moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
+          endTime: shiftType === 'NA' ? "00:00:00" : moment(endTime, ["h:mm A"]).format("HH:mm:ss"),
           contractType,
           shiftMasterId: 0,
           shiftType,
@@ -290,15 +291,15 @@ const CreateShiftModal = (props) => {
         const validate = validation();
         const newShift = {
 
-          startTime: moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
-          endTime: moment(endTime, ["h:mm A"]).format("HH:mm:ss"),
+          startTime: shiftType === 'NA' ? "00:00:00" : moment(startTime, ["h:mm A"]).format("HH:mm:ss"),
+          endTime: shiftType === 'NA' ? "00:00:00" : moment(endTime, ["h:mm A"]).format("HH:mm:ss"),
           contractType,
           shiftMasterId: 0,
           shiftType,
           workingHours: 0,
           storeId: storeId,
-          breakStartTime: moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
-          breakEndTime: moment(breakStartTime).add(1, 'hours').format('HH:mm:ss'),
+          breakStartTime: shiftType === 'NA' ? 0 : moment(breakStartTime, ["h:mm A"]).format("HH:mm:ss"),
+          breakEndTime: shiftType === 'NA' ? 0 : moment(breakStartTime).add(1, 'hours').format('HH:mm:ss'),
           status: 0
         }
 
@@ -365,30 +366,61 @@ const CreateShiftModal = (props) => {
 
                   </div>
                   <div className="row">
+                    <div className="col-sm-12">
+                      <div className="form-group">
+                        <label htmlFor="exampleFormControlInput1"> Shift Type</label>
+                        <select
+                          className="form-control"
+                          required
+
+                          value={shiftType}
+                          onChange={setShiftTypeHandler}>
+
+                          <option value="">Select Shift Type</option>
+                          <option value='NA'>N/A</option>
+                          <option>Captain</option>
+                          <option>On Duty</option>
+                          <option>General</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="row">
                     <div className="col-sm-6">
                       <div className="form-group">
                         <label htmlFor="exampleFormControlInput1">Start Time</label>
                         <br />
-                        <DatePicker
-                          className="form-control"
-                          selected={startTime}
-                          onChange={date => setStartTime(date)}
-                          showTimeSelect
-                          showTimeSelectOnly
-                          // onCalendarClose={endTime === null ? () => { call() } : () => { calcTime() }}
-                          timeFormat="HH:mm"
-                          timeIntervals={30}
-                          timeCaption="Time"
-                          dateFormat="HH:mm "
-                          placeholderText="Select start time"
-                          required
-                        />
+                        {shiftType === 'NA' ?
+                         <input type='text' onChange={(e) => setStartTime(e.target.value)} value='00:00'
+                          disabled />
+                          :
+                          <DatePicker
+                            className="form-control"
+                            selected={startTime}
+                            onChange={(date) => {
+                              setStartTime(date);
+                              console.log('date', date)
+                            }}
+                            showTimeSelect
+                            showTimeSelectOnly
+                            // onCalendarClose={endTime === null ? () => { call() } : () => { calcTime() }}
+                            timeFormat="HH:mm"
+                            timeIntervals={30}
+                            timeCaption="Time"
+                            dateFormat="HH:mm "
+                            placeholderText="Select start time"
+                            required
+                          />}
                       </div>
                     </div>
                     <div className="col-sm-6">
                       <div className="form-group">
                         <label htmlFor="exampleFormControlInput1">End Time</label>
                         <br />
+                        {shiftType === 'NA' ?
+                         <input type='text' onChange={(e) => setEndTime(e.target.value)} value='00:00'
+                          disabled />
+                          :
                         <DatePicker
                           selected={endTime}
                           className="form-control"
@@ -403,7 +435,7 @@ const CreateShiftModal = (props) => {
                           dateFormat="HH:mm "
 
                           placeholderText="Select end time"
-                        />
+                        />}
                       </div>
                     </div>
                     <h6 style={{ color: "red", fontFamily: "work-Sans, sans-serif", fontSize: "14px", marginLeft: "16px" }}>{errormsg}</h6>
@@ -561,7 +593,7 @@ const CreateShiftModal = (props) => {
 
 
                   <br />
-                  <div className="row">
+                  {/*  <div className="row">
                     <div className="col-sm-12">
                       <div className="form-group">
                         <label htmlFor="exampleFormControlInput1"> Shift Type</label>
@@ -580,7 +612,7 @@ const CreateShiftModal = (props) => {
                         </select>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
 
                   {(() => {
