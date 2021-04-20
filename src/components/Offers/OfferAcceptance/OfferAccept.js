@@ -7,6 +7,7 @@ import AcceptModal from "./AcceptModal";
 import RejectModal from "./RejectModal";
 //import {  Page } from 'react-pdf'
 import fileName from "../../../assets/file.pdf";
+import appointmentFile from "../../../assets/Full_Time_Appointment.pdf";
 import { Document, Page } from "react-pdf/dist/esm/entry.webpack";
 import { ChevronRight, ChevronLeft } from "react-feather";
 import { OnBoardContext } from "../../../context/OnBoardState";
@@ -18,8 +19,11 @@ const OfferAccept = (props) => {
   const [modal, setModal] = useState(false);
   const [rejectModal, setRejectModal] = useState(false);
   const [numPages, setNumPages] = useState(null);
+  const [numAppointPages, setNumAppointPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
+  const [pageAppointNumber, setPageAppointNumber] = useState(1);
   const [disabled, setDisabled] = useState(false);
+  const [showAppointmentLetter, setShowAppointmentLetter] = useState(false);
   const { CandidateProfile, candidateProfileData } = useContext(OnBoardContext);
   const { candidateRejectOffer } = useContext(CandidateContext);
 
@@ -41,6 +45,10 @@ const OfferAccept = (props) => {
     setShowLetter(true);
   };
 
+  const showAppointmentLetterClick = (e) => {
+    setShowAppointmentLetter(true);
+  };
+
   const handleSwitch = (e) => {
     setChecked(e);
     if (e === true) {
@@ -54,9 +62,17 @@ const OfferAccept = (props) => {
   const onDocumentLoadSuccess = ({ numPages }) => {
     setNumPages(numPages);
   };
+  const onAppoinmentDocumentLoadSuccess = ({ numAppointPages }) => {
+    setNumAppointPages(numAppointPages);
+  };
+
   const goToPrevPage = () => setPageNumber(pageNumber - 1);
 
   const goToNextPage = () => setPageNumber(pageNumber + 1);
+
+  const goToAppointPrevPage = () => setPageAppointNumber(pageAppointNumber - 1);
+
+  const goToAppointNextPage = () => setPageAppointNumber(pageAppointNumber + 1);
 
   return (
     <Fragment>
@@ -71,6 +87,7 @@ const OfferAccept = (props) => {
             <Button onClick={showLetterClick}>Show</Button>
           </div>
         </Container>
+
         {showLetter === true && (
           <Container className="last-container">
             <Row>
@@ -135,6 +152,75 @@ const OfferAccept = (props) => {
               checked={checked}
               className="react-switch"
             />
+          </Container>
+        )}
+        <Container className="middle-container">
+          <div style={{ marginTop: "3rem", marginBottom: "2rem" }}>
+            <span style={{ marginRight: "1rem" }}>
+              View Your Appointment Letter
+            </span>
+            <Button onClick={showAppointmentLetterClick}>Show</Button>
+          </div>
+        </Container>
+        {showAppointmentLetter === true && (
+          <Container className="last-container">
+            <Row>
+              <Col sm={2}>
+                {pageAppointNumber <= 1 ? (
+                  <ChevronLeft
+                    disabled
+                    style={{
+                      color: "grey",
+                      cursor: "pointer",
+                      marginTop: "20rem",
+                    }}
+                  />
+                ) : (
+                  <ChevronLeft
+                    onClick={goToAppointPrevPage}
+                    disabled={pageAppointNumber === 1}
+                    style={{
+                      color: "blue",
+                      cursor: "pointer",
+                      marginTop: "20rem",
+                    }}
+                  />
+                )}
+              </Col>
+              <Col sm={8}>
+                <Document
+                  file={appointmentFile}
+                  onLoadSuccess={onAppoinmentDocumentLoadSuccess}
+                >
+                  <Page pageNumber={pageAppointNumber} />
+                </Document>
+              </Col>
+              <Col sm={2}>
+                {pageAppointNumber === numAppointPages ? (
+                  <ChevronRight
+                    disabled
+                    style={{
+                      color: "grey",
+                      cursor: "pointer",
+                      marginTop: "20rem",
+                    }}
+                  />
+                ) : (
+                  <ChevronRight
+                    onClick={goToAppointNextPage}
+                    style={{
+                      color: "blue",
+                      cursor: "pointer",
+                      marginTop: "20rem",
+                    }}
+                  />
+                )}
+              </Col>
+            </Row>
+            <p>
+              Page {pageAppointNumber} of {numAppointPages}
+            </p>
+            {/* <Button>Save</Button> */}
           </Container>
         )}
         <AcceptModal modal={modal} handleClose={handleClose} />
