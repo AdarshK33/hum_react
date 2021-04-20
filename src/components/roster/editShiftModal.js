@@ -70,7 +70,6 @@ const EditShiftModal = (props) => {
     setStartBreakTime(singleShiftList.breakStartTime)
     setStatus(singleShiftList.status)
     setCostCenterName(props.shiftData.storeId)
-    //console.log("1---->"+getSingleCluster.employeeIds);
 
   }, [props])
 
@@ -110,7 +109,7 @@ const EditShiftModal = (props) => {
     var ctime = stime.replace(/:/g, ".");
     var dtime = etime.replace(/:/g, ".");
     if (ctime === 0.00 || dtime === 0.00 || shiftType === 'NA' ) {
-      /* setWorkingHour('00.00'); */
+      
       setShiftButton(false)
         setErrorMsg('')
         setWorkingHour(0);
@@ -372,7 +371,7 @@ const EditShiftModal = (props) => {
                         <br />
                         {shiftType === 'NA' ?
                          <input type='text' onChange={(e) => setEndTime(e.target.value)} value='00:00'
-                          disabled />
+                          disabled className="form-control" />
                           :
                         <DatePicker
                           className="form-control"
@@ -395,9 +394,10 @@ const EditShiftModal = (props) => {
                     <div className="col-sm-6">
                       <div className="form-group">
                         <label htmlFor="exampleFormControlInput1">End Time</label>
+                        <br/>
                         {shiftType === 'NA' ?
                          <input type='text' onChange={(e) => setEndTime(e.target.value)} value='00:00'
-                          disabled />
+                          disabled className="form-control" />
                           :
                         <DatePicker
                           // selected={endTime}

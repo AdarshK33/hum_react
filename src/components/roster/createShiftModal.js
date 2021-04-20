@@ -392,7 +392,7 @@ const CreateShiftModal = (props) => {
                         <br />
                         {shiftType === 'NA' ?
                          <input type='text' onChange={(e) => setStartTime(e.target.value)} value='00:00'
-                          disabled />
+                          disabled className="form-control" />
                           :
                           <DatePicker
                             className="form-control"
@@ -419,7 +419,7 @@ const CreateShiftModal = (props) => {
                         <br />
                         {shiftType === 'NA' ?
                          <input type='text' onChange={(e) => setEndTime(e.target.value)} value='00:00'
-                          disabled />
+                          disabled className="form-control" />
                           :
                         <DatePicker
                           selected={endTime}

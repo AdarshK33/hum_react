@@ -3,6 +3,7 @@ import { Container, Row, Col, Card } from 'react-bootstrap'
 import Chart from 'react-google-charts'
 import { RosterContext } from "../../context/RosterState";
 import Select from 'react-select'
+import RosterTable from './rosterTable'
 
 const RosterDashboard = () => {
     const [costCenter1, setCostCenter1] = useState();
@@ -128,6 +129,7 @@ const RosterDashboard = () => {
                         </Row>
                     </Col>
                 </Row>
+                <RosterTable />
             </Container>
         </Fragment>
     );
