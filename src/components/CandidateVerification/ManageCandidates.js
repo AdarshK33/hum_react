@@ -175,7 +175,8 @@ const CandidateList = () => {
                       <td>{item.statusDesc}</td>
 
                       <td>
-                        <Link to={"/verification/" + item.candidateId}>
+                        {/* <Link to={"/verification/" + item.candidateId}> */}
+                        <Link to={"/no_due_clearance"}>
                           <Edit2
                             onClick={() => {
                               FetchCandidateData(item.candidateId);

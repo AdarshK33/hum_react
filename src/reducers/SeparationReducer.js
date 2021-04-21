@@ -9,7 +9,9 @@ const GroupReducer = (state, action) => {
         total: action.total,
       };
       case "FETCH_SEPARATION_LIST":
-        return { ...state, candidate: action.payload };
+        return { ...state, noDueClearanceList: action.payload };
+        case "UPDATE_SEPARATION_LIST":
+          return {...state,updateNoDueClearanceList:action.payload};
       default:
         return state;
   }

@@ -25,6 +25,7 @@ button.assign-button.btn.btn-secondary.btn-block.btn-sm {
 }
 small.form-text.text-muted{
     text-align: center;
+    color: blue;
 }
 title{
     text-align: center;
@@ -58,6 +59,14 @@ thead th {
 .shift-date input.form-control.shift-view {
     height: 40px;
 }
+.searchFeild{
+    align-items: center;
+}
+.columnColor{
+    border: "1px solid blue";
+    background-color:aliceblue
+
+}
 .inputWrapper {
     border: none;
     box-shadow: none !important;
@@ -66,4 +75,18 @@ thead th {
     border: 0;
     padding: 0;
   }
-  
+  .tableSize{
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    border: 1px solid #ddd;
+  }
+  .uploadButton{
+    background-color: #006ebb !important;
+    border-color: #006ebb !important;
+    word-spacing: initial;
+    color: #ffffff !important;
+    float: right;
+    flex-flow: row;
+    padding: auto;
+  }

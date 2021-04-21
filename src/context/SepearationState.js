@@ -7,6 +7,7 @@ import { access_token } from "../auth/signin";
 
 const initial_state = {
   noDueClearanceList:[],
+  updateNoDueClearanceList:[],
   separationList: [],
   total: {},
   data: [],
@@ -62,12 +63,43 @@ export const SeparationProvider = (props) => {
         console.log(error)
       })
   }
+  const updateITClearanceList = (value,key,page) => {
+    console.log(value,"value in update ")
+    const formData = {
+      itclearanceId: value.itclearanceId,
+      exitId: value.exitId,
+      itClearanceStatus: value.itClearanceStatus,
+      itAmount: value.itAmount,
+      itRemarks: value.itRemarks,
+      itClearanceUpdatedBy: value.itClearanceUpdatedBy,
+      lastWorkingDay: value.lastWorkingDay,
+      employeeId: value.employeeId,
+      employeeName: value.employeeName,
+      costCentreName: value.costCentreName,
+      joiningDate: value.joiningDate,
+      managerName: value.managerName
+    }
+    console.log(formData,"updateClearanceList separation context")
+    return client.post('/api/v1/separation/it-clearance/edit', formData)
+      .then((response) => {
+        toast.info(response.data.message);
+        viewITClearanceList(key,page)
+        return (
+          dispatch({ type: 'UPDATE_SEPARATION_LIST', payload: state.updateNoDueClearanceList })
+        )
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
   return (
     <SeparationContext.Provider
       value={{
         separationListView,
         viewITClearanceList,
         setLoader,
+        updateITClearanceList,
+        updateNoDueClearanceList:state.updateNoDueClearanceList,
         noDueClearanceList:state.noDueClearanceList,
         separationList: state.separationList,
         loader: state.loader,
