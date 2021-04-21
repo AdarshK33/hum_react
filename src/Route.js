@@ -129,10 +129,10 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/ViewGroup`}
             component={ViewGroup}
           />
-          {/* <Route
+          <Route
             path={`${process.env.PUBLIC_URL}/roster-dashboard`}
             component={RosterDashboard}
-          /> */}
+          />
          {/*  <Route
             path={`${process.env.PUBLIC_URL}/manager-offer-release`}
             component={ManagerOfferRelease}
