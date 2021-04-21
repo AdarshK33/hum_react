@@ -41,13 +41,15 @@ const DocVerification = () => {
     downloadedFile,
     personalInfoData,
     personalInfo,
+    updateUANNumber,
+    uanUpdate,
   } = useContext(DocsVerifyContext);
   const { getUserInfo, user } = useContext(AppContext);
   useEffect(() => {
     verificationDocsView(candidateId);
     personalInfo(candidateId);
     setState(personalInfoData);
-  }, [acceptStatus, rejectStatus]);
+  }, [acceptStatus, rejectStatus, uanUpdate]);
   useEffect(() => {
     getUserInfo();
   }, []);
@@ -110,6 +112,12 @@ const DocVerification = () => {
       .map((filteredResult) => {
         return filteredResult;
       });
+
+  const handleDocSave = () => {
+    if (UANNo && uanNumber !== "") {
+      updateUANNumber(personalInfoData.candidateId, uanNumber);
+    }
+  };
   return (
     <Fragment>
       <Modal show={showModal} onHide={() => handleClose()} centered>
@@ -464,7 +472,9 @@ const DocVerification = () => {
           textAlign: "center",
         }}
       >
-        <button className="stepperButtons">Save</button>
+        <button className="stepperButtons" onClick={() => handleDocSave()}>
+          Save
+        </button>
 
         {state !== undefined && state.verificationStatus === 1 && (
           <button className="onboardButton" onClick={() => handleOnboard()}>

@@ -17,6 +17,7 @@ const initial_state = {
   acceptStatus: "",
   rejectStatus: "",
   downloadedFile: [],
+  uanUpdate: "",
 };
 export const DocsVerifyContext = createContext();
 export const DocsVerificationProvider = (props) => {
@@ -187,7 +188,26 @@ export const DocsVerificationProvider = (props) => {
         console.log(error);
       });
   };
-
+  const updateUANNumber = (candidateId, uan) => {
+    setLoader(true);
+    client
+      .get(
+        "/api/v1/candidate/update/uan?candidateId=" +
+          candidateId +
+          "&uan=" +
+          uan
+      )
+      .then((response) => {
+        state.uanUpdate = response.data.message;
+        return dispatch({
+          type: "UPDATE_UAN",
+          payload: state.uanUpdate,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const downloadDocument = (name) => {
     Axios({
       url: `${process.env.REACT_APP_BASEURL}api/v1/candidate/document/download?name=${name}`,
@@ -217,6 +237,7 @@ export const DocsVerificationProvider = (props) => {
         approveDocument,
         disApproveDocument,
         downloadDocument,
+        updateUANNumber,
         docsToVerify: state.docsToVerify,
         personalInfoData: state.personalInfoData,
         addressInfoData: state.addressInfoData,
@@ -228,6 +249,7 @@ export const DocsVerificationProvider = (props) => {
         rejectStatus: state.rejectStatus,
         loader: loader,
         downloadedFile: state.downloadedFile,
+        uanUpdate: state.uanUpdate,
       }}
     >
       {" "}

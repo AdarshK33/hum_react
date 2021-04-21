@@ -7,7 +7,6 @@ import { Edit2, Eye, Search } from "react-feather";
 import Pagination from "react-js-pagination";
 import "./ManageCandidate.css";
 import { DocsVerifyContext } from "../../context/DocverificationState";
-import { candidate } from "../../utils/canditateLogin";
 
 const CandidateList = () => {
   const [pageCount, setPageCount] = useState(0);
