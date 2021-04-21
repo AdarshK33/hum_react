@@ -17,7 +17,9 @@ import { AdminContext } from "../../context/AdminState";
 import AppointmentLetter from "./AppointmentLetter";
 
 const CandidateOnboarding = () => {
-  const { candidateData } = useContext(OfferContext);
+  const { generateOfferLetter, offerLetterData, candidateData } = useContext(
+    OfferContext
+  );
   const { RoleList } = useContext(RoleManagementContext);
   const { costCenterList } = useContext(AdminContext);
   const [count, setCount] = useState(1);
@@ -40,8 +42,19 @@ const CandidateOnboarding = () => {
   const [startYear3Date, setStartYear3Date] = useState("");
   const [endMonth3Date, setEndMonth3Date] = useState("");
   const [endYear3Date, setEndYear3Date] = useState("");
+
+  useEffect(() => {}, []);
+
   const previewAppointmentLetter = () => {
+    console.log("candidateData id", candidateData);
     setShowLetter(true);
+    if (
+      candidateData !== null &&
+      candidateData !== undefined &&
+      candidateData.candidateInformation
+    ) {
+      generateOfferLetter(candidateData.candidateInformation.candidateId);
+    }
   };
 
   const handleEmailChange = (e) => {
