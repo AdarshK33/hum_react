@@ -20,6 +20,8 @@ const GroupReducer = (state, action) => {
       return { ...state, rejectStatus: action.payload };
     case "DOWNLOAD_DOCU":
       return { ...state, downloadedFile: action.payload };
+    case "UPDATE_UAN":
+      return { ...state, uanUpdate: action.payload };
   }
 };
 export default GroupReducer;
