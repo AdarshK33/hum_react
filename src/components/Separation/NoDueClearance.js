@@ -163,7 +163,7 @@ console.log(listRecords,clearanceData,"listRecords")
                 </div><br/>
             <div className="card" style={{ overflowX: "auto" }}>
               <div className="title_bar" >
-              <b className="title">NO DUE CLEARANCE LISTING </b>            
+              <b >NO DUE CLEARANCE LISTING </b>            
               </div>
 
         <div className="ag-theme-alpine" style={{ align:"center",height: 400, width: 1400 }}>

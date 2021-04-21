@@ -29,6 +29,7 @@ small.form-text.text-muted{
 }
 title{
     text-align: center;
+    overflow: "auto";
 }
 /* .modal-backdrop {
   background-color: transparent;
@@ -80,13 +81,4 @@ thead th {
     border-spacing: 0;
     width: 100%;
     border: 1px solid #ddd;
-  }
-  .uploadButton{
-    background-color: #006ebb !important;
-    border-color: #006ebb !important;
-    word-spacing: initial;
-    color: #ffffff !important;
-    float: right;
-    flex-flow: row;
-    padding: auto;
   }
