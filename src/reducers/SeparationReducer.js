@@ -14,6 +14,8 @@ const GroupReducer = (state, action) => {
           return {...state,updateNoDueClearanceList:action.payload};
       default:
         return state;
+    case "SAVE_FINANCE_LIST":
+      return { ...state, financeList: action.payload };
   }
 };
 export default GroupReducer;

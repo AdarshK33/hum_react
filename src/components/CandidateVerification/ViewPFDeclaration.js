@@ -433,7 +433,7 @@ const EditPFDeclaration = (props) => {
             <Col sm={5}>
               <div>
                 <label>
-                  Does the PF nomination hold good in case of health ?
+                  Does the PF nomination hold good in case of Death ?
                 </label>
                 {pfNominationHoldHealthError ? (
                   <p style={{ color: "red" }}>

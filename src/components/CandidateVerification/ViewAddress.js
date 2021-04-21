@@ -78,9 +78,37 @@ const EditAddress = (props) => {
     addressInfo(candidateId);
     setState(addressInfoData);
     candidateCountryList();
-
+    // CandidateStateList();
     setDisableState(true);
   }, []);
+  useEffect(() => {
+    var countryvalue = candidateCountryData.filter(
+      (i) => i.countryId === state.countryId
+    );
+    if (countryvalue !== undefined && countryvalue[0] !== undefined) {
+      CandidateStateList(countryvalue[0].countryName);
+    }
+    var permanentCountry = candidateCountryData.filter(
+      (j) => j.countryId === state.permanentCountryId
+    );
+    if (permanentCountry !== undefined && permanentCountry[0] !== undefined) {
+      CandidateStateList(countryvalue[0].countryName);
+    }
+  }, [candidateCountryData]);
+  useEffect(() => {
+    var stateList = candidateStateData.filter(
+      (i) => i.stateId === state.stateId
+    );
+    if (stateList !== undefined && stateList[0] !== undefined) {
+      candidateCityList(stateList[0].stateId);
+    }
+    var permanetStateList = candidateStateData.filter(
+      (st) => st.stateId === state.permanentStateId
+    );
+    if (permanetStateList !== undefined && permanetStateList[0] !== undefined) {
+      candidateCityList(permanetStateList[0].stateId);
+    }
+  }, [candidateStateData]);
   const flatNumberValidation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
     if (state.flatNumber !== "") {
@@ -327,9 +355,25 @@ const EditAddress = (props) => {
     (i) => i.countryId === state.countryId
   );
 
+  var stateVale =
+    candidateStateData !== null &&
+    candidateStateData.filter((s) => s.stateId === state.stateId);
+  var cityvalue =
+    candidateCityData !== null &&
+    candidateCityData.filter((c) => c.cityId === state.cityId);
+  var permanetCountry = candidateCountryData.filter(
+    (k) => k.countryId === state.permanentCountryId
+  );
+  var permanentStateValue =
+    candidateStateData !== null &&
+    candidateStateData.filter(
+      (state) => state.stateId === state.permanentStateId
+    );
+  var permanentCityValue =
+    candidateCityData !== null &&
+    candidateCityData.filter((city) => city.cityId === state.permanentCityId);
   return (
-    console.log(countryvalue),
-    console.log("candidateCountryList data", candidateCountryData),
+    console.log(permanetCountry),
     (
       <Fragment>
         {addressInfoData !== null && addressInfoData !== undefined ? (
@@ -435,34 +479,18 @@ const EditAddress = (props) => {
                   <Form.Label>
                     Country <span style={{ color: "red" }}>*</span>
                   </Form.Label>
-                  {/* <br></br> */}
-                  <Form.Label className="headingColor">
-                    {countryvalue !== undefined &&
-                      countryvalue[0] !== undefined &&
-                      countryvalue[0].countryName}
-                  </Form.Label>
                   <Form.Control
-                    as="select"
                     name="countryId"
-                    value={state.countryId}
-                    options={options}
-                    onChange={changeHandler}
+                    type="text"
+                    value={
+                      countryvalue !== undefined &&
+                      countryvalue[0] !== undefined &&
+                      countryvalue[0].countryName
+                    }
                     required
                     style={countryError ? { borderColor: "red" } : {}}
-                    disabled={disabled}
-                  >
-                    {" "}
-                    {options.filter((item) => item.value === state.countryId)}
-                    <option value="">Country</option>
-                    {options.map((item) => {
-                      return <option key={item.value}>{item.label}</option>;
-                    })}
-                  </Form.Control>
-                  {countryError ? (
-                    <p style={{ color: "red" }}> Please choose country</p>
-                  ) : (
-                    <p></p>
-                  )}
+                    disabled={true}
+                  ></Form.Control>
                 </Form.Group>
               </div>
               <div className="col-sm-3">
@@ -471,16 +499,17 @@ const EditAddress = (props) => {
                     State <span style={{ color: "red" }}>*</span>
                   </Form.Label>
                   <Form.Control
-                    as="select"
                     name="stateId"
-                    value={state.stateId}
+                    type="text"
+                    value={
+                      stateVale !== undefined &&
+                      stateVale[0] !== undefined &&
+                      stateVale[0].stateName
+                    }
                     style={stateError ? { borderColor: "red" } : {}}
                     onChange={changeHandler}
-                    disabled={disabled}
-                  >
-                    <option value="">State</option>
-                    <option>one</option>
-                  </Form.Control>
+                    disabled={true}
+                  ></Form.Control>
                   {stateError ? (
                     <p style={{ color: "red" }}> Please choose state</p>
                   ) : (
@@ -494,16 +523,17 @@ const EditAddress = (props) => {
                     City <span style={{ color: "red" }}>*</span>
                   </Form.Label>
                   <Form.Control
-                    as="select"
+                    type="text"
                     name="cityId"
-                    value={state.cityId}
+                    value={
+                      cityvalue !== undefined &&
+                      cityvalue[0] !== undefined &&
+                      cityvalue[0].cityName
+                    }
                     style={cityError ? { borderColor: "red" } : {}}
                     onChange={changeHandler}
-                    disabled={disabled}
-                  >
-                    <option value="">City</option>
-                    <option>one</option>
-                  </Form.Control>
+                    disabled={true}
+                  ></Form.Control>
                   {cityError ? (
                     <p style={{ color: "red" }}> Please choose city</p>
                   ) : (
@@ -712,9 +742,13 @@ const EditAddress = (props) => {
                         Country <span style={{ color: "red" }}>*</span>
                       </Form.Label>
                       <Form.Control
-                        as="select"
+                        type="text"
                         name="permanentCountryId"
-                        value={state.permanentCountryId}
+                        value={
+                          permanetCountry !== undefined &&
+                          permanetCountry[0] !== undefined &&
+                          permanetCountry[0].countryName
+                        }
                         options={options}
                         onChange={changeHandler}
                         required
@@ -722,12 +756,7 @@ const EditAddress = (props) => {
                           PermanentCountryError ? { borderColor: "red" } : {}
                         }
                         disabled={disabled}
-                      >
-                        <option value="">Country</option>
-                        {options.map((item) => {
-                          return <option key={item.value}>{item.label}</option>;
-                        })}
-                      </Form.Control>
+                      ></Form.Control>
                       {PermanentCountryError ? (
                         <p style={{ color: "red" }}> Please choose country</p>
                       ) : (
@@ -741,16 +770,19 @@ const EditAddress = (props) => {
                         State <span style={{ color: "red" }}>*</span>
                       </Form.Label>
                       <Form.Control
-                        as="select"
+                        type="text"
                         name="permanentStateId"
-                        value={state.permanentStateId}
+                        value={
+                          permanentStateValue !== undefined &&
+                          permanentStateValue[0] !== undefined &&
+                          permanentStateValue[0].stateName
+                        }
                         style={
                           PermanentStateError ? { borderColor: "red" } : {}
                         }
                         onChange={changeHandler}
-                      >
-                        <option value="">State</option>
-                      </Form.Control>
+                        disabled={true}
+                      ></Form.Control>
                       {PermanentStateError ? (
                         <p style={{ color: "red" }}> Please choose state</p>
                       ) : (
@@ -764,14 +796,16 @@ const EditAddress = (props) => {
                         City <span style={{ color: "red" }}>*</span>
                       </Form.Label>
                       <Form.Control
-                        as="select"
-                        name="permanentCityId"
-                        value={state.permanentCityId}
+                        type="text"
+                        value={
+                          permanentCityValue !== undefined &&
+                          permanentCityValue[0] !== undefined &&
+                          permanentCityValue[0].cityName
+                        }
                         style={PermanentCityError ? { borderColor: "red" } : {}}
                         onChange={changeHandler}
-                      >
-                        <option value="">City</option>
-                      </Form.Control>
+                        disabled={true}
+                      ></Form.Control>
                       {PermanentCityError ? (
                         <p style={{ color: "red" }}> Please choose city</p>
                       ) : (

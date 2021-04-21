@@ -11,6 +11,7 @@ const initial_state = {
   separationList: [],
   total: {},
   data: [],
+  clearanceList: [],
 };
 
 export const SeparationContext = createContext();
@@ -92,6 +93,21 @@ export const SeparationProvider = (props) => {
         console.log(error)
       })
   }
+  const saveFinanceClearanceData = (data) => {
+    setLoader(true);
+    return client
+      .post("/api/v1/separation/finance-clearance/create", data)
+      .then((response) => {
+        state.clearanceList = response.data.data;
+        console.log(response.data.data);
+        dispatch({
+          type: "SAVE_FINANCE_LIST",
+          payload: state.clearanceList,
+        });
+
+        return dispatch;
+      });
+  };
   return (
     <SeparationContext.Provider
       value={{
@@ -101,8 +117,10 @@ export const SeparationProvider = (props) => {
         updateITClearanceList,
         updateNoDueClearanceList:state.updateNoDueClearanceList,
         noDueClearanceList:state.noDueClearanceList,
+        saveFinanceClearanceData,
         separationList: state.separationList,
         loader: state.loader,
+        clearanceList: state.clearanceList,
       }}
     >
       {props.children}

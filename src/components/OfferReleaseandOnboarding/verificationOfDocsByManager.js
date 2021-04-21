@@ -49,11 +49,15 @@ const DocVerification = () => {
     personalInfo,
   } = useContext(DocsVerifyContext);
   const { getUserInfo, user } = useContext(AppContext);
-  // useEffect(() => {
-  //   verificationDocsView(candidateId);
-  //   personalInfo(candidateId);
-  //   setState(personalInfoData);
-  // }, [acceptStatus, rejectStatus]);
+  useEffect(() => {
+    if (candidateData.candidateInformation !== undefined) {
+      // candidateData.candidateInformation.candidateId,
+
+      verificationDocsView(candidateData.candidateInformation.candidateId);
+    }
+    // personalInfo(candidateId);
+    // setState(personalInfoData);
+  }, [acceptStatus, rejectStatus]);
   useEffect(() => {
     getUserInfo();
   }, []);
@@ -382,11 +386,14 @@ const DocVerification = () => {
                       </p>
                       {item.documentType > 5 && item.documentName}
                     </td>
-                    {item.reviewStatus !== null && item.documentType > 5 ? (
-                      <td>{item.reviewStatus}</td>
+
+                    {item.statusDesc !== null &&
+                    item.statusDesc !== "Pending" &&
+                    item.documentType > 5 ? (
+                      <td className="buttonMargin1">{item.statusDesc}</td>
                     ) : (
                       item.documentType > 5 && (
-                        <td className="row text-center">
+                        <td className="row text-center buttonMargin">
                           <button
                             className="approveButton"
                             onClick={() =>
@@ -431,14 +438,22 @@ const DocVerification = () => {
                       )
                     )}
                     {item.remark !== null ? (
-                      <td>{item.documentType > 5 && item.remark}</td>
+                      <td className="buttonMargin1">
+                        {item.documentType > 5 && item.remark}
+                      </td>
                     ) : (
-                      item.documentType > 5 && <td>NA</td>
+                      item.documentType > 5 && (
+                        <td className="buttonMargin1">NA</td>
+                      )
                     )}
                     {item.verifiedDate !== null ? (
-                      <td>{item.documentType > 5 && item.verifiedDate}</td>
+                      <td className="buttonMargin1">
+                        {item.documentType > 5 && item.verifiedDate}
+                      </td>
                     ) : (
-                      item.documentType > 5 && <td>NA</td>
+                      item.documentType > 5 && (
+                        <td className="buttonMargin1">NA</td>
+                      )
                     )}
                   </tr>
                 </tbody>
