@@ -19,7 +19,7 @@ const InsuranceNomination = (props) => {
   const {
     CandidatePersonalInfo,
     candidatePersonalInfoData,
-    candidateData,
+    candidateProfileData,
     CandidateViewInformation,
     candidateViewInfo,
     CreateNominee,
@@ -147,29 +147,29 @@ const InsuranceNomination = (props) => {
   ]);
 
   useEffect(() => {
-    console.log("personal information view candidate", candidateData);
-    if (candidateData) {
-      CandidateViewInformation(candidateData.candidateId);
+    console.log("personal information view candidate", candidateProfileData);
+    if (candidateProfileData) {
+      CandidateViewInformation(candidateProfileData.candidateId);
     }
-  }, [candidateViewInfo]);
+  }, [candidateProfileData]);
   console.log("personal information candidateViewInfo-->", candidateViewInfo);
   console.log("contract type-->", candidateViewInfo.contractType);
 
   useEffect(() => {
-    // console.log("personal information view candidate", candidateData);
-    if (candidateData) {
-      CandidatePersonalInfo(candidateData.candidateId);
+    // console.log("personal information view candidate", candidateProfileData);
+    if (candidateProfileData) {
+      CandidatePersonalInfo(candidateProfileData.candidateId);
     }
-  }, [candidateData]);
+  }, [candidateProfileData]);
 
   console.log("Candiate personal information data", candidatePersonalInfoData);
 
   useEffect(() => {
-    console.log("personal information view candidate", candidateData);
-    if (candidateData) {
-      InsuranceNominationView(candidateData.candidateId);
+    console.log("personal information view candidate", candidateProfileData);
+    if (candidateProfileData) {
+      InsuranceNominationView(candidateProfileData.candidateId);
     }
-  }, [candidateData]);
+  }, [candidateProfileData]);
 
   console.log(
     "Insurance nomination view candidate",
@@ -177,7 +177,7 @@ const InsuranceNomination = (props) => {
   );
 
   useEffect(() => {
-    // console.log("personal information view candidate", candidateData);
+    // console.log("personal information view candidate", candidateProfileData);
     if (
       candidatePersonalInfoData !== null &&
       candidatePersonalInfoData !== undefined &&
@@ -791,11 +791,11 @@ const InsuranceNomination = (props) => {
         age: state.age !== null ? state.age : null,
         bloodGroup: state.bloodGroup !== null ? state.bloodGroup : null,
         candidateId:
-          candidateData &&
-          candidateData !== null &&
-          candidateData !== undefined &&
-          candidateData.candidateId !== null
-            ? candidateData.candidateId
+          candidateProfileData &&
+          candidateProfileData !== null &&
+          candidateProfileData !== undefined &&
+          candidateProfileData.candidateId !== null
+            ? candidateProfileData.candidateId
             : 0,
         dateOfBirth: Nominee1DOB !== null ? Nominee1DOB : null,
         gender: state.gender !== null ? state.gender : null,
@@ -807,11 +807,11 @@ const InsuranceNomination = (props) => {
         age: state.nominee2Age,
         bloodGroup: state.nominee2BloodGroup,
         candidateId:
-          candidateData &&
-          candidateData !== null &&
-          candidateData !== undefined &&
-          candidateData.candidateId !== null
-            ? candidateData.candidateId
+          candidateProfileData &&
+          candidateProfileData !== null &&
+          candidateProfileData !== undefined &&
+          candidateProfileData.candidateId !== null
+            ? candidateProfileData.candidateId
             : 0,
         dateOfBirth: Nominee2DOB,
         gender: state.nominee2Gender,
@@ -823,11 +823,11 @@ const InsuranceNomination = (props) => {
         age: state.nominee3Age,
         bloodGroup: state.nominee3BloodGroup,
         candidateId:
-          candidateData &&
-          candidateData !== null &&
-          candidateData !== undefined &&
-          candidateData.candidateId !== null
-            ? candidateData.candidateId
+          candidateProfileData &&
+          candidateProfileData !== null &&
+          candidateProfileData !== undefined &&
+          candidateProfileData.candidateId !== null
+            ? candidateProfileData.candidateId
             : 0,
         dateOfBirth: Nominee3DOB,
         gender: state.nominee3Gender,
@@ -839,11 +839,11 @@ const InsuranceNomination = (props) => {
         age: state.nominee4Age,
         bloodGroup: state.nominee4BloodGroup,
         candidateId:
-          candidateData &&
-          candidateData !== null &&
-          candidateData !== undefined &&
-          candidateData.candidateId !== null
-            ? candidateData.candidateId
+          candidateProfileData &&
+          candidateProfileData !== null &&
+          candidateProfileData !== undefined &&
+          candidateProfileData.candidateId !== null
+            ? candidateProfileData.candidateId
             : 0,
         dateOfBirth: Nominee4DOB,
         gender: state.nominee2Gender,
@@ -855,11 +855,11 @@ const InsuranceNomination = (props) => {
         age: state.nominee5Age,
         bloodGroup: state.nominee5BloodGroup,
         candidateId:
-          candidateData &&
-          candidateData !== null &&
-          candidateData !== undefined &&
-          candidateData.candidateId !== null
-            ? candidateData.candidateId
+          candidateProfileData &&
+          candidateProfileData !== null &&
+          candidateProfileData !== undefined &&
+          candidateProfileData.candidateId !== null
+            ? candidateProfileData.candidateId
             : 0,
         dateOfBirth: Nominee5DOB,
         gender: state.nominee5Gender,

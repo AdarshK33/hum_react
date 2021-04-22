@@ -24,6 +24,7 @@ const ViewOfferRelease = () => {
   const { candidateView, candidateData, viewCandidateId } = useContext(
     OfferContext
   );
+  const { candidateList } = useContext(OfferContext);
   const [activeStep5, setActiveStep5] = useState(false);
   const [activeStep6, setActiveStep6] = useState(false);
   const [checkStep5, setCheckStep5] = useState(false);
@@ -39,6 +40,7 @@ const ViewOfferRelease = () => {
       candidateData.candidateInformation.candidateId !== null
     ) {
       console.log("------>", candidateData.candidateInformation.candidateId);
+      console.log("List----->", candidateList);
       personalInfo(candidateData.candidateInformation.candidateId);
     }
   }, [candidateData]);
@@ -49,16 +51,43 @@ const ViewOfferRelease = () => {
       personalInfoData !== undefined
     ) {
       if (personalInfoData.verificationStatus === 0) {
-        console.log("if");
-        setActiveStep5(false);
         setActiveStep6(false);
       } else {
         console.log("else");
-        setActiveStep5(true);
+
         setActiveStep6(true);
       }
     }
   }, [personalInfoData]);
+  useEffect(() => {
+    if (
+      candidateList !== undefined &&
+      candidateList !== null &&
+      candidateList.length > 0 &&
+      candidateData &&
+      candidateData.candidateInformation &&
+      candidateData.candidateInformation.candidateId !== null
+    ) {
+      candidateList.map((item, i) => {
+        if (
+          item.candidateId === candidateData.candidateInformation.candidateId
+        ) {
+          if (
+            item.status === 5 &&
+            item.statusDesc !== "Rejected" &&
+            item.statusDesc !== "Approved" &&
+            item.statusDesc === "Offer Released"
+          ) {
+            console.log("-->", item);
+            setActiveStep5(true);
+          } else {
+            setActiveStep5(false);
+          }
+        }
+      });
+    }
+  }, [candidateList, candidateData]);
+  console.log(activeStep5);
   return (
     <Fragment>
       <Container fluid className="container-accordion">
@@ -173,7 +202,7 @@ const ViewOfferRelease = () => {
                     Step 5: Verify Candidate Documents{" "}
                   </div>
                 ) : (
-                  <div>Step 5: Verify Candidate Documents </div>
+                  "Step 5: Verify Candidate Documents"
                 )}
               </AccordionItemButton>
             </AccordionItemHeading>
@@ -207,7 +236,7 @@ const ViewOfferRelease = () => {
                     Step 6: Candidate Onboarding{" "}
                   </div>
                 ) : (
-                  <div> Step 6: Candidate Onboarding </div>
+                  "Step 6: Candidate Onboarding"
                 )}
               </AccordionItemButton>
             </AccordionItemHeading>
