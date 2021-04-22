@@ -8,6 +8,14 @@ const GroupReducer = (state, action) => {
         data: action.data,
         total: action.total,
       };
+      case "FETCH_SEPARATION_LIST":
+        return { ...state, noDueClearanceList: action.payload };
+        case "UPDATE_SEPARATION_LIST":
+          return {...state,updateNoDueClearanceList:action.payload};
+      default:
+        return state;
+    case "SAVE_FINANCE_LIST":
+      return { ...state, financeList: action.payload };
   }
 };
 export default GroupReducer;

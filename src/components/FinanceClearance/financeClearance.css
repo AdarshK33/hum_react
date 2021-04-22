@@ -6,3 +6,24 @@
   border: 0;
   padding: 0;
 }
+.searchBox {
+  margin-right: auto;
+  width: 30% !important;
+}
+.selectList {
+  margin-left: auto;
+  width: 40% !important;
+  display: inline-flex;
+}
+.mainWrapper {
+  justify-content: space-between;
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.inputWrapper {
+  width: 50% !important;
+}
+.selectInputWrapper {
+  width: 50% !important;
+}
