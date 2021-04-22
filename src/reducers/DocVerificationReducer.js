@@ -26,6 +26,10 @@ const GroupReducer = (state, action) => {
       return { ...state, costCenter: action.payload };
     case "CANDIDATE_ONBOARD":
       return { ...state, onBoardData: action.payload };
+    case "CREATE_EMPLOYEE":
+      return { ...state, createStatus: action.payload };
+    case "VIEW_EMPLOYEE":
+      return { ...state, empData: action.payload };
   }
 };
 export default GroupReducer;

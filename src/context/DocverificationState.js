@@ -21,6 +21,7 @@ const initial_state = {
   costCenter: "",
   createStatus: "",
   onBoardData: {},
+  empData: {},
 };
 export const DocsVerifyContext = createContext();
 export const DocsVerificationProvider = (props) => {
@@ -216,10 +217,27 @@ export const DocsVerificationProvider = (props) => {
     client
       .post("/api/v1/cost_centre/split/create", costCenterData)
       .then((response) => {
+        console.log(response.data.status);
         state.costCenter = response.data.message;
         return dispatch({
           type: "COST_CENTER_CREATE",
           payload: state.costCenter,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const viewEmployee = (empId) => {
+    setLoader(true);
+    client
+      .get("/api/v1/employee/" + empId)
+      .then((response) => {
+        state.empData = response.data.data;
+        return dispatch({
+          type: "VIEW_EMPLOYEE",
+          payload: state.empData,
         });
       })
       .catch((error) => {
@@ -231,11 +249,12 @@ export const DocsVerificationProvider = (props) => {
     client
       .post("/api/v1/employee/create", employeData)
       .then((response) => {
-        console.log(response.data.status);
         state.createStatus = response.data.status;
+        // state.empData = response.data.data;
         return dispatch({
           type: "CREATE_EMPLOYEE",
           payload: state.createStatus,
+          // payload: state.empData,
         });
       })
       .catch((error) => {
@@ -287,6 +306,8 @@ export const DocsVerificationProvider = (props) => {
         costCenterSplit,
         createEmployee,
         candidateOnBoard,
+        viewEmployee,
+        empData: state.empData,
         onBoardData: state.onBoardData,
         docsToVerify: state.docsToVerify,
         createStatus: state.createStatus,
