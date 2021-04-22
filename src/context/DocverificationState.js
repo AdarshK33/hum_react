@@ -18,6 +18,10 @@ const initial_state = {
   rejectStatus: "",
   downloadedFile: [],
   uanUpdate: "",
+  costCenter: "",
+  createStatus: "",
+  onBoardData: {},
+  empData: {},
 };
 export const DocsVerifyContext = createContext();
 export const DocsVerificationProvider = (props) => {
@@ -208,6 +212,67 @@ export const DocsVerificationProvider = (props) => {
         console.log(error);
       });
   };
+  const costCenterSplit = (costCenterData) => {
+    setLoader(true);
+    client
+      .post("/api/v1/cost_centre/split/create", costCenterData)
+      .then((response) => {
+        console.log(response.data.status);
+        state.costCenter = response.data.message;
+        return dispatch({
+          type: "COST_CENTER_CREATE",
+          payload: state.costCenter,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const viewEmployee = (empId) => {
+    setLoader(true);
+    client
+      .get("/api/v1/employee/" + empId)
+      .then((response) => {
+        state.empData = response.data.data;
+        return dispatch({
+          type: "VIEW_EMPLOYEE",
+          payload: state.empData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const createEmployee = (employeData) => {
+    setLoader(true);
+    client
+      .post("/api/v1/employee/create", employeData)
+      .then((response) => {
+        state.createStatus = response.data.status;
+        // state.empData = response.data.data;
+        return dispatch({
+          type: "CREATE_EMPLOYEE",
+          payload: state.createStatus,
+          // payload: state.empData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const candidateOnBoard = (candidateId) => {
+    setLoader(true);
+    client
+      .get("/api/v1/candidate/onboard?candidateId=" + candidateId)
+      .then((response) => {
+        state.onBoardData = response.data.data;
+        return dispatch({
+          type: "CANDIDATE_ONBOARD",
+          payload: state.onBoardData,
+        });
+      });
+  };
   const downloadDocument = (name) => {
     Axios({
       url: `${process.env.REACT_APP_BASEURL}api/v1/candidate/document/download?name=${name}`,
@@ -238,7 +303,15 @@ export const DocsVerificationProvider = (props) => {
         disApproveDocument,
         downloadDocument,
         updateUANNumber,
+        costCenterSplit,
+        createEmployee,
+        candidateOnBoard,
+        viewEmployee,
+        empData: state.empData,
+        onBoardData: state.onBoardData,
         docsToVerify: state.docsToVerify,
+        createStatus: state.createStatus,
+        costCenter: state.costCenter,
         personalInfoData: state.personalInfoData,
         addressInfoData: state.addressInfoData,
         emergencyInfo: state.emergencyInfo,

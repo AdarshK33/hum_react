@@ -1,6 +1,8 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import { OfferContext } from "../../context/OfferState";
 import { RoleManagementContext } from "../../context/RoleManagementState";
+import { DocsVerifyContext } from "../../context/DocverificationState";
+
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import "./offerReleaseandOnboarding.css";
@@ -17,6 +19,18 @@ import { AdminContext } from "../../context/AdminState";
 import AppointmentLetter from "./AppointmentLetter";
 
 const CandidateOnboarding = () => {
+  const {
+    costCenterSplit,
+    createEmployee,
+    createStatus,
+    candidateOnBoard,
+    onBoardData,
+    personalInfo,
+    personalInfoData,
+    viewEmployee,
+    empData,
+  } = useContext(DocsVerifyContext);
+
   const { candidateData } = useContext(OfferContext);
   const { RoleList } = useContext(RoleManagementContext);
   const { costCenterList } = useContext(AdminContext);
@@ -29,22 +43,114 @@ const CandidateOnboarding = () => {
   const [costCenter3, setCostCenter3] = useState(false);
   const [costCenter4, setCostCenter4] = useState(false);
   const [showLetter, setShowLetter] = useState(false);
-  const [startMonth1Date, setStartMonth1Date] = useState("");
-  const [startYear1Date, setStartYear1Date] = useState("");
-  const [startMonth1End, setStartMonth1EndDate] = useState("");
-  const [endYear1Date, setEndYear1Date] = useState("");
-  const [startMonth2Date, setStartMonth2Date] = useState("");
-  const [startYear2Date, setStartYear2Date] = useState("");
-  const [endMonth2Date, setEndMonth2Date] = useState("");
-  const [endYear2Date, setEndyear2Date] = useState("");
-  const [startMonth3Date, setStartMonth3Date] = useState("");
-  const [startYear3Date, setStartYear3Date] = useState("");
-  const [endMonth3Date, setEndMonth3Date] = useState("");
-  const [endYear3Date, setEndYear3Date] = useState("");
+  const [startMonth1Date, setStartMonth1Date] = useState(0);
+  const [startYear1Date, setStartYear1Date] = useState(0);
+  const [startMonth1End, setStartMonth1EndDate] = useState(0);
+  // const [endMonth1Date, setEndMonth1Date] = useState("");
+  const [endYear1Date, setEndYear1Date] = useState(0);
+  const [startMonth2Date, setStartMonth2Date] = useState(0);
+  const [startYear2Date, setStartYear2Date] = useState(0);
+  const [endMonth2Date, setEndMonth2Date] = useState(0);
+  const [endYear2Date, setEndyear2Date] = useState(0);
+  const [startMonth3Date, setStartMonth3Date] = useState(0);
+
+  const [startYear3Date, setStartYear3Date] = useState(0);
+  const [endMonth3Date, setEndMonth3Date] = useState(0);
+  const [endYear3Date, setEndYear3Date] = useState(0);
+  const [startMonth4Date, setStartMonth4Date] = useState(0);
+  const [startYear4Date, setStartYear4Date] = useState(0);
+  const [endMonth4Date, setEndMonth4Date] = useState(0);
+  const [endYear4Date, setEndYear4Date] = useState(0);
+  const [startMonth5Date, setStartMonth5Date] = useState(0);
+  const [endMonth5Date, setEndMonth5Date] = useState(0);
+  const [startYear5Date, setStartYear5Date] = useState(0);
+  const [endYear5Date, setEndYear5Date] = useState(0);
   const [isClicked, setClicked] = useState(false);
+  const [costCenterA, setCostCenterA] = useState("");
+  const [costCenterB, setCostCenterB] = useState("");
+  const [costCenterC, setCostCenterC] = useState("");
+  const [costCenterD, setCostCenterD] = useState("");
+  const [costCenterE, setCostCenterE] = useState("");
+  const [emailError, setError] = useState(false);
+  const [costCentersData, setCostCentersData] = useState({});
   const previewAppointmentLetter = () => {
     setShowLetter(true);
   };
+  useEffect(() => {
+    if (
+      candidateData !== undefined &&
+      candidateData.candidateInformation !== undefined
+    ) {
+      console.log(candidateData.candidateInformation.candidateId);
+      candidateOnBoard(candidateData.candidateInformation.candidateId);
+    }
+    if (onBoardData === null) {
+      personalInfo(candidateData.candidateInformation.candidateId);
+    }
+  }, [candidateData, onBoardData]);
+  useEffect(() => {
+    if (
+      onBoardData === null &&
+      candidateData !== undefined &&
+      candidateData.candidateInformation !== undefined
+    ) {
+      personalInfo(candidateData.candidateInformation.candidateId);
+    }
+  }, [onBoardData]);
+  useEffect(() => {
+    setEmployeeData({
+      ...employeeData,
+      ["employeeId"]:
+        onBoardData !== undefined && onBoardData !== null
+          ? onBoardData.employeeId
+          : personalInfoData !== undefined
+          ? personalInfoData.employeeId
+          : "",
+    });
+  }, [onBoardData, personalInfoData]);
+  useEffect(() => {
+    if (
+      personalInfoData !== undefined &&
+      personalInfoData !== null &&
+      personalInfoData.employeeId !== undefined
+    ) {
+      viewEmployee(personalInfoData.employeeId);
+    }
+  }, [personalInfoData]);
+  useEffect(() => {
+    if (empData !== undefined && empData !== null) {
+      setEmployeeData(empData);
+      setEmployeeData({
+        ...employeeData,
+        ["active"]: empData !== undefined ? empData.active : "",
+        ["additionalRole"]: empData !== undefined ? empData.additionalRole : "",
+        ["address"]: empData.address,
+        ["bloodGroup"]: empData.bloodGroup,
+        ["company"]: empData.company,
+        ["contractType"]: empData.contractType,
+        ["costCentre"]: empData.costCentre,
+        ["department"]: empData.department,
+        ["dob"]: empData.dob,
+        ["employeeName"]:
+          empData.employeeName !== null ? empData.employeeName : "sravani",
+        ["fatherName"]: empData.fatherName,
+        ["gender"]: empData.gender,
+        ["joiningDate"]: empData.joiningDate,
+        ["locationId"]: empData.locationId,
+        ["lastName"]: empData.lastName,
+        ["loginType"]: empData.loginType,
+        ["managerId"]: empData.managerId,
+        ["maritalStatus"]: empData.maritalStatus,
+        ["nationality"]: empData.nationality,
+        ["paymentType"]:
+          empData.paymentType !== null ? empData.paymentType : "Bank",
+        ["personalEmail"]: empData.personalEmail,
+        ["phone"]: empData.phone,
+        ["position"]: empData.position,
+        ["firstName"]: empData.firstName,
+      });
+    }
+  }, [empData]);
   const [employeeData, setEmployeeData] = useState({
     active: "",
     additionalRole: "",
@@ -56,7 +162,12 @@ const CandidateOnboarding = () => {
     department: "",
     dob: "",
     email: "",
-    employeeId: "",
+    employeeId:
+      onBoardData !== undefined && onBoardData !== null
+        ? onBoardData.employeeId
+        : personalInfoData !== undefined
+        ? personalInfoData.employeeId
+        : "",
     employeeName: "",
     fatherName: "",
     fedId: "",
@@ -74,13 +185,15 @@ const CandidateOnboarding = () => {
     personalEmail: "",
     phone: "",
     position: "",
+    role: "",
   });
+
   const handleChange = (e) => {
     setEmployeeData({ ...employeeData, [e.target.name]: e.target.value });
+
+    setError(false);
   };
-  const handleFedChange = (e) => {
-    setFedId(e.target.value);
-  };
+
   const validateEmail = (email) => {
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (re.test(email)) {
@@ -90,10 +203,64 @@ const CandidateOnboarding = () => {
           email.length - "@decathlon.com".length
         ) !== -1
       ) {
-        console.log("VALID");
+        return true;
       } else {
-        console.log("error");
+        return false;
       }
+    }
+  };
+  useEffect(() => {
+    if (createStatus === "SUCCESS") {
+      console.log(costCentersData);
+      costCenterSplit(costCentersData);
+    }
+  }, [createStatus]);
+  const handleDataSave = () => {
+    const costCenterData = {
+      costCenterSplitId: 0,
+      costCentreA: costCenterA,
+      costCentreB: costCenterB,
+      costCentreC: costCenterC,
+      costCentreD: costCenterD,
+      costCentreE: costCenterE,
+      employeeId:
+        onBoardData !== undefined && onBoardData !== null
+          ? onBoardData.employeeId
+          : personalInfoData !== undefined
+          ? personalInfoData.employeeId
+          : "",
+      endMonthA: parseInt(moment(startMonth1End).format("MM")),
+      endMonthB: parseInt(moment(endMonth2Date).format("MM")),
+      endMonthC: parseInt(moment(endMonth3Date).format("MM")),
+      endMonthD: parseInt(moment(endMonth4Date).format("MM")),
+      endMonthE: parseInt(moment(endMonth5Date).format("MM")),
+      endYearA: parseInt(moment(endYear1Date).format("YYYY")),
+      endYearB: parseInt(moment(endYear2Date).format("YYYY")),
+      endYearC: parseInt(moment(endYear3Date).format("YYYY")),
+      endYearD: parseInt(moment(endYear4Date).format("YYYY")),
+      endYearE: parseInt(moment(endYear5Date).format("YYYY")),
+      startMonthA: parseInt(moment(startMonth1Date).format("MM")),
+      startMonthB: parseInt(moment(startMonth2Date).format("MM")),
+      startMonthC: parseInt(moment(startMonth3Date).format("MM")),
+      startMonthD: parseInt(moment(startMonth4Date).format("MM")),
+      startMonthE: parseInt(moment(startMonth5Date).format("MM")),
+      startYearA: parseInt(moment(startYear1Date).format("YYYY")),
+      startYearB: parseInt(moment(startYear2Date).format("YYYY")),
+      startYearC: parseInt(moment(startYear3Date).format("YYYY")),
+      startYearD: parseInt(moment(startYear4Date).format("YYYY")),
+      startYearE: parseInt(moment(startYear5Date).format("YYYY")),
+    };
+    setCostCentersData(costCenterData);
+    if (validateEmail(employeeData.email)) {
+      console.log(employeeData);
+
+      createEmployee(employeeData);
+      // if (createStatus === "SUCCESS") {
+      //   alert("Hii");
+      //   costCenterSplit(costCenterData);
+      // }
+    } else {
+      setError(true);
     }
   };
   const handleIncrement = (key) => {
@@ -184,10 +351,13 @@ const CandidateOnboarding = () => {
               <Form.Control
                 style={{ borderColor: "#006ebb" }}
                 type="text"
-                name="personalEmail"
-                value={employeeData.personalEmail}
+                name="email"
+                value={employeeData.email}
                 onChange={(e) => handleChange(e)}
               />
+              {emailError === true && (
+                <span style={{ color: "red" }}>Please enter a valid email</span>
+              )}
             </Col>
           </Row>
           <Row className="mt-4">
@@ -211,8 +381,8 @@ const CandidateOnboarding = () => {
             <Col sm={5}>
               <Form.Control
                 as="select"
-                name="position"
-                value={employeeData.position}
+                name="role"
+                value={employeeData.role}
                 onChange={(e) => handleChange(e)}
                 style={{ borderColor: "#006ebb" }}
               >
@@ -297,9 +467,9 @@ const CandidateOnboarding = () => {
                 <Form.Group>
                   <Form.Control
                     as="select"
-                    name="costCentre"
-                    value={employeeData.costCentre}
-                    onChange={(e) => handleChange(e)}
+                    name="costCentreA"
+                    value={costCenterA}
+                    onChange={(e) => setCostCenterA(e.target.value)}
                     placeholder="costCenter1"
                   >
                     <option value="">Cost Center1</option>
@@ -317,6 +487,7 @@ const CandidateOnboarding = () => {
               </Col>
               <Col sm={2}>
                 <DatePicker
+                  name="startMonthA"
                   selected={startMonth1Date}
                   onChange={(date) => setStartMonth1Date(date)}
                   placeholderText="Select Start Month"
@@ -359,7 +530,12 @@ const CandidateOnboarding = () => {
             <Row>
               <Col sm={2}>
                 <Form.Group>
-                  <Form.Control as="select" placeholder="costCenter1">
+                  <Form.Control
+                    as="select"
+                    placeholder="costCenter1"
+                    value={costCenterB}
+                    onChange={(e) => setCostCenterB(e.target.value)}
+                  >
                     <option value="">Cost Center2</option>
                     {costCenterList !== null &&
                       costCenterList !== undefined &&
@@ -432,7 +608,12 @@ const CandidateOnboarding = () => {
             <Row>
               <Col sm={2}>
                 <Form.Group>
-                  <Form.Control as="select" placeholder="costCenter1">
+                  <Form.Control
+                    as="select"
+                    placeholder="costCenter1"
+                    value={costCenterC}
+                    onChange={(e) => setCostCenterC(e.target.value)}
+                  >
                     <option value="">Cost Center3</option>
                     {costCenterList !== null &&
                       costCenterList !== undefined &&
@@ -505,7 +686,12 @@ const CandidateOnboarding = () => {
             <Row>
               <Col sm={2}>
                 <Form.Group>
-                  <Form.Control as="select" placeholder="costCenter1">
+                  <Form.Control
+                    as="select"
+                    placeholder="costCenter1"
+                    value={costCenterD}
+                    onChange={(e) => setCostCenterD(e.target.value)}
+                  >
                     <option value="">Cost Center4</option>
                     {costCenterList !== null &&
                       costCenterList !== undefined &&
@@ -521,25 +707,41 @@ const CandidateOnboarding = () => {
               </Col>
               <Col sm={2}>
                 <DatePicker
-                  dateFormat="MM"
-                  placeholderText="Select Start Month"
-                />
-              </Col>
-              <Col sm={2}>
-                <DatePicker dateFormat="MM" placeholderText="Select Year" />
-              </Col>
-              <Col sm={2}>
-                <DatePicker
-                  dateFormat="MM"
+                  selected={startMonth4Date}
+                  onChange={(date) => setStartMonth4Date(date)}
                   placeholderText="Select End Month"
-                />
+                  dateFormat="MM"
+                  showMonthYearPicker
+                  showFullMonthYearPicker
+                />{" "}
               </Col>
               <Col sm={2}>
                 <DatePicker
+                  selected={startYear4Date}
+                  onChange={(date) => setStartYear4Date(date)}
+                  placeholderText="Select End Year"
+                  dateFormat="yyyy"
+                  showYearPicker
+                />{" "}
+              </Col>
+              <Col sm={2}>
+                <DatePicker
+                  selected={endMonth4Date}
+                  onChange={(date) => setEndMonth4Date(date)}
+                  placeholderText="Select End Month"
                   dateFormat="MM"
-                  placeholderText="Select Year"
-                  // disabled={disabled}
-                />
+                  showMonthYearPicker
+                  showFullMonthYearPicker
+                />{" "}
+              </Col>
+              <Col sm={2}>
+                <DatePicker
+                  selected={endYear4Date}
+                  onChange={(date) => setEndYear4Date(date)}
+                  placeholderText="Select End Year"
+                  dateFormat="yyyy"
+                  showYearPicker
+                />{" "}
               </Col>
               {isClicked === true && (
                 <Col sm={2}>
@@ -562,7 +764,12 @@ const CandidateOnboarding = () => {
             <Row>
               <Col sm={2}>
                 <Form.Group>
-                  <Form.Control as="select" placeholder="costCenter1">
+                  <Form.Control
+                    as="select"
+                    placeholder="costCenter1"
+                    value={costCenterE}
+                    onChange={(e) => setCostCenterE(e.target.value)}
+                  >
                     <option value="">Cost Center5</option>
                     {costCenterList !== null &&
                       costCenterList !== undefined &&
@@ -578,25 +785,41 @@ const CandidateOnboarding = () => {
               </Col>
               <Col sm={2}>
                 <DatePicker
-                  dateFormat="MM"
-                  placeholderText="Select Start Month"
-                />
-              </Col>
-              <Col sm={2}>
-                <DatePicker dateFormat="MM" placeholderText="Select Year" />
-              </Col>
-              <Col sm={2}>
-                <DatePicker
-                  dateFormat="MM"
+                  selected={startMonth5Date}
+                  onChange={(date) => setStartMonth5Date(date)}
                   placeholderText="Select End Month"
-                />
+                  dateFormat="MM"
+                  showMonthYearPicker
+                  showFullMonthYearPicker
+                />{" "}
               </Col>
               <Col sm={2}>
                 <DatePicker
+                  selected={startYear5Date}
+                  onChange={(date) => setStartYear5Date(date)}
+                  placeholderText="Select Start Year"
+                  dateFormat="yyyy"
+                  showYearPicker
+                />{" "}
+              </Col>
+              <Col sm={2}>
+                <DatePicker
+                  selected={endMonth5Date}
+                  onChange={(date) => setEndMonth5Date(date)}
+                  placeholderText="Select End Month"
                   dateFormat="MM"
-                  placeholderText="Select Year"
-                  // disabled={disabled}
-                />
+                  showMonthYearPicker
+                  showFullMonthYearPicker
+                />{" "}
+              </Col>
+              <Col sm={2}>
+                <DatePicker
+                  selected={endYear5Date}
+                  onChange={(date) => setEndYear5Date(date)}
+                  placeholderText="Select End Year"
+                  dateFormat="yyyy"
+                  showYearPicker
+                />{" "}
               </Col>
               {isClicked === true && (
                 <Col sm={2}>
@@ -656,7 +879,9 @@ const CandidateOnboarding = () => {
           }}
         >
           <button className="stepperButtons">Back</button>
-          <button className="stepperButtons">Save & Next</button>
+          <button className="stepperButtons" onClick={() => handleDataSave()}>
+            Save & Next
+          </button>
         </div>
       </Fragment>
     )

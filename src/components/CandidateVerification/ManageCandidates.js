@@ -176,15 +176,13 @@ const CandidateList = () => {
                       <td>
                         <Link to={"/verification/" + item.candidateId}>
                         {/* <Link to={"/no_due_clearance"}> */}
+                          {/* <Link to={"/finance-clearance"}> */}
                           <Edit2
                             onClick={() => {
                               FetchCandidateData(item.candidateId);
                             }}
                           />
                         </Link>
-                        {/* <Link to={"/finance-clearance"}>
-                          <Edit2 />
-                        </Link> */}
                       </td>
                     </tr>
                   </tbody>

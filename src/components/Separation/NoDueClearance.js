@@ -1,4 +1,3 @@
-
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import Breadcrumb from "../common/breadcrumb";
 import { SeparationContext } from "../../context/SepearationState";
@@ -105,12 +104,12 @@ const handlePageChange = pageNumber => {
     const formData = value.data
       setCleranceData(formData)
     console.log(formData,"clearanceData")
-    // updateITClearanceList(formData,"all", pageCount)
+     updateITClearanceList(formData,"all", pageCount)
     console.log(data,"save button");
   };
   useEffect(() => {
     viewITClearanceList("all", pageCount);
-  },[]);
+  }, []);
   useEffect(() => {
     if (noDueClearanceList !== undefined && noDueClearanceList !== null) {
       setListRecords(noDueClearanceList);
@@ -120,9 +119,8 @@ const handlePageChange = pageNumber => {
     console.log(value);
     return <span>{value}</span>;
   };
-console.log(listRecords,clearanceData,"listRecords")
+  console.log(listRecords, clearanceData, "listRecords");
   const renderButton = (e) => {
-  
     return (
       <button
         style={{
@@ -148,7 +146,7 @@ console.log(listRecords,clearanceData,"listRecords")
     // setData(selectedData);
     // return selectedData;
   };
- 
+
   return (
     <div>
       <Fragment>
@@ -170,7 +168,6 @@ console.log(listRecords,clearanceData,"listRecords")
                     // onClick={searchDataHandler} 
                     />
                   </div>
-                </div>
                 </div>
                 <div className="col-sm-6">
                 <div className="job-filter">
@@ -219,6 +216,7 @@ console.log(listRecords,clearanceData,"listRecords")
               <div className="title_bar" >
               <b >NO DUE CLEARANCE LISTING </b>            
               </div>
+         
 
         <div className="ag-theme-alpine" style={{ align:"center",height: 495, width: 1400 }}>
           
@@ -240,34 +238,47 @@ console.log(listRecords,clearanceData,"listRecords")
             <AgGridColumn className="columnColor" editable="false" headerName="Last Working Day" field="lastWorkingDay"></AgGridColumn>
             <AgGridColumn className="columnColor" headerName="IT Amount To Be Recovered" field="itAmount"></AgGridColumn>
 
-            <AgGridColumn
-            className="columnColor"
-              field="itClearanceStatus"
-              headerName="IT Clearance"
-              editable={true}
-              cellRendererFramework={renderStatusOptions}
-              cellEditorParams={{
-                values: ["Due", "No Due", "On Hold"],
-                cellRenderer: { statusRender },
-              }}
-            ></AgGridColumn>
-            <AgGridColumn className="columnColor" headerName="IT Clearance Remarks" field="itRemarks"></AgGridColumn>
-            <AgGridColumn className="columnColor" headerName="IT Clearance UpdatedBy" field="itClearanceUpdatedBy"></AgGridColumn>
-            <AgGridColumn
-            headerName="Action"
-            editable="false"
-              field="exitId"
-              cellRendererFramework={(e) => renderButton(e)}
-            ></AgGridColumn>
-          </AgGridReact>
-        </div>
-   
-        {(noDueClearanceList === null) ?
-                  <p style={{ textAlign: "center" }}>No Record Found</p> : null}
+                    <AgGridColumn
+                      className="columnColor"
+                      field="itClearanceStatus"
+                      headerName="IT Clearance"
+                      editable={true}
+                      cellRendererFramework={renderStatusOptions}
+                      cellEditorParams={{
+                        values: ["Due", "No Due", "On Hold"],
+                        cellRenderer: { statusRender },
+                      }}
+                    ></AgGridColumn>
+                    <AgGridColumn
+                      className="columnColor"
+                      headerName="IT Clearance Remarks"
+                      field="itRemarks"
+                    ></AgGridColumn>
+                    <AgGridColumn
+                      className="columnColor"
+                      headerName="IT Clearance UpdatedBy"
+                      field="itClearanceUpdatedBy"
+                    ></AgGridColumn>
+                    <AgGridColumn
+                      headerName="Action"
+                      editable="false"
+                      field="exitId"
+                      cellRendererFramework={(e) => renderButton(e)}
+                    ></AgGridColumn>
+                  </AgGridReact>
+                </div>
 
-                {noDueClearanceList !== undefined && noDueClearanceList !== null && currentRecords.length === 0 ?
+                {noDueClearanceList === null ? (
+                  <p style={{ textAlign: "center" }}>No Record Found</p>
+                ) : null}
 
-                  <div className="loader-box loader" style={{ width: "100% !important" }}>
+                {noDueClearanceList !== undefined &&
+                noDueClearanceList !== null &&
+                currentRecords.length === 0 ? (
+                  <div
+                    className="loader-box loader"
+                    style={{ width: "100% !important" }}
+                  >
                     <div className="loader">
                       <div className="line bg-primary"></div>
                       <div className="line bg-primary"></div>
@@ -275,8 +286,7 @@ console.log(listRecords,clearanceData,"listRecords")
                       <div className="line bg-primary"></div>
                     </div>
                   </div>
-                  :
-                  null}
+                ) : null}
               </div>
               <div>
        {noDueClearanceList !== null && noDueClearanceList !== undefined && 

@@ -65,11 +65,11 @@ import EditOfferRelease from "./components/Offers/editOfferRelease";
 import OfferAccept from "./components/Offers/OfferAcceptance/OfferAccept";
 import LoginOnboard from "./components/Login/LoginOnboard";
 import ViewOfferRelease from "./components/Offers/viewOfferRelease";
-import FinanceClearanceList from "./components/FinanceClearance/ClearanceList"
+import FinanceClearanceList from "./components/FinanceClearance/ClearanceList";
 /*------------------- Candidate Verification -----------------------------------*/
 import CandidateVerification from "./components/CandidateVerification/ManageCandidates";
 import Verification from "./components/CandidateVerification/Verification";
-import NoDueClearance from "./components/Separation/NoDueClearance"
+import NoDueClearance from "./components/Separation/NoDueClearance";
 import ViewEditRelease from "./components/OfferReleaseandOnboarding/ViewOfferRelease";
 import Documents from "./components/OnBording/Documents";
 const RoutePath = () => {
@@ -98,6 +98,7 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/finance-clearance`}
             component={FinanceClearanceList}
           />
+
       <Route
         //  {/*Rajasekhar */}
         path={`${process.env.PUBLIC_URL}/onboard`}
