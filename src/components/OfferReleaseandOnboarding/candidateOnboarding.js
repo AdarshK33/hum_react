@@ -1,6 +1,8 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import { OfferContext } from "../../context/OfferState";
 import { RoleManagementContext } from "../../context/RoleManagementState";
+import { DocsVerifyContext } from "../../context/DocverificationState";
+
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import "./offerReleaseandOnboarding.css";
@@ -17,6 +19,14 @@ import { AdminContext } from "../../context/AdminState";
 import AppointmentLetter from "./AppointmentLetter";
 
 const CandidateOnboarding = () => {
+  const {
+    costCenterSplit,
+    createEmployee,
+    createStatus,
+    candidateOnBoard,
+    onBoardData,
+  } = useContext(DocsVerifyContext);
+
   const { candidateData } = useContext(OfferContext);
   const { RoleList } = useContext(RoleManagementContext);
   const { costCenterList } = useContext(AdminContext);
@@ -32,19 +42,43 @@ const CandidateOnboarding = () => {
   const [startMonth1Date, setStartMonth1Date] = useState("");
   const [startYear1Date, setStartYear1Date] = useState("");
   const [startMonth1End, setStartMonth1EndDate] = useState("");
+  // const [endMonth1Date, setEndMonth1Date] = useState("");
   const [endYear1Date, setEndYear1Date] = useState("");
   const [startMonth2Date, setStartMonth2Date] = useState("");
   const [startYear2Date, setStartYear2Date] = useState("");
   const [endMonth2Date, setEndMonth2Date] = useState("");
   const [endYear2Date, setEndyear2Date] = useState("");
   const [startMonth3Date, setStartMonth3Date] = useState("");
+
   const [startYear3Date, setStartYear3Date] = useState("");
   const [endMonth3Date, setEndMonth3Date] = useState("");
   const [endYear3Date, setEndYear3Date] = useState("");
+  const [startMonth4Date, setStartMonth4Date] = useState("");
+  const [startYear4Date, setStartYear4Date] = useState("");
+  const [endMonth4Date, setEndMonth4Date] = useState("");
+  const [endYear4Date, setEndYear4Date] = useState("");
+  const [startMonth5Date, setStartMonth5Date] = useState("");
+  const [endMonth5Date, setEndMonth5Date] = useState("");
+  const [startYear5Date, setStartYear5Date] = useState("");
+  const [endYear5Date, setEndYear5Date] = useState("");
   const [isClicked, setClicked] = useState(false);
+  const [costCenterA, setCostCenterA] = useState("");
+  const [costCenterB, setCostCenterB] = useState("");
+  const [costCenterC, setCostCenterC] = useState("");
+  const [costCenterD, setCostCenterD] = useState("");
+  const [costCenterE, setCostCenterE] = useState("");
+  const [emailError, setError] = useState(false);
   const previewAppointmentLetter = () => {
     setShowLetter(true);
   };
+  useEffect(() => {
+    if (
+      candidateData !== undefined &&
+      candidateData.candidateInformation !== undefined
+    ) {
+      candidateOnBoard(candidateData.candidateInformation.candidateId);
+    }
+  }, [candidateData]);
   const [employeeData, setEmployeeData] = useState({
     active: "",
     additionalRole: "",
@@ -56,7 +90,10 @@ const CandidateOnboarding = () => {
     department: "",
     dob: "",
     email: "",
-    employeeId: "",
+    employeeId:
+      onBoardData !== undefined && onBoardData !== null
+        ? onBoardData.employeeId
+        : "",
     employeeName: "",
     fatherName: "",
     fedId: "",
@@ -75,12 +112,12 @@ const CandidateOnboarding = () => {
     phone: "",
     position: "",
   });
+
   const handleChange = (e) => {
     setEmployeeData({ ...employeeData, [e.target.name]: e.target.value });
+    setError(false);
   };
-  const handleFedChange = (e) => {
-    setFedId(e.target.value);
-  };
+
   const validateEmail = (email) => {
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (re.test(email)) {
@@ -90,10 +127,48 @@ const CandidateOnboarding = () => {
           email.length - "@decathlon.com".length
         ) !== -1
       ) {
-        console.log("VALID");
+        return true;
       } else {
-        console.log("error");
+        return false;
       }
+    }
+  };
+  const handleDataSave = () => {
+    const costCenterData = {
+      costCenterSplitId: 0,
+      costCentreA: costCenterA,
+      costCentreB: costCenterB,
+      costCentreC: costCenterC,
+      costCentreD: costCenterD,
+      costCentreE: costCenterE,
+      employeeId: "",
+      endMonthA: startMonth1End,
+      endMonthB: endMonth2Date,
+      endMonthC: endMonth3Date,
+      endMonthD: endMonth4Date,
+      endMonthE: endMonth5Date,
+      endYearA: endYear1Date,
+      endYearB: endYear2Date,
+      endYearC: endYear3Date,
+      endYearD: endYear4Date,
+      endYearE: endYear5Date,
+      startMonthA: startMonth1Date,
+      startMonthB: startMonth2Date,
+      startMonthC: startMonth3Date,
+      startMonthD: startMonth4Date,
+      startMonthE: startMonth5Date,
+      startYearA: startYear1Date,
+      startYearB: startYear2Date,
+      startYearC: startYear3Date,
+      startYearD: startYear4Date,
+      startYearE: startYear5Date,
+    };
+    if (validateEmail(employeeData.personalEmail)) {
+      console.log(onBoardData);
+      // createEmployee(employeeData);
+      // costCenterSplit(costCenterData);
+    } else {
+      setError(true);
     }
   };
   const handleIncrement = (key) => {
@@ -156,510 +231,566 @@ const CandidateOnboarding = () => {
   };
 
   return (
-    console.log(employeeData),
-    (
-      <Fragment>
-        {showLetter && <AppointmentLetter />}
+    // console.log(onBoardData["employeeId"]),
+    <Fragment>
+      {showLetter && <AppointmentLetter />}
 
-        <div className="px-5 mx-auto">
-          <h5>
-            <u>WORK DETAILS</u>
-          </h5>
-          <Row className="mt-5">
-            <Col sm={2}>Candidate date of joining</Col>
-            <Col>
-              {candidateData !== undefined &&
-              candidateData.workInformation !== undefined
-                ? moment(candidateData.workInformation.dateOfJoin).format(
-                    "YYYY-MM-DD"
-                  )
-                : ""}
-            </Col>
-          </Row>
-          <Row className="mt-4">
-            <Col sm={1}>
-              <Form.Label>Email ID</Form.Label>
-            </Col>
-            <Col sm={5}>
-              <Form.Control
-                style={{ borderColor: "#006ebb" }}
-                type="text"
-                name="personalEmail"
-                value={employeeData.personalEmail}
-                onChange={(e) => handleChange(e)}
-              />
-            </Col>
-          </Row>
-          <Row className="mt-4">
-            <Col sm={1}>
-              <Form.Label>FED ID</Form.Label>
-            </Col>
-            <Col sm={5}>
-              <Form.Control
-                style={{ borderColor: "#006ebb" }}
-                type="text"
-                name="fedId"
-                value={employeeData.fedId}
-                onChange={(e) => handleChange(e)}
-              />
-            </Col>
-          </Row>
-          <Row className="mt-4">
-            <Col sm={1}>
-              <Form.Label>System role</Form.Label>
-            </Col>
-            <Col sm={5}>
-              <Form.Control
-                as="select"
-                name="position"
-                value={employeeData.position}
-                onChange={(e) => handleChange(e)}
-                style={{ borderColor: "#006ebb" }}
-              >
-                <option value="">Select Role</option>
-                {RoleList !== null &&
-                  RoleList !== undefined &&
-                  RoleList.map((item, i) => {
-                    return (
-                      <option key={i} value={item.roleId}>
-                        {item.roleName}
-                      </option>
-                    );
-                  })}
-              </Form.Control>
-            </Col>
-          </Row>
-        </div>
-        <div className="px-5 mx-auto mt-4">
-          <h5>
-            <u>REMUNERATION DETAILS</u>
-          </h5>
-          <Row className="mt-4">
-            <Col sm={4}>
-              <label className="mr-3">Candidate ID:</label>
-              <label>
-                {candidateData.candidateInformation !== undefined &&
-                candidateData.candidateInformation !== null
-                  ? candidateData.candidateInformation.candidateId
-                  : ""}
-              </label>
-            </Col>
-            <Col sm={4}>
-              <label className="mr-3">Candidate Name:</label>
-              <label>
-                {candidateData.candidateInformation !== undefined &&
-                candidateData.candidateInformation !== null
-                  ? candidateData.candidateInformation.firstName +
-                    candidateData.candidateInformation.lastName
-                  : ""}
-              </label>
-            </Col>
-            <Col sm={4}>
-              <label className="mr-3">Application Date:</label>
-              <label>
-                {candidateData.candidateInformation !== undefined &&
-                candidateData.candidateInformation !== null
-                  ? candidateData.candidateInformation.createdDate
-                  : ""}
-              </label>
-            </Col>
-          </Row>
-          <Row>
-            <Col sm={4}>
-              <label className="mr-3">Fixed Gross:</label>
-              <label>
-                {candidateData.remuneration !== undefined &&
-                candidateData.remuneration !== null ? (
-                  <p>{candidateData.remuneration.fixedGross}</p>
-                ) : (
-                  <p>N/A</p>
-                )}
-              </label>
-            </Col>
-            <Col sm={4}>
-              <label className="mr-3">Bonus (in %):</label>
-              <label>
-                {candidateData.remuneration !== undefined &&
-                candidateData.remuneration !== null ? (
-                  <p>{candidateData.remuneration.fixedGross}</p>
-                ) : (
-                  <p>N/A</p>
-                )}
-              </label>
-            </Col>
-          </Row>
-        </div>
-        <div className="px-5 mx-auto mt-4">
-          <h5>Cost Center Split</h5>
-          {costCenter === true && (
-            <Row>
-              <Col sm={2}>
-                <Form.Group>
-                  <Form.Control
-                    as="select"
-                    name="costCentre"
-                    value={employeeData.costCentre}
-                    onChange={(e) => handleChange(e)}
-                    placeholder="costCenter1"
-                  >
-                    <option value="">Cost Center1</option>
-                    {costCenterList !== null &&
-                      costCenterList !== undefined &&
-                      costCenterList.map((item, i) => {
-                        return (
-                          <option key={i} value={item.costCenterId}>
-                            {item.costCentreName}
-                          </option>
-                        );
-                      })}
-                  </Form.Control>
-                </Form.Group>
-              </Col>
-              <Col sm={2}>
-                <DatePicker
-                  selected={startMonth1Date}
-                  onChange={(date) => setStartMonth1Date(date)}
-                  placeholderText="Select Start Month"
-                  dateFormat="MM"
-                  showMonthYearPicker
-                  showFullMonthYearPicker
-                />{" "}
-              </Col>
-              <Col sm={2}>
-                <DatePicker
-                  selected={startYear1Date}
-                  onChange={(date) => setStartYear1Date(date)}
-                  placeholderText="Select Start Year"
-                  dateFormat="yyyy"
-                  showYearPicker
-                />{" "}
-              </Col>
-              <Col sm={2}>
-                <DatePicker
-                  selected={startMonth1End}
-                  onChange={(date) => setStartMonth1EndDate(date)}
-                  placeholderText="Select End Month"
-                  dateFormat="MM"
-                  showMonthYearPicker
-                  showFullMonthYearPicker
-                />{" "}
-              </Col>
-              <Col sm={2}>
-                <DatePicker
-                  selected={endYear1Date}
-                  onChange={(date) => setEndYear1Date(date)}
-                  placeholderText="Select End Year"
-                  dateFormat="yyyy"
-                  showYearPicker
-                />{" "}
-              </Col>
-            </Row>
-          )}
-          {costCenter1 === true && (
-            <Row>
-              <Col sm={2}>
-                <Form.Group>
-                  <Form.Control as="select" placeholder="costCenter1">
-                    <option value="">Cost Center2</option>
-                    {costCenterList !== null &&
-                      costCenterList !== undefined &&
-                      costCenterList.map((item, i) => {
-                        return (
-                          <option key={i} value={item.costCenterId}>
-                            {item.costCentreName}
-                          </option>
-                        );
-                      })}
-                  </Form.Control>
-                </Form.Group>
-              </Col>
-              <Col sm={2}>
-                <DatePicker
-                  selected={startMonth2Date}
-                  onChange={(date) => setStartMonth2Date(date)}
-                  placeholderText="Select Start Month"
-                  dateFormat="MM"
-                  showMonthYearPicker
-                  showFullMonthYearPicker
-                />{" "}
-              </Col>
-              <Col sm={2}>
-                <DatePicker
-                  selected={startYear2Date}
-                  onChange={(date) => setStartYear2Date(date)}
-                  placeholderText="Select End Year"
-                  dateFormat="yyyy"
-                  showYearPicker
-                />{" "}
-              </Col>
-              <Col sm={2}>
-                <DatePicker
-                  selected={endMonth2Date}
-                  onChange={(date) => setEndMonth2Date(date)}
-                  placeholderText="Select End Month"
-                  dateFormat="MM"
-                  showMonthYearPicker
-                  showFullMonthYearPicker
-                />{" "}
-              </Col>
-              <Col sm={2}>
-                <DatePicker
-                  selected={endYear2Date}
-                  onChange={(date) => setEndyear2Date(date)}
-                  placeholderText="Select End Year"
-                  dateFormat="yyyy"
-                  showYearPicker
-                />{" "}
-              </Col>
-              {isClicked === true && (
-                <Col sm={2}>
-                  <Form.Group>
-                    <div>
-                      <button
-                        className="buttonField  button"
-                        onClick={() => cancel(1)}
-                        // disabled={!isClicked}
-                      >
-                        <b> Cancel </b>
-                      </button>
-                    </div>
-                  </Form.Group>
-                </Col>
-              )}
-            </Row>
-          )}
-          {costCenter2 === true && (
-            <Row>
-              <Col sm={2}>
-                <Form.Group>
-                  <Form.Control as="select" placeholder="costCenter1">
-                    <option value="">Cost Center3</option>
-                    {costCenterList !== null &&
-                      costCenterList !== undefined &&
-                      costCenterList.map((item, i) => {
-                        return (
-                          <option key={i} value={item.costCenterId}>
-                            {item.costCentreName}
-                          </option>
-                        );
-                      })}
-                  </Form.Control>
-                </Form.Group>
-              </Col>
-              <Col sm={2}>
-                <DatePicker
-                  selected={startMonth3Date}
-                  onChange={(date) => setStartMonth3Date(date)}
-                  placeholderText="Select End Month"
-                  dateFormat="MM"
-                  showMonthYearPicker
-                  showFullMonthYearPicker
-                />{" "}
-              </Col>
-              <Col sm={2}>
-                <DatePicker
-                  selected={startYear3Date}
-                  onChange={(date) => setStartYear3Date(date)}
-                  placeholderText="Select End Year"
-                  dateFormat="yyyy"
-                  showYearPicker
-                />{" "}
-              </Col>
-              <Col sm={2}>
-                <DatePicker
-                  selected={endMonth3Date}
-                  onChange={(date) => setEndMonth3Date(date)}
-                  placeholderText="Select End Month"
-                  dateFormat="MM"
-                  showMonthYearPicker
-                  showFullMonthYearPicker
-                />{" "}
-              </Col>
-              <Col sm={2}>
-                <DatePicker
-                  selected={endYear3Date}
-                  onChange={(date) => setEndYear3Date(date)}
-                  placeholderText="Select End Year"
-                  dateFormat="yyyy"
-                  showYearPicker
-                />{" "}
-              </Col>
-              {isClicked === true && (
-                <Col sm={2}>
-                  <Form.Group>
-                    <div>
-                      <button
-                        className="buttonField  button"
-                        onClick={() => cancel(2)}
-                        // disabled={!isClicked}
-                      >
-                        <b> Cancel </b>
-                      </button>
-                    </div>
-                  </Form.Group>
-                </Col>
-              )}
-            </Row>
-          )}
-          {costCenter3 === true && (
-            <Row>
-              <Col sm={2}>
-                <Form.Group>
-                  <Form.Control as="select" placeholder="costCenter1">
-                    <option value="">Cost Center4</option>
-                    {costCenterList !== null &&
-                      costCenterList !== undefined &&
-                      costCenterList.map((item, i) => {
-                        return (
-                          <option key={i} value={item.costCenterId}>
-                            {item.costCentreName}
-                          </option>
-                        );
-                      })}
-                  </Form.Control>
-                </Form.Group>
-              </Col>
-              <Col sm={2}>
-                <DatePicker
-                  dateFormat="MM"
-                  placeholderText="Select Start Month"
-                />
-              </Col>
-              <Col sm={2}>
-                <DatePicker dateFormat="MM" placeholderText="Select Year" />
-              </Col>
-              <Col sm={2}>
-                <DatePicker
-                  dateFormat="MM"
-                  placeholderText="Select End Month"
-                />
-              </Col>
-              <Col sm={2}>
-                <DatePicker
-                  dateFormat="MM"
-                  placeholderText="Select Year"
-                  // disabled={disabled}
-                />
-              </Col>
-              {isClicked === true && (
-                <Col sm={2}>
-                  <Form.Group>
-                    <div>
-                      <button
-                        className="buttonField  button"
-                        onClick={() => cancel(3)}
-                        // disabled={!isClicked}
-                      >
-                        <b> Cancel </b>
-                      </button>
-                    </div>
-                  </Form.Group>
-                </Col>
-              )}
-            </Row>
-          )}
-          {costCenter4 === true && (
-            <Row>
-              <Col sm={2}>
-                <Form.Group>
-                  <Form.Control as="select" placeholder="costCenter1">
-                    <option value="">Cost Center5</option>
-                    {costCenterList !== null &&
-                      costCenterList !== undefined &&
-                      costCenterList.map((item, i) => {
-                        return (
-                          <option key={i} value={item.costCenterId}>
-                            {item.costCentreName}
-                          </option>
-                        );
-                      })}
-                  </Form.Control>
-                </Form.Group>
-              </Col>
-              <Col sm={2}>
-                <DatePicker
-                  dateFormat="MM"
-                  placeholderText="Select Start Month"
-                />
-              </Col>
-              <Col sm={2}>
-                <DatePicker dateFormat="MM" placeholderText="Select Year" />
-              </Col>
-              <Col sm={2}>
-                <DatePicker
-                  dateFormat="MM"
-                  placeholderText="Select End Month"
-                />
-              </Col>
-              <Col sm={2}>
-                <DatePicker
-                  dateFormat="MM"
-                  placeholderText="Select Year"
-                  // disabled={disabled}
-                />
-              </Col>
-              {isClicked === true && (
-                <Col sm={2}>
-                  <Form.Group>
-                    <div>
-                      <button
-                        className="buttonField  button"
-                        onClick={() => cancel(4)}
-                        // disabled={!isClicked}
-                      >
-                        <b> Cancel </b>
-                      </button>
-                    </div>
-                  </Form.Group>
-                </Col>
-              )}
-            </Row>
-          )}
-          <div className="text-right addButtonWrapper">
-            <button
-              className="addButtonField  button"
-              onClick={() => {
-                handleIncrement(count);
-              }}
-              disabled={false}
-              style={{ width: "160px" }}
+      <div className="px-5 mx-auto">
+        <h5>
+          <u>WORK DETAILS</u>
+        </h5>
+        <Row className="mt-5">
+          <Col sm={2}>Candidate date of joining</Col>
+          <Col>
+            {candidateData !== undefined &&
+            candidateData.workInformation !== undefined
+              ? moment(candidateData.workInformation.dateOfJoin).format(
+                  "YYYY-MM-DD"
+                )
+              : ""}
+          </Col>
+        </Row>
+        <Row className="mt-4">
+          <Col sm={1}>
+            <Form.Label>Email ID</Form.Label>
+          </Col>
+          <Col sm={5}>
+            <Form.Control
+              style={{ borderColor: "#006ebb" }}
+              type="text"
+              name="personalEmail"
+              value={employeeData.personalEmail}
+              onChange={(e) => handleChange(e)}
+            />
+            {emailError === true && (
+              <span style={{ color: "red" }}>Please enter a valid email</span>
+            )}
+          </Col>
+        </Row>
+        <Row className="mt-4">
+          <Col sm={1}>
+            <Form.Label>FED ID</Form.Label>
+          </Col>
+          <Col sm={5}>
+            <Form.Control
+              style={{ borderColor: "#006ebb" }}
+              type="text"
+              name="fedId"
+              value={employeeData.fedId}
+              onChange={(e) => handleChange(e)}
+            />
+          </Col>
+        </Row>
+        <Row className="mt-4">
+          <Col sm={1}>
+            <Form.Label>System role</Form.Label>
+          </Col>
+          <Col sm={5}>
+            <Form.Control
+              as="select"
+              name="additionalRole"
+              value={employeeData.additionalRole}
+              onChange={(e) => handleChange(e)}
+              style={{ borderColor: "#006ebb" }}
             >
-              <b> Add + </b>
-            </button>
-          </div>
-          {/* <Row className="mt-5">
+              <option value="">Select Role</option>
+              {RoleList !== null &&
+                RoleList !== undefined &&
+                RoleList.map((item, i) => {
+                  return (
+                    <option key={i} value={item.roleId}>
+                      {item.roleName}
+                    </option>
+                  );
+                })}
+            </Form.Control>
+          </Col>
+        </Row>
+      </div>
+      <div className="px-5 mx-auto mt-4">
+        <h5>
+          <u>REMUNERATION DETAILS</u>
+        </h5>
+        <Row className="mt-4">
+          <Col sm={4}>
+            <label className="mr-3">Candidate ID:</label>
+            <label>
+              {candidateData.candidateInformation !== undefined &&
+              candidateData.candidateInformation !== null
+                ? candidateData.candidateInformation.candidateId
+                : ""}
+            </label>
+          </Col>
+          <Col sm={4}>
+            <label className="mr-3">Candidate Name:</label>
+            <label>
+              {candidateData.candidateInformation !== undefined &&
+              candidateData.candidateInformation !== null
+                ? candidateData.candidateInformation.firstName +
+                  candidateData.candidateInformation.lastName
+                : ""}
+            </label>
+          </Col>
+          <Col sm={4}>
+            <label className="mr-3">Application Date:</label>
+            <label>
+              {candidateData.candidateInformation !== undefined &&
+              candidateData.candidateInformation !== null
+                ? candidateData.candidateInformation.createdDate
+                : ""}
+            </label>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={4}>
+            <label className="mr-3">Fixed Gross:</label>
+            <label>
+              {candidateData.remuneration !== undefined &&
+              candidateData.remuneration !== null ? (
+                <p>{candidateData.remuneration.fixedGross}</p>
+              ) : (
+                <p>N/A</p>
+              )}
+            </label>
+          </Col>
+          <Col sm={4}>
+            <label className="mr-3">Bonus (in %):</label>
+            <label>
+              {candidateData.remuneration !== undefined &&
+              candidateData.remuneration !== null ? (
+                <p>{candidateData.remuneration.fixedGross}</p>
+              ) : (
+                <p>N/A</p>
+              )}
+            </label>
+          </Col>
+        </Row>
+      </div>
+      <div className="px-5 mx-auto mt-4">
+        <h5>Cost Center Split</h5>
+        {costCenter === true && (
+          <Row>
+            <Col sm={2}>
+              <Form.Group>
+                <Form.Control
+                  as="select"
+                  name="costCentreA"
+                  value={costCenterA}
+                  onChange={(e) => setCostCenterA(e.target.value)}
+                  placeholder="costCenter1"
+                >
+                  <option value="">Cost Center1</option>
+                  {costCenterList !== null &&
+                    costCenterList !== undefined &&
+                    costCenterList.map((item, i) => {
+                      return (
+                        <option key={i} value={item.costCenterId}>
+                          {item.costCentreName}
+                        </option>
+                      );
+                    })}
+                </Form.Control>
+              </Form.Group>
+            </Col>
+            <Col sm={2}>
+              <DatePicker
+                name="startMonthA"
+                selected={startMonth1Date}
+                onChange={(date) => setStartMonth1Date(new Date(date))}
+                placeholderText="Select Start Month"
+                dateFormat="MM"
+                showMonthYearPicker
+                showFullMonthYearPicker
+              />{" "}
+            </Col>
+            <Col sm={2}>
+              <DatePicker
+                selected={startYear1Date}
+                onChange={(date) => setStartYear1Date(date)}
+                placeholderText="Select Start Year"
+                dateFormat="yyyy"
+                showYearPicker
+              />{" "}
+            </Col>
+            <Col sm={2}>
+              <DatePicker
+                selected={startMonth1End}
+                onChange={(date) => setStartMonth1EndDate(date)}
+                placeholderText="Select End Month"
+                dateFormat="MM"
+                showMonthYearPicker
+                showFullMonthYearPicker
+              />{" "}
+            </Col>
+            <Col sm={2}>
+              <DatePicker
+                selected={endYear1Date}
+                onChange={(date) => setEndYear1Date(date)}
+                placeholderText="Select End Year"
+                dateFormat="yyyy"
+                showYearPicker
+              />{" "}
+            </Col>
+          </Row>
+        )}
+        {costCenter1 === true && (
+          <Row>
+            <Col sm={2}>
+              <Form.Group>
+                <Form.Control
+                  as="select"
+                  placeholder="costCenter1"
+                  value={costCenterB}
+                  onChange={(e) => setCostCenterB(e.target.value)}
+                >
+                  <option value="">Cost Center2</option>
+                  {costCenterList !== null &&
+                    costCenterList !== undefined &&
+                    costCenterList.map((item, i) => {
+                      return (
+                        <option key={i} value={item.costCenterId}>
+                          {item.costCentreName}
+                        </option>
+                      );
+                    })}
+                </Form.Control>
+              </Form.Group>
+            </Col>
+            <Col sm={2}>
+              <DatePicker
+                selected={startMonth2Date}
+                onChange={(date) => setStartMonth2Date(date)}
+                placeholderText="Select Start Month"
+                dateFormat="MM"
+                showMonthYearPicker
+                showFullMonthYearPicker
+              />{" "}
+            </Col>
+            <Col sm={2}>
+              <DatePicker
+                selected={startYear2Date}
+                onChange={(date) => setStartYear2Date(date)}
+                placeholderText="Select End Year"
+                dateFormat="yyyy"
+                showYearPicker
+              />{" "}
+            </Col>
+            <Col sm={2}>
+              <DatePicker
+                selected={endMonth2Date}
+                onChange={(date) => setEndMonth2Date(date)}
+                placeholderText="Select End Month"
+                dateFormat="MM"
+                showMonthYearPicker
+                showFullMonthYearPicker
+              />{" "}
+            </Col>
+            <Col sm={2}>
+              <DatePicker
+                selected={endYear2Date}
+                onChange={(date) => setEndyear2Date(date)}
+                placeholderText="Select End Year"
+                dateFormat="yyyy"
+                showYearPicker
+              />{" "}
+            </Col>
+            {isClicked === true && (
+              <Col sm={2}>
+                <Form.Group>
+                  <div>
+                    <button
+                      className="buttonField  button"
+                      onClick={() => cancel(1)}
+                      // disabled={!isClicked}
+                    >
+                      <b> Cancel </b>
+                    </button>
+                  </div>
+                </Form.Group>
+              </Col>
+            )}
+          </Row>
+        )}
+        {costCenter2 === true && (
+          <Row>
+            <Col sm={2}>
+              <Form.Group>
+                <Form.Control
+                  as="select"
+                  placeholder="costCenter1"
+                  value={costCenterC}
+                  onChange={(e) => setCostCenterC(e.target.value)}
+                >
+                  <option value="">Cost Center3</option>
+                  {costCenterList !== null &&
+                    costCenterList !== undefined &&
+                    costCenterList.map((item, i) => {
+                      return (
+                        <option key={i} value={item.costCenterId}>
+                          {item.costCentreName}
+                        </option>
+                      );
+                    })}
+                </Form.Control>
+              </Form.Group>
+            </Col>
+            <Col sm={2}>
+              <DatePicker
+                selected={startMonth3Date}
+                onChange={(date) => setStartMonth3Date(date)}
+                placeholderText="Select End Month"
+                dateFormat="MM"
+                showMonthYearPicker
+                showFullMonthYearPicker
+              />{" "}
+            </Col>
+            <Col sm={2}>
+              <DatePicker
+                selected={startYear3Date}
+                onChange={(date) => setStartYear3Date(date)}
+                placeholderText="Select End Year"
+                dateFormat="yyyy"
+                showYearPicker
+              />{" "}
+            </Col>
+            <Col sm={2}>
+              <DatePicker
+                selected={endMonth3Date}
+                onChange={(date) => setEndMonth3Date(date)}
+                placeholderText="Select End Month"
+                dateFormat="MM"
+                showMonthYearPicker
+                showFullMonthYearPicker
+              />{" "}
+            </Col>
+            <Col sm={2}>
+              <DatePicker
+                selected={endYear3Date}
+                onChange={(date) => setEndYear3Date(date)}
+                placeholderText="Select End Year"
+                dateFormat="yyyy"
+                showYearPicker
+              />{" "}
+            </Col>
+            {isClicked === true && (
+              <Col sm={2}>
+                <Form.Group>
+                  <div>
+                    <button
+                      className="buttonField  button"
+                      onClick={() => cancel(2)}
+                      // disabled={!isClicked}
+                    >
+                      <b> Cancel </b>
+                    </button>
+                  </div>
+                </Form.Group>
+              </Col>
+            )}
+          </Row>
+        )}
+        {costCenter3 === true && (
+          <Row>
+            <Col sm={2}>
+              <Form.Group>
+                <Form.Control
+                  as="select"
+                  placeholder="costCenter1"
+                  value={costCenterD}
+                  onChange={(e) => setCostCenterD(e.target.value)}
+                >
+                  <option value="">Cost Center4</option>
+                  {costCenterList !== null &&
+                    costCenterList !== undefined &&
+                    costCenterList.map((item, i) => {
+                      return (
+                        <option key={i} value={item.costCenterId}>
+                          {item.costCentreName}
+                        </option>
+                      );
+                    })}
+                </Form.Control>
+              </Form.Group>
+            </Col>
+            <Col sm={2}>
+              <DatePicker
+                selected={startMonth4Date}
+                onChange={(date) => setStartMonth4Date(date)}
+                placeholderText="Select End Month"
+                dateFormat="MM"
+                showMonthYearPicker
+                showFullMonthYearPicker
+              />{" "}
+            </Col>
+            <Col sm={2}>
+              <DatePicker
+                selected={startYear4Date}
+                onChange={(date) => setStartYear4Date(date)}
+                placeholderText="Select End Year"
+                dateFormat="yyyy"
+                showYearPicker
+              />{" "}
+            </Col>
+            <Col sm={2}>
+              <DatePicker
+                selected={endMonth4Date}
+                onChange={(date) => setEndMonth4Date(date)}
+                placeholderText="Select End Month"
+                dateFormat="MM"
+                showMonthYearPicker
+                showFullMonthYearPicker
+              />{" "}
+            </Col>
+            <Col sm={2}>
+              <DatePicker
+                selected={endYear4Date}
+                onChange={(date) => setEndYear4Date(date)}
+                placeholderText="Select End Year"
+                dateFormat="yyyy"
+                showYearPicker
+              />{" "}
+            </Col>
+            {isClicked === true && (
+              <Col sm={2}>
+                <Form.Group>
+                  <div>
+                    <button
+                      className="buttonField  button"
+                      onClick={() => cancel(3)}
+                      // disabled={!isClicked}
+                    >
+                      <b> Cancel </b>
+                    </button>
+                  </div>
+                </Form.Group>
+              </Col>
+            )}
+          </Row>
+        )}
+        {costCenter4 === true && (
+          <Row>
+            <Col sm={2}>
+              <Form.Group>
+                <Form.Control
+                  as="select"
+                  placeholder="costCenter1"
+                  value={costCenterE}
+                  onChange={(e) => setCostCenterE(e.target.value)}
+                >
+                  <option value="">Cost Center5</option>
+                  {costCenterList !== null &&
+                    costCenterList !== undefined &&
+                    costCenterList.map((item, i) => {
+                      return (
+                        <option key={i} value={item.costCenterId}>
+                          {item.costCentreName}
+                        </option>
+                      );
+                    })}
+                </Form.Control>
+              </Form.Group>
+            </Col>
+            <Col sm={2}>
+              <DatePicker
+                selected={startMonth5Date}
+                onChange={(date) => setStartMonth5Date(date)}
+                placeholderText="Select End Month"
+                dateFormat="MM"
+                showMonthYearPicker
+                showFullMonthYearPicker
+              />{" "}
+            </Col>
+            <Col sm={2}>
+              <DatePicker
+                selected={startYear5Date}
+                onChange={(date) => setStartYear5Date(date)}
+                placeholderText="Select Start Year"
+                dateFormat="yyyy"
+                showYearPicker
+              />{" "}
+            </Col>
+            <Col sm={2}>
+              <DatePicker
+                selected={endMonth5Date}
+                onChange={(date) => setEndMonth5Date(date)}
+                placeholderText="Select End Month"
+                dateFormat="MM"
+                showMonthYearPicker
+                showFullMonthYearPicker
+              />{" "}
+            </Col>
+            <Col sm={2}>
+              <DatePicker
+                selected={endYear5Date}
+                onChange={(date) => setEndYear5Date(date)}
+                placeholderText="Select End Year"
+                dateFormat="yyyy"
+                showYearPicker
+              />{" "}
+            </Col>
+            {isClicked === true && (
+              <Col sm={2}>
+                <Form.Group>
+                  <div>
+                    <button
+                      className="buttonField  button"
+                      onClick={() => cancel(4)}
+                      // disabled={!isClicked}
+                    >
+                      <b> Cancel </b>
+                    </button>
+                  </div>
+                </Form.Group>
+              </Col>
+            )}
+          </Row>
+        )}
+        <div className="text-right addButtonWrapper">
+          <button
+            className="addButtonField  button"
+            onClick={() => {
+              handleIncrement(count);
+            }}
+            disabled={false}
+            style={{ width: "160px" }}
+          >
+            <b> Add + </b>
+          </button>
+        </div>
+        {/* <Row className="mt-5">
             <Col sm={3}></Col>
             <Col sm={4} className="text-center">
               <Button className="px-5">Save</Button>
             </Col>
           </Row> */}
-        </div>
-        <div className="px-5 mx-auto mt-5">
-          <h5>
-            <u>GENERATE APPOINTMENT LETTER</u>
-          </h5>
-          <Row className="text-center mt-3">
-            <Button
-              type="button"
-              className="px-5 mb-4 previewButton"
-              onClick={() => previewAppointmentLetter()}
-            >
-              Preview Appointment Letter
-            </Button>
-          </Row>
-        </div>
-        <div
-          style={{
-            marginTop: "2rem",
-            marginBottom: "2rem",
-            textAlign: "center",
-          }}
-        >
-          <button className="stepperButtons">Back</button>
-          <button className="stepperButtons">Save & Next</button>
-        </div>
-      </Fragment>
-    )
+      </div>
+      <div className="px-5 mx-auto mt-5">
+        <h5>
+          <u>GENERATE APPOINTMENT LETTER</u>
+        </h5>
+        <Row className="text-center mt-3">
+          <Button
+            type="button"
+            className="px-5 mb-4 previewButton"
+            onClick={() => previewAppointmentLetter()}
+          >
+            Preview Appointment Letter
+          </Button>
+        </Row>
+      </div>
+      <div
+        style={{
+          marginTop: "2rem",
+          marginBottom: "2rem",
+          textAlign: "center",
+        }}
+      >
+        <button className="stepperButtons">Back</button>
+        <button className="stepperButtons" onClick={() => handleDataSave()}>
+          Save & Next
+        </button>
+      </div>
+    </Fragment>
   );
 };
 export default CandidateOnboarding;
