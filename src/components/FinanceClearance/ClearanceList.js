@@ -1,5 +1,7 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import { SeparationContext } from "../../context/SepearationState";
+import Breadcrumb from "../common/breadcrumb";
+
 import {
   Button,
   Container,
@@ -10,9 +12,10 @@ import {
   Table,
 } from "react-bootstrap";
 import { Edit2, Eye, Search } from "react-feather";
-import moment from "moment";
+// import moment from "moment";
 import "./financeClearance.css";
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
+import Pagination from "react-js-pagination";
 
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
@@ -26,7 +29,24 @@ const FinanceClearanceList = () => {
     saveFinanceClearanceData,
   } = useContext(SeparationContext);
   const [pageCount, setPageCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+
   const [listRecords, setListRecords] = useState([]);
+  const recordPerPage = 10;
+  const totalRecords =
+    separationList !== undefined &&
+    separationList !== null &&
+    separationList.length;
+  const pageRange = 10;
+  const indexOfLastRecord = currentPage * recordPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+  const currentRecords =
+    separationList !== undefined && separationList !== null
+      ? separationList.slice(indexOfFirstRecord, indexOfLastRecord)
+      : [];
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
   // const [clearanceData, setCleranceData] = useState({
   //   financeClearanceId: "",
   //   exitId: "",
@@ -99,105 +119,122 @@ const FinanceClearanceList = () => {
 
   const onCellClicked = (params) => {
     if (params.column.colId === "action") {
-      console.log(params.node.data);
-      // saveFinanceClearanceData(params.node.data);
+      saveFinanceClearanceData(params.node.data);
     }
     if (params.column.colId === "status") {
-      // setClearanceData({
-      //   ...params.data.node,
-      //   [params.event.target.name]: params.event.target.value,
-      // });
+      // console.log(params.node.data);
+      if (params.node.data !== undefined) {
+        params.node.data.financeClearanceStatus = params.event.target.value;
+      }
+    }
+  };
+  const onCellValueChanged = (params) => {
+    if (params.column.colId === "status") {
+      console.log("hii");
     }
   };
 
   return (
-    console.log(clearanceData),
-    (
-      <Fragment>
-        <Container fluid>
-          <div className="row headingWrapper px-4 mx-auto">
-            <div className="col-md-12">
-              <b className="text-uppercase text-center">
-                NO DUE CLEARANCE LISTING
-              </b>
-            </div>
-          </div>
-          <Row className="mt-4 mainWrapper">
-            <Col className="searchBox">
-              <input
-                className="form-control inputWrapper"
-                type="text"
-                placeholder="Search.."
-              />
-              <Search
-                className="search-icon"
-                style={{ color: "#313131", marginRight: "25rem" }}
-                //   onClick={searchDataHandler}
-              />
-            </Col>
-            <Col className="selectList">
-              <label>Select Cost Center</label> &nbsp;&nbsp;
-              <Form.Control
-                as="select"
-                className="selectInputWrapper"
-              ></Form.Control>
-            </Col>
-          </Row>
+    <Fragment>
+      <Breadcrumb title="Finance Clearance" parent="Finanace Clearance" />
 
-          <div className="ag-theme-alpine" style={{ height: 400, width: 1450 }}>
-            <AgGridReact
-              rowData={separationList}
-              onGridReady={(params) => setGridApi(params.api)}
-              onCellClicked={onCellClicked}
-            >
-              <AgGridColumn field="employeeId"></AgGridColumn>
-              <AgGridColumn field="empName"></AgGridColumn>
-              <AgGridColumn field="costCentre"></AgGridColumn>
-              <AgGridColumn field="managerName"></AgGridColumn>
-              <AgGridColumn field="joiningDate"></AgGridColumn>
-              <AgGridColumn
-                field="lastWorkingDate"
-                headerName="Last working Day"
-              ></AgGridColumn>
-              <AgGridColumn
-                field="financeAmount"
-                headerName="Finance Amount to be Recovered"
-                editable={true}
-                singleClickEdit={true}
-              ></AgGridColumn>
-              <AgGridColumn
-                field="financeClearanceStatus"
-                headerName="Finance Clearance"
-                colId="status"
-                editable={true}
-                cellRendererFramework={renderStatusOptions}
-                // cellEditor={agRichSelectCellEditor}
-                cellEditorParams={{
-                  values: ["0", "1", "2"],
-                  cellRenderer: { statusRender },
-                }}
-              ></AgGridColumn>
-              <AgGridColumn
-                field="financeRemarks"
-                headerName="Finance Clearance Remarks"
-                editable={true}
-                singleClickEdit={true}
-              ></AgGridColumn>
-              <AgGridColumn
-                field="financeClearanceUpdatedBy"
-                editable={true}
-                singleClickEdit={true}
-              ></AgGridColumn>
-              <AgGridColumn
-                field="Action"
-                colId="action"
-                cellRendererFramework={() => renderButton()}
-              ></AgGridColumn>
-            </AgGridReact>
+      <Container fluid>
+        <div className="row headingWrapper px-4 mx-auto">
+          <div className="col-md-12">
+            <b className="text-uppercase text-center">
+              NO DUE CLEARANCE LISTING
+            </b>
           </div>
-        </Container>
-      </Fragment>
-    )
+        </div>
+        <Row className="mt-4 mainWrapper">
+          <Col className="searchBox">
+            <input
+              className="form-control inputWrapper"
+              type="text"
+              placeholder="Search.."
+            />
+            <Search
+              className="search-icon"
+              style={{ color: "#313131", marginRight: "25rem" }}
+              //   onClick={searchDataHandler}
+            />
+          </Col>
+          <Col className="selectList">
+            <label>Select Cost Center</label> &nbsp;&nbsp;
+            <Form.Control
+              as="select"
+              className="selectInputWrapper"
+            ></Form.Control>
+          </Col>
+        </Row>
+
+        <div className="ag-theme-alpine" style={{ height: 400, width: 1450 }}>
+          <AgGridReact
+            rowData={separationList}
+            onGridReady={(params) => setGridApi(params.api)}
+            onCellClicked={onCellClicked}
+            onCellValueChanged={onCellValueChanged}
+          >
+            <AgGridColumn field="employeeId"></AgGridColumn>
+            <AgGridColumn field="empName"></AgGridColumn>
+            <AgGridColumn field="costCentre"></AgGridColumn>
+            <AgGridColumn field="managerName"></AgGridColumn>
+            <AgGridColumn field="joiningDate"></AgGridColumn>
+            <AgGridColumn
+              field="lastWorkingDate"
+              headerName="Last working Day"
+            ></AgGridColumn>
+            <AgGridColumn
+              field="financeAmount"
+              headerName="Finance Amount to be Recovered"
+              editable={true}
+              singleClickEdit={true}
+            ></AgGridColumn>
+            <AgGridColumn
+              field="financeClearanceStatus"
+              headerName="Finance Clearance"
+              colId="status"
+              editable={true}
+              cellRendererFramework={renderStatusOptions}
+              // cellEditor={agRichSelectCellEditor}
+              cellEditorParams={{
+                values: ["0", "1", "2"],
+                cellRenderer: { statusRender },
+              }}
+            ></AgGridColumn>
+            <AgGridColumn
+              field="financeRemarks"
+              headerName="Finance Clearance Remarks"
+              editable={true}
+              singleClickEdit={true}
+            ></AgGridColumn>
+            <AgGridColumn
+              field="financeClearanceUpdatedBy"
+              editable={true}
+              singleClickEdit={true}
+            ></AgGridColumn>
+            <AgGridColumn
+              field="Action"
+              colId="action"
+              cellRendererFramework={() => renderButton()}
+            ></AgGridColumn>
+          </AgGridReact>
+        </div>
+      </Container>
+      <div>
+        {separationList !== null && separationList.length > 10 && (
+          <Pagination
+            itemClass="page-item"
+            linkClass="page-link"
+            activePage={currentPage}
+            itemsCountPerPage={recordPerPage}
+            totalItemsCount={totalRecords}
+            pageRangeDisplayed={pageRange}
+            onChange={handlePageChange}
+          />
+        )}
+      </div>
+    </Fragment>
   );
 };
 export default FinanceClearanceList;
