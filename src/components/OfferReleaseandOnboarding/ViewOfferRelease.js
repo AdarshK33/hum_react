@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect, useContext } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
 import Breadcrumb from "../common/breadcrumb";
 import {
@@ -16,8 +16,49 @@ import ViewRemunerationInformation from "./viewRemunerationInformation";
 import CandidateOfferLetter from "./candidateOfferLetter";
 import VerifyCandidateDocs from "./verifyCandidateDocs";
 import CandidateOnboarding from "./candidateOnboarding";
+import { DocsVerifyContext } from "../../context/DocverificationState";
+import { OfferContext } from "../../context/OfferState";
 
 const ViewOfferRelease = () => {
+  const { personalInfo, personalInfoData } = useContext(DocsVerifyContext);
+  const { candidateView, candidateData, viewCandidateId } = useContext(
+    OfferContext
+  );
+  const [activeStep5, setActiveStep5] = useState(false);
+  const [activeStep6, setActiveStep6] = useState(false);
+  const [checkStep5, setCheckStep5] = useState(false);
+  const [checkStep6, setCheckStep6] = useState(false);
+  // useEffect(() => {
+  //   viewCandidateId(0);
+  // }, [candidateData]);
+
+  useEffect(() => {
+    if (
+      candidateData &&
+      candidateData.candidateInformation &&
+      candidateData.candidateInformation.candidateId !== null
+    ) {
+      console.log("------>", candidateData.candidateInformation.candidateId);
+      personalInfo(candidateData.candidateInformation.candidateId);
+    }
+  }, [candidateData]);
+  useEffect(() => {
+    if (
+      personalInfoData !== null &&
+      Object.keys(personalInfoData).length !== 0 &&
+      personalInfoData !== undefined
+    ) {
+      if (personalInfoData.verificationStatus === 0) {
+        console.log("if");
+        setActiveStep5(false);
+        setActiveStep6(false);
+      } else {
+        console.log("else");
+        setActiveStep5(true);
+        setActiveStep6(true);
+      }
+    }
+  }, [personalInfoData]);
   return (
     <Fragment>
       <Container fluid className="container-accordion">
@@ -113,23 +154,70 @@ const ViewOfferRelease = () => {
 
           <AccordionItem>
             <AccordionItemHeading>
-              <AccordionItemButton style={{ background: "#aaa" }}>
-                Step 5: Verify Candidate Documents
+              <AccordionItemButton
+                style={activeStep5 ? {} : { background: "#aaa" }}
+              >
+                {checkStep5 === true && activeStep5 === true ? (
+                  <div>
+                    {" "}
+                    <i
+                      style={{
+                        color: "green",
+                        backgroundColor: "white",
+                        borderRadius: "50%",
+                        fontSize: "19px",
+                      }}
+                      className="fa fa-check-circle"
+                      aria-hidden="true"
+                    ></i>
+                    Step 5: Verify Candidate Documents{" "}
+                  </div>
+                ) : (
+                  <div>Step 5: Verify Candidate Documents </div>
+                )}
               </AccordionItemButton>
             </AccordionItemHeading>
-            <AccordionItemPanel>
-              <VerifyCandidateDocs />
-            </AccordionItemPanel>
+            {activeStep5 === true ? (
+              <AccordionItemPanel>
+                <VerifyCandidateDocs />
+              </AccordionItemPanel>
+            ) : (
+              ""
+            )}
           </AccordionItem>
           <AccordionItem>
             <AccordionItemHeading>
-              <AccordionItemButton style={{ background: "#aaa" }}>
-                Step 6: Candidate Onboarding
+              <AccordionItemButton
+                style={activeStep6 ? {} : { background: "#aaa" }}
+              >
+                {" "}
+                {checkStep6 === true && activeStep6 === true ? (
+                  <div>
+                    {" "}
+                    <i
+                      style={{
+                        color: "green",
+                        backgroundColor: "white",
+                        borderRadius: "50%",
+                        fontSize: "19px",
+                      }}
+                      className="fa fa-check-circle"
+                      aria-hidden="true"
+                    ></i>
+                    Step 6: Candidate Onboarding{" "}
+                  </div>
+                ) : (
+                  <div> Step 6: Candidate Onboarding </div>
+                )}
               </AccordionItemButton>
             </AccordionItemHeading>
-            <AccordionItemPanel>
-              <CandidateOnboarding />
-            </AccordionItemPanel>
+            {activeStep6 === true ? (
+              <AccordionItemPanel>
+                <CandidateOnboarding />
+              </AccordionItemPanel>
+            ) : (
+              ""
+            )}
           </AccordionItem>
         </Accordion>
         {/* </Accordion> */}
