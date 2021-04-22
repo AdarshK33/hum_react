@@ -5,6 +5,7 @@
     line-height: 3rem;
     font-weight: bold;
     text-align: center;
+    width:1400px
 }
 nav.nav.nav-tabs a {
     font-weight: bold;
@@ -28,7 +29,7 @@ small.form-text.text-muted{
     color: blue;
 }
 title{
-    text-align: center;
+    align-content: center;
     overflow: "auto";
 }
 /* .modal-backdrop {
@@ -81,4 +82,33 @@ thead th {
     border-spacing: 0;
     width: 100%;
     border: 1px solid #ddd;
+  }
+  .inputWrapper {
+    border: none;
+    box-shadow: none !important;
+  }
+  ::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
+  .searchBox {
+    margin-right: auto;
+    width: 30% !important;
+  }
+  .selectList {
+    margin-left: auto;
+    width: 100% !important;
+    display: inline-flex;
+  }
+  .mainWrapper {
+    justify-content: space-between;
+    display: flex;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .inputWrapper {
+    width: 50% !important;
+  }
+  .selectInputWrapper {
+    width: 50% !important;
   }

@@ -12,7 +12,9 @@ import {
   Table,
 } from "react-bootstrap";
 import Pagination from 'react-js-pagination';
+import MultiSelect from 'react-multi-select-component'
 import { Edit2, Eye, Search } from "react-feather";
+import { AdminContext } from '../../context/AdminState'
 import moment from "moment";
 import "./nodueclearance.css";
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
@@ -21,9 +23,11 @@ import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 // import { handleInputChange } from "react-select/src/utils";
 const NoDueClearance = () => {
-  const { separationListView, separationList,updateITClearanceList,viewITClearanceList,noDueClearanceList, total, loader } = useContext(
+  const { 
+    updateITClearanceList,viewITClearanceList,noDueClearanceList } = useContext(
     SeparationContext
   );
+  const { CostCenter, costCenterList } = useContext(AdminContext)
   const [pageCount, setPageCount] = useState(0);
   const [listRecords, setListRecords] = useState([]);
   const [clearanceData, setCleranceData] = useState({
@@ -43,27 +47,44 @@ const NoDueClearance = () => {
   const [gridApi, setGridApi] = useState(null);
   const [gridColumnApi, setGridColumnApi] = useState(null);
   const [data, setData] = useState([]);
+  const [costCenter, setCostCenter] = useState([])
+  const [error, setError] = useState(false)
+  const [searchValue, setSearchValue] = useState(false);
 
-  const [modal, setModal] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const recordPerPage = 10;
-  const totalRecords = noDueClearanceList !== undefined && noDueClearanceList !== null && noDueClearanceList.length;
-  const pageRange = 10;
+/*-----------------Pagination------------------*/
+const [currentPage, setCurrentPage] = useState(1);
+const recordPerPage = 10;
+const totalRecords = noDueClearanceList !== null && noDueClearanceList !== undefined && noDueClearanceList.length;
+const pageRange = 10;
+const indexOfLastRecord = currentPage * recordPerPage;
+const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
+const currentRecords = noDueClearanceList !== null ? noDueClearanceList !== undefined && noDueClearanceList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
-  const indexOfLastRecord = currentPage * recordPerPage;
-  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  const currentRecords = noDueClearanceList !== undefined && noDueClearanceList !== null ? noDueClearanceList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
-  const statusValue = ["Due", "No Due", "On Hold"]
-  const handlePageChange = pageNumber => {
-    setCurrentPage(pageNumber);
+const handlePageChange = pageNumber => {
+  setCurrentPage(pageNumber);
+}
+/*-----------------Pagination------------------*/
+
+  useEffect(() => {
+    CostCenter();
+  }, []);
+  const searchHandler = (e) => {
+    setSearchValue(e.target.value)
+
   }
+  const searchDataHandler = () => {
+    if (searchValue !== "") {
+      viewITClearanceList(searchValue);
+    }else{
+      viewITClearanceList("all");
 
-
-  const handleClose = () => {
-    setModal(false)
-    setCurrentPage(1)
+    }
   }
-
+  const setCostCenterHandler = (options) => {
+    let data1 = options !== null ? options.map((e, i) => options[i].value) : []
+    setCostCenter(options)
+    console.log("options in cost center", data1)
+} 
   const renderStatusOptions = () => {
     return (
       <div>
@@ -84,7 +105,7 @@ const NoDueClearance = () => {
     const formData = value.data
       setCleranceData(formData)
     console.log(formData,"clearanceData")
-    updateITClearanceList(formData,"all", pageCount)
+    // updateITClearanceList(formData,"all", pageCount)
     console.log(data,"save button");
   };
   useEffect(() => {
@@ -131,12 +152,13 @@ console.log(listRecords,clearanceData,"listRecords")
   return (
     <div>
       <Fragment>
+        <Container fluid>
       <Breadcrumb title="No Due Clearance" parent="No Due Clearance" />
       <div className="container-fluid">
         <div className="row">
 
           <div className="col-sm-12">
-          <div className="row">
+          {/* <div className="row">
               <div className="col-sm-3">
         <div className="job-filter">
           <br/>
@@ -154,19 +176,51 @@ console.log(listRecords,clearanceData,"listRecords")
                 <div className="job-filter">
                   <div className="faq-form mr-4">
                         <Row>
-                <Form.Label>Select Cost Center</Form.Label>
+                <Form.Label>Select Cost Center</Form.Label> &nbsp;&nbsp;
                 <Form.Control as="select"></Form.Control>
             </Row>
                   </div>
                 </div>
                 </div>
-                </div><br/>
+                </div><br/> */}
+                        <Row className="mt-4 mainWrapper">
+          <Col className="searchBox">
+            <input
+              className="form-control inputWrapper"
+              type="text"
+              placeholder="Search.."
+              onChange={(e) => searchHandler(e)}
+            />
+            <Search
+              className="search-icon"
+              style={{ color: "#313131", marginRight: "17rem" }}
+              onClick={searchDataHandler} 
+                          />
+          </Col>
+          <div className="col-sm-6">
+          <Col className="selectList">
+            <br/>
+            <label className="title">Select Cost Center</label> &nbsp;&nbsp;
+                <MultiSelect
+                className="selectInputWrapper"
+                  options={costCenterList !== null ?
+                    costCenterList.map(e => ({ label: e.costCentreName, value: e.costCentreName })) : []}
+                  value={costCenter}
+                  onChange={setCostCenterHandler}
+                  labelledBy={"Select"}
+                  hasSelectAll={true}
+                  disableSearch={false}
+                />
+                <div>{error && <span style={{ color: 'red' }}>Cost Center is Required</span>}</div>
+          </Col>
+          </div>
+        </Row>
             <div className="card" style={{ overflowX: "auto" }}>
               <div className="title_bar" >
               <b >NO DUE CLEARANCE LISTING </b>            
               </div>
 
-        <div className="ag-theme-alpine" style={{ align:"center",height: 400, width: 1400 }}>
+        <div className="ag-theme-alpine" style={{ align:"center",height: 495, width: 1400 }}>
           
           <AgGridReact 
             rowData={noDueClearanceList}
@@ -225,7 +279,7 @@ console.log(listRecords,clearanceData,"listRecords")
                   null}
               </div>
               <div>
-       {noDueClearanceList !== null && noDueClearanceList.length > 10 &&
+       {noDueClearanceList !== null && noDueClearanceList !== undefined && 
          <Pagination
            itemClass="page-item"
            linkClass="page-link"
@@ -239,7 +293,8 @@ console.log(listRecords,clearanceData,"listRecords")
      </div>
               </div>
               </div>
-              </div>        
+              </div>   
+              </Container>     
     </Fragment> 
      </div>
   );
