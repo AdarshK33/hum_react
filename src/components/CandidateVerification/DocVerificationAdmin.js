@@ -41,13 +41,15 @@ const DocVerification = () => {
     downloadedFile,
     personalInfoData,
     personalInfo,
+    updateUANNumber,
+    uanUpdate,
   } = useContext(DocsVerifyContext);
   const { getUserInfo, user } = useContext(AppContext);
   useEffect(() => {
     verificationDocsView(candidateId);
     personalInfo(candidateId);
     setState(personalInfoData);
-  }, [acceptStatus, rejectStatus]);
+  }, [acceptStatus, rejectStatus, uanUpdate]);
   useEffect(() => {
     getUserInfo();
   }, []);
@@ -110,6 +112,12 @@ const DocVerification = () => {
       .map((filteredResult) => {
         return filteredResult;
       });
+
+  const handleDocSave = () => {
+    if (UANNo && uanNumber !== "") {
+      updateUANNumber(personalInfoData.candidateId, uanNumber);
+    }
+  };
   return (
     <Fragment>
       <Modal show={showModal} onHide={() => handleClose()} centered>
@@ -138,7 +146,10 @@ const DocVerification = () => {
       <Modal show={onBoardPopup} onHide={() => setOnboardPopup(false)} centered>
         <Container style={{ textAlign: "center", margin: "4rem 0 4rem 0" }}>
           <Modal.Body>
-            <h6 style={{ marginBottom: "1rem" }}>Your Verification Done!!</h6>{" "}
+            <h6 style={{ marginBottom: "1rem" }}>
+              The documents have been verified successfully, notification sent
+              to the manager to complete candidate onboarding
+            </h6>{" "}
             <Button onClick={() => setOnboardPopup(false)}>Cancel</Button>
           </Modal.Body>
         </Container>
@@ -461,7 +472,9 @@ const DocVerification = () => {
           textAlign: "center",
         }}
       >
-        <button className="stepperButtons">Save</button>
+        <button className="stepperButtons" onClick={() => handleDocSave()}>
+          Save
+        </button>
 
         {state !== undefined && state.verificationStatus === 1 && (
           <button className="onboardButton" onClick={() => handleOnboard()}>
