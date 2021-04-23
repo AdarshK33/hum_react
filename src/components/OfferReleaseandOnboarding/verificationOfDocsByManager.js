@@ -33,7 +33,7 @@ const DocVerification = () => {
   const [UANNo, setNo] = useState(false);
   const [uanNumber, setUanNumber] = useState("");
   const [docType, setDocType] = useState("");
-
+  const [disapprovePopup, setDisapprovePopup] = useState(false);
   const {
     verificationDocsView,
     docsToVerify,
@@ -47,17 +47,18 @@ const DocVerification = () => {
     downloadedFile,
     personalInfoData,
     personalInfo,
+    rejectMessage,
   } = useContext(DocsVerifyContext);
   const { getUserInfo, user } = useContext(AppContext);
   useEffect(() => {
+    // if (rejectMessage) {
+    //   setDisapprovePopup(true);
+    // }
     if (candidateData.candidateInformation !== undefined) {
-      // candidateData.candidateInformation.candidateId,
-
       verificationDocsView(candidateData.candidateInformation.candidateId);
     }
-    // personalInfo(candidateId);
-    // setState(personalInfoData);
-  }, [acceptStatus, rejectStatus]);
+    setState(personalInfoData);
+  }, [acceptStatus, rejectStatus, rejectMessage]);
   useEffect(() => {
     getUserInfo();
   }, []);
@@ -157,8 +158,26 @@ const DocVerification = () => {
       <Modal show={onBoardPopup} onHide={() => setOnboardPopup(false)} centered>
         <Container style={{ textAlign: "center", margin: "4rem 0 4rem 0" }}>
           <Modal.Body>
-            <h6 style={{ marginBottom: "1rem" }}>Your Verification Done!!</h6>{" "}
+            <h6 style={{ marginBottom: "1rem" }}>
+              The documents have been verified successfully, please complete the
+              steps to onboard the candidate
+            </h6>{" "}
             <Button onClick={() => setOnboardPopup(false)}>Cancel</Button>
+          </Modal.Body>
+        </Container>
+      </Modal>
+      <Modal
+        show={disapprovePopup}
+        onHide={() => setDisapprovePopup(false)}
+        centered
+        closeButton
+      >
+        <Container style={{ textAlign: "center", margin: "4rem 0 4rem 0" }}>
+          <Modal.Body>
+            <h6 style={{ marginBottom: "1rem" }}>
+              Document has been rejected.
+            </h6>{" "}
+            {/* <Button onClick={() => setOnboardPopup(false)}>Cancel</Button> */}
           </Modal.Body>
         </Container>
       </Modal>
@@ -223,6 +242,11 @@ const DocVerification = () => {
                             <span style={{ color: "black" }}>PhotoID</span>{" "}
                             <span style={{ color: "red" }}>*</span>
                           </label>
+                        ) : item.documentType === 1 ? (
+                          <label>
+                            <span style={{ color: "black" }}>Aadhar Card</span>{" "}
+                            <span style={{ color: "red" }}>*</span>
+                          </label>
                         ) : item.documentType === 2 ? (
                           <label>
                             <span style={{ color: "black" }}>Pan Number</span>{" "}
@@ -260,26 +284,20 @@ const DocVerification = () => {
                           )
                         )}
                       </p>
-                      {item.documentType !== 1 && (
-                        <p
-                          style={{ cursor: "pointer" }}
-                          onClick={() => downloadDocument(item.documentName)}
-                        >
-                          {downloadedFile && (
-                            <img src={downloadedFile} alt="" />
-                          )}
-                          {item.documentName}
-                        </p>
-                      )}
+                      <p
+                        style={{ cursor: "pointer" }}
+                        onClick={() => downloadDocument(item.documentName)}
+                      >
+                        {downloadedFile && <img src={downloadedFile} alt="" />}
+                        {item.documentName}
+                      </p>
                     </td>
                     {item.statusDesc !== null &&
                     item.statusDesc !== "Pending" ? (
-                      <td className="buttonMargin1">
-                        {item.documentType !== 1 && item.statusDesc}
-                      </td>
+                      <td className="buttonMargin1">{item.statusDesc}</td>
                     ) : (
                       <td className="row text-center buttonMargin">
-                        {user.role === "MANAGER" && item.documentType !== 1 && (
+                        {user.role === "MANAGER" && (
                           <button
                             className="approveButton"
                             onClick={() =>
@@ -290,7 +308,7 @@ const DocVerification = () => {
                           </button>
                         )}
 
-                        {user.role === "MANAGER" && item.documentType !== 1 && (
+                        {user.role === "MANAGER" && (
                           <button
                             className="approveButton ml-4"
                             style={
@@ -324,16 +342,12 @@ const DocVerification = () => {
                           )}
                       </td>
                     )}
-                    {item.documentType !== 1 && (
-                      <td className="buttonMargin1">
-                        {item.remark !== null ? item.remark : "N/A"}
-                      </td>
-                    )}
-                    {item.documentType !== 1 && (
-                      <td className="buttonMargin1">
-                        {item.verifiedDate !== null ? item.verifiedDate : "N/A"}
-                      </td>
-                    )}
+                    <td className="buttonMargin1">
+                      {item.remark !== null ? item.remark : "N/A"}
+                    </td>
+                    <td className="buttonMargin1">
+                      {item.verifiedDate !== null ? item.verifiedDate : "N/A"}
+                    </td>
                   </tr>
                 </tbody>
               );
