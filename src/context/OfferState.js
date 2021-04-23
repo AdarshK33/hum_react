@@ -24,6 +24,7 @@ const initial_state = {
   stateList: [],
   cityList: [],
   managerList: [],
+  aadhaarNotificationData: {},
 };
 
 export const OfferContext = createContext();
@@ -407,6 +408,28 @@ export const OfferProvider = (props) => {
     }
   };
 
+  const adhaarVerificationNotification = (id) => {
+    console.log("state aadhaarNotificationData id", id);
+    return (
+      client
+        // .get("/api/v1/candidate/offer/54")
+        .get("/api/v1/candidate/verification/complete" + id)
+        .then((response) => {
+          state.aadhaarNotificationData = response.data.data;
+          console.log(
+            "aadhaarNotificationData.message",
+            state.aadhaarNotificationData
+          );
+          return dispatch({
+            type: "ADHAAR_NOTIFICATION_DATA",
+            payload: state.aadhaarNotificationData,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    );
+  };
   return (
     <OfferContext.Provider
       value={{
@@ -430,6 +453,7 @@ export const OfferProvider = (props) => {
         workInfoView,
         stateData,
         cityData,
+        adhaarVerificationNotification,
         searchData: state.searchData,
         departmentName: state.departmentName,
         designationName: state.designationName,
@@ -450,6 +474,7 @@ export const OfferProvider = (props) => {
         cityList: state.cityList,
         managerList: state.managerList,
         workInformationData: state.workInformationData,
+        aadhaarNotificationData: state.aadhaarNotificationData,
       }}
     >
       {props.children}

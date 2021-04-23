@@ -26,7 +26,11 @@ const Documents = (props) => {
     documentView,
     documentViewData,
   } = useContext(OnBoardContext);
-  const { candidateData } = useContext(OfferContext);
+  const {
+    candidateData,
+    aadhaarNotificationData,
+    adhaarVerificationNotification,
+  } = useContext(OfferContext);
   const [fileName, setFileName] = useState("");
   const [fullTime, setFullTime] = useState(true);
   const [partTime, setParTime] = useState(false);
@@ -735,6 +739,7 @@ const Documents = (props) => {
     // const value = checkValidations();
     const value = isAllFilesUploaded();
     if (value === true) {
+      adhaarVerificationNotification(candidateProfileData.candidateId);
       console.log(state);
       const nextPage = props.NextStep;
       nextPage(true);

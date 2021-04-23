@@ -71,10 +71,11 @@ const RemunerationInformation = (props) => {
       workInfoViewData
     );
     if (
-      typeof stipened === "undefined" ||
-      stipened === "" ||
-      (stipened + "").includes(" ", "-", ".", "/", "+") ||
-      (workInfoViewData.contractType === "Internship" && stipened <= 0)
+      (typeof stipened === "undefined" ||
+        stipened === "" ||
+        (stipened + "").includes(" ", "-", ".", "/", "+")) &&
+      workInfoViewData.contractType === "Internship" &&
+      stipened <= 0
     ) {
       console.log("remuneration Info5", fixedGross, monthlyBonus, stipened);
       setStipenedError(true);

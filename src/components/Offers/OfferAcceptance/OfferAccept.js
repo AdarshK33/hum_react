@@ -12,6 +12,7 @@ import { Document, Page } from "react-pdf/dist/esm/entry.webpack";
 import { ChevronRight, ChevronLeft } from "react-feather";
 import { OnBoardContext } from "../../../context/OnBoardState";
 import { CandidateContext } from "../../../context/CandidateState";
+import { OfferContext } from "../../../context/OfferState";
 
 const OfferAccept = (props) => {
   const [showLetter, setShowLetter] = useState(false);
@@ -26,6 +27,7 @@ const OfferAccept = (props) => {
   const [showAppointmentLetter, setShowAppointmentLetter] = useState(false);
   const { CandidateProfile, candidateProfileData } = useContext(OnBoardContext);
   const { candidateRejectOffer } = useContext(CandidateContext);
+  const { viewCandidateId, candidateData } = useContext(OfferContext);
 
   const handleClose = () => setModal(false);
   const handleRejectClose = () => {
@@ -40,6 +42,11 @@ const OfferAccept = (props) => {
   useEffect(() => {
     CandidateProfile();
   }, []);
+
+  useEffect(() => {
+    console.log("candidateProfileData offer accept", candidateProfileData);
+    viewCandidateId(candidateProfileData.candidateId);
+  }, [candidateProfileData]);
 
   const showLetterClick = (e) => {
     setShowLetter(true);
@@ -144,24 +151,34 @@ const OfferAccept = (props) => {
             <p>
               Page {pageNumber} of {numPages}
             </p>
-            <span style={{ marginRight: "1rem" }}>
-              Do you accept the Offer letter
-            </span>
-            <Switch
-              onChange={handleSwitch}
-              checked={checked}
-              className="react-switch"
-            />
+            {candidateProfileData && candidateProfileData.status === 5 ? (
+              <React.Fragment>
+                <span style={{ marginRight: "1rem" }}>
+                  Do you accept the Offer letter
+                </span>
+                <Switch
+                  onChange={handleSwitch}
+                  checked={checked}
+                  className="react-switch"
+                />
+              </React.Fragment>
+            ) : (
+              ""
+            )}
           </Container>
         )}
-        <Container className="middle-container">
-          <div style={{ marginTop: "3rem", marginBottom: "2rem" }}>
-            <span style={{ marginRight: "1rem" }}>
-              View Your Appointment Letter
-            </span>
-            <Button onClick={showAppointmentLetterClick}>Show</Button>
-          </div>
-        </Container>
+        {candidateProfileData && candidateProfileData.status === 6 ? (
+          <Container className="middle-container">
+            <div style={{ marginTop: "3rem", marginBottom: "2rem" }}>
+              <span style={{ marginRight: "1rem" }}>
+                View Your Appointment Letter
+              </span>
+              <Button onClick={showAppointmentLetterClick}>Show</Button>
+            </div>
+          </Container>
+        ) : (
+          ""
+        )}
         {showAppointmentLetter === true && (
           <Container className="last-container">
             <Row>
@@ -217,9 +234,9 @@ const OfferAccept = (props) => {
                 )}
               </Col>
             </Row>
-            <p>
+            {/* <p>
               Page {pageAppointNumber} of {numAppointPages}
-            </p>
+            </p> */}
             {/* <Button>Save</Button> */}
           </Container>
         )}
