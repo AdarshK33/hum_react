@@ -57,18 +57,32 @@ const GenerateOfferLetter = () => {
 
   const submitOfferLetter = () => {
     console.log("offer Letter id", createCandidateResponse.candidateId);
-    setSubmitLetter(true);
-    setLetterSent(true);
-    setShow(true);
-    finalSubmitOfferLetter(createCandidateResponse.candidateId);
+    if (
+      candidateData.candidateInformation !== null &&
+      candidateData.candidateInformation !== undefined
+    ) {
+      console.log(
+        "offer Letter id",
+        candidateData.candidateInformation.candidateId
+      );
+      setSubmitLetter(true);
+      setLetterSent(true);
+      setShow(true);
+      finalSubmitOfferLetter(candidateData.candidateInformation.candidateId);
+    }
   };
 
   const previewOfferLetter = () => {
-    generateOfferLetter(createCandidateResponse.candidateId);
-    console.log("offer letter response data", offerLetterData);
-    setSubmitLetter(false);
-    setPreviewLetter(true);
-    setShow(true);
+    if (
+      candidateData.candidateInformation !== null &&
+      candidateData.candidateInformation !== undefined
+    ) {
+      generateOfferLetter(candidateData.candidateInformation.candidateId);
+      console.log("offer letter response data", offerLetterData);
+      setSubmitLetter(false);
+      setPreviewLetter(true);
+      setShow(true);
+    }
   };
   return (
     <Fragment>

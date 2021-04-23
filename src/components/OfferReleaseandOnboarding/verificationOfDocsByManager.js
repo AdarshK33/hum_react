@@ -48,7 +48,10 @@ const DocVerification = () => {
     personalInfoData,
     personalInfo,
     rejectMessage,
+    step5suscessStatus,
+    step5Status,
   } = useContext(DocsVerifyContext);
+
   const { getUserInfo, user } = useContext(AppContext);
   useEffect(() => {
     if (rejectMessage) {
@@ -109,6 +112,7 @@ const DocVerification = () => {
   };
 
   const handleOnboard = () => {
+    step5suscessStatus(true);
     setOnboardPopup(true);
   };
   var documents =

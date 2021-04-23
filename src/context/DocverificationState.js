@@ -23,6 +23,8 @@ const initial_state = {
   onBoardData: {},
   empData: {},
   rejectMessage: "",
+  step5Status: false,
+  step6Status: false,
 };
 export const DocsVerifyContext = createContext();
 export const DocsVerificationProvider = (props) => {
@@ -295,6 +297,21 @@ export const DocsVerificationProvider = (props) => {
     });
   };
 
+  const step5suscessStatus = (val) => {
+    state.step5Status = val;
+    return dispatch({
+      type: "STEP5_STATUS",
+      payload: state.step5Status,
+    });
+  };
+  const step6suscessStatus = (val) => {
+    state.step6Status = val;
+    return dispatch({
+      type: "STEP6_STATUS",
+      payload: state.step5Status,
+    });
+  };
+
   return (
     <DocsVerifyContext.Provider
       value={{
@@ -313,6 +330,10 @@ export const DocsVerificationProvider = (props) => {
         createEmployee,
         candidateOnBoard,
         viewEmployee,
+        step5suscessStatus,
+        step6suscessStatus,
+        step5Status: state.step5Status,
+        step6Status: state.step6Status,
         empData: state.empData,
         onBoardData: state.onBoardData,
         docsToVerify: state.docsToVerify,

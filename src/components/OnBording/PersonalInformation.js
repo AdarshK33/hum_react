@@ -113,6 +113,9 @@ const PersonalInformation = (props) => {
       });
   }, []);
   useEffect(() => {
+    CandidateProfile();
+  }, [candidateProfileData]);
+  useEffect(() => {
     setRefEmail1(
       searchEmpData1 !== null
         ? searchEmpData1.email !== undefined && searchEmpData1.email !== null
@@ -398,7 +401,12 @@ const PersonalInformation = (props) => {
   const PanNumberValidation = () => {
     const panValid = /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/;
 
-    if (candidateViewInfo.contractType === "Permanent") {
+    if (
+      candidateViewInfo !== null &&
+      candidateViewInfo !== undefined &&
+      Object.keys(candidateViewInfo).length !== 0 &&
+      candidateViewInfo.contractType === "Permanent"
+    ) {
       if ((state.panNumber !== "") & panValid.test(state.panNumber)) {
         var tempVar = state.panNumber.split("");
         console.log(tempVar[3]);
@@ -424,8 +432,11 @@ const PersonalInformation = (props) => {
     const aadharValid = /^[0-9\b]+$/;
     console.log("adhar");
     if (
+      candidateViewInfo !== null &&
+      candidateViewInfo !== undefined &&
+      Object.keys(candidateViewInfo).length !== 0 &&
       (candidateViewInfo.contractType === "Permanent") |
-      (candidateViewInfo.contractType === "Parttime")
+        (candidateViewInfo.contractType === "Parttime")
     ) {
       if (
         state.aadhaarNumber !== "" &&
@@ -447,7 +458,12 @@ const PersonalInformation = (props) => {
   const PassPortNumberValidations = () => {
     const passPortValid = /^[0-9\b]+$/;
     console.log("passPort");
-    if (candidateViewInfo.contractType === "Localexpact") {
+    if (
+      candidateViewInfo !== null &&
+      candidateViewInfo !== undefined &&
+      Object.keys(candidateViewInfo).length !== 0 &&
+      candidateViewInfo.contractType === "Localexpact"
+    ) {
       if (state.passPortNo !== "" && passPortValid.test(state.passPortNo)) {
         setPassPortError(false);
         console.log("passPortsucess");
@@ -1120,13 +1136,21 @@ const PersonalInformation = (props) => {
             </Form.Group>
           </div>
           <div className="col-sm-4">
-            {(candidateViewInfo.contractType === "Parttime") |
-            (candidateViewInfo.contractType === "Permanent") ? (
+            {candidateViewInfo !== null &&
+            candidateViewInfo !== undefined &&
+            Object.keys(candidateViewInfo).length !== 0 &&
+            (candidateViewInfo.contractType === "Parttime") |
+              (candidateViewInfo.contractType === "Permanent") ? (
               <Form.Group>
                 <Form.Label>
                   Aadhaar Number
                   <span style={{ color: "red" }}>
-                    {candidateViewInfo.contractType === "Internship" ? "" : "*"}
+                    {candidateViewInfo !== null &&
+                    candidateViewInfo !== undefined &&
+                    Object.keys(candidateViewInfo).length !== 0 &&
+                    candidateViewInfo.contractType === "Internship"
+                      ? ""
+                      : "*"}
                   </span>
                 </Form.Label>
                 <Form.Control
@@ -1151,7 +1175,10 @@ const PersonalInformation = (props) => {
             ) : (
               ""
             )}
-            {candidateViewInfo.contractType === "Localexpact" ? (
+            {candidateViewInfo !== null &&
+            candidateViewInfo !== undefined &&
+            Object.keys(candidateViewInfo).length !== 0 &&
+            candidateViewInfo.contractType === "Localexpact" ? (
               <Form.Group>
                 <Form.Label>
                   Pass Port Number<span style={{ color: "red" }}>*</span>
@@ -1180,14 +1207,22 @@ const PersonalInformation = (props) => {
             )}{" "}
           </div>
           <div className="col-sm-4">
-            {(candidateViewInfo.contractType === "Parttime") |
-            (candidateViewInfo.contractType === "Permanent") ? (
+            {candidateViewInfo !== null &&
+            candidateViewInfo !== undefined &&
+            Object.keys(candidateViewInfo).length !== 0 &&
+            (candidateViewInfo.contractType === "Parttime") |
+              (candidateViewInfo.contractType === "Permanent") ? (
               <Form.Group>
                 <Form.Label>
                   Pan Number
                   <span style={{ color: "red" }}>
                     {" "}
-                    {candidateViewInfo.contractType === "Permanent" ? "*" : ""}
+                    {candidateViewInfo !== null &&
+                    candidateViewInfo !== undefined &&
+                    Object.keys(candidateViewInfo).length !== 0 &&
+                    candidateViewInfo.contractType === "Permanent"
+                      ? "*"
+                      : ""}
                   </span>
                 </Form.Label>
                 <Form.Control
@@ -1213,128 +1248,134 @@ const PersonalInformation = (props) => {
             )}
           </div>
         </Row>
+        <div style={{ width: "105%" }}>
+          <Row
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginBottom: "2rem",
+            }}
+          >
+            <Col sm={1} style={{ marginTop: "1.4rem" }}>
+              <Form.Group>
+                <div className="inputField">
+                  <label>
+                    <b>Gender</b>
+                  </label>
+                </div>
+              </Form.Group>
+            </Col>
+            <Col sm={2} style={{ marginTop: "2rem" }}>
+              <Form.Group>
+                <div className="boxField_1 input">
+                  <input
+                    className="largerCheckbox"
+                    type="checkbox"
+                    style={genderError ? { borderColor: "red" } : {}}
+                    value="Male"
+                    checked={genderCheckM}
+                    required={required}
+                    onChange={handleMaleGenderCheckboxChange}
+                  />
+                  <label style={genderError ? { color: "red" } : {}}>
+                    Male{" "}
+                  </label>
+                </div>
+              </Form.Group>
+            </Col>
+            <Col sm={2} style={{ marginTop: "2rem" }}>
+              <Form.Group>
+                <div className="boxField_1 input">
+                  <input
+                    className="largerCheckbox"
+                    type="checkbox"
+                    style={genderError ? { borderColor: "red" } : {}}
+                    value="Female"
+                    required={required}
+                    checked={genderCheckF}
+                    onChange={handleFemaleGenderCheckboxChange}
+                  />
+                  <label style={genderError ? { color: "red" } : {}}>
+                    Female
+                  </label>
+                </div>
+              </Form.Group>
+            </Col>
+            <Col sm={2} style={{ marginTop: "2rem" }}>
+              <Form.Group>
+                <div className="boxField_1 input">
+                  <input
+                    className="largerCheckbox"
+                    type="checkbox"
+                    style={genderError ? { borderColor: "red" } : {}}
+                    value="Other"
+                    required={required}
+                    checked={genderCheckOther}
+                    onChange={handleOtherGenderCheckboxChange}
+                  />
+                  <label style={genderError ? { color: "red" } : {}}>
+                    Other
+                  </label>
+                </div>
+              </Form.Group>
+            </Col>
 
-        <Row
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginBottom: "2rem",
-          }}
-        >
-          <Col sm={1} style={{ marginTop: "1.4rem" }}>
-            <Form.Group>
-              <div className="inputField">
-                <label>
-                  <b>Gender</b>
-                </label>
-              </div>
-            </Form.Group>
-          </Col>
-          <Col sm={2} style={{ marginTop: "2rem" }}>
-            <Form.Group>
-              <div className="boxField_1 input">
-                <input
-                  className="largerCheckbox"
-                  type="checkbox"
-                  style={genderError ? { borderColor: "red" } : {}}
-                  value="Male"
-                  checked={genderCheckM}
-                  required={required}
-                  onChange={handleMaleGenderCheckboxChange}
-                />
-                <label style={genderError ? { color: "red" } : {}}>Male </label>
-              </div>
-            </Form.Group>
-          </Col>
-          <Col sm={2} style={{ marginTop: "2rem" }}>
-            <Form.Group>
-              <div className="boxField_1 input">
-                <input
-                  className="largerCheckbox"
-                  type="checkbox"
-                  style={genderError ? { borderColor: "red" } : {}}
-                  value="Female"
-                  required={required}
-                  checked={genderCheckF}
-                  onChange={handleFemaleGenderCheckboxChange}
-                />
-                <label style={genderError ? { color: "red" } : {}}>
-                  Female
-                </label>
-              </div>
-            </Form.Group>
-          </Col>
-          <Col sm={2} style={{ marginTop: "2rem" }}>
-            <Form.Group>
-              <div className="boxField_1 input">
-                <input
-                  className="largerCheckbox"
-                  type="checkbox"
-                  style={genderError ? { borderColor: "red" } : {}}
-                  value="Other"
-                  required={required}
-                  checked={genderCheckOther}
-                  onChange={handleOtherGenderCheckboxChange}
-                />
-                <label style={genderError ? { color: "red" } : {}}>Other</label>
-              </div>
-            </Form.Group>
-          </Col>
-
-          <Col sm={1} style={{ marginTop: "1rem" }}>
-            <Form.Group>
-              <div className="inputField">
-                <label>
-                  <b>
-                    Marital<br></br>Status
-                  </b>
-                </label>
-              </div>
-            </Form.Group>
-          </Col>
-          <Col sm={2}>
-            <Form.Group>
-              <div className="boxField_1 input" style={{ marginTop: "2rem" }}>
-                <input
-                  className="largerCheckbox"
-                  type="checkbox"
-                  style={maritalStatusError ? { borderColor: "red" } : {}}
-                  value="Married"
-                  required={statusRequired}
-                  checked={married}
-                  onChange={handleMarriedCheckboxChange}
-                />
-                <label
-                  style={
-                    maritalStatusError
-                      ? { marginLeft: "2px", color: "red" }
-                      : { marginLeft: "2px" }
-                  }
-                >
-                  Married{" "}
-                </label>
-              </div>
-            </Form.Group>
-          </Col>
-          <Col sm={2}>
-            <Form.Group>
-              <div className="boxField_1 input" style={{ marginTop: "2rem" }}>
-                <input
-                  className="largerCheckbox"
-                  type="checkbox"
-                  style={maritalStatusError ? { borderColor: "red" } : {}}
-                  value="Unmarried"
-                  required={statusRequired}
-                  checked={unMarried}
-                  onChange={handleUnMarriedCheckboxChange}
-                />
-                <label style={maritalStatusError ? { color: "red" } : {}}>
-                  Unmarried
-                </label>
-              </div>
-            </Form.Group>
-          </Col>
-
+            <Col sm={1} style={{ marginTop: "1rem" }}>
+              <Form.Group>
+                <div className="inputField">
+                  <label>
+                    <b>
+                      Marital<br></br>Status
+                    </b>
+                  </label>
+                </div>
+              </Form.Group>
+            </Col>
+            <Col sm={2}>
+              <Form.Group>
+                <div className="boxField_1 input" style={{ marginTop: "2rem" }}>
+                  <input
+                    className="largerCheckbox"
+                    type="checkbox"
+                    style={maritalStatusError ? { borderColor: "red" } : {}}
+                    value="Married"
+                    required={statusRequired}
+                    checked={married}
+                    onChange={handleMarriedCheckboxChange}
+                  />
+                  <label
+                    style={
+                      maritalStatusError
+                        ? { marginLeft: "2px", color: "red" }
+                        : { marginLeft: "2px" }
+                    }
+                  >
+                    Married{" "}
+                  </label>
+                </div>
+              </Form.Group>
+            </Col>
+            <Col sm={2}>
+              <Form.Group>
+                <div className="boxField_1 input" style={{ marginTop: "2rem" }}>
+                  <input
+                    className="largerCheckbox"
+                    type="checkbox"
+                    style={maritalStatusError ? { borderColor: "red" } : {}}
+                    value="Unmarried"
+                    required={statusRequired}
+                    checked={unMarried}
+                    onChange={handleUnMarriedCheckboxChange}
+                  />
+                  <label style={maritalStatusError ? { color: "red" } : {}}>
+                    Unmarried
+                  </label>
+                </div>
+              </Form.Group>
+            </Col>
+          </Row>
+        </div>
+        <Row>
           {state.disability === "Yes" ? (
             <div style={{ width: "100%" }}>
               <Row>

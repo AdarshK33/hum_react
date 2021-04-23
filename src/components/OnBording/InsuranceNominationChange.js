@@ -19,7 +19,7 @@ const InsuranceNomination = (props) => {
   const {
     CandidatePersonalInfo,
     candidatePersonalInfoData,
-    candidateData,
+    candidateProfileData,
     CandidateViewInformation,
     candidateViewInfo,
     CreateNominee,
@@ -147,29 +147,29 @@ const InsuranceNomination = (props) => {
   ]);
 
   useEffect(() => {
-    console.log("personal information view candidate", candidateData);
-    if (candidateData) {
-      CandidateViewInformation(candidateData.candidateId);
+    console.log("personal information view candidate", candidateProfileData);
+    if (candidateProfileData) {
+      CandidateViewInformation(candidateProfileData.candidateId);
     }
-  }, [candidateData]);
+  }, [candidateProfileData]);
   console.log("personal information candidateViewInfo-->", candidateViewInfo);
   console.log("contract type-->", candidateViewInfo.contractType);
 
   useEffect(() => {
-    // console.log("personal information view candidate", candidateData);
-    if (candidateData) {
-      CandidatePersonalInfo(candidateData.candidateId);
+    // console.log("personal information view candidate", candidateProfileData);
+    if (candidateProfileData) {
+      CandidatePersonalInfo(candidateProfileData.candidateId);
     }
-  }, [candidateData]);
+  }, [candidateProfileData]);
 
   console.log("Candiate personal information data", candidatePersonalInfoData);
 
   useEffect(() => {
-    console.log("personal information view candidate", candidateData);
-    if (candidateData) {
-      InsuranceNominationView(candidateData.candidateId);
+    console.log("personal information view candidate", candidateProfileData);
+    if (candidateProfileData) {
+      InsuranceNominationView(candidateProfileData.candidateId);
     }
-  }, [candidateData]);
+  }, [candidateProfileData]);
 
   console.log(
     "Insurance nomination view candidate",
@@ -177,7 +177,7 @@ const InsuranceNomination = (props) => {
   );
 
   useEffect(() => {
-    // console.log("personal information view candidate", candidateData);
+    // console.log("personal information view candidate", candidateProfileData);
     if (
       candidatePersonalInfoData !== null &&
       candidatePersonalInfoData !== undefined &&
@@ -530,7 +530,7 @@ const InsuranceNomination = (props) => {
   };
   const validateSelectInput = (itemState, setError, condition) => {
     console.log("Relatio nshipItem---->", itemState);
-    if (itemState !== "") {
+    if ((itemState !== "") & (itemState !== "Relationship")) {
       setError(false);
       return true;
     } else {
@@ -775,6 +775,9 @@ const InsuranceNomination = (props) => {
   const submitHandler = (e) => {
     // const nextPage = props.NextStep;
     // nextPage();
+    // if (nominee5Relationship !== "") {
+    //   state.nominee3Relationship = "Brother";
+    // }
     if (parentsCheck === true) {
       state.nominee3Relationship = "Father";
       state.nominee4Relationship = "Mother";
@@ -791,7 +794,12 @@ const InsuranceNomination = (props) => {
         age: state.age !== null ? state.age : null,
         bloodGroup: state.bloodGroup !== null ? state.bloodGroup : null,
         candidateId:
-          candidateData.candidateId !== null ? candidateData.candidateId : 0,
+          candidateProfileData &&
+          candidateProfileData !== null &&
+          candidateProfileData !== undefined &&
+          candidateProfileData.candidateId !== null
+            ? candidateProfileData.candidateId
+            : 0,
         dateOfBirth: Nominee1DOB !== null ? Nominee1DOB : null,
         gender: state.gender !== null ? state.gender : null,
         nominiId: Data1_nominiId,
@@ -802,7 +810,12 @@ const InsuranceNomination = (props) => {
         age: state.nominee2Age,
         bloodGroup: state.nominee2BloodGroup,
         candidateId:
-          candidateData.candidateId !== null ? candidateData.candidateId : 0,
+          candidateProfileData &&
+          candidateProfileData !== null &&
+          candidateProfileData !== undefined &&
+          candidateProfileData.candidateId !== null
+            ? candidateProfileData.candidateId
+            : 0,
         dateOfBirth: Nominee2DOB,
         gender: state.nominee2Gender,
         nominiId: Data2_nominiId,
@@ -813,7 +826,12 @@ const InsuranceNomination = (props) => {
         age: state.nominee3Age,
         bloodGroup: state.nominee3BloodGroup,
         candidateId:
-          candidateData.candidateId !== null ? candidateData.candidateId : 0,
+          candidateProfileData &&
+          candidateProfileData !== null &&
+          candidateProfileData !== undefined &&
+          candidateProfileData.candidateId !== null
+            ? candidateProfileData.candidateId
+            : 0,
         dateOfBirth: Nominee3DOB,
         gender: state.nominee3Gender,
         nominiId: Data3_nominiId,
@@ -824,7 +842,12 @@ const InsuranceNomination = (props) => {
         age: state.nominee4Age,
         bloodGroup: state.nominee4BloodGroup,
         candidateId:
-          candidateData.candidateId !== null ? candidateData.candidateId : 0,
+          candidateProfileData &&
+          candidateProfileData !== null &&
+          candidateProfileData !== undefined &&
+          candidateProfileData.candidateId !== null
+            ? candidateProfileData.candidateId
+            : 0,
         dateOfBirth: Nominee4DOB,
         gender: state.nominee2Gender,
         nominiId: Data4_nominiId,
@@ -835,7 +858,12 @@ const InsuranceNomination = (props) => {
         age: state.nominee5Age,
         bloodGroup: state.nominee5BloodGroup,
         candidateId:
-          candidateData.candidateId !== null ? candidateData.candidateId : 0,
+          candidateProfileData &&
+          candidateProfileData !== null &&
+          candidateProfileData !== undefined &&
+          candidateProfileData.candidateId !== null
+            ? candidateProfileData.candidateId
+            : 0,
         dateOfBirth: Nominee5DOB,
         gender: state.nominee5Gender,
         nominiId: Data5_nominiId,
@@ -843,21 +871,32 @@ const InsuranceNomination = (props) => {
         relationship: state.nominee5Relationship,
       };
       const NominiInfo = [];
+      var itemIncrease = 0;
 
       if (addFirst === true) {
-        NominiInfo.push(...NominiInfo, first_nomine_info);
+        console.log("one", NominiInfo);
+        NominiInfo[itemIncrease] = first_nomine_info;
+        itemIncrease = itemIncrease + 1;
       }
       if (addSecond === true) {
-        NominiInfo.push(...NominiInfo, second_nomine_info);
+        console.log("two", NominiInfo);
+        NominiInfo[itemIncrease] = second_nomine_info;
+        itemIncrease = itemIncrease + 1;
       }
       if (addThird === true) {
-        NominiInfo.push(...NominiInfo, fifth_nomine_info);
+        console.log("three", NominiInfo);
+        NominiInfo[itemIncrease] = fifth_nomine_info;
+        itemIncrease = itemIncrease + 1;
       }
       if ((addOne === true) & (NAcheck === false)) {
-        NominiInfo.push(...NominiInfo, third_nomine_info);
+        console.log("four", NominiInfo);
+        NominiInfo[itemIncrease] = third_nomine_info;
+        itemIncrease = itemIncrease + 1;
       }
       if ((addTwo === true) & (NAcheck === false)) {
-        NominiInfo.push(...NominiInfo, fourth_nomine_info);
+        console.log("five", NominiInfo);
+        NominiInfo[itemIncrease] = fourth_nomine_info;
+        itemIncrease = itemIncrease + 1;
       }
 
       //   const NominiInfo =
@@ -883,6 +922,16 @@ const InsuranceNomination = (props) => {
       //           fifth_nomine_info,
       //         ]
       //       : [];
+
+      if (NominiInfo.length < 5) {
+        console.log("nominee length", NominiInfo.length);
+        let len = 5 - NominiInfo.length;
+        console.log("nominee adjust length", len);
+        for (let i = 0; i < len; i++) {
+          console.log("------>", len);
+          NominiInfo[NominiInfo.length + i] = {};
+        }
+      }
       console.log(NominiInfo);
       CreateNominee(NominiInfo);
       const nextPage = props.NextStep;
@@ -1590,7 +1639,7 @@ const InsuranceNomination = (props) => {
         <div>
           {/* Fifth Nominee */}
           <label>
-            <b>Fifth Nominee</b>
+            <b>Third Dependent</b>
           </label>
           <Row style={{ marginBottom: "2rem" }}>
             <Col sm={11}>
@@ -1633,15 +1682,17 @@ const InsuranceNomination = (props) => {
                       onChange={changeHandler}
                       style={relationshipError_5 ? { borderColor: "red" } : {}}
                     >
+                      <option value="">Relationship</option>
+
                       {relativeInLaw === true ? (
-                        <option value="">Child 2</option>
+                        <option value="Child 2">Child 2</option>
                       ) : (
-                        <option value="">Brother</option>
+                        <option value="Brother">Brother</option>
                       )}
                       {relativeInLaw === true ? (
-                        <option value="">Child 3</option>
+                        <option value="Child 3">Child 3</option>
                       ) : (
-                        <option value="">Sister</option>
+                        <option value="Sister">Sister</option>
                       )}
                     </Form.Control>
 

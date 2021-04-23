@@ -142,7 +142,7 @@ const OnBoardingStepper = (props) => {
 
   useEffect(() => {
     CandidateProfile();
-  }, []);
+  }, [candidateProfileData]);
   useEffect(() => {
     viewCandidateId(candidateProfileData.candidateId);
   }, []);
