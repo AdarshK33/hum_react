@@ -25,6 +25,8 @@ const Documents = (props) => {
     candidateProfileData,
     documentView,
     documentViewData,
+    candidateViewInfo,
+    CandidateViewInformation,
   } = useContext(OnBoardContext);
   const {
     candidateData,
@@ -56,15 +58,23 @@ const Documents = (props) => {
     console.log("candidateProfileData", candidateProfileData);
     console.log("candidateData", candidateData);
   }, [candidateProfileData]);
+
+  useEffect(() => {
+    console.log("personal information view candidate", candidateProfileData);
+    if (candidateProfileData) {
+      CandidateViewInformation(candidateProfileData.candidateId);
+    }
+  }, [candidateProfileData]);
+  console.log("personal information candidateViewInfo-->", candidateViewInfo);
   useEffect(() => {
     if (
-      candidateData !== null &&
-      candidateData !== undefined &&
-      candidateData.workInformation
+      candidateViewInfo !== null &&
+      candidateViewInfo !== undefined &&
+      candidateViewInfo
     ) {
-      setWorkInfoData(candidateData.workInformation);
+      setWorkInfoData(candidateViewInfo);
     }
-  }, [candidateData]);
+  }, [candidateViewInfo]);
   console.log("contractType", workInfoData);
 
   useEffect(() => {

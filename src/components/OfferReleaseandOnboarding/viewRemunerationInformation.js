@@ -312,7 +312,7 @@ const ViewRemunerationInformation = (props) => {
                         : "N/A"}
                     </Form.Label>
 
-                    {fixedGrossError ? (
+                    {/* {fixedGrossError ? (
                       <p style={{ color: "red" }}>This field cannot be empty</p>
                     ) : ((candidateData &&
                         candidateData.workInformation &&
@@ -334,7 +334,7 @@ const ViewRemunerationInformation = (props) => {
                       </p>
                     ) : (
                       ""
-                    )}
+                    )} */}
                   </Col>
                 </Form.Group>
               </Col>
@@ -378,7 +378,7 @@ const ViewRemunerationInformation = (props) => {
                               : "N/A"}
                           </Form.Label>
 
-                          {monthlyBonusError ? (
+                          {/* {monthlyBonusError ? (
                             <p style={{ color: "red" }}>
                               This field cannot be empty
                             </p>
@@ -386,7 +386,7 @@ const ViewRemunerationInformation = (props) => {
                             <p style={{ color: "red" }}>Maximum Bonus 20 %</p>
                           ) : (
                             ""
-                          )}
+                          )} */}
                         </Col>
                       </Form.Group>
                     </Col>
@@ -396,7 +396,8 @@ const ViewRemunerationInformation = (props) => {
                         {/* <Form.Label column sm={3}> */}
                         Monthly Bonus ( % ){/* </Form.Label> */}
                         <Col sm={6}>
-                          <Form.Control
+                          <Form.Label>0</Form.Label>
+                          {/* <Form.Control
                             className="form-input"
                             type="number"
                             min="0"
@@ -404,7 +405,7 @@ const ViewRemunerationInformation = (props) => {
                             readOnly
                             disabled={disabled}
                             placeholder="0"
-                          />
+                          /> */}
                           {monthlyBonusError ? (
                             <p style={{ color: "red" }}>
                               This field cannot be empty

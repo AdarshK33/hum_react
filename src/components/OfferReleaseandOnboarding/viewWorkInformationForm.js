@@ -177,204 +177,211 @@ const EditWorkInformation = () => {
   );
 
   return (
-    <Fragment>
-      <Form onSubmit={submitHandler}>
-        <Row>
-          <Col sm={3}>
-            <Form.Group>
-              <Form.Label>Company Name</Form.Label>
-              <br></br>
-              <Form.Label className="headingColor">{user.company}</Form.Label>
-            </Form.Group>
-          </Col>
-          <Col sm={3}>
-            <Form.Group className="reactDate">
-              <Form.Label>Type of Employment</Form.Label>
-              <br></br>
-              {candidateData.workInformation !== null && (
-                <Form.Label className="headingColor">
-                  {state.employmentType}
-                </Form.Label>
-              )}
-            </Form.Group>
-          </Col>
-          <Col sm={3}>
-            <Form.Group>
-              <Form.Label>Designation</Form.Label>
-              <br></br>
-              {state.employmentType === "Internship" ? (
-                <Form.Label className="headingColor">Intern</Form.Label>
-              ) : (
-                <Form.Label className="headingColor">
-                  {state.designation}
-                </Form.Label>
-              )}
-            </Form.Group>
-          </Col>
-          <Col sm={3}>
-            <Form.Group>
-              <Form.Label>Department</Form.Label>
-              <br></br>
-              <Form.Label className="headingColor">
-                {state.department}
-              </Form.Label>
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row className="mt-4">
-          <Col sm={3}>
-            {state.employmentType === "Internship" ? (
-              <Form.Group className="reactDate">
-                <Form.Label>College Name</Form.Label>
-                <br></br>
-                <Form.Label className="headingColor">{college}</Form.Label>
-              </Form.Group>
-            ) : (
-              <Form.Group>
-                <Form.Label>Position</Form.Label>
-                <br></br>
-                <Form.Label className="headingColor">
-                  {state.position}
-                </Form.Label>
-              </Form.Group>
-            )}
-          </Col>
-          <Col sm={3}>
-            <Form.Group>
-              <Form.Label>Cost Center</Form.Label>
-              <br></br>
-              <Form.Label className="headingColor">{costCenter}</Form.Label>
-            </Form.Group>
-          </Col>
-          <Col sm={3}>
-            <Form.Group className="reactDate">
-              <Form.Label>Manager Name/Id</Form.Label>
-              <br></br>
-              {managerList === null ? (
-                <Form.Label>{user.employeeId}</Form.Label>
-              ) : (
-                <Form.Label className="headingColor">
-                  {state.managerId}
-                </Form.Label>
-              )}
-            </Form.Group>
-          </Col>
-          <Col sm={3}>
-            <Form.Group>
-              <Form.Label>Sports</Form.Label>
-              <br></br>
-              {state.employmentType === "Internship" ? (
-                <Form.Label className="headingColor">N/A</Form.Label>
-              ) : (
-                <Form.Label className="headingColor">{state.sports}</Form.Label>
-              )}
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row className="mt-4">
-          <Col sm={3}>
-            <Form.Group>
-              <Form.Label>Work Location state</Form.Label>
-              <br></br>
-              <Form.Label className="headingColor">
-                {filterArray !== undefined && filterArray[0] !== undefined
-                  ? filterArray[0].stateName
-                  : ""}
-              </Form.Label>
-            </Form.Group>
-          </Col>
-          <Col sm={3}>
-            <Form.Group>
-              <Form.Label>Work Location City</Form.Label>
-              <br></br>
-              <Form.Label className="headingColor">
-                {filterArray !== undefined && filterArray[0] !== undefined
-                  ? filterArray[0].cityName
-                  : ""}
-              </Form.Label>
-            </Form.Group>
-          </Col>
-
-          <Col sm={3}>
-            <Form.Group className="reactDate">
-              <Form.Label>Date of Joining</Form.Label>
-              <br></br>
-              <Form.Label className="headingColor">
-                {moment(dateOfJoining).format("YYYY-MM-DD")}
-              </Form.Label>
-            </Form.Group>
-          </Col>
-          <Col sm={3}>
-            {state.employmentType === "Internship" ? (
-              <Form.Group className="reactDate">
-                <Form.Label>Date of Leaving</Form.Label>
-                <br></br>
-                <Form.Label className="headingColor">
-                  {moment(dateOfLeaving).format("YYYY-MM-DD")}
-                </Form.Label>
-              </Form.Group>
-            ) : (
-              <Form.Group>
-                <Form.Label>Recuritment Source</Form.Label>
-                <br></br>
-                <Form.Label className="headingColor">
-                  {state.recuritment}
-                </Form.Label>
-              </Form.Group>
-            )}
-          </Col>
-        </Row>
-        <Row className="mt-4">
-          <Col sm={3}>
-            {state.employmentType === "Internship" ? (
-              <Form.Group>
-                <Form.Label>Internship Duration</Form.Label>
-                <br></br>
-                <Form.Label className="headingColor">
-                  {state.internship} Month
-                </Form.Label>
-              </Form.Group>
-            ) : (
-              <Form.Group>
-                <Form.Label>Notice Period</Form.Label>
-                <br></br>
-                <Form.Label className="headingColor">
-                  {state.noticePeriod} Month
-                </Form.Label>
-              </Form.Group>
-            )}
-          </Col>
-          {state.employmentType === "Internship" ? (
-            ""
-          ) : (
+    console.log(candidateData.workInformation),
+    (
+      <Fragment>
+        <Form onSubmit={submitHandler}>
+          <Row>
             <Col sm={3}>
               <Form.Group>
-                <Form.Label>Probation Period</Form.Label>
+                <Form.Label>Company Name</Form.Label>
                 <br></br>
-                <Form.Label className="headingColor">
-                  {state.probation} Month
-                </Form.Label>
+                <Form.Label className="headingColor">{user.company}</Form.Label>
               </Form.Group>
             </Col>
-          )}
-        </Row>
-        {state.recuritment === "NGO" ? (
-          <Row className="mt-4">
-            <Col sm={12}>
+            <Col sm={3}>
+              <Form.Group className="reactDate">
+                <Form.Label>Type of Employment</Form.Label>
+                <br></br>
+                {candidateData.workInformation !== null && (
+                  <Form.Label className="headingColor">
+                    {state.employmentType}
+                  </Form.Label>
+                )}
+              </Form.Group>
+            </Col>
+            <Col sm={3}>
               <Form.Group>
-                <Form.Label>Enter NGO Detail</Form.Label>
+                <Form.Label>Designation</Form.Label>
+                <br></br>
+                {state.employmentType === "Internship" ? (
+                  <Form.Label className="headingColor">Intern</Form.Label>
+                ) : (
+                  <Form.Label className="headingColor">
+                    {state.designation}
+                  </Form.Label>
+                )}
+              </Form.Group>
+            </Col>
+            <Col sm={3}>
+              <Form.Group>
+                <Form.Label>Department</Form.Label>
                 <br></br>
                 <Form.Label className="headingColor">
-                  {state.ngoDetail}
+                  {state.department}
                 </Form.Label>
               </Form.Group>
             </Col>
           </Row>
-        ) : (
-          ""
-        )}
-      </Form>
-    </Fragment>
+          <Row className="mt-4">
+            <Col sm={3}>
+              {state.employmentType === "Internship" ? (
+                <Form.Group className="reactDate">
+                  <Form.Label>College Name</Form.Label>
+                  <br></br>
+                  <Form.Label className="headingColor">{college}</Form.Label>
+                </Form.Group>
+              ) : (
+                <Form.Group>
+                  <Form.Label>Position</Form.Label>
+                  <br></br>
+                  <Form.Label className="headingColor">
+                    {state.position}
+                  </Form.Label>
+                </Form.Group>
+              )}
+            </Col>
+            <Col sm={3}>
+              <Form.Group>
+                <Form.Label>Cost Center</Form.Label>
+                <br></br>
+                <Form.Label className="headingColor">{costCenter}</Form.Label>
+              </Form.Group>
+            </Col>
+            <Col sm={3}>
+              <Form.Group className="reactDate">
+                <Form.Label>Manager Name/Id</Form.Label>
+                <br></br>
+                {managerList === null ? (
+                  <Form.Label>{user.employeeId}</Form.Label>
+                ) : (
+                  <Form.Label className="headingColor">
+                    {state.managerId}
+                  </Form.Label>
+                )}
+              </Form.Group>
+            </Col>
+            <Col sm={3}>
+              <Form.Group>
+                <Form.Label>Sports</Form.Label>
+                <br></br>
+                {state.employmentType === "Internship" ? (
+                  <Form.Label className="headingColor">N/A</Form.Label>
+                ) : (
+                  <Form.Label className="headingColor">
+                    {state.sports !== undefined && state.sports !== null
+                      ? state.sports
+                      : "N/A"}
+                  </Form.Label>
+                )}
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row className="mt-4">
+            <Col sm={3}>
+              <Form.Group>
+                <Form.Label>Work Location state</Form.Label>
+                <br></br>
+                <Form.Label className="headingColor">
+                  {filterArray !== undefined && filterArray[0] !== undefined
+                    ? filterArray[0].stateName
+                    : ""}
+                </Form.Label>
+              </Form.Group>
+            </Col>
+            <Col sm={3}>
+              <Form.Group>
+                <Form.Label>Work Location City</Form.Label>
+                <br></br>
+                <Form.Label className="headingColor">
+                  {filterArray !== undefined && filterArray[0] !== undefined
+                    ? filterArray[0].cityName
+                    : ""}
+                </Form.Label>
+              </Form.Group>
+            </Col>
+
+            <Col sm={3}>
+              <Form.Group className="reactDate">
+                <Form.Label>Date of Joining</Form.Label>
+                <br></br>
+                <Form.Label className="headingColor">
+                  {moment(dateOfJoining).format("YYYY-MM-DD")}
+                </Form.Label>
+              </Form.Group>
+            </Col>
+            <Col sm={3}>
+              {state.employmentType === "Internship" ? (
+                <Form.Group className="reactDate">
+                  <Form.Label>Date of Leaving</Form.Label>
+                  <br></br>
+                  <Form.Label className="headingColor">
+                    {moment(dateOfLeaving).format("YYYY-MM-DD")}
+                  </Form.Label>
+                </Form.Group>
+              ) : (
+                <Form.Group>
+                  <Form.Label>Recuritment Source</Form.Label>
+                  <br></br>
+                  <Form.Label className="headingColor">
+                    {state.recuritment}
+                  </Form.Label>
+                </Form.Group>
+              )}
+            </Col>
+          </Row>
+          <Row className="mt-4">
+            <Col sm={3}>
+              {state.employmentType === "Internship" ? (
+                <Form.Group>
+                  <Form.Label>Internship Duration</Form.Label>
+                  <br></br>
+                  <Form.Label className="headingColor">
+                    {state.internship} Month
+                  </Form.Label>
+                </Form.Group>
+              ) : (
+                <Form.Group>
+                  <Form.Label>Notice Period</Form.Label>
+                  <br></br>
+                  <Form.Label className="headingColor">
+                    {state.noticePeriod} Month
+                  </Form.Label>
+                </Form.Group>
+              )}
+            </Col>
+            {state.employmentType === "Internship" ? (
+              ""
+            ) : (
+              <Col sm={3}>
+                <Form.Group>
+                  <Form.Label>Probation Period</Form.Label>
+                  <br></br>
+                  <Form.Label className="headingColor">
+                    {state.probation} Month
+                  </Form.Label>
+                </Form.Group>
+              </Col>
+            )}
+          </Row>
+          {state.recuritment === "NGO" ? (
+            <Row className="mt-4">
+              <Col sm={12}>
+                <Form.Group>
+                  <Form.Label>Enter NGO Detail</Form.Label>
+                  <br></br>
+                  <Form.Label className="headingColor">
+                    {state.ngoDetail}
+                  </Form.Label>
+                </Form.Group>
+              </Col>
+            </Row>
+          ) : (
+            ""
+          )}
+        </Form>
+      </Fragment>
+    )
   );
 };
 
