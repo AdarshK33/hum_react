@@ -413,13 +413,14 @@ export const OfferProvider = (props) => {
     return (
       client
         // .get("/api/v1/candidate/offer/54")
-        .get("/api/v1/candidate/verification/complete" + id)
+        .get("/api/v1/candidate/verification/complete?candidateId=" + id)
         .then((response) => {
           state.aadhaarNotificationData = response.data.data;
           console.log(
             "aadhaarNotificationData.message",
             state.aadhaarNotificationData
           );
+          toast.info("Documents uploaded successfully");
           return dispatch({
             type: "ADHAAR_NOTIFICATION_DATA",
             payload: state.aadhaarNotificationData,
