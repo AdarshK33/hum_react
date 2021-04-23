@@ -19,6 +19,9 @@ import { AdminContext } from "../../context/AdminState";
 import AppointmentLetter from "./AppointmentLetter";
 
 const CandidateOnboarding = () => {
+  const { generateOfferLetter, offerLetterData, candidateData } = useContext(
+    OfferContext
+  );
   const {
     costCenterSplit,
     createEmployee,
@@ -31,7 +34,6 @@ const CandidateOnboarding = () => {
     empData,
   } = useContext(DocsVerifyContext);
 
-  const { candidateData } = useContext(OfferContext);
   const { RoleList } = useContext(RoleManagementContext);
   const { costCenterList } = useContext(AdminContext);
   const [count, setCount] = useState(0);
@@ -74,7 +76,15 @@ const CandidateOnboarding = () => {
   const [emailError, setError] = useState(false);
   const [costCentersData, setCostCentersData] = useState({});
   const previewAppointmentLetter = () => {
+    console.log("candidateData id", candidateData);
     setShowLetter(true);
+    if (
+      candidateData !== null &&
+      candidateData !== undefined &&
+      candidateData.candidateInformation
+    ) {
+      generateOfferLetter(candidateData.candidateInformation.candidateId);
+    }
   };
   useEffect(() => {
     if (
