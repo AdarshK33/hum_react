@@ -100,6 +100,7 @@ const DocVerification = () => {
   };
   var documents =
     docsToVerify !== undefined &&
+    docsToVerify !== null &&
     docsToVerify
       .filter((personal) => personal.documentType <= 5)
       .map((filteredResult) => {
@@ -107,6 +108,7 @@ const DocVerification = () => {
       });
   var educationDocuments =
     docsToVerify !== undefined &&
+    docsToVerify !== null &&
     docsToVerify
       .filter(
         (personal) => personal.documentType > 5 && personal.documentType <= 8
@@ -225,6 +227,13 @@ const DocVerification = () => {
                               </span>{" "}
                               <span style={{ color: "red" }}>*</span>
                             </label>
+                          ) : item.documentType === 1 ? (
+                            <label>
+                              <span style={{ color: "black" }}>
+                                Aadhar Card
+                              </span>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </label>
                           ) : item.documentType === 2 ? (
                             <label>
                               <span
@@ -272,17 +281,15 @@ const DocVerification = () => {
                             )
                           )}
                         </p>
-                        {item.documentType !== 1 && (
-                          <p
-                            style={{ cursor: "pointer" }}
-                            onClick={() => downloadDocument(item.documentName)}
-                          >
-                            {downloadedFile && (
-                              <img src={downloadedFile} alt="" />
-                            )}
-                            {item.documentName}
-                          </p>
-                        )}
+                        <p
+                          style={{ cursor: "pointer" }}
+                          onClick={() => downloadDocument(item.documentName)}
+                        >
+                          {downloadedFile && (
+                            <img src={downloadedFile} alt="" />
+                          )}
+                          {item.documentName}
+                        </p>
                       </td>
                       {item.statusDesc !== null &&
                       item.statusDesc !== "Pending" ? (
@@ -291,7 +298,7 @@ const DocVerification = () => {
                         </td>
                       ) : (
                         <td className="row text-center buttonMargin">
-                          {user.role === "MANAGER" && item.documentType !== 1 && (
+                          {user.role === "MANAGER" && (
                             <button
                               className="approveButton"
                               style={{ opacity: "10px" }}
@@ -304,7 +311,7 @@ const DocVerification = () => {
                             </button>
                           )}
 
-                          {user.role === "MANAGER" && item.documentType !== 1 && (
+                          {user.role === "MANAGER" && (
                             <button
                               className="approveButton ml-4"
                               style={
@@ -338,18 +345,12 @@ const DocVerification = () => {
                             )}
                         </td>
                       )}
-                      {item.documentType !== 1 && (
-                        <td className="buttonMargin1">
-                          {item.remark !== null ? item.remark : "N/A"}
-                        </td>
-                      )}
-                      {item.documentType !== 1 && (
-                        <td className="buttonMargin1">
-                          {item.verifiedDate !== null
-                            ? item.verifiedDate
-                            : "N/A"}
-                        </td>
-                      )}
+                      <td className="buttonMargin1">
+                        {item.remark !== null ? item.remark : "N/A"}
+                      </td>
+                      <td className="buttonMargin1">
+                        {item.verifiedDate !== null ? item.verifiedDate : "N/A"}
+                      </td>
                     </tr>
                   </tbody>
                 );
