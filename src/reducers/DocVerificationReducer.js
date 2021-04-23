@@ -34,6 +34,10 @@ const GroupReducer = (state, action) => {
       return { ...state, createStatus: action.payload };
     case "VIEW_EMPLOYEE":
       return { ...state, empData: action.payload };
+    case "STEP5_STATUS":
+      return { ...state, step5Status: action.payload };
+    case "STEP6_STATUS":
+      return { ...state, step5Status: action.payload };
   }
 };
 export default GroupReducer;

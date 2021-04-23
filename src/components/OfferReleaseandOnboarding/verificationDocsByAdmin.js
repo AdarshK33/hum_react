@@ -43,6 +43,7 @@ const DocVerification = () => {
     downloadedFile,
     personalInfoData,
     personalInfo,
+    step5suscessStatus,
   } = useContext(DocsVerifyContext);
   const { getUserInfo, user } = useContext(AppContext);
   useEffect(() => {
@@ -82,6 +83,7 @@ const DocVerification = () => {
   };
 
   const handleOnboard = () => {
+    step5suscessStatus(true);
     setOnboardPopup(true);
   };
   var documents =
