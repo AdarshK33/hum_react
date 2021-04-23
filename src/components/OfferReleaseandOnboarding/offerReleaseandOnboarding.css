@@ -28,3 +28,13 @@
 .appointmentLetter .modal-backdrop .show {
   opacity: 0 !important;
 }
+.circleCheckIcon {
+  background-color: white;
+  font-size: 24px;
+  color: green;
+  background-color: white;
+  border-radius: 50%;
+  height: 22px;
+  width: 21px;
+  padding-top: -13px;
+}

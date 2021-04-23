@@ -43,6 +43,7 @@ const DocVerification = () => {
     downloadedFile,
     personalInfoData,
     personalInfo,
+    step5suscessStatus,
   } = useContext(DocsVerifyContext);
   const { getUserInfo, user } = useContext(AppContext);
   useEffect(() => {
@@ -82,6 +83,7 @@ const DocVerification = () => {
   };
 
   const handleOnboard = () => {
+    step5suscessStatus(true);
     setOnboardPopup(true);
   };
   var documents =
@@ -138,7 +140,10 @@ const DocVerification = () => {
       <Modal show={onBoardPopup} onHide={() => setOnboardPopup(false)} centered>
         <Container style={{ textAlign: "center", margin: "4rem 0 4rem 0" }}>
           <Modal.Body>
-            <h6 style={{ marginBottom: "1rem" }}>Your Verification Done!!</h6>{" "}
+            <h6 style={{ marginBottom: "1rem" }}>
+              The documents have been verified successfully, please complete the
+              steps to onboard the candidate
+            </h6>{" "}
             <Button onClick={() => setOnboardPopup(false)}>Cancel</Button>
           </Modal.Body>
         </Container>

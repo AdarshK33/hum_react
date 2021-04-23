@@ -6,8 +6,8 @@ import Axios from "axios";
 import { access_token } from "../auth/signin";
 
 const initial_state = {
-  noDueClearanceList:[],
-  updateNoDueClearanceList:[],
+  noDueClearanceList: [],
+  updateNoDueClearanceList: [],
   separationList: [],
   total: {},
   data: [],
@@ -63,7 +63,10 @@ export const SeparationProvider = (props) => {
         state.total = response.data.data.total;
         console.log("=====GET Admin separation API response=====", response.data.data)
 
-        return dispatch({ type: 'FETCH_SEPARATION_LIST', payload: state.noDueClearanceList })
+        return dispatch({
+          type: "FETCH_SEPARATION_LIST",
+          payload: state.noDueClearanceList,
+        });
       })
       .catch((error) => {
         console.log(error)
@@ -83,10 +86,11 @@ export const SeparationProvider = (props) => {
       employeeName: value.employeeName,
       costCentreName: value.costCentreName,
       joiningDate: value.joiningDate,
-      managerName: value.managerName
-    }
-    console.log(formData,"updateClearanceList separation context")
-    return client.post('/api/v1/separation/it-clearance/edit', formData)
+      managerName: value.managerName,
+    };
+    console.log(formData, "updateClearanceList separation context");
+    return client
+      .post("/api/v1/separation/it-clearance/edit", formData)
       .then((response) => {
         toast.info(response.data.message);
         viewITClearanceList(key,page,costCenter)
@@ -95,9 +99,9 @@ export const SeparationProvider = (props) => {
         )
       })
       .catch((error) => {
-        console.log(error)
-      })
-  }
+        console.log(error);
+      });
+  };
   const saveFinanceClearanceData = (data) => {
     setLoader(true);
     return client

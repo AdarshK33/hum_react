@@ -17,7 +17,11 @@ const GroupReducer = (state, action) => {
     case "GET_ACCEPT_STATUS":
       return { ...state, acceptStatus: action.payload };
     case "GET_REJECT_STATUS":
-      return { ...state, rejectStatus: action.payload };
+      return {
+        ...state,
+        rejectStatus: action.payload,
+        rejectMessage: action.rejectMessage,
+      };
     case "DOWNLOAD_DOCU":
       return { ...state, downloadedFile: action.payload };
     case "UPDATE_UAN":
@@ -30,6 +34,10 @@ const GroupReducer = (state, action) => {
       return { ...state, createStatus: action.payload };
     case "VIEW_EMPLOYEE":
       return { ...state, empData: action.payload };
+    case "STEP5_STATUS":
+      return { ...state, step5Status: action.payload };
+    case "STEP6_STATUS":
+      return { ...state, step5Status: action.payload };
   }
 };
 export default GroupReducer;

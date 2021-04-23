@@ -25,8 +25,14 @@ const Documents = (props) => {
     candidateProfileData,
     documentView,
     documentViewData,
+    candidateViewInfo,
+    CandidateViewInformation,
   } = useContext(OnBoardContext);
-  const { candidateData } = useContext(OfferContext);
+  const {
+    candidateData,
+    aadhaarNotificationData,
+    adhaarVerificationNotification,
+  } = useContext(OfferContext);
   const [fileName, setFileName] = useState("");
   const [fullTime, setFullTime] = useState(true);
   const [partTime, setParTime] = useState(false);
@@ -52,15 +58,23 @@ const Documents = (props) => {
     console.log("candidateProfileData", candidateProfileData);
     console.log("candidateData", candidateData);
   }, [candidateProfileData]);
+
+  useEffect(() => {
+    console.log("personal information view candidate", candidateProfileData);
+    if (candidateProfileData) {
+      CandidateViewInformation(candidateProfileData.candidateId);
+    }
+  }, [candidateProfileData]);
+  console.log("personal information candidateViewInfo-->", candidateViewInfo);
   useEffect(() => {
     if (
-      candidateData !== null &&
-      candidateData !== undefined &&
-      candidateData.workInformation
+      candidateViewInfo !== null &&
+      candidateViewInfo !== undefined &&
+      candidateViewInfo
     ) {
-      setWorkInfoData(candidateData.workInformation);
+      setWorkInfoData(candidateViewInfo);
     }
-  }, [candidateData]);
+  }, [candidateViewInfo]);
   console.log("contractType", workInfoData);
 
   useEffect(() => {
@@ -735,6 +749,7 @@ const Documents = (props) => {
     // const value = checkValidations();
     const value = isAllFilesUploaded();
     if (value === true) {
+      adhaarVerificationNotification(candidateProfileData.candidateId);
       console.log(state);
       const nextPage = props.NextStep;
       nextPage(true);
