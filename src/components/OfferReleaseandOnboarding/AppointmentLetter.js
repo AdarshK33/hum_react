@@ -11,18 +11,27 @@ import {
   Table,
 } from "react-bootstrap";
 import moment from "moment";
+
 const AppointmentLetter = (props) => {
-  const { generateOfferLetter, offerLetterData, candidateData } = useContext(
-    OfferContext
-  );
+  const {
+    generateOfferLetter,
+    offerLetterData,
+    candidateData,
+    finalSubmitAppointmentLetter,
+    submitAppointmentLetter,
+  } = useContext(OfferContext);
   const [showLetter, setShow] = useState(true);
   const handleClose = () => {
     setShow(false);
   };
   const [signaturePad, setSignature] = useState(false);
-
+  const [saveLetter, setSaveLetter] = useState(false);
   const addSignature = () => {
     setSignature(true);
+  };
+  const saveAppointmentLetter = () => {
+    setSaveLetter(true);
+    setShow(false);
   };
   return (
     <Fragment>
@@ -508,7 +517,12 @@ const AppointmentLetter = (props) => {
               </div>
               {signaturePad && (
                 <div className="text-center mb-4">
-                  <button className=" signatureButtons">Save Changes</button>
+                  <button
+                    className=" signatureButtons"
+                    onClick={saveAppointmentLetter}
+                  >
+                    Save Changes
+                  </button>
                 </div>
               )}
             </Container>
