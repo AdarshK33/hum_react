@@ -22,6 +22,7 @@ const initial_state = {
   createStatus: "",
   onBoardData: {},
   empData: {},
+  rejectMessage: "",
 };
 export const DocsVerifyContext = createContext();
 export const DocsVerificationProvider = (props) => {
@@ -182,10 +183,12 @@ export const DocsVerificationProvider = (props) => {
       )
       .then((response) => {
         state.rejectStatus = response.data.status;
+        state.rejectMessage = response.data.message;
         setLoader(false);
         return dispatch({
           type: "GET_REJECT_STATUS",
           payload: state.rejectStatus,
+          rejectMessage: state.rejectMessage,
         });
       })
       .catch((error) => {
