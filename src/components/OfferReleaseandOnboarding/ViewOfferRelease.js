@@ -20,7 +20,14 @@ import { DocsVerifyContext } from "../../context/DocverificationState";
 import { OfferContext } from "../../context/OfferState";
 
 const ViewOfferRelease = () => {
-  const { personalInfo, personalInfoData } = useContext(DocsVerifyContext);
+  const {
+    personalInfo,
+    personalInfoData,
+    step5suscessStatus,
+    step5Status,
+    step6suscessStatus,
+    step6Status,
+  } = useContext(DocsVerifyContext);
   const { candidateView, candidateData, viewCandidateId } = useContext(
     OfferContext
   );
@@ -33,6 +40,22 @@ const ViewOfferRelease = () => {
   //   viewCandidateId(0);
   // }, [candidateData]);
 
+  console.log("step5Status----->", step5Status);
+
+  useEffect(() => {
+    if (step5Status === true) {
+      setCheckStep5(true);
+    } else {
+      setCheckStep5(false);
+    }
+  }, [step5Status]);
+  useEffect(() => {
+    if (step6Status === true) {
+      setCheckStep6(true);
+    } else {
+      setCheckStep6(false);
+    }
+  }, [step6Status]);
   useEffect(() => {
     if (
       candidateData &&
