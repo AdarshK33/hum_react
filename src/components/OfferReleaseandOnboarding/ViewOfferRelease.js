@@ -52,9 +52,10 @@ const ViewOfferRelease = () => {
     ) {
       if (personalInfoData.verificationStatus === 0) {
         setActiveStep6(false);
+        console.log("--->Data,", personalInfoData);
       } else {
         console.log("else");
-
+        console.log("--->Data,", personalInfoData);
         setActiveStep6(true);
       }
     }
@@ -66,7 +67,10 @@ const ViewOfferRelease = () => {
       candidateList.length > 0 &&
       candidateData &&
       candidateData.candidateInformation &&
-      candidateData.candidateInformation.candidateId !== null
+      candidateData.candidateInformation.candidateId !== null &&
+      personalInfoData !== null &&
+      Object.keys(personalInfoData).length !== 0 &&
+      personalInfoData !== undefined
     ) {
       candidateList.map((item, i) => {
         if (
@@ -76,7 +80,8 @@ const ViewOfferRelease = () => {
             item.status === 5 &&
             item.statusDesc !== "Rejected" &&
             item.statusDesc !== "Approved" &&
-            item.statusDesc === "Offer Released"
+            item.statusDesc === "Offer Released" &&
+            personalInfoData.documentUploaded === 1
           ) {
             console.log("-->", item);
             setActiveStep5(true);
@@ -86,7 +91,7 @@ const ViewOfferRelease = () => {
         }
       });
     }
-  }, [candidateList, candidateData]);
+  }, [candidateList, candidateData, personalInfoData]);
   console.log(activeStep5);
   return (
     <Fragment>
