@@ -868,21 +868,32 @@ const InsuranceNomination = (props) => {
         relationship: state.nominee5Relationship,
       };
       const NominiInfo = [];
+      var itemIncrease = 0;
 
       if (addFirst === true) {
-        NominiInfo.push(...NominiInfo, first_nomine_info);
+        console.log("one", NominiInfo);
+        NominiInfo[itemIncrease] = first_nomine_info;
+        itemIncrease = itemIncrease + 1;
       }
       if (addSecond === true) {
-        NominiInfo.push(...NominiInfo, second_nomine_info);
+        console.log("two", NominiInfo);
+        NominiInfo[itemIncrease] = second_nomine_info;
+        itemIncrease = itemIncrease + 1;
       }
       if (addThird === true) {
-        NominiInfo.push(...NominiInfo, fifth_nomine_info);
+        console.log("three", NominiInfo);
+        NominiInfo[itemIncrease] = fifth_nomine_info;
+        itemIncrease = itemIncrease + 1;
       }
       if ((addOne === true) & (NAcheck === false)) {
-        NominiInfo.push(...NominiInfo, third_nomine_info);
+        console.log("four", NominiInfo);
+        NominiInfo[itemIncrease] = third_nomine_info;
+        itemIncrease = itemIncrease + 1;
       }
       if ((addTwo === true) & (NAcheck === false)) {
-        NominiInfo.push(...NominiInfo, fourth_nomine_info);
+        console.log("five", NominiInfo);
+        NominiInfo[itemIncrease] = fourth_nomine_info;
+        itemIncrease = itemIncrease + 1;
       }
 
       //   const NominiInfo =
@@ -908,6 +919,16 @@ const InsuranceNomination = (props) => {
       //           fifth_nomine_info,
       //         ]
       //       : [];
+
+      if (NominiInfo.length < 5) {
+        console.log("nominee length", NominiInfo.length);
+        let len = 5 - NominiInfo.length;
+        console.log("nominee adjust length", len);
+        for (let i = 0; i < len; i++) {
+          console.log("------>", len);
+          NominiInfo[NominiInfo.length+i] = {};
+        }
+      }
       console.log(NominiInfo);
       CreateNominee(NominiInfo);
       const nextPage = props.NextStep;
