@@ -396,6 +396,7 @@ const DocVerification = () => {
                     <td>
                       {item.verifiedDate !== null &&
                         item.documentType > 5 &&
+                        item.documentType === 1 &&
                         item.verifiedDate}
                     </td>
                   </tr>

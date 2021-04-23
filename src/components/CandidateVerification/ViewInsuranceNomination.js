@@ -775,6 +775,11 @@ const EditInsuranceNomination = (props) => {
             </div>
             {nominationDetails[1] !== undefined ? (
               <div>
+                <div>
+                  <label>
+                    <b>Second Dependent</b>
+                  </label>
+                </div>
                 {/* second Nominee */}
                 <Row style={{ marginBottom: "2rem" }}>
                   <Col sm={11}>
@@ -795,6 +800,7 @@ const EditInsuranceNomination = (props) => {
                             }
                             onChange={changeHandler}
                             placeholder="Nominee Name"
+                            disabled={true}
                             required="required"
                             style={
                               nomineNameError_2 ? { borderColor: "red" } : {}
@@ -823,6 +829,7 @@ const EditInsuranceNomination = (props) => {
                                 ? nominationDetails[0].relationship
                                 : ""
                             }
+                            disabled={true}
                             onChange={changeHandler}
                             style={
                               relationshipError_2 ? { borderColor: "red" } : {}
@@ -853,6 +860,7 @@ const EditInsuranceNomination = (props) => {
                                 ? nominationDetails[0].gender
                                 : ""
                             }
+                            disabled={true}
                             onChange={changeHandler}
                             placeholder="Gender"
                             required="required"
@@ -870,7 +878,7 @@ const EditInsuranceNomination = (props) => {
                       </div>
                     </Row>
                   </Col>
-                  <Col sm={1} style={{ marginLeft: "-2rem" }}>
+                  {/* <Col sm={1} style={{ marginLeft: "-2rem" }}>
                     <Form.Group>
                       <div>
                         <button
@@ -888,7 +896,7 @@ const EditInsuranceNomination = (props) => {
                         </button>
                       </div>
                     </Form.Group>
-                  </Col>
+                  </Col> */}
                 </Row>
                 <Row style={{ marginBottom: "1rem" }}>
                   <Col sm={11}>
@@ -913,6 +921,7 @@ const EditInsuranceNomination = (props) => {
                                     )
                                   : Nominee2DOB
                               }
+                              disabled={true}
                               required
                               onChange={(e) => dateOfBirthHandler(e, "2")}
                               dateFormat="yyyy-MM-dd"
@@ -943,6 +952,7 @@ const EditInsuranceNomination = (props) => {
                                 ? nominationDetails[0].age
                                 : ""
                             }
+                            disabled={true}
                             onChange={changeHandler}
                             placeholder="Age"
                             required="required"
@@ -972,6 +982,7 @@ const EditInsuranceNomination = (props) => {
                                 : ""
                             }
                             onChange={changeHandler}
+                            disabled={true}
                             style={
                               bloodGroupError_2 ? { borderColor: "red" } : {}
                             }
@@ -1089,7 +1100,7 @@ const EditInsuranceNomination = (props) => {
                       </div>
                     </Row>
                   </Col>
-                  <Col sm={1} style={{ marginLeft: "-2rem" }}>
+                  {/* <Col sm={1} style={{ marginLeft: "-2rem" }}>
                     <Form.Group>
                       <div>
                         <button
@@ -1107,7 +1118,7 @@ const EditInsuranceNomination = (props) => {
                         </button>
                       </div>
                     </Form.Group>
-                  </Col>
+                  </Col> */}
                 </Row>
                 <Row style={{ marginBottom: "1rem" }}>
                   <Col sm={11}>
@@ -1289,7 +1300,7 @@ const EditInsuranceNomination = (props) => {
                   <Col sm={1} style={{ marginLeft: "-2rem" }}>
                     <Form.Group>
                       <div>
-                        <button
+                        {/* <button
                           onClick={cancel}
                           type="cancel"
                           style={{
@@ -1301,7 +1312,7 @@ const EditInsuranceNomination = (props) => {
                             class="fa fa-close"
                             style={{ fontSize: "20px", color: "red" }}
                           ></i>
-                        </button>
+                        </button> */}
                       </div>
                     </Form.Group>
                   </Col>
@@ -1483,7 +1494,7 @@ const EditInsuranceNomination = (props) => {
                       </div>
                     </Row>
                   </Col>
-                  <Col sm={1} style={{ marginLeft: "-2rem" }}>
+                  {/* <Col sm={1} style={{ marginLeft: "-2rem" }}>
                     <Form.Group>
                       <div>
                         <button
@@ -1501,7 +1512,7 @@ const EditInsuranceNomination = (props) => {
                         </button>
                       </div>
                     </Form.Group>
-                  </Col>
+                  </Col> */}
                 </Row>
                 <Row style={{ marginBottom: "1rem" }}>
                   <Col sm={11}>
