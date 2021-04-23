@@ -25,6 +25,7 @@ const initial_state = {
   cityList: [],
   managerList: [],
   aadhaarNotificationData: {},
+  submitAppointmentLetter: {},
 };
 
 export const OfferContext = createContext();
@@ -431,6 +432,23 @@ export const OfferProvider = (props) => {
         })
     );
   };
+
+  const finalSubmitAppointmentLetter = (id) => {
+    console.log("state appoint submit id", id);
+    return client
+      .get("/api/v1/candidate/" + id + "/appointment")
+      .then((response) => {
+        state.submitAppointmentLetter = response.data.data;
+        console.log("appoint.message", state.submitAppointmentLetter);
+        return dispatch({
+          type: "SUBMIT_APPOINTMENT_LETTER",
+          payload: state.submitAppointmentLetter,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <OfferContext.Provider
       value={{
@@ -455,6 +473,7 @@ export const OfferProvider = (props) => {
         stateData,
         cityData,
         adhaarVerificationNotification,
+        finalSubmitAppointmentLetter,
         searchData: state.searchData,
         departmentName: state.departmentName,
         designationName: state.designationName,
@@ -476,6 +495,7 @@ export const OfferProvider = (props) => {
         managerList: state.managerList,
         workInformationData: state.workInformationData,
         aadhaarNotificationData: state.aadhaarNotificationData,
+        submitAppointmentLetter: state.submitAppointmentLetter,
       }}
     >
       {props.children}
