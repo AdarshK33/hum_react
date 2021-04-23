@@ -46,13 +46,16 @@ const DocVerification = () => {
     downloadedFile,
     personalInfoData,
     personalInfo,
+    rejectMessage,
   } = useContext(DocsVerifyContext);
   const { getUserInfo, user } = useContext(AppContext);
   useEffect(() => {
+    if (rejectMessage) {
+    }
     verificationDocsView(candidateId);
-    // personalInfo(candidateId);
-    // setState(personalInfoData);
-  }, [acceptStatus, rejectStatus]);
+    personalInfo(candidateId);
+    setState(personalInfoData);
+  }, [acceptStatus, rejectStatus, rejectMessage]);
   useEffect(() => {
     getUserInfo();
   }, []);
@@ -293,9 +296,7 @@ const DocVerification = () => {
                       </td>
                       {item.statusDesc !== null &&
                       item.statusDesc !== "Pending" ? (
-                        <td className="buttonMargin1">
-                          {item.documentType !== 1 && item.statusDesc}
-                        </td>
+                        <td className="buttonMargin1">{item.statusDesc}</td>
                       ) : (
                         <td className="row text-center buttonMargin">
                           {user.role === "MANAGER" && (
@@ -337,12 +338,6 @@ const DocVerification = () => {
                               Disapprove
                             </button>
                           )}
-                          {rejectStatus === "FAIL" &&
-                            docType === item.documentType && (
-                              <p style={{ color: "red" }}>
-                                Maximum attempst had reached
-                              </p>
-                            )}
                         </td>
                       )}
                       <td className="buttonMargin1">

@@ -51,14 +51,21 @@ const DocVerification = () => {
   } = useContext(DocsVerifyContext);
   const { getUserInfo, user } = useContext(AppContext);
   useEffect(() => {
-    // if (rejectMessage) {
-    //   setDisapprovePopup(true);
-    // }
+    if (rejectMessage) {
+      setDisapprovePopup(true);
+    }
     if (candidateData.candidateInformation !== undefined) {
       verificationDocsView(candidateData.candidateInformation.candidateId);
     }
-    setState(personalInfoData);
   }, [acceptStatus, rejectStatus, rejectMessage]);
+  useEffect(() => {
+    if (disapprovePopup === true) {
+      if (candidateData.candidateInformation !== undefined) {
+        verificationDocsView(candidateData.candidateInformation.candidateId);
+      }
+      setState(personalInfoData);
+    }
+  }, [disapprovePopup]);
   useEffect(() => {
     getUserInfo();
   }, []);
@@ -246,6 +253,15 @@ const DocVerification = () => {
                           <label>
                             <span style={{ color: "black" }}>Aadhar Card</span>{" "}
                             <span style={{ color: "red" }}>*</span>
+                            <span
+                              style={{
+                                color: "#47ef47",
+                                fontStyle: "italic",
+                                fontSize: "20px",
+                              }}
+                            >
+                              (Upload the first and last page)
+                            </span>
                           </label>
                         ) : item.documentType === 2 ? (
                           <label>
@@ -334,12 +350,12 @@ const DocVerification = () => {
                             Disapprove
                           </button>
                         )}
-                        {rejectStatus === "FAIL" &&
+                        {/* {rejectStatus === "FAIL" &&
                           docType === item.documentType && (
                             <p style={{ color: "red" }}>
                               Maximum attempst had reached
                             </p>
-                          )}
+                          )} */}
                       </td>
                     )}
                     <td className="buttonMargin1">
