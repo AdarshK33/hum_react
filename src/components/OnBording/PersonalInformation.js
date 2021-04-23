@@ -113,6 +113,9 @@ const PersonalInformation = (props) => {
       });
   }, []);
   useEffect(() => {
+    CandidateProfile();
+  }, [candidateProfileData]);
+  useEffect(() => {
     setRefEmail1(
       searchEmpData1 !== null
         ? searchEmpData1.email !== undefined && searchEmpData1.email !== null
