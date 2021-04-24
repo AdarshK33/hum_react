@@ -32,6 +32,7 @@ const AppointmentLetter = (props) => {
   const saveAppointmentLetter = () => {
     setSaveLetter(true);
     setShow(false);
+    /*saveAppointmentLetter */
   };
   return (
     <Fragment>
