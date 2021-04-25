@@ -1,17 +1,41 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
-import { Modal, Row, Col, Form, Button } from "react-bootstrap";
+import { Modal, Row, Col, Form, Button, Container } from "react-bootstrap";
 import calendarImage from "../../assets/images/calendar-image.png";
 import moment from "moment";
-import "./offers.css";
 import { OfferContext } from "../../context/OfferState";
 
-const InternAppointmentLetter = () => {
+const InternAppointmentLetter = (props) => {
   const {
     createCandidateResponse,
     generateOfferLetter,
     offerLetterData,
   } = useContext(OfferContext);
-
+  const [showLetter, setShow] = useState(true);
+  const [saveLetter, setSaveLetter] = useState(false);
+  const [previewClick, setPreviewClick] = useState(false);
+  const handleClose = () => {
+    setShow(false);
+  };
+  useEffect(() => {
+    console.log(
+      "inside intern appointment letter",
+      offerLetterData,
+      props.previewLetter
+    );
+    if (props.previewLetter === true) {
+      setShow(true);
+      setPreviewClick(true);
+    }
+  }, [offerLetterData]);
+  const addSignature = () => {
+    setSignature(true);
+  };
+  const saveAppointmentLetter = () => {
+    setSaveLetter(true);
+    setShow(false);
+    /*saveAppointmentLetter */
+  };
+  const [signaturePad, setSignature] = useState(false);
   return (
     <Fragment>
       {typeof offerLetterData &&
@@ -236,9 +260,14 @@ const InternAppointmentLetter = () => {
                     </Col>
                   </Row>
                 </div>
-                {signaturePad && (
+                {signaturePad && !saveLetter && (
                   <div className="text-center mb-4">
-                    <button className=" signatureButtons">Save Changes</button>
+                    <button
+                      className=" signatureButtons"
+                      onClick={saveAppointmentLetter}
+                    >
+                      Save Changes
+                    </button>
                   </div>
                 )}
               </Container>
