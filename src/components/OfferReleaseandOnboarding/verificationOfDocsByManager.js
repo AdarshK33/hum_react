@@ -565,7 +565,7 @@ const DocVerification = () => {
       >
         {state !== undefined && state.verificationStatus === 1 && (
           <button className="onboardButton" onClick={() => handleOnboard()}>
-            Onboard Candidate
+            Proceed
           </button>
         )}
       </div>

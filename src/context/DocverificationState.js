@@ -211,6 +211,7 @@ export const DocsVerificationProvider = (props) => {
       )
       .then((response) => {
         state.uanUpdate = response.data.message;
+        toast.info(response.data.message);
         return dispatch({
           type: "UPDATE_UAN",
           payload: state.uanUpdate,
