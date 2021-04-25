@@ -28,6 +28,7 @@ const DocVerification = () => {
   const [UANYes, setYes] = useState(false);
   const [UANNo, setNo] = useState(false);
   const [uanNumber, setUanNumber] = useState("");
+  const [uanError, setUanError] = useState(false);
   const {
     verificationDocsView,
     docsToVerify,
@@ -69,6 +70,7 @@ const DocVerification = () => {
 
   const handleUANNumber = (e) => {
     setUanNumber(e.target.value);
+    setUanError(false);
   };
   const handleApproveDocument = (docId) => {
     approveDocument(docId);
@@ -116,6 +118,8 @@ const DocVerification = () => {
   const handleDocSave = () => {
     if (UANNo && uanNumber !== "") {
       updateUANNumber(personalInfoData.candidateId, uanNumber);
+    } else {
+      setUanError(true);
     }
   };
   return (
@@ -463,6 +467,9 @@ const DocVerification = () => {
                 />
               </div>
             </Form.Group>
+            {uanError && (
+              <p style={{ color: "red" }}>Please Enter UAN Number</p>
+            )}
           </Col>
         </Row>
       )}
