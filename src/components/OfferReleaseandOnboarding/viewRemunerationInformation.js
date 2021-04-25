@@ -306,10 +306,7 @@ const ViewRemunerationInformation = (props) => {
                   <Form.Label>Fixed Gross</Form.Label>
                   <Col sm={6}>
                     <Form.Label className="headingColor">
-                      {candidateData.remuneration !== null &&
-                      candidateData.candidateData !== undefined
-                        ? fixedGross
-                        : "N/A"}
+                      {candidateData.remuneration !== null ? fixedGross : "N/A"}
                     </Form.Label>
 
                     {/* {fixedGrossError ? (
