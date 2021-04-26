@@ -213,7 +213,7 @@ const EmergencyContact = (props) => {
           <Col sm={6}>
             <div>
               <label>
-                <b>Present Address</b>
+                <b>Emergency Contact</b>
               </label>
             </div>
           </Col>
