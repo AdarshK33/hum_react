@@ -887,7 +887,7 @@ const Documents = (props) => {
         fileType = 7;
       }
     } else if (event.target.name === "latestPaySlips") {
-      if (latestPaySlipsError() === true) {
+      if (PaySlipsValidation() === true) {
         fileUpload = state.latestPaySlips;
         fileType = 8;
       }
