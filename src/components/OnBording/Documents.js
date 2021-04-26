@@ -466,11 +466,14 @@ const Documents = (props) => {
     }
   };
   const PaySlipsValidation = () => {
-    if (stateOfName.relievingLetter !== "") {
+    if (stateOfName.latestPaySlips !== "") {
+      console.log("in if Validation");
       setLatestPaySlipsError(false);
       console.log("payslipsSuccess");
       return true;
     } else {
+      console.log("in else Validation");
+
       setLatestPaySlipsError(true);
       console.log("paySlipsFail");
       return false;
@@ -643,11 +646,16 @@ const Documents = (props) => {
   };
   const LatestPaySlipsUploadValidation = () => {
     if (UploadedArray[0].ULLatestPaySlip === false) {
+      console.log("Upload in if");
+
       if (PaySlipsValidation() === true) {
+        console.log("Upload in nested if");
+
         setLatestPaySlipsError(true);
         return false;
       }
     } else {
+      console.log("Upload in else");
       return true;
     }
   };
@@ -748,6 +756,8 @@ const Documents = (props) => {
   const submitHandler = (e) => {
     // const value = checkValidations();
     const value = isAllFilesUploaded();
+    console.log("ERROR-->", latestPaySlipsError, state.latestPaySlips);
+    console.log(value);
     if (value === true) {
       adhaarVerificationNotification(candidateProfileData.candidateId);
       console.log(state);
@@ -813,6 +823,7 @@ const Documents = (props) => {
     } else if (event.target.name === "relievingLetter") {
       UploadedArray[0].ULRelivingLetter = false;
     } else if (event.target.name === "latestPaySlips") {
+      console.log("uploading payslip");
       UploadedArray[0].ULLatestPaySlip = false;
     }
   };
@@ -886,16 +897,20 @@ const Documents = (props) => {
       if (EducationCertificatesValidation() === true) {
         fileUpload = state.educationCertificate;
         fileType = 6;
+        UploadedArray[0].ULEducationCer = true;
       }
     } else if (event.target.name === "relievingLetter") {
       if (RelievingLetterValidation() === true) {
         fileUpload = state.relievingLetter;
         fileType = 7;
+        UploadedArray[0].ULRelivingLetter = true;
       }
     } else if (event.target.name === "latestPaySlips") {
       if (PaySlipsValidation() === true) {
+        console.log("payslip true ");
         fileUpload = state.latestPaySlips;
         fileType = 8;
+        UploadedArray[0].ULLatestPaySlip = true;
       }
     }
     if (fileUpload) {
