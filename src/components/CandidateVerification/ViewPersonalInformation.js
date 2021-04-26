@@ -856,7 +856,10 @@ const EditPersonalInformation = (props) => {
                           value="Unmarried"
                           required={statusRequired}
                           checked={
-                            state.maritalStatus === "UnMarried" ? true : false
+                            state.maritalStatus === "UnMarried" ||
+                            state.maritalStatus === "Unmarried"
+                              ? true
+                              : false
                           }
                         />
                         <label>Unmarried</label>

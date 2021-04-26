@@ -1,4 +1,10 @@
-import React, { createContext, useReducer, useContext, useState } from "react";
+import React, {
+  createContext,
+  useReducer,
+  useContext,
+  useState,
+  useEffect,
+} from "react";
 import { Fragment } from "react";
 import { OfferContext } from "../../context/OfferState";
 import {
@@ -11,6 +17,7 @@ import {
   Table,
 } from "react-bootstrap";
 import moment from "moment";
+import "../Offers/offers.css";
 
 const AppointmentLetter = (props) => {
   const {
@@ -21,9 +28,21 @@ const AppointmentLetter = (props) => {
     submitAppointmentLetter,
   } = useContext(OfferContext);
   const [showLetter, setShow] = useState(true);
+  const [previewClick, setPreviewClick] = useState(false);
   const handleClose = () => {
     setShow(false);
   };
+  useEffect(() => {
+    console.log(
+      "inside full appointment letter",
+      offerLetterData,
+      props.previewLetter
+    );
+    if (props.previewLetter === true) {
+      setShow(true);
+      setPreviewClick(true);
+    }
+  }, [offerLetterData]);
   const [signaturePad, setSignature] = useState(false);
   const [saveLetter, setSaveLetter] = useState(false);
   const addSignature = () => {
@@ -32,6 +51,7 @@ const AppointmentLetter = (props) => {
   const saveAppointmentLetter = () => {
     setSaveLetter(true);
     setShow(false);
+    /*saveAppointmentLetter */
   };
   return (
     <Fragment>
@@ -515,7 +535,7 @@ const AppointmentLetter = (props) => {
                   </Col>
                 </Row>
               </div>
-              {signaturePad && (
+              {signaturePad && !saveLetter && (
                 <div className="text-center mb-4">
                   <button
                     className=" signatureButtons"
