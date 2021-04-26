@@ -271,7 +271,9 @@ const CandidateOnboarding = () => {
       setSubmitLetter(true);
       setLetterSent(true);
       setSubmitModal(true);
-      // finalSubmitAppointmentLetter(candidateData.candidateInformation.candidateId);
+      finalSubmitAppointmentLetter(
+        candidateData.candidateInformation.candidateId
+      );
     }
   };
   const handleDataSave = () => {
