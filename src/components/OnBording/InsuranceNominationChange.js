@@ -179,6 +179,8 @@ const InsuranceNomination = (props) => {
   useEffect(() => {
     // console.log("personal information view candidate", candidateProfileData);
     if (
+      candidateInsuranceNominationData &&
+      candidatePersonalInfoData &&
       candidatePersonalInfoData !== null &&
       candidatePersonalInfoData !== undefined &&
       Object.keys(candidatePersonalInfoData).length !== 0
@@ -206,22 +208,34 @@ const InsuranceNomination = (props) => {
         setAge(finalAge !== null && finalAge !== undefined ? finalAge : "");
       }
       if (
+        candidateInsuranceNominationData &&
+        candidateInsuranceNominationData.length !== 0 &&
+        candidateInsuranceNominationData.length === 2
+      ) {
+        setNAcheck(true);
+        setParentCheck(false);
+        setInlawCheck(false);
+      } else if (
         candidatePersonalInfoData.maritalStatus !== null &&
         candidatePersonalInfoData.maritalStatus !== undefined &&
         candidatePersonalInfoData.maritalStatus === "Married"
       ) {
         setRelativeType(true);
         setInlawCheck(true);
+        setParentCheck(false);
+        setNAcheck(false);
         state.relationship = "Spouse";
         state.nominee2Relationship = "Child 1";
       } else {
         setRelativeType(false);
         setParentCheck(true);
+        setInlawCheck(false);
+        setNAcheck(false);
         state.relationship = "Father";
         state.nominee2Relationship = "Mother";
       }
     }
-  }, [candidatePersonalInfoData]);
+  }, [candidatePersonalInfoData, candidateInsuranceNominationData]);
 
   useEffect(() => {
     if (
@@ -231,6 +245,7 @@ const InsuranceNomination = (props) => {
       Object.keys(candidateInsuranceNominationData).length !== 0
     ) {
       console.log("12345678");
+
       if (
         candidateInsuranceNominationData[0] &&
         candidateInsuranceNominationData[0] !== null &&
@@ -870,7 +885,7 @@ const InsuranceNomination = (props) => {
         nominiName: state.nominee5NominiName,
         relationship: state.nominee5Relationship,
       };
-      const NominiInfo = [];
+      const NominiInfo = [{}, {}, {}, {}, {}];
       var itemIncrease = 0;
 
       if (addFirst === true) {
@@ -927,10 +942,10 @@ const InsuranceNomination = (props) => {
         console.log("nominee length", NominiInfo.length);
         let len = 5 - NominiInfo.length;
         console.log("nominee adjust length", len);
-        for (let i = 0; i < len; i++) {
-          console.log("------>", len);
-          NominiInfo[NominiInfo.length + i] = {};
-        }
+        // for (let i = 0; i <= len; i++) {
+        //   console.log("------>", len);
+        //   NominiInfo[NominiInfo.length + i] = {};
+        // }
       }
       console.log(NominiInfo);
       CreateNominee(NominiInfo);

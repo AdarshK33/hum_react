@@ -808,6 +808,12 @@ const Documents = (props) => {
       UploadedArray[0].ULCollegeLetter = false;
     } else if (event.target.name === "collegeId") {
       UploadedArray[0].ULCollegeId = false;
+    } else if (event.target.name === "educationCertificate") {
+      UploadedArray[0].ULEducationCer = false;
+    } else if (event.target.name === "relievingLetter") {
+      UploadedArray[0].ULRelivingLetter = false;
+    } else if (event.target.name === "latestPaySlips") {
+      UploadedArray[0].ULLatestPaySlip = false;
     }
   };
 
@@ -887,7 +893,7 @@ const Documents = (props) => {
         fileType = 7;
       }
     } else if (event.target.name === "latestPaySlips") {
-      if (latestPaySlipsError() === true) {
+      if (PaySlipsValidation() === true) {
         fileUpload = state.latestPaySlips;
         fileType = 8;
       }
