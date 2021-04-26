@@ -120,7 +120,7 @@ const DocVerification = () => {
         return filteredResult;
       });
   return (
-    console.log(docsToVerify),
+    console.log(state.verificationStatus),
     (
       <Fragment>
         <Modal show={showModal} onHide={() => handleClose()} centered>
