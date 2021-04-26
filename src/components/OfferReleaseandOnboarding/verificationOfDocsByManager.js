@@ -14,6 +14,7 @@ import {
   Form,
   Table,
 } from "react-bootstrap";
+import { accepts } from "react-dropzone-uploader";
 
 // import { handleInputChange } from "react-select/src/utils";
 
@@ -34,6 +35,7 @@ const DocVerification = () => {
   const [uanNumber, setUanNumber] = useState("");
   const [docType, setDocType] = useState("");
   const [disapprovePopup, setDisapprovePopup] = useState(false);
+  const [accept, setAccept] = useState(false);
   const {
     verificationDocsView,
     docsToVerify,
@@ -61,6 +63,15 @@ const DocVerification = () => {
       verificationDocsView(candidateData.candidateInformation.candidateId);
     }
   }, [acceptStatus, rejectStatus, rejectMessage]);
+  useEffect(() => {
+    if (accept === true) {
+      if (candidateData.candidateInformation !== undefined) {
+        verificationDocsView(candidateData.candidateInformation.candidateId);
+        personalInfo(candidateData.candidateInformation.candidateId);
+        setAccept(false);
+      }
+    }
+  }, [accept]);
   // useEffect(() => {
   //   if (disapprovePopup === true) {
   //     if (candidateData.candidateInformation !== undefined) {
@@ -100,6 +111,7 @@ const DocVerification = () => {
   };
   const handleApproveDocument = (docId) => {
     approveDocument(docId);
+    setAccept(true);
   };
   const handleDisApproveDocument = (docId, type) => {
     setModal(true);
@@ -149,7 +161,7 @@ const DocVerification = () => {
       });
   return (
     console.log(docsToVerify),
-    console.log("loader", loader),
+    console.log("loader", state.verificationStatus),
     (
       <Fragment>
         <Modal show={showModal} onHide={() => handleClose()} centered>

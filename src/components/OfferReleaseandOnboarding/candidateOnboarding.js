@@ -456,6 +456,7 @@ const CandidateOnboarding = () => {
             <Form.Control
               style={{ borderColor: "#006ebb" }}
               type="text"
+              className="form-input"
               name="email"
               value={
                 employeeData !== undefined && employeeData !== null
@@ -476,6 +477,7 @@ const CandidateOnboarding = () => {
           <Col sm={5}>
             <Form.Control
               style={{ borderColor: "#006ebb" }}
+              className="form-input"
               type="text"
               name="fedId"
               value={
@@ -495,6 +497,7 @@ const CandidateOnboarding = () => {
             <Form.Control
               as="select"
               name="role"
+              className="form-input"
               value={
                 employeeData !== undefined && employeeData !== null
                   ? employeeData.role
@@ -576,7 +579,7 @@ const CandidateOnboarding = () => {
           </Col>
         </Row>
       </div>
-      <div className="px-5  mt-4">
+      <div className="pr-5  mt-4">
         <h5>Cost Center Split</h5>
         {costCenter === true && (
           <Row>
@@ -586,6 +589,7 @@ const CandidateOnboarding = () => {
                   as="select"
                   name="costCentreA"
                   value={costCenterA}
+                  className="form-input"
                   onChange={(e) => setCostCenterA(e.target.value)}
                   placeholder="costCenter1"
                 >
@@ -650,7 +654,8 @@ const CandidateOnboarding = () => {
               <Form.Group>
                 <Form.Control
                   as="select"
-                  placeholder="costCenter1"
+                  className="form-input"
+                  placeholder="costCenter2"
                   value={costCenterB}
                   onChange={(e) => setCostCenterB(e.target.value)}
                 >
@@ -728,7 +733,8 @@ const CandidateOnboarding = () => {
               <Form.Group>
                 <Form.Control
                   as="select"
-                  placeholder="costCenter1"
+                  placeholder="costCenter3"
+                  className="form-input"
                   value={costCenterC}
                   onChange={(e) => setCostCenterC(e.target.value)}
                 >
@@ -806,7 +812,8 @@ const CandidateOnboarding = () => {
               <Form.Group>
                 <Form.Control
                   as="select"
-                  placeholder="costCenter1"
+                  className="form-input"
+                  placeholder="costCenter4"
                   value={costCenterD}
                   onChange={(e) => setCostCenterD(e.target.value)}
                 >
@@ -884,7 +891,8 @@ const CandidateOnboarding = () => {
               <Form.Group>
                 <Form.Control
                   as="select"
-                  placeholder="costCenter1"
+                  placeholder="costCenter5"
+                  className="form-input"
                   value={costCenterE}
                   onChange={(e) => setCostCenterE(e.target.value)}
                 >
