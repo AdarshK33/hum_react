@@ -604,7 +604,7 @@ const EditAddress = (props) => {
                   <input
                     type="checkbox"
                     value="No"
-                    checked={!isChecked}
+                    checked={state.addressType === 0 ? true : false}
                     disabled={disabled}
                     onChange={handleNoCheckboxChange}
                   />
@@ -620,7 +620,7 @@ const EditAddress = (props) => {
                   <input
                     type="checkbox"
                     value="Yes"
-                    checked={isChecked}
+                    checked={state.addressType === 1 ? true : false}
                     disabled={disabled}
                     onChange={handleCheckboxChange}
                   />
@@ -629,7 +629,7 @@ const EditAddress = (props) => {
               </Form.Group>
             </Col>
           </Row>
-          {isChecked ? (
+          {state.addressType === 1 ? (
             <div></div>
           ) : (
             <div>
