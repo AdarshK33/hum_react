@@ -33,7 +33,7 @@ const GroupReducer = (state, action) => {
       return { ...state, emergencyContactCreate: action.payload };
     case "PFDECLARATION_VIEW":
       console.log("PFDECLARATION_VIEW reducer", action.payload);
-      return { ...state, emergencyContactView: action.payload };
+      return { ...state, pfDeclarationView: action.payload };
     case "SEARCH_EMP1":
       return { ...state, searchEmpData1: action.payload };
 
