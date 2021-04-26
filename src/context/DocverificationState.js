@@ -161,6 +161,7 @@ export const DocsVerificationProvider = (props) => {
       .get("/api/v1/candidate/document/" + docId + "/accept")
       .then((response) => {
         state.acceptStatus = response.data.status;
+        console.log(response.data.status);
         toast.info(response.data.message);
 
         setLoader(false);
