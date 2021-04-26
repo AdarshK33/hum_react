@@ -73,6 +73,9 @@ const DocVerification = () => {
     getUserInfo();
     setState(personalInfoData);
   }, []);
+  useEffect(() => {
+    verificationDocsView(candidateData.candidateInformation.candidateId);
+  }, [onBoardPopup]);
   const handleShifting = () => {
     changeState(!isChecked);
   };
