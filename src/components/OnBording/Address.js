@@ -69,7 +69,7 @@ const Address = (props) => {
     permanentPhoneNumber: "",
   });
 
-  const [countryName, setCountryName] = useState();
+  const [countryName, setCountryName] = useState("");
   const [stateName, setStateName] = useState();
   const [cityName, setCityName] = useState();
   const [permanentCountryName, setPermanentCountryName] = useState();
