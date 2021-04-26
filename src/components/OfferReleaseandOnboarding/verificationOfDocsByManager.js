@@ -73,6 +73,9 @@ const DocVerification = () => {
     getUserInfo();
     setState(personalInfoData);
   }, []);
+  useEffect(() => {
+    verificationDocsView(candidateData.candidateInformation.candidateId);
+  }, [onBoardPopup]);
   const handleShifting = () => {
     changeState(!isChecked);
   };
@@ -296,7 +299,6 @@ const DocVerification = () => {
                                 style={{
                                   color: "#47ef47",
                                   fontStyle: "italic",
-                                  fontSize: "20px",
                                 }}
                               >
                                 (First page of the book)
