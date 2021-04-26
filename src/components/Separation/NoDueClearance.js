@@ -35,8 +35,8 @@ const NoDueClearance = () => {
   const [gridColumnApi, setGridColumnApi] = useState(null);
   const [costCenter, setCostCenter] = useState("all")
   const [searchValue, setSearchValue] = useState("all");
-
 /*-----------------Pagination------------------*/
+const statusValue = ["Due","No Due","On Hold"]
 const [currentPage, setCurrentPage] = useState(1);
 const recordPerPage = 10;
 const totalRecords = noDueClearanceList !== null && noDueClearanceList !== undefined && total;
@@ -44,7 +44,6 @@ const pageRange = 10;
 const indexOfLastRecord = currentPage * recordPerPage;
 const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
 const currentRecords = noDueClearanceList !== null ? noDueClearanceList !== undefined && noDueClearanceList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
-
 const handlePageChange = (pageNumber) => {
   console.log("page change")
   setPageCount(pageNumber-1)
@@ -82,10 +81,10 @@ const handleCostCenter = (options) => {
   const renderStatusOptions = (value) => {
     return (
       <div>
-        <select name="itClearanceStatus" value={value.data.itClearanceStatus}onChange={(e) => statusRender(e,value)}>
-          <option value={0}> Due </option>
-          <option value={1}> No Due </option>
-          <option value={2}> On Hold </option>
+        <select name="itClearanceStatus" value={value.data.itClearanceStatus} onChange={(e) => statusRender(e,value)}>
+          <option value="0"> Due </option>
+          <option value="1"> No Due </option>
+          <option value="2"> On Hold </option>
         </select>
       </div>
     );
@@ -97,6 +96,7 @@ const handleCostCenter = (options) => {
 
   const handleSave = (value) => {
     const formData = value.data
+    console.log(formData,"handlelsave")
       setCleranceData(formData)
      updateITClearanceList(formData,searchValue, pageCount,costCenter)
   };
@@ -108,17 +108,29 @@ const handleCostCenter = (options) => {
     const status = e.target.value
     const clearanceStatus = value.data
     clearanceStatus['itClearanceStatus']= status
-    noDueClearanceList.map((item,i)=>{
-      if(clearanceStatus.exitId == item.exitId || clearanceStatus.itclearanceId == item.itclearanceId){
-       return  noDueClearanceList.splice(i,1,clearanceStatus)
-      }
-    })
+    // noDueClearanceList.map((item,i)=>{
+    //   if(clearanceStatus.exitId == item.exitId || clearanceStatus.itclearanceId == item.itclearanceId){
+    //  console.log(clearanceStatus,"inside if")
+    //     return  noDueClearanceList.splice(i,1,clearanceStatus)
+    //   }
+
+    // })
  
   };
+  console.log(noDueClearanceList,"noDueClearance")
   const renderButton = (e) => {
+    var buttonValue = false
     return (
-      <button
-        style={{
+      <button disabled={buttonValue}
+        style={buttonValue?{
+          backgroundColor: "#9ea4af54",
+          color: "white",
+          border: "1px solid #9ea4af54",
+          paddingLeft: "10px",
+          paddingRight: "10px",
+          width: "100%",
+          lineHeight: "30px",
+        }:{
           backgroundColor: "#006ebb",
           color: "white",
           border: "1px solid #006ebb",
@@ -205,7 +217,7 @@ const handleCostCenter = (options) => {
                       colId="status"
                       cellRendererFramework={renderStatusOptions}
                       cellEditorParams={{
-                        values: [0,1,2],
+                        values: ["0","1","2"],
                         cellRenderer: { statusRender },
                       }}
                     ></AgGridColumn>
@@ -235,7 +247,7 @@ const handleCostCenter = (options) => {
                 
               </div>
               <div>
-       {noDueClearanceList == null && noDueClearanceList == undefined ? (
+       {/* {noDueClearanceList == null && noDueClearanceList == undefined ? (
                   <div
                     className="loader-box loader"
                     style={{ width: "100% !important" }}
@@ -248,7 +260,7 @@ const handleCostCenter = (options) => {
                     </div>
                   </div>
                 ) 
-                :
+                : */}
          <Pagination
            itemClass="page-item"
            linkClass="page-link"
@@ -257,7 +269,7 @@ const handleCostCenter = (options) => {
            totalItemsCount={totalRecords}
            pageRangeDisplayed={pageRange}
            onChange={handlePageChange}
-         />}
+         />
      </div>
               </div>
               </div>
