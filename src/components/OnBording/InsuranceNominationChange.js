@@ -179,6 +179,8 @@ const InsuranceNomination = (props) => {
   useEffect(() => {
     // console.log("personal information view candidate", candidateProfileData);
     if (
+      candidateInsuranceNominationData &&
+      candidatePersonalInfoData &&
       candidatePersonalInfoData !== null &&
       candidatePersonalInfoData !== undefined &&
       Object.keys(candidatePersonalInfoData).length !== 0
@@ -206,22 +208,34 @@ const InsuranceNomination = (props) => {
         setAge(finalAge !== null && finalAge !== undefined ? finalAge : "");
       }
       if (
+        candidateInsuranceNominationData &&
+        candidateInsuranceNominationData.length !== 0 &&
+        candidateInsuranceNominationData.length === 2
+      ) {
+        setNAcheck(true);
+        setParentCheck(false);
+        setInlawCheck(false);
+      } else if (
         candidatePersonalInfoData.maritalStatus !== null &&
         candidatePersonalInfoData.maritalStatus !== undefined &&
         candidatePersonalInfoData.maritalStatus === "Married"
       ) {
         setRelativeType(true);
         setInlawCheck(true);
+        setParentCheck(false);
+        setNAcheck(false);
         state.relationship = "Spouse";
         state.nominee2Relationship = "Child 1";
       } else {
         setRelativeType(false);
         setParentCheck(true);
+        setInlawCheck(false);
+        setNAcheck(false);
         state.relationship = "Father";
         state.nominee2Relationship = "Mother";
       }
     }
-  }, [candidatePersonalInfoData]);
+  }, [candidatePersonalInfoData, candidateInsuranceNominationData]);
 
   useEffect(() => {
     if (
@@ -231,6 +245,7 @@ const InsuranceNomination = (props) => {
       Object.keys(candidateInsuranceNominationData).length !== 0
     ) {
       console.log("12345678");
+
       if (
         candidateInsuranceNominationData[0] &&
         candidateInsuranceNominationData[0] !== null &&
@@ -530,7 +545,7 @@ const InsuranceNomination = (props) => {
   };
   const validateSelectInput = (itemState, setError, condition) => {
     console.log("Relatio nshipItem---->", itemState);
-    if (itemState !== "") {
+    if ((itemState !== "") & (itemState !== "Relationship")) {
       setError(false);
       return true;
     } else {
@@ -775,6 +790,9 @@ const InsuranceNomination = (props) => {
   const submitHandler = (e) => {
     // const nextPage = props.NextStep;
     // nextPage();
+    // if (nominee5Relationship !== "") {
+    //   state.nominee3Relationship = "Brother";
+    // }
     if (parentsCheck === true) {
       state.nominee3Relationship = "Father";
       state.nominee4Relationship = "Mother";
@@ -867,22 +885,33 @@ const InsuranceNomination = (props) => {
         nominiName: state.nominee5NominiName,
         relationship: state.nominee5Relationship,
       };
-      const NominiInfo = [];
+      const NominiInfo = [{}, {}, {}, {}, {}];
+      var itemIncrease = 0;
 
       if (addFirst === true) {
-        NominiInfo.push(...NominiInfo, first_nomine_info);
+        console.log("one", NominiInfo);
+        NominiInfo[itemIncrease] = first_nomine_info;
+        itemIncrease = itemIncrease + 1;
       }
       if (addSecond === true) {
-        NominiInfo.push(...NominiInfo, second_nomine_info);
+        console.log("two", NominiInfo);
+        NominiInfo[itemIncrease] = second_nomine_info;
+        itemIncrease = itemIncrease + 1;
       }
       if (addThird === true) {
-        NominiInfo.push(...NominiInfo, fifth_nomine_info);
+        console.log("three", NominiInfo);
+        NominiInfo[itemIncrease] = fifth_nomine_info;
+        itemIncrease = itemIncrease + 1;
       }
       if ((addOne === true) & (NAcheck === false)) {
-        NominiInfo.push(...NominiInfo, third_nomine_info);
+        console.log("four", NominiInfo);
+        NominiInfo[itemIncrease] = third_nomine_info;
+        itemIncrease = itemIncrease + 1;
       }
       if ((addTwo === true) & (NAcheck === false)) {
-        NominiInfo.push(...NominiInfo, fourth_nomine_info);
+        console.log("five", NominiInfo);
+        NominiInfo[itemIncrease] = fourth_nomine_info;
+        itemIncrease = itemIncrease + 1;
       }
 
       //   const NominiInfo =
@@ -908,6 +937,16 @@ const InsuranceNomination = (props) => {
       //           fifth_nomine_info,
       //         ]
       //       : [];
+
+      if (NominiInfo.length < 5) {
+        console.log("nominee length", NominiInfo.length);
+        let len = 5 - NominiInfo.length;
+        console.log("nominee adjust length", len);
+        // for (let i = 0; i <= len; i++) {
+        //   console.log("------>", len);
+        //   NominiInfo[NominiInfo.length + i] = {};
+        // }
+      }
       console.log(NominiInfo);
       CreateNominee(NominiInfo);
       const nextPage = props.NextStep;
@@ -1658,15 +1697,17 @@ const InsuranceNomination = (props) => {
                       onChange={changeHandler}
                       style={relationshipError_5 ? { borderColor: "red" } : {}}
                     >
+                      <option value="">Relationship</option>
+
                       {relativeInLaw === true ? (
-                        <option value="">Child 2</option>
+                        <option value="Child 2">Child 2</option>
                       ) : (
-                        <option value="">Brother</option>
+                        <option value="Brother">Brother</option>
                       )}
                       {relativeInLaw === true ? (
-                        <option value="">Child 3</option>
+                        <option value="Child 3">Child 3</option>
                       ) : (
-                        <option value="">Sister</option>
+                        <option value="Sister">Sister</option>
                       )}
                     </Form.Control>
 

@@ -245,7 +245,11 @@ const ViewOfferRelease = () => {
           <AccordionItem>
             <AccordionItemHeading>
               <AccordionItemButton
-                style={activeStep6 ? {} : { background: "#aaa" }}
+                style={
+                  activeStep6 === true && checkStep5 === true
+                    ? {}
+                    : { background: "#aaa" }
+                }
               >
                 {" "}
                 {checkStep6 === true && activeStep6 === true ? (
@@ -268,7 +272,7 @@ const ViewOfferRelease = () => {
                 )}
               </AccordionItemButton>
             </AccordionItemHeading>
-            {activeStep6 === true ? (
+            {activeStep6 === true && checkStep5 === true ? (
               <AccordionItemPanel>
                 <CandidateOnboarding />
               </AccordionItemPanel>

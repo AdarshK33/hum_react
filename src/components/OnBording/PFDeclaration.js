@@ -438,7 +438,7 @@ const PFDeclaration = (props) => {
     }
   };
   const Form11UploadValidation = () => {
-    if ((pfNominationHoldDeathNo === true) | (state.form11 !== "")) {
+    if (pfNominationHoldDeathNo === true) {
       if (Form11uploade === false) {
         if (Form11Validation() === true) {
           setForm11Error(true);
@@ -452,7 +452,7 @@ const PFDeclaration = (props) => {
     }
   };
   const Form2EpfUploadValidation = () => {
-    if ((pfNominationHoldDeathNo === true) | (state.form2epf !== "")) {
+    if (pfNominationHoldDeathNo === true) {
       if (Form2Epfuploade === false) {
         if (Form2EpfValidation() === true) {
           setForm2EpfError(true);
@@ -466,7 +466,7 @@ const PFDeclaration = (props) => {
     }
   };
   const FormFUploadValidation = () => {
-    if ((pfNominationHoldDeathNo === true) | (state.FormF !== "")) {
+    if (pfNominationHoldDeathNo === true) {
       if (FormFuploade === false) {
         if (FormFValidation() === true) {
           setFormFError(true);

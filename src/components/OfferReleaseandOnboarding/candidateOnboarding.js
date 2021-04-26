@@ -2,7 +2,7 @@ import React, { Fragment, useState, useContext, useEffect } from "react";
 import { OfferContext } from "../../context/OfferState";
 import { RoleManagementContext } from "../../context/RoleManagementState";
 import { DocsVerifyContext } from "../../context/DocverificationState";
-
+import calendarImage from "../../assets/images/calendar-image.png";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import "./offerReleaseandOnboarding.css";
@@ -17,11 +17,17 @@ import {
 } from "react-bootstrap";
 import { AdminContext } from "../../context/AdminState";
 import AppointmentLetter from "./AppointmentLetter";
+import PartTimeAppointmentLetter from "./partTimeAppointmentLetter";
+import InternAppointmentLetter from "./internAppointmentLetter";
 
 const CandidateOnboarding = () => {
-  const { generateOfferLetter, offerLetterData, candidateData } = useContext(
-    OfferContext
-  );
+  const {
+    generateOfferLetter,
+    offerLetterData,
+    candidateData,
+    finalSubmitAppointmentLetter,
+    submitAppointmentLetter,
+  } = useContext(OfferContext);
   const {
     costCenterSplit,
     createEmployee,
@@ -32,11 +38,12 @@ const CandidateOnboarding = () => {
     personalInfoData,
     viewEmployee,
     empData,
+    step6suscessStatus,
   } = useContext(DocsVerifyContext);
 
   const { RoleList } = useContext(RoleManagementContext);
   const { costCenterList } = useContext(AdminContext);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
   const [costCenter1, setCostCenter1] = useState(false);
   const [email, setEmail] = useState("");
   const [fedId, setFedId] = useState("");
@@ -75,17 +82,11 @@ const CandidateOnboarding = () => {
   const [costCenterE, setCostCenterE] = useState("");
   const [emailError, setError] = useState(false);
   const [costCentersData, setCostCentersData] = useState({});
-  const previewAppointmentLetter = () => {
-    console.log("candidateData id", candidateData);
-    setShowLetter(true);
-    if (
-      candidateData !== null &&
-      candidateData !== undefined &&
-      candidateData.candidateInformation
-    ) {
-      generateOfferLetter(candidateData.candidateInformation.candidateId);
-    }
-  };
+  const [submitLetter, setSubmitLetter] = useState(false);
+  const [previewLetter, setPreviewLetter] = useState(false);
+  const [letterSent, setLetterSent] = useState(false);
+  const [showSubmitModal, setSubmitModal] = useState(false);
+
   useEffect(() => {
     if (
       candidateData !== undefined &&
@@ -228,8 +229,55 @@ const CandidateOnboarding = () => {
     if (createStatus === "SUCCESS") {
       setEmployeeData(empData);
       costCenterSplit(costCentersData);
+      step6suscessStatus(true);
     }
   }, [createStatus]);
+  const generateAppointmentLetter = () => {
+    console.log("candidateData id", candidateData);
+    if (
+      candidateData !== null &&
+      candidateData !== undefined &&
+      candidateData.candidateInformation
+    ) {
+      generateOfferLetter(candidateData.candidateInformation.candidateId);
+      setSubmitLetter(false);
+      setPreviewLetter(true);
+      setShowLetter(true);
+    }
+  };
+
+  const handleClose = () => setSubmitModal(false);
+  const previewAppointmentLetter = () => {
+    console.log("candidateData id", candidateData);
+    if (
+      candidateData !== null &&
+      candidateData !== undefined &&
+      candidateData.candidateInformation
+    ) {
+      console.log("inside condition", candidateData);
+      generateOfferLetter(candidateData.candidateInformation.candidateId);
+      setSubmitLetter(false);
+      setPreviewLetter(true);
+      setShowLetter(true);
+    }
+  };
+  const submitAppointLetter = () => {
+    if (
+      candidateData.candidateInformation !== null &&
+      candidateData.candidateInformation !== undefined
+    ) {
+      console.log(
+        "offer Letter id",
+        candidateData.candidateInformation.candidateId
+      );
+      setSubmitLetter(true);
+      setLetterSent(true);
+      setSubmitModal(true);
+      finalSubmitAppointmentLetter(
+        candidateData.candidateInformation.candidateId
+      );
+    }
+  };
   const handleDataSave = () => {
     const costCenterData = {
       costCenterSplitId: 0,
@@ -277,9 +325,10 @@ const CandidateOnboarding = () => {
     }
   };
   const handleIncrement = (key) => {
+    console.log(key);
     setClicked(true);
     if (count <= 5) {
-      switch (count) {
+      switch (key) {
         case 0:
           setCostCenter(true);
           setCount(count + 1);
@@ -337,8 +386,53 @@ const CandidateOnboarding = () => {
 
   return (
     <Fragment>
-      {showLetter && <AppointmentLetter />}
+      {showLetter &&
+      !previewLetter &&
+      candidateData !== undefined &&
+      candidateData.workInformation !== undefined ? (
+        candidateData.workInformation.contractType === "Permanent" ? (
+          <AppointmentLetter />
+        ) : candidateData.workInformation.contractType === "Parttime" ? (
+          <PartTimeAppointmentLetter />
+        ) : (
+          <InternAppointmentLetter />
+        )
+      ) : (
+        ""
+      )}
 
+      {previewLetter &&
+      candidateData !== undefined &&
+      candidateData.workInformation !== undefined ? (
+        candidateData.workInformation.contractType === "Permanent" ? (
+          <AppointmentLetter previewLetter={previewLetter} />
+        ) : candidateData.workInformation.contractType === "Parttime" ? (
+          <PartTimeAppointmentLetter previewLetter={previewLetter} />
+        ) : (
+          <InternAppointmentLetter previewLetter={previewLetter} />
+        )
+      ) : (
+        ""
+      )}
+
+      <Modal show={showSubmitModal} onHide={handleClose} size="lg">
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        {submitLetter ? (
+          <Modal.Body>
+            <div className="offer-letter-message ">
+              <p className="signature-text">
+                Appointment Letter has been Sent to the Candidate
+              </p>
+              <br></br>
+              <Button type="button" onClick={handleClose}>
+                Close
+              </Button>
+            </div>
+          </Modal.Body>
+        ) : (
+          ""
+        )}
+      </Modal>
       <div className="px-5 mx-auto">
         <h5>
           <u>WORK DETAILS</u>
@@ -482,7 +576,7 @@ const CandidateOnboarding = () => {
           </Col>
         </Row>
       </div>
-      <div className="px-5 mx-auto mt-4">
+      <div className="px-5  mt-4">
         <h5>Cost Center Split</h5>
         {costCenter === true && (
           <Row>
@@ -511,6 +605,7 @@ const CandidateOnboarding = () => {
             <Col sm={2}>
               <DatePicker
                 name="startMonthA"
+                style={{ width: "20%" }}
                 selected={startMonth1Date}
                 onChange={(date) => setStartMonth1Date(date)}
                 placeholderText="Select Start Month"
@@ -861,7 +956,7 @@ const CandidateOnboarding = () => {
             )}
           </Row>
         )}
-        <div className="text-right addButtonWrapper">
+        <div className="text-right addButtonWrapper float-right">
           <button
             className="addButtonField  button"
             onClick={() => {
@@ -880,20 +975,55 @@ const CandidateOnboarding = () => {
             </Col>
           </Row> */}
       </div>
-      <div className="px-5 mx-auto mt-5">
-        <h5>
-          <u>GENERATE APPOINTMENT LETTER</u>
-        </h5>
-        <Row className="text-center mt-3">
-          <Button
-            type="button"
-            className="px-5 mb-4 previewButton"
-            onClick={() => previewAppointmentLetter()}
-          >
-            Preview Appointment Letter
-          </Button>
-        </Row>
-      </div>
+      {!previewLetter ? (
+        <div className="px-5 mx-auto mt-5">
+          <h5>
+            <u>GENERATE APPOINTMENT LETTER</u>
+          </h5>
+          <Row className="text-center mt-3">
+            <Button
+              type="button"
+              className="px-5 mb-4 previewButton"
+              onClick={() => generateAppointmentLetter()}
+            >
+              Generate Appointment Letter
+            </Button>
+          </Row>
+        </div>
+      ) : (
+        <div className="px-5 mx-auto mt-5">
+          <h5>
+            <u>APPOINTMENT LETTER</u>
+          </h5>
+          <div className="preview-section">
+            {/* <Row className="text-center mt-3"> */}
+            <Button
+              type="button"
+              className="px-5 mb-4 previewButton"
+              onClick={() => previewAppointmentLetter()}
+            >
+              Preview Appointment Letter
+            </Button>
+            <br></br>
+            <br></br>
+            <img src={calendarImage} alt="calendar" width="300px" />
+            <br></br>
+            <br></br>
+            {letterSent ? (
+              ""
+            ) : (
+              <Button
+                type="button"
+                onClick={submitAppointLetter}
+                style={{ textAlign: "center" }}
+              >
+                Submit
+              </Button>
+            )}
+            {/* </Row> */}
+          </div>
+        </div>
+      )}
       <div
         style={{
           marginTop: "2rem",

@@ -161,6 +161,8 @@ export const DocsVerificationProvider = (props) => {
       .get("/api/v1/candidate/document/" + docId + "/accept")
       .then((response) => {
         state.acceptStatus = response.data.status;
+        toast.info(response.data.message);
+
         setLoader(false);
         return dispatch({
           type: "GET_ACCEPT_STATUS",
@@ -185,6 +187,7 @@ export const DocsVerificationProvider = (props) => {
       )
       .then((response) => {
         state.rejectStatus = response.data.status;
+        toast.info(response.data.message);
         state.rejectMessage = response.data.message;
         setLoader(false);
         return dispatch({
@@ -208,6 +211,7 @@ export const DocsVerificationProvider = (props) => {
       )
       .then((response) => {
         state.uanUpdate = response.data.message;
+        toast.info(response.data.message);
         return dispatch({
           type: "UPDATE_UAN",
           payload: state.uanUpdate,

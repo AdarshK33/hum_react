@@ -445,47 +445,7 @@ const EditPersonalInformation = (props) => {
     console.log("---");
     console.log(gender);
   };
-  const handleFemaleGenderCheckboxChange = (e) => {
-    setGenderF(e.target.checked);
-    setGenderM(!e.target.checked);
-    {
-      required ? setRequired(!required) : setRequired(required);
-    }
-    {
-      genderCheckF ? setGender("Male") : setGender("FeMale");
-    }
-    console.log(genderCheckF);
-    console.log("---");
-    console.log(gender);
-  };
-  const handleMarriedCheckboxChange = (e) => {
-    setMarried(e.target.checked);
-    setUnMarried(!e.target.checked);
-    {
-      statusRequired
-        ? setstatusRequired(!statusRequired)
-        : setstatusRequired(statusRequired);
-    }
-    {
-      married ? setMaritalStatus("UnMarried") : setMaritalStatus("Married");
-    }
-    console.log(married);
-    console.log(maritalStatus);
-  };
-  const handleUnMarriedCheckboxChange = (e) => {
-    setUnMarried(e.target.checked);
-    setMarried(!e.target.checked);
-    {
-      statusRequired
-        ? setstatusRequired(!statusRequired)
-        : setstatusRequired(statusRequired);
-    }
-    {
-      unMarried ? setMaritalStatus("Married") : setMaritalStatus("UnMarried");
-    }
-    console.log(unMarried);
-    console.log(maritalStatus);
-  };
+
   const AddExtrReferenceClick = () => {
     setIsClicked(true);
   };
@@ -811,11 +771,8 @@ const EditPersonalInformation = (props) => {
                           className="largerCheckbox"
                           type="checkbox"
                           disabled={true}
-                          // style={genderError ? { borderColor: "red" } : {}}
                           value="Male"
-                          checked={genderCheckM}
-                          required={required}
-                          onChange={handleMaleGenderCheckboxChange}
+                          checked={state.gender === "Male" ? true : false}
                         />
                         <label>Male </label>
                       </div>
@@ -827,12 +784,9 @@ const EditPersonalInformation = (props) => {
                         <input
                           className="largerCheckbox"
                           type="checkbox"
-                          // style={genderError ? { borderColor: "red" } : {}}
                           value="Female"
                           disabled={true}
-                          required={required}
-                          checked={genderCheckF}
-                          onChange={handleFemaleGenderCheckboxChange}
+                          checked={state.gender === "Female" ? true : false}
                         />
                         <label>Female</label>
                       </div>
@@ -848,7 +802,7 @@ const EditPersonalInformation = (props) => {
                           // style={genderError ? { borderColor: "red" } : {}}
                           value="Other"
                           required={required}
-                          // checked={genderCheckOther}
+                          checked={state.gender === "Other" ? true : false}
                           // onChange={handleOtherGenderCheckboxChange}
                         />
                         <label>Other</label>
@@ -881,8 +835,9 @@ const EditPersonalInformation = (props) => {
                           // }
                           value="Married"
                           required={statusRequired}
-                          checked={married}
-                          onChange={handleMarriedCheckboxChange}
+                          checked={
+                            state.maritalStatus === "Married" ? true : false
+                          }
                         />
                         <label>Married </label>
                       </div>
@@ -898,13 +853,14 @@ const EditPersonalInformation = (props) => {
                           className="largerCheckbox"
                           type="checkbox"
                           disabled={true}
-                          // style={
-                          //   maritalStatusError ? { borderColor: "red" } : {}
-                          // }
                           value="Unmarried"
                           required={statusRequired}
-                          checked={unMarried}
-                          onChange={handleUnMarriedCheckboxChange}
+                          checked={
+                            state.maritalStatus === "UnMarried" ||
+                            state.maritalStatus === "Unmarried"
+                              ? true
+                              : false
+                          }
                         />
                         <label>Unmarried</label>
                       </div>

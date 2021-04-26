@@ -48,6 +48,7 @@ const DocVerification = () => {
   const { getUserInfo, user } = useContext(AppContext);
   useEffect(() => {
     getUserInfo();
+    setState(personalInfoData);
   }, []);
   const handleShifting = () => {
     changeState(!isChecked);
@@ -81,7 +82,9 @@ const DocVerification = () => {
       setError(true);
     }
   };
-
+  // useEffect(() => {
+  //   verificationDocsView(candidateData.candidateInformation.candidateId);
+  // }, [onBoardPopup]);
   const handleOnboard = () => {
     step5suscessStatus(true);
     setOnboardPopup(true);
@@ -144,7 +147,7 @@ const DocVerification = () => {
               The documents have been verified successfully, please complete the
               steps to onboard the candidate
             </h6>{" "}
-            <Button onClick={() => setOnboardPopup(false)}>Cancel</Button>
+            <Button onClick={() => setOnboardPopup(false)}>OK</Button>
           </Modal.Body>
         </Container>
       </Modal>
@@ -175,8 +178,8 @@ const DocVerification = () => {
             </tr>
           </thead>
           {loader === true &&
-          docsToVerify !== undefined &&
-          docsToVerify !== null ? (
+          docsToVerify === undefined &&
+          docsToVerify === null ? (
             <tbody>
               <tr>
                 <td colSpan="12">
@@ -221,7 +224,6 @@ const DocVerification = () => {
                               style={{
                                 color: "#47ef47",
                                 fontStyle: "italic",
-                                fontSize: "14px",
                               }}
                             >
                               (Upload the first and last page)
@@ -252,7 +254,6 @@ const DocVerification = () => {
                               style={{
                                 color: "#47ef47",
                                 fontStyle: "italic",
-                                fontSize: "20px",
                               }}
                             >
                               (First page of the book)
@@ -408,7 +409,7 @@ const DocVerification = () => {
       >
         {state !== undefined && state.verificationStatus === 1 && (
           <button className="onboardButton" onClick={() => handleOnboard()}>
-            Onboard Candidate
+            Proceed
           </button>
         )}
       </div>
