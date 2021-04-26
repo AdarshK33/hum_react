@@ -151,7 +151,7 @@ const DocVerification = () => {
                 The documents have been verified successfully, please complete
                 the steps to onboard the candidate
               </h6>{" "}
-              <Button onClick={() => setOnboardPopup(false)}>Cancel</Button>
+              <Button onClick={() => setOnboardPopup(false)}>OK</Button>
             </Modal.Body>
           </Container>
         </Modal>
@@ -233,7 +233,6 @@ const DocVerification = () => {
                                 style={{
                                   color: "#47ef47",
                                   fontStyle: "italic",
-                                  fontSize: "14px",
                                 }}
                               >
                                 (Upload the first and last page)
@@ -392,7 +391,6 @@ const DocVerification = () => {
                                 style={{
                                   color: "#47ef47",
                                   fontStyle: "italic",
-                                  fontSize: "20px",
                                 }}
                               >
                                 (Upload the first and last page)
