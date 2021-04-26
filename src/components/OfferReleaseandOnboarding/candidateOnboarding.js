@@ -38,6 +38,7 @@ const CandidateOnboarding = () => {
     personalInfoData,
     viewEmployee,
     empData,
+    step6suscessStatus,
   } = useContext(DocsVerifyContext);
 
   const { RoleList } = useContext(RoleManagementContext);
@@ -228,6 +229,7 @@ const CandidateOnboarding = () => {
     if (createStatus === "SUCCESS") {
       setEmployeeData(empData);
       costCenterSplit(costCentersData);
+      step6suscessStatus(true);
     }
   }, [createStatus]);
   const generateAppointmentLetter = () => {
