@@ -600,7 +600,7 @@ const CandidateOnboarding = () => {
                 </Form.Control>
               </Form.Group>
             </Col>
-            <Col sm={2} style={{ overflow: "overlay" }}>
+            <Col sm={2}>
               <DatePicker
                 name="startMonthA"
                 style={{ width: "20%" }}
@@ -612,7 +612,7 @@ const CandidateOnboarding = () => {
                 showFullMonthYearPicker
               />{" "}
             </Col>
-            <Col sm={2} style={{ overflow: "overlay" }}>
+            <Col sm={2}>
               <DatePicker
                 selected={startYear1Date}
                 onChange={(date) => setStartYear1Date(date)}
@@ -621,7 +621,7 @@ const CandidateOnboarding = () => {
                 showYearPicker
               />{" "}
             </Col>
-            <Col sm={2} style={{ overflow: "overlay" }}>
+            <Col sm={2}>
               <DatePicker
                 selected={startMonth1End}
                 onChange={(date) => setStartMonth1EndDate(date)}
@@ -631,7 +631,7 @@ const CandidateOnboarding = () => {
                 showFullMonthYearPicker
               />{" "}
             </Col>
-            <Col sm={2} style={{ overflow: "overlay" }}>
+            <Col sm={2}>
               <DatePicker
                 selected={endYear1Date}
                 onChange={(date) => setEndYear1Date(date)}
@@ -644,7 +644,7 @@ const CandidateOnboarding = () => {
         )}
         {costCenter1 === true && (
           <Row>
-            <Col sm={2} style={{ overflow: "overlay" }}>
+            <Col sm={2}>
               <Form.Group>
                 <Form.Control
                   as="select"
@@ -665,7 +665,7 @@ const CandidateOnboarding = () => {
                 </Form.Control>
               </Form.Group>
             </Col>
-            <Col sm={2} style={{ overflow: "overlay" }}>
+            <Col sm={2}>
               <DatePicker
                 selected={startMonth2Date}
                 onChange={(date) => setStartMonth2Date(date)}
@@ -675,7 +675,7 @@ const CandidateOnboarding = () => {
                 showFullMonthYearPicker
               />{" "}
             </Col>
-            <Col sm={2} style={{ overflow: "overlay" }}>
+            <Col sm={2}>
               <DatePicker
                 selected={startYear2Date}
                 onChange={(date) => setStartYear2Date(date)}
@@ -684,7 +684,7 @@ const CandidateOnboarding = () => {
                 showYearPicker
               />{" "}
             </Col>
-            <Col sm={2} style={{ overflow: "overlay" }}>
+            <Col sm={2}>
               <DatePicker
                 selected={endMonth2Date}
                 onChange={(date) => setEndMonth2Date(date)}
@@ -694,7 +694,7 @@ const CandidateOnboarding = () => {
                 showFullMonthYearPicker
               />{" "}
             </Col>
-            <Col sm={2} style={{ overflow: "overlay" }}>
+            <Col sm={2}>
               <DatePicker
                 selected={endYear2Date}
                 onChange={(date) => setEndyear2Date(date)}
@@ -704,7 +704,7 @@ const CandidateOnboarding = () => {
               />{" "}
             </Col>
             {isClicked === true && (
-              <Col sm={2} style={{ overflow: "overlay" }}>
+              <Col sm={2}>
                 <Form.Group>
                   <div>
                     <button
@@ -722,7 +722,7 @@ const CandidateOnboarding = () => {
         )}
         {costCenter2 === true && (
           <Row>
-            <Col sm={2} style={{ overflow: "overlay" }}>
+            <Col sm={2}>
               <Form.Group>
                 <Form.Control
                   as="select"
@@ -743,7 +743,7 @@ const CandidateOnboarding = () => {
                 </Form.Control>
               </Form.Group>
             </Col>
-            <Col sm={2} style={{ overflow: "overlay" }}>
+            <Col sm={2}>
               <DatePicker
                 selected={startMonth3Date}
                 onChange={(date) => setStartMonth3Date(date)}
@@ -753,7 +753,7 @@ const CandidateOnboarding = () => {
                 showFullMonthYearPicker
               />{" "}
             </Col>
-            <Col sm={2} style={{ overflow: "overlay" }}>
+            <Col sm={2}>
               <DatePicker
                 selected={startYear3Date}
                 onChange={(date) => setStartYear3Date(date)}
@@ -762,7 +762,7 @@ const CandidateOnboarding = () => {
                 showYearPicker
               />{" "}
             </Col>
-            <Col sm={2} style={{ overflow: "overlay" }}>
+            <Col sm={2}>
               <DatePicker
                 selected={endMonth3Date}
                 onChange={(date) => setEndMonth3Date(date)}
@@ -772,7 +772,7 @@ const CandidateOnboarding = () => {
                 showFullMonthYearPicker
               />{" "}
             </Col>
-            <Col sm={2} style={{ overflow: "overlay" }}>
+            <Col sm={2}>
               <DatePicker
                 selected={endYear3Date}
                 onChange={(date) => setEndYear3Date(date)}
@@ -782,7 +782,7 @@ const CandidateOnboarding = () => {
               />{" "}
             </Col>
             {isClicked === true && (
-              <Col sm={2} style={{ overflow: "overlay" }}>
+              <Col sm={2}>
                 <Form.Group>
                   <div>
                     <button
@@ -800,7 +800,7 @@ const CandidateOnboarding = () => {
         )}
         {costCenter3 === true && (
           <Row>
-            <Col sm={2} style={{ overflow: "overlay" }}>
+            <Col sm={2}>
               <Form.Group>
                 <Form.Control
                   as="select"
@@ -821,7 +821,7 @@ const CandidateOnboarding = () => {
                 </Form.Control>
               </Form.Group>
             </Col>
-            <Col sm={2} style={{ overflow: "overlay" }}>
+            <Col sm={2}>
               <DatePicker
                 selected={startMonth4Date}
                 onChange={(date) => setStartMonth4Date(date)}
@@ -831,7 +831,7 @@ const CandidateOnboarding = () => {
                 showFullMonthYearPicker
               />{" "}
             </Col>
-            <Col sm={2} style={{ overflow: "overlay" }}>
+            <Col sm={2}>
               <DatePicker
                 selected={startYear4Date}
                 onChange={(date) => setStartYear4Date(date)}
@@ -840,7 +840,7 @@ const CandidateOnboarding = () => {
                 showYearPicker
               />{" "}
             </Col>
-            <Col sm={2} style={{ overflow: "overlay" }}>
+            <Col sm={2}>
               <DatePicker
                 selected={endMonth4Date}
                 onChange={(date) => setEndMonth4Date(date)}
@@ -850,7 +850,7 @@ const CandidateOnboarding = () => {
                 showFullMonthYearPicker
               />{" "}
             </Col>
-            <Col sm={2} style={{ overflow: "overlay" }}>
+            <Col sm={2}>
               <DatePicker
                 selected={endYear4Date}
                 onChange={(date) => setEndYear4Date(date)}
@@ -860,7 +860,7 @@ const CandidateOnboarding = () => {
               />{" "}
             </Col>
             {isClicked === true && (
-              <Col sm={2} style={{ overflow: "overlay" }}>
+              <Col sm={2}>
                 <Form.Group>
                   <div>
                     <button
@@ -878,7 +878,7 @@ const CandidateOnboarding = () => {
         )}
         {costCenter4 === true && (
           <Row>
-            <Col sm={2} style={{ overflow: "overlay" }}>
+            <Col sm={2}>
               <Form.Group>
                 <Form.Control
                   as="select"
@@ -899,7 +899,7 @@ const CandidateOnboarding = () => {
                 </Form.Control>
               </Form.Group>
             </Col>
-            <Col sm={2} style={{ overflow: "overlay" }}>
+            <Col sm={2}>
               <DatePicker
                 selected={startMonth5Date}
                 onChange={(date) => setStartMonth5Date(date)}
@@ -909,7 +909,7 @@ const CandidateOnboarding = () => {
                 showFullMonthYearPicker
               />{" "}
             </Col>
-            <Col sm={2} style={{ overflow: "overlay" }}>
+            <Col sm={2}>
               <DatePicker
                 selected={startYear5Date}
                 onChange={(date) => setStartYear5Date(date)}
@@ -918,7 +918,7 @@ const CandidateOnboarding = () => {
                 showYearPicker
               />{" "}
             </Col>
-            <Col sm={2} style={{ overflow: "overlay" }}>
+            <Col sm={2}>
               <DatePicker
                 selected={endMonth5Date}
                 onChange={(date) => setEndMonth5Date(date)}
@@ -928,7 +928,7 @@ const CandidateOnboarding = () => {
                 showFullMonthYearPicker
               />{" "}
             </Col>
-            <Col sm={2} style={{ overflow: "overlay" }}>
+            <Col sm={2}>
               <DatePicker
                 selected={endYear5Date}
                 onChange={(date) => setEndYear5Date(date)}
@@ -938,7 +938,7 @@ const CandidateOnboarding = () => {
               />{" "}
             </Col>
             {isClicked === true && (
-              <Col sm={2} style={{ overflow: "overlay" }}>
+              <Col sm={2}>
                 <Form.Group>
                   <div>
                     <button

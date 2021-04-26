@@ -61,21 +61,26 @@ const DocVerification = () => {
       verificationDocsView(candidateData.candidateInformation.candidateId);
     }
   }, [acceptStatus, rejectStatus, rejectMessage]);
-  useEffect(() => {
-    if (disapprovePopup === true) {
-      if (candidateData.candidateInformation !== undefined) {
-        verificationDocsView(candidateData.candidateInformation.candidateId);
-      }
-      // setState(personalInfoData);
-    }
-  }, [disapprovePopup]);
+  // useEffect(() => {
+  //   if (disapprovePopup === true) {
+  //     if (candidateData.candidateInformation !== undefined) {
+  //       verificationDocsView(candidateData.candidateInformation.candidateId);
+  //     }
+  //     // setState(personalInfoData);
+  //   }
+  // }, [disapprovePopup]);
   useEffect(() => {
     getUserInfo();
     setState(personalInfoData);
   }, []);
   useEffect(() => {
-    verificationDocsView(candidateData.candidateInformation.candidateId);
-  }, [onBoardPopup]);
+    if (candidateData.candidateInformation !== undefined) {
+      verificationDocsView(candidateData.candidateInformation.candidateId);
+    }
+  }, [candidateData]);
+  // useEffect(() => {
+  //   verificationDocsView(candidateData.candidateInformation.candidateId);
+  // }, [onBoardPopup]);
   const handleShifting = () => {
     changeState(!isChecked);
   };
@@ -114,6 +119,11 @@ const DocVerification = () => {
       setError(true);
     }
   };
+  // useEffect(() => {
+  //   // if (onBoardPopup === true) {
+  //   verificationDocsView(candidateData.candidateInformation.candidateId);
+  //   // }
+  // }, [onBoardPopup]);
 
   const handleOnboard = () => {
     step5suscessStatus(true);
@@ -138,7 +148,8 @@ const DocVerification = () => {
         return filteredResult;
       });
   return (
-    console.log(state.verificationStatus),
+    console.log(docsToVerify),
+    console.log("loader", loader),
     (
       <Fragment>
         <Modal show={showModal} onHide={() => handleClose()} centered>
@@ -229,8 +240,8 @@ const DocVerification = () => {
               </tr>
             </thead>
             {loader === true &&
-            docsToVerify !== undefined &&
-            docsToVerify !== null ? (
+            docsToVerify === undefined &&
+            docsToVerify === null ? (
               <tbody>
                 <tr>
                   <td colSpan="12">

@@ -82,9 +82,9 @@ const DocVerification = () => {
       setError(true);
     }
   };
-  useEffect(() => {
-    verificationDocsView(candidateData.candidateInformation.candidateId);
-  }, [onBoardPopup]);
+  // useEffect(() => {
+  //   verificationDocsView(candidateData.candidateInformation.candidateId);
+  // }, [onBoardPopup]);
   const handleOnboard = () => {
     step5suscessStatus(true);
     setOnboardPopup(true);
@@ -178,8 +178,8 @@ const DocVerification = () => {
             </tr>
           </thead>
           {loader === true &&
-          docsToVerify !== undefined &&
-          docsToVerify !== null ? (
+          docsToVerify === undefined &&
+          docsToVerify === null ? (
             <tbody>
               <tr>
                 <td colSpan="12">
