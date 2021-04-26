@@ -175,6 +175,7 @@ const CandidateList = () => {
 
                       <td>
                         <Link to={"/verification/" + item.candidateId}>
+                        {/* <Link to={"/no_due_clearance"}> */}
                           {/* <Link to={"/finance-clearance"}> */}
                           <Edit2
                             onClick={() => {
