@@ -84,18 +84,28 @@ const EditEmployeeForm = () => {
     candidateRefData.candidateReferences !== null &&
     candidateRefData.candidateReferences !== undefined &&
     candidateRefData.candidateReferences[1];
- /*  console.log("data1", data1);
+  /*  console.log("data1", data1);
   console.log("data2", data2); */
 
   useEffect(() => {
-    if (candidateRefData !==null && candidateRefData !== undefined && data1 !== undefined && data1 !== null &&
-       data1.employeeName === "") {
+    if (
+      candidateRefData !== null &&
+      candidateRefData !== undefined &&
+      data1 !== undefined &&
+      data1 !== null &&
+      data1.employeeName === ""
+    ) {
       setYesChecked(false);
       setNoChecked(true);
     }
 
-    if (candidateRefData !==null && candidateRefData !== undefined && 
-      data2 !== undefined && data2 !== null && data2.employeeName === "") {
+    if (
+      candidateRefData !== null &&
+      candidateRefData !== undefined &&
+      data2 !== undefined &&
+      data2 !== null &&
+      data2.employeeName === ""
+    ) {
       setSecondRef(false);
     } else {
       setSecondRef(true);
