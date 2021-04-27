@@ -56,6 +56,9 @@ const DocVerification = () => {
 
   const { getUserInfo, user } = useContext(AppContext);
   useEffect(() => {
+    setState(personalInfoData);
+  }, [user]);
+  useEffect(() => {
     if (rejectMessage) {
       setDisapprovePopup(true);
     }
@@ -603,11 +606,18 @@ const DocVerification = () => {
             textAlign: "center",
           }}
         >
-          {state !== undefined && state.verificationStatus === 1 && (
-            <button className="onboardButton" onClick={() => handleOnboard()}>
-              Proceed
-            </button>
-          )}
+          <button
+            className="onboardButton"
+            onClick={() => handleOnboard()}
+            disabled={state.verificationStatus === 1 ? false : true}
+            style={
+              state.verificationStatus === 1
+                ? { opacity: "1" }
+                : { opacity: "0.6" }
+            }
+          >
+            Proceed
+          </button>
         </div>
       </Fragment>
     )

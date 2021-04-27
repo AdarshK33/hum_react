@@ -18,7 +18,12 @@ const OfferReleaseList = () => {
     total,
     viewCandidateId,
   } = useContext(OfferContext);
-  const { verificationDocsView, docsToVerify } = useContext(DocsVerifyContext);
+  const {
+    verificationDocsView,
+    docsToVerify,
+    personalInfo,
+    personalInfoData,
+  } = useContext(DocsVerifyContext);
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [searchValue, setSearchValue] = useState("");
@@ -70,6 +75,7 @@ const OfferReleaseList = () => {
   const fetchCandidateDetails = (candidateId) => {
     viewCandidateId(candidateId);
     verificationDocsView(candidateId);
+    personalInfo(candidateId);
     viewRole();
     CostCenter();
   };
