@@ -9,7 +9,6 @@ import "./rosterDashboard.css";
 import moment from 'moment'
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import { setYear } from 'date-fns';
 
 const RosterTable = (storeID) => {
     const [startDate, setStartDate] = useState(moment())
@@ -185,7 +184,7 @@ const RosterTable = (storeID) => {
                     <Col className="right">
                         <span style={{marginRight: '10px'}}>
                             <label style={{marginRight: '5px'}}>Select Date</label>
-                            <DatePicker selected={currentDate.toDate()} onChange={(date, e) => {
+                            <DatePicker wrapperClassName="datePicker" selected={currentDate.toDate()} onChange={(date, e) => {
                                 setCurrentDate(moment(date, 'YYYY-MM-DD'))
                                 dailySelected(e, date);
                             }}
@@ -196,32 +195,32 @@ const RosterTable = (storeID) => {
                     )}
                     {displayNormal && (
                         <Col style={{padding: '0px'}}>
-                        <span style={{marginRight: '10px'}}>
-                            <label style={{marginRight: '5px'}}>Start Date</label>
-                            <DatePicker selected={startDate.toDate()} onChange={(date, e) => {
-                                setStartDate(moment(date, 'YYYY-MM-DD'))
-                                normalSelected(e);
-                            }}
-                                className="input_date" dateFormat="yyyy-MM-dd"
-                                placeholderText="From Date" required />
-                        </span>
-                        <span>
-                            <label style={{marginRight: '5px'}}>End Date</label>
-                            <DatePicker selected={endDate.toDate()} onChange={(date, e) => {
-                                setEndDate(moment(date, 'YYYY-MM-DD'))
-                                normalSelected(e);
-                            }}
-                                className="input_date" dateFormat="yyyy-MM-dd"
-                                placeholderText="From Date" required />
-                        </span>
-                    </Col>
+                            <span className="roster-date" style={{marginRight: '10px'}}>
+                                <label style={{marginRight: '5px'}}>Start Date</label>
+                                <DatePicker wrapperClassName="datePicker" selected={startDate.toDate()} onChange={(date, e) => {
+                                    setStartDate(moment(date, 'YYYY-MM-DD'))
+                                    normalSelected(e);
+                                }}
+                                    className="input_date" dateFormat="yyyy-MM-dd"
+                                    placeholderText="From Date" required />
+                            </span>
+                            <span>
+                                <label className="roster-date" style={{marginRight: '5px'}}>End Date</label>
+                                <DatePicker wrapperClassName="datePicker" selected={endDate.toDate()} onChange={(date, e) => {
+                                    setEndDate(moment(date, 'YYYY-MM-DD'))
+                                    normalSelected(e);
+                                }}
+                                    className="input_date" dateFormat="yyyy-MM-dd"
+                                    placeholderText="From Date" required />
+                            </span>
+                        </Col>
                     )}
                 </Row>
                 {/* {console.log(storeID.storeID, 'storeID.storeID')} */}
                 {storeID.storeId && adminRosterUtilisationScheduleResult.rosterDates && adminRosterUtilisationScheduleResult.rosterDates.length ? (
                     <div style={{marginTop: '30px'}}>
                         {/* {console.log('check check')} */}
-                    <table>
+                    <table className="roster-table">
                         <thead>
                             <tr>
                                 <th className="table-head header-option">
