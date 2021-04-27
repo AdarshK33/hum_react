@@ -42,6 +42,8 @@ const InsuranceNomination = (props) => {
   const [Nominee3DOB, setNominee3DOB] = useState();
   const [Nominee4DOB, setNominee4DOB] = useState();
   const [Nominee5DOB, setNominee5DOB] = useState();
+  const [In_law_Nominee1DOB, setInLawNominee1Dob] = useState();
+  const [In_law_Nominee2DOB, setInLawNominee2Dob] = useState();
   const [ageError_1, setageError_1] = useState(false);
   const [bloodGroupError_1, setBloodGroupError_1] = useState(false);
   const [genderError_1, setGenderError_1] = useState(false);
@@ -70,6 +72,24 @@ const InsuranceNomination = (props) => {
   const [relationshipError_4, setRelationshipError_4] = useState(false);
   const [DOBError_4, setDobError_4] = useState(false);
 
+  const [In_law_ageError_1, setInLawAgeError_1] = useState(false);
+  const [In_law_bloodGroupError_1, setInLawBloodGroupError_1] = useState(false);
+  const [In_law_genderError_1, setInLawGenderError_1] = useState(false);
+  const [In_law_nomineNameError_1, setInLawNomineerror_1] = useState(false);
+  const [In_law_relationshipError_1, setInLawRelationshipError_1] = useState(
+    false
+  );
+  const [In_law_DOBError_1, setInLawDobError_1] = useState(false);
+
+  const [In_law_ageError_2, setInLawAgeError_2] = useState(false);
+  const [In_law_bloodGroupError_2, setInLawBloodGroupError_2] = useState(false);
+  const [In_law_genderError_2, setInLawGenderError_2] = useState(false);
+  const [In_law_nomineNameError_2, setInLawNomineerror_2] = useState(false);
+  const [In_law_relationshipError_2, setInLawRelationshipError_2] = useState(
+    false
+  );
+  const [In_law_DOBError_2, setInLawDobError_2] = useState(false);
+
   const [ageError_5, setageError_5] = useState(false);
   const [bloodGroupError_5, setBloodGroupError_5] = useState(false);
   const [genderError_5, setGenderError_5] = useState(false);
@@ -86,6 +106,8 @@ const InsuranceNomination = (props) => {
   const [addThird, setAddThird] = useState(false);
   const [addTwo, setAddTwo] = useState(true);
   const [addOne, setAddOne] = useState(true);
+  const [addFirstInLaw, setAddFirstInLaw] = useState(true);
+  const [addSecondInLaw, setAddSecondInLaw] = useState(true);
   const [InfoState, setInfoState] = useState({
     empName: "",
     gender: "",
@@ -120,6 +142,20 @@ const InsuranceNomination = (props) => {
     nominee4NominiId: 0,
     nominee4NominiName: "",
     nominee4Relationship: "",
+
+    In_law_nominee1Age: "",
+    In_law_nominee1BloodGroup: "",
+    In_law_nominee1Gender: "",
+    In_law_nominee1NominiId: 0,
+    In_law_nominee1NominiName: "",
+    In_law_nominee1Relationship: "",
+
+    In_law_nominee2Age: "",
+    In_law_nominee2BloodGroup: "",
+    In_law_nominee2Gender: "",
+    In_law_nominee2NominiId: 0,
+    In_law_nominee2NominiName: "",
+    In_law_nominee2Relationship: "",
 
     nominee5Age: "",
     nominee5BloodGroup: "",
@@ -216,9 +252,13 @@ const InsuranceNomination = (props) => {
         setParentCheck(false);
         setInlawCheck(false);
       } else if (
-        candidatePersonalInfoData.maritalStatus !== null &&
-        candidatePersonalInfoData.maritalStatus !== undefined &&
-        candidatePersonalInfoData.maritalStatus === "Married"
+        candidateInsuranceNominationData[2] &&
+        candidateInsuranceNominationData[2] !== null &&
+        candidateInsuranceNominationData[2] !== undefined &&
+        Object.keys(candidateInsuranceNominationData[2]).length !== 0 &&
+        candidateInsuranceNominationData[2].relationship !== null &&
+        candidateInsuranceNominationData[2].relationship !== undefined &&
+        candidateInsuranceNominationData[2].relationship === "Father In-Law"
       ) {
         setRelativeType(true);
         setInlawCheck(true);
@@ -226,7 +266,15 @@ const InsuranceNomination = (props) => {
         setNAcheck(false);
         state.relationship = "Spouse";
         state.nominee2Relationship = "Child 1";
-      } else {
+      } else if (
+        candidateInsuranceNominationData[2] &&
+        candidateInsuranceNominationData[2] !== null &&
+        candidateInsuranceNominationData[2] !== undefined &&
+        Object.keys(candidateInsuranceNominationData[2]).length !== 0 &&
+        candidateInsuranceNominationData[2].relationship !== null &&
+        candidateInsuranceNominationData[2].relationship !== undefined &&
+        candidateInsuranceNominationData[2].relationship === "Father"
+      ) {
         setRelativeType(false);
         setParentCheck(true);
         setInlawCheck(false);
@@ -272,7 +320,10 @@ const InsuranceNomination = (props) => {
         candidateInsuranceNominationData[2] &&
         candidateInsuranceNominationData[2] !== null &&
         candidateInsuranceNominationData[2] !== undefined &&
-        Object.keys(candidateInsuranceNominationData[2]).length !== 0
+        Object.keys(candidateInsuranceNominationData[2]).length !== 0 &&
+        candidateInsuranceNominationData[2].relationship !== null &&
+        candidateInsuranceNominationData[2].relationship !== undefined &&
+        candidateInsuranceNominationData[2].relationship === "Father"
       ) {
         setAddOne(true);
         setNomineeCount(2);
@@ -283,12 +334,43 @@ const InsuranceNomination = (props) => {
         candidateInsuranceNominationData[3] &&
         candidateInsuranceNominationData[3] !== null &&
         candidateInsuranceNominationData[3] !== undefined &&
-        Object.keys(candidateInsuranceNominationData[3]).length !== 0
+        Object.keys(candidateInsuranceNominationData[3]).length !== 0 &&
+        candidateInsuranceNominationData[3].relationship !== null &&
+        candidateInsuranceNominationData[3].relationship !== undefined &&
+        candidateInsuranceNominationData[3].relationship === "Mother"
       ) {
         setAddTwo(true);
         setNomineeCount(3);
       } else {
         setAddTwo(false);
+      }
+      if (
+        candidateInsuranceNominationData[2] &&
+        candidateInsuranceNominationData[2] !== null &&
+        candidateInsuranceNominationData[2] !== undefined &&
+        Object.keys(candidateInsuranceNominationData[2]).length !== 0 &&
+        candidateInsuranceNominationData[2].relationship !== null &&
+        candidateInsuranceNominationData[2].relationship !== undefined &&
+        candidateInsuranceNominationData[2].relationship === "Father In-Law"
+      ) {
+        setAddFirstInLaw(true);
+        setNomineeCount(2);
+      } else {
+        setAddFirstInLaw(false);
+      }
+      if (
+        candidateInsuranceNominationData[3] &&
+        candidateInsuranceNominationData[3] !== null &&
+        candidateInsuranceNominationData[3] !== undefined &&
+        Object.keys(candidateInsuranceNominationData[3]).length !== 0 &&
+        candidateInsuranceNominationData[3].relationship !== null &&
+        candidateInsuranceNominationData[3].relationship !== undefined &&
+        candidateInsuranceNominationData[3].relationship === "Mother In-Law"
+      ) {
+        setAddSecondInLaw(true);
+        setNomineeCount(3);
+      } else {
+        setAddSecondInLaw(false);
       }
       if (
         candidateInsuranceNominationData[4] &&
@@ -367,62 +449,204 @@ const InsuranceNomination = (props) => {
         nominee3Age:
           candidateInsuranceNominationData[2] &&
           candidateInsuranceNominationData[2].age !== null &&
-          candidateInsuranceNominationData[2].age !== undefined
+          candidateInsuranceNominationData[2].age !== undefined &&
+          Object.keys(candidateInsuranceNominationData[2]).length !== 0 &&
+          candidateInsuranceNominationData[2].relationship !== null &&
+          candidateInsuranceNominationData[2].relationship !== undefined &&
+          candidateInsuranceNominationData[2].relationship === "Father"
             ? candidateInsuranceNominationData[2].age
             : "",
         nominee3BloodGroup:
           candidateInsuranceNominationData[2] &&
           candidateInsuranceNominationData[2].bloodGroup !== null &&
-          candidateInsuranceNominationData[2].bloodGroup !== undefined
+          candidateInsuranceNominationData[2].bloodGroup !== undefined &&
+          Object.keys(candidateInsuranceNominationData[2]).length !== 0 &&
+          candidateInsuranceNominationData[2].relationship !== null &&
+          candidateInsuranceNominationData[2].relationship !== undefined &&
+          candidateInsuranceNominationData[2].relationship === "Father"
             ? candidateInsuranceNominationData[2].bloodGroup
             : "",
         nominee3Gender:
           candidateInsuranceNominationData[2] &&
           candidateInsuranceNominationData[2].gender !== null &&
-          candidateInsuranceNominationData[2].gender !== undefined
+          candidateInsuranceNominationData[2].gender !== undefined &&
+          Object.keys(candidateInsuranceNominationData[2]).length !== 0 &&
+          candidateInsuranceNominationData[2].relationship !== null &&
+          candidateInsuranceNominationData[2].relationship !== undefined &&
+          candidateInsuranceNominationData[2].relationship === "Father"
             ? candidateInsuranceNominationData[2].gender
             : "",
         nominee3NominiName:
           candidateInsuranceNominationData[2] &&
           candidateInsuranceNominationData[2].nominiName !== null &&
-          candidateInsuranceNominationData[2].nominiName !== undefined
+          candidateInsuranceNominationData[2].nominiName !== undefined &&
+          Object.keys(candidateInsuranceNominationData[2]).length !== 0 &&
+          candidateInsuranceNominationData[2].relationship !== null &&
+          candidateInsuranceNominationData[2].relationship !== undefined &&
+          candidateInsuranceNominationData[2].relationship === "Father"
             ? candidateInsuranceNominationData[2].nominiName
             : "",
         nominee3Relationship:
           candidateInsuranceNominationData[2] &&
           candidateInsuranceNominationData[2].relationship !== null &&
-          candidateInsuranceNominationData[2].relationship !== undefined
+          candidateInsuranceNominationData[2].relationship !== undefined &&
+          Object.keys(candidateInsuranceNominationData[2]).length !== 0 &&
+          candidateInsuranceNominationData[2].relationship !== null &&
+          candidateInsuranceNominationData[2].relationship !== undefined &&
+          candidateInsuranceNominationData[2].relationship === "Father"
             ? candidateInsuranceNominationData[2].relationship
             : "",
 
         nominee4Age:
           candidateInsuranceNominationData[3] &&
           candidateInsuranceNominationData[3].age !== null &&
-          candidateInsuranceNominationData[3].age !== undefined
+          candidateInsuranceNominationData[3].age !== undefined &&
+          Object.keys(candidateInsuranceNominationData[3]).length !== 0 &&
+          candidateInsuranceNominationData[3].relationship !== null &&
+          candidateInsuranceNominationData[3].relationship !== undefined &&
+          candidateInsuranceNominationData[3].relationship === "Mother"
             ? candidateInsuranceNominationData[3].age
             : "",
         nominee4BloodGroup:
           candidateInsuranceNominationData[3] &&
           candidateInsuranceNominationData[3].bloodGroup !== null &&
-          candidateInsuranceNominationData[3].bloodGroup !== undefined
+          candidateInsuranceNominationData[3].bloodGroup !== undefined &&
+          Object.keys(candidateInsuranceNominationData[3]).length !== 0 &&
+          candidateInsuranceNominationData[3].relationship !== null &&
+          candidateInsuranceNominationData[3].relationship !== undefined &&
+          candidateInsuranceNominationData[3].relationship === "Mother"
             ? candidateInsuranceNominationData[3].bloodGroup
             : "",
         nominee4Gender:
           candidateInsuranceNominationData[3] &&
           candidateInsuranceNominationData[3].gender !== null &&
-          candidateInsuranceNominationData[3].gender !== undefined
+          candidateInsuranceNominationData[3].gender !== undefined &&
+          Object.keys(candidateInsuranceNominationData[3]).length !== 0 &&
+          candidateInsuranceNominationData[3].relationship !== null &&
+          candidateInsuranceNominationData[3].relationship !== undefined &&
+          candidateInsuranceNominationData[3].relationship === "Mother"
             ? candidateInsuranceNominationData[3].gender
             : "",
         nominee4NominiName:
           candidateInsuranceNominationData[3] &&
           candidateInsuranceNominationData[3].nominiName !== null &&
-          candidateInsuranceNominationData[3].nominiName !== undefined
+          candidateInsuranceNominationData[3].nominiName !== undefined &&
+          Object.keys(candidateInsuranceNominationData[3]).length !== 0 &&
+          candidateInsuranceNominationData[3].relationship !== null &&
+          candidateInsuranceNominationData[3].relationship !== undefined &&
+          candidateInsuranceNominationData[3].relationship === "Mother"
             ? candidateInsuranceNominationData[3].nominiName
             : "",
         nominee4Relationship:
           candidateInsuranceNominationData[3] &&
           candidateInsuranceNominationData[3].relationship !== null &&
-          candidateInsuranceNominationData[3].relationship !== undefined
+          candidateInsuranceNominationData[3].relationship !== undefined &&
+          Object.keys(candidateInsuranceNominationData[3]).length !== 0 &&
+          candidateInsuranceNominationData[3].relationship !== null &&
+          candidateInsuranceNominationData[3].relationship !== undefined &&
+          candidateInsuranceNominationData[3].relationship === "Mother"
+            ? candidateInsuranceNominationData[3].relationship
+            : "",
+
+        In_law_nominee1Age:
+          candidateInsuranceNominationData[2] &&
+          candidateInsuranceNominationData[2].age !== null &&
+          candidateInsuranceNominationData[2].age !== undefined &&
+          Object.keys(candidateInsuranceNominationData[2]).length !== 0 &&
+          candidateInsuranceNominationData[2].relationship !== null &&
+          candidateInsuranceNominationData[2].relationship !== undefined &&
+          candidateInsuranceNominationData[2].relationship === "Father In-Law"
+            ? candidateInsuranceNominationData[2].age
+            : "",
+        In_law_nominee1BloodGroup:
+          candidateInsuranceNominationData[2] &&
+          candidateInsuranceNominationData[2].bloodGroup !== null &&
+          candidateInsuranceNominationData[2].bloodGroup !== undefined &&
+          Object.keys(candidateInsuranceNominationData[2]).length !== 0 &&
+          candidateInsuranceNominationData[2].relationship !== null &&
+          candidateInsuranceNominationData[2].relationship !== undefined &&
+          candidateInsuranceNominationData[2].relationship === "Father In-Law"
+            ? candidateInsuranceNominationData[2].bloodGroup
+            : "",
+        In_law_nominee1Gender:
+          candidateInsuranceNominationData[2] &&
+          candidateInsuranceNominationData[2].gender !== null &&
+          candidateInsuranceNominationData[2].gender !== undefined &&
+          Object.keys(candidateInsuranceNominationData[2]).length !== 0 &&
+          candidateInsuranceNominationData[2].relationship !== null &&
+          candidateInsuranceNominationData[2].relationship !== undefined &&
+          candidateInsuranceNominationData[2].relationship === "Father In-Law"
+            ? candidateInsuranceNominationData[2].gender
+            : "",
+        In_law_nominee1NominiName:
+          candidateInsuranceNominationData[2] &&
+          candidateInsuranceNominationData[2].nominiName !== null &&
+          candidateInsuranceNominationData[2].nominiName !== undefined &&
+          Object.keys(candidateInsuranceNominationData[2]).length !== 0 &&
+          candidateInsuranceNominationData[2].relationship !== null &&
+          candidateInsuranceNominationData[2].relationship !== undefined &&
+          candidateInsuranceNominationData[2].relationship === "Father In-Law"
+            ? candidateInsuranceNominationData[2].nominiName
+            : "",
+        In_law_nominee1Relationship:
+          candidateInsuranceNominationData[2] &&
+          candidateInsuranceNominationData[2].relationship !== null &&
+          candidateInsuranceNominationData[2].relationship !== undefined &&
+          Object.keys(candidateInsuranceNominationData[2]).length !== 0 &&
+          candidateInsuranceNominationData[2].relationship !== null &&
+          candidateInsuranceNominationData[2].relationship !== undefined &&
+          candidateInsuranceNominationData[2].relationship === "Father In-Law"
+            ? candidateInsuranceNominationData[2].relationship
+            : "",
+
+        In_law_nominee2Age:
+          candidateInsuranceNominationData[3] &&
+          candidateInsuranceNominationData[3].age !== null &&
+          candidateInsuranceNominationData[3].age !== undefined &&
+          Object.keys(candidateInsuranceNominationData[3]).length !== 0 &&
+          candidateInsuranceNominationData[3].relationship !== null &&
+          candidateInsuranceNominationData[3].relationship !== undefined &&
+          candidateInsuranceNominationData[3].relationship === "Mother In-Law"
+            ? candidateInsuranceNominationData[3].age
+            : "",
+        In_law_nominee2BloodGroup:
+          candidateInsuranceNominationData[3] &&
+          candidateInsuranceNominationData[3].bloodGroup !== null &&
+          candidateInsuranceNominationData[3].bloodGroup !== undefined &&
+          Object.keys(candidateInsuranceNominationData[3]).length !== 0 &&
+          candidateInsuranceNominationData[3].relationship !== null &&
+          candidateInsuranceNominationData[3].relationship !== undefined &&
+          candidateInsuranceNominationData[3].relationship === "Mother In-Law"
+            ? candidateInsuranceNominationData[3].bloodGroup
+            : "",
+        In_law_nominee2Gender:
+          candidateInsuranceNominationData[3] &&
+          candidateInsuranceNominationData[3].gender !== null &&
+          candidateInsuranceNominationData[3].gender !== undefined &&
+          Object.keys(candidateInsuranceNominationData[3]).length !== 0 &&
+          candidateInsuranceNominationData[3].relationship !== null &&
+          candidateInsuranceNominationData[3].relationship !== undefined &&
+          candidateInsuranceNominationData[3].relationship === "Mother In-Law"
+            ? candidateInsuranceNominationData[3].gender
+            : "",
+        In_law_nominee2NominiName:
+          candidateInsuranceNominationData[3] &&
+          candidateInsuranceNominationData[3].nominiName !== null &&
+          candidateInsuranceNominationData[3].nominiName !== undefined &&
+          Object.keys(candidateInsuranceNominationData[3]).length !== 0 &&
+          candidateInsuranceNominationData[3].relationship !== null &&
+          candidateInsuranceNominationData[3].relationship !== undefined &&
+          candidateInsuranceNominationData[3].relationship === "Mother In-Law"
+            ? candidateInsuranceNominationData[3].nominiName
+            : "",
+        In_law_nominee2Relationship:
+          candidateInsuranceNominationData[3] &&
+          candidateInsuranceNominationData[3].relationship !== null &&
+          candidateInsuranceNominationData[3].relationship !== undefined &&
+          Object.keys(candidateInsuranceNominationData[3]).length !== 0 &&
+          candidateInsuranceNominationData[3].relationship !== null &&
+          candidateInsuranceNominationData[3].relationship !== undefined &&
+          candidateInsuranceNominationData[3].relationship === "Mother In-Law"
             ? candidateInsuranceNominationData[3].relationship
             : "",
 
@@ -474,14 +698,45 @@ const InsuranceNomination = (props) => {
       setNominee3DOB(
         candidateInsuranceNominationData[2] &&
           candidateInsuranceNominationData[2].dateOfBirth !== null &&
-          candidateInsuranceNominationData[2].dateOfBirth !== undefined
+          candidateInsuranceNominationData[2].dateOfBirth !== undefined &&
+          Object.keys(candidateInsuranceNominationData[2]).length !== 0 &&
+          candidateInsuranceNominationData[2].relationship !== null &&
+          candidateInsuranceNominationData[2].relationship !== undefined &&
+          candidateInsuranceNominationData[2].relationship === "Father"
           ? new Date(candidateInsuranceNominationData[2].dateOfBirth)
           : ""
       );
       setNominee4DOB(
         candidateInsuranceNominationData[3] &&
           candidateInsuranceNominationData[3].dateOfBirth !== null &&
-          candidateInsuranceNominationData[3].dateOfBirth !== undefined
+          candidateInsuranceNominationData[3].dateOfBirth !== undefined &&
+          Object.keys(candidateInsuranceNominationData[3]).length !== 0 &&
+          candidateInsuranceNominationData[3].relationship !== null &&
+          candidateInsuranceNominationData[3].relationship !== undefined &&
+          candidateInsuranceNominationData[3].relationship === "Mother"
+          ? new Date(candidateInsuranceNominationData[3].dateOfBirth)
+          : ""
+      );
+
+      setInLawNominee1Dob(
+        candidateInsuranceNominationData[2] &&
+          candidateInsuranceNominationData[2].dateOfBirth !== null &&
+          candidateInsuranceNominationData[2].dateOfBirth !== undefined &&
+          Object.keys(candidateInsuranceNominationData[2]).length !== 0 &&
+          candidateInsuranceNominationData[2].relationship !== null &&
+          candidateInsuranceNominationData[2].relationship !== undefined &&
+          candidateInsuranceNominationData[2].relationship === "Father In-Law"
+          ? new Date(candidateInsuranceNominationData[2].dateOfBirth)
+          : ""
+      );
+      setInLawNominee2Dob(
+        candidateInsuranceNominationData[3] &&
+          candidateInsuranceNominationData[3].dateOfBirth !== null &&
+          candidateInsuranceNominationData[3].dateOfBirth !== undefined &&
+          Object.keys(candidateInsuranceNominationData[3]).length !== 0 &&
+          candidateInsuranceNominationData[3].relationship !== null &&
+          candidateInsuranceNominationData[3].relationship !== undefined &&
+          candidateInsuranceNominationData[3].relationship === "Mother In-Law"
           ? new Date(candidateInsuranceNominationData[3].dateOfBirth)
           : ""
       );
@@ -558,9 +813,11 @@ const InsuranceNomination = (props) => {
     let now = new Date();
     if ((now - dob > 568024668000) & (dateItem !== "")) {
       setError(false);
+      console.log("sucess-->", dateItem);
       return true;
     } else {
       setError(true);
+      console.log("sucess-->", dateItem);
       return false;
     }
   };
@@ -628,7 +885,7 @@ const InsuranceNomination = (props) => {
     }
   };
   const CheckValidationsNomine_3 = () => {
-    if (addOne === true && NAcheck === false) {
+    if (addOne === true && NAcheck === false && InlawCheck === false) {
       console.log("AddONEEEEEEEEEEEEEEE", addOne);
       if (
         (AgeErrorValidation(state.nominee3Age, setageError_3) === true) &
@@ -663,7 +920,7 @@ const InsuranceNomination = (props) => {
     }
   };
   const CheckValidationsNomine_4 = () => {
-    if (addTwo === true && NAcheck === false) {
+    if (addTwo === true && NAcheck === false && InlawCheck === false) {
       if (
         (AgeErrorValidation(state.nominee4Age, setageError_4) === true) &
         (NomineeNameValidation(state.nominee4NominiName, setNomineerror_4) ===
@@ -730,13 +987,93 @@ const InsuranceNomination = (props) => {
       return true;
     }
   };
+
+  const CheckValidationsNomine_6 = () => {
+    if (addFirstInLaw === true && NAcheck === false && parentsCheck === false) {
+      if (
+        (AgeErrorValidation(state.In_law_nominee1Age, setInLawAgeError_1) ===
+          true) &
+        (NomineeNameValidation(
+          state.In_law_nominee1NominiName,
+          setInLawNomineerror_1
+        ) ===
+          true) &
+        (validateSelectInput(
+          state.In_law_nominee1Gender,
+          setInLawGenderError_1,
+          "Gender"
+        ) ===
+          true) &
+        DOBValidation(In_law_Nominee1DOB, setInLawDobError_1) &
+        (validateSelectInput(
+          state.In_law_nominee1Relationship,
+          setInLawRelationshipError_1,
+          "Relationship"
+        ) ===
+          true) &
+        (validateSelectInput(
+          state.In_law_nominee1BloodGroup,
+          setInLawBloodGroupError_1,
+          "Blood Group"
+        ) ===
+          true)
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return true;
+    }
+  };
+
+  const CheckValidationsNomine_7 = () => {
+    if (addFirstInLaw === true && NAcheck === false && parentsCheck === false) {
+      if (
+        (AgeErrorValidation(state.In_law_nominee2Age, setInLawAgeError_2) ===
+          true) &
+        (NomineeNameValidation(
+          state.In_law_nominee2NominiName,
+          setInLawNomineerror_2
+        ) ===
+          true) &
+        (validateSelectInput(
+          state.In_law_nominee2Gender,
+          setInLawGenderError_2,
+          "Gender"
+        ) ===
+          true) &
+        DOBValidation(In_law_Nominee2DOB, setInLawDobError_2) &
+        (validateSelectInput(
+          state.In_law_nominee2Relationship,
+          setInLawRelationshipError_2,
+          "Relationship"
+        ) ===
+          true) &
+        (validateSelectInput(
+          state.In_law_nominee2BloodGroup,
+          setInLawBloodGroupError_2,
+          "Blood Group"
+        ) ===
+          true)
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return true;
+    }
+  };
   const checkAllValidations = () => {
     if (
       (CheckValidationsNomine_1() === true) &
       (CheckValidationsNomine_2() === true) &
       (CheckValidationsNomine_3() === true) &
       (CheckValidationsNomine_4() === true) &
-      (CheckValidationsNomine_5() === true)
+      (CheckValidationsNomine_5() === true) &
+      (CheckValidationsNomine_6() === true) &
+      (CheckValidationsNomine_7() === true)
     ) {
       return true;
     } else {
@@ -797,8 +1134,8 @@ const InsuranceNomination = (props) => {
       state.nominee3Relationship = "Father";
       state.nominee4Relationship = "Mother";
     } else if (InlawCheck === true) {
-      state.nominee3Relationship = "Father In-Law";
-      state.nominee4Relationship = "Mother In-Law";
+      state.In_law_nominee1Relationship = "Father In-Law";
+      state.In_law_nominee2Relationship = "Mother In-Law";
     } else if (NAcheck === true) {
       state.nominee3Relationship = "";
       state.nominee4Relationship = "";
@@ -885,6 +1222,40 @@ const InsuranceNomination = (props) => {
         nominiName: state.nominee5NominiName,
         relationship: state.nominee5Relationship,
       };
+
+      const sixth_nomine_info = {
+        age: state.In_law_nominee1Age,
+        bloodGroup: state.In_law_nominee1BloodGroup,
+        candidateId:
+          candidateProfileData &&
+          candidateProfileData !== null &&
+          candidateProfileData !== undefined &&
+          candidateProfileData.candidateId !== null
+            ? candidateProfileData.candidateId
+            : 0,
+        dateOfBirth: In_law_Nominee1DOB,
+        gender: state.In_law_nominee1Gender,
+        nominiId: Data3_nominiId,
+        nominiName: state.In_law_nominee1NominiName,
+        relationship: state.In_law_nominee1Relationship,
+      };
+      const seventh_nomine_info = {
+        age: state.In_law_nominee2Age,
+        bloodGroup: state.In_law_nominee2BloodGroup,
+        candidateId:
+          candidateProfileData &&
+          candidateProfileData !== null &&
+          candidateProfileData !== undefined &&
+          candidateProfileData.candidateId !== null
+            ? candidateProfileData.candidateId
+            : 0,
+        dateOfBirth: In_law_Nominee2DOB,
+        gender: state.In_law_nominee2Gender,
+        nominiId: Data3_nominiId,
+        nominiName: state.In_law_nominee2NominiName,
+        relationship: state.In_law_nominee2Relationship,
+      };
+
       const NominiInfo = [{}, {}, {}, {}, {}];
       var itemIncrease = 0;
 
@@ -903,14 +1274,32 @@ const InsuranceNomination = (props) => {
         NominiInfo[itemIncrease] = fifth_nomine_info;
         itemIncrease = itemIncrease + 1;
       }
-      if ((addOne === true) & (NAcheck === false)) {
+      if ((addOne === true) & (NAcheck === false) & (parentsCheck === true)) {
         console.log("four", NominiInfo);
         NominiInfo[itemIncrease] = third_nomine_info;
         itemIncrease = itemIncrease + 1;
       }
-      if ((addTwo === true) & (NAcheck === false)) {
+      if ((addTwo === true) & (NAcheck === false) & (parentsCheck === true)) {
         console.log("five", NominiInfo);
         NominiInfo[itemIncrease] = fourth_nomine_info;
+        itemIncrease = itemIncrease + 1;
+      }
+      if (
+        (addFirstInLaw === true) &
+        (NAcheck === false) &
+        (InlawCheck === true)
+      ) {
+        console.log("five", NominiInfo);
+        NominiInfo[itemIncrease] = sixth_nomine_info;
+        itemIncrease = itemIncrease + 1;
+      }
+      if (
+        (addFirstInLaw === true) &
+        (NAcheck === false) &
+        (InlawCheck === true)
+      ) {
+        console.log("five", NominiInfo);
+        NominiInfo[itemIncrease] = seventh_nomine_info;
         itemIncrease = itemIncrease + 1;
       }
 
@@ -998,6 +1387,16 @@ const InsuranceNomination = (props) => {
         setNominee5DOB(AdjusteddateValue);
         console.log("Nomineee5Dob");
         state.nominee5Age = finalAge;
+        break;
+      case "6":
+        setInLawNominee1Dob(AdjusteddateValue);
+        console.log("setInLawNominee1Dob");
+        state.In_law_nominee1Age = finalAge;
+        break;
+      case "7":
+        setInLawNominee2Dob(AdjusteddateValue);
+        console.log("Nomineee5Dob");
+        state.In_law_nominee2Age = finalAge;
         break;
 
       default:
@@ -1138,6 +1537,10 @@ const InsuranceNomination = (props) => {
       setNAcheck(false);
     }
     setParentCheck(true);
+    setAddFirstInLaw(false);
+    setAddSecondInLaw(false);
+    setAddOne(true);
+    setAddTwo(true);
   };
   const handleInLawCheckboxChange = (e) => {
     if (parentsCheck === true) {
@@ -1150,6 +1553,10 @@ const InsuranceNomination = (props) => {
       setNAcheck(false);
     }
     setInlawCheck(true);
+    setAddOne(false);
+    setAddTwo(false);
+    setAddFirstInLaw(true);
+    setAddSecondInLaw(true);
   };
   const handleNACheckboxChange = (e) => {
     if (parentsCheck === true) {
@@ -1162,6 +1569,10 @@ const InsuranceNomination = (props) => {
       setNAcheck(false);
     }
     setNAcheck(true);
+    setAddOne(false);
+    setAddTwo(false);
+    setAddFirstInLaw(false);
+    setAddSecondInLaw(false);
   };
 
   return (
@@ -1992,11 +2403,11 @@ const InsuranceNomination = (props) => {
         </Col>
       </Row>
 
-      {(InlawCheck === true) | (parentsCheck === true) && addOne === true ? (
+      {parentsCheck === true && addOne === true ? (
         <div>
           {/* Third Nominee  */}
           <label>
-            <b>{InlawCheck ? "InLaw" : "Parent"} Dependent</b>
+            <b>Parent Dependent</b>
           </label>
           <Row style={{ marginBottom: "2rem" }}>
             <Col sm={11}>
@@ -2039,11 +2450,7 @@ const InsuranceNomination = (props) => {
                       onChange={changeHandler}
                       style={relationshipError_3 ? { borderColor: "red" } : {}}
                     >
-                      {InlawCheck === true ? (
-                        <option value="">Father In-Law</option>
-                      ) : (
-                        <option value="">Father</option>
-                      )}
+                      <option value="">Father</option>
                     </Form.Control>
                     {relationshipError_3 ? (
                       <p style={{ color: "red" }}>
@@ -2206,11 +2613,11 @@ const InsuranceNomination = (props) => {
       ) : (
         ""
       )}
-      {(InlawCheck === true) | (parentsCheck === true) && addTwo === true ? (
+      {parentsCheck === true && addTwo === true ? (
         <div>
           {/* fourth Nominee Name */}
           <label>
-            <b>{InlawCheck ? "InLaw" : "Parent"} Dependent</b>
+            <b>Parent Dependent</b>
           </label>
           <Row style={{ marginBottom: "2rem" }}>
             <Col sm={11}>
@@ -2253,11 +2660,7 @@ const InsuranceNomination = (props) => {
                       onChange={changeHandler}
                       style={relationshipError_4 ? { borderColor: "red" } : {}}
                     >
-                      {InlawCheck === true ? (
-                        <option value="">Mother In-Law</option>
-                      ) : (
-                        <option value="">Mother</option>
-                      )}
+                      <option value="">Mother</option>
                     </Form.Control>
 
                     {relationshipError_4 ? (
@@ -2405,6 +2808,445 @@ const InsuranceNomination = (props) => {
                       <option>AB-</option>
                     </Form.Control>
                     {bloodGroupError_4 ? (
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        &nbsp; *Please select blood group
+                      </p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </Form.Group>
+                </div>
+              </Row>
+            </Col>
+            <Col sm={1}></Col>
+          </Row>
+        </div>
+      ) : (
+        ""
+      )}
+
+      {/* In- law component */}
+
+      {InlawCheck === true && addFirstInLaw === true ? (
+        <div>
+          {/* Third Nominee  */}
+          <label>
+            <b>InLaw Dependent</b>
+          </label>
+          <Row style={{ marginBottom: "2rem" }}>
+            <Col sm={11}>
+              <Row>
+                <div className="col-sm-4">
+                  <Form.Group>
+                    <Form.Label>
+                      Dependent Name
+                      <span style={{ color: "red" }}>*</span>
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="In_law_nominee1NominiName"
+                      value={state.In_law_nominee1NominiName}
+                      onChange={changeHandler}
+                      placeholder="Dependent Name"
+                      required="required"
+                      style={
+                        In_law_nomineNameError_1 ? { borderColor: "red" } : {}
+                      }
+                    />
+                    {In_law_nomineNameError_1 ? (
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        &nbsp; *Please enter valid name
+                      </p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </Form.Group>
+                </div>
+                <div className="col-sm-4">
+                  <Form.Group>
+                    <Form.Label>
+                      Relationship <span style={{ color: "red" }}>*</span>
+                    </Form.Label>
+                    <Form.Control
+                      as="select"
+                      name="In_law_nominee1Relationship"
+                      value={state.In_law_nominee1Relationship}
+                      options={relativesList}
+                      onChange={changeHandler}
+                      style={
+                        In_law_relationshipError_1 ? { borderColor: "red" } : {}
+                      }
+                    >
+                      <option value="">Father In-Law</option>
+                    </Form.Control>
+                    {In_law_relationshipError_1 ? (
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        &nbsp; *Please select relation ship
+                      </p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </Form.Group>
+                </div>
+                <div className="col-sm-4">
+                  <Form.Group>
+                    <Form.Label>
+                      Gender<span style={{ color: "red" }}>*</span>
+                    </Form.Label>
+                    <Form.Control
+                      as="select"
+                      name="In_law_nominee1Gender"
+                      value={state.In_law_nominee1Gender}
+                      onChange={changeHandler}
+                      style={In_law_genderError_1 ? { borderColor: "red" } : {}}
+                    >
+                      <option value="">Gender</option>
+                      <option>Male</option>
+                      <option>Female</option>
+                      <option>Others</option>
+                    </Form.Control>
+
+                    {In_law_genderError_1 ? (
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        &nbsp; *Please select the gender
+                      </p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </Form.Group>
+                </div>
+              </Row>
+            </Col>
+            {/* {isChecked === false ? ( */}
+            {false ? (
+              <Col sm={1} style={{ marginLeft: "-2rem" }}>
+                <Form.Group>
+                  <div>
+                    <button
+                      onClick={() => {
+                        DeleteOne();
+                      }}
+                      type="cancel"
+                      style={{ color: "white", border: " 2px solid#4466f2" }}
+                    >
+                      <i
+                        class="fa fa-close"
+                        style={{ fontSize: "20px", color: "red" }}
+                      ></i>
+                    </button>
+                  </div>
+                </Form.Group>
+              </Col>
+            ) : (
+              ""
+            )}
+          </Row>
+          <Row style={{ marginBottom: "1rem" }}>
+            <Col sm={11}>
+              <Row>
+                <div className="col-sm-4">
+                  <Form.Group>
+                    <Form.Label>
+                      Date Of Birth<span style={{ color: "red" }}>*</span>
+                    </Form.Label>
+                    <div
+                      className={
+                        In_law_DOBError_1
+                          ? "onBoard-date-error"
+                          : "onBoard-date"
+                      }
+                    >
+                      <DatePicker
+                        className="form-control onBoard-view"
+                        selected={In_law_Nominee1DOB}
+                        required
+                        onChange={(e) => dateOfBirthHandler(e, "6")}
+                        dateFormat="yyyy-MM-dd"
+                        placeholderText="YYYY-MM-DD"
+                        style={DOBError_3 ? { borderColor: "red" } : {}}
+                      />
+                    </div>
+                    {In_law_DOBError_1 ? (
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        &nbsp; *Please select valid date
+                      </p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </Form.Group>
+                </div>
+                <div className="col-sm-4">
+                  <Form.Group>
+                    <Form.Label>
+                      Age<span style={{ color: "red" }}>*</span>
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="In_law_nominee1Age"
+                      value={state.In_law_nominee1Age}
+                      onChange={changeHandler}
+                      placeholder="Age"
+                      required="required"
+                      style={In_law_ageError_1 ? { borderColor: "red" } : {}}
+                    />
+                    {In_law_ageError_1 ? (
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        &nbsp; *Please enter valid age
+                      </p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </Form.Group>
+                </div>
+                <div className="col-sm-4">
+                  <Form.Group>
+                    <Form.Label>
+                      Blood Group <span style={{ color: "red" }}>*</span>
+                    </Form.Label>
+                    <Form.Control
+                      as="select"
+                      name="In_law_nominee1BloodGroup"
+                      value={state.In_law_nominee1BloodGroup}
+                      onChange={changeHandler}
+                      style={
+                        In_law_bloodGroupError_1 ? { borderColor: "red" } : {}
+                      }
+                    >
+                      <option value="">Blood Group</option>
+                      <option>A+</option>
+                      <option>A-</option>
+                      <option>B+</option>
+                      <option>B-</option>
+                      <option>O+</option>
+                      <option>O-</option>
+                      <option>AB+</option>
+                      <option>AB-</option>
+                    </Form.Control>
+                    {In_law_bloodGroupError_1 ? (
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        &nbsp; *Please enter valid blood group
+                      </p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </Form.Group>
+                </div>
+              </Row>
+            </Col>
+            <Col sm={1}></Col>
+          </Row>
+        </div>
+      ) : (
+        ""
+      )}
+      {InlawCheck === true && addSecondInLaw === true ? (
+        <div>
+          {/* fourth Nominee Name */}
+          <label>
+            <b>InLaw Dependent</b>
+          </label>
+          <Row style={{ marginBottom: "2rem" }}>
+            <Col sm={11}>
+              <Row>
+                <div className="col-sm-4">
+                  <Form.Group>
+                    <Form.Label>
+                      Dependent Name
+                      <span style={{ color: "red" }}>*</span>
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="In_law_nominee2NominiName"
+                      value={state.In_law_nominee2NominiName}
+                      onChange={changeHandler}
+                      placeholder="Dependent Name"
+                      required="required"
+                      style={
+                        In_law_nomineNameError_2 ? { borderColor: "red" } : {}
+                      }
+                    />
+                    {In_law_nomineNameError_2 ? (
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        &nbsp; *Please enter valid name
+                      </p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </Form.Group>
+                </div>
+                <div className="col-sm-4">
+                  <Form.Group>
+                    <Form.Label>
+                      Relationship <span style={{ color: "red" }}>*</span>
+                    </Form.Label>
+                    <Form.Control
+                      as="select"
+                      name="In_law_nominee2Relationship"
+                      value={state.In_law_nominee2Relationship}
+                      options={relativesList}
+                      onChange={changeHandler}
+                      style={
+                        In_law_relationshipError_2 ? { borderColor: "red" } : {}
+                      }
+                    >
+                      <option value="">Mother In-Law</option>
+                    </Form.Control>
+
+                    {In_law_relationshipError_2 ? (
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        &nbsp; *Please select relationship
+                      </p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </Form.Group>
+                </div>
+                <div className="col-sm-4">
+                  <Form.Group>
+                    <Form.Label>
+                      Gender<span style={{ color: "red" }}>*</span>
+                    </Form.Label>
+                    <Form.Control
+                      as="select"
+                      name="In_law_nominee2Gender"
+                      value={state.In_law_nominee2Gender}
+                      onChange={changeHandler}
+                      style={In_law_genderError_2 ? { borderColor: "red" } : {}}
+                    >
+                      <option value="">Gender</option>
+                      <option>Male</option>
+                      <option>Female</option>
+                      <option>Others</option>
+                    </Form.Control>
+
+                    {In_law_genderError_2 ? (
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        &nbsp; *Please select the gender
+                      </p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </Form.Group>
+                </div>
+              </Row>
+            </Col>
+            {/* {isChecked === false ? ( */}
+            {false ? (
+              <Col sm={1} style={{ marginLeft: "-2rem" }}>
+                <Form.Group>
+                  <div>
+                    <button
+                      onClick={() => {
+                        DeleteTwo();
+                      }}
+                      type="cancel"
+                      style={{ color: "white", border: " 2px solid#4466f2" }}
+                    >
+                      <i
+                        class="fa fa-close"
+                        style={{ fontSize: "20px", color: "red" }}
+                      ></i>
+                    </button>
+                  </div>
+                </Form.Group>
+              </Col>
+            ) : (
+              ""
+            )}
+          </Row>
+          <Row style={{ marginBottom: "1rem" }}>
+            <Col sm={11}>
+              <Row>
+                <div className="col-sm-4">
+                  <Form.Group>
+                    <Form.Label>
+                      &nbsp; Date Of Birth
+                      <span style={{ color: "red" }}>*</span>
+                    </Form.Label>
+                    <div
+                      className={
+                        DOBError_4 ? "onBoard-date-error" : "onBoard-date"
+                      }
+                    >
+                      <DatePicker
+                        className="form-control onBoard-view"
+                        selected={In_law_Nominee2DOB}
+                        required
+                        onChange={(e) => dateOfBirthHandler(e, "7")}
+                        dateFormat="yyyy-MM-dd"
+                        placeholderText="YYYY-MM-DD"
+                        style={In_law_DOBError_2 ? { borderColor: "red" } : {}}
+                      />
+                    </div>
+                    {In_law_DOBError_2 ? (
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        &nbsp; *Please select valid date
+                      </p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </Form.Group>
+                </div>
+                <div className="col-sm-4">
+                  <Form.Group>
+                    <Form.Label>
+                      Age<span style={{ color: "red" }}>*</span>
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="In_law_nominee2Age"
+                      value={state.In_law_nominee2Age}
+                      onChange={changeHandler}
+                      placeholder="Age"
+                      required="required"
+                      style={In_law_ageError_2 ? { borderColor: "red" } : {}}
+                    />
+                    {In_law_ageError_2 ? (
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        &nbsp; *Please enter valid age
+                      </p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </Form.Group>
+                </div>
+                <div className="col-sm-4">
+                  <Form.Group>
+                    <Form.Label>
+                      Blood Group <span style={{ color: "red" }}>*</span>
+                    </Form.Label>
+                    <Form.Control
+                      as="select"
+                      name="In_law_nominee2BloodGroup"
+                      value={state.In_law_nominee2BloodGroup}
+                      onChange={changeHandler}
+                      style={
+                        In_law_bloodGroupError_2 ? { borderColor: "red" } : {}
+                      }
+                    >
+                      <option value="">Blood Group</option>
+                      <option>A+</option>
+                      <option>A-</option>
+                      <option>B+</option>
+                      <option>B-</option>
+                      <option>O+</option>
+                      <option>O-</option>
+                      <option>AB+</option>
+                      <option>AB-</option>
+                    </Form.Control>
+                    {In_law_bloodGroupError_2 ? (
                       <p style={{ color: "red" }}>
                         {" "}
                         &nbsp; *Please select blood group
