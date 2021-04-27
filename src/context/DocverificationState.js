@@ -260,6 +260,7 @@ export const DocsVerificationProvider = (props) => {
       .post("/api/v1/employee/create", employeData)
       .then((response) => {
         state.createStatus = response.data.status;
+        toast.info(response.data.message);
         // state.empData = response.data.data;
         return dispatch({
           type: "CREATE_EMPLOYEE",

@@ -70,7 +70,7 @@ export const OnBoardProvider = (props) => {
           "Candidate Personal information  Response ",
           state.candidatePersonalInfoData
         );
-        toast.info(response.data.message);
+        // toast.info(response.data.message);
         return dispatch({
           type: "CANDIDATE_PERSONAL_INFODATA",
           payload: state.candidatePersonalInfoData,
