@@ -43,6 +43,7 @@ export const OnBoardProvider = (props) => {
     return candidate
       .post("/api/v2/candidate/update", updateData)
       .then((response) => {
+        console.log("personal Information message", response.data);
         state.PersonalInfoResponse = response.data.data;
         console.log(
           "personal Information response--->",
@@ -69,6 +70,7 @@ export const OnBoardProvider = (props) => {
           "Candidate Personal information  Response ",
           state.candidatePersonalInfoData
         );
+        toast.info(response.data.message);
         return dispatch({
           type: "CANDIDATE_PERSONAL_INFODATA",
           payload: state.candidatePersonalInfoData,
