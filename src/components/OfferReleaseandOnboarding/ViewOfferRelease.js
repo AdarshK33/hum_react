@@ -100,10 +100,7 @@ const ViewOfferRelease = () => {
           item.candidateId === candidateData.candidateInformation.candidateId
         ) {
           if (
-            item.status === 5 &&
-            item.statusDesc !== "Rejected" &&
-            item.statusDesc !== "Approved" &&
-            item.statusDesc === "Offer Released" &&
+            (item.status === 5 || item.status === 6) &&
             personalInfoData.documentUploaded === 1
           ) {
             console.log("-->", item);
@@ -212,73 +209,73 @@ const ViewOfferRelease = () => {
           <AccordionItem>
             <AccordionItemHeading>
               <AccordionItemButton
-              // style={activeStep5 ? {} : { background: "#aaa" }}
+                style={activeStep5 ? {} : { background: "#aaa" }}
               >
-                {/* {checkStep5 === true && activeStep5 === true ? ( */}
-                <div>
-                  {" "}
-                  <i
-                    style={{
-                      color: "green",
-                      backgroundColor: "white",
-                      borderRadius: "50%",
-                      fontSize: "19px",
-                    }}
-                    className="fa fa-check-circle"
-                    aria-hidden="true"
-                  ></i>
-                  Step 5: Verify Candidate Documents{" "}
-                </div>
-                {/* ) : (
+                {checkStep5 === true && activeStep5 === true ? (
+                  <div>
+                    {" "}
+                    <i
+                      style={{
+                        color: "green",
+                        backgroundColor: "white",
+                        borderRadius: "50%",
+                        fontSize: "19px",
+                      }}
+                      className="fa fa-check-circle"
+                      aria-hidden="true"
+                    ></i>
+                    Step 5: Verify Candidate Documents{" "}
+                  </div>
+                ) : (
                   "Step 5: Verify Candidate Documents"
-                )} */}
+                )}
               </AccordionItemButton>
             </AccordionItemHeading>
-            {/* {activeStep5 === true ? ( */}
-            <AccordionItemPanel>
-              <VerifyCandidateDocs />
-            </AccordionItemPanel>
-            {/* ) : (
+            {activeStep5 === true ? (
+              <AccordionItemPanel>
+                <VerifyCandidateDocs />
+              </AccordionItemPanel>
+            ) : (
               ""
-            )} */}
+            )}
           </AccordionItem>
           <AccordionItem>
             <AccordionItemHeading>
               <AccordionItemButton
-              // style={
-              //   activeStep6 === true && checkStep5 === true
-              //     ? {}
-              //     : { background: "#aaa" }
-              // }
+                style={
+                  activeStep6 === true && checkStep5 === true
+                    ? {}
+                    : { background: "#aaa" }
+                }
               >
                 {" "}
-                {/* {checkStep6 === true && activeStep6 === true ? ( */}
-                <div>
-                  {" "}
-                  <i
-                    style={{
-                      color: "green",
-                      backgroundColor: "white",
-                      borderRadius: "50%",
-                      fontSize: "19px",
-                    }}
-                    className="fa fa-check-circle"
-                    aria-hidden="true"
-                  ></i>
-                  Step 6: Candidate Onboarding{" "}
-                </div>
-                {/* ) : (
+                {checkStep6 === true && activeStep6 === true ? (
+                  <div>
+                    {" "}
+                    <i
+                      style={{
+                        color: "green",
+                        backgroundColor: "white",
+                        borderRadius: "50%",
+                        fontSize: "19px",
+                      }}
+                      className="fa fa-check-circle"
+                      aria-hidden="true"
+                    ></i>
+                    Step 6: Candidate Onboarding{" "}
+                  </div>
+                ) : (
                   "Step 6: Candidate Onboarding"
-                )} */}
+                )}
               </AccordionItemButton>
             </AccordionItemHeading>
-            {/* {activeStep6 === true && checkStep5 === true ? ( */}
-            <AccordionItemPanel>
-              <CandidateOnboarding />
-            </AccordionItemPanel>
-            {/* ) : (
+            {activeStep6 === true && checkStep5 === true ? (
+              <AccordionItemPanel>
+                <CandidateOnboarding />
+              </AccordionItemPanel>
+            ) : (
               ""
-            )} */}
+            )}
           </AccordionItem>
         </Accordion>
         {/* </Accordion> */}

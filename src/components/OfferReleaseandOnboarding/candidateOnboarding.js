@@ -443,8 +443,8 @@ const CandidateOnboarding = () => {
           <u>WORK DETAILS</u>
         </h5>
         <Row className="mt-5">
-          <Col sm={2}>Candidate date of joining</Col>
-          <Col>
+          <Col sm={3}>Candidate date of joining</Col>
+          <Col sm={6}>
             {candidateData !== undefined &&
             candidateData.workInformation !== undefined
               ? moment(candidateData.workInformation.dateOfJoin).format(
@@ -454,14 +454,13 @@ const CandidateOnboarding = () => {
           </Col>
         </Row>
         <Row className="mt-4">
-          <Col sm={1}>
+          <Col sm={3}>
             <Form.Label>Email ID</Form.Label>
           </Col>
-          <Col sm={5}>
+          <Col sm={6}>
             <Form.Control
               style={{ borderColor: "#006ebb" }}
               type="text"
-              className="form-input"
               name="email"
               value={
                 employeeData !== undefined && employeeData !== null
@@ -476,13 +475,12 @@ const CandidateOnboarding = () => {
           </Col>
         </Row>
         <Row className="mt-4">
-          <Col sm={1}>
+          <Col sm={3}>
             <Form.Label>FED ID</Form.Label>
           </Col>
-          <Col sm={5}>
+          <Col sm={6}>
             <Form.Control
               style={{ borderColor: "#006ebb" }}
-              className="form-input"
               type="text"
               name="fedId"
               value={
@@ -495,14 +493,13 @@ const CandidateOnboarding = () => {
           </Col>
         </Row>
         <Row className="mt-4">
-          <Col sm={1}>
+          <Col sm={3}>
             <Form.Label>System role</Form.Label>
           </Col>
-          <Col sm={5}>
+          <Col sm={6}>
             <Form.Control
               as="select"
               name="role"
-              className="form-input"
               value={
                 employeeData !== undefined && employeeData !== null
                   ? employeeData.role
@@ -595,7 +592,6 @@ const CandidateOnboarding = () => {
                   as="select"
                   name="costCentreA"
                   value={costCenterA}
-                  className="form-input"
                   onChange={(e) => setCostCenterA(e.target.value)}
                   placeholder="costCenter1"
                 >
@@ -660,8 +656,7 @@ const CandidateOnboarding = () => {
               <Form.Group>
                 <Form.Control
                   as="select"
-                  className="form-input"
-                  placeholder="costCenter2"
+                  placeholder="costCenter1"
                   value={costCenterB}
                   onChange={(e) => setCostCenterB(e.target.value)}
                 >
@@ -719,7 +714,7 @@ const CandidateOnboarding = () => {
             {isClicked === true && (
               <Col sm={2}>
                 <Form.Group>
-                  <div>
+                  <div style={{ marginLeft: "100px" }}>
                     <button
                       className="buttonField  button"
                       onClick={() => cancel(1)}
@@ -739,8 +734,7 @@ const CandidateOnboarding = () => {
               <Form.Group>
                 <Form.Control
                   as="select"
-                  placeholder="costCenter3"
-                  className="form-input"
+                  placeholder="costCenter1"
                   value={costCenterC}
                   onChange={(e) => setCostCenterC(e.target.value)}
                 >
@@ -798,7 +792,7 @@ const CandidateOnboarding = () => {
             {isClicked === true && (
               <Col sm={2}>
                 <Form.Group>
-                  <div>
+                  <div style={{ marginLeft: "100px" }}>
                     <button
                       className="buttonField  button"
                       onClick={() => cancel(2)}
@@ -818,8 +812,7 @@ const CandidateOnboarding = () => {
               <Form.Group>
                 <Form.Control
                   as="select"
-                  className="form-input"
-                  placeholder="costCenter4"
+                  placeholder="costCenter1"
                   value={costCenterD}
                   onChange={(e) => setCostCenterD(e.target.value)}
                 >
@@ -877,7 +870,7 @@ const CandidateOnboarding = () => {
             {isClicked === true && (
               <Col sm={2}>
                 <Form.Group>
-                  <div>
+                  <div style={{ marginLeft: "100px" }}>
                     <button
                       className="buttonField  button"
                       onClick={() => cancel(3)}
@@ -897,8 +890,7 @@ const CandidateOnboarding = () => {
               <Form.Group>
                 <Form.Control
                   as="select"
-                  placeholder="costCenter5"
-                  className="form-input"
+                  placeholder="costCenter1"
                   value={costCenterE}
                   onChange={(e) => setCostCenterE(e.target.value)}
                 >
@@ -956,7 +948,7 @@ const CandidateOnboarding = () => {
             {isClicked === true && (
               <Col sm={2}>
                 <Form.Group>
-                  <div>
+                  <div style={{ marginLeft: "100px" }}>
                     <button
                       className="buttonField  button"
                       onClick={() => cancel(4)}

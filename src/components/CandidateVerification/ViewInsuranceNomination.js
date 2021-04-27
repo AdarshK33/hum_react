@@ -1019,6 +1019,74 @@ const EditInsuranceNomination = (props) => {
             ) : (
               ""
             )}
+            {/* <Row>
+              <Col sm={3} style={{ marginTop: "2rem" }}>
+                <label>Do you want to add dependent as</label>
+              </Col>
+              <Col sm={2} style={{ marginTop: "2rem" }}>
+                <Form.Group>
+                  <div className="boxField_1 input">
+                    <input
+                      className="largerCheckbox"
+                      type="checkbox"
+                      //   style={genderError ? { borderColor: "red" } : {}}
+                      value="Male"
+                      disabled={true}
+                      checked={
+                        nominationDetails[2].relationship === "Mother" ||
+                        nominationDetails[2].relationship === "Father"
+                          ? true
+                          : false
+                      }
+                      //required={required}
+                      // onChange={handleParentCheckboxChange}
+                    />
+                    <label>Parents</label>
+                  </div>
+                </Form.Group>
+              </Col>
+              <Col sm={2} style={{ marginTop: "2rem" }}>
+                <Form.Group>
+                  <div className="boxField_1 input">
+                    <input
+                      className="largerCheckbox"
+                      type="checkbox"
+                      //   style={genderError ? { borderColor: "red" } : {}}
+                      value="Female"
+                      disabled={true}
+                      checked={
+                        nominationDetails[2].relationship === "Mother In-Law" ||
+                        nominationDetails[2].relationship === "Father In-Law"
+                          ? true
+                          : false
+                      }
+                      //   required={required}
+                      // checked={InlawCheck}
+                      // onChange={handleInLawCheckboxChange}
+                    />
+                    <label>In-Laws</label>
+                  </div>
+                </Form.Group>
+              </Col>
+              <Col sm={2} style={{ marginTop: "2rem" }}>
+                <Form.Group>
+                  <div className="boxField_1 input">
+                    <input
+                      className="largerCheckbox"
+                      type="checkbox"
+                      //   style={genderError ? { borderColor: "red" } : {}}
+                      value="Other"
+                      disabled={true}
+
+                      //   required={required}
+                      // checked={NAcheck}
+                      // onChange={handleNACheckboxChange}
+                    />
+                    <label>NA</label>
+                  </div>
+                </Form.Group>
+              </Col>
+            </Row> */}
             {nominationDetails[2] !== undefined ? (
               <div>
                 <div>
@@ -1321,7 +1389,7 @@ const EditInsuranceNomination = (props) => {
                           <Form.Control
                             type="text"
                             name="nominee4BloodGroup"
-                            value={nominationDetails.bloodGroup}
+                            value={nominationDetails[3].bloodGroup}
                             onChange={changeHandler}
                             disabled={true}
                           >
