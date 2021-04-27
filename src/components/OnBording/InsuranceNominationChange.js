@@ -14,6 +14,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { OnBoardContext } from "../../context/OnBoardState";
 import { setSeconds } from "date-fns";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const InsuranceNomination = (props) => {
   const {
@@ -1578,6 +1580,7 @@ const InsuranceNomination = (props) => {
   return (
     <Fragment>
       {/* <Form onSubmit={submitHandler}>  */}
+      <ToastContainer />
       <Row style={{ marginBottom: "2rem" }} className="CheckBoxField">
         <Col sm={3}>
           <div>

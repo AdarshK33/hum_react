@@ -2,10 +2,13 @@ import React, { Fragment, useState, useContext, useEffect } from "react";
 import { OfferContext } from "../../context/OfferState";
 import { RoleManagementContext } from "../../context/RoleManagementState";
 import { DocsVerifyContext } from "../../context/DocverificationState";
+import { DashboardContext } from "../../context/DashboardState";
 import calendarImage from "../../assets/images/calendar-image.png";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import "./offerReleaseandOnboarding.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   Button,
   Container,
@@ -99,6 +102,7 @@ const CandidateOnboarding = () => {
       personalInfo(candidateData.candidateInformation.candidateId);
     }
   }, [candidateData, onBoardData]);
+
   useEffect(() => {
     if (
       onBoardData === null &&
@@ -386,6 +390,7 @@ const CandidateOnboarding = () => {
 
   return (
     <Fragment>
+      <ToastContainer />
       {showLetter &&
       !previewLetter &&
       candidateData !== undefined &&
@@ -537,6 +542,7 @@ const CandidateOnboarding = () => {
               {candidateData.candidateInformation !== undefined &&
               candidateData.candidateInformation !== null
                 ? candidateData.candidateInformation.firstName +
+                  " " +
                   candidateData.candidateInformation.lastName
                 : ""}
             </label>
@@ -568,7 +574,7 @@ const CandidateOnboarding = () => {
             <label>
               {candidateData.remuneration !== undefined &&
               candidateData.remuneration !== null ? (
-                <p>{candidateData.remuneration.fixedGross}</p>
+                <p>{candidateData.remuneration.monthlyBonus}</p>
               ) : (
                 <p>N/A</p>
               )}
@@ -1031,9 +1037,9 @@ const CandidateOnboarding = () => {
           textAlign: "center",
         }}
       >
-        <button className="stepperButtons">Back</button>
+        {/* <button className="stepperButtons">Back</button> */}
         <button className="stepperButtons" onClick={() => handleDataSave()}>
-          Save & Next
+          Save
         </button>
       </div>
     </Fragment>

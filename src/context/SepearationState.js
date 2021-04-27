@@ -18,7 +18,7 @@ export const SeparationContext = createContext();
 export const SeparationProvider = (props) => {
   const [state, dispatch] = useReducer(SepationReducer, initial_state);
   const [loader, setLoader] = useState(false);
-  const separationListView = (key, page) => {
+  const separationListView = (key, page, costCenter) => {
     setLoader(true);
     client
       .get(
@@ -27,7 +27,9 @@ export const SeparationProvider = (props) => {
           "&page=" +
           page +
           "&size=" +
-          10
+          10 +
+          "&storeId=" +
+          costCenter
       )
       .then((response) => {
         console.log("response", response.data.data.data);
@@ -47,8 +49,10 @@ export const SeparationProvider = (props) => {
         console.log(error);
       });
   };
-  const viewITClearanceList = (key, page,costCenter) => {
-    client.get( "/api/v1/separation/it-clearance/view?key=" +
+  const viewITClearanceList = (key, page, costCenter) => {
+    client
+      .get(
+        "/api/v1/separation/it-clearance/view?key=" +
           key +
           "&page=" +
           page +
@@ -56,12 +60,15 @@ export const SeparationProvider = (props) => {
           10 +
           "&storeId=" +
           costCenter
-          )
+      )
       .then((response) => {
-        state.noDueClearanceList = response.data.data.data
+        state.noDueClearanceList = response.data.data.data;
         state.data = response.data.data;
         state.total = response.data.data.total;
-        console.log("=====GET Admin separation API response=====", response.data.data)
+        console.log(
+          "=====GET Admin separation API response=====",
+          response.data.data
+        );
 
         return dispatch({
           type: "FETCH_SEPARATION_LIST",
@@ -69,11 +76,11 @@ export const SeparationProvider = (props) => {
         });
       })
       .catch((error) => {
-        console.log(error)
-      })
-  }
-  const updateITClearanceList = (value,key,page,costCenter) => {
-    console.log(value,"value in update ")
+        console.log(error);
+      });
+  };
+  const updateITClearanceList = (value, key, page, costCenter) => {
+    console.log(value, "value in update ");
     const formData = {
       itclearanceId: value.itclearanceId,
       exitId: value.exitId,
@@ -93,10 +100,11 @@ export const SeparationProvider = (props) => {
       .post("/api/v1/separation/it-clearance/edit", formData)
       .then((response) => {
         toast.info(response.data.message);
-        viewITClearanceList(key,page,costCenter)
-        return (
-          dispatch({ type: 'UPDATE_SEPARATION_LIST', payload: state.updateNoDueClearanceList })
-        )
+        viewITClearanceList(key, page, costCenter);
+        return dispatch({
+          type: "UPDATE_SEPARATION_LIST",
+          payload: state.updateNoDueClearanceList,
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -124,9 +132,9 @@ export const SeparationProvider = (props) => {
         viewITClearanceList,
         setLoader,
         updateITClearanceList,
-        updateNoDueClearanceList:state.updateNoDueClearanceList,
-        noDueClearanceList:state.noDueClearanceList,
-        total:state.total,
+        updateNoDueClearanceList: state.updateNoDueClearanceList,
+        noDueClearanceList: state.noDueClearanceList,
+        total: state.total,
         saveFinanceClearanceData,
         separationList: state.separationList,
         loader: state.loader,

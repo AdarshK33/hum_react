@@ -5,7 +5,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import "./OnBoard.css";
 import { OnBoardContext } from "../../context/OnBoardState";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const BankDetails = (props) => {
   const {
     bankCreate,
@@ -145,6 +146,7 @@ const BankDetails = (props) => {
   };
   return (
     <Fragment>
+      <ToastContainer />
       <Form>
         <Row style={{ marginBottom: "2rem" }}>
           <div className="col-sm-4">

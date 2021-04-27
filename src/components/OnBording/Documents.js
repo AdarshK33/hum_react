@@ -4,9 +4,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 // import './OnBoard.css'
 import "./Documents.css";
-import { toast } from "react-toastify";
 import { OnBoardContext } from "../../context/OnBoardState";
 import { OfferContext } from "../../context/OfferState";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // File Type list:
 // Photo = 0
 // Aadhaar = 1
@@ -964,6 +965,7 @@ const Documents = (props) => {
     <Fragment>
       {(localExpact === false) & (internship === false) ? (
         <Row>
+          <ToastContainer />
           <Col>
             <div className="parent">
               <button

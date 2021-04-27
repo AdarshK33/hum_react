@@ -606,27 +606,19 @@ const EditInsuranceNomination = (props) => {
                           Relationship <span style={{ color: "red" }}>*</span>
                         </Form.Label>
                         <Form.Control
-                          as="select"
+                          as="input"
                           name="relationship"
                           value={
                             nominationDetails[0] !== undefined
                               ? nominationDetails[0].relationship
                               : ""
                           }
-                          disabled={disable}
+                          disabled={true}
                           onChange={changeHandler}
                           style={
                             relationshipError_1 ? { borderColor: "red" } : {}
                           }
-                        >
-                          <option value="">Relationship</option>
-                          <option value="Mother">Mother</option>
-                          <option value="Father">Father</option>
-                          <option value="Brother">Brother</option>
-                          <option value="Sister">Sister</option>
-                          <option value="Spouse">Spouse</option>\{" "}
-                          <option value="Others">Others</option>{" "}
-                        </Form.Control>
+                        ></Form.Control>
                         {relationshipError_1 ? (
                           <p style={{ color: "red" }}>
                             {" "}
@@ -741,7 +733,7 @@ const EditInsuranceNomination = (props) => {
                           Blood Group <span style={{ color: "red" }}>*</span>
                         </Form.Label>
                         <Form.Control
-                          as="select"
+                          type="text"
                           name="bloodGroup"
                           value={
                             nominationDetails[0] !== undefined
@@ -754,7 +746,7 @@ const EditInsuranceNomination = (props) => {
                             bloodGroupError_1 ? { borderColor: "red" } : {}
                           }
                         >
-                          <option value="">Blood Group</option>
+                          {/* <option value="">Blood Group</option>
                           <option>A+</option>
                           <option>A-</option>
                           <option>B+</option>
@@ -762,7 +754,7 @@ const EditInsuranceNomination = (props) => {
                           <option>O+</option>
                           <option>O-</option>
                           <option>AB+</option>
-                          <option>AB-</option>{" "}
+                          <option>AB-</option>{" "} */}
                         </Form.Control>
                         {bloodGroupError_1 ? (
                           <p style={{ color: "red" }}>
@@ -828,11 +820,11 @@ const EditInsuranceNomination = (props) => {
                             Relationship <span style={{ color: "red" }}>*</span>
                           </Form.Label>
                           <Form.Control
-                            as="select"
+                            type="text"
                             name="nominee2Relationship"
                             value={
-                              nominationDetails[0] !== undefined
-                                ? nominationDetails[0].relationship
+                              nominationDetails[1] !== undefined
+                                ? nominationDetails[1].relationship
                                 : ""
                             }
                             disabled={true}
@@ -841,13 +833,13 @@ const EditInsuranceNomination = (props) => {
                               relationshipError_2 ? { borderColor: "red" } : {}
                             }
                           >
-                            <option value="">Relationship</option>
+                            {/* <option value="">Relationship</option>
                             <option value="Mother">Mother</option>
                             <option value="Father">Father</option>
                             <option value="Brother">Brother</option>
                             <option value="Sister">Sister</option>
                             <option value="Spouse">Spouse</option>\{" "}
-                            <option value="Others">Others</option>{" "}
+                            <option value="Others">Others</option>{" "} */}
                           </Form.Control>
                           {relationshipError_2 ? (
                             <p style={{ color: "red" }}>
@@ -986,7 +978,7 @@ const EditInsuranceNomination = (props) => {
                             Blood Group <span style={{ color: "red" }}>*</span>
                           </Form.Label>
                           <Form.Control
-                            as="select"
+                            type="text"
                             name="nominee2BloodGroup"
                             value={
                               nominationDetails[0] !== undefined
@@ -999,7 +991,7 @@ const EditInsuranceNomination = (props) => {
                               bloodGroupError_2 ? { borderColor: "red" } : {}
                             }
                           >
-                            <option value="">Blood Group</option>
+                            {/* <option value="">Blood Group</option>
                             <option>A+</option>
                             <option>A-</option>
                             <option>B+</option>
@@ -1007,7 +999,7 @@ const EditInsuranceNomination = (props) => {
                             <option>O+</option>
                             <option>O-</option>
                             <option>AB+</option>
-                            <option>AB-</option>{" "}
+                            <option>AB-</option>{" "} */}
                           </Form.Control>
                           {bloodGroupError_2 ? (
                             <p style={{ color: "red" }}>
@@ -1060,18 +1052,18 @@ const EditInsuranceNomination = (props) => {
                             Relationship <span style={{ color: "red" }}>*</span>
                           </Form.Label>
                           <Form.Control
-                            as="select"
+                            type="text"
                             name="nominee3Relationship"
                             value={nominationDetails[2].relationship}
                             disabled={true}
                           >
-                            <option value="">Relationship</option>
+                            {/* <option value="">Relationship</option>
                             <option value="Mother">Mother</option>
                             <option value="Father">Father</option>
                             <option value="Brother">Brother</option>
                             <option value="Sister">Sister</option>
                             <option value="Spouse">Spouse</option>\{" "}
-                            <option value="Others">Others</option>{" "}
+                            <option value="Others">Others</option>{" "} */}
                           </Form.Control>
                         </Form.Group>
                       </div>
@@ -1146,12 +1138,12 @@ const EditInsuranceNomination = (props) => {
                             Blood Group <span style={{ color: "red" }}>*</span>
                           </Form.Label>
                           <Form.Control
-                            as="select"
+                            type="text"
                             name="nominee3BloodGroup"
                             value={nominationDetails[2].bloodGroup}
                             disabled={true}
                           >
-                            <option value="">Blood Group</option>
+                            {/* <option value="">Blood Group</option>
                             <option>A+</option>
                             <option>A-</option>
                             <option>B+</option>
@@ -1159,7 +1151,7 @@ const EditInsuranceNomination = (props) => {
                             <option>O+</option>
                             <option>O-</option>
                             <option>AB+</option>
-                            <option>AB-</option>
+                            <option>AB-</option> */}
                           </Form.Control>
                           {bloodGroupError_3 ? (
                             <p style={{ color: "red" }}>
@@ -1181,7 +1173,11 @@ const EditInsuranceNomination = (props) => {
             )}
             {nominationDetails[3] !== undefined ? (
               <div>
-                {/* fourth Nominee Name */}
+                <div>
+                  <label>
+                    <b>Fourth Dependent</b>
+                  </label>
+                </div>
                 <Row style={{ marginBottom: "2rem" }}>
                   <Col sm={11}>
                     <Row>
@@ -1198,6 +1194,7 @@ const EditInsuranceNomination = (props) => {
                             onChange={changeHandler}
                             placeholder="Nominee Name"
                             required="required"
+                            disabled={true}
                           />
                         </Form.Group>
                       </div>
@@ -1207,18 +1204,19 @@ const EditInsuranceNomination = (props) => {
                             Relationship <span style={{ color: "red" }}>*</span>
                           </Form.Label>
                           <Form.Control
-                            as="select"
+                            type="text"
                             name="nominee4Relationship"
                             value={nominationDetails[3].relationship}
                             onChange={changeHandler}
+                            disabled={true}
                           >
-                            <option value="">Relationship</option>
+                            {/* <option value="">Relationship</option>
                             <option value="Mother">Mother</option>
                             <option value="Father">Father</option>
                             <option value="Brother">Brother</option>
                             <option value="Sister">Sister</option>
                             <option value="Spouse">Spouse</option>\{" "}
-                            <option value="Others">Others</option>{" "}
+                            <option value="Others">Others</option>{" "} */}
                           </Form.Control>
                         </Form.Group>
                       </div>
@@ -1234,6 +1232,7 @@ const EditInsuranceNomination = (props) => {
                             onChange={changeHandler}
                             placeholder="Gender"
                             required="required"
+                            disabled={true}
                           />
                         </Form.Group>
                       </div>
@@ -1285,6 +1284,7 @@ const EditInsuranceNomination = (props) => {
                               required
                               dateFormat="yyyy-MM-dd"
                               placeholderText="YYYY-MM-DD"
+                              disabled={true}
                               style={DOBError_4 ? { borderColor: "red" } : {}}
                             />
                           </div>
@@ -1309,7 +1309,7 @@ const EditInsuranceNomination = (props) => {
                             value={nominationDetails[3].age}
                             onChange={changeHandler}
                             placeholder="Age"
-                            required="required"
+                            disabled={true}
                           />
                         </Form.Group>
                       </div>
@@ -1319,12 +1319,13 @@ const EditInsuranceNomination = (props) => {
                             Blood Group <span style={{ color: "red" }}>*</span>
                           </Form.Label>
                           <Form.Control
-                            as="select"
+                            type="text"
                             name="nominee4BloodGroup"
                             value={nominationDetails.bloodGroup}
                             onChange={changeHandler}
+                            disabled={true}
                           >
-                            <option value="">Blood Group</option>
+                            {/* <option value="">Blood Group</option> */}
                           </Form.Control>
                         </Form.Group>
                       </div>
@@ -1338,6 +1339,11 @@ const EditInsuranceNomination = (props) => {
             )}
             {nominationDetails[4] !== undefined ? (
               <div>
+                <div>
+                  <label>
+                    <b>Fifth Dependent</b>
+                  </label>
+                </div>
                 {/* Fifth Nominee */}
                 <Row style={{ marginBottom: "2rem" }}>
                   <Col sm={11}>
@@ -1355,9 +1361,7 @@ const EditInsuranceNomination = (props) => {
                             onChange={changeHandler}
                             placeholder="Nominee Name"
                             required="required"
-                            style={
-                              nomineNameError_5 ? { borderColor: "red" } : {}
-                            }
+                            disabled={true}
                           />
                         </Form.Group>
                       </div>
@@ -1367,21 +1371,14 @@ const EditInsuranceNomination = (props) => {
                             Relationship <span style={{ color: "red" }}>*</span>
                           </Form.Label>
                           <Form.Control
-                            as="select"
+                            type="text"
                             name="nominee5Relationship"
                             value={nominationDetails[4].relationship}
                             onChange={changeHandler}
+                            disabled={true}
                           >
-                            <option value="">Relationship</option>
+                            {/* <option value="">Relationship</option> */}
                           </Form.Control>
-                          {relationshipError_5 ? (
-                            <p style={{ color: "red" }}>
-                              {" "}
-                              &nbsp; *Please select relationship
-                            </p>
-                          ) : (
-                            <p></p>
-                          )}
                         </Form.Group>
                       </div>
                       <div className="col-sm-4">
@@ -1395,7 +1392,7 @@ const EditInsuranceNomination = (props) => {
                             value={nominationDetails[4].gender}
                             onChange={changeHandler}
                             placeholder="Gender"
-                            required="required"
+                            disabled={true}
                           />
                         </Form.Group>
                       </div>
@@ -1483,7 +1480,7 @@ const EditInsuranceNomination = (props) => {
                             Blood Group <span style={{ color: "red" }}>*</span>
                           </Form.Label>
                           <Form.Control
-                            as="select"
+                            type="text"
                             name="nominee5BloodGroup"
                             value={nominationDetails[4].bloodGroup}
                             onChange={changeHandler}
@@ -1491,7 +1488,7 @@ const EditInsuranceNomination = (props) => {
                               bloodGroupError_5 ? { borderColor: "red" } : {}
                             }
                           >
-                            <option value="">Blood Group</option>
+                            {/* <option value="">Blood Group</option> */}
                           </Form.Control>
                         </Form.Group>
                       </div>

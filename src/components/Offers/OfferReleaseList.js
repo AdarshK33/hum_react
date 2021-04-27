@@ -18,7 +18,12 @@ const OfferReleaseList = () => {
     total,
     viewCandidateId,
   } = useContext(OfferContext);
-  const { verificationDocsView, docsToVerify } = useContext(DocsVerifyContext);
+  const {
+    verificationDocsView,
+    docsToVerify,
+    personalInfo,
+    personalInfoData,
+  } = useContext(DocsVerifyContext);
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [searchValue, setSearchValue] = useState("");
@@ -70,6 +75,7 @@ const OfferReleaseList = () => {
   const fetchCandidateDetails = (candidateId) => {
     viewCandidateId(candidateId);
     verificationDocsView(candidateId);
+    personalInfo(candidateId);
     viewRole();
     CostCenter();
   };
@@ -157,7 +163,9 @@ const OfferReleaseList = () => {
                             <td>{item.statusDesc}</td>
 
                             <td>
-                              {item.status !== 5 ? (
+                              {item.status === 5 || item.status === 6 ? (
+                                <Edit2 />
+                              ) : (
                                 <Link to="/edit-offer-release">
                                   <Edit2
                                     onClick={() => {
@@ -165,8 +173,6 @@ const OfferReleaseList = () => {
                                     }}
                                   />
                                 </Link>
-                              ) : (
-                                <Edit2 />
                               )}
                             </td>
 

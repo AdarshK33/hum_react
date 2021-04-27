@@ -9,9 +9,10 @@ import { Row, Col, Form, Button } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import "./OnBoard.css";
+import { ToastContainer, toast } from "react-toastify";
 import countryList from "react-select-country-list";
 import { OnBoardContext } from "../../context/OnBoardState";
-
+import "react-toastify/dist/ReactToastify.css";
 const Address = (props) => {
   const {
     candidateCountryList,
@@ -585,6 +586,7 @@ const Address = (props) => {
     console.log("permanet", permanetCityData),
     (
       <Fragment>
+        <ToastContainer />
         <Form>
           <Row style={{ marginBottom: "1rem" }}>
             <Col sm={6}>
@@ -770,7 +772,7 @@ const Address = (props) => {
                   PinCode<span style={{ color: "red" }}>*</span>
                 </Form.Label>
                 <Form.Control
-                  type="text"
+                  type="number"
                   name="pinCode"
                   value={state.pinCode}
                   onChange={changeHandler}
@@ -794,7 +796,7 @@ const Address = (props) => {
                   Phone No<span style={{ color: "red" }}>*</span>
                 </Form.Label>
                 <Form.Control
-                  type="text"
+                  type="number"
                   name="phoneNumber"
                   value={state.phoneNumber}
                   onChange={changeHandler}
@@ -1052,7 +1054,7 @@ const Address = (props) => {
                       PinCode<span style={{ color: "red" }}>*</span>
                     </Form.Label>
                     <Form.Control
-                      type="text"
+                      type="number"
                       name="permanentPinCode"
                       value={state.permanentPinCode}
                       onChange={changeHandler}
@@ -1078,7 +1080,7 @@ const Address = (props) => {
                       Phone No<span style={{ color: "red" }}>*</span>
                     </Form.Label>
                     <Form.Control
-                      type="text"
+                      type="number"
                       name="permanentPhoneNumber"
                       value={state.permanentPhoneNumber}
                       onChange={changeHandler}
