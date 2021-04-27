@@ -34,10 +34,14 @@ const DocVerification = () => {
     docsToVerify,
     loader,
     setLoader,
-    approveDocument,
-    disApproveDocument,
-    acceptStatus,
-    rejectStatus,
+    // approveDocument,
+    aadharStatus,
+    approveAadharByAdmin,
+    disapproveAadharByAdmin,
+    disApproveAadhar,
+    // disApproveDocument,
+    // acceptStatus,
+    // rejectStatus,
     downloadDocument,
     downloadedFile,
     personalInfoData,
@@ -49,8 +53,14 @@ const DocVerification = () => {
   useEffect(() => {
     verificationDocsView(candidateId);
     personalInfo(candidateId);
-    setState(personalInfoData);
-  }, [acceptStatus, rejectStatus, uanUpdate]);
+    // setState(personalInfoData);
+  }, [disApproveAadhar, uanUpdate]);
+  useEffect(() => {
+    if (aadharStatus === "SUCCESS") {
+      verificationDocsView(candidateId);
+      personalInfo(candidateId);
+    }
+  }, [aadharStatus]);
   useEffect(() => {
     getUserInfo();
     personalInfo(candidateId);
@@ -78,7 +88,7 @@ const DocVerification = () => {
     setUanError(false);
   };
   const handleApproveDocument = (docId) => {
-    approveDocument(docId);
+    approveAadharByAdmin(docId);
   };
   const handleDisApproveDocument = (docId) => {
     setModal(true);
@@ -91,7 +101,7 @@ const DocVerification = () => {
   };
   const handleSave = (docId, candidateId, remarks) => {
     if (remarks !== "") {
-      disApproveDocument(docId, candidateId, remarks);
+      disapproveAadharByAdmin(docId, candidateId, remarks);
       handleClose();
     } else {
       setError(true);
@@ -295,7 +305,9 @@ const DocVerification = () => {
                       <td className="buttonMargin1">{item.statusDesc}</td>
                     ) : (
                       <td className="row text-center buttonMargin">
-                        {user.role === "ADMIN" && item.documentType === 1 && (
+                        {user.role === "ADMIN" &&
+                        item.documentType === 1 &&
+                        state.verificationStatus === 1 ? (
                           <button
                             className="approveButton ml-4"
                             onClick={() =>
@@ -304,19 +316,23 @@ const DocVerification = () => {
                           >
                             Approve
                           </button>
+                        ) : (
+                          <div></div>
                         )}
-                        {user.role === "ADMIN" && item.documentType === 1 && (
+                        {user.role === "ADMIN" &&
+                        item.documentType === 1 &&
+                        state.verificationStatus === 1 ? (
                           <button
                             className="approveButton ml-4"
                             disabled={
-                              rejectStatus !== undefined &&
-                              rejectStatus === "FAIL"
+                              disApproveAadhar !== undefined &&
+                              disApproveAadhar === "FAIL"
                                 ? true
                                 : false
                             }
                             style={
-                              rejectStatus !== undefined &&
-                              rejectStatus === "FAIL"
+                              disApproveAadhar !== undefined &&
+                              disApproveAadhar === "FAIL"
                                 ? { opacity: "0.6" }
                                 : { opacity: "1" }
                             }
@@ -326,6 +342,8 @@ const DocVerification = () => {
                           >
                             Disapprove
                           </button>
+                        ) : (
+                          <div></div>
                         )}
                       </td>
                     )}
