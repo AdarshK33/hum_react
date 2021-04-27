@@ -163,7 +163,9 @@ const OfferReleaseList = () => {
                             <td>{item.statusDesc}</td>
 
                             <td>
-                              {item.status !== 5 ? (
+                              {item.status === 5 || item.status === 6 ? (
+                                <Edit2 />
+                              ) : (
                                 <Link to="/edit-offer-release">
                                   <Edit2
                                     onClick={() => {
@@ -171,8 +173,6 @@ const OfferReleaseList = () => {
                                     }}
                                   />
                                 </Link>
-                              ) : (
-                                <Edit2 />
                               )}
                             </td>
 

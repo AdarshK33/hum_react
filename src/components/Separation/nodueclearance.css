@@ -1,4 +1,4 @@
-.title_bar{
+.nodue_title{
     background: #006EBB;
     font-weight: bold;
     color: white;
@@ -51,16 +51,8 @@ thead th {
    height: 500px;
  }
 
- .pagination{
-     margin-left: 25%;
- }
+ 
 
- .shift-date .react-datepicker-wrapper{
-    width: 100% !important;
-}
-.shift-date input.form-control.shift-view {
-    height: 40px;
-}
 .searchFeild{
     align-items: center;
 }

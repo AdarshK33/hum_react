@@ -27,6 +27,8 @@ const Documents = (props) => {
     documentViewData,
     candidateViewInfo,
     CandidateViewInformation,
+    pfDeclarationView,
+    PFDeclarationView,
   } = useContext(OnBoardContext);
   const {
     candidateData,
@@ -52,6 +54,8 @@ const Documents = (props) => {
   const [passportError, setPassPortError] = useState(false);
   const [collegeIdError, setCollegeError] = useState(false);
   const [collegeLetterError, setCollegeLetterError] = useState(false);
+  const [CandidateFirstJob, setCandidateFirstJob] = useState(false);
+
   // const [fileUpload, setFileUpload] = useState();
   const [workInfoData, setWorkInfoData] = useState();
   useEffect(() => {
@@ -81,6 +85,27 @@ const Documents = (props) => {
     documentView(candidateProfileData.candidateId);
   }, []);
   console.log("documentViewData", documentViewData);
+
+  useEffect(() => {
+    PFDeclarationView(candidateProfileData.candidateId);
+  }, [candidateProfileData, pfDeclarationView]);
+  // console.log(pfDeclarationView, "<------pfDeclarationViewuse");
+
+  useEffect(() => {
+    if (
+      pfDeclarationView !== null &&
+      pfDeclarationView !== undefined &&
+      Object.keys(pfDeclarationView).length !== 0 &&
+      pfDeclarationView.firstJob !== null &&
+      pfDeclarationView.firstJob !== undefined
+    ) {
+      if (pfDeclarationView.firstJob === true) {
+        setCandidateFirstJob(false);
+      } else {
+        setCandidateFirstJob(true);
+      }
+    }
+  }, [pfDeclarationView]);
 
   useEffect(() => {
     if (
@@ -635,27 +660,35 @@ const Documents = (props) => {
     }
   };
   const RelivingLetterUploadValidation = () => {
-    if (UploadedArray[0].ULRelivingLetter === false) {
-      if (RelievingLetterValidation() === true) {
-        setRelievingLetterError(true);
-        return false;
+    if (CandidateFirstJob === true) {
+      if (UploadedArray[0].ULRelivingLetter === false) {
+        if (RelievingLetterValidation() === true) {
+          setRelievingLetterError(true);
+          return false;
+        }
+      } else {
+        return true;
       }
     } else {
       return true;
     }
   };
   const LatestPaySlipsUploadValidation = () => {
-    if (UploadedArray[0].ULLatestPaySlip === false) {
-      console.log("Upload in if");
+    if (CandidateFirstJob === true) {
+      if (UploadedArray[0].ULLatestPaySlip === false) {
+        console.log("Upload in if");
 
-      if (PaySlipsValidation() === true) {
-        console.log("Upload in nested if");
+        if (PaySlipsValidation() === true) {
+          console.log("Upload in nested if");
 
-        setLatestPaySlipsError(true);
-        return false;
+          setLatestPaySlipsError(true);
+          return false;
+        }
+      } else {
+        console.log("Upload in else");
+        return true;
       }
     } else {
-      console.log("Upload in else");
       return true;
     }
   };
@@ -1690,7 +1723,11 @@ const Documents = (props) => {
           <Row>
             <Col>
               <Form.Group>
-                <div className="FileInput">
+                <div
+                  className={
+                    CandidateFirstJob ? "FileInput" : "FileInputWithOutStar"
+                  }
+                >
                   <label>Relieving Letter</label>
                 </div>
                 <div className="parentInput">
@@ -1744,7 +1781,11 @@ const Documents = (props) => {
           <Row>
             <Col>
               <Form.Group>
-                <div className="FileInput">
+                <div
+                  className={
+                    CandidateFirstJob ? "FileInput" : "FileInputWithOutStar"
+                  }
+                >
                   <label>Latest Payslips</label>
                 </div>
                 <div className="parentInput">

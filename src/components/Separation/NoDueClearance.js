@@ -47,7 +47,6 @@ const NoDueClearance = () => {
   const [costCenter, setCostCenter] = useState("all");
   const [searchValue, setSearchValue] = useState("all");
   /*-----------------Pagination------------------*/
-  const statusValue = ["Due", "No Due", "On Hold"];
   const [currentPage, setCurrentPage] = useState(1);
   const recordPerPage = 10;
   const totalRecords =
@@ -55,15 +54,25 @@ const NoDueClearance = () => {
   const pageRange = 10;
   const indexOfLastRecord = currentPage * recordPerPage;
   const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-  const currentRecords =
-    noDueClearanceList !== null
-      ? noDueClearanceList !== undefined &&
-        noDueClearanceList.slice(indexOfFirstRecord, indexOfLastRecord)
-      : [];
+  const [currentRecords, setCurrentRecords] = useState([]);
+
+  useEffect(() => {
+    if (noDueClearanceList !== null && noDueClearanceList !== undefined) {
+      setCurrentRecords(noDueClearanceList);
+    }
+  }, [noDueClearanceList, currentRecords]);
+
   const handlePageChange = (pageNumber) => {
-    console.log("page change");
     setPageCount(pageNumber - 1);
+    console.log("page change", pageNumber, pageCount);
+
     setCurrentPage(pageNumber);
+    if (searchValue !== "all") {
+      viewITClearanceList(searchValue, pageNumber - 1, costCenter);
+    } else {
+      viewITClearanceList("all", pageNumber - 1, "all");
+    }
+    setCurrentRecords(noDueClearanceList);
   };
   /*-----------------Pagination------------------*/
 
@@ -115,30 +124,24 @@ const NoDueClearance = () => {
 
   const handleSave = (value) => {
     const formData = value.data;
-    console.log(formData, "handlelsave");
+    console.log(formData, pageCount, "handlelsave");
     setCleranceData(formData);
     updateITClearanceList(formData, searchValue, pageCount, costCenter);
   };
   useEffect(() => {
+    console.log(pageCount, "pageCount");
     viewITClearanceList(searchValue, pageCount, costCenter);
   }, [costCenter, searchValue, pageCount]);
-
   const statusRender = (e, value) => {
-    console.log(e.target.value);
     const status = e.target.value;
     const clearanceStatus = value.data;
     clearanceStatus["itClearanceStatus"] = status;
-    // noDueClearanceList.map((item,i)=>{
-    //   if(clearanceStatus.exitId == item.exitId || clearanceStatus.itclearanceId == item.itclearanceId){
-    //  console.log(clearanceStatus,"inside if")
-    //     return  noDueClearanceList.splice(i,1,clearanceStatus)
-    //   }
-
-    // })
+    clearanceStatus["disabled"] = true;
   };
   console.log(noDueClearanceList, "noDueClearance");
   const renderButton = (e) => {
-    var buttonValue = false;
+    console.log(e, "render");
+    var buttonValue = e.data.disabled;
     return (
       <button
         disabled={buttonValue}
@@ -169,59 +172,122 @@ const NoDueClearance = () => {
       </button>
     );
   };
-
+  const employeeIdHandle = (e) => {
+    console.log(e, "employeeId");
+  };
   return (
-    console.log(noDueClearanceList),
-    (
-      <div>
-        <Fragment>
-          <Container fluid>
-            <Breadcrumb title="No Due Clearance" parent="No Due Clearance" />
-            <div className="container-fluid">
-              <div className="row">
-                <div className="col-sm-12">
-                  <Row className="mt-4 mainWrapper">
-                    <Col className="searchBox">
-                      <input
-                        className="form-control inputWrapper"
-                        type="text"
-                        placeholder="Search.."
-                        onChange={(e) => searchHandler(e)}
-                      />
-                      <Search
-                        className="search-icon"
-                        style={{ color: "#313131", marginRight: "17rem" }}
-                        onClick={searchDataHandler}
+    <div>
+      <Fragment>
+        <Container fluid>
+          <Breadcrumb title="No Due Clearance" parent="No Due Clearance" />
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-sm-12">
+                <Row className="mt-4 mainWrapper">
+                  <Col className="searchBox">
+                    <input
+                      className="form-control inputWrapper"
+                      type="text"
+                      placeholder="Search.."
+                      onChange={(e) => searchHandler(e)}
+                    />
+                    <Search
+                      className="search-icon"
+                      style={{ color: "#313131", marginRight: "17rem" }}
+                      onClick={searchDataHandler}
+                    />
+                  </Col>
+                  <div className="col-sm-6">
+                    <Col className="selectList">
+                      <br />
+                      <label className="title">Select Cost Center</label>{" "}
+                      &nbsp;&nbsp;
+                      <Select
+                        className="selectInputWrapper"
+                        name="filters"
+                        placeholder="Cost Center"
+                        options={
+                          costCenterList !== null
+                            ? costCenterList.map((e) => ({
+                                label: e.costCentreName,
+                                value: e.costCentreName,
+                              }))
+                            : []
+                        }
+                        onChange={handleCostCenter}
+                        required
+                        isSearchable
                       />
                     </Col>
-                    <div className="col-sm-6">
-                      <Col className="selectList">
-                        <br />
-                        <label className="title">Select Cost Center</label>{" "}
-                        &nbsp;&nbsp;
-                        <Select
-                          className="selectInputWrapper"
-                          name="filters"
-                          placeholder="Cost Center"
-                          options={
-                            costCenterList !== null
-                              ? costCenterList.map((e) => ({
-                                  label: e.costCentreName,
-                                  value: e.costCentreName,
-                                }))
-                              : []
-                          }
-                          onChange={handleCostCenter}
-                          required
-                          isSearchable
-                        />
-                      </Col>
-                    </div>
-                  </Row>
-                  <div className="card" style={{ overflowX: "auto" }}>
-                    <div className="title_bar">
-                      <b>NO DUE CLEARANCE LISTING </b>
-                    </div>
+                  </div>
+                </Row>
+                <div className="card" style={{ overflowX: "auto" }}>
+                  <div className="nodue_title">
+                    <b>NO DUE CLEARANCE LISTING </b>
+                  </div>
+
+                  <div
+                    className="ag-theme-alpine"
+                    style={{ align: "center", height: 495, width: 1400 }}
+                  >
+                    <AgGridReact
+                      rowData={noDueClearanceList}
+                      rowSelection="single"
+                      onGridReady={onGridReady}
+                      defaultColDef={{
+                        width: 150,
+                        editable: true,
+                        resizable: true,
+                      }}
+                    ></AgGridReact>
+                    <AgGridColumn
+                      className="columnColor"
+                      editable="false"
+                      headerName="S No"
+                      pinned="left"
+                      valueGetter={`node.rowIndex+1 + ${indexOfFirstRecord}`}
+                    ></AgGridColumn>
+                    <AgGridColumn
+                      className="columnColor"
+                      editable="false"
+                      headerName="Employee Id"
+                      field="employeeId"
+                    ></AgGridColumn>
+                    <AgGridColumn
+                      className="columnColor"
+                      editable="false"
+                      headerName="Employee Name"
+                      field="employeeName"
+                    ></AgGridColumn>
+                    <AgGridColumn
+                      className="columnColor"
+                      editable="false"
+                      headerName="Cost Center Name"
+                      field="costCentreName"
+                    ></AgGridColumn>
+                    <AgGridColumn
+                      className="columnColor"
+                      editable="false"
+                      headerName="Manager Name"
+                      field="managerName"
+                    ></AgGridColumn>
+                    <AgGridColumn
+                      className="columnColor"
+                      editable="false"
+                      headerName="Joining Date"
+                      field="joiningDate"
+                    ></AgGridColumn>
+                    <AgGridColumn
+                      className="columnColor"
+                      editable="false"
+                      headerName="Last Working Day"
+                      field="lastWorkingDay"
+                    ></AgGridColumn>
+                    <AgGridColumn
+                      className="columnColor"
+                      headerName="IT Amount To Be Recovered"
+                      field="itAmount"
+                    ></AgGridColumn>
 
                     <div
                       className="ag-theme-alpine"
@@ -309,43 +375,42 @@ const NoDueClearance = () => {
                         ></AgGridColumn>
                       </AgGridReact>
                     </div>
-
-                    {noDueClearanceList === null ? (
-                      <p style={{ textAlign: "center" }}>No Record Found</p>
-                    ) : null}
                   </div>
+                  {/* </AgGridReact> */}
                   <div>
-                    {/* {noDueClearanceList == null && noDueClearanceList == undefined ? (
-                  <div
-                    className="loader-box loader"
-                    style={{ width: "100% !important" }}
-                  >
-                    <div className="loader">
-                      <div className="line bg-primary"></div>
-                      <div className="line bg-primary"></div>
-                      <div className="line bg-primary"></div>
-                      <div className="line bg-primary"></div>
-                    </div>
-                  </div>
-                ) 
-                : */}
-                    <Pagination
-                      itemClass="page-item"
-                      linkClass="page-link"
-                      activePage={currentPage}
-                      itemsCountPerPage={recordPerPage}
-                      totalItemsCount={totalRecords}
-                      pageRangeDisplayed={pageRange}
-                      onChange={handlePageChange}
-                    />
+                    {noDueClearanceList == null &&
+                    noDueClearanceList == undefined ? (
+                      <div
+                        className="loader-box loader"
+                        style={{ width: "100% !important" }}
+                      >
+                        <div className="loader">
+                          <div className="line bg-primary"></div>
+                          <div className="line bg-primary"></div>
+                          <div className="line bg-primary"></div>
+                          <div className="line bg-primary"></div>
+                        </div>
+                      </div>
+                    ) : (
+                      <Pagination
+                        itemClass="page-item"
+                        linkClass="page-link"
+                        activePage={currentPage}
+                        itemsCountPerPage={recordPerPage}
+                        totalItemsCount={totalRecords}
+                        pageRangeDisplayed={pageRange}
+                        onChange={handlePageChange}
+                      />
+                    )}
                   </div>
                 </div>
               </div>
             </div>
-          </Container>
-        </Fragment>
-      </div>
-    )
+          </div>
+        </Container>
+      </Fragment>
+    </div>
+    // )
   );
 };
 export default NoDueClearance;
