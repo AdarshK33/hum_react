@@ -116,7 +116,7 @@ const AppointmentLetter = (props) => {
                     and guide you in this phase of your professional journey or
                     any such manager assigned by the later.
                   </p>
-                  <p>
+                  {/* <p>
                     We at Indeca strongly believe in your ability to manage
                     yourself in the best interest of the Company. Fewer the
                     rules better the productivity as far as we are concerned.
@@ -124,7 +124,7 @@ const AppointmentLetter = (props) => {
                   <p>
                     We trust you will enjoy working with Indeca and take the
                     utmost autonomy to complete your responsibilities-
-                  </p>
+                  </p> */}
                   <ol>
                     <li>
                       We believe you will treat your team mates and customers
@@ -186,7 +186,7 @@ const AppointmentLetter = (props) => {
                       to you at least 7 days in advance during probation or 1
                       month in advance if your employment is confirmed
                     </li>
-                    <li>
+                    {/* <li>
                       Service rules under the Certified Standing Orders of
                       Decathlon will be applicable to you from the date of
                       certification of such orders. The information on the
@@ -197,22 +197,22 @@ const AppointmentLetter = (props) => {
                       However, your employment will be subjected to immediate
                       termination on the following conditions prescribed in the
                       Industrial Employment/Model Standing Orders Act 1946-
-                    </li>
-                    <ul>
+                    </li> */}
+                    {/* <ul>
                       <li>
                         ● Wilful in subordination or disobedience, whether alone
                         or in combination with others, to any lawful and
                         reasonable order of a superior
-                      </li>
-                      <li>
+                      </li> */}
+                    {/* <li>
                         ● Theft, fraud or dishonesty in connection with the
                         employers business or property
                       </li>
                       <li>
                         ● Wilful damage to or loss of employers goods or
                         property
-                      </li>
-                      <li>
+                      </li> */}
+                    {/* <li>
                         ● Taking or giving bribes or any illegal gratification
                       </li>
                       <li>
@@ -240,7 +240,7 @@ const AppointmentLetter = (props) => {
                       a photo-shoot shall be the property of Decathlon and you
                       consent to Decathlon's use of the such image in
                       communication.
-                    </li>
+                    </li>*/}
                     <li>
                       Apart from the above mentioned rules all rules specified
                       under the certified standing orders of Decathlon will be
@@ -259,10 +259,10 @@ const AppointmentLetter = (props) => {
                       respective manager during your induction program{" "}
                     </b>
                   </p>
-                  <p>
+                  {/* <p>
                     Should you accept the above information, then kindly sign
                     the duplicate copy of this appointment letter
-                  </p>
+                  </p> */}
                   <p>
                     <b>We welcome you to the Decathlon Family!</b>
                   </p>
