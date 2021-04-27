@@ -571,7 +571,7 @@ const CandidateOnboarding = () => {
             <label>
               {candidateData.remuneration !== undefined &&
               candidateData.remuneration !== null ? (
-                <p>{candidateData.remuneration.fixedGross}</p>
+                <p>{candidateData.remuneration.monthlyBonus}</p>
               ) : (
                 <p>N/A</p>
               )}
@@ -579,7 +579,7 @@ const CandidateOnboarding = () => {
           </Col>
         </Row>
       </div>
-      <div className="pr-5  mt-4">
+      <div className="px-5  mt-4">
         <h5>Cost Center Split</h5>
         {costCenter === true && (
           <Row>
