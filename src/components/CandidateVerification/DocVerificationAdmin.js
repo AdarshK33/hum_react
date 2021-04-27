@@ -447,7 +447,8 @@ const DocVerification = () => {
                   className="largerCheckbox"
                   type="checkbox"
                   value="yes"
-                  checked={UANYes}
+                  checked={state.uanStatus === 1 ? true : UANYes}
+                  disabled={true}
                   // required={required}
                   onChange={(e) => handleUANYes(e)}
                 />
@@ -463,6 +464,7 @@ const DocVerification = () => {
                   type="checkbox"
                   value="no"
                   checked={UANNo}
+                  disabled={state.uanStatus === 1 ? true : false}
                   // required={required}
                   onChange={(e) => handleUANNo(e)}
                 />
@@ -502,9 +504,11 @@ const DocVerification = () => {
           textAlign: "center",
         }}
       >
-        <button className="stepperButtons" onClick={() => handleDocSave()}>
-          Save
-        </button>
+        {state.uanStatus !== 1 && (
+          <button className="stepperButtons" onClick={() => handleDocSave()}>
+            Save
+          </button>
+        )}
 
         {state !== undefined && state.verificationStatus === 1 && (
           <button className="onboardButton" onClick={() => handleOnboard()}>
