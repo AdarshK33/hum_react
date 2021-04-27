@@ -24,6 +24,8 @@ const initial_state = {
   adminCalculateWeekResult: [],
   EmployeeListForAdminRosterWeekOff: [],
   adminRosterWeekOffDataList: [],
+  adminRosterCalculateUtilisationList: [],
+  adminRosterUtilisationScheduleResult: [],
   adminRosterAvailableShiftList: [],
   costCenterList: [],
   masterWeeks: [],
@@ -376,6 +378,36 @@ export const RosterProvider = ({ children }) => {
       })
   }
 
+  // Roster utilisation
+  const adminRosterCalculateUtilisation = (storeId) => {
+    //  alert(endDate,endDate);
+    // eslint-disable-next-line no-useless-concat
+    client.get('/roster/utilisation?storeId=' + storeId)
+      .then((response) => {
+        state.adminRosterCalculateUtilisationList = response.data.data;
+        console.log("admin calculate week ", state.adminRosterCalculateUtilisationList)
+        return dispatch({ type: 'ADMIN_CALCULATE_UTILISATION', payload: state.adminRosterCalculateUtilisationList })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
+  // Roster Utilisation Schedule
+  const adminRosterUtilisationSchedule = (filterType, month, storeId, date=0, endDate=0, startDate=0, weekId=0, year=0) => {
+    //  alert(endDate,endDate);
+    // eslint-disable-next-line no-useless-concat
+    client.get('/roster/dashboard?date=' + date + '&endDate=' + endDate + '&filterType=' + filterType + '&month=' + month + '&startDate=' + startDate + '&storeId=' + storeId + '&weekId=' + weekId + '&year=' + year)
+      .then((response) => {
+        state.adminRosterUtilisationScheduleResult = response.data.data;
+        console.log("admin calculate week ", state.adminRosterUtilisationScheduleResult)
+        return dispatch({ type: 'ADMIN_UTILISATION_SCHEDULE', payload: state.adminRosterUtilisationScheduleResult })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
   //ADMIN EMPLOYEE LIST FOR ROSTER WEEKOFF
   const getEmployeeListForAdminRosterWeekOff = (contractType, storeId, clusterId) => {
     // const contractType="Parttime";
@@ -497,7 +529,9 @@ export const RosterProvider = ({ children }) => {
     getallWeeks,
     adminWeekOffDataEmp,
     adminCalculateWeek,
+    adminRosterCalculateUtilisation,
     getEmployeeListForAdminRosterWeekOff,
+    adminRosterUtilisationSchedule,
     adminAddWeekOff,
     adminRosterAvailableShift,
     assignAdminShift,
@@ -522,6 +556,8 @@ export const RosterProvider = ({ children }) => {
     adminWeekOffDataListHeader: state.adminWeekOffDataListHeader,
     adminWeeksInYear: state.adminWeeksInYear,
     adminCalculateWeekResult: state.adminCalculateWeekResult,
+    adminRosterCalculateUtilisationList: state.adminRosterCalculateUtilisationList,
+    adminRosterUtilisationScheduleResult: state.adminRosterUtilisationScheduleResult,
     adminRosterAvailableShiftList: state.adminRosterAvailableShiftList,
     EmployeeListForAdminRosterWeekOff: state.EmployeeListForAdminRosterWeekOff,
     pageData: state.pageData

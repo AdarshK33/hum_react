@@ -30,7 +30,7 @@ const Roster = () => {
 
 
   useEffect(() => {
-    console.log(user.employeeId)
+    console.log(user.employeeId, weekOffDataList, 'weekOffDataList');
     weekOffDataEmp(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"), user.employeeId)
   }, [user.employeeId])
   //use effect
