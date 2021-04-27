@@ -148,7 +148,7 @@ const RosterDashboard = () => {
 
     return (
         <Fragment>
-            <Container>
+            <Container style={{paddingBottom: '30px'}}>
                 <Row className='costCenter-row' style={{margin: '10px 0px', paddingTop: '10px', display: 'flex', justifyContent: 'flex-end'}}>
                     <Col style={{maxWidth:'20%'}}>
                         <Select
@@ -166,7 +166,7 @@ const RosterDashboard = () => {
                             <h2>{options4.title}</h2>
                             <Chart
                                 chartType="PieChart"
-                                data={[["Utilised", "Unutilised"], ["Utilised", options4.data.utilisedValue], ["Unutilised", options4.data.unUtilisedValue]]}
+                                data={[["Utilised", "Unutilised"], [`Utilised ${options4.data.utilisedValue}`, options4.data.utilisedValue], [`Unutilised ${options4.data.unUtilisedValue}`, options4.data.unUtilisedValue]]}
                                 options={options4}
                                 width={"100%"}
                                 height={"500px"}
@@ -176,12 +176,12 @@ const RosterDashboard = () => {
                     </Col>
                 </Row>
                 <Row>    
-                    <Col sm={4}>
+                    <Col sm={4} px={0}>
                         <Card className='small-card1 p-10'>
                             <h4>{options1.title}</h4>
                             <Chart
                                 chartType="PieChart"
-                                data={[["Utilised", "Unutilised"], ["Utilised", options1.data.utilisedValue], ["Unutilised", options1.data.unUtilisedValue]]}
+                                data={[["Utilised", "Unutilised"], [`Utilised ${options1.data.utilisedValue}`, options1.data.utilisedValue], [`Unutilised ${options1.data.unUtilisedValue}`, options1.data.unUtilisedValue]]}
                                 options={options1}
                                 width={"100%"}
                                 height={"250px"}
@@ -189,12 +189,12 @@ const RosterDashboard = () => {
                             />
                         </Card>
                     </Col>
-                    <Col sm={4}>
+                    <Col sm={4} px={0}>
                         <Card className='small-card2 p-10'>
                             <h4>{options2.title}</h4>
                             <Chart
                                 chartType="PieChart"
-                                data={[["Utilised", "Unutilised"], ["Utilised", options2.data.utilisedValue], ["Unutilised", options2.data.unUtilisedValue]]}
+                                data={[["Utilised", "Unutilised"], [`Utilised ${options2.data.utilisedValue}`, options2.data.utilisedValue], [`Unutilised ${options2.data.unUtilisedValue}`, options2.data.unUtilisedValue]]}
                                 options={options2}
                                 width={"100%"}
                                 height={"250px"}
@@ -202,12 +202,12 @@ const RosterDashboard = () => {
                             />
                         </Card>
                     </Col>
-                    <Col sm={4}>
+                    <Col sm={4} px={0}>
                         <Card className='small-card3 p-10'>
                             <h4>{options3.title}</h4>
                             <Chart
                                 chartType="PieChart"
-                                data={[["Utilised", "Unutilised"], ["Utilised", options3.data.utilisedValue], ["Unutilised", options3.data.unUtilisedValue]]}
+                                data={[["Utilised", "Unutilised"], [`Utilised ${options3.data.utilisedValue}`, options3.data.utilisedValue], [`Unutilised ${options3.data.unUtilisedValue}`, options3.data.unUtilisedValue]]}
                                 options={options3}
                                 width={"100%"}
                                 height={"250px"}
