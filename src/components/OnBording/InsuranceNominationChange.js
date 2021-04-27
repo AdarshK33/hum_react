@@ -283,6 +283,13 @@ const InsuranceNomination = (props) => {
         setNAcheck(false);
         state.relationship = "Father";
         state.nominee2Relationship = "Mother";
+      } else {
+        setRelativeType(false);
+        setParentCheck(true);
+        setInlawCheck(false);
+        setNAcheck(false);
+        state.relationship = "Father";
+        state.nominee2Relationship = "Mother";
       }
     }
   }, [candidatePersonalInfoData, candidateInsuranceNominationData]);
