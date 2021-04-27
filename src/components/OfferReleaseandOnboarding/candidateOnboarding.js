@@ -420,7 +420,7 @@ const CandidateOnboarding = () => {
         ""
       )}
 
-      <Modal show={showSubmitModal} onHide={handleClose} size="lg">
+      <Modal show={showSubmitModal} onHide={handleClose} size="md">
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         {submitLetter ? (
           <Modal.Body>
