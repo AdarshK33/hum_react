@@ -7,6 +7,8 @@ import calendarImage from "../../assets/images/calendar-image.png";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import "./offerReleaseandOnboarding.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   Button,
   Container,
@@ -388,6 +390,7 @@ const CandidateOnboarding = () => {
 
   return (
     <Fragment>
+      <ToastContainer />
       {showLetter &&
       !previewLetter &&
       candidateData !== undefined &&

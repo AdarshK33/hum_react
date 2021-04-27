@@ -208,6 +208,7 @@ const EmergencyContact = (props) => {
 
   return (
     <Fragment>
+      <ToastContainer />
       <Form>
         <Row style={{ marginBottom: "1rem" }}>
           <Col sm={6}>
