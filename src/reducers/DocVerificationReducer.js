@@ -38,6 +38,10 @@ const GroupReducer = (state, action) => {
       return { ...state, step5Status: action.payload };
     case "STEP6_STATUS":
       return { ...state, step5Status: action.payload };
+    case "AADHAR_ACCEPT":
+      return { ...state, aadharStatus: action.payload };
+    case "AADHAR_REJECT":
+      return { ...state, disApproveAadhar: action.payload };
   }
 };
 export default GroupReducer;

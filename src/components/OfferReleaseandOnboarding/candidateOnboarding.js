@@ -2,6 +2,7 @@ import React, { Fragment, useState, useContext, useEffect } from "react";
 import { OfferContext } from "../../context/OfferState";
 import { RoleManagementContext } from "../../context/RoleManagementState";
 import { DocsVerifyContext } from "../../context/DocverificationState";
+import { DashboardContext } from "../../context/DashboardState";
 import calendarImage from "../../assets/images/calendar-image.png";
 import DatePicker from "react-datepicker";
 import moment from "moment";
@@ -101,6 +102,7 @@ const CandidateOnboarding = () => {
       personalInfo(candidateData.candidateInformation.candidateId);
     }
   }, [candidateData, onBoardData]);
+
   useEffect(() => {
     if (
       onBoardData === null &&
@@ -543,6 +545,7 @@ const CandidateOnboarding = () => {
               {candidateData.candidateInformation !== undefined &&
               candidateData.candidateInformation !== null
                 ? candidateData.candidateInformation.firstName +
+                  " " +
                   candidateData.candidateInformation.lastName
                 : ""}
             </label>
@@ -1042,9 +1045,9 @@ const CandidateOnboarding = () => {
           textAlign: "center",
         }}
       >
-        <button className="stepperButtons">Back</button>
+        {/* <button className="stepperButtons">Back</button> */}
         <button className="stepperButtons" onClick={() => handleDataSave()}>
-          Save & Next
+          Save
         </button>
       </div>
     </Fragment>

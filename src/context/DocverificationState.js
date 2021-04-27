@@ -25,6 +25,8 @@ const initial_state = {
   rejectMessage: "",
   step5Status: false,
   step6Status: false,
+  aadharStatus: "",
+  disApproveAadhar: "",
 };
 export const DocsVerifyContext = createContext();
 export const DocsVerificationProvider = (props) => {
@@ -174,7 +176,43 @@ export const DocsVerificationProvider = (props) => {
         console.log(error);
       });
   };
-
+  const approveAadharByAdmin = (docId) => {
+    setLoader(true);
+    client
+      .get("/api/v1/candidate/aadhaar/" + docId + "/accept")
+      .then((response) => {
+        toast.info(response.data.message);
+        setLoader(false);
+        return dispatch({
+          type: "AADHAR_ACCEPT",
+          payload: state.aadharStatus,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const disapproveAadharByAdmin = (docId, candidateId, remarks) => {
+    setLoader(true);
+    client
+      .get(
+        "/api/v1/candidate/aadhaar/" +
+          docId +
+          "/reject?candidateId=" +
+          candidateId +
+          "&remarks=" +
+          remarks
+      )
+      .then((response) => {
+        setLoader(false);
+        state.disApproveAadhar = response.data.status;
+        toast.info(response.data.message);
+        return dispatch({
+          type: "AADHAR_REJECT",
+          payload: state.disApproveAadhar,
+        });
+      });
+  };
   const disApproveDocument = (docId, candidateId, remarks) => {
     setLoader(true);
     client
@@ -335,7 +373,11 @@ export const DocsVerificationProvider = (props) => {
         viewEmployee,
         step5suscessStatus,
         step6suscessStatus,
+        approveAadharByAdmin,
+        disapproveAadharByAdmin,
+        disApproveAadhar: state.disApproveAadhar,
         step5Status: state.step5Status,
+        aadharStatus: state.aadharStatus,
         step6Status: state.step6Status,
         empData: state.empData,
         onBoardData: state.onBoardData,
