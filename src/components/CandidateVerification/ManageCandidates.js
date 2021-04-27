@@ -170,12 +170,12 @@ const CandidateList = () => {
                       </td> */}
                       <td>{item.createdDate}</td>
                       <td>{item.verificationStatusDesc}</td>
-                      <td>{item.statusDesc}</td>
+                      <td>{item.uanStatusDesc}</td>
                       <td>{item.statusDesc}</td>
 
                       <td>
                         <Link to={"/verification/" + item.candidateId}>
-                        {/* <Link to={"/no_due_clearance"}> */}
+                          {/* <Link to={"/no_due_clearance"}> */}
                           {/* <Link to={"/finance-clearance"}> */}
                           <Edit2
                             onClick={() => {

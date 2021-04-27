@@ -42,7 +42,7 @@ const InternAppointmentLetter = (props) => {
       offerLetterData.internshipCandidateOffer !== undefined ? (
         <Fragment>
           <div className="appointmentLetter">
-            <Modal show={showLetter} onHide={() => handleClose()} size="lg">
+            <Modal show={showLetter} onHide={() => handleClose()} size="md">
               <Container>
                 <Modal.Header
                   closeButton
@@ -65,7 +65,9 @@ const InternAppointmentLetter = (props) => {
                     <p>{offerLetterData.address}</p>
                     <p>{offerLetterData.cityName}</p>
                   </div>
-                  <p>Dear {offerLetterData.candidateName},</p>
+                  <p>
+                    Dear <b>{offerLetterData.candidateName}</b>,
+                  </p>
                   <p>
                     We thank you for your interest in choosing Decathlon Sports
                     India Pvt Ltd (DSIPL). We are in receipt of your application
@@ -77,30 +79,37 @@ const InternAppointmentLetter = (props) => {
                     are pleased to assign the project of your interest and we
                     permit you to carry out the learning and we engage you as an
                     intern for the period{" "}
-                    {offerLetterData.internshipCandidateOffer.fromDate} to{" "}
-                    {offerLetterData.internshipCandidateOffer.toDate} at our{" "}
-                    {offerLetterData.location} location.
+                    <b>{offerLetterData.internshipCandidateOffer.fromDate}</b>{" "}
+                    to <b>{offerLetterData.internshipCandidateOffer.toDate}</b>{" "}
+                    at our <b>{offerLetterData.location}</b> location.
                   </p>
                   <p>
-                    Your fixed stipend would be INR. XXXX.00 per month. This
-                    stipend is paid purely to manage your travel, record
-                    maintenance, project submission and any other unforeseen
-                    project related expenses. Further it is to be noted that
-                    DSIPL will not be in receipt of any professional service
-                    from you which might result in financial gain in the form of
-                    revenue or profits. Hence, this stipend is not to be treated
-                    as a wage in any form.
+                    Your fixed stipend would be INR.{" "}
+                    {offerLetterData.internshipCandidateOffer.stipend} per
+                    month. This stipend is paid purely to manage your travel,
+                    record maintenance, project submission and any other
+                    unforeseen project related expenses. Further it is to be
+                    noted that DSIPL will not be in receipt of any professional
+                    service from you which might result in financial gain in the
+                    form of revenue or profits. Hence, this stipend is not to be
+                    treated as a wage in any form.
                   </p>
 
                   <p>
                     We are pleased to offer internship programme for period of{" "}
-                    {offerLetterData.internshipCandidateOffer.internshipPeriod}{" "}
+                    <b>
+                      {
+                        offerLetterData.internshipCandidateOffer
+                          .internshipPeriod
+                      }
+                    </b>{" "}
                     months from{" "}
-                    {offerLetterData.internshipCandidateOffer.fromDate} to{" "}
-                    {offerLetterData.internshipCandidateOffer.toDate} at{" "}
-                    {offerLetterData.companyName} Pvt. Ltd. You will be provided
-                    stipend {offerLetterData.internshipCandidateOffer.stipend}{" "}
-                    per month.
+                    <b>{offerLetterData.internshipCandidateOffer.fromDate}</b>{" "}
+                    to <b>{offerLetterData.internshipCandidateOffer.toDate}</b>{" "}
+                    at {offerLetterData.companyName} Pvt. Ltd. You will be
+                    provided stipend{" "}
+                    {offerLetterData.internshipCandidateOffer.stipend} per
+                    month.
                   </p>
 
                   <p>
@@ -109,8 +118,8 @@ const InternAppointmentLetter = (props) => {
                   </p>
                   <ol>
                     <li>
-                      {offerLetterData.managerName} will be responsible to
-                      mentor and guide you in this phase of your professional
+                      <b>{offerLetterData.managerName}</b> will be responsible
+                      to mentor and guide you in this phase of your professional
                       journey or any such manager assigned by the later.
                     </li>
                     <li>

@@ -194,6 +194,7 @@ const ViewEmployeeForm = () => {
                       type="text"
                       value={empName1}
                       placeholder="Search by Emp Name/Emp Id"
+                      readOnly
                     />
                     {/* <Search
                         className="search-icon"

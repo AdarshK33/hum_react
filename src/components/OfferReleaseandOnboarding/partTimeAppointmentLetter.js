@@ -49,7 +49,7 @@ const PartTimeAppointmentLetter = (props) => {
       {offerLetterData && offerLetterData.partTimeCandidateOffer ? (
         <Fragment>
           <div className="appointmentLetter">
-            <Modal show={showLetter} onHide={() => handleClose()} size="lg">
+            <Modal show={showLetter} onHide={() => handleClose()} size="md">
               <Container>
                 <Modal.Header
                   closeButton
@@ -72,49 +72,54 @@ const PartTimeAppointmentLetter = (props) => {
                     <p>{offerLetterData.address}</p>
                     <p>{offerLetterData.cityName}</p>
                   </div>
-                  <p>Dear {offerLetterData.candidateName},</p>
+                  <p>
+                    Dear <b>{offerLetterData.candidateName}</b>,
+                  </p>
                   <p>
                     Thank for your interest in choosing Decathlon Sports India
                     Pvt Ltd (DSIPL). As we believe your passion for sport and
                     your values match those of our Company, we, at DSIPL, are
                     pleased to appoint you as a Decathlon Permanent Employee on
                     a part time basis, and your responsibilities would be those
-                    of a{" "}
-                    <span className="boldText">{offerLetterData.position}</span>{" "}
-                    at our {offerLetterData.location} location effective{" "}
-                    {offerLetterData.partTimeCandidateOffer.effectiveDate}.{" "}
+                    of a <b>{offerLetterData.position}</b> at our{" "}
+                    <b>{offerLetterData.location}</b> location effective{" "}
+                    <b>
+                      {offerLetterData.partTimeCandidateOffer.effectiveDate}
+                    </b>
+                    .{" "}
                   </p>
                   <br></br>
                   <p>
                     Your gross fixed compensation would be INR.{" "}
-                    {offerLetterData.partTimeCandidateOffer.grossSalary} per
-                    hour. You are entitled to all the social security benefits
-                    like PF, ESIC (as per applicability), & bonus as specified
-                    in the respective statutory acts. Further, sufficient
-                    holidays keep one motivated in a work environment.{" "}
+                    <b>{offerLetterData.partTimeCandidateOffer.grossSalary}</b>{" "}
+                    per hour. You are entitled to all the social security
+                    benefits like PF, ESIC (as per applicability), & bonus as
+                    specified in the respective statutory acts. Further,
+                    sufficient holidays keep one motivated in a work
+                    environment.{" "}
                   </p>
                   <p>
                     You would be entitled to non-statutory benefits such as
                     Health & Social Security Insurance. Further you would be
                     eligible to earn monthly performance bonus to a maximum of{" "}
-                    {offerLetterData.bonus} % . Monthly performance bonus is
-                    payable subject to the successful achievement of individual
-                    and Company goals as specified by your manager from time to
-                    time.
+                    <b>{offerLetterData.bonus}</b> % . Monthly performance bonus
+                    is payable subject to the successful achievement of
+                    individual and Company goals as specified by your manager
+                    from time to time.
                   </p>
                   <p>
-                    {offerLetterData.managerName} will be responsible to mentor
-                    and guide you in this phase of your professional journey or
-                    any such manager assigned by the later.
+                    <b>{offerLetterData.managerName}</b> will be responsible to
+                    mentor and guide you in this phase of your professional
+                    journey or any such manager assigned by the later.
                   </p>
 
                   <p>
-                    We at Indeca strongly believe in your ability to manage
+                    We at Decathlon strongly believe in your ability to manage
                     yourself in the best interest of the Company. Fewer the
                     rules better the productivity as far as we are concerned.
                   </p>
                   <p>
-                    We trust you will enjoy working with Indeca and take the
+                    We trust you will enjoy working with Decathlon and take the
                     utmost autonomy to complete your responsibilities-
                   </p>
                   <ol>
@@ -129,10 +134,11 @@ const PartTimeAppointmentLetter = (props) => {
                       rules that might be incorporated from time to time
                     </li>
                     <li>
-                      When you are happy being a part of the Indeca family, we
-                      expect you will be open to relocate to any location where
-                      the Company currently has stores or may be established or
-                      any other Group companies as deemed necessary
+                      When you are happy being a part of the Decathlon family,
+                      we expect you will be open to relocate to any location
+                      where the Company currently has stores or may be
+                      established or any other Group companies as deemed
+                      necessary
                     </li>
                     <li>
                       Your salary and its components are strictly confidential
@@ -142,7 +148,7 @@ const PartTimeAppointmentLetter = (props) => {
                       We hold transparency in high regard. You cannot involve
                       yourself in taking or giving bribe, gambling, theft,
                       fraudulent practices or any such act that might affect
-                      Indecas reputation or damage to property
+                      Decathlon reputation or damage to property
                     </li>
                     <li>
                       We at DSIPL, have a strict policy against sexual

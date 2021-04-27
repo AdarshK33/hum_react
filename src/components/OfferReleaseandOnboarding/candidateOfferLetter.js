@@ -97,7 +97,7 @@ const GenerateOfferLetter = () => {
         )}
       </Form>
 
-      <Modal show={showModal} onHide={handleClose} size="lg">
+      <Modal show={showModal} onHide={handleClose} size="md">
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         {submitLetter ? (
           <Modal.Body>
