@@ -36,18 +36,32 @@ const NoDueClearance = () => {
   const [costCenter, setCostCenter] = useState("all")
   const [searchValue, setSearchValue] = useState("all");
 /*-----------------Pagination------------------*/
-const statusValue = ["Due","No Due","On Hold"]
 const [currentPage, setCurrentPage] = useState(1);
 const recordPerPage = 10;
 const totalRecords = noDueClearanceList !== null && noDueClearanceList !== undefined && total;
 const pageRange = 10;
 const indexOfLastRecord = currentPage * recordPerPage;
 const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-const currentRecords = noDueClearanceList !== null ? noDueClearanceList !== undefined && noDueClearanceList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+const [currentRecords, setCurrentRecords] = useState([]);
+
+
+useEffect(() => {
+  if (noDueClearanceList !== null && noDueClearanceList !== undefined) {
+    setCurrentRecords(noDueClearanceList);
+  }
+}, [noDueClearanceList, currentRecords]);
+
 const handlePageChange = (pageNumber) => {
-  console.log("page change")
-  setPageCount(pageNumber-1)
-  setCurrentPage(pageNumber);
+  setPageCount(pageNumber - 1);
+  console.log("page change",pageNumber,pageCount)
+
+    setCurrentPage(pageNumber);
+    if (searchValue !== "all") {
+      viewITClearanceList(searchValue,pageNumber-1,costCenter);
+    } else {
+      viewITClearanceList("all",pageNumber-1,"all");
+    }
+    setCurrentRecords(noDueClearanceList);
 }
 /*-----------------Pagination------------------*/
 
@@ -96,30 +110,25 @@ const handleCostCenter = (options) => {
 
   const handleSave = (value) => {
     const formData = value.data
-    console.log(formData,"handlelsave")
+    console.log(formData,pageCount,"handlelsave")
       setCleranceData(formData)
      updateITClearanceList(formData,searchValue, pageCount,costCenter)
   };
   useEffect(() => {
+    console.log(pageCount,"pageCount")
     viewITClearanceList(searchValue, pageCount,costCenter);
   }, [costCenter,searchValue,pageCount]);
-
   const statusRender = (e,value) => {
     const status = e.target.value
     const clearanceStatus = value.data
     clearanceStatus['itClearanceStatus']= status
-    // noDueClearanceList.map((item,i)=>{
-    //   if(clearanceStatus.exitId == item.exitId || clearanceStatus.itclearanceId == item.itclearanceId){
-    //  console.log(clearanceStatus,"inside if")
-    //     return  noDueClearanceList.splice(i,1,clearanceStatus)
-    //   }
-
-    // })
+    clearanceStatus['disabled']= true
  
   };
   console.log(noDueClearanceList,"noDueClearance")
   const renderButton = (e) => {
-    var buttonValue = false
+    console.log(e,"render")
+    var buttonValue = e.data.disabled
     return (
       <button disabled={buttonValue}
         style={buttonValue?{
@@ -139,13 +148,15 @@ const handleCostCenter = (options) => {
           width: "100%",
           lineHeight: "30px",
         }}
-        onClick={() => handleSave(e)}
+         onClick={() => handleSave(e)}
       >
         Save
       </button>
     );
   };
-
+const employeeIdHandle = (e)=>{
+  console.log(e,"employeeId")
+}
   return (
     <div>
       <Fragment>
@@ -184,7 +195,7 @@ const handleCostCenter = (options) => {
           </div>
         </Row>
             <div className="card" style={{ overflowX: "auto" }}>
-              <div className="title_bar" >
+              <div className="nodue_title" >
               <b >NO DUE CLEARANCE LISTING </b>            
               </div>
          
@@ -194,13 +205,16 @@ const handleCostCenter = (options) => {
           <AgGridReact 
             rowData={noDueClearanceList}
             rowSelection="single"
+            
             onGridReady={onGridReady}
             defaultColDef={{
               width: 150,
               editable: true,
               resizable: true,
             }}
+            
           >
+          <AgGridColumn className="columnColor" editable="false" headerName="S No" pinned="left" valueGetter={`node.rowIndex+1 + ${indexOfFirstRecord}`}></AgGridColumn>
             <AgGridColumn className="columnColor" editable="false" headerName="Employee Id" field="employeeId"></AgGridColumn>
             <AgGridColumn className="columnColor" editable="false" headerName="Employee Name" field="employeeName"></AgGridColumn>
             <AgGridColumn className="columnColor" editable="false" headerName="Cost Center Name" field="costCentreName"></AgGridColumn>
@@ -247,7 +261,7 @@ const handleCostCenter = (options) => {
                 
               </div>
               <div>
-       {/* {noDueClearanceList == null && noDueClearanceList == undefined ? (
+       {noDueClearanceList == null && noDueClearanceList == undefined ? (
                   <div
                     className="loader-box loader"
                     style={{ width: "100% !important" }}
@@ -260,7 +274,7 @@ const handleCostCenter = (options) => {
                     </div>
                   </div>
                 ) 
-                : */}
+                :
          <Pagination
            itemClass="page-item"
            linkClass="page-link"
@@ -269,7 +283,7 @@ const handleCostCenter = (options) => {
            totalItemsCount={totalRecords}
            pageRangeDisplayed={pageRange}
            onChange={handlePageChange}
-         />
+         />}
      </div>
               </div>
               </div>
