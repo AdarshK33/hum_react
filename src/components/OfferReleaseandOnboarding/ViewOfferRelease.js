@@ -100,10 +100,7 @@ const ViewOfferRelease = () => {
           item.candidateId === candidateData.candidateInformation.candidateId
         ) {
           if (
-            item.status === 5 &&
-            item.statusDesc !== "Rejected" &&
-            item.statusDesc !== "Approved" &&
-            item.statusDesc === "Offer Released" &&
+            (item.status === 5 || item.status === 6) &&
             personalInfoData.documentUploaded === 1
           ) {
             console.log("-->", item);
