@@ -12,6 +12,7 @@ import {
   Form,
   Table,
 } from "react-bootstrap";
+import { OfferContext } from "../../context/OfferState";
 
 // import { handleInputChange } from "react-select/src/utils";
 
@@ -48,6 +49,11 @@ const DocVerification = () => {
     personalInfo,
     rejectMessage,
   } = useContext(DocsVerifyContext);
+  const {
+    candidateData,
+    aadhaarNotificationData,
+    adhaarVerificationNotification,
+  } = useContext(OfferContext);
   const { getUserInfo, user } = useContext(AppContext);
   useEffect(() => {
     console.log("acceptStatus+rejectStatus");
@@ -111,6 +117,7 @@ const DocVerification = () => {
   };
 
   const handleOnboard = () => {
+    adhaarVerificationNotification(candidateId);
     setOnboardPopup(true);
   };
   var documents =
