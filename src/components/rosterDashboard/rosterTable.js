@@ -263,13 +263,13 @@ const RosterTable = (storeID) => {
                                                 <td 
                                                     className='table-empDetails table-empSchedule' 
                                                     style={{
-                                                        backgroundColor: `${empData.roster && empData.roster.leave ? '#ff6b6b' : empData.roster && empData.roster.holiday ? '#f3bf5f' : empData.roster && empData.roster.weekOff ? '#68a4cf' : '#4bb642'}`    
+                                                        backgroundColor: `${empData.roster && empData.roster.leave ? '#ff6b6b' : empData.roster && empData.roster.holiday ? '#f3bf5f' : empData.roster && empData.roster.weekOff ? '#68a4cf' : empData.roster && empData.roster.shiftName ? '#4bb642' : '#8d8d8d94'}`    
                                                     }}
                                                 >
                                                     {/* <div>{empData.date}</div> */}
                                                     {empData.roster === null ? (<div>----</div>)
                                                  : ( 
-                                                     <div>{empData.roster.leave ? 'Leave': empData.roster.holiday ? 'Holiday': empData.roster.weekOff ? 'WeekOff' : 'General'}</div>
+                                                     <div>{empData.roster.leave ? 'Leave': empData.roster.holiday ? 'Holiday': empData.roster.weekOff ? 'WeekOff' : empData.roster.shiftName ? empData.roster.shiftName : '----'}</div>
                                                  )}
                                                  {/* {console.log(empData, 'empData')} */}
                                                 </td>
