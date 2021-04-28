@@ -139,7 +139,7 @@ const CandidateOnboarding = () => {
         ...employeeData,
         ["active"]: empData !== undefined ? empData.active : "",
         ["additionalRole"]: empData !== undefined ? empData.additionalRole : "",
-        ["address"]: empData.address,
+        ["employeeId"]: empData !== undefined ? empData.employeeId : "",
         ["bloodGroup"]: empData.bloodGroup,
         ["company"]: empData.company,
         ["contractType"]: empData.contractType,
@@ -591,6 +591,7 @@ const CandidateOnboarding = () => {
                 <Form.Control
                   as="select"
                   name="costCentreA"
+                  className="form-input"
                   value={costCenterA}
                   onChange={(e) => setCostCenterA(e.target.value)}
                   placeholder="costCenter1"

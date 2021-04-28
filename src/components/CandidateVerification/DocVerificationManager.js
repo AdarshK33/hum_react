@@ -50,19 +50,27 @@ const DocVerification = () => {
   } = useContext(DocsVerifyContext);
   const { getUserInfo, user } = useContext(AppContext);
   useEffect(() => {
-    if (rejectMessage) {
-    }
+    console.log("acceptStatus+rejectStatus");
     verificationDocsView(candidateId);
     personalInfo(candidateId);
-    setState(personalInfoData);
+    // setState(personalInfoData);
   }, [acceptStatus, rejectStatus, rejectMessage]);
   useEffect(() => {
+    console.log("userinfo");
     getUserInfo();
     personalInfo(candidateId);
   }, []);
   useEffect(() => {
+    console.log("prsnl");
     setState(personalInfoData);
   }, [personalInfoData]);
+  useEffect(() => {
+    console.log("acceptStatus");
+    if (acceptStatus === "SUCCESS") {
+      verificationDocsView(candidateId);
+      personalInfo(candidateId);
+    }
+  }, [acceptStatus]);
   const handleShifting = () => {
     changeState(!isChecked);
   };
@@ -224,7 +232,9 @@ const DocVerification = () => {
                           </label>
                         ) : item.documentType === 1 ? (
                           <label>
-                            <span style={{ color: "black" }}>Aadhar Card</span>{" "}
+                            <span style={{ color: "black", fontSize: "16px" }}>
+                              Aadhar Card
+                            </span>{" "}
                             <span style={{ color: "red" }}>*</span>
                           </label>
                         ) : item.documentType === 2 ? (
