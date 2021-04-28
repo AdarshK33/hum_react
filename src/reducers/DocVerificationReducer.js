@@ -42,6 +42,10 @@ const GroupReducer = (state, action) => {
       return { ...state, aadharStatus: action.payload };
     case "AADHAR_REJECT":
       return { ...state, disApproveAadhar: action.payload };
+    case "VIEW_VERIFICATION_STATE":
+      return { ...state, verificationStateList: action.payload };
+    case "VIEW_VERIFICATION_CITY":
+      return { ...state, verificationCityList: action.payload };
   }
 };
 export default GroupReducer;
