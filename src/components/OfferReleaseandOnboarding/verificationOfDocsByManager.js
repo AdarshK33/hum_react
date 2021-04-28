@@ -3,7 +3,6 @@ import { DocsVerifyContext } from "../../context/DocverificationState";
 import { AppContext } from "../../context/AppState";
 import { useParams } from "react-router-dom";
 import "../CandidateVerification/ManageCandidate.css";
-import { OfferContext } from "../../context/OfferState";
 
 import {
   Button,
@@ -15,12 +14,12 @@ import {
   Table,
 } from "react-bootstrap";
 import { accepts } from "react-dropzone-uploader";
+import { OfferContext } from "../../context/OfferState";
 
 // import { handleInputChange } from "react-select/src/utils";
 
 const DocVerification = () => {
   const [isChecked, changeState] = useState(false);
-  const { candidateData } = useContext(OfferContext);
 
   const params = useParams();
   const candidateId = params["candidateId"];
@@ -53,7 +52,11 @@ const DocVerification = () => {
     step5suscessStatus,
     step5Status,
   } = useContext(DocsVerifyContext);
-
+  const {
+    candidateData,
+    aadhaarNotificationData,
+    adhaarVerificationNotification,
+  } = useContext(OfferContext);
   const { getUserInfo, user } = useContext(AppContext);
   useEffect(() => {
     setState(personalInfoData);
@@ -141,6 +144,10 @@ const DocVerification = () => {
   // }, [onBoardPopup]);
 
   const handleOnboard = () => {
+    adhaarVerificationNotification(
+      candidateData.candidateInformation.candidateId
+    );
+
     step5suscessStatus(true);
     setOnboardPopup(true);
   };

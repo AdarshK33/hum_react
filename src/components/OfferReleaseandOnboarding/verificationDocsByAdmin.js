@@ -19,8 +19,11 @@ import {
 
 const DocVerification = () => {
   const [isChecked, changeState] = useState(false);
-  const { candidateData } = useContext(OfferContext);
-
+  const {
+    candidateData,
+    aadhaarNotificationData,
+    adhaarVerificationNotification,
+  } = useContext(OfferContext);
   const params = useParams();
   const candidateId = params["candidateId"];
   const [showModal, setModal] = useState(false);
@@ -90,6 +93,10 @@ const DocVerification = () => {
   // }, [onBoardPopup]);
   const handleOnboard = () => {
     step5suscessStatus(true);
+    adhaarVerificationNotification(
+      candidateData.candidateInformation.candidateId
+    );
+
     setOnboardPopup(true);
   };
   var documents =
