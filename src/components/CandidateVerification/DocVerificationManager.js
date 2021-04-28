@@ -33,6 +33,7 @@ const DocVerification = () => {
   const [addressError, setAddressError] = useState(false);
   const [epfError, setEpfError] = useState(false);
   const [docType, setDocType] = useState("");
+  const [shiftingTheStatus, setShiftingTheStatus] = useState("");
   const {
     verificationDocsView,
     docsToVerify,
@@ -49,13 +50,14 @@ const DocVerification = () => {
     rejectMessage,
   } = useContext(DocsVerifyContext);
   const { getUserInfo, user } = useContext(AppContext);
+
   useEffect(() => {
     if (rejectMessage) {
     }
     verificationDocsView(candidateId);
     personalInfo(candidateId);
     setState(personalInfoData);
-  }, [acceptStatus, rejectStatus, rejectMessage]);
+  }, [acceptStatus, rejectStatus, rejectMessage, shiftingTheStatus, docId]);
   useEffect(() => {
     getUserInfo();
     personalInfo(candidateId);
@@ -82,11 +84,14 @@ const DocVerification = () => {
   };
   const handleApproveDocument = (docId) => {
     approveDocument(docId);
+    setShiftingTheStatus(docId);
   };
   const handleDisApproveDocument = (docId, type) => {
     setModal(true);
     setdocId(docId);
     setDocType(type);
+
+    setShiftingTheStatus(docId);
   };
   const handleClose = () => setModal(false);
   const handleChange = (e) => {
@@ -105,7 +110,10 @@ const DocVerification = () => {
   const handleOnboard = () => {
     setOnboardPopup(true);
   };
-  var documents =
+  // useEffect(() => {
+  var documents = "";
+  var educationDocuments = "";
+  documents =
     docsToVerify !== undefined &&
     docsToVerify !== null &&
     docsToVerify
@@ -113,7 +121,7 @@ const DocVerification = () => {
       .map((filteredResult) => {
         return filteredResult;
       });
-  var educationDocuments =
+  educationDocuments =
     docsToVerify !== undefined &&
     docsToVerify !== null &&
     docsToVerify
@@ -123,6 +131,7 @@ const DocVerification = () => {
       .map((filteredResult) => {
         return filteredResult;
       });
+  // }, [docsToVerify]);
   return (
     <Fragment>
       <Modal show={showModal} onHide={() => handleClose()} centered>
