@@ -13,8 +13,9 @@ import countryList from "react-select-country-list";
 import { OnBoardContext } from "../../context/OnBoardState";
 import { DocsVerifyContext } from "../../context/DocverificationState";
 import { useParams } from "react-router-dom";
-
+import { MasterFilesContext } from "../../context/MasterFilesState";
 const EditAddress = (props) => {
+  const { viewCountries, countryList } = useContext(MasterFilesContext);
   const {
     candidateCountryList,
     candidateCountryData,
@@ -23,12 +24,17 @@ const EditAddress = (props) => {
     candidateCityList,
     candidateCityData,
   } = useContext(OnBoardContext);
-  const { addressInfo, addressInfoData, loader } = useContext(
-    DocsVerifyContext
-  );
+  const {
+    addressInfo,
+    addressInfoData,
+    loader,
+    viewStatesVerification,
+    verificationStateList,
+    viewCityVerification,
+    verificationCityList,
+  } = useContext(DocsVerifyContext);
   const [isChecked, changeCheckState] = useState(false);
   const [disabled, setDisableState] = useState(false);
-  const options = useMemo(() => countryList().getData(), []);
   const [flatNumberErro, setFlatNumberError] = useState(false);
   const [addressLineError, setAddressLineError] = useState(false);
   const [countryError, setCountryError] = useState(false);
@@ -77,38 +83,38 @@ const EditAddress = (props) => {
   useEffect(() => {
     addressInfo(candidateId);
     setState(addressInfoData);
-    candidateCountryList();
+    viewCountries();
     // CandidateStateList();
     setDisableState(true);
   }, []);
   useEffect(() => {
-    var countryvalue = candidateCountryData.filter(
+    var countryvalue = countryList.filter(
       (i) => i.countryId === state.countryId
     );
     if (countryvalue !== undefined && countryvalue[0] !== undefined) {
-      CandidateStateList(countryvalue[0].countryName);
+      viewStatesVerification(countryvalue[0].countryName);
     }
-    var permanentCountry = candidateCountryData.filter(
+    var permanentCountry = countryList.filter(
       (j) => j.countryId === state.permanentCountryId
     );
     if (permanentCountry !== undefined && permanentCountry[0] !== undefined) {
-      CandidateStateList(permanentCountry[0].countryName);
+      viewStatesVerification(permanentCountry[0].countryName);
     }
-  }, [candidateCountryData]);
+  }, [countryList]);
   useEffect(() => {
-    var stateList = candidateStateData.filter(
+    var stateList = verificationStateList.filter(
       (i) => i.stateId === state.stateId
     );
     if (stateList !== undefined && stateList[0] !== undefined) {
-      candidateCityList(stateList[0].stateId);
+      viewCityVerification(stateList[0].stateId);
     }
-    var permanetStateList = candidateStateData.filter(
+    var permanetStateList = verificationStateList.filter(
       (st) => st.stateId === state.permanentStateId
     );
     if (permanetStateList !== undefined && permanetStateList[0] !== undefined) {
-      candidateCityList(permanetStateList[0].stateId);
+      viewCityVerification(permanetStateList[0].stateId);
     }
-  }, [candidateStateData]);
+  }, [verificationStateList]);
   const flatNumberValidation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
     if (state.flatNumber !== "") {
@@ -351,25 +357,25 @@ const EditAddress = (props) => {
     changeCheckState(!e.target.checked);
     console.log(isChecked);
   };
-  var countryvalue = candidateCountryData.filter(
-    (i) => i.countryId === state.countryId
-  );
+  var countryvalue = countryList.filter((i) => i.countryId === state.countryId);
 
   var stateVale =
-    candidateStateData !== null &&
-    candidateStateData.filter((s) => s.stateId === state.stateId);
+    verificationStateList !== null &&
+    verificationStateList.filter((s) => s.stateId === state.stateId);
   var cityvalue =
-    candidateCityData !== null &&
-    candidateCityData.filter((c) => c.cityId === state.cityId);
-  var permanetCountry = candidateCountryData.filter(
+    verificationCityList !== null &&
+    verificationCityList.filter((c) => c.cityId === state.cityId);
+  var permanetCountry = countryList.filter(
     (k) => k.countryId === state.permanentCountryId
   );
   var permanentStateValue =
-    candidateStateData !== null &&
-    candidateStateData.filter((ps) => ps.stateId === state.permanentStateId);
+    verificationStateList !== null &&
+    verificationStateList.filter((ps) => ps.stateId === state.permanentStateId);
   var permanentCityValue =
-    candidateCityData !== null &&
-    candidateCityData.filter((city) => city.cityId === state.permanentCityId);
+    verificationCityList !== null &&
+    verificationCityList.filter(
+      (city) => city.cityId === state.permanentCityId
+    );
   return (
     <Fragment>
       {addressInfoData !== null && addressInfoData !== undefined ? (
@@ -741,7 +747,6 @@ const EditAddress = (props) => {
                           ? permanetCountry[0].countryName
                           : ""
                       }
-                      options={options}
                       onChange={changeHandler}
                       required
                       style={

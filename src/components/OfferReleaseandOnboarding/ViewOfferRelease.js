@@ -18,7 +18,7 @@ import VerifyCandidateDocs from "./verifyCandidateDocs";
 import CandidateOnboarding from "./candidateOnboarding";
 import { DocsVerifyContext } from "../../context/DocverificationState";
 import { OfferContext } from "../../context/OfferState";
-
+import ViewOfferLetter from "../Offers/viewOfferLetter";
 const ViewOfferRelease = () => {
   const {
     personalInfo,
@@ -198,11 +198,11 @@ const ViewOfferRelease = () => {
                   className="fa fa-check-circle"
                   aria-hidden="true"
                 ></i>
-                Step 4: Generate Candidate Offer Letter
+                Step 4: Candidate Offer Letter
               </AccordionItemButton>
             </AccordionItemHeading>
             <AccordionItemPanel>
-              <CandidateOfferLetter />
+              <ViewOfferLetter />
             </AccordionItemPanel>
           </AccordionItem>
 
