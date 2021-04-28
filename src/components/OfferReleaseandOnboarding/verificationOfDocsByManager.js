@@ -144,9 +144,9 @@ const DocVerification = () => {
   // }, [onBoardPopup]);
 
   const handleOnboard = () => {
-    adhaarVerificationNotification(
-      candidateData.candidateInformation.candidateId
-    );
+    // adhaarVerificationNotification(
+    //   candidateData.candidateInformation.candidateId
+    // );
 
     step5suscessStatus(true);
     setOnboardPopup(true);

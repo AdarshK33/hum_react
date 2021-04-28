@@ -353,16 +353,20 @@ const DocVerification = () => {
                         )}
                       </td>
                     )}
-                    {item.documentType === 1 && (
-                      <td className="buttonMargin1">
-                        {item.remark !== null ? item.remark : "N/A"}
-                      </td>
-                    )}
-                    {item.documentType === 1 && (
-                      <td className="buttonMargin1">
-                        {item.verifiedDate !== null ? item.verifiedDate : "N/A"}
-                      </td>
-                    )}
+                    {item.documentType === 1 &&
+                      state.verificationStatus === 1 && (
+                        <td className="buttonMargin1">
+                          {item.remark !== null ? item.remark : "N/A"}
+                        </td>
+                      )}
+                    {item.documentType === 1 &&
+                      state.verificationStatus === 1 && (
+                        <td className="buttonMargin1">
+                          {item.verifiedDate !== null
+                            ? item.verifiedDate
+                            : "N/A"}
+                        </td>
+                      )}
                   </tr>
                 </tbody>
               );
