@@ -140,7 +140,6 @@ const Address = (props) => {
   }, [candidateStateData, addressViewData]);
   useEffect(() => {
     let cityValue;
-    let permanentCityValue;
     if (addressViewData !== undefined && addressViewData !== null) {
       cityValue = candidateCityData.filter(
         (i) => i.cityId == addressViewData.cityId
