@@ -1,22 +1,35 @@
-* {
-  box-sizing: border-box;
-}
-
-.react-datepicker-wrapper,
+/* .react-datepicker-wrapper,
 .react-datepicker__input-container,
 .react-datepicker__input-container input {
   display: inline-block;
   width: 154px;
-}
+} */
 
-table {
+.datePicker div input {
+  display: inline-block;
+  width: 154px;
+  height: 40px;
+  border-radius: 8px;
+  outline: none;
+  border: 1px solid #c4c4c494;
+  padding: 0px 6px;
+  color: #2b2b2b;
+}
+/* table {
+  display: block;
+  width: 100%;
+  margin: 0px;
+  overflow-x: scroll;
+} */
+
+.roster-table {
   display: block;
   width: 100%;
   margin: 0px;
   overflow-x: scroll;
 }
 
-tr {
+.roster-table tr {
   display: flex;
   justify-content: space-between;
 }
@@ -68,11 +81,15 @@ tr {
   align-items: center;
   border: none !important;
   background: #4bb642;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 }
 
-.empDetails-left div {
+/* .empDetails-left div {
   color: black !important;
-}
+} */
 
 .empDetails-left div:nth-child(1) {
   color: #212529;
@@ -87,4 +104,10 @@ tr {
 .table-empDetails div:nth-child(3) {
   color: #33373a;
   font-size: 14px;
+}
+
+.right {
+  display: flex;
+  padding-right: 0px !important;
+  justify-content: flex-end;
 }

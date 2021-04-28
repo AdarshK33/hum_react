@@ -5,7 +5,7 @@ import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import { RosterContext } from "../../context/RosterState";
 import { AppContext } from "../../context/AppState";
-import "./roster.css";
+import "./rosterDashboard.css";
 import moment from 'moment'
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
@@ -17,20 +17,22 @@ const RosterTable = (storeID) => {
     const [displayMonth, setDisplayMonth] = useState(false);
     const [displayWeek, setDisplayWeek] = useState(false);
     const [displayDaily, setDisplayDaily] = useState(false);
+    const [year, setYear] = useState('');
     const [displayNormal, setDisplayNormal] = useState(true);
 
     const months = [1,2,3,4,5,6,7,8,9,10,11,12];
 
-    const {adminRosterUtilisationSchedule, adminRosterUtilisationScheduleResult, weekOffDataEmp, weekOffDataList, availableShifts} = useContext(RosterContext);
+    const {adminRosterUtilisationSchedule, adminRosterUtilisationScheduleResult, getMasterWeeks, masterWeeks} = useContext(RosterContext);
     const { user } = useContext(AppContext);
 
     useEffect(() => {
-        weekOffDataEmp(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"), user.employeeId)
+        // weekOffDataEmp(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"), user.employeeId)
+        // getMasterWeeks(2021);
         // if(storeID.storeId) {
         //     adminRosterUtilisationSchedule('W', 0, storeID.storeId, 0, 0, 0, 345);
         // }
-        // console.log(adminRosterUtilisationScheduleResult, storeID, weekOffDataList, endDate, startDate,'adminRosterUtilisationScheduleResult');
-    }, [endDate, startDate])
+        // console.log(adminRosterUtilisationScheduleResult, storeID, endDate, startDate, masterWeeks,'adminRosterUtilisationScheduleResult');
+    }, [endDate, startDate, masterWeeks])
 
     const linkStyle={
         textDecoration: 'none',
@@ -80,14 +82,20 @@ const RosterTable = (storeID) => {
     const weekSelected = e => {
         e.preventDefault();
         console.log(e.target.value, 'e.target');
-        if( e.target.value && storeID.storeId) 
-        adminRosterUtilisationSchedule('W', 0, storeID.storeId, 0, 0, 0, Number(e.target.value));
+        if( e.target.value && storeID.storeId && year) 
+        adminRosterUtilisationSchedule('W', 0, storeID.storeId, 0, 0, 0, Number(e.target.value), year);
     }
 
     const dailySelected = (e, date) => {
         e.preventDefault();
         console.log(moment(date, 'YYYY-MM-DD').format("YYYY-MM-DD"), 'e.target.value');
         adminRosterUtilisationSchedule('D', 0, storeID.storeId, moment(date, 'YYYY-MM-DD').format("YYYY-MM-DD"));
+    }
+
+    const yearSelected = e => {
+        e.preventDefault();
+        setYear(e.target.value);
+        getMasterWeeks(e.target.value);
     }
 
     const normalSelected = e => {
@@ -109,12 +117,12 @@ const RosterTable = (storeID) => {
                     </Col>
                     
                     {displayMonth && (
-                    <Col>
+                    <Col className="right">
                         <Form.Control 
                             style={{
                                 width: '150px', 
-                                height: '30px', 
-                                fontSize: '14px', 
+                                height: '40px', 
+                                fontSize: '16px', 
                                 padding: '0px 5px'
                             }} 
                             as="select" 
@@ -129,29 +137,54 @@ const RosterTable = (storeID) => {
                     </Col>
                     )}
                     {displayWeek && (
-                    <Col>
-                        <Form.Control 
-                            style={{
-                                width: '150px', 
-                                height: '30px', 
-                                fontSize: '14px', 
-                                padding: '0px 5px'}} 
-                            as="select" 
-                            defaultValue="Choose..."
-                            onChange={weekSelected}
-                        >
-                            <option>Select Week Id</option>
-                            {weekOffDataList.map(weekId => (
-                                <option>{weekId.weekId}</option>
-                            ))}
-                        </Form.Control>
+                    <Col className="right">
+                        <span>
+                            <Form.Control 
+                                style={{
+                                    display: 'inline-block',
+                                    width: '150px', 
+                                    height: '40px', 
+                                    fontSize: '16px', 
+                                    padding: '0px 5px',
+                                    marginRight: '20px',
+                                }} 
+                                as="select" 
+                                defaultValue="Choose..."
+                                onChange={yearSelected}
+                            >
+                                <option>Select Year</option>
+                                <option>2019</option>
+                                <option>2020</option>
+                                <option>2021</option>
+                            </Form.Control>
+                        </span>
+                        <span>
+                            <Form.Control 
+                                style={{
+                                    display: 'inline-block',
+                                    width: '150px', 
+                                    height: '40px', 
+                                    fontSize: '16px', 
+                                    padding: '0px 5px',
+                                    margin: 0,
+                                }} 
+                                as="select" 
+                                defaultValue="Choose..."
+                                onChange={weekSelected}
+                            >
+                                <option>Select Week</option>
+                                {masterWeeks.map(week => (
+                                    <option value={week.weekId}>{week.weekName}</option>
+                                ))}
+                            </Form.Control>
+                        </span>    
                     </Col>
                     )}
                     {displayDaily && (
-                    <Col>
+                    <Col className="right">
                         <span style={{marginRight: '10px'}}>
                             <label style={{marginRight: '5px'}}>Select Date</label>
-                            <DatePicker selected={currentDate.toDate()} onChange={(date, e) => {
+                            <DatePicker wrapperClassName="datePicker" selected={currentDate.toDate()} onChange={(date, e) => {
                                 setCurrentDate(moment(date, 'YYYY-MM-DD'))
                                 dailySelected(e, date);
                             }}
@@ -162,32 +195,32 @@ const RosterTable = (storeID) => {
                     )}
                     {displayNormal && (
                         <Col style={{padding: '0px'}}>
-                        <span style={{marginRight: '10px'}}>
-                            <label style={{marginRight: '5px'}}>Start Date</label>
-                            <DatePicker selected={startDate.toDate()} onChange={(date, e) => {
-                                setStartDate(moment(date, 'YYYY-MM-DD'))
-                                normalSelected(e);
-                            }}
-                                className="input_date" dateFormat="yyyy-MM-dd"
-                                placeholderText="From Date" required />
-                        </span>
-                        <span>
-                            <label style={{marginRight: '5px'}}>End Date</label>
-                            <DatePicker selected={endDate.toDate()} onChange={(date, e) => {
-                                setEndDate(moment(date, 'YYYY-MM-DD'))
-                                normalSelected(e);
-                            }}
-                                className="input_date" dateFormat="yyyy-MM-dd"
-                                placeholderText="From Date" required />
-                        </span>
-                    </Col>
+                            <span className="roster-date" style={{marginRight: '10px'}}>
+                                <label style={{marginRight: '5px'}}>Start Date</label>
+                                <DatePicker wrapperClassName="datePicker" selected={startDate.toDate()} onChange={(date, e) => {
+                                    setStartDate(moment(date, 'YYYY-MM-DD'))
+                                    normalSelected(e);
+                                }}
+                                    className="input_date" dateFormat="yyyy-MM-dd"
+                                    placeholderText="From Date" required />
+                            </span>
+                            <span>
+                                <label className="roster-date" style={{marginRight: '5px'}}>End Date</label>
+                                <DatePicker wrapperClassName="datePicker" selected={endDate.toDate()} onChange={(date, e) => {
+                                    setEndDate(moment(date, 'YYYY-MM-DD'))
+                                    normalSelected(e);
+                                }}
+                                    className="input_date" dateFormat="yyyy-MM-dd"
+                                    placeholderText="From Date" required />
+                            </span>
+                        </Col>
                     )}
                 </Row>
                 {/* {console.log(storeID.storeID, 'storeID.storeID')} */}
                 {storeID.storeId && adminRosterUtilisationScheduleResult.rosterDates && adminRosterUtilisationScheduleResult.rosterDates.length ? (
-                    <div>
+                    <div style={{marginTop: '30px'}}>
                         {/* {console.log('check check')} */}
-                    <table>
+                    <table className="roster-table">
                         <thead>
                             <tr>
                                 <th className="table-head header-option">
@@ -233,7 +266,7 @@ const RosterTable = (storeID) => {
                                                         backgroundColor: `${empData.roster && empData.roster.leave ? '#ff6b6b' : empData.roster && empData.roster.holiday ? '#f3bf5f' : empData.roster && empData.roster.weekOff ? '#68a4cf' : '#4bb642'}`    
                                                     }}
                                                 >
-                                                    <div>{empData.date}</div>
+                                                    {/* <div>{empData.date}</div> */}
                                                     {empData.roster === null ? (<div>----</div>)
                                                  : ( 
                                                      <div>{empData.roster.leave ? 'Leave': empData.roster.holiday ? 'Holiday': empData.roster.weekOff ? 'WeekOff' : 'General'}</div>
