@@ -12,6 +12,7 @@ import {
   Form,
   Table,
 } from "react-bootstrap";
+import { OfferContext } from "../../context/OfferState";
 
 // import { handleInputChange } from "react-select/src/utils";
 
@@ -49,22 +50,35 @@ const DocVerification = () => {
     personalInfo,
     rejectMessage,
   } = useContext(DocsVerifyContext);
+  const {
+    candidateData,
+    aadhaarNotificationData,
+    adhaarVerificationNotification,
+  } = useContext(OfferContext);
   const { getUserInfo, user } = useContext(AppContext);
 
   useEffect(() => {
-    if (rejectMessage) {
-    }
+    console.log("acceptStatus+rejectStatus");
     verificationDocsView(candidateId);
     personalInfo(candidateId);
-    setState(personalInfoData);
-  }, [acceptStatus, rejectStatus, rejectMessage, shiftingTheStatus, docId]);
+    // setState(personalInfoData);
+  }, [acceptStatus, rejectStatus, rejectMessage]);
   useEffect(() => {
+    console.log("userinfo");
     getUserInfo();
     personalInfo(candidateId);
   }, []);
   useEffect(() => {
+    console.log("prsnl");
     setState(personalInfoData);
   }, [personalInfoData]);
+  useEffect(() => {
+    console.log("acceptStatus");
+    if (acceptStatus === "SUCCESS") {
+      verificationDocsView(candidateId);
+      personalInfo(candidateId);
+    }
+  }, [acceptStatus]);
   const handleShifting = () => {
     changeState(!isChecked);
   };
@@ -108,6 +122,7 @@ const DocVerification = () => {
   };
 
   const handleOnboard = () => {
+    adhaarVerificationNotification(candidateId);
     setOnboardPopup(true);
   };
   // useEffect(() => {
@@ -125,9 +140,7 @@ const DocVerification = () => {
     docsToVerify !== undefined &&
     docsToVerify !== null &&
     docsToVerify
-      .filter(
-        (personal) => personal.documentType > 5 && personal.documentType <= 8
-      )
+      .filter((personal) => personal.documentType > 5)
       .map((filteredResult) => {
         return filteredResult;
       });
@@ -235,7 +248,9 @@ const DocVerification = () => {
                           </label>
                         ) : item.documentType === 1 ? (
                           <label>
-                            <span style={{ color: "black" }}>Aadhar Card</span>{" "}
+                            <span style={{ color: "black", fontSize: "16px" }}>
+                              Aadhar Card
+                            </span>{" "}
                             <span style={{ color: "red" }}>*</span>
                           </label>
                         ) : item.documentType === 2 ? (
@@ -375,13 +390,69 @@ const DocVerification = () => {
                               (Upload the first and last page)
                             </span>
                           </p>
+                        ) : item.documentType === 8 ? (
+                          <p>
+                            <span style={{ color: "black", fontSize: "16px" }}>
+                              Latest play slip
+                            </span>{" "}
+                            <span style={{ color: "red" }}>*</span>
+                          </p>
+                        ) : item.documentType === 9 ? (
+                          <p>
+                            <span style={{ color: "black", fontSize: "16px" }}>
+                              Offer Letter
+                            </span>{" "}
+                            <span style={{ color: "red" }}>*</span>
+                          </p>
+                        ) : item.documentType === 10 ? (
+                          <p>
+                            <span style={{ color: "black", fontSize: "16px" }}>
+                              Form11Uan
+                            </span>{" "}
+                            {/* <span style={{ color: "red" }}>*</span> */}
+                          </p>
+                        ) : item.documentType === 11 ? (
+                          <p>
+                            <span style={{ color: "black", fontSize: "16px" }}>
+                              Form2EPF
+                            </span>{" "}
+                            {/* <span style={{ color: "red" }}>*</span> */}
+                          </p>
+                        ) : item.documentType === 12 ? (
+                          <p>
+                            <span style={{ color: "black", fontSize: "16px" }}>
+                              FormFGratuity
+                            </span>{" "}
+                            {/* <span style={{ color: "red" }}>*</span> */}
+                          </p>
+                        ) : item.documentType === 13 ? (
+                          <p>
+                            <span style={{ color: "black", fontSize: "16px" }}>
+                              DisabilityDoc
+                            </span>{" "}
+                            <span style={{ color: "red" }}>*</span>
+                          </p>
+                        ) : item.documentType === 14 ? (
+                          <p>
+                            <span style={{ color: "black", fontSize: "16px" }}>
+                              Passport
+                            </span>{" "}
+                            <span style={{ color: "red" }}>*</span>
+                          </p>
+                        ) : item.documentType === 15 ? (
+                          <p>
+                            <span style={{ color: "black", fontSize: "16px" }}>
+                              CollegeLetter
+                            </span>{" "}
+                            <span style={{ color: "red" }}>*</span>
+                          </p>
                         ) : (
-                          item.documentType === 8 && (
+                          item.documentType === 16 && (
                             <p>
                               <span
                                 style={{ color: "black", fontSize: "16px" }}
                               >
-                                Latest play slip
+                                CollegeId
                               </span>{" "}
                               <span style={{ color: "red" }}>*</span>
                             </p>

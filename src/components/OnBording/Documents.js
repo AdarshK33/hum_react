@@ -793,7 +793,7 @@ const Documents = (props) => {
     console.log("ERROR-->", latestPaySlipsError, state.latestPaySlips);
     console.log(value);
     if (value === true) {
-      adhaarVerificationNotification(candidateProfileData.candidateId);
+      // adhaarVerificationNotification(candidateProfileData.candidateId);
       console.log(state);
       const nextPage = props.NextStep;
       nextPage(true);

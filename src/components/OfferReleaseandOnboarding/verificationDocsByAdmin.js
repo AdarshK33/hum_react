@@ -19,8 +19,11 @@ import {
 
 const DocVerification = () => {
   const [isChecked, changeState] = useState(false);
-  const { candidateData } = useContext(OfferContext);
-
+  const {
+    candidateData,
+    aadhaarNotificationData,
+    adhaarVerificationNotification,
+  } = useContext(OfferContext);
   const params = useParams();
   const candidateId = params["candidateId"];
   const [showModal, setModal] = useState(false);
@@ -90,6 +93,10 @@ const DocVerification = () => {
   // }, [onBoardPopup]);
   const handleOnboard = () => {
     step5suscessStatus(true);
+    adhaarVerificationNotification(
+      candidateData.candidateInformation.candidateId
+    );
+
     setOnboardPopup(true);
   };
   var documents =
@@ -104,9 +111,7 @@ const DocVerification = () => {
     docsToVerify !== undefined &&
     docsToVerify !== null &&
     docsToVerify
-      .filter(
-        (personal) => personal.documentType > 5 && personal.documentType <= 8
-      )
+      .filter((personal) => personal.documentType > 5)
       .map((filteredResult) => {
         return filteredResult;
       });
@@ -403,13 +408,85 @@ const DocVerification = () => {
                                 (Upload the first and last page)
                               </span>
                             </p>
+                          ) : item.documentType === 8 ? (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "16px" }}
+                              >
+                                Latest play slip
+                              </span>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </p>
+                          ) : item.documentType === 9 ? (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "16px" }}
+                              >
+                                Offer Letter
+                              </span>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </p>
+                          ) : item.documentType === 10 ? (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "16px" }}
+                              >
+                                Form11Uan
+                              </span>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </p>
+                          ) : item.documentType === 11 ? (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "16px" }}
+                              >
+                                Form2EPF
+                              </span>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </p>
+                          ) : item.documentType === 12 ? (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "16px" }}
+                              >
+                                FormFGratuity
+                              </span>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </p>
+                          ) : item.documentType === 13 ? (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "16px" }}
+                              >
+                                DisabilityDoc
+                              </span>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </p>
+                          ) : item.documentType === 14 ? (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "16px" }}
+                              >
+                                Passport
+                              </span>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </p>
+                          ) : item.documentType === 15 ? (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "16px" }}
+                              >
+                                CollegeLetter
+                              </span>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </p>
                           ) : (
-                            item.documentType === 8 && (
+                            item.documentType === 16 && (
                               <p>
                                 <span
                                   style={{ color: "black", fontSize: "16px" }}
                                 >
-                                  Latest play slip
+                                  CollegeId
                                 </span>{" "}
                                 <span style={{ color: "red" }}>*</span>
                               </p>
@@ -452,6 +529,7 @@ const DocVerification = () => {
           >
             Proceed
           </button>
+
           {/* )} */}
         </div>
       </Fragment>

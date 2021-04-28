@@ -27,6 +27,8 @@ const initial_state = {
   step6Status: false,
   aadharStatus: "",
   disApproveAadhar: "",
+  verificationStateList: [],
+  verificationCityList: [],
 };
 export const DocsVerifyContext = createContext();
 export const DocsVerificationProvider = (props) => {
@@ -353,6 +355,38 @@ export const DocsVerificationProvider = (props) => {
     });
   };
 
+  const viewStatesVerification = (country) => {
+    return client
+      .get("/api/v1/state/view/state/country?country=" + country)
+      .then((response) => {
+        console.log(response);
+        state.verificationStateList = response.data.data;
+        return dispatch({
+          type: "VIEW_VERIFICATION_STATE",
+          payload: state.verificationStateList,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const viewCityVerification = (state) => {
+    return client
+      .get("/api/v1/city/view/city/stateId?stateId=" + state)
+      .then((response) => {
+        console.log(response);
+        state.verificationCityList = response.data.data;
+        return dispatch({
+          type: "VIEW_VERIFICATION_CITY",
+          payload: state.verificationCityList,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <DocsVerifyContext.Provider
       value={{
@@ -375,6 +409,8 @@ export const DocsVerificationProvider = (props) => {
         step6suscessStatus,
         approveAadharByAdmin,
         disapproveAadharByAdmin,
+        viewStatesVerification,
+        viewCityVerification,
         disApproveAadhar: state.disApproveAadhar,
         step5Status: state.step5Status,
         aadharStatus: state.aadharStatus,
@@ -395,6 +431,8 @@ export const DocsVerificationProvider = (props) => {
         loader: loader,
         downloadedFile: state.downloadedFile,
         uanUpdate: state.uanUpdate,
+        verificationStateList: state.verificationStateList,
+        verificationCityList: state.verificationCityList,
       }}
     >
       {" "}
