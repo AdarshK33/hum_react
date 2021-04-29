@@ -93,8 +93,8 @@ const DocVerification = () => {
     setUanNumber(e.target.value);
     setUanError(false);
   };
-  const handleApproveDocument = (docId) => {
-    approveAadharByAdmin(docId);
+  const handleApproveDocument = (docId, candidateId) => {
+    approveAadharByAdmin(docId, candidateId);
   };
   const handleDisApproveDocument = (docId) => {
     setModal(true);
@@ -319,7 +319,10 @@ const DocVerification = () => {
                           <button
                             className="approveButton ml-4"
                             onClick={() =>
-                              handleApproveDocument(item.documentId)
+                              handleApproveDocument(
+                                item.documentId,
+                                candidateId
+                              )
                             }
                           >
                             Approve
