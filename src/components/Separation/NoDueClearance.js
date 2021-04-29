@@ -214,7 +214,7 @@ const employeeIdHandle = (e)=>{
             }}
             
           >
-          <AgGridColumn className="columnColor" editable="false" headerName="S No" pinned="left" valueGetter={`node.rowIndex+1 + ${indexOfFirstRecord}`}></AgGridColumn>
+          <AgGridColumn className="columnColor" editable="false" headerName="S No" lockPinned="true" pinned="left" valueGetter={`node.rowIndex+1 + ${indexOfFirstRecord}`}></AgGridColumn>
             <AgGridColumn className="columnColor" editable="false" headerName="Employee Id" field="employeeId"></AgGridColumn>
             <AgGridColumn className="columnColor" editable="false" headerName="Employee Name" field="employeeName"></AgGridColumn>
             <AgGridColumn className="columnColor" editable="false" headerName="Cost Center Name" field="costCentreName"></AgGridColumn>

@@ -6,6 +6,7 @@ import Axios from "axios";
 import { access_token } from "../auth/signin";
 
 const initial_state = {
+  adminNoDueClearanceList:[],
   noDueClearanceList: [],
   updateNoDueClearanceList: [],
   separationList: [],
@@ -47,6 +48,30 @@ export const SeparationProvider = (props) => {
         console.log(error);
       });
   };
+  const viewAdminITClearanceList = (key, page,costCenter) => {
+    client.get( "/api/v1/separation/full-and-final/view/no-due-clearance?key=" +
+          key +
+          "&page=" +
+          page +
+          "&size=" +
+          10 +
+          "&storeId=" +
+          costCenter
+          )
+      .then((response) => {
+        state.adminNoDueClearanceList = response.data.data.data
+        state.data = response.data.data;
+        state.total = response.data.data.total;
+        console.log("=====GET FETCH_ADMIN_NODUECLEARANCE_LIST API response=====", response.data.data)
+        return dispatch({
+          type: "FETCH_ADMIN_NODUECLEARANCE_LIST",
+          payload: state.adminNoDueClearanceList
+        });
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
   const viewITClearanceList = (key, page,costCenter) => {
     client.get( "/api/v1/separation/it-clearance/view?key=" +
           key +
@@ -124,6 +149,8 @@ export const SeparationProvider = (props) => {
         viewITClearanceList,
         setLoader,
         updateITClearanceList,
+        viewAdminITClearanceList,
+        adminNoDueClearanceList:state.adminNoDueClearanceList,
         updateNoDueClearanceList:state.updateNoDueClearanceList,
         noDueClearanceList:state.noDueClearanceList,
         total:state.total,

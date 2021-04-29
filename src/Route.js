@@ -69,6 +69,7 @@ import FinanceClearanceList from "./components/FinanceClearance/ClearanceList";
 /*------------------- Candidate Verification -----------------------------------*/
 import CandidateVerification from "./components/CandidateVerification/ManageCandidates";
 import Verification from "./components/CandidateVerification/Verification";
+import AdminNoDueClearance from "./components/Separation/AdminNoDueClearance/AdminNoDueClearance"
 import NoDueClearance from "./components/Separation/NoDueClearance";
 import ViewEditRelease from "./components/OfferReleaseandOnboarding/ViewOfferRelease";
 import Documents from "./components/OnBording/Documents";
@@ -130,6 +131,10 @@ const RoutePath = () => {
              <Route
             path={`${process.env.PUBLIC_URL}/no_due_clearance`}
             component={NoDueClearance}
+          />
+           <Route
+            path={`${process.env.PUBLIC_URL}/admin_no_due_clearance`}
+            component={AdminNoDueClearance}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/finance-clearance`}
