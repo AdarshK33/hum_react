@@ -26,6 +26,7 @@ import { CandidateProvider } from "./context/CandidateState";
 import { OfferProvider } from "./context/OfferState";
 import { OnBoardProvider } from "./context/OnBoardState";
 import { DocsVerificationProvider } from "./context/DocverificationState";
+import { EmploeeSeparationProvider } from "./context/EmployeeSeparationState";
 import {
   SeparationContext,
   SeparationProvider,
@@ -63,17 +64,19 @@ function Root() {
                                     <OnBoardProvider>
                                       <CandidateProvider>
                                         <DocsVerificationProvider>
-                                          <SeparationProvider>
-                                            <BrowserRouter basename={"/"}>
-                                              <ScrollContext>
-                                                <WithAxios>
-                                                  <CandidateWithAxios>
-                                                    <RoutePath />
-                                                  </CandidateWithAxios>
-                                                </WithAxios>
-                                              </ScrollContext>
-                                            </BrowserRouter>
-                                          </SeparationProvider>
+                                          <EmploeeSeparationProvider>
+                                            <SeparationProvider>
+                                              <BrowserRouter basename={"/"}>
+                                                <ScrollContext>
+                                                  <WithAxios>
+                                                    <CandidateWithAxios>
+                                                      <RoutePath />
+                                                    </CandidateWithAxios>
+                                                  </WithAxios>
+                                                </ScrollContext>
+                                              </BrowserRouter>
+                                            </SeparationProvider>
+                                          </EmploeeSeparationProvider>
                                         </DocsVerificationProvider>
                                       </CandidateProvider>
                                     </OnBoardProvider>
