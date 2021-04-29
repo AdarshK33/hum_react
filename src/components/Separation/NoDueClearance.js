@@ -179,52 +179,67 @@ const NoDueClearance = () => {
     <div>
       <Fragment>
         <Container fluid>
-          <Breadcrumb title="No Due Clearance" parent="No Due Clearance" />
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col-sm-12">
-                <Row className="mt-4 mainWrapper">
-                  <Col className="searchBox">
-                    <input
-                      className="form-control inputWrapper"
-                      type="text"
-                      placeholder="Search.."
-                      onChange={(e) => searchHandler(e)}
-                    />
-                    <Search
-                      className="search-icon"
-                      style={{ color: "#313131", marginRight: "17rem" }}
-                      onClick={searchDataHandler}
-                    />
-                  </Col>
-                  <div className="col-sm-6">
-                    <Col className="selectList">
-                      <br />
-                      <label className="title">Select Cost Center</label>{" "}
-                      &nbsp;&nbsp;
-                      <Select
-                        className="selectInputWrapper"
-                        name="filters"
-                        placeholder="Cost Center"
-                        options={
-                          costCenterList !== null
-                            ? costCenterList.map((e) => ({
-                                label: e.costCentreName,
-                                value: e.costCentreName,
-                              }))
-                            : []
-                        }
-                        onChange={handleCostCenter}
-                        required
-                        isSearchable
-                      />
-                    </Col>
-                  </div>
-                </Row>
-                <div className="card" style={{ overflowX: "auto" }}>
-                  <div className="nodue_title">
-                    <b>NO DUE CLEARANCE LISTING </b>
-                  </div>
+      <Breadcrumb title="No Due Clearance" parent="No Due Clearance" />
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-sm-12">
+            <Row className="mt-4 mainWrapper">
+          <Col className="searchBox">
+            <input
+              className="form-control inputWrapper"
+              type="text"
+              placeholder="Search.."
+              onChange={(e) => searchHandler(e)}
+            />
+            <Search
+              className="search-icon"
+              style={{ color: "#313131", marginRight: "17rem" }}
+              onClick={searchDataHandler} 
+                          />
+          </Col>
+          <div className="col-sm-6">
+          <Col className="selectList">
+            <br/>
+            <label className="title">Select Cost Center</label> &nbsp;&nbsp;
+             
+          <Select
+          className="selectInputWrapper"
+           name="filters"
+          placeholder="Cost Center"
+          options={costCenterList !== null ?costCenterList.map(e => ({ label: e.costCentreName, value: e.costCentreName })) : []}
+            onChange={handleCostCenter}
+               required isSearchable />
+          </Col>
+          </div>
+        </Row>
+            <div className="card" style={{ overflowX: "auto" }}>
+              <div className="nodue_title" >
+              <b >NO DUE CLEARANCE LISTING </b>            
+              </div>
+         
+
+        <div className="ag-theme-alpine" style={{ align:"center",height: 495, width: 1400 }}>
+          
+          <AgGridReact 
+            rowData={noDueClearanceList}
+            rowSelection="single"
+            
+            onGridReady={onGridReady}
+            defaultColDef={{
+              width: 150,
+              editable: true,
+              resizable: true,
+            }}
+            
+          >
+          <AgGridColumn className="columnColor" editable="false" headerName="S No" lockPinned="true" pinned="left" valueGetter={`node.rowIndex+1 + ${indexOfFirstRecord}`}></AgGridColumn>
+            <AgGridColumn className="columnColor" editable="false" headerName="Employee Id" field="employeeId"></AgGridColumn>
+            <AgGridColumn className="columnColor" editable="false" headerName="Employee Name" field="employeeName"></AgGridColumn>
+            <AgGridColumn className="columnColor" editable="false" headerName="Cost Center Name" field="costCentreName"></AgGridColumn>
+            <AgGridColumn className="columnColor" editable="false" headerName="Manager Name" field="managerName"></AgGridColumn>
+            <AgGridColumn  className="columnColor" editable="false" headerName="Joining Date" field="joiningDate"></AgGridColumn>
+            <AgGridColumn className="columnColor" editable="false" headerName="Last Working Day" field="lastWorkingDay"></AgGridColumn>
+            <AgGridColumn className="columnColor" headerName="IT Amount To Be Recovered" field="itAmount"></AgGridColumn>
 
                   <div
                     className="ag-theme-alpine"
@@ -376,7 +391,7 @@ const NoDueClearance = () => {
                       </AgGridReact>
                     </div>
                   </div>
-                  {/* </AgGridReact> */}
+                  </AgGridReact>
                   <div>
                     {noDueClearanceList == null &&
                     noDueClearanceList == undefined ? (
@@ -405,12 +420,12 @@ const NoDueClearance = () => {
                   </div>
                 </div>
               </div>
+              </div>
             </div>
           </div>
         </Container>
       </Fragment>
     </div>
-    // )
-  );
+    )
 };
 export default NoDueClearance;
