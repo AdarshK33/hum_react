@@ -68,7 +68,7 @@ const GenerateOfferLetter = () => {
             <Col sm={5}></Col>
             <Col sm={2}>
               <Button type="button" onClick={offerLetterClick}>
-                Generate Offer Letter
+                Preview Offer Letter
               </Button>
             </Col>
           </Row>

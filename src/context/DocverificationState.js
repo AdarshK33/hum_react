@@ -25,6 +25,10 @@ const initial_state = {
   rejectMessage: "",
   step5Status: false,
   step6Status: false,
+  aadharStatus: "",
+  disApproveAadhar: "",
+  verificationStateList: [],
+  verificationCityList: [],
 };
 export const DocsVerifyContext = createContext();
 export const DocsVerificationProvider = (props) => {
@@ -174,7 +178,43 @@ export const DocsVerificationProvider = (props) => {
         console.log(error);
       });
   };
-
+  const approveAadharByAdmin = (docId) => {
+    setLoader(true);
+    client
+      .get("/api/v1/candidate/aadhaar/" + docId + "/accept")
+      .then((response) => {
+        toast.info(response.data.message);
+        setLoader(false);
+        return dispatch({
+          type: "AADHAR_ACCEPT",
+          payload: state.aadharStatus,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const disapproveAadharByAdmin = (docId, candidateId, remarks) => {
+    setLoader(true);
+    client
+      .get(
+        "/api/v1/candidate/aadhaar/" +
+          docId +
+          "/reject?candidateId=" +
+          candidateId +
+          "&remarks=" +
+          remarks
+      )
+      .then((response) => {
+        setLoader(false);
+        state.disApproveAadhar = response.data.status;
+        toast.info(response.data.message);
+        return dispatch({
+          type: "AADHAR_REJECT",
+          payload: state.disApproveAadhar,
+        });
+      });
+  };
   const disApproveDocument = (docId, candidateId, remarks) => {
     setLoader(true);
     client
@@ -260,6 +300,7 @@ export const DocsVerificationProvider = (props) => {
       .post("/api/v1/employee/create", employeData)
       .then((response) => {
         state.createStatus = response.data.status;
+        toast.info(response.data.message);
         // state.empData = response.data.data;
         return dispatch({
           type: "CREATE_EMPLOYEE",
@@ -314,6 +355,38 @@ export const DocsVerificationProvider = (props) => {
     });
   };
 
+  const viewStatesVerification = (country) => {
+    return client
+      .get("/api/v1/state/view/state/country?country=" + country)
+      .then((response) => {
+        console.log(response);
+        state.verificationStateList = response.data.data;
+        return dispatch({
+          type: "VIEW_VERIFICATION_STATE",
+          payload: state.verificationStateList,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const viewCityVerification = (state) => {
+    return client
+      .get("/api/v1/city/view/city/stateId?stateId=" + state)
+      .then((response) => {
+        console.log(response);
+        state.verificationCityList = response.data.data;
+        return dispatch({
+          type: "VIEW_VERIFICATION_CITY",
+          payload: state.verificationCityList,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <DocsVerifyContext.Provider
       value={{
@@ -334,7 +407,13 @@ export const DocsVerificationProvider = (props) => {
         viewEmployee,
         step5suscessStatus,
         step6suscessStatus,
+        approveAadharByAdmin,
+        disapproveAadharByAdmin,
+        viewStatesVerification,
+        viewCityVerification,
+        disApproveAadhar: state.disApproveAadhar,
         step5Status: state.step5Status,
+        aadharStatus: state.aadharStatus,
         step6Status: state.step6Status,
         empData: state.empData,
         onBoardData: state.onBoardData,
@@ -352,6 +431,8 @@ export const DocsVerificationProvider = (props) => {
         loader: loader,
         downloadedFile: state.downloadedFile,
         uanUpdate: state.uanUpdate,
+        verificationStateList: state.verificationStateList,
+        verificationCityList: state.verificationCityList,
       }}
     >
       {" "}

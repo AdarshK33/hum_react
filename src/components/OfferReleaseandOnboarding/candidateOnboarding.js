@@ -2,10 +2,13 @@ import React, { Fragment, useState, useContext, useEffect } from "react";
 import { OfferContext } from "../../context/OfferState";
 import { RoleManagementContext } from "../../context/RoleManagementState";
 import { DocsVerifyContext } from "../../context/DocverificationState";
+import { DashboardContext } from "../../context/DashboardState";
 import calendarImage from "../../assets/images/calendar-image.png";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import "./offerReleaseandOnboarding.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   Button,
   Container,
@@ -99,6 +102,7 @@ const CandidateOnboarding = () => {
       personalInfo(candidateData.candidateInformation.candidateId);
     }
   }, [candidateData, onBoardData]);
+
   useEffect(() => {
     if (
       onBoardData === null &&
@@ -135,7 +139,7 @@ const CandidateOnboarding = () => {
         ...employeeData,
         ["active"]: empData !== undefined ? empData.active : "",
         ["additionalRole"]: empData !== undefined ? empData.additionalRole : "",
-        ["address"]: empData.address,
+        ["employeeId"]: empData !== undefined ? empData.employeeId : "",
         ["bloodGroup"]: empData.bloodGroup,
         ["company"]: empData.company,
         ["contractType"]: empData.contractType,
@@ -386,6 +390,7 @@ const CandidateOnboarding = () => {
 
   return (
     <Fragment>
+      <ToastContainer />
       {showLetter &&
       !previewLetter &&
       candidateData !== undefined &&
@@ -415,7 +420,7 @@ const CandidateOnboarding = () => {
         ""
       )}
 
-      <Modal show={showSubmitModal} onHide={handleClose} size="lg">
+      <Modal show={showSubmitModal} onHide={handleClose} size="md">
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         {submitLetter ? (
           <Modal.Body>
@@ -438,8 +443,8 @@ const CandidateOnboarding = () => {
           <u>WORK DETAILS</u>
         </h5>
         <Row className="mt-5">
-          <Col sm={2}>Candidate date of joining</Col>
-          <Col>
+          <Col sm={3}>Candidate date of joining</Col>
+          <Col sm={6}>
             {candidateData !== undefined &&
             candidateData.workInformation !== undefined
               ? moment(candidateData.workInformation.dateOfJoin).format(
@@ -449,14 +454,13 @@ const CandidateOnboarding = () => {
           </Col>
         </Row>
         <Row className="mt-4">
-          <Col sm={1}>
+          <Col sm={3}>
             <Form.Label>Email ID</Form.Label>
           </Col>
-          <Col sm={5}>
+          <Col sm={6}>
             <Form.Control
               style={{ borderColor: "#006ebb" }}
               type="text"
-              className="form-input"
               name="email"
               value={
                 employeeData !== undefined && employeeData !== null
@@ -471,13 +475,12 @@ const CandidateOnboarding = () => {
           </Col>
         </Row>
         <Row className="mt-4">
-          <Col sm={1}>
+          <Col sm={3}>
             <Form.Label>FED ID</Form.Label>
           </Col>
-          <Col sm={5}>
+          <Col sm={6}>
             <Form.Control
               style={{ borderColor: "#006ebb" }}
-              className="form-input"
               type="text"
               name="fedId"
               value={
@@ -490,14 +493,13 @@ const CandidateOnboarding = () => {
           </Col>
         </Row>
         <Row className="mt-4">
-          <Col sm={1}>
+          <Col sm={3}>
             <Form.Label>System role</Form.Label>
           </Col>
-          <Col sm={5}>
+          <Col sm={6}>
             <Form.Control
               as="select"
               name="role"
-              className="form-input"
               value={
                 employeeData !== undefined && employeeData !== null
                   ? employeeData.role
@@ -540,6 +542,7 @@ const CandidateOnboarding = () => {
               {candidateData.candidateInformation !== undefined &&
               candidateData.candidateInformation !== null
                 ? candidateData.candidateInformation.firstName +
+                  " " +
                   candidateData.candidateInformation.lastName
                 : ""}
             </label>
@@ -588,8 +591,8 @@ const CandidateOnboarding = () => {
                 <Form.Control
                   as="select"
                   name="costCentreA"
-                  value={costCenterA}
                   className="form-input"
+                  value={costCenterA}
                   onChange={(e) => setCostCenterA(e.target.value)}
                   placeholder="costCenter1"
                 >
@@ -654,8 +657,7 @@ const CandidateOnboarding = () => {
               <Form.Group>
                 <Form.Control
                   as="select"
-                  className="form-input"
-                  placeholder="costCenter2"
+                  placeholder="costCenter1"
                   value={costCenterB}
                   onChange={(e) => setCostCenterB(e.target.value)}
                 >
@@ -713,7 +715,7 @@ const CandidateOnboarding = () => {
             {isClicked === true && (
               <Col sm={2}>
                 <Form.Group>
-                  <div>
+                  <div style={{ marginLeft: "100px" }}>
                     <button
                       className="buttonField  button"
                       onClick={() => cancel(1)}
@@ -733,8 +735,7 @@ const CandidateOnboarding = () => {
               <Form.Group>
                 <Form.Control
                   as="select"
-                  placeholder="costCenter3"
-                  className="form-input"
+                  placeholder="costCenter1"
                   value={costCenterC}
                   onChange={(e) => setCostCenterC(e.target.value)}
                 >
@@ -792,7 +793,7 @@ const CandidateOnboarding = () => {
             {isClicked === true && (
               <Col sm={2}>
                 <Form.Group>
-                  <div>
+                  <div style={{ marginLeft: "100px" }}>
                     <button
                       className="buttonField  button"
                       onClick={() => cancel(2)}
@@ -812,8 +813,7 @@ const CandidateOnboarding = () => {
               <Form.Group>
                 <Form.Control
                   as="select"
-                  className="form-input"
-                  placeholder="costCenter4"
+                  placeholder="costCenter1"
                   value={costCenterD}
                   onChange={(e) => setCostCenterD(e.target.value)}
                 >
@@ -871,7 +871,7 @@ const CandidateOnboarding = () => {
             {isClicked === true && (
               <Col sm={2}>
                 <Form.Group>
-                  <div>
+                  <div style={{ marginLeft: "100px" }}>
                     <button
                       className="buttonField  button"
                       onClick={() => cancel(3)}
@@ -891,8 +891,7 @@ const CandidateOnboarding = () => {
               <Form.Group>
                 <Form.Control
                   as="select"
-                  placeholder="costCenter5"
-                  className="form-input"
+                  placeholder="costCenter1"
                   value={costCenterE}
                   onChange={(e) => setCostCenterE(e.target.value)}
                 >
@@ -950,7 +949,7 @@ const CandidateOnboarding = () => {
             {isClicked === true && (
               <Col sm={2}>
                 <Form.Group>
-                  <div>
+                  <div style={{ marginLeft: "100px" }}>
                     <button
                       className="buttonField  button"
                       onClick={() => cancel(4)}
@@ -1039,9 +1038,9 @@ const CandidateOnboarding = () => {
           textAlign: "center",
         }}
       >
-        <button className="stepperButtons">Back</button>
+        {/* <button className="stepperButtons">Back</button> */}
         <button className="stepperButtons" onClick={() => handleDataSave()}>
-          Save & Next
+          Save
         </button>
       </div>
     </Fragment>

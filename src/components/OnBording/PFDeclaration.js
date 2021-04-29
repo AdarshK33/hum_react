@@ -13,6 +13,7 @@ import FormF from "../../forms/Form_F_Gratuity.pdf";
 import FormFView from "../../forms/Form_F_(Gratuity)_Sample_copy.pdf";
 import "react-toastify/dist/ReactToastify.css";
 import "./OnBoard.css";
+
 const PFDeclaration = (props) => {
   const {
     PFDeclarationCreate,
@@ -537,6 +538,7 @@ const PFDeclaration = (props) => {
   };
   return (
     <Fragment>
+      <ToastContainer />
       <Form>
         <Row style={{ marginBottom: "2rem" }}>
           <Col sm={5}>

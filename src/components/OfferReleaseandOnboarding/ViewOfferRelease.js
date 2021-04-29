@@ -18,7 +18,7 @@ import VerifyCandidateDocs from "./verifyCandidateDocs";
 import CandidateOnboarding from "./candidateOnboarding";
 import { DocsVerifyContext } from "../../context/DocverificationState";
 import { OfferContext } from "../../context/OfferState";
-
+import ViewOfferLetter from "../Offers/viewOfferLetter";
 const ViewOfferRelease = () => {
   const {
     personalInfo,
@@ -100,10 +100,7 @@ const ViewOfferRelease = () => {
           item.candidateId === candidateData.candidateInformation.candidateId
         ) {
           if (
-            item.status === 5 &&
-            item.statusDesc !== "Rejected" &&
-            item.statusDesc !== "Approved" &&
-            item.statusDesc === "Offer Released" &&
+            (item.status === 5 || item.status === 6) &&
             personalInfoData.documentUploaded === 1
           ) {
             console.log("-->", item);
@@ -201,11 +198,11 @@ const ViewOfferRelease = () => {
                   className="fa fa-check-circle"
                   aria-hidden="true"
                 ></i>
-                Step 4: Generate Candidate Offer Letter
+                Step 4: Candidate Offer Letter
               </AccordionItemButton>
             </AccordionItemHeading>
             <AccordionItemPanel>
-              <CandidateOfferLetter />
+              <ViewOfferLetter />
             </AccordionItemPanel>
           </AccordionItem>
 

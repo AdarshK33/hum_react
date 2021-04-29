@@ -3,7 +3,6 @@ import { DocsVerifyContext } from "../../context/DocverificationState";
 import { AppContext } from "../../context/AppState";
 import { useParams } from "react-router-dom";
 import "../CandidateVerification/ManageCandidate.css";
-import { OfferContext } from "../../context/OfferState";
 
 import {
   Button,
@@ -15,12 +14,12 @@ import {
   Table,
 } from "react-bootstrap";
 import { accepts } from "react-dropzone-uploader";
+import { OfferContext } from "../../context/OfferState";
 
 // import { handleInputChange } from "react-select/src/utils";
 
 const DocVerification = () => {
   const [isChecked, changeState] = useState(false);
-  const { candidateData } = useContext(OfferContext);
 
   const params = useParams();
   const candidateId = params["candidateId"];
@@ -53,8 +52,15 @@ const DocVerification = () => {
     step5suscessStatus,
     step5Status,
   } = useContext(DocsVerifyContext);
-
+  const {
+    candidateData,
+    aadhaarNotificationData,
+    adhaarVerificationNotification,
+  } = useContext(OfferContext);
   const { getUserInfo, user } = useContext(AppContext);
+  useEffect(() => {
+    setState(personalInfoData);
+  }, [user]);
   useEffect(() => {
     if (rejectMessage) {
       setDisapprovePopup(true);
@@ -138,6 +144,10 @@ const DocVerification = () => {
   // }, [onBoardPopup]);
 
   const handleOnboard = () => {
+    // adhaarVerificationNotification(
+    //   candidateData.candidateInformation.candidateId
+    // );
+
     step5suscessStatus(true);
     setOnboardPopup(true);
   };
@@ -153,9 +163,7 @@ const DocVerification = () => {
     docsToVerify !== undefined &&
     docsToVerify !== null &&
     docsToVerify
-      .filter(
-        (personal) => personal.documentType > 5 && personal.documentType <= 8
-      )
+      .filter((personal) => personal.documentType > 5)
       .map((filteredResult) => {
         return filteredResult;
       });
@@ -445,13 +453,85 @@ const DocVerification = () => {
                                 (Upload the first and last page)
                               </span>
                             </p>
+                          ) : item.documentType === 8 ? (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "16px" }}
+                              >
+                                Latest play slip
+                              </span>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </p>
+                          ) : item.documentType === 9 ? (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "16px" }}
+                              >
+                                Offer Letter
+                              </span>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </p>
+                          ) : item.documentType === 10 ? (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "16px" }}
+                              >
+                                Form11Uan
+                              </span>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </p>
+                          ) : item.documentType === 11 ? (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "16px" }}
+                              >
+                                Form2EPF
+                              </span>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </p>
+                          ) : item.documentType === 12 ? (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "16px" }}
+                              >
+                                FormFGratuity
+                              </span>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </p>
+                          ) : item.documentType === 13 ? (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "16px" }}
+                              >
+                                DisabilityDoc{" "}
+                              </span>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </p>
+                          ) : item.documentType === 14 ? (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "16px" }}
+                              >
+                                Passport
+                              </span>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </p>
+                          ) : item.documentType === 15 ? (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "16px" }}
+                              >
+                                CollegeLetter
+                              </span>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </p>
                           ) : (
-                            item.documentType === 8 && (
+                            item.documentType === 16 && (
                               <p>
                                 <span
                                   style={{ color: "black", fontSize: "16px" }}
                                 >
-                                  Latest play slip
+                                  CollegeId
                                 </span>{" "}
                                 <span style={{ color: "red" }}>*</span>
                               </p>
@@ -603,11 +683,18 @@ const DocVerification = () => {
             textAlign: "center",
           }}
         >
-          {state !== undefined && state.verificationStatus === 1 && (
-            <button className="onboardButton" onClick={() => handleOnboard()}>
-              Proceed
-            </button>
-          )}
+          <button
+            className="onboardButton"
+            onClick={() => handleOnboard()}
+            disabled={state.verificationStatus === 1 ? false : true}
+            style={
+              state.verificationStatus === 1
+                ? { opacity: "1" }
+                : { opacity: "0.6" }
+            }
+          >
+            Proceed
+          </button>
         </div>
       </Fragment>
     )

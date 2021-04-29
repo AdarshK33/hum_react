@@ -9,9 +9,10 @@ import { Row, Col, Form, Button } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import "./OnBoard.css";
+import { ToastContainer, toast } from "react-toastify";
 import countryList from "react-select-country-list";
 import { OnBoardContext } from "../../context/OnBoardState";
-
+import "react-toastify/dist/ReactToastify.css";
 const Address = (props) => {
   const {
     candidateCountryList,
@@ -139,7 +140,6 @@ const Address = (props) => {
   }, [candidateStateData, addressViewData]);
   useEffect(() => {
     let cityValue;
-    let permanentCityValue;
     if (addressViewData !== undefined && addressViewData !== null) {
       cityValue = candidateCityData.filter(
         (i) => i.cityId == addressViewData.cityId
@@ -585,6 +585,7 @@ const Address = (props) => {
     console.log("permanet", permanetCityData),
     (
       <Fragment>
+        <ToastContainer />
         <Form>
           <Row style={{ marginBottom: "1rem" }}>
             <Col sm={6}>

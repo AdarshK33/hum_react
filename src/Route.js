@@ -90,15 +90,15 @@ const RoutePath = () => {
       path={`${process.env.PUBLIC_URL}/onboard`}
       component={OnBoardingStepper}
       /> */}
-      
+
       {/* <Route
             path={`${process.env.PUBLIC_URL}/no_due_clearance`}
             component={NoDueClearance}
           /> */}
-            <Route
-            path={`${process.env.PUBLIC_URL}/finance-clearance`}
-            component={FinanceClearanceList}
-          />
+      {/* <Route
+        path={`${process.env.PUBLIC_URL}/finance-clearance`}
+        component={FinanceClearanceList}
+      /> */}
 
       <Route
         //  {/*Rajasekhar */}
@@ -128,7 +128,7 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/profileEdit`}
             component={ProfileEdit}
           /> */}
-             <Route
+          <Route
             path={`${process.env.PUBLIC_URL}/no_due_clearance`}
             component={NoDueClearance}
           />
