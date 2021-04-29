@@ -110,6 +110,7 @@ const InsuranceNomination = (props) => {
   const [addOne, setAddOne] = useState(true);
   const [addFirstInLaw, setAddFirstInLaw] = useState(true);
   const [addSecondInLaw, setAddSecondInLaw] = useState(true);
+  const [marriedStatus, setMarriedStatus] = useState(false);
   const [InfoState, setInfoState] = useState({
     empName: "",
     gender: "",
@@ -283,6 +284,14 @@ const InsuranceNomination = (props) => {
         setNAcheck(false);
         state.relationship = "Father";
         state.nominee2Relationship = "Mother";
+      } else if (
+        candidatePersonalInfoData &&
+        candidatePersonalInfoData.maritalStatus !== null &&
+        candidatePersonalInfoData.maritalStatus !== undefined &&
+        (candidatePersonalInfoData.maritalStatus === "Unmarried") |
+          (candidatePersonalInfoData.maritalStatus === "UnMarried")
+      ) {
+        setMarriedStatus(true);
       } else {
         setRelativeType(false);
         setParentCheck(true);
@@ -2358,62 +2367,65 @@ const InsuranceNomination = (props) => {
       ) : (
         ""
       )}
+      {marriedStatus === false ? (
+        <Row>
+          <Col sm={3} style={{ marginTop: "2rem" }}>
+            <label>Do you want to add dependent as</label>
+          </Col>
+          <Col sm={2} style={{ marginTop: "2rem" }}>
+            <Form.Group>
+              <div className="boxField_1 input">
+                <input
+                  className="largerCheckbox"
+                  type="checkbox"
+                  //   style={genderError ? { borderColor: "red" } : {}}
+                  value="Male"
+                  checked={parentsCheck}
+                  //required={required}
+                  onChange={handleParentCheckboxChange}
+                />
+                <label>Parents</label>
+              </div>
+            </Form.Group>
+          </Col>
+          <Col sm={2} style={{ marginTop: "2rem" }}>
+            <Form.Group>
+              <div className="boxField_1 input">
+                <input
+                  className="largerCheckbox"
+                  type="checkbox"
+                  //   style={genderError ? { borderColor: "red" } : {}}
+                  value="Female"
+                  //   required={required}
+                  checked={InlawCheck}
+                  onChange={handleInLawCheckboxChange}
+                />
+                <label>In-Laws</label>
+              </div>
+            </Form.Group>
+          </Col>
+          <Col sm={2} style={{ marginTop: "2rem" }}>
+            <Form.Group>
+              <div className="boxField_1 input">
+                <input
+                  className="largerCheckbox"
+                  type="checkbox"
+                  //   style={genderError ? { borderColor: "red" } : {}}
+                  value="Other"
+                  //   required={required}
+                  checked={NAcheck}
+                  onChange={handleNACheckboxChange}
+                />
+                <label>NA</label>
+              </div>
+            </Form.Group>
+          </Col>
+        </Row>
+      ) : (
+        ""
+      )}
 
-      <Row>
-        <Col sm={3} style={{ marginTop: "2rem" }}>
-          <label>Do you want to add dependent as</label>
-        </Col>
-        <Col sm={2} style={{ marginTop: "2rem" }}>
-          <Form.Group>
-            <div className="boxField_1 input">
-              <input
-                className="largerCheckbox"
-                type="checkbox"
-                //   style={genderError ? { borderColor: "red" } : {}}
-                value="Male"
-                checked={parentsCheck}
-                //required={required}
-                onChange={handleParentCheckboxChange}
-              />
-              <label>Parents</label>
-            </div>
-          </Form.Group>
-        </Col>
-        <Col sm={2} style={{ marginTop: "2rem" }}>
-          <Form.Group>
-            <div className="boxField_1 input">
-              <input
-                className="largerCheckbox"
-                type="checkbox"
-                //   style={genderError ? { borderColor: "red" } : {}}
-                value="Female"
-                //   required={required}
-                checked={InlawCheck}
-                onChange={handleInLawCheckboxChange}
-              />
-              <label>In-Laws</label>
-            </div>
-          </Form.Group>
-        </Col>
-        <Col sm={2} style={{ marginTop: "2rem" }}>
-          <Form.Group>
-            <div className="boxField_1 input">
-              <input
-                className="largerCheckbox"
-                type="checkbox"
-                //   style={genderError ? { borderColor: "red" } : {}}
-                value="Other"
-                //   required={required}
-                checked={NAcheck}
-                onChange={handleNACheckboxChange}
-              />
-              <label>NA</label>
-            </div>
-          </Form.Group>
-        </Col>
-      </Row>
-
-      {parentsCheck === true && addOne === true ? (
+      {parentsCheck === true && addOne === true && marriedStatus === false ? (
         <div>
           {/* Third Nominee  */}
           <label>
@@ -2623,7 +2635,7 @@ const InsuranceNomination = (props) => {
       ) : (
         ""
       )}
-      {parentsCheck === true && addTwo === true ? (
+      {parentsCheck === true && addTwo === true && marriedStatus === false ? (
         <div>
           {/* fourth Nominee Name */}
           <label>
@@ -2838,7 +2850,9 @@ const InsuranceNomination = (props) => {
 
       {/* In- law component */}
 
-      {InlawCheck === true && addFirstInLaw === true ? (
+      {InlawCheck === true &&
+      addFirstInLaw === true &&
+      marriedStatus === false ? (
         <div>
           {/* Third Nominee  */}
           <label>
@@ -3056,7 +3070,9 @@ const InsuranceNomination = (props) => {
       ) : (
         ""
       )}
-      {InlawCheck === true && addSecondInLaw === true ? (
+      {InlawCheck === true &&
+      addSecondInLaw === true &&
+      marriedStatus === false ? (
         <div>
           {/* fourth Nominee Name */}
           <label>
