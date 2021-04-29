@@ -33,6 +33,7 @@ const initial_state = {
   bankViewData: [],
   bankUpdateData: {},
   documentViewData: [],
+  documentUploadData: {},
 };
 // git
 export const OnBoardProvider = (props) => {
@@ -506,6 +507,24 @@ export const OnBoardProvider = (props) => {
         console.log(error);
       });
   };
+
+  const completeDocumentUpload = (id) => {
+    console.log(" document id", id);
+    return candidate
+      .get("/v2/candidate/documents/complete?candidateId=" + id)
+      .then((response) => {
+        state.documentUploadData = response.data.data;
+        console.log("documentUploadData.message", state.documentUploadData);
+        toast.info(response.data.message);
+        return dispatch({
+          type: "DOCUMENT_UPLOAD_DATA",
+          payload: state.documentUploadData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <OnBoardContext.Provider
       value={{
@@ -535,6 +554,7 @@ export const OnBoardProvider = (props) => {
         bankUpdate,
         uploadFile,
         documentView,
+        completeDocumentUpload,
         emergencyContactData: state.emergencyContactData,
         emergencyContactCreate: state.emergencyContactCreate,
         emergencyContactView: state.emergencyContactView,
@@ -562,6 +582,7 @@ export const OnBoardProvider = (props) => {
         bankViewData: state.bankViewData,
         bankUpdateData: state.bankUpdateData,
         documentViewData: state.documentViewData,
+        documentUploadData: state.documentUploadData,
       }}
     >
       {props.children}

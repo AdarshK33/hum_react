@@ -30,6 +30,7 @@ const Documents = (props) => {
     CandidateViewInformation,
     pfDeclarationView,
     PFDeclarationView,
+    completeDocumentUpload,
   } = useContext(OnBoardContext);
   const {
     candidateData,
@@ -793,7 +794,7 @@ const Documents = (props) => {
     console.log("ERROR-->", latestPaySlipsError, state.latestPaySlips);
     console.log(value);
     if (value === true) {
-      // adhaarVerificationNotification(candidateProfileData.candidateId);
+      completeDocumentUpload(candidateProfileData.candidateId);
       console.log(state);
       const nextPage = props.NextStep;
       nextPage(true);
