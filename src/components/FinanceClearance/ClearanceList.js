@@ -103,12 +103,18 @@ const FinanceClearanceList = () => {
     );
   };
 
-  const handleSave = () => {
-    // onSelectionChanged();
-  };
+  // const handleSave = (value) => {
+  //   const formData = value.data;
+  //   console.log(formData, pageCount, "handlelsave");
+  //   setCleranceData(formData);
+  //   updateITClearanceList(formData, searchValue, pageCount, costCenter);
+  // };
   useEffect(() => {
     separationListView("all", pageCount, "all");
   }, []);
+  useEffect(() => {
+    separationListView(searchValue, pageCount, costCenter);
+  }, [costCenter, searchValue, pageCount]);
   useEffect(() => {
     CostCenter();
   }, []);
@@ -121,18 +127,34 @@ const FinanceClearanceList = () => {
     return <span>{e.target.value}</span>;
   };
 
-  const renderButton = () => {
+  const renderButton = (e) => {
+    console.log(e, "render");
+    var buttonValue = e.data.disabled;
     return (
       <button
-        style={{
-          backgroundColor: "#006ebb",
-          color: "white",
-          border: "1px solid #006ebb",
-          paddingLeft: "10px",
-          paddingRight: "10px",
-          width: "100%",
-          lineHeight: "30px",
-        }}
+        disabled={buttonValue}
+        style={
+          buttonValue
+            ? {
+                backgroundColor: "#9ea4af54",
+                color: "white",
+                border: "1px solid #9ea4af54",
+                paddingLeft: "10px",
+                paddingRight: "10px",
+                width: "100%",
+                lineHeight: "30px",
+              }
+            : {
+                backgroundColor: "#006ebb",
+                color: "white",
+                border: "1px solid #006ebb",
+                paddingLeft: "10px",
+                paddingRight: "10px",
+                width: "100%",
+                lineHeight: "30px",
+              }
+        }
+        // onClick={() => handleSave(e)}
       >
         Save
       </button>
@@ -215,6 +237,14 @@ const FinanceClearanceList = () => {
               onCellClicked={onCellClicked}
               onCellValueChanged={onCellValueChanged}
             >
+              <AgGridColumn
+                className="columnColor"
+                editable="false"
+                headerName="S No"
+                pinned="left"
+                valueGetter={`node.rowIndex+1 + ${indexOfFirstRecord}`}
+              ></AgGridColumn>
+
               <AgGridColumn field="employeeId"></AgGridColumn>
               <AgGridColumn field="empName"></AgGridColumn>
               <AgGridColumn field="costCentre"></AgGridColumn>
@@ -254,9 +284,10 @@ const FinanceClearanceList = () => {
                 singleClickEdit={true}
               ></AgGridColumn>
               <AgGridColumn
-                field="Action"
+                field="exitId"
+                headerName="Action"
                 colId="action"
-                cellRendererFramework={() => renderButton()}
+                cellRendererFramework={(e) => renderButton(e)}
               ></AgGridColumn>
             </AgGridReact>
           </div>
