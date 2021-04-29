@@ -159,7 +159,7 @@ export const DocsVerificationProvider = (props) => {
       });
   };
 
-  const approveDocument = (docId) => {
+  const approveDocument = (docId,candidateId) => {
     setLoader(true);
     client
       .get("/api/v1/candidate/document/" + docId + "/accept")
@@ -169,6 +169,7 @@ export const DocsVerificationProvider = (props) => {
         toast.info(response.data.message);
 
         setLoader(false);
+        verificationDocsView(candidateId)
         return dispatch({
           type: "GET_ACCEPT_STATUS",
           payload: state.acceptStatus,
@@ -231,6 +232,7 @@ export const DocsVerificationProvider = (props) => {
         toast.info(response.data.message);
         state.rejectMessage = response.data.message;
         setLoader(false);
+        verificationDocsView(candidateId)
         return dispatch({
           type: "GET_REJECT_STATUS",
           payload: state.rejectStatus,
