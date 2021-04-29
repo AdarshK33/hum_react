@@ -307,13 +307,15 @@ const DocVerification = () => {
                     </td>
                     {item.statusDesc !== null &&
                     item.documentType === 1 &&
-                    item.statusDesc !== "Pending" ? (
+                    item.statusDesc !== "Pending" &&
+                    state.adminVerificationStatus === 1 ? (
                       <td className="buttonMargin1">{item.statusDesc}</td>
                     ) : (
                       <td className="row text-center buttonMargin">
                         {user.role === "ADMIN" &&
                         item.documentType === 1 &&
-                        state.verificationStatus === 1 ? (
+                        state.verificationStatus === 1 &&
+                        state.adminVerificationStatus === 0 ? (
                           <button
                             className="approveButton ml-4"
                             onClick={() =>
@@ -327,7 +329,8 @@ const DocVerification = () => {
                         )}
                         {user.role === "ADMIN" &&
                         item.documentType === 1 &&
-                        state.verificationStatus === 1 ? (
+                        state.verificationStatus === 1 &&
+                        state.adminVerificationStatus === 0 ? (
                           <button
                             className="approveButton ml-4"
                             disabled={
@@ -503,42 +506,44 @@ const DocVerification = () => {
           )}
         </Table>
       </div>
-      {user.role === "ADMIN" && !isChecked && (
-        <Row className="mx-2">
-          <label>Is UAN Number Generated ?</label>
-          <Col sm={2}>
-            <Form.Group>
-              <div className="boxField input">
-                <input
-                  className="largerCheckbox"
-                  type="checkbox"
-                  value="yes"
-                  checked={state.uanStatus === 1 ? true : UANYes}
-                  disabled={state.uanStatus === 1 ? true : false}
-                  onChange={(e) => handleUANYes(e)}
-                />
-                <label>Yes</label>
-              </div>
-            </Form.Group>
-          </Col>
-          <Col sm={2}>
-            <Form.Group>
-              <div className="boxField input">
-                <input
-                  className="largerCheckbox"
-                  type="checkbox"
-                  value="no"
-                  checked={UANNo}
-                  disabled={state.uanStatus === 1 ? true : false}
-                  // required={required}
-                  onChange={(e) => handleUANNo(e)}
-                />
-                <label>No </label>
-              </div>
-            </Form.Group>
-          </Col>
-        </Row>
-      )}
+      {user.role === "ADMIN" &&
+        state.adminVerificationStatus === 1 &&
+        !isChecked && (
+          <Row className="mx-2">
+            <label>Is UAN Number Generated ?</label>
+            <Col sm={2}>
+              <Form.Group>
+                <div className="boxField input">
+                  <input
+                    className="largerCheckbox"
+                    type="checkbox"
+                    value="yes"
+                    checked={state.uanStatus === 1 ? true : UANYes}
+                    disabled={state.uanStatus === 1 ? true : false}
+                    onChange={(e) => handleUANYes(e)}
+                  />
+                  <label>Yes</label>
+                </div>
+              </Form.Group>
+            </Col>
+            <Col sm={2}>
+              <Form.Group>
+                <div className="boxField input">
+                  <input
+                    className="largerCheckbox"
+                    type="checkbox"
+                    value="no"
+                    checked={UANNo}
+                    disabled={state.uanStatus === 1 ? true : false}
+                    // required={required}
+                    onChange={(e) => handleUANNo(e)}
+                  />
+                  <label>No </label>
+                </div>
+              </Form.Group>
+            </Col>
+          </Row>
+        )}
       {UANNo && (
         <Row>
           <Col sm={6}>
@@ -569,17 +574,19 @@ const DocVerification = () => {
           textAlign: "center",
         }}
       >
-        {state.uanStatus !== 1 && (
+        {state.uanStatus !== 1 && state.adminVerificationStatus === 1 && (
           <button className="stepperButtons" onClick={() => handleDocSave()}>
             Save
           </button>
         )}
 
-        {state !== undefined && state.verificationStatus === 1 && (
-          <button className="onboardButton" onClick={() => handleOnboard()}>
-            Onboard Candidate
-          </button>
-        )}
+        {state !== undefined &&
+          state.verificationStatus === 1 &&
+          state.adminVerificationStatus === 1 && (
+            <button className="onboardButton" onClick={() => handleOnboard()}>
+              Onboard Candidate
+            </button>
+          )}
       </div>
     </Fragment>
   );

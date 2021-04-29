@@ -310,7 +310,8 @@ const DocVerification = () => {
                       </td>
                       {item.statusDesc !== null &&
                       item.documentType === 1 &&
-                      item.statusDesc !== "Pending" ? (
+                      item.statusDesc !== "Pending" &&
+                      state.adminVerificationStatus === 1 ? (
                         <td className="buttonMargin1">{item.statusDesc}</td>
                       ) : (
                         <td className="row text-center buttonMargin">
@@ -520,9 +521,15 @@ const DocVerification = () => {
           <button
             className="onboardButton"
             onClick={() => handleOnboard()}
-            disabled={state.verificationStatus === 1 ? false : true}
+            disabled={
+              state.verificationStatus === 1 &&
+              state.adminVerificationStatus === 0
+                ? false
+                : true
+            }
             style={
-              state.verificationStatus === 1
+              state.verificationStatus === 1 &&
+              state.adminVerificationStatus === 1
                 ? { opacity: "1" }
                 : { opacity: "0.6" }
             }
