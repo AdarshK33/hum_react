@@ -30,7 +30,8 @@ const initial_state = {
   costCenterList: [],
   masterWeeks: [],
   pageData: [],
-  rosterSheet: {}
+  rosterSheet: {},
+  rosterLoading: false
 }
 
 
@@ -391,6 +392,7 @@ export const RosterProvider = ({ children }) => {
       .catch((error) => {
         console.log(error)
       })
+      state.rosterLoading = true
   }
 
   // Roster Utilisation Schedule
@@ -560,7 +562,8 @@ export const RosterProvider = ({ children }) => {
     adminRosterUtilisationScheduleResult: state.adminRosterUtilisationScheduleResult,
     adminRosterAvailableShiftList: state.adminRosterAvailableShiftList,
     EmployeeListForAdminRosterWeekOff: state.EmployeeListForAdminRosterWeekOff,
-    pageData: state.pageData
+    pageData: state.pageData,
+    rosterLoading: state.rosterLoading
   }}>
     {children}
   </RosterContext.Provider>);

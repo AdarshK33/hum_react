@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect, useContext } from 'react';
-import { Container, Row, Col, Form } from 'react-bootstrap'
+import { Container, Row, Col, Form, Spinner } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
@@ -19,10 +19,11 @@ const RosterTable = (storeID) => {
     const [displayDaily, setDisplayDaily] = useState(false);
     const [year, setYear] = useState('');
     const [displayNormal, setDisplayNormal] = useState(true);
+    const [displayTable, setDisplayTable] = useState(false);
 
     const months = [1,2,3,4,5,6,7,8,9,10,11,12];
 
-    const {adminRosterUtilisationSchedule, adminRosterUtilisationScheduleResult, getMasterWeeks, masterWeeks} = useContext(RosterContext);
+    const {adminRosterUtilisationSchedule, adminRosterUtilisationScheduleResult, getMasterWeeks, masterWeeks, rosterLoading} = useContext(RosterContext);
     const { user } = useContext(AppContext);
 
     useEffect(() => {
@@ -32,7 +33,8 @@ const RosterTable = (storeID) => {
         //     adminRosterUtilisationSchedule('W', 0, storeID.storeId, 0, 0, 0, 345);
         // }
         // console.log(adminRosterUtilisationScheduleResult, storeID, endDate, startDate, masterWeeks,'adminRosterUtilisationScheduleResult');
-    }, [endDate, startDate, masterWeeks])
+        adminRosterUtilisationSchedule();
+    }, [storeID.storeId])
 
     const linkStyle={
         textDecoration: 'none',
@@ -74,6 +76,7 @@ const RosterTable = (storeID) => {
 
     const monthSelected = e => {
         e.preventDefault();
+        setDisplayTable(true);
         console.log(typeof Number(e.target.value), 'e.target');
         if( e.target.value !== "Select month" && storeID.storeId) 
         adminRosterUtilisationSchedule('M', Number(e.target.value), storeID.storeId, 0, 0, 0, 0, 2021);
@@ -81,6 +84,7 @@ const RosterTable = (storeID) => {
 
     const weekSelected = e => {
         e.preventDefault();
+        setDisplayTable(true);
         console.log(e.target.value, 'e.target');
         if( e.target.value && storeID.storeId && year) 
         adminRosterUtilisationSchedule('W', 0, storeID.storeId, 0, 0, 0, Number(e.target.value), year);
@@ -88,18 +92,21 @@ const RosterTable = (storeID) => {
 
     const dailySelected = (e, date) => {
         e.preventDefault();
+        setDisplayTable(true);
         console.log(moment(date, 'YYYY-MM-DD').format("YYYY-MM-DD"), 'e.target.value');
         adminRosterUtilisationSchedule('D', 0, storeID.storeId, moment(date, 'YYYY-MM-DD').format("YYYY-MM-DD"));
     }
 
     const yearSelected = e => {
         e.preventDefault();
+        // setDisplayTable(true);
         setYear(e.target.value);
         getMasterWeeks(e.target.value);
     }
 
     const normalSelected = e => {
         e.preventDefault();
+        setDisplayTable(true);
         if(endDate > startDate)
         adminRosterUtilisationSchedule('N', 0, storeID.storeId, 0, endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"));
     }
@@ -217,77 +224,78 @@ const RosterTable = (storeID) => {
                     )}
                 </Row>
                 {/* {console.log(storeID.storeID, 'storeID.storeID')} */}
-                {storeID.storeId && adminRosterUtilisationScheduleResult.rosterDates && adminRosterUtilisationScheduleResult.rosterDates.length ? (
+                {storeID.storeId && displayTable ? (
                     <div style={{marginTop: '30px'}}>
-                        {/* {console.log('check check')} */}
-                    <table className="roster-table">
-                        <thead>
-                            <tr>
-                                <th className="table-head header-option">
-                                    <div>Resource Utilisation Schedule</div>
-                                </th>
-                                { adminRosterUtilisationScheduleResult.rosterDates && adminRosterUtilisationScheduleResult.rosterDates.length && adminRosterUtilisationScheduleResult.rosterDates.map(data => (
-                                    <th className="table-head">
-                                        <h6>{data.date}</h6>
-                                        <ul>
-                                            <li>{data.generalCount} General</li>
-                                            <li>{data.onDutyCount} on duty</li>
-                                            <li>{data.captainCount} Captain</li>
-                                        </ul>
-                                    </th>
-                                ))}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            { adminRosterUtilisationScheduleResult.rosterResponses && adminRosterUtilisationScheduleResult.rosterResponses.length && adminRosterUtilisationScheduleResult.rosterResponses.map((data, index) => {
-                                    return (
-                                        <tr>
-                                            <td 
-                                                className="table-empDetails"
-                                                style={{
-                                                    width: `${data.rank === 1 ? '200px' : data.rank === 2 ? '175px' : '150px'}`,
-                                                    marginLeft: `${data.rank === 1 ? '3px' : data.rank === 2 ? '27px' : '53px'}`
-                                                }}     
-                                            >
-                                                <div className="empDetails-left">
-                                                    <div>{data.firstName} {data.lastName}</div>
-                                                    <div>{data.contractType}</div>
-                                                    <div>{data.position}</div>
-                                                </div>
-                                                {console.log(data.utilization.split('%'), 'data.utilization')}
-                                                <div style={{width: '40px', margin: 'auto'}}>
-                                                    <CircularProgressbar value={data.utilization.split('%')[0]} text={`${data.utilization}`}/>
-                                                </div>
-                                            </td>
-                                            {data.employeeRosters.map(empData => (
-                                                <td 
-                                                    className='table-empDetails table-empSchedule' 
-                                                    style={{
-                                                        backgroundColor: `${empData.roster && empData.roster.leave ? '#ff6b6b' : empData.roster && empData.roster.holiday ? '#f3bf5f' : empData.roster && empData.roster.weekOff ? '#68a4cf' : empData.roster && empData.roster.shiftName ? '#4bb642' : '#8d8d8d94'}`    
-                                                    }}
-                                                >
-                                                    {/* <div>{empData.date}</div> */}
-                                                    {empData.roster === null ? (<div>----</div>)
-                                                 : ( 
-                                                     <div>{empData.roster.leave ? 'Leave': empData.roster.holiday ? 'Holiday': empData.roster.weekOff ? 'WeekOff' : empData.roster.shiftName ? empData.roster.shiftName : '----'}</div>
-                                                 )}
-                                                 {/* {console.log(empData, 'empData')} */}
-                                                </td>
-                                            ))}
-                                        </tr>
-                                    )
-                                }
-                            )}
-                            {/* {console.log(adminRosterUtilisationScheduleResult.rosterResponses)}
-                            { adminRosterUtilisationScheduleResult.rosterResponses && adminRosterUtilisationScheduleResult.rosterResponses.length && adminRosterUtilisationScheduleResult.rosterResponses.map((data, index) => (
+                    {console.log(rosterLoading, 'check check')}
+                    {adminRosterUtilisationScheduleResult.rosterDates && adminRosterUtilisationScheduleResult.rosterDates.length && rosterLoading? (
+                        <table className="roster-table">
+                            <thead>
                                 <tr>
-                                    <td>Dummy</td>
+                                    <th className="table-head header-option">
+                                        <div>Resource Utilisation Schedule</div>
+                                    </th>
+                                    { adminRosterUtilisationScheduleResult.rosterDates && adminRosterUtilisationScheduleResult.rosterDates.length && adminRosterUtilisationScheduleResult.rosterDates.map(data => (
+                                        <th className="table-head">
+                                            <h6>{data.date}</h6>
+                                            <ul>
+                                                <li>{data.generalCount} General</li>
+                                                <li>{data.onDutyCount} on duty</li>
+                                                <li>{data.captainCount} Captain</li>
+                                            </ul>
+                                        </th>
+                                    ))}
                                 </tr>
-                            ))} */}
-                        </tbody>
-                    </table>
-                </div>
-                ) : null}
+                            </thead>
+                            <tbody>
+                                { adminRosterUtilisationScheduleResult.rosterResponses && adminRosterUtilisationScheduleResult.rosterResponses.length && adminRosterUtilisationScheduleResult.rosterResponses.map((data, index) => {
+                                        return (
+                                            <tr>
+                                                <td 
+                                                    className="table-empDetails"
+                                                    style={{
+                                                        width: `${data.rank === 1 ? '200px' : data.rank === 2 ? '175px' : '150px'}`,
+                                                        marginLeft: `${data.rank === 1 ? '3px' : data.rank === 2 ? '27px' : '53px'}`
+                                                    }}     
+                                                >
+                                                    <div className="empDetails-left">
+                                                        <div>{data.firstName} {data.lastName}</div>
+                                                        <div>{data.contractType}</div>
+                                                        <div>{data.position}</div>
+                                                    </div>
+                                                    {console.log(data.utilization.split('%'), 'data.utilization')}
+                                                    <div style={{width: '40px', margin: 'auto'}}>
+                                                        <CircularProgressbar value={data.utilization.split('%')[0]} text={`${data.utilization}`}/>
+                                                    </div>
+                                                </td>
+                                                {data.employeeRosters.map(empData => (
+                                                    <td 
+                                                        className='table-empDetails table-empSchedule' 
+                                                        style={{
+                                                            backgroundColor: `${empData.roster && empData.roster.leave ? '#ff6b6b' : empData.roster && empData.roster.holiday ? '#f3bf5f' : empData.roster && empData.roster.weekOff ? '#68a4cf' : empData.roster && empData.roster.shiftName ? '#4bb642' : '#8d8d8d94'}`    
+                                                        }}
+                                                    >
+                                                        {/* <div>{empData.date}</div> */}
+                                                        {empData.roster === null ? (<div>----</div>)
+                                                    : ( 
+                                                        <div>{empData.roster.leave ? 'Leave': empData.roster.holiday ? 'Holiday': empData.roster.weekOff ? 'WeekOff' : empData.roster.shiftName ? empData.roster.shiftName : '----'}</div>
+                                                    )}
+                                                    {/* {console.log(empData, 'empData')} */}
+                                                    </td>
+                                                ))}
+                                            </tr>
+                                        )
+                                    }
+                                )}
+                                {/* {console.log(adminRosterUtilisationScheduleResult.rosterResponses)}
+                                { adminRosterUtilisationScheduleResult.rosterResponses && adminRosterUtilisationScheduleResult.rosterResponses.length && adminRosterUtilisationScheduleResult.rosterResponses.map((data, index) => (
+                                    <tr>
+                                        <td>Dummy</td>
+                                    </tr>
+                                ))} */}
+                            </tbody>
+                        </table> ) : (<div style={{position: 'absolute', top: '50%', left: '50%'}}><Spinner animation="border" variant="primary" /></div>)}
+                    </div> ) : null 
+                }
                 
             </Container>
         </Fragment>
