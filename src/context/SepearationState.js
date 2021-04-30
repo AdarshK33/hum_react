@@ -6,6 +6,7 @@ import Axios from "axios";
 import { access_token } from "../auth/signin";
 
 const initial_state = {
+  financeAdminNoDueClearanceList:[],
   adminNoDueClearanceList:[],
   noDueClearanceList: [],
   updateNoDueClearanceList: [],
@@ -50,6 +51,30 @@ export const SeparationProvider = (props) => {
         console.log(error);
       });
   };
+  const viewFinanceAdminClearanceList = (key, page,costCenter) => {
+    client.get( "/api/v1/separation/full-and-final/view?key=" +
+          key +
+          "&page=" +
+          page +
+          "&size=" +
+          10 +
+          "&storeId=" +
+          costCenter
+          )
+      .then((response) => {
+        state.financeAdminNoDueClearanceList = response.data.data.data
+        state.data = response.data.data;
+        state.total = response.data.data.total;
+        console.log("=====GET financeAdminNoDueClearanceList API response=====", response.data.data)
+        return dispatch({
+          type: "FETCH_FINANCE_ADMIN_NODUECLEARANCE_LIST",
+          payload: state.financeAdminNoDueClearanceList
+        });
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
   const viewAdminITClearanceList = (key, page,costCenter) => {
     client.get( "/api/v1/separation/full-and-final/view/no-due-clearance?key=" +
           key +
@@ -64,7 +89,7 @@ export const SeparationProvider = (props) => {
         state.adminNoDueClearanceList = response.data.data.data
         state.data = response.data.data;
         state.total = response.data.data.total;
-        console.log("=====GET FETCH_ADMIN_NODUECLEARANCE_LIST API response=====", response.data.data)
+        console.log(key, page,costCenter,"=====GET FETCH_ADMIN_NODUECLEARANCE_LIST API response=====", response.data.data)
         return dispatch({
           type: "FETCH_ADMIN_NODUECLEARANCE_LIST",
           payload: state.adminNoDueClearanceList
@@ -133,13 +158,28 @@ export const SeparationProvider = (props) => {
         console.log(error);
       });
   };
-  const saveFinanceClearanceData = (data) => {
+  const saveFinanceClearanceData = (value, key, page, costCenter) => {
+    const formData = {
+      financeClearanceId: value.financeClearanceId,
+      exitId: value.exitId,
+      financeClearanceStatus: value.financeClearanceStatus,
+      financeAmount: value.financeAmount,
+      financeRemarks: value.financeRemarks,
+      financeClearanceUpdatedBy: value.financeClearanceUpdatedBy,
+      lastWorkingDate: value.lastWorkingDate,
+      employeeId: value.employeeId,
+      empName: value.empName,
+      costCentre: value.costCentre,
+      joiningDate: value.joiningDate,
+      managerName: value.managerName,
+    };
     setLoader(true);
     return client
-      .post("/api/v1/separation/finance-clearance/create", data)
+      .post("/api/v1/separation/finance-clearance/create", formData)
       .then((response) => {
         state.clearanceList = response.data.data;
         console.log(response.data.data);
+        separationListView(key, page, costCenter)
         dispatch({
           type: "SAVE_FINANCE_LIST",
           payload: state.clearanceList,
@@ -156,7 +196,9 @@ export const SeparationProvider = (props) => {
         setLoader,
         updateITClearanceList,
         viewAdminITClearanceList,
+        viewFinanceAdminClearanceList,
         adminNoDueClearanceList:state.adminNoDueClearanceList,
+        financeAdminNoDueClearanceList:state.financeAdminNoDueClearanceList,
         updateNoDueClearanceList:state.updateNoDueClearanceList,
         noDueClearanceList:state.noDueClearanceList,
         total:state.total,

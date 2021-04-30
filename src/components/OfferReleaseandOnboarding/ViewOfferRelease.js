@@ -101,7 +101,8 @@ const ViewOfferRelease = () => {
         ) {
           if (
             (item.status === 5 || item.status === 6) &&
-            personalInfoData.documentUploaded === 1
+            personalInfoData.documentUploaded === 1 &&
+            personalInfoData.adminVerificationStatus === 1
           ) {
             console.log("-->", item);
             setActiveStep5(true);
