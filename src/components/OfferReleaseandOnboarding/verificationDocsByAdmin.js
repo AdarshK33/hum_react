@@ -523,7 +523,7 @@ const DocVerification = () => {
             onClick={() => handleOnboard()}
             disabled={
               state.verificationStatus === 1 &&
-              state.adminVerificationStatus === 0
+              state.adminVerificationStatus === 1
                 ? false
                 : true
             }

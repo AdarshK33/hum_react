@@ -168,45 +168,50 @@ const CandidateOnboarding = () => {
         ["email"]: empData.email,
         ["fedId"]: empData.fedId,
         ["role"]: empData.role,
+        ["address"]: empData.address,
+        ["isClusterManager"]: 0,
       });
     }
   }, [empData]);
-  const [employeeData, setEmployeeData] = useState({
-    active: "",
-    additionalRole: "",
-    address: "",
-    bloodGroup: "",
-    company: "",
-    contractType: "",
-    costCentre: "",
-    department: "",
-    dob: "",
-    email: "",
-    employeeId:
-      onBoardData !== undefined && onBoardData !== null
-        ? onBoardData.employeeId
-        : personalInfoData !== undefined
-        ? personalInfoData.employeeId
-        : "",
-    employeeName: "",
-    fatherName: "",
-    fedId: "",
-    firstName: "",
-    gender: "",
-    isClusterManager: 0,
-    joiningDate: "",
-    lastName: "",
-    locationId: 0,
-    loginType: "",
-    managerId: "",
-    maritalStatus: "",
-    nationality: "",
-    paymentType: "",
-    personalEmail: "",
-    phone: "",
-    position: "",
-    role: "",
-  });
+  const [employeeData, setEmployeeData] = useState(
+    {
+      active: "",
+      additionalRole: "",
+      address: "",
+      bloodGroup: "",
+      company: "",
+      contractType: "",
+      costCentre: "",
+      department: "",
+      dob: "",
+      email: "",
+      employeeId:
+        onBoardData !== undefined && onBoardData !== null
+          ? onBoardData.employeeId
+          : personalInfoData !== undefined
+          ? personalInfoData.employeeId
+          : "",
+      employeeName: "",
+      fatherName: "",
+      fedId: "",
+      firstName: "",
+      gender: "",
+      isClusterManager: 0,
+      joiningDate: "",
+      lastName: "",
+      locationId: 0,
+      loginType: "",
+      managerId: "",
+      maritalStatus: "",
+      nationality: "",
+      paymentType: "",
+      personalEmail: "",
+      phone: "",
+      position: "",
+      role: "",
+    },
+    []
+  );
 
   const handleChange = (e) => {
     setEmployeeData({ ...employeeData, [e.target.name]: e.target.value });
