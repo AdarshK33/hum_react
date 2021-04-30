@@ -121,7 +121,7 @@ const PFDeclaration = (props) => {
   useEffect(() => {
     PFDeclarationView(candidateProfileData.candidateId);
     console.log(pfDeclarationView, "pfDeclarationViewuse");
-  }, []);
+  }, [pfDeclarationView]);
 
   useEffect(() => {
     console.log(pfDeclarationView, "pfDeclarationViewuse2");

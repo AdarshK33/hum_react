@@ -69,6 +69,7 @@ import FinanceClearanceList from "./components/FinanceClearance/ClearanceList";
 /*------------------- Candidate Verification -----------------------------------*/
 import CandidateVerification from "./components/CandidateVerification/ManageCandidates";
 import Verification from "./components/CandidateVerification/Verification";
+import AdminNoDueClearance from "./components/Separation/AdminNoDueClearance/AdminNoDueClearance"
 import NoDueClearance from "./components/Separation/NoDueClearance";
 import ViewEditRelease from "./components/OfferReleaseandOnboarding/ViewOfferRelease";
 import Documents from "./components/OnBording/Documents";
@@ -116,7 +117,11 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/onboard`}
             component={OnBoardingStepper}
       /> */}
-
+      <Route
+        path={`${process.env.PUBLIC_URL}/onboard-offer`}
+        component={LoginOnboard}
+      />
+      <Route path={`${process.env.PUBLIC_URL}/offer`} component={OfferAccept} />
       <Fragment>
         <App>
           {/* dashboard menu */}
@@ -132,6 +137,10 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/no_due_clearance`}
             component={NoDueClearance}
+          />
+           <Route
+            path={`${process.env.PUBLIC_URL}/admin_no_due_clearance`}
+            component={AdminNoDueClearance}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/finance-clearance`}

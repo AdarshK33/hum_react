@@ -35,6 +35,8 @@ const DocVerification = () => {
   const [epfError, setEpfError] = useState(false);
   const [docType, setDocType] = useState("");
   const [shiftingTheStatus, setShiftingTheStatus] = useState("");
+  const [disApproveTheStatus, setDisApproveTheStatus] = useState("");
+
   const {
     verificationDocsView,
     docsToVerify,
@@ -63,22 +65,18 @@ const DocVerification = () => {
     personalInfo(candidateId);
     // setState(personalInfoData);
   }, [acceptStatus, rejectStatus, rejectMessage]);
+
   useEffect(() => {
     console.log("userinfo");
     getUserInfo();
     personalInfo(candidateId);
   }, []);
+
   useEffect(() => {
     console.log("prsnl");
     setState(personalInfoData);
   }, [personalInfoData]);
-  useEffect(() => {
-    console.log("acceptStatus");
-    if (acceptStatus === "SUCCESS") {
-      verificationDocsView(candidateId);
-      personalInfo(candidateId);
-    }
-  }, [acceptStatus]);
+
   const handleShifting = () => {
     changeState(!isChecked);
   };
@@ -97,15 +95,17 @@ const DocVerification = () => {
     setUanNumber(e.target.value);
   };
   const handleApproveDocument = (docId) => {
-    approveDocument(docId);
     setShiftingTheStatus(docId);
+    console.log(shiftingTheStatus, "in approve");
+    return approveDocument(docId, candidateId);
   };
   const handleDisApproveDocument = (docId, type) => {
+    setDisApproveTheStatus(docId);
     setModal(true);
     setdocId(docId);
     setDocType(type);
 
-    setShiftingTheStatus(docId);
+    console.log(shiftingTheStatus, "in approve");
   };
   const handleClose = () => setModal(false);
   const handleChange = (e) => {
