@@ -89,6 +89,9 @@ const CandidateOnboarding = () => {
   const [previewLetter, setPreviewLetter] = useState(false);
   const [letterSent, setLetterSent] = useState(false);
   const [showSubmitModal, setSubmitModal] = useState(false);
+  const [decathlonEmailError, setDecathlonEmailError] = useState(false);
+  const [fedIdError, setFedIdError] = useState(false);
+  const [roleError, setRoleError] = useState(false);
 
   useEffect(() => {
     if (
@@ -218,6 +221,27 @@ const CandidateOnboarding = () => {
   );
 
   const handleChange = (e) => {
+    console.log("handleChange name", e.target.name);
+    console.log("handleChange value", e.target.value);
+    if (e.target.name === "email") {
+      if (e.target.value !== "") {
+        setDecathlonEmailError(false);
+      } else {
+        setDecathlonEmailError(true);
+      }
+    } else if (e.target.name === "fedId") {
+      if (e.target.value !== "") {
+        setFedIdError(false);
+      } else {
+        setFedIdError(true);
+      }
+    } else if (e.target.name === "role") {
+      if (e.target.value !== "") {
+        setRoleError(false);
+      } else {
+        setRoleError(true);
+      }
+    }
     setEmployeeData({ ...employeeData, [e.target.name]: e.target.value });
 
     setError(false);
@@ -291,6 +315,7 @@ const CandidateOnboarding = () => {
       );
     }
   };
+
   const handleDataSave = () => {
     const costCenterData = {
       costCenterSplitId: 0,
@@ -326,15 +351,17 @@ const CandidateOnboarding = () => {
       startYearD: parseInt(moment(startYear4Date).format("YYYY")),
       startYearE: parseInt(moment(startYear5Date).format("YYYY")),
     };
-    setCostCentersData(costCenterData);
-    if (validateEmail(employeeData.email)) {
-      createEmployee(employeeData);
-      // if (createStatus === "SUCCESS") {
-      //   alert("Hii");
-      //   costCenterSplit(costCenterData);
-      // }
-    } else {
-      setError(true);
+    if (!decathlonEmailError && !fedIdError && !roleError) {
+      setCostCentersData(costCenterData);
+      if (validateEmail(employeeData.email)) {
+        createEmployee(employeeData);
+        // if (createStatus === "SUCCESS") {
+        //   alert("Hii");
+        //   costCenterSplit(costCenterData);
+        // }
+      } else {
+        setError(true);
+      }
     }
   };
   const handleIncrement = (key) => {
@@ -478,7 +505,7 @@ const CandidateOnboarding = () => {
               }
               onChange={(e) => handleChange(e)}
             />
-            {emailError === true && (
+            {(emailError === true || decathlonEmailError) && (
               <span style={{ color: "red" }}>Please enter a valid email</span>
             )}
           </Col>
@@ -499,6 +526,9 @@ const CandidateOnboarding = () => {
               }
               onChange={(e) => handleChange(e)}
             />
+            {fedIdError && (
+              <span style={{ color: "red" }}>Please enter a valid FedId</span>
+            )}
           </Col>
         </Row>
         <Row className="mt-4">
@@ -528,6 +558,11 @@ const CandidateOnboarding = () => {
                   );
                 })}
             </Form.Control>
+            {roleError && (
+              <span style={{ color: "red" }}>
+                Please enter a valid System role
+              </span>
+            )}
           </Col>
         </Row>
       </div>
