@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from "react";
+import React, { createContext, useReducer, useContext } from "react";
 import CandidateReducer from "../reducers/CandidateReducer";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
@@ -6,11 +6,12 @@ import { setDefaultCandidiateHeader, candidate } from "../utils/canditateLogin";
 import { OnBoardContext } from "./OnBoardState";
 const initial_state = {
   candidateData: {},
+  offerAcceptData: {},
 };
 
 export const CandidateContext = createContext();
-
 export const CandidateProvider = ({ children }) => {
+  const { CandidateProfile, candidateProfileData } = useContext(OnBoardContext);
   const [state, dispatch] = useReducer(CandidateReducer, initial_state);
   const candidateOnBoardLogin = (data) => {
     const formData = { username: data.username, password: data.password };
@@ -51,12 +52,30 @@ export const CandidateProvider = ({ children }) => {
       });
   };
 
+  const candidateAcceptOffer = (id) => {
+    candidate
+      .get("/api/v2/candidate/" + id + "/offer/accept")
+      .then((response) => {
+        state.offerAcceptData = response.data.data;
+        toast.info(response.data.message);
+        return dispatch({
+          type: "OFFER_ACCEPT_DATA",
+          payload: state.offerAcceptData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <CandidateContext.Provider
       value={{
         candidateOnBoardLogin,
         candidateRejectOffer,
+        candidateAcceptOffer,
         candidateData: state.candidateData,
+        offerAcceptData: state.offerAcceptData,
       }}
     >
       {children}

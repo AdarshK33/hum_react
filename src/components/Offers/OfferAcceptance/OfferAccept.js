@@ -26,7 +26,11 @@ const OfferAccept = (props) => {
   const [disabled, setDisabled] = useState(false);
   const [showAppointmentLetter, setShowAppointmentLetter] = useState(false);
   const { CandidateProfile, candidateProfileData } = useContext(OnBoardContext);
-  const { candidateRejectOffer } = useContext(CandidateContext);
+  const {
+    candidateRejectOffer,
+    candidateAcceptOffer,
+    offerAcceptData,
+  } = useContext(CandidateContext);
   const { viewCandidateId, candidateData } = useContext(OfferContext);
 
   const handleClose = () => setModal(false);
@@ -151,7 +155,9 @@ const OfferAccept = (props) => {
             <p>
               Page {pageNumber} of {numPages}
             </p>
-            {candidateProfileData && candidateProfileData.status === 5 ? (
+            {candidateProfileData &&
+            (candidateProfileData.status === 5 ||
+              candidateProfileData.status === 2) ? (
               <React.Fragment>
                 <span style={{ marginRight: "1rem" }}>
                   Do you accept the Offer letter
