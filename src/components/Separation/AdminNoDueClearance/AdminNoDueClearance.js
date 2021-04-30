@@ -27,17 +27,20 @@ const [currentRecords, setCurrentRecords] = useState([]);
 useEffect(() => {
   console.log(pageCount,"pageCount")
   viewAdminITClearanceList(searchValue, pageCount,costCenter);
+  if (adminNoDueClearanceList !== null && adminNoDueClearanceList !== undefined) {
+    setCurrentRecords(adminNoDueClearanceList);
+  }
 }, [costCenter,searchValue,pageCount]);
 
 useEffect(() => {
   CostCenter();
 }, []);
 
-useEffect(() => {
-  if (adminNoDueClearanceList !== null && adminNoDueClearanceList !== undefined) {
-    setCurrentRecords(adminNoDueClearanceList);
-  }
-}, [adminNoDueClearanceList, currentRecords]);
+// useEffect(() => {
+//   if (adminNoDueClearanceList !== null && adminNoDueClearanceList !== undefined) {
+//     setCurrentRecords(adminNoDueClearanceList);
+//   }
+// }, [adminNoDueClearanceList]);
 
 const handlePageChange = (pageNumber) => {
   setPageCount(pageNumber - 1);
@@ -45,9 +48,9 @@ const handlePageChange = (pageNumber) => {
 
     setCurrentPage(pageNumber);
     if (searchValue !== "all") {
-      viewAdminITClearanceList(searchValue,pageCount,costCenter);
+      viewAdminITClearanceList(searchValue,pageNumber-1,costCenter);
     } else {
-      viewAdminITClearanceList("all",pageCount,"all");
+      viewAdminITClearanceList("all",pageNumber-1,"all");
     }
     setCurrentRecords(adminNoDueClearanceList);
 }
@@ -59,7 +62,7 @@ const handlePageChange = (pageNumber) => {
   }
   const searchDataHandler = () => {
     if (searchValue !== "" && searchValue !== "all") {
-      viewAdminITClearanceList(searchValue,pageCount,costCenter);
+      viewAdminITClearanceList(searchValue,0,costCenter);
     }else{
       viewAdminITClearanceList("all",pageCount,"all");
 
@@ -71,7 +74,7 @@ const handleCostCenter = (options) => {
   console.log(data2)
   setCostCenter(data2)
   if (costCenter !== "" && costCenter !== "all") {
-    return viewAdminITClearanceList(searchValue,pageCount,costCenter);
+    return viewAdminITClearanceList(searchValue,0,costCenter);
   }else{
     return viewAdminITClearanceList("all",pageCount,"all");
   }
@@ -141,8 +144,8 @@ const handleCostCenter = (options) => {
                     </tr>
                   </thead>
 
-                  {currentRecords !== undefined && currentRecords !== null &&
-                    currentRecords.map((e, i) => {
+                  {adminNoDueClearanceList !== undefined && adminNoDueClearanceList !== null &&
+                    adminNoDueClearanceList.map((e, i) => {
                       return (
                         <tbody key={i + 1}>
                           <tr>
@@ -169,7 +172,7 @@ const handleCostCenter = (options) => {
                 {(adminNoDueClearanceList === null) ?
                   <p style={{ textAlign: "center" }}>No Record Found</p> : null}
 
-                {adminNoDueClearanceList !== undefined && adminNoDueClearanceList !== null && currentRecords.length === 0 ?
+                {adminNoDueClearanceList !== undefined && adminNoDueClearanceList !== null && adminNoDueClearanceList.length === 0 ?
 
                   <div className="loader-box loader" style={{ width: "100% !important" }}>
                     <div className="loader">
@@ -185,7 +188,7 @@ const handleCostCenter = (options) => {
               </div>
 
               <div>
-                {adminNoDueClearanceList !== null && adminNoDueClearanceList !== null &&
+                {adminNoDueClearanceList !== null && adminNoDueClearanceList !== undefined &&
                   <Pagination
                     itemClass="page-item"
                     linkClass="page-link"
