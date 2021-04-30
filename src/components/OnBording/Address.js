@@ -254,7 +254,7 @@ const Address = (props) => {
 
   const flatNumberValidation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
-    if (state.flatNumber !== "") {
+    if (state.flatNumber !== "" && state.flatNumber !== undefined) {
       setFlatNumberError(false);
       console.log("flatNumberSuccess");
       return true;
@@ -266,7 +266,7 @@ const Address = (props) => {
   };
   const addressLineValidations = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
-    if (state.addressLine !== "") {
+    if (state.addressLine !== "" && state.addressLine !== undefined) {
       setAddressLineError(false);
       console.log("flatNumberSuccess");
       return true;
@@ -277,7 +277,13 @@ const Address = (props) => {
     }
   };
   const countryValidation = () => {
-    if ((state.countryId !== "") & (state.countryId !== "Country")) {
+    console.log("--------------->", countryName);
+    if (
+      (countryName !== null) &
+      (countryName !== undefined) &
+      (countryName !== "") &
+      (countryName !== "Select Country")
+    ) {
       setCountryError(false);
       console.log("CountrySucess");
       return true;
@@ -288,7 +294,12 @@ const Address = (props) => {
     }
   };
   const StateValidation = () => {
-    if ((state.stateId !== 0) & (state.stateId !== "State")) {
+    if (
+      (stateName !== null) &
+      (stateName !== undefined) &
+      (stateName !== 0) &
+      (stateName !== "Select State")
+    ) {
       setStateError(false);
       console.log("StateSucess");
       return true;
@@ -299,7 +310,12 @@ const Address = (props) => {
     }
   };
   const CityValidation = () => {
-    if ((state.cityId !== 0) & (state.cityId !== "City")) {
+    if (
+      (cityName !== null) &
+      (cityName !== undefined) &
+      (cityName !== 0) &
+      (cityName !== "Select City")
+    ) {
       setCityError(false);
       console.log("citySucess");
       return true;
@@ -310,10 +326,16 @@ const Address = (props) => {
     }
   };
   const PinCodeErrorValidations = () => {
-    const nameValid = /^[a-zA-Z\b]+$/;
-    if (state.pinCode !== "") {
+    const aadharValid = /^[0-9\b]+$/;
+    if (
+      state.pinCode !== "" &&
+      state.pinCode !== undefined &&
+      aadharValid.test(state.pinCode) &&
+      state.pinCode.length === 6
+    ) {
       setPinCodeError(false);
-      console.log("pinCodeSuccess");
+
+      console.log("pinCodeSuccess", state.pinCode.length);
       return true;
     } else {
       setPinCodeError(true);
@@ -322,8 +344,14 @@ const Address = (props) => {
     }
   };
   const PhoneNoErrorValidations = () => {
-    const nameValid = /^[a-zA-Z\b]+$/;
-    if (state.phoneNumber !== "") {
+    const aadharValid = /^[0-9\b]+$/;
+
+    if (
+      state.phoneNumber !== "" &&
+      state.phoneNumber !== undefined &&
+      aadharValid.test(state.phoneNumber) &&
+      state.phoneNumber.length === 10
+    ) {
       setPhoneNoError(false);
       console.log("phoneNoeSuccess");
       return true;
@@ -336,7 +364,12 @@ const Address = (props) => {
 
   const permanentFlatNumberValidation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
-    if (state.permanentFlatNumber !== "") {
+    console.log("------>pFNo", state.permanentFlatNumber);
+    if (
+      state.permanentFlatNumber !== "" &&
+      state.permanentFlatNumber !== null &&
+      state.permanentFlatNumber !== undefined
+    ) {
       setPermanentFlatNumberError(false);
       console.log("flatNumberSuccess");
       return true;
@@ -348,7 +381,11 @@ const Address = (props) => {
   };
   const permanentAddressLineValidations = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
-    if (state.permanentAddressLine !== "") {
+    if (
+      state.permanentAddressLine !== "" &&
+      state.permanentAddressLine !== null &&
+      state.permanentAddressLine !== undefined
+    ) {
       setPermanentAddressLineError(false);
       console.log("addresSuccess");
       return true;
@@ -360,8 +397,10 @@ const Address = (props) => {
   };
   const permanentCountryValidation = () => {
     if (
-      (state.permanentCountryId !== "") &
-      (state.permanentCountryId !== "Country")
+      (permanentCountryName !== null) &
+      (permanentCountryName !== undefined) &
+      (permanentCountryName !== "") &
+      (permanentCountryName !== "Select Country")
     ) {
       setPermanentCountryError(false);
       console.log("CountrySucess");
@@ -373,7 +412,12 @@ const Address = (props) => {
     }
   };
   const permanentStateValidation = () => {
-    if ((state.permanentStateId !== 0) & (state.permanentStateId !== "State")) {
+    if (
+      (permanentStateName !== null) &
+      (permanentStateName !== undefined) &
+      (permanentStateName !== 0) &
+      (permanentStateName !== "Select State")
+    ) {
       setPermanentStateError(false);
       console.log("StateSucess");
       return true;
@@ -384,7 +428,12 @@ const Address = (props) => {
     }
   };
   const permanentCityValidation = () => {
-    if ((state.permanentCityId !== 0) & (state.permanentCityId !== "City")) {
+    if (
+      (permanentCityName !== null) &
+      (permanentCityName !== undefined) &
+      (permanentCityName !== 0) &
+      (permanentCityName !== "Select City")
+    ) {
       setPermanentCityError(false);
       console.log("citySucess");
       return true;
@@ -395,8 +444,12 @@ const Address = (props) => {
     }
   };
   const permanentPinCodeErrorValidations = () => {
-    const nameValid = /^[a-zA-Z\b]+$/;
-    if (state.permanentPinCode !== "") {
+    const aadharValid = /^[0-9\b]+$/;
+    if (
+      state.permanentPinCode !== "" &&
+      aadharValid.test(state.permanentPinCode) &&
+      state.permanentPinCode.length === 6
+    ) {
       setPermanentPinCodeError(false);
       console.log("pinCodeSuccess");
       return true;
@@ -407,8 +460,12 @@ const Address = (props) => {
     }
   };
   const permanentPhoneNoErrorValidations = () => {
-    const nameValid = /^[a-zA-Z\b]+$/;
-    if (state.permanentPhoneNumber !== "") {
+    const aadharValid = /^[0-9\b]+$/;
+    if (
+      state.permanentPhoneNumber !== "" &&
+      aadharValid.test(state.permanentPhoneNumber) &&
+      state.permanentPhoneNumber.length === 10
+    ) {
       setPermanentPhoneNoError(false);
       console.log("phoneNoeSuccess");
       return true;
@@ -418,6 +475,7 @@ const Address = (props) => {
       return false;
     }
   };
+
   const checkValidations = () => {
     if (
       (flatNumberValidation() == true) &
@@ -511,11 +569,7 @@ const Address = (props) => {
   };
 
   const submitHandler = (e) => {
-    const nextPage = props.NextStep;
-    // let addressValue;
-    nextPage();
     e.preventDefault();
-    console.log("addressViewData", addressViewData, addressSaveData, saveclick);
     // if (saveclick === false) {
     //   addressValue = 0;
     //   setSaveclick(true);
@@ -525,6 +579,7 @@ const Address = (props) => {
     //     : addressViewData.addressId;
     // }
     const value = checkValidations();
+
     if (value === true) {
       // setSaveclick(true);
       const AddressInfo = {
@@ -749,7 +804,7 @@ const Address = (props) => {
                   style={cityError ? { borderColor: "red" } : {}}
                   onChange={cityHandler}
                 >
-                  <option value="">City</option>
+                  <option value="">Select City</option>
                   {candidateCityData !== null &&
                     candidateCityData !== undefined &&
                     candidateCityData.length > 0 &&
@@ -775,6 +830,7 @@ const Address = (props) => {
                   name="pinCode"
                   value={state.pinCode}
                   onChange={changeHandler}
+                  maxLength="6"
                   required
                   style={pinCodeError ? { borderColor: "red" } : {}}
                   placeholder="Pin Code"
@@ -799,6 +855,7 @@ const Address = (props) => {
                   name="phoneNumber"
                   value={state.phoneNumber}
                   onChange={changeHandler}
+                  maxLength="10"
                   required
                   style={phoneNoError ? { borderColor: "red" } : {}}
                   placeholder="Phone No"
@@ -1057,6 +1114,7 @@ const Address = (props) => {
                       name="permanentPinCode"
                       value={state.permanentPinCode}
                       onChange={changeHandler}
+                      maxLength="6"
                       required
                       style={
                         PermanentPinCodeError ? { borderColor: "red" } : {}
@@ -1083,6 +1141,7 @@ const Address = (props) => {
                       name="permanentPhoneNumber"
                       value={state.permanentPhoneNumber}
                       onChange={changeHandler}
+                      maxLength="10"
                       required
                       style={
                         PermanentPhoneNoError ? { borderColor: "red" } : {}
