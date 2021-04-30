@@ -301,6 +301,7 @@ const CandidateOnboarding = () => {
       );
     }
   };
+
   const handleDataSave = () => {
     const costCenterData = {
       costCenterSplitId: 0,
@@ -336,6 +337,7 @@ const CandidateOnboarding = () => {
       startYearD: parseInt(moment(startYear4Date).format("YYYY")),
       startYearE: parseInt(moment(startYear5Date).format("YYYY")),
     };
+
     setCostCentersData(costCenterData);
     if (
       (validateEmail(employeeData.email) &&
@@ -516,6 +518,9 @@ const CandidateOnboarding = () => {
               }
               onChange={(e) => handleChange(e)}
             />
+            {emailError === true && (
+              <span style={{ color: "red" }}>Please enter a valid email</span>
+            )}
           </Col>
         </Row>
         <Row className="mt-4">

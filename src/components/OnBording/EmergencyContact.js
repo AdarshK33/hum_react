@@ -98,7 +98,7 @@ const EmergencyContact = (props) => {
 
     // if (typeof fields["addressLine"] !== "undefined") {
     //   if (
-    //     !fields["addressLine"].match(/^([0-9]{5}|[a-zA-Z][a-zA-Z ]{0,49})$/)
+    //     !fields["addressLine"].match(/^[a-zA-Z0-9\s,.'-]{3,}$/)
     //   ) {
     //     formIsValid = false;
     //     stateError["addressLineError"] = "*Please enter valid address.";
@@ -109,23 +109,23 @@ const EmergencyContact = (props) => {
     //   stateError["cityError"] = "*Please enter your city.";
     // }
 
-    // if (typeof fields["city"] !== "undefined") {
-    //   if (!fields["city"].match(/^[a-zA-Z ]*$/)) {
-    //     formIsValid = false;
-    //     stateError["cityError"] = "*Please enter alphabet characters only.";
-    //   }
-    // }
+    if (typeof fields["city"] !== "undefined") {
+      if (!fields["city"].match(/^[a-zA-Z ]*$/)) {
+        formIsValid = false;
+        stateError["cityError"] = "*Please enter valid city name.";
+      }
+    }
     // if (!fields["country"]) {
     //   formIsValid = false;
     //   stateError["countryError"] = "*Please enter your country.";
     // }
 
-    // if (typeof fields["country"] !== "undefined") {
-    //   if (!fields["country"].match(/^[a-zA-Z ]*$/)) {
-    //     formIsValid = false;
-    //     stateError["countryError"] = "*Please enter alphabet characters only.";
-    //   }
-    // }
+    if (typeof fields["country"] !== "undefined") {
+      if (!fields["country"].match(/^[a-zA-Z ]*$/)) {
+        formIsValid = false;
+        stateError["countryError"] = "*Please enter valid country name.";
+      }
+    }
     // if (!fields["locality"]) {
     //   formIsValid = false;
     //   stateError["localityError"] = "Please enter your locality.";
@@ -153,12 +153,12 @@ const EmergencyContact = (props) => {
     //   stateError["pinCodeError"] = "*Please enter your pinCode.";
     // }
 
-    // if (typeof fields["pinCode"] !== "undefined") {
-    //   if (!/^[0-9]{6}$/g.test(fields["pinCode"])) {
-    //     formIsValid = false;
-    //     stateError["pinCodeError"] = "*Please enter numbers only.";
-    //   }
-    // }
+    if (typeof fields["pinCode"] !== "undefined") {
+      if (!/^[0-9]{6}$/g.test(fields["pinCode"])) {
+        formIsValid = false;
+        stateError["pinCodeError"] = "*Please enter valid pinCode.";
+      }
+    }
 
     if (!fields["relationship"]) {
       formIsValid = false;
