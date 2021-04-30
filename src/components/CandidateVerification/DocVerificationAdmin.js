@@ -315,7 +315,8 @@ const DocVerification = () => {
                         {user.role === "ADMIN" &&
                         item.documentType === 1 &&
                         state.verificationStatus === 1 &&
-                        state.adminVerificationStatus === 0 ? (
+                        (state.adminVerificationStatus === 0 ||
+                          state.adminVerificationStatus === null) ? (
                           <button
                             className="approveButton ml-4"
                             onClick={() =>
@@ -333,7 +334,8 @@ const DocVerification = () => {
                         {user.role === "ADMIN" &&
                         item.documentType === 1 &&
                         state.verificationStatus === 1 &&
-                        state.adminVerificationStatus === 0 ? (
+                        (state.adminVerificationStatus === 0 ||
+                          state.adminVerificationStatus === null) ? (
                           <button
                             className="approveButton ml-4"
                             disabled={
@@ -575,11 +577,13 @@ const DocVerification = () => {
           textAlign: "center",
         }}
       >
-        {state.uanStatus !== 1 && state.adminVerificationStatus === 1 && (
-          <button className="stepperButtons" onClick={() => handleDocSave()}>
-            Save
-          </button>
-        )}
+        {state.uanStatus !== 1 &&
+          state.adminVerificationStatus === 1 &&
+          UANYes === false && (
+            <button className="stepperButtons" onClick={() => handleDocSave()}>
+              Save
+            </button>
+          )}
 
         {state !== undefined &&
           state.verificationStatus === 1 &&
