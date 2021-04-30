@@ -85,12 +85,12 @@ const Documents = (props) => {
 
   useEffect(() => {
     documentView(candidateProfileData.candidateId);
-  }, [candidateProfileData, documentViewData]);
+  }, [candidateProfileData]);
   console.log("documentViewData", documentViewData);
 
   useEffect(() => {
     PFDeclarationView(candidateProfileData.candidateId);
-  }, [candidateProfileData, pfDeclarationView]);
+  }, [candidateProfileData]);
   // console.log(pfDeclarationView, "<------pfDeclarationViewuse");
 
   useEffect(() => {
