@@ -16,6 +16,8 @@ const GroupReducer = (state, action) => {
          return { ...state, financeList: action.payload };
          case "FETCH_ADMIN_NODUECLEARANCE_LIST":
            return {...state,adminNoDueClearanceList:action.payload}
+           case "FETCH_FINANCE_ADMIN_NODUECLEARANCE_LIST":
+            return {...state,financeAdminNoDueClearanceList:action.payload}
       default:
         return state;
   }
