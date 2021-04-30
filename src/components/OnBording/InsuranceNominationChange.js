@@ -292,14 +292,34 @@ const InsuranceNomination = (props) => {
           (candidatePersonalInfoData.maritalStatus === "UnMarried")
       ) {
         setMarriedStatus(true);
-      } else {
         setRelativeType(false);
-        setParentCheck(true);
+        setParentCheck(false);
         setInlawCheck(false);
         setNAcheck(false);
+        setAddOne(false);
+        setAddTwo(false);
+        setAddFirstInLaw(false);
+        setAddSecondInLaw(false);
         state.relationship = "Father";
         state.nominee2Relationship = "Mother";
+      } else if (
+        candidatePersonalInfoData &&
+        candidatePersonalInfoData.maritalStatus !== null &&
+        candidatePersonalInfoData.maritalStatus !== undefined &&
+        (candidatePersonalInfoData.maritalStatus === "married") |
+          (candidatePersonalInfoData.maritalStatus === "Married")
+      ) {
+        setRelativeType(true);
+        setParentCheck(false);
+        setInlawCheck(true);
+        setNAcheck(false);
+        state.relationship = "Spouse";
+        state.nominee2Relationship = "Child 1";
       }
+      // } else {
+      //   state.relationship = "Father";
+      //   state.nominee2Relationship = "Mother";
+      // }
     }
   }, [candidatePersonalInfoData, candidateInsuranceNominationData]);
 
@@ -1148,16 +1168,24 @@ const InsuranceNomination = (props) => {
     // if (nominee5Relationship !== "") {
     //   state.nominee3Relationship = "Brother";
     // }
-    if (parentsCheck === true) {
-      state.nominee3Relationship = "Father";
-      state.nominee4Relationship = "Mother";
-    } else if (InlawCheck === true) {
-      state.In_law_nominee1Relationship = "Father In-Law";
-      state.In_law_nominee2Relationship = "Mother In-Law";
-    } else if (NAcheck === true) {
-      state.nominee3Relationship = "";
-      state.nominee4Relationship = "";
+
+    state.nominee3Relationship = "Father";
+    state.nominee4Relationship = "Mother";
+
+    state.In_law_nominee1Relationship = "Father In-Law";
+    state.In_law_nominee2Relationship = "Mother In-Law";
+
+    state.nominee3Relationship = "";
+    state.nominee4Relationship = "";
+
+    if (marriedStatus === true) {
+      state.relationship = "Father";
+      state.nominee2Relationship = "Mother";
+    } else {
+      state.relationship = "Spouse";
+      state.nominee2Relationship = "Child 1";
     }
+
     if (checkAllValidations() === true) {
       const CountOFNominees = NomineeCount;
       const first_nomine_info = {

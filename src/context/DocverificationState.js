@@ -159,7 +159,7 @@ export const DocsVerificationProvider = (props) => {
       });
   };
 
-  const approveDocument = (docId,candidateId) => {
+  const approveDocument = (docId, candidateId) => {
     setLoader(true);
     client
       .get("/api/v1/candidate/document/" + docId + "/accept")
@@ -169,7 +169,9 @@ export const DocsVerificationProvider = (props) => {
         toast.info(response.data.message);
 
         setLoader(false);
-        verificationDocsView(candidateId)
+        verificationDocsView(candidateId);
+        personalInfo(candidateId);
+
         return dispatch({
           type: "GET_ACCEPT_STATUS",
           payload: state.acceptStatus,
@@ -179,13 +181,17 @@ export const DocsVerificationProvider = (props) => {
         console.log(error);
       });
   };
-  const approveAadharByAdmin = (docId) => {
+  const approveAadharByAdmin = (docId, candidateId) => {
     setLoader(true);
     client
       .get("/api/v1/candidate/aadhaar/" + docId + "/accept")
       .then((response) => {
+        state.aadharStatus = response.data.message;
         toast.info(response.data.message);
         setLoader(false);
+        verificationDocsView(candidateId);
+        personalInfo(candidateId);
+
         return dispatch({
           type: "AADHAR_ACCEPT",
           payload: state.aadharStatus,
@@ -210,6 +216,8 @@ export const DocsVerificationProvider = (props) => {
         setLoader(false);
         state.disApproveAadhar = response.data.status;
         toast.info(response.data.message);
+        verificationDocsView(candidateId);
+        personalInfo(candidateId);
         return dispatch({
           type: "AADHAR_REJECT",
           payload: state.disApproveAadhar,
@@ -232,7 +240,9 @@ export const DocsVerificationProvider = (props) => {
         toast.info(response.data.message);
         state.rejectMessage = response.data.message;
         setLoader(false);
-        verificationDocsView(candidateId)
+        verificationDocsView(candidateId);
+        personalInfo(candidateId);
+
         return dispatch({
           type: "GET_REJECT_STATUS",
           payload: state.rejectStatus,
@@ -373,9 +383,9 @@ export const DocsVerificationProvider = (props) => {
       });
   };
 
-  const viewCityVerification = (state) => {
+  const viewCityVerification = (stateId) => {
     return client
-      .get("/api/v1/city/view/city/stateId?stateId=" + state)
+      .get("/api/v1/city/view/city/stateId?stateId=" + stateId)
       .then((response) => {
         console.log(response);
         state.verificationCityList = response.data.data;

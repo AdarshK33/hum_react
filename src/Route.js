@@ -117,7 +117,11 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/onboard`}
             component={OnBoardingStepper}
       /> */}
-
+      <Route
+        path={`${process.env.PUBLIC_URL}/onboard-offer`}
+        component={LoginOnboard}
+      />
+      <Route path={`${process.env.PUBLIC_URL}/offer`} component={OfferAccept} />
       <Fragment>
         <App>
           {/* dashboard menu */}
