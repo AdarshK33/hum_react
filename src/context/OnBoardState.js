@@ -511,7 +511,7 @@ export const OnBoardProvider = (props) => {
   const completeDocumentUpload = (id) => {
     console.log(" document id", id);
     return candidate
-      .get("/v2/candidate/documents/complete?candidateId=" + id)
+      .get("/api/v2/candidate/documents/complete?candidateId=" + id)
       .then((response) => {
         state.documentUploadData = response.data.data;
         console.log("documentUploadData.message", state.documentUploadData);

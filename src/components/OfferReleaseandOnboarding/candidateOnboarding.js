@@ -168,6 +168,7 @@ const CandidateOnboarding = () => {
         ["email"]: empData.email,
         ["fedId"]: empData.fedId,
         ["role"]: empData.role,
+        ["isClusterManager"]: 0,
       });
     }
   }, [empData]);

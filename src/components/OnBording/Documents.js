@@ -85,7 +85,7 @@ const Documents = (props) => {
 
   useEffect(() => {
     documentView(candidateProfileData.candidateId);
-  }, []);
+  }, [candidateProfileData, documentViewData]);
   console.log("documentViewData", documentViewData);
 
   useEffect(() => {

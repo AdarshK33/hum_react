@@ -478,9 +478,7 @@ const DocVerification = () => {
                           )
                         )}
                       </p>
-                      {item.documentType > 5 &&
-                        item.documentType <= 9 &&
-                        item.documentName}
+                      {item.documentType > 5 && item.documentName}
                     </td>
                     {item.reviewStatus !== null && item.documentType > 5 && (
                       <td>{item.reviewStatus}</td>
