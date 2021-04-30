@@ -71,12 +71,11 @@ const DocVerification = () => {
     getUserInfo();
     personalInfo(candidateId);
   }, []);
-  
+
   useEffect(() => {
     console.log("prsnl");
     setState(personalInfoData);
   }, [personalInfoData]);
-  
 
   const handleShifting = () => {
     changeState(!isChecked);
@@ -97,8 +96,8 @@ const DocVerification = () => {
   };
   const handleApproveDocument = (docId) => {
     setShiftingTheStatus(docId);
-    console.log(shiftingTheStatus,"in approve")
-     return approveDocument(docId,candidateId);
+    console.log(shiftingTheStatus, "in approve");
+    return approveDocument(docId, candidateId);
   };
   const handleDisApproveDocument = (docId, type) => {
     setDisApproveTheStatus(docId);
@@ -106,8 +105,7 @@ const DocVerification = () => {
     setdocId(docId);
     setDocType(type);
 
-    console.log(shiftingTheStatus,"in approve")
-
+    console.log(shiftingTheStatus, "in approve");
   };
   const handleClose = () => setModal(false);
   const handleChange = (e) => {
