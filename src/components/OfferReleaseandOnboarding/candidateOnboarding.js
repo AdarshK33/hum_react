@@ -170,6 +170,8 @@ const CandidateOnboarding = () => {
         ["role"]: empData.role,
         ["address"]: empData.address,
         ["isClusterManager"]: 0,
+        ["aadhaarNumber"]: empData.aadhaarNumber,
+        ["designation"]: empData.designation,
       });
     }
   }, [empData]);
@@ -209,6 +211,8 @@ const CandidateOnboarding = () => {
       phone: "",
       position: "",
       role: "",
+      designation: "",
+      aadhaarNumber: "",
     },
     []
   );
