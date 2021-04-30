@@ -79,7 +79,16 @@ const PFDeclaration = (props) => {
   console.log("documentViewData", documentViewData);
 
   useEffect(() => {
-    if (documentViewData !== null && documentViewData !== undefined) {
+    if (
+      documentViewData &&
+      documentViewData !== null &&
+      documentViewData !== undefined &&
+      pfDeclarationView &&
+      pfDeclarationView !== null &&
+      pfDeclarationView !== undefined &&
+      Object.keys(pfDeclarationView).length !== 0 &&
+      Object.keys(documentViewData).length !== 0
+    ) {
       let form11Doc = "";
       let form2epfDoc = "";
       let formFDoc = "";
@@ -98,19 +107,21 @@ const PFDeclaration = (props) => {
           setFormFUploade(true);
         }
       });
+
       setState({
-        uanNumber: "",
+        uanNumber: pfDeclarationView.uanNumber,
         form11: form11Doc,
         form2epf: form2epfDoc,
         formf: formFDoc,
       });
     }
-  }, [documentViewData]);
+  }, [documentViewData, pfDeclarationView]);
+  console.log("---->", documentViewData);
 
   useEffect(() => {
     PFDeclarationView(candidateProfileData.candidateId);
     console.log(pfDeclarationView, "pfDeclarationViewuse");
-  }, []);
+  }, [pfDeclarationView]);
 
   useEffect(() => {
     console.log(pfDeclarationView, "pfDeclarationViewuse2");
@@ -185,10 +196,10 @@ const PFDeclaration = (props) => {
         );
         setDeclarationIdValue(pfDeclarationView.declarationId);
       }
-      if (pfDeclarationView.uanNumber !== undefined) {
-        console.log("uab number");
-        setState({ uanNumber: pfDeclarationView.uanNumber });
-      }
+      // if (pfDeclarationView.uanNumber !== undefined) {
+      //   console.log("uab number");
+      //   setState({ uanNumber: pfDeclarationView.uanNumber });
+      // }
       setDataExist({ exist: true });
     }
     console.log(candidateProfileData.candidateId, "pfdeclaration");
@@ -508,16 +519,19 @@ const PFDeclaration = (props) => {
     let fileUpload;
     if (event.target.name === "form11") {
       if (Form11Validation() === true) {
+        setForm11Uploade(true);
         fileUpload = ObjState.form11;
         fileType = 10;
       }
     } else if (event.target.name === "form2epf") {
       if (Form2EpfValidation() === true) {
+        setForm2EpfUploade(true);
         fileUpload = ObjState.form2epf;
         fileType = 11;
       }
     } else if (event.target.name === "formf") {
       if (FormFValidation() === true) {
+        setFormFUploade(true);
         fileUpload = ObjState.formf;
         fileType = 12;
       }

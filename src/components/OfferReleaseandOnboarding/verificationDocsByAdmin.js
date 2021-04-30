@@ -47,6 +47,8 @@ const DocVerification = () => {
     personalInfoData,
     personalInfo,
     step5suscessStatus,
+    approveAadharByAdmin,
+    disapproveAadharByAdmin,
   } = useContext(DocsVerifyContext);
   const { getUserInfo, user } = useContext(AppContext);
   useEffect(() => {
@@ -60,8 +62,8 @@ const DocVerification = () => {
     changeState(!isChecked);
   };
 
-  const handleApproveDocument = (docId) => {
-    approveDocument(docId);
+  const handleApproveDocument = (docId, candidateId) => {
+    approveAadharByAdmin(docId, candidateId);
   };
   const handleDisApproveDocument = (docId) => {
     setModal(true);
@@ -74,7 +76,7 @@ const DocVerification = () => {
   };
   const handleSave = (docId, candidateId, remarks) => {
     if (remarks !== "") {
-      disApproveDocument(docId, candidateId, remarks);
+      disapproveAadharByAdmin(docId, candidateId, remarks);
 
       handleClose();
       if (
@@ -92,6 +94,7 @@ const DocVerification = () => {
   //   verificationDocsView(candidateData.candidateInformation.candidateId);
   // }, [onBoardPopup]);
   const handleOnboard = () => {
+    console.log("inside handleOnboard");
     step5suscessStatus(true);
     // adhaarVerificationNotification(
     //   candidateData.candidateInformation.candidateId
@@ -319,7 +322,10 @@ const DocVerification = () => {
                             <button
                               className="approveButton ml-4"
                               onClick={() =>
-                                handleApproveDocument(item.documentId)
+                                handleApproveDocument(
+                                  item.documentId,
+                                  candidateData.candidateInformation.candidateId
+                                )
                               }
                             >
                               Approve
