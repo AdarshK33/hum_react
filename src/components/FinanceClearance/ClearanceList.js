@@ -103,12 +103,14 @@ const FinanceClearanceList = () => {
     );
   };
 
-  // const handleSave = (value) => {
-  //   const formData = value.data;
-  //   console.log(formData, pageCount, "handlelsave");
-  //   setCleranceData(formData);
-  //   updateITClearanceList(formData, searchValue, pageCount, costCenter);
-  // };
+  const handleSave = (value) => {
+    const formData = value.data;
+    console.log(formData, pageCount, "handlelsave");
+    // setCleranceData(formData);
+    saveFinanceClearanceData(formData, searchValue, pageCount, costCenter);
+
+    // updateITClearanceList(formData, searchValue, pageCount, costCenter);
+  };
   useEffect(() => {
     separationListView("all", pageCount, "all");
   }, []);
@@ -154,7 +156,7 @@ const FinanceClearanceList = () => {
                 lineHeight: "30px",
               }
         }
-        // onClick={() => handleSave(e)}
+        onClick={() => handleSave(e)}
       >
         Save
       </button>
