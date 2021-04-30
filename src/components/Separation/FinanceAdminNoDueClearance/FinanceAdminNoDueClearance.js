@@ -114,16 +114,13 @@ const handleCostCenter = (options) => {
     return viewFinanceAdminClearanceList("all",pageCount,"all");
   }
 } 
-const renderStatusOptionTwo = (value) => {
+const renderStatusOptions = (value) => {
     return (
-      <div>
-        <select name="itClearanceStatus" value={value.data.financeClearanceStatus} onChange={(e) => statusRender(e,value)}>
-          <option value="0"> Due </option>
-          <option value="1"> No Due </option>
-          <option value="2"> On Hold </option>
-        </select>
-      </div>
-    );
+        <div class="switch">
+  <input type="checkbox" name="itClearanceStatus" value={value.data.financeClearanceStatus} onChange={(e) => statusRender(e,value)}></input>
+  <span class="slider"></span>
+</div>
+    )
   };
 
   const onGridReady = (params) => {
@@ -210,10 +207,31 @@ const renderStatusOptionTwo = (value) => {
             <AgGridColumn  className="columnColor" editable="false" headerName="Joining Date" field="joiningDate"></AgGridColumn>
             <AgGridColumn className="columnColor" editable="false" headerName="Last Working Day" field="lastWorkingDay"></AgGridColumn>
             <AgGridColumn className="columnColor" editable="false"  headerName="Mode of Separation" field="modeOfSeparation"></AgGridColumn>
-            <AgGridColumn className="columnColor" editable="false"  headerName="F & F Complete" field="fullAndFinalCompleteStatus"></AgGridColumn>
+            <AgGridColumn 
+            className="columnColor" 
+            editable="false" 
+             headerName="F & F Complete" 
+            field="fullAndFinalCompleteStatus"
+            editable="false" 
+              colId="status"
+            cellRendererFramework={renderStatusOptions}
+            cellEditorParams={{
+              values: ["0","1","2"],
+              cellRenderer: { statusRender },
+            }}
+            ></AgGridColumn>
             <AgGridColumn className="columnColor" editable="false"  headerName="F & F Amount" field="fullAndFinalAmount"></AgGridColumn>
             <AgGridColumn className="columnColor" editable="false"  headerName="F & F Processed On" field="fullAndFinalProcessDate"></AgGridColumn>
-            <AgGridColumn className="columnColor" editable="false"  headerName="Deactivate Profile" field="deactivateProfile"></AgGridColumn>
+            <AgGridColumn className="columnColor" editable="false" 
+             headerName="Deactivate Profile"
+              field="deactivateProfile"
+              colId="status"
+              cellRendererFramework={renderStatusOptions}
+              cellEditorParams={{
+                values: ["0","1","2"],
+                cellRenderer: { statusRender }
+              }}
+              ></AgGridColumn>
             <AgGridColumn
                       headerName="Action"
                       editable="false"

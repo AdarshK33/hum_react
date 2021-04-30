@@ -473,7 +473,7 @@ const employeeIdHandle = (e)=>{
     <div>
       <Fragment>
         <Container fluid>
-      <Breadcrumb title="No Due Clearance" parent="No Due Clearance" />
+      <Breadcrumb title="Finance Clearance" parent="Finance Clearance" />
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
