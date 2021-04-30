@@ -383,9 +383,9 @@ export const DocsVerificationProvider = (props) => {
       });
   };
 
-  const viewCityVerification = (state) => {
+  const viewCityVerification = (stateId) => {
     return client
-      .get("/api/v1/city/view/city/stateId?stateId=" + state)
+      .get("/api/v1/city/view/city/stateId?stateId=" + stateId)
       .then((response) => {
         console.log(response);
         state.verificationCityList = response.data.data;

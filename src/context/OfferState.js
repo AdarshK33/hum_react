@@ -421,7 +421,7 @@ export const OfferProvider = (props) => {
             "aadhaarNotificationData.message",
             state.aadhaarNotificationData
           );
-          toast.info("Documents uploaded successfully");
+          toast.info(response.data.message);
           return dispatch({
             type: "ADHAAR_NOTIFICATION_DATA",
             payload: state.aadhaarNotificationData,
