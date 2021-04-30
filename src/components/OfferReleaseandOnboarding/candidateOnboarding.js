@@ -222,6 +222,14 @@ const CandidateOnboarding = () => {
 
     setError(false);
   };
+  const alphaNumeric = (fedId) => {
+    var letterNumber = /^[0-9a-zA-Z]+$/;
+    if (fedId.match(letterNumber)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   const validateEmail = (email) => {
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -327,12 +335,13 @@ const CandidateOnboarding = () => {
       startYearE: parseInt(moment(startYear5Date).format("YYYY")),
     };
     setCostCentersData(costCenterData);
-    if (validateEmail(employeeData.email)) {
+    if (
+      validateEmail(employeeData.email) &&
+      alphaNumeric(employeeData.fedId) &&
+      employeeData.role !== "" &&
+      personalInfoData.status === 6
+    ) {
       createEmployee(employeeData);
-      // if (createStatus === "SUCCESS") {
-      //   alert("Hii");
-      //   costCenterSplit(costCenterData);
-      // }
     } else {
       setError(true);
     }
@@ -478,9 +487,6 @@ const CandidateOnboarding = () => {
               }
               onChange={(e) => handleChange(e)}
             />
-            {emailError === true && (
-              <span style={{ color: "red" }}>Please enter a valid email</span>
-            )}
           </Col>
         </Row>
         <Row className="mt-4">
@@ -530,6 +536,12 @@ const CandidateOnboarding = () => {
             </Form.Control>
           </Col>
         </Row>
+        {emailError === true && (
+          <span style={{ color: "red" }}>
+            Please Enter Valid Details and make sure Appointment Letter
+            Generated
+          </span>
+        )}
       </div>
       <div className="px-5 mx-auto mt-4">
         <h5>
