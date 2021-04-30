@@ -27,6 +27,7 @@
   width: 100%;
   margin: 0px;
   overflow-x: scroll;
+  position: relative;
 }
 
 .roster-table tr {
@@ -101,7 +102,7 @@
   font-size: 12px;
 }
 
-.table-empDetails div:nth-child(3) {
+.empDetails-left div:nth-child(3) {
   color: #33373a;
   font-size: 14px;
 }
@@ -110,4 +111,8 @@
   display: flex;
   padding-right: 0px !important;
   justify-content: flex-end;
+}
+
+.game-cell {
+  padding: 20px;
 }
