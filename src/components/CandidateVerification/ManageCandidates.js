@@ -29,6 +29,7 @@ const CandidateList = () => {
     contactInformation,
     personalInfo,
     fetchPfDetails,
+    verificationDocsView,
     downloadDocument,
   } = useContext(DocsVerifyContext);
   useEffect(() => {
@@ -76,6 +77,7 @@ const CandidateList = () => {
   const FetchCandidateData = (candidateId) => {
     fetchNominationDetails(candidateId);
     fetchPfDetails(candidateId);
+    verificationDocsView(candidateId);
     bankDetailsData(candidateId);
     contactInformation(candidateId);
     addressInfo(candidateId);
