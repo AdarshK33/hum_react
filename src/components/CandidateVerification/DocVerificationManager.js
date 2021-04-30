@@ -59,12 +59,12 @@ const DocVerification = () => {
   } = useContext(OfferContext);
   const { getUserInfo, user } = useContext(AppContext);
 
-  useEffect(() => {
-    console.log("acceptStatus+rejectStatus");
-    verificationDocsView(candidateId);
-    personalInfo(candidateId);
-    // setState(personalInfoData);
-  }, [acceptStatus, rejectStatus, rejectMessage]);
+  // useEffect(() => {
+  //   console.log("acceptStatus+rejectStatus");
+  //   verificationDocsView(candidateId);
+  //   personalInfo(candidateId);
+  //   // setState(personalInfoData);
+  // }, []);
 
   useEffect(() => {
     console.log("userinfo");

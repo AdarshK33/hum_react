@@ -89,6 +89,7 @@ const CandidateOnboarding = () => {
   const [previewLetter, setPreviewLetter] = useState(false);
   const [letterSent, setLetterSent] = useState(false);
   const [showSubmitModal, setSubmitModal] = useState(false);
+  const [costCenterError, setCostCenterError] = useState(false);
 
   useEffect(() => {
     if (
@@ -246,13 +247,14 @@ const CandidateOnboarding = () => {
       }
     }
   };
-  useEffect(() => {
-    if (createStatus === "SUCCESS") {
-      setEmployeeData(empData);
-      costCenterSplit(costCentersData);
-      step6suscessStatus(true);
-    }
-  }, [createStatus]);
+  const saveCostcenterData = (costCentersData) => {
+    // setEmployeeData(empData);
+    costCenterSplit(costCentersData);
+    step6suscessStatus(true);
+    // } else {
+    //   setCostCenterError(true);
+    // }
+  };
   const generateAppointmentLetter = () => {
     console.log("candidateData id", candidateData);
     if (
@@ -338,14 +340,41 @@ const CandidateOnboarding = () => {
 
     setCostCentersData(costCenterData);
     if (
-      validateEmail(employeeData.email) &&
-      alphaNumeric(employeeData.fedId) &&
-      employeeData.role !== "" &&
-      personalInfoData.status === 6
+      (validateEmail(employeeData.email) &&
+        alphaNumeric(employeeData.fedId) &&
+        employeeData.role !== "" &&
+        personalInfoData.status === 6 &&
+        costCenterData.costCentreA !== "" &&
+        costCenterData.endMonthA !== "" &&
+        costCenterData.startMonthA !== "" &&
+        costCenterData.startYearA !== "" &&
+        costCenterData.endYearA !== "") ||
+      (costCenterData.costCentreB !== "" &&
+        costCenterData.startYearB !== "" &&
+        costCenterData.startMonthB !== "" &&
+        costCenterData.endMonthB !== "" &&
+        costCenterData.endYearB !== "") ||
+      (costCenterData.costCentreC !== "" &&
+        costCenterData.startYearC !== "" &&
+        costCenterData.startMonthC !== "" &&
+        costCenterData.endMonthC !== "" &&
+        costCenterData.endYearC !== "") ||
+      (costCenterData.costCentreD !== "" &&
+        costCenterData.startYearD !== "" &&
+        costCenterData.startMonthD !== "" &&
+        costCenterData.endMonthD !== "" &&
+        costCenterData.endYearD !== "") ||
+      (costCenterData.costCentreE !== "" &&
+        costCenterData.startYearE !== "" &&
+        costCenterData.startMonthE !== "" &&
+        costCenterData.endMonthE !== "" &&
+        costCenterData.endYearE !== "")
     ) {
       createEmployee(employeeData);
+      saveCostcenterData(costCenterData);
     } else {
       setError(true);
+      setCostCenterError(true);
     }
   };
   const handleIncrement = (key) => {
@@ -520,11 +549,7 @@ const CandidateOnboarding = () => {
             <Form.Control
               as="select"
               name="role"
-              value={
-                employeeData !== undefined && employeeData !== null
-                  ? employeeData.role
-                  : ""
-              }
+              value={employeeData.role}
               onChange={(e) => handleChange(e)}
               style={{ borderColor: "#006ebb" }}
             >
@@ -987,7 +1012,15 @@ const CandidateOnboarding = () => {
                 </Form.Group>
               </Col>
             )}
+            {/* {costCenterError === true && (
+              <p style={{ color: "red" }}>
+                Please select atleast one cost Center
+              </p>
+            )} */}
           </Row>
+        )}
+        {costCenterError === true && (
+          <p style={{ color: "red" }}>Please select atleast one cost Center</p>
         )}
         <div className="text-right addButtonWrapper float-right">
           <button
