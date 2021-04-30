@@ -104,11 +104,18 @@ const RosterTable = (storeID) => {
         getMasterWeeks(e.target.value);
     }
 
-    const normalSelected = e => {
+    const normalStartDateSelected = (e, date) => {
         e.preventDefault();
         setDisplayTable(true);
         if(endDate > startDate)
-        adminRosterUtilisationSchedule('N', 0, storeID.storeId, 0, endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"));
+        adminRosterUtilisationSchedule('N', 0, storeID.storeId, 0, endDate.format("YYYY-MM-DD"), moment(date, 'YYYY-MM-DD').format("YYYY-MM-DD"));
+    }
+
+    const normalEndDateSelected = (e, date) => {
+        e.preventDefault();
+        setDisplayTable(true);
+        if(endDate > startDate)
+        adminRosterUtilisationSchedule('N', 0, storeID.storeId, 0, moment(date, 'YYYY-MM-DD').format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"));
     }
 
     return (
@@ -206,7 +213,7 @@ const RosterTable = (storeID) => {
                                 <label style={{marginRight: '5px'}}>Start Date</label>
                                 <DatePicker wrapperClassName="datePicker" selected={startDate.toDate()} onChange={(date, e) => {
                                     setStartDate(moment(date, 'YYYY-MM-DD'))
-                                    normalSelected(e);
+                                    normalStartDateSelected(e, date);
                                 }}
                                     className="input_date" dateFormat="yyyy-MM-dd"
                                     placeholderText="From Date" required />
@@ -215,7 +222,7 @@ const RosterTable = (storeID) => {
                                 <label className="roster-date" style={{marginRight: '5px'}}>End Date</label>
                                 <DatePicker wrapperClassName="datePicker" selected={endDate.toDate()} onChange={(date, e) => {
                                     setEndDate(moment(date, 'YYYY-MM-DD'))
-                                    normalSelected(e);
+                                    normalEndDateSelected(e, date);
                                 }}
                                     className="input_date" dateFormat="yyyy-MM-dd"
                                     placeholderText="From Date" required />
@@ -227,14 +234,14 @@ const RosterTable = (storeID) => {
                 {storeID.storeId && displayTable ? (
                     <div style={{marginTop: '30px'}}>
                     {console.log(rosterLoading, 'check check')}
-                    {adminRosterUtilisationScheduleResult.rosterDates && adminRosterUtilisationScheduleResult.rosterDates.length && rosterLoading? (
+                    {adminRosterUtilisationScheduleResult && adminRosterUtilisationScheduleResult.rosterDates && adminRosterUtilisationScheduleResult.rosterDates.length && rosterLoading? (
                         <table className="roster-table">
                             <thead>
                                 <tr>
                                     <th className="table-head header-option">
                                         <div>Resource Utilisation Schedule</div>
                                     </th>
-                                    { adminRosterUtilisationScheduleResult.rosterDates && adminRosterUtilisationScheduleResult.rosterDates.length && adminRosterUtilisationScheduleResult.rosterDates.map(data => (
+                                    { adminRosterUtilisationScheduleResult && adminRosterUtilisationScheduleResult.rosterDates && adminRosterUtilisationScheduleResult.rosterDates.length && adminRosterUtilisationScheduleResult.rosterDates.map(data => (
                                         <th className="table-head">
                                             <h6>{data.date}</h6>
                                             <ul>
