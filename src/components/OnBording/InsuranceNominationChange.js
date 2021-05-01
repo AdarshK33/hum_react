@@ -316,10 +316,19 @@ const InsuranceNomination = (props) => {
         state.relationship = "Spouse";
         state.nominee2Relationship = "Child 1";
       }
-      // } else {
-      //   state.relationship = "Father";
-      //   state.nominee2Relationship = "Mother";
-      // }
+    } else {
+      console.log("in else");
+      setMarriedStatus(true);
+      setRelativeType(false);
+      setParentCheck(false);
+      setInlawCheck(false);
+      setNAcheck(true);
+      setAddOne(false);
+      setAddTwo(false);
+      setAddFirstInLaw(false);
+      setAddSecondInLaw(false);
+      state.relationship = "Father";
+      state.nominee2Relationship = "Mother";
     }
   }, [candidatePersonalInfoData, candidateInsuranceNominationData]);
 
