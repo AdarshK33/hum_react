@@ -90,6 +90,8 @@ const CandidateOnboarding = () => {
   const [letterSent, setLetterSent] = useState(false);
   const [showSubmitModal, setSubmitModal] = useState(false);
   const [costCenterError, setCostCenterError] = useState(false);
+  const [fedError, setFedError] = useState(false);
+  const [mandatory, setMandatory] = useState(false);
 
   useEffect(() => {
     if (
@@ -219,9 +221,24 @@ const CandidateOnboarding = () => {
   );
 
   const handleChange = (e) => {
-    setEmployeeData({ ...employeeData, [e.target.name]: e.target.value });
-
     setError(false);
+    setFedError(false);
+    if (e.target.name === "email") {
+      if (!validateEmail(e.target.value)) {
+        setError(true);
+      } else {
+        setEmployeeData({ ...employeeData, ["email"]: e.target.value });
+      }
+    }
+    if (e.target.name === "fedId") {
+      if (!alphaNumeric(e.target.value)) {
+        setFedError(true);
+      } else {
+        setEmployeeData({ ...employeeData, ["fedId"]: e.target.value });
+      }
+    }
+
+    setEmployeeData({ ...employeeData, [e.target.name]: e.target.value });
   };
   const alphaNumeric = (fedId) => {
     var letterNumber = /^[0-9a-zA-Z]+$/;
@@ -340,9 +357,11 @@ const CandidateOnboarding = () => {
 
     setCostCentersData(costCenterData);
     if (
-      (validateEmail(employeeData.email) &&
-        alphaNumeric(employeeData.fedId) &&
-        employeeData.role !== "" &&
+      // (validateEmail(employeeData.email) &&
+      //   alphaNumeric(employeeData.fedId) &&
+      (employeeData.role !== "" &&
+        employeeData.email !== "" &&
+        employeeData.fedId !== "" &&
         personalInfoData.status === 6 &&
         costCenterData.costCentreA !== "" &&
         costCenterData.endMonthA !== "" &&
@@ -372,8 +391,15 @@ const CandidateOnboarding = () => {
     ) {
       createEmployee(employeeData);
       saveCostcenterData(costCenterData);
+      setError(false);
+      setCostCenterError(false);
+      setMandatory(false);
+
+      // }
     } else {
-      setError(true);
+      // setError(true);
+      // setFedError(true);
+      setMandatory(true);
       setCostCenterError(true);
     }
   };
@@ -540,6 +566,9 @@ const CandidateOnboarding = () => {
                 }
                 onChange={(e) => handleChange(e)}
               />
+              {fedError === true && (
+                <p style={{ color: "red" }}>Please enter valid FedId</p>
+              )}
             </Col>
           </Row>
           <Row className="mt-4">
@@ -567,9 +596,9 @@ const CandidateOnboarding = () => {
               </Form.Control>
             </Col>
           </Row>
-          {emailError === true && (
+          {mandatory === true && (
             <span style={{ color: "red" }}>
-              Please Enter Valid Details and make sure Appointment Letter
+              Please Enter all Details and make sure Appointment Letter
               Generated
             </span>
           )}
