@@ -362,7 +362,6 @@ const CandidateOnboarding = () => {
       (employeeData.role !== "" &&
         employeeData.email !== "" &&
         employeeData.fedId !== "" &&
-        personalInfoData.status === 6 &&
         costCenterData.costCentreA !== "" &&
         costCenterData.endMonthA !== "" &&
         costCenterData.startMonthA !== "" &&
