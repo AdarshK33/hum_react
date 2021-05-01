@@ -163,7 +163,9 @@ const OfferReleaseList = () => {
                             <td>{item.statusDesc}</td>
 
                             <td>
-                              {item.status === 5 || item.status === 6 ? (
+                              {item.status === 5 ||
+                              item.status === 6 ||
+                              item.status === 2 ? (
                                 <Edit2 />
                               ) : (
                                 <Link to="/edit-offer-release">

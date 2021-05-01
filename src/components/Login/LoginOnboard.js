@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { CandidateContext } from "../../context/CandidateState";
 import { OnBoardContext } from "../../context/OnBoardState";
 import { ToastContainer, toast } from "react-toastify";
@@ -14,11 +14,29 @@ function LoginOnboard(props) {
     OnBoardContext
   );
 
+  useEffect(() => {
+    CandidateProfile();
+  }, [candidateData, candidateProfileData]);
+
   const handleLogin = (e) => {
     e.preventDefault();
     console.log("inside login");
     candidateOnBoardLogin({ ...loginData, history: props.history });
     CandidateProfile();
+    loginRedirect();
+  };
+
+  const loginRedirect = () => {
+    console.log("candidateProfileData.status", candidateProfileData.status);
+    if (
+      candidateProfileData !== undefined &&
+      candidateProfileData !== null &&
+      candidateProfileData.status === 2
+    ) {
+      props.history.push("/onboard");
+    } else {
+      props.history.push("/offer");
+    }
   };
 
   return (

@@ -94,19 +94,19 @@ const Address = (props) => {
   // console.log("address candidate data", candidateProfileData);
   // console.log("candidateCountryList data", candidateCountryData);
   // console.log("addressViewData data", addressViewData);
-  useEffect(() => {
-    if (
-      candidateCountryData !== undefined &&
-      candidateCountryData !== null &&
-      countryName === ""
-    ) {
-      const countryvalue = candidateCountryData.filter(
-        (i) => i.countryId === addressViewData.countryId
-      );
-      console.log("Countryvalue", countryvalue);
-      setCountryName(countryvalue[0].countryName);
-    }
-  }, [candidateCountryData]);
+  // useEffect(() => {
+  //   if (
+  //     candidateCountryData !== undefined &&
+  //     candidateCountryData !== null &&
+  //     countryName === ""
+  //   ) {
+  //     const countryvalue = candidateCountryData.filter(
+  //       (i) => i.countryId === addressViewData.countryId
+  //     );
+  //     console.log("Countryvalue", countryvalue);
+  //     setCountryName(countryvalue[0].countryName);
+  //   }
+  // }, [candidateCountryData]);
   useEffect(() => {
     let permanentStatevalue;
     let permanentCityValue;
