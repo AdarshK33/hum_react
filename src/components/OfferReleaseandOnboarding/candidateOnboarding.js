@@ -487,92 +487,96 @@ const CandidateOnboarding = () => {
           ""
         )}
       </Modal>
-      <div className="px-5 mx-auto">
-        <h5>
-          <u>WORK DETAILS</u>
-        </h5>
-        <Row className="mt-5">
-          <Col sm={3}>Candidate date of joining</Col>
-          <Col sm={6}>
-            {candidateData !== undefined &&
-            candidateData.workInformation !== undefined
-              ? moment(candidateData.workInformation.dateOfJoin).format(
-                  "YYYY-MM-DD"
-                )
-              : ""}
-          </Col>
-        </Row>
-        <Row className="mt-4">
-          <Col sm={3}>
-            <Form.Label>Email ID</Form.Label>
-          </Col>
-          <Col sm={6}>
-            <Form.Control
-              style={{ borderColor: "#006ebb" }}
-              type="text"
-              name="email"
-              value={
-                employeeData !== undefined && employeeData !== null
-                  ? employeeData.email
-                  : ""
-              }
-              onChange={(e) => handleChange(e)}
-            />
-            {emailError === true && (
-              <span style={{ color: "red" }}>Please enter a valid email</span>
-            )}
-          </Col>
-        </Row>
-        <Row className="mt-4">
-          <Col sm={3}>
-            <Form.Label>FED ID</Form.Label>
-          </Col>
-          <Col sm={6}>
-            <Form.Control
-              style={{ borderColor: "#006ebb" }}
-              type="text"
-              name="fedId"
-              value={
-                employeeData !== undefined && employeeData !== null
-                  ? employeeData.fedId
-                  : ""
-              }
-              onChange={(e) => handleChange(e)}
-            />
-          </Col>
-        </Row>
-        <Row className="mt-4">
-          <Col sm={3}>
-            <Form.Label>System role</Form.Label>
-          </Col>
-          <Col sm={6}>
-            <Form.Control
-              as="select"
-              name="role"
-              value={employeeData.role}
-              onChange={(e) => handleChange(e)}
-              style={{ borderColor: "#006ebb" }}
-            >
-              <option value="">Select Role</option>
-              {RoleList !== null &&
-                RoleList !== undefined &&
-                RoleList.map((item, i) => {
-                  return (
-                    <option key={i} value={item.roleId}>
-                      {item.roleName}
-                    </option>
-                  );
-                })}
-            </Form.Control>
-          </Col>
-        </Row>
-        {emailError === true && (
-          <span style={{ color: "red" }}>
-            Please Enter Valid Details and make sure Appointment Letter
-            Generated
-          </span>
-        )}
-      </div>
+      {employeeData !== null && employeeData !== undefined ? (
+        <div className="px-5 mx-auto">
+          <h5>
+            <u>WORK DETAILS</u>
+          </h5>
+          <Row className="mt-5">
+            <Col sm={3}>Candidate date of joining</Col>
+            <Col sm={6}>
+              {candidateData !== undefined &&
+              candidateData.workInformation !== undefined
+                ? moment(candidateData.workInformation.dateOfJoin).format(
+                    "YYYY-MM-DD"
+                  )
+                : ""}
+            </Col>
+          </Row>
+          <Row className="mt-4">
+            <Col sm={3}>
+              <Form.Label>Email ID</Form.Label>
+            </Col>
+            <Col sm={6}>
+              <Form.Control
+                style={{ borderColor: "#006ebb" }}
+                type="text"
+                name="email"
+                value={
+                  employeeData !== undefined && employeeData !== null
+                    ? employeeData.email
+                    : ""
+                }
+                onChange={(e) => handleChange(e)}
+              />
+              {emailError === true && (
+                <span style={{ color: "red" }}>Please enter a valid email</span>
+              )}
+            </Col>
+          </Row>
+          <Row className="mt-4">
+            <Col sm={3}>
+              <Form.Label>FED ID</Form.Label>
+            </Col>
+            <Col sm={6}>
+              <Form.Control
+                style={{ borderColor: "#006ebb" }}
+                type="text"
+                name="fedId"
+                value={
+                  employeeData !== undefined && employeeData !== null
+                    ? employeeData.fedId
+                    : ""
+                }
+                onChange={(e) => handleChange(e)}
+              />
+            </Col>
+          </Row>
+          <Row className="mt-4">
+            <Col sm={3}>
+              <Form.Label>System role</Form.Label>
+            </Col>
+            <Col sm={6}>
+              <Form.Control
+                as="select"
+                name="role"
+                value={employeeData.role}
+                onChange={(e) => handleChange(e)}
+                style={{ borderColor: "#006ebb" }}
+              >
+                <option value="">Select Role</option>
+                {RoleList !== null &&
+                  RoleList !== undefined &&
+                  RoleList.map((item, i) => {
+                    return (
+                      <option key={i} value={item.roleId}>
+                        {item.roleName}
+                      </option>
+                    );
+                  })}
+              </Form.Control>
+            </Col>
+          </Row>
+          {emailError === true && (
+            <span style={{ color: "red" }}>
+              Please Enter Valid Details and make sure Appointment Letter
+              Generated
+            </span>
+          )}
+        </div>
+      ) : (
+        ""
+      )}
       <div className="px-5 mx-auto mt-4">
         <h5>
           <u>REMUNERATION DETAILS</u>
