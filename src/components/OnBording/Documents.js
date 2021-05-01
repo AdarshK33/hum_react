@@ -107,7 +107,7 @@ const Documents = (props) => {
         setCandidateFirstJob(true);
       }
     }
-  }, [pfDeclarationView]);
+  }, [candidateProfileData, pfDeclarationView]);
 
   useEffect(() => {
     if (

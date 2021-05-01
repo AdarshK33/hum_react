@@ -94,19 +94,19 @@ const Address = (props) => {
   // console.log("address candidate data", candidateProfileData);
   // console.log("candidateCountryList data", candidateCountryData);
   // console.log("addressViewData data", addressViewData);
-  useEffect(() => {
-    if (
-      candidateCountryData !== undefined &&
-      candidateCountryData !== null &&
-      countryName === ""
-    ) {
-      const countryvalue = candidateCountryData.filter(
-        (i) => i.countryId === addressViewData.countryId
-      );
-      console.log("Countryvalue", countryvalue);
-      setCountryName(countryvalue[0].countryName);
-    }
-  }, [candidateCountryData]);
+  // useEffect(() => {
+  //   if (
+  //     candidateCountryData !== undefined &&
+  //     candidateCountryData !== null &&
+  //     countryName === ""
+  //   ) {
+  //     const countryvalue = candidateCountryData.filter(
+  //       (i) => i.countryId === addressViewData.countryId
+  //     );
+  //     console.log("Countryvalue", countryvalue);
+  //     setCountryName(countryvalue[0].countryName);
+  //   }
+  // }, [candidateCountryData]);
   useEffect(() => {
     let permanentStatevalue;
     let permanentCityValue;
@@ -164,13 +164,13 @@ const Address = (props) => {
       setPermanentCityId(permanetCityData[0].cityId);
       setPermanentCityName(permanetCityData[0].cityName);
     }
-  }, [permanetCityData]);
+  }, [candidateStateData, permanetCityData]);
   useEffect(() => {
     if (presentCityData.length !== 0) {
       setCityId(presentCityData[0].cityId);
       setCityName(presentCityData[0].cityName);
     }
-  }, [presentCityData]);
+  }, [candidateStateData, presentCityData]);
   useEffect(() => {
     console.log("prefill data", addressViewData);
     let countryvalue;
@@ -181,27 +181,33 @@ const Address = (props) => {
     if (addressViewData !== undefined && addressViewData !== null) {
       if (addressViewData.addressType === 0) {
         setAddressValue(addressViewData.addressId);
-        countryvalue = candidateCountryData.filter(
-          (i) => i.countryId === addressViewData.countryId
-        );
-        console.log("Countryvalue", countryvalue);
-        if (countryvalue !== undefined && countryvalue !== null) {
-          setCountryName(countryvalue[0].countryName);
-          setCountryId(countryvalue[0].countryId);
-          CandidateStateList(countryvalue[0].countryName);
-        }
-
-        permanentCountryvalue = candidateCountryData.filter(
-          (i) => i.countryId === addressViewData.permanentCountryId
-        );
-        console.log("permanentCountryvalue", permanentCountryvalue);
         if (
-          permanentCountryvalue !== undefined &&
-          permanentCountryvalue !== null
+          candidateCountryData !== null &&
+          candidateCountryData !== undefined &&
+          candidateCountryData.length !== 0
         ) {
-          setPermanentCountryId(permanentCountryvalue[0].countryId);
-          setPermanentCountryName(permanentCountryvalue[0].countryName);
-          CandidateStateList(permanentCountryvalue[0].countryName);
+          countryvalue = candidateCountryData.filter(
+            (i) => i.countryId === addressViewData.countryId
+          );
+          console.log("Countryvalue", countryvalue);
+          if (countryvalue !== undefined && countryvalue !== null) {
+            setCountryName(countryvalue[0].countryName);
+            setCountryId(countryvalue[0].countryId);
+            CandidateStateList(countryvalue[0].countryName);
+          }
+
+          permanentCountryvalue = candidateCountryData.filter(
+            (i) => i.countryId === addressViewData.permanentCountryId
+          );
+          console.log("permanentCountryvalue", permanentCountryvalue);
+          if (
+            permanentCountryvalue !== undefined &&
+            permanentCountryvalue !== null
+          ) {
+            setPermanentCountryId(permanentCountryvalue[0].countryId);
+            setPermanentCountryName(permanentCountryvalue[0].countryName);
+            CandidateStateList(permanentCountryvalue[0].countryName);
+          }
         }
 
         changeCheckState(false);
@@ -221,22 +227,28 @@ const Address = (props) => {
         });
       } else if (addressViewData.addressType === 1) {
         setAddressValue(addressViewData.addressId);
-        countryvalue = candidateCountryData.filter(
-          (i) => i.countryId === addressViewData.countryId
-        );
-        console.log("Countryvalue", countryvalue);
-        setCountryName(countryvalue[0].countryName);
-        setCountryId(countryvalue[0].countryId);
-        CandidateStateList(countryvalue[0].countryName);
-        stateValue = candidateStateData.filter(
-          (i) => i.stateId === addressViewData.stateId
-        );
-        console.log("stateValue", stateValue);
+        if (
+          candidateCountryData !== null &&
+          candidateCountryData !== undefined &&
+          candidateCountryData.length !== 0
+        ) {
+          countryvalue = candidateCountryData.filter(
+            (i) => i.countryId === addressViewData.countryId
+          );
+          console.log("Countryvalue", countryvalue);
+          setCountryName(countryvalue[0].countryName);
+          setCountryId(countryvalue[0].countryId);
+          CandidateStateList(countryvalue[0].countryName);
+          stateValue = candidateStateData.filter(
+            (i) => i.stateId === addressViewData.stateId
+          );
+          console.log("stateValue", stateValue);
 
-        if (stateValue.length !== 0) {
-          setStateId(stateValue[0].stateId);
-          setStateName(stateValue[0].stateName);
-          candidateCityList(stateValue[0].stateId);
+          if (stateValue.length !== 0) {
+            setStateId(stateValue[0].stateId);
+            setStateName(stateValue[0].stateName);
+            candidateCityList(stateValue[0].stateId);
+          }
         }
 
         changeCheckState(true);
@@ -837,7 +849,7 @@ const Address = (props) => {
                   disabled={disabled}
                 />
                 {pinCodeError ? (
-                  <p style={{ color: "red" }}> Please enter pin code</p>
+                  <p style={{ color: "red" }}> Please enter valid pin code</p>
                 ) : (
                   <p></p>
                 )}

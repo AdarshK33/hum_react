@@ -100,7 +100,7 @@ const ViewOfferRelease = () => {
           item.candidateId === candidateData.candidateInformation.candidateId
         ) {
           if (
-            (item.status === 5 || item.status === 6) &&
+            (item.status === 2 || item.status === 6) &&
             personalInfoData.documentUploaded === 1 &&
             personalInfoData.adminVerificationStatus === 1
           ) {
