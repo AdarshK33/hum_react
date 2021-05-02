@@ -16,8 +16,8 @@ const RosterDashboard = () => {
         adminRosterCalculateUtilisation(costCenter1)
         // else 
         // adminRosterCalculateUtilisation('IN1041');
-        if(adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length)
-        console.log(costCenterList, costCenter1, adminRosterCalculateUtilisationList, 'asdasd');
+        // if(adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length)
+        // console.log(costCenterList, costCenter1, adminRosterCalculateUtilisationList, 'asdasd');
     },[costCenter1])
 
     const handleCostCenter = (options) => {
