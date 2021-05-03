@@ -133,7 +133,7 @@ const RosterTable = (storeID) => {
             <Container>
                 {/* {console.log(storeID, 'storeID')} */}
                 <Row>
-                    <Col>
+                    <Col style={{paddingTop: '10px'}}>
                         <Link onClick={selectDaily} className={"roster-link " + (dailyActive ? 'active-link' : '') }>Daily</Link>
                         <Link onClick={selectNormal} className={"roster-link " + (normalActive ? 'active-link' : '') }>Normal</Link>
                         <Link onClick={selectWeek} className={"roster-link " + (weekActive ? 'active-link' : '') }>Weekly</Link>
@@ -218,7 +218,7 @@ const RosterTable = (storeID) => {
                     </Col>
                     )}
                     {displayNormal && (
-                        <Col style={{padding: '0px'}}>
+                        <Col className="right" style={{padding: '0px'}}>
                             <span className="roster-date" style={{marginRight: '10px'}}>
                                 <label style={{marginRight: '5px'}}>Start Date</label>
                                 <DatePicker wrapperClassName="datePicker" selected={startDate.toDate()} onChange={(date, e) => {
@@ -242,7 +242,7 @@ const RosterTable = (storeID) => {
                 </Row>
                 {/* {console.log(storeID.storeID, 'storeID.storeID')} */}
                 {storeID.storeId && displayTable ? (
-                    <div style={{marginTop: '30px'}}>
+                    <div style={{marginTop: '10px'}}>
                     {/* {console.log(rosterLoading, 'check check')} */}
                     {adminRosterUtilisationScheduleResult && adminRosterUtilisationScheduleResult.rosterDates && adminRosterUtilisationScheduleResult.rosterDates.length && rosterLoading? (
                         <table className="roster-table">
@@ -280,7 +280,7 @@ const RosterTable = (storeID) => {
                                                         <div>{data.position}</div>
                                                     </div>
                                                     {/* {console.log(data.utilization.split('%'), 'data.utilization')} */}
-                                                    <div style={{width: '40px', margin: 'auto'}}>
+                                                    <div style={{width: '45px', margin: 'auto'}}>
                                                         <CircularProgressbar value={data.utilization.split('%')[0]} text={`${data.utilization}`}/>
                                                     </div>
                                                 </td>
@@ -288,13 +288,14 @@ const RosterTable = (storeID) => {
                                                     <td 
                                                         className='table-empDetails table-empSchedule' 
                                                         style={{
-                                                            backgroundColor: `${empData.roster && empData.roster.leave ? '#ff6b6b' : empData.roster && empData.roster.holiday ? '#f3bf5f' : empData.roster && empData.roster.weekOff ? '#68a4cf' : empData.roster && empData.roster.shiftName ? '#4bb642' : '#8d8d8d94'}`    
+                                                            backgroundColor: `${empData.roster && empData.roster.leave ? '#FF5370' : empData.roster && empData.roster.holiday ? '#FF9F40' : empData.roster && empData.roster.weekOff ? '#006EBB' : empData.roster && empData.roster.shiftName ? '#22AF47' : '#8d8d8d94'}`,
+                                                            color: 'white'    
                                                         }}
                                                     >
                                                         {/* <div>{empData.date}</div> */}
                                                         {empData.roster === null ? (<div>----</div>)
                                                     : ( 
-                                                        <div>{empData.roster.leave ? 'Leave': empData.roster.holiday ? 'Holiday': empData.roster.weekOff ? 'WeekOff' : empData.roster.shiftName ? empData.roster.shiftName : '----'}</div>
+                                                        <div style={{textAlign: 'center'}}>{empData.roster.leave ? 'Leave': empData.roster.holiday ? 'Holiday': empData.roster.weekOff ? 'WeekOff' : empData.roster.shiftName ? empData.roster.shiftName : '----'}</div>
                                                     )}
                                                     {/* {console.log(empData, 'empData')} */}
                                                     </td>

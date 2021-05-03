@@ -41,7 +41,7 @@ const RosterDashboard = () => {
             alignment: "center",
             textStyle: {
                 color: "233238",
-                fontSize: 14
+                fontSize: 8
             }
         },
         chartArea: {
@@ -52,7 +52,9 @@ const RosterDashboard = () => {
         },
         data: {
             utilisedValue: adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? adminRosterCalculateUtilisationList[0].utilisedValue : 'null',
-            unUtilisedValue: adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? adminRosterCalculateUtilisationList[0].unUtilisedValue : 'null'
+            utilised: adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? adminRosterCalculateUtilisationList[0].utilised : 'null',
+            unUtilisedValue: adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? adminRosterCalculateUtilisationList[0].unUtilisedValue : 'null',
+            unUtilised: adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? adminRosterCalculateUtilisationList[0].unUtilised : 'null'
         }
     };
 
@@ -71,7 +73,7 @@ const RosterDashboard = () => {
             alignment: "center",
             textStyle: {
                 color: "233238",
-                fontSize: 14
+                fontSize: 8
             }
         },
         chartArea: {
@@ -82,7 +84,9 @@ const RosterDashboard = () => {
         },
         data: {
             utilisedValue: adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? adminRosterCalculateUtilisationList[1].utilisedValue : 'null',
-            unUtilisedValue: adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? adminRosterCalculateUtilisationList[1].unUtilisedValue : 'null'
+            utilised: adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? adminRosterCalculateUtilisationList[1].utilised : 'null',
+            unUtilisedValue: adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? adminRosterCalculateUtilisationList[1].unUtilisedValue : 'null',
+            unUtilised: adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? adminRosterCalculateUtilisationList[1].unUtilised : 'null'
         }
     };
 
@@ -101,18 +105,20 @@ const RosterDashboard = () => {
             alignment: "center",
             textStyle: {
                 color: "233238",
-                fontSize: 14
+                fontSize: 8
             }
         },
         chartArea: {
             left: 10,
             top: 10,
             width: "100%",
-            height: "80%"
+            height: "80%",
         },
         data: {
             utilisedValue: adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? adminRosterCalculateUtilisationList[2].utilisedValue : 'null',
-            unUtilisedValue: adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? adminRosterCalculateUtilisationList[2].unUtilisedValue : 'null'
+            utilised: adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? adminRosterCalculateUtilisationList[2].utilised : 'null',
+            unUtilisedValue: adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? adminRosterCalculateUtilisationList[2].unUtilisedValue : 'null',
+            unUtilised: adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? adminRosterCalculateUtilisationList[2].unUtilised : 'null'
         }
     };
 
@@ -143,7 +149,9 @@ const RosterDashboard = () => {
         },
         data: {
             utilisedValue: adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? adminRosterCalculateUtilisationList[3].utilisedValue : 'null',
-            unUtilisedValue: adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? adminRosterCalculateUtilisationList[3].unUtilisedValue : 'null'
+            utilised: adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? adminRosterCalculateUtilisationList[3].utilised : 'null',
+            unUtilisedValue: adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? adminRosterCalculateUtilisationList[3].unUtilisedValue : 'null',
+            unUtilised: adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? adminRosterCalculateUtilisationList[3].unUtilised : 'null',
         }
     };
 
@@ -164,13 +172,13 @@ const RosterDashboard = () => {
                 <Row>
                     <Col sm={12}>
                         <Card className='big-card p-30'>
-                            <h2>{adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? (adminRosterCalculateUtilisationList[3].utilisationType + ' Utilisation') : 'Overall Utilisation'}</h2>
+                            <h2 className="roster-center">{adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? (adminRosterCalculateUtilisationList[3].utilisationType + ' Utilisation') : 'Overall Utilisation'}</h2>
                             <Chart
                                 chartType="PieChart"
-                                data={[["Utilised", "Unutilised"], [`Utilised ${options4.data.utilisedValue}`, options4.data.utilisedValue], [`Unutilised ${options4.data.unUtilisedValue}`, options4.data.unUtilisedValue]]}
+                                data={[["Utilised", "Unutilised"], [`Utilised ${options4.data.utilisedValue} hrs (${options4.data.utilised})`, options4.data.utilisedValue], [`Unutilised ${options4.data.unUtilisedValue} hrs (${options4.data.unUtilised})`, options4.data.unUtilisedValue]]}
                                 options={options4}
                                 width={"100%"}
-                                height={"150px"}
+                                height={"300px"}
                                 legend_toggle
                             />
                         </Card>
@@ -179,10 +187,10 @@ const RosterDashboard = () => {
                 <Row>    
                     <Col sm={4} px={0}>
                         <Card className='small-card1 p-10'>
-                            <h4>{adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? (adminRosterCalculateUtilisationList[0].utilisationType + ' Utilisation') : 'Permanent Utilisation'}</h4>
+                            <h4 className="roster-center">{adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? (adminRosterCalculateUtilisationList[0].utilisationType + ' Utilisation') : 'Permanent Utilisation'}</h4>
                             <Chart
                                 chartType="PieChart"
-                                data={[["Utilised", "Unutilised"], [`Utilised ${options1.data.utilisedValue}`, options1.data.utilisedValue], [`Unutilised ${options1.data.unUtilisedValue}`, options1.data.unUtilisedValue]]}
+                                data={[["Utilised", "Unutilised"], [`Utilised ${options1.data.utilisedValue} hrs (${options1.data.utilised})`, options1.data.utilisedValue], [`Unutilised ${options1.data.unUtilisedValue} hrs (${options1.data.unUtilised})`, options1.data.unUtilisedValue]]}
                                 options={options1}
                                 width={"100%"}
                                 height={"150px"}
@@ -192,10 +200,10 @@ const RosterDashboard = () => {
                     </Col>
                     <Col sm={4} px={0}>
                         <Card className='small-card2 p-10'>
-                            <h4>{adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? (adminRosterCalculateUtilisationList[1].utilisationType + ' Utilisation') : 'Part Time Utilisation'}</h4>
+                            <h4 className="roster-center">{adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? (adminRosterCalculateUtilisationList[1].utilisationType + ' Utilisation') : 'Part Time Utilisation'}</h4>
                             <Chart
                                 chartType="PieChart"
-                                data={[["Utilised", "Unutilised"], [`Utilised ${options2.data.utilisedValue}`, options2.data.utilisedValue], [`Unutilised ${options2.data.unUtilisedValue}`, options2.data.unUtilisedValue]]}
+                                data={[["Utilised", "Unutilised"], [`Utilised ${options2.data.utilisedValue} hrs (${options2.data.utilised})`, options2.data.utilisedValue], [`Unutilised ${options2.data.unUtilisedValue} hrs (${options2.data.unUtilised})`, options2.data.unUtilisedValue]]}
                                 options={options2}
                                 width={"100%"}
                                 height={"150px"}
@@ -205,10 +213,10 @@ const RosterDashboard = () => {
                     </Col>
                     <Col sm={4} px={0}>
                         <Card className='small-card3 p-10'>
-                            <h4>{adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? (adminRosterCalculateUtilisationList[2].utilisationType + ' Utilisation') : 'Internship Utilisation'}</h4>
+                            <h4 className="roster-center">{adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? (adminRosterCalculateUtilisationList[2].utilisationType + ' Utilisation') : 'Internship Utilisation'}</h4>
                             <Chart
                                 chartType="PieChart"
-                                data={[["Utilised", "Unutilised"], [`Utilised ${options3.data.utilisedValue}`, options3.data.utilisedValue], [`Unutilised ${options3.data.unUtilisedValue}`, options3.data.unUtilisedValue]]}
+                                data={[["Utilised", "Unutilised"], [`Utilised ${options3.data.utilisedValue} hrs (${options3.data.utilised})`, options3.data.utilisedValue], [`Unutilised ${options3.data.unUtilisedValue} hrs (${options3.data.unUtilised})`, options3.data.unUtilisedValue]]}
                                 options={options3}
                                 width={"100%"}
                                 height={"150px"}
