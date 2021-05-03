@@ -15,11 +15,15 @@ const RosterTable = (storeID) => {
     const [endDate, setEndDate] = useState(moment().add('30', 'd'));
     const [currentDate, setCurrentDate] = useState(moment());
     const [displayMonth, setDisplayMonth] = useState(false);
-    const [displayWeek, setDisplayWeek] = useState(false);
+    const [displayWeek, setDisplayWeek] = useState(true);
     const [displayDaily, setDisplayDaily] = useState(false);
     const [year, setYear] = useState('');
-    const [displayNormal, setDisplayNormal] = useState(true);
-    const [displayTable, setDisplayTable] = useState(false);
+    const [displayNormal, setDisplayNormal] = useState(false);
+    const [displayTable, setDisplayTable] = useState(true);
+    const [weekActive, setWeekActive] = useState(true);
+    const [dailyActive, setDailyActive] = useState(false);
+    const [normalActive, setNormalActive] = useState(false);
+    const [monthActive, setMonthActive] = useState(false);
 
     const months = [1,2,3,4,5,6,7,8,9,10,11,12];
 
@@ -27,20 +31,8 @@ const RosterTable = (storeID) => {
     const { user } = useContext(AppContext);
 
     useEffect(() => {
-        // weekOffDataEmp(endDate.format("YYYY-MM-DD"), startDate.format("YYYY-MM-DD"), user.employeeId)
-        // getMasterWeeks(2021);
-        // if(storeID.storeId) {
-        //     adminRosterUtilisationSchedule('W', 0, storeID.storeId, 0, 0, 0, 345);
-        // }
-        // console.log(adminRosterUtilisationScheduleResult, storeID, endDate, startDate, masterWeeks,'adminRosterUtilisationScheduleResult');
-        adminRosterUtilisationSchedule();
+        setDisplayTable(false);
     }, [storeID.storeId])
-
-    const linkStyle={
-        textDecoration: 'none',
-        marginRight: '10px',
-        fontWeight: 'bold'
-    }
 
     const selectMonth = e => {
         e.preventDefault();
@@ -48,6 +40,10 @@ const RosterTable = (storeID) => {
         setDisplayNormal(false);
         setDisplayWeek(false);
         setDisplayDaily(false);
+        setWeekActive(false);
+        setDailyActive(false);
+        setMonthActive(true);
+        setNormalActive(false);
     }
 
     const selectNormal = e => {
@@ -56,6 +52,10 @@ const RosterTable = (storeID) => {
         setDisplayNormal(true);
         setDisplayWeek(false);
         setDisplayDaily(false);
+        setWeekActive(false);
+        setDailyActive(false);
+        setMonthActive(false);
+        setNormalActive(true);
     }
 
     const selectWeek = e => {
@@ -64,6 +64,10 @@ const RosterTable = (storeID) => {
         setDisplayNormal(false);
         setDisplayDaily(false);
         setDisplayMonth(false);
+        setWeekActive(true);
+        setDailyActive(false);
+        setMonthActive(false);
+        setNormalActive(false);
     }
 
     const selectDaily = e => {
@@ -72,12 +76,18 @@ const RosterTable = (storeID) => {
         setDisplayNormal(false);
         setDisplayMonth(false);
         setDisplayWeek(false);
+        setWeekActive(false);
+        setDailyActive(true);
+        setMonthActive(false);
+        setNormalActive(false);
     }
 
     const monthSelected = e => {
         e.preventDefault();
         setDisplayTable(true);
-        console.log(typeof Number(e.target.value), 'e.target');
+        // console.log(typeof Number(e.target.value), 'e.target');
+        const currentYear = new Date().getFullYear();
+        console.log(currentYear, 'currentYear');
         if( e.target.value !== "Select month" && storeID.storeId) 
         adminRosterUtilisationSchedule('M', Number(e.target.value), storeID.storeId, 0, 0, 0, 0, 2021);
     }
@@ -85,7 +95,7 @@ const RosterTable = (storeID) => {
     const weekSelected = e => {
         e.preventDefault();
         setDisplayTable(true);
-        console.log(e.target.value, 'e.target');
+        // console.log(e.target.value, 'e.target');
         if( e.target.value && storeID.storeId && year) 
         adminRosterUtilisationSchedule('W', 0, storeID.storeId, 0, 0, 0, Number(e.target.value), year);
     }
@@ -93,7 +103,7 @@ const RosterTable = (storeID) => {
     const dailySelected = (e, date) => {
         e.preventDefault();
         setDisplayTable(true);
-        console.log(moment(date, 'YYYY-MM-DD').format("YYYY-MM-DD"), 'e.target.value');
+        // console.log(moment(date, 'YYYY-MM-DD').format("YYYY-MM-DD"), 'e.target.value');
         adminRosterUtilisationSchedule('D', 0, storeID.storeId, moment(date, 'YYYY-MM-DD').format("YYYY-MM-DD"));
     }
 
@@ -124,10 +134,10 @@ const RosterTable = (storeID) => {
                 {/* {console.log(storeID, 'storeID')} */}
                 <Row>
                     <Col>
-                        <Link onClick={selectDaily} style={linkStyle}>Daily</Link>
-                        <Link onClick={selectNormal} style={linkStyle}>Normal</Link>
-                        <Link onClick={selectWeek} style={linkStyle}>Weekly</Link>
-                        <Link onClick={selectMonth} style={{fontWeight: 'bold', textDecoration: 'none'}}>Monthly</Link>
+                        <Link onClick={selectDaily} className={"roster-link " + (dailyActive ? 'active-link' : '') }>Daily</Link>
+                        <Link onClick={selectNormal} className={"roster-link " + (normalActive ? 'active-link' : '') }>Normal</Link>
+                        <Link onClick={selectWeek} className={"roster-link " + (weekActive ? 'active-link' : '') }>Weekly</Link>
+                        <Link onClick={selectMonth} className={"roster-link " + (monthActive ? 'active-link' : '') }>Monthly</Link>
                     </Col>
                     
                     {displayMonth && (
@@ -233,7 +243,7 @@ const RosterTable = (storeID) => {
                 {/* {console.log(storeID.storeID, 'storeID.storeID')} */}
                 {storeID.storeId && displayTable ? (
                     <div style={{marginTop: '30px'}}>
-                    {console.log(rosterLoading, 'check check')}
+                    {/* {console.log(rosterLoading, 'check check')} */}
                     {adminRosterUtilisationScheduleResult && adminRosterUtilisationScheduleResult.rosterDates && adminRosterUtilisationScheduleResult.rosterDates.length && rosterLoading? (
                         <table className="roster-table">
                             <thead>
@@ -258,7 +268,7 @@ const RosterTable = (storeID) => {
                                         return (
                                             <tr>
                                                 <td 
-                                                    className="table-empDetails"
+                                                    className="table-empDetails left-option"
                                                     style={{
                                                         width: `${data.rank === 1 ? '200px' : data.rank === 2 ? '175px' : '150px'}`,
                                                         marginLeft: `${data.rank === 1 ? '3px' : data.rank === 2 ? '27px' : '53px'}`
@@ -269,7 +279,7 @@ const RosterTable = (storeID) => {
                                                         <div>{data.contractType}</div>
                                                         <div>{data.position}</div>
                                                     </div>
-                                                    {console.log(data.utilization.split('%'), 'data.utilization')}
+                                                    {/* {console.log(data.utilization.split('%'), 'data.utilization')} */}
                                                     <div style={{width: '40px', margin: 'auto'}}>
                                                         <CircularProgressbar value={data.utilization.split('%')[0]} text={`${data.utilization}`}/>
                                                     </div>
