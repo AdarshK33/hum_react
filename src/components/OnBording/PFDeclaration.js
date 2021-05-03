@@ -216,7 +216,12 @@ const PFDeclaration = (props) => {
     }
   };
   const UanNumberValidation = () => {
-    if (state.uanNumber !== "" && state.uanNumber.length == 12) {
+    if (
+      state.uanNumber !== null &&
+      state.uanNumber !== undefined &&
+      state.uanNumber !== "" &&
+      state.uanNumber.length == 12
+    ) {
       console.log("uan number");
       setUanNumberError(false);
       return true;
@@ -842,7 +847,11 @@ const PFDeclaration = (props) => {
                   style={{ marginTop: "0.5rem" }}
                 >
                   &nbsp;&nbsp;
-                  {state.form11 !== "" ? state.form11 : "Select File Here"}
+                  {state.form11 !== "" &&
+                  state.form11 !== null &&
+                  state.form11 !== undefined
+                    ? state.form11
+                    : "Select File Here"}
                   <input
                     type="file"
                     accept="image/jpeg,.pdf"
@@ -896,7 +905,11 @@ const PFDeclaration = (props) => {
                   style={{ marginTop: "0.5rem" }}
                 >
                   &nbsp;&nbsp;
-                  {state.form2epf !== "" ? state.form2epf : "Select File Here"}
+                  {state.form2epf !== "" &&
+                  state.form2epf !== null &&
+                  state.form2epf !== undefined
+                    ? state.form2epf
+                    : "Select File Here"}
                   <input
                     type="file"
                     accept="image/jpeg,.pdf"
@@ -950,7 +963,11 @@ const PFDeclaration = (props) => {
                   style={{ marginTop: "0.5rem" }}
                 >
                   &nbsp;&nbsp;
-                  {state.formf !== "" ? state.formf : "Select File Here"}
+                  {state.formf !== "" &&
+                  state.formf !== null &&
+                  state.formf !== undefined
+                    ? state.formf
+                    : "Select File Here"}
                   <input
                     type="file"
                     accept="image/jpeg,.pdf"

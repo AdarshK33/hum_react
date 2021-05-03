@@ -51,8 +51,10 @@ const GroupReducer = (state, action) => {
       return { ...state, candidateCountryData: action.payload };
     case "CANDIDATE_STATE_LIST":
       return { ...state, candidateStateData: action.payload };
-    case "CANDIDATE_CITY_LIST":
-      return { ...state, candidateCityData: action.payload };
+    case "CANDIDATE_PERMANENT_CITY_LIST":
+      return { ...state, candidatePermanentCityData: action.payload };
+    case "CANDIDATE_PRESENT_CITY_LIST":
+      return { ...state, candidatePresentCityData: action.payload };
     case "CANDIDATE_ADDRESS_DATA":
       return { ...state, addressSaveData: action.payload };
     case "CANDIDATE_ADDRESS_VIEW_DATA":

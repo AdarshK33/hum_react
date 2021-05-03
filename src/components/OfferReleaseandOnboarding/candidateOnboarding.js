@@ -89,6 +89,9 @@ const CandidateOnboarding = () => {
   const [previewLetter, setPreviewLetter] = useState(false);
   const [letterSent, setLetterSent] = useState(false);
   const [showSubmitModal, setSubmitModal] = useState(false);
+  const [costCenterError, setCostCenterError] = useState(false);
+  const [fedError, setFedError] = useState(false);
+  const [mandatory, setMandatory] = useState(false);
 
   useEffect(() => {
     if (
@@ -218,9 +221,24 @@ const CandidateOnboarding = () => {
   );
 
   const handleChange = (e) => {
-    setEmployeeData({ ...employeeData, [e.target.name]: e.target.value });
-
     setError(false);
+    setFedError(false);
+    if (e.target.name === "email") {
+      if (!validateEmail(e.target.value)) {
+        setError(true);
+      } else {
+        setEmployeeData({ ...employeeData, ["email"]: e.target.value });
+      }
+    }
+    if (e.target.name === "fedId") {
+      if (!alphaNumeric(e.target.value)) {
+        setFedError(true);
+      } else {
+        setEmployeeData({ ...employeeData, ["fedId"]: e.target.value });
+      }
+    }
+
+    setEmployeeData({ ...employeeData, [e.target.name]: e.target.value });
   };
   const alphaNumeric = (fedId) => {
     var letterNumber = /^[0-9a-zA-Z]+$/;
@@ -246,13 +264,14 @@ const CandidateOnboarding = () => {
       }
     }
   };
-  useEffect(() => {
-    if (createStatus === "SUCCESS") {
-      setEmployeeData(empData);
-      costCenterSplit(costCentersData);
-      step6suscessStatus(true);
-    }
-  }, [createStatus]);
+  const saveCostcenterData = (costCentersData) => {
+    // setEmployeeData(empData);
+    costCenterSplit(costCentersData);
+    step6suscessStatus(true);
+    // } else {
+    //   setCostCenterError(true);
+    // }
+  };
   const generateAppointmentLetter = () => {
     console.log("candidateData id", candidateData);
     if (
@@ -299,6 +318,7 @@ const CandidateOnboarding = () => {
       );
     }
   };
+
   const handleDataSave = () => {
     const costCenterData = {
       costCenterSplitId: 0,
@@ -334,16 +354,52 @@ const CandidateOnboarding = () => {
       startYearD: parseInt(moment(startYear4Date).format("YYYY")),
       startYearE: parseInt(moment(startYear5Date).format("YYYY")),
     };
+
     setCostCentersData(costCenterData);
     if (
-      validateEmail(employeeData.email) &&
-      alphaNumeric(employeeData.fedId) &&
-      employeeData.role !== "" &&
-      personalInfoData.status === 6
+      // (validateEmail(employeeData.email) &&
+      //   alphaNumeric(employeeData.fedId) &&
+      (employeeData.role !== "" &&
+        employeeData.email !== "" &&
+        employeeData.fedId !== "" &&
+        costCenterData.costCentreA !== "" &&
+        costCenterData.endMonthA !== "" &&
+        costCenterData.startMonthA !== "" &&
+        costCenterData.startYearA !== "" &&
+        costCenterData.endYearA !== "") ||
+      (costCenterData.costCentreB !== "" &&
+        costCenterData.startYearB !== "" &&
+        costCenterData.startMonthB !== "" &&
+        costCenterData.endMonthB !== "" &&
+        costCenterData.endYearB !== "") ||
+      (costCenterData.costCentreC !== "" &&
+        costCenterData.startYearC !== "" &&
+        costCenterData.startMonthC !== "" &&
+        costCenterData.endMonthC !== "" &&
+        costCenterData.endYearC !== "") ||
+      (costCenterData.costCentreD !== "" &&
+        costCenterData.startYearD !== "" &&
+        costCenterData.startMonthD !== "" &&
+        costCenterData.endMonthD !== "" &&
+        costCenterData.endYearD !== "") ||
+      (costCenterData.costCentreE !== "" &&
+        costCenterData.startYearE !== "" &&
+        costCenterData.startMonthE !== "" &&
+        costCenterData.endMonthE !== "" &&
+        costCenterData.endYearE !== "")
     ) {
       createEmployee(employeeData);
+      saveCostcenterData(costCenterData);
+      setError(false);
+      setCostCenterError(false);
+      setMandatory(false);
+
+      // }
     } else {
-      setError(true);
+      // setError(true);
+      // setFedError(true);
+      setMandatory(true);
+      setCostCenterError(true);
     }
   };
   const handleIncrement = (key) => {
@@ -456,93 +512,99 @@ const CandidateOnboarding = () => {
           ""
         )}
       </Modal>
-      <div className="px-5 mx-auto">
-        <h5>
-          <u>WORK DETAILS</u>
-        </h5>
-        <Row className="mt-5">
-          <Col sm={3}>Candidate date of joining</Col>
-          <Col sm={6}>
-            {candidateData !== undefined &&
-            candidateData.workInformation !== undefined
-              ? moment(candidateData.workInformation.dateOfJoin).format(
-                  "YYYY-MM-DD"
-                )
-              : ""}
-          </Col>
-        </Row>
-        <Row className="mt-4">
-          <Col sm={3}>
-            <Form.Label>Email ID</Form.Label>
-          </Col>
-          <Col sm={6}>
-            <Form.Control
-              style={{ borderColor: "#006ebb" }}
-              type="text"
-              name="email"
-              value={
-                employeeData !== undefined && employeeData !== null
-                  ? employeeData.email
-                  : ""
-              }
-              onChange={(e) => handleChange(e)}
-            />
-          </Col>
-        </Row>
-        <Row className="mt-4">
-          <Col sm={3}>
-            <Form.Label>FED ID</Form.Label>
-          </Col>
-          <Col sm={6}>
-            <Form.Control
-              style={{ borderColor: "#006ebb" }}
-              type="text"
-              name="fedId"
-              value={
-                employeeData !== undefined && employeeData !== null
-                  ? employeeData.fedId
-                  : ""
-              }
-              onChange={(e) => handleChange(e)}
-            />
-          </Col>
-        </Row>
-        <Row className="mt-4">
-          <Col sm={3}>
-            <Form.Label>System role</Form.Label>
-          </Col>
-          <Col sm={6}>
-            <Form.Control
-              as="select"
-              name="role"
-              value={
-                employeeData !== undefined && employeeData !== null
-                  ? employeeData.role
-                  : ""
-              }
-              onChange={(e) => handleChange(e)}
-              style={{ borderColor: "#006ebb" }}
-            >
-              <option value="">Select Role</option>
-              {RoleList !== null &&
-                RoleList !== undefined &&
-                RoleList.map((item, i) => {
-                  return (
-                    <option key={i} value={item.roleId}>
-                      {item.roleName}
-                    </option>
-                  );
-                })}
-            </Form.Control>
-          </Col>
-        </Row>
-        {emailError === true && (
-          <span style={{ color: "red" }}>
-            Please Enter Valid Details and make sure Appointment Letter
-            Generated
-          </span>
-        )}
-      </div>
+      {employeeData !== null && employeeData !== undefined ? (
+        <div className="px-5 mx-auto">
+          <h5>
+            <u>WORK DETAILS</u>
+          </h5>
+          <Row className="mt-5">
+            <Col sm={3}>Candidate date of joining</Col>
+            <Col sm={6}>
+              {candidateData !== undefined &&
+              candidateData.workInformation !== undefined
+                ? moment(candidateData.workInformation.dateOfJoin).format(
+                    "YYYY-MM-DD"
+                  )
+                : ""}
+            </Col>
+          </Row>
+          <Row className="mt-4">
+            <Col sm={3}>
+              <Form.Label>Email ID</Form.Label>
+            </Col>
+            <Col sm={6}>
+              <Form.Control
+                style={{ borderColor: "#006ebb" }}
+                type="text"
+                name="email"
+                value={
+                  employeeData !== undefined && employeeData !== null
+                    ? employeeData.email
+                    : ""
+                }
+                onChange={(e) => handleChange(e)}
+              />
+              {emailError === true && (
+                <span style={{ color: "red" }}>Please enter a valid email</span>
+              )}
+            </Col>
+          </Row>
+          <Row className="mt-4">
+            <Col sm={3}>
+              <Form.Label>FED ID</Form.Label>
+            </Col>
+            <Col sm={6}>
+              <Form.Control
+                style={{ borderColor: "#006ebb" }}
+                type="text"
+                name="fedId"
+                value={
+                  employeeData !== undefined && employeeData !== null
+                    ? employeeData.fedId
+                    : ""
+                }
+                onChange={(e) => handleChange(e)}
+              />
+              {fedError === true && (
+                <p style={{ color: "red" }}>Please enter valid FedId</p>
+              )}
+            </Col>
+          </Row>
+          <Row className="mt-4">
+            <Col sm={3}>
+              <Form.Label>System role</Form.Label>
+            </Col>
+            <Col sm={6}>
+              <Form.Control
+                as="select"
+                name="role"
+                value={employeeData.role}
+                onChange={(e) => handleChange(e)}
+                style={{ borderColor: "#006ebb" }}
+              >
+                <option value="">Select Role</option>
+                {RoleList !== null &&
+                  RoleList !== undefined &&
+                  RoleList.map((item, i) => {
+                    return (
+                      <option key={i} value={item.roleId}>
+                        {item.roleName}
+                      </option>
+                    );
+                  })}
+              </Form.Control>
+            </Col>
+          </Row>
+          {mandatory === true && (
+            <span style={{ color: "red" }}>
+              Please Enter all Details and make sure Appointment Letter
+              Generated
+            </span>
+          )}
+        </div>
+      ) : (
+        ""
+      )}
       <div className="px-5 mx-auto mt-4">
         <h5>
           <u>REMUNERATION DETAILS</u>
@@ -982,7 +1044,15 @@ const CandidateOnboarding = () => {
                 </Form.Group>
               </Col>
             )}
+            {/* {costCenterError === true && (
+              <p style={{ color: "red" }}>
+                Please select atleast one cost Center
+              </p>
+            )} */}
           </Row>
+        )}
+        {costCenterError === true && (
+          <p style={{ color: "red" }}>Please select atleast one cost Center</p>
         )}
         <div className="text-right addButtonWrapper float-right">
           <button

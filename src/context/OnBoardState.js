@@ -26,7 +26,8 @@ const initial_state = {
   candidateViewInfo: {},
   candidateCountryData: [],
   candidateStateData: [],
-  candidateCityData: [],
+  candidatePresentCityData: [],
+  candidatePermanentCityData: [],
   addressSaveData: {},
   addressViewData: [],
   bankSaveData: {},
@@ -364,18 +365,19 @@ export const OnBoardProvider = (props) => {
       });
   };
 
-  const candidateCityList = (StateId) => {
-    console.log("candidateCityList", StateId);
+  const candidatePermanentCityList = (StateId) => {
+    console.log("candidatePermanentCityList", StateId);
     candidate
       .get("/api/v2/candidate/address/view/city/" + StateId)
-      // candidate
-      //   .get("/api/v2/candidate/address/view/city/1")
       .then((response) => {
-        state.candidateCityData = response.data.data;
-        console.log("candidateCityData name", state.candidateCityData);
+        state.candidatePermanentCityData = response.data.data;
+        console.log(
+          "candidatePermanentCityData name",
+          state.candidatePermanentCityData
+        );
         return dispatch({
-          type: "CANDIDATE_CITY_LIST",
-          payload: state.candidateCityData,
+          type: "CANDIDATE_PERMANENT_CITY_LIST",
+          payload: state.candidatePermanentCityData,
         });
       })
       .catch((error) => {
@@ -383,6 +385,25 @@ export const OnBoardProvider = (props) => {
       });
   };
 
+  const candidatePresentCityList = (StateId) => {
+    console.log("candidatePresentCityList", StateId);
+    candidate
+      .get("/api/v2/candidate/address/view/city/" + StateId)
+      .then((response) => {
+        state.candidatePresentCityData = response.data.data;
+        console.log(
+          "candidatePresentCityData name",
+          state.candidatePresentCityData
+        );
+        return dispatch({
+          type: "CANDIDATE_PRESENT_CITY_LIST",
+          payload: state.candidatePresentCityData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const addressCreate = (AddressInfo) => {
     console.log("addressCreate", AddressInfo);
     candidate
@@ -546,7 +567,8 @@ export const OnBoardProvider = (props) => {
         InsuranceNominationView,
         candidateCountryList,
         CandidateStateList,
-        candidateCityList,
+        candidatePermanentCityList,
+        candidatePresentCityList,
         addressCreate,
         addressView,
         bankCreate,
@@ -575,7 +597,8 @@ export const OnBoardProvider = (props) => {
         candidateViewInfo: state.candidateViewInfo,
         candidateCountryData: state.candidateCountryData,
         candidateStateData: state.candidateStateData,
-        candidateCityData: state.candidateCityData,
+        candidatePermanentCityData: state.candidatePermanentCityData,
+        candidatePresentCityData: state.candidatePresentCityData,
         addressSaveData: state.addressSaveData,
         addressViewData: state.addressViewData,
         bankSaveData: state.bankSaveData,

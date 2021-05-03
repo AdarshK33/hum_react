@@ -281,6 +281,7 @@ export const DocsVerificationProvider = (props) => {
       .then((response) => {
         console.log(response.data.status);
         state.costCenter = response.data.message;
+        toast.info(response.data.message);
         return dispatch({
           type: "COST_CENTER_CREATE",
           payload: state.costCenter,

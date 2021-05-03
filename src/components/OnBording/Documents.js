@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
-import { Row, Col, Form, Button } from "react-bootstrap";
+import { Row, Col, Container, Modal, Form, Button } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 // import './OnBoard.css'
@@ -57,7 +57,7 @@ const Documents = (props) => {
   const [collegeIdError, setCollegeError] = useState(false);
   const [collegeLetterError, setCollegeLetterError] = useState(false);
   const [CandidateFirstJob, setCandidateFirstJob] = useState(false);
-
+  const [onDocumentPopup, setOnDocumentPopup] = useState(false);
   // const [fileUpload, setFileUpload] = useState();
   const [workInfoData, setWorkInfoData] = useState();
   useEffect(() => {
@@ -107,7 +107,7 @@ const Documents = (props) => {
         setCandidateFirstJob(true);
       }
     }
-  }, [pfDeclarationView]);
+  }, [candidateProfileData, pfDeclarationView]);
 
   useEffect(() => {
     if (
@@ -796,6 +796,7 @@ const Documents = (props) => {
     if (value === true) {
       completeDocumentUpload(candidateProfileData.candidateId);
       console.log(state);
+      setOnDocumentPopup(true);
       const nextPage = props.NextStep;
       nextPage(true);
     }
@@ -966,6 +967,24 @@ const Documents = (props) => {
     <Fragment>
       {(localExpact === false) & (internship === false) ? (
         <Row>
+          <Modal
+            show={onDocumentPopup}
+            onHide={() => setOnDocumentPopup(false)}
+            centered
+          >
+            <Container style={{ textAlign: "center", margin: "4rem 0 4rem 0" }}>
+              <Modal.Body>
+                <h3>Thank You</h3>
+                <h6 style={{ marginBottom: "1rem" }}>
+                  Your details have been sent to our verification team, please
+                  wait to hear from us
+                </h6>{" "}
+                <Button onClick={() => setOnDocumentPopup(false)}>
+                  Return to the Portal
+                </Button>
+              </Modal.Body>
+            </Container>
+          </Modal>
           <ToastContainer />
           <Col>
             <div className="parent">
