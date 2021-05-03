@@ -35,6 +35,7 @@ const initial_state = {
   bankUpdateData: {},
   documentViewData: [],
   documentUploadData: {},
+  deleteNomineeData: {},
 };
 // git
 export const OnBoardProvider = (props) => {
@@ -283,6 +284,27 @@ export const OnBoardProvider = (props) => {
         console.log(error);
       });
   };
+
+  const InsuranceNominationDelete = (nomineeId) => {
+    candidate
+      .get("/api/v2/candidate/insurance-nomination/delete/" + nomineeId)
+      .then((response) => {
+        toast.info(response.data.message);
+        state.deleteNomineeData = response.data.data;
+        console.log(
+          "Candidate Insurance Nomination delete ",
+          state.deleteNomineeData
+        );
+        return dispatch({
+          type: "DELETE_NOMINEE_DATA",
+          payload: state.deleteNomineeData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const StateList = (country) => {
     candidate
       .get("/api/v2/candidate/address/view/state/" + country)
@@ -577,6 +599,8 @@ export const OnBoardProvider = (props) => {
         uploadFile,
         documentView,
         completeDocumentUpload,
+        InsuranceNominationDelete,
+        deleteNomineeData: state.deleteNomineeData,
         emergencyContactData: state.emergencyContactData,
         emergencyContactCreate: state.emergencyContactCreate,
         emergencyContactView: state.emergencyContactView,
