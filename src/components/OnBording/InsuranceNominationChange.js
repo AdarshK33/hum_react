@@ -3278,7 +3278,7 @@ const InsuranceNomination = (props) => {
                 <div className="col-sm-4">
                   <Form.Group>
                     <Form.Label>
-                      Fifth Nominee Name
+                    Dependent Name
                       <span style={{ color: "red" }}>*</span>
                     </Form.Label>
                     <Form.Control
@@ -3500,7 +3500,7 @@ const InsuranceNomination = (props) => {
                 <div className="col-sm-4">
                   <Form.Group>
                     <Form.Label>
-                      Fifth Nominee Name
+                    Dependent Name
                       <span style={{ color: "red" }}>*</span>
                     </Form.Label>
                     <Form.Control
@@ -3766,7 +3766,7 @@ const InsuranceNomination = (props) => {
                   disabled={false}
                   style={{ width: "175px" }}
                 >
-                  <b> Add New Dependent 1 + </b>
+                  <b> Add New Dependent + </b>
                 </button>
               </div>
             </Form.Group>
