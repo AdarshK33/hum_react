@@ -27,6 +27,9 @@
 .selectInputWrapper {
   width: 50% !important;
 } */
+.rag-red {
+  background-color: rgb(177, 47, 47);
+}
 .nodue_title{
   background: #006EBB;
   font-weight: bold;

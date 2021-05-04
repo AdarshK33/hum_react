@@ -76,34 +76,34 @@ const handlePageChange = (pageNumber) => {
       <Edit2/>
     );
   };
-  const renderButton = (e) => {
-    console.log(e,"render")
-    var buttonValue = e.data.disabled
-    return (
-      <button disabled={buttonValue}
-        style={buttonValue?{
-          backgroundColor: "#9ea4af54",
-          color: "white",
-          border: "1px solid #9ea4af54",
-          paddingLeft: "10px",
-          paddingRight: "10px",
-          width: "100%",
-          lineHeight: "30px",
-        }:{
-          backgroundColor: "#006ebb",
-          color: "white",
-          border: "1px solid #006ebb",
-          paddingLeft: "10px",
-          paddingRight: "10px",
-          width: "100%",
-          lineHeight: "30px",
-        }}
-         onClick={() => handleSave(e)}
-      >
-        Save
-      </button>
-    );
-  };
+  // const renderButton = (e) => {
+  //   console.log(e,"render")
+  //   var buttonValue = e.data.disabled
+  //   return (
+  //     <button disabled={buttonValue}
+  //       style={buttonValue?{
+  //         backgroundColor: "#9ea4af54",
+  //         color: "white",
+  //         border: "1px solid #9ea4af54",
+  //         paddingLeft: "10px",
+  //         paddingRight: "10px",
+  //         width: "100%",
+  //         lineHeight: "30px",
+  //       }:{
+  //         backgroundColor: "#006ebb",
+  //         color: "white",
+  //         border: "1px solid #006ebb",
+  //         paddingLeft: "10px",
+  //         paddingRight: "10px",
+  //         width: "100%",
+  //         lineHeight: "30px",
+  //       }}
+  //        onClick={() => handleSave(e)}
+  //     >
+  //       Save
+  //     </button>
+  //   );
+  // };
 const handleCostCenter = (options) => {
   let data2 = options !== null?options.value:''
   console.log(data2)
@@ -116,13 +116,25 @@ const handleCostCenter = (options) => {
 } 
 const renderStatusOptions = (value) => {
     return (
-        <div class="switch">
-  <input type="checkbox" name="itClearanceStatus" value={value.data.financeClearanceStatus} onChange={(e) => statusRender(e,value)}></input>
-  <span class="slider"></span>
-</div>
+      <label className="switch">
+    <input className="switch-input" type="checkbox" id="checkbox" name="fullAndFinalCompleteStatus" value={value.data.fullAndFinalCompleteStatus} onChange={(e) => statusRender(e,value)}/>
+	<span className="switch-label" data-on="Yes" data-off="No"></span> 
+	<span className="switch-handle"></span> 
+</label>
+
+    )
+
+  };
+  const renderStatusOptionsTwo = (value) => {
+    return (
+
+ <label className="switch">
+    <input className="switch-input" type="checkbox" id="checkbox" name="deactivateProfile" value={value.data.deactivateProfile} onChange={(e) => statusRenderTwo(e,value)}/>
+<span className="switch-label" data-on="Yes" data-off="No"></span> 
+<span className="switch-handle"></span> 
+</label>
     )
   };
-
   const onGridReady = (params) => {
     setGridApi(params.api);
     setGridColumnApi(params.columnApi);
@@ -133,14 +145,29 @@ const renderStatusOptions = (value) => {
     console.log(pageCount,"pageCount")
     viewFinanceAdminClearanceList(searchValue, pageCount,costCenter);
   }, [costCenter,searchValue,pageCount]);
+
   const statusRender = (e,value) => {
+    var result = document.getElementsByClassName("switch-input")[0].checked
+
     const status = e.target.value
-    const clearanceStatus = value.data
-    clearanceStatus['itClearanceStatus']= status
-    clearanceStatus['disabled']= true
- 
+    const financeClearanceStatus = value.data
+    financeClearanceStatus['fullAndFinalCompleteStatus']= status
+    financeClearanceStatus['disabled']= true
+    console.log(status,result,"fullAndFinalCompleteStatus")
+
   };
 
+  const statusRenderTwo = (e,value) => {
+    var result = document.getElementsByClassName("switch-input")[0].checked
+
+    const status = e.target.value
+    const financeClearanceStatus = value.data
+
+    financeClearanceStatus['deactivateProfile']= status
+    financeClearanceStatus['disabled']= true
+    console.log(status,result,"deactivateProfile")
+
+  };
 
   return (
     <div>
@@ -151,23 +178,24 @@ const renderStatusOptions = (value) => {
         <div className="row">
           <div className="col-sm-12">
             <Row className="mt-4 mainWrapper">
-          <Col className="searchBox">
+               <div className="col-sm-3">
+            {" "}
             <input
-              className="form-control inputWrapper"
+              className="form-control searchButton"
               type="text"
               placeholder="Search.."
               onChange={(e) => searchHandler(e)}
             />
             <Search
-              className="search-icon"
-              style={{ color: "#313131", marginRight: "17rem" }}
-              onClick={searchDataHandler} 
-                          />
-          </Col>
-          <div className="col-sm-6">
+              className="search-icon mr-2"
+              style={{ color: "#313131" }}
+              onClick={searchDataHandler}
+            />
+          </div>
+          <div className="col-sm-4">
           <Col className="selectList">
             <br/>
-            <label className="title">Select Cost Center</label> &nbsp;&nbsp;
+            <label className="title" style={{padding:"6px"}}>Select Cost Center</label> &nbsp;&nbsp;
              
           <Select
           className="selectInputWrapper"
@@ -205,18 +233,19 @@ const renderStatusOptions = (value) => {
             <AgGridColumn className="columnColor" editable="false" headerName="Cost Center Name" field="costCentreName"></AgGridColumn>
             <AgGridColumn className="columnColor" editable="false" headerName="Manager Name" field="managerName"></AgGridColumn>
             <AgGridColumn  className="columnColor" editable="false" headerName="Joining Date" field="joiningDate"></AgGridColumn>
-            <AgGridColumn className="columnColor" editable="false" headerName="Last Working Day" field="lastWorkingDay"></AgGridColumn>
+            <AgGridColumn className="columnColor" editable="false" headerName="Last Working Day" field="lastWorkingDate"></AgGridColumn>
             <AgGridColumn className="columnColor" editable="false"  headerName="Mode of Separation" field="modeOfSeparation"></AgGridColumn>
             <AgGridColumn 
             className="columnColor" 
             editable="false" 
              headerName="F & F Complete" 
             field="fullAndFinalCompleteStatus"
+            valueGetter="node.rowIndex"
             editable="false" 
               colId="status"
             cellRendererFramework={renderStatusOptions}
             cellEditorParams={{
-              values: ["0","1","2"],
+              values: ["Yes","No"],
               cellRenderer: { statusRender },
             }}
             ></AgGridColumn>
@@ -226,18 +255,12 @@ const renderStatusOptions = (value) => {
              headerName="Deactivate Profile"
               field="deactivateProfile"
               colId="status"
-              cellRendererFramework={renderStatusOptions}
+              cellRendererFramework={renderStatusOptionsTwo}
               cellEditorParams={{
-                values: ["0","1","2"],
-                cellRenderer: { statusRender }
+                values: ["Yes","No"],
+                cellRenderer: { statusRenderTwo}
               }}
               ></AgGridColumn>
-            <AgGridColumn
-                      headerName="Action"
-                      editable="false"
-                      field="exitId"
-                      cellRendererFramework={(e) => renderButton(e)}
-                    ></AgGridColumn>
                       <AgGridColumn
                       headerName="History"
                       editable="false"

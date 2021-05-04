@@ -4,6 +4,8 @@ import { SeparationContext } from "../../context/SepearationState";
 import {Button,Container, Modal, Row, Col, Form, Table} from "react-bootstrap";
 import Pagination from 'react-js-pagination';
 import Select from 'react-select'
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Edit2, Eye, Search } from "react-feather";
 import { AdminContext } from '../../context/AdminState'
 import "./nodueclearance.css";
@@ -96,6 +98,7 @@ const handleCostCenter = (options) => {
     return (
       <div>
         <select name="itClearanceStatus" value={value.data.itClearanceStatus} onChange={(e) => statusRender(e,value)}>
+        <option value=""> select </option>
           <option value="0"> Due </option>
           <option value="1"> No Due </option>
           <option value="2"> On Hold </option>
@@ -111,8 +114,22 @@ const handleCostCenter = (options) => {
   const handleSave = (value) => {
     const formData = value.data
     console.log(formData,pageCount,"handlelsave")
+    
+     if(formData.itClearanceStatus !== "" && formData.itClearanceStatus !== null ){
+      if( formData.itClearanceStatus == 0 && formData.itRemarks !==null && formData.itRemarks !== undefined && formData.itRemarks !==""){
+        setCleranceData(formData)
+        updateITClearanceList(formData,searchValue, pageCount,costCenter)
+     toast.info("IT Clearance fetched successfully")
+     }else if(formData.itClearanceStatus == 1 || formData.itClearanceStatus == 2){
       setCleranceData(formData)
-     updateITClearanceList(formData,searchValue, pageCount,costCenter)
+      updateITClearanceList(formData,searchValue, pageCount,costCenter)
+     toast.info("IT Clearance fetched successfully")
+     }else{
+       toast.error("Please enter IT-remarks")
+     }
+     }else{
+       toast.error("please enter IT status and remarks")
+     }
   };
   useEffect(() => {
     console.log(pageCount,"pageCount")
@@ -154,35 +171,35 @@ const handleCostCenter = (options) => {
       </button>
     );
   };
-const employeeIdHandle = (e)=>{
-  console.log(e,"employeeId")
-}
+
   return (
     <div>
       <Fragment>
+        <ToastContainer/>
         <Container fluid>
       <Breadcrumb title="No Due Clearance" parent="No Due Clearance" />
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
             <Row className="mt-4 mainWrapper">
-          <Col className="searchBox">
+               <div className="col-sm-3">
+            {" "}
             <input
-              className="form-control inputWrapper"
+              className="form-control searchButton"
               type="text"
               placeholder="Search.."
               onChange={(e) => searchHandler(e)}
             />
             <Search
-              className="search-icon"
-              style={{ color: "#313131", marginRight: "17rem" }}
-              onClick={searchDataHandler} 
-                          />
-          </Col>
-          <div className="col-sm-6">
+              className="search-icon mr-2"
+              style={{ color: "#313131" }}
+              onClick={searchDataHandler}
+            />
+          </div>
+          <div className="col-sm-4">
           <Col className="selectList">
             <br/>
-            <label className="title">Select Cost Center</label> &nbsp;&nbsp;
+            <label className="title" style={{padding:"6px"}}>Select Cost Center</label> &nbsp;&nbsp;
              
           <Select
           className="selectInputWrapper"

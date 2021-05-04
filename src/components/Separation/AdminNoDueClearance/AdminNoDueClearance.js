@@ -83,28 +83,29 @@ const handleCostCenter = (options) => {
  
   return (
     <Fragment>
-      <Breadcrumb title="IT Admin No Due Clearance" parent="IT Admin No Due Clearance" />
+      <Breadcrumb title="Admin No Due Clearance" parent="Admin No Due Clearance" />
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
           <Row className="mt-4 mainWrapper">
-        <Col className="searchBox">
+          <div className="col-sm-3">
+            {" "}
             <input
-              className="form-control inputWrapper"
+              className="form-control searchButton"
               type="text"
               placeholder="Search.."
               onChange={(e) => searchHandler(e)}
             />
             <Search
-              className="search-icon"
-              style={{ color: "#313131", marginRight: "17rem" }}
-              onClick={searchDataHandler} 
-                          />
-          </Col>
-          <div className="col-sm-6">
+              className="search-icon mr-2"
+              style={{ color: "#313131" }}
+              onClick={searchDataHandler}
+            />
+          </div>
+          <div className="col-sm-4">
           <Col className="selectList">
             <br/>
-            <label className="title">Select Cost Center</label> &nbsp;&nbsp;
+            <label className="title" style={{padding:"6px"}}>Select Cost Center</label> &nbsp;&nbsp;
              
           <Select
           className="selectInputWrapper"
@@ -123,24 +124,24 @@ const handleCostCenter = (options) => {
               </div>
               <div className="table-responsive">
 
-                <table id="table-to-xls" className="table table-hover">
+              <Table id="table-to-xls" className="table table-hover">
                   <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
-                    <tr>
-                      <th>S. No</th>
-                      <th>Employee Id</th>
-                      <th>Employee Name</th>
-                      <th>Cost Center Name</th>
-                      <th>Manager Name</th>
-                      <th>Joining Date</th>
-                      <th>Last Working Day</th>
-                      <th>IT Amount To Be Recovered</th>
-                      <th>IT Clearance</th>
-                      <th>IT Clearance Remarks</th>
-                      <th>IT Clearance UpdatedBy</th>
-                      <th>Finance Amount To Be Recovered</th>
-                      <th>Finance Clearance</th>
-                      <th>Finance Clearance Remarks</th>
-                      <th>Finance Clearance UpdatedBy</th>
+                    <tr className="rowStyle">
+                      <th className="cloumnWidth">S. No</th>
+                      <th className="cloumnWidth">Employee Id</th>
+                      <th className="cloumnWidth">Employee Name</th>
+                      <th className="cloumnWidth">Cost Center Name</th>
+                      <th className="cloumnWidth">Manager Name</th>
+                      <th className="cloumnWidth">Joining Date</th>
+                      <th className="cloumnWidth">Last Working Day</th>
+                      <th className="cloumnWidth">IT Amount To Be Recovered</th>
+                      <th className="cloumnWidth"> IT Clearance</th>
+                      <th className="cloumnWidth">IT Clearance Remarks</th>
+                      <th className="cloumnWidth">IT Clearance UpdatedBy</th>
+                      <th className="cloumnWidth">Finance Amount To Be Recovered</th>
+                      <th className="cloumnWidth">Finance Clearance</th>
+                      <th className="cloumnWidth">Finance Clearance Remarks</th>
+                      <th className="cloumnWidth">Finance Clearance UpdatedBy</th>
                     </tr>
                   </thead>
 
@@ -168,7 +169,7 @@ const handleCostCenter = (options) => {
                         </tbody>
                       );
                     })}
-                </table>
+                </Table>
                 {(adminNoDueClearanceList === null) ?
                   <p style={{ textAlign: "center" }}>No Record Found</p> : null}
 

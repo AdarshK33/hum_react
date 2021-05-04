@@ -312,6 +312,9 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import Breadcrumb from "../common/breadcrumb";
 import { SeparationContext } from "../../context/SepearationState";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import {
   Button,
   Container,
@@ -420,6 +423,7 @@ const FinanceClearanceList = () => {
           value={value.data.financeClearanceStatus}
           onChange={(e) => statusRender(e, value)}
         >
+          <option value=""> select </option>
           <option value="0"> Due </option>
           <option value="1"> No Due </option>
           <option value="2"> On Hold </option>
@@ -435,8 +439,21 @@ const FinanceClearanceList = () => {
   const handleSave = (value) => {
     const formData = value.data;
     console.log(formData, pageCount, "handlelsave");
-    setCleranceData(formData);
+    if(formData.financeClearanceStatus !== "" && formData.financeClearanceStatus !== null ){
+     if( formData.financeClearanceStatus == 0 && formData.financeRemarks !==null && formData.financeRemarks !== undefined && formData.financeRemarks !==""){
+      setCleranceData(formData);
     saveFinanceClearanceData(formData, searchValue, pageCount, costCenter);
+    toast.info("Finance Clearance fetched successfully")
+    }else if(formData.financeClearanceStatus == 1 || formData.financeClearanceStatus == 2){
+      setCleranceData(formData);
+    saveFinanceClearanceData(formData, searchValue, pageCount, costCenter);
+    toast.info("Finance Clearance fetched successfully")
+    }else{
+      toast.error("Please enter finance-remarks")
+    }
+    }else{
+      toast.error("please enter finance status and remarks")
+    }
   };
   useEffect(() => {
     console.log(pageCount, "pageCount");
@@ -488,29 +505,31 @@ const FinanceClearanceList = () => {
   return (
     <div>
       <Fragment>
+      <ToastContainer />
         <Container fluid>
       <Breadcrumb title="Finance Clearance" parent="Finance Clearance" />
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
             <Row className="mt-4 mainWrapper">
-          <Col className="searchBox">
+            <div className="col-sm-3">
+            {" "}
             <input
-              className="form-control inputWrapper"
+              className="form-control searchButton"
               type="text"
               placeholder="Search.."
               onChange={(e) => searchHandler(e)}
             />
             <Search
-              className="search-icon"
-              style={{ color: "#313131", marginRight: "17rem" }}
-              onClick={searchDataHandler} 
-                          />
-          </Col>
-          <div className="col-sm-6">
+              className="search-icon mr-2"
+              style={{ color: "#313131" }}
+              onClick={searchDataHandler}
+            />
+          </div>
+          <div className="col-sm-4">
           <Col className="selectList">
             <br/>
-            <label className="title">Select Cost Center</label> &nbsp;&nbsp;
+            <label className="title" style={{padding:"6px"}}>Select Cost Center</label> &nbsp;&nbsp;
              
           <Select
           className="selectInputWrapper"
@@ -602,6 +621,9 @@ const FinanceClearanceList = () => {
                         }}
                       ></AgGridColumn>
                       <AgGridColumn
+                      // cellClassRules={{
+                      //         'rag-red': `x == null`,
+                      // }}
                         className="columnColor"
                         headerName="Finance Clearance Remarks"
                         field="financeRemarks"
