@@ -69,12 +69,13 @@ import FinanceClearanceList from "./components/FinanceClearance/ClearanceList";
 /*------------------- Candidate Verification -----------------------------------*/
 import CandidateVerification from "./components/CandidateVerification/ManageCandidates";
 import Verification from "./components/CandidateVerification/Verification";
-import AdminNoDueClearance from "./components/Separation/AdminNoDueClearance/AdminNoDueClearance"
+import AdminNoDueClearance from "./components/Separation/AdminNoDueClearance/AdminNoDueClearance";
 import NoDueClearance from "./components/Separation/NoDueClearance";
 import ViewEditRelease from "./components/OfferReleaseandOnboarding/ViewOfferRelease";
 import Documents from "./components/OnBording/Documents";
 
 import EmployeeExitList from "./components/ManagerApproveEmployeExit/EmployeeExitList";
+import EmployeeExitAction from "./components/ManagerApproveEmployeExit/EmployeeExitAction";
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
   console.log(user, state, "route8888888888888");
@@ -138,7 +139,7 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/no_due_clearance`}
             component={NoDueClearance}
           />
-           <Route
+          <Route
             path={`${process.env.PUBLIC_URL}/admin_no_due_clearance`}
             component={AdminNoDueClearance}
           />
@@ -200,8 +201,15 @@ const RoutePath = () => {
           />
           <Route
             path={`${process.env.PUBLIC_URL}/candidate-verification`}
-            component={CandidateVerification}
+            component={EmployeeExitList}
+            // component={
+            //CandidateVerification}
           />
+          <Route
+            path={`${process.env.PUBLIC_URL}/exit-action/:employeeid`}
+            component={EmployeeExitAction}
+          />
+
           <Route
             path={`${process.env.PUBLIC_URL}/offer-relase-and-onboard`}
             component={ViewEditRelease}

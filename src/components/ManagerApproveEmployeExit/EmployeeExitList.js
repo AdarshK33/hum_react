@@ -14,6 +14,8 @@ const EmployeeExitList = () => {
   const {
     EmployeeSeparationListView,
     EmployeeSeparationList,
+    ViewEmployeeDataById,
+    employeeData,
     loader,
     total,
   } = useContext(EmployeeSeparationContext);
@@ -25,15 +27,18 @@ const EmployeeExitList = () => {
   useEffect(() => {
     EmployeeSeparationListView("all", pageCount);
   }, []);
+  console.log("---->", EmployeeSeparationList);
 
   useEffect(() => {
     if (
       EmployeeSeparationList !== null &&
       EmployeeSeparationList !== undefined
     ) {
+      console.log("list");
       setCurrentRecords(EmployeeSeparationList);
     }
   }, [EmployeeSeparationList, currentRecords]);
+  console.log("Records-->", currentRecords);
 
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
@@ -68,7 +73,8 @@ const EmployeeExitList = () => {
     }
   };
 
-  const fetchCandidateDetails = (candidateId) => {
+  const fetchEmployeeDetails = (employeeId) => {
+    ViewEmployeeDataById(employeeId);
     // viewCandidateId(candidateId);
     // verificationDocsView(candidateId);
     // personalInfo(candidateId);
@@ -169,10 +175,10 @@ const EmployeeExitList = () => {
                             <td>{item.noticePeriod}</td>
 
                             <td>
-                              <Link to="/offer-relase-and-onboard">
+                              <Link to={"/exit-action/" + item.employeeId}>
                                 <Edit2
                                   onClick={() => {
-                                    fetchCandidateDetails(item.employeeId);
+                                    fetchEmployeeDetails(item.employeeId);
                                   }}
                                 />
                               </Link>

@@ -3,6 +3,8 @@ const GroupReducer = (state, action) => {
     case "EMPLOYEE_SEPARATION_LISTING":
       console.log("on reducer");
       return { ...state, EmployeeSeparationList: action.payload };
+    case "EMPLOYEE_DATA_BY_ID":
+      return { ...state, employeeData: action.payload };
 
     default:
       return state;
