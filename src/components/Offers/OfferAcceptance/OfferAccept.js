@@ -13,6 +13,7 @@ import { ChevronRight, ChevronLeft } from "react-feather";
 import { OnBoardContext } from "../../../context/OnBoardState";
 import { CandidateContext } from "../../../context/CandidateState";
 import { OfferContext } from "../../../context/OfferState";
+import { Link } from "react-router-dom";
 
 const OfferAccept = (props) => {
   const [showLetter, setShowLetter] = useState(false);
@@ -47,15 +48,15 @@ const OfferAccept = (props) => {
     CandidateProfile();
   }, []);
 
-  useEffect(() => {
-    if (
-      candidateProfileData !== undefined &&
-      candidateProfileData !== null &&
-      candidateProfileData.status === 2
-    ) {
-      props.history.push("/onboard");
-    }
-  }, [candidateProfileData]);
+  // useEffect(() => {
+  //   if (
+  //     candidateProfileData !== undefined &&
+  //     candidateProfileData !== null &&
+  //     candidateProfileData.status === 2
+  //   ) {
+  //     props.history.push("/onboard");
+  //   }
+  // }, [candidateProfileData]);
 
   useEffect(() => {
     console.log("candidateProfileData offer accept", candidateProfileData);
@@ -101,7 +102,105 @@ const OfferAccept = (props) => {
       candidateProfileData !== null &&
       Object.keys(candidateProfileData).length !== 0 ? (
         candidateProfileData.status === 2 ? (
-          props.history.push("/onboard")
+          <Fragment>
+            <Breadcrumb
+              title="CANDIDATE OFFER ACCEPTANCE"
+              parent="onboard-offer"
+            />
+            <Container className="main-container">
+              <h5 className="offerHeading">Candidate Offer Acceptance</h5>
+              <Container className="middle-container">
+                <h6>Congrats!</h6>
+                <h6>Welcome to Decathlon</h6>
+                <div style={{ marginTop: "3rem", marginBottom: "2rem" }}>
+                  <span style={{ marginRight: "1rem" }}>
+                    View Your Offer Letter
+                  </span>
+                  <Button onClick={showLetterClick}>Show</Button>
+                </div>
+              </Container>
+
+              {showLetter === true && (
+                <Container className="last-container">
+                  <Row>
+                    <Col sm={2}>
+                      {pageNumber <= 1 ? (
+                        <ChevronLeft
+                          disabled
+                          style={{
+                            color: "grey",
+                            cursor: "pointer",
+                            marginTop: "20rem",
+                          }}
+                        />
+                      ) : (
+                        <ChevronLeft
+                          onClick={goToPrevPage}
+                          disabled={pageNumber === 1}
+                          style={{
+                            color: "blue",
+                            cursor: "pointer",
+                            marginTop: "20rem",
+                          }}
+                        />
+                      )}
+                    </Col>
+                    <Col sm={8}>
+                      <Document
+                        file={fileName}
+                        onLoadSuccess={onDocumentLoadSuccess}
+                      >
+                        <Page pageNumber={pageNumber} />
+                      </Document>
+                    </Col>
+                    <Col sm={2}>
+                      {pageNumber === numPages ? (
+                        <ChevronRight
+                          disabled
+                          style={{
+                            color: "grey",
+                            cursor: "pointer",
+                            marginTop: "20rem",
+                          }}
+                        />
+                      ) : (
+                        <ChevronRight
+                          onClick={goToNextPage}
+                          style={{
+                            color: "blue",
+                            cursor: "pointer",
+                            marginTop: "20rem",
+                          }}
+                        />
+                      )}
+                    </Col>
+                  </Row>
+
+                  <p>
+                    Page {pageNumber} of {numPages}
+                  </p>
+                </Container>
+              )}
+              <Link
+                style={{
+                  color: "#ffffff",
+                  textDecoration: "none !important",
+                }}
+                to="/onboard"
+              >
+                <Button>
+                  Candidate Onboard{" "}
+                  <ChevronRight
+                    disabled
+                    style={{
+                      color: "#ffffff",
+                      cursor: "pointer",
+                    }}
+                  />
+                </Button>
+              </Link>
+            </Container>
+          </Fragment>
         ) : (
           <Fragment>
             <Breadcrumb

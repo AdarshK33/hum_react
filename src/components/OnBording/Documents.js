@@ -8,6 +8,7 @@ import { OnBoardContext } from "../../context/OnBoardState";
 import { OfferContext } from "../../context/OfferState";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
 // File Type list:
 // Photo = 0
 // Aadhaar = 1
@@ -979,9 +980,17 @@ const Documents = (props) => {
                   Your details have been sent to our verification team, please
                   wait to hear from us
                 </h6>{" "}
-                <Button onClick={() => setOnDocumentPopup(false)}>
-                  Return to the Portal
-                </Button>
+                <Link
+                  style={{
+                    color: "#ffffff",
+                    textDecoration: "none !important",
+                  }}
+                  to="/offer"
+                >
+                  <Button onClick={() => setOnDocumentPopup(false)}>
+                    Return to the Portal
+                  </Button>
+                </Link>
               </Modal.Body>
             </Container>
           </Modal>

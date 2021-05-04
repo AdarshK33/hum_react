@@ -29,6 +29,7 @@ const initial_state = {
   disApproveAadhar: "",
   verificationStateList: [],
   verificationCityList: [],
+  verificationPermanentCityList: [],
 };
 export const DocsVerifyContext = createContext();
 export const DocsVerificationProvider = (props) => {
@@ -400,6 +401,22 @@ export const DocsVerificationProvider = (props) => {
       });
   };
 
+  const viewPermanentCityVerification = (stateId) => {
+    return client
+      .get("/api/v1/city/view/city/stateId?stateId=" + stateId)
+      .then((response) => {
+        console.log(response);
+        state.verificationPermanentCityList = response.data.data;
+        return dispatch({
+          type: "VIEW_PERMANENT_VERIFICATION_CITY",
+          payload: state.verificationPermanentCityList,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <DocsVerifyContext.Provider
       value={{
@@ -424,6 +441,7 @@ export const DocsVerificationProvider = (props) => {
         disapproveAadharByAdmin,
         viewStatesVerification,
         viewCityVerification,
+        viewPermanentCityVerification,
         disApproveAadhar: state.disApproveAadhar,
         step5Status: state.step5Status,
         aadharStatus: state.aadharStatus,
@@ -446,6 +464,7 @@ export const DocsVerificationProvider = (props) => {
         uanUpdate: state.uanUpdate,
         verificationStateList: state.verificationStateList,
         verificationCityList: state.verificationCityList,
+        verificationPermanentCityList: state.verificationPermanentCityList,
       }}
     >
       {" "}
