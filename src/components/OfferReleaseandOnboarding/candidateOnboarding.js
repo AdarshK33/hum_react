@@ -586,7 +586,7 @@ const CandidateOnboarding = () => {
                   RoleList.map((item, i) => {
                     return (
                       <option key={i} value={item.roleId}>
-                        {item.roleName}
+                        {item.roleDesc}
                       </option>
                     );
                   })}

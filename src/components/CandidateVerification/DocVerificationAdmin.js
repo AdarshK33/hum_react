@@ -564,43 +564,49 @@ const DocVerification = () => {
           </Col>
         </Row>
       )}
-      {UANNo && pfDetails !== null && (
-        <Row>
-          <Col sm={6}>
-            <Form.Group style={{ borderRadius: " 12.25rem !important" }}>
-              <div className="boxField input">
-                <label>Enter UAN Number</label>{" "}
-                <input
-                  type="text"
-                  name="uannbr"
-                  value={uanNumber}
-                  className="form-input"
-                  // required={required}
-                  onChange={(e) => handleUANNumber(e)}
-                />
-              </div>
-            </Form.Group>
-            {uanError && (
-              <p style={{ color: "red" }}>Please Enter UAN Number</p>
-            )}
-          </Col>
-        </Row>
-      )}
+      {UANNo &&
+        user.role === "ADMIN" &&
+        state.adminVerificationStatus === 1 &&
+        pfDetails !== null && (
+          <Row>
+            <Col sm={6}>
+              <Form.Group style={{ borderRadius: " 12.25rem !important" }}>
+                <div className="boxField input">
+                  <label>Enter UAN Number</label>{" "}
+                  <input
+                    type="text"
+                    name="uannbr"
+                    value={uanNumber}
+                    className="form-input"
+                    // required={required}
+                    onChange={(e) => handleUANNumber(e)}
+                  />
+                </div>
+              </Form.Group>
+              {uanError && (
+                <p style={{ color: "red" }}>Please Enter UAN Number</p>
+              )}
+            </Col>
+          </Row>
+        )}
 
-      {UANYes && pfDetails !== null && (
-        <Row>
-          <Col sm={6}>
-            <Form.Group>
-              <div className="boxField input">
-                <label style={{ color: "#006EBB" }}>
-                  {" "}
-                  {pfDetails.uanNumber}
-                </label>
-              </div>
-            </Form.Group>
-          </Col>
-        </Row>
-      )}
+      {user.role === "ADMIN" &&
+        state.adminVerificationStatus === 1 &&
+        UANYes &&
+        pfDetails !== null && (
+          <Row>
+            <Col sm={6}>
+              <Form.Group>
+                <div className="boxField input">
+                  <label style={{ color: "#006EBB" }}>
+                    {" "}
+                    {pfDetails.uanNumber}
+                  </label>
+                </div>
+              </Form.Group>
+            </Col>
+          </Row>
+        )}
       <div
         style={{
           marginTop: "2rem",
