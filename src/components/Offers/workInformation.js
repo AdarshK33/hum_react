@@ -73,6 +73,72 @@ const WorkInformation = () => {
     cityData(locationName.stateId);
     console.log("state in useEffect", locationName);
   }, [locationName]);
+  // useEffect(() => {
+  //   console.log("inside candidateData", candidateData);
+  //   if (
+  //     candidateData !== null &&
+  //     candidateData !== undefined &&
+  //     candidateData.candidateInformation !== null &&
+  //     candidateData.candidateInformation !== undefined &&
+  //     candidateData.candidateInformation.candidateReferences !== "" &&
+  //     candidateData.workInformation !== null &&
+  //     candidateData.workInformation !== undefined &&
+  //     candidateData.workInformation.recruitmentSource !== "Employee Referral"
+  //   ) {
+  //     console.log(" 1st condition");
+  //     candidateData.candidateInformation.candidateReferences.map((item) => {
+  //       if (item.employeeName !== "") {
+  //         setState({
+  //           recuritment: candidateData.workInformation.recruitmentSource,
+  //         });
+  //       }
+  //     });
+  //   } else if (
+  //     candidateData !== null &&
+  //     candidateData !== undefined &&
+  //     candidateData.candidateInformation !== null &&
+  //     candidateData.candidateInformation !== undefined &&
+  //     candidateData.candidateInformation.candidateReferences !== "" &&
+  //     candidateData.workInformation !== null &&
+  //     candidateData.workInformation !== undefined &&
+  //     candidateData.workInformation.recruitmentSource === "Employee Referral"
+  //   ) {
+  //     console.log(" 2nd condition");
+  //     candidateData.candidateInformation.candidateReferences.map((item) => {
+  //       if (item.employeeName !== "") {
+  //         setState({ recuritment: "Employee Referral" });
+  //       }
+  //     });
+  //   } else if (
+  //     candidateData !== null &&
+  //     candidateData !== undefined &&
+  //     candidateData.candidateInformation !== null &&
+  //     candidateData.candidateInformation !== undefined &&
+  //     candidateData.candidateInformation.candidateReferences !== "" &&
+  //     (candidateData.workInformation === null ||
+  //       candidateData.workInformation === undefined)
+  //   ) {
+  //     console.log(" 3rd condition");
+  //     candidateData.candidateInformation.candidateReferences.map((item) => {
+  //       if (item.employeeName !== "") {
+  //         setState({ recuritment: "Employee Referral" });
+  //       }
+  //     });
+  //   } else if (
+  //     candidateData !== null &&
+  //     candidateData !== undefined &&
+  //     candidateData.candidateInformation !== null &&
+  //     candidateData.candidateInformation !== undefined &&
+  //     candidateData.candidateInformation.candidateReferences[
+  //       candidateData.candidateInformation.candidateReferences.length - 1
+  //     ].employeeName === "" &&
+  //     (candidateData.workInformation === null ||
+  //       candidateData.workInformation === undefined)
+  //   ) {
+  //     console.log(" 4th condition");
+  //     setState({ recuritment: "" });
+  //   }
+  // }, [candidateData]);
 
   const stateHandler = (e) => {
     setStateValue(e.target.value);

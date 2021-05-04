@@ -606,6 +606,7 @@ const InsuranceNomination = (props) => {
               (candidatePersonalInfoData.maritalStatus === "Married")
           ) {
             if (candidateInsuranceNominationData[0].nomineeVariant === 1) {
+              console.log("inside parent");
               setParentCheck(true);
               setInlawCheck(false);
               setNAcheck(false);
@@ -650,76 +651,160 @@ const InsuranceNomination = (props) => {
       setButtonTwo(false);
       setButtonOne(true);
     }
+
     if (
+      candidateInsuranceNominationData &&
+      candidateInsuranceNominationData !== null &&
+      candidateInsuranceNominationData !== undefined &&
+      Object.keys(candidateInsuranceNominationData).length !== 0 &&
       candidatePersonalInfoData &&
-      candidatePersonalInfoData.maritalStatus !== null &&
-      candidatePersonalInfoData.maritalStatus !== undefined &&
-      (candidatePersonalInfoData.maritalStatus === "Unmarried") |
-        (candidatePersonalInfoData.maritalStatus === "UnMarried")
+      candidatePersonalInfoData !== null &&
+      candidatePersonalInfoData !== undefined &&
+      Object.keys(candidatePersonalInfoData).length !== 0
     ) {
-      setMarriedStatus(true);
-      setRelativeType(false);
-      setParentCheck(false);
-      setInlawCheck(false);
-      setNAcheck(false);
-      setAddExtraFirst(true);
-      setAddExtraSecond(true);
-      setAddFirstInLaw(false);
-      setAddSecondInLaw(false);
-      setAddFirst(false);
-      setAddSecond(false);
-      setAddOne(false);
-      setAddTwo(false);
-      setButtonTwo(false);
-      setButtonOne(true);
-      // setAddOne(false);
-      // setAddTwo(false);
-      // setAddFirstInLaw(false);
-      // setAddSecondInLaw(false);
-      state.relationship = "Father";
-      state.nominee2Relationship = "Mother";
-    } else if (
-      candidatePersonalInfoData &&
-      candidatePersonalInfoData.maritalStatus !== null &&
-      candidatePersonalInfoData.maritalStatus !== undefined &&
-      (candidatePersonalInfoData.maritalStatus === "married") |
-        (candidatePersonalInfoData.maritalStatus === "Married")
-    ) {
-      setRelativeType(true);
-      setMarriedStatus(false);
-      setParentCheck(false);
-      setInlawCheck(true);
-      setNAcheck(false);
-      // setAddFirstInLaw(true);
-      // setAddSecondInLaw(true);
-      // setAddFirst(true);
-      // setAddSecond(true);
-      setAddOne(true);
-      setAddTwo(true);
-      setAddExtraFirst(false);
-      setAddExtraSecond(false);
-      setButtonOne(false);
-      setButtonTwo(true);
-      state.relationship = "Spouse";
-      state.nominee2Relationship = "Child 1";
+      if (
+        candidatePersonalInfoData &&
+        candidatePersonalInfoData.maritalStatus !== null &&
+        candidatePersonalInfoData.maritalStatus !== undefined &&
+        (candidatePersonalInfoData.maritalStatus === "Unmarried") |
+          (candidatePersonalInfoData.maritalStatus === "UnMarried")
+      ) {
+        setMarriedStatus(true);
+        setRelativeType(false);
+        // setParentCheck(false);
+        // setInlawCheck(false);
+        // setNAcheck(false);
+        setAddExtraFirst(true);
+        setAddExtraSecond(true);
+        setAddFirstInLaw(false);
+        setAddSecondInLaw(false);
+        setAddFirst(false);
+        setAddSecond(false);
+        setAddOne(false);
+        setAddTwo(false);
+        setButtonTwo(false);
+        setButtonOne(true);
+        setAddOne(false);
+        setAddTwo(false);
+        setAddFirstInLaw(false);
+        setAddSecondInLaw(false);
+        state.relationship = "Father";
+        state.nominee2Relationship = "Mother";
+      } else if (
+        candidatePersonalInfoData &&
+        candidatePersonalInfoData.maritalStatus !== null &&
+        candidatePersonalInfoData.maritalStatus !== undefined &&
+        (candidatePersonalInfoData.maritalStatus === "married") |
+          (candidatePersonalInfoData.maritalStatus === "Married")
+      ) {
+        setRelativeType(true);
+        setMarriedStatus(false);
+        // setParentCheck(false);
+        // setInlawCheck(true);
+        // setNAcheck(false);
+        setAddFirstInLaw(true);
+        setAddSecondInLaw(true);
+        // setAddFirst(true);
+        // setAddSecond(true);
+        setAddOne(true);
+        setAddTwo(true);
+        setAddExtraFirst(false);
+        setAddExtraSecond(false);
+        setButtonOne(false);
+        setButtonTwo(true);
+        state.relationship = "Spouse";
+        state.nominee2Relationship = "Child 1";
+      } else {
+        setMarriedStatus(true);
+        setRelativeType(false);
+        setParentCheck(false);
+        setInlawCheck(false);
+        setNAcheck(false);
+        setAddExtraFirst(true);
+        setAddExtraSecond(true);
+        setAddFirstInLaw(false);
+        setAddSecondInLaw(false);
+        setAddFirst(false);
+        setAddSecond(false);
+        setAddOne(false);
+        setAddTwo(false);
+        state.relationship = "Father";
+        state.nominee2Relationship = "Mother";
+        setButtonTwo(false);
+        setButtonOne(true);
+      }
     } else {
-      setMarriedStatus(true);
-      setRelativeType(false);
-      setParentCheck(false);
-      setInlawCheck(false);
-      setNAcheck(false);
-      setAddExtraFirst(true);
-      setAddExtraSecond(true);
-      setAddFirstInLaw(false);
-      setAddSecondInLaw(false);
-      setAddFirst(false);
-      setAddSecond(false);
-      setAddOne(false);
-      setAddTwo(false);
-      state.relationship = "Father";
-      state.nominee2Relationship = "Mother";
-      setButtonTwo(false);
-      setButtonOne(true);
+      if (
+        candidatePersonalInfoData &&
+        candidatePersonalInfoData.maritalStatus !== null &&
+        candidatePersonalInfoData.maritalStatus !== undefined &&
+        (candidatePersonalInfoData.maritalStatus === "Unmarried") |
+          (candidatePersonalInfoData.maritalStatus === "UnMarried")
+      ) {
+        setMarriedStatus(true);
+        setRelativeType(false);
+        setParentCheck(false);
+        setInlawCheck(false);
+        setNAcheck(false);
+        setAddExtraFirst(true);
+        setAddExtraSecond(true);
+        setAddFirstInLaw(false);
+        setAddSecondInLaw(false);
+        setAddFirst(false);
+        setAddSecond(false);
+        setAddOne(false);
+        setAddTwo(false);
+        setButtonTwo(false);
+        setButtonOne(true);
+        setAddOne(false);
+        setAddTwo(false);
+        setAddFirstInLaw(false);
+        setAddSecondInLaw(false);
+        state.relationship = "Father";
+        state.nominee2Relationship = "Mother";
+      } else if (
+        candidatePersonalInfoData &&
+        candidatePersonalInfoData.maritalStatus !== null &&
+        candidatePersonalInfoData.maritalStatus !== undefined &&
+        (candidatePersonalInfoData.maritalStatus === "married") |
+          (candidatePersonalInfoData.maritalStatus === "Married")
+      ) {
+        setRelativeType(true);
+        setMarriedStatus(false);
+        setParentCheck(false);
+        setInlawCheck(true);
+        setNAcheck(false);
+        setAddFirstInLaw(true);
+        setAddSecondInLaw(true);
+        setAddFirst(true);
+        setAddSecond(true);
+        setAddOne(true);
+        setAddTwo(true);
+        setAddExtraFirst(false);
+        setAddExtraSecond(false);
+        setButtonOne(false);
+        setButtonTwo(true);
+        state.relationship = "Spouse";
+        state.nominee2Relationship = "Child 1";
+      } else {
+        setMarriedStatus(true);
+        setRelativeType(false);
+        setParentCheck(false);
+        setInlawCheck(false);
+        setNAcheck(false);
+        setAddExtraFirst(true);
+        setAddExtraSecond(true);
+        setAddFirstInLaw(false);
+        setAddSecondInLaw(false);
+        setAddFirst(false);
+        setAddSecond(false);
+        setAddOne(false);
+        setAddTwo(false);
+        state.relationship = "Father";
+        state.nominee2Relationship = "Mother";
+        setButtonTwo(false);
+        setButtonOne(true);
+      }
     }
   }, [
     candidateInsuranceNominationData,
@@ -1709,6 +1794,11 @@ const InsuranceNomination = (props) => {
     state.extra1relationship = "Father";
     state.extra2relationship = "Mother";
 
+    // state.relationship = "Father";
+    // state.nominee2Relationship = "Mother";
+    state.nominee3Relationship = "Father";
+    state.nominee4Relationship = "Mother";
+
     state.In_law_nominee1Relationship = "Father In-Law";
     state.In_law_nominee2Relationship = "Mother In-Law";
 
@@ -2157,6 +2247,7 @@ const InsuranceNomination = (props) => {
   const DeleteSecond = () => {
     setAddSecond(false);
     if (
+      state.nominee2NominiId !== 0 &&
       state.nominee2NominiId !== "" &&
       state.nominee2NominiId !== null &&
       state.nominee2NominiId !== undefined
@@ -3278,7 +3369,7 @@ const InsuranceNomination = (props) => {
                 <div className="col-sm-4">
                   <Form.Group>
                     <Form.Label>
-                    Dependent Name
+                      Dependent Name
                       <span style={{ color: "red" }}>*</span>
                     </Form.Label>
                     <Form.Control
@@ -3500,7 +3591,7 @@ const InsuranceNomination = (props) => {
                 <div className="col-sm-4">
                   <Form.Group>
                     <Form.Label>
-                    Dependent Name
+                      Dependent Name
                       <span style={{ color: "red" }}>*</span>
                     </Form.Label>
                     <Form.Control

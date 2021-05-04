@@ -32,6 +32,8 @@ const EditAddress = (props) => {
     verificationStateList,
     viewCityVerification,
     verificationCityList,
+    viewPermanentCityVerification,
+    verificationPermanentCityList,
   } = useContext(DocsVerifyContext);
   const [isChecked, changeCheckState] = useState(false);
   const [disabled, setDisableState] = useState(false);
@@ -88,31 +90,38 @@ const EditAddress = (props) => {
     setDisableState(true);
   }, []);
   useEffect(() => {
-    var countryvalue = countryList.filter(
-      (i) => i.countryId === state.countryId
-    );
-    if (countryvalue !== undefined && countryvalue[0] !== undefined) {
-      viewStatesVerification(countryvalue[0].countryName);
-    }
-    var permanentCountry = countryList.filter(
-      (j) => j.countryId === state.permanentCountryId
-    );
-    if (permanentCountry !== undefined && permanentCountry[0] !== undefined) {
-      viewStatesVerification(permanentCountry[0].countryName);
+    if (countryList !== null && countryList !== undefined) {
+      var countryvalue = countryList.filter(
+        (i) => i.countryId === state.countryId
+      );
+      if (countryvalue !== undefined && countryvalue[0] !== undefined) {
+        viewStatesVerification(countryvalue[0].countryName);
+      }
+      var permanentCountry = countryList.filter(
+        (j) => j.countryId === state.permanentCountryId
+      );
+      if (permanentCountry !== undefined && permanentCountry[0] !== undefined) {
+        viewStatesVerification(permanentCountry[0].countryName);
+      }
     }
   }, [countryList]);
   useEffect(() => {
-    var stateList = verificationStateList.filter(
-      (i) => i.stateId === state.stateId
-    );
-    if (stateList !== undefined && stateList[0] !== undefined) {
-      viewCityVerification(stateList[0].stateId);
-    }
-    var permanetStateList = verificationStateList.filter(
-      (st) => st.stateId === state.permanentStateId
-    );
-    if (permanetStateList !== undefined && permanetStateList[0] !== undefined) {
-      viewCityVerification(permanetStateList[0].stateId);
+    if (verificationStateList !== null && verificationStateList !== undefined) {
+      var stateList = verificationStateList.filter(
+        (i) => i.stateId === state.stateId
+      );
+      if (stateList !== undefined && stateList[0] !== undefined) {
+        viewCityVerification(stateList[0].stateId);
+      }
+      var permanetStateList = verificationStateList.filter(
+        (st) => st.stateId === state.permanentStateId
+      );
+      if (
+        permanetStateList !== undefined &&
+        permanetStateList[0] !== undefined
+      ) {
+        viewPermanentCityVerification(permanetStateList[0].stateId);
+      }
     }
   }, [verificationStateList]);
   const flatNumberValidation = () => {
@@ -357,7 +366,11 @@ const EditAddress = (props) => {
     changeCheckState(!e.target.checked);
     console.log(isChecked);
   };
-  var countryvalue = countryList.filter((i) => i.countryId === state.countryId);
+  if (countryList !== undefined && countryList !== null) {
+    var countryvalue = countryList.filter(
+      (i) => i.countryId === state.countryId
+    );
+  }
 
   var stateVale =
     verificationStateList !== null &&
@@ -365,15 +378,17 @@ const EditAddress = (props) => {
   var cityvalue =
     verificationCityList !== null &&
     verificationCityList.filter((c) => c.cityId === state.cityId);
-  var permanetCountry = countryList.filter(
-    (k) => k.countryId === state.permanentCountryId
-  );
+  if (countryList !== undefined && countryList !== null) {
+    var permanetCountry = countryList.filter(
+      (k) => k.countryId === state.permanentCountryId
+    );
+  }
   var permanentStateValue =
     verificationStateList !== null &&
     verificationStateList.filter((ps) => ps.stateId === state.permanentStateId);
   var permanentCityValue =
-    verificationCityList !== null &&
-    verificationCityList.filter(
+    verificationPermanentCityList !== null &&
+    verificationPermanentCityList.filter(
       (city) => city.cityId === state.permanentCityId
     );
   return (
