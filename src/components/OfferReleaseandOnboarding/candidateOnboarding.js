@@ -514,10 +514,8 @@ const CandidateOnboarding = () => {
       </Modal>
       {employeeData !== null && employeeData !== undefined ? (
         <div className="px-5 mx-auto">
-          <h5>
-            <u>WORK DETAILS</u>
-          </h5>
-          <Row className="mt-5">
+          <h5 style={{ fontWeight: 700 }}>Work Details</h5>
+          <Row className="mt-4">
             <Col sm={3}>Candidate date of joining</Col>
             <Col sm={6}>
               {candidateData !== undefined &&
@@ -588,7 +586,7 @@ const CandidateOnboarding = () => {
                   RoleList.map((item, i) => {
                     return (
                       <option key={i} value={item.roleId}>
-                        {item.roleName}
+                        {item.roleDesc}
                       </option>
                     );
                   })}
@@ -606,9 +604,7 @@ const CandidateOnboarding = () => {
         ""
       )}
       <div className="px-5 mx-auto mt-4">
-        <h5>
-          <u>REMUNERATION DETAILS</u>
-        </h5>
+        <h5 style={{ fontWeight: 700 }}>Remuneration Details</h5>
         <Row className="mt-4">
           <Col sm={4}>
             <label className="mr-3">Candidate ID:</label>
@@ -666,9 +662,9 @@ const CandidateOnboarding = () => {
         </Row>
       </div>
       <div className="px-5  mt-4">
-        <h5>Cost Center Split</h5>
+        <h5 style={{ fontWeight: 700 }}>Cost Center Split</h5>
         {costCenter === true && (
-          <Row>
+          <Row className="mt-4">
             <Col sm={2}>
               <Form.Group>
                 <Form.Control
@@ -1075,10 +1071,8 @@ const CandidateOnboarding = () => {
       </div>
       {!previewLetter ? (
         <div className="px-5 mx-auto mt-5">
-          <h5>
-            <u>GENERATE APPOINTMENT LETTER</u>
-          </h5>
-          <Row className="text-center mt-3">
+          <h5 style={{ fontWeight: 700 }}>GENERATE APPOINTMENT LETTER</h5>
+          <Row className="text-center mt-4">
             <Button
               type="button"
               className="px-5 mb-4 previewButton"

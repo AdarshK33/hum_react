@@ -91,10 +91,71 @@ const EditWorkInformation = () => {
     }
   }, [candidateData]);
 
+  // useEffect(() => {
+  //   console.log("inside candidateData", candidateData);
+  //   if (
+  //     candidateData !== null &&
+  //     candidateData !== undefined &&
+  //     candidateData.candidateInformation !== null &&
+  //     candidateData.candidateInformation !== undefined &&
+  //     candidateData.candidateInformation.candidateReferences[-1]
+  //       .employeeName !== "" &&
+  //     candidateData.workInformation !== null &&
+  //     candidateData.workInformation !== undefined &&
+  //     candidateData.workInformation.recruitmentSource !== "Employee Referral"
+  //   ) {
+  //     console.log(" 1st condition");
+  //     setState({
+  //       recuritment: candidateData.workInformation.recruitmentSource,
+  //     });
+  //   } else if (
+  //     candidateData !== null &&
+  //     candidateData !== undefined &&
+  //     candidateData.candidateInformation !== null &&
+  //     candidateData.candidateInformation !== undefined &&
+  //     candidateData.candidateInformation.candidateReferences[-1]
+  //       .employeeName !== "" &&
+  //     candidateData.workInformation !== null &&
+  //     candidateData.workInformation !== undefined &&
+  //     candidateData.workInformation.recruitmentSource === "Employee Referral"
+  //   ) {
+  //     console.log(" 2nd condition");
+  //     setState({ recuritment: "Employee Referral" });
+  //   } else if (
+  //     candidateData !== null &&
+  //     candidateData !== undefined &&
+  //     candidateData.candidateInformation !== null &&
+  //     candidateData.candidateInformation !== undefined &&
+  //     candidateData.candidateInformation.candidateReferences[-1]
+  //       .employeeName !== "" &&
+  //     (candidateData.workInformation === null ||
+  //       candidateData.workInformation === undefined)
+  //   ) {
+  //     console.log(" 3rd condition");
+  //     setState({ recuritment: "Employee Referral" });
+  //   } else if (
+  //     candidateData !== null &&
+  //     candidateData !== undefined &&
+  //     candidateData.candidateInformation !== null &&
+  //     candidateData.candidateInformation !== undefined &&
+  //     candidateData.candidateInformation.candidateReferences[-1]
+  //       .employeeName === "" &&
+  //     (candidateData.workInformation === null ||
+  //       candidateData.workInformation === undefined)
+  //   ) {
+  //     console.log(" 4th condition");
+  //     setState({ recuritment: "" });
+  //   }
+  // }, [candidateData]);
+
   useEffect(() => {
     setStateValue(locationName.stateId);
     setCity(locationName.cityId);
     cityData(locationName.stateId);
+    console.log(
+      "candidateData.candidateInformation",
+      candidateData.candidateInformation
+    );
     console.log("state in useEffect", locationName);
   }, [locationName]);
 

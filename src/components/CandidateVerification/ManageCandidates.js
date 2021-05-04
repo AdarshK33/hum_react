@@ -3,7 +3,7 @@ import { OfferContext } from "../../context/OfferState";
 import Breadcrumb from "../common/breadcrumb";
 import { Link } from "react-router-dom";
 import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
-import { Edit2, Eye, Search } from "react-feather";
+import { Edit2, Eye, Search, AlertCircle } from "react-feather";
 import Pagination from "react-js-pagination";
 import "./ManageCandidate.css";
 import { DocsVerifyContext } from "../../context/DocverificationState";
@@ -187,7 +187,7 @@ const CandidateList = () => {
                               {/* <Link to={"/admin-finance-clearance"}> */}
                           {/* <Link to={"/no_due_clearance"}> */}
                           {/* <Link to={"/finance-clearance"}> */}
-                          <Edit2
+                          <AlertCircle
                             onClick={() => {
                               FetchCandidateData(item.candidateId);
                             }}

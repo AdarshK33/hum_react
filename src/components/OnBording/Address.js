@@ -1137,7 +1137,10 @@ const Address = (props) => {
                       disabled={disabled}
                     />
                     {PermanentPinCodeError ? (
-                      <p style={{ color: "red" }}> Please enter pin code</p>
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        Please enter valid pin code
+                      </p>
                     ) : (
                       <p></p>
                     )}
@@ -1164,7 +1167,10 @@ const Address = (props) => {
                       disabled={disabled}
                     />
                     {PermanentPhoneNoError ? (
-                      <p style={{ color: "red" }}> Please enter phone number</p>
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        Please enter valid phone number
+                      </p>
                     ) : (
                       <p></p>
                     )}
