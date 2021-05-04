@@ -21,6 +21,7 @@ import { toast } from "react-toastify";
 import DocVerification from "../../components/CandidateVerification/DocVerification";
 import { OnBoardContext } from "../../context/OnBoardState";
 import { OfferContext } from "../../context/OfferState";
+import man from "../../assets/images/dashboard/userImage.png";
 
 const OnBoardingStepper = (props) => {
   const { CandidateProfile, candidateProfileData } = useContext(OnBoardContext);
@@ -164,6 +165,10 @@ const OnBoardingStepper = (props) => {
       setStep(tempArray);
     }
   };
+
+  const candidateLogout = () => {
+    console.log("inside candidate logout");
+  };
   const PrevStep = () => {
     console.log("prevStep");
     console.log(stepCount);
@@ -205,6 +210,30 @@ const OnBoardingStepper = (props) => {
   return (
     <Fragment>
       <Breadcrumb title="OnBoard" parent="Candidate OnBoard" />
+      {/* <Fragment>
+        <li className="onhover-dropdown">
+          <div className="media align-items-center">
+            <img
+              className="align-self-center pull-right img-50 rounded-circle blur-up lazyloaded"
+              src={man}
+              alt="header-user"
+            />
+          </div>
+          <ul className="profile-dropdown onhover-show-div p-20 profile-dropdown-hover">
+            <li>
+              <a href="#profile">My Profile</a>
+            </li>
+
+            <li
+              onClick={() => {
+                candidateLogout();
+              }}
+            >
+              <a href="#javascript">Log out</a>
+            </li>
+          </ul>
+        </li>
+      </Fragment> */}
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">

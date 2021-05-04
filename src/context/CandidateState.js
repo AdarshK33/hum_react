@@ -5,8 +5,9 @@ import { useHistory } from "react-router-dom";
 import { setDefaultCandidiateHeader, candidate } from "../utils/canditateLogin";
 import { OnBoardContext } from "./OnBoardState";
 const initial_state = {
-  candidateData: {},
+  candidateLoginValue: {},
   offerAcceptData: {},
+  candidateLoginResponse: {},
 };
 
 export const CandidateContext = createContext();
@@ -21,16 +22,19 @@ export const CandidateProvider = ({ children }) => {
         console.log(response, "login candidate");
         let accessTokenExist = localStorage.getItem("candidate_access_token");
         const token = response.data.token;
-        state.candidateData = response.data;
+        state.candidateLoginResponse = response;
+        state.candidateLoginValue = response.data;
         if (token == null) {
           toast.error(response.data.message);
+          dispatch({ type: "LOGIN", payload: state });
+          data.history.push("/onboard-offer");
         } else if (token !== "" || token !== null) {
           setDefaultCandidiateHeader(token);
-          dispatch({ type: "LOGIN", payload: state.candidateData });
+          dispatch({ type: "LOGIN", payload: state });
           localStorage.setItem("candidate_access_token", token);
           if (accessTokenExist !== null || accessTokenExist !== undefined) {
             CandidateProfile();
-            // data.history.push("/offer");
+            data.history.push("/offer");
           } else {
             toast.error("Bad Credentials");
           }
@@ -75,8 +79,9 @@ export const CandidateProvider = ({ children }) => {
         candidateOnBoardLogin,
         candidateRejectOffer,
         candidateAcceptOffer,
-        candidateData: state.candidateData,
+        candidateLoginValue: state.candidateLoginValue,
         offerAcceptData: state.offerAcceptData,
+        candidateLoginResponse: state.candidateLoginResponse,
       }}
     >
       {children}
