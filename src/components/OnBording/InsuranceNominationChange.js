@@ -417,6 +417,87 @@ const InsuranceNomination = (props) => {
       //     setNAcheck(true);
       //   }
       // }
+
+      state.age = "";
+      state.bloodGroup = "";
+      state.gender = "";
+      state.nominiId = 0;
+      state.nominiName = "";
+      state.relationship = "";
+
+      state.nominee2Age = "";
+      state.nominee2BloodGroup = "";
+      state.nominee2Gender = "";
+      state.nominee2NominiId = 0;
+      state.nominee2NominiName = "";
+      state.nominee2Relationship = "";
+
+      state.nominee3Age = "";
+      state.nominee3BloodGroup = "";
+      state.nominee3Gender = "";
+      state.nominee3NominiId = 0;
+      state.nominee3NominiName = "";
+      state.nominee3Relationship = "";
+
+      state.nominee4Age = "";
+      state.nominee4BloodGroup = "";
+      state.nominee4Gender = "";
+      state.nominee4NominiId = 0;
+      state.nominee4NominiName = "";
+      state.nominee4Relationship = "";
+
+      state.In_law_nominee1Age = "";
+      state.In_law_nominee1BloodGroup = "";
+      state.In_law_nominee1Gender = "";
+      state.In_law_nominee1NominiId = 0;
+      state.In_law_nominee1NominiName = "";
+      state.In_law_nominee1Relationship = "";
+
+      state.In_law_nominee2Age = "";
+      state.In_law_nominee2BloodGroup = "";
+      state.In_law_nominee2Gender = "";
+      state.In_law_nominee2NominiId = 0;
+      state.In_law_nominee2NominiName = "";
+      state.In_law_nominee2Relationship = "";
+
+      state.nominee5Age = "";
+      state.nominee5BloodGroup = "";
+      state.nominee5Gender = "";
+      state.nominee5NominiId = 0;
+      state.nominee5NominiName = "";
+      state.nominee5Relationship = "";
+
+      state.nominee5Age1 = "";
+      state.nominee5BloodGroup1 = "";
+      state.nominee5Gender1 = "";
+      state.nominee5NominiId1 = 0;
+      state.nominee5NominiName1 = "";
+      state.nominee5Relationship1 = "";
+
+      state.extra1age = "";
+      state.extra1bloodGroup = "";
+      state.extra1gender = "";
+      state.extra1nominiId = 0;
+      state.extra1nominiName = "";
+      state.extra1relationship = "";
+
+      state.extra2age = "";
+      state.extra2bloodGroup = "";
+      state.extra2gender = "";
+      state.extra2nominiId = 0;
+      state.extra2nominiName = "";
+      state.extra2relationship = "";
+      setExtra1Nominee1DOB("");
+      setExtra2Nominee1DOB("");
+      setNominee1DOB("");
+      setNominee2DOB("");
+      setNominee3DOB("");
+      setNominee4DOB("");
+      setNominee5DOB("");
+      setNominee5DOB1("");
+      setInLawNominee1Dob("");
+      setInLawNominee2Dob("");
+
       candidateInsuranceNominationData.map((item, i) => {
         console.log(item.nomineeType);
         if (
@@ -809,6 +890,7 @@ const InsuranceNomination = (props) => {
   }, [
     candidateInsuranceNominationData,
     candidatePersonalInfoData,
+    candidateProfileData,
     deleteNomineeData,
   ]);
 
@@ -1808,6 +1890,38 @@ const InsuranceNomination = (props) => {
     } else {
       state.relationship = "Spouse";
       state.nominee2Relationship = "Child 1";
+    }
+
+    if (parentsCheck === true) {
+      if (
+        state.In_law_nominee1NominiId !== 0 &&
+        state.In_law_nominee1NominiId !== null &&
+        state.In_law_nominee1NominiId !== undefined
+      ) {
+        InsuranceNominationDelete(state.In_law_nominee1NominiId);
+      }
+      if (
+        state.In_law_nominee2NominiId !== 0 &&
+        state.In_law_nominee2NominiId !== null &&
+        state.In_law_nominee2NominiId !== undefined
+      ) {
+        InsuranceNominationDelete(state.In_law_nominee2NominiId);
+      }
+    } else if (InlawCheck === true) {
+      if (
+        state.nominee3NominiId !== 0 &&
+        state.nominee3NominiId !== null &&
+        state.nominee3NominiId !== undefined
+      ) {
+        InsuranceNominationDelete(state.nominee3NominiId);
+      }
+      if (
+        state.nominee4NominiId !== 0 &&
+        state.nominee4NominiId !== null &&
+        state.nominee4NominiId !== undefined
+      ) {
+        InsuranceNominationDelete(state.nominee4NominiId);
+      }
     }
 
     if (checkAllValidations() === true) {
