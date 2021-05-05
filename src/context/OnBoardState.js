@@ -290,7 +290,7 @@ export const OnBoardProvider = (props) => {
       .get("/api/v2/candidate/insurance-nomination/delete/" + nomineeId)
       .then((response) => {
         toast.info(response.data.message);
-        state.deleteNomineeData = response.data.data;
+        state.deleteNomineeData = response.data;
         console.log(
           "Candidate Insurance Nomination delete ",
           state.deleteNomineeData

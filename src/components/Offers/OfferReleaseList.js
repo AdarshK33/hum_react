@@ -2,7 +2,7 @@ import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Breadcrumb from "../common/breadcrumb";
 import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
-import { Edit2, Eye, Search } from "react-feather";
+import { Edit2, Eye, Search, AlertCircle } from "react-feather";
 import { OfferContext } from "../../context/OfferState";
 import Pagination from "react-js-pagination";
 import "react-confirm-alert/src/react-confirm-alert.css";
@@ -189,7 +189,7 @@ const OfferReleaseList = () => {
                             </td>
                             <td>
                               <Link to="/offer-relase-and-onboard">
-                                <Edit2
+                                <AlertCircle
                                   onClick={() => {
                                     fetchCandidateDetails(item.candidateId);
                                   }}
