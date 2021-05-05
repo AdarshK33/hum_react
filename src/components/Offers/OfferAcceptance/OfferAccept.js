@@ -26,6 +26,9 @@ const OfferAccept = (props) => {
   const [pageAppointNumber, setPageAppointNumber] = useState(1);
   const [disabled, setDisabled] = useState(false);
   const [showAppointmentLetter, setShowAppointmentLetter] = useState(false);
+  const [yesChecked, setYesChecked] = useState(false);
+  const [noChecked, setNoChecked] = useState(false);
+
   const { CandidateProfile, candidateProfileData } = useContext(OnBoardContext);
   const {
     candidateRejectOffer,
@@ -81,6 +84,20 @@ const OfferAccept = (props) => {
       setRejectModal(true);
     }
   };
+
+  const checkedYesHandler = () => {
+    setYesChecked(!yesChecked);
+    setNoChecked(yesChecked);
+    setModal(true);
+    setRejectModal(false);
+  };
+  const checkedNoHandler = () => {
+    setNoChecked(!noChecked);
+    setYesChecked(noChecked);
+    setModal(false);
+    setRejectModal(true);
+  };
+
   const onDocumentLoadSuccess = ({ numPages }) => {
     setNumPages(numPages);
   };
@@ -195,6 +212,7 @@ const OfferAccept = (props) => {
                     style={{
                       color: "#ffffff",
                       cursor: "pointer",
+                      verticalAlign: "inherit",
                     }}
                   />
                 </Button>
@@ -286,10 +304,24 @@ const OfferAccept = (props) => {
                       <span style={{ marginRight: "1rem" }}>
                         Do you accept the Offer letter
                       </span>
-                      <Switch
+                      {/* <Switch
                         onChange={handleSwitch}
                         checked={checked}
                         className="react-switch"
+                      /> */}
+                      Yes &nbsp;{" "}
+                      <input
+                        type="checkbox"
+                        name="accept"
+                        checked={yesChecked}
+                        onChange={checkedYesHandler}
+                      />
+                      &nbsp; &nbsp;&nbsp; &nbsp; No &nbsp;{" "}
+                      <input
+                        type="checkbox"
+                        name="accept"
+                        checked={noChecked}
+                        onChange={checkedNoHandler}
                       />
                     </React.Fragment>
                   ) : (
