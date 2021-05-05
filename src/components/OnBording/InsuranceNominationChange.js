@@ -66,6 +66,9 @@ const InsuranceNomination = (props) => {
   const [extra1relationshipError_1, setExtra1RelationshipError_1] = useState(
     false
   );
+  const [extra1relationshipError_11, setExtra1RelationshipError_11] = useState(
+    false
+  );
   const [extra1DOBError_1, setExtra1DobError_1] = useState(false);
 
   const [extra2ageError_1, setExtra2ageError_1] = useState(false);
@@ -135,6 +138,8 @@ const InsuranceNomination = (props) => {
   const [parentsCheck, setParentCheck] = useState(false);
   const [InlawCheck, setInlawCheck] = useState(false);
   const [NAcheck, setNAcheck] = useState(false);
+  const [NAcheck2, setNAcheck2] = useState(false);
+  const [disable, setDisable] = useState(false);
   const [addFirst, setAddFirst] = useState(false);
   const [addSecond, setAddSecond] = useState(false);
   const [addThird, setAddThird] = useState(false);
@@ -217,7 +222,7 @@ const InsuranceNomination = (props) => {
     extra1gender: "",
     extra1nominiId: 0,
     extra1nominiName: "",
-    extra1relationship: "",
+    extra1relationship: "Father",
 
     extra2age: "",
     extra2bloodGroup: "",
@@ -479,7 +484,7 @@ const InsuranceNomination = (props) => {
       state.extra1gender = "";
       state.extra1nominiId = 0;
       state.extra1nominiName = "";
-      state.extra1relationship = "";
+      state.extra1relationship = "Father";
 
       state.extra2age = "";
       state.extra2bloodGroup = "";
@@ -497,6 +502,8 @@ const InsuranceNomination = (props) => {
       setNominee5DOB1("");
       setInLawNominee1Dob("");
       setInLawNominee2Dob("");
+      setAddExtraSecond(false);
+      setAddExtraThird(false);
 
       candidateInsuranceNominationData.map((item, i) => {
         console.log(item.nomineeType);
@@ -719,8 +726,8 @@ const InsuranceNomination = (props) => {
       setParentCheck(false);
       setInlawCheck(false);
       setNAcheck(false);
-      setAddExtraFirst(true);
-      setAddExtraSecond(true);
+      // setAddExtraFirst(true);
+      // setAddExtraSecond(true);
       setAddFirstInLaw(false);
       setAddSecondInLaw(false);
       setAddFirst(false);
@@ -756,7 +763,7 @@ const InsuranceNomination = (props) => {
         // setInlawCheck(false);
         // setNAcheck(false);
         setAddExtraFirst(true);
-        setAddExtraSecond(true);
+        // setAddExtraSecond(true);
         setAddFirstInLaw(false);
         setAddSecondInLaw(false);
         setAddFirst(false);
@@ -801,8 +808,9 @@ const InsuranceNomination = (props) => {
         setParentCheck(false);
         setInlawCheck(false);
         setNAcheck(false);
-        setAddExtraFirst(true);
-        setAddExtraSecond(true);
+        console.log("e3");
+        setAddExtraFirst(true); //Raz
+        setAddExtraSecond(true); //Raz
         setAddFirstInLaw(false);
         setAddSecondInLaw(false);
         setAddFirst(false);
@@ -828,7 +836,8 @@ const InsuranceNomination = (props) => {
         setInlawCheck(false);
         setNAcheck(false);
         setAddExtraFirst(true);
-        setAddExtraSecond(true);
+        console.log("e2");
+        setAddExtraSecond(true); //raz
         setAddFirstInLaw(false);
         setAddSecondInLaw(false);
         setAddFirst(false);
@@ -874,7 +883,8 @@ const InsuranceNomination = (props) => {
         setInlawCheck(false);
         setNAcheck(false);
         setAddExtraFirst(true);
-        setAddExtraSecond(true);
+        console.log("e1");
+        setAddExtraSecond(true); //raz
         setAddFirstInLaw(false);
         setAddSecondInLaw(false);
         setAddFirst(false);
@@ -1873,8 +1883,17 @@ const InsuranceNomination = (props) => {
     //   state.nominee3Relationship = "Brother";
     // }
 
-    state.extra1relationship = "Father";
-    state.extra2relationship = "Mother";
+    // state.extra1relationship = "Father";
+    if (addExtraSecond === true) {
+      state.extra2relationship = "Mother";
+      if (state.extra2relationship === state.extra1relationship) {
+        setExtra1RelationshipError_11(true);
+      } else {
+        setExtra1RelationshipError_11(false);
+      }
+    } else {
+      setExtra1RelationshipError_11(false);
+    }
 
     // state.relationship = "Father";
     // state.nominee2Relationship = "Mother";
@@ -1885,8 +1904,8 @@ const InsuranceNomination = (props) => {
     state.In_law_nominee2Relationship = "Mother In-Law";
 
     if (marriedStatus === true) {
-      state.extra1relationship = "Father";
-      state.extra2relationship = "Mother";
+      // state.extra1relationship = "Father";
+      // state.extra2relationship = "Mother";
     } else {
       state.relationship = "Spouse";
       state.nominee2Relationship = "Child 1";
@@ -1924,7 +1943,10 @@ const InsuranceNomination = (props) => {
       }
     }
 
-    if (checkAllValidations() === true) {
+    if (
+      checkAllValidations() === true &&
+      extra1relationshipError_11 === false
+    ) {
       const CountOFNominees = NomineeCount;
       const first_nomine_info = {
         age: state.age !== null ? state.age : null,
@@ -2377,6 +2399,31 @@ const InsuranceNomination = (props) => {
       setNominee2DOB("");
     }
   };
+
+  const DeleteExtra2 = () => {
+    setAddExtraSecond(false);
+    console.log("at delete", state.In_law_nominee2NominiId);
+    if (
+      state.extra2nominiId !== 0 &&
+      state.extra2nominiId !== null &&
+      state.extra2nominiId !== undefined
+    ) {
+      console.log("deleting", state.extra2nominiId);
+      InsuranceNominationDelete(state.extra2nominiId);
+    }
+  };
+  const DeleteExtra3 = () => {
+    setAddExtraThird(false);
+    console.log("at delete", state.nominee5NominiId1);
+    if (
+      state.nominee5NominiId1 !== 0 &&
+      state.nominee5NominiId1 !== null &&
+      state.nominee5NominiId1 !== undefined
+    ) {
+      console.log("deleting", state.nominee5NominiId1);
+      InsuranceNominationDelete(state.nominee5NominiId1);
+    }
+  };
   const DeleteThird = () => {
     setAddThird(false);
   };
@@ -2550,6 +2597,14 @@ const InsuranceNomination = (props) => {
     // setAddTwo(false);
     // setAddFirstInLaw(false);
     // setAddSecondInLaw(false);
+  };
+  const handleNACheckboxChange2 = (e) => {
+    setNAcheck2(!NAcheck2);
+    if (NAcheck2 === true) {
+      setDisable(false);
+    } else {
+      setDisable(true);
+    }
   };
 
   return (
@@ -2827,6 +2882,32 @@ const InsuranceNomination = (props) => {
       {addExtraFirst === true ? (
         <div>
           {/* first Nominee */}
+          <Row>
+            <Col sm={5}>
+              <Form.Group>
+                <label>
+                  {" "}
+                  If you don't have any one of these please check this
+                </label>
+              </Form.Group>
+            </Col>
+            <Col sm={2}>
+              <Form.Group>
+                <div className="boxField_1 input">
+                  <input
+                    className="largerCheckbox"
+                    type="checkbox"
+                    //   style={genderError ? { borderColor: "red" } : {}}
+                    value="Other1"
+                    //   required={required}
+                    checked={NAcheck2}
+                    onChange={handleNACheckboxChange2}
+                  />
+                  <label>NA</label>
+                </div>
+              </Form.Group>
+            </Col>
+          </Row>
           <label>
             <b>First Dependent</b>
           </label>
@@ -2844,6 +2925,7 @@ const InsuranceNomination = (props) => {
                       name="extra1nominiName"
                       value={state.extra1nominiName}
                       onChange={changeHandler}
+                      disabled={disable}
                       required
                       style={
                         extra1nomineNameError_1 ? { borderColor: "red" } : {}
@@ -2869,22 +2951,29 @@ const InsuranceNomination = (props) => {
                       as="select"
                       name="extra1relationship"
                       value={state.extra1relationship}
-                      defaultValue={"Spouse"}
                       //   onChange={}
+                      disabled={disable}
                       onChange={changeHandler}
                       style={
-                        extra1relationshipError_1 ? { borderColor: "red" } : {}
+                        extra1relationshipError_1 | extra1relationshipError_11
+                          ? { borderColor: "red" }
+                          : {}
                       }
                     >
                       <option value="Father">Father</option>
+                      <option value="Mother">Mother</option>
                     </Form.Control>
                     {extra1relationshipError_1 ? (
                       <p style={{ color: "red" }}>
                         {" "}
                         &nbsp; *Please select relationship
                       </p>
+                    ) : extra1relationshipError_11 ? (
+                      <p style={{ color: "red" }}>
+                        &nbsp; *Please select another relationship
+                      </p>
                     ) : (
-                      <p></p>
+                      ""
                     )}
                   </Form.Group>
                 </div>
@@ -2898,6 +2987,7 @@ const InsuranceNomination = (props) => {
                       name="extra1gender"
                       value={state.extra1gender}
                       onChange={changeHandler}
+                      disabled={disable}
                       style={extra1genderError_1 ? { borderColor: "red" } : {}}
                     >
                       <option value="">Gender</option>
@@ -2926,6 +3016,7 @@ const InsuranceNomination = (props) => {
                         DeleteFirst();
                       }}
                       type="cancel"
+                      disabled={disable}
                       style={{ color: "white", border: " 2px solid#4466f2" }}
                     >
                       <i
@@ -2960,6 +3051,7 @@ const InsuranceNomination = (props) => {
                         onChange={(e) => dateOfBirthHandler(e, "11")}
                         dateFormat="yyyy-MM-dd"
                         placeholderText="YYYY-MM-DD"
+                        disabled={disable}
                         style={extra1DOBError_1 ? { borderColor: "red" } : {}}
                       />
                     </div>
@@ -2984,6 +3076,7 @@ const InsuranceNomination = (props) => {
                       required="required"
                       name="extra1age"
                       value={state.extra1age}
+                      disabled={disable}
                       onChange={changeHandler}
                       style={extra1ageError_1 ? { borderColor: "red" } : {}}
                     />
@@ -3006,6 +3099,7 @@ const InsuranceNomination = (props) => {
                       name="extra1bloodGroup"
                       value={state.extra1bloodGroup}
                       onChange={changeHandler}
+                      disabled={disable}
                       style={
                         extra1bloodGroupError_1 ? { borderColor: "red" } : {}
                       }
@@ -3276,6 +3370,7 @@ const InsuranceNomination = (props) => {
                       name="extra2nominiName"
                       value={state.extra2nominiName}
                       onChange={changeHandler}
+                      disabled={disable}
                       required
                       style={
                         extra2nomineNameError_1 ? { borderColor: "red" } : {}
@@ -3304,6 +3399,7 @@ const InsuranceNomination = (props) => {
                       defaultValue={"Spouse"}
                       //   onChange={}
                       onChange={changeHandler}
+                      disabled={disable}
                       style={
                         extra2relationshipError_1 ? { borderColor: "red" } : {}
                       }
@@ -3330,6 +3426,7 @@ const InsuranceNomination = (props) => {
                       name="extra2gender"
                       value={state.extra2gender}
                       onChange={changeHandler}
+                      disabled={disable}
                       style={extra2genderError_1 ? { borderColor: "red" } : {}}
                     >
                       <option value="">Gender</option>
@@ -3349,15 +3446,16 @@ const InsuranceNomination = (props) => {
               </Row>
             </Col>
             {/* {relativeInLaw === false ? ( */}
-            {false ? (
+            {true ? (
               <Col sm={1} style={{ marginLeft: "-2rem" }}>
                 <Form.Group>
                   <div>
                     <button
                       onClick={() => {
-                        DeleteFirst();
+                        DeleteExtra2();
                       }}
                       type="cancel"
+                      disabled={disable}
                       style={{ color: "white", border: " 2px solid#4466f2" }}
                     >
                       <i
@@ -3392,6 +3490,7 @@ const InsuranceNomination = (props) => {
                         onChange={(e) => dateOfBirthHandler(e, "12")}
                         dateFormat="yyyy-MM-dd"
                         placeholderText="YYYY-MM-DD"
+                        disabled={disable}
                         style={extra2DOBError_1 ? { borderColor: "red" } : {}}
                       />
                     </div>
@@ -3415,6 +3514,7 @@ const InsuranceNomination = (props) => {
                       placeholder="Age"
                       required="required"
                       name="extra2age"
+                      disabled={disable}
                       value={state.extra2age}
                       onChange={changeHandler}
                       style={extra2ageError_1 ? { borderColor: "red" } : {}}
@@ -3437,6 +3537,7 @@ const InsuranceNomination = (props) => {
                       as="select"
                       name="extra2bloodGroup"
                       value={state.extra2bloodGroup}
+                      disabled={disable}
                       onChange={changeHandler}
                       style={
                         extra2bloodGroupError_1 ? { borderColor: "red" } : {}
@@ -3715,6 +3816,7 @@ const InsuranceNomination = (props) => {
                       onChange={changeHandler}
                       placeholder="Dependent Name"
                       required="required"
+                      disabled={disable}
                       style={nomineNameError_51 ? { borderColor: "red" } : {}}
                     />
                     {nomineNameError_51 ? (
@@ -3738,20 +3840,14 @@ const InsuranceNomination = (props) => {
                       value={state.nominee5Relationship1}
                       options={relativesList}
                       onChange={changeHandler}
+                      disabled={disable}
                       style={relationshipError_51 ? { borderColor: "red" } : {}}
                     >
                       <option value="">Relationship</option>
 
-                      {relativeInLaw === true ? (
-                        <option value="Child 2">Child 2</option>
-                      ) : (
-                        <option value="Brother">Brother</option>
-                      )}
-                      {relativeInLaw === true ? (
-                        <option value="Child 3">Child 3</option>
-                      ) : (
-                        <option value="Sister">Sister</option>
-                      )}
+                      <option value="Brother">Brother</option>
+
+                      <option value="Sister">Sister</option>
                     </Form.Control>
 
                     {relationshipError_51 ? (
@@ -3773,6 +3869,7 @@ const InsuranceNomination = (props) => {
                       as="select"
                       name="nominee5Gender1"
                       value={state.nominee5Gender1}
+                      disabled={disable}
                       onChange={changeHandler}
                       style={genderError_51 ? { borderColor: "red" } : {}}
                     >
@@ -3794,15 +3891,16 @@ const InsuranceNomination = (props) => {
               </Row>
             </Col>
             {/* {isChecked === false ? ( */}
-            {false ? (
+            {true ? (
               <Col sm={1} style={{ marginLeft: "-2rem" }}>
                 <Form.Group>
                   <div>
                     <button
                       onClick={() => {
-                        DeleteThird();
+                        DeleteExtra3();
                       }}
                       type="cancel"
+                      disabled={disable}
                       style={{ color: "white", border: " 2px solid#4466f2" }}
                     >
                       <i
@@ -3833,6 +3931,7 @@ const InsuranceNomination = (props) => {
                       <DatePicker
                         className="form-control onBoard-view"
                         selected={Nominee5DOB1}
+                        disabled={disable}
                         required
                         onChange={(e) => dateOfBirthHandler(e, "51")}
                         dateFormat="yyyy-MM-dd"
@@ -3860,6 +3959,7 @@ const InsuranceNomination = (props) => {
                       name="nominee5Age1"
                       value={state.nominee5Age1}
                       onChange={changeHandler}
+                      disabled={disable}
                       placeholder="Age"
                       required="required"
                       style={ageError_51 ? { borderColor: "red" } : {}}
@@ -3883,6 +3983,7 @@ const InsuranceNomination = (props) => {
                       as="select"
                       name="nominee5BloodGroup1"
                       value={state.nominee5BloodGroup1}
+                      disabled={disable}
                       onChange={changeHandler}
                       style={bloodGroupError_51 ? { borderColor: "red" } : {}}
                     >
@@ -3968,7 +4069,7 @@ const InsuranceNomination = (props) => {
                   onClick={() => {
                     addOneMoreExtra();
                   }}
-                  disabled={false}
+                  disabled={disable}
                   style={{ width: "175px" }}
                 >
                   <b> Add New Dependent + </b>
