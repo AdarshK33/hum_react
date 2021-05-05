@@ -887,7 +887,12 @@ const InsuranceNomination = (props) => {
         setButtonOne(true);
       }
     }
-  }, [candidateInsuranceNominationData]);
+  }, [
+    candidateInsuranceNominationData,
+    candidatePersonalInfoData,
+    candidateProfileData,
+    deleteNomineeData,
+  ]);
 
   // useEffect(() => {
   //   if (
