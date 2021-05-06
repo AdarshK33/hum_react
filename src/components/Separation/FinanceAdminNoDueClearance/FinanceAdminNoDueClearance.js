@@ -4,17 +4,27 @@ import { SeparationContext } from "../../../context/SepearationState";
 import {Button,Container, Modal, Row, Col, Form, Table} from "react-bootstrap";
 import Pagination from 'react-js-pagination';
 import Select from 'react-select'
-import { Edit2, Eye, Search } from "react-feather";
+import { RotateCw, Eye, Search } from "react-feather";
 import { AdminContext } from '../../../context/AdminState'
 import "../nodueclearance.css";
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+import {
+  JsonToExcel
+} from 'react-json-excel';
 const FinanaceAdminNoDueClearance = () => {
-  const { total,loader,viewFinanceAdminClearanceList,financeAdminNoDueClearanceList } = useContext(SeparationContext);
+  const { total,loader,viewFinanceAdminClearanceList,
+    financeAdminNoDueClearanceList,
+    FinanceClearanceUploadSettlement,
+    financeClearanceUploadSettlement,FinanceClearanceExport,
+    financeClearanceExport ,UpdateAdminFinanceClearanceList} = useContext(SeparationContext);
   const { CostCenter, costCenterList } = useContext(AdminContext)
   const [pageCount, setPageCount] = useState(0);
- 
+  const [fileUpload, setFileUpload] = useState();
+
   const [gridApi, setGridApi] = useState(null);
   const [gridColumnApi, setGridColumnApi] = useState(null);
   const [costCenter, setCostCenter] = useState("all")
@@ -28,12 +38,21 @@ const indexOfLastRecord = currentPage * recordPerPage;
 const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
 const [currentRecords, setCurrentRecords] = useState([]);
 
+useEffect(() => {
+  console.log(pageCount,"pageCount")
+  viewFinanceAdminClearanceList(searchValue, pageCount,costCenter);
+}, [costCenter,searchValue,pageCount]);
 
 useEffect(() => {
   if (financeAdminNoDueClearanceList !== null && financeAdminNoDueClearanceList !== undefined) {
     setCurrentRecords(financeAdminNoDueClearanceList);
   }
 }, [financeAdminNoDueClearanceList, currentRecords]);
+
+
+useEffect(() => {
+  CostCenter();
+}, []);
 
 const handlePageChange = (pageNumber) => {
   setPageCount(pageNumber - 1);
@@ -47,11 +66,7 @@ const handlePageChange = (pageNumber) => {
     }
     setCurrentRecords(financeAdminNoDueClearanceList);
 }
-/*-----------------Pagination------------------*/
 
-  useEffect(() => {
-    CostCenter();
-  }, []);
   const searchHandler = (e) => {
     setSearchValue(e.target.value)
 
@@ -66,44 +81,59 @@ const handlePageChange = (pageNumber) => {
   }
   const handleSave = (value) => {
     const formData = value.data
+    formData['disabled']= true
+
     console.log(formData,pageCount,"handlelsave")
+    UpdateAdminFinanceClearanceList(formData,searchValue, pageCount,costCenter)
+
   };
  
   const renderButtonTwo = (e) => {
     console.log(e,"render")
     var buttonValue = e.data.disabled
     return (
-      <Edit2/>
+      <RotateCw/>
     );
   };
-  // const renderButton = (e) => {
-  //   console.log(e,"render")
-  //   var buttonValue = e.data.disabled
-  //   return (
-  //     <button disabled={buttonValue}
-  //       style={buttonValue?{
-  //         backgroundColor: "#9ea4af54",
-  //         color: "white",
-  //         border: "1px solid #9ea4af54",
-  //         paddingLeft: "10px",
-  //         paddingRight: "10px",
-  //         width: "100%",
-  //         lineHeight: "30px",
-  //       }:{
-  //         backgroundColor: "#006ebb",
-  //         color: "white",
-  //         border: "1px solid #006ebb",
-  //         paddingLeft: "10px",
-  //         paddingRight: "10px",
-  //         width: "100%",
-  //         lineHeight: "30px",
-  //       }}
-  //        onClick={() => handleSave(e)}
-  //     >
-  //       Save
-  //     </button>
-  //   );
-  // };
+  const changeHandler = (event) => {
+    let fileObj = event.target.files[0];
+    console.log("clicked", fileObj)
+    setFileUpload(fileObj)
+    // uploadFile(fileObj)
+    // setTimeout(()=>{
+    //   window.location.reload()
+    // }, 5000)
+
+  }
+
+  const renderButton = (e) => {
+    console.log(e.data,"render")
+    var buttonValue = e.data.disabled
+    return (
+      <button disabled={buttonValue}
+        style={buttonValue?{
+          backgroundColor: "#9ea4af54",
+          color: "white",
+          border: "1px solid #9ea4af54",
+          paddingLeft: "10px",
+          paddingRight: "10px",
+          width: "100%",
+          lineHeight: "30px",
+        }:{
+          backgroundColor: "#006ebb",
+          color: "white",
+          border: "1px solid #006ebb",
+          paddingLeft: "10px",
+          paddingRight: "10px",
+          width: "100%",
+          lineHeight: "30px",
+        }}
+         onClick={() => handleSave(e)}
+      >
+        Save
+      </button>
+    );
+  };
 const handleCostCenter = (options) => {
   let data2 = options !== null?options.value:''
   console.log(data2)
@@ -115,63 +145,122 @@ const handleCostCenter = (options) => {
   }
 } 
 const renderStatusOptions = (value) => {
+  console.log(value,"renderStatusOptions1")
     return (
-      <label className="switch">
-    <input className="switch-input" type="checkbox" id="checkbox" name="fullAndFinalCompleteStatus" value={value.data.fullAndFinalCompleteStatus} onChange={(e) => statusRender(e,value)}/>
-	<span className="switch-label" data-on="Yes" data-off="No"></span> 
-	<span className="switch-handle"></span> 
-</label>
+      <div>
+      <select name="fullAndFinalCompleteStatus" 
+      style={value.data.fullAndFinalCompleteStatus == 1?{color:"green"}:value.data.fullAndFinalCompleteStatus == 0?{color:"red"}:{color:'black'}}
+       value={value.data.fullAndFinalCompleteStatus} onChange={(e) => statusRender(e,value)}>
+      <option value={null}> select </option>
+        <option value={1}> Yes </option>
+        <option value={0}> No </option>
+      </select>
+    </div>
+  
 
     )
+//     <label className="switch">
+//     <input className="switch-input" type="checkbox" id="checkbox" name="fullAndFinalCompleteStatus" value={value.data.fullAndFinalCompleteStatus} onChange={(e) => statusRender(e,value)}/>
+// 	<span className="switch-label" data-on="Yes" data-off="No"></span> 
+// 	<span className="switch-handle"></span> 
+// </label>
 
   };
   const renderStatusOptionsTwo = (value) => {
     return (
-
- <label className="switch">
-    <input className="switch-input" type="checkbox" id="checkbox" name="deactivateProfile" value={value.data.deactivateProfile} onChange={(e) => statusRenderTwo(e,value)}/>
-<span className="switch-label" data-on="Yes" data-off="No"></span> 
-<span className="switch-handle"></span> 
-</label>
+      <div>
+      <select name="deactivateProfile"
+       style={value.data.deactivateProfile == 1?{color:"green"}:value.data.deactivateProfile == 0?{color:"red"}:{color:'black'}} 
+        value={value.data.deactivateProfile} onChange={(e) => statusRenderTwo(e,value)}>
+      <option value={null}> select </option>
+        <option value={1}> Yes </option>
+        <option value={0}> No </option>
+      </select>
+    </div>
     )
   };
   const onGridReady = (params) => {
     setGridApi(params.api);
     setGridColumnApi(params.columnApi);
   };
+  const handleUploadSettlement = () => {
+    if (fileUpload !== undefined && fileUpload !== null) {
+      FinanceClearanceUploadSettlement(fileUpload)
+    } else {
+      toast.info("Please select a file to upload")
+    }
 
-  
-  useEffect(() => {
-    console.log(pageCount,"pageCount")
-    viewFinanceAdminClearanceList(searchValue, pageCount,costCenter);
-  }, [costCenter,searchValue,pageCount]);
+    setTimeout(() => {
+      window.location.reload()
+    }, 5000)
+  }
+ 
+  //File export 
+  const filename = 'F&FListing';
+  let fields = {
+    "S. No": "S. No",
+    "employeeId": "Employee Id",
+    "employeeName": "Employee Name",
+    "costCenterName": "Cost Center Name",
+    "managerName": "Manager Name",
+    "joiningDate": "Joining Date",
+    "lastWorkingDate":"Last Working Date",
+    "modeOfSeparation":"Mode Of Separation",
+    "fullAndFinalCompleteStatus":"Full And Final Complete Status",
+    "fullAndFinalAmount":"Full And Final Amount",
+    "fullAndFinalProcessDate":"Full And Final ProcessDate",
+    "deactivateProfile":"Deactivate Profile"
+  }
 
+  let data = [];
+  if (financeAdminNoDueClearanceList !== undefined && financeAdminNoDueClearanceList !== null) {
+    for (let i = 0; i < financeAdminNoDueClearanceList.length; i++) {
+      console.log(financeAdminNoDueClearanceList[i].holidayDate)
+      data.push({
+        "S. No": i + 1,
+        employeeId: financeAdminNoDueClearanceList[i].employeeId,
+        employeeName: financeAdminNoDueClearanceList[i].employeeName,
+        costCenterName: financeAdminNoDueClearanceList[i].costCenterName,
+        managerName: financeAdminNoDueClearanceList[i].managerName,
+        joiningDate: financeAdminNoDueClearanceList[i].joiningDate,
+        lastWorkingDate: financeAdminNoDueClearanceList[i].lastWorkingDate,
+        modeOfSeparation: financeAdminNoDueClearanceList[i].modeOfSeparation,
+        fullAndFinalCompleteStatus: financeAdminNoDueClearanceList[i].fullAndFinalCompleteStatus,
+        fullAndFinalAmount: financeAdminNoDueClearanceList[i].fullAndFinalAmount,
+        fullAndFinalProcessDate: financeAdminNoDueClearanceList[i].fullAndFinalProcessDate,
+        deactivateProfile: financeAdminNoDueClearanceList[i].deactivateProfile,
+      })
+    }
+  }
+  const handleExport = (e) =>{
+    const file = e.target.value
+    FinanceClearanceExport(file)
+  }
   const statusRender = (e,value) => {
-    var result = document.getElementsByClassName("switch-input")[0].checked
+    // var result = document.getElementsByClassName("switch-input")[0].checked
 
     const status = e.target.value
     const financeClearanceStatus = value.data
     financeClearanceStatus['fullAndFinalCompleteStatus']= status
-    financeClearanceStatus['disabled']= true
-    console.log(status,result,"fullAndFinalCompleteStatus")
+    console.log(e.target,"fullAndFinalCompleteStatus")
 
   };
 
   const statusRenderTwo = (e,value) => {
-    var result = document.getElementsByClassName("switch-input")[0].checked
+    // var result = document.getElementsByClassName("switch-input")[0].checked
 
     const status = e.target.value
     const financeClearanceStatus = value.data
 
     financeClearanceStatus['deactivateProfile']= status
-    financeClearanceStatus['disabled']= true
-    console.log(status,result,"deactivateProfile")
+    console.log(e.target,"deactivateProfile")
 
   };
 
   return (
     <div>
       <Fragment>
+        <ToastContainer/>
         <Container fluid>
       <Breadcrumb title="F & F Listing" parent="F & F Listing" />
       <div className="container-fluid">
@@ -208,11 +297,37 @@ const renderStatusOptions = (value) => {
           </div>
         </Row>
             <div className="card" style={{ overflowX: "auto" }}>
-              <div className="nodue_title" >
-              <b >F & F Listing </b>            
-              </div>
-         
+              <div>
+              <div className="nodue_title_finance" >
+                {data.length > 0 &&
+                      <JsonToExcel
+                        data={data}
+                        style={{float:'left',marginTop: '5px',marginLeft:"5px"}}
+                        className="btn btn-light mr-2"
+                        filename={filename}
+                        fields={fields}
 
+                        text="Export excel"
+                      />}
+              <b >F & F Listing </b>  
+                <Button style={{float:'right',marginTop: '5px'}} className="btn btn-light mr-2" onClick={''}>
+                  Save AS
+                </Button>
+                <Button className="btn btn-light mr-2"  style={{float:'right',marginTop: '5px'}} onClick={handleUploadSettlement} >
+                  Upload F & F Settlement
+                </Button>
+                <input type="file"    
+                  accept=".xlsx, .xls, .csv" 
+                  style={{float:'right'}}
+                    onChange={(e) => {
+                      changeHandler(e)
+                    }}
+                  className="btn"                  
+                  />
+                  
+              </div>
+              
+            
         <div className="ag-theme-alpine" style={{ align:"center",height: 495, width: 1400 }}>
           
           <AgGridReact 
@@ -230,56 +345,48 @@ const renderStatusOptions = (value) => {
           <AgGridColumn className="columnColor" editable="false" headerName="S No" pinned="left" lockPinned="true" valueGetter={`node.rowIndex+1 + ${indexOfFirstRecord}`}></AgGridColumn>
             <AgGridColumn className="columnColor" editable="false" headerName="Employee Id" field="employeeId"></AgGridColumn>
             <AgGridColumn className="columnColor" editable="false" headerName="Employee Name" field="employeeName"></AgGridColumn>
-            <AgGridColumn className="columnColor" editable="false" headerName="Cost Center Name" field="costCentreName"></AgGridColumn>
+            <AgGridColumn className="columnColor" editable="false" headerName="Cost Center Name" field="costCenterName"></AgGridColumn>
             <AgGridColumn className="columnColor" editable="false" headerName="Manager Name" field="managerName"></AgGridColumn>
             <AgGridColumn  className="columnColor" editable="false" headerName="Joining Date" field="joiningDate"></AgGridColumn>
             <AgGridColumn className="columnColor" editable="false" headerName="Last Working Day" field="lastWorkingDate"></AgGridColumn>
             <AgGridColumn className="columnColor" editable="false"  headerName="Mode of Separation" field="modeOfSeparation"></AgGridColumn>
             <AgGridColumn 
-            className="columnColor" 
-            editable="false" 
+            className="columnColor"             
              headerName="F & F Complete" 
             field="fullAndFinalCompleteStatus"
-            valueGetter="node.rowIndex"
-            editable="false" 
               colId="status"
             cellRendererFramework={renderStatusOptions}
             cellEditorParams={{
-              values: ["Yes","No"],
-              cellRenderer: { statusRender },
+              values: ["1","0"],
+              cellRenderer: { statusRender }
             }}
             ></AgGridColumn>
-            <AgGridColumn className="columnColor" editable="false"  headerName="F & F Amount" field="fullAndFinalAmount"></AgGridColumn>
-            <AgGridColumn className="columnColor" editable="false"  headerName="F & F Processed On" field="fullAndFinalProcessDate"></AgGridColumn>
-            <AgGridColumn className="columnColor" editable="false" 
+            <AgGridColumn className="columnColor"   headerName="F & F Amount" field="fullAndFinalAmount"></AgGridColumn>
+            <AgGridColumn className="columnColor"   headerName="F & F Processed On" field="fullAndFinalProcessDate"></AgGridColumn>
+            <AgGridColumn className="columnColor" 
              headerName="Deactivate Profile"
               field="deactivateProfile"
               colId="status"
               cellRendererFramework={renderStatusOptionsTwo}
               cellEditorParams={{
-                values: ["Yes","No"],
+                values: ["1","0"],
                 cellRenderer: { statusRenderTwo}
               }}
               ></AgGridColumn>
                       <AgGridColumn
                       headerName="History"
+                      pinned="right"
                       editable="false"
                       field="exitId"
                       cellRendererFramework={(e) => renderButtonTwo(e)}
                     ></AgGridColumn>
-                    {/* <AgGridColumn
-                      className="columnColor"
-                      field="itClearanceStatus"
-                      headerName="IT Clearance"
-                      editable="false" 
-                        colId="status"
-                      cellRendererFramework={renderStatusOptions}
-                      cellEditorParams={{
-                        values: ["0","1","2"],
-                        cellRenderer: { statusRender },
-                      }}
+                       {/* <AgGridColumn
+                      headerName="Action"
+                      pinned="right"
+                      editable="false"
+                      field="exitId"
+                      cellRendererFramework={(e) => renderButton(e)}
                     ></AgGridColumn> */}
-                 
 
                   </AgGridReact>
                 </div>
@@ -318,6 +425,7 @@ const renderStatusOptions = (value) => {
               </div>
               </div>
               </div>   
+              </div>
               </Container>     
     </Fragment> 
      </div>

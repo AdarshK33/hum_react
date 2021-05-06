@@ -7,6 +7,15 @@
   text-align: center;
   width:1400px
 }
+.nodue_title_finance{
+	background: #006EBB;
+	font-weight: bold;
+	color: white;
+	line-height: 3rem;
+	font-weight: bold;
+	text-align: center;
+	width:1400px
+  }
 .nodue_title_admin{
   background: #006EBB;
   font-weight: bold;
@@ -51,8 +60,9 @@ opacity: 1.5;
 }
 
 thead th {
-  position: sticky;
-  top: 0; 
+	table-layout: fixed;
+  width: 200px;
+  overflow: hidden;
 }
 
 .tableFixHead {
@@ -122,12 +132,7 @@ thead th {
   
  }
  .cloumnWidth{
-	flex-wrap: nowrap;
-	flex-direction: row;
-	width: max-content;
-	border-collapse: collapse;
-
-
+	max-width: 200px
 	;}
 
 

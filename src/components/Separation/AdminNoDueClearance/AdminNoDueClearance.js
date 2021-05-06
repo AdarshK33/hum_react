@@ -125,23 +125,23 @@ const handleCostCenter = (options) => {
               <div className="table-responsive">
 
               <Table id="table-to-xls" className="table table-hover">
-                  <thead className="thead-light" style={{ backgroundColor: "#2f3c4e" }}>
+                  <thead className="thead-light" style={{tableLayout:'fixed',width:"200px", backgroundColor: "#2f3c4e" }}>
                     <tr className="rowStyle">
-                      <th className="cloumnWidth">S. No</th>
-                      <th className="cloumnWidth">Employee Id</th>
-                      <th className="cloumnWidth">Employee Name</th>
-                      <th className="cloumnWidth">Cost Center Name</th>
-                      <th className="cloumnWidth">Manager Name</th>
-                      <th className="cloumnWidth">Joining Date</th>
-                      <th className="cloumnWidth">Last Working Day</th>
-                      <th className="cloumnWidth">IT Amount To Be Recovered</th>
-                      <th className="cloumnWidth"> IT Clearance</th>
-                      <th className="cloumnWidth">IT Clearance Remarks</th>
-                      <th className="cloumnWidth">IT Clearance UpdatedBy</th>
-                      <th className="cloumnWidth">Finance Amount To Be Recovered</th>
-                      <th className="cloumnWidth">Finance Clearance</th>
-                      <th className="cloumnWidth">Finance Clearance Remarks</th>
-                      <th className="cloumnWidth">Finance Clearance UpdatedBy</th>
+                      <th >S. No</th>
+                      <th >Employee Id</th>
+                      <th >Employee Name</th>
+                      <th >Cost Center Name</th>
+                      <th >Manager Name</th>
+                      <th >Joining Date</th>
+                      <th >Last Working Day</th>
+                      <th >IT Amount To Be Recovered</th>
+                      <th > IT Clearance</th>
+                      <th >IT Clearance Remarks</th>
+                      <th >IT Clearance UpdatedBy</th>
+                      <th >Finance Amount To Be Recovered</th>
+                      <th >Finance Clearance</th>
+                      <th >Finance Clearance Remarks</th>
+                      <th >Finance Clearance UpdatedBy</th>
                     </tr>
                   </thead>
 

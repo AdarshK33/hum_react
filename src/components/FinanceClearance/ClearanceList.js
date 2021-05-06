@@ -423,7 +423,7 @@ const FinanceClearanceList = () => {
           value={value.data.financeClearanceStatus}
           onChange={(e) => statusRender(e, value)}
         >
-          <option value=""> select </option>
+          <option value={null}> select </option>
           <option value="0"> Due </option>
           <option value="1"> No Due </option>
           <option value="2"> On Hold </option>

@@ -14,6 +14,9 @@ const initial_state = {
   total: {},
   data: [],
   clearanceList: [],
+  financeClearanceUploadSettlement:{},
+  financeClearanceExport:{},
+  updateAdminFinanceClearanceList:[]
 };
 
 export const SeparationContext = createContext();
@@ -75,6 +78,41 @@ export const SeparationProvider = (props) => {
         console.log(error)
       })
   }
+  const UpdateAdminFinanceClearanceList = (value, key, page, costCenter) => {
+    console.log(value, "value in update ");
+    const formData = {
+      costCenterName: value.costCenterName,
+      deactivateProfile: value.deactivateProfile,
+      disabled: value.disabled,
+      employeeId: value.employeeId,
+      employeeName: value.employeeName,
+      exitId: value.exitId,
+      fullAndFinalAmount: parseInt(value.fullAndFinalAmount),
+      fullAndFinalCompleteStatus: value.fullAndFinalCompleteStatus,
+      fullAndFinalId: value.fullAndFinalId,
+      fullAndFinalProcessDate: value.fullAndFinalProcessDate,
+      joiningDate: value.joiningDate,
+      lastWorkingDate:value.lastWorkingDate,
+
+      managerName: value.managerName,
+      modeOfSeparation:value.modeOfSeparation
+    };
+    
+    console.log(formData, "updateAdminFinanceClearanceList separation context");
+    return client
+      .post("/api/v1/separation/full-and-final/edit", formData)
+      .then((response) => {
+        toast.info(response.data.message);
+        viewFinanceAdminClearanceList(key, page, costCenter);
+        return dispatch({
+          type: "UPDATE_ADMIN_FINANCE_SEPARATION",
+          payload: state.updateAdminFinanceClearance,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const viewAdminITClearanceList = (key, page,costCenter) => {
     client.get( "/api/v1/separation/full-and-final/view/no-due-clearance?key=" +
           key +
@@ -121,6 +159,40 @@ export const SeparationProvider = (props) => {
         return dispatch({
           type: "FETCH_SEPARATION_LIST",
           payload: state.noDueClearanceList,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const FinanceClearanceUploadSettlement = (value) => {
+    console.log(value, "value in update ");
+    const formData = new FormData();
+    formData.append('file', value, value.name)
+    console.log(formData, "FinanceClearanceUploadSettlement separation context");
+    return client
+      .post("/api/v1/separation/full-and-final/upload", formData)
+      .then((response) => {
+        toast.info(response.data.message);
+        return dispatch({
+          type: "FINANCECLEARANCE_UPLOAD_SETTLEMENT",
+          payload: state.financeClearanceUploadSettlement,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const FinanceClearanceExport = () => {
+    console.log( "FinanceClearanceExport separation context");
+    return client
+      .get("/api/v1/separation/full-and-final/download")
+      .then((response) => {
+        toast.info(response.data.message);
+        return dispatch({
+          type: "FINANCECLEARANCE_EXPORT",
+          payload: state.financeClearanceExport,
         });
       })
       .catch((error) => {
@@ -197,6 +269,12 @@ export const SeparationProvider = (props) => {
         updateITClearanceList,
         viewAdminITClearanceList,
         viewFinanceAdminClearanceList,
+        FinanceClearanceUploadSettlement,
+        FinanceClearanceExport,
+        UpdateAdminFinanceClearanceList,
+        updateAdminFinanceClearance:state.updateAdminFinanceClearance,
+        financeClearanceExport:state.financeClearanceExport,
+        financeClearanceUploadSettlement:state.financeClearanceUploadSettlement,
         adminNoDueClearanceList:state.adminNoDueClearanceList,
         financeAdminNoDueClearanceList:state.financeAdminNoDueClearanceList,
         updateNoDueClearanceList:state.updateNoDueClearanceList,
