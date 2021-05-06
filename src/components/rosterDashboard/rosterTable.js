@@ -270,18 +270,19 @@ const RosterTable = (storeID) => {
                                                 <td 
                                                     className="table-empDetails left-option"
                                                     style={{
-                                                        width: `${data.rank === 1 ? '200px' : data.rank === 2 ? '175px' : '150px'}`,
-                                                        marginLeft: `${data.rank === 1 ? '3px' : data.rank === 2 ? '27px' : '53px'}`
+                                                        width: `${data.rank === 1 ? '200px' : data.rank === 2 ? '180px' : '160px'}`,
+                                                        marginLeft: `${data.rank === 1 ? '3px' : data.rank === 2 ? '23px' : '43px'}`,
+                                                        borderLeft: `${data.rank === 1 ? '4px solid red' : data.rank === 2 ? '4px solid yellow' : '4px solid green'}`
                                                     }}     
                                                 >
                                                     <div className="empDetails-left">
                                                         <div>{data.firstName} {data.lastName}</div>
                                                         <div>{data.contractType}</div>
-                                                        <div>{data.position}</div>
+                                                        <div>{data.position} | <span style={{display: 'inline-block'}}>{data.clusterName}</span></div>
                                                     </div>
                                                     {/* {console.log(data.utilization.split('%'), 'data.utilization')} */}
-                                                    <div style={{width: '45px', margin: 'auto'}}>
-                                                        <CircularProgressbar value={data.utilization.split('%')[0]} text={`${data.utilization}`}/>
+                                                    <div>
+                                                        <CircularProgressbar value={data.utilization.split('%')[0]} text={`${data.utilization}`} height="50px"/>
                                                     </div>
                                                 </td>
                                                 {data.employeeRosters.map(empData => (
@@ -295,7 +296,7 @@ const RosterTable = (storeID) => {
                                                         {/* <div>{empData.date}</div> */}
                                                         {empData.roster === null ? (<div>----</div>)
                                                     : ( 
-                                                        <div style={{textAlign: 'center'}}>{empData.roster.leave ? 'Leave': empData.roster.holiday ? 'Holiday': empData.roster.weekOff ? 'WeekOff' : empData.roster.shiftName ? empData.roster.shiftName : '----'}</div>
+                                                        <div style={{textAlign: 'center'}}>{empData.roster.leave ? 'Leave': empData.roster.holiday ? empData.roster.holiday : empData.roster.weekOff ? 'WeekOff' : empData.roster.shiftName ? empData.roster.shiftName : '----'}</div>
                                                     )}
                                                     {/* {console.log(empData, 'empData')} */}
                                                     </td>
