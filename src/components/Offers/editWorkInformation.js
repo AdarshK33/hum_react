@@ -9,6 +9,7 @@ import { OfferContext } from "../../context/OfferState";
 import { RosterContext } from "../../context/RosterState";
 import { AppContext } from "../../context/AppState";
 import moment from "moment";
+import { MasterFilesContext } from "../../context/MasterFilesState";
 
 const EditWorkInformation = () => {
   const [state, setState] = useState({
@@ -23,7 +24,12 @@ const EditWorkInformation = () => {
     internship: "",
     noticePeriod: "",
     managerId: null,
+    expatUser: "",
+    passportNumber: "",
+    nationality: "",
   });
+  const { viewCountries, countryList } = useContext(MasterFilesContext);
+
   const [dateOfJoining, setDateOFJoining] = useState();
   const [dateOfLeaving, setDateOFLeaving] = useState();
   const [costCenter, setCostCenter] = useState("");
@@ -61,6 +67,7 @@ const EditWorkInformation = () => {
     viewContractTypes();
     designationView();
     stateData();
+    viewCountries();
   }, []);
 
   useEffect(() => {
@@ -82,6 +89,9 @@ const EditWorkInformation = () => {
         internship: workData.internshipPeriod,
         noticePeriod: workData.noticePeriod,
         managerId: workData.managerId,
+        nationality: workData.nationality,
+        expatUser: workData.expatUser,
+        passportNumber: workData.passportNumber,
       });
       setDateOFJoining(new Date(workData.dateOfJoin));
       setDateOFLeaving(new Date(workData.dateOfLeaving));
@@ -230,6 +240,9 @@ const EditWorkInformation = () => {
       noticePeriod:
         state.employmentType === "Internship" ? 0 : state.noticePeriod,
       sportId: state.sports,
+      expatUser: state.expatUser,
+      nationality: state.nationality,
+      passportNumber: state.passportNumber,
     };
     console.log("update data", updateData);
     updateCandidateWork(updateData);
@@ -654,6 +667,67 @@ const EditWorkInformation = () => {
                     <option value="1">1 Month</option>
                     <option value="2">2 Month</option>
                     <option value="3">3 Month</option>
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+            )}
+            {(state.employmentType === "Internship" ||
+              state.employmentType === "Permanent" ||
+              state.employmentType === "Parttime") && (
+              <Col sm={3}>
+                <Form.Group>
+                  <Form.Label>Local Expert</Form.Label>
+                  <Form.Control
+                    as="select"
+                    className="form-input"
+                    name="expatUser"
+                    value={state.expatUser}
+                    onChange={changeHandler}
+                  >
+                    <option>Seclect </option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+            )}
+            {state.expatUser == 1 && (
+              <Col sm={3}>
+                <Form.Group>
+                  <Form.Label>Passport Number</Form.Label>
+                  <Form.Control
+                    type="text"
+                    className="form-input"
+                    value={state.passportNumber}
+                    name="passportNumber"
+                    onChange={changeHandler}
+                  />
+                </Form.Group>
+              </Col>
+            )}
+          </Row>
+          <Row>
+            {state.expatUser == 1 && (
+              <Col sm={3}>
+                <Form.Group>
+                  <Form.Label>Nationality</Form.Label>
+                  <Form.Control
+                    as="select"
+                    className="form-input"
+                    value={state.nationality}
+                    name="nationality"
+                    onChange={changeHandler}
+                  >
+                    <option>Select Nationality</option>
+                    {countryList !== null &&
+                      countryList !== undefined &&
+                      countryList.map((item) => {
+                        return (
+                          <option key={item.countryId}>
+                            {item.nationality}
+                          </option>
+                        );
+                      })}
                   </Form.Control>
                 </Form.Group>
               </Col>

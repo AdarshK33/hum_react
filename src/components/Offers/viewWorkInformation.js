@@ -8,6 +8,7 @@ import { AdminContext } from "../../context/AdminState";
 import { OfferContext } from "../../context/OfferState";
 import { RosterContext } from "../../context/RosterState";
 import { AppContext } from "../../context/AppState";
+import { MasterFilesContext } from "../../context/MasterFilesState";
 
 const ViewWorkInformation = () => {
   const [state, setState] = useState({
@@ -22,6 +23,9 @@ const ViewWorkInformation = () => {
     internship: "",
     noticePeriod: "",
     managerId: null,
+    expatUser: "",
+    passportNumber: "",
+    nationality: "",
   });
   const [dateOfJoining, setDateOFJoining] = useState();
   const [costCenter, setCostCenter] = useState("");
@@ -29,6 +33,8 @@ const ViewWorkInformation = () => {
   const { viewSports, sportsNames } = useContext(ClusterContext);
   const { CostCenter, costCenterList } = useContext(AdminContext);
   const [college, setCollege] = useState("");
+  const { viewCountries, countryList } = useContext(MasterFilesContext);
+
   const {
     departmentView,
     departmentName,
@@ -57,6 +63,7 @@ const ViewWorkInformation = () => {
     viewContractTypes();
     designationView();
     stateData();
+    viewCountries();
     console.log("candidateData work info", candidateData);
   }, []);
 
@@ -79,6 +86,9 @@ const ViewWorkInformation = () => {
         internship: workData.internshipPeriod,
         noticePeriod: workData.noticePeriod,
         managerId: workData.managerId,
+        expatUser: workData.expatUser,
+        passportNumber: workData.passportNumber,
+        nationality: workData.nationality,
       });
       setDateOFJoining(new Date(workData.dateOfJoin));
       setDateOFLeaving(new Date(workData.dateOfLeaving));
@@ -453,6 +463,65 @@ const ViewWorkInformation = () => {
                   <option value="1">1 Month</option>
                   <option value="2">2 Month</option>
                   <option value="3">3 Month</option>
+                </Form.Control>
+              </Form.Group>
+            </Col>
+          )}
+          {(state.employmentType === "Internship" ||
+            state.employmentType === "Permanent" ||
+            state.employmentType === "Parttime") && (
+            <Col sm={3}>
+              <Form.Group>
+                <Form.Label>Local Expert</Form.Label>
+                <Form.Control
+                  as="select"
+                  className="form-input"
+                  name="expatUser"
+                  value={state.expatUser}
+                  disabled={true}
+                >
+                  <option>Seclect </option>
+                  <option value="1">Yes</option>
+                  <option value="0">No</option>
+                </Form.Control>
+              </Form.Group>
+            </Col>
+          )}
+          {state.expatUser == 1 && (
+            <Col sm={3}>
+              <Form.Group>
+                <Form.Label>Passport Number</Form.Label>
+                <Form.Control
+                  type="text"
+                  className="form-input"
+                  value={state.passportNumber}
+                  name="passportNumber"
+                  disabled={true}
+                />
+              </Form.Group>
+            </Col>
+          )}
+        </Row>
+        <Row>
+          {state.expatUser == 1 && (
+            <Col sm={3}>
+              <Form.Group>
+                <Form.Label>Nationality</Form.Label>
+                <Form.Control
+                  as="select"
+                  className="form-input"
+                  value={state.nationality}
+                  name="nationality"
+                  disabled={true}
+                >
+                  <option>Select Nationality</option>
+                  {countryList !== null &&
+                    countryList !== undefined &&
+                    countryList.map((item) => {
+                      return (
+                        <option key={item.countryId}>{item.nationality}</option>
+                      );
+                    })}
                 </Form.Control>
               </Form.Group>
             </Col>
