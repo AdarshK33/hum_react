@@ -9,32 +9,46 @@ import { AlignCenter } from "react-feather";
 
 function LoginOnboard(props) {
   const [loginData, setLoginData] = useState({ username: "", password: "" });
-  const { candidateOnBoardLogin } = useContext(CandidateContext);
+  const {
+    candidateOnBoardLogin,
+    candidateLoginValue,
+    candidateLoginResponse,
+  } = useContext(CandidateContext);
   const { CandidateProfile, candidateProfileData, candidateData } = useContext(
     OnBoardContext
   );
 
   useEffect(() => {
     CandidateProfile();
-  }, [candidateData, candidateProfileData]);
+  }, [candidateLoginValue]);
 
   const handleLogin = (e) => {
     e.preventDefault();
     console.log("inside login");
     candidateOnBoardLogin({ ...loginData, history: props.history });
     CandidateProfile();
-    loginRedirect();
+    // loginRedirect();
   };
 
   const loginRedirect = () => {
+    let accessTokenExist = localStorage.getItem("candidate_access_token");
     console.log("candidateProfileData.status", candidateProfileData.status);
+    console.log("login data", candidateLoginValue, candidateLoginResponse);
     if (
-      candidateProfileData !== undefined &&
-      candidateProfileData !== null &&
-      candidateProfileData.status === 2
+      candidateLoginValue !== null &&
+      candidateLoginValue !== undefined &&
+      Object.keys(candidateLoginValue).length !== 0 &&
+      candidateLoginValue.status === "FAIL"
     ) {
-      props.history.push("/onboard");
-    } else {
+      console.log("1st condition");
+      props.history.push("/onboard-offer");
+    } else if (
+      (candidateLoginValue !== null &&
+        candidateLoginValue !== undefined &&
+        Object.keys(candidateLoginValue).length !== 0) ||
+      accessTokenExist !== null
+    ) {
+      console.log("2nd condition");
       props.history.push("/offer");
     }
   };
