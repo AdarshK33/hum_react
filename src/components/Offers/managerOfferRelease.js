@@ -59,6 +59,16 @@ const ManagerOfferRelease = () => {
     }
   };
 
+  // const workInformationClick = (e) => {
+  //   console.log("inside workInformationClick");
+  //   if (
+  //     createCandidateResponse !== null &&
+  //     createCandidateResponse != undefined
+  //   ) {
+  //     viewCandidateId(createCandidateResponse.candidateId);
+  //   }
+  // };
+
   return (
     console.log(workInfoViewData),
     (

@@ -19,8 +19,10 @@ const Address = (props) => {
     candidateCountryData,
     CandidateStateList,
     candidateStateData,
-    candidateCityList,
-    candidateCityData,
+    candidatePermanentCityList,
+    candidatePresentCityList,
+    candidatePermanentCityData,
+    candidatePresentCityData,
     addressCreate,
     addressSaveData,
     addressView,
@@ -125,23 +127,23 @@ const Address = (props) => {
       if (stateValue.length !== 0) {
         setStateId(stateValue[0].stateId);
         setStateName(stateValue[0].stateName);
-        candidateCityList(addressViewData.stateId);
+        candidatePresentCityList(addressViewData.stateId);
       }
-      setPresentCityData(candidateCityData);
+      setPresentCityData(candidatePresentCityData);
       permanentStatevalue = candidateStateData.filter(
         (i) => i.stateId === addressViewData.permanentStateId
       );
       if (permanentStatevalue.length !== 0) {
         setPermanentStateId(permanentStatevalue[0].stateId);
         setPermanentStateName(permanentStatevalue[0].stateName);
-        candidateCityList(addressViewData.permanentStateId);
+        candidatePermanentCityList(addressViewData.permanentStateId);
       }
     }
   }, [candidateStateData, addressViewData]);
   useEffect(() => {
     let cityValue;
     if (addressViewData !== undefined && addressViewData !== null) {
-      cityValue = candidateCityData.filter(
+      cityValue = candidatePresentCityData.filter(
         (i) => i.cityId == addressViewData.cityId
       );
       console.log("present............", cityValue);
@@ -151,13 +153,13 @@ const Address = (props) => {
       let permanentCityValue;
 
       if (addressViewData.addressType === 0) {
-        permanentCityValue = candidateCityData.filter(
+        permanentCityValue = candidatePermanentCityData.filter(
           (i) => i.cityId === addressViewData.permanentCityId
         );
         setPermanentCityData(permanentCityValue);
       }
     }
-  }, [addressViewData, candidateCityData]);
+  }, [addressViewData, candidatePresentCityData, candidatePermanentCityData]);
 
   useEffect(() => {
     if (permanetCityData.length !== 0) {
@@ -247,7 +249,7 @@ const Address = (props) => {
           if (stateValue.length !== 0) {
             setStateId(stateValue[0].stateId);
             setStateName(stateValue[0].stateName);
-            candidateCityList(stateValue[0].stateId);
+            candidatePresentCityList(stateValue[0].stateId);
           }
         }
 
@@ -539,15 +541,15 @@ const Address = (props) => {
     console.log("filteredListOfState", filteredListOfState);
     setStateName(e.target.value);
     setStateId(filteredListOfState[0].stateId);
-    candidateCityList(filteredListOfState[0].stateId);
+    candidatePresentCityList(filteredListOfState[0].stateId);
   };
 
   const cityHandler = (e) => {
-    let filteredListOfCity = candidateCityData.filter(
+    let filteredListOfCity = candidatePresentCityData.filter(
       (i) => i.cityName === e.target.value
     );
     console.log("filteredListOfCity", filteredListOfCity);
-    setCityName(e.target.value);
+    setCityName(filteredListOfCity[0].cityName);
     setCityId(filteredListOfCity[0].cityId);
   };
 
@@ -568,11 +570,11 @@ const Address = (props) => {
     console.log("filteredListOfState", filteredListOfState);
     setPermanentStateName(e.target.value);
     setPermanentStateId(filteredListOfState[0].stateId);
-    candidateCityList(filteredListOfState[0].stateId);
+    candidatePermanentCityList(filteredListOfState[0].stateId);
   };
 
   const permanentCityHandler = (e) => {
-    let filteredListOfCity = candidateCityData.filter(
+    let filteredListOfCity = candidatePermanentCityData.filter(
       (i) => i.cityName === e.target.value
     );
     console.log("filteredListOfCity", filteredListOfCity);
@@ -817,10 +819,10 @@ const Address = (props) => {
                   onChange={cityHandler}
                 >
                   <option value="">Select City</option>
-                  {candidateCityData !== null &&
-                    candidateCityData !== undefined &&
-                    candidateCityData.length > 0 &&
-                    candidateCityData.map((item, i) => {
+                  {candidatePresentCityData !== null &&
+                    candidatePresentCityData !== undefined &&
+                    candidatePresentCityData.length > 0 &&
+                    candidatePresentCityData.map((item, i) => {
                       return <option key={item.cityId}>{item.cityName}</option>;
                     })}
                 </Form.Control>
@@ -1099,10 +1101,10 @@ const Address = (props) => {
                       onChange={permanentCityHandler}
                     >
                       <option value="">Select City</option>
-                      {candidateCityData !== null &&
-                        candidateCityData !== undefined &&
-                        candidateCityData.length > 0 &&
-                        candidateCityData.map((item) => {
+                      {candidatePermanentCityData !== null &&
+                        candidatePermanentCityData !== undefined &&
+                        candidatePermanentCityData.length > 0 &&
+                        candidatePermanentCityData.map((item) => {
                           return (
                             <option key={item.cityId}>{item.cityName}</option>
                           );
@@ -1135,7 +1137,10 @@ const Address = (props) => {
                       disabled={disabled}
                     />
                     {PermanentPinCodeError ? (
-                      <p style={{ color: "red" }}> Please enter pin code</p>
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        Please enter valid pin code
+                      </p>
                     ) : (
                       <p></p>
                     )}
@@ -1162,7 +1167,10 @@ const Address = (props) => {
                       disabled={disabled}
                     />
                     {PermanentPhoneNoError ? (
-                      <p style={{ color: "red" }}> Please enter phone number</p>
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        Please enter valid phone number
+                      </p>
                     ) : (
                       <p></p>
                     )}
