@@ -46,6 +46,7 @@ const ViewTicket = () => {
         serviceGroupView()
     }, [])
 
+
     /* const changeHandler = (e) => {
         let fileObj = e.target.files[0].name;
         console.log("clicked", fileObj)
@@ -280,7 +281,7 @@ const ViewTicket = () => {
                 })
         }
     }
-
+    
     const validation = () => {
         let flag = true
         if (resolution === '') {
@@ -325,7 +326,9 @@ const ViewTicket = () => {
         setFileNames([])
         setshowFirst(false)
         setshowSecond(false)
+        history.push("./ticketlistingpage")
         }
+        
 
     }
 
