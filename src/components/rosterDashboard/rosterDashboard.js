@@ -44,7 +44,7 @@ const RosterDashboard = () => {
             alignment: "center",
             textStyle: {
                 color: "233238",
-                fontSize: 8
+                fontSize: 11
             }
         },
         chartArea: {
@@ -81,7 +81,7 @@ const RosterDashboard = () => {
             alignment: "center",
             textStyle: {
                 color: "233238",
-                fontSize: 8
+                fontSize: 11
             }
         },
         chartArea: {
@@ -118,7 +118,7 @@ const RosterDashboard = () => {
             alignment: "center",
             textStyle: {
                 color: "233238",
-                fontSize: 8
+                fontSize: 11
             }
         },
         chartArea: {

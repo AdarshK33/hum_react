@@ -80,6 +80,10 @@
   color: grey;
 }
 
+.bold {
+  font-weight: bold;
+}
+
 .table-head ul {
   list-style-type: disc;
   font-size: 12px;
