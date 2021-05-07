@@ -275,14 +275,16 @@ const RosterTable = (storeID) => {
                                                         borderLeft: `${data.rank === 1 ? '4px solid red' : data.rank === 2 ? '4px solid yellow' : '4px solid green'}`
                                                     }}     
                                                 >
-                                                    <div className="empDetails-left">
-                                                        <div>{data.firstName} {data.lastName}</div>
-                                                        <div>{data.contractType}</div>
-                                                        <div>{data.position} | <span style={{display: 'inline-block'}}>{data.clusterName}</span></div>
-                                                    </div>
-                                                    {/* {console.log(data.utilization.split('%'), 'data.utilization')} */}
-                                                    <div>
-                                                        <CircularProgressbar value={data.utilization.split('%')[0]} text={`${data.utilization}`} height="50px"/>
+                                                    <div>{data.firstName} {data.lastName}</div>
+                                                    <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                                                        <div className="empDetails-left">
+                                                            <div>{data.contractType}</div>
+                                                            <div>{data.position} | <span style={{display: 'inline-block'}}>{data.clusterName}</span></div>
+                                                        </div>
+                                                        {/* {console.log(data.utilization.split('%'), 'data.utilization')} */}
+                                                        <div style={{margin: 'auto'}}>
+                                                            <CircularProgressbar value={data.utilization.split('%')[0]} text={`${data.utilization}`} height="50px"/>
+                                                        </div>
                                                     </div>
                                                 </td>
                                                 {data.employeeRosters.map(empData => (
