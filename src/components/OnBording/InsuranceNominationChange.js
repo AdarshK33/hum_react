@@ -594,6 +594,7 @@ const InsuranceNomination = (props) => {
           setMarriedStatus(true);
           setRelativeType(false);
           setButtonOne(true);
+          setDisable(false);
         }
         if (
           item.nomineeType === 2 &&
@@ -2854,13 +2855,13 @@ const InsuranceNomination = (props) => {
     // setAddSecondInLaw(false);
   };
   const handleNACheckboxChange2 = () => {
+    // if (NAcheck2 === true) {
+    //   setDisable(false);
+    // } else {
+    //   setDisable(true);
+    // }
+    setDisable(!disable);
     setNAcheck2(!NAcheck2);
-    if (disable === true) {
-      setDisable(false);
-    } else {
-      // setState({});
-      setDisable(true);
-    }
   };
 
   return (
