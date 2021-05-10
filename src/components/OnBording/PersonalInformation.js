@@ -43,6 +43,7 @@ const PersonalInformation = (props) => {
     uploadFile,
     documentView,
     documentViewData,
+    DeleteAllInsuranceNominations,
   } = useContext(OnBoardContext);
   const options = useMemo(() => countryList().getData(), []);
   const [isClicked, setIsClicked] = useState(false);
@@ -778,6 +779,17 @@ const PersonalInformation = (props) => {
               : 0,
           verificationStatusDesc: null,
         };
+        if (
+          candidateProfileData.maritalStatus !== null &&
+          candidateProfileData.maritalStatus !== undefined &&
+          candidateProfileData.maritalStatus !== ""
+        ) {
+          if (candidateProfileData.maritalStatus !== maritalStatus) {
+            DeleteAllInsuranceNominations(candidateProfileData.candidateId);
+            const doInsuranceNomineeFalse = props.MakeFalse;
+            doInsuranceNomineeFalse(false);
+          }
+        }
         console.log("onsubmit");
         console.log(InfoData);
         updatePersonalInfo(InfoData);
