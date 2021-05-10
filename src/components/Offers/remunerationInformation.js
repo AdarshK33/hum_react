@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { OfferContext } from "../../context/OfferState";
 import { AppContext } from "../../context/AppState";
+import { candidate } from "../../utils/canditateLogin";
 
 const RemunerationInformation = (props) => {
   const [fixedGross, setFixedGross] = useState();
@@ -360,19 +361,26 @@ const RemunerationInformation = (props) => {
                         Please Enter the valid Input
                       </p>
                     ) : ((candidateData &&
-                        candidateData.workInformation &&
+                        candidateData.workInformation !== null &&
+                        candidateData.workInformation !== undefined &&
                         candidateData.workInformation.contractType ===
                           "Parttime") ||
-                        workInfoViewData.contractType === "Parttime") &&
+                        (workInfoViewData !== null &&
+                          workInfoViewData !== undefined &&
+                          workInfoViewData.contractType === "Parttime")) &&
                       (fixedGross < 90 || fixedGross > 200) ? (
                       <p style={{ color: "red" }}>
                         Value should be between 90 - 200{" "}
                       </p>
                     ) : ((candidateData &&
                         candidateData.workInformation &&
+                        candidateData.workInformation !== null &&
+                        candidateData.workInformation !== undefined &&
                         candidateData.workInformation.contractType ===
                           "Permanent") ||
-                        workInfoViewData.contractType === "Permanent") &&
+                        (workInfoViewData !== null &&
+                          workInfoViewData !== undefined &&
+                          workInfoViewData.contractType === "Permanent")) &&
                       fixedGross < 18000 ? (
                       <p style={{ color: "red" }}>
                         Value should be greater than 18000{" "}
