@@ -11,7 +11,7 @@ const EmployeeForm = (props) => {
   const [state, setState] = useState({
     firstName: "",
     lastName: "",
-    email: "",
+    personalEmail: "",
   });
 
   const [yesChecked, setYesChecked] = useState(true);
@@ -27,8 +27,10 @@ const EmployeeForm = (props) => {
   const [desgination1, setDesignation1] = useState("");
   const [desgination2, setDesignation2] = useState("");
   const [modal, setModal] = useState(false);
+  const [eligibleToReHire, setRehire] = useState(false);
   const [saveclick, setSaveclick] = useState(false);
-
+  const [yesValue, setYesValue] = useState();
+  const [firstClick, setFirstClick] = useState(false);
   let history = useHistory();
 
   const {
@@ -45,7 +47,7 @@ const EmployeeForm = (props) => {
   } = useContext(OfferContext);
 
   const handleClose = () => setModal(false);
-  const handleShow = () => setModal(true);
+  // const handleShow = () => setModal(true);
 
   useEffect(() => {
     setRefEmail1(
@@ -103,8 +105,21 @@ const EmployeeForm = (props) => {
   }, []);
 
   useEffect(() => {
-    if (searchData !== null && Object.keys(searchData).length > 0) {
-      setModal(true);
+    if (
+      searchData !== null &&
+      Object.keys(searchData).length > 0 &&
+      searchData[0] !== undefined &&
+      firstClick === true
+    ) {
+      setFirstClick(false);
+      if (searchData[0].eligibleToReHire === 0) {
+        setRehire(false);
+        setModal(true);
+      }
+      if (searchData[0].eligibleToReHire === 1) {
+        setRehire(true);
+        setModal(true);
+      }
       console.log("searchData in if", searchData);
     }
     console.log("searchData out if", searchData);
@@ -116,15 +131,17 @@ const EmployeeForm = (props) => {
   const searchDataHandler = () => {
     if (searchValue !== null) {
       searchByAadhar(searchValue);
+      setFirstClick(true);
     }
   };
-  /* const callback = (yesValue) => {
-    console.log("yesValue", yesValue);
-    setState({
-      firstName: searchData.firstName,
-      lastName: searchData.lastName,
-      email: searchData.personalEmail,
-    });
+  useEffect(() => {
+    if (
+      searchData !== undefined &&
+      searchData[0] !== undefined &&
+      yesValue === true
+    ) {
+      setState(searchData[0]);
+    }
     searchData.candidateReferences !== null &&
       searchData.candidateReferences !== undefined &&
       searchData.candidateReferences.map((item) => {
@@ -137,7 +154,36 @@ const EmployeeForm = (props) => {
           setDesignation2(item[1].designation)
         );
       });
-  }; */
+  }, [yesValue, searchData]);
+  const callback = (yesValue) => {
+    setYesValue(yesValue);
+    console.log("yesValue", yesValue);
+    if (yesValue == false) {
+      setState([]);
+      setTimeout(() => {
+        history.push("/offer-release-list");
+      }, 1000);
+    }
+    // console.log(searchData);
+    // setState(
+    //   searchData
+    //   // firstName: searchData.firstName,
+    //   // lastName: searchData.lastName,
+    //   // email: searchData.personalEmail,
+    // );
+    // searchData.candidateReferences !== null &&
+    //   searchData.candidateReferences !== undefined &&
+    //   searchData.candidateReferences.map((item) => {
+    //     return (
+    //       setEmpName1(item[0].employeeName),
+    //       setEmpName2(item[1].employeeName),
+    //       setRefEmail1(item[0].email),
+    //       setRefEmail2(item[1].email),
+    //       setDesignation1(item[0].designation),
+    //       setDesignation2(item[1].designation)
+    //     );
+    //   });
+  };
 
   const showOneMoreRefer = () => {
     setSecondRef(true);
@@ -247,9 +293,10 @@ const EmployeeForm = (props) => {
         nationality: null,
         panDoc: null,
         panNumber: null,
-        personalEmail: state.email,
+        personalEmail: state.personalEmail,
         photo: null,
         refered: true,
+        rehired: yesValue === true ? true : false,
         status: 1,
         verificationStatus: 0,
       };
@@ -287,9 +334,11 @@ const EmployeeForm = (props) => {
         nationality: null,
         panDoc: null,
         panNumber: null,
-        personalEmail: state.email,
+        personalEmail: state.personalEmail,
         photo: null,
         refered: true,
+        rehired: yesValue === true ? true : false,
+
         status: 1,
         verificationStatus: 0,
       };
@@ -299,7 +348,15 @@ const EmployeeForm = (props) => {
     console.log("firstNameError info", firstNameError, lastNameError);
     console.log("saveclick", saveclick);
     console.log("createCandidateResponse saveclick", createCandidateResponse);
-    if (firstNameError === false && lastNameError === false) {
+    let refValue =
+      searchEmpData1 === null || searchEmpData2 === null ? false : true;
+
+    // console.log("empdata.......", searchEmpData1.length);
+    if (
+      firstNameError === false &&
+      lastNameError === false &&
+      refValue === true
+    ) {
       if (
         saveclick === true &&
         createCandidateResponse &&
@@ -326,108 +383,172 @@ const EmployeeForm = (props) => {
     console.log("state", state);
   };
   return (
-    <Fragment>
-      <Form onSubmit={submitHandler}>
-        <Row style={{ marginBottom: "1rem" }}>
-          <Col sm={4}>
-            <Form.Group>
-              <Form.Label>Search by Account Number/Aadhar Number</Form.Label>
-              <div className="faq-form">
-                <input
-                  className="form-control searchButton"
+    console.log(searchEmpData1),
+    (
+      <Fragment>
+        <Form onSubmit={submitHandler}>
+          <Row style={{ marginBottom: "1rem" }}>
+            <Col sm={4}>
+              <Form.Group>
+                <Form.Label>Search by Account Number/Aadhar Number</Form.Label>
+                <div className="faq-form ">
+                  <input
+                    className="form-control searchButton"
+                    type="text"
+                    disabled={disabled}
+                    placeholder="Search.."
+                    onChange={(e) => searchHandler(e)}
+                  />
+                  <Search
+                    className="search-icon"
+                    style={{ color: "#313131" }}
+                    onClick={searchDataHandler}
+                  />
+                </div>
+              </Form.Group>
+            </Col>
+            <RehiredModal
+              eligibleToReHire={eligibleToReHire}
+              modal={modal}
+              handleClose={handleClose}
+              callback={callback}
+            />
+          </Row>
+          <Row>
+            <Col sm={4}>
+              <Form.Group>
+                <Form.Label>First Name</Form.Label>
+                <Form.Control
+                  className="form-input"
                   type="text"
+                  name="firstName"
+                  value={state.firstName}
+                  onChange={changeHandler}
+                  required
+                  placeholder="First Name"
                   disabled={disabled}
-                  placeholder="Search.."
-                  onChange={(e) => searchHandler(e)}
                 />
-                <Search
-                  className="search-icon"
-                  style={{ color: "#313131" }}
-                  onClick={searchDataHandler}
+              </Form.Group>
+            </Col>
+            <Col sm={4}>
+              <Form.Group>
+                <Form.Label>Last Name</Form.Label>
+                <Form.Control
+                  className="form-input"
+                  type="text"
+                  name="lastName"
+                  value={state.lastName}
+                  onChange={changeHandler}
+                  required
+                  placeholder="Last Name"
+                  disabled={disabled}
                 />
-              </div>
-            </Form.Group>
-          </Col>
-          <RehiredModal
-            modal={modal}
-            handleClose={handleClose}
-            /*  callback={callback} */
-          />
-        </Row>
-        <Row>
-          <Col sm={4}>
-            <Form.Group>
-              <Form.Label>First Name</Form.Label>
-              <Form.Control
-                className="form-input"
-                type="text"
-                name="firstName"
-                value={state.firstName}
-                onChange={changeHandler}
-                required
-                placeholder="First Name"
-                disabled={disabled}
+              </Form.Group>
+            </Col>
+            <Col sm={4}>
+              <Form.Group>
+                <Form.Label>Personal Email ID</Form.Label>
+                <Form.Control
+                  type="email"
+                  className="form-input"
+                  name="personalEmail"
+                  value={state.personalEmail}
+                  onChange={changeHandler}
+                  required
+                  placeholder="Personal Email ID"
+                  disabled={disabled}
+                />
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row>
+            <Col sm={4}>
+              <p>Were you referred for this position?</p>
+            </Col>
+            <Col sm={4}>
+              Yes &nbsp;{" "}
+              <input
+                type="checkbox"
+                name="refrence"
+                checked={yesChecked}
+                onChange={checkedYesHandler}
               />
-            </Form.Group>
-          </Col>
-          <Col sm={4}>
-            <Form.Group>
-              <Form.Label>Last Name</Form.Label>
-              <Form.Control
-                className="form-input"
-                type="text"
-                name="lastName"
-                value={state.lastName}
-                onChange={changeHandler}
-                required
-                placeholder="Last Name"
-                disabled={disabled}
+              &nbsp; &nbsp;&nbsp; &nbsp; No &nbsp;{" "}
+              <input
+                type="checkbox"
+                name="refrence"
+                checked={noChecked}
+                onChange={checkedNoHandler}
               />
-            </Form.Group>
-          </Col>
-          <Col sm={4}>
-            <Form.Group>
-              <Form.Label>Personal Email ID</Form.Label>
-              <Form.Control
-                type="email"
-                className="form-input"
-                name="email"
-                value={state.email}
-                onChange={changeHandler}
-                required
-                placeholder="Personal Email ID"
-                disabled={disabled}
-              />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-          <Col sm={4}>
-            <p>Were you referred for this position?</p>
-          </Col>
-          <Col sm={4}>
-            Yes &nbsp;{" "}
-            <input
-              type="checkbox"
-              name="refrence"
-              checked={yesChecked}
-              onChange={checkedYesHandler}
-            />
-            &nbsp; &nbsp;&nbsp; &nbsp; No &nbsp;{" "}
-            <input
-              type="checkbox"
-              name="refrence"
-              checked={noChecked}
-              onChange={checkedNoHandler}
-            />
-          </Col>
-        </Row>
-        {yesChecked === true ? (
-          <Fragment>
-            <p>
-              State two reference(max two are allowed)
-              <span style={{ color: "red" }}>*</span>
-            </p>
+            </Col>
+          </Row>
+          {yesChecked === true ? (
+            <Fragment>
+              <p>
+                State two reference(max two are allowed)
+                <span style={{ color: "red" }}>*</span>
+              </p>
+              <Row>
+                <Col sm={4}>
+                  <Form.Group>
+                    <Form.Label>
+                      Emp Name/Emp ID <span style={{ color: "red" }}>*</span>
+                    </Form.Label>
+                    <div className="faq-form">
+                      <input
+                        className="form-control searchButton"
+                        type="text"
+                        disabled={disabled}
+                        value={empName1}
+                        placeholder="Search by Emp Name/Emp Id"
+                        onChange={(e) => empName1Handler(e)}
+                        required
+                      />
+                      <Search
+                        className="search-icon"
+                        style={{ color: "#313131" }}
+                        onClick={empName1Search}
+                      />
+                    </div>
+                  </Form.Group>
+                </Col>
+                <Col sm={4}>
+                  <Form.Group>
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control
+                      className="form-input"
+                      type="text"
+                      value={empName1 === "" ? "" : refEmail1}
+                      /*  value={refEmail1} */
+                      onChange={(e) => setRefEmail1(e.target.value)}
+                      readOnly
+                    />
+                  </Form.Group>
+                </Col>
+                <Col sm={3}>
+                  <Form.Group>
+                    <Form.Label>Designation</Form.Label>
+                    <Form.Control
+                      className="form-input"
+                      type="text"
+                      value={empName1 === "" ? "" : desgination1}
+                      /*  value={desgination1} */
+                      onChange={(e) => setDesignation1(e.target.value)}
+                      readOnly
+                    />
+                  </Form.Group>
+                </Col>
+                <PlusCircle
+                  style={{ color: "#376ebb" }}
+                  onClick={showOneMoreRefer}
+                  style={{ marginTop: "2rem", color: "#006EBB" }}
+                />
+              </Row>
+            </Fragment>
+          ) : (
+            ""
+          )}
+          {secondRef === true && yesChecked === true ? (
             <Row>
               <Col sm={4}>
                 <Form.Group>
@@ -439,15 +560,15 @@ const EmployeeForm = (props) => {
                       className="form-control searchButton"
                       type="text"
                       disabled={disabled}
-                      value={empName1}
+                      value={empName2}
                       placeholder="Search by Emp Name/Emp Id"
-                      onChange={(e) => empName1Handler(e)}
+                      onChange={(e) => empName2Handler(e)}
                       required
                     />
                     <Search
                       className="search-icon"
                       style={{ color: "#313131" }}
-                      onClick={empName1Search}
+                      onClick={empName2Search}
                     />
                   </div>
                 </Form.Group>
@@ -458,10 +579,10 @@ const EmployeeForm = (props) => {
                   <Form.Control
                     className="form-input"
                     type="text"
-                    value={empName1 === "" ? "" : refEmail1}
-                    /*  value={refEmail1} */
-                    onChange={(e) => setRefEmail1(e.target.value)}
                     readOnly
+                    value={empName2 === "" ? "" : refEmail2}
+                    /*  value={refEmail2} */
+                    onChange={(e) => setRefEmail2(e.target.value)}
                   />
                 </Form.Group>
               </Col>
@@ -471,98 +592,38 @@ const EmployeeForm = (props) => {
                   <Form.Control
                     className="form-input"
                     type="text"
-                    value={empName1 === "" ? "" : desgination1}
-                    /*  value={desgination1} */
-                    onChange={(e) => setDesignation1(e.target.value)}
+                    value={empName2 === "" ? "" : desgination2}
+                    /* value={desgination2} */
+                    onChange={(e) => setDesignation2(e.target.value)}
                     readOnly
                   />
                 </Form.Group>
               </Col>
-              <PlusCircle
+              <MinusCircle
                 style={{ color: "#376ebb" }}
-                onClick={showOneMoreRefer}
+                onClick={hideOneMoreRefer}
                 style={{ marginTop: "2rem", color: "#006EBB" }}
               />
             </Row>
-          </Fragment>
-        ) : (
-          ""
-        )}
-        {secondRef === true && yesChecked === true ? (
-          <Row>
-            <Col sm={4}>
-              <Form.Group>
-                <Form.Label>
-                  Emp Name/Emp ID <span style={{ color: "red" }}>*</span>
-                </Form.Label>
-                <div className="faq-form">
-                  <input
-                    className="form-control searchButton"
-                    type="text"
-                    disabled={disabled}
-                    value={empName2}
-                    placeholder="Search by Emp Name/Emp Id"
-                    onChange={(e) => empName2Handler(e)}
-                    required
-                  />
-                  <Search
-                    className="search-icon"
-                    style={{ color: "#313131" }}
-                    onClick={empName2Search}
-                  />
-                </div>
-              </Form.Group>
-            </Col>
-            <Col sm={4}>
-              <Form.Group>
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                  className="form-input"
-                  type="text"
-                  readOnly
-                  value={empName2 === "" ? "" : refEmail2}
-                  /*  value={refEmail2} */
-                  onChange={(e) => setRefEmail2(e.target.value)}
-                />
-              </Form.Group>
-            </Col>
-            <Col sm={3}>
-              <Form.Group>
-                <Form.Label>Designation</Form.Label>
-                <Form.Control
-                  className="form-input"
-                  type="text"
-                  value={empName2 === "" ? "" : desgination2}
-                  /* value={desgination2} */
-                  onChange={(e) => setDesignation2(e.target.value)}
-                  readOnly
-                />
-              </Form.Group>
-            </Col>
-            <MinusCircle
-              style={{ color: "#376ebb" }}
-              onClick={hideOneMoreRefer}
-              style={{ marginTop: "2rem", color: "#006EBB" }}
-            />
-          </Row>
-        ) : (
-          ""
-        )}
-        <Row>
-          <Col sm={4}></Col>
-          <Col sm={2}>
-            <Button type="submit">Save</Button>
-          </Col>
-          {editButton === true ? (
-            <Col sm={2}>
-              <Button onClick={editHandler}>Edit</Button>
-            </Col>
           ) : (
             ""
           )}
-        </Row>
-      </Form>
-    </Fragment>
+          <Row>
+            <Col sm={4}></Col>
+            <Col sm={2}>
+              <Button type="submit">Save</Button>
+            </Col>
+            {editButton === true ? (
+              <Col sm={2}>
+                <Button onClick={editHandler}>Edit</Button>
+              </Col>
+            ) : (
+              ""
+            )}
+          </Row>
+        </Form>
+      </Fragment>
+    )
   );
 };
 
