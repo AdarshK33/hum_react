@@ -30,6 +30,9 @@ const InsuranceNomination = (props) => {
     candidateInsuranceNominationData,
     InsuranceNominationDelete,
     deleteNomineeData,
+    DeleteAllInsuranceNominations,
+    UpdateNomineeStatus,
+    deleteAllNomineeData,
   } = useContext(OnBoardContext);
   const [isChecked, changeCheckState] = useState(false);
   const [showEdit, SetShowEdit] = useState(false);
@@ -57,6 +60,8 @@ const InsuranceNomination = (props) => {
   const [genderError_1, setGenderError_1] = useState(false);
   const [nomineNameError_1, setNomineerror_1] = useState(false);
   const [relationshipError_1, setRelationshipError_1] = useState(false);
+  const [relationshipError_11, setRelationshipError_11] = useState(false);
+  const [relationshipError_12, setRelationshipError_12] = useState(false);
   const [DOBError_1, setDobError_1] = useState(false);
 
   const [extra1ageError_1, setExtra1ageError_1] = useState(false);
@@ -67,6 +72,9 @@ const InsuranceNomination = (props) => {
     false
   );
   const [extra1relationshipError_11, setExtra1RelationshipError_11] = useState(
+    false
+  );
+  const [extra1relationshipError_12, setExtra1RelationshipError_12] = useState(
     false
   );
   const [extra1DOBError_1, setExtra1DobError_1] = useState(false);
@@ -92,6 +100,7 @@ const InsuranceNomination = (props) => {
   const [genderError_3, setGenderError_3] = useState(false);
   const [nomineNameError_3, setNomineerror_3] = useState(false);
   const [relationshipError_3, setRelationshipError_3] = useState(false);
+  const [relationshipError_31, setRelationshipError_31] = useState(false);
   const [DOBError_3, setDobError_3] = useState(false);
 
   const [ageError_4, setageError_4] = useState(false);
@@ -106,6 +115,9 @@ const InsuranceNomination = (props) => {
   const [In_law_genderError_1, setInLawGenderError_1] = useState(false);
   const [In_law_nomineNameError_1, setInLawNomineerror_1] = useState(false);
   const [In_law_relationshipError_1, setInLawRelationshipError_1] = useState(
+    false
+  );
+  const [In_law_relationshipError_11, setInLawRelationshipError_11] = useState(
     false
   );
   const [In_law_DOBError_1, setInLawDobError_1] = useState(false);
@@ -166,7 +178,7 @@ const InsuranceNomination = (props) => {
     gender: "",
     nominiId: 0,
     nominiName: "",
-    relationship: "",
+    relationship: "Spouse",
 
     nominee2Age: "",
     nominee2BloodGroup: "",
@@ -180,7 +192,7 @@ const InsuranceNomination = (props) => {
     nominee3Gender: "",
     nominee3NominiId: 0,
     nominee3NominiName: "",
-    nominee3Relationship: "",
+    nominee3Relationship: "Father",
 
     nominee4Age: "",
     nominee4BloodGroup: "",
@@ -194,7 +206,7 @@ const InsuranceNomination = (props) => {
     In_law_nominee1Gender: "",
     In_law_nominee1NominiId: 0,
     In_law_nominee1NominiName: "",
-    In_law_nominee1Relationship: "",
+    In_law_nominee1Relationship: "Father In-Law",
 
     In_law_nominee2Age: "",
     In_law_nominee2BloodGroup: "",
@@ -309,6 +321,54 @@ const InsuranceNomination = (props) => {
         var finalAge = Math.abs(ageDate.getUTCFullYear() - 1970);
         setAge(finalAge !== null && finalAge !== undefined ? finalAge : "");
       }
+      if (
+        candidatePersonalInfoData &&
+        candidatePersonalInfoData.maritalStatus !== null &&
+        candidatePersonalInfoData.maritalStatus !== undefined &&
+        (candidatePersonalInfoData.maritalStatus === "Unmarried") |
+          (candidatePersonalInfoData.maritalStatus === "UnMarried")
+      ) {
+        console.log(
+          "disabledInsuranceNominee",
+          candidatePersonalInfoData.disabledInsuranceNominee
+        );
+        // if (candidatePersonalInfoData.disabledInsuranceNominee !== NAcheck2) {
+        if (
+          candidatePersonalInfoData.disabledInsuranceNominee === true &&
+          NAcheck2 === false
+        ) {
+          handleNACheckboxChange2();
+          // setNAcheck2(true);
+          // setDisable(true);
+
+          state.extra1age = "";
+          state.extra1bloodGroup = "";
+          state.extra1gender = "";
+          state.extra1nominiId = 0;
+          state.extra1nominiName = "";
+          state.extra1relationship = "Father";
+
+          state.extra2age = "";
+          state.extra2bloodGroup = "";
+          state.extra2gender = "";
+          state.extra2nominiId = 0;
+          state.extra2nominiName = "";
+          state.extra2relationship = "";
+          setExtra1Nominee1DOB("");
+          setExtra2Nominee1DOB("");
+          console.log("NAAAAAAAAAAA1");
+        } else if (
+          candidatePersonalInfoData.disabledInsuranceNominee === false &&
+          NAcheck2 === true
+        ) {
+          console.log("NAAAAAAAAAAA2");
+          handleNACheckboxChange2();
+          // setNAcheck2(false);
+          // setDisable(false);
+        }
+        // }
+      }
+
       //   if (
       //     candidatePersonalInfoData &&
       //     candidatePersonalInfoData.maritalStatus !== null &&
@@ -428,7 +488,7 @@ const InsuranceNomination = (props) => {
       state.gender = "";
       state.nominiId = 0;
       state.nominiName = "";
-      state.relationship = "";
+      state.relationship = "Spouse";
 
       state.nominee2Age = "";
       state.nominee2BloodGroup = "";
@@ -442,7 +502,7 @@ const InsuranceNomination = (props) => {
       state.nominee3Gender = "";
       state.nominee3NominiId = 0;
       state.nominee3NominiName = "";
-      state.nominee3Relationship = "";
+      state.nominee3Relationship = "Father";
 
       state.nominee4Age = "";
       state.nominee4BloodGroup = "";
@@ -456,7 +516,7 @@ const InsuranceNomination = (props) => {
       state.In_law_nominee1Gender = "";
       state.In_law_nominee1NominiId = 0;
       state.In_law_nominee1NominiName = "";
-      state.In_law_nominee1Relationship = "";
+      state.In_law_nominee1Relationship = "Father In-Law";
 
       state.In_law_nominee2Age = "";
       state.In_law_nominee2BloodGroup = "";
@@ -504,12 +564,16 @@ const InsuranceNomination = (props) => {
       setInLawNominee2Dob("");
       setAddExtraSecond(false);
       setAddExtraThird(false);
+      setAddThird(false);
+      setNAcheck2(false);
+      setAddSecondInLaw(false);
+      setAddSecond(false);
+      setAddTwo(false);
 
       candidateInsuranceNominationData.map((item, i) => {
         console.log(item.nomineeType);
         if (
           item.nomineeType === 1 &&
-          item.relationship === "Father" &&
           candidatePersonalInfoData &&
           candidatePersonalInfoData.maritalStatus !== null &&
           candidatePersonalInfoData.maritalStatus !== undefined &&
@@ -607,7 +671,6 @@ const InsuranceNomination = (props) => {
         }
         if (
           item.nomineeType === 8 &&
-          item.relationship === "Spouse" &&
           candidatePersonalInfoData &&
           candidatePersonalInfoData.maritalStatus !== null &&
           candidatePersonalInfoData.maritalStatus !== undefined &&
@@ -650,11 +713,6 @@ const InsuranceNomination = (props) => {
           setAddSecond(true);
           setMarriedStatus(false);
           setRelativeType(true);
-          setButtonTwo(true);
-        } else {
-          console.log("came in else");
-          setButtonOne(false);
-          setAddSecond(false);
           setButtonTwo(true);
         }
         if (item.nomineeType === 10) {
@@ -734,8 +792,8 @@ const InsuranceNomination = (props) => {
       setAddSecond(false);
       setAddOne(false);
       setAddTwo(false);
-      state.relationship = "Father";
-      state.nominee2Relationship = "Mother";
+      // state.relationship = "Father";
+      // state.nominee2Relationship = "Mother";
       setButtonTwo(false);
       setButtonOne(true);
     }
@@ -776,8 +834,8 @@ const InsuranceNomination = (props) => {
         setAddTwo(false);
         setAddFirstInLaw(false);
         setAddSecondInLaw(false);
-        state.relationship = "Father";
-        state.nominee2Relationship = "Mother";
+        // state.relationship = "Father";
+        // state.nominee2Relationship = "Mother";
       } else if (
         candidatePersonalInfoData &&
         candidatePersonalInfoData.maritalStatus !== null &&
@@ -791,17 +849,17 @@ const InsuranceNomination = (props) => {
         // setInlawCheck(true);
         // setNAcheck(false);
         setAddFirstInLaw(true);
-        setAddSecondInLaw(true);
-        // setAddFirst(true);
+        //setAddSecondInLaw(true);
+        setAddFirst(true); //Raz
         // setAddSecond(true);
         setAddOne(true);
-        setAddTwo(true);
+        // setAddTwo(true);
         setAddExtraFirst(false);
         setAddExtraSecond(false);
         setButtonOne(false);
         setButtonTwo(true);
-        state.relationship = "Spouse";
-        state.nominee2Relationship = "Child 1";
+        // state.relationship = "Spouse";
+        // state.nominee2Relationship = "Child 1";
       } else {
         setMarriedStatus(true);
         setRelativeType(false);
@@ -817,8 +875,8 @@ const InsuranceNomination = (props) => {
         setAddSecond(false);
         setAddOne(false);
         setAddTwo(false);
-        state.relationship = "Father";
-        state.nominee2Relationship = "Mother";
+        // state.relationship = "Father";
+        // state.nominee2Relationship = "Mother";
         setButtonTwo(false);
         setButtonOne(true);
       }
@@ -850,8 +908,8 @@ const InsuranceNomination = (props) => {
         setAddTwo(false);
         setAddFirstInLaw(false);
         setAddSecondInLaw(false);
-        state.relationship = "Father";
-        state.nominee2Relationship = "Mother";
+        // state.relationship = "Father";
+        // state.nominee2Relationship = "Mother";
       } else if (
         candidatePersonalInfoData &&
         candidatePersonalInfoData.maritalStatus !== null &&
@@ -874,8 +932,8 @@ const InsuranceNomination = (props) => {
         setAddExtraSecond(false);
         setButtonOne(false);
         setButtonTwo(true);
-        state.relationship = "Spouse";
-        state.nominee2Relationship = "Child 1";
+        // state.relationship = "Spouse";
+        // state.nominee2Relationship = "Child 1";
       } else {
         setMarriedStatus(true);
         setRelativeType(false);
@@ -891,8 +949,8 @@ const InsuranceNomination = (props) => {
         setAddSecond(false);
         setAddOne(false);
         setAddTwo(false);
-        state.relationship = "Father";
-        state.nominee2Relationship = "Mother";
+        // state.relationship = "Father";
+        // state.nominee2Relationship = "Mother";
         setButtonTwo(false);
         setButtonOne(true);
       }
@@ -1776,7 +1834,8 @@ const InsuranceNomination = (props) => {
       addFirstInLaw === true &&
       NAcheck === false &&
       parentsCheck === false &&
-      InlawCheck === true
+      InlawCheck === true &&
+      addSecondInLaw === true
     ) {
       if (
         (AgeErrorValidation(state.In_law_nominee2Age, setInLawAgeError_2) ===
@@ -1814,6 +1873,112 @@ const InsuranceNomination = (props) => {
       return true;
     }
   };
+
+  const relCompareSecondInLaw = () => {
+    if (addSecondInLaw === true) {
+      state.In_law_nominee2Relationship = "Mother In-Law";
+      console.log(
+        "comparing the",
+        state.In_law_nominee1Relationship,
+        state.In_law_nominee2Relationship
+      );
+      if (
+        state.In_law_nominee1Relationship === state.In_law_nominee2Relationship
+      ) {
+        setInLawRelationshipError_11(true);
+        return false;
+      } else {
+        setInLawRelationshipError_11(false);
+        return true;
+      }
+    } else {
+      setInLawRelationshipError_11(false);
+      return true;
+    }
+  };
+  const relCompareChild1 = () => {
+    if (addSecond === true) {
+      state.nominee2Relationship = "Child 1";
+      console.log("compare-", state.relationship, state.nominee2Relationship);
+      if (state.relationship === state.nominee2Relationship) {
+        setRelationshipError_11(true);
+        return false;
+      } else {
+        setRelationshipError_11(false);
+        return true;
+      }
+    } else {
+      setRelationshipError_11(false);
+      return true;
+    }
+  };
+  const relCompareChild2 = () => {
+    if (addThird === true) {
+      console.log("compare-", state.relationship, state.nominee5Relationship);
+      if (state.relationship === state.nominee5Relationship) {
+        setRelationshipError_12(true);
+        return false;
+      } else {
+        setRelationshipError_12(false);
+        return true;
+      }
+    } else {
+      setRelationshipError_12(false);
+      return true;
+    }
+  };
+
+  const relCompareParent2 = () => {
+    if (addTwo === true) {
+      state.nominee4Relationship = "Mother";
+      console.log(
+        "compare-",
+        state.nominee4Relationship,
+        state.nominee3Relationship
+      );
+      if (state.nominee3Relationship === state.nominee4Relationship) {
+        setRelationshipError_31(true);
+        return false;
+      } else {
+        setRelationshipError_31(false);
+        return true;
+      }
+    } else {
+      setRelationshipError_31(false);
+      return true;
+    }
+  };
+
+  const relCompareExtra2 = () => {
+    if (addExtraSecond === true) {
+      state.extra2relationship = "Mother";
+      if (state.extra2relationship === state.extra1relationship) {
+        setExtra1RelationshipError_11(true);
+        return false;
+      } else {
+        setExtra1RelationshipError_11(false);
+        return true;
+      }
+    } else {
+      setRelationshipError_11(false);
+      return true;
+    }
+  };
+  const relCompareExtra3 = () => {
+    if (addExtraThird === true) {
+      if (state.nominee5Relationship1 === state.extra1relationship) {
+        setExtra1RelationshipError_12(true);
+        return false;
+      } else {
+        setExtra1RelationshipError_12(false);
+        return true;
+      }
+    } else {
+      setExtra1RelationshipError_12(false);
+      return true;
+    }
+  };
+
   const checkAllValidations = () => {
     if (
       (CheckValidationsNomine_1() === true) &
@@ -1825,7 +1990,13 @@ const InsuranceNomination = (props) => {
       (CheckValidationsNomine_7() === true) &
       (CheckValidationsNomine_extra1() === true) &
       (CheckValidationsNomine_extra2() === true) &
-      (CheckValidationsNomine_51() === true)
+      (CheckValidationsNomine_51() === true) &
+      (relCompareSecondInLaw() === true) &
+      (relCompareChild1() === true) &
+      (relCompareChild2() === true) &
+      (relCompareParent2() === true) &
+      (relCompareExtra2() === true) &
+      (relCompareExtra3() === true)
     ) {
       return true;
     } else {
@@ -1883,422 +2054,470 @@ const InsuranceNomination = (props) => {
     //   state.nominee3Relationship = "Brother";
     // }
 
-    // state.extra1relationship = "Father";
-    if (addExtraSecond === true) {
-      state.extra2relationship = "Mother";
-      if (state.extra2relationship === state.extra1relationship) {
-        setExtra1RelationshipError_11(true);
-      } else {
-        setExtra1RelationshipError_11(false);
-      }
-    } else {
-      setExtra1RelationshipError_11(false);
-    }
+    // for unmarried
 
-    // state.relationship = "Father";
-    // state.nominee2Relationship = "Mother";
-    state.nominee3Relationship = "Father";
-    state.nominee4Relationship = "Mother";
-
-    state.In_law_nominee1Relationship = "Father In-Law";
-    state.In_law_nominee2Relationship = "Mother In-Law";
-
-    if (marriedStatus === true) {
-      // state.extra1relationship = "Father";
-      // state.extra2relationship = "Mother";
-    } else {
-      state.relationship = "Spouse";
-      state.nominee2Relationship = "Child 1";
-    }
-
-    if (parentsCheck === true) {
+    if (NAcheck2 === true) {
       if (
-        state.In_law_nominee1NominiId !== 0 &&
-        state.In_law_nominee1NominiId !== null &&
-        state.In_law_nominee1NominiId !== undefined
+        candidateInsuranceNominationData &&
+        candidateInsuranceNominationData !== null &&
+        candidateInsuranceNominationData !== undefined &&
+        Object.keys(candidateInsuranceNominationData).length !== 0
       ) {
-        InsuranceNominationDelete(state.In_law_nominee1NominiId);
+        DeleteAllInsuranceNominations(candidateProfileData.candidateId);
       }
-      if (
-        state.In_law_nominee2NominiId !== 0 &&
-        state.In_law_nominee2NominiId !== null &&
-        state.In_law_nominee2NominiId !== undefined
-      ) {
-        InsuranceNominationDelete(state.In_law_nominee2NominiId);
-      }
-    } else if (InlawCheck === true) {
-      if (
-        state.nominee3NominiId !== 0 &&
-        state.nominee3NominiId !== null &&
-        state.nominee3NominiId !== undefined
-      ) {
-        InsuranceNominationDelete(state.nominee3NominiId);
-      }
-      if (
-        state.nominee4NominiId !== 0 &&
-        state.nominee4NominiId !== null &&
-        state.nominee4NominiId !== undefined
-      ) {
-        InsuranceNominationDelete(state.nominee4NominiId);
-      }
-    }
-
-    if (
-      checkAllValidations() === true &&
-      extra1relationshipError_11 === false
-    ) {
-      const CountOFNominees = NomineeCount;
-      const first_nomine_info = {
-        age: state.age !== null ? state.age : null,
-        bloodGroup: state.bloodGroup !== null ? state.bloodGroup : null,
-        candidateId:
-          candidateProfileData &&
-          candidateProfileData !== null &&
-          candidateProfileData !== undefined &&
-          candidateProfileData.candidateId !== null
-            ? candidateProfileData.candidateId
-            : 0,
-        dateOfBirth: Nominee1DOB !== null ? Nominee1DOB : null,
-        gender: state.gender !== null ? state.gender : null,
-        nomineeVariant: marriedStatus
-          ? 0
-          : parentsCheck
-          ? 1
-          : InlawCheck
-          ? 2
-          : 3,
-        nomineeType: 8,
-        nominiId: state.nominiId,
-        nominiName: state.nominiName !== null ? state.nominiName : null,
-        relationship: state.relationship !== null ? state.relationship : null,
-      };
-      const second_nomine_info = {
-        age: state.nominee2Age,
-        bloodGroup: state.nominee2BloodGroup,
-        candidateId:
-          candidateProfileData &&
-          candidateProfileData !== null &&
-          candidateProfileData !== undefined &&
-          candidateProfileData.candidateId !== null
-            ? candidateProfileData.candidateId
-            : 0,
-        dateOfBirth: Nominee2DOB,
-        gender: state.nominee2Gender,
-        nomineeVariant: marriedStatus
-          ? 0
-          : parentsCheck
-          ? 1
-          : InlawCheck
-          ? 2
-          : 3,
-        nomineeType: 9,
-        nominiId: state.nominee2NominiId,
-        nominiName: state.nominee2NominiName,
-        relationship: state.nominee2Relationship,
-      };
-      const third_nomine_info = {
-        age: state.nominee3Age,
-        bloodGroup: state.nominee3BloodGroup,
-        candidateId:
-          candidateProfileData &&
-          candidateProfileData !== null &&
-          candidateProfileData !== undefined &&
-          candidateProfileData.candidateId !== null
-            ? candidateProfileData.candidateId
-            : 0,
-        dateOfBirth: Nominee3DOB,
-        gender: state.nominee3Gender,
-        nomineeVariant: marriedStatus
-          ? 0
-          : parentsCheck
-          ? 1
-          : InlawCheck
-          ? 2
-          : 3,
-        nomineeType: 3,
-        nominiId: state.nominee3NominiId,
-        nominiName: state.nominee3NominiName,
-        relationship: state.nominee3Relationship,
-      };
-      const fourth_nomine_info = {
-        age: state.nominee4Age,
-        bloodGroup: state.nominee4BloodGroup,
-        candidateId:
-          candidateProfileData &&
-          candidateProfileData !== null &&
-          candidateProfileData !== undefined &&
-          candidateProfileData.candidateId !== null
-            ? candidateProfileData.candidateId
-            : 0,
-        dateOfBirth: Nominee4DOB,
-        gender: state.nominee2Gender,
-
-        nomineeVariant: marriedStatus
-          ? 0
-          : parentsCheck
-          ? 1
-          : InlawCheck
-          ? 2
-          : 3,
-        nomineeType: 4,
-        nominiId: state.nominee4NominiId,
-        nominiName: state.nominee4NominiName,
-        relationship: state.nominee4Relationship,
-      };
-      const fifth_nomine_info = {
-        age: state.nominee5Age,
-        bloodGroup: state.nominee5BloodGroup,
-        candidateId:
-          candidateProfileData &&
-          candidateProfileData !== null &&
-          candidateProfileData !== undefined &&
-          candidateProfileData.candidateId !== null
-            ? candidateProfileData.candidateId
-            : 0,
-        dateOfBirth: Nominee5DOB,
-        gender: state.nominee5Gender,
-        nomineeVariant: marriedStatus
-          ? 0
-          : parentsCheck
-          ? 1
-          : InlawCheck
-          ? 2
-          : 3,
-        nomineeType: 5,
-        nominiId: state.nominee5NominiId,
-        nominiName: state.nominee5NominiName,
-        relationship: state.nominee5Relationship,
-      };
-
-      const sixth_nomine_info = {
-        age: state.In_law_nominee1Age,
-        bloodGroup: state.In_law_nominee1BloodGroup,
-        candidateId:
-          candidateProfileData &&
-          candidateProfileData !== null &&
-          candidateProfileData !== undefined &&
-          candidateProfileData.candidateId !== null
-            ? candidateProfileData.candidateId
-            : 0,
-        dateOfBirth: In_law_Nominee1DOB,
-        gender: state.In_law_nominee1Gender,
-        nomineeVariant: marriedStatus
-          ? 0
-          : parentsCheck
-          ? 1
-          : InlawCheck
-          ? 2
-          : 3,
-        nomineeType: 6,
-        nominiId: state.In_law_nominee1NominiId,
-        nominiName: state.In_law_nominee1NominiName,
-        relationship: state.In_law_nominee1Relationship,
-      };
-      const seventh_nomine_info = {
-        age: state.In_law_nominee2Age,
-        bloodGroup: state.In_law_nominee2BloodGroup,
-        candidateId:
-          candidateProfileData &&
-          candidateProfileData !== null &&
-          candidateProfileData !== undefined &&
-          candidateProfileData.candidateId !== null
-            ? candidateProfileData.candidateId
-            : 0,
-        dateOfBirth: In_law_Nominee2DOB,
-        gender: state.In_law_nominee2Gender,
-        nomineeVariant: marriedStatus
-          ? 0
-          : parentsCheck
-          ? 1
-          : InlawCheck
-          ? 2
-          : 3,
-        nomineeType: 7,
-        nominiId: state.In_law_nominee2NominiId,
-        nominiName: state.In_law_nominee2NominiName,
-        relationship: state.In_law_nominee2Relationship,
-      };
-
-      const Eight_nomine_info = {
-        age: state.extra1age !== null ? state.extra1age : null,
-        bloodGroup:
-          state.extra1bloodGroup !== null ? state.extra1bloodGroup : null,
-        candidateId:
-          candidateProfileData &&
-          candidateProfileData !== null &&
-          candidateProfileData !== undefined &&
-          candidateProfileData.candidateId !== null
-            ? candidateProfileData.candidateId
-            : 0,
-        dateOfBirth: extra1Nominee1DOB !== null ? extra1Nominee1DOB : null,
-        gender: state.extra1gender !== null ? state.extra1gender : null,
-        nomineeVariant: marriedStatus
-          ? 0
-          : parentsCheck
-          ? 1
-          : InlawCheck
-          ? 2
-          : 3,
-        nomineeType: 1,
-        nominiId: state.extra1nominiId,
-        nominiName:
-          state.extra1nominiName !== null ? state.extra1nominiName : null,
-        relationship:
-          state.extra1relationship !== null ? state.extra1relationship : null,
-      };
-      const Ninenth_nomine_info = {
-        age: state.extra2age !== null ? state.extra2age : null,
-        bloodGroup:
-          state.extra2bloodGroup !== null ? state.extra2bloodGroup : null,
-        candidateId:
-          candidateProfileData &&
-          candidateProfileData !== null &&
-          candidateProfileData !== undefined &&
-          candidateProfileData.candidateId !== null
-            ? candidateProfileData.candidateId
-            : 0,
-        dateOfBirth: extra2Nominee1DOB !== null ? extra2Nominee1DOB : null,
-        gender: state.extra2gender !== null ? state.extra2gender : null,
-        nomineeVariant: marriedStatus
-          ? 0
-          : parentsCheck
-          ? 1
-          : InlawCheck
-          ? 2
-          : 3,
-        nomineeType: 2,
-        nominiId: state.extra2nominiId,
-        nominiName:
-          state.extra2nominiName !== null ? state.extra2nominiName : null,
-        relationship:
-          state.extra2relationship !== null ? state.extra2relationship : null,
-      };
-
-      const tenth_nomine_info = {
-        age: state.nominee5Age1,
-        bloodGroup: state.nominee5BloodGroup1,
-        candidateId:
-          candidateProfileData &&
-          candidateProfileData !== null &&
-          candidateProfileData !== undefined &&
-          candidateProfileData.candidateId !== null
-            ? candidateProfileData.candidateId
-            : 0,
-        dateOfBirth: Nominee5DOB1,
-        gender: state.nominee5Gender1,
-        nomineeVariant: marriedStatus
-          ? 0
-          : parentsCheck
-          ? 1
-          : InlawCheck
-          ? 2
-          : 3,
-        nomineeType: 10,
-        nominiId: state.nominee5NominiId1,
-        nominiName: state.nominee5NominiName1,
-        relationship: state.nominee5Relationship1,
-      };
-
-      const NominiInfo = [{}, {}, {}, {}, {}];
-      var itemIncrease = 0;
-
-      if (addFirst === true) {
-        console.log("one", NominiInfo);
-        NominiInfo[itemIncrease] = first_nomine_info;
-        itemIncrease = itemIncrease + 1;
-      }
-      if (addSecond === true) {
-        console.log("two", NominiInfo);
-        NominiInfo[itemIncrease] = second_nomine_info;
-        itemIncrease = itemIncrease + 1;
-      }
-      if (addThird === true) {
-        console.log("three", NominiInfo);
-        NominiInfo[itemIncrease] = fifth_nomine_info;
-        itemIncrease = itemIncrease + 1;
-      }
-      if ((addOne === true) & (NAcheck === false) & (parentsCheck === true)) {
-        console.log("four", NominiInfo);
-        NominiInfo[itemIncrease] = third_nomine_info;
-        itemIncrease = itemIncrease + 1;
-      }
-      if ((addTwo === true) & (NAcheck === false) & (parentsCheck === true)) {
-        console.log("five", NominiInfo);
-        NominiInfo[itemIncrease] = fourth_nomine_info;
-        itemIncrease = itemIncrease + 1;
-      }
-      if (
-        (addFirstInLaw === true) &
-        (NAcheck === false) &
-        (InlawCheck === true)
-      ) {
-        console.log("five", NominiInfo);
-        NominiInfo[itemIncrease] = sixth_nomine_info;
-        itemIncrease = itemIncrease + 1;
-      }
-      if (
-        (addFirstInLaw === true) &
-        (NAcheck === false) &
-        (InlawCheck === true)
-      ) {
-        console.log("five", NominiInfo);
-        NominiInfo[itemIncrease] = seventh_nomine_info;
-        itemIncrease = itemIncrease + 1;
-      }
-
-      if (addExtraFirst === true) {
-        console.log("eigth");
-        NominiInfo[itemIncrease] = Eight_nomine_info;
-        itemIncrease = itemIncrease + 1;
-      }
-      if (addExtraSecond === true) {
-        console.log("eigth");
-        NominiInfo[itemIncrease] = Ninenth_nomine_info;
-        itemIncrease = itemIncrease + 1;
-      }
-      if (addExtraThird === true) {
-        console.log("eigth");
-        NominiInfo[itemIncrease] = tenth_nomine_info;
-        itemIncrease = itemIncrease + 1;
-      }
-
-      //   const NominiInfo =
-      //     CountOFNominees === 0
-      //       ? [first_nomine_info]
-      //       : CountOFNominees === 1
-      //       ? [first_nomine_info, second_nomine_info]
-      //       : CountOFNominees === 2
-      //       ? [first_nomine_info, second_nomine_info, third_nomine_info]
-      //       : CountOFNominees === 3
-      //       ? [
-      //           first_nomine_info,
-      //           second_nomine_info,
-      //           third_nomine_info,
-      //           fourth_nomine_info,
-      //         ]
-      //       : CountOFNominees === 4
-      //       ? [
-      //           first_nomine_info,
-      //           second_nomine_info,
-      //           third_nomine_info,
-      //           fourth_nomine_info,
-      //           fifth_nomine_info,
-      //         ]
-      //       : [];
-
-      if (NominiInfo.length < 5) {
-        console.log("nominee length", NominiInfo.length);
-        let len = 5 - NominiInfo.length;
-        console.log("nominee adjust length", len);
-        // for (let i = 0; i <= len; i++) {
-        //   console.log("------>", len);
-        //   NominiInfo[NominiInfo.length + i] = {};
-        // }
-      }
-      console.log(NominiInfo);
-      CreateNominee(NominiInfo);
+      UpdateNomineeStatus(candidateProfileData.candidateId, NAcheck2);
       const nextPage = props.NextStep;
       nextPage(true);
+    } else {
+      //  if (addExtraSecond === true) {
+      //   state.extra2relationship = "Mother";
+      //   if (state.extra2relationship === state.extra1relationship) {
+      //     setExtra1RelationshipError_11(true);
+      //   } else {
+      //     setExtra1RelationshipError_11(false);
+      //   }
+      // } else {
+      //   setExtra1RelationshipError_11(false);
+      // }
+      // if (addExtraThird === true) {
+      //   if (state.nominee5Relationship1 === state.extra1relationship) {
+      //     setExtra1RelationshipError_12(true);
+      //   } else {
+      //     setExtra1RelationshipError_12(false);
+      //   }
+      // } else {
+      //   setExtra1RelationshipError_12(false);
+      // }
+      // for unmarried
+      state.extra2relationship = "Mother";
+      // for married
+      state.nominee2Relationship = "Child 1";
+
+      state.nominee4Relationship = "Mother";
+
+      state.In_law_nominee2Relationship = "Mother In-Law";
+
+      if (
+        checkAllValidations() === true
+        // &&
+        // extra1relationshipError_11 === false &&
+        // extra1relationshipError_12 === false
+      ) {
+        if (parentsCheck === true) {
+          if (
+            state.In_law_nominee1NominiId !== 0 &&
+            state.In_law_nominee1NominiId !== null &&
+            state.In_law_nominee1NominiId !== undefined
+          ) {
+            InsuranceNominationDelete(state.In_law_nominee1NominiId);
+          }
+          if (
+            state.In_law_nominee2NominiId !== 0 &&
+            state.In_law_nominee2NominiId !== null &&
+            state.In_law_nominee2NominiId !== undefined
+          ) {
+            InsuranceNominationDelete(state.In_law_nominee2NominiId);
+          }
+        } else if (InlawCheck === true) {
+          if (
+            state.nominee3NominiId !== 0 &&
+            state.nominee3NominiId !== null &&
+            state.nominee3NominiId !== undefined
+          ) {
+            InsuranceNominationDelete(state.nominee3NominiId);
+          }
+          if (
+            state.nominee4NominiId !== 0 &&
+            state.nominee4NominiId !== null &&
+            state.nominee4NominiId !== undefined
+          ) {
+            InsuranceNominationDelete(state.nominee4NominiId);
+          }
+        } else if (NAcheck === true) {
+          if (
+            state.nominee3NominiId !== 0 &&
+            state.nominee3NominiId !== null &&
+            state.nominee3NominiId !== undefined
+          ) {
+            InsuranceNominationDelete(state.nominee3NominiId);
+          }
+          if (
+            state.nominee4NominiId !== 0 &&
+            state.nominee4NominiId !== null &&
+            state.nominee4NominiId !== undefined
+          ) {
+            InsuranceNominationDelete(state.nominee4NominiId);
+          }
+          if (
+            state.In_law_nominee1NominiId !== 0 &&
+            state.In_law_nominee1NominiId !== null &&
+            state.In_law_nominee1NominiId !== undefined
+          ) {
+            InsuranceNominationDelete(state.In_law_nominee1NominiId);
+          }
+          if (
+            state.In_law_nominee2NominiId !== 0 &&
+            state.In_law_nominee2NominiId !== null &&
+            state.In_law_nominee2NominiId !== undefined
+          ) {
+            InsuranceNominationDelete(state.In_law_nominee2NominiId);
+          }
+        }
+
+        const CountOFNominees = NomineeCount;
+        const first_nomine_info = {
+          age: state.age !== null ? state.age : null,
+          bloodGroup: state.bloodGroup !== null ? state.bloodGroup : null,
+          candidateId:
+            candidateProfileData &&
+            candidateProfileData !== null &&
+            candidateProfileData !== undefined &&
+            candidateProfileData.candidateId !== null
+              ? candidateProfileData.candidateId
+              : 0,
+          dateOfBirth: Nominee1DOB !== null ? Nominee1DOB : null,
+          gender: state.gender !== null ? state.gender : null,
+          nomineeVariant: marriedStatus
+            ? 0
+            : parentsCheck
+            ? 1
+            : InlawCheck
+            ? 2
+            : 3,
+          nomineeType: 8,
+          nominiId: state.nominiId,
+          nominiName: state.nominiName !== null ? state.nominiName : null,
+          relationship: state.relationship !== null ? state.relationship : null,
+        };
+        const second_nomine_info = {
+          age: state.nominee2Age,
+          bloodGroup: state.nominee2BloodGroup,
+          candidateId:
+            candidateProfileData &&
+            candidateProfileData !== null &&
+            candidateProfileData !== undefined &&
+            candidateProfileData.candidateId !== null
+              ? candidateProfileData.candidateId
+              : 0,
+          dateOfBirth: Nominee2DOB,
+          gender: state.nominee2Gender,
+          nomineeVariant: marriedStatus
+            ? 0
+            : parentsCheck
+            ? 1
+            : InlawCheck
+            ? 2
+            : 3,
+          nomineeType: 9,
+          nominiId: state.nominee2NominiId,
+          nominiName: state.nominee2NominiName,
+          relationship: state.nominee2Relationship,
+        };
+        const third_nomine_info = {
+          age: state.nominee3Age,
+          bloodGroup: state.nominee3BloodGroup,
+          candidateId:
+            candidateProfileData &&
+            candidateProfileData !== null &&
+            candidateProfileData !== undefined &&
+            candidateProfileData.candidateId !== null
+              ? candidateProfileData.candidateId
+              : 0,
+          dateOfBirth: Nominee3DOB,
+          gender: state.nominee3Gender,
+          nomineeVariant: marriedStatus
+            ? 0
+            : parentsCheck
+            ? 1
+            : InlawCheck
+            ? 2
+            : 3,
+          nomineeType: 3,
+          nominiId: state.nominee3NominiId,
+          nominiName: state.nominee3NominiName,
+          relationship: state.nominee3Relationship,
+        };
+        const fourth_nomine_info = {
+          age: state.nominee4Age,
+          bloodGroup: state.nominee4BloodGroup,
+          candidateId:
+            candidateProfileData &&
+            candidateProfileData !== null &&
+            candidateProfileData !== undefined &&
+            candidateProfileData.candidateId !== null
+              ? candidateProfileData.candidateId
+              : 0,
+          dateOfBirth: Nominee4DOB,
+          gender: state.nominee2Gender,
+
+          nomineeVariant: marriedStatus
+            ? 0
+            : parentsCheck
+            ? 1
+            : InlawCheck
+            ? 2
+            : 3,
+          nomineeType: 4,
+          nominiId: state.nominee4NominiId,
+          nominiName: state.nominee4NominiName,
+          relationship: state.nominee4Relationship,
+        };
+        const fifth_nomine_info = {
+          age: state.nominee5Age,
+          bloodGroup: state.nominee5BloodGroup,
+          candidateId:
+            candidateProfileData &&
+            candidateProfileData !== null &&
+            candidateProfileData !== undefined &&
+            candidateProfileData.candidateId !== null
+              ? candidateProfileData.candidateId
+              : 0,
+          dateOfBirth: Nominee5DOB,
+          gender: state.nominee5Gender,
+          nomineeVariant: marriedStatus
+            ? 0
+            : parentsCheck
+            ? 1
+            : InlawCheck
+            ? 2
+            : 3,
+          nomineeType: 5,
+          nominiId: state.nominee5NominiId,
+          nominiName: state.nominee5NominiName,
+          relationship: state.nominee5Relationship,
+        };
+
+        const sixth_nomine_info = {
+          age: state.In_law_nominee1Age,
+          bloodGroup: state.In_law_nominee1BloodGroup,
+          candidateId:
+            candidateProfileData &&
+            candidateProfileData !== null &&
+            candidateProfileData !== undefined &&
+            candidateProfileData.candidateId !== null
+              ? candidateProfileData.candidateId
+              : 0,
+          dateOfBirth: In_law_Nominee1DOB,
+          gender: state.In_law_nominee1Gender,
+          nomineeVariant: marriedStatus
+            ? 0
+            : parentsCheck
+            ? 1
+            : InlawCheck
+            ? 2
+            : 3,
+          nomineeType: 6,
+          nominiId: state.In_law_nominee1NominiId,
+          nominiName: state.In_law_nominee1NominiName,
+          relationship: state.In_law_nominee1Relationship,
+        };
+        const seventh_nomine_info = {
+          age: state.In_law_nominee2Age,
+          bloodGroup: state.In_law_nominee2BloodGroup,
+          candidateId:
+            candidateProfileData &&
+            candidateProfileData !== null &&
+            candidateProfileData !== undefined &&
+            candidateProfileData.candidateId !== null
+              ? candidateProfileData.candidateId
+              : 0,
+          dateOfBirth: In_law_Nominee2DOB,
+          gender: state.In_law_nominee2Gender,
+          nomineeVariant: marriedStatus
+            ? 0
+            : parentsCheck
+            ? 1
+            : InlawCheck
+            ? 2
+            : 3,
+          nomineeType: 7,
+          nominiId: state.In_law_nominee2NominiId,
+          nominiName: state.In_law_nominee2NominiName,
+          relationship: state.In_law_nominee2Relationship,
+        };
+
+        const Eight_nomine_info = {
+          age: state.extra1age !== null ? state.extra1age : null,
+          bloodGroup:
+            state.extra1bloodGroup !== null ? state.extra1bloodGroup : null,
+          candidateId:
+            candidateProfileData &&
+            candidateProfileData !== null &&
+            candidateProfileData !== undefined &&
+            candidateProfileData.candidateId !== null
+              ? candidateProfileData.candidateId
+              : 0,
+          dateOfBirth: extra1Nominee1DOB !== null ? extra1Nominee1DOB : null,
+          gender: state.extra1gender !== null ? state.extra1gender : null,
+          nomineeVariant: marriedStatus
+            ? 0
+            : parentsCheck
+            ? 1
+            : InlawCheck
+            ? 2
+            : 3,
+          nomineeType: 1,
+          nominiId: state.extra1nominiId,
+          nominiName:
+            state.extra1nominiName !== null ? state.extra1nominiName : null,
+          relationship:
+            state.extra1relationship !== null ? state.extra1relationship : null,
+        };
+        const Ninenth_nomine_info = {
+          age: state.extra2age !== null ? state.extra2age : null,
+          bloodGroup:
+            state.extra2bloodGroup !== null ? state.extra2bloodGroup : null,
+          candidateId:
+            candidateProfileData &&
+            candidateProfileData !== null &&
+            candidateProfileData !== undefined &&
+            candidateProfileData.candidateId !== null
+              ? candidateProfileData.candidateId
+              : 0,
+          dateOfBirth: extra2Nominee1DOB !== null ? extra2Nominee1DOB : null,
+          gender: state.extra2gender !== null ? state.extra2gender : null,
+          nomineeVariant: marriedStatus
+            ? 0
+            : parentsCheck
+            ? 1
+            : InlawCheck
+            ? 2
+            : 3,
+          nomineeType: 2,
+          nominiId: state.extra2nominiId,
+          nominiName:
+            state.extra2nominiName !== null ? state.extra2nominiName : null,
+          relationship:
+            state.extra2relationship !== null ? state.extra2relationship : null,
+        };
+
+        const tenth_nomine_info = {
+          age: state.nominee5Age1,
+          bloodGroup: state.nominee5BloodGroup1,
+          candidateId:
+            candidateProfileData &&
+            candidateProfileData !== null &&
+            candidateProfileData !== undefined &&
+            candidateProfileData.candidateId !== null
+              ? candidateProfileData.candidateId
+              : 0,
+          dateOfBirth: Nominee5DOB1,
+          gender: state.nominee5Gender1,
+          nomineeVariant: marriedStatus
+            ? 0
+            : parentsCheck
+            ? 1
+            : InlawCheck
+            ? 2
+            : 3,
+          nomineeType: 10,
+          nominiId: state.nominee5NominiId1,
+          nominiName: state.nominee5NominiName1,
+          relationship: state.nominee5Relationship1,
+        };
+
+        const NominiInfo = [{}, {}, {}, {}, {}];
+        var itemIncrease = 0;
+
+        if (addFirst === true) {
+          console.log("one", NominiInfo);
+          NominiInfo[itemIncrease] = first_nomine_info;
+          itemIncrease = itemIncrease + 1;
+        }
+        if (addSecond === true) {
+          console.log("two", NominiInfo);
+          NominiInfo[itemIncrease] = second_nomine_info;
+          itemIncrease = itemIncrease + 1;
+        }
+        if (addThird === true) {
+          console.log("three", NominiInfo);
+          NominiInfo[itemIncrease] = fifth_nomine_info;
+          itemIncrease = itemIncrease + 1;
+        }
+        if ((addOne === true) & (NAcheck === false) & (parentsCheck === true)) {
+          console.log("addOne", NominiInfo);
+          NominiInfo[itemIncrease] = third_nomine_info;
+          itemIncrease = itemIncrease + 1;
+        }
+        if ((addTwo === true) & (NAcheck === false) & (parentsCheck === true)) {
+          console.log("addTwo", NominiInfo);
+          NominiInfo[itemIncrease] = fourth_nomine_info;
+          itemIncrease = itemIncrease + 1;
+        }
+        if (
+          (addFirstInLaw === true) &
+          (NAcheck === false) &
+          (InlawCheck === true)
+        ) {
+          console.log("addFirstInlaw", NominiInfo);
+          NominiInfo[itemIncrease] = sixth_nomine_info;
+          itemIncrease = itemIncrease + 1;
+        }
+        if (
+          (addSecondInLaw === true) &
+          (NAcheck === false) &
+          (InlawCheck === true)
+        ) {
+          console.log("addSecondInLaw", NominiInfo);
+          NominiInfo[itemIncrease] = seventh_nomine_info;
+          itemIncrease = itemIncrease + 1;
+        }
+
+        if (addExtraFirst === true) {
+          console.log("addExtraFirst");
+          NominiInfo[itemIncrease] = Eight_nomine_info;
+          itemIncrease = itemIncrease + 1;
+        }
+        if (addExtraSecond === true) {
+          console.log("addExtraSecond");
+          NominiInfo[itemIncrease] = Ninenth_nomine_info;
+          itemIncrease = itemIncrease + 1;
+        }
+        if (addExtraThird === true) {
+          console.log("addExtraThird");
+          NominiInfo[itemIncrease] = tenth_nomine_info;
+          itemIncrease = itemIncrease + 1;
+        }
+
+        //   const NominiInfo =
+        //     CountOFNominees === 0
+        //       ? [first_nomine_info]
+        //       : CountOFNominees === 1
+        //       ? [first_nomine_info, second_nomine_info]
+        //       : CountOFNominees === 2
+        //       ? [first_nomine_info, second_nomine_info, third_nomine_info]
+        //       : CountOFNominees === 3
+        //       ? [
+        //           first_nomine_info,
+        //           second_nomine_info,
+        //           third_nomine_info,
+        //           fourth_nomine_info,
+        //         ]
+        //       : CountOFNominees === 4
+        //       ? [
+        //           first_nomine_info,
+        //           second_nomine_info,
+        //           third_nomine_info,
+        //           fourth_nomine_info,
+        //           fifth_nomine_info,
+        //         ]
+        //       : [];
+
+        if (NominiInfo.length < 5) {
+          console.log("nominee length", NominiInfo.length);
+          let len = 5 - NominiInfo.length;
+          console.log("nominee adjust length", len);
+          // for (let i = 0; i <= len; i++) {
+          //   console.log("------>", len);
+          //   NominiInfo[NominiInfo.length + i] = {};
+          // }
+        }
+        console.log(NominiInfo);
+        CreateNominee(NominiInfo);
+        UpdateNomineeStatus(candidateProfileData.candidateId, NAcheck2);
+        const nextPage = props.NextStep;
+        nextPage(true);
+      }
     }
   };
 
@@ -2424,8 +2643,38 @@ const InsuranceNomination = (props) => {
       InsuranceNominationDelete(state.nominee5NominiId1);
     }
   };
+  const DeleteInLaw2 = () => {
+    setAddSecondInLaw(false);
+    if (
+      state.In_law_nominee2NominiId !== 0 &&
+      state.In_law_nominee2NominiId !== null &&
+      state.In_law_nominee2NominiId !== undefined
+    ) {
+      console.log("deleting", state.In_law_nominee2NominiId);
+      InsuranceNominationDelete(state.In_law_nominee2NominiId);
+    }
+  };
+  const DeleteParent2 = () => {
+    setAddTwo(false);
+    if (
+      state.nominee4NominiId !== 0 &&
+      state.nominee4NominiId !== null &&
+      state.nominee4NominiId !== undefined
+    ) {
+      console.log("deleting", state.nominee4NominiId);
+      InsuranceNominationDelete(state.nominee4NominiId);
+    }
+  };
   const DeleteThird = () => {
     setAddThird(false);
+    if (
+      state.nominee5NominiId !== 0 &&
+      state.nominee5NominiId !== null &&
+      state.nominee5NominiId !== undefined
+    ) {
+      console.log("deleting", state.nominee5NominiId);
+      InsuranceNominationDelete(state.nominee5NominiId);
+    }
   };
   const DeleteOne = () => {
     setAddOne(false);
@@ -2450,6 +2699,12 @@ const InsuranceNomination = (props) => {
     } else {
       setAddExtraThird(true);
     }
+  };
+  const addingInLaw2 = () => {
+    setAddSecondInLaw(true);
+  };
+  const addingParent2 = () => {
+    setAddTwo(true);
   };
   const cancel = (num) => {
     if (NomineeCount >= 0) {
@@ -2598,11 +2853,12 @@ const InsuranceNomination = (props) => {
     // setAddFirstInLaw(false);
     // setAddSecondInLaw(false);
   };
-  const handleNACheckboxChange2 = (e) => {
+  const handleNACheckboxChange2 = () => {
     setNAcheck2(!NAcheck2);
-    if (NAcheck2 === true) {
+    if (disable === true) {
       setDisable(false);
     } else {
+      // setState({});
       setDisable(true);
     }
   };
@@ -2711,21 +2967,31 @@ const InsuranceNomination = (props) => {
                       defaultValue={"Spouse"}
                       //   onChange={}
                       onChange={changeHandler}
-                      style={relationshipError_1 ? { borderColor: "red" } : {}}
+                      style={
+                        relationshipError_1 |
+                        relationshipError_11 |
+                        relationshipError_12
+                          ? { borderColor: "red" }
+                          : {}
+                      }
                     >
-                      {relativeInLaw === true ? (
-                        <option value="Spouse">Spouse</option>
-                      ) : (
-                        <option value="Father">Father</option>
-                      )}
+                      <option value="Spouse">Spouse</option>
+                      <option value="Child 1">Child 1</option>
+                      <option value="Child 2">Child 2</option>
+                      <option value="Child 3">Child 3</option>
                     </Form.Control>
                     {relationshipError_1 ? (
                       <p style={{ color: "red" }}>
                         {" "}
                         &nbsp; *Please select relationship
                       </p>
+                    ) : relationshipError_11 | relationshipError_12 ? (
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        &nbsp; *Please select another relationship
+                      </p>
                     ) : (
-                      <p></p>
+                      ""
                     )}
                   </Form.Group>
                 </div>
@@ -2955,20 +3221,25 @@ const InsuranceNomination = (props) => {
                       disabled={disable}
                       onChange={changeHandler}
                       style={
-                        extra1relationshipError_1 | extra1relationshipError_11
+                        extra1relationshipError_1 |
+                        extra1relationshipError_11 |
+                        extra1relationshipError_12
                           ? { borderColor: "red" }
                           : {}
                       }
                     >
                       <option value="Father">Father</option>
                       <option value="Mother">Mother</option>
+                      <option value="Brother">Brother</option>
+                      <option value="Sister">Sister</option>
                     </Form.Control>
                     {extra1relationshipError_1 ? (
                       <p style={{ color: "red" }}>
                         {" "}
                         &nbsp; *Please select relationship
                       </p>
-                    ) : extra1relationshipError_11 ? (
+                    ) : extra1relationshipError_11 |
+                      extra1relationshipError_12 ? (
                       <p style={{ color: "red" }}>
                         &nbsp; *Please select another relationship
                       </p>
@@ -3180,11 +3451,7 @@ const InsuranceNomination = (props) => {
                       onChange={changeHandler}
                       style={relationshipError_2 ? { borderColor: "red" } : {}}
                     >
-                      {relativeInLaw === true ? (
-                        <option value="">Child 1</option>
-                      ) : (
-                        <option value="">Mother</option>
-                      )}
+                      <option value="Child 1">Child 1</option>
                     </Form.Control>
 
                     {relationshipError_2 ? (
@@ -3620,17 +3887,8 @@ const InsuranceNomination = (props) => {
                       style={relationshipError_5 ? { borderColor: "red" } : {}}
                     >
                       <option value="">Relationship</option>
-
-                      {relativeInLaw === true ? (
-                        <option value="Child 2">Child 2</option>
-                      ) : (
-                        <option value="Brother">Brother</option>
-                      )}
-                      {relativeInLaw === true ? (
-                        <option value="Child 3">Child 3</option>
-                      ) : (
-                        <option value="Sister">Sister</option>
-                      )}
+                      <option value="Child 2">Child 2</option>
+                      <option value="Child 3">Child 3</option>
                     </Form.Control>
 
                     {relationshipError_5 ? (
@@ -3673,7 +3931,7 @@ const InsuranceNomination = (props) => {
               </Row>
             </Col>
             {/* {isChecked === false ? ( */}
-            {false ? (
+            {true ? (
               <Col sm={1} style={{ marginLeft: "-2rem" }}>
                 <Form.Group>
                   <div>
@@ -4207,14 +4465,24 @@ const InsuranceNomination = (props) => {
                       value={state.nominee3Relationship}
                       options={relativesList}
                       onChange={changeHandler}
-                      style={relationshipError_3 ? { borderColor: "red" } : {}}
+                      style={
+                        relationshipError_3 | relationshipError_31
+                          ? { borderColor: "red" }
+                          : {}
+                      }
                     >
-                      <option value="">Father</option>
+                      <option value="Father">Father</option>
+                      <option value="Mother">Mother</option>
                     </Form.Control>
                     {relationshipError_3 ? (
                       <p style={{ color: "red" }}>
                         {" "}
                         &nbsp; *Please select relation ship
+                      </p>
+                    ) : relationshipError_31 ? (
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        &nbsp; *Please select another relation ship
                       </p>
                     ) : (
                       <p></p>
@@ -4463,13 +4731,13 @@ const InsuranceNomination = (props) => {
               </Row>
             </Col>
             {/* {isChecked === false ? ( */}
-            {false ? (
+            {true ? (
               <Col sm={1} style={{ marginLeft: "-2rem" }}>
                 <Form.Group>
                   <div>
                     <button
                       onClick={() => {
-                        DeleteTwo();
+                        DeleteParent2();
                       }}
                       type="cancel"
                       style={{ color: "white", border: " 2px solid#4466f2" }}
@@ -4585,6 +4853,30 @@ const InsuranceNomination = (props) => {
         ""
       )}
 
+      {parentsCheck === true && addTwo === false && marriedStatus === false ? (
+        <Row>
+          <Col sm={4}></Col>
+          <Col sm={4} style={{ padding: "0px 0px 0px 35px" }}>
+            <Form.Group>
+              <div>
+                <button
+                  className="buttonField  button"
+                  onClick={() => {
+                    addingParent2();
+                  }}
+                  disabled={disable}
+                  style={{ width: "175px" }}
+                >
+                  <b> Add New Dependent + </b>
+                </button>
+              </div>
+            </Form.Group>
+          </Col>
+        </Row>
+      ) : (
+        ""
+      )}
+
       {/* In- law component */}
 
       {InlawCheck === true &&
@@ -4637,15 +4929,23 @@ const InsuranceNomination = (props) => {
                       options={relativesList}
                       onChange={changeHandler}
                       style={
-                        In_law_relationshipError_1 ? { borderColor: "red" } : {}
+                        In_law_relationshipError_1 | In_law_relationshipError_11
+                          ? { borderColor: "red" }
+                          : {}
                       }
                     >
-                      <option value="">Father In-Law</option>
+                      <option value="Father In-Law">Father In-Law</option>
+                      <option value="Mother In-Law">Mother In-Law</option>
                     </Form.Control>
                     {In_law_relationshipError_1 ? (
                       <p style={{ color: "red" }}>
                         {" "}
                         &nbsp; *Please select relation ship
+                      </p>
+                    ) : In_law_relationshipError_11 ? (
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        &nbsp; *Please select another relation ship
                       </p>
                     ) : (
                       <p></p>
@@ -4904,13 +5204,13 @@ const InsuranceNomination = (props) => {
               </Row>
             </Col>
             {/* {isChecked === false ? ( */}
-            {false ? (
+            {true ? (
               <Col sm={1} style={{ marginLeft: "-2rem" }}>
                 <Form.Group>
                   <div>
                     <button
                       onClick={() => {
-                        DeleteTwo();
+                        DeleteInLaw2();
                       }}
                       type="cancel"
                       style={{ color: "white", border: " 2px solid#4466f2" }}
@@ -5026,6 +5326,31 @@ const InsuranceNomination = (props) => {
             <Col sm={1}></Col>
           </Row>
         </div>
+      ) : (
+        ""
+      )}
+      {InlawCheck === true &&
+      addSecondInLaw === false &&
+      marriedStatus === false ? (
+        <Row>
+          <Col sm={4}></Col>
+          <Col sm={4} style={{ padding: "0px 0px 0px 35px" }}>
+            <Form.Group>
+              <div>
+                <button
+                  className="buttonField  button"
+                  onClick={() => {
+                    addingInLaw2();
+                  }}
+                  disabled={disable}
+                  style={{ width: "175px" }}
+                >
+                  <b> Add New Dependent + </b>
+                </button>
+              </div>
+            </Form.Group>
+          </Col>
+        </Row>
       ) : (
         ""
       )}

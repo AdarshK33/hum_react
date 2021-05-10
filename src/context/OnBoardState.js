@@ -36,6 +36,7 @@ const initial_state = {
   documentViewData: [],
   documentUploadData: {},
   deleteNomineeData: {},
+  deleteAllNomineeData: {},
 };
 // git
 export const OnBoardProvider = (props) => {
@@ -304,7 +305,49 @@ export const OnBoardProvider = (props) => {
         console.log(error);
       });
   };
-
+  const DeleteAllInsuranceNominations = (candidteId) => {
+    candidate
+      .get(
+        "/api/v2/candidate/insurance-nomination/delete?candidateId=" +
+          candidteId
+      )
+      .then((response) => {
+        toast.info(response.data.message);
+        state.deleteAllNomineeData = response.data;
+        console.log(
+          "Candidate Insurance Nomination delete All ",
+          state.deleteAllNomineeData
+        );
+        return dispatch({
+          type: "DELETE_ALL_NOMINEE_DATA",
+          payload: state.deleteAllNomineeData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const UpdateNomineeStatus = (candidateId, status) => {
+    candidate
+      .get(
+        "/api/v2/candidate/" +
+          candidateId +
+          "/change/nomination-status?status=" +
+          status
+      )
+      .then((response) => {
+        toast.info(response.data.message);
+        // state.deleteNomineeData = response.data;
+        console.log("Candidate Insurance Nomination status ", response);
+        // return dispatch({
+        //   type: "DELETE_NOMINEE_DATA",
+        //   payload: state.deleteNomineeData,
+        // });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const StateList = (country) => {
     candidate
       .get("/api/v2/candidate/address/view/state/" + country)
@@ -600,6 +643,9 @@ export const OnBoardProvider = (props) => {
         documentView,
         completeDocumentUpload,
         InsuranceNominationDelete,
+        DeleteAllInsuranceNominations,
+        UpdateNomineeStatus,
+        deleteAllNomineeData: state.deleteAllNomineeData,
         deleteNomineeData: state.deleteNomineeData,
         emergencyContactData: state.emergencyContactData,
         emergencyContactCreate: state.emergencyContactCreate,

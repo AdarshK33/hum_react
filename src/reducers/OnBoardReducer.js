@@ -47,6 +47,8 @@ const GroupReducer = (state, action) => {
       return { ...state, CreateNomineeResponse: action.payload };
     case "DELETE_NOMINEE_DATA":
       return { ...state, deleteNomineeData: action.payload };
+    case "DELETE_ALL_NOMINEE_DATA":
+      return { ...state, deleteAllNomineeData: action.payload };
     case "CANDIDATE_INSURANCE_NOMINEE_DATA":
       return { ...state, candidateInsuranceNominationData: action.payload };
     case "CANDIDATE_COUNTRY_LIST":
