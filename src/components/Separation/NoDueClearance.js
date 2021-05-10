@@ -66,6 +66,10 @@ const handlePageChange = (pageNumber) => {
     setCurrentRecords(noDueClearanceList);
 }
 /*-----------------Pagination------------------*/
+useEffect(() => {
+  console.log(pageCount,"pageCount")
+  viewITClearanceList(searchValue, pageCount,costCenter);
+}, [costCenter,searchValue,pageCount]);
 
   useEffect(() => {
     CostCenter();
@@ -88,16 +92,16 @@ const handleCostCenter = (options) => {
   console.log(data2)
   setCostCenter(data2)
   if (costCenter !== "" && costCenter !== "all") {
-    return viewITClearanceList(searchValue,pageCount,costCenter);
+     viewITClearanceList(searchValue,pageCount,costCenter);
   }else{
-    return viewITClearanceList("all",pageCount,"all");
+     viewITClearanceList("all",pageCount,"all");
   }
 } 
   
   const renderStatusOptions = (value) => {
     return (
       <div>
-        <select name="itClearanceStatus" value={value.data.itClearanceStatus} onChange={(e) => statusRender(e,value)}>
+        <select className="selectpicker"  name="itClearanceStatus" value={value.data.itClearanceStatus} onChange={(e) => statusRender(e,value)}>
         <option value={null}> select </option>
           <option value="0"> Due </option>
           <option value="1"> No Due </option>
@@ -131,10 +135,7 @@ const handleCostCenter = (options) => {
        toast.error("please enter IT status and remarks")
      }
   };
-  useEffect(() => {
-    console.log(pageCount,"pageCount")
-    viewITClearanceList(searchValue, pageCount,costCenter);
-  }, [costCenter,searchValue,pageCount]);
+ 
   const statusRender = (e,value) => {
     const status = e.target.value
     const clearanceStatus = value.data
@@ -177,7 +178,7 @@ const handleCostCenter = (options) => {
       <Fragment>
         <ToastContainer/>
         <Container fluid>
-      <Breadcrumb title="No Due Clearance" parent="No Due Clearance" />
+      <Breadcrumb title="IT No Due Clearance" parent="IT No Due Clearance" />
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
@@ -213,11 +214,11 @@ const handleCostCenter = (options) => {
         </Row>
             <div className="card" style={{ overflowX: "auto" }}>
               <div className="nodue_title" >
-              <b >NO DUE CLEARANCE LISTING </b>            
+              <b >IT NO DUE CLEARANCE LISTING </b>            
               </div>
          
 
-        <div className="ag-theme-alpine" style={{ align:"center",height: 495, width: 1400 }}>
+        <div className="ag-theme-alpine" style={{ align:"center",height: 350, width: "100%" }}>
           
           <AgGridReact 
             rowData={noDueClearanceList}
@@ -225,13 +226,13 @@ const handleCostCenter = (options) => {
             
             onGridReady={onGridReady}
             defaultColDef={{
-              width: 150,
+              width: 200,
               editable: true,
               resizable: true,
             }}
             
           >
-          <AgGridColumn className="columnColor" editable="false" headerName="S No" pinned="left" valueGetter={`node.rowIndex+1 + ${indexOfFirstRecord}`}></AgGridColumn>
+          <AgGridColumn width={50} className="columnColor" editable="false" headerName="S No" pinned="left" valueGetter={`node.rowIndex+1 + ${indexOfFirstRecord}`}></AgGridColumn>
             <AgGridColumn className="columnColor" editable="false" headerName="Employee Id" field="employeeId"></AgGridColumn>
             <AgGridColumn className="columnColor" editable="false" headerName="Employee Name" field="employeeName"></AgGridColumn>
             <AgGridColumn className="columnColor" editable="false" headerName="Cost Center Name" field="costCentreName"></AgGridColumn>

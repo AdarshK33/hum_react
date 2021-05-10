@@ -2,8 +2,11 @@ import React, { createContext, useContext, useReducer, useState } from "react";
 import { client } from "../utils/axios";
 import SepationReducer from "../reducers/SeparationReducer";
 import { toast } from "react-toastify";
+import { saveAs } from 'file-saver';
+
 import Axios from "axios";
 import { access_token } from "../auth/signin";
+var FileSaver = require('file-saver');
 
 const initial_state = {
   financeAdminNoDueClearanceList:[],
@@ -14,7 +17,7 @@ const initial_state = {
   total: {},
   data: [],
   clearanceList: [],
-  financeClearanceUploadSettlement:{},
+  financeClearanceUpload:{},
   financeClearanceExport:{},
   updateAdminFinanceClearanceList:[]
 };
@@ -166,18 +169,21 @@ export const SeparationProvider = (props) => {
       });
   };
 
-  const FinanceClearanceUploadSettlement = (value) => {
-    console.log(value, "value in update ");
+  const FinanceClearanceUploadSettlement = (file) => {
+    console.log(file, "file in update ");
     const formData = new FormData();
-    formData.append('file', value, value.name)
+    formData.append('file', file, file.name)
     console.log(formData, "FinanceClearanceUploadSettlement separation context");
     return client
       .post("/api/v1/separation/full-and-final/upload", formData)
       .then((response) => {
+        console.log(response,"upload")
+ 
+
         toast.info(response.data.message);
         return dispatch({
           type: "FINANCECLEARANCE_UPLOAD_SETTLEMENT",
-          payload: state.financeClearanceUploadSettlement,
+          payload: state.financeClearanceUpload,
         });
       })
       .catch((error) => {
@@ -189,6 +195,11 @@ export const SeparationProvider = (props) => {
     return client
       .get("/api/v1/separation/full-and-final/download")
       .then((response) => {
+        console.log(response,"export excel ")
+        var blob = new Blob([response.data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+        var fileName = "F&FListing.xlsx";
+        saveAs(blob, fileName);
+      
         toast.info(response.data.message);
         return dispatch({
           type: "FINANCECLEARANCE_EXPORT",
@@ -274,7 +285,7 @@ export const SeparationProvider = (props) => {
         UpdateAdminFinanceClearanceList,
         updateAdminFinanceClearance:state.updateAdminFinanceClearance,
         financeClearanceExport:state.financeClearanceExport,
-        financeClearanceUploadSettlement:state.financeClearanceUploadSettlement,
+        financeClearanceUpload:state.financeClearanceUpload,
         adminNoDueClearanceList:state.adminNoDueClearanceList,
         financeAdminNoDueClearanceList:state.financeAdminNoDueClearanceList,
         updateNoDueClearanceList:state.updateNoDueClearanceList,

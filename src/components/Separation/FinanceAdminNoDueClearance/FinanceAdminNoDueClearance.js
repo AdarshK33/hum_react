@@ -5,6 +5,7 @@ import {Button,Container, Modal, Row, Col, Form, Table} from "react-bootstrap";
 import Pagination from 'react-js-pagination';
 import Select from 'react-select'
 import { RotateCw, Eye, Search } from "react-feather";
+import { saveAs ,FileSaver} from 'file-saver';
 import { AdminContext } from '../../../context/AdminState'
 import "../nodueclearance.css";
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
@@ -15,11 +16,16 @@ import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 import {
   JsonToExcel
 } from 'react-json-excel';
+
+import ReactExport from 'react-data-export'
+
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 const FinanaceAdminNoDueClearance = () => {
   const { total,loader,viewFinanceAdminClearanceList,
     financeAdminNoDueClearanceList,
-    FinanceClearanceUploadSettlement,
-    financeClearanceUploadSettlement,FinanceClearanceExport,
+    FinanceClearanceUploadSettlement,financeClearanceUpload,FinanceClearanceExport,
     financeClearanceExport ,UpdateAdminFinanceClearanceList} = useContext(SeparationContext);
   const { CostCenter, costCenterList } = useContext(AdminContext)
   const [pageCount, setPageCount] = useState(0);
@@ -148,8 +154,15 @@ const renderStatusOptions = (value) => {
   console.log(value,"renderStatusOptions1")
     return (
       <div>
-      <select name="fullAndFinalCompleteStatus" 
-      style={value.data.fullAndFinalCompleteStatus == 1?{color:"green"}:value.data.fullAndFinalCompleteStatus == 0?{color:"red"}:{color:'black'}}
+      <select name="fullAndFinalCompleteStatus" className="selectpicker" 
+        data-style="btn-success"
+      style={value.data.fullAndFinalCompleteStatus == 1?{border: '1px solid green',
+        color: '#fff',
+        backgroundColor: 'green',
+        fontWeight: 'bold'}:value.data.fullAndFinalCompleteStatus == 0?{border: '1px solid red',
+        color: '#fff',
+        backgroundColor: 'red',
+        fontWeight: 'bold'}:{color:'black'}}
        value={value.data.fullAndFinalCompleteStatus} onChange={(e) => statusRender(e,value)}>
       <option value={null}> select </option>
         <option value={1}> Yes </option>
@@ -169,8 +182,14 @@ const renderStatusOptions = (value) => {
   const renderStatusOptionsTwo = (value) => {
     return (
       <div>
-      <select name="deactivateProfile"
-       style={value.data.deactivateProfile == 1?{color:"green"}:value.data.deactivateProfile == 0?{color:"red"}:{color:'black'}} 
+      <select name="deactivateProfile" className="selectpicker"
+       style={value.data.deactivateProfile == 1?{border: '1px solid green',
+       color: '#fff',
+       backgroundColor: 'green',
+       fontWeight: 'bold'}:value.data.deactivateProfile == 0?{border: '1px solid red',
+       color: '#fff',
+       backgroundColor: 'red',
+       fontWeight: 'bold'}:{color:'black'}} 
         value={value.data.deactivateProfile} onChange={(e) => statusRenderTwo(e,value)}>
       <option value={null}> select </option>
         <option value={1}> Yes </option>
@@ -187,12 +206,8 @@ const renderStatusOptions = (value) => {
     if (fileUpload !== undefined && fileUpload !== null) {
       FinanceClearanceUploadSettlement(fileUpload)
     } else {
-      toast.info("Please select a file to upload")
+      toast.error("Please select a file to upload")
     }
-
-    setTimeout(() => {
-      window.location.reload()
-    }, 5000)
   }
  
   //File export 
@@ -233,8 +248,10 @@ const renderStatusOptions = (value) => {
     }
   }
   const handleExport = (e) =>{
-    const file = e.target.value
-    FinanceClearanceExport(file)
+    const value = e.target.value
+    FinanceClearanceExport(value)
+//         
+
   }
   const statusRender = (e,value) => {
     // var result = document.getElementsByClassName("switch-input")[0].checked
@@ -246,6 +263,9 @@ const renderStatusOptions = (value) => {
 
   };
 
+  const disabledText = () => {
+    toast.error("No Records to be Export")
+}
   const statusRenderTwo = (e,value) => {
     // var result = document.getElementsByClassName("switch-input")[0].checked
 
@@ -261,8 +281,7 @@ const renderStatusOptions = (value) => {
     <div>
       <Fragment>
         <ToastContainer/>
-        <Container fluid>
-      <Breadcrumb title="F & F Listing" parent="F & F Listing" />
+      <Breadcrumb title="F & F Clearance - Admin" parent="F & F Clearance - Admin" />
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
@@ -299,20 +318,12 @@ const renderStatusOptions = (value) => {
             <div className="card" style={{ overflowX: "auto" }}>
               <div>
               <div className="nodue_title_finance" >
-                {data.length > 0 &&
-                      <JsonToExcel
-                        data={data}
-                        style={{float:'left',marginTop: '5px',marginLeft:"5px"}}
-                        className="btn btn-light mr-2"
-                        filename={filename}
-                        fields={fields}
-
-                        text="Export excel"
-                      />}
-              <b >F & F Listing </b>  
-                <Button style={{float:'right',marginTop: '5px'}} className="btn btn-light mr-2" onClick={''}>
-                  Save AS
+              <b style={{textAlign:"center"}}>F & F  Clearance Listing </b>  
+                <Button style={{float:'left',marginTop: '5px'}} className="btn btn-light mr-2" onClick={''}>
+                  Submit
                 </Button>
+                <ExcelFile data={financeClearanceExport}  element={ <Button style={{float:'right',marginTop: '5px'}} className="btn btn-light mr-2" onClick={handleExport}> Export excel</Button>}/>
+
                 <Button className="btn btn-light mr-2"  style={{float:'right',marginTop: '5px'}} onClick={handleUploadSettlement} >
                   Upload F & F Settlement
                 </Button>
@@ -328,7 +339,8 @@ const renderStatusOptions = (value) => {
               </div>
               
             
-        <div className="ag-theme-alpine" style={{ align:"center",height: 495, width: 1400 }}>
+        <div className="ag-theme-alpine" style={{ align:"center",height: 350, width:'100%'
+ }}>
           
           <AgGridReact 
             rowData={financeAdminNoDueClearanceList}
@@ -336,13 +348,14 @@ const renderStatusOptions = (value) => {
             
             onGridReady={onGridReady}
             defaultColDef={{
-              width: 150,
+              width: 200,
               editable: true,
               resizable: true,
+              overflowX: 'hidden'
             }}
             
           >
-          <AgGridColumn className="columnColor" editable="false" headerName="S No" pinned="left" lockPinned="true" valueGetter={`node.rowIndex+1 + ${indexOfFirstRecord}`}></AgGridColumn>
+          <AgGridColumn width={50} className="columnColor" editable="false" headerName="S No" pinned="left" lockPinned="true" valueGetter={`node.rowIndex+1 + ${indexOfFirstRecord}`}></AgGridColumn>
             <AgGridColumn className="columnColor" editable="false" headerName="Employee Id" field="employeeId"></AgGridColumn>
             <AgGridColumn className="columnColor" editable="false" headerName="Employee Name" field="employeeName"></AgGridColumn>
             <AgGridColumn className="columnColor" editable="false" headerName="Cost Center Name" field="costCenterName"></AgGridColumn>
@@ -373,7 +386,7 @@ const renderStatusOptions = (value) => {
                 cellRenderer: { statusRenderTwo}
               }}
               ></AgGridColumn>
-                      <AgGridColumn
+                      <AgGridColumn width={80}
                       headerName="History"
                       pinned="right"
                       editable="false"
@@ -394,7 +407,7 @@ const renderStatusOptions = (value) => {
                 {financeAdminNoDueClearanceList === null ? (
                   <p style={{ textAlign: "center" }}>No Record Found</p>
                 ) : null}
-
+              </div>
                 
               </div>
               <div>
@@ -423,10 +436,8 @@ const renderStatusOptions = (value) => {
          />}
      </div>
               </div>
-              </div>
               </div>   
               </div>
-              </Container>     
     </Fragment> 
      </div>
   );

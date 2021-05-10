@@ -5,7 +5,7 @@
   line-height: 3rem;
   font-weight: bold;
   text-align: center;
-  width:1400px
+  width:100%
 }
 .nodue_title_finance{
 	background: #006EBB;
@@ -14,8 +14,8 @@
 	line-height: 3rem;
 	font-weight: bold;
 	text-align: center;
-	width:1400px
-  }
+	width:100%
+}
 .nodue_title_admin{
   background: #006EBB;
   font-weight: bold;
@@ -29,6 +29,7 @@ nav.nav.nav-tabs a {
   font-size: 1.1rem;
   color: black
 }
+
 .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
   color: #495057;
   background-color: #c7c7c7;
@@ -50,6 +51,15 @@ title{
   padding :5px;
   overflow: "auto";
 }
+.selectpicker{
+    vertical-align: middle;
+    padding: 5px;
+    color: var(--ag-data-color, var(--ag-foreground-color, #181d1f));
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    border-radius: 5px;
+    background-color: #fff;
+
+}
 /* .modal-backdrop {
 background-color: transparent;
 opacity: 1.5;
@@ -60,9 +70,12 @@ opacity: 1.5;
 }
 
 thead th {
-	table-layout: fixed;
-  width: 200px;
-  overflow: hidden;
+	word-break: break-all;
+    white-space: nowrap;
+}
+tbody td {
+	word-break: break-all;
+    white-space: nowrap;
 }
 
 .tableFixHead {

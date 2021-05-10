@@ -62,7 +62,7 @@ const handlePageChange = (pageNumber) => {
   }
   const searchDataHandler = () => {
     if (searchValue !== "" && searchValue !== "all") {
-      viewAdminITClearanceList(searchValue,0,costCenter);
+      viewAdminITClearanceList(searchValue,pageCount,costCenter);
     }else{
       viewAdminITClearanceList("all",pageCount,"all");
 
@@ -83,7 +83,7 @@ const handleCostCenter = (options) => {
  
   return (
     <Fragment>
-      <Breadcrumb title="Admin No Due Clearance" parent="Admin No Due Clearance" />
+      <Breadcrumb title="No Due Clearance - Admin" parent="No Due Clearance - Admin" />
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
@@ -158,11 +158,11 @@ const handleCostCenter = (options) => {
                             <td>{e.joiningDate}</td>
                             <td>{e.lastWorkingDay}</td>
                             <td>{e.itAmount}</td>
-                            <td>{e.itClearanceStatus}</td>
+                            <td>{e.itClearanceStatus == 0?"Due":e.itClearanceStatus == 1?"No Due":"On Hold"}</td>
                             <td>{e.itClearanceRemarks}</td>
                             <td>{e.itClearanceUpdatedBy}</td>
                             <td>{e.financeAmount}</td>
-                            <td>{e.financeClearanceStatus}</td>
+                            <td>{e.financeClearanceStatus == 0?"Due":e.financeClearanceStatus == 1?"No Due":"On Hold"}</td>
                             <td>{e.financeClearanceRemarks}</td>
                             <td>{e.financeClearanceUpdatedBy}</td>
                           </tr>

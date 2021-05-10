@@ -543,18 +543,18 @@ const FinanceClearanceList = () => {
         </Row>
             <div className="card" style={{ overflowX: "auto" }}>
               <div className="nodue_title" >
-              <b >NO DUE CLEARANCE LISTING </b>            
+              <b >FINANCE NO DUE CLEARANCE LISTING </b>            
               </div>
          
 
-        <div className="ag-theme-alpine" style={{ align:"center",height: 495, width: 1400 }}>
+        <div className="ag-theme-alpine" style={{ align:"center", height: 350, width:'100%'}}>
           
                     <AgGridReact
                       rowData={separationList}
                       rowSelection="single"
                       onGridReady={onGridReady}
                       defaultColDef={{
-                        width: 150,
+                        width: 200,
                         editable: true,
                         resizable: true,
                       }}
@@ -563,6 +563,7 @@ const FinanceClearanceList = () => {
                         className="columnColor"
                         editable="false"
                         headerName="S No"
+                        width={50}
                         pinned="left"
                         valueGetter={`node.rowIndex+1 + ${indexOfFirstRecord}`}
                       ></AgGridColumn>
