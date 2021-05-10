@@ -252,12 +252,12 @@ const RosterTable = (storeID) => {
                                         <div>Resource Utilisation Schedule</div>
                                     </th>
                                     { adminRosterUtilisationScheduleResult && adminRosterUtilisationScheduleResult.rosterDates && adminRosterUtilisationScheduleResult.rosterDates.length && adminRosterUtilisationScheduleResult.rosterDates.map(data => (
-                                        <th className="table-head">
-                                            <h6>{data.date}</h6>
+                                        <th className="table-head" style={{ backgroundColor: 'white' }}>
+                                            <h6 className="bold">{data.date}</h6>
                                             <ul>
-                                                <li>{data.generalCount} General</li>
-                                                <li>{data.onDutyCount} on duty</li>
-                                                <li>{data.captainCount} Captain</li>
+                                                <li className="bold">{data.generalCount} General</li>
+                                                <li className="bold">{data.onDutyCount} on duty</li>
+                                                <li className="bold">{data.captainCount} Captain</li>
                                             </ul>
                                         </th>
                                     ))}
