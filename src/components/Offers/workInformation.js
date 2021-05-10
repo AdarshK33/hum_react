@@ -9,6 +9,7 @@ import { OfferContext } from "../../context/OfferState";
 import { RosterContext } from "../../context/RosterState";
 import { AppContext } from "../../context/AppState";
 import moment from "moment";
+import { MasterFilesContext } from "../../context/MasterFilesState";
 
 const WorkInformation = (props) => {
   const [state, setState] = useState({
@@ -23,7 +24,12 @@ const WorkInformation = (props) => {
     internship: "",
     noticePeriod: "",
     managerId: null,
+    expatUser: "",
+    passportNumber: "",
+    nationality: "",
   });
+  const { viewCountries, countryList } = useContext(MasterFilesContext);
+
   const [dateOfJoining, setDateOFJoining] = useState();
   const [dateOfLeaving, setDateOFLeaving] = useState();
   const [costCenter, setCostCenter] = useState("");
@@ -66,15 +72,14 @@ const WorkInformation = (props) => {
     viewContractTypes();
     designationView();
     stateData();
+    viewCountries();
   }, []);
   useEffect(() => {
-    console.log("props in work info");
-    console.log("props....", props.workInfo);
-    console.log("costCenter....", props.workInfo.costCentre);
-    console.log("managerList...", managerList);
     let data =
-      props !== undefined && props.workInfo !== undefined && props.workInfo;
-    if (data !== undefined && data !== undefined) {
+      candidateData !== undefined &&
+      candidateData.workInformation !== undefined &&
+      candidateData.workInformation;
+    if (data !== undefined && data !== null) {
       setState({
         employmentType: data.contractType,
         department: data.department,
@@ -94,7 +99,7 @@ const WorkInformation = (props) => {
       }
     }
     // setWorkInformationData(props.workInfo);
-  }, [props.workInfo]);
+  }, [candidateData]);
 
   useEffect(() => {
     if (locationName !== null && locationName !== undefined) {
@@ -183,6 +188,7 @@ const WorkInformation = (props) => {
   };
 
   const changeHandler = (e) => {
+    console.log(e.target.value);
     setState({
       ...state,
       [e.target.name]: e.target.value,
@@ -241,6 +247,9 @@ const WorkInformation = (props) => {
         noticePeriod:
           state.employmentType === "Internship" ? 0 : state.noticePeriod,
         sportId: state.sports,
+        expatUser: state.expatUser,
+        nationality: state.nationality,
+        passportNumber: state.passportNumber,
       };
     } else if (createCandidateResponse.candidateId && saveclick === true) {
       createData = {
@@ -275,6 +284,9 @@ const WorkInformation = (props) => {
         noticePeriod:
           state.employmentType === "Internship" ? 0 : state.noticePeriod,
         sportId: state.sports,
+        expatUser: state.expatUser,
+        nationality: state.nationality,
+        passportNumber: state.passportNumber,
       };
     }
     console.log("createData", createData);
@@ -291,9 +303,7 @@ const WorkInformation = (props) => {
   };
 
   return (
-    console.log(state),
-    console.log(designationName),
-    console.log(managerList),
+    console.log(candidateData.workInformation),
     (
       <Fragment>
         <Form onSubmit={submitHandler}>
@@ -313,7 +323,8 @@ const WorkInformation = (props) => {
             <Col sm={3}>
               <Form.Group>
                 <Form.Label>Type of Employment</Form.Label>
-                {props.workInfo !== undefined ? (
+                {candidateData.workInformation !== undefined &&
+                candidateData.workInformation !== null ? (
                   <Form.Control
                     type="text"
                     value={state.employmentType}
@@ -343,6 +354,7 @@ const WorkInformation = (props) => {
                 )}
               </Form.Group>
             </Col>
+
             <Col sm={3}>
               <Form.Group>
                 <Form.Label>Designation</Form.Label>
@@ -378,16 +390,13 @@ const WorkInformation = (props) => {
                 )}
               </Form.Group>
             </Col>
+
             <Col sm={3}>
               <Form.Group>
                 <Form.Label>Department</Form.Label>
                 <Form.Control
                   as="select"
-                  value={
-                    props !== undefined
-                      ? workInformationData.department
-                      : state.department
-                  }
+                  value={state.department}
                   className="form-input"
                   name="department"
                   onChange={changeHandler}
@@ -714,6 +723,67 @@ const WorkInformation = (props) => {
                 </Form.Group>
               </Col>
             )}
+            {(state.employmentType === "Internship" ||
+              state.employmentType === "Permanent" ||
+              state.employmentType === "Parttime") && (
+              <Col sm={3}>
+                <Form.Group>
+                  <Form.Label>Local Expert</Form.Label>
+                  <Form.Control
+                    as="select"
+                    className="form-input"
+                    name="expatUser"
+                    value={state.expatUser}
+                    onChange={changeHandler}
+                  >
+                    <option>Seclect </option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+            )}
+            {state.expatUser == 1 && (
+              <Col sm={3}>
+                <Form.Group>
+                  <Form.Label>Passport Number</Form.Label>
+                  <Form.Control
+                    type="text"
+                    className="form-input"
+                    value={state.passportNumber}
+                    name="passportNumber"
+                    onChange={changeHandler}
+                  />
+                </Form.Group>
+              </Col>
+            )}
+          </Row>
+          <Row>
+            {state.expatUser == 1 && (
+              <Col sm={3}>
+                <Form.Group>
+                  <Form.Label>Nationality</Form.Label>
+                  <Form.Control
+                    as="select"
+                    className="form-input"
+                    value={state.nationality}
+                    name="nationality"
+                    onChange={changeHandler}
+                  >
+                    <option>Select Nationality</option>
+                    {countryList !== null &&
+                      countryList !== undefined &&
+                      countryList.map((item) => {
+                        return (
+                          <option key={item.countryId}>
+                            {item.nationality}
+                          </option>
+                        );
+                      })}
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+            )}
           </Row>
           {state.recuritment === "NGO" ? (
             <Row>
@@ -736,6 +806,7 @@ const WorkInformation = (props) => {
           ) : (
             ""
           )}
+
           <Row>
             <Col sm={4}></Col>
             <Col sm={2}>
