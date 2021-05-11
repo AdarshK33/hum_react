@@ -26,8 +26,6 @@ const ViewTicket = () => {
     // const [fileUpload, setFileUpload] = useState('');
     //const [fileName, setFileName] = useState('')
     const [number, setNumber] = useState()
-    const [phoneNumber, setPhoneNumber] = useState('')
-    const [error, setError] = useState(false)
     // const [filesCount, setFilesCount] = useState([])
     const [fileSubmitButtonFirst, setFileSubmitButtonFirst] = useState(false);
     const [fileSubmitButtonSecond, setFileSubmitButtonSecond] = useState(false);
@@ -293,22 +291,10 @@ const ViewTicket = () => {
         }
         return flag;
     }
-    const validateMethod = (e) => {
-        let flag = true
-        var phoneno = /^\d{10}$/;
-        if(phoneNumber.match(phoneno)){
-            setError(false)
-            return flag;
-        }else{
-            setError(true)
-            flag = false;
-            return;
-        }
-    }
+    
     const submitHandler = (e) => {
         e.preventDefault();
         const validate = validation()
-        const validated = validateMethod()
         const updateData = {
             categoryId: ticketIdList.categoryId,
             completionStatus: compStatus,
@@ -319,7 +305,7 @@ const ViewTicket = () => {
             firstName: ticketIdList.firstName,
             groupId: serviceGroup,
             lastName: ticketIdList.lastName,
-            phoneNumber:phoneNumber,
+            phoneNumber:ticketIdList.phoneNumber,
             position: ticketIdList.position,
             priorityId: ticketIdList.priorityId,
             resolution: resolution,
@@ -336,17 +322,14 @@ const ViewTicket = () => {
         }
         console.log("resolutionFile", updateData.resolutionFiles)
         console.log("fileNames", fileNames)
-        if(validate && validated){
+        if(validate){
         updateTicket(updateData, ticketIdList.ticketId)
         setResolution('')
         setFileNames([])
         setshowFirst(false)
         setshowSecond(false)
         history.push("./ticketlistingpage")
-        }else{
-            toast.info("Please Enter all the required fields")
         }
-        
 
     }
 
@@ -371,9 +354,6 @@ const ViewTicket = () => {
         setServiceGroup(ticketIdList.groupId)
     }, [ticketIdList.groupId])
 
-    useEffect(() => {
-        setPhoneNumber(ticketIdList.phoneNumber)
-    },[ticketIdList.phoneNumber])
 
     /* useEffect(() => {
         setFileName(ticketIdList.fileName)
@@ -474,6 +454,16 @@ const ViewTicket = () => {
                                     <Form.Label column sm='4' className='labels'>Position :</Form.Label>
                                     <Col sm='8'>
                                         <Form.Control type='text' value={ticketIdList.position} readOnly className='disabledValue blueText' />
+                                    </Col>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col sm={8}>
+                                <Form.Group as={Row} >
+                                    <Form.Label column sm='3' className='labels'>Phone Number :</Form.Label>
+                                    <Col sm='9'>
+                                        <Form.Control type='text' value={ticketIdList.phoneNumber} readOnly className='disabledValue'/>
                                     </Col>
                                 </Form.Group>
                             </Col>
@@ -602,18 +592,7 @@ const ViewTicket = () => {
                                 </Form.Group>
                             </Col>
                         </Row>
-                        <Row>
-                            <Col sm={8}>
-                                <Form.Group as={Row} >
-                                    <Form.Label column sm='3' className='labels'>Phone Number :<span style={{ color: 'red' }}>*</span></Form.Label>
-                                    <Col sm='9'>
-                                        <Form.Control type='text' value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)}
-                                        placeHolder='Enter Phone Number' required onBlur={validateMethod} />
-                                        {error ? <p style={{color:'red'}}>* Phone Number should be 10 digits only.</p> : ''}
-                                    </Col>
-                                </Form.Group>
-                            </Col>
-                        </Row>
+                       
                         <Row>
                             <Col sm={8}>
                                 <Form.Group as={Row} >
