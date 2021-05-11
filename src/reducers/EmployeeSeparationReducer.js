@@ -6,6 +6,9 @@ const GroupReducer = (state, action) => {
     case "EMPLOYEE_DATA_BY_ID":
       return { ...state, employeeData: action.payload };
 
+    case "MODE_OF_SEPARATION":
+      return { ...state, ModeOfSeparationData: action.payload };
+
     default:
       return state;
   }

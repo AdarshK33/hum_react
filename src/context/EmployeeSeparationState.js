@@ -9,6 +9,7 @@ const initial_state = {
   EmployeeSeparationList: [],
   total: {},
   employeeData: {},
+  ModeOfSeparationData: {},
 };
 
 export const EmploeeSeparationProvider = (props) => {
@@ -64,11 +65,33 @@ export const EmploeeSeparationProvider = (props) => {
       });
   };
 
+  const ModeOfSeparationView = () => {
+    setLoader(true);
+    client
+      .get("/api/v1/mode-of-separation/view")
+      .then((response) => {
+        state.ModeOfSeparationData = response.data.data;
+        setLoader(false);
+        console.log("mode of separation", state.ModeOfSeparationData);
+        console.log("response of mode of separartion", response);
+
+        return dispatch({
+          type: "MODE_OF_SEPARATION",
+          payload: state.ModeOfSeparationData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <EmployeeSeparationContext.Provider
       value={{
         EmployeeSeparationListView,
         ViewEmployeeDataById,
+        ModeOfSeparationView,
+        ModeOfSeparationData: state.ModeOfSeparationData,
         EmployeeSeparationList: state.EmployeeSeparationList,
         employeeData: state.employeeData,
         loader: loader,

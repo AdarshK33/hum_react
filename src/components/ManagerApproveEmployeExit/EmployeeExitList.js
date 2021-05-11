@@ -16,6 +16,7 @@ const EmployeeExitList = () => {
     EmployeeSeparationList,
     ViewEmployeeDataById,
     employeeData,
+    ModeOfSeparationView,
     loader,
     total,
   } = useContext(EmployeeSeparationContext);
@@ -75,6 +76,7 @@ const EmployeeExitList = () => {
 
   const fetchEmployeeDetails = (employeeId) => {
     ViewEmployeeDataById(employeeId);
+    ModeOfSeparationView();
     // viewCandidateId(candidateId);
     // verificationDocsView(candidateId);
     // personalInfo(candidateId);
