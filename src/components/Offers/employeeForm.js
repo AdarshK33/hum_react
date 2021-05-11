@@ -348,15 +348,73 @@ const EmployeeForm = (props) => {
     console.log("firstNameError info", firstNameError, lastNameError);
     console.log("saveclick", saveclick);
     console.log("createCandidateResponse saveclick", createCandidateResponse);
+    var sameEmail;
+    var validEmail1;
+    var validEmail2;
     let refValue =
       searchEmpData1 === null || searchEmpData2 === null ? false : true;
+    if (
+      yesChecked === true &&
+      searchEmpData1 !== null &&
+      searchEmpData2 !== null
+    ) {
+      if (searchEmpData1.email === searchEmpData2.email) {
+        sameEmail = true;
+      } else {
+        sameEmail = false;
+      }
+    } else {
+      sameEmail = false;
+    }
+    if (yesChecked === true && searchEmpData1 !== null) {
+      let EmailId = searchEmpData1.email;
+      console.log(searchEmpData2);
+      if (
+        searchEmpData1.email !== undefined &&
+        searchEmpData1.email !== null &&
+        searchEmpData1.email.length > 0 &&
+        searchEmpData1.email.includes("decathlon.com")
+      ) {
+        console.log("inside.........");
+        validEmail1 = true;
+      } else {
+        validEmail1 = false;
+      }
+    } else {
+      validEmail1 = true;
+    }
 
+    if (
+      yesChecked === true &&
+      searchEmpData2 !== null &&
+      searchEmpData2.email !== undefined &&
+      searchEmpData1.email !== null &&
+      searchEmpData2.email.length > 0
+    ) {
+      if (searchEmpData2.email.includes("decathlon.com")) {
+        validEmail2 = true;
+      } else {
+        validEmail2 = false;
+      }
+    } else {
+      validEmail2 = true;
+    }
+    console.log("emp...", searchEmpData1);
+    console.log("emp2...", searchEmpData2);
+    console.log("refValue...........", refValue);
+    console.log("sameemail..................", sameEmail);
+    console.log("validEmail1.......", validEmail1);
+    console.log("validEmail2.............", validEmail2);
     // console.log("empdata.......", searchEmpData1.length);
     if (
       firstNameError === false &&
       lastNameError === false &&
-      refValue === true
+      refValue === true &&
+      sameEmail === false &&
+      validEmail1 === true &&
+      validEmail2 === true
     ) {
+      console.log("inif...........");
       if (
         saveclick === true &&
         createCandidateResponse &&
@@ -383,172 +441,109 @@ const EmployeeForm = (props) => {
     console.log("state", state);
   };
   return (
-    console.log(searchEmpData1),
-    (
-      <Fragment>
-        <Form onSubmit={submitHandler}>
-          <Row style={{ marginBottom: "1rem" }}>
-            <Col sm={4}>
-              <Form.Group>
-                <Form.Label>Search by Account Number/Aadhar Number</Form.Label>
-                <div className="faq-form ">
-                  <input
-                    className="form-control searchButton"
-                    type="text"
-                    disabled={disabled}
-                    placeholder="Search.."
-                    onChange={(e) => searchHandler(e)}
-                  />
-                  <Search
-                    className="search-icon"
-                    style={{ color: "#313131" }}
-                    onClick={searchDataHandler}
-                  />
-                </div>
-              </Form.Group>
-            </Col>
-            <RehiredModal
-              eligibleToReHire={eligibleToReHire}
-              modal={modal}
-              handleClose={handleClose}
-              callback={callback}
+    <Fragment>
+      <Form onSubmit={submitHandler}>
+        <Row style={{ marginBottom: "1rem" }}>
+          <Col sm={4}>
+            <Form.Group>
+              <Form.Label>Search by Account Number/Aadhar Number</Form.Label>
+              <div className="faq-form ">
+                <input
+                  className="form-control searchButton"
+                  type="text"
+                  disabled={disabled}
+                  placeholder="Search.."
+                  onChange={(e) => searchHandler(e)}
+                />
+                <Search
+                  className="search-icon"
+                  style={{ color: "#313131" }}
+                  onClick={searchDataHandler}
+                />
+              </div>
+            </Form.Group>
+          </Col>
+          <RehiredModal
+            eligibleToReHire={eligibleToReHire}
+            modal={modal}
+            handleClose={handleClose}
+            callback={callback}
+          />
+        </Row>
+        <Row>
+          <Col sm={4}>
+            <Form.Group>
+              <Form.Label>First Name</Form.Label>
+              <Form.Control
+                className="form-input"
+                type="text"
+                name="firstName"
+                value={state.firstName}
+                onChange={changeHandler}
+                required
+                placeholder="First Name"
+                disabled={disabled}
+              />
+            </Form.Group>
+          </Col>
+          <Col sm={4}>
+            <Form.Group>
+              <Form.Label>Last Name</Form.Label>
+              <Form.Control
+                className="form-input"
+                type="text"
+                name="lastName"
+                value={state.lastName}
+                onChange={changeHandler}
+                required
+                placeholder="Last Name"
+                disabled={disabled}
+              />
+            </Form.Group>
+          </Col>
+          <Col sm={4}>
+            <Form.Group>
+              <Form.Label>Personal Email ID</Form.Label>
+              <Form.Control
+                type="email"
+                className="form-input"
+                name="personalEmail"
+                value={state.personalEmail}
+                onChange={changeHandler}
+                required
+                placeholder="Personal Email ID"
+                disabled={disabled}
+              />
+            </Form.Group>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={4}>
+            <p>Were you referred for this position?</p>
+          </Col>
+          <Col sm={4}>
+            Yes &nbsp;{" "}
+            <input
+              type="checkbox"
+              name="refrence"
+              checked={yesChecked}
+              onChange={checkedYesHandler}
             />
-          </Row>
-          <Row>
-            <Col sm={4}>
-              <Form.Group>
-                <Form.Label>First Name</Form.Label>
-                <Form.Control
-                  className="form-input"
-                  type="text"
-                  name="firstName"
-                  value={state.firstName}
-                  onChange={changeHandler}
-                  required
-                  placeholder="First Name"
-                  disabled={disabled}
-                />
-              </Form.Group>
-            </Col>
-            <Col sm={4}>
-              <Form.Group>
-                <Form.Label>Last Name</Form.Label>
-                <Form.Control
-                  className="form-input"
-                  type="text"
-                  name="lastName"
-                  value={state.lastName}
-                  onChange={changeHandler}
-                  required
-                  placeholder="Last Name"
-                  disabled={disabled}
-                />
-              </Form.Group>
-            </Col>
-            <Col sm={4}>
-              <Form.Group>
-                <Form.Label>Personal Email ID</Form.Label>
-                <Form.Control
-                  type="email"
-                  className="form-input"
-                  name="personalEmail"
-                  value={state.personalEmail}
-                  onChange={changeHandler}
-                  required
-                  placeholder="Personal Email ID"
-                  disabled={disabled}
-                />
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row>
-            <Col sm={4}>
-              <p>Were you referred for this position?</p>
-            </Col>
-            <Col sm={4}>
-              Yes &nbsp;{" "}
-              <input
-                type="checkbox"
-                name="refrence"
-                checked={yesChecked}
-                onChange={checkedYesHandler}
-              />
-              &nbsp; &nbsp;&nbsp; &nbsp; No &nbsp;{" "}
-              <input
-                type="checkbox"
-                name="refrence"
-                checked={noChecked}
-                onChange={checkedNoHandler}
-              />
-            </Col>
-          </Row>
-          {yesChecked === true ? (
-            <Fragment>
-              <p>
-                State two reference(max two are allowed)
-                <span style={{ color: "red" }}>*</span>
-              </p>
-              <Row>
-                <Col sm={4}>
-                  <Form.Group>
-                    <Form.Label>
-                      Emp Name/Emp ID <span style={{ color: "red" }}>*</span>
-                    </Form.Label>
-                    <div className="faq-form">
-                      <input
-                        className="form-control searchButton"
-                        type="text"
-                        disabled={disabled}
-                        value={empName1}
-                        placeholder="Search by Emp Name/Emp Id"
-                        onChange={(e) => empName1Handler(e)}
-                        required
-                      />
-                      <Search
-                        className="search-icon"
-                        style={{ color: "#313131" }}
-                        onClick={empName1Search}
-                      />
-                    </div>
-                  </Form.Group>
-                </Col>
-                <Col sm={4}>
-                  <Form.Group>
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                      className="form-input"
-                      type="text"
-                      value={empName1 === "" ? "" : refEmail1}
-                      /*  value={refEmail1} */
-                      onChange={(e) => setRefEmail1(e.target.value)}
-                      readOnly
-                    />
-                  </Form.Group>
-                </Col>
-                <Col sm={3}>
-                  <Form.Group>
-                    <Form.Label>Designation</Form.Label>
-                    <Form.Control
-                      className="form-input"
-                      type="text"
-                      value={empName1 === "" ? "" : desgination1}
-                      /*  value={desgination1} */
-                      onChange={(e) => setDesignation1(e.target.value)}
-                      readOnly
-                    />
-                  </Form.Group>
-                </Col>
-                <PlusCircle
-                  style={{ color: "#376ebb" }}
-                  onClick={showOneMoreRefer}
-                  style={{ marginTop: "2rem", color: "#006EBB" }}
-                />
-              </Row>
-            </Fragment>
-          ) : (
-            ""
-          )}
-          {secondRef === true && yesChecked === true ? (
+            &nbsp; &nbsp;&nbsp; &nbsp; No &nbsp;{" "}
+            <input
+              type="checkbox"
+              name="refrence"
+              checked={noChecked}
+              onChange={checkedNoHandler}
+            />
+          </Col>
+        </Row>
+        {yesChecked === true ? (
+          <Fragment>
+            <p>
+              State two reference(max two are allowed)
+              <span style={{ color: "red" }}>*</span>
+            </p>
             <Row>
               <Col sm={4}>
                 <Form.Group>
@@ -560,15 +555,15 @@ const EmployeeForm = (props) => {
                       className="form-control searchButton"
                       type="text"
                       disabled={disabled}
-                      value={empName2}
+                      value={empName1}
                       placeholder="Search by Emp Name/Emp Id"
-                      onChange={(e) => empName2Handler(e)}
+                      onChange={(e) => empName1Handler(e)}
                       required
                     />
                     <Search
                       className="search-icon"
                       style={{ color: "#313131" }}
-                      onClick={empName2Search}
+                      onClick={empName1Search}
                     />
                   </div>
                 </Form.Group>
@@ -579,10 +574,10 @@ const EmployeeForm = (props) => {
                   <Form.Control
                     className="form-input"
                     type="text"
+                    value={empName1 === "" ? "" : refEmail1}
+                    /*  value={refEmail1} */
+                    onChange={(e) => setRefEmail1(e.target.value)}
                     readOnly
-                    value={empName2 === "" ? "" : refEmail2}
-                    /*  value={refEmail2} */
-                    onChange={(e) => setRefEmail2(e.target.value)}
                   />
                 </Form.Group>
               </Col>
@@ -592,38 +587,98 @@ const EmployeeForm = (props) => {
                   <Form.Control
                     className="form-input"
                     type="text"
-                    value={empName2 === "" ? "" : desgination2}
-                    /* value={desgination2} */
-                    onChange={(e) => setDesignation2(e.target.value)}
+                    value={empName1 === "" ? "" : desgination1}
+                    /*  value={desgination1} */
+                    onChange={(e) => setDesignation1(e.target.value)}
                     readOnly
                   />
                 </Form.Group>
               </Col>
-              <MinusCircle
+              <PlusCircle
                 style={{ color: "#376ebb" }}
-                onClick={hideOneMoreRefer}
+                onClick={showOneMoreRefer}
                 style={{ marginTop: "2rem", color: "#006EBB" }}
               />
             </Row>
+          </Fragment>
+        ) : (
+          ""
+        )}
+        {secondRef === true && yesChecked === true ? (
+          <Row>
+            <Col sm={4}>
+              <Form.Group>
+                <Form.Label>
+                  Emp Name/Emp ID <span style={{ color: "red" }}>*</span>
+                </Form.Label>
+                <div className="faq-form">
+                  <input
+                    className="form-control searchButton"
+                    type="text"
+                    disabled={disabled}
+                    value={empName2}
+                    placeholder="Search by Emp Name/Emp Id"
+                    onChange={(e) => empName2Handler(e)}
+                    required
+                  />
+                  <Search
+                    className="search-icon"
+                    style={{ color: "#313131" }}
+                    onClick={empName2Search}
+                  />
+                </div>
+              </Form.Group>
+            </Col>
+            <Col sm={4}>
+              <Form.Group>
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  className="form-input"
+                  type="text"
+                  readOnly
+                  value={empName2 === "" ? "" : refEmail2}
+                  /*  value={refEmail2} */
+                  onChange={(e) => setRefEmail2(e.target.value)}
+                />
+              </Form.Group>
+            </Col>
+            <Col sm={3}>
+              <Form.Group>
+                <Form.Label>Designation</Form.Label>
+                <Form.Control
+                  className="form-input"
+                  type="text"
+                  value={empName2 === "" ? "" : desgination2}
+                  /* value={desgination2} */
+                  onChange={(e) => setDesignation2(e.target.value)}
+                  readOnly
+                />
+              </Form.Group>
+            </Col>
+            <MinusCircle
+              style={{ color: "#376ebb" }}
+              onClick={hideOneMoreRefer}
+              style={{ marginTop: "2rem", color: "#006EBB" }}
+            />
+          </Row>
+        ) : (
+          ""
+        )}
+        <Row>
+          <Col sm={4}></Col>
+          <Col sm={2}>
+            <Button type="submit">Save</Button>
+          </Col>
+          {editButton === true && createCandidateResponse !== null ? (
+            <Col sm={2}>
+              <Button onClick={editHandler}>Edit</Button>
+            </Col>
           ) : (
             ""
           )}
-          <Row>
-            <Col sm={4}></Col>
-            <Col sm={2}>
-              <Button type="submit">Save</Button>
-            </Col>
-            {editButton === true ? (
-              <Col sm={2}>
-                <Button onClick={editHandler}>Edit</Button>
-              </Col>
-            ) : (
-              ""
-            )}
-          </Row>
-        </Form>
-      </Fragment>
-    )
+        </Row>
+      </Form>
+    </Fragment>
   );
 };
 

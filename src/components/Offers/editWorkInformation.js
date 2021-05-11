@@ -673,6 +673,7 @@ const EditWorkInformation = () => {
             )}
             {(state.employmentType === "Internship" ||
               state.employmentType === "Permanent" ||
+              state.employmentType === "permanent" ||
               state.employmentType === "Parttime") && (
               <Col sm={3}>
                 <Form.Group>
