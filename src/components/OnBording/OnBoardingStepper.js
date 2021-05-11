@@ -165,7 +165,17 @@ const OnBoardingStepper = (props) => {
       setStep(tempArray);
     }
   };
-
+  const MakeFalse = (value) => {
+    console.log(stepCount, "making false");
+    if (stepCount >= 0 && stepCount < 6) {
+      let tempArray = [...stepArray];
+      tempArray[stepCount + 4].fileSaved = value;
+      tempArray[stepCount + 4].step = defaultStep;
+      tempArray[stepCount + 4].label = defaultLabel;
+      tempArray[stepCount + 3].line = defaultLine;
+      setStep(tempArray);
+    }
+  };
   const candidateLogout = () => {
     console.log("inside candidate logout");
   };
@@ -405,6 +415,7 @@ const OnBoardingStepper = (props) => {
                               <PersonalInformation
                                 NextStep={NextStep}
                                 PrevStep={PrevStep}
+                                MakeFalse={MakeFalse}
                               />
                             );
 
