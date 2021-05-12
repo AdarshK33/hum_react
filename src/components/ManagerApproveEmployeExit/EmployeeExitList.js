@@ -17,6 +17,7 @@ const EmployeeExitList = () => {
     ViewEmployeeDataById,
     employeeData,
     ModeOfSeparationView,
+    ModeOfSeparationData,
     loader,
     total,
   } = useContext(EmployeeSeparationContext);
@@ -28,18 +29,74 @@ const EmployeeExitList = () => {
   useEffect(() => {
     EmployeeSeparationListView("all", pageCount);
   }, []);
+
   console.log("---->", EmployeeSeparationList);
+
+  // useEffect(() => {
+  //   if (
+  //     EmployeeSeparationList !== null &&
+  //     EmployeeSeparationList !== undefined
+  //   ) {
+  //     console.log("list");
+  //     setCurrentRecords(EmployeeSeparationList);
+  //   }
+  // }, [EmployeeSeparationList, currentRecords]);
+  // console.log("Records-->", currentRecords);
 
   useEffect(() => {
     if (
+      EmployeeSeparationList &&
       EmployeeSeparationList !== null &&
-      EmployeeSeparationList !== undefined
+      EmployeeSeparationList !== undefined &&
+      Object.keys(EmployeeSeparationList).length !== 0 &&
+      ModeOfSeparationData &&
+      ModeOfSeparationData !== null &&
+      ModeOfSeparationData !== undefined &&
+      Object.keys(ModeOfSeparationData).length !== 0
     ) {
-      console.log("list");
+      if (EmployeeSeparationList.modeOfSeparationId === 1) {
+        console.log(ModeOfSeparationData[0].modeOfSeparation);
+        console.log(ModeOfSeparationData[0].modeOfSeparation.modeOfSeparation);
+        console.log(ModeOfSeparationData[0].modeOfSeparationReasonList);
+      }
+      EmployeeSeparationList.map((rotate, r) => {
+        ModeOfSeparationData.map((item, i) => {
+          if (
+            EmployeeSeparationList[r].modeOfSeparationId ===
+            ModeOfSeparationData[i].modeOfSeparation.separationId
+          ) {
+            console.log(
+              "seww",
+              ModeOfSeparationData[i].modeOfSeparation.modeOfSeparation
+            );
+
+            ModeOfSeparationData[i].modeOfSeparationReasonList.map(
+              (item1, j) => {
+                if (EmployeeSeparationList[r].modeOfSeparationReasonId === 0) {
+                  EmployeeSeparationList[r].modeOfSeparationReasonId = "";
+                } else if (
+                  EmployeeSeparationList[r].modeOfSeparationReasonId ===
+                  ModeOfSeparationData[i].modeOfSeparationReasonList[j]
+                    .separationReasonId
+                ) {
+                  EmployeeSeparationList[r].modeOfSeparationReasonId =
+                    ModeOfSeparationData[i].modeOfSeparationReasonList[
+                      j
+                    ].modeOfSeparationReason;
+                  console.log(
+                    "sepp",
+                    ModeOfSeparationData[i].modeOfSeparationReasonList[j]
+                      .modeOfSeparationReason
+                  );
+                }
+              }
+            );
+          }
+        });
+      });
       setCurrentRecords(EmployeeSeparationList);
     }
-  }, [EmployeeSeparationList, currentRecords]);
-  console.log("Records-->", currentRecords);
+  }, [EmployeeSeparationList, ModeOfSeparationData]);
 
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
@@ -141,7 +198,9 @@ const EmployeeExitList = () => {
                   </thead>
                   {loader === true &&
                   EmployeeSeparationList !== null &&
-                  EmployeeSeparationList !== undefined ? (
+                  EmployeeSeparationList !== undefined &&
+                  ModeOfSeparationData !== null &&
+                  ModeOfSeparationData !== undefined ? (
                     <tbody>
                       <tr>
                         <td colSpan="12">
@@ -161,7 +220,9 @@ const EmployeeExitList = () => {
                     </tbody>
                   ) : EmployeeSeparationList !== undefined &&
                     EmployeeSeparationList !== null &&
-                    EmployeeSeparationList.length > 0 ? (
+                    EmployeeSeparationList.length > 0 &&
+                    ModeOfSeparationData !== null &&
+                    ModeOfSeparationData !== undefined ? (
                     EmployeeSeparationList.map((item, i) => {
                       return (
                         <tbody key={item.candidateId}>
@@ -173,7 +234,7 @@ const EmployeeExitList = () => {
                             <td>{item.contractType}</td>
                             <td>{item.dateOfResignation}</td>
                             <td>{item.lastWorkingDate}</td>
-                            <td>{item.reasonForResignation}</td>
+                            <td>{item.modeOfSeparationReasonId}</td>
                             <td>{item.noticePeriod}</td>
 
                             <td>
@@ -203,7 +264,10 @@ const EmployeeExitList = () => {
         </Row>
       </Container>
       {EmployeeSeparationList !== null &&
-        EmployeeSeparationList !== undefined && (
+        EmployeeSeparationList !== undefined &&
+        ModeOfSeparationData !== null &&
+        ModeOfSeparationData !== undefined &&
+        Object.keys(ModeOfSeparationData).length !== 0 && (
           <Pagination
             itemClass="page-item"
             linkClass="page-link"

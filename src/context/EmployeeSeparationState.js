@@ -10,6 +10,7 @@ const initial_state = {
   total: {},
   employeeData: {},
   ModeOfSeparationData: {},
+  updateResponse: {},
 };
 
 export const EmploeeSeparationProvider = (props) => {
@@ -54,6 +55,7 @@ export const EmploeeSeparationProvider = (props) => {
         setLoader(false);
         console.log(state.total);
         console.log(response);
+        ModeOfSeparationView();
 
         return dispatch({
           type: "EMPLOYEE_SEPARATION_LISTING",
@@ -85,12 +87,32 @@ export const EmploeeSeparationProvider = (props) => {
       });
   };
 
+  const UpdateEmplyoeeExist = (updateInfo) => {
+    setLoader(true);
+    client
+      .post("/api/v1/separation/employee-exit/update", updateInfo)
+      .then((response) => {
+        state.updateResponse = response.data.data;
+        toast.info(response.data.message);
+        console.log("updated response", state.updateResponse);
+        return dispatch({
+          type: "UPDATE_EMPLOYEE_SEPARATION",
+          payload: state.updateResponse,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <EmployeeSeparationContext.Provider
       value={{
         EmployeeSeparationListView,
         ViewEmployeeDataById,
         ModeOfSeparationView,
+        UpdateEmplyoeeExist,
+        updateResponse: state.updateResponse,
         ModeOfSeparationData: state.ModeOfSeparationData,
         EmployeeSeparationList: state.EmployeeSeparationList,
         employeeData: state.employeeData,

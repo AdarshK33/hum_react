@@ -1,6 +1,18 @@
 .itemResult {
   color: #006ebb;
 }
+.SavebuttonField.button {
+  width: 80px;
+  height: 30px;
+  background-color: white;
+  color: #006ebb;
+  border: 1px solid#006ebb;
+}
+.savebuttonField.button:disabled {
+  border: 1px solid red;
+  color: red;
+}
+
 .boxField_2 input[type="checkbox"] {
   --active: #006ebb;
   --active-inner: #fff;

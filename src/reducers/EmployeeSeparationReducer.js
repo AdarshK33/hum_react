@@ -9,6 +9,9 @@ const GroupReducer = (state, action) => {
     case "MODE_OF_SEPARATION":
       return { ...state, ModeOfSeparationData: action.payload };
 
+    case "UPDATE_EMPLOYEE_SEPARATION":
+      return { ...state, updateResponse: action.payload };
+
     default:
       return state;
   }

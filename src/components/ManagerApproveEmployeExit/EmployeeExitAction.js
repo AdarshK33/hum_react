@@ -1,8 +1,10 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
-import { Row, Col, Form, Button } from "react-bootstrap";
+import { Row, Col, Form, Button, Container, Modal } from "react-bootstrap";
 import Breadcrumb from "../common/breadcrumb";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
 import "./EmployeeExit.css";
+import { setGlobalCssModule } from "reactstrap/es/utils";
+
 const EmployeeExitAction = () => {
   const [modeOfSeparation, setModeOfSeparation] = useState("");
   const [RcryYes, setRcryYes] = useState(false);
@@ -11,6 +13,10 @@ const EmployeeExitAction = () => {
   const [RehireNo, setRehireNo] = useState(false);
   const [RcryError, setRcryError] = useState(false);
   const [RehireError, setRehireError] = useState(false);
+  const [rcryDaysError, setRcryDaysError] = useState(false);
+  const [remarkError, setRemarkError] = useState(false);
+  const [showModal, setModal] = useState(false);
+  const [showSuccessModal, setSuccessModal] = useState(false);
   const [state, setState] = useState({
     empName: "",
     empId: "",
@@ -30,6 +36,7 @@ const EmployeeExitAction = () => {
     emailId: "",
     comments: "",
     noticePeriodRcryDays: "",
+    remarks: "",
   });
   const {
     EmployeeSeparationListView,
@@ -37,6 +44,7 @@ const EmployeeExitAction = () => {
     ViewEmployeeDataById,
     employeeData,
     ModeOfSeparationData,
+    UpdateEmplyoeeExist,
   } = useContext(EmployeeSeparationContext);
   console.log(ModeOfSeparationData);
   useEffect(() => {
@@ -64,6 +72,45 @@ const EmployeeExitAction = () => {
       state.lastWorkingDate = employeeData.lastWorkingDate;
       state.emailId = employeeData.emailId;
       state.comments = employeeData.employeeComment;
+      state.noticePeriodRcryDays =
+        employeeData.noticePeriodRecoveryDays !== null &&
+        employeeData.noticePeriodRecoveryDays !== undefined
+          ? employeeData.noticePeriodRecoveryDays
+          : "";
+
+      if (
+        employeeData.noticePeriodRecovery !== null &&
+        employeeData.noticePeriodRecovery !== undefined
+      ) {
+        if (employeeData.noticePeriodRecovery === 2) {
+          setRcryNo(true);
+          setRcryYes(false);
+        } else if (employeeData.noticePeriodRecovery === 1) {
+          setRcryNo(false);
+          setRcryYes(true);
+        } else if (employeeData.noticePeriodRecovery === 0) {
+          setRcryNo(false);
+          setRcryYes(false);
+        }
+      } else {
+        setRcryNo(false);
+        setRcryYes(false);
+      }
+      if (employeeData.reHire !== null && employeeData.reHire !== undefined) {
+        if (employeeData.reHire === 2) {
+          setRehireNo(true);
+          setRehireYes(false);
+        } else if (employeeData.reHire === 1) {
+          setRehireNo(false);
+          setRehireYes(true);
+        } else if (employeeData.reHire === 0) {
+          setRehireNo(false);
+          setRehireYes(false);
+        }
+      } else {
+        setRehireNo(false);
+        setRehireYes(false);
+      }
     }
   }, [employeeData]);
   useEffect(() => {
@@ -123,6 +170,22 @@ const EmployeeExitAction = () => {
     setRehireYes(!e.target.checked);
     setRehireNo(e.target.checked);
   };
+  const handleClose = () => {
+    setModal(false);
+    setSuccessModal(false);
+  };
+  const handleSaveRemarks = () => {
+    if (
+      state.remarks !== "" &&
+      state.remarks !== null &&
+      state.remarks !== undefined
+    ) {
+      setRemarkError(false);
+      setModal(false);
+    } else {
+      setRemarkError(true);
+    }
+  };
   const changeHandler = (e) => {
     setState({
       ...state,
@@ -140,11 +203,31 @@ const EmployeeExitAction = () => {
       return false;
     }
   };
+  const validateRcryDays = () => {
+    const Valid = /^[0-9\b]+$/;
+    if (RcryYes === true) {
+      if (
+        state.noticePeriodRcryDays !== "" &&
+        state.noticePeriodRcryDays !== null &&
+        state.noticePeriodRcryDays !== undefined &&
+        Valid.test(state.noticePeriodRcryDays)
+      ) {
+        setRcryDaysError(false);
+        return true;
+      } else {
+        setRcryDaysError(true);
+        return false;
+      }
+    } else {
+      return true;
+    }
+  };
   const checkValidations = () => {
     console.log("on validation");
     if (
       (validateCheckBoxes(RcryYes, RcryNo, setRcryError) === true) &
-      (validateCheckBoxes(RehireYes, RehireNo, setRehireError) === true)
+      (validateCheckBoxes(RehireYes, RehireNo, setRehireError) === true) &
+      (validateRcryDays() === true)
     ) {
       console.log("on true");
       return true;
@@ -156,14 +239,102 @@ const EmployeeExitAction = () => {
 
   const submitHandler = (e) => {
     console.log("submit handler");
+
     e.preventDefault();
     const value = checkValidations();
     if (value === true) {
+      if (
+        (RehireNo === true && state.remarks === "") ||
+        state.remarks === null ||
+        state.remarks === undefined
+      ) {
+        setModal(true);
+      } else {
+        const InfoData = {
+          company: employeeData.company,
+          contractType: employeeData.contractType,
+          costCentreManagerEmailId: employeeData.costCentreManagerEmailId,
+          costCentreManagerName: employeeData.costCentreManagerName,
+          costCentreName: employeeData.costCentreName,
+          dateOfResignation: employeeData.dateOfResignation,
+          emailId: employeeData.emailId,
+          empName: employeeData.empName,
+          employeeComment: employeeData.employeeComment,
+          employeeId: employeeData.employeeId,
+          employeeName: employeeData.employeeName,
+          exitId: employeeData.exitId,
+          hoursWorked: employeeData.hoursWorked,
+          lastWorkingDate: employeeData.lastWorkingDate,
+          location: employeeData.location,
+          managerCostCentre: employeeData.managerCostCentre,
+          managerEmailId: employeeData.managerEmailId,
+          managerId: employeeData.managerId,
+          managerName: employeeData.managerName,
+          managerPosition: employeeData.managerPosition,
+          modeOfSeparationId: employeeData.modeOfSeparationId,
+          modeOfSeparationReasonId: employeeData.modeOfSeparationReasonId,
+          noticePeriodRecoveryDays: state.noticePeriodRcryDays,
+          noticePeriod: employeeData.noticePeriod,
+          noticePeriodRecovery: RcryYes ? 1 : RcryNo ? 2 : 0,
+          position: employeeData.position,
+          reHire: RehireYes ? 1 : RehireNo ? 2 : 0,
+          reason: employeeData.reason,
+          reasonForResignation: employeeData.reasonForResignation,
+          rehireRemark: state.remarks !== "" ? state.remarks : null,
+          status: employeeData.status,
+          withdraw: employeeData.withdraw,
+        };
+        UpdateEmplyoeeExist(InfoData);
+        setSuccessModal(true);
+        console.log("in else");
+      }
     }
   };
 
   return (
     <Fragment>
+      <Modal show={showModal} onHide={() => handleClose()} centered>
+        <Container>
+          <Modal.Header closeButton className="modalHeader">
+            {/* <Modal.Title>State remarks for disapproval</Modal.Title> */}
+          </Modal.Header>{" "}
+          <Modal.Body className="mx-auto">
+            <label className="itemResult">State remarks:</label>
+            <textarea
+              className="remarkText rounded"
+              name="remarks"
+              value={state.remarks}
+              placeholder="Write here.."
+              onChange={(e) => changeHandler(e)}
+            />
+
+            {remarkError && (
+              <p style={{ color: "red" }}>Please add your remarks</p>
+            )}
+            <div className="text-center mb-2">
+              <Button onClick={() => handleSaveRemarks()}>Save</Button>
+            </div>
+          </Modal.Body>
+        </Container>
+      </Modal>
+
+      <Modal show={showSuccessModal} onHide={() => handleClose()} centered>
+        <Container>
+          <Modal.Header closeButton className="modalHeader">
+            {/* <Modal.Title>State remarks for disapproval</Modal.Title> */}
+          </Modal.Header>{" "}
+          <Modal.Body className="mx-auto">
+            <label className="itemResult">
+              Exit details saved successfully, the employee has been notified
+            </label>
+
+            <div className="text-center mb-2">
+              <Button onClick={() => handleClose()}>Close</Button>
+            </div>
+          </Modal.Body>
+        </Container>
+      </Modal>
+
       <Breadcrumb title="EMPLOYEE SEPARATION" parent="EMPLOYEE SEPARATION" />
       <div className="container-fluid">
         <div className="row">
@@ -187,7 +358,7 @@ const EmployeeExitAction = () => {
                           <b>Emp Name/Id:</b>
                           <label className="itemResult">
                             {" "}
-                            &nbsp;&nbsp; {state.empName} {state.empId}
+                            &nbsp;&nbsp; {state.empName} &nbsp;{state.empId}
                           </label>
                         </label>
                       </div>
@@ -197,7 +368,7 @@ const EmployeeExitAction = () => {
                         <label>
                           <b>Contract Type:</b>
                           <label className="itemResult">
-                            &nbsp;&nbsp; {state.contractType}
+                            &nbsp;&nbsp; {state.empContractType}
                           </label>
                         </label>
                       </div>
@@ -254,7 +425,7 @@ const EmployeeExitAction = () => {
                           <b>Manager Name/Id:</b>
                           <label className="itemResult">
                             &nbsp;&nbsp; {state.mngrName}
-                            {state.mngrId}
+                            &nbsp; {state.mngrId}
                           </label>
                         </label>
                       </div>
@@ -481,7 +652,17 @@ const EmployeeExitAction = () => {
                           name="noticePeriodRcryDays"
                           value={state.noticePeriodRcryDays}
                           onChange={(e) => changeHandler(e)}
+                          style={rcryDaysError ? { borderColor: "red" } : {}}
                         />
+
+                        {rcryDaysError ? (
+                          <p style={{ color: "red" }}>
+                            {" "}
+                            &nbsp; *Please enter valid days
+                          </p>
+                        ) : (
+                          <p></p>
+                        )}
                       </Form.Group>
                     </Col>
                     <Col sm={2}>
@@ -546,7 +727,16 @@ const EmployeeExitAction = () => {
             Back
           </button> */}
 
-                    <button className="stepperButtons" onClick={submitHandler}>
+                    <button
+                      // style={
+                      //   showModal | showSuccessModal
+                      //     ? { borderColor: "#aaa" }
+                      //     : ""
+                      // }
+                      disabled={showModal | showSuccessModal}
+                      className="stepperButtons"
+                      onClick={submitHandler}
+                    >
                       Save
                     </button>
                   </div>
