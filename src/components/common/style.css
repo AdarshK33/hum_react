@@ -35,3 +35,23 @@ input.fileButton:hover{
     font-weight: bold;
     text-decoration: underline;
 }
+label.labels-data.form-label.col-form-label {
+    font-size: 0.9rem;
+}
+input.blueTextData.form-control {
+    color: blue;
+    font-size: 0.9rem;
+}
+.row.emp-heading{
+    background-color: #006EBB;
+    color:white;
+    padding: 5px;
+    margin-bottom: 25px;
+}
+select.non-disable.blueTextData.form-control,
+input.form-control.non-disable.blueTextData {
+    font-size: 0.9rem;
+    height: 2.2rem;
+    padding: 5px;
+    margin: 4px 0;
+}

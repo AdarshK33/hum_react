@@ -418,57 +418,60 @@ export const DocsVerificationProvider = (props) => {
   };
 
   return (
-    <DocsVerifyContext.Provider
-      value={{
-        verificationDocsView,
-        personalInfo,
-        addressInfo,
-        contactInformation,
-        bankDetailsData,
-        fetchNominationDetails,
-        fetchPfDetails,
-        approveDocument,
-        disApproveDocument,
-        downloadDocument,
-        updateUANNumber,
-        costCenterSplit,
-        createEmployee,
-        candidateOnBoard,
-        viewEmployee,
-        step5suscessStatus,
-        step6suscessStatus,
-        approveAadharByAdmin,
-        disapproveAadharByAdmin,
-        viewStatesVerification,
-        viewCityVerification,
-        viewPermanentCityVerification,
-        disApproveAadhar: state.disApproveAadhar,
-        step5Status: state.step5Status,
-        aadharStatus: state.aadharStatus,
-        step6Status: state.step6Status,
-        empData: state.empData,
-        onBoardData: state.onBoardData,
-        docsToVerify: state.docsToVerify,
-        createStatus: state.createStatus,
-        costCenter: state.costCenter,
-        personalInfoData: state.personalInfoData,
-        addressInfoData: state.addressInfoData,
-        emergencyInfo: state.emergencyInfo,
-        bankDetails: state.bankDetails,
-        nominationDetails: state.nominationDetails,
-        pfDetails: state.pfDetails,
-        acceptStatus: state.acceptStatus,
-        rejectStatus: state.rejectStatus,
-        loader: loader,
-        downloadedFile: state.downloadedFile,
-        uanUpdate: state.uanUpdate,
-        verificationStateList: state.verificationStateList,
-        verificationCityList: state.verificationCityList,
-        verificationPermanentCityList: state.verificationPermanentCityList,
-      }}
-    >
-      {" "}
-      {props.children}
-    </DocsVerifyContext.Provider>
+    console.log(state),
+    (
+      <DocsVerifyContext.Provider
+        value={{
+          verificationDocsView,
+          personalInfo,
+          addressInfo,
+          contactInformation,
+          bankDetailsData,
+          fetchNominationDetails,
+          fetchPfDetails,
+          approveDocument,
+          disApproveDocument,
+          downloadDocument,
+          updateUANNumber,
+          costCenterSplit,
+          createEmployee,
+          candidateOnBoard,
+          viewEmployee,
+          step5suscessStatus,
+          step6suscessStatus,
+          approveAadharByAdmin,
+          disapproveAadharByAdmin,
+          viewStatesVerification,
+          viewCityVerification,
+          viewPermanentCityVerification,
+          disApproveAadhar: state.disApproveAadhar,
+          step5Status: state.step5Status,
+          aadharStatus: state.aadharStatus,
+          step6Status: state.step6Status,
+          empData: state.empData,
+          onBoardData: state.onBoardData,
+          docsToVerify: state.docsToVerify,
+          createStatus: state.createStatus,
+          costCenter: state.costCenter,
+          personalInfoData: state.personalInfoData,
+          addressInfoData: state.addressInfoData,
+          emergencyInfo: state.emergencyInfo,
+          bankDetails: state.bankDetails,
+          nominationDetails: state.nominationDetails,
+          pfDetails: state.pfDetails,
+          acceptStatus: state.acceptStatus,
+          rejectStatus: state.rejectStatus,
+          loader: loader,
+          downloadedFile: state.downloadedFile,
+          uanUpdate: state.uanUpdate,
+          verificationStateList: state.verificationStateList,
+          verificationCityList: state.verificationCityList,
+          verificationPermanentCityList: state.verificationPermanentCityList,
+        }}
+      >
+        {" "}
+        {props.children}
+      </DocsVerifyContext.Provider>
+    )
   );
 };
