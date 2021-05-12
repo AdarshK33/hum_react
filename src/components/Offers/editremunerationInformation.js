@@ -98,8 +98,12 @@ const EditRemunerationInformation = (props) => {
       setStipenedError(true);
     } else if (
       (user.role === "ADMIN" &&
-        (candidateData.workInformation.contractType !== "Internship" ||
-          workInfoViewData.contractType !== "Internship") &&
+        ((candidateData.workInformation !== null &&
+          candidateData.workInformation !== undefined &&
+          candidateData.workInformation.contractType !== "Internship") ||
+          (workInfoViewData !== null &&
+            workInfoViewData !== undefined &&
+            workInfoViewData.contractType !== "Internship")) &&
         (typeof fixedGross === "undefined" ||
           fixedGross === "" ||
           stipened <= 0 ||
@@ -138,9 +142,28 @@ const EditRemunerationInformation = (props) => {
         fixedGross > 18000
       ) {
         console.log("inside permanent");
+        remunerationinfo = {
+          candidateId: candidateData.candidateInformation.candidateId,
+          fixedGross:
+            fixedGross === undefined || fixedGross === null ? 0 : fixedGross,
+          monthlyBonus:
+            monthlyBonus === undefined || monthlyBonus === null
+              ? 0
+              : monthlyBonus,
+          remunerationId: remunerationViewData
+            ? remunerationViewData.remunerationId
+            : 0,
+          stipend: stipened === undefined || stipened === null ? 0 : stipened,
+        };
+        console.log("remunearion....", remunerationinfo);
         setParmanentGrossLimit(false);
         setFixedGrossError(false);
         setPartTimeGrossLimit(false);
+        remunerationUpdate(remunerationinfo);
+        viewCandidateId(candidateData.candidateInformation.candidateId);
+        remunerationView(candidateData.candidateInformation.candidateId);
+        setDisabled(true);
+        setEditButton(true);
       } else if (
         (candidateData.workInformation.contractType === "Parttime" ||
           workInfoViewData.contractType === "Parttime") &&
@@ -341,7 +364,6 @@ const EditRemunerationInformation = (props) => {
         bonusLimit === false
         // saveclick === false
       ) {
-        alert("hloo");
         remunerationUpdate(remunerationinfo);
         viewCandidateId(candidateData.candidateInformation.candidateId);
         remunerationView(candidateData.candidateInformation.candidateId);
@@ -397,10 +419,13 @@ const EditRemunerationInformation = (props) => {
                           This field cannot be empty
                         </p>
                       ) : ((candidateData &&
-                          candidateData.workInformation &&
+                          candidateData.workInformation !== null &&
+                          candidateData.workInformation !== undefined &&
                           candidateData.workInformation.contractType ===
                             "Parttime") ||
-                          workInfoViewData.contractType === "Parttime") &&
+                          (workInfoViewData !== null &&
+                            workInfoViewData !== undefined &&
+                            workInfoViewData.contractType === "Parttime")) &&
                         (fixedGross < 90 || fixedGross > 200) ? (
                         <p style={{ color: "red" }}>
                           Value should be between 90 - 200{" "}
@@ -479,7 +504,7 @@ const EditRemunerationInformation = (props) => {
                             />
                             {monthlyBonusError && !monthlyBonus ? (
                               <p style={{ color: "red" }}>
-                                admin This field cannot be empty
+                                This field cannot be empty
                               </p>
                             ) : monthlyBonus > 20 ? (
                               <p style={{ color: "red" }}>Maximum Bonus 20 %</p>
