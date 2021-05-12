@@ -59,7 +59,7 @@ const RemunerationInformation = (props) => {
   }, [candidateData.workInformation]);
 
   const submitHandler = (e) => {
-    alert("in sumbit handler");
+    // alert("in sumbit handler");
     console.log("inside submit", candidateData);
     let remunerationinfo;
     e.preventDefault();
@@ -97,7 +97,7 @@ const RemunerationInformation = (props) => {
         (workInfoViewData.contractType === "Permanent" && monthlyBonus > 20) ||
         (workInfoViewData.contractType === "Parttime" && monthlyBonus > 20))
     ) {
-      alert("in admin");
+      // alert("in admin");
       console.log("remuneration Info2", fixedGross, monthlyBonus, stipened);
       setFixedGrossError(true);
       setMonthlyBonusError(true);
@@ -156,7 +156,7 @@ const RemunerationInformation = (props) => {
         (workInfoViewData.contractType === "Parttime" &&
           (fixedGross < 90 || fixedGross > 200)))
     ) {
-      alert("in manager");
+      // alert("in manager");
       console.log("remuneration Info3", fixedGross, monthlyBonus, stipened);
       console.log(
         "workInfoViewData.contractType",
@@ -225,7 +225,7 @@ const RemunerationInformation = (props) => {
         setMonthlyBonusError(false);
       }
     } else {
-      alert("secon else in manager");
+      // alert("secon else in manager");
       console.log("remuneration Info6", fixedGross, monthlyBonus, stipened);
       setStipenedError(false);
       setFixedGrossError(false);

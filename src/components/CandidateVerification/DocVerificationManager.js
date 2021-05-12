@@ -307,7 +307,7 @@ const DocVerification = () => {
                       <td className="buttonMargin1">{item.statusDesc}</td>
                     ) : (
                       <td className="row text-center buttonMargin">
-                        {user.role === "MANAGER" && (
+                        {user.role === "MANAGER" && item.documentType !== 5 && (
                           <button
                             className="approveButton"
                             style={{ opacity: "10px" }}
@@ -320,7 +320,7 @@ const DocVerification = () => {
                           </button>
                         )}
 
-                        {user.role === "MANAGER" && (
+                        {user.role === "MANAGER" && item.documentType !== 5 && (
                           <button
                             className="approveButton ml-4"
                             style={
