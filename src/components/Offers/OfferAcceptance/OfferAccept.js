@@ -280,10 +280,56 @@ const OfferAccept = (props) => {
           </Fragment>
         ) : (
           <Fragment>
-            <Breadcrumb
+            {/* <Breadcrumb
               title="CANDIDATE OFFER ACCEPTANCE"
               parent="onboard-offer"
-            />
+            /> */}{" "}
+            <Fragment>
+              <div className="row">
+                <div className="col-md-8"></div>
+                <div className="col-md-2">
+                  <h6
+                    style={{
+                      fontSize: "16px",
+                      fontWeight: "600",
+                      color: "rgb(0, 110, 187)",
+                      textAlign: "left",
+                    }}
+                  >
+                    Hello, {candidateProfileData.firstName}{" "}
+                    {candidateProfileData.lastName}
+                  </h6>
+                </div>
+                <div className="col-md-2">
+                  <li
+                    className="onhover-dropdown"
+                    style={{ listStyle: "none" }}
+                  >
+                    <div className="media align-items-center">
+                      {"  "}
+                      <img
+                        className="align-self-center pull-right img-50 rounded-circle blur-up lazyloaded"
+                        src={man}
+                        alt="header-user"
+                      />
+                    </div>
+                    <ul className="profile-dropdown onhover-show-div p-20 profile-dropdown-hover">
+                      <li>
+                        <a href="#profile">My Profile</a>
+                      </li>
+
+                      <li
+                        onClick={() => {
+                          candidateLogout();
+                        }}
+                      >
+                        <a href="">Log out</a>
+                      </li>
+                    </ul>
+                  </li>
+                </div>
+              </div>
+            </Fragment>
             <Container className="main-container">
               <h5 className="offerHeading">Candidate Offer Acceptance</h5>
               <Container className="middle-container">
