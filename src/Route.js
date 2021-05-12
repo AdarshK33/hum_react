@@ -76,7 +76,7 @@ import NoDueClearance from "./components/Separation/NoDueClearance";
 import ViewEditRelease from "./components/OfferReleaseandOnboarding/ViewOfferRelease";
 import Documents from "./components/OnBording/Documents";
 import EmpResignation from "./components/employeeSeparation/empResignation";
-import EmployeeSeparationListing from './components/managerSeparation/employeeSeparationListing'
+import EmployeeSeparationListing from "./components/managerSeparation/employeeSeparationListing";
 
 import ViewBonus from "./components/Bonus/ViewBonus";
 const RoutePath = () => {
