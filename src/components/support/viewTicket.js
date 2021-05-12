@@ -389,7 +389,13 @@ const ViewTicket = () => {
         console.log("e.target.value of service group", e.target.value)
     }
 
-    console.log("ticketid list", ticketIdList.ticketStatus)
+    useEffect(() => {
+        if(ticketIdList.firstName === undefined){
+            history.push("./ticketlistingpage")
+        }
+    },[ticketIdList.firstName])
+
+    console.log("ticketid list first name", ticketIdList.firstName)
     return (
         <Fragment>
             <Breadcrumb title="View Ticket" parent="View Ticket" />
