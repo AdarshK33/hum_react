@@ -9,8 +9,9 @@ import { OfferContext } from "../../context/OfferState";
 import { RosterContext } from "../../context/RosterState";
 import { AppContext } from "../../context/AppState";
 import moment from "moment";
+import { MasterFilesContext } from "../../context/MasterFilesState";
 
-const WorkInformation = () => {
+const WorkInformation = (props) => {
   const [state, setState] = useState({
     employmentType: "",
     department: "",
@@ -23,7 +24,12 @@ const WorkInformation = () => {
     internship: "",
     noticePeriod: "",
     managerId: null,
+    expatUser: "",
+    passportNumber: "",
+    nationality: "",
   });
+  const { viewCountries, countryList } = useContext(MasterFilesContext);
+
   const [dateOfJoining, setDateOFJoining] = useState();
   const [dateOfLeaving, setDateOFLeaving] = useState();
   const [costCenter, setCostCenter] = useState("");
@@ -31,6 +37,7 @@ const WorkInformation = () => {
   const [disabled, setDisabled] = useState(false);
   const [saveclick, setSaveclick] = useState(false);
   const [college, setCollege] = useState("");
+  const [workInformationData, setWorkInformationData] = useState({});
 
   const { viewSports, sportsNames } = useContext(ClusterContext);
   const { CostCenter, costCenterList } = useContext(AdminContext);
@@ -65,13 +72,42 @@ const WorkInformation = () => {
     viewContractTypes();
     designationView();
     stateData();
+    viewCountries();
   }, []);
+  useEffect(() => {
+    let data =
+      candidateData !== undefined &&
+      candidateData.workInformation !== undefined &&
+      candidateData.workInformation;
+    if (data !== undefined && data !== null) {
+      setState({
+        employmentType: data.contractType,
+        department: data.department,
+        position: data.position,
+        designation: data.designation,
+        sports: data.sportId !== null ? data.sportId : "",
+        probation: data.probationPeriod,
+        recuritment: data.recruitmentSource,
+        ngoDetail: data.ngoDetails !== null ? data.ngoDetails : "",
+        internship: data.internshipPeriod,
+        noticePeriod: data.noticePeriod,
+        managerId: data.managerId,
+      });
+      if (data.costCentre !== null && data.costCentre !== undefined) {
+        locationView(data.costCentre);
+        setCostCenter(data.costCenter);
+      }
+    }
+    // setWorkInformationData(props.workInfo);
+  }, [candidateData]);
 
   useEffect(() => {
-    setStateValue(locationName.stateId);
-    setCity(locationName.cityId);
-    cityData(locationName.stateId);
-    console.log("state in useEffect", locationName);
+    if (locationName !== null && locationName !== undefined) {
+      setStateValue(locationName.stateId);
+      setCity(locationName.cityId);
+      cityData(locationName.stateId);
+      console.log("state in useEffect", locationName);
+    }
   }, [locationName]);
   // useEffect(() => {
   //   console.log("inside candidateData", candidateData);
@@ -152,6 +188,7 @@ const WorkInformation = () => {
   };
 
   const changeHandler = (e) => {
+    console.log(e.target.value);
     setState({
       ...state,
       [e.target.name]: e.target.value,
@@ -209,6 +246,10 @@ const WorkInformation = () => {
         ngoDetails: state.ngoDetail,
         noticePeriod:
           state.employmentType === "Internship" ? 0 : state.noticePeriod,
+        sportId: state.sports,
+        expatUser: state.expatUser,
+        nationality: state.nationality,
+        passportNumber: state.passportNumber,
       };
     } else if (createCandidateResponse.candidateId && saveclick === true) {
       createData = {
@@ -242,6 +283,10 @@ const WorkInformation = () => {
         ngoDetails: state.ngoDetail,
         noticePeriod:
           state.employmentType === "Internship" ? 0 : state.noticePeriod,
+        sportId: state.sports,
+        expatUser: state.expatUser,
+        nationality: state.nationality,
+        passportNumber: state.passportNumber,
       };
     }
     console.log("createData", createData);
@@ -258,449 +303,526 @@ const WorkInformation = () => {
   };
 
   return (
-    <Fragment>
-      <Form onSubmit={submitHandler}>
-        <Row>
-          <Col sm={3}>
-            <Form.Group>
-              <Form.Label>Company Name</Form.Label>
-              <Form.Control
-                type="text"
-                value={user.company}
-                className="form-input"
-                name="company"
-                readOnly
-              />
-            </Form.Group>
-          </Col>
-          <Col sm={3}>
-            <Form.Group>
-              <Form.Label>Type of Employment</Form.Label>
-              <Form.Control
-                as="select"
-                value={state.employmentType}
-                className="form-input"
-                name="employmentType"
-                onChange={changeHandler}
-                disabled={disabled}
-                required
-              >
-                <option value="">Select Employment Type</option>
-                {shiftContractNames !== null &&
-                  shiftContractNames !== undefined &&
-                  shiftContractNames.length > 0 &&
-                  shiftContractNames.map((item) => {
-                    return (
-                      <option key={item.typeId}>{item.contractType}</option>
-                    );
-                  })}
-              </Form.Control>
-            </Form.Group>
-          </Col>
-          <Col sm={3}>
-            <Form.Group>
-              <Form.Label>Designation</Form.Label>
-              {state.employmentType === "Internship" ? (
-                <Form.Control
-                  type="text"
-                  value="Intern"
-                  className="form-input"
-                  readOnly
-                />
-              ) : (
-                <Form.Control
-                  as="select"
-                  value={state.designation}
-                  className="form-input"
-                  name="designation"
-                  onChange={changeHandler}
-                  disabled={disabled}
-                  required
-                >
-                  <option value="">Select Designation</option>
-                  {designationName !== null &&
-                    designationName !== undefined &&
-                    designationName.length > 0 &&
-                    designationName.map((item) => {
-                      return (
-                        <option key={item.designationId}>
-                          {item.designation}
-                        </option>
-                      );
-                    })}
-                </Form.Control>
-              )}
-            </Form.Group>
-          </Col>
-          <Col sm={3}>
-            <Form.Group>
-              <Form.Label>Department</Form.Label>
-              <Form.Control
-                as="select"
-                value={state.department}
-                className="form-input"
-                name="department"
-                onChange={changeHandler}
-                disabled={disabled}
-                required
-              >
-                {}
-                <option value="">Select Department</option>
-                {departmentName !== null &&
-                  departmentName !== undefined &&
-                  departmentName.length > 0 &&
-                  departmentName.map((item) => {
-                    return (
-                      <option key={item.deptId}>{item.departmentName}</option>
-                    );
-                  })}
-              </Form.Control>
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-          <Col sm={3}>
-            {state.employmentType === "Internship" ? (
-              <Form.Group className="reactDate">
-                <Form.Label>College Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={college}
-                  onChange={(e) => setCollege(e.target.value)}
-                  placeholder="Enter College Name"
-                  className="form-input"
-                  required
-                />
-              </Form.Group>
-            ) : (
-              <Form.Group>
-                <Form.Label>Position</Form.Label>
-                <Form.Control
-                  as="select"
-                  value={state.position}
-                  className="form-input"
-                  name="position"
-                  onChange={changeHandler}
-                  disabled={disabled}
-                  required
-                >
-                  <option value="">Select Position</option>
-                  {designationName !== null &&
-                    designationName !== undefined &&
-                    designationName.length > 0 &&
-                    designationName.map((item) => {
-                      return (
-                        <option key={item.designationId}>
-                          {item.designation}
-                        </option>
-                      );
-                    })}
-                </Form.Control>
-              </Form.Group>
-            )}
-          </Col>
-          <Col sm={3}>
-            <Form.Group>
-              <Form.Label>Cost Center</Form.Label>
-              <Form.Control
-                as="select"
-                value={costCenter}
-                className="form-input"
-                name="costCenter"
-                onChange={costCenterChangeHandler}
-                disabled={disabled}
-                required
-              >
-                <option value="">Select Cost Center</option>
-                {costCenterList !== null &&
-                  costCenterList !== undefined &&
-                  costCenterList.length > 0 &&
-                  costCenterList.map((item) => {
-                    return (
-                      <option key={item.costCenterId}>
-                        {item.costCentreName}
-                      </option>
-                    );
-                  })}
-              </Form.Control>
-            </Form.Group>
-          </Col>
-          <Col sm={3}>
-            <Form.Group className="reactDate">
-              <Form.Label>Manager Name/Id</Form.Label>
-              {managerList === null ? (
-                <Form.Control
-                  type="text"
-                  value={user.employeeId}
-                  className="form-input"
-                  readOnly
-                />
-              ) : (
-                <Form.Control
-                  as="select"
-                  value={state.managerId}
-                  className="form-input"
-                  name="managerId"
-                  onChange={changeHandler}
-                  disabled={disabled}
-                  required
-                >
-                  <option value="">Select ManagerId</option>
-                  {managerList.map((item, i) => {
-                    return (
-                      <option key={i} value={item.employeeId}>
-                        {item.firstName}-{item.employeeId}
-                      </option>
-                    );
-                  })}
-                </Form.Control>
-              )}
-            </Form.Group>
-          </Col>
-          <Col sm={3}>
-            <Form.Group>
-              <Form.Label>Sports</Form.Label>
-              {state.employmentType === "Internship" ? (
-                <Form.Control
-                  type="text"
-                  value="N/A"
-                  readOnly
-                  className="form-input"
-                />
-              ) : (
-                <Form.Control
-                  as="select"
-                  value={state.sports}
-                  className="form-input"
-                  name="sports"
-                  onChange={changeHandler}
-                  disabled={disabled}
-                  required
-                >
-                  <option value="">Select Sports</option>
-                  {sportsNames !== null &&
-                    sportsNames !== undefined &&
-                    sportsNames.length > 0 &&
-                    sportsNames.map((item) => {
-                      return (
-                        <option key={item.sportId} value={item.sportId}>
-                          {item.sportName}
-                        </option>
-                      );
-                    })}
-                </Form.Control>
-              )}
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-          <Col sm={3}>
-            <Form.Group>
-              <Form.Label>Work Location state</Form.Label>
-              <Form.Control
-                as="select"
-                value={costCenter === "" ? "" : stateValue}
-                className="form-input"
-                onChange={stateHandler}
-                disabled={disabled}
-                required
-              >
-                <option value="">Select State</option>
-                {stateList !== null &&
-                  stateList !== undefined &&
-                  stateList.map((item, i) => {
-                    return (
-                      <option key={i} value={item.stateId}>
-                        {item.stateName}
-                      </option>
-                    );
-                  })}
-              </Form.Control>
-            </Form.Group>
-          </Col>
-          <Col sm={3}>
-            <Form.Group>
-              <Form.Label>Work Location City</Form.Label>
-              <Form.Control
-                as="select"
-                value={city}
-                className="form-input"
-                onChange={cityHandler}
-                disabled={disabled}
-                required
-              >
-                <option value="">Select City</option>
-                {cityList !== null &&
-                  cityList !== undefined &&
-                  cityList.map((item, i) => {
-                    return (
-                      <option key={i} value={item.cityId}>
-                        {item.locationName}/{item.cityName}
-                      </option>
-                    );
-                  })}
-              </Form.Control>
-            </Form.Group>
-          </Col>
-
-          <Col sm={3}>
-            <Form.Group className="reactDate">
-              <Form.Label>Date of Joining</Form.Label>
-              <DatePicker
-                className="form-control form-input"
-                selected={dateOfJoining}
-                required
-                onChange={(e) => dateOfJoiningHandler(e)}
-                minDate={new Date()}
-                dateFormat="yyyy-MM-dd"
-                placeholderText="Date of Joining"
-                disabled={disabled}
-              />
-            </Form.Group>
-          </Col>
-          <Col sm={3}>
-            {state.employmentType === "Internship" ? (
-              <Form.Group className="reactDate">
-                <Form.Label>Date of Leaving</Form.Label>
-                <DatePicker
-                  className="form-control form-input"
-                  selected={dateOfLeaving}
-                  required
-                  onChange={(e) => dateOfLeavingHandler(e)}
-                  minDate={dateOfJoining}
-                  dateFormat="yyyy-MM-dd"
-                  placeholderText="Date of Leaving"
-                  disabled={disabled}
-                />
-              </Form.Group>
-            ) : (
-              <Form.Group>
-                <Form.Label>Recuritment Source</Form.Label>
-                <Form.Control
-                  as="select"
-                  value={state.recuritment}
-                  className="form-input"
-                  name="recuritment"
-                  onChange={changeHandler}
-                  disabled={disabled}
-                  required
-                >
-                  <option value="">Select Recuritment Source</option>
-                  <option>Employee Referral</option>
-                  <option>LinkedIn</option>
-                  <option>Monster</option>
-                  <option>Naukri</option>
-                  <option>Others</option>
-                  <option>Recruitment Agency</option>
-                  <option>NGO</option>
-                </Form.Control>
-              </Form.Group>
-            )}
-          </Col>
-        </Row>
-        <Row>
-          <Col sm={3}>
-            {state.employmentType === "Internship" ? (
-              <Form.Group>
-                <Form.Label>Internship Duration</Form.Label>
-                <Form.Control
-                  as="select"
-                  value={state.internship}
-                  className="form-input"
-                  name="internship"
-                  onChange={changeHandler}
-                  disabled={disabled}
-                  required
-                >
-                  <option value="">Select Internship Duration</option>
-                  <option value="1">1 Month</option>
-                  <option value="2">2 Month</option>
-                  <option value="3">3 Month</option>
-                  <option value="4">4 Month</option>
-                  <option value="5">5 Month</option>
-                  <option value="6">6 Month</option>
-                </Form.Control>
-              </Form.Group>
-            ) : (
-              <Form.Group>
-                <Form.Label>Notice Period</Form.Label>
-                <Form.Control
-                  as="select"
-                  value={state.noticePeriod}
-                  className="form-input"
-                  name="noticePeriod"
-                  onChange={changeHandler}
-                  disabled={disabled}
-                  required
-                >
-                  <option value="">Select Notice Period</option>
-                  <option value="1">1 Month</option>
-                  <option value="2">2 Month</option>
-                  <option value="3">3 Month</option>
-                </Form.Control>
-              </Form.Group>
-            )}
-          </Col>
-          {state.employmentType === "Internship" ? (
-            ""
-          ) : (
+    console.log(candidateData.workInformation),
+    (
+      <Fragment>
+        <Form onSubmit={submitHandler}>
+          <Row>
             <Col sm={3}>
               <Form.Group>
-                <Form.Label>Probation Period</Form.Label>
+                <Form.Label>Company Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={user.company}
+                  className="form-input"
+                  name="company"
+                  readOnly
+                />
+              </Form.Group>
+            </Col>
+            <Col sm={3}>
+              <Form.Group>
+                <Form.Label>Type of Employment</Form.Label>
+                {candidateData.workInformation !== undefined &&
+                candidateData.workInformation !== null ? (
+                  <Form.Control
+                    type="text"
+                    value={state.employmentType}
+                    className="form-control form-input"
+                    readOnly
+                  ></Form.Control>
+                ) : (
+                  <Form.Control
+                    as="select"
+                    value={state.employmentType}
+                    className="form-input"
+                    name="employmentType"
+                    onChange={changeHandler}
+                    disabled={disabled}
+                    required
+                  >
+                    <option value="">Select Employment Type</option>
+                    {shiftContractNames !== null &&
+                      shiftContractNames !== undefined &&
+                      shiftContractNames.length > 0 &&
+                      shiftContractNames.map((item) => {
+                        return (
+                          <option key={item.typeId}>{item.contractType}</option>
+                        );
+                      })}
+                  </Form.Control>
+                )}
+              </Form.Group>
+            </Col>
+
+            <Col sm={3}>
+              <Form.Group>
+                <Form.Label>Designation</Form.Label>
+                {state.employmentType === "Internship" ? (
+                  <Form.Control
+                    type="text"
+                    value="Intern"
+                    className="form-input"
+                    readOnly
+                  />
+                ) : (
+                  <Form.Control
+                    as="select"
+                    value={state.designation}
+                    className="form-input"
+                    name="designation"
+                    onChange={changeHandler}
+                    disabled={disabled}
+                    required
+                  >
+                    <option value="">Select Designation</option>
+                    {designationName !== null &&
+                      designationName !== undefined &&
+                      designationName.length > 0 &&
+                      designationName.map((item) => {
+                        return (
+                          <option key={item.designationId}>
+                            {item.designation}
+                          </option>
+                        );
+                      })}
+                  </Form.Control>
+                )}
+              </Form.Group>
+            </Col>
+
+            <Col sm={3}>
+              <Form.Group>
+                <Form.Label>Department</Form.Label>
                 <Form.Control
                   as="select"
-                  value={state.probation}
+                  value={state.department}
                   className="form-input"
-                  name="probation"
+                  name="department"
                   onChange={changeHandler}
                   disabled={disabled}
                   required
                 >
-                  <option value="">Select Probation</option>
-                  <option value="1">1 Month</option>
-                  <option value="2">2 Month</option>
-                  <option value="3">3 Month</option>
+                  {}
+                  <option value="">Select Department</option>
+                  {departmentName !== null &&
+                    departmentName !== undefined &&
+                    departmentName.length > 0 &&
+                    departmentName.map((item) => {
+                      return (
+                        <option key={item.deptId}>{item.departmentName}</option>
+                      );
+                    })}
                 </Form.Control>
-              </Form.Group>
-            </Col>
-          )}
-        </Row>
-        {state.recuritment === "NGO" ? (
-          <Row>
-            <Col sm={12}>
-              <Form.Group>
-                <Form.Label>Enter NGO Detail</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={state.ngoDetail}
-                  className="form-input"
-                  disabled={disabled}
-                  onChange={changeHandler}
-                  name="ngoDetail"
-                  placeholder="Enter NGO Detail"
-                  required
-                />
               </Form.Group>
             </Col>
           </Row>
-        ) : (
-          ""
-        )}
-        <Row>
-          <Col sm={4}></Col>
-          <Col sm={2}>
-            <Button type="submit">Save</Button>
-          </Col>
-          {editButton === true ? (
-            <Col sm={2}>
-              <Button onClick={editHandler}>Edit</Button>
+          <Row>
+            <Col sm={3}>
+              {state.employmentType === "Internship" ? (
+                <Form.Group className="reactDate">
+                  <Form.Label>College Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={college}
+                    onChange={(e) => setCollege(e.target.value)}
+                    placeholder="Enter College Name"
+                    className="form-input"
+                    required
+                  />
+                </Form.Group>
+              ) : (
+                <Form.Group>
+                  <Form.Label>Position</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={state.position}
+                    className="form-input"
+                    name="position"
+                    onChange={changeHandler}
+                    disabled={disabled}
+                    required
+                  >
+                    <option value="">Select Position</option>
+                    {designationName !== null &&
+                      designationName !== undefined &&
+                      designationName.length > 0 &&
+                      designationName.map((item) => {
+                        return (
+                          <option key={item.designationId}>
+                            {item.designation}
+                          </option>
+                        );
+                      })}
+                  </Form.Control>
+                </Form.Group>
+              )}
             </Col>
+            <Col sm={3}>
+              <Form.Group>
+                <Form.Label>Cost Center</Form.Label>
+                <Form.Control
+                  as="select"
+                  value={costCenter}
+                  className="form-input"
+                  name="costCenter"
+                  onChange={costCenterChangeHandler}
+                  disabled={disabled}
+                  required
+                >
+                  <option value="">Select Cost Center</option>
+                  {costCenterList !== null &&
+                    costCenterList !== undefined &&
+                    costCenterList.length > 0 &&
+                    costCenterList.map((item) => {
+                      return (
+                        <option key={item.costCenterId}>
+                          {item.costCentreName}
+                        </option>
+                      );
+                    })}
+                </Form.Control>
+              </Form.Group>
+            </Col>
+            <Col sm={3}>
+              <Form.Group className="reactDate">
+                <Form.Label>Manager Name/Id</Form.Label>
+                {managerList === null ? (
+                  <Form.Control
+                    type="text"
+                    value={user.employeeId}
+                    className="form-input"
+                    readOnly
+                  />
+                ) : (
+                  <Form.Control
+                    as="select"
+                    value={state.managerId}
+                    className="form-input"
+                    name="managerId"
+                    onChange={changeHandler}
+                    disabled={disabled}
+                    required
+                  >
+                    <option value="">Select ManagerId</option>
+                    {managerList.map((item, i) => {
+                      return (
+                        <option key={i} value={item.employeeId}>
+                          {item.firstName}-{item.employeeId}
+                        </option>
+                      );
+                    })}
+                  </Form.Control>
+                )}
+              </Form.Group>
+            </Col>
+            <Col sm={3}>
+              <Form.Group>
+                <Form.Label>Sports</Form.Label>
+                {state.employmentType === "Internship" ? (
+                  <Form.Control
+                    type="text"
+                    value="N/A"
+                    readOnly
+                    className="form-input"
+                  />
+                ) : (
+                  <Form.Control
+                    as="select"
+                    value={state.sports}
+                    className="form-input"
+                    name="sports"
+                    onChange={changeHandler}
+                    disabled={disabled}
+                    required
+                  >
+                    <option value="">Select Sports</option>
+                    {sportsNames !== null &&
+                      sportsNames !== undefined &&
+                      sportsNames.length > 0 &&
+                      sportsNames.map((item) => {
+                        return (
+                          <option key={item.sportId} value={item.sportId}>
+                            {item.sportName}
+                          </option>
+                        );
+                      })}
+                  </Form.Control>
+                )}
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row>
+            <Col sm={3}>
+              <Form.Group>
+                <Form.Label>Work Location state</Form.Label>
+                <Form.Control
+                  as="select"
+                  value={costCenter === "" ? "" : stateValue}
+                  className="form-input"
+                  onChange={stateHandler}
+                  disabled={disabled}
+                  required
+                >
+                  <option value="">Select State</option>
+                  {stateList !== null &&
+                    stateList !== undefined &&
+                    stateList.map((item, i) => {
+                      return (
+                        <option key={i} value={item.stateId}>
+                          {item.stateName}
+                        </option>
+                      );
+                    })}
+                </Form.Control>
+              </Form.Group>
+            </Col>
+            <Col sm={3}>
+              <Form.Group>
+                <Form.Label>Work Location City</Form.Label>
+                <Form.Control
+                  as="select"
+                  value={city}
+                  className="form-input"
+                  onChange={cityHandler}
+                  disabled={disabled}
+                  required
+                >
+                  <option value="">Select City</option>
+                  {cityList !== null &&
+                    cityList !== undefined &&
+                    cityList.map((item, i) => {
+                      return (
+                        <option key={i} value={item.cityId}>
+                          {item.locationName}/{item.cityName}
+                        </option>
+                      );
+                    })}
+                </Form.Control>
+              </Form.Group>
+            </Col>
+
+            <Col sm={3}>
+              <Form.Group className="reactDate">
+                <Form.Label>Date of Joining</Form.Label>
+                <DatePicker
+                  className="form-control form-input"
+                  selected={dateOfJoining}
+                  required
+                  onChange={(e) => dateOfJoiningHandler(e)}
+                  minDate={new Date()}
+                  dateFormat="yyyy-MM-dd"
+                  placeholderText="Date of Joining"
+                  disabled={disabled}
+                />
+              </Form.Group>
+            </Col>
+            <Col sm={3}>
+              {state.employmentType === "Internship" ? (
+                <Form.Group className="reactDate">
+                  <Form.Label>Date of Leaving</Form.Label>
+                  <DatePicker
+                    className="form-control form-input"
+                    selected={dateOfLeaving}
+                    required
+                    onChange={(e) => dateOfLeavingHandler(e)}
+                    minDate={dateOfJoining}
+                    dateFormat="yyyy-MM-dd"
+                    placeholderText="Date of Leaving"
+                    disabled={disabled}
+                  />
+                </Form.Group>
+              ) : (
+                <Form.Group>
+                  <Form.Label>Recuritment Source</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={state.recuritment}
+                    className="form-input"
+                    name="recuritment"
+                    onChange={changeHandler}
+                    disabled={disabled}
+                    required
+                  >
+                    <option value="">Select Recuritment Source</option>
+                    <option>Employee Referral</option>
+                    <option>LinkedIn</option>
+                    <option>Monster</option>
+                    <option>Naukri</option>
+                    <option>Others</option>
+                    <option>Recruitment Agency</option>
+                    <option>NGO</option>
+                  </Form.Control>
+                </Form.Group>
+              )}
+            </Col>
+          </Row>
+          <Row>
+            <Col sm={3}>
+              {state.employmentType === "Internship" ? (
+                <Form.Group>
+                  <Form.Label>Internship Duration</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={state.internship}
+                    className="form-input"
+                    name="internship"
+                    onChange={changeHandler}
+                    disabled={disabled}
+                    required
+                  >
+                    <option value="">Select Internship Duration</option>
+                    <option value="1">1 Month</option>
+                    <option value="2">2 Month</option>
+                    <option value="3">3 Month</option>
+                    <option value="4">4 Month</option>
+                    <option value="5">5 Month</option>
+                    <option value="6">6 Month</option>
+                  </Form.Control>
+                </Form.Group>
+              ) : (
+                <Form.Group>
+                  <Form.Label>Notice Period</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={state.noticePeriod}
+                    className="form-input"
+                    name="noticePeriod"
+                    onChange={changeHandler}
+                    disabled={disabled}
+                    required
+                  >
+                    <option value="">Select Notice Period</option>
+                    <option value="1">1 Month</option>
+                    <option value="2">2 Month</option>
+                    <option value="3">3 Month</option>
+                  </Form.Control>
+                </Form.Group>
+              )}
+            </Col>
+            {state.employmentType === "Internship" ? (
+              ""
+            ) : (
+              <Col sm={3}>
+                <Form.Group>
+                  <Form.Label>Probation Period</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={state.probation}
+                    className="form-input"
+                    name="probation"
+                    onChange={changeHandler}
+                    disabled={disabled}
+                    required
+                  >
+                    <option value="">Select Probation</option>
+                    <option value="1">1 Month</option>
+                    <option value="2">2 Month</option>
+                    <option value="3">3 Month</option>
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+            )}
+            {(state.employmentType === "Internship" ||
+              state.employmentType === "Permanent" ||
+              state.employmentType === "Parttime") && (
+              <Col sm={3}>
+                <Form.Group>
+                  <Form.Label>Local Expert</Form.Label>
+                  <Form.Control
+                    as="select"
+                    className="form-input"
+                    name="expatUser"
+                    value={state.expatUser}
+                    onChange={changeHandler}
+                  >
+                    <option>Seclect </option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+            )}
+            {state.expatUser == 1 && (
+              <Col sm={3}>
+                <Form.Group>
+                  <Form.Label>Passport Number</Form.Label>
+                  <Form.Control
+                    type="text"
+                    className="form-input"
+                    value={state.passportNumber}
+                    name="passportNumber"
+                    onChange={changeHandler}
+                  />
+                </Form.Group>
+              </Col>
+            )}
+          </Row>
+          <Row>
+            {state.expatUser == 1 && (
+              <Col sm={3}>
+                <Form.Group>
+                  <Form.Label>Nationality</Form.Label>
+                  <Form.Control
+                    as="select"
+                    className="form-input"
+                    value={state.nationality}
+                    name="nationality"
+                    onChange={changeHandler}
+                  >
+                    <option>Select Nationality</option>
+                    {countryList !== null &&
+                      countryList !== undefined &&
+                      countryList.map((item) => {
+                        return (
+                          <option key={item.countryId}>
+                            {item.nationality}
+                          </option>
+                        );
+                      })}
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+            )}
+          </Row>
+          {state.recuritment === "NGO" ? (
+            <Row>
+              <Col sm={12}>
+                <Form.Group>
+                  <Form.Label>Enter NGO Detail</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={state.ngoDetail}
+                    className="form-input"
+                    disabled={disabled}
+                    onChange={changeHandler}
+                    name="ngoDetail"
+                    placeholder="Enter NGO Detail"
+                    required
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
           ) : (
             ""
           )}
-        </Row>
-      </Form>
-    </Fragment>
+
+          <Row>
+            <Col sm={4}></Col>
+            <Col sm={2}>
+              <Button type="submit">Save</Button>
+            </Col>
+            {editButton === true ? (
+              <Col sm={2}>
+                <Button onClick={editHandler}>Edit</Button>
+              </Col>
+            ) : (
+              ""
+            )}
+          </Row>
+        </Form>
+      </Fragment>
+    )
   );
 };
 

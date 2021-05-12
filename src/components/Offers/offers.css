@@ -116,3 +116,9 @@ span.boldText {
   -webkit-appearance: none;
   appearance: none;
 }
+.rehire {
+  background-color: #006ebb;
+}
+.not-rehire {
+  background-color: rgb(223, 28, 28) !important;
+}

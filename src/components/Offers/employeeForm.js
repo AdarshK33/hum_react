@@ -11,7 +11,7 @@ const EmployeeForm = (props) => {
   const [state, setState] = useState({
     firstName: "",
     lastName: "",
-    email: "",
+    personalEmail: "",
   });
 
   const [yesChecked, setYesChecked] = useState(true);
@@ -27,8 +27,10 @@ const EmployeeForm = (props) => {
   const [desgination1, setDesignation1] = useState("");
   const [desgination2, setDesignation2] = useState("");
   const [modal, setModal] = useState(false);
+  const [eligibleToReHire, setRehire] = useState(false);
   const [saveclick, setSaveclick] = useState(false);
-
+  const [yesValue, setYesValue] = useState();
+  const [firstClick, setFirstClick] = useState(false);
   let history = useHistory();
 
   const {
@@ -45,7 +47,7 @@ const EmployeeForm = (props) => {
   } = useContext(OfferContext);
 
   const handleClose = () => setModal(false);
-  const handleShow = () => setModal(true);
+  // const handleShow = () => setModal(true);
 
   useEffect(() => {
     setRefEmail1(
@@ -103,8 +105,21 @@ const EmployeeForm = (props) => {
   }, []);
 
   useEffect(() => {
-    if (searchData !== null && Object.keys(searchData).length > 0) {
-      setModal(true);
+    if (
+      searchData !== null &&
+      Object.keys(searchData).length > 0 &&
+      searchData[0] !== undefined &&
+      firstClick === true
+    ) {
+      setFirstClick(false);
+      if (searchData[0].eligibleToReHire === 0) {
+        setRehire(false);
+        setModal(true);
+      }
+      if (searchData[0].eligibleToReHire === 1) {
+        setRehire(true);
+        setModal(true);
+      }
       console.log("searchData in if", searchData);
     }
     console.log("searchData out if", searchData);
@@ -116,15 +131,17 @@ const EmployeeForm = (props) => {
   const searchDataHandler = () => {
     if (searchValue !== null) {
       searchByAadhar(searchValue);
+      setFirstClick(true);
     }
   };
-  /* const callback = (yesValue) => {
-    console.log("yesValue", yesValue);
-    setState({
-      firstName: searchData.firstName,
-      lastName: searchData.lastName,
-      email: searchData.personalEmail,
-    });
+  useEffect(() => {
+    if (
+      searchData !== undefined &&
+      searchData[0] !== undefined &&
+      yesValue === true
+    ) {
+      setState(searchData[0]);
+    }
     searchData.candidateReferences !== null &&
       searchData.candidateReferences !== undefined &&
       searchData.candidateReferences.map((item) => {
@@ -137,7 +154,36 @@ const EmployeeForm = (props) => {
           setDesignation2(item[1].designation)
         );
       });
-  }; */
+  }, [yesValue, searchData]);
+  const callback = (yesValue) => {
+    setYesValue(yesValue);
+    console.log("yesValue", yesValue);
+    if (yesValue == false) {
+      setState([]);
+      setTimeout(() => {
+        history.push("/offer-release-list");
+      }, 1000);
+    }
+    // console.log(searchData);
+    // setState(
+    //   searchData
+    //   // firstName: searchData.firstName,
+    //   // lastName: searchData.lastName,
+    //   // email: searchData.personalEmail,
+    // );
+    // searchData.candidateReferences !== null &&
+    //   searchData.candidateReferences !== undefined &&
+    //   searchData.candidateReferences.map((item) => {
+    //     return (
+    //       setEmpName1(item[0].employeeName),
+    //       setEmpName2(item[1].employeeName),
+    //       setRefEmail1(item[0].email),
+    //       setRefEmail2(item[1].email),
+    //       setDesignation1(item[0].designation),
+    //       setDesignation2(item[1].designation)
+    //     );
+    //   });
+  };
 
   const showOneMoreRefer = () => {
     setSecondRef(true);
@@ -247,9 +293,10 @@ const EmployeeForm = (props) => {
         nationality: null,
         panDoc: null,
         panNumber: null,
-        personalEmail: state.email,
+        personalEmail: state.personalEmail,
         photo: null,
         refered: true,
+        rehired: yesValue === true ? true : false,
         status: 1,
         verificationStatus: 0,
       };
@@ -287,9 +334,11 @@ const EmployeeForm = (props) => {
         nationality: null,
         panDoc: null,
         panNumber: null,
-        personalEmail: state.email,
+        personalEmail: state.personalEmail,
         photo: null,
         refered: true,
+        rehired: yesValue === true ? true : false,
+
         status: 1,
         verificationStatus: 0,
       };
@@ -299,7 +348,73 @@ const EmployeeForm = (props) => {
     console.log("firstNameError info", firstNameError, lastNameError);
     console.log("saveclick", saveclick);
     console.log("createCandidateResponse saveclick", createCandidateResponse);
-    if (firstNameError === false && lastNameError === false) {
+    var sameEmail;
+    var validEmail1;
+    var validEmail2;
+    let refValue =
+      searchEmpData1 === null || searchEmpData2 === null ? false : true;
+    if (
+      yesChecked === true &&
+      searchEmpData1 !== null &&
+      searchEmpData2 !== null
+    ) {
+      if (searchEmpData1.email === searchEmpData2.email) {
+        sameEmail = true;
+      } else {
+        sameEmail = false;
+      }
+    } else {
+      sameEmail = false;
+    }
+    if (yesChecked === true && searchEmpData1 !== null) {
+      let EmailId = searchEmpData1.email;
+      console.log(searchEmpData2);
+      if (
+        searchEmpData1.email !== undefined &&
+        searchEmpData1.email !== null &&
+        searchEmpData1.email.length > 0 &&
+        searchEmpData1.email.includes("decathlon.com")
+      ) {
+        console.log("inside.........");
+        validEmail1 = true;
+      } else {
+        validEmail1 = false;
+      }
+    } else {
+      validEmail1 = true;
+    }
+
+    if (
+      yesChecked === true &&
+      searchEmpData2 !== null &&
+      searchEmpData2.email !== undefined &&
+      searchEmpData1.email !== null &&
+      searchEmpData2.email.length > 0
+    ) {
+      if (searchEmpData2.email.includes("decathlon.com")) {
+        validEmail2 = true;
+      } else {
+        validEmail2 = false;
+      }
+    } else {
+      validEmail2 = true;
+    }
+    console.log("emp...", searchEmpData1);
+    console.log("emp2...", searchEmpData2);
+    console.log("refValue...........", refValue);
+    console.log("sameemail..................", sameEmail);
+    console.log("validEmail1.......", validEmail1);
+    console.log("validEmail2.............", validEmail2);
+    // console.log("empdata.......", searchEmpData1.length);
+    if (
+      firstNameError === false &&
+      lastNameError === false &&
+      refValue === true &&
+      sameEmail === false &&
+      validEmail1 === true &&
+      validEmail2 === true
+    ) {
+      console.log("inif...........");
       if (
         saveclick === true &&
         createCandidateResponse &&
@@ -332,7 +447,7 @@ const EmployeeForm = (props) => {
           <Col sm={4}>
             <Form.Group>
               <Form.Label>Search by Account Number/Aadhar Number</Form.Label>
-              <div className="faq-form">
+              <div className="faq-form ">
                 <input
                   className="form-control searchButton"
                   type="text"
@@ -349,9 +464,10 @@ const EmployeeForm = (props) => {
             </Form.Group>
           </Col>
           <RehiredModal
+            eligibleToReHire={eligibleToReHire}
             modal={modal}
             handleClose={handleClose}
-            /*  callback={callback} */
+            callback={callback}
           />
         </Row>
         <Row>
@@ -391,8 +507,8 @@ const EmployeeForm = (props) => {
               <Form.Control
                 type="email"
                 className="form-input"
-                name="email"
-                value={state.email}
+                name="personalEmail"
+                value={state.personalEmail}
                 onChange={changeHandler}
                 required
                 placeholder="Personal Email ID"
@@ -553,7 +669,7 @@ const EmployeeForm = (props) => {
           <Col sm={2}>
             <Button type="submit">Save</Button>
           </Col>
-          {editButton === true ? (
+          {editButton === true && createCandidateResponse !== null ? (
             <Col sm={2}>
               <Button onClick={editHandler}>Edit</Button>
             </Col>
