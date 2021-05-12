@@ -473,10 +473,10 @@ const ViewWorkInformation = () => {
             state.employmentType === "Parttime") && (
             <Col sm={3}>
               <Form.Group>
-                <Form.Label>Local Expert</Form.Label>
+                <Form.Label>Local Expact</Form.Label>
                 <Form.Control
                   as="select"
-                  className="form-input"
+                  className="form-input disable-arrow"
                   name="expatUser"
                   value={state.expatUser}
                   disabled={true}
@@ -510,7 +510,7 @@ const ViewWorkInformation = () => {
                 <Form.Label>Nationality</Form.Label>
                 <Form.Control
                   as="select"
-                  className="form-input"
+                  className="form-input disable-arrow"
                   value={state.nationality}
                   name="nationality"
                   disabled={true}

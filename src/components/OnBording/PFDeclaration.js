@@ -65,7 +65,6 @@ const PFDeclaration = (props) => {
 
   const [nomineeAddressError, setNomineeAddressError] = useState(false);
   const [state, setState] = useState({
-    uanNumber: "",
     form11: "",
     form2epf: "",
     formf: "",
@@ -81,6 +80,7 @@ const PFDeclaration = (props) => {
     nomineeRelationship: "",
     nomineeAddress: "",
   });
+  const [uanNumber, setUanNumber] = useState();
   const [epfPassbookCopy, setEpfPassbookCopy] = useState("");
   const [required, setRequired] = useState(true);
   const [firstJobError, setFirstJobError] = useState(false);
@@ -132,10 +132,15 @@ const PFDeclaration = (props) => {
             setFormFUploade(true);
           }
           setState({
-            uanNumber: pfDeclarationView.uanNumber,
             form11: form11Doc,
             form2epf: form2epfDoc,
             formf: formFDoc,
+          });
+          setNomineeDOB();
+          setNominee({
+            nomineeAddress: "",
+            nomineeName: "",
+            nomineeRelationship: "",
           });
         });
         console.log(
@@ -145,39 +150,6 @@ const PFDeclaration = (props) => {
           formFDoc,
           state
         );
-      } else {
-        setState({
-          uanNumber: pfDeclarationView.uanNumber,
-          form11: form11Doc,
-          form2epf: form2epfDoc,
-          formf: formFDoc,
-        });
-      }
-      if (
-        pfDeclarationView.pfNomination !== null &&
-        pfDeclarationView.pfNomination !== undefined
-      ) {
-        setNomineeValue(pfDeclarationView.pfNomination.nomineeId);
-      }
-
-      console.log(
-        "documents prefill 1",
-        form11Doc,
-        form2epfDoc,
-        formFDoc,
-        state
-      );
-      if (
-        pfDeclarationView.pfNomination !== null &&
-        pfDeclarationView.pfNomination !== undefined &&
-        pfDeclarationView.pfNominationHoldDeath === false
-      ) {
-        setNomineeDOB(new Date(pfDeclarationView.pfNomination.dateOfBirth));
-        setNominee({
-          nomineeAddress: pfDeclarationView.pfNomination.address,
-          nomineeName: pfDeclarationView.pfNomination.nomineeName,
-          nomineeRelationship: pfDeclarationView.pfNomination.relationship,
-        });
       }
     }
   }, [documentViewData, pfDeclarationView]);
@@ -261,6 +233,45 @@ const PFDeclaration = (props) => {
         );
         setDeclarationIdValue(pfDeclarationView.declarationId);
       }
+      if (
+        pfDeclarationView.pfNomination !== null &&
+        pfDeclarationView.pfNomination !== undefined &&
+        pfDeclarationView.pfNomination.nomineeId !== undefined
+      ) {
+        console.log(
+          "pfDeclarationView.pfNomination.nomineeId",
+          pfDeclarationView.pfNomination.nomineeId
+        );
+        setNomineeValue(pfDeclarationView.pfNomination.nomineeId);
+      }
+
+      if (
+        pfDeclarationView.pfNomination !== null &&
+        pfDeclarationView.pfNomination !== undefined &&
+        pfDeclarationView.pfNominationHoldDeath === false
+      ) {
+        setNomineeDOB(new Date(pfDeclarationView.pfNomination.dateOfBirth));
+        setNominee({
+          nomineeAddress: pfDeclarationView.pfNomination.address,
+          nomineeName: pfDeclarationView.pfNomination.nomineeName,
+          nomineeRelationship: pfDeclarationView.pfNomination.relationship,
+        });
+        setState({
+          form11: "",
+          form2epf: "",
+          formf: "",
+        });
+      }
+
+      if (
+        pfDeclarationView !== null &&
+        pfDeclarationView !== undefined &&
+        pfDeclarationView.uanNumber !== undefined
+      ) {
+        console.log("pfDeclarationView.uanNumber", pfDeclarationView.uanNumber);
+        setUanNumber(pfDeclarationView.uanNumber);
+      }
+
       // if (pfDeclarationView.uanNumber !== undefined) {
       //   console.log("uab number");
       //   setState({ uanNumber: pfDeclarationView.uanNumber });
@@ -282,10 +293,10 @@ const PFDeclaration = (props) => {
   };
   const UanNumberValidation = () => {
     if (
-      state.uanNumber !== null &&
-      state.uanNumber !== undefined &&
-      state.uanNumber !== "" &&
-      state.uanNumber.length == 12
+      uanNumber !== null &&
+      uanNumber !== undefined &&
+      uanNumber !== "" &&
+      uanNumber.length == 12
     ) {
       console.log("uan number");
       setUanNumberError(false);
@@ -478,7 +489,7 @@ const PFDeclaration = (props) => {
           firstJob: firstJobYes ? true : false,
           memberOfPensionScheme: memberOfPensionSchemeYes ? true : false,
           pfNominationHoldDeath: pfNominationHoldDeathYes ? true : false,
-          uanNumber: state.uanNumber,
+          uanNumber: uanNumber,
           pfNomination: {
             address: nominee.nomineeAddress,
             dateOfBirth: moment(nomineeDOB).format("YYYY-MM-DD"),
@@ -504,7 +515,7 @@ const PFDeclaration = (props) => {
           firstJob: firstJobYes ? true : false,
           memberOfPensionScheme: memberOfPensionSchemeYes ? true : false,
           pfNominationHoldDeath: pfNominationHoldDeathYes ? true : false,
-          uanNumber: state.uanNumber,
+          uanNumber: uanNumber,
           pfNomination: {
             address: nominee.nomineeAddress,
             dateOfBirth: moment(nomineeDOB).format("YYYY-MM-DD"),
@@ -533,7 +544,8 @@ const PFDeclaration = (props) => {
     setContributingPrevOrgNo(e.target.checked);
     setMemberOfPensionSchemeNo(e.target.checked);
     setContributingPrevOrgYes(!e.target.checked);
-    setState({ uanNumber: "" });
+    // setState({ uanNumber: "" });
+    setUanNumber("");
     setMemberOfPensionSchemeYes(!e.target.checked);
     {
       required ? setRequired(!required) : setRequired(required);
@@ -561,7 +573,8 @@ const PFDeclaration = (props) => {
   const handleContributingPrevOrgNoChange = (e) => {
     setContributingPrevOrgNo(e.target.checked);
     setContributingPrevOrgYes(!e.target.checked);
-    setState({ uanNumber: "" });
+    // setState({ uanNumber: "" });
+    setUanNumber("");
     {
       required ? setRequired(!required) : setRequired(required);
     }
@@ -853,7 +866,7 @@ const PFDeclaration = (props) => {
                 required
                 disabled={contributingPrevOrgNo}
                 name="uanNumber"
-                value={state.uanNumber}
+                value={uanNumber}
                 onChange={(e) => changeHandler(e)}
               />
             </Form.Group>
