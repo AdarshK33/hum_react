@@ -59,6 +59,7 @@ const RemunerationInformation = (props) => {
   }, [candidateData.workInformation]);
 
   const submitHandler = (e) => {
+    alert("in sumbit handler");
     console.log("inside submit", candidateData);
     let remunerationinfo;
     e.preventDefault();
@@ -96,6 +97,7 @@ const RemunerationInformation = (props) => {
         (workInfoViewData.contractType === "Permanent" && monthlyBonus > 20) ||
         (workInfoViewData.contractType === "Parttime" && monthlyBonus > 20))
     ) {
+      alert("in admin");
       console.log("remuneration Info2", fixedGross, monthlyBonus, stipened);
       setFixedGrossError(true);
       setMonthlyBonusError(true);
@@ -154,6 +156,7 @@ const RemunerationInformation = (props) => {
         (workInfoViewData.contractType === "Parttime" &&
           (fixedGross < 90 || fixedGross > 200)))
     ) {
+      alert("in manager");
       console.log("remuneration Info3", fixedGross, monthlyBonus, stipened);
       console.log(
         "workInfoViewData.contractType",
@@ -222,6 +225,7 @@ const RemunerationInformation = (props) => {
         setMonthlyBonusError(false);
       }
     } else {
+      alert("secon else in manager");
       console.log("remuneration Info6", fixedGross, monthlyBonus, stipened);
       setStipenedError(false);
       setFixedGrossError(false);
@@ -271,7 +275,7 @@ const RemunerationInformation = (props) => {
         createCandidateResponse.candidateId
       );
 
-      console.log("createCandidateResponse data", remunerationinfo);
+      console.log("remuneration data", remunerationinfo);
       console.log(
         "validation check",
         fixedGrossError,
@@ -443,13 +447,13 @@ const RemunerationInformation = (props) => {
                             readOnly
                             disabled={disabled}
                           />
-                          {monthlyBonusError ? (
+                          {/* {monthlyBonusError ? (
                             <p style={{ color: "red" }}>
                               Please Enter the valid Input
                             </p>
                           ) : (
                             ""
-                          )}
+                          )} */}
                         </Col>
                       </Form.Group>
                     </Col>

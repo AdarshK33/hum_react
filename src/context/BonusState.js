@@ -8,6 +8,7 @@ const initial_state = {
   bonusDetails: [],
   total: {},
   data: [],
+  getBonusDetailsById: [],
 };
 export const BonusContext = createContext();
 export const BonusProvider = (props) => {
@@ -32,7 +33,6 @@ export const BonusProvider = (props) => {
       });
   };
   const viewBonus = (key, page) => {
-    console.log(key);
     setLoader(true);
     client
       .get("/api/v1/bonus?key=" + key + "&page=" + page + "&size=" + 10)
@@ -55,22 +55,46 @@ export const BonusProvider = (props) => {
         console.log(error);
       });
   };
+  const viewBonusById = (id) => {
+    setLoader(true);
+    client.get("/api/v1/bonus/" + id).then((response) => {
+      state.getBonusDetailsById = response.data.data;
+      setLoader(false);
+      return dispatch({
+        type: "VIEW_BONUS_BY_ID",
+        payload: state.getBonusDetailsById,
+      });
+    });
+  };
+
+  const updateBonus = (data) => {
+    setLoader(true);
+    client.post("/api/v1/bonus/update", data).then((response) => {
+      state.bonusData = response.data.data;
+      setLoader(false);
+      toast.info(response.data.message);
+      return dispatch({
+        type: "BONUS_UPDATE",
+        payload: state.bonusData,
+      });
+    });
+  };
   return (
-    console.log(state),
-    (
-      <BonusContext.Provider
-        value={{
-          bonusCreate,
-          viewBonus,
-          setLoader,
-          loader: loader,
-          bonusData: state.bonusData,
-          bonusDetails: state.bonusDetails,
-          total: state.total,
-        }}
-      >
-        {props.children}
-      </BonusContext.Provider>
-    )
+    <BonusContext.Provider
+      value={{
+        bonusCreate,
+        viewBonus,
+        setLoader,
+        viewBonusById,
+        updateBonus,
+        loader: loader,
+        bonusData: state.bonusData,
+        bonusDetails: state.bonusDetails,
+        total: state.total,
+        getBonusDetailsById: state.getBonusDetailsById,
+      }}
+    >
+      {props.children}
+    </BonusContext.Provider>
   );
 };
