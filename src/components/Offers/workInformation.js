@@ -212,6 +212,12 @@ const WorkInformation = (props) => {
     console.log("work information form id", workInfoViewData);
     e.preventDefault();
     console.log(state, "state");
+    if (
+      state.nationality !== "" &&
+      state.expatUser !== "" &&
+      state.passportNumber !== ""
+    ) {
+    }
     if (saveclick === false) {
       console.log("first click");
       setSaveclick(true);
@@ -428,6 +434,7 @@ const WorkInformation = (props) => {
                     onChange={(e) => setCollege(e.target.value)}
                     placeholder="Enter College Name"
                     className="form-input"
+                    disabled={disabled}
                     required
                   />
                 </Form.Group>
@@ -728,12 +735,14 @@ const WorkInformation = (props) => {
               state.employmentType === "Parttime") && (
               <Col sm={3}>
                 <Form.Group>
-                  <Form.Label>Local Expert</Form.Label>
+                  <Form.Label>Local Expact</Form.Label>
                   <Form.Control
                     as="select"
                     className="form-input"
                     name="expatUser"
                     value={state.expatUser}
+                    disabled={disabled}
+                    required
                     onChange={changeHandler}
                   >
                     <option>Seclect </option>
@@ -753,6 +762,8 @@ const WorkInformation = (props) => {
                     value={state.passportNumber}
                     name="passportNumber"
                     onChange={changeHandler}
+                    disabled={disabled}
+                    required
                   />
                 </Form.Group>
               </Col>
@@ -769,6 +780,8 @@ const WorkInformation = (props) => {
                     value={state.nationality}
                     name="nationality"
                     onChange={changeHandler}
+                    disabled={disabled}
+                    required
                   >
                     <option>Select Nationality</option>
                     {countryList !== null &&

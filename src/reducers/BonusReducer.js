@@ -9,6 +9,10 @@ const GroupReducer = (state, action) => {
         total: action.total,
         loader: action.loader,
       };
+    case "VIEW_BONUS_BY_ID":
+      return { ...state, getBonusDetailsById: action.payload };
+    case "BONUS_UPDATE":
+      return { ...state, bonusData: action.payload };
   }
 };
 export default GroupReducer;

@@ -14,30 +14,70 @@ import {
   Modal,
   Table,
 } from "react-bootstrap";
+import Pagination from "react-js-pagination";
+
 import Breadcrumb from "../common/breadcrumb";
-import { Edit2, Eye, Search } from "react-feather";
+import { Edit, Edit2, Eye, Search } from "react-feather";
 import BonusForm from "./BonusForm";
 import { BonusContext } from "../../context/BonusState";
-
+import EditBonus from "./EditBonus";
 const ViewBonus = () => {
-  const { bonusDetails, total, loader, viewBonus } = useContext(BonusContext);
+  const {
+    bonusDetails,
+    total,
+    loader,
+    viewBonus,
+    viewBonusById,
+    getBonusDetailsById,
+  } = useContext(BonusContext);
   const [pageCount, setPageCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordPerPage = 10;
+  const pageRange = 10;
+
+  const totalRecords = total;
+
   const [show, setShow] = useState(false);
+  const [editmodal, setEditModal] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+  const [currentRecords, setCurrentRecords] = useState([]);
+  const indexOfLastRecord = currentPage * recordPerPage;
+  const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
   const handleShow = () => {
     setShow(true);
   };
   const handleClose = () => {
     setShow(false);
   };
+  const handleEditClose = () => {
+    setEditModal(false);
+  };
+  const handlePageChange = (pageNumber) => {
+    setPageCount(pageNumber - 1);
+    setCurrentPage(pageNumber);
+    if (searchValue !== "") {
+      viewBonus(searchValue, pageNumber - 1);
+    } else {
+      viewBonus("all", pageNumber - 1);
+    }
+    setCurrentRecords(bonusDetails);
+  };
   useEffect(() => {
     viewBonus("all", pageCount);
   }, []);
+  useEffect(() => {
+    if (bonusDetails !== null && bonusDetails !== undefined) {
+      setCurrentRecords(bonusDetails);
+    }
+  }, [bonusDetails, currentRecords]);
   return (
     console.log(bonusDetails),
+    console.log(currentRecords),
     console.log(total),
     (
       <Fragment>
         <BonusForm show={show} handleClose={handleClose} />
+        <EditBonus editmodal={editmodal} handleEditClose={handleEditClose} />
         <Breadcrumb title="Bonus Structure" parent="Bonus Structure" />
         <div className="container-fluid">
           <div className="row">
@@ -85,9 +125,72 @@ const ViewBonus = () => {
                 <th>Edit</th>
               </tr>
             </thead>
-            {/* {loader === true && bonusDetails !== null && bonusDetails !== undefined ?} */}
+            {loader === true &&
+            bonusDetails !== null &&
+            bonusDetails !== undefined ? (
+              <tbody>
+                <tr>
+                  <td colSpan="12">
+                    <div
+                      className="loader-box loader"
+                      style={{ width: "100% !important" }}
+                    >
+                      <div className="loader">
+                        <div className="line bg-primary"></div>
+                        <div className="line bg-primary"></div>
+                        <div className="line bg-primary"></div>
+                        <div className="line bg-primary"></div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            ) : (
+              bonusDetails !== undefined &&
+              bonusDetails !== null &&
+              bonusDetails.map((item, i) => {
+                return (
+                  <tbody key={i}>
+                    <tr>
+                      <td>{i + 1 + indexOfFirstRecord}</td>
+                      <td>{item.department}</td>
+
+                      <td>{item.contractType}</td>
+                      <td>{item.designation}</td>
+                      <td>{item.bonus}</td>
+                      <td>{item.month}</td>
+                      <td>{item.year}</td>
+                      <td>
+                        <Edit2
+                          onClick={() => {
+                            setEditModal(true);
+                            viewBonusById(item.bonusId);
+                            //setLeaveTypeId(item.leaveTypeId);
+                            // setFromDate(item.fromDate); setToDate(item.toDate); setReason(item.reason)
+                            // setltId(item.ltId); setEmpId(item.empId)
+                          }}
+                        ></Edit2>
+                      </td>
+                    </tr>
+                  </tbody>
+                );
+              })
+            )}
           </Table>
         </div>
+        {bonusDetails !== null && bonusDetails !== undefined && (
+          <Pagination
+            itemClass="page-item"
+            linkClass="page-link"
+            activePage={currentPage}
+            itemsCountPerPage={recordPerPage}
+            totalItemsCount={totalRecords}
+            pageRangeDisplayed={pageRange}
+            onChange={handlePageChange}
+            firstPageText="First"
+            lastPageText="Last"
+          />
+        )}
       </Fragment>
     )
   );

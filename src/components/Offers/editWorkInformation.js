@@ -276,33 +276,24 @@ const EditWorkInformation = () => {
             <Col sm={3}>
               <Form.Group className="reactDate">
                 <Form.Label>Type of Employment</Form.Label>
-                {candidateData.workInformation === null ? (
-                  <Form.Control
-                    as="select"
-                    value={state.employmentType}
-                    className="form-input"
-                    name="employmentType"
-                    onChange={changeHandler}
-                    disabled={disabled}
-                  >
-                    <option value="">Select Employment Type</option>
-                    {shiftContractNames !== null &&
-                      shiftContractNames !== undefined &&
-                      shiftContractNames.length > 0 &&
-                      shiftContractNames.map((item) => {
-                        return (
-                          <option key={item.typeId}>{item.contractType}</option>
-                        );
-                      })}
-                  </Form.Control>
-                ) : (
-                  <Form.Control
-                    type="text"
-                    value={state.employmentType}
-                    className="form-control form-input"
-                    readOnly
-                  />
-                )}
+                <Form.Control
+                  as="select"
+                  value={state.employmentType}
+                  className="form-input"
+                  name="employmentType"
+                  onChange={changeHandler}
+                  disabled={disabled}
+                >
+                  <option value="">Select Employment Type</option>
+                  {shiftContractNames !== null &&
+                    shiftContractNames !== undefined &&
+                    shiftContractNames.length > 0 &&
+                    shiftContractNames.map((item) => {
+                      return (
+                        <option key={item.typeId}>{item.contractType}</option>
+                      );
+                    })}
+                </Form.Control>
               </Form.Group>
             </Col>
             <Col sm={3}>
@@ -677,15 +668,17 @@ const EditWorkInformation = () => {
               state.employmentType === "Parttime") && (
               <Col sm={3}>
                 <Form.Group>
-                  <Form.Label>Local Expert</Form.Label>
+                  <Form.Label>Local Expact</Form.Label>
                   <Form.Control
                     as="select"
                     className="form-input"
                     name="expatUser"
                     value={state.expatUser}
                     onChange={changeHandler}
+                    disabled={disabled}
+                    required
                   >
-                    <option>Seclect </option>
+                    <option required>Seclect </option>
                     <option value="1">Yes</option>
                     <option value="0">No</option>
                   </Form.Control>
@@ -702,6 +695,8 @@ const EditWorkInformation = () => {
                     value={state.passportNumber}
                     name="passportNumber"
                     onChange={changeHandler}
+                    disabled={disabled}
+                    required
                   />
                 </Form.Group>
               </Col>
@@ -718,8 +713,10 @@ const EditWorkInformation = () => {
                     value={state.nationality}
                     name="nationality"
                     onChange={changeHandler}
+                    disabled={disabled}
+                    required
                   >
-                    <option>Select Nationality</option>
+                    <option required>Select Nationality</option>
                     {countryList !== null &&
                       countryList !== undefined &&
                       countryList.map((item) => {
