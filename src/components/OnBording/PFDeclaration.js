@@ -875,7 +875,7 @@ const PFDeclaration = (props) => {
             <div>
               <label>
                 Fill{" "}
-                <a href="" target="_blank" rel="noopener noreferrer" download>
+                <a href="" target="_blank "" rel="noopener noreferrer" download>
                   <i className="fas fa-download" />
                   EPF Form
                 </a>{" "}
