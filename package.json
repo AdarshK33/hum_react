@@ -9,6 +9,7 @@
     "@fullcalendar/timegrid": "^4.4.2",
     "@lourenci/react-kanban": "^0.14.0",
     "@react-pdf/renderer": "^1.6.13",
+    "ag-grid": "^18.1.2",
     "ag-grid-community": "^25.1.0",
     "ag-grid-react": "^25.1.0",
     "array-unique": "^0.3.2",

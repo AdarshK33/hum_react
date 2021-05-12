@@ -26,6 +26,7 @@ import { CandidateProvider } from "./context/CandidateState";
 import { OfferProvider } from "./context/OfferState";
 import { OnBoardProvider } from "./context/OnBoardState";
 import { DocsVerificationProvider } from "./context/DocverificationState";
+import { BonusProvider } from "./context/BonusState";
 import {
   SeparationContext,
   SeparationProvider,
@@ -64,15 +65,17 @@ function Root() {
                                       <CandidateProvider>
                                         <DocsVerificationProvider>
                                           <SeparationProvider>
-                                            <BrowserRouter basename={"/"}>
-                                              <ScrollContext>
-                                                <WithAxios>
-                                                  <CandidateWithAxios>
-                                                    <RoutePath />
-                                                  </CandidateWithAxios>
-                                                </WithAxios>
-                                              </ScrollContext>
-                                            </BrowserRouter>
+                                            <BonusProvider>
+                                              <BrowserRouter basename={"/"}>
+                                                <ScrollContext>
+                                                  <WithAxios>
+                                                    <CandidateWithAxios>
+                                                      <RoutePath />
+                                                    </CandidateWithAxios>
+                                                  </WithAxios>
+                                                </ScrollContext>
+                                              </BrowserRouter>
+                                            </BonusProvider>
                                           </SeparationProvider>
                                         </DocsVerificationProvider>
                                       </CandidateProvider>

@@ -64,6 +64,10 @@ const GroupReducer = (state, action) => {
 
     case "CITY":
       return { ...state, cityList: action.payload };
+    case "ADHAAR_NOTIFICATION_DATA":
+      return { ...state, aadhaarNotificationData: action.payload };
+    case "SUBMIT_APPOINTMENT_LETTER":
+      return { ...state, submitAppointmentLetter: action.payload };
 
     default:
       return state;

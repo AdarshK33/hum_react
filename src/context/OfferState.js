@@ -24,6 +24,8 @@ const initial_state = {
   stateList: [],
   cityList: [],
   managerList: [],
+  aadhaarNotificationData: {},
+  submitAppointmentLetter: {},
 };
 
 export const OfferContext = createContext();
@@ -149,7 +151,7 @@ export const OfferProvider = (props) => {
   //Search by aadhar card/bank account
   const searchByAadhar = (number) => {
     client
-      .get("/api/v1/candidate/search?number=" + number)
+      .get("/api/v1/employee/exit/search?number=" + number)
       .then((response) => {
         if (response.data.data === null) {
           toast.info(response.data.message);
@@ -241,6 +243,7 @@ export const OfferProvider = (props) => {
   };
   // location api for work information
   const locationView = async (costCenter) => {
+    console.log(costCenter);
     const result1 = await client.get("/api/v1/location/view/" + costCenter);
     const result2 = await client.get(
       `api/v1/employee/view/${costCenter}/managers`
@@ -407,6 +410,46 @@ export const OfferProvider = (props) => {
     }
   };
 
+  const adhaarVerificationNotification = (id) => {
+    console.log("state aadhaarNotificationData id", id);
+    return (
+      client
+        // .get("/api/v1/candidate/offer/54")
+        .get("/api/v1/candidate/verification/complete?candidateId=" + id)
+        .then((response) => {
+          state.aadhaarNotificationData = response.data.data;
+          console.log(
+            "aadhaarNotificationData.message",
+            state.aadhaarNotificationData
+          );
+          toast.info(response.data.message);
+          return dispatch({
+            type: "ADHAAR_NOTIFICATION_DATA",
+            payload: state.aadhaarNotificationData,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+    );
+  };
+
+  const finalSubmitAppointmentLetter = (id) => {
+    console.log("state appoint submit id", id);
+    return client
+      .get("/api/v1/candidate/" + id + "/appointment")
+      .then((response) => {
+        state.submitAppointmentLetter = response.data.data;
+        console.log("appoint.message", state.submitAppointmentLetter);
+        return dispatch({
+          type: "SUBMIT_APPOINTMENT_LETTER",
+          payload: state.submitAppointmentLetter,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <OfferContext.Provider
       value={{
@@ -430,6 +473,8 @@ export const OfferProvider = (props) => {
         workInfoView,
         stateData,
         cityData,
+        adhaarVerificationNotification,
+        finalSubmitAppointmentLetter,
         searchData: state.searchData,
         departmentName: state.departmentName,
         designationName: state.designationName,
@@ -450,6 +495,8 @@ export const OfferProvider = (props) => {
         cityList: state.cityList,
         managerList: state.managerList,
         workInformationData: state.workInformationData,
+        aadhaarNotificationData: state.aadhaarNotificationData,
+        submitAppointmentLetter: state.submitAppointmentLetter,
       }}
     >
       {props.children}

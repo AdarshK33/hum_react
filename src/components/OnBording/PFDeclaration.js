@@ -13,6 +13,7 @@ import FormF from "../../forms/Form_F_Gratuity.pdf";
 import FormFView from "../../forms/Form_F_(Gratuity)_Sample_copy.pdf";
 import "react-toastify/dist/ReactToastify.css";
 import "./OnBoard.css";
+
 const PFDeclaration = (props) => {
   const {
     PFDeclarationCreate,
@@ -78,7 +79,16 @@ const PFDeclaration = (props) => {
   console.log("documentViewData", documentViewData);
 
   useEffect(() => {
-    if (documentViewData !== null && documentViewData !== undefined) {
+    if (
+      documentViewData &&
+      documentViewData !== null &&
+      documentViewData !== undefined &&
+      pfDeclarationView &&
+      pfDeclarationView !== null &&
+      pfDeclarationView !== undefined &&
+      Object.keys(pfDeclarationView).length !== 0 &&
+      Object.keys(documentViewData).length !== 0
+    ) {
       let form11Doc = "";
       let form2epfDoc = "";
       let formFDoc = "";
@@ -97,19 +107,21 @@ const PFDeclaration = (props) => {
           setFormFUploade(true);
         }
       });
+
       setState({
-        uanNumber: "",
+        uanNumber: pfDeclarationView.uanNumber,
         form11: form11Doc,
         form2epf: form2epfDoc,
         formf: formFDoc,
       });
     }
-  }, [documentViewData]);
+  }, [documentViewData, pfDeclarationView]);
+  console.log("---->", documentViewData);
 
   useEffect(() => {
     PFDeclarationView(candidateProfileData.candidateId);
     console.log(pfDeclarationView, "pfDeclarationViewuse");
-  }, []);
+  }, [candidateProfileData]);
 
   useEffect(() => {
     console.log(pfDeclarationView, "pfDeclarationViewuse2");
@@ -184,10 +196,10 @@ const PFDeclaration = (props) => {
         );
         setDeclarationIdValue(pfDeclarationView.declarationId);
       }
-      if (pfDeclarationView.uanNumber !== undefined) {
-        console.log("uab number");
-        setState({ uanNumber: pfDeclarationView.uanNumber });
-      }
+      // if (pfDeclarationView.uanNumber !== undefined) {
+      //   console.log("uab number");
+      //   setState({ uanNumber: pfDeclarationView.uanNumber });
+      // }
       setDataExist({ exist: true });
     }
     console.log(candidateProfileData.candidateId, "pfdeclaration");
@@ -204,7 +216,12 @@ const PFDeclaration = (props) => {
     }
   };
   const UanNumberValidation = () => {
-    if (state.uanNumber !== "" && state.uanNumber.length == 12) {
+    if (
+      state.uanNumber !== null &&
+      state.uanNumber !== undefined &&
+      state.uanNumber !== "" &&
+      state.uanNumber.length == 12
+    ) {
       console.log("uan number");
       setUanNumberError(false);
       return true;
@@ -438,7 +455,7 @@ const PFDeclaration = (props) => {
     }
   };
   const Form11UploadValidation = () => {
-    if ((pfNominationHoldDeathNo === true) | (state.form11 !== "")) {
+    if (pfNominationHoldDeathNo === true) {
       if (Form11uploade === false) {
         if (Form11Validation() === true) {
           setForm11Error(true);
@@ -452,7 +469,7 @@ const PFDeclaration = (props) => {
     }
   };
   const Form2EpfUploadValidation = () => {
-    if ((pfNominationHoldDeathNo === true) | (state.form2epf !== "")) {
+    if (pfNominationHoldDeathNo === true) {
       if (Form2Epfuploade === false) {
         if (Form2EpfValidation() === true) {
           setForm2EpfError(true);
@@ -466,7 +483,7 @@ const PFDeclaration = (props) => {
     }
   };
   const FormFUploadValidation = () => {
-    if ((pfNominationHoldDeathNo === true) | (state.FormF !== "")) {
+    if (pfNominationHoldDeathNo === true) {
       if (FormFuploade === false) {
         if (FormFValidation() === true) {
           setFormFError(true);
@@ -507,16 +524,19 @@ const PFDeclaration = (props) => {
     let fileUpload;
     if (event.target.name === "form11") {
       if (Form11Validation() === true) {
+        setForm11Uploade(true);
         fileUpload = ObjState.form11;
         fileType = 10;
       }
     } else if (event.target.name === "form2epf") {
       if (Form2EpfValidation() === true) {
+        setForm2EpfUploade(true);
         fileUpload = ObjState.form2epf;
         fileType = 11;
       }
     } else if (event.target.name === "formf") {
       if (FormFValidation() === true) {
+        setFormFUploade(true);
         fileUpload = ObjState.formf;
         fileType = 12;
       }
@@ -537,6 +557,7 @@ const PFDeclaration = (props) => {
   };
   return (
     <Fragment>
+      <ToastContainer />
       <Form>
         <Row style={{ marginBottom: "2rem" }}>
           <Col sm={5}>
@@ -826,7 +847,11 @@ const PFDeclaration = (props) => {
                   style={{ marginTop: "0.5rem" }}
                 >
                   &nbsp;&nbsp;
-                  {state.form11 !== "" ? state.form11 : "Select File Here"}
+                  {state.form11 !== "" &&
+                  state.form11 !== null &&
+                  state.form11 !== undefined
+                    ? state.form11
+                    : "Select File Here"}
                   <input
                     type="file"
                     accept="image/jpeg,.pdf"
@@ -880,7 +905,11 @@ const PFDeclaration = (props) => {
                   style={{ marginTop: "0.5rem" }}
                 >
                   &nbsp;&nbsp;
-                  {state.form2epf !== "" ? state.form2epf : "Select File Here"}
+                  {state.form2epf !== "" &&
+                  state.form2epf !== null &&
+                  state.form2epf !== undefined
+                    ? state.form2epf
+                    : "Select File Here"}
                   <input
                     type="file"
                     accept="image/jpeg,.pdf"
@@ -934,7 +963,11 @@ const PFDeclaration = (props) => {
                   style={{ marginTop: "0.5rem" }}
                 >
                   &nbsp;&nbsp;
-                  {state.formf !== "" ? state.formf : "Select File Here"}
+                  {state.formf !== "" &&
+                  state.formf !== null &&
+                  state.formf !== undefined
+                    ? state.formf
+                    : "Select File Here"}
                   <input
                     type="file"
                     accept="image/jpeg,.pdf"

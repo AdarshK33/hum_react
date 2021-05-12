@@ -85,13 +85,13 @@ const EditRemunerationInformation = (props) => {
       workInfoViewData.contractType
     );
     if (
-      typeof stipened === "undefined" ||
-      stipened === "" ||
-      stipened === "null" ||
-      (stipened + "").includes(" ", "-", ".", "/", "+") ||
-      ((candidateData.workInformation.contractType === "Internship" ||
+      (typeof stipened === "undefined" ||
+        stipened === "" ||
+        stipened === "null" ||
+        (stipened + "").includes(" ", "-", ".", "/", "+")) &&
+      (candidateData.workInformation.contractType === "Internship" ||
         workInfoViewData.contractType === "Internship") &&
-        stipened < "0")
+      stipened < "0"
     ) {
       console.log("remuneration Info5", fixedGross, monthlyBonus, stipened);
       setStipenedError(true);

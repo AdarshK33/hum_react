@@ -5,7 +5,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import "./OnBoard.css";
 import { OnBoardContext } from "../../context/OnBoardState";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const BankDetails = (props) => {
   const {
     bankCreate,
@@ -48,7 +49,12 @@ const BankDetails = (props) => {
 
   const BankNameErrorValidation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
-    if (state.bankName !== "") {
+    if (
+      state.bankName !== "" &&
+      state.bankName !== null &&
+      state.bankName !== undefined &&
+      nameValid.test(state.bankName.replace(/ +/g, ""))
+    ) {
       setBankNameError(false);
       console.log("bankNameSuccess");
       return true;
@@ -59,8 +65,13 @@ const BankDetails = (props) => {
     }
   };
   const AccountNumberErrorValidation = () => {
-    const nameValid = /^[a-zA-Z\b]+$/;
-    if (state.accountNumber !== "") {
+    const aadharValid = /^[0-9\b]+$/;
+    if (
+      state.accountNumber !== "" &&
+      state.accountNumber !== null &&
+      state.accountNumber !== undefined &&
+      aadharValid.test(state.accountNumber)
+    ) {
       setAccountNumberError(false);
       console.log("accountNumberSuccess");
       return true;
@@ -72,8 +83,14 @@ const BankDetails = (props) => {
   };
 
   const IfscCodeErrorValidation = () => {
-    const nameValid = /^[a-zA-Z\b]+$/;
-    if ((state.ifscCode !== "") & (state.ifscCode.length >= 11)) {
+    const aadharValid = /^[0-9\b]+$/;
+    if (
+      state.ifscCode !== "" &&
+      state.ifscCode !== null &&
+      state.ifscCode !== undefined &&
+      state.ifscCode.length >= 11 &&
+      aadharValid.test(state.accountNumber)
+    ) {
       setIfscCodeError(false);
       console.log("ifscCodeSuccess");
       return true;
@@ -145,6 +162,7 @@ const BankDetails = (props) => {
   };
   return (
     <Fragment>
+      <ToastContainer />
       <Form>
         <Row style={{ marginBottom: "2rem" }}>
           <div className="col-sm-4">
@@ -160,9 +178,13 @@ const BankDetails = (props) => {
                 required
                 placeholder="Bank Name"
                 disabled={disabled}
+                style={bankNameError ? { borderColor: "red" } : {}}
               />
               {bankNameError ? (
-                <p style={{ color: "red" }}> Please enter bank name</p>
+                <p style={{ color: "red" }}>
+                  {" "}
+                  Please enter the valid bank name
+                </p>
               ) : (
                 <p></p>
               )}
@@ -181,9 +203,13 @@ const BankDetails = (props) => {
                 required
                 placeholder="Bank Account No"
                 disabled={disabled}
+                style={accountNumberError ? { borderColor: "red" } : {}}
               />
               {accountNumberError ? (
-                <p style={{ color: "red" }}> Please enter Account Number</p>
+                <p style={{ color: "red" }}>
+                  {" "}
+                  Please enter the valid Account Number
+                </p>
               ) : (
                 <p></p>
               )}
@@ -202,9 +228,13 @@ const BankDetails = (props) => {
                 required
                 placeholder="IFSC Code"
                 disabled={disabled}
+                style={ifscCodeError ? { borderColor: "red" } : {}}
               />
               {ifscCodeError ? (
-                <p style={{ color: "red" }}> Please enter valid IFSC code</p>
+                <p style={{ color: "red" }}>
+                  {" "}
+                  Please enter the valid IFSC code
+                </p>
               ) : (
                 <p></p>
               )}

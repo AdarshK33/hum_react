@@ -68,7 +68,7 @@ const GenerateOfferLetter = () => {
             <Col sm={5}></Col>
             <Col sm={2}>
               <Button type="button" onClick={offerLetterClick}>
-                Generate Offer Letter
+                Preview Offer Letter
               </Button>
             </Col>
           </Row>
@@ -97,7 +97,7 @@ const GenerateOfferLetter = () => {
         )}
       </Form>
 
-      <Modal show={showModal} onHide={handleClose} size="lg">
+      <Modal show={showModal} onHide={handleClose} size="md">
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         {submitLetter ? (
           <Modal.Body>

@@ -1,12 +1,14 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
-import { Row, Col, Form, Button } from "react-bootstrap";
+import { Row, Col, Container, Modal, Form, Button } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 // import './OnBoard.css'
 import "./Documents.css";
-import { toast } from "react-toastify";
 import { OnBoardContext } from "../../context/OnBoardState";
 import { OfferContext } from "../../context/OfferState";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
 // File Type list:
 // Photo = 0
 // Aadhaar = 1
@@ -25,8 +27,17 @@ const Documents = (props) => {
     candidateProfileData,
     documentView,
     documentViewData,
+    candidateViewInfo,
+    CandidateViewInformation,
+    pfDeclarationView,
+    PFDeclarationView,
+    completeDocumentUpload,
   } = useContext(OnBoardContext);
-  const { candidateData } = useContext(OfferContext);
+  const {
+    candidateData,
+    aadhaarNotificationData,
+    adhaarVerificationNotification,
+  } = useContext(OfferContext);
   const [fileName, setFileName] = useState("");
   const [fullTime, setFullTime] = useState(true);
   const [partTime, setParTime] = useState(false);
@@ -46,27 +57,58 @@ const Documents = (props) => {
   const [passportError, setPassPortError] = useState(false);
   const [collegeIdError, setCollegeError] = useState(false);
   const [collegeLetterError, setCollegeLetterError] = useState(false);
+  const [CandidateFirstJob, setCandidateFirstJob] = useState(false);
+  const [onDocumentPopup, setOnDocumentPopup] = useState(false);
   // const [fileUpload, setFileUpload] = useState();
   const [workInfoData, setWorkInfoData] = useState();
   useEffect(() => {
     console.log("candidateProfileData", candidateProfileData);
     console.log("candidateData", candidateData);
   }, [candidateProfileData]);
+
+  useEffect(() => {
+    console.log("personal information view candidate", candidateProfileData);
+    if (candidateProfileData) {
+      CandidateViewInformation(candidateProfileData.candidateId);
+    }
+  }, [candidateProfileData]);
+  console.log("personal information candidateViewInfo-->", candidateViewInfo);
   useEffect(() => {
     if (
-      candidateData !== null &&
-      candidateData !== undefined &&
-      candidateData.workInformation
+      candidateViewInfo !== null &&
+      candidateViewInfo !== undefined &&
+      candidateViewInfo
     ) {
-      setWorkInfoData(candidateData.workInformation);
+      setWorkInfoData(candidateViewInfo);
     }
-  }, [candidateData]);
+  }, [candidateViewInfo]);
   console.log("contractType", workInfoData);
 
   useEffect(() => {
     documentView(candidateProfileData.candidateId);
-  }, []);
+  }, [candidateProfileData]);
   console.log("documentViewData", documentViewData);
+
+  useEffect(() => {
+    PFDeclarationView(candidateProfileData.candidateId);
+  }, [candidateProfileData]);
+  // console.log(pfDeclarationView, "<------pfDeclarationViewuse");
+
+  useEffect(() => {
+    if (
+      pfDeclarationView !== null &&
+      pfDeclarationView !== undefined &&
+      Object.keys(pfDeclarationView).length !== 0 &&
+      pfDeclarationView.firstJob !== null &&
+      pfDeclarationView.firstJob !== undefined
+    ) {
+      if (pfDeclarationView.firstJob === true) {
+        setCandidateFirstJob(false);
+      } else {
+        setCandidateFirstJob(true);
+      }
+    }
+  }, [candidateProfileData, pfDeclarationView]);
 
   useEffect(() => {
     if (
@@ -452,11 +494,14 @@ const Documents = (props) => {
     }
   };
   const PaySlipsValidation = () => {
-    if (stateOfName.relievingLetter !== "") {
+    if (stateOfName.latestPaySlips !== "") {
+      console.log("in if Validation");
       setLatestPaySlipsError(false);
       console.log("payslipsSuccess");
       return true;
     } else {
+      console.log("in else Validation");
+
       setLatestPaySlipsError(true);
       console.log("paySlipsFail");
       return false;
@@ -618,20 +663,33 @@ const Documents = (props) => {
     }
   };
   const RelivingLetterUploadValidation = () => {
-    if (UploadedArray[0].ULRelivingLetter === false) {
-      if (RelievingLetterValidation() === true) {
-        setRelievingLetterError(true);
-        return false;
+    if (CandidateFirstJob === true) {
+      if (UploadedArray[0].ULRelivingLetter === false) {
+        if (RelievingLetterValidation() === true) {
+          setRelievingLetterError(true);
+          return false;
+        }
+      } else {
+        return true;
       }
     } else {
       return true;
     }
   };
   const LatestPaySlipsUploadValidation = () => {
-    if (UploadedArray[0].ULLatestPaySlip === false) {
-      if (PaySlipsValidation() === true) {
-        setLatestPaySlipsError(true);
-        return false;
+    if (CandidateFirstJob === true) {
+      if (UploadedArray[0].ULLatestPaySlip === false) {
+        console.log("Upload in if");
+
+        if (PaySlipsValidation() === true) {
+          console.log("Upload in nested if");
+
+          setLatestPaySlipsError(true);
+          return false;
+        }
+      } else {
+        console.log("Upload in else");
+        return true;
       }
     } else {
       return true;
@@ -734,8 +792,12 @@ const Documents = (props) => {
   const submitHandler = (e) => {
     // const value = checkValidations();
     const value = isAllFilesUploaded();
+    console.log("ERROR-->", latestPaySlipsError, state.latestPaySlips);
+    console.log(value);
     if (value === true) {
+      completeDocumentUpload(candidateProfileData.candidateId);
       console.log(state);
+      setOnDocumentPopup(true);
       const nextPage = props.NextStep;
       nextPage(true);
     }
@@ -793,6 +855,13 @@ const Documents = (props) => {
       UploadedArray[0].ULCollegeLetter = false;
     } else if (event.target.name === "collegeId") {
       UploadedArray[0].ULCollegeId = false;
+    } else if (event.target.name === "educationCertificate") {
+      UploadedArray[0].ULEducationCer = false;
+    } else if (event.target.name === "relievingLetter") {
+      UploadedArray[0].ULRelivingLetter = false;
+    } else if (event.target.name === "latestPaySlips") {
+      console.log("uploading payslip");
+      UploadedArray[0].ULLatestPaySlip = false;
     }
   };
 
@@ -865,16 +934,20 @@ const Documents = (props) => {
       if (EducationCertificatesValidation() === true) {
         fileUpload = state.educationCertificate;
         fileType = 6;
+        UploadedArray[0].ULEducationCer = true;
       }
     } else if (event.target.name === "relievingLetter") {
       if (RelievingLetterValidation() === true) {
         fileUpload = state.relievingLetter;
         fileType = 7;
+        UploadedArray[0].ULRelivingLetter = true;
       }
     } else if (event.target.name === "latestPaySlips") {
-      if (latestPaySlipsError() === true) {
+      if (PaySlipsValidation() === true) {
+        console.log("payslip true ");
         fileUpload = state.latestPaySlips;
         fileType = 8;
+        UploadedArray[0].ULLatestPaySlip = true;
       }
     }
     if (fileUpload) {
@@ -895,6 +968,33 @@ const Documents = (props) => {
     <Fragment>
       {(localExpact === false) & (internship === false) ? (
         <Row>
+          <Modal
+            show={onDocumentPopup}
+            onHide={() => setOnDocumentPopup(false)}
+            centered
+          >
+            <Container style={{ textAlign: "center", margin: "4rem 0 4rem 0" }}>
+              <Modal.Body>
+                <h3>Thank You</h3>
+                <h6 style={{ marginBottom: "1rem" }}>
+                  Your details have been sent to our verification team, please
+                  wait to hear from us
+                </h6>{" "}
+                <Link
+                  style={{
+                    color: "#ffffff",
+                    textDecoration: "none !important",
+                  }}
+                  to="/offer"
+                >
+                  <Button onClick={() => setOnDocumentPopup(false)}>
+                    Return to the Portal
+                  </Button>
+                </Link>
+              </Modal.Body>
+            </Container>
+          </Modal>
+          <ToastContainer />
           <Col>
             <div className="parent">
               <button
@@ -1654,7 +1754,11 @@ const Documents = (props) => {
           <Row>
             <Col>
               <Form.Group>
-                <div className="FileInput">
+                <div
+                  className={
+                    CandidateFirstJob ? "FileInput" : "FileInputWithOutStar"
+                  }
+                >
                   <label>Relieving Letter</label>
                 </div>
                 <div className="parentInput">
@@ -1708,7 +1812,11 @@ const Documents = (props) => {
           <Row>
             <Col>
               <Form.Group>
-                <div className="FileInput">
+                <div
+                  className={
+                    CandidateFirstJob ? "FileInput" : "FileInputWithOutStar"
+                  }
+                >
                   <label>Latest Payslips</label>
                 </div>
                 <div className="parentInput">

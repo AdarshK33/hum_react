@@ -38,6 +38,18 @@ const EditOfferRelease = () => {
     }
   };
 
+  // const workInformationClick = (e) => {
+  //   console.log("inside remunarationClick");
+  //   if (
+  //     candidateData !== null &&
+  //     candidateData != undefined &&
+  //     candidateData.candidateInformation !== null &&
+  //     candidateData.candidateInformation !== undefined
+  //   ) {
+  //     viewCandidateId(candidateData.candidateInformation.candidateId);
+  //   }
+  // };
+
   return (
     <Fragment>
       <Container fluid className="container-accordion">

@@ -26,13 +26,17 @@ const initial_state = {
   candidateViewInfo: {},
   candidateCountryData: [],
   candidateStateData: [],
-  candidateCityData: [],
+  candidatePresentCityData: [],
+  candidatePermanentCityData: [],
   addressSaveData: {},
   addressViewData: [],
   bankSaveData: {},
   bankViewData: [],
   bankUpdateData: {},
   documentViewData: [],
+  documentUploadData: {},
+  deleteNomineeData: {},
+  deleteAllNomineeData: {},
 };
 // git
 export const OnBoardProvider = (props) => {
@@ -43,6 +47,7 @@ export const OnBoardProvider = (props) => {
     return candidate
       .post("/api/v2/candidate/update", updateData)
       .then((response) => {
+        console.log("personal Information message", response.data);
         state.PersonalInfoResponse = response.data.data;
         console.log(
           "personal Information response--->",
@@ -69,6 +74,7 @@ export const OnBoardProvider = (props) => {
           "Candidate Personal information  Response ",
           state.candidatePersonalInfoData
         );
+        // toast.info(response.data.message);
         return dispatch({
           type: "CANDIDATE_PERSONAL_INFODATA",
           payload: state.candidatePersonalInfoData,
@@ -279,6 +285,69 @@ export const OnBoardProvider = (props) => {
         console.log(error);
       });
   };
+
+  const InsuranceNominationDelete = (nomineeId) => {
+    candidate
+      .get("/api/v2/candidate/insurance-nomination/delete/" + nomineeId)
+      .then((response) => {
+        // toast.info(response.data.message);
+        state.deleteNomineeData = response.data;
+        console.log(
+          "Candidate Insurance Nomination delete ",
+          state.deleteNomineeData
+        );
+        return dispatch({
+          type: "DELETE_NOMINEE_DATA",
+          payload: state.deleteNomineeData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const DeleteAllInsuranceNominations = (candidteId) => {
+    candidate
+      .get(
+        "/api/v2/candidate/insurance-nomination/delete?candidateId=" +
+          candidteId
+      )
+      .then((response) => {
+        toast.info(response.data.message);
+        state.deleteAllNomineeData = response.data;
+        console.log(
+          "Candidate Insurance Nomination delete All ",
+          state.deleteAllNomineeData
+        );
+        return dispatch({
+          type: "DELETE_ALL_NOMINEE_DATA",
+          payload: state.deleteAllNomineeData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const UpdateNomineeStatus = (candidateId, status) => {
+    candidate
+      .get(
+        "/api/v2/candidate/" +
+          candidateId +
+          "/change/nomination-status?status=" +
+          status
+      )
+      .then((response) => {
+        toast.info(response.data.message);
+        // state.deleteNomineeData = response.data;
+        console.log("Candidate Insurance Nomination status ", response);
+        // return dispatch({
+        //   type: "DELETE_NOMINEE_DATA",
+        //   payload: state.deleteNomineeData,
+        // });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const StateList = (country) => {
     candidate
       .get("/api/v2/candidate/address/view/state/" + country)
@@ -361,18 +430,19 @@ export const OnBoardProvider = (props) => {
       });
   };
 
-  const candidateCityList = (StateId) => {
-    console.log("candidateCityList", StateId);
+  const candidatePermanentCityList = (StateId) => {
+    console.log("candidatePermanentCityList", StateId);
     candidate
       .get("/api/v2/candidate/address/view/city/" + StateId)
-      // candidate
-      //   .get("/api/v2/candidate/address/view/city/1")
       .then((response) => {
-        state.candidateCityData = response.data.data;
-        console.log("candidateCityData name", state.candidateCityData);
+        state.candidatePermanentCityData = response.data.data;
+        console.log(
+          "candidatePermanentCityData name",
+          state.candidatePermanentCityData
+        );
         return dispatch({
-          type: "CANDIDATE_CITY_LIST",
-          payload: state.candidateCityData,
+          type: "CANDIDATE_PERMANENT_CITY_LIST",
+          payload: state.candidatePermanentCityData,
         });
       })
       .catch((error) => {
@@ -380,6 +450,25 @@ export const OnBoardProvider = (props) => {
       });
   };
 
+  const candidatePresentCityList = (StateId) => {
+    console.log("candidatePresentCityList", StateId);
+    candidate
+      .get("/api/v2/candidate/address/view/city/" + StateId)
+      .then((response) => {
+        state.candidatePresentCityData = response.data.data;
+        console.log(
+          "candidatePresentCityData name",
+          state.candidatePresentCityData
+        );
+        return dispatch({
+          type: "CANDIDATE_PRESENT_CITY_LIST",
+          payload: state.candidatePresentCityData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const addressCreate = (AddressInfo) => {
     console.log("addressCreate", AddressInfo);
     candidate
@@ -504,6 +593,24 @@ export const OnBoardProvider = (props) => {
         console.log(error);
       });
   };
+
+  const completeDocumentUpload = (id) => {
+    console.log(" document id", id);
+    return candidate
+      .get("/api/v2/candidate/documents/complete?candidateId=" + id)
+      .then((response) => {
+        state.documentUploadData = response.data.data;
+        console.log("documentUploadData.message", state.documentUploadData);
+        toast.info(response.data.message);
+        return dispatch({
+          type: "DOCUMENT_UPLOAD_DATA",
+          payload: state.documentUploadData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <OnBoardContext.Provider
       value={{
@@ -525,7 +632,8 @@ export const OnBoardProvider = (props) => {
         InsuranceNominationView,
         candidateCountryList,
         CandidateStateList,
-        candidateCityList,
+        candidatePermanentCityList,
+        candidatePresentCityList,
         addressCreate,
         addressView,
         bankCreate,
@@ -533,6 +641,12 @@ export const OnBoardProvider = (props) => {
         bankUpdate,
         uploadFile,
         documentView,
+        completeDocumentUpload,
+        InsuranceNominationDelete,
+        DeleteAllInsuranceNominations,
+        UpdateNomineeStatus,
+        deleteAllNomineeData: state.deleteAllNomineeData,
+        deleteNomineeData: state.deleteNomineeData,
         emergencyContactData: state.emergencyContactData,
         emergencyContactCreate: state.emergencyContactCreate,
         emergencyContactView: state.emergencyContactView,
@@ -553,13 +667,15 @@ export const OnBoardProvider = (props) => {
         candidateViewInfo: state.candidateViewInfo,
         candidateCountryData: state.candidateCountryData,
         candidateStateData: state.candidateStateData,
-        candidateCityData: state.candidateCityData,
+        candidatePermanentCityData: state.candidatePermanentCityData,
+        candidatePresentCityData: state.candidatePresentCityData,
         addressSaveData: state.addressSaveData,
         addressViewData: state.addressViewData,
         bankSaveData: state.bankSaveData,
         bankViewData: state.bankViewData,
         bankUpdateData: state.bankUpdateData,
         documentViewData: state.documentViewData,
+        documentUploadData: state.documentUploadData,
       }}
     >
       {props.children}

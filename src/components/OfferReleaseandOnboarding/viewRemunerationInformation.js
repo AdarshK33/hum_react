@@ -292,27 +292,28 @@ const ViewRemunerationInformation = (props) => {
   };
 
   return (
-    <Fragment>
-      <Form>
-        <Row>
-          <Fragment>
-            {(candidateData &&
-              candidateData.workInformation &&
-              candidateData.workInformation.contractType !== "Internship") ||
-            workInfoViewData.contractType !== "Internship" ? (
-              <Col sm={6}>
-                <Form.Group as={Row} controlId="formHorizontalEmail">
-                  {/* <Col sm={2}></Col> */}
-                  <Form.Label>Fixed Gross</Form.Label>
-                  <Col sm={6}>
-                    <Form.Label className="headingColor">
-                      {candidateData.remuneration !== null &&
-                      candidateData.candidateData !== undefined
-                        ? fixedGross
-                        : "N/A"}
-                    </Form.Label>
+    console.log(candidateData.remuneration),
+    (
+      <Fragment>
+        <Form>
+          <Row>
+            <Fragment>
+              {(candidateData &&
+                candidateData.workInformation &&
+                candidateData.workInformation.contractType !== "Internship") ||
+              workInfoViewData.contractType !== "Internship" ? (
+                <Col sm={6}>
+                  <Form.Group as={Row} controlId="formHorizontalEmail">
+                    {/* <Col sm={2}></Col> */}
+                    <Form.Label>Fixed Gross</Form.Label>
+                    <Col sm={6}>
+                      <Form.Label className="headingColor">
+                        {candidateData.remuneration !== null
+                          ? fixedGross
+                          : "N/A"}
+                      </Form.Label>
 
-                    {fixedGrossError ? (
+                      {/* {fixedGrossError ? (
                       <p style={{ color: "red" }}>This field cannot be empty</p>
                     ) : ((candidateData &&
                         candidateData.workInformation &&
@@ -334,38 +335,40 @@ const ViewRemunerationInformation = (props) => {
                       </p>
                     ) : (
                       ""
-                    )}
-                  </Col>
-                </Form.Group>
-              </Col>
-            ) : (
-              <Col sm={6}>
-                <Form.Group as={Row} controlId="formHorizontalEmail">
-                  <Col sm={2}></Col>
-                  <Form.Label column sm={3}>
-                    Stipend
-                  </Form.Label>
-                  <Col sm={6}>
-                    {stipened}
+                    )} */}
+                    </Col>
+                  </Form.Group>
+                </Col>
+              ) : (
+                <Col sm={6}>
+                  <Form.Group as={Row} controlId="formHorizontalEmail">
+                    <Col sm={2}></Col>
+                    <Form.Label column sm={3}>
+                      Stipend
+                    </Form.Label>
+                    <Col sm={6}>
+                      {stipened}
 
-                    {stipenedError ? (
-                      <p style={{ color: "red" }}>This field cannot be empty</p>
-                    ) : (
-                      ""
-                    )}
-                  </Col>
-                </Form.Group>
-              </Col>
-            )}
+                      {stipenedError ? (
+                        <p style={{ color: "red" }}>
+                          This field cannot be empty
+                        </p>
+                      ) : (
+                        ""
+                      )}
+                    </Col>
+                  </Form.Group>
+                </Col>
+              )}
 
-            {(candidateData &&
-              candidateData.workInformation &&
-              candidateData.workInformation.contractType !== "Internship") ||
-            (workInfoViewData &&
-              workInfoViewData.contractType !== "Internship") ? (
-              <Fragment>
-                {user ? (
-                  user.role === "ADMIN" ? (
+              {(candidateData &&
+                candidateData.workInformation &&
+                candidateData.workInformation.contractType !== "Internship") ||
+              (workInfoViewData &&
+                workInfoViewData.contractType !== "Internship") ? (
+                <Fragment>
+                  {user ? (
+                    // user.role === "ADMIN" ? (
                     <Col sm={6}>
                       <Form.Group as={Row} controlId="formHorizontalEmail">
                         {/* <Form.Label column sm={3}> */}
@@ -378,7 +381,7 @@ const ViewRemunerationInformation = (props) => {
                               : "N/A"}
                           </Form.Label>
 
-                          {monthlyBonusError ? (
+                          {/* {monthlyBonusError ? (
                             <p style={{ color: "red" }}>
                               This field cannot be empty
                             </p>
@@ -386,47 +389,53 @@ const ViewRemunerationInformation = (props) => {
                             <p style={{ color: "red" }}>Maximum Bonus 20 %</p>
                           ) : (
                             ""
-                          )}
+                          )} */}
                         </Col>
                       </Form.Group>
                     </Col>
                   ) : (
-                    <Col sm={6}>
-                      <Form.Group as={Row} controlId="formHorizontalEmail">
-                        {/* <Form.Label column sm={3}> */}
-                        Monthly Bonus ( % ){/* </Form.Label> */}
-                        <Col sm={6}>
-                          <Form.Control
-                            className="form-input"
-                            type="number"
-                            min="0"
-                            name="monthlyBonus"
-                            readOnly
-                            disabled={disabled}
-                            placeholder="0"
-                          />
-                          {monthlyBonusError ? (
-                            <p style={{ color: "red" }}>
-                              This field cannot be empty
-                            </p>
-                          ) : (
-                            ""
-                          )}
-                        </Col>
-                      </Form.Group>
-                    </Col>
-                  )
-                ) : (
-                  ""
-                )}
-              </Fragment>
-            ) : (
-              ""
-            )}
-          </Fragment>
-        </Row>
-      </Form>
-    </Fragment>
+                    // ) : (
+                    //   <Col sm={6}>
+                    //     <Form.Group as={Row} controlId="formHorizontalEmail">
+                    //       {/* <Form.Label column sm={3}> */}
+                    //       Monthly Bonus ( % ){/* </Form.Label> */}
+                    //       <Col sm={6}>
+                    //         <Form.Label>
+                    //           {candidateData.remuneration !== undefined
+                    //             ? monthlyBonus
+                    //             : "N/A"}
+                    //         </Form.Label>
+                    //         {/* <Form.Control
+                    //         className="form-input"
+                    //         type="number"
+                    //         min="0"
+                    //         name="monthlyBonus"
+                    //         readOnly
+                    //         disabled={disabled}
+                    //         placeholder="0"
+                    //       /> */}
+                    //         {monthlyBonusError ? (
+                    //           <p style={{ color: "red" }}>
+                    //             This field cannot be empty
+                    //           </p>
+                    //         ) : (
+                    //           ""
+                    //         )}
+                    //       </Col>
+                    //     </Form.Group>
+                    //   </Col>
+                    // )
+                    ""
+                  )}
+                </Fragment>
+              ) : (
+                ""
+              )}
+            </Fragment>
+          </Row>
+        </Form>
+      </Fragment>
+    )
   );
 };
 

@@ -33,7 +33,7 @@ const GroupReducer = (state, action) => {
       return { ...state, emergencyContactCreate: action.payload };
     case "PFDECLARATION_VIEW":
       console.log("PFDECLARATION_VIEW reducer", action.payload);
-      return { ...state, emergencyContactView: action.payload };
+      return { ...state, pfDeclarationView: action.payload };
     case "SEARCH_EMP1":
       return { ...state, searchEmpData1: action.payload };
 
@@ -45,14 +45,20 @@ const GroupReducer = (state, action) => {
       return { ...state, candidatePersonalInfoData: action.payload };
     case "CREATE_NOMINEE_DATA":
       return { ...state, CreateNomineeResponse: action.payload };
+    case "DELETE_NOMINEE_DATA":
+      return { ...state, deleteNomineeData: action.payload };
+    case "DELETE_ALL_NOMINEE_DATA":
+      return { ...state, deleteAllNomineeData: action.payload };
     case "CANDIDATE_INSURANCE_NOMINEE_DATA":
       return { ...state, candidateInsuranceNominationData: action.payload };
     case "CANDIDATE_COUNTRY_LIST":
       return { ...state, candidateCountryData: action.payload };
     case "CANDIDATE_STATE_LIST":
       return { ...state, candidateStateData: action.payload };
-    case "CANDIDATE_CITY_LIST":
-      return { ...state, candidateCityData: action.payload };
+    case "CANDIDATE_PERMANENT_CITY_LIST":
+      return { ...state, candidatePermanentCityData: action.payload };
+    case "CANDIDATE_PRESENT_CITY_LIST":
+      return { ...state, candidatePresentCityData: action.payload };
     case "CANDIDATE_ADDRESS_DATA":
       return { ...state, addressSaveData: action.payload };
     case "CANDIDATE_ADDRESS_VIEW_DATA":
@@ -65,6 +71,8 @@ const GroupReducer = (state, action) => {
       return { ...state, bankUpdateData: action.payload };
     case "CANDIDATE_DOCUMENT_VIEW_DATA":
       return { ...state, documentViewData: action.payload };
+    case "DOCUMENT_UPLOAD_DATA":
+      return { ...state, documentUploadData: action.payload };
     default:
       return state;
   }

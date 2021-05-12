@@ -17,11 +17,37 @@ const GroupReducer = (state, action) => {
     case "GET_ACCEPT_STATUS":
       return { ...state, acceptStatus: action.payload };
     case "GET_REJECT_STATUS":
-      return { ...state, rejectStatus: action.payload };
+      return {
+        ...state,
+        rejectStatus: action.payload,
+        rejectMessage: action.rejectMessage,
+      };
     case "DOWNLOAD_DOCU":
       return { ...state, downloadedFile: action.payload };
     case "UPDATE_UAN":
       return { ...state, uanUpdate: action.payload };
+    case "COST_CENTER_CREATE":
+      return { ...state, costCenter: action.payload };
+    case "CANDIDATE_ONBOARD":
+      return { ...state, onBoardData: action.payload };
+    case "CREATE_EMPLOYEE":
+      return { ...state, createStatus: action.payload };
+    case "VIEW_EMPLOYEE":
+      return { ...state, empData: action.payload };
+    case "STEP5_STATUS":
+      return { ...state, step5Status: action.payload };
+    case "STEP6_STATUS":
+      return { ...state, step5Status: action.payload };
+    case "AADHAR_ACCEPT":
+      return { ...state, aadharStatus: action.payload };
+    case "AADHAR_REJECT":
+      return { ...state, disApproveAadhar: action.payload };
+    case "VIEW_VERIFICATION_STATE":
+      return { ...state, verificationStateList: action.payload };
+    case "VIEW_VERIFICATION_CITY":
+      return { ...state, verificationCityList: action.payload };
+    case "VIEW_PERMANENT_VERIFICATION_CITY":
+      return { ...state, verificationPermanentCityList: action.payload };
   }
 };
 export default GroupReducer;

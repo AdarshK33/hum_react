@@ -12,6 +12,7 @@ import {
   Form,
   Table,
 } from "react-bootstrap";
+import { OfferContext } from "../../context/OfferState";
 
 // import { handleInputChange } from "react-select/src/utils";
 
@@ -24,35 +25,78 @@ const DocVerification = () => {
   const [docId, setdocId] = useState("");
   const [error, setError] = useState(false);
   const [state, setState] = useState({});
+  const [pfData, setPFData] = useState({});
   const [onBoardPopup, setOnboardPopup] = useState(false);
   const [UANYes, setYes] = useState(false);
   const [UANNo, setNo] = useState(false);
   const [uanNumber, setUanNumber] = useState("");
+  const [uanError, setUanError] = useState(false);
   const {
     verificationDocsView,
     docsToVerify,
     loader,
     setLoader,
-    approveDocument,
-    disApproveDocument,
-    acceptStatus,
-    rejectStatus,
+    // approveDocument,
+    aadharStatus,
+    approveAadharByAdmin,
+    disapproveAadharByAdmin,
+    disApproveAadhar,
+    // disApproveDocument,
+    // acceptStatus,
+    // rejectStatus,
     downloadDocument,
     downloadedFile,
     personalInfoData,
     personalInfo,
     updateUANNumber,
     uanUpdate,
+    pfDetails,
+    fetchPfDetails,
   } = useContext(DocsVerifyContext);
+  const {
+    candidateData,
+    aadhaarNotificationData,
+    adhaarVerificationNotification,
+  } = useContext(OfferContext);
   const { getUserInfo, user } = useContext(AppContext);
   useEffect(() => {
     verificationDocsView(candidateId);
     personalInfo(candidateId);
-    setState(personalInfoData);
-  }, [acceptStatus, rejectStatus, uanUpdate]);
+    // setState(personalInfoData);
+  }, [disApproveAadhar, uanUpdate]);
+  useEffect(() => {
+    if (aadharStatus === "SUCCESS") {
+      verificationDocsView(candidateId);
+      personalInfo(candidateId);
+    }
+  }, [aadharStatus]);
   useEffect(() => {
     getUserInfo();
+    personalInfo(candidateId);
+    fetchPfDetails(candidateId);
+    setPFData(pfDetails);
+    setState(personalInfoData);
   }, []);
+  useEffect(() => {
+    setState(personalInfoData);
+  }, [personalInfoData]);
+
+  useEffect(() => {
+    setPFData(pfDetails);
+    console.log("pfDetails", pfDetails);
+    if (
+      pfDetails !== undefined &&
+      pfDetails !== null &&
+      pfDetails.uanNumber !== ""
+    ) {
+      setYes(true);
+      setNo(false);
+    } else {
+      setYes(false);
+      setNo(true);
+    }
+  }, [pfDetails]);
+
   const handleShifting = () => {
     changeState(!isChecked);
   };
@@ -69,9 +113,10 @@ const DocVerification = () => {
 
   const handleUANNumber = (e) => {
     setUanNumber(e.target.value);
+    setUanError(false);
   };
-  const handleApproveDocument = (docId) => {
-    approveDocument(docId);
+  const handleApproveDocument = (docId, candidateId) => {
+    approveAadharByAdmin(docId, candidateId);
   };
   const handleDisApproveDocument = (docId) => {
     setModal(true);
@@ -84,7 +129,7 @@ const DocVerification = () => {
   };
   const handleSave = (docId, candidateId, remarks) => {
     if (remarks !== "") {
-      disApproveDocument(docId, candidateId, remarks);
+      disapproveAadharByAdmin(docId, candidateId, remarks);
       handleClose();
     } else {
       setError(true);
@@ -92,6 +137,8 @@ const DocVerification = () => {
   };
 
   const handleOnboard = () => {
+    adhaarVerificationNotification(candidateId);
+
     setOnboardPopup(true);
   };
   var documents =
@@ -106,9 +153,7 @@ const DocVerification = () => {
     docsToVerify !== undefined &&
     docsToVerify !== null &&
     docsToVerify
-      .filter(
-        (personal) => personal.documentType > 5 && personal.documentType <= 8
-      )
+      .filter((personal) => personal.documentType > 5)
       .map((filteredResult) => {
         return filteredResult;
       });
@@ -116,6 +161,8 @@ const DocVerification = () => {
   const handleDocSave = () => {
     if (UANNo && uanNumber !== "") {
       updateUANNumber(personalInfoData.candidateId, uanNumber);
+    } else {
+      setUanError(true);
     }
   };
   return (
@@ -150,7 +197,7 @@ const DocVerification = () => {
               The documents have been verified successfully, notification sent
               to the manager to complete candidate onboarding
             </h6>{" "}
-            <Button onClick={() => setOnboardPopup(false)}>Cancel</Button>
+            <Button onClick={() => setOnboardPopup(false)}>OK</Button>
           </Modal.Body>
         </Container>
       </Modal>
@@ -227,7 +274,6 @@ const DocVerification = () => {
                               style={{
                                 color: "#47ef47",
                                 fontStyle: "italic",
-                                fontSize: "20px",
                               }}
                             >
                               (Upload the first and last page)
@@ -283,32 +329,46 @@ const DocVerification = () => {
                     </td>
                     {item.statusDesc !== null &&
                     item.documentType === 1 &&
-                    item.statusDesc !== "Pending" ? (
+                    item.statusDesc !== "Pending" &&
+                    state.adminVerificationStatus === 1 ? (
                       <td className="buttonMargin1">{item.statusDesc}</td>
                     ) : (
                       <td className="row text-center buttonMargin">
-                        {user.role === "ADMIN" && item.documentType === 1 && (
+                        {user.role === "ADMIN" &&
+                        item.documentType === 1 &&
+                        state.verificationStatus === 1 &&
+                        (state.adminVerificationStatus === 0 ||
+                          state.adminVerificationStatus === null) ? (
                           <button
                             className="approveButton ml-4"
                             onClick={() =>
-                              handleApproveDocument(item.documentId)
+                              handleApproveDocument(
+                                item.documentId,
+                                candidateId
+                              )
                             }
                           >
                             Approve
                           </button>
+                        ) : (
+                          <div></div>
                         )}
-                        {user.role === "ADMIN" && item.documentType === 1 && (
+                        {user.role === "ADMIN" &&
+                        item.documentType === 1 &&
+                        state.verificationStatus === 1 &&
+                        (state.adminVerificationStatus === 0 ||
+                          state.adminVerificationStatus === null) ? (
                           <button
                             className="approveButton ml-4"
                             disabled={
-                              rejectStatus !== undefined &&
-                              rejectStatus === "FAIL"
+                              disApproveAadhar !== undefined &&
+                              disApproveAadhar === "FAIL"
                                 ? true
                                 : false
                             }
                             style={
-                              rejectStatus !== undefined &&
-                              rejectStatus === "FAIL"
+                              disApproveAadhar !== undefined &&
+                              disApproveAadhar === "FAIL"
                                 ? { opacity: "0.6" }
                                 : { opacity: "1" }
                             }
@@ -318,19 +378,25 @@ const DocVerification = () => {
                           >
                             Disapprove
                           </button>
+                        ) : (
+                          <div></div>
                         )}
                       </td>
                     )}
-                    {item.documentType === 1 && (
-                      <td className="buttonMargin1">
-                        {item.remark !== null ? item.remark : "N/A"}
-                      </td>
-                    )}
-                    {item.documentType === 1 && (
-                      <td className="buttonMargin1">
-                        {item.verifiedDate !== null ? item.verifiedDate : "N/A"}
-                      </td>
-                    )}
+                    {item.documentType === 1 &&
+                      state.verificationStatus === 1 && (
+                        <td className="buttonMargin1">
+                          {item.remark !== null ? item.remark : "N/A"}
+                        </td>
+                      )}
+                    {item.documentType === 1 &&
+                      state.verificationStatus === 1 && (
+                        <td className="buttonMargin1">
+                          {item.verifiedDate !== null
+                            ? item.verifiedDate
+                            : "N/A"}
+                        </td>
+                      )}
                   </tr>
                 </tbody>
               );
@@ -362,28 +428,81 @@ const DocVerification = () => {
                               style={{
                                 color: "#47ef47",
                                 fontStyle: "italic",
-                                fontSize: "20px",
                               }}
                             >
                               (Upload the first and last page)
                             </span>
                           </p>
+                        ) : item.documentType === 8 ? (
+                          <p>
+                            <span style={{ color: "black", fontSize: "16px" }}>
+                              Latest play slip
+                            </span>{" "}
+                            <span style={{ color: "red" }}>*</span>
+                          </p>
+                        ) : item.documentType === 9 ? (
+                          <p>
+                            <span style={{ color: "black", fontSize: "16px" }}>
+                              OfferLetter
+                            </span>{" "}
+                            <span style={{ color: "red" }}>*</span>
+                          </p>
+                        ) : item.documentType === 10 ? (
+                          <p>
+                            <span style={{ color: "black", fontSize: "16px" }}>
+                              Form11Uan
+                            </span>{" "}
+                            {/* <span style={{ color: "red" }}>*</span> */}
+                          </p>
+                        ) : item.documentType === 11 ? (
+                          <p>
+                            <span style={{ color: "black", fontSize: "16px" }}>
+                              Form2EPF
+                            </span>{" "}
+                            {/* <span style={{ color: "red" }}>*</span> */}
+                          </p>
+                        ) : item.documentType === 12 ? (
+                          <p>
+                            <span style={{ color: "black", fontSize: "16px" }}>
+                              FormFGratuity
+                            </span>{" "}
+                            {/* <span style={{ color: "red" }}>*</span> */}
+                          </p>
+                        ) : item.documentType === 13 ? (
+                          <p>
+                            <span style={{ color: "black", fontSize: "16px" }}>
+                              DisabilityDoc
+                            </span>{" "}
+                            <span style={{ color: "red" }}>*</span>
+                          </p>
+                        ) : item.documentType === 14 ? (
+                          <p>
+                            <span style={{ color: "black", fontSize: "16px" }}>
+                              Passport
+                            </span>{" "}
+                            <span style={{ color: "red" }}>*</span>
+                          </p>
+                        ) : item.documentType === 15 ? (
+                          <p>
+                            <span style={{ color: "black", fontSize: "16px" }}>
+                              CollegeLetter
+                            </span>{" "}
+                            <span style={{ color: "red" }}>*</span>
+                          </p>
                         ) : (
-                          item.documentType === 8 && (
+                          item.documentType === 16 && (
                             <p>
                               <span
                                 style={{ color: "black", fontSize: "16px" }}
                               >
-                                Latest play slip
+                                CollegeId
                               </span>{" "}
                               <span style={{ color: "red" }}>*</span>
                             </p>
                           )
                         )}
                       </p>
-                      {item.documentType > 5 &&
-                        item.documentType <= 9 &&
-                        item.documentName}
+                      {item.documentType > 5 && item.documentName}
                     </td>
                     {item.reviewStatus !== null && item.documentType > 5 && (
                       <td>{item.reviewStatus}</td>
@@ -396,6 +515,7 @@ const DocVerification = () => {
                     <td>
                       {item.verifiedDate !== null &&
                         item.documentType > 5 &&
+                        item.documentType === 1 &&
                         item.verifiedDate}
                     </td>
                   </tr>
@@ -411,7 +531,7 @@ const DocVerification = () => {
           )}
         </Table>
       </div>
-      {user.role === "ADMIN" && !isChecked && (
+      {user.role === "ADMIN" && state.adminVerificationStatus === 1 && (
         <Row className="mx-2">
           <label>Is UAN Number Generated ?</label>
           <Col sm={2}>
@@ -421,9 +541,8 @@ const DocVerification = () => {
                   className="largerCheckbox"
                   type="checkbox"
                   value="yes"
-                  checked={UANYes}
-                  // required={required}
-                  onChange={(e) => handleUANYes(e)}
+                  checked={pfData.uanNumber !== "" ? true : false}
+                  disabled="true"
                 />
                 <label>Yes</label>
               </div>
@@ -436,9 +555,8 @@ const DocVerification = () => {
                   className="largerCheckbox"
                   type="checkbox"
                   value="no"
-                  checked={UANNo}
-                  // required={required}
-                  onChange={(e) => handleUANNo(e)}
+                  checked={pfData.uanNumber === "" ? true : false}
+                  disabled="true"
                 />
                 <label>No </label>
               </div>
@@ -446,25 +564,49 @@ const DocVerification = () => {
           </Col>
         </Row>
       )}
-      {UANNo && (
-        <Row>
-          <Col sm={6}>
-            <Form.Group>
-              <div className="boxField input">
-                <label>Enter UAN Number</label>
-                <input
-                  className="mx-2"
-                  type="text"
-                  name="uannbr"
-                  value={uanNumber}
-                  // required={required}
-                  onChange={(e) => handleUANNumber(e)}
-                />
-              </div>
-            </Form.Group>
-          </Col>
-        </Row>
-      )}
+      {UANNo &&
+        user.role === "ADMIN" &&
+        state.adminVerificationStatus === 1 &&
+        pfDetails !== null && (
+          <Row>
+            <Col sm={6}>
+              <Form.Group style={{ borderRadius: " 12.25rem !important" }}>
+                <div className="boxField input">
+                  <label>Enter UAN Number</label>{" "}
+                  <input
+                    type="text"
+                    name="uannbr"
+                    value={uanNumber}
+                    className="form-input"
+                    // required={required}
+                    onChange={(e) => handleUANNumber(e)}
+                  />
+                </div>
+              </Form.Group>
+              {uanError && (
+                <p style={{ color: "red" }}>Please Enter UAN Number</p>
+              )}
+            </Col>
+          </Row>
+        )}
+
+      {user.role === "ADMIN" &&
+        state.adminVerificationStatus === 1 &&
+        UANYes &&
+        pfDetails !== null && (
+          <Row>
+            <Col sm={6}>
+              <Form.Group>
+                <div className="boxField input">
+                  <label style={{ color: "#006EBB" }}>
+                    {" "}
+                    {pfDetails.uanNumber}
+                  </label>
+                </div>
+              </Form.Group>
+            </Col>
+          </Row>
+        )}
       <div
         style={{
           marginTop: "2rem",
@@ -472,15 +614,21 @@ const DocVerification = () => {
           textAlign: "center",
         }}
       >
-        <button className="stepperButtons" onClick={() => handleDocSave()}>
-          Save
-        </button>
+        {state.uanStatus !== 1 &&
+          state.adminVerificationStatus === 1 &&
+          UANYes === false && (
+            <button className="stepperButtons" onClick={() => handleDocSave()}>
+              Save
+            </button>
+          )}
 
-        {state !== undefined && state.verificationStatus === 1 && (
-          <button className="onboardButton" onClick={() => handleOnboard()}>
-            Onboard Candidate
-          </button>
-        )}
+        {state !== undefined &&
+          state.verificationStatus === 1 &&
+          state.adminVerificationStatus === 1 && (
+            <button className="onboardButton" onClick={() => handleOnboard()}>
+              Onboard Candidate
+            </button>
+          )}
       </div>
     </Fragment>
   );

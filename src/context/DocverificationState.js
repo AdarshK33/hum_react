@@ -18,6 +18,18 @@ const initial_state = {
   rejectStatus: "",
   downloadedFile: [],
   uanUpdate: "",
+  costCenter: "",
+  createStatus: "",
+  onBoardData: {},
+  empData: {},
+  rejectMessage: "",
+  step5Status: false,
+  step6Status: false,
+  aadharStatus: "",
+  disApproveAadhar: "",
+  verificationStateList: [],
+  verificationCityList: [],
+  verificationPermanentCityList: [],
 };
 export const DocsVerifyContext = createContext();
 export const DocsVerificationProvider = (props) => {
@@ -148,13 +160,19 @@ export const DocsVerificationProvider = (props) => {
       });
   };
 
-  const approveDocument = (docId) => {
+  const approveDocument = (docId, candidateId) => {
     setLoader(true);
     client
       .get("/api/v1/candidate/document/" + docId + "/accept")
       .then((response) => {
         state.acceptStatus = response.data.status;
+        console.log(response.data.status);
+        toast.info(response.data.message);
+
         setLoader(false);
+        verificationDocsView(candidateId);
+        personalInfo(candidateId);
+
         return dispatch({
           type: "GET_ACCEPT_STATUS",
           payload: state.acceptStatus,
@@ -164,7 +182,49 @@ export const DocsVerificationProvider = (props) => {
         console.log(error);
       });
   };
+  const approveAadharByAdmin = (docId, candidateId) => {
+    setLoader(true);
+    client
+      .get("/api/v1/candidate/aadhaar/" + docId + "/accept")
+      .then((response) => {
+        state.aadharStatus = response.data.message;
+        toast.info(response.data.message);
+        setLoader(false);
+        verificationDocsView(candidateId);
+        personalInfo(candidateId);
 
+        return dispatch({
+          type: "AADHAR_ACCEPT",
+          payload: state.aadharStatus,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const disapproveAadharByAdmin = (docId, candidateId, remarks) => {
+    setLoader(true);
+    client
+      .get(
+        "/api/v1/candidate/aadhaar/" +
+          docId +
+          "/reject?candidateId=" +
+          candidateId +
+          "&remarks=" +
+          remarks
+      )
+      .then((response) => {
+        setLoader(false);
+        state.disApproveAadhar = response.data.status;
+        toast.info(response.data.message);
+        verificationDocsView(candidateId);
+        personalInfo(candidateId);
+        return dispatch({
+          type: "AADHAR_REJECT",
+          payload: state.disApproveAadhar,
+        });
+      });
+  };
   const disApproveDocument = (docId, candidateId, remarks) => {
     setLoader(true);
     client
@@ -178,10 +238,16 @@ export const DocsVerificationProvider = (props) => {
       )
       .then((response) => {
         state.rejectStatus = response.data.status;
+        toast.info(response.data.message);
+        state.rejectMessage = response.data.message;
         setLoader(false);
+        verificationDocsView(candidateId);
+        personalInfo(candidateId);
+
         return dispatch({
           type: "GET_REJECT_STATUS",
           payload: state.rejectStatus,
+          rejectMessage: state.rejectMessage,
         });
       })
       .catch((error) => {
@@ -199,6 +265,7 @@ export const DocsVerificationProvider = (props) => {
       )
       .then((response) => {
         state.uanUpdate = response.data.message;
+        toast.info(response.data.message);
         return dispatch({
           type: "UPDATE_UAN",
           payload: state.uanUpdate,
@@ -206,6 +273,69 @@ export const DocsVerificationProvider = (props) => {
       })
       .catch((error) => {
         console.log(error);
+      });
+  };
+  const costCenterSplit = (costCenterData) => {
+    setLoader(true);
+    client
+      .post("/api/v1/cost_centre/split/create", costCenterData)
+      .then((response) => {
+        console.log(response.data.status);
+        state.costCenter = response.data.message;
+        toast.info(response.data.message);
+        return dispatch({
+          type: "COST_CENTER_CREATE",
+          payload: state.costCenter,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const viewEmployee = (empId) => {
+    setLoader(true);
+    client
+      .get("/api/v1/employee/" + empId)
+      .then((response) => {
+        state.empData = response.data.data;
+        return dispatch({
+          type: "VIEW_EMPLOYEE",
+          payload: state.empData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const createEmployee = (employeData) => {
+    setLoader(true);
+    client
+      .post("/api/v1/employee/create", employeData)
+      .then((response) => {
+        state.createStatus = response.data.status;
+        toast.info(response.data.message);
+        // state.empData = response.data.data;
+        return dispatch({
+          type: "CREATE_EMPLOYEE",
+          payload: state.createStatus,
+          // payload: state.empData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const candidateOnBoard = (candidateId) => {
+    setLoader(true);
+    client
+      .get("/api/v1/candidate/onboard?candidateId=" + candidateId)
+      .then((response) => {
+        state.onBoardData = response.data.data;
+        return dispatch({
+          type: "CANDIDATE_ONBOARD",
+          payload: state.onBoardData,
+        });
       });
   };
   const downloadDocument = (name) => {
@@ -224,36 +354,124 @@ export const DocsVerificationProvider = (props) => {
     });
   };
 
+  const step5suscessStatus = (val) => {
+    state.step5Status = val;
+    return dispatch({
+      type: "STEP5_STATUS",
+      payload: state.step5Status,
+    });
+  };
+  const step6suscessStatus = (val) => {
+    state.step6Status = val;
+    return dispatch({
+      type: "STEP6_STATUS",
+      payload: state.step5Status,
+    });
+  };
+
+  const viewStatesVerification = (country) => {
+    return client
+      .get("/api/v1/state/view/state/country?country=" + country)
+      .then((response) => {
+        console.log(response);
+        state.verificationStateList = response.data.data;
+        return dispatch({
+          type: "VIEW_VERIFICATION_STATE",
+          payload: state.verificationStateList,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const viewCityVerification = (stateId) => {
+    return client
+      .get("/api/v1/city/view/city/stateId?stateId=" + stateId)
+      .then((response) => {
+        console.log(response);
+        state.verificationCityList = response.data.data;
+        return dispatch({
+          type: "VIEW_VERIFICATION_CITY",
+          payload: state.verificationCityList,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const viewPermanentCityVerification = (stateId) => {
+    return client
+      .get("/api/v1/city/view/city/stateId?stateId=" + stateId)
+      .then((response) => {
+        console.log(response);
+        state.verificationPermanentCityList = response.data.data;
+        return dispatch({
+          type: "VIEW_PERMANENT_VERIFICATION_CITY",
+          payload: state.verificationPermanentCityList,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
-    <DocsVerifyContext.Provider
-      value={{
-        verificationDocsView,
-        personalInfo,
-        addressInfo,
-        contactInformation,
-        bankDetailsData,
-        fetchNominationDetails,
-        fetchPfDetails,
-        approveDocument,
-        disApproveDocument,
-        downloadDocument,
-        updateUANNumber,
-        docsToVerify: state.docsToVerify,
-        personalInfoData: state.personalInfoData,
-        addressInfoData: state.addressInfoData,
-        emergencyInfo: state.emergencyInfo,
-        bankDetails: state.bankDetails,
-        nominationDetails: state.nominationDetails,
-        pfDetails: state.pfDetails,
-        acceptStatus: state.acceptStatus,
-        rejectStatus: state.rejectStatus,
-        loader: loader,
-        downloadedFile: state.downloadedFile,
-        uanUpdate: state.uanUpdate,
-      }}
-    >
-      {" "}
-      {props.children}
-    </DocsVerifyContext.Provider>
+    console.log(state),
+    (
+      <DocsVerifyContext.Provider
+        value={{
+          verificationDocsView,
+          personalInfo,
+          addressInfo,
+          contactInformation,
+          bankDetailsData,
+          fetchNominationDetails,
+          fetchPfDetails,
+          approveDocument,
+          disApproveDocument,
+          downloadDocument,
+          updateUANNumber,
+          costCenterSplit,
+          createEmployee,
+          candidateOnBoard,
+          viewEmployee,
+          step5suscessStatus,
+          step6suscessStatus,
+          approveAadharByAdmin,
+          disapproveAadharByAdmin,
+          viewStatesVerification,
+          viewCityVerification,
+          viewPermanentCityVerification,
+          disApproveAadhar: state.disApproveAadhar,
+          step5Status: state.step5Status,
+          aadharStatus: state.aadharStatus,
+          step6Status: state.step6Status,
+          empData: state.empData,
+          onBoardData: state.onBoardData,
+          docsToVerify: state.docsToVerify,
+          createStatus: state.createStatus,
+          costCenter: state.costCenter,
+          personalInfoData: state.personalInfoData,
+          addressInfoData: state.addressInfoData,
+          emergencyInfo: state.emergencyInfo,
+          bankDetails: state.bankDetails,
+          nominationDetails: state.nominationDetails,
+          pfDetails: state.pfDetails,
+          acceptStatus: state.acceptStatus,
+          rejectStatus: state.rejectStatus,
+          loader: loader,
+          downloadedFile: state.downloadedFile,
+          uanUpdate: state.uanUpdate,
+          verificationStateList: state.verificationStateList,
+          verificationCityList: state.verificationCityList,
+          verificationPermanentCityList: state.verificationPermanentCityList,
+        }}
+      >
+        {" "}
+        {props.children}
+      </DocsVerifyContext.Provider>
+    )
   );
 };

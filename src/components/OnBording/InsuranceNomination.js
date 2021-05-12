@@ -13,7 +13,8 @@ import NomineeForm from "./NominForm";
 import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-datepicker";
 import { OnBoardContext } from "../../context/OnBoardState";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const InsuranceNomination = (props) => {
   const {
     CandidatePersonalInfo,
@@ -1360,6 +1361,7 @@ const InsuranceNomination = (props) => {
   console.log("----------->", NominForm1);
   return (
     <Fragment>
+      <ToastContainer />
       {/* <Form onSubmit={submitHandler}>  */}
       <Row style={{ marginBottom: "2rem" }} className="CheckBoxField">
         <Col sm={3}>
@@ -2286,7 +2288,7 @@ const InsuranceNomination = (props) => {
         <div>
           {/* Fifth Nominee */}
           <label>
-            <b>Fifth Nominee</b>
+            <b>Third Nominee</b>
           </label>
           <Row style={{ marginBottom: "2rem" }}>
             <Col sm={11}>

@@ -1,92 +1,114 @@
-.title_bar{
-    background: #006EBB;
-    font-weight: bold;
-    color: white;
-    line-height: 3rem;
-    font-weight: bold;
-    text-align: center;
+.nodue_title{
+  background: #006EBB;
+  font-weight: bold;
+  color: white;
+  line-height: 3rem;
+  font-weight: bold;
+  text-align: center;
+  width:1400px
+}
+.nodue_title_admin{
+  background: #006EBB;
+  font-weight: bold;
+  color: white;
+  line-height: 3rem;
+  font-weight: bold;
+  text-align: center;
 }
 nav.nav.nav-tabs a {
-    font-weight: bold;
-    font-size: 1.1rem;
-    color: black
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: black
 }
 .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
-    color: #495057;
-    background-color: #c7c7c7;
-    border-color: #c7c7c7 #c7c7c7 #fff;
+  color: #495057;
+  background-color: #c7c7c7;
+  border-color: #c7c7c7 #c7c7c7 #fff;
 }
 select.form-control.form-control-sm.darkBackground {
-    background-color: #c7c7c7;
+  background-color: #c7c7c7;
 }
 button.assign-button.btn.btn-secondary.btn-block.btn-sm {
-    background-color: #615158 !important;
-    border-color: #615158 !important;
+  background-color: #615158 !important;
+  border-color: #615158 !important;
 }
 small.form-text.text-muted{
-    text-align: center;
-    color: blue;
+  text-align: center;
+  color: blue;
 }
 title{
-    text-align: center;
+  align-content: center;
+  overflow: "auto";
 }
 /* .modal-backdrop {
-  background-color: transparent;
-  opacity: 1.5;
+background-color: transparent;
+opacity: 1.5;
 } */
 
 .note{
-    font-size: 13px;
+  font-size: 13px;
 }
 
 thead th {
-    position: sticky;
-    top: 0; 
+  position: sticky;
+  top: 0; 
 }
 
 .tableFixHead {
-   overflow: auto;
-   height: 500px;
- }
-
- .pagination{
-     margin-left: 25%;
- }
-
- .shift-date .react-datepicker-wrapper{
-    width: 100% !important;
+ overflow: auto;
+ height: 500px;
 }
-.shift-date input.form-control.shift-view {
-    height: 40px;
-}
+
+
+
 .searchFeild{
-    align-items: center;
+  align-items: center;
 }
 .columnColor{
-    border: "1px solid blue";
-    background-color:aliceblue
+  border: "1px solid blue";
+  background-color:aliceblue
 
 }
 .inputWrapper {
-    border: none;
-    box-shadow: none !important;
-  }
-  ::-moz-focus-inner {
-    border: 0;
-    padding: 0;
-  }
-  .tableSize{
-    border-collapse: collapse;
-    border-spacing: 0;
-    width: 100%;
-    border: 1px solid #ddd;
-  }
-  .uploadButton{
-    background-color: #006ebb !important;
-    border-color: #006ebb !important;
-    word-spacing: initial;
-    color: #ffffff !important;
-    float: right;
-    flex-flow: row;
-    padding: auto;
-  }
+  border: none;
+  box-shadow: none !important;
+}
+::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+.tableSize{
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+.inputWrapper {
+  border: none;
+  box-shadow: none !important;
+}
+::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+.searchBox {
+  margin-right: auto;
+  width: 30% !important;
+}
+.selectList {
+  margin-left: auto;
+  width: 100% !important;
+  display: inline-flex;
+}
+.mainWrapper {
+  justify-content: space-between;
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.inputWrapper {
+  width: 50% !important;
+}
+.selectInputWrapper {
+  width: 50% !important;
+}

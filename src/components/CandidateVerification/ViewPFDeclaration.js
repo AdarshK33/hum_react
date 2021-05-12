@@ -46,7 +46,7 @@ const EditPFDeclaration = (props) => {
     if (window.location.href.includes("verification")) {
       fetchPfDetails(candidateId);
       setDisable(true);
-      if (pfDetails !== undefined) {
+      if (pfDetails !== undefined && pfDetails !== null) {
         if (pfDetails.uanNumber !== undefined) {
           setState(pfDetails.uanNumber);
         }
@@ -247,62 +247,16 @@ const EditPFDeclaration = (props) => {
     console.log(state);
   };
   return (
-    <Fragment>
-      {pfDetails !== null && pfDetails !== undefined ? (
-        <Form>
-          <Row style={{ marginBottom: "2rem" }}>
-            <Col sm={5}>
-              <div>
-                <label>Is this your first job ?</label>
-                {firstJobError ? (
-                  <p style={{ color: "red" }}>
-                    {" "}
-                    *Please select one of the option
-                  </p>
-                ) : (
-                  <p></p>
-                )}
-              </div>
-            </Col>
-            <Col sm={2}>
-              <Form.Group>
-                <div className="boxField input">
-                  <input
-                    className="largerCheckbox"
-                    type="checkbox"
-                    value="yes"
-                    checked={firstJobYes}
-                    required={required}
-                    disabled={disable}
-                    onChange={handleFirstJobYesChange}
-                  />
-                  <label>Yes</label>
-                </div>
-              </Form.Group>
-            </Col>
-            <Col sm={2}>
-              <Form.Group>
-                <div className="boxField input">
-                  <input
-                    className="largerCheckbox"
-                    type="checkbox"
-                    value="no"
-                    checked={firstJobNo}
-                    required={required}
-                    disabled={disable}
-                    onChange={handleFirstJobNoChange}
-                  />
-                  <label>No </label>
-                </div>
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row style={{ marginBottom: "2rem" }}>
-            <Col sm={5}>
-              <div>
-                <label>
-                  Were you contributing in your previous organization ?
-                  {contributingPrevError ? (
+    console.log(pfDetails),
+    (
+      <Fragment>
+        {pfDetails !== null && pfDetails !== undefined ? (
+          <Form>
+            <Row style={{ marginBottom: "2rem" }}>
+              <Col sm={5}>
+                <div>
+                  <label>Is this your first job ?</label>
+                  {firstJobError ? (
                     <p style={{ color: "red" }}>
                       {" "}
                       *Please select one of the option
@@ -310,188 +264,240 @@ const EditPFDeclaration = (props) => {
                   ) : (
                     <p></p>
                   )}
-                </label>
-              </div>
-            </Col>
-            <Col sm={2}>
-              <Form.Group>
-                <div className="boxField input">
-                  <input
-                    type="checkbox"
-                    value="yes"
-                    checked={contributingPrevOrgYes}
-                    required={required}
-                    disabled={disable}
-                    onChange={handleContributingPrevOrgYesChange}
-                  />
-                  <label>Yes</label>
                 </div>
-              </Form.Group>
-            </Col>
-            <Col sm={2}>
-              <Form.Group>
-                <div className="boxField input">
-                  <input
-                    type="checkbox"
-                    value="no"
-                    checked={contributingPrevOrgNo}
-                    required={required}
-                    disabled={disable}
-                    onChange={handleContributingPrevOrgNoChange}
-                  />
-                  <label>No </label>
-                </div>
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row style={{ marginBottom: "2rem" }}>
-            <Col sm={5}>
-              <div>
-                <label>Provide your UAN number</label>
-                {uanNumberError ? (
-                  <p style={{ color: "red" }}> *Please enter your UAN number</p>
-                ) : (
-                  <p></p>
-                )}
-              </div>
-            </Col>
-            <Col sm={4}>
-              <Form.Group>
-                <Form.Control
-                  type="text"
-                  placeholder="UAN number"
-                  required
-                  name="uanNumber"
-                  value={state.uanNumber}
-                  disabled={disable}
-                  onChange={(e) => changeHandler(e)}
-                />
-              </Form.Group>
-            </Col>
-            {!candidateId && (
+              </Col>
               <Col sm={2}>
+                <Form.Group>
+                  <div className="boxField input">
+                    <input
+                      className="largerCheckbox"
+                      type="checkbox"
+                      value="yes"
+                      checked={firstJobYes}
+                      required={required}
+                      disabled={disable}
+                      onChange={handleFirstJobYesChange}
+                    />
+                    <label>Yes</label>
+                  </div>
+                </Form.Group>
+              </Col>
+              <Col sm={2}>
+                <Form.Group>
+                  <div className="boxField input">
+                    <input
+                      className="largerCheckbox"
+                      type="checkbox"
+                      value="no"
+                      checked={firstJobNo}
+                      required={required}
+                      disabled={disable}
+                      onChange={handleFirstJobNoChange}
+                    />
+                    <label>No </label>
+                  </div>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row style={{ marginBottom: "2rem" }}>
+              <Col sm={5}>
                 <div>
                   <label>
-                    Fill <a href="~/address">EPF Form</a> here
+                    Were you contributing in your previous organization ?
+                    {contributingPrevError ? (
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        *Please select one of the option
+                      </p>
+                    ) : (
+                      <p></p>
+                    )}
                   </label>
                 </div>
               </Col>
-            )}
-          </Row>
+              <Col sm={2}>
+                <Form.Group>
+                  <div className="boxField input">
+                    <input
+                      type="checkbox"
+                      value="yes"
+                      checked={contributingPrevOrgYes}
+                      required={required}
+                      disabled={disable}
+                      onChange={handleContributingPrevOrgYesChange}
+                    />
+                    <label>Yes</label>
+                  </div>
+                </Form.Group>
+              </Col>
+              <Col sm={2}>
+                <Form.Group>
+                  <div className="boxField input">
+                    <input
+                      type="checkbox"
+                      value="no"
+                      checked={contributingPrevOrgNo}
+                      required={required}
+                      disabled={disable}
+                      onChange={handleContributingPrevOrgNoChange}
+                    />
+                    <label>No </label>
+                  </div>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row style={{ marginBottom: "2rem" }}>
+              <Col sm={5}>
+                <div>
+                  <label>Provide your UAN number</label>
+                  {uanNumberError ? (
+                    <p style={{ color: "red" }}>
+                      {" "}
+                      *Please enter your UAN number
+                    </p>
+                  ) : (
+                    <p></p>
+                  )}
+                </div>
+              </Col>
+              <Col sm={4}>
+                <Form.Group>
+                  <Form.Control
+                    type="text"
+                    placeholder="UAN number"
+                    required
+                    name="uanNumber"
+                    value={pfDetails.uanNumber}
+                    disabled={disable}
+                    onChange={(e) => changeHandler(e)}
+                  />
+                </Form.Group>
+              </Col>
+              {!candidateId && (
+                <Col sm={2}>
+                  <div>
+                    <label>
+                      Fill <a href="~/address">EPF Form</a> here
+                    </label>
+                  </div>
+                </Col>
+              )}
+            </Row>
 
-          <Row style={{ marginBottom: "2rem" }}>
-            <Col sm={5}>
-              <div>
-                <label>
-                  Are you a member of employer pension scheme in your previous
-                  employement ?
-                </label>
-                {memberOfPensionSchemaError ? (
-                  <p style={{ color: "red" }}>
-                    {" "}
-                    *Please select one of the option
-                  </p>
-                ) : (
-                  <p></p>
-                )}
-              </div>
-            </Col>
-            <Col sm={2}>
-              <Form.Group>
-                <div className="boxField input">
-                  <input
-                    className="largerCheckbox"
-                    type="checkbox"
-                    value="yes"
-                    checked={memberOfPensionSchemeYes}
-                    required={required}
-                    disabled={disable}
-                    onChange={handleMemberOfPensionSchemeYesChange}
-                  />
-                  <label>Yes</label>
-                </div>
-              </Form.Group>
-            </Col>
-            <Col sm={2}>
-              <Form.Group>
-                <div className="boxField input">
-                  <input
-                    className="largerCheckbox"
-                    type="checkbox"
-                    value="yes"
-                    checked={memberOfPensionSchemeNo}
-                    disabled={disable}
-                    required={required}
-                    onChange={handleMemberOfPensionSchemeNoChange}
-                  />
-                  <label>No </label>
-                </div>
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row style={{ marginBottom: "2rem" }}>
-            <Col sm={5}>
-              <div>
-                <label>
-                  Does the PF nomination hold good in case of Death ?
-                </label>
-                {pfNominationHoldHealthError ? (
-                  <p style={{ color: "red" }}>
-                    {" "}
-                    *Please select one of the option
-                  </p>
-                ) : (
-                  <p></p>
-                )}
-              </div>
-            </Col>
-            <Col sm={2}>
-              <Form.Group>
-                <div className="boxField input">
-                  <input
-                    className="largerCheckbox"
-                    type="checkbox"
-                    value="yes"
-                    checked={pfNominationHoldHealthYes}
-                    required={required}
-                    disabled={disable}
-                    onChange={handlePfNominationHoldHealthYesChange}
-                  />
-                  <label>Yes</label>
-                </div>
-              </Form.Group>
-            </Col>
-            <Col sm={2}>
-              <Form.Group>
-                <div className="boxField input">
-                  <input
-                    className="largerCheckbox"
-                    type="checkbox"
-                    value="no"
-                    checked={pfNominationHoldHealthNo}
-                    disabled={disable}
-                    required={required}
-                    onChange={handlePfNominationHoldHealthNoChange}
-                  />
-                  <label>No </label>
-                </div>
-              </Form.Group>
-            </Col>
-            {!candidateId && (
-              <Col sm={2}>
+            <Row style={{ marginBottom: "2rem" }}>
+              <Col sm={5}>
                 <div>
                   <label>
-                    <a href="~/address">Add</a> Details here
+                    Are you a member of employer pension scheme in your previous
+                    employement ?
                   </label>
+                  {memberOfPensionSchemaError ? (
+                    <p style={{ color: "red" }}>
+                      {" "}
+                      *Please select one of the option
+                    </p>
+                  ) : (
+                    <p></p>
+                  )}
                 </div>
               </Col>
-            )}
-          </Row>
-        </Form>
-      ) : (
-        <div className="text-center">No Data Found</div>
-      )}
-    </Fragment>
+              <Col sm={2}>
+                <Form.Group>
+                  <div className="boxField input">
+                    <input
+                      className="largerCheckbox"
+                      type="checkbox"
+                      value="yes"
+                      checked={memberOfPensionSchemeYes}
+                      required={required}
+                      disabled={disable}
+                      onChange={handleMemberOfPensionSchemeYesChange}
+                    />
+                    <label>Yes</label>
+                  </div>
+                </Form.Group>
+              </Col>
+              <Col sm={2}>
+                <Form.Group>
+                  <div className="boxField input">
+                    <input
+                      className="largerCheckbox"
+                      type="checkbox"
+                      value="yes"
+                      checked={memberOfPensionSchemeNo}
+                      disabled={disable}
+                      required={required}
+                      onChange={handleMemberOfPensionSchemeNoChange}
+                    />
+                    <label>No </label>
+                  </div>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row style={{ marginBottom: "2rem" }}>
+              <Col sm={5}>
+                <div>
+                  <label>
+                    Does the PF nomination hold good in case of Death ?
+                  </label>
+                  {pfNominationHoldHealthError ? (
+                    <p style={{ color: "red" }}>
+                      {" "}
+                      *Please select one of the option
+                    </p>
+                  ) : (
+                    <p></p>
+                  )}
+                </div>
+              </Col>
+              <Col sm={2}>
+                <Form.Group>
+                  <div className="boxField input">
+                    <input
+                      className="largerCheckbox"
+                      type="checkbox"
+                      value="yes"
+                      checked={pfNominationHoldHealthYes}
+                      required={required}
+                      disabled={disable}
+                      onChange={handlePfNominationHoldHealthYesChange}
+                    />
+                    <label>Yes</label>
+                  </div>
+                </Form.Group>
+              </Col>
+              <Col sm={2}>
+                <Form.Group>
+                  <div className="boxField input">
+                    <input
+                      className="largerCheckbox"
+                      type="checkbox"
+                      value="no"
+                      checked={pfNominationHoldHealthNo}
+                      disabled={disable}
+                      required={required}
+                      onChange={handlePfNominationHoldHealthNoChange}
+                    />
+                    <label>No </label>
+                  </div>
+                </Form.Group>
+              </Col>
+              {!candidateId && (
+                <Col sm={2}>
+                  <div>
+                    <label>
+                      <a href="~/address">Add</a> Details here
+                    </label>
+                  </div>
+                </Col>
+              )}
+            </Row>
+          </Form>
+        ) : (
+          <div className="text-center">No Data Found</div>
+        )}
+      </Fragment>
+    )
   );
 };
 export default EditPFDeclaration;

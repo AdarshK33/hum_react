@@ -9,17 +9,20 @@ import { Row, Col, Form, Button } from "react-bootstrap";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
 import "./OnBoard.css";
+import { ToastContainer, toast } from "react-toastify";
 import countryList from "react-select-country-list";
 import { OnBoardContext } from "../../context/OnBoardState";
-
+import "react-toastify/dist/ReactToastify.css";
 const Address = (props) => {
   const {
     candidateCountryList,
     candidateCountryData,
     CandidateStateList,
     candidateStateData,
-    candidateCityList,
-    candidateCityData,
+    candidatePermanentCityList,
+    candidatePresentCityList,
+    candidatePermanentCityData,
+    candidatePresentCityData,
     addressCreate,
     addressSaveData,
     addressView,
@@ -51,6 +54,8 @@ const Address = (props) => {
   const [PermanentPinCodeError, setPermanentPinCodeError] = useState(false);
   const [PermanentPhoneNoError, setPermanentPhoneNoError] = useState(false);
   const [saveclick, setSaveclick] = useState(false);
+  const [permanetCityData, setPermanentCityData] = useState([]);
+  const [presentCityData, setPresentCityData] = useState([]);
 
   const [state, setState] = useState({
     flatNumber: "",
@@ -86,90 +91,125 @@ const Address = (props) => {
     CandidateProfile();
     candidateCountryList();
     addressView(candidateProfileData.candidateId);
-  }, []);
-  console.log("address candidate data", candidateProfileData);
-  console.log("candidateCountryList data", candidateCountryData);
-  console.log("addressViewData data", addressViewData);
+    console.log("intialdata");
+  }, [candidateProfileData]);
+  // console.log("address candidate data", candidateProfileData);
+  // console.log("candidateCountryList data", candidateCountryData);
+  // console.log("addressViewData data", addressViewData);
+  // useEffect(() => {
+  //   if (
+  //     candidateCountryData !== undefined &&
+  //     candidateCountryData !== null &&
+  //     countryName === ""
+  //   ) {
+  //     const countryvalue = candidateCountryData.filter(
+  //       (i) => i.countryId === addressViewData.countryId
+  //     );
+  //     console.log("Countryvalue", countryvalue);
+  //     setCountryName(countryvalue[0].countryName);
+  //   }
+  // }, [candidateCountryData]);
   useEffect(() => {
+    let permanentStatevalue;
+    let permanentCityValue;
+    let stateValue;
+    let cityValue;
     if (
-      candidateCountryData !== undefined &&
-      candidateCountryData !== null &&
-      countryName === ""
+      addressViewData !== undefined &&
+      addressViewData !== null &&
+      addressViewData.stateId !== undefined &&
+      addressViewData.stateId !== null
     ) {
-      const countryvalue = candidateCountryData.filter(
-        (i) => i.countryId === addressViewData.countryId
+      stateValue = candidateStateData.filter(
+        (i) => i.stateId === addressViewData.stateId
       );
-      console.log("Countryvalue", countryvalue);
-      setCountryName(countryvalue[0].countryName);
+      console.log("stateValue", stateValue);
+      if (stateValue.length !== 0) {
+        setStateId(stateValue[0].stateId);
+        setStateName(stateValue[0].stateName);
+        candidatePresentCityList(addressViewData.stateId);
+      }
+      setPresentCityData(candidatePresentCityData);
+      permanentStatevalue = candidateStateData.filter(
+        (i) => i.stateId === addressViewData.permanentStateId
+      );
+      if (permanentStatevalue.length !== 0) {
+        setPermanentStateId(permanentStatevalue[0].stateId);
+        setPermanentStateName(permanentStatevalue[0].stateName);
+        candidatePermanentCityList(addressViewData.permanentStateId);
+      }
     }
-  }, [candidateCountryData]);
+  }, [candidateStateData, addressViewData]);
+  useEffect(() => {
+    let cityValue;
+    if (addressViewData !== undefined && addressViewData !== null) {
+      cityValue = candidatePresentCityData.filter(
+        (i) => i.cityId == addressViewData.cityId
+      );
+      console.log("present............", cityValue);
+
+      setPresentCityData(cityValue);
+
+      let permanentCityValue;
+
+      if (addressViewData.addressType === 0) {
+        permanentCityValue = candidatePermanentCityData.filter(
+          (i) => i.cityId === addressViewData.permanentCityId
+        );
+        setPermanentCityData(permanentCityValue);
+      }
+    }
+  }, [addressViewData, candidatePresentCityData, candidatePermanentCityData]);
+
+  useEffect(() => {
+    if (permanetCityData.length !== 0) {
+      setPermanentCityId(permanetCityData[0].cityId);
+      setPermanentCityName(permanetCityData[0].cityName);
+    }
+  }, [candidateStateData, permanetCityData]);
+  useEffect(() => {
+    if (presentCityData.length !== 0) {
+      setCityId(presentCityData[0].cityId);
+      setCityName(presentCityData[0].cityName);
+    }
+  }, [candidateStateData, presentCityData]);
   useEffect(() => {
     console.log("prefill data", addressViewData);
     let countryvalue;
     let stateValue;
     let cityValue;
     let permanentCountryvalue;
-    let permanentStatevalue;
-    let permanentCityValue;
 
     if (addressViewData !== undefined && addressViewData !== null) {
       if (addressViewData.addressType === 0) {
         setAddressValue(addressViewData.addressId);
-        countryvalue = candidateCountryData.filter(
-          (i) => i.countryId === addressViewData.countryId
-        );
-        console.log("Countryvalue", countryvalue);
-        setCountryName(countryvalue[0].countryName);
-        setCountryId(countryvalue[0].countryId);
-        CandidateStateList(countryvalue[0].countryName);
+        if (
+          candidateCountryData !== null &&
+          candidateCountryData !== undefined &&
+          candidateCountryData.length !== 0
+        ) {
+          countryvalue = candidateCountryData.filter(
+            (i) => i.countryId === addressViewData.countryId
+          );
+          console.log("Countryvalue", countryvalue);
+          if (countryvalue !== undefined && countryvalue !== null) {
+            setCountryName(countryvalue[0].countryName);
+            setCountryId(countryvalue[0].countryId);
+            CandidateStateList(countryvalue[0].countryName);
+          }
 
-        console.log("candidateStateData", candidateStateData);
-        stateValue = candidateStateData.filter(
-          (i) => i.stateId === addressViewData.stateId
-        );
-        console.log("stateValue", stateValue);
-        if (stateValue.length !== 0) {
-          setStateId(stateValue[0].stateId);
-          setStateName(stateValue[0].stateName);
-          candidateCityList(addressViewData.stateId);
-          console.log("stateName", stateName);
-          console.log("candidateCityData", candidateCityData);
-        }
-
-        cityValue = candidateCityData.filter(
-          (i) => i.cityId === addressViewData.cityId
-        );
-        console.log("cityValue", cityValue);
-        if (cityValue.length !== 0) {
-          setCityId(cityValue[0].cityId);
-          setCityName(cityValue[0].cityName);
-        }
-
-        permanentCountryvalue = candidateCountryData.filter(
-          (i) => i.countryId === addressViewData.permanentCountryId
-        );
-        console.log("permanentCountryvalue", permanentCountryvalue);
-        setPermanentCountryId(permanentCountryvalue[0].countryId);
-        setPermanentCountryName(permanentCountryvalue[0].countryName);
-        CandidateStateList(permanentCountryvalue[0].countryName);
-
-        permanentStatevalue = candidateStateData.filter(
-          (i) => i.stateId === addressViewData.permanentStateId
-        );
-        console.log("permanentStatevalue", permanentStatevalue);
-        if (permanentStatevalue.length !== 0) {
-          setPermanentStateId(permanentStatevalue[0].stateId);
-          setPermanentStateName(permanentStatevalue[0].stateName);
-          candidateCityList(addressViewData.permanentStateId);
-        }
-
-        permanentCityValue = candidateCityData.filter(
-          (i) => i.cityId === addressViewData.permanentCityId
-        );
-        console.log("permanentCityValue", permanentCityValue);
-        if (permanentCityValue.length !== 0) {
-          setPermanentCityId(permanentCityValue[0].cityId);
-          setPermanentCityName(permanentCityValue[0].cityName);
+          permanentCountryvalue = candidateCountryData.filter(
+            (i) => i.countryId === addressViewData.permanentCountryId
+          );
+          console.log("permanentCountryvalue", permanentCountryvalue);
+          if (
+            permanentCountryvalue !== undefined &&
+            permanentCountryvalue !== null
+          ) {
+            setPermanentCountryId(permanentCountryvalue[0].countryId);
+            setPermanentCountryName(permanentCountryvalue[0].countryName);
+            CandidateStateList(permanentCountryvalue[0].countryName);
+          }
         }
 
         changeCheckState(false);
@@ -189,31 +229,28 @@ const Address = (props) => {
         });
       } else if (addressViewData.addressType === 1) {
         setAddressValue(addressViewData.addressId);
-        countryvalue = candidateCountryData.filter(
-          (i) => i.countryId === addressViewData.countryId
-        );
-        console.log("Countryvalue", countryvalue);
-        setCountryName(countryvalue[0].countryName);
-        setCountryId(countryvalue[0].countryId);
-        CandidateStateList(countryvalue[0].countryName);
-        stateValue = candidateStateData.filter(
-          (i) => i.stateId === addressViewData.stateId
-        );
-        console.log("stateValue", stateValue);
+        if (
+          candidateCountryData !== null &&
+          candidateCountryData !== undefined &&
+          candidateCountryData.length !== 0
+        ) {
+          countryvalue = candidateCountryData.filter(
+            (i) => i.countryId === addressViewData.countryId
+          );
+          console.log("Countryvalue", countryvalue);
+          setCountryName(countryvalue[0].countryName);
+          setCountryId(countryvalue[0].countryId);
+          CandidateStateList(countryvalue[0].countryName);
+          stateValue = candidateStateData.filter(
+            (i) => i.stateId === addressViewData.stateId
+          );
+          console.log("stateValue", stateValue);
 
-        if (stateValue.length !== 0) {
-          setStateId(stateValue[0].stateId);
-          setStateName(stateValue[0].stateName);
-          candidateCityList(stateValue[0].stateId);
-        }
-
-        cityValue = candidateCityData.filter(
-          (i) => i.cityId === addressViewData.cityId
-        );
-        console.log("cityValue addresstype 1", cityValue);
-        if (cityValue.length !== 0) {
-          setCityId(cityValue[0].cityId);
-          setCityName(cityValue[0].cityName);
+          if (stateValue.length !== 0) {
+            setStateId(stateValue[0].stateId);
+            setStateName(stateValue[0].stateName);
+            candidatePresentCityList(stateValue[0].stateId);
+          }
         }
 
         changeCheckState(true);
@@ -231,7 +268,7 @@ const Address = (props) => {
 
   const flatNumberValidation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
-    if (state.flatNumber !== "") {
+    if (state.flatNumber !== "" && state.flatNumber !== undefined) {
       setFlatNumberError(false);
       console.log("flatNumberSuccess");
       return true;
@@ -243,7 +280,7 @@ const Address = (props) => {
   };
   const addressLineValidations = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
-    if (state.addressLine !== "") {
+    if (state.addressLine !== "" && state.addressLine !== undefined) {
       setAddressLineError(false);
       console.log("flatNumberSuccess");
       return true;
@@ -254,7 +291,13 @@ const Address = (props) => {
     }
   };
   const countryValidation = () => {
-    if ((state.countryId !== "") & (state.countryId !== "Country")) {
+    console.log("--------------->", countryName);
+    if (
+      (countryName !== null) &
+      (countryName !== undefined) &
+      (countryName !== "") &
+      (countryName !== "Select Country")
+    ) {
       setCountryError(false);
       console.log("CountrySucess");
       return true;
@@ -265,7 +308,12 @@ const Address = (props) => {
     }
   };
   const StateValidation = () => {
-    if ((state.stateId !== 0) & (state.stateId !== "State")) {
+    if (
+      (stateName !== null) &
+      (stateName !== undefined) &
+      (stateName !== 0) &
+      (stateName !== "Select State")
+    ) {
       setStateError(false);
       console.log("StateSucess");
       return true;
@@ -276,7 +324,12 @@ const Address = (props) => {
     }
   };
   const CityValidation = () => {
-    if ((state.cityId !== 0) & (state.cityId !== "City")) {
+    if (
+      (cityName !== null) &
+      (cityName !== undefined) &
+      (cityName !== 0) &
+      (cityName !== "Select City")
+    ) {
       setCityError(false);
       console.log("citySucess");
       return true;
@@ -287,10 +340,16 @@ const Address = (props) => {
     }
   };
   const PinCodeErrorValidations = () => {
-    const nameValid = /^[a-zA-Z\b]+$/;
-    if (state.pinCode !== "") {
+    const aadharValid = /^[0-9\b]+$/;
+    if (
+      state.pinCode !== "" &&
+      state.pinCode !== undefined &&
+      aadharValid.test(state.pinCode) &&
+      state.pinCode.length === 6
+    ) {
       setPinCodeError(false);
-      console.log("pinCodeSuccess");
+
+      console.log("pinCodeSuccess", state.pinCode.length);
       return true;
     } else {
       setPinCodeError(true);
@@ -299,8 +358,14 @@ const Address = (props) => {
     }
   };
   const PhoneNoErrorValidations = () => {
-    const nameValid = /^[a-zA-Z\b]+$/;
-    if (state.phoneNumber !== "") {
+    const aadharValid = /^[0-9\b]+$/;
+
+    if (
+      state.phoneNumber !== "" &&
+      state.phoneNumber !== undefined &&
+      aadharValid.test(state.phoneNumber) &&
+      state.phoneNumber.length === 10
+    ) {
       setPhoneNoError(false);
       console.log("phoneNoeSuccess");
       return true;
@@ -313,7 +378,12 @@ const Address = (props) => {
 
   const permanentFlatNumberValidation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
-    if (state.permanentFlatNumber !== "") {
+    console.log("------>pFNo", state.permanentFlatNumber);
+    if (
+      state.permanentFlatNumber !== "" &&
+      state.permanentFlatNumber !== null &&
+      state.permanentFlatNumber !== undefined
+    ) {
       setPermanentFlatNumberError(false);
       console.log("flatNumberSuccess");
       return true;
@@ -325,7 +395,11 @@ const Address = (props) => {
   };
   const permanentAddressLineValidations = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
-    if (state.permanentAddressLine !== "") {
+    if (
+      state.permanentAddressLine !== "" &&
+      state.permanentAddressLine !== null &&
+      state.permanentAddressLine !== undefined
+    ) {
       setPermanentAddressLineError(false);
       console.log("addresSuccess");
       return true;
@@ -337,8 +411,10 @@ const Address = (props) => {
   };
   const permanentCountryValidation = () => {
     if (
-      (state.permanentCountryId !== "") &
-      (state.permanentCountryId !== "Country")
+      (permanentCountryName !== null) &
+      (permanentCountryName !== undefined) &
+      (permanentCountryName !== "") &
+      (permanentCountryName !== "Select Country")
     ) {
       setPermanentCountryError(false);
       console.log("CountrySucess");
@@ -350,7 +426,12 @@ const Address = (props) => {
     }
   };
   const permanentStateValidation = () => {
-    if ((state.permanentStateId !== 0) & (state.permanentStateId !== "State")) {
+    if (
+      (permanentStateName !== null) &
+      (permanentStateName !== undefined) &
+      (permanentStateName !== 0) &
+      (permanentStateName !== "Select State")
+    ) {
       setPermanentStateError(false);
       console.log("StateSucess");
       return true;
@@ -361,7 +442,12 @@ const Address = (props) => {
     }
   };
   const permanentCityValidation = () => {
-    if ((state.permanentCityId !== 0) & (state.permanentCityId !== "City")) {
+    if (
+      (permanentCityName !== null) &
+      (permanentCityName !== undefined) &
+      (permanentCityName !== 0) &
+      (permanentCityName !== "Select City")
+    ) {
       setPermanentCityError(false);
       console.log("citySucess");
       return true;
@@ -372,8 +458,12 @@ const Address = (props) => {
     }
   };
   const permanentPinCodeErrorValidations = () => {
-    const nameValid = /^[a-zA-Z\b]+$/;
-    if (state.permanentPinCode !== "") {
+    const aadharValid = /^[0-9\b]+$/;
+    if (
+      state.permanentPinCode !== "" &&
+      aadharValid.test(state.permanentPinCode) &&
+      state.permanentPinCode.length === 6
+    ) {
       setPermanentPinCodeError(false);
       console.log("pinCodeSuccess");
       return true;
@@ -384,8 +474,12 @@ const Address = (props) => {
     }
   };
   const permanentPhoneNoErrorValidations = () => {
-    const nameValid = /^[a-zA-Z\b]+$/;
-    if (state.permanentPhoneNumber !== "") {
+    const aadharValid = /^[0-9\b]+$/;
+    if (
+      state.permanentPhoneNumber !== "" &&
+      aadharValid.test(state.permanentPhoneNumber) &&
+      state.permanentPhoneNumber.length === 10
+    ) {
       setPermanentPhoneNoError(false);
       console.log("phoneNoeSuccess");
       return true;
@@ -395,6 +489,7 @@ const Address = (props) => {
       return false;
     }
   };
+
   const checkValidations = () => {
     if (
       (flatNumberValidation() == true) &
@@ -446,15 +541,15 @@ const Address = (props) => {
     console.log("filteredListOfState", filteredListOfState);
     setStateName(e.target.value);
     setStateId(filteredListOfState[0].stateId);
-    candidateCityList(filteredListOfState[0].stateId);
+    candidatePresentCityList(filteredListOfState[0].stateId);
   };
 
   const cityHandler = (e) => {
-    let filteredListOfCity = candidateCityData.filter(
+    let filteredListOfCity = candidatePresentCityData.filter(
       (i) => i.cityName === e.target.value
     );
     console.log("filteredListOfCity", filteredListOfCity);
-    setCityName(e.target.value);
+    setCityName(filteredListOfCity[0].cityName);
     setCityId(filteredListOfCity[0].cityId);
   };
 
@@ -475,11 +570,11 @@ const Address = (props) => {
     console.log("filteredListOfState", filteredListOfState);
     setPermanentStateName(e.target.value);
     setPermanentStateId(filteredListOfState[0].stateId);
-    candidateCityList(filteredListOfState[0].stateId);
+    candidatePermanentCityList(filteredListOfState[0].stateId);
   };
 
   const permanentCityHandler = (e) => {
-    let filteredListOfCity = candidateCityData.filter(
+    let filteredListOfCity = candidatePermanentCityData.filter(
       (i) => i.cityName === e.target.value
     );
     console.log("filteredListOfCity", filteredListOfCity);
@@ -488,11 +583,7 @@ const Address = (props) => {
   };
 
   const submitHandler = (e) => {
-    const nextPage = props.NextStep;
-    // let addressValue;
-    nextPage();
     e.preventDefault();
-    console.log("addressViewData", addressViewData, addressSaveData, saveclick);
     // if (saveclick === false) {
     //   addressValue = 0;
     //   setSaveclick(true);
@@ -502,6 +593,7 @@ const Address = (props) => {
     //     : addressViewData.addressId;
     // }
     const value = checkValidations();
+
     if (value === true) {
       // setSaveclick(true);
       const AddressInfo = {
@@ -558,526 +650,552 @@ const Address = (props) => {
     console.log(isChecked);
   };
   return (
-    <Fragment>
-      <Form>
-        <Row style={{ marginBottom: "1rem" }}>
-          <Col sm={6}>
-            <div>
-              <label>
-                <b>Present Address</b>
-              </label>
-            </div>
-          </Col>
-        </Row>
-        <Row style={{ marginBottom: "2rem" }}>
-          {/* <div className="divContents"> */}
-          <div className="col-sm-3">
-            {/* <label for="validationCustom03" class="form-label">City</label>
+    console.log("cityName", presentCityData),
+    console.log("permanet", permanetCityData),
+    (
+      <Fragment>
+        <ToastContainer />
+        <Form>
+          <Row style={{ marginBottom: "1rem" }}>
+            <Col sm={6}>
+              <div>
+                <label>
+                  <b>Present Address</b>
+                </label>
+              </div>
+            </Col>
+          </Row>
+          <Row style={{ marginBottom: "2rem" }}>
+            {/* <div className="divContents"> */}
+            <div className="col-sm-3">
+              {/* <label for="validationCustom03" class="form-label">City</label>
     <input type="text" class="form-control" id="validationCustom03" required/>
     <div class="invalid-feedback">
       Please provide a valid city.
     </div> */}
-            <Form.Group>
-              <Form.Label>
-                Flat/Plot No<span style={{ color: "red" }}>*</span>
-              </Form.Label>
-              <Form.Control
-                type="text"
-                name="flatNumber"
-                value={state.flatNumber}
-                onChange={changeHandler}
-                required
-                style={flatNumberErro ? { borderColor: "red" } : {}}
-                placeholder="Flat/Plot No"
-                disabled={disabled}
-              />
-              {flatNumberErro ? (
-                <p style={{ color: "red" }}> Please enter flat/plot no</p>
-              ) : (
-                <p></p>
-              )}
-            </Form.Group>
-          </div>
-          <div className="col-sm-3">
-            <Form.Group>
-              <Form.Label>Street</Form.Label>
-              <Form.Control
-                type="text"
-                name="street"
-                value={state.street}
-                onChange={changeHandler}
-                placeholder="Street"
-                disabled={disabled}
-              />
-            </Form.Group>
-          </div>
-          <div className="col-sm-3">
-            <Form.Group>
-              <Form.Label>Locality</Form.Label>
-
-              <Form.Control
-                type="text"
-                name="locality"
-                value={state.locality}
-                onChange={changeHandler}
-                placeholder="Locality"
-                disabled={disabled}
-              />
-            </Form.Group>
-          </div>
-          <div className="col-sm-3">
-            <Form.Group>
-              <Form.Label>
-                Address Line 1<span style={{ color: "red" }}>*</span>
-              </Form.Label>
-              <Form.Control
-                type="text"
-                name="addressLine"
-                value={state.addressLine}
-                onChange={changeHandler}
-                required
-                style={addressLineError ? { borderColor: "red" } : {}}
-                placeholder="Address Line 1"
-                disabled={disabled}
-              />
-              {addressLineError ? (
-                <p style={{ color: "red" }}> Please enter address line1</p>
-              ) : (
-                <p></p>
-              )}
-            </Form.Group>
-          </div>
-          {/* </div> */}
-        </Row>
-        <Row style={{ marginBottom: "2rem" }}>
-          <div className="col-sm-3">
-            <Form.Group>
-              <Form.Label>
-                Country <span style={{ color: "red" }}>*</span>
-              </Form.Label>
-              <Form.Control
-                as="select"
-                name="countryId"
-                value={countryName}
-                onChange={(e) => countryHandler(e)}
-                required
-                style={countryError ? { borderColor: "red" } : {}}
-                disabled={disabled}
-              >
-                <option value="">Select Country</option>
-                {candidateCountryData !== null &&
-                  candidateCountryData !== undefined &&
-                  candidateCountryData.length > 0 &&
-                  candidateCountryData.map((item, i) => {
-                    return (
-                      <option key={item.countryId}>{item.countryName}</option>
-                    );
-                  })}
-              </Form.Control>
-              {countryError ? (
-                <p style={{ color: "red" }}> Please choose country</p>
-              ) : (
-                <p></p>
-              )}
-            </Form.Group>
-          </div>
-          <div className="col-sm-3">
-            <Form.Group>
-              <Form.Label>
-                State <span style={{ color: "red" }}>*</span>
-              </Form.Label>
-              <Form.Control
-                as="select"
-                name="stateId"
-                value={stateName}
-                style={stateError ? { borderColor: "red" } : {}}
-                onChange={(e) => stateHandler(e)}
-              >
-                <option value="">Select State</option>
-                {candidateStateData !== null &&
-                  candidateStateData !== undefined &&
-                  candidateStateData.length > 0 &&
-                  candidateStateData.map((item, i) => {
-                    return <option key={item.stateId}>{item.stateName}</option>;
-                  })}
-              </Form.Control>
-              {stateError ? (
-                <p style={{ color: "red" }}> Please choose state</p>
-              ) : (
-                <p></p>
-              )}
-            </Form.Group>
-          </div>
-          <div className="col-sm-3">
-            <Form.Group>
-              <Form.Label>
-                City <span style={{ color: "red" }}>*</span>
-              </Form.Label>
-              <Form.Control
-                as="select"
-                name="cityId"
-                value={cityName}
-                style={cityError ? { borderColor: "red" } : {}}
-                onChange={cityHandler}
-              >
-                <option value="">City</option>
-                {candidateCityData !== null &&
-                  candidateCityData !== undefined &&
-                  candidateCityData.length > 0 &&
-                  candidateCityData.map((item, i) => {
-                    return <option key={item.cityId}>{item.cityName}</option>;
-                  })}
-              </Form.Control>
-              {cityError ? (
-                <p style={{ color: "red" }}> Please choose city</p>
-              ) : (
-                <p></p>
-              )}
-            </Form.Group>
-          </div>
-
-          <div className="col-sm-3">
-            <Form.Group>
-              <Form.Label>
-                PinCode<span style={{ color: "red" }}>*</span>
-              </Form.Label>
-              <Form.Control
-                type="text"
-                name="pinCode"
-                value={state.pinCode}
-                onChange={changeHandler}
-                required
-                style={pinCodeError ? { borderColor: "red" } : {}}
-                placeholder="Pin Code"
-                disabled={disabled}
-              />
-              {pinCodeError ? (
-                <p style={{ color: "red" }}> Please enter pin code</p>
-              ) : (
-                <p></p>
-              )}
-            </Form.Group>
-          </div>
-        </Row>
-        <Row style={{ marginBottom: "2rem" }}>
-          <div className="col-sm-3">
-            <Form.Group>
-              <Form.Label>
-                Phone No<span style={{ color: "red" }}>*</span>
-              </Form.Label>
-              <Form.Control
-                type="text"
-                name="phoneNumber"
-                value={state.phoneNumber}
-                onChange={changeHandler}
-                required
-                style={phoneNoError ? { borderColor: "red" } : {}}
-                placeholder="Phone No"
-                disabled={disabled}
-              />
-              {phoneNoError ? (
-                <p style={{ color: "red" }}>
-                  {" "}
-                  Please enter valid phone number{" "}
-                </p>
-              ) : (
-                <p></p>
-              )}
-            </Form.Group>
-          </div>
-        </Row>
-        <Row style={{ marginBottom: "2rem" }}>
-          <Col sm={5}>
-            <div>
-              <label>
-                <b>Is permanent address same as present address ?</b>
-              </label>
+              <Form.Group>
+                <Form.Label>
+                  Flat/Plot No<span style={{ color: "red" }}>*</span>
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="flatNumber"
+                  value={state.flatNumber}
+                  onChange={changeHandler}
+                  required
+                  style={flatNumberErro ? { borderColor: "red" } : {}}
+                  placeholder="Flat/Plot No"
+                  disabled={disabled}
+                />
+                {flatNumberErro ? (
+                  <p style={{ color: "red" }}> Please enter flat/plot no</p>
+                ) : (
+                  <p></p>
+                )}
+              </Form.Group>
             </div>
-          </Col>
-          <Col sm={2}>
-            <Form.Group>
-              <div className="boxField input">
-                {/* className="CheckBoxField" */}
+            <div className="col-sm-3">
+              <Form.Group>
+                <Form.Label>Street</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="street"
+                  value={state.street}
+                  onChange={changeHandler}
+                  placeholder="Street"
+                  disabled={disabled}
+                />
+              </Form.Group>
+            </div>
+            <div className="col-sm-3">
+              <Form.Group>
+                <Form.Label>Locality</Form.Label>
 
-                {/* <input  className="largerCheckbox" type="checkbox" value="No" /> */}
-                <input
-                  type="checkbox"
-                  value="No"
-                  checked={!isChecked}
-                  onChange={handleNoCheckboxChange}
+                <Form.Control
+                  type="text"
+                  name="locality"
+                  value={state.locality}
+                  onChange={changeHandler}
+                  placeholder="Locality"
+                  disabled={disabled}
                 />
-                <label>No </label>
-              </div>
-            </Form.Group>
-          </Col>
-          <Col sm={2}>
-            <Form.Group>
-              <div className="boxField input">
-                {/* <label>Yes</label> */}
-                {/* <input  className="largerCheckbox" type="checkbox" value="Yes" /> */}
-                <input
-                  type="checkbox"
-                  value="Yes"
-                  checked={isChecked}
-                  onChange={handleCheckboxChange}
+              </Form.Group>
+            </div>
+            <div className="col-sm-3">
+              <Form.Group>
+                <Form.Label>
+                  Address Line 1<span style={{ color: "red" }}>*</span>
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  name="addressLine"
+                  value={state.addressLine}
+                  onChange={changeHandler}
+                  required
+                  style={addressLineError ? { borderColor: "red" } : {}}
+                  placeholder="Address Line 1"
+                  disabled={disabled}
                 />
-                <label>Yes</label>
+                {addressLineError ? (
+                  <p style={{ color: "red" }}> Please enter address line1</p>
+                ) : (
+                  <p></p>
+                )}
+              </Form.Group>
+            </div>
+            {/* </div> */}
+          </Row>
+          <Row style={{ marginBottom: "2rem" }}>
+            <div className="col-sm-3">
+              <Form.Group>
+                <Form.Label>
+                  Country <span style={{ color: "red" }}>*</span>
+                </Form.Label>
+                <Form.Control
+                  as="select"
+                  name="countryId"
+                  value={countryName}
+                  onChange={(e) => countryHandler(e)}
+                  required
+                  style={countryError ? { borderColor: "red" } : {}}
+                  disabled={disabled}
+                >
+                  <option value="">Select Country</option>
+                  {candidateCountryData !== null &&
+                    candidateCountryData !== undefined &&
+                    candidateCountryData.length > 0 &&
+                    candidateCountryData.map((item, i) => {
+                      return (
+                        <option key={item.countryId}>{item.countryName}</option>
+                      );
+                    })}
+                </Form.Control>
+                {countryError ? (
+                  <p style={{ color: "red" }}> Please choose country</p>
+                ) : (
+                  <p></p>
+                )}
+              </Form.Group>
+            </div>
+            <div className="col-sm-3">
+              <Form.Group>
+                <Form.Label>
+                  State <span style={{ color: "red" }}>*</span>
+                </Form.Label>
+                <Form.Control
+                  as="select"
+                  name="stateId"
+                  value={stateName}
+                  style={stateError ? { borderColor: "red" } : {}}
+                  onChange={(e) => stateHandler(e)}
+                >
+                  <option value="">Select State</option>
+                  {candidateStateData !== null &&
+                    candidateStateData !== undefined &&
+                    candidateStateData.length > 0 &&
+                    candidateStateData.map((item, i) => {
+                      return (
+                        <option key={item.stateId}>{item.stateName}</option>
+                      );
+                    })}
+                </Form.Control>
+                {stateError ? (
+                  <p style={{ color: "red" }}> Please choose state</p>
+                ) : (
+                  <p></p>
+                )}
+              </Form.Group>
+            </div>
+            <div className="col-sm-3">
+              <Form.Group>
+                <Form.Label>
+                  City <span style={{ color: "red" }}>*</span>
+                </Form.Label>
+                <Form.Control
+                  as="select"
+                  name="cityId"
+                  value={cityName}
+                  style={cityError ? { borderColor: "red" } : {}}
+                  onChange={cityHandler}
+                >
+                  <option value="">Select City</option>
+                  {candidatePresentCityData !== null &&
+                    candidatePresentCityData !== undefined &&
+                    candidatePresentCityData.length > 0 &&
+                    candidatePresentCityData.map((item, i) => {
+                      return <option key={item.cityId}>{item.cityName}</option>;
+                    })}
+                </Form.Control>
+                {cityError ? (
+                  <p style={{ color: "red" }}> Please choose city</p>
+                ) : (
+                  <p></p>
+                )}
+              </Form.Group>
+            </div>
+
+            <div className="col-sm-3">
+              <Form.Group>
+                <Form.Label>
+                  PinCode<span style={{ color: "red" }}>*</span>
+                </Form.Label>
+                <Form.Control
+                  type="number"
+                  name="pinCode"
+                  value={state.pinCode}
+                  onChange={changeHandler}
+                  maxLength="6"
+                  required
+                  style={pinCodeError ? { borderColor: "red" } : {}}
+                  placeholder="Pin Code"
+                  disabled={disabled}
+                />
+                {pinCodeError ? (
+                  <p style={{ color: "red" }}> Please enter valid pin code</p>
+                ) : (
+                  <p></p>
+                )}
+              </Form.Group>
+            </div>
+          </Row>
+          <Row style={{ marginBottom: "2rem" }}>
+            <div className="col-sm-3">
+              <Form.Group>
+                <Form.Label>
+                  Phone No<span style={{ color: "red" }}>*</span>
+                </Form.Label>
+                <Form.Control
+                  type="number"
+                  name="phoneNumber"
+                  value={state.phoneNumber}
+                  onChange={changeHandler}
+                  maxLength="10"
+                  required
+                  style={phoneNoError ? { borderColor: "red" } : {}}
+                  placeholder="Phone No"
+                  disabled={disabled}
+                />
+                {phoneNoError ? (
+                  <p style={{ color: "red" }}>
+                    {" "}
+                    Please enter valid phone number{" "}
+                  </p>
+                ) : (
+                  <p></p>
+                )}
+              </Form.Group>
+            </div>
+          </Row>
+          <Row style={{ marginBottom: "2rem" }}>
+            <Col sm={5}>
+              <div>
+                <label>
+                  <b>Is permanent address same as present address ?</b>
+                </label>
               </div>
-            </Form.Group>
-          </Col>
-        </Row>
-        {isChecked ? (
-          <div></div>
-        ) : (
-          <div>
-            <Row style={{ marginBottom: "1rem" }}>
-              <Col sm={6}>
-                <div>
-                  <label>
-                    <b>Permanent Address</b>
-                  </label>
+            </Col>
+            <Col sm={2}>
+              <Form.Group>
+                <div className="boxField input">
+                  {/* className="CheckBoxField" */}
+
+                  {/* <input  className="largerCheckbox" type="checkbox" value="No" /> */}
+                  <input
+                    type="checkbox"
+                    value="No"
+                    checked={!isChecked}
+                    onChange={handleNoCheckboxChange}
+                  />
+                  <label>No </label>
                 </div>
-              </Col>
-            </Row>
-            <Row style={{ marginBottom: "2rem" }}>
-              {/* <div className="divContents"> */}
-              <div className="col-sm-3">
-                <Form.Group>
-                  <Form.Label>
-                    Flat/Plot No<span style={{ color: "red" }}>*</span>
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="permanentFlatNumber"
-                    value={state.permanentFlatNumber}
-                    onChange={changeHandler}
-                    required
-                    style={
-                      PermanentFlatNumberError ? { borderColor: "red" } : {}
-                    }
-                    placeholder="Flat/Plot No"
-                    disabled={disabled}
+              </Form.Group>
+            </Col>
+            <Col sm={2}>
+              <Form.Group>
+                <div className="boxField input">
+                  {/* <label>Yes</label> */}
+                  {/* <input  className="largerCheckbox" type="checkbox" value="Yes" /> */}
+                  <input
+                    type="checkbox"
+                    value="Yes"
+                    checked={isChecked}
+                    onChange={handleCheckboxChange}
                   />
-                  {PermanentFlatNumberError ? (
-                    <p style={{ color: "red" }}> Please enter flat/plot no</p>
-                  ) : (
-                    <p></p>
-                  )}
-                </Form.Group>
-              </div>
-              <div className="col-sm-3">
-                <Form.Group>
-                  <Form.Label>Street</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="permanentStreet"
-                    value={state.permanentStreet}
-                    onChange={changeHandler}
-                    required
-                    placeholder="Street"
-                    disabled={disabled}
-                  />
-                </Form.Group>
-              </div>
-              <div className="col-sm-3">
-                <Form.Group>
-                  <Form.Label>Locality</Form.Label>
+                  <label>Yes</label>
+                </div>
+              </Form.Group>
+            </Col>
+          </Row>
+          {isChecked ? (
+            <div></div>
+          ) : (
+            <div>
+              <Row style={{ marginBottom: "1rem" }}>
+                <Col sm={6}>
+                  <div>
+                    <label>
+                      <b>Permanent Address</b>
+                    </label>
+                  </div>
+                </Col>
+              </Row>
+              <Row style={{ marginBottom: "2rem" }}>
+                {/* <div className="divContents"> */}
+                <div className="col-sm-3">
+                  <Form.Group>
+                    <Form.Label>
+                      Flat/Plot No<span style={{ color: "red" }}>*</span>
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="permanentFlatNumber"
+                      value={state.permanentFlatNumber}
+                      onChange={changeHandler}
+                      required
+                      style={
+                        PermanentFlatNumberError ? { borderColor: "red" } : {}
+                      }
+                      placeholder="Flat/Plot No"
+                      disabled={disabled}
+                    />
+                    {PermanentFlatNumberError ? (
+                      <p style={{ color: "red" }}> Please enter flat/plot no</p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </Form.Group>
+                </div>
+                <div className="col-sm-3">
+                  <Form.Group>
+                    <Form.Label>Street</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="permanentStreet"
+                      value={state.permanentStreet}
+                      onChange={changeHandler}
+                      required
+                      placeholder="Street"
+                      disabled={disabled}
+                    />
+                  </Form.Group>
+                </div>
+                <div className="col-sm-3">
+                  <Form.Group>
+                    <Form.Label>Locality</Form.Label>
 
-                  <Form.Control
-                    type="text"
-                    name="permanentLocality"
-                    value={state.permanentLocality}
-                    onChange={changeHandler}
-                    required
-                    placeholder="Locality"
-                    disabled={disabled}
-                  />
-                </Form.Group>
-              </div>
-              <div className="col-sm-3">
-                <Form.Group>
-                  <Form.Label>
-                    Address Line 1<span style={{ color: "red" }}>*</span>
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="permanentAddressLine"
-                    value={state.permanentAddressLine}
-                    onChange={changeHandler}
-                    required
-                    style={
-                      PermanentAddressLineError ? { borderColor: "red" } : {}
-                    }
-                    placeholder="Address Line 1"
-                    disabled={disabled}
-                  />
-                  {PermanentAddressLineError ? (
-                    <p style={{ color: "red" }}> Please enter address line1</p>
-                  ) : (
-                    <p></p>
-                  )}
-                </Form.Group>
-              </div>
-              {/* </div> */}
-            </Row>
-            <Row style={{ marginBottom: "2rem" }}>
-              <div className="col-sm-3">
-                <Form.Group>
-                  <Form.Label>
-                    Country <span style={{ color: "red" }}>*</span>
-                  </Form.Label>
-                  <Form.Control
-                    as="select"
-                    name="permanentCountryId"
-                    value={permanentCountryName}
-                    onChange={permanentCountryHandler}
-                    required
-                    style={PermanentCountryError ? { borderColor: "red" } : {}}
-                    disabled={disabled}
-                  >
-                    <option value="">Select Country</option>
-                    {candidateCountryData !== null &&
-                      candidateCountryData !== undefined &&
-                      candidateCountryData.length > 0 &&
-                      candidateCountryData.map((item) => {
-                        return (
-                          <option key={item.countryId}>
-                            {item.countryName}
-                          </option>
-                        );
-                      })}
-                  </Form.Control>
-                  {PermanentCountryError ? (
-                    <p style={{ color: "red" }}> Please choose country</p>
-                  ) : (
-                    <p></p>
-                  )}
-                </Form.Group>
-              </div>
-              <div className="col-sm-3">
-                <Form.Group>
-                  <Form.Label>
-                    State <span style={{ color: "red" }}>*</span>
-                  </Form.Label>
-                  <Form.Control
-                    as="select"
-                    name="permanentStateId"
-                    value={permanentStateName}
-                    style={PermanentStateError ? { borderColor: "red" } : {}}
-                    onChange={permanentStateHandler}
-                  >
-                    <option value="">Select State</option>
-                    {candidateStateData !== null &&
-                      candidateStateData !== undefined &&
-                      candidateStateData.length > 0 &&
-                      candidateStateData.map((item) => {
-                        return (
-                          <option key={item.stateId}>{item.stateName}</option>
-                        );
-                      })}
-                  </Form.Control>
-                  {PermanentStateError ? (
-                    <p style={{ color: "red" }}> Please choose state</p>
-                  ) : (
-                    <p></p>
-                  )}
-                </Form.Group>
-              </div>
-              <div className="col-sm-3">
-                <Form.Group>
-                  <Form.Label>
-                    City <span style={{ color: "red" }}>*</span>
-                  </Form.Label>
-                  <Form.Control
-                    as="select"
-                    name="permanentCityId"
-                    value={permanentCityName}
-                    style={PermanentCityError ? { borderColor: "red" } : {}}
-                    onChange={permanentCityHandler}
-                  >
-                    <option value="">Select City</option>
-                    {candidateCityData !== null &&
-                      candidateCityData !== undefined &&
-                      candidateCityData.length > 0 &&
-                      candidateCityData.map((item) => {
-                        return (
-                          <option key={item.cityId}>{item.cityName}</option>
-                        );
-                      })}
-                  </Form.Control>
-                  {PermanentCityError ? (
-                    <p style={{ color: "red" }}> Please choose city</p>
-                  ) : (
-                    <p></p>
-                  )}
-                </Form.Group>
-              </div>
+                    <Form.Control
+                      type="text"
+                      name="permanentLocality"
+                      value={state.permanentLocality}
+                      onChange={changeHandler}
+                      required
+                      placeholder="Locality"
+                      disabled={disabled}
+                    />
+                  </Form.Group>
+                </div>
+                <div className="col-sm-3">
+                  <Form.Group>
+                    <Form.Label>
+                      Address Line 1<span style={{ color: "red" }}>*</span>
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="permanentAddressLine"
+                      value={state.permanentAddressLine}
+                      onChange={changeHandler}
+                      required
+                      style={
+                        PermanentAddressLineError ? { borderColor: "red" } : {}
+                      }
+                      placeholder="Address Line 1"
+                      disabled={disabled}
+                    />
+                    {PermanentAddressLineError ? (
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        Please enter address line1
+                      </p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </Form.Group>
+                </div>
+                {/* </div> */}
+              </Row>
+              <Row style={{ marginBottom: "2rem" }}>
+                <div className="col-sm-3">
+                  <Form.Group>
+                    <Form.Label>
+                      Country <span style={{ color: "red" }}>*</span>
+                    </Form.Label>
+                    <Form.Control
+                      as="select"
+                      name="permanentCountryId"
+                      value={permanentCountryName}
+                      onChange={permanentCountryHandler}
+                      required
+                      style={
+                        PermanentCountryError ? { borderColor: "red" } : {}
+                      }
+                      disabled={disabled}
+                    >
+                      <option value="">Select Country</option>
+                      {candidateCountryData !== null &&
+                        candidateCountryData !== undefined &&
+                        candidateCountryData.length > 0 &&
+                        candidateCountryData.map((item) => {
+                          return (
+                            <option key={item.countryId}>
+                              {item.countryName}
+                            </option>
+                          );
+                        })}
+                    </Form.Control>
+                    {PermanentCountryError ? (
+                      <p style={{ color: "red" }}> Please choose country</p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </Form.Group>
+                </div>
+                <div className="col-sm-3">
+                  <Form.Group>
+                    <Form.Label>
+                      State <span style={{ color: "red" }}>*</span>
+                    </Form.Label>
+                    <Form.Control
+                      as="select"
+                      name="permanentStateId"
+                      value={permanentStateName}
+                      style={PermanentStateError ? { borderColor: "red" } : {}}
+                      onChange={permanentStateHandler}
+                    >
+                      <option value="">Select State</option>
+                      {candidateStateData !== null &&
+                        candidateStateData !== undefined &&
+                        candidateStateData.length > 0 &&
+                        candidateStateData.map((item) => {
+                          return (
+                            <option key={item.stateId}>{item.stateName}</option>
+                          );
+                        })}
+                    </Form.Control>
+                    {PermanentStateError ? (
+                      <p style={{ color: "red" }}> Please choose state</p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </Form.Group>
+                </div>
+                <div className="col-sm-3">
+                  <Form.Group>
+                    <Form.Label>
+                      City <span style={{ color: "red" }}>*</span>
+                    </Form.Label>
+                    <Form.Control
+                      as="select"
+                      name="permanentCityId"
+                      value={permanentCityName}
+                      style={PermanentCityError ? { borderColor: "red" } : {}}
+                      onChange={permanentCityHandler}
+                    >
+                      <option value="">Select City</option>
+                      {candidatePermanentCityData !== null &&
+                        candidatePermanentCityData !== undefined &&
+                        candidatePermanentCityData.length > 0 &&
+                        candidatePermanentCityData.map((item) => {
+                          return (
+                            <option key={item.cityId}>{item.cityName}</option>
+                          );
+                        })}
+                    </Form.Control>
+                    {PermanentCityError ? (
+                      <p style={{ color: "red" }}> Please choose city</p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </Form.Group>
+                </div>
 
-              <div className="col-sm-3">
-                <Form.Group>
-                  <Form.Label>
-                    PinCode<span style={{ color: "red" }}>*</span>
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="permanentPinCode"
-                    value={state.permanentPinCode}
-                    onChange={changeHandler}
-                    required
-                    style={PermanentPinCodeError ? { borderColor: "red" } : {}}
-                    placeholder="Pin Code"
-                    disabled={disabled}
-                  />
-                  {PermanentPinCodeError ? (
-                    <p style={{ color: "red" }}> Please enter pin code</p>
-                  ) : (
-                    <p></p>
-                  )}
-                </Form.Group>
-              </div>
-            </Row>
-            <Row style={{ marginBottom: "2rem" }}>
-              <div className="col-sm-3">
-                <Form.Group>
-                  <Form.Label>
-                    Phone No<span style={{ color: "red" }}>*</span>
-                  </Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="permanentPhoneNumber"
-                    value={state.permanentPhoneNumber}
-                    onChange={changeHandler}
-                    required
-                    style={PermanentPhoneNoError ? { borderColor: "red" } : {}}
-                    placeholder="Phone No"
-                    disabled={disabled}
-                  />
-                  {PermanentPhoneNoError ? (
-                    <p style={{ color: "red" }}> Please enter phone number</p>
-                  ) : (
-                    <p></p>
-                  )}
-                </Form.Group>
-              </div>
-            </Row>
+                <div className="col-sm-3">
+                  <Form.Group>
+                    <Form.Label>
+                      PinCode<span style={{ color: "red" }}>*</span>
+                    </Form.Label>
+                    <Form.Control
+                      type="number"
+                      name="permanentPinCode"
+                      value={state.permanentPinCode}
+                      onChange={changeHandler}
+                      maxLength="6"
+                      required
+                      style={
+                        PermanentPinCodeError ? { borderColor: "red" } : {}
+                      }
+                      placeholder="Pin Code"
+                      disabled={disabled}
+                    />
+                    {PermanentPinCodeError ? (
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        Please enter valid pin code
+                      </p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </Form.Group>
+                </div>
+              </Row>
+              <Row style={{ marginBottom: "2rem" }}>
+                <div className="col-sm-3">
+                  <Form.Group>
+                    <Form.Label>
+                      Phone No<span style={{ color: "red" }}>*</span>
+                    </Form.Label>
+                    <Form.Control
+                      type="number"
+                      name="permanentPhoneNumber"
+                      value={state.permanentPhoneNumber}
+                      onChange={changeHandler}
+                      maxLength="10"
+                      required
+                      style={
+                        PermanentPhoneNoError ? { borderColor: "red" } : {}
+                      }
+                      placeholder="Phone No"
+                      disabled={disabled}
+                    />
+                    {PermanentPhoneNoError ? (
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        Please enter valid phone number
+                      </p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </Form.Group>
+                </div>
+              </Row>
+            </div>
+          )}
+          <div
+            style={{
+              marginTop: "2rem",
+              marginBottom: "2rem",
+              textAlign: "center",
+            }}
+          >
+            <button className="stepperButtons" onClick={PrevStep}>
+              Back
+            </button>
+            <button className="stepperButtons" onClick={submitHandler}>
+              Save & Next
+            </button>
           </div>
-        )}
-        <div
-          style={{
-            marginTop: "2rem",
-            marginBottom: "2rem",
-            textAlign: "center",
-          }}
-        >
-          <button className="stepperButtons" onClick={PrevStep}>
-            Back
-          </button>
-          <button className="stepperButtons" onClick={submitHandler}>
-            Save & Next
-          </button>
-        </div>
-      </Form>
-    </Fragment>
+        </Form>
+      </Fragment>
+    )
   );
 };
 export default Address;

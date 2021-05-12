@@ -2,14 +2,14 @@ import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Breadcrumb from "../common/breadcrumb";
 import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
-import { Edit2, Eye, Search } from "react-feather";
+import { Edit2, Eye, Search, AlertCircle } from "react-feather";
 import { OfferContext } from "../../context/OfferState";
 import Pagination from "react-js-pagination";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { DocsVerifyContext } from "../../context/DocverificationState";
 import { RoleManagementContext } from "../../context/RoleManagementState";
 import { AdminContext } from "../../context/AdminState";
-
+import { AppContext } from "../../context/AppState";
 const OfferReleaseList = () => {
   const {
     candidateView,
@@ -18,7 +18,13 @@ const OfferReleaseList = () => {
     total,
     viewCandidateId,
   } = useContext(OfferContext);
-  const { verificationDocsView, docsToVerify } = useContext(DocsVerifyContext);
+  const {
+    verificationDocsView,
+    docsToVerify,
+    personalInfo,
+    personalInfoData,
+  } = useContext(DocsVerifyContext);
+  const { user } = useContext(AppContext);
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [searchValue, setSearchValue] = useState("");
@@ -26,6 +32,7 @@ const OfferReleaseList = () => {
   const { costCenterList, CostCenter } = useContext(AdminContext);
   useEffect(() => {
     candidateView("all", pageCount);
+    console.log("user role", user);
   }, []);
 
   useEffect(() => {
@@ -70,6 +77,7 @@ const OfferReleaseList = () => {
   const fetchCandidateDetails = (candidateId) => {
     viewCandidateId(candidateId);
     verificationDocsView(candidateId);
+    personalInfo(candidateId);
     viewRole();
     CostCenter();
   };
@@ -117,7 +125,13 @@ const OfferReleaseList = () => {
                       <th scope="col">Overall Status</th>
                       <th scope="col">Edit</th>
                       <th scope="col">View</th>
-                      <th scope="col">Action</th>
+                      {user !== null &&
+                      user !== undefined &&
+                      user.role !== "ADMIN" ? (
+                        <th scope="col">Action</th>
+                      ) : (
+                        ""
+                      )}
                     </tr>
                   </thead>
                   {loader === true &&
@@ -157,7 +171,12 @@ const OfferReleaseList = () => {
                             <td>{item.statusDesc}</td>
 
                             <td>
-                              {item.status !== 5 ? (
+                              {item.status === 5 ||
+                              item.status === 6 ||
+                              item.status === 2 ||
+                              item.status === 3 ? (
+                                <Edit2 />
+                              ) : (
                                 <Link to="/edit-offer-release">
                                   <Edit2
                                     onClick={() => {
@@ -165,8 +184,6 @@ const OfferReleaseList = () => {
                                     }}
                                   />
                                 </Link>
-                              ) : (
-                                <Edit2 />
                               )}
                             </td>
 
@@ -179,15 +196,21 @@ const OfferReleaseList = () => {
                                 />
                               </Link>
                             </td>
-                            <td>
-                              <Link to="/offer-relase-and-onboard">
-                                <Edit2
-                                  onClick={() => {
-                                    fetchCandidateDetails(item.candidateId);
-                                  }}
-                                />
-                              </Link>
-                            </td>
+                            {user !== null &&
+                            user !== undefined &&
+                            user.role !== "ADMIN" ? (
+                              <td>
+                                <Link to="/offer-relase-and-onboard">
+                                  <AlertCircle
+                                    onClick={() => {
+                                      fetchCandidateDetails(item.candidateId);
+                                    }}
+                                  />
+                                </Link>
+                              </td>
+                            ) : (
+                              ""
+                            )}
                           </tr>
                         </tbody>
                       );
