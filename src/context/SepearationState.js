@@ -12,6 +12,10 @@ const initial_state = {
   total: {},
   data: [],
   clearanceList: [],
+  empResignData:[],
+  managerList: [],
+  modeOfResponse:[],
+  reason:{}
 };
 
 export const SeparationContext = createContext();
@@ -108,6 +112,55 @@ export const SeparationProvider = (props) => {
         return dispatch;
       });
   };
+
+  const empResign = (create) => {
+    setLoader(true)
+    console.log("response of loader outside-----", loader)
+    return client.post('api/v1/separation/employee-exit/create',create)
+    .then((response) => {
+        toast.info(response.data.message)
+        setLoader(false)
+        console.log("response of loader -----", loader)
+        return dispatch({ type: 'EMP_RESIGN', payload: state.empResignData, loader: loader})
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  }
+
+  const managerData = (costCenter) => {
+    return client.get(`api/v1/employee/view/${costCenter}/managers`)
+    .then((response) => {
+      state.managerList = response.data.data
+      return dispatch({type:'MANAGER_LIST', payload: state.managerList})
+    })
+  }
+
+  const modeOfSeparation = () => {
+    return client.get('api/v1/mode-of-separation/view')
+    .then((response) => {
+         const reason = response.data.data[0].modeOfSeparation.modeOfSeparation
+         const modeOfResponse = response.data.data[0].modeOfSeparationReasonList
+      console.log('state.modeOfResponse',state.modeOfResponse)
+      console.log('state.reason',state.reason)
+      return dispatch({type:'MODE_OF_SEPARATION', payload: {modeOfResponse, reason}})
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  }
+
+  const withdraw = (empId) => {
+    return client.get(`api/v1/separation/employee-exit/withdraw?employeeId=${empId}`)
+    .then((response) => {
+      toast.info(response.data.message)
+      console.log("response of withdraw", response.data)
+      return dispatch({type:'WITHDRAW_RESIGNATION'})
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  }
   return (
     <SeparationContext.Provider
       value={{
@@ -121,6 +174,13 @@ export const SeparationProvider = (props) => {
         separationList: state.separationList,
         loader: state.loader,
         clearanceList: state.clearanceList,
+        empResign,
+        managerData,
+        managerList: state.managerList,
+        modeOfSeparation,
+        modeOfResponse: state.modeOfResponse,
+        reason: state.reason,
+        withdraw
       }}
     >
       {props.children}

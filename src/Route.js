@@ -72,6 +72,9 @@ import Verification from "./components/CandidateVerification/Verification";
 import NoDueClearance from "./components/Separation/NoDueClearance"
 import ViewEditRelease from "./components/OfferReleaseandOnboarding/ViewOfferRelease";
 import Documents from "./components/OnBording/Documents";
+import EmpResignation from "./components/employeeSeparation/empResignation";
+import EmployeeSeparationListing from './components/managerSeparation/employeeSeparationListing'
+
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
   console.log(user, state, "route8888888888888");
@@ -193,6 +196,16 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/verification/:candidateId`}
             component={Verification}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/employee-resignation`}
+            component={EmpResignation}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/employee-separation-listing`}
+            component={EmployeeSeparationListing}
           />
 
           {state.MenuPermissionsRoute.map((e) => {
