@@ -5,6 +5,24 @@ import { DocsVerifyContext } from "../../context/DocverificationState";
 import { DashboardContext } from "../../context/DashboardState";
 import calendarImage from "../../assets/images/calendar-image.png";
 import DatePicker from "react-datepicker";
+import {
+  format,
+  startOfMonth,
+  subMonths,
+  addMonths,
+  subYears,
+  addYears,
+  getDaysInMonth,
+  getDay,
+  endOfMonth,
+  setDate,
+  getDate,
+  isEqual,
+  subWeeks,
+  addWeeks,
+  subDays,
+  addDays,
+} from "date-fns";
 import moment from "moment";
 import "./offerReleaseandOnboarding.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -393,7 +411,7 @@ const CandidateOnboarding = () => {
       setError(false);
       setCostCenterError(false);
       setMandatory(false);
-
+      submitAppointLetter();
       // }
     } else {
       // setError(true);
@@ -499,9 +517,7 @@ const CandidateOnboarding = () => {
         {submitLetter ? (
           <Modal.Body>
             <div className="offer-letter-message ">
-              <p className="signature-text">
-                Appointment Letter has been Sent to the Candidate
-              </p>
+              <p>Appointment Letter has been Sent to the Candidate</p>
               <br></br>
               <Button type="button" onClick={handleClose}>
                 Close
@@ -696,8 +712,10 @@ const CandidateOnboarding = () => {
                 onChange={(date) => setStartMonth1Date(date)}
                 placeholderText="Select Start Month"
                 dateFormat="MM"
+                minDate={subMonths(new Date(), 1)}
                 showMonthYearPicker
                 showFullMonthYearPicker
+                showTwoColumnMonthYearPicker
               />{" "}
             </Col>
             <Col sm={2}>
@@ -707,6 +725,8 @@ const CandidateOnboarding = () => {
                 placeholderText="Select Start Year"
                 dateFormat="yyyy"
                 showYearPicker
+                showTwoColumnMonthYearPicker
+                minDate={subYears(new Date(), 1)}
               />{" "}
             </Col>
             <Col sm={2}>
@@ -717,6 +737,8 @@ const CandidateOnboarding = () => {
                 dateFormat="MM"
                 showMonthYearPicker
                 showFullMonthYearPicker
+                showTwoColumnMonthYearPicker
+                minDate={subMonths(new Date(), 1)}
               />{" "}
             </Col>
             <Col sm={2}>
@@ -726,6 +748,8 @@ const CandidateOnboarding = () => {
                 placeholderText="Select End Year"
                 dateFormat="yyyy"
                 showYearPicker
+                showTwoColumnMonthYearPicker
+                minDate={subYears(new Date(), 1)}
               />{" "}
             </Col>
           </Row>
@@ -1084,9 +1108,7 @@ const CandidateOnboarding = () => {
         </div>
       ) : (
         <div className="px-5 mx-auto mt-5">
-          <h5>
-            <u>APPOINTMENT LETTER</u>
-          </h5>
+          <h5 style={{ fontWeight: 700 }}>APPOINTMENT LETTER</h5>
           <div className="preview-section">
             {/* <Row className="text-center mt-3"> */}
             <Button
@@ -1106,28 +1128,27 @@ const CandidateOnboarding = () => {
             ) : (
               <Button
                 type="button"
-                onClick={submitAppointLetter}
+                onClick={handleDataSave}
                 style={{ textAlign: "center" }}
               >
-                Submit
+                Save & Submit
               </Button>
             )}
             {/* </Row> */}
           </div>
         </div>
       )}
-      <div
+      {/* <div
         style={{
           marginTop: "2rem",
           marginBottom: "2rem",
           textAlign: "center",
         }}
       >
-        {/* <button className="stepperButtons">Back</button> */}
         <button className="stepperButtons" onClick={() => handleDataSave()}>
           Save
         </button>
-      </div>
+      </div> */}
     </Fragment>
   );
 };

@@ -168,6 +168,8 @@ const OnBoardingStepper = (props) => {
 
   const candidateLogout = () => {
     console.log("inside candidate logout");
+    localStorage.removeItem("candidate_access_token");
+    props.history.push("/onboard-offer");
   };
   const PrevStep = () => {
     console.log("prevStep");
@@ -209,31 +211,50 @@ const OnBoardingStepper = (props) => {
   console.log(stepCount, stepArray, "stepArray");
   return (
     <Fragment>
-      <Breadcrumb title="OnBoard" parent="Candidate OnBoard" />
-      {/* <Fragment>
-        <li className="onhover-dropdown">
-          <div className="media align-items-center">
-            <img
-              className="align-self-center pull-right img-50 rounded-circle blur-up lazyloaded"
-              src={man}
-              alt="header-user"
-            />
-          </div>
-          <ul className="profile-dropdown onhover-show-div p-20 profile-dropdown-hover">
-            <li>
-              <a href="#profile">My Profile</a>
-            </li>
-
-            <li
-              onClick={() => {
-                candidateLogout();
+      {/* <Breadcrumb title="OnBoard" parent="Candidate OnBoard" /> */}
+      <Fragment>
+        <div className="row">
+          <div className="col-md-8"></div>
+          <div className="col-md-2">
+            <h6
+              style={{
+                fontSize: "16px",
+                fontWeight: "600",
+                color: "rgb(0, 110, 187)",
+                textAlign: "left",
               }}
             >
-              <a href="#javascript">Log out</a>
+              Hello, {candidateProfileData.firstName}{" "}
+              {candidateProfileData.lastName}
+            </h6>
+          </div>
+          <div className="col-md-2">
+            <li className="onhover-dropdown" style={{ listStyle: "none" }}>
+              <div className="media align-items-center">
+                {"  "}
+                <img
+                  className="align-self-center pull-right img-50 rounded-circle blur-up lazyloaded"
+                  src={man}
+                  alt="header-user"
+                />
+              </div>
+              <ul className="profile-dropdown onhover-show-div p-20 profile-dropdown-hover">
+                <li>
+                  <a href="#profile">My Profile</a>
+                </li>
+
+                <li
+                  onClick={() => {
+                    candidateLogout();
+                  }}
+                >
+                  <a href="">Log out</a>
+                </li>
+              </ul>
             </li>
-          </ul>
-        </li>
-      </Fragment> */}
+          </div>
+        </div>
+      </Fragment>
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">

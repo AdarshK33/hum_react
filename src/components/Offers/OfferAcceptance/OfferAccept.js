@@ -14,6 +14,7 @@ import { OnBoardContext } from "../../../context/OnBoardState";
 import { CandidateContext } from "../../../context/CandidateState";
 import { OfferContext } from "../../../context/OfferState";
 import { Link } from "react-router-dom";
+import man from "../../../assets/images/dashboard/userImage.png";
 
 const OfferAccept = (props) => {
   const [showLetter, setShowLetter] = useState(false);
@@ -113,6 +114,12 @@ const OfferAccept = (props) => {
 
   const goToAppointNextPage = () => setPageAppointNumber(pageAppointNumber + 1);
 
+  const candidateLogout = () => {
+    console.log("inside candidate logout");
+    localStorage.removeItem("candidate_access_token");
+    props.history.push("/onboard-offer");
+  };
+
   return (
     <Fragment>
       {candidateProfileData !== undefined &&
@@ -120,10 +127,56 @@ const OfferAccept = (props) => {
       Object.keys(candidateProfileData).length !== 0 ? (
         candidateProfileData.status === 2 ? (
           <Fragment>
-            <Breadcrumb
+            {/* <Breadcrumb
               title="CANDIDATE OFFER ACCEPTANCE"
               parent="onboard-offer"
-            />
+            /> */}
+            <Fragment>
+              <div className="row">
+                <div className="col-md-8"></div>
+                <div className="col-md-2">
+                  <h6
+                    style={{
+                      fontSize: "16px",
+                      fontWeight: "600",
+                      color: "rgb(0, 110, 187)",
+                      textAlign: "left",
+                    }}
+                  >
+                    Hello, {candidateProfileData.firstName}{" "}
+                    {candidateProfileData.lastName}
+                  </h6>
+                </div>
+                <div className="col-md-2">
+                  <li
+                    className="onhover-dropdown"
+                    style={{ listStyle: "none" }}
+                  >
+                    <div className="media align-items-center">
+                      {"  "}
+                      <img
+                        className="align-self-center pull-right img-50 rounded-circle blur-up lazyloaded"
+                        src={man}
+                        alt="header-user"
+                      />
+                    </div>
+                    <ul className="profile-dropdown onhover-show-div p-20 profile-dropdown-hover">
+                      <li>
+                        <a href="#profile">My Profile</a>
+                      </li>
+
+                      <li
+                        onClick={() => {
+                          candidateLogout();
+                        }}
+                      >
+                        <a href="">Log out</a>
+                      </li>
+                    </ul>
+                  </li>
+                </div>
+              </div>
+            </Fragment>
             <Container className="main-container">
               <h5 className="offerHeading">Candidate Offer Acceptance</h5>
               <Container className="middle-container">
@@ -134,6 +187,7 @@ const OfferAccept = (props) => {
                     View Your Offer Letter
                   </span>
                   <Button onClick={showLetterClick}>Show</Button>
+                  <Button style={{ marginLeft: "1rem" }}>Download</Button>
                 </div>
               </Container>
 
@@ -198,25 +252,30 @@ const OfferAccept = (props) => {
                   </p>
                 </Container>
               )}
-              <Link
-                style={{
-                  color: "#ffffff",
-                  textDecoration: "none !important",
-                }}
-                to="/onboard"
-              >
-                <Button>
-                  Candidate Onboard{" "}
-                  <ChevronRight
-                    disabled
-                    style={{
-                      color: "#ffffff",
-                      cursor: "pointer",
-                      verticalAlign: "inherit",
-                    }}
-                  />
-                </Button>
-              </Link>
+              {candidateProfileData.status === 2 &&
+              candidateProfileData.documentUploaded === 0 ? (
+                <Link
+                  style={{
+                    color: "#ffffff",
+                    textDecoration: "none !important",
+                  }}
+                  to="/onboard"
+                >
+                  <Button>
+                    Candidate Onboard{" "}
+                    <ChevronRight
+                      disabled
+                      style={{
+                        color: "#ffffff",
+                        cursor: "pointer",
+                        verticalAlign: "inherit",
+                      }}
+                    />
+                  </Button>
+                </Link>
+              ) : (
+                ""
+              )}
             </Container>
           </Fragment>
         ) : (
@@ -235,6 +294,7 @@ const OfferAccept = (props) => {
                     View Your Offer Letter
                   </span>
                   <Button onClick={showLetterClick}>Show</Button>
+                  <Button style={{ marginLeft: "1rem" }}>Download</Button>
                 </div>
               </Container>
 
@@ -336,6 +396,7 @@ const OfferAccept = (props) => {
                       View Your Appointment Letter
                     </span>
                     <Button onClick={showAppointmentLetterClick}>Show</Button>
+                    <Button style={{ marginLeft: "1rem" }}>Download</Button>
                   </div>
                 </Container>
               ) : (
