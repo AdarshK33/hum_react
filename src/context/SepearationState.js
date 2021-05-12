@@ -18,6 +18,9 @@ const initial_state = {
   data: [],
   clearanceList: [],
   financeClearanceUpload:{},
+  financeAdminClearanceExport:{},
+  noDueClearanceAdminClearanceExport:{},
+  noDueClearanceClearanceExport:{},
   financeClearanceExport:{},
   updateAdminFinanceClearanceList:[]
 };
@@ -26,7 +29,7 @@ export const SeparationContext = createContext();
 export const SeparationProvider = (props) => {
   const [state, dispatch] = useReducer(SepationReducer, initial_state);
   const [loader, setLoader] = useState(false);
-  const separationListView = (key, page, costCenter) => {
+  const separationListView = (key, page,actionStatus, costCenter) => {
     setLoader(true);
     client
       .get(
@@ -36,6 +39,8 @@ export const SeparationProvider = (props) => {
           page +
           "&size=" +
           10 +
+          "&status=" +
+          actionStatus +
           "&storeId=" +
           costCenter
       )
@@ -83,27 +88,27 @@ export const SeparationProvider = (props) => {
   }
   const UpdateAdminFinanceClearanceList = (value, key, page, costCenter) => {
     console.log(value, "value in update ");
-    const formData = {
-      costCenterName: value.costCenterName,
-      deactivateProfile: value.deactivateProfile,
-      disabled: value.disabled,
-      employeeId: value.employeeId,
-      employeeName: value.employeeName,
-      exitId: value.exitId,
-      fullAndFinalAmount: parseInt(value.fullAndFinalAmount),
-      fullAndFinalCompleteStatus: value.fullAndFinalCompleteStatus,
-      fullAndFinalId: value.fullAndFinalId,
-      fullAndFinalProcessDate: value.fullAndFinalProcessDate,
-      joiningDate: value.joiningDate,
-      lastWorkingDate:value.lastWorkingDate,
+    // const formData = {
+    //   costCenterName: value.costCenterName,
+    //   deactivateProfile: value.deactivateProfile,
+    //   disabled: value.disabled,
+    //   employeeId: value.employeeId,
+    //   employeeName: value.employeeName,
+    //   exitId: value.exitId,
+    //   fullAndFinalAmount: parseInt(value.fullAndFinalAmount),
+    //   fullAndFinalCompleteStatus: value.fullAndFinalCompleteStatus,
+    //   fullAndFinalId: value.fullAndFinalId,
+    //   fullAndFinalProcessDate: value.fullAndFinalProcessDate,
+    //   joiningDate: value.joiningDate,
+    //   lastWorkingDate:value.lastWorkingDate,
 
-      managerName: value.managerName,
-      modeOfSeparation:value.modeOfSeparation
-    };
+    //   managerName: value.managerName,
+    //   modeOfSeparation:value.modeOfSeparation
+    // };
     
-    console.log(formData, "updateAdminFinanceClearanceList separation context");
+    // console.log(formData, "updateAdminFinanceClearanceList separation context");
     return client
-      .post("/api/v1/separation/full-and-final/edit", formData)
+      .post("/api/v1/separation/full-and-final/edit", value)
       .then((response) => {
         toast.info(response.data.message);
         viewFinanceAdminClearanceList(key, page, costCenter);
@@ -140,13 +145,16 @@ export const SeparationProvider = (props) => {
         console.log(error)
       })
   }
-  const viewITClearanceList = (key, page,costCenter) => {
+  const viewITClearanceList = (key, page,actionStatus,costCenter) => {
+    setLoader(true);
     client.get( "/api/v1/separation/it-clearance/view?key=" +
           key +
           "&page=" +
           page +
           "&size=" +
           10 +
+          "&status=" +
+          actionStatus +
           "&storeId=" +
           costCenter
       )
@@ -158,7 +166,7 @@ export const SeparationProvider = (props) => {
           "=====GET Admin separation API response=====",
           response.data.data
         );
-
+        setLoader(false);
         return dispatch({
           type: "FETCH_SEPARATION_LIST",
           payload: state.noDueClearanceList,
@@ -190,14 +198,72 @@ export const SeparationProvider = (props) => {
         console.log(error);
       });
   };
-  const FinanceClearanceExport = () => {
-    console.log( "FinanceClearanceExport separation context");
+  const NoDueClearanceAdminClearanceExport = () => {
+    console.log( "NoDueClearanceAdminClearanceExport separation context");
     return client
-      .get("/api/v1/separation/full-and-final/download")
+      .get("/api/v1/separation/full-and-final/noDueClearance/download",{ responseType: 'arraybuffer' })
       .then((response) => {
         console.log(response,"export excel ")
         var blob = new Blob([response.data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+        var fileName = "AdminNoDueClearanceListing.xlsx";
+        saveAs(blob, fileName);
+      
+        toast.info(response.data.message);
+        return dispatch({
+          type: "NO_DUE_CLEARANCE_ADMIN_EXPORT",
+          payload: state.noDueClearanceAdminClearanceExport
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const FinanceAdminClearanceExport = () => {
+    console.log( "FinanceAdminClearanceExport separation context");
+    return client
+      .get("/api/v1/separation/full-and-final/download",{ responseType: 'arraybuffer' })
+      .then((response) => {
+        var blob = new Blob([response.data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
         var fileName = "F&FListing.xlsx";
+        saveAs(blob, fileName);
+      
+        toast.info(response.data.message);
+        return dispatch({
+          type: "FINANCECLEARANCE_ADMIN_EXPORT",
+          payload: state.financeAdminClearanceExport,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const NoDueClearanceClearanceExport = () => {
+    console.log( "NoDueClearanceClearanceExport separation context");
+    return client
+      .get("/api/v1/separation/it-clearance/download",{ responseType: 'arraybuffer' })
+      .then((response) => {
+        console.log(response,"export excel ")
+        var blob = new Blob([response.data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+        var fileName = "NoDueClearanceListing.xlsx";
+        saveAs(blob, fileName);
+      
+        toast.info(response.data.message);
+        return dispatch({
+          type: "NO_DUE_CLEARANCE_EXPORT",
+          payload: state.noDueClearanceClearanceExport
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const FinanceClearanceExport = () => {
+    console.log( "FinanceClearanceExport separation context");
+    return client
+      .get("/api/v1/separation/finance-clearance/download",{ responseType: 'arraybuffer' })
+      .then((response) => {
+        var blob = new Blob([response.data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+        var fileName = "FinanceClearnace.xlsx";
         saveAs(blob, fileName);
       
         toast.info(response.data.message);
@@ -210,7 +276,7 @@ export const SeparationProvider = (props) => {
         console.log(error);
       });
   };
-  const updateITClearanceList = (value, key, page, costCenter) => {
+  const updateITClearanceList = (value, key, page,actionStatus, costCenter) => {
     console.log(value, "value in update ");
     const formData = {
       itclearanceId: value.itclearanceId,
@@ -231,7 +297,7 @@ export const SeparationProvider = (props) => {
       .post("/api/v1/separation/it-clearance/edit", formData)
       .then((response) => {
         toast.info(response.data.message);
-        viewITClearanceList(key, page, costCenter);
+        viewITClearanceList(key, page,actionStatus, costCenter);
         return dispatch({
           type: "UPDATE_SEPARATION_LIST",
           payload: state.updateNoDueClearanceList,
@@ -241,7 +307,7 @@ export const SeparationProvider = (props) => {
         console.log(error);
       });
   };
-  const saveFinanceClearanceData = (value, key, page, costCenter) => {
+  const saveFinanceClearanceData = (value, key, page,actionStatus,costCenter) => {
     const formData = {
       financeClearanceId: value.financeClearanceId,
       exitId: value.exitId,
@@ -262,7 +328,7 @@ export const SeparationProvider = (props) => {
       .then((response) => {
         state.clearanceList = response.data.data;
         console.log(response.data.data);
-        separationListView(key, page, costCenter)
+        separationListView(key, page,actionStatus, costCenter)
         dispatch({
           type: "SAVE_FINANCE_LIST",
           payload: state.clearanceList,
@@ -281,15 +347,22 @@ export const SeparationProvider = (props) => {
         viewAdminITClearanceList,
         viewFinanceAdminClearanceList,
         FinanceClearanceUploadSettlement,
-        FinanceClearanceExport,
+        FinanceAdminClearanceExport,
         UpdateAdminFinanceClearanceList,
-        updateAdminFinanceClearance:state.updateAdminFinanceClearance,
+        NoDueClearanceAdminClearanceExport,
+        NoDueClearanceClearanceExport,
+        FinanceClearanceExport,
         financeClearanceExport:state.financeClearanceExport,
+
+        updateAdminFinanceClearance:state.updateAdminFinanceClearance,
+        financeAdminClearanceExport:state.financeAdminClearanceExport,
+        noDueClearanceAdminClearanceExport:state.noDueClearanceAdminClearanceExport,
         financeClearanceUpload:state.financeClearanceUpload,
         adminNoDueClearanceList:state.adminNoDueClearanceList,
         financeAdminNoDueClearanceList:state.financeAdminNoDueClearanceList,
         updateNoDueClearanceList:state.updateNoDueClearanceList,
         noDueClearanceList:state.noDueClearanceList,
+        noDueClearanceClearanceExport:state.noDueClearanceClearanceExport,
         total:state.total,
         saveFinanceClearanceData,
         separationList: state.separationList,

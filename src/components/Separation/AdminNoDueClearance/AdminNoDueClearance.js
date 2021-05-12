@@ -9,7 +9,7 @@ import { Button ,Container, Modal, Row, Col, Form, Table} from 'react-bootstrap'
 import { Edit2, Search } from 'react-feather';
 import { toast } from "react-toastify";
 const AdminNoDueClearance =()=> {
-  const { total,loader,viewAdminITClearanceList,adminNoDueClearanceList } = useContext(SeparationContext);
+  const { total,loader,viewAdminITClearanceList,adminNoDueClearanceList,NoDueClearanceAdminClearanceExport } = useContext(SeparationContext);
   const { CostCenter, costCenterList } = useContext(AdminContext)
 const [pageCount, setPageCount] = useState(0);
 
@@ -42,6 +42,7 @@ useEffect(() => {
 //   }
 // }, [adminNoDueClearanceList]);
 
+
 const handlePageChange = (pageNumber) => {
   setPageCount(pageNumber - 1);
   console.log("page change",pageNumber,pageCount)
@@ -69,6 +70,11 @@ const handlePageChange = (pageNumber) => {
     }
   }
  
+  const handleExport = (e) =>{
+    const value = e.target.value
+    NoDueClearanceAdminClearanceExport(value)
+
+  }
 const handleCostCenter = (options) => {
   let data2 = options !== null?options.value:''
   console.log(data2)
@@ -120,28 +126,28 @@ const handleCostCenter = (options) => {
             <div className="card" style={{ overflowX: "auto" }}>
               <div className="nodue_title_admin" >
            <b >ADMIN NO DUE CLEARANCE LISTING </b>            
-             
+           <Button style={{float:'right',marginTop: '5px'}} className="btn btn-light mr-2" onClick={handleExport}> Export excel</Button>
               </div>
               <div className="table-responsive">
 
               <Table id="table-to-xls" className="table table-hover">
                   <thead className="thead-light" style={{tableLayout:'fixed',width:"200px", backgroundColor: "#2f3c4e" }}>
-                    <tr className="rowStyle">
-                      <th >S. No</th>
-                      <th >Employee Id</th>
-                      <th >Employee Name</th>
-                      <th >Cost Center Name</th>
-                      <th >Manager Name</th>
-                      <th >Joining Date</th>
-                      <th >Last Working Day</th>
-                      <th >IT Amount To Be Recovered</th>
-                      <th > IT Clearance</th>
-                      <th >IT Clearance Remarks</th>
-                      <th >IT Clearance UpdatedBy</th>
-                      <th >Finance Amount To Be Recovered</th>
-                      <th >Finance Clearance</th>
-                      <th >Finance Clearance Remarks</th>
-                      <th >Finance Clearance UpdatedBy</th>
+                    <tr >
+                      <th className="rowStyle" >S. No</th>
+                      <th className="rowStyle">Employee Id</th>
+                      <th className="rowStyle">Employee Name</th>
+                      <th className="rowStyle">Cost Center Name</th>
+                      <th className="rowStyle" >Manager Name</th>
+                      <th className="rowStyle">Joining Date</th>
+                      <th className="rowStyle">Last Working Day</th>
+                      <th className="rowStyle">IT Amount To Be Recovered</th>
+                      <th className="rowStyle"> IT Clearance</th>
+                      <th className="rowStyle">IT Clearance Remarks</th>
+                      <th className="rowStyle">IT Clearance UpdatedBy</th>
+                      <th className="rowStyle">Finance Amount To Be Recovered</th>
+                      <th className="rowStyle">Finance Clearance</th>
+                      <th className="rowStyle">Finance Clearance Remarks</th>
+                      <th className="rowStyle">Finance Clearance UpdatedBy</th>
                     </tr>
                   </thead>
 
@@ -150,21 +156,21 @@ const handleCostCenter = (options) => {
                       return (
                         <tbody key={i + 1}>
                           <tr>
-                            <td>{i + 1 + indexOfFirstRecord}</td>
-                            <td>{e.employeeId}</td>
-                            <td>{e.employeeName}</td>
-                            <td>{e.costCentreName}</td>
-                            <td>{e.managerName}</td>
-                            <td>{e.joiningDate}</td>
-                            <td>{e.lastWorkingDay}</td>
-                            <td>{e.itAmount}</td>
-                            <td>{e.itClearanceStatus == 0?"Due":e.itClearanceStatus == 1?"No Due":"On Hold"}</td>
-                            <td>{e.itClearanceRemarks}</td>
-                            <td>{e.itClearanceUpdatedBy}</td>
-                            <td>{e.financeAmount}</td>
-                            <td>{e.financeClearanceStatus == 0?"Due":e.financeClearanceStatus == 1?"No Due":"On Hold"}</td>
-                            <td>{e.financeClearanceRemarks}</td>
-                            <td>{e.financeClearanceUpdatedBy}</td>
+                            <td className="rowStyle">{i + 1 + indexOfFirstRecord}</td>
+                            <td className="rowStyle">{e.employeeId}</td>
+                            <td className="rowStyle">{e.employeeName}</td>
+                            <td className="rowStyle">{e.costCentreName}</td>
+                            <td className="rowStyle">{e.managerName}</td>
+                            <td className="rowStyle">{e.joiningDate}</td>
+                            <td className="rowStyle">{e.lastWorkingDay}</td>
+                            <td className="rowStyle">{e.itAmount}</td>
+                            <td className="rowStyle">{e.itClearanceStatus == 0?"Due":e.itClearanceStatus == 1?"No Due":"On Hold"}</td>
+                            <td className="rowStyle">{e.itClearanceRemarks}</td>
+                            <td className="rowStyle">{e.itClearanceUpdatedBy}</td>
+                            <td className="rowStyle">{e.financeAmount}</td>
+                            <td className="rowStyle">{e.financeClearanceStatus == 0?"Due":e.financeClearanceStatus == 1?"No Due":"On Hold"}</td>
+                            <td className="rowStyle">{e.financeClearanceRemarks}</td>
+                            <td className="rowStyle">{e.financeClearanceUpdatedBy}</td>
                           </tr>
                         </tbody>
                       );

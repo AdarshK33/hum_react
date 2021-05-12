@@ -20,10 +20,16 @@ const GroupReducer = (state, action) => {
             return {...state,financeAdminNoDueClearanceList:action.payload}
       case "FINANCECLEARANCE_UPLOAD_SETTLEMENT":
               return {...state,financeClearanceUpload:action.payload}
-      case "FINANCECLEARANCE_EXPORT":
-                return {...state,financeClearanceExport:action.payload}
+      case "FINANCECLEARANCE_ADMIN_EXPORT":
+                return {...state,financeAdminClearanceExport:action.payload}
       case "UPDATE_ADMIN_FINANCE_SEPARATION":
         return {...state,updateAdminFinanceClearance:action.payload}
+        case "NO_DUE_CLEARANCE_ADMIN_EXPORT":
+          return {...state,noDueClearanceAdminClearanceExport:action.payload}
+          case "FINANCECLEARANCE_EXPORT":
+            return {...state,financeClearanceExport:action.payload}
+            case "NO_DUE_CLEARANCE_EXPORT":
+              return {...state,noDueClearanceClearanceExport:action.payload}
       default:
         return state;
   }

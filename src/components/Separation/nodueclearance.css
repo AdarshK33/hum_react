@@ -60,6 +60,17 @@ title{
     background-color: #fff;
 
 }
+.selectActionStatus{
+	float: right;
+	margin-top: 5px;
+    vertical-align: middle;
+    padding: 5px;
+    color: var(--ag-data-color, var(--ag-foreground-color, #181d1f));
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    border-radius: 5px;
+    background-color: #fff;
+
+}
 /* .modal-backdrop {
 background-color: transparent;
 opacity: 1.5;
@@ -68,15 +79,19 @@ opacity: 1.5;
 .note{
   font-size: 13px;
 }
-
-thead th {
+.rowStyle{
+	word-break: break-all;
+    white-space: nowrap;
+  
+ }
+/* thead th {
 	word-break: break-all;
     white-space: nowrap;
 }
 tbody td {
 	word-break: break-all;
     white-space: nowrap;
-}
+} */
 
 .tableFixHead {
  overflow: auto;
@@ -138,12 +153,7 @@ tbody td {
   width: 50% !important;
 }
  /* css for table td */
- .rowStyle{
-	width: 100%;
-	margin: 20px auto;
-	table-layout: auto;
-  
- }
+
  .cloumnWidth{
 	max-width: 200px
 	;}

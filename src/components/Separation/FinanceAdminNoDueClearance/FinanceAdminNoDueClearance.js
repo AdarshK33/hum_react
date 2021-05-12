@@ -25,13 +25,14 @@ const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 const FinanaceAdminNoDueClearance = () => {
   const { total,loader,viewFinanceAdminClearanceList,
     financeAdminNoDueClearanceList,
-    FinanceClearanceUploadSettlement,financeClearanceUpload,FinanceClearanceExport,
-    financeClearanceExport ,UpdateAdminFinanceClearanceList} = useContext(SeparationContext);
+    FinanceClearanceUploadSettlement,financeClearanceUpload,FinanceAdminClearanceExport,
+    financeAdminClearanceExport ,UpdateAdminFinanceClearanceList} = useContext(SeparationContext);
   const { CostCenter, costCenterList } = useContext(AdminContext)
   const [pageCount, setPageCount] = useState(0);
   const [fileUpload, setFileUpload] = useState();
 
   const [gridApi, setGridApi] = useState(null);
+  const [checkedData,setCheckedData] = useState([])
   const [gridColumnApi, setGridColumnApi] = useState(null);
   const [costCenter, setCostCenter] = useState("all")
   const [searchValue, setSearchValue] = useState("all");
@@ -85,13 +86,8 @@ const handlePageChange = (pageNumber) => {
 
     }
   }
-  const handleSave = (value) => {
-    const formData = value.data
-    formData['disabled']= true
-
-    console.log(formData,pageCount,"handlelsave")
-    UpdateAdminFinanceClearanceList(formData,searchValue, pageCount,costCenter)
-
+  const handleSave = () => {
+     UpdateAdminFinanceClearanceList(checkedData,searchValue, pageCount,costCenter)
   };
  
   const renderButtonTwo = (e) => {
@@ -134,7 +130,7 @@ const handlePageChange = (pageNumber) => {
           width: "100%",
           lineHeight: "30px",
         }}
-         onClick={() => handleSave(e)}
+         onClick={() => (e)}
       >
         Save
       </button>
@@ -154,14 +150,14 @@ const renderStatusOptions = (value) => {
   console.log(value,"renderStatusOptions1")
     return (
       <div>
-      <select name="fullAndFinalCompleteStatus" className="selectpicker" 
+      <select name="fullAndFinalCompleteStatus" className="selectpicker" disabled={true}
         data-style="btn-success"
       style={value.data.fullAndFinalCompleteStatus == 1?{border: '1px solid green',
-        color: '#fff',
-        backgroundColor: 'green',
+        color: 'green',
+        borderBlockEndStyle: 'green',
         fontWeight: 'bold'}:value.data.fullAndFinalCompleteStatus == 0?{border: '1px solid red',
-        color: '#fff',
-        backgroundColor: 'red',
+        color: 'red',
+        borderBlockEndStyle: 'red',
         fontWeight: 'bold'}:{color:'black'}}
        value={value.data.fullAndFinalCompleteStatus} onChange={(e) => statusRender(e,value)}>
       <option value={null}> select </option>
@@ -180,15 +176,16 @@ const renderStatusOptions = (value) => {
 
   };
   const renderStatusOptionsTwo = (value) => {
+    console.log(value)
     return (
       <div>
-      <select name="deactivateProfile" className="selectpicker"
+      <select name="deactivateProfile" className="selectpicker" disabled={true}
        style={value.data.deactivateProfile == 1?{border: '1px solid green',
-       color: '#fff',
-       backgroundColor: 'green',
+       color: 'green',
+        borderBlockEndStyle: 'green',
        fontWeight: 'bold'}:value.data.deactivateProfile == 0?{border: '1px solid red',
-       color: '#fff',
-       backgroundColor: 'red',
+       color: 'red',
+       borderBlockEndStyle: 'red',
        fontWeight: 'bold'}:{color:'black'}} 
         value={value.data.deactivateProfile} onChange={(e) => statusRenderTwo(e,value)}>
       <option value={null}> select </option>
@@ -209,47 +206,18 @@ const renderStatusOptions = (value) => {
       toast.error("Please select a file to upload")
     }
   }
- 
-  //File export 
-  const filename = 'F&FListing';
-  let fields = {
-    "S. No": "S. No",
-    "employeeId": "Employee Id",
-    "employeeName": "Employee Name",
-    "costCenterName": "Cost Center Name",
-    "managerName": "Manager Name",
-    "joiningDate": "Joining Date",
-    "lastWorkingDate":"Last Working Date",
-    "modeOfSeparation":"Mode Of Separation",
-    "fullAndFinalCompleteStatus":"Full And Final Complete Status",
-    "fullAndFinalAmount":"Full And Final Amount",
-    "fullAndFinalProcessDate":"Full And Final ProcessDate",
-    "deactivateProfile":"Deactivate Profile"
-  }
-
-  let data = [];
-  if (financeAdminNoDueClearanceList !== undefined && financeAdminNoDueClearanceList !== null) {
-    for (let i = 0; i < financeAdminNoDueClearanceList.length; i++) {
-      console.log(financeAdminNoDueClearanceList[i].holidayDate)
-      data.push({
-        "S. No": i + 1,
-        employeeId: financeAdminNoDueClearanceList[i].employeeId,
-        employeeName: financeAdminNoDueClearanceList[i].employeeName,
-        costCenterName: financeAdminNoDueClearanceList[i].costCenterName,
-        managerName: financeAdminNoDueClearanceList[i].managerName,
-        joiningDate: financeAdminNoDueClearanceList[i].joiningDate,
-        lastWorkingDate: financeAdminNoDueClearanceList[i].lastWorkingDate,
-        modeOfSeparation: financeAdminNoDueClearanceList[i].modeOfSeparation,
-        fullAndFinalCompleteStatus: financeAdminNoDueClearanceList[i].fullAndFinalCompleteStatus,
-        fullAndFinalAmount: financeAdminNoDueClearanceList[i].fullAndFinalAmount,
-        fullAndFinalProcessDate: financeAdminNoDueClearanceList[i].fullAndFinalProcessDate,
-        deactivateProfile: financeAdminNoDueClearanceList[i].deactivateProfile,
-      })
-    }
-  }
+  const onSelectionChanged=(e)=>{
+    let preValue = checkedData
+    let formData = e.data
+    formData['disabled'] = true
+    preValue.push(formData)
+    setCheckedData(preValue)
+    console.log(checkedData,"checkbox")
+ }
+console.log(checkedData,"hhkjhkhkj")
   const handleExport = (e) =>{
     const value = e.target.value
-    FinanceClearanceExport(value)
+    FinanceAdminClearanceExport(value)
 //         
 
   }
@@ -314,22 +282,24 @@ const renderStatusOptions = (value) => {
                required isSearchable />
           </Col>
           </div>
+          <div className="col-sm-2">
+          <Button className="submitButton" onClick={handleExport}> Export excel</Button>
+            </div>
         </Row>
             <div className="card" style={{ overflowX: "auto" }}>
               <div>
               <div className="nodue_title_finance" >
-              <b style={{textAlign:"center"}}>F & F  Clearance Listing </b>  
-                <Button style={{float:'left',marginTop: '5px'}} className="btn btn-light mr-2" onClick={''}>
+              <b style={{textAlign:"center"}} >F & F  Clearance Listing </b>  
+                <Button style={{float:'left',marginTop: '7px',marginLeft:'5px',height:"35px"}} className="btn btn-light mr-2" onClick={handleSave}>
                   Submit
                 </Button>
-                <ExcelFile data={financeClearanceExport}  element={ <Button style={{float:'right',marginTop: '5px'}} className="btn btn-light mr-2" onClick={handleExport}> Export excel</Button>}/>
 
-                <Button className="btn btn-light mr-2"  style={{float:'right',marginTop: '5px'}} onClick={handleUploadSettlement} >
+                <Button className="btn btn-light mr-2"  style={{float:'right',marginTop: '7px',height:"35px"}} onClick={handleUploadSettlement} >
                   Upload F & F Settlement
                 </Button>
                 <input type="file"    
                   accept=".xlsx, .xls, .csv" 
-                  style={{float:'right'}}
+                  style={{marginTop:"2px",float:'right',width:"250px"}}
                     onChange={(e) => {
                       changeHandler(e)
                     }}
@@ -344,27 +314,36 @@ const renderStatusOptions = (value) => {
           
           <AgGridReact 
             rowData={financeAdminNoDueClearanceList}
-            rowSelection="single"
-            
-            onGridReady={onGridReady}
+          
             defaultColDef={{
               width: 200,
-              editable: true,
               resizable: true,
-              overflowX: 'hidden'
+              overflowX: 'hidden',
             }}
-            
+            autoGroupColumnDef={{
+              headerName: 'Employee Id',
+              field: 'employeeId',
+              cellRenderer: 'agGroupCellRenderer',
+              cellRendererParams: { checkbox: true},
+            }}
+            rowSelection={'multiple'}
+            groupSelectsChildren={true}
+            suppressRowClickSelection={true}
+            suppressAggFuncInHeader={true}
+            onRowSelected={(e) => onSelectionChanged(e)}
+            onGridReady={onGridReady}
           >
-          <AgGridColumn width={50} className="columnColor" editable="false" headerName="S No" pinned="left" lockPinned="true" valueGetter={`node.rowIndex+1 + ${indexOfFirstRecord}`}></AgGridColumn>
-            <AgGridColumn className="columnColor" editable="false" headerName="Employee Id" field="employeeId"></AgGridColumn>
-            <AgGridColumn className="columnColor" editable="false" headerName="Employee Name" field="employeeName"></AgGridColumn>
-            <AgGridColumn className="columnColor" editable="false" headerName="Cost Center Name" field="costCenterName"></AgGridColumn>
-            <AgGridColumn className="columnColor" editable="false" headerName="Manager Name" field="managerName"></AgGridColumn>
-            <AgGridColumn  className="columnColor" editable="false" headerName="Joining Date" field="joiningDate"></AgGridColumn>
-            <AgGridColumn className="columnColor" editable="false" headerName="Last Working Day" field="lastWorkingDate"></AgGridColumn>
-            <AgGridColumn className="columnColor" editable="false"  headerName="Mode of Separation" field="modeOfSeparation"></AgGridColumn>
+          <AgGridColumn width={80} type="checkbox" className="columnColor"  headerName="S No" pinned="left" lockPinned="true" 
+          valueGetter={`node.rowIndex+1 + ${indexOfFirstRecord}`}></AgGridColumn>
+            <AgGridColumn className="columnColor" rowGroup={true} hide={true}   headerName="Employee Id" field="employeeId"></AgGridColumn>
+            <AgGridColumn className="columnColor"  headerName="Employee Name" field="employeeName"></AgGridColumn>
+            <AgGridColumn className="columnColor"  headerName="Cost Center Name" field="costCenterName"></AgGridColumn>
+            <AgGridColumn className="columnColor"  headerName="Manager Name" field="managerName"></AgGridColumn>
+            <AgGridColumn  className="columnColor"  headerName="Joining Date" field="joiningDate"></AgGridColumn>
+            <AgGridColumn className="columnColor"  headerName="Last Working Day" field="lastWorkingDate"></AgGridColumn>
+            <AgGridColumn className="columnColor"   headerName="Mode of Separation" field="modeOfSeparation"></AgGridColumn>
             <AgGridColumn 
-            className="columnColor"             
+            className="columnColor"      
              headerName="F & F Complete" 
             field="fullAndFinalCompleteStatus"
               colId="status"
@@ -375,7 +354,7 @@ const renderStatusOptions = (value) => {
             }}
             ></AgGridColumn>
             <AgGridColumn className="columnColor"   headerName="F & F Amount" field="fullAndFinalAmount"></AgGridColumn>
-            <AgGridColumn className="columnColor"   headerName="F & F Processed On" field="fullAndFinalProcessDate"></AgGridColumn>
+            <AgGridColumn className="columnColor"    type='dateColumn'  headerName="F & F Processed On" field="fullAndFinalProcessDate"></AgGridColumn>
             <AgGridColumn className="columnColor" 
              headerName="Deactivate Profile"
               field="deactivateProfile"
