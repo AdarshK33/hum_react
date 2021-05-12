@@ -18,7 +18,7 @@ const [searchValue, setSearchValue] = useState("all");
 /*-----------------Pagination------------------*/
 const [currentPage, setCurrentPage] = useState(1);
 const recordPerPage = 10;
-const totalRecords = adminNoDueClearanceList !== null && adminNoDueClearanceList !== undefined && total;
+const totalRecords = total;
 const pageRange = 10;
 const indexOfLastRecord = currentPage * recordPerPage;
 const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
@@ -27,20 +27,17 @@ const [currentRecords, setCurrentRecords] = useState([]);
 useEffect(() => {
   console.log(pageCount,"pageCount")
   viewAdminITClearanceList(searchValue, pageCount,costCenter);
-  if (adminNoDueClearanceList !== null && adminNoDueClearanceList !== undefined) {
-    setCurrentRecords(adminNoDueClearanceList);
-  }
 }, [costCenter,searchValue,pageCount]);
 
 useEffect(() => {
   CostCenter();
 }, []);
 
-// useEffect(() => {
-//   if (adminNoDueClearanceList !== null && adminNoDueClearanceList !== undefined) {
-//     setCurrentRecords(adminNoDueClearanceList);
-//   }
-// }, [adminNoDueClearanceList]);
+useEffect(() => {
+  if (adminNoDueClearanceList !== null && adminNoDueClearanceList !== undefined) {
+    setCurrentRecords(adminNoDueClearanceList);
+  }
+}, [adminNoDueClearanceList,currentRecords]);
 
 
 const handlePageChange = (pageNumber) => {
@@ -48,7 +45,7 @@ const handlePageChange = (pageNumber) => {
   console.log("page change",pageNumber,pageCount)
 
     setCurrentPage(pageNumber);
-    if (searchValue !== "all") {
+    if (searchValue !== "all" || costCenter !== "all") {
       viewAdminITClearanceList(searchValue,pageNumber-1,costCenter);
     } else {
       viewAdminITClearanceList("all",pageNumber-1,"all");
@@ -80,7 +77,7 @@ const handleCostCenter = (options) => {
   console.log(data2)
   setCostCenter(data2)
   if (costCenter !== "" && costCenter !== "all") {
-    return viewAdminITClearanceList(searchValue,0,costCenter);
+    return viewAdminITClearanceList(searchValue,pageCount,data2);
   }else{
     return viewAdminITClearanceList("all",pageCount,"all");
   }
@@ -179,7 +176,7 @@ const handleCostCenter = (options) => {
                 {(adminNoDueClearanceList === null) ?
                   <p style={{ textAlign: "center" }}>No Record Found</p> : null}
 
-                {adminNoDueClearanceList !== undefined && adminNoDueClearanceList !== null && adminNoDueClearanceList.length === 0 ?
+                {adminNoDueClearanceList == undefined && adminNoDueClearanceList == null ?
 
                   <div className="loader-box loader" style={{ width: "100% !important" }}>
                     <div className="loader">
@@ -195,7 +192,7 @@ const handleCostCenter = (options) => {
               </div>
 
               <div>
-                {adminNoDueClearanceList !== null && adminNoDueClearanceList !== undefined &&
+                {adminNoDueClearanceList !== null && adminNoDueClearanceList !== undefined ?
                   <Pagination
                     itemClass="page-item"
                     linkClass="page-link"
@@ -204,7 +201,9 @@ const handleCostCenter = (options) => {
                     totalItemsCount={totalRecords}
                     pageRangeDisplayed={pageRange}
                     onChange={handlePageChange}
-                  />
+                    firstPageText="First"
+           lastPageText="Last"
+                  />:""
                 }
               </div>
 

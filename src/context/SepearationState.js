@@ -67,6 +67,7 @@ export const SeparationProvider = (props) => {
       });
   };
   const viewFinanceAdminClearanceList = (key, page,costCenter) => {
+    setLoader(true);
     client.get( "/api/v1/separation/full-and-final/view?key=" +
           key +
           "&page=" +
@@ -79,11 +80,15 @@ export const SeparationProvider = (props) => {
       .then((response) => {
         state.financeAdminNoDueClearanceList = response.data.data.data
         state.data = response.data.data;
-        state.total = response.data.data.total;
+        state.total = state.data.total;
         console.log("=====GET financeAdminNoDueClearanceList API response=====", response.data.data)
+        setLoader(false);
         return dispatch({
           type: "FETCH_FINANCE_ADMIN_NODUECLEARANCE_LIST",
-          payload: state.financeAdminNoDueClearanceList
+          payload: state.financeAdminNoDueClearanceList,
+          loader: loader,
+          data: state.data,
+          total: state.total,
         });
       })
       .catch((error) => {
@@ -138,11 +143,14 @@ export const SeparationProvider = (props) => {
       .then((response) => {
         state.adminNoDueClearanceList = response.data.data.data
         state.data = response.data.data;
-        state.total = response.data.data.total;
+        state.total = state.data.total;
         console.log(key, page,costCenter,"=====GET FETCH_ADMIN_NODUECLEARANCE_LIST API response=====", response.data.data)
         return dispatch({
           type: "FETCH_ADMIN_NODUECLEARANCE_LIST",
-          payload: state.adminNoDueClearanceList
+          payload: state.adminNoDueClearanceList,
+          loader: loader,
+          data: state.data,
+          total: state.total,
         });
       })
       .catch((error) => {
@@ -174,6 +182,9 @@ export const SeparationProvider = (props) => {
         return dispatch({
           type: "FETCH_SEPARATION_LIST",
           payload: state.noDueClearanceList,
+          loader: loader,
+          data: state.data,
+          total: state.total,
         });
       })
       .catch((error) => {
@@ -295,6 +306,7 @@ export const SeparationProvider = (props) => {
       costCentreName: value.costCentreName,
       joiningDate: value.joiningDate,
       managerName: value.managerName,
+      disabled: true
     };
     console.log(formData, "updateClearanceList separation context");
     return client
@@ -325,6 +337,7 @@ export const SeparationProvider = (props) => {
       costCentre: value.costCentre,
       joiningDate: value.joiningDate,
       managerName: value.managerName,
+      disabled :true
     };
     setLoader(true);
     return client

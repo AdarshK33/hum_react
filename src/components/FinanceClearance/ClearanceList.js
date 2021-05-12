@@ -51,7 +51,7 @@ const FinanceClearanceList = () => {
   const [costCenter, setCostCenter] = useState("all");
   const [searchValue, setSearchValue] = useState("all");
   const [actionStatus, setActionStatus] = useState("all");
-
+  const [financeStatusValue,setFinanceStatusValue] = useState(null)
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
   const recordPerPage = 10;
@@ -100,7 +100,7 @@ const FinanceClearanceList = () => {
     console.log(data2);
     setCostCenter(data2);
     if (costCenter !== "" && costCenter !== "all") {
-       separationListView(searchValue, pageCount,actionStatus, costCenter);
+       separationListView(searchValue, pageCount,actionStatus, data2);
     } else {
        separationListView("all", pageCount,"all", "all");
     }
@@ -113,7 +113,7 @@ const FinanceClearanceList = () => {
     let statusValue = e.target.value
     setActionStatus(statusValue)
     if (actionStatus !== "" && actionStatus !== "all") {
-      separationListView(searchValue, pageCount, actionStatus,costCenter);
+      separationListView(searchValue, pageCount, statusValue,costCenter);
     } else {
       separationListView("all", pageCount,"all" ,"all");
     } 
@@ -141,6 +141,7 @@ const FinanceClearanceList = () => {
 
   const handleSave = (value) => {
     const formData = value.data;
+    formData["financeClearanceStatus"] = financeStatusValue;
     console.log(formData, pageCount, "handlelsave");
     if(formData.financeClearanceStatus !== "" && formData.financeClearanceStatus !== null ){
      if( formData.financeClearanceStatus == 0 && formData.financeRemarks !==null && formData.financeRemarks !== undefined && formData.financeRemarks !==""){
@@ -165,8 +166,9 @@ const FinanceClearanceList = () => {
   const statusRender = (e, value) => {
     const status = e.target.value;
     const clearanceStatus = value.data;
-    clearanceStatus["financeClearanceStatus"] = status;
-    clearanceStatus["disabled"] = true;
+    setFinanceStatusValue(status)
+    // clearanceStatus["financeClearanceStatus"] = status;
+    // clearanceStatus["disabled"] = true;
   };
   console.log(separationList, "noDueClearance");
   const renderButton = (e) => {

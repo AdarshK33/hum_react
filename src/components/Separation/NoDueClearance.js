@@ -35,9 +35,11 @@ const NoDueClearance = () => {
   });
   const [gridApi, setGridApi] = useState(null);
   const [gridColumnApi, setGridColumnApi] = useState(null);
-  const [costCenter, setCostCenter] = useState("")
-  const [searchValue, setSearchValue] = useState("");
-  const [actionStatus, setActionStatus] = useState("");
+  const [costCenter, setCostCenter] = useState("all")
+  const [searchValue, setSearchValue] = useState("all");
+  const [actionStatus, setActionStatus] = useState("all");
+  const [itStatusValue,setITStatusValue] = useState(null)
+
 /*-----------------Pagination------------------*/
 const [currentPage, setCurrentPage] = useState(1);
 const recordPerPage = 10;
@@ -50,17 +52,17 @@ const [currentRecords, setCurrentRecords] = useState([]);
 
 useEffect(() => {
   console.log("current 11111")
-  if (noDueClearanceList !== null && noDueClearanceList !== undefined && noDueClearanceList.length>0) {
+  if (noDueClearanceList !== null && noDueClearanceList !== undefined ) {
     setCurrentRecords(noDueClearanceList);
   }
-}, [noDueClearanceList]);
+}, [noDueClearanceList, currentRecords]);
 
 const handlePageChange = (pageNumber) => {
-    setPageCount(pageNumber-1 );
+    setPageCount(pageNumber - 1 );
     setCurrentPage(pageNumber);
-    if (searchValue !== "" || actionStatus !== "" || costCenter !== "") {
+    if (searchValue !== "all" || actionStatus !== "all" || costCenter !== "all") {
       console.log("page change1", searchValue, actionStatus,costCenter,pageCount);
-      viewITClearanceList(searchValue,pageNumber-1,actionStatus,costCenter);
+      viewITClearanceList(searchValue,pageNumber - 1,actionStatus,costCenter);
     } else {
       console.log("page change2", searchValue, actionStatus,costCenter,pageCount);
   
@@ -84,7 +86,7 @@ const handlePageChange = (pageNumber) => {
     NoDueClearanceClearanceExport(value)
   }
   const searchDataHandler = () => {
-    if (searchValue !== "") {
+    if (searchValue !== "" && searchValue !== "all") {
       viewITClearanceList(searchValue,pageCount,actionStatus,costCenter);
     }else{
       viewITClearanceList("all",pageCount,"all","all");
@@ -97,7 +99,7 @@ const handleCostCenter = (options) => {
   console.log(data2)
   setCostCenter(data2)
   if (costCenter !== "" && costCenter !== "all") {
-     viewITClearanceList(searchValue,pageCount,actionStatus,costCenter);
+     viewITClearanceList(searchValue,pageCount,actionStatus,data2);
   }else{
      viewITClearanceList("all",pageCount,"all","all");
   }
@@ -106,7 +108,7 @@ const handleActionStatus = (e)=>{
   let statusValue = e.target.value
   setActionStatus(statusValue)
   if (actionStatus !== "" && actionStatus !== "all") {
-    viewITClearanceList(searchValue, pageCount, actionStatus,costCenter);
+    viewITClearanceList(searchValue, pageCount, statusValue,costCenter);
   } else {
     viewITClearanceList("all", pageCount,"all" ,"all");
   } 
@@ -129,9 +131,9 @@ const handleActionStatus = (e)=>{
   };
 
   const handleSave = (value) => {
-    const formData = value.data
-    console.log(formData,pageCount,"handlelsave")
-    
+    const formData = value.data    
+    formData['itClearanceStatus']= itStatusValue
+
      if(formData.itClearanceStatus !== "" && formData.itClearanceStatus !== null ){
       if( formData.itClearanceStatus == 0 && formData.itRemarks !==null && formData.itRemarks !== undefined && formData.itRemarks !==""){
         setCleranceData(formData)
@@ -151,15 +153,13 @@ const handleActionStatus = (e)=>{
   useEffect(() => {
     console.log(pageCount,"cost search action page")
     viewITClearanceList(searchValue, pageCount,actionStatus,costCenter);
-    setCurrentRecords(noDueClearanceList);
 
-  }, [costCenter,searchValue,actionStatus,pageCount]);
+  }, [costCenter,searchValue,pageCount,actionStatus]);
 
   const statusRender = (e,value) => {
     const status = e.target.value
     const clearanceStatus = value.data
-    clearanceStatus['itClearanceStatus']= status
-    clearanceStatus['disabled']= true
+    setITStatusValue(status)
  
   };
   const renderButton = (e) => {
@@ -270,7 +270,6 @@ const handleActionStatus = (e)=>{
                       className="columnColor"
                       field="itClearanceStatus"
                       headerName="IT Clearance"
-                      editable={true}
                       colId="status"
                       cellRendererFramework={renderStatusOptions}
                       cellEditorParams={{
@@ -304,7 +303,7 @@ const handleActionStatus = (e)=>{
                 
               </div>
               <div>
-       { noDueClearanceList == null && noDueClearanceList == undefined  ? (
+       { noDueClearanceList == null && noDueClearanceList == undefined?(
                   <div
                     className="loader-box loader"
                     style={{ width: "100% !important" }}

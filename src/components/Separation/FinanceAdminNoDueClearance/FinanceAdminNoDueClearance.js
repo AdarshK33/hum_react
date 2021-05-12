@@ -39,7 +39,7 @@ const FinanaceAdminNoDueClearance = () => {
 /*-----------------Pagination------------------*/
 const [currentPage, setCurrentPage] = useState(1);
 const recordPerPage = 10;
-const totalRecords = financeAdminNoDueClearanceList !== null && financeAdminNoDueClearanceList !== undefined && total;
+const totalRecords =  total;
 const pageRange = 10;
 const indexOfLastRecord = currentPage * recordPerPage;
 const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
@@ -66,7 +66,7 @@ const handlePageChange = (pageNumber) => {
   console.log("page change",pageNumber,pageCount)
 
     setCurrentPage(pageNumber);
-    if (searchValue !== "all") {
+    if (searchValue !== "all" ||costCenter !== "all") {
       viewFinanceAdminClearanceList(searchValue,pageNumber-1,costCenter);
     } else {
       viewFinanceAdminClearanceList("all",pageNumber-1,"all");
@@ -108,40 +108,13 @@ const handlePageChange = (pageNumber) => {
 
   }
 
-  const renderButton = (e) => {
-    console.log(e.data,"render")
-    var buttonValue = e.data.disabled
-    return (
-      <button disabled={buttonValue}
-        style={buttonValue?{
-          backgroundColor: "#9ea4af54",
-          color: "white",
-          border: "1px solid #9ea4af54",
-          paddingLeft: "10px",
-          paddingRight: "10px",
-          width: "100%",
-          lineHeight: "30px",
-        }:{
-          backgroundColor: "#006ebb",
-          color: "white",
-          border: "1px solid #006ebb",
-          paddingLeft: "10px",
-          paddingRight: "10px",
-          width: "100%",
-          lineHeight: "30px",
-        }}
-         onClick={() => (e)}
-      >
-        Save
-      </button>
-    );
-  };
+ 
 const handleCostCenter = (options) => {
   let data2 = options !== null?options.value:''
   console.log(data2)
   setCostCenter(data2)
   if (costCenter !== "" && costCenter !== "all") {
-    return viewFinanceAdminClearanceList(searchValue,pageCount,costCenter);
+    return viewFinanceAdminClearanceList(searchValue,pageCount,data2);
   }else{
     return viewFinanceAdminClearanceList("all",pageCount,"all");
   }
@@ -222,7 +195,6 @@ console.log(checkedData,"hhkjhkhkj")
 
   }
   const statusRender = (e,value) => {
-    // var result = document.getElementsByClassName("switch-input")[0].checked
 
     const status = e.target.value
     const financeClearanceStatus = value.data
@@ -231,12 +203,8 @@ console.log(checkedData,"hhkjhkhkj")
 
   };
 
-  const disabledText = () => {
-    toast.error("No Records to be Export")
-}
+ 
   const statusRenderTwo = (e,value) => {
-    // var result = document.getElementsByClassName("switch-input")[0].checked
-
     const status = e.target.value
     const financeClearanceStatus = value.data
 
@@ -372,13 +340,7 @@ console.log(checkedData,"hhkjhkhkj")
                       field="exitId"
                       cellRendererFramework={(e) => renderButtonTwo(e)}
                     ></AgGridColumn>
-                       {/* <AgGridColumn
-                      headerName="Action"
-                      pinned="right"
-                      editable="false"
-                      field="exitId"
-                      cellRendererFramework={(e) => renderButton(e)}
-                    ></AgGridColumn> */}
+                    
 
                   </AgGridReact>
                 </div>

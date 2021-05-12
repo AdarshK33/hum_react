@@ -9,15 +9,21 @@ const GroupReducer = (state, action) => {
         total: action.total,
       };
       case "FETCH_SEPARATION_LIST":
-         return { ...state, noDueClearanceList: action.payload };
+         return { ...state, noDueClearanceList: action.payload,loader: action.loader,
+          data: action.data,
+          total: action.total,};
      case "UPDATE_SEPARATION_LIST":
           return {...state,updateNoDueClearanceList:action.payload};
       case "SAVE_FINANCE_LIST":
          return { ...state, financeList: action.payload };
       case "FETCH_ADMIN_NODUECLEARANCE_LIST":
-           return {...state,adminNoDueClearanceList:action.payload}
+           return {...state,adminNoDueClearanceList:action.payload, loader: action.loader,
+            data: action.data,
+            total: action.total,}
       case "FETCH_FINANCE_ADMIN_NODUECLEARANCE_LIST":
-            return {...state,financeAdminNoDueClearanceList:action.payload}
+            return {...state,financeAdminNoDueClearanceList:action.payload, loader: action.loader,
+              data: action.data,
+              total: action.total,}
       case "FINANCECLEARANCE_UPLOAD_SETTLEMENT":
               return {...state,financeClearanceUpload:action.payload}
       case "FINANCECLEARANCE_ADMIN_EXPORT":
