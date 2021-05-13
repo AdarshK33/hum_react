@@ -93,6 +93,9 @@ const WorkInformation = (props) => {
         internship: data.internshipPeriod,
         noticePeriod: data.noticePeriod,
         managerId: data.managerId,
+        expatUser: data.expatUser,
+        nationality: data.nationality,
+        passportNumber: data.passportNumber,
       });
       if (data.costCentre !== null && data.costCentre !== undefined) {
         locationView(data.costCentre);
@@ -310,7 +313,8 @@ const WorkInformation = (props) => {
   };
 
   return (
-    console.log(candidateData.workInformation),
+    console.log(state),
+    console.log(state.expatUser),
     (
       <Fragment>
         <Form onSubmit={submitHandler}>
