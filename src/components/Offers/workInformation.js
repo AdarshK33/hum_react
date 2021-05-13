@@ -330,7 +330,7 @@ const WorkInformation = (props) => {
             <Col sm={3}>
               <Form.Group>
                 <Form.Label>Type of Employment</Form.Label>
-                {candidateData.workInformation !== undefined &&
+                {/* {candidateData.workInformation !== undefined &&
                 candidateData.workInformation !== null ? (
                   <Form.Control
                     type="text"
@@ -338,27 +338,27 @@ const WorkInformation = (props) => {
                     className="form-control form-input"
                     readOnly
                   ></Form.Control>
-                ) : (
-                  <Form.Control
-                    as="select"
-                    value={state.employmentType}
-                    className="form-input"
-                    name="employmentType"
-                    onChange={changeHandler}
-                    disabled={disabled}
-                    required
-                  >
-                    <option value="">Select Employment Type</option>
-                    {shiftContractNames !== null &&
-                      shiftContractNames !== undefined &&
-                      shiftContractNames.length > 0 &&
-                      shiftContractNames.map((item) => {
-                        return (
-                          <option key={item.typeId}>{item.contractType}</option>
-                        );
-                      })}
-                  </Form.Control>
-                )}
+                ) : ( */}
+                <Form.Control
+                  as="select"
+                  value={state.employmentType}
+                  className="form-input"
+                  name="employmentType"
+                  onChange={changeHandler}
+                  disabled={disabled}
+                  required
+                >
+                  <option value="">Select Employment Type</option>
+                  {shiftContractNames !== null &&
+                    shiftContractNames !== undefined &&
+                    shiftContractNames.length > 0 &&
+                    shiftContractNames.map((item) => {
+                      return (
+                        <option key={item.typeId}>{item.contractType}</option>
+                      );
+                    })}
+                </Form.Control>
+                {/* )} */}
               </Form.Group>
             </Col>
 
@@ -733,6 +733,7 @@ const WorkInformation = (props) => {
             )}
             {(state.employmentType === "Internship" ||
               state.employmentType === "Permanent" ||
+              state.employmentType === "permanent" ||
               state.employmentType === "Parttime") && (
               <Col sm={3}>
                 <Form.Group>

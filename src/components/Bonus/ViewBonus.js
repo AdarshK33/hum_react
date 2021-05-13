@@ -62,6 +62,18 @@ const ViewBonus = () => {
     }
     setCurrentRecords(bonusDetails);
   };
+
+  const searchHandler = (e) => {
+    setSearchValue(e.target.value);
+  };
+
+  const searchDataHandler = () => {
+    if (searchValue !== "") {
+      viewBonus(searchValue, pageCount);
+    } else {
+      viewBonus("all", pageCount);
+    }
+  };
   useEffect(() => {
     viewBonus("all", pageCount);
   }, []);
@@ -96,12 +108,12 @@ const ViewBonus = () => {
                   className="form-control "
                   type="text"
                   placeholder="Search.."
-                  // onChange={(e) => searchHandler(e)}
+                  onChange={(e) => searchHandler(e)}
                 />
                 <Search
                   className="search-icon"
                   style={{ color: "#313131" }}
-                  // onClick={searchDataHandler}
+                  onClick={searchDataHandler}
                 />
               </div>
             </Col>
@@ -165,9 +177,6 @@ const ViewBonus = () => {
                           onClick={() => {
                             setEditModal(true);
                             viewBonusById(item.bonusId);
-                            //setLeaveTypeId(item.leaveTypeId);
-                            // setFromDate(item.fromDate); setToDate(item.toDate); setReason(item.reason)
-                            // setltId(item.ltId); setEmpId(item.empId)
                           }}
                         ></Edit2>
                       </td>
