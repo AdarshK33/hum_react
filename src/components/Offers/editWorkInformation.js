@@ -283,6 +283,7 @@ const EditWorkInformation = () => {
                   name="employmentType"
                   onChange={changeHandler}
                   disabled={disabled}
+                  readOnly
                 >
                   <option value="">Select Employment Type</option>
                   {shiftContractNames !== null &&
@@ -678,7 +679,7 @@ const EditWorkInformation = () => {
                     disabled={disabled}
                     required
                   >
-                    <option required>Seclect </option>
+                    <option value=" ">Seclect </option>
                     <option value="1">Yes</option>
                     <option value="0">No</option>
                   </Form.Control>
@@ -716,7 +717,7 @@ const EditWorkInformation = () => {
                     disabled={disabled}
                     required
                   >
-                    <option required>Select Nationality</option>
+                    <option value=" ">Select Nationality</option>
                     {countryList !== null &&
                       countryList !== undefined &&
                       countryList.map((item) => {

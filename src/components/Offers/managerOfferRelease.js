@@ -45,9 +45,9 @@ const ManagerOfferRelease = () => {
       createCandidateResponse.candidateId !== undefined
     ) {
       console.log("work info.........");
-      viewCandidateId(createCandidateResponse.candidateId);
+      // viewCandidateId(createCandidateResponse.candidateId);
 
-      // workInfoView(createCandidateResponse.candidateId);
+      workInfoView(createCandidateResponse.candidateId);
     }
   }, [createCandidateResponse]);
   const remunarationClick = (e) => {
