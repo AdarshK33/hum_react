@@ -277,7 +277,7 @@ const EditWorkInformation = () => {
               <Form.Group className="reactDate">
                 <Form.Label>Type of Employment</Form.Label>
                 <Form.Control
-                  as="select"
+                  type="text"
                   value={state.employmentType}
                   className="form-input"
                   name="employmentType"
@@ -285,7 +285,7 @@ const EditWorkInformation = () => {
                   disabled={disabled}
                   readOnly
                 >
-                  <option value="">Select Employment Type</option>
+                  {/* <option value="">Select Employment Type</option>
                   {shiftContractNames !== null &&
                     shiftContractNames !== undefined &&
                     shiftContractNames.length > 0 &&
@@ -293,7 +293,7 @@ const EditWorkInformation = () => {
                       return (
                         <option key={item.typeId}>{item.contractType}</option>
                       );
-                    })}
+                    })} */}
                 </Form.Control>
               </Form.Group>
             </Col>
