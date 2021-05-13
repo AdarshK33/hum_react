@@ -8,6 +8,7 @@ import { AdminContext } from "../../context/AdminState";
 import { OfferContext } from "../../context/OfferState";
 import { RosterContext } from "../../context/RosterState";
 import { AppContext } from "../../context/AppState";
+import { MasterFilesContext } from "../../context/MasterFilesState";
 import moment from "moment";
 import "./offerReleaseandOnboarding.css";
 const EditWorkInformation = () => {
@@ -23,6 +24,9 @@ const EditWorkInformation = () => {
     internship: "",
     noticePeriod: "",
     managerId: null,
+    expatUser: "",
+    passportNumber: "",
+    nationality: "",
   });
   const [dateOfJoining, setDateOFJoining] = useState();
   const [dateOfLeaving, setDateOFLeaving] = useState();
@@ -53,7 +57,7 @@ const EditWorkInformation = () => {
   const { user } = useContext(AppContext);
   const [stateValue, setStateValue] = useState();
   const [city, setCity] = useState();
-
+  const { viewCountries, countryList } = useContext(MasterFilesContext);
   useEffect(() => {
     viewSports();
     CostCenter();
@@ -82,6 +86,9 @@ const EditWorkInformation = () => {
         internship: workData.internshipPeriod,
         noticePeriod: workData.noticePeriod,
         managerId: workData.managerId,
+        expatUser: workData.expatUser,
+        passportNumber: workData.passportNumber,
+        nationality: workData.nationality,
       });
       setDateOFJoining(new Date(workData.dateOfJoin));
       setDateOFLeaving(new Date(workData.dateOfLeaving));
@@ -264,15 +271,32 @@ const EditWorkInformation = () => {
             <Col sm={3}>
               <Form.Group>
                 <Form.Label>Sports</Form.Label>
-                <br></br>
                 {state.employmentType === "Internship" ? (
-                  <Form.Label className="headingColor">N/A</Form.Label>
+                  <Form.Label>N/A</Form.Label>
                 ) : (
-                  <Form.Label className="headingColor">
-                    {state.sports !== undefined && state.sports !== null
-                      ? state.sports
-                      : "N/A"}
-                  </Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={state.sports}
+                    name="sports"
+                    disabled="true"
+                    className=" disable-arrow"
+                    style={{
+                      border: "0px",
+                      color: "#0020a5",
+                      backgroundColor: "#fafafa",
+                    }}
+                  >
+                    {sportsNames !== null &&
+                      sportsNames !== undefined &&
+                      sportsNames.length > 0 &&
+                      sportsNames.map((item) => {
+                        return (
+                          <option key={item.sportId} value={item.sportId}>
+                            {item.sportName}
+                          </option>
+                        );
+                      })}
+                  </Form.Control>
                 )}
               </Form.Group>
             </Col>
@@ -359,6 +383,44 @@ const EditWorkInformation = () => {
                   <br></br>
                   <Form.Label className="headingColor">
                     {state.probation} Month
+                  </Form.Label>
+                </Form.Group>
+              </Col>
+            )}
+            {(state.employmentType === "Internship" ||
+              state.employmentType === "Permanent" ||
+              state.employmentType === "permanent" ||
+              state.employmentType === "Parttime") && (
+              <Col sm={3}>
+                <Form.Group>
+                  <Form.Label>Local Expact</Form.Label>
+                  <br></br>
+                  <Form.Label className="headingColor">
+                    {state.expatUser === 1 ? "Yes" : "No"}
+                  </Form.Label>
+                </Form.Group>
+              </Col>
+            )}
+            {state.expatUser == 1 && (
+              <Col sm={3}>
+                <Form.Group>
+                  <Form.Label>Passport Number</Form.Label>
+                  <br></br>
+                  <Form.Label className="headingColor">
+                    {state.passportNumber}
+                  </Form.Label>
+                </Form.Group>
+              </Col>
+            )}
+          </Row>
+          <Row>
+            {state.expatUser == 1 && (
+              <Col sm={3}>
+                <Form.Group>
+                  <Form.Label>Nationality</Form.Label>
+                  <br></br>
+                  <Form.Label className="headingColor">
+                    {state.nationality}
                   </Form.Label>
                 </Form.Group>
               </Col>
