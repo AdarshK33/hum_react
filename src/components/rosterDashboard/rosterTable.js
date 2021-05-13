@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect, useContext } from 'react';
 import { Container, Row, Col, Form, Spinner } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import DatePicker from 'react-datepicker'
+// import Loader from "../common/loader";
 import "react-datepicker/dist/react-datepicker.css";
 import { RosterContext } from "../../context/RosterState";
 import { AppContext } from "../../context/AppState";
@@ -15,13 +16,13 @@ const RosterTable = (storeID) => {
     const [endDate, setEndDate] = useState(moment().add('30', 'd'));
     const [currentDate, setCurrentDate] = useState(moment());
     const [displayMonth, setDisplayMonth] = useState(false);
-    const [displayWeek, setDisplayWeek] = useState(true);
-    const [displayDaily, setDisplayDaily] = useState(false);
+    const [displayWeek, setDisplayWeek] = useState(false);
+    const [displayDaily, setDisplayDaily] = useState(true);
     const [year, setYear] = useState('');
     const [displayNormal, setDisplayNormal] = useState(false);
     const [displayTable, setDisplayTable] = useState(true);
-    const [weekActive, setWeekActive] = useState(true);
-    const [dailyActive, setDailyActive] = useState(false);
+    const [weekActive, setWeekActive] = useState(false);
+    const [dailyActive, setDailyActive] = useState(true);
     const [normalActive, setNormalActive] = useState(false);
     const [monthActive, setMonthActive] = useState(false);
 
@@ -31,8 +32,16 @@ const RosterTable = (storeID) => {
     const { user } = useContext(AppContext);
 
     useEffect(() => {
-        setDisplayTable(false);
+        const date = new Date();
+        // setDisplayTable(false);
+        if(storeID.storeId)
+        adminRosterUtilisationSchedule('D', 0, storeID.storeId, moment(date, 'YYYY-MM-DD').format("YYYY-MM-DD"));
     }, [storeID.storeId])
+
+    // useEffect(() => {
+    //     adminRosterUtilisationSchedule('D', 0, storeID.storeId, moment(date, 'YYYY-MM-DD').format("YYYY-MM-DD"));
+    //     setDisplayTable(true);
+    // }, [])
 
     const selectMonth = e => {
         e.preventDefault();
@@ -87,7 +96,6 @@ const RosterTable = (storeID) => {
         setDisplayTable(true);
         // console.log(typeof Number(e.target.value), 'e.target');
         const currentYear = new Date().getFullYear();
-        console.log(currentYear, 'currentYear');
         if( e.target.value !== "Select month" && storeID.storeId) 
         adminRosterUtilisationSchedule('M', Number(e.target.value), storeID.storeId, 0, 0, 0, 0, 2021);
     }
@@ -314,7 +322,7 @@ const RosterTable = (storeID) => {
                                     </tr>
                                 ))} */}
                             </tbody>
-                        </table> ) : (<div style={{position: 'absolute', top: '50%', left: '50%'}}><Spinner animation="border" variant="primary" /></div>)}
+                        </table> ) : (<Spinner />)}
                     </div> ) : null 
                 }
                 

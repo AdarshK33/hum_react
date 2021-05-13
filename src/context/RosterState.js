@@ -380,10 +380,10 @@ export const RosterProvider = ({ children }) => {
   }
 
   // Roster utilisation
-  const adminRosterCalculateUtilisation = (storeId) => {
+  const adminRosterCalculateUtilisation = (storeId, month=0, year=2021) => {
     //  alert(endDate,endDate);
     // eslint-disable-next-line no-useless-concat
-    client.get('/roster/utilisation?storeId=' + storeId)
+    client.get('/roster/utilisation?storeId=' + storeId + '&year=' + year + '&month=' + month)
       .then((response) => {
         state.adminRosterCalculateUtilisationList = response.data.data;
         console.log("admin calculate week ", state.adminRosterCalculateUtilisationList)

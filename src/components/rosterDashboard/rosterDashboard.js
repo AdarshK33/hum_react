@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect, useContext } from 'react';
-import { Container, Row, Col, Card } from 'react-bootstrap'
+import { Container, Row, Col, Card, Form } from 'react-bootstrap'
 import Chart from 'react-google-charts'
 import { RosterContext } from "../../context/RosterState";
 import Select from 'react-select'
@@ -10,20 +10,54 @@ const RosterDashboard = () => {
 
     const {costCenterList, costCenter, adminRosterCalculateUtilisationList, adminRosterCalculateUtilisation} = useContext(RosterContext);
 
+    const months = [1,2,3,4,5,6,7,8,9,10,11,12];
+
+    const years = [2019, 2020, 2021]
+
     useEffect(() => {
         costCenter()
-        if(costCenter1)
-        adminRosterCalculateUtilisation(costCenter1)
+        // if(costCenter1)
+        // adminRosterCalculateUtilisation(costCenter1)
+        // console.log(costCenterList, 'costCenterList')
+        if(costCenterList && costCenterList.length) {
+        setCostCenter1(costCenterList[0].costCentreName);
+        adminRosterCalculateUtilisation(costCenterList[0].costCentreName)
+        }
+
         // else 
         // adminRosterCalculateUtilisation('IN1041');
         // if(adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length)
         // console.log(costCenterList, costCenter1, adminRosterCalculateUtilisationList, 'asdasd');
-    },[costCenter1])
+    },[costCenter1, costCenterList.length])
 
     const handleCostCenter = (options) => {
         let data2 = options !== null ? options.value : ''
         setCostCenter1(data2)
-        console.log( data2, costCenter1, 'sdakjsdhashd');
+        // console.log( data2, costCenter1, 'sdakjsdhashd');
+    }
+
+    const monthSelected = e => {
+        e.preventDefault();
+        // setDisplayTable(true);
+        // console.log(typeof Number(e.target.value), 'e.target');
+        const currentYear = new Date().getFullYear();
+        // console.log(currentYear, 'currentYear');
+        // if( e.target.value !== "Select month") 
+        // adminRosterUtilisationSchedule('M', Number(e.target.value), storeID.storeId, 0, 0, 0, 0, 2021);
+        // setCostCenter1(Number(e.target.value))
+        adminRosterCalculateUtilisation(costCenterList[0].costCentreName, Number(e.target.value))
+    }
+
+    const yearSelected = e => {
+        e.preventDefault();
+        // setDisplayTable(true);
+        // console.log(typeof Number(e.target.value), 'e.target');
+        const currentYear = new Date().getFullYear();
+        // console.log(currentYear, 'currentYear');
+        // if( e.target.value !== "Select month") 
+        // adminRosterUtilisationSchedule('M', Number(e.target.value), storeID.storeId, 0, 0, 0, 0, 2021);
+        // setCostCenter1(Number(e.target.value))
+        adminRosterCalculateUtilisation(costCenterList[0].costCentreName, 0, Number(e.target.value))
     }
 
     const options1 = {
@@ -180,19 +214,62 @@ const RosterDashboard = () => {
             <Container style={{paddingBottom: '30px'}}>
                 <Row className='costCenter-row' style={{margin: '10px 0px', paddingTop: '10px', display: 'flex', justifyContent: 'flex-end'}}>
                     <Col style={{maxWidth:'20%'}}>
-                        <Select
+                        {costCenterList && costCenterList.length &&
+                            <Select
                             name="filters"
-                            placeholder="Cost Center"
+                            // placeholder="Cost Center"
+                            // value={costCenterList && costCenterList.length ? costCenterList[0].costCentreName : 'sdasd'}
+                            defaultValue={{ label: costCenterList[0].costCentreName , value: costCenterList[0].costCentreName }}
                             options={costCenterList !== null ?
                                 costCenterList.map(e => ({ label: e.costCentreName, value: e.costCentreName })) : []}
                             onChange={handleCostCenter}
                             required isSearchable />
+                        }
+                    </Col>
+                    <Col style={{maxWidth:'20%', paddingRight: '0px'}}>
+                        <Form.Control 
+                            style={{
+                                width: '150px', 
+                                height: '40px', 
+                                fontSize: '16px', 
+                                padding: '0px',
+                                margin: '0px'
+                            }} 
+                            as="select" 
+                            defaultValue="Choose..."
+                            onChange={monthSelected}
+                        >
+                            <option>Select month</option>
+                            {months.map(month => (
+                                <option>{month}</option>
+                            ))}
+                        </Form.Control>
+                    </Col>
+                    <Col style={{maxWidth:'20%', paddingRight: '0px'}}>
+                        <Form.Control 
+                            style={{
+                                width: '150px', 
+                                height: '40px', 
+                                fontSize: '16px', 
+                                padding: '0px',
+                                margin: '0px'
+                            }} 
+                            as="select" 
+                            defaultValue="Choose..."
+                            onChange={yearSelected}
+                        >
+                            <option>Select year</option>
+                            {years.map(year => (
+                                <option>{year}</option>
+                            ))}
+                        </Form.Control>
                     </Col>
                 </Row>
                 <Row>
                     <Col sm={12}>
                         <Card className='big-card p-30'>
                             <h2 className="roster-center">{adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? (adminRosterCalculateUtilisationList[3].utilisationType + ' Utilisation') : 'Overall Utilisation'}</h2>
+                            {/* {console.log(adminRosterCalculateUtilisationList, 'adminRosterCalculateUtilisationList')} */}
                             <Chart
                                 chartType="PieChart"
                                 data={[["Utilisation", "hrs"], [`Utilised ${options4.data.utilisedValue} hrs (${options4.data.utilised})`, options4.data.utilisedValue], [`Unutilised ${options4.data.unUtilisedValue} hrs (${options4.data.unUtilised})`, options4.data.unUtilisedValue], [`Holiday Utilization ${options4.data.holidayUtilisedValue} hrs (${options4.data.holidayUtilised})`, options4.data.holidayUtilisedValue]]}
