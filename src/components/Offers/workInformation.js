@@ -76,9 +76,10 @@ const WorkInformation = (props) => {
   }, []);
   useEffect(() => {
     let data =
-      candidateData !== undefined &&
-      candidateData.workInformation !== undefined &&
-      candidateData.workInformation;
+      workInfoViewData !== undefined &&
+      workInfoViewData !== null &&
+      workInfoViewData;
+
     if (data !== undefined && data !== null) {
       setState({
         employmentType: data.contractType,
@@ -99,7 +100,7 @@ const WorkInformation = (props) => {
       }
     }
     // setWorkInformationData(props.workInfo);
-  }, [candidateData]);
+  }, [workInfoViewData]);
 
   useEffect(() => {
     if (locationName !== null && locationName !== undefined) {
@@ -745,7 +746,7 @@ const WorkInformation = (props) => {
                     required
                     onChange={changeHandler}
                   >
-                    <option>Seclect </option>
+                    <option value=" ">Seclect </option>
                     <option value="1">Yes</option>
                     <option value="0">No</option>
                   </Form.Control>
@@ -783,7 +784,7 @@ const WorkInformation = (props) => {
                     disabled={disabled}
                     required
                   >
-                    <option>Select Nationality</option>
+                    <option value=" ">Select Nationality</option>
                     {countryList !== null &&
                       countryList !== undefined &&
                       countryList.map((item) => {
