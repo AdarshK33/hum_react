@@ -273,30 +273,46 @@ const EditWorkInformation = () => {
                 />
               </Form.Group>
             </Col>
-            <Col sm={3}>
-              <Form.Group className="reactDate">
-                <Form.Label>Type of Employment</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={state.employmentType}
-                  className="form-input"
-                  name="employmentType"
-                  onChange={changeHandler}
-                  disabled={disabled}
-                  readOnly
-                >
-                  {/* <option value="">Select Employment Type</option>
-                  {shiftContractNames !== null &&
-                    shiftContractNames !== undefined &&
-                    shiftContractNames.length > 0 &&
-                    shiftContractNames.map((item) => {
-                      return (
-                        <option key={item.typeId}>{item.contractType}</option>
-                      );
-                    })} */}
-                </Form.Control>
-              </Form.Group>
-            </Col>
+            {state.employmentType !== "" &&
+            candidateData.workInformation !== "" &&
+            candidateData.workInformation !== null &&
+            candidateData.workInformation !== undefined ? (
+              <Col sm={3}>
+                <Form.Group>
+                  <Form.Label>Type of Employment</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={state.employmentType}
+                    className="form-control form-input"
+                    readOnly
+                  />
+                </Form.Group>
+              </Col>
+            ) : (
+              <Col sm={3}>
+                <Form.Group className="reactDate">
+                  <Form.Label>Type of Employment</Form.Label>
+                  <Form.Control
+                    as="select"
+                    value={state.employmentType}
+                    className="form-input "
+                    name="employmentType"
+                    onChange={changeHandler}
+                    disabled={disabled}
+                  >
+                    <option value="">Select Employment Type</option>
+                    {shiftContractNames !== null &&
+                      shiftContractNames !== undefined &&
+                      shiftContractNames.length > 0 &&
+                      shiftContractNames.map((item) => {
+                        return (
+                          <option key={item.typeId}>{item.contractType}</option>
+                        );
+                      })}
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+            )}
             <Col sm={3}>
               <Form.Group>
                 <Form.Label>Designation</Form.Label>
@@ -717,7 +733,7 @@ const EditWorkInformation = () => {
                     disabled={disabled}
                     required
                   >
-                    <option value=" ">Select Nationality</option>
+                    <option value="">Select Nationality</option>
                     {countryList !== null &&
                       countryList !== undefined &&
                       countryList.map((item) => {
