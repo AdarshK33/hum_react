@@ -733,7 +733,7 @@ const EditWorkInformation = () => {
                     disabled={disabled}
                     required
                   >
-                    <option value=" ">Select Nationality</option>
+                    <option value="">Select Nationality</option>
                     {countryList !== null &&
                       countryList !== undefined &&
                       countryList.map((item) => {

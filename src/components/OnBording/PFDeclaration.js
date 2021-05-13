@@ -617,6 +617,10 @@ const PFDeclaration = (props) => {
     console.log(state);
   };
 
+  const uanHandler = (e) => {
+    setUanNumber(e.target.value);
+  };
+
   const Form11Validation = () => {
     if (state.form11 !== "") {
       setForm11Error(false);
@@ -867,7 +871,7 @@ const PFDeclaration = (props) => {
                 disabled={contributingPrevOrgNo}
                 name="uanNumber"
                 value={uanNumber}
-                onChange={(e) => changeHandler(e)}
+                onChange={(e) => uanHandler(e)}
               />
             </Form.Group>
           </Col>
