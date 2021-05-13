@@ -743,10 +743,10 @@ const WorkInformation = (props) => {
                     name="expatUser"
                     value={state.expatUser}
                     disabled={disabled}
-                    required
                     onChange={changeHandler}
+                    required
                   >
-                    <option value=" ">Seclect </option>
+                    <option value="">Seclect </option>
                     <option value="1">Yes</option>
                     <option value="0">No</option>
                   </Form.Control>
@@ -784,7 +784,7 @@ const WorkInformation = (props) => {
                     disabled={disabled}
                     required
                   >
-                    <option value=" ">Select Nationality</option>
+                    <option value="">Select Nationality</option>
                     {countryList !== null &&
                       countryList !== undefined &&
                       countryList.map((item) => {
