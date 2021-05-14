@@ -180,8 +180,10 @@ const renderStatusOptions = (value) => {
     }
   }
   const onSelectionChanged=(e)=>{
+    console.log(e)
     let preValue = checkedData
     let formData = e.data
+    console.log(formData,"formdata")
     formData['disabled'] = true
     preValue.push(formData)
     setCheckedData(preValue)
@@ -303,7 +305,10 @@ console.log(checkedData,"hhkjhkhkj")
           >
           <AgGridColumn width={80} type="checkbox" className="columnColor"  headerName="S No" pinned="left" lockPinned="true" 
           valueGetter={`node.rowIndex+1 + ${indexOfFirstRecord}`}></AgGridColumn>
-            <AgGridColumn className="columnColor" rowGroup={true} hide={true}   headerName="Employee Id" field="employeeId"></AgGridColumn>
+            <AgGridColumn className="columnColor"  headerCheckboxSelection={true}
+              headerCheckboxSelectionFilteredOnly={true}
+              checkboxSelection={true}
+              headerName="Employee Id" field="employeeId"></AgGridColumn>
             <AgGridColumn className="columnColor"  headerName="Employee Name" field="employeeName"></AgGridColumn>
             <AgGridColumn className="columnColor"  headerName="Cost Center Name" field="costCenterName"></AgGridColumn>
             <AgGridColumn className="columnColor"  headerName="Manager Name" field="managerName"></AgGridColumn>
