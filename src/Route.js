@@ -66,9 +66,11 @@ import OfferAccept from "./components/Offers/OfferAcceptance/OfferAccept";
 import LoginOnboard from "./components/Login/LoginOnboard";
 import ViewOfferRelease from "./components/Offers/viewOfferRelease";
 import FinanceClearanceList from "./components/FinanceClearance/ClearanceList";
+
 /*------------------- Candidate Verification -----------------------------------*/
 import CandidateVerification from "./components/CandidateVerification/ManageCandidates";
 import Verification from "./components/CandidateVerification/Verification";
+import FinanaceAdminNoDueClearance from "./components/Separation/FinanceAdminNoDueClearance/FinanceAdminNoDueClearance";
 import AdminNoDueClearance from "./components/Separation/AdminNoDueClearance/AdminNoDueClearance";
 import NoDueClearance from "./components/Separation/NoDueClearance";
 import ViewEditRelease from "./components/OfferReleaseandOnboarding/ViewOfferRelease";
@@ -76,6 +78,11 @@ import Documents from "./components/OnBording/Documents";
 
 import EmployeeExitList from "./components/ManagerApproveEmployeExit/EmployeeExitList";
 import EmployeeExitAction from "./components/ManagerApproveEmployeExit/EmployeeExitAction";
+import ManagerInitiateExit from "./components/ManagerApproveEmployeExit/ManagerInitiateExit";
+import EmpResignation from "./components/employeeSeparation/empResignation";
+import EmployeeSeparationListing from "./components/managerSeparation/employeeSeparationListing";
+
+import ViewBonus from "./components/Bonus/ViewBonus";
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
   console.log(user, state, "route8888888888888");
@@ -144,6 +151,10 @@ const RoutePath = () => {
             component={AdminNoDueClearance}
           />
           <Route
+            path={`${process.env.PUBLIC_URL}/admin-finance-clearance`}
+            component={FinanaceAdminNoDueClearance}
+          />
+          <Route
             path={`${process.env.PUBLIC_URL}/finance-clearance`}
             component={FinanceClearanceList}
           />
@@ -201,13 +212,16 @@ const RoutePath = () => {
           />
           <Route
             path={`${process.env.PUBLIC_URL}/candidate-verification`}
-            component={EmployeeExitList}
-            // component={
-            //CandidateVerification}
+            // component={EmployeeExitList}
+            component={CandidateVerification}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/exit-action/:employeeid`}
             component={EmployeeExitAction}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/manager-initiate-exit`}
+            component={ManagerInitiateExit}
           />
 
           <Route
@@ -218,8 +232,19 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/verification/:candidateId`}
             component={Verification}
           />
+          {/* <Route
+           
+            path={`${process.env.PUBLIC_URL}/employee-separation-listing`}
+            component={EmployeeExitList}
+          /> */}
+          {/*Rajasekhar */}
+
           <Route
-            //  {/*Rajasekhar */}
+            path={`${process.env.PUBLIC_URL}/employee-resignation`}
+            component={EmpResignation}
+          />
+
+          <Route
             path={`${process.env.PUBLIC_URL}/employee-separation-listing`}
             component={EmployeeExitList}
           />
@@ -407,6 +432,11 @@ const RoutePath = () => {
                     <Route
                       path={`${process.env.PUBLIC_URL}/service-group`}
                       component={ViewGroup}
+                    />
+                  ) : e.path === "/master/bonus-structure" ? (
+                    <Route
+                      path={`${process.env.PUBLIC_URL}/master/bonus-structure`}
+                      component={ViewBonus}
                     />
                   ) : (
                     ""

@@ -292,8 +292,17 @@ const EditEmployeeForm = () => {
       verificationStatusDesc:
         candidateData.candidateInformation.verificationStatusDesc,
     };
-    console.log("candidate data", updateData.candidateReferences);
-    if (firstNameError === false && lastNameError === false) {
+    let refValue =
+      updateData.candidateReferences[0].email === null ||
+      !updateData.candidateReferences[0].email
+        ? false
+        : true;
+
+    if (
+      firstNameError === false &&
+      lastNameError === false &&
+      refValue === true
+    ) {
       editCandidate(updateData);
       setDisabled(true);
       setEditButton(true);

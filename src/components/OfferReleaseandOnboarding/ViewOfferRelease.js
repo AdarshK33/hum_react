@@ -100,8 +100,9 @@ const ViewOfferRelease = () => {
           item.candidateId === candidateData.candidateInformation.candidateId
         ) {
           if (
-            (item.status === 5 || item.status === 6) &&
-            personalInfoData.documentUploaded === 1
+            (item.status === 2 || item.status === 6) &&
+            personalInfoData.documentUploaded === 1 &&
+            personalInfoData.adminVerificationStatus === 1
           ) {
             console.log("-->", item);
             setActiveStep5(true);

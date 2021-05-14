@@ -29,6 +29,7 @@ const initial_state = {
   disApproveAadhar: "",
   verificationStateList: [],
   verificationCityList: [],
+  verificationPermanentCityList: [],
 };
 export const DocsVerifyContext = createContext();
 export const DocsVerificationProvider = (props) => {
@@ -281,6 +282,7 @@ export const DocsVerificationProvider = (props) => {
       .then((response) => {
         console.log(response.data.status);
         state.costCenter = response.data.message;
+        toast.info(response.data.message);
         return dispatch({
           type: "COST_CENTER_CREATE",
           payload: state.costCenter,
@@ -399,56 +401,77 @@ export const DocsVerificationProvider = (props) => {
       });
   };
 
+  const viewPermanentCityVerification = (stateId) => {
+    return client
+      .get("/api/v1/city/view/city/stateId?stateId=" + stateId)
+      .then((response) => {
+        console.log(response);
+        state.verificationPermanentCityList = response.data.data;
+        return dispatch({
+          type: "VIEW_PERMANENT_VERIFICATION_CITY",
+          payload: state.verificationPermanentCityList,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
-    <DocsVerifyContext.Provider
-      value={{
-        verificationDocsView,
-        personalInfo,
-        addressInfo,
-        contactInformation,
-        bankDetailsData,
-        fetchNominationDetails,
-        fetchPfDetails,
-        approveDocument,
-        disApproveDocument,
-        downloadDocument,
-        updateUANNumber,
-        costCenterSplit,
-        createEmployee,
-        candidateOnBoard,
-        viewEmployee,
-        step5suscessStatus,
-        step6suscessStatus,
-        approveAadharByAdmin,
-        disapproveAadharByAdmin,
-        viewStatesVerification,
-        viewCityVerification,
-        disApproveAadhar: state.disApproveAadhar,
-        step5Status: state.step5Status,
-        aadharStatus: state.aadharStatus,
-        step6Status: state.step6Status,
-        empData: state.empData,
-        onBoardData: state.onBoardData,
-        docsToVerify: state.docsToVerify,
-        createStatus: state.createStatus,
-        costCenter: state.costCenter,
-        personalInfoData: state.personalInfoData,
-        addressInfoData: state.addressInfoData,
-        emergencyInfo: state.emergencyInfo,
-        bankDetails: state.bankDetails,
-        nominationDetails: state.nominationDetails,
-        pfDetails: state.pfDetails,
-        acceptStatus: state.acceptStatus,
-        rejectStatus: state.rejectStatus,
-        loader: loader,
-        downloadedFile: state.downloadedFile,
-        uanUpdate: state.uanUpdate,
-        verificationStateList: state.verificationStateList,
-        verificationCityList: state.verificationCityList,
-      }}
-    >
-      {" "}
-      {props.children}
-    </DocsVerifyContext.Provider>
+    console.log(state),
+    (
+      <DocsVerifyContext.Provider
+        value={{
+          verificationDocsView,
+          personalInfo,
+          addressInfo,
+          contactInformation,
+          bankDetailsData,
+          fetchNominationDetails,
+          fetchPfDetails,
+          approveDocument,
+          disApproveDocument,
+          downloadDocument,
+          updateUANNumber,
+          costCenterSplit,
+          createEmployee,
+          candidateOnBoard,
+          viewEmployee,
+          step5suscessStatus,
+          step6suscessStatus,
+          approveAadharByAdmin,
+          disapproveAadharByAdmin,
+          viewStatesVerification,
+          viewCityVerification,
+          viewPermanentCityVerification,
+          disApproveAadhar: state.disApproveAadhar,
+          step5Status: state.step5Status,
+          aadharStatus: state.aadharStatus,
+          step6Status: state.step6Status,
+          empData: state.empData,
+          onBoardData: state.onBoardData,
+          docsToVerify: state.docsToVerify,
+          createStatus: state.createStatus,
+          costCenter: state.costCenter,
+          personalInfoData: state.personalInfoData,
+          addressInfoData: state.addressInfoData,
+          emergencyInfo: state.emergencyInfo,
+          bankDetails: state.bankDetails,
+          nominationDetails: state.nominationDetails,
+          pfDetails: state.pfDetails,
+          acceptStatus: state.acceptStatus,
+          rejectStatus: state.rejectStatus,
+          loader: loader,
+          downloadedFile: state.downloadedFile,
+          uanUpdate: state.uanUpdate,
+          verificationStateList: state.verificationStateList,
+          verificationCityList: state.verificationCityList,
+          verificationPermanentCityList: state.verificationPermanentCityList,
+        }}
+      >
+        {" "}
+        {props.children}
+      </DocsVerifyContext.Provider>
+    )
   );
 };

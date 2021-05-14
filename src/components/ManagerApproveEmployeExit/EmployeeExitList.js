@@ -20,6 +20,7 @@ const EmployeeExitList = () => {
     ModeOfSeparationData,
     loader,
     total,
+    changeEmployeeId,
   } = useContext(EmployeeSeparationContext);
 
   const [pageCount, setPageCount] = useState(0);
@@ -65,10 +66,10 @@ const EmployeeExitList = () => {
             EmployeeSeparationList[r].modeOfSeparationId ===
             ModeOfSeparationData[i].modeOfSeparation.separationId
           ) {
-            console.log(
-              "seww",
-              ModeOfSeparationData[i].modeOfSeparation.modeOfSeparation
-            );
+            // console.log(
+            //   "seww",
+            //   ModeOfSeparationData[i].modeOfSeparation.modeOfSeparation
+            // );
 
             ModeOfSeparationData[i].modeOfSeparationReasonList.map(
               (item1, j) => {
@@ -83,11 +84,11 @@ const EmployeeExitList = () => {
                     ModeOfSeparationData[i].modeOfSeparationReasonList[
                       j
                     ].modeOfSeparationReason;
-                  console.log(
-                    "sepp",
-                    ModeOfSeparationData[i].modeOfSeparationReasonList[j]
-                      .modeOfSeparationReason
-                  );
+                  // console.log(
+                  //   "sepp",
+                  //   ModeOfSeparationData[i].modeOfSeparationReasonList[j]
+                  //     .modeOfSeparationReason
+                  // );
                 }
               }
             );
@@ -132,6 +133,7 @@ const EmployeeExitList = () => {
   };
 
   const fetchEmployeeDetails = (employeeId) => {
+    changeEmployeeId(employeeId);
     ViewEmployeeDataById(employeeId);
     ModeOfSeparationView();
     // viewCandidateId(candidateId);
@@ -171,7 +173,7 @@ const EmployeeExitList = () => {
                     />
                   </div>
                 </div> */}
-                <Link to="/manager-offer-release">
+                <Link to="/manager-initiate-exit">
                   <Button className="apply-button btn btn-light mr-2">
                     Initiate Exit
                   </Button>

@@ -151,7 +151,7 @@ export const OfferProvider = (props) => {
   //Search by aadhar card/bank account
   const searchByAadhar = (number) => {
     client
-      .get("/api/v1/candidate/search?number=" + number)
+      .get("/api/v1/employee/exit/search?number=" + number)
       .then((response) => {
         if (response.data.data === null) {
           toast.info(response.data.message);
@@ -243,6 +243,7 @@ export const OfferProvider = (props) => {
   };
   // location api for work information
   const locationView = async (costCenter) => {
+    console.log(costCenter);
     const result1 = await client.get("/api/v1/location/view/" + costCenter);
     const result2 = await client.get(
       `api/v1/employee/view/${costCenter}/managers`

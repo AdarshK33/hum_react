@@ -19,8 +19,10 @@ const Address = (props) => {
     candidateCountryData,
     CandidateStateList,
     candidateStateData,
-    candidateCityList,
-    candidateCityData,
+    candidatePermanentCityList,
+    candidatePresentCityList,
+    candidatePermanentCityData,
+    candidatePresentCityData,
     addressCreate,
     addressSaveData,
     addressView,
@@ -94,19 +96,19 @@ const Address = (props) => {
   // console.log("address candidate data", candidateProfileData);
   // console.log("candidateCountryList data", candidateCountryData);
   // console.log("addressViewData data", addressViewData);
-  useEffect(() => {
-    if (
-      candidateCountryData !== undefined &&
-      candidateCountryData !== null &&
-      countryName === ""
-    ) {
-      const countryvalue = candidateCountryData.filter(
-        (i) => i.countryId === addressViewData.countryId
-      );
-      console.log("Countryvalue", countryvalue);
-      setCountryName(countryvalue[0].countryName);
-    }
-  }, [candidateCountryData]);
+  // useEffect(() => {
+  //   if (
+  //     candidateCountryData !== undefined &&
+  //     candidateCountryData !== null &&
+  //     countryName === ""
+  //   ) {
+  //     const countryvalue = candidateCountryData.filter(
+  //       (i) => i.countryId === addressViewData.countryId
+  //     );
+  //     console.log("Countryvalue", countryvalue);
+  //     setCountryName(countryvalue[0].countryName);
+  //   }
+  // }, [candidateCountryData]);
   useEffect(() => {
     let permanentStatevalue;
     let permanentCityValue;
@@ -125,23 +127,23 @@ const Address = (props) => {
       if (stateValue.length !== 0) {
         setStateId(stateValue[0].stateId);
         setStateName(stateValue[0].stateName);
-        candidateCityList(addressViewData.stateId);
+        candidatePresentCityList(addressViewData.stateId);
       }
-      setPresentCityData(candidateCityData);
+      setPresentCityData(candidatePresentCityData);
       permanentStatevalue = candidateStateData.filter(
         (i) => i.stateId === addressViewData.permanentStateId
       );
       if (permanentStatevalue.length !== 0) {
         setPermanentStateId(permanentStatevalue[0].stateId);
         setPermanentStateName(permanentStatevalue[0].stateName);
-        candidateCityList(addressViewData.permanentStateId);
+        candidatePermanentCityList(addressViewData.permanentStateId);
       }
     }
   }, [candidateStateData, addressViewData]);
   useEffect(() => {
     let cityValue;
     if (addressViewData !== undefined && addressViewData !== null) {
-      cityValue = candidateCityData.filter(
+      cityValue = candidatePresentCityData.filter(
         (i) => i.cityId == addressViewData.cityId
       );
       console.log("present............", cityValue);
@@ -151,26 +153,26 @@ const Address = (props) => {
       let permanentCityValue;
 
       if (addressViewData.addressType === 0) {
-        permanentCityValue = candidateCityData.filter(
+        permanentCityValue = candidatePermanentCityData.filter(
           (i) => i.cityId === addressViewData.permanentCityId
         );
         setPermanentCityData(permanentCityValue);
       }
     }
-  }, [addressViewData, candidateCityData]);
+  }, [addressViewData, candidatePresentCityData, candidatePermanentCityData]);
 
   useEffect(() => {
     if (permanetCityData.length !== 0) {
       setPermanentCityId(permanetCityData[0].cityId);
       setPermanentCityName(permanetCityData[0].cityName);
     }
-  }, [permanetCityData]);
+  }, [candidateStateData, permanetCityData]);
   useEffect(() => {
     if (presentCityData.length !== 0) {
       setCityId(presentCityData[0].cityId);
       setCityName(presentCityData[0].cityName);
     }
-  }, [presentCityData]);
+  }, [candidateStateData, presentCityData]);
   useEffect(() => {
     console.log("prefill data", addressViewData);
     let countryvalue;
@@ -181,27 +183,33 @@ const Address = (props) => {
     if (addressViewData !== undefined && addressViewData !== null) {
       if (addressViewData.addressType === 0) {
         setAddressValue(addressViewData.addressId);
-        countryvalue = candidateCountryData.filter(
-          (i) => i.countryId === addressViewData.countryId
-        );
-        console.log("Countryvalue", countryvalue);
-        if (countryvalue !== undefined && countryvalue !== null) {
-          setCountryName(countryvalue[0].countryName);
-          setCountryId(countryvalue[0].countryId);
-          CandidateStateList(countryvalue[0].countryName);
-        }
-
-        permanentCountryvalue = candidateCountryData.filter(
-          (i) => i.countryId === addressViewData.permanentCountryId
-        );
-        console.log("permanentCountryvalue", permanentCountryvalue);
         if (
-          permanentCountryvalue !== undefined &&
-          permanentCountryvalue !== null
+          candidateCountryData !== null &&
+          candidateCountryData !== undefined &&
+          candidateCountryData.length !== 0
         ) {
-          setPermanentCountryId(permanentCountryvalue[0].countryId);
-          setPermanentCountryName(permanentCountryvalue[0].countryName);
-          CandidateStateList(permanentCountryvalue[0].countryName);
+          countryvalue = candidateCountryData.filter(
+            (i) => i.countryId === addressViewData.countryId
+          );
+          console.log("Countryvalue", countryvalue);
+          if (countryvalue !== undefined && countryvalue !== null) {
+            setCountryName(countryvalue[0].countryName);
+            setCountryId(countryvalue[0].countryId);
+            CandidateStateList(countryvalue[0].countryName);
+          }
+
+          permanentCountryvalue = candidateCountryData.filter(
+            (i) => i.countryId === addressViewData.permanentCountryId
+          );
+          console.log("permanentCountryvalue", permanentCountryvalue);
+          if (
+            permanentCountryvalue !== undefined &&
+            permanentCountryvalue !== null
+          ) {
+            setPermanentCountryId(permanentCountryvalue[0].countryId);
+            setPermanentCountryName(permanentCountryvalue[0].countryName);
+            CandidateStateList(permanentCountryvalue[0].countryName);
+          }
         }
 
         changeCheckState(false);
@@ -221,22 +229,28 @@ const Address = (props) => {
         });
       } else if (addressViewData.addressType === 1) {
         setAddressValue(addressViewData.addressId);
-        countryvalue = candidateCountryData.filter(
-          (i) => i.countryId === addressViewData.countryId
-        );
-        console.log("Countryvalue", countryvalue);
-        setCountryName(countryvalue[0].countryName);
-        setCountryId(countryvalue[0].countryId);
-        CandidateStateList(countryvalue[0].countryName);
-        stateValue = candidateStateData.filter(
-          (i) => i.stateId === addressViewData.stateId
-        );
-        console.log("stateValue", stateValue);
+        if (
+          candidateCountryData !== null &&
+          candidateCountryData !== undefined &&
+          candidateCountryData.length !== 0
+        ) {
+          countryvalue = candidateCountryData.filter(
+            (i) => i.countryId === addressViewData.countryId
+          );
+          console.log("Countryvalue", countryvalue);
+          setCountryName(countryvalue[0].countryName);
+          setCountryId(countryvalue[0].countryId);
+          CandidateStateList(countryvalue[0].countryName);
+          stateValue = candidateStateData.filter(
+            (i) => i.stateId === addressViewData.stateId
+          );
+          console.log("stateValue", stateValue);
 
-        if (stateValue.length !== 0) {
-          setStateId(stateValue[0].stateId);
-          setStateName(stateValue[0].stateName);
-          candidateCityList(stateValue[0].stateId);
+          if (stateValue.length !== 0) {
+            setStateId(stateValue[0].stateId);
+            setStateName(stateValue[0].stateName);
+            candidatePresentCityList(stateValue[0].stateId);
+          }
         }
 
         changeCheckState(true);
@@ -254,7 +268,7 @@ const Address = (props) => {
 
   const flatNumberValidation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
-    if (state.flatNumber !== "") {
+    if (state.flatNumber !== "" && state.flatNumber !== undefined) {
       setFlatNumberError(false);
       console.log("flatNumberSuccess");
       return true;
@@ -266,7 +280,7 @@ const Address = (props) => {
   };
   const addressLineValidations = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
-    if (state.addressLine !== "") {
+    if (state.addressLine !== "" && state.addressLine !== undefined) {
       setAddressLineError(false);
       console.log("flatNumberSuccess");
       return true;
@@ -277,7 +291,13 @@ const Address = (props) => {
     }
   };
   const countryValidation = () => {
-    if ((state.countryId !== "") & (state.countryId !== "Country")) {
+    console.log("--------------->", countryName);
+    if (
+      (countryName !== null) &
+      (countryName !== undefined) &
+      (countryName !== "") &
+      (countryName !== "Select Country")
+    ) {
       setCountryError(false);
       console.log("CountrySucess");
       return true;
@@ -288,7 +308,12 @@ const Address = (props) => {
     }
   };
   const StateValidation = () => {
-    if ((state.stateId !== 0) & (state.stateId !== "State")) {
+    if (
+      (stateName !== null) &
+      (stateName !== undefined) &
+      (stateName !== 0) &
+      (stateName !== "Select State")
+    ) {
       setStateError(false);
       console.log("StateSucess");
       return true;
@@ -299,7 +324,12 @@ const Address = (props) => {
     }
   };
   const CityValidation = () => {
-    if ((state.cityId !== 0) & (state.cityId !== "City")) {
+    if (
+      (cityName !== null) &
+      (cityName !== undefined) &
+      (cityName !== 0) &
+      (cityName !== "Select City")
+    ) {
       setCityError(false);
       console.log("citySucess");
       return true;
@@ -310,10 +340,16 @@ const Address = (props) => {
     }
   };
   const PinCodeErrorValidations = () => {
-    const nameValid = /^[a-zA-Z\b]+$/;
-    if (state.pinCode !== "") {
+    const aadharValid = /^[0-9\b]+$/;
+    if (
+      state.pinCode !== "" &&
+      state.pinCode !== undefined &&
+      aadharValid.test(state.pinCode) &&
+      state.pinCode.length === 6
+    ) {
       setPinCodeError(false);
-      console.log("pinCodeSuccess");
+
+      console.log("pinCodeSuccess", state.pinCode.length);
       return true;
     } else {
       setPinCodeError(true);
@@ -322,8 +358,14 @@ const Address = (props) => {
     }
   };
   const PhoneNoErrorValidations = () => {
-    const nameValid = /^[a-zA-Z\b]+$/;
-    if (state.phoneNumber !== "") {
+    const aadharValid = /^[0-9\b]+$/;
+
+    if (
+      state.phoneNumber !== "" &&
+      state.phoneNumber !== undefined &&
+      aadharValid.test(state.phoneNumber) &&
+      state.phoneNumber.length === 10
+    ) {
       setPhoneNoError(false);
       console.log("phoneNoeSuccess");
       return true;
@@ -336,7 +378,12 @@ const Address = (props) => {
 
   const permanentFlatNumberValidation = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
-    if (state.permanentFlatNumber !== "") {
+    console.log("------>pFNo", state.permanentFlatNumber);
+    if (
+      state.permanentFlatNumber !== "" &&
+      state.permanentFlatNumber !== null &&
+      state.permanentFlatNumber !== undefined
+    ) {
       setPermanentFlatNumberError(false);
       console.log("flatNumberSuccess");
       return true;
@@ -348,7 +395,11 @@ const Address = (props) => {
   };
   const permanentAddressLineValidations = () => {
     const nameValid = /^[a-zA-Z\b]+$/;
-    if (state.permanentAddressLine !== "") {
+    if (
+      state.permanentAddressLine !== "" &&
+      state.permanentAddressLine !== null &&
+      state.permanentAddressLine !== undefined
+    ) {
       setPermanentAddressLineError(false);
       console.log("addresSuccess");
       return true;
@@ -360,8 +411,10 @@ const Address = (props) => {
   };
   const permanentCountryValidation = () => {
     if (
-      (state.permanentCountryId !== "") &
-      (state.permanentCountryId !== "Country")
+      (permanentCountryName !== null) &
+      (permanentCountryName !== undefined) &
+      (permanentCountryName !== "") &
+      (permanentCountryName !== "Select Country")
     ) {
       setPermanentCountryError(false);
       console.log("CountrySucess");
@@ -373,7 +426,12 @@ const Address = (props) => {
     }
   };
   const permanentStateValidation = () => {
-    if ((state.permanentStateId !== 0) & (state.permanentStateId !== "State")) {
+    if (
+      (permanentStateName !== null) &
+      (permanentStateName !== undefined) &
+      (permanentStateName !== 0) &
+      (permanentStateName !== "Select State")
+    ) {
       setPermanentStateError(false);
       console.log("StateSucess");
       return true;
@@ -384,7 +442,12 @@ const Address = (props) => {
     }
   };
   const permanentCityValidation = () => {
-    if ((state.permanentCityId !== 0) & (state.permanentCityId !== "City")) {
+    if (
+      (permanentCityName !== null) &
+      (permanentCityName !== undefined) &
+      (permanentCityName !== 0) &
+      (permanentCityName !== "Select City")
+    ) {
       setPermanentCityError(false);
       console.log("citySucess");
       return true;
@@ -395,8 +458,12 @@ const Address = (props) => {
     }
   };
   const permanentPinCodeErrorValidations = () => {
-    const nameValid = /^[a-zA-Z\b]+$/;
-    if (state.permanentPinCode !== "") {
+    const aadharValid = /^[0-9\b]+$/;
+    if (
+      state.permanentPinCode !== "" &&
+      aadharValid.test(state.permanentPinCode) &&
+      state.permanentPinCode.length === 6
+    ) {
       setPermanentPinCodeError(false);
       console.log("pinCodeSuccess");
       return true;
@@ -407,8 +474,12 @@ const Address = (props) => {
     }
   };
   const permanentPhoneNoErrorValidations = () => {
-    const nameValid = /^[a-zA-Z\b]+$/;
-    if (state.permanentPhoneNumber !== "") {
+    const aadharValid = /^[0-9\b]+$/;
+    if (
+      state.permanentPhoneNumber !== "" &&
+      aadharValid.test(state.permanentPhoneNumber) &&
+      state.permanentPhoneNumber.length === 10
+    ) {
       setPermanentPhoneNoError(false);
       console.log("phoneNoeSuccess");
       return true;
@@ -418,6 +489,7 @@ const Address = (props) => {
       return false;
     }
   };
+
   const checkValidations = () => {
     if (
       (flatNumberValidation() == true) &
@@ -469,15 +541,15 @@ const Address = (props) => {
     console.log("filteredListOfState", filteredListOfState);
     setStateName(e.target.value);
     setStateId(filteredListOfState[0].stateId);
-    candidateCityList(filteredListOfState[0].stateId);
+    candidatePresentCityList(filteredListOfState[0].stateId);
   };
 
   const cityHandler = (e) => {
-    let filteredListOfCity = candidateCityData.filter(
+    let filteredListOfCity = candidatePresentCityData.filter(
       (i) => i.cityName === e.target.value
     );
     console.log("filteredListOfCity", filteredListOfCity);
-    setCityName(e.target.value);
+    setCityName(filteredListOfCity[0].cityName);
     setCityId(filteredListOfCity[0].cityId);
   };
 
@@ -498,11 +570,11 @@ const Address = (props) => {
     console.log("filteredListOfState", filteredListOfState);
     setPermanentStateName(e.target.value);
     setPermanentStateId(filteredListOfState[0].stateId);
-    candidateCityList(filteredListOfState[0].stateId);
+    candidatePermanentCityList(filteredListOfState[0].stateId);
   };
 
   const permanentCityHandler = (e) => {
-    let filteredListOfCity = candidateCityData.filter(
+    let filteredListOfCity = candidatePermanentCityData.filter(
       (i) => i.cityName === e.target.value
     );
     console.log("filteredListOfCity", filteredListOfCity);
@@ -511,11 +583,7 @@ const Address = (props) => {
   };
 
   const submitHandler = (e) => {
-    const nextPage = props.NextStep;
-    // let addressValue;
-    nextPage();
     e.preventDefault();
-    console.log("addressViewData", addressViewData, addressSaveData, saveclick);
     // if (saveclick === false) {
     //   addressValue = 0;
     //   setSaveclick(true);
@@ -525,6 +593,7 @@ const Address = (props) => {
     //     : addressViewData.addressId;
     // }
     const value = checkValidations();
+
     if (value === true) {
       // setSaveclick(true);
       const AddressInfo = {
@@ -749,11 +818,11 @@ const Address = (props) => {
                   style={cityError ? { borderColor: "red" } : {}}
                   onChange={cityHandler}
                 >
-                  <option value="">City</option>
-                  {candidateCityData !== null &&
-                    candidateCityData !== undefined &&
-                    candidateCityData.length > 0 &&
-                    candidateCityData.map((item, i) => {
+                  <option value="">Select City</option>
+                  {candidatePresentCityData !== null &&
+                    candidatePresentCityData !== undefined &&
+                    candidatePresentCityData.length > 0 &&
+                    candidatePresentCityData.map((item, i) => {
                       return <option key={item.cityId}>{item.cityName}</option>;
                     })}
                 </Form.Control>
@@ -775,13 +844,14 @@ const Address = (props) => {
                   name="pinCode"
                   value={state.pinCode}
                   onChange={changeHandler}
+                  maxLength="6"
                   required
                   style={pinCodeError ? { borderColor: "red" } : {}}
                   placeholder="Pin Code"
                   disabled={disabled}
                 />
                 {pinCodeError ? (
-                  <p style={{ color: "red" }}> Please enter pin code</p>
+                  <p style={{ color: "red" }}> Please enter valid pin code</p>
                 ) : (
                   <p></p>
                 )}
@@ -799,6 +869,7 @@ const Address = (props) => {
                   name="phoneNumber"
                   value={state.phoneNumber}
                   onChange={changeHandler}
+                  maxLength="10"
                   required
                   style={phoneNoError ? { borderColor: "red" } : {}}
                   placeholder="Phone No"
@@ -1030,10 +1101,10 @@ const Address = (props) => {
                       onChange={permanentCityHandler}
                     >
                       <option value="">Select City</option>
-                      {candidateCityData !== null &&
-                        candidateCityData !== undefined &&
-                        candidateCityData.length > 0 &&
-                        candidateCityData.map((item) => {
+                      {candidatePermanentCityData !== null &&
+                        candidatePermanentCityData !== undefined &&
+                        candidatePermanentCityData.length > 0 &&
+                        candidatePermanentCityData.map((item) => {
                           return (
                             <option key={item.cityId}>{item.cityName}</option>
                           );
@@ -1057,6 +1128,7 @@ const Address = (props) => {
                       name="permanentPinCode"
                       value={state.permanentPinCode}
                       onChange={changeHandler}
+                      maxLength="6"
                       required
                       style={
                         PermanentPinCodeError ? { borderColor: "red" } : {}
@@ -1065,7 +1137,10 @@ const Address = (props) => {
                       disabled={disabled}
                     />
                     {PermanentPinCodeError ? (
-                      <p style={{ color: "red" }}> Please enter pin code</p>
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        Please enter valid pin code
+                      </p>
                     ) : (
                       <p></p>
                     )}
@@ -1083,6 +1158,7 @@ const Address = (props) => {
                       name="permanentPhoneNumber"
                       value={state.permanentPhoneNumber}
                       onChange={changeHandler}
+                      maxLength="10"
                       required
                       style={
                         PermanentPhoneNoError ? { borderColor: "red" } : {}
@@ -1091,7 +1167,10 @@ const Address = (props) => {
                       disabled={disabled}
                     />
                     {PermanentPhoneNoError ? (
-                      <p style={{ color: "red" }}> Please enter phone number</p>
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        Please enter valid phone number
+                      </p>
                     ) : (
                       <p></p>
                     )}

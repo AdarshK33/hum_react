@@ -11,8 +11,8 @@
   background-color: #006ebb;
   color: white;
   border: none;
-  width: 5vw;
-  height: 4vh;
+  width: auto;
+  height: auto;
   border-radius: 10px !important;
 }
 .tableText {

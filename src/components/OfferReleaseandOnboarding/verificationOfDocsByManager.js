@@ -61,23 +61,23 @@ const DocVerification = () => {
   useEffect(() => {
     setState(personalInfoData);
   }, [user]);
-  useEffect(() => {
-    if (rejectMessage) {
-      setDisapprovePopup(true);
-    }
-    if (candidateData.candidateInformation !== undefined) {
-      verificationDocsView(candidateData.candidateInformation.candidateId);
-    }
-  }, [acceptStatus, rejectStatus, rejectMessage]);
-  useEffect(() => {
-    if (accept === true) {
-      if (candidateData.candidateInformation !== undefined) {
-        verificationDocsView(candidateData.candidateInformation.candidateId);
-        personalInfo(candidateData.candidateInformation.candidateId);
-        setAccept(false);
-      }
-    }
-  }, [accept]);
+  // useEffect(() => {
+  //   if (rejectMessage) {
+  //     setDisapprovePopup(true);
+  //   }
+  //   if (candidateData.candidateInformation !== undefined) {
+  //     verificationDocsView(candidateData.candidateInformation.candidateId);
+  //   }
+  // }, [acceptStatus, rejectStatus, rejectMessage]);
+  // useEffect(() => {
+  //   if (accept === true) {
+  //     if (candidateData.candidateInformation !== undefined) {
+  //       verificationDocsView(candidateData.candidateInformation.candidateId);
+  //       personalInfo(candidateData.candidateInformation.candidateId);
+  //       setAccept(false);
+  //     }
+  //   }
+  // }, [accept]);
   // useEffect(() => {
   //   if (disapprovePopup === true) {
   //     if (candidateData.candidateInformation !== undefined) {

@@ -19,7 +19,10 @@ import "./OnBoard.css";
 import "./Documents.css";
 import { OnBoardContext } from "../../context/OnBoardState";
 import countryList from "react-select-country-list";
-import { candidate, getRefreshToken } from "../../utils/canditateLogin";
+import {
+  candidate,
+  candidateGetRefreshToken,
+} from "../../utils/canditateLogin";
 import moment from "moment";
 
 const PersonalInformation = (props) => {
@@ -40,6 +43,7 @@ const PersonalInformation = (props) => {
     uploadFile,
     documentView,
     documentViewData,
+    DeleteAllInsuranceNominations,
   } = useContext(OnBoardContext);
   const options = useMemo(() => countryList().getData(), []);
   const [isClicked, setIsClicked] = useState(false);
@@ -100,17 +104,26 @@ const PersonalInformation = (props) => {
   let history = useHistory();
   useEffect(() => {
     CandidateProfile();
-    getRefreshToken()
-      .then((response) => {
-        const token = response.data.token;
-        localStorage.setItem("candidate_access_token", token);
-      })
-      .catch((error) => {
-        if (error.message == "Cannot read property 'data' of undefined") {
-          localStorage.removeItem("candidate_access_token");
-          history.push("/onboard-offer");
-        }
-      });
+    if (
+      localStorage.getItem("candidate_access_token") !== null &&
+      localStorage.getItem("candidate_access_token") !== undefined
+    ) {
+      console.log(
+        "inside refresh token",
+        localStorage.getItem("candidate_access_token")
+      );
+      candidateGetRefreshToken()
+        .then((response) => {
+          const token = response.data.token;
+          localStorage.setItem("candidate_access_token", token);
+        })
+        .catch((error) => {
+          if (error.message == "Cannot read property 'data' of undefined") {
+            localStorage.removeItem("candidate_access_token");
+            history.push("/onboard-offer");
+          }
+        });
+    }
   }, []);
   useEffect(() => {
     CandidateProfile();
@@ -766,6 +779,17 @@ const PersonalInformation = (props) => {
               : 0,
           verificationStatusDesc: null,
         };
+        if (
+          candidateProfileData.maritalStatus !== null &&
+          candidateProfileData.maritalStatus !== undefined &&
+          candidateProfileData.maritalStatus !== ""
+        ) {
+          if (candidateProfileData.maritalStatus !== maritalStatus) {
+            DeleteAllInsuranceNominations(candidateProfileData.candidateId);
+            const doInsuranceNomineeFalse = props.MakeFalse;
+            doInsuranceNomineeFalse(false);
+          }
+        }
         console.log("onsubmit");
         console.log(InfoData);
         updatePersonalInfo(InfoData);

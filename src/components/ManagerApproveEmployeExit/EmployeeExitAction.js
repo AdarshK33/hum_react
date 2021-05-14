@@ -45,8 +45,13 @@ const EmployeeExitAction = () => {
     employeeData,
     ModeOfSeparationData,
     UpdateEmplyoeeExist,
+    employeeId,
+    loader,
   } = useContext(EmployeeSeparationContext);
-  console.log(ModeOfSeparationData);
+  console.log("employeeId", employeeId);
+  useEffect(() => {
+    ViewEmployeeDataById(employeeId);
+  }, [employeeId]);
   useEffect(() => {
     if (
       employeeData &&
@@ -112,7 +117,7 @@ const EmployeeExitAction = () => {
         setRehireYes(false);
       }
     }
-  }, [employeeData]);
+  }, [employeeData, ModeOfSeparationData, employeeId]);
   useEffect(() => {
     if (
       employeeData &&
@@ -153,7 +158,7 @@ const EmployeeExitAction = () => {
         }
       });
     }
-  }, [employeeData, ModeOfSeparationData]);
+  }, [employeeData, ModeOfSeparationData, employeeId]);
   const handleNoticePeriodRcryYes = (e) => {
     setRcryYes(e.target.checked);
     setRcryNo(!e.target.checked);
@@ -171,8 +176,11 @@ const EmployeeExitAction = () => {
     setRehireNo(e.target.checked);
   };
   const handleClose = () => {
-    setModal(false);
     setSuccessModal(false);
+  };
+  const handleClose1 = () => {
+    setModal(false);
+    state.remarks = "";
   };
   const handleSaveRemarks = () => {
     if (
@@ -293,7 +301,7 @@ const EmployeeExitAction = () => {
 
   return (
     <Fragment>
-      <Modal show={showModal} onHide={() => handleClose()} centered>
+      <Modal show={showModal} onHide={() => handleClose1()} centered>
         <Container>
           <Modal.Header closeButton className="modalHeader">
             {/* <Modal.Title>State remarks for disapproval</Modal.Title> */}
@@ -344,403 +352,441 @@ const EmployeeExitAction = () => {
                 <div className="OnBoardHeading">
                   <b>EMPLOYEE SEPARATION </b>
                 </div>
-                <Form>
-                  <Row
-                    style={{
-                      marginLeft: "2rem",
-                      marginTop: "2rem",
-                      marginBottom: "1rem",
-                    }}
+                {loader === true ? (
+                  <div
+                    className="loader-box loader"
+                    style={{ width: "100% !important" }}
                   >
-                    <Col sm={4}>
-                      <div>
-                        <label>
-                          <b>Emp Name/Id:</b>
-                          <label className="itemResult">
-                            {" "}
-                            &nbsp;&nbsp; {state.empName} &nbsp;{state.empId}
+                    <div className="loader">
+                      <div className="line bg-primary"></div>
+                      <div className="line bg-primary"></div>
+                      <div className="line bg-primary"></div>
+                      <div className="line bg-primary"></div>
+                    </div>
+                  </div>
+                ) : (
+                  <Form>
+                    <Row
+                      style={{
+                        marginLeft: "2rem",
+                        marginTop: "2rem",
+                        marginBottom: "1rem",
+                      }}
+                    >
+                      <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Emp Name/Id:</b>
+                            <label className="itemResult">
+                              {" "}
+                              &nbsp;&nbsp; {state.empName} &nbsp;{state.empId}
+                            </label>
                           </label>
-                        </label>
-                      </div>
-                    </Col>
-                    <Col sm={4}>
-                      <div>
-                        <label>
-                          <b>Contract Type:</b>
-                          <label className="itemResult">
-                            &nbsp;&nbsp; {state.empContractType}
-                          </label>
-                        </label>
-                      </div>
-                    </Col>
-                    <Col sm={4}>
-                      <div>
-                        <label>
-                          <b>Cost Center Name:</b>
-                          <label className="itemResult">
-                            &nbsp;&nbsp; {state.empCostCenterName}
-                          </label>
-                        </label>
-                      </div>
-                    </Col>
-                  </Row>
-                  <Row
-                    style={{
-                      marginLeft: "2rem",
-                      marginTop: "1rem",
-                      marginBottom: "2rem",
-                    }}
-                  >
-                    <Col sm={4}>
-                      <div>
-                        <label>
-                          <b>Location:</b>
-                          <label className="itemResult">
-                            &nbsp;&nbsp; {state.empLocation}
-                          </label>
-                        </label>
-                      </div>
-                    </Col>
-                    <Col sm={4}>
-                      <div>
-                        <label>
-                          <b>Position:</b>
-                          <label className="itemResult">
-                            &nbsp;&nbsp; {state.empPosition}
-                          </label>
-                        </label>
-                      </div>
-                    </Col>
-                  </Row>
-                  <Row
-                    style={{
-                      marginLeft: "2rem",
-                      marginTop: "1rem",
-                      marginBottom: "1rem",
-                    }}
-                  >
-                    <Col sm={4}>
-                      <div>
-                        <label>
-                          <b>Manager Name/Id:</b>
-                          <label className="itemResult">
-                            &nbsp;&nbsp; {state.mngrName}
-                            &nbsp; {state.mngrId}
-                          </label>
-                        </label>
-                      </div>
-                    </Col>
-                    <Col sm={4}>
-                      <div>
-                        <label>
-                          <b>Position:</b>
-                          <label className="itemResult">
-                            &nbsp;&nbsp; {state.mngrPosition}
-                          </label>
-                        </label>
-                      </div>
-                    </Col>
-                    <Col sm={4}>
-                      <div>
-                        <label>
-                          <b>Cost Center Name:</b>
-                          <label className="itemResult">
-                            &nbsp;&nbsp; {state.mngrCostCenterName}
-                          </label>
-                        </label>
-                      </div>
-                    </Col>
-                  </Row>
-                  <Row
-                    style={{
-                      marginLeft: "2rem",
-                      marginTop: "1rem",
-                      marginBottom: "1rem",
-                    }}
-                  >
-                    <Col sm={4}>
-                      <div>
-                        <label>
-                          <b>Mode of Separation:</b>
-                          <label className="itemResult">
-                            &nbsp;&nbsp; {modeOfSeparation}
-                          </label>
-                        </label>
-                      </div>
-                    </Col>
-                    <Col sm={4}>
-                      <div>
-                        <label>
-                          <b>Reason of Separation:</b>
-                          <label className="itemResult">
-                            &nbsp;&nbsp; {state.modeOfSeparationReasonId}
-                          </label>
-                        </label>
-                      </div>
-                    </Col>
-                    <Col sm={4}>
-                      <div>
-                        <label>
-                          <b>Date of Resignation:</b>
-                          <label className="itemResult">
-                            &nbsp;&nbsp; {state.dateOfResignation}
-                          </label>
-                        </label>
-                      </div>
-                    </Col>
-                  </Row>
-                  <Row
-                    style={{
-                      marginLeft: "2rem",
-                      marginTop: "1rem",
-                      marginBottom: "3rem",
-                    }}
-                  >
-                    <Col sm={4}>
-                      <div>
-                        <label>
-                          <b>Notice Period:</b>
-                          <label className="itemResult">
-                            &nbsp;&nbsp; {state.noticePeriod}
-                          </label>
-                        </label>
-                      </div>
-                    </Col>
-                    <Col sm={4}>
-                      <div>
-                        <label>
-                          <b>Preffered Last Working Date:</b>
-                          <label className="itemResult">
-                            &nbsp;&nbsp; {state.lastWorkingDate}
-                          </label>
-                        </label>
-                      </div>
-                    </Col>
-                    <Col sm={4}>
-                      <div>
-                        <label>
-                          <b>Personal Email Id:</b>
-                          <label className="itemResult">
-                            &nbsp;&nbsp; {state.emailId}
-                          </label>
-                        </label>
-                      </div>
-                    </Col>
-                  </Row>
-                  <Row
-                    style={{
-                      marginLeft: "2rem",
-                      marginTop: "1rem",
-                      marginBottom: "3rem",
-                    }}
-                  >
-                    <Col sm={2}>
-                      <div>
-                        <label>
-                          <b>Exit Feedback Form:</b>
-                          <label className="itemResult">
-                            {/* &nbsp;&nbsp; {InfoState.empName} */}
-                          </label>
-                        </label>
-                      </div>
-                    </Col>
-                    <Col sm={2}>
-                      <div>
-                        <label>
-                          <a href="~/address">
-                            <u>Exit Feedback Form</u>
-                          </a>
-                        </label>
-                      </div>
-                    </Col>
-                  </Row>
-                  <Row
-                    style={{
-                      marginLeft: "2rem",
-                      marginTop: "1rem",
-                      marginBottom: "3rem",
-                    }}
-                  >
-                    <Col sm={12}>
-                      <div>
-                        <label>
-                          <b>Comments:</b>
-                          <label className="itemResult">
-                            &nbsp;&nbsp; {state.comments}
-                          </label>
-                        </label>
-                      </div>
-                    </Col>
-                  </Row>
-                  <Row
-                    style={{
-                      marginTop: "2rem",
-                      marginLeft: "2rem",
-                      marginBottom: "2rem",
-                    }}
-                  >
-                    <Col sm={2}>
-                      <div>
-                        <label>
-                          <b>Notice Period Recovery</b>
-                        </label>
-                        {RcryError ? (
-                          <p style={{ color: "red" }}>
-                            {" "}
-                            *Please select one of the option
-                          </p>
-                        ) : (
-                          <p></p>
-                        )}
-                      </div>
-                    </Col>
-                    <Col sm={1} style={{ marginTop: "0.5rem" }}>
-                      <Form.Group>
-                        <div className="boxField_2 input">
-                          <input
-                            className="largerCheckbox"
-                            type="checkbox"
-                            value="yes"
-                            checked={RcryYes}
-                            style={RcryError ? { borderColor: "red" } : {}}
-                            // required={required}
-                            onChange={handleNoticePeriodRcryYes}
-                          />
-                          <label className="itemResult">Yes</label>
                         </div>
-                      </Form.Group>
-                    </Col>
-                    <Col sm={1} style={{ marginTop: "0.5rem" }}>
-                      <Form.Group>
-                        <div className="boxField_2 input">
-                          <input
-                            className="largerCheckbox"
-                            type="checkbox"
-                            value="no"
-                            checked={RcryNo}
-                            style={RcryError ? { borderColor: "red" } : {}}
-                            // required={required}
-                            onChange={handleNoticePeriodRcryNo}
-                          />
-                          <label className="itemResult">No</label>
+                      </Col>
+                      <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Contract Type:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.empContractType}
+                            </label>
+                          </label>
                         </div>
-                      </Form.Group>
-                    </Col>
+                      </Col>
+                      <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Cost Center Name:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.empCostCenterName}
+                            </label>
+                          </label>
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row
+                      style={{
+                        marginLeft: "2rem",
+                        marginTop: "1rem",
+                        marginBottom: "2rem",
+                      }}
+                    >
+                      <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Location:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.empLocation}
+                            </label>
+                          </label>
+                        </div>
+                      </Col>
+                      <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Position:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.empPosition}
+                            </label>
+                          </label>
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row
+                      style={{
+                        marginLeft: "2rem",
+                        marginTop: "1rem",
+                        marginBottom: "1rem",
+                      }}
+                    >
+                      <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Manager Name/Id:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.mngrName}
+                              &nbsp; {state.mngrId}
+                            </label>
+                          </label>
+                        </div>
+                      </Col>
+                      <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Position:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.mngrPosition}
+                            </label>
+                          </label>
+                        </div>
+                      </Col>
+                      <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Cost Center Name:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.mngrCostCenterName}
+                            </label>
+                          </label>
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row
+                      style={{
+                        marginLeft: "2rem",
+                        marginTop: "1rem",
+                        marginBottom: "1rem",
+                      }}
+                    >
+                      <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Mode of Separation:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {modeOfSeparation}
+                            </label>
+                          </label>
+                        </div>
+                      </Col>
+                      <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Reason of Separation:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.modeOfSeparationReasonId}
+                            </label>
+                          </label>
+                        </div>
+                      </Col>
+                      <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Date of Resignation:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.dateOfResignation}
+                            </label>
+                          </label>
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row
+                      style={{
+                        marginLeft: "2rem",
+                        marginTop: "1rem",
+                        marginBottom: "3rem",
+                      }}
+                    >
+                      <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Notice Period:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.noticePeriod}
+                            </label>
+                          </label>
+                        </div>
+                      </Col>
+                      <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Preffered Last Working Date:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.lastWorkingDate}
+                            </label>
+                          </label>
+                        </div>
+                      </Col>
+                      <Col sm={4}>
+                        <div>
+                          <label>
+                            <b>Personal Email Id:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.emailId}
+                            </label>
+                          </label>
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row
+                      style={{
+                        marginLeft: "2rem",
+                        marginTop: "1rem",
+                        marginBottom: "3rem",
+                      }}
+                    >
+                      <Col sm={2}>
+                        <div>
+                          <label>
+                            <b>Exit Feedback Form:</b>
+                            <label className="itemResult">
+                              {/* &nbsp;&nbsp; {InfoState.empName} */}
+                            </label>
+                          </label>
+                        </div>
+                      </Col>
+                      <Col sm={2}>
+                        <div>
+                          <label>
+                            <a href="~/address">
+                              <u>Exit Feedback Form</u>
+                            </a>
+                          </label>
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row
+                      style={{
+                        marginLeft: "2rem",
+                        marginTop: "1rem",
+                        marginBottom: "3rem",
+                      }}
+                    >
+                      <Col sm={12}>
+                        <div>
+                          <label>
+                            <b>Comments:</b>
+                            <label className="itemResult">
+                              &nbsp;&nbsp; {state.comments}
+                            </label>
+                          </label>
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row
+                      style={{
+                        marginTop: "2rem",
+                        marginLeft: "2rem",
+                        marginBottom: "2rem",
+                      }}
+                    >
+                      <Col sm={2}>
+                        <div>
+                          <label>
+                            <b>Notice Period Recovery</b>
+                          </label>
+                          {RcryError ? (
+                            <p style={{ color: "red" }}>
+                              {" "}
+                              *Please select one of the option
+                            </p>
+                          ) : (
+                            <p></p>
+                          )}
+                        </div>
+                      </Col>
+                      <Col sm={1} style={{ marginTop: "0.5rem" }}>
+                        <Form.Group>
+                          <div className="boxField_2 input">
+                            <input
+                              className="largerCheckbox"
+                              type="checkbox"
+                              value="yes"
+                              checked={RcryYes}
+                              style={RcryError ? { borderColor: "red" } : {}}
+                              // required={required}
+                              onChange={handleNoticePeriodRcryYes}
+                            />
+                            <label className="itemResult">Yes</label>
+                          </div>
+                        </Form.Group>
+                      </Col>
+                      <Col sm={1} style={{ marginTop: "0.5rem" }}>
+                        <Form.Group>
+                          <div className="boxField_2 input">
+                            <input
+                              className="largerCheckbox"
+                              type="checkbox"
+                              value="no"
+                              checked={RcryNo}
+                              style={RcryError ? { borderColor: "red" } : {}}
+                              // required={required}
+                              onChange={handleNoticePeriodRcryNo}
+                            />
+                            <label className="itemResult">No</label>
+                          </div>
+                        </Form.Group>
+                      </Col>
 
-                    <Col sm={2}>
-                      <div>
-                        <label>
-                          <b>Notice Period Recovery Days</b>
-                        </label>
-                        {/* {uanNumberError ? (
+                      <Col sm={2}>
+                        <div>
+                          <label>
+                            <b>Notice Period Recovery Days</b>
+                          </label>
+                          {/* {uanNumberError ? (
                 <p style={{ color: "red" }}> *Please enter your UAN number</p>
               ) : (
                 <p></p>
               )} */}
-                      </div>
-                    </Col>
-                    <Col sm={2} style={{ marginTop: "0.5rem" }}>
-                      <Form.Group>
-                        <Form.Control
-                          type="text"
-                          placeholder=""
-                          required
-                          style={{
-                            borderColor: "#006ebb",
-                          }}
-                          disabled={!RcryYes}
-                          name="noticePeriodRcryDays"
-                          value={state.noticePeriodRcryDays}
-                          onChange={(e) => changeHandler(e)}
-                          style={rcryDaysError ? { borderColor: "red" } : {}}
-                        />
+                        </div>
+                      </Col>
+                      <Col sm={2} style={{ marginTop: "0.5rem" }}>
+                        <Form.Group>
+                          <Form.Control
+                            type="text"
+                            placeholder=""
+                            required
+                            style={{
+                              borderColor: "#006ebb",
+                            }}
+                            disabled={!RcryYes}
+                            name="noticePeriodRcryDays"
+                            value={state.noticePeriodRcryDays}
+                            onChange={(e) => changeHandler(e)}
+                            style={rcryDaysError ? { borderColor: "red" } : {}}
+                          />
 
-                        {rcryDaysError ? (
-                          <p style={{ color: "red" }}>
-                            {" "}
-                            &nbsp; *Please enter valid days
-                          </p>
-                        ) : (
-                          <p></p>
-                        )}
-                      </Form.Group>
-                    </Col>
-                    <Col sm={2}>
-                      <div>
-                        <label>
-                          <b>
-                            Eligible <br />
-                            For Rehire
-                          </b>
-                        </label>
-                        {RehireError ? (
-                          <p style={{ color: "red" }}>
-                            {" "}
-                            *Please select one of the option
-                          </p>
-                        ) : (
-                          <p></p>
-                        )}
-                      </div>
-                    </Col>
-                    <Col sm={1} style={{ marginTop: "0.5rem" }}>
-                      <Form.Group>
-                        <div className="boxField_2 input">
-                          <input
-                            className="largerCheckbox"
-                            type="checkbox"
-                            value="yes"
-                            checked={RehireYes}
-                            // required={required}
-                            style={RehireError ? { borderColor: "red" } : {}}
-                            onChange={handleRehireChangeYes}
-                          />
-                          <label className="itemResult">Yes</label>
+                          {rcryDaysError ? (
+                            <p style={{ color: "red" }}>
+                              {" "}
+                              &nbsp; *Please enter valid days
+                            </p>
+                          ) : (
+                            <p></p>
+                          )}
+                        </Form.Group>
+                      </Col>
+                      <Col sm={2}>
+                        <div>
+                          <label>
+                            <b>
+                              Eligible <br />
+                              For Rehire
+                            </b>
+                          </label>
+                          {RehireError ? (
+                            <p style={{ color: "red" }}>
+                              {" "}
+                              *Please select one of the option
+                            </p>
+                          ) : (
+                            <p></p>
+                          )}
                         </div>
-                      </Form.Group>
-                    </Col>
-                    <Col sm={1} style={{ marginTop: "0.5rem" }}>
-                      <Form.Group>
-                        <div className="boxField_2 input">
-                          <input
-                            className="largerCheckbox"
-                            type="checkbox"
-                            value="no"
-                            checked={RehireNo}
-                            // required={required}
-                            style={RehireError ? { borderColor: "red" } : {}}
-                            onChange={handleRehireChangeNo}
-                          />
-                          <label className="itemResult">No</label>
-                        </div>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <div
-                    style={{
-                      marginTop: "2rem",
-                      marginBottom: "2rem",
-                      textAlign: "center",
-                    }}
-                  >
-                    {/* <button className="stepperButtons" onClick={PrevStep}>
+                      </Col>
+                      <Col sm={1} style={{ marginTop: "0.5rem" }}>
+                        <Form.Group>
+                          <div className="boxField_2 input">
+                            <input
+                              className="largerCheckbox"
+                              type="checkbox"
+                              value="yes"
+                              checked={RehireYes}
+                              // required={required}
+                              style={RehireError ? { borderColor: "red" } : {}}
+                              onChange={handleRehireChangeYes}
+                            />
+                            <label className="itemResult">Yes</label>
+                          </div>
+                        </Form.Group>
+                      </Col>
+                      <Col sm={1} style={{ marginTop: "0.5rem" }}>
+                        <Form.Group>
+                          <div className="boxField_2 input">
+                            <input
+                              className="largerCheckbox"
+                              type="checkbox"
+                              value="no"
+                              checked={RehireNo}
+                              // required={required}
+                              style={RehireError ? { borderColor: "red" } : {}}
+                              onChange={handleRehireChangeNo}
+                            />
+                            <label className="itemResult">No</label>
+                          </div>
+                        </Form.Group>
+                      </Col>
+                    </Row>
+                    {state.remarks !== "" &&
+                    state.remarks !== null &&
+                    state.remarks !== undefined ? (
+                      <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "1rem",
+                          marginBottom: "3rem",
+                        }}
+                      >
+                        <Col sm={12}>
+                          <div>
+                            <label>
+                              <b>Remarks:</b>
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.remarks}
+                              </label>
+                            </label>
+                          </div>
+                        </Col>
+                      </Row>
+                    ) : (
+                      ""
+                    )}
+                    <div
+                      style={{
+                        marginTop: "2rem",
+                        marginBottom: "2rem",
+                        textAlign: "center",
+                      }}
+                    >
+                      {/* <button className="stepperButtons" onClick={PrevStep}>
             Back
           </button> */}
 
-                    <button
-                      // style={
-                      //   showModal | showSuccessModal
-                      //     ? { borderColor: "#aaa" }
-                      //     : ""
-                      // }
-                      disabled={showModal | showSuccessModal}
-                      className="stepperButtons"
-                      onClick={submitHandler}
-                    >
-                      Save
-                    </button>
-                  </div>
-                </Form>
+                      <button
+                        // style={
+                        //   showModal | showSuccessModal
+                        //     ? { borderColor: "#aaa" }
+                        //     : ""
+                        // }
+                        disabled={showModal | showSuccessModal}
+                        className="stepperButtons"
+                        onClick={submitHandler}
+                      >
+                        Save
+                      </button>
+                    </div>
+                  </Form>
+                )}
               </div>
             </div>
           </div>

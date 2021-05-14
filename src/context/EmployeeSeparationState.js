@@ -11,6 +11,7 @@ const initial_state = {
   employeeData: {},
   ModeOfSeparationData: {},
   updateResponse: {},
+  employeeId: "",
 };
 
 export const EmploeeSeparationProvider = (props) => {
@@ -19,6 +20,15 @@ export const EmploeeSeparationProvider = (props) => {
     EmployeeSeparationReducer,
     initial_state
   );
+  const changeEmployeeId = (employeeId) => {
+    setLoader(true);
+    state.employeeId = employeeId;
+    setLoader(false);
+    return dispatch({
+      type: "EMPLOYEE_ID",
+      payload: state.employeeId,
+    });
+  };
 
   const ViewEmployeeDataById = (employeeId) => {
     setLoader(true);
@@ -26,6 +36,7 @@ export const EmploeeSeparationProvider = (props) => {
       .get("/api/v1/separation/employee-exit/view/" + employeeId)
       .then((response) => {
         state.employeeData = response.data.data;
+
         setLoader(false);
         console.log("--->", state.employeeData);
         console.log(response);
@@ -112,6 +123,8 @@ export const EmploeeSeparationProvider = (props) => {
         ViewEmployeeDataById,
         ModeOfSeparationView,
         UpdateEmplyoeeExist,
+        changeEmployeeId,
+        employeeId: state.employeeId,
         updateResponse: state.updateResponse,
         ModeOfSeparationData: state.ModeOfSeparationData,
         EmployeeSeparationList: state.EmployeeSeparationList,

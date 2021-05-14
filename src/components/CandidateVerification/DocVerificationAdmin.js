@@ -25,6 +25,7 @@ const DocVerification = () => {
   const [docId, setdocId] = useState("");
   const [error, setError] = useState(false);
   const [state, setState] = useState({});
+  const [pfData, setPFData] = useState({});
   const [onBoardPopup, setOnboardPopup] = useState(false);
   const [UANYes, setYes] = useState(false);
   const [UANNo, setNo] = useState(false);
@@ -49,6 +50,8 @@ const DocVerification = () => {
     personalInfo,
     updateUANNumber,
     uanUpdate,
+    pfDetails,
+    fetchPfDetails,
   } = useContext(DocsVerifyContext);
   const {
     candidateData,
@@ -70,11 +73,30 @@ const DocVerification = () => {
   useEffect(() => {
     getUserInfo();
     personalInfo(candidateId);
+    fetchPfDetails(candidateId);
+    setPFData(pfDetails);
     setState(personalInfoData);
   }, []);
   useEffect(() => {
     setState(personalInfoData);
   }, [personalInfoData]);
+
+  useEffect(() => {
+    setPFData(pfDetails);
+    console.log("pfDetails", pfDetails);
+    if (
+      pfDetails !== undefined &&
+      pfDetails !== null &&
+      pfDetails.uanNumber !== ""
+    ) {
+      setYes(true);
+      setNo(false);
+    } else {
+      setYes(false);
+      setNo(true);
+    }
+  }, [pfDetails]);
+
   const handleShifting = () => {
     changeState(!isChecked);
   };
@@ -315,7 +337,8 @@ const DocVerification = () => {
                         {user.role === "ADMIN" &&
                         item.documentType === 1 &&
                         state.verificationStatus === 1 &&
-                        state.adminVerificationStatus === 0 ? (
+                        (state.adminVerificationStatus === 0 ||
+                          state.adminVerificationStatus === null) ? (
                           <button
                             className="approveButton ml-4"
                             onClick={() =>
@@ -333,7 +356,8 @@ const DocVerification = () => {
                         {user.role === "ADMIN" &&
                         item.documentType === 1 &&
                         state.verificationStatus === 1 &&
-                        state.adminVerificationStatus === 0 ? (
+                        (state.adminVerificationStatus === 0 ||
+                          state.adminVerificationStatus === null) ? (
                           <button
                             className="approveButton ml-4"
                             disabled={
@@ -507,67 +531,82 @@ const DocVerification = () => {
           )}
         </Table>
       </div>
-      {user.role === "ADMIN" &&
+      {user.role === "ADMIN" && state.adminVerificationStatus === 1 && (
+        <Row className="mx-2">
+          <label>Is UAN Number Generated ?</label>
+          <Col sm={2}>
+            <Form.Group>
+              <div className="boxField input">
+                <input
+                  className="largerCheckbox"
+                  type="checkbox"
+                  value="yes"
+                  checked={pfData.uanNumber !== "" ? true : false}
+                  disabled="true"
+                />
+                <label>Yes</label>
+              </div>
+            </Form.Group>
+          </Col>
+          <Col sm={2}>
+            <Form.Group>
+              <div className="boxField input">
+                <input
+                  className="largerCheckbox"
+                  type="checkbox"
+                  value="no"
+                  checked={pfData.uanNumber === "" ? true : false}
+                  disabled="true"
+                />
+                <label>No </label>
+              </div>
+            </Form.Group>
+          </Col>
+        </Row>
+      )}
+      {UANNo &&
+        user.role === "ADMIN" &&
         state.adminVerificationStatus === 1 &&
-        !isChecked && (
-          <Row className="mx-2">
-            <label>Is UAN Number Generated ?</label>
-            <Col sm={2}>
-              <Form.Group>
+        pfDetails !== null && (
+          <Row>
+            <Col sm={6}>
+              <Form.Group style={{ borderRadius: " 12.25rem !important" }}>
                 <div className="boxField input">
+                  <label>Enter UAN Number</label>{" "}
                   <input
-                    className="largerCheckbox"
-                    type="checkbox"
-                    value="yes"
-                    checked={state.uanStatus === 1 ? true : UANYes}
-                    disabled={state.uanStatus === 1 ? true : false}
-                    onChange={(e) => handleUANYes(e)}
+                    type="text"
+                    name="uannbr"
+                    value={uanNumber}
+                    className="form-input"
+                    // required={required}
+                    onChange={(e) => handleUANNumber(e)}
                   />
-                  <label>Yes</label>
                 </div>
               </Form.Group>
+              {uanError && (
+                <p style={{ color: "red" }}>Please Enter UAN Number</p>
+              )}
             </Col>
-            <Col sm={2}>
+          </Row>
+        )}
+
+      {user.role === "ADMIN" &&
+        state.adminVerificationStatus === 1 &&
+        UANYes &&
+        pfDetails !== null && (
+          <Row>
+            <Col sm={6}>
               <Form.Group>
                 <div className="boxField input">
-                  <input
-                    className="largerCheckbox"
-                    type="checkbox"
-                    value="no"
-                    checked={UANNo}
-                    disabled={state.uanStatus === 1 ? true : false}
-                    // required={required}
-                    onChange={(e) => handleUANNo(e)}
-                  />
-                  <label>No </label>
+                  <label style={{ color: "#006EBB" }}>
+                    {" "}
+                    {pfDetails.uanNumber}
+                  </label>
                 </div>
               </Form.Group>
             </Col>
           </Row>
         )}
-      {UANNo && (
-        <Row>
-          <Col sm={6}>
-            <Form.Group>
-              <div className="boxField input">
-                <label>Enter UAN Number</label>
-                <input
-                  className="mx-2"
-                  type="text"
-                  name="uannbr"
-                  value={uanNumber}
-                  className="form-input"
-                  // required={required}
-                  onChange={(e) => handleUANNumber(e)}
-                />
-              </div>
-            </Form.Group>
-            {uanError && (
-              <p style={{ color: "red" }}>Please Enter UAN Number</p>
-            )}
-          </Col>
-        </Row>
-      )}
       <div
         style={{
           marginTop: "2rem",
@@ -575,11 +614,13 @@ const DocVerification = () => {
           textAlign: "center",
         }}
       >
-        {state.uanStatus !== 1 && state.adminVerificationStatus === 1 && (
-          <button className="stepperButtons" onClick={() => handleDocSave()}>
-            Save
-          </button>
-        )}
+        {state.uanStatus !== 1 &&
+          state.adminVerificationStatus === 1 &&
+          UANYes === false && (
+            <button className="stepperButtons" onClick={() => handleDocSave()}>
+              Save
+            </button>
+          )}
 
         {state !== undefined &&
           state.verificationStatus === 1 &&

@@ -27,6 +27,7 @@ import { OfferProvider } from "./context/OfferState";
 import { OnBoardProvider } from "./context/OnBoardState";
 import { DocsVerificationProvider } from "./context/DocverificationState";
 import { EmploeeSeparationProvider } from "./context/EmployeeSeparationState";
+import { BonusProvider } from "./context/BonusState";
 import {
   SeparationContext,
   SeparationProvider,
@@ -66,15 +67,17 @@ function Root() {
                                         <DocsVerificationProvider>
                                           <EmploeeSeparationProvider>
                                             <SeparationProvider>
-                                              <BrowserRouter basename={"/"}>
-                                                <ScrollContext>
-                                                  <WithAxios>
-                                                    <CandidateWithAxios>
-                                                      <RoutePath />
-                                                    </CandidateWithAxios>
-                                                  </WithAxios>
-                                                </ScrollContext>
-                                              </BrowserRouter>
+                                              <BonusProvider>
+                                                <BrowserRouter basename={"/"}>
+                                                  <ScrollContext>
+                                                    <WithAxios>
+                                                      <CandidateWithAxios>
+                                                        <RoutePath />
+                                                      </CandidateWithAxios>
+                                                    </WithAxios>
+                                                  </ScrollContext>
+                                                </BrowserRouter>
+                                              </BonusProvider>
                                             </SeparationProvider>
                                           </EmploeeSeparationProvider>
                                         </DocsVerificationProvider>
