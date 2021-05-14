@@ -984,7 +984,7 @@ const Documents = (props) => {
                   Thank you for filling the onboarding details. Do you wish to
                   proceed?
                 </h6>{" "}
-                <b>
+                <b style={{ color: "red" }}>
                   Note: Once you click on Yes, no further editing will be
                   allowed
                 </b>
