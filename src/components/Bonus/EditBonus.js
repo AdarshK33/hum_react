@@ -46,6 +46,7 @@ const EditBonus = (props) => {
       year: state.year,
     };
     updateBonus(data);
+    onCloseModal();
   };
   useEffect(() => {
     departmentView();

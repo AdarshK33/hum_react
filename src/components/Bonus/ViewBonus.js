@@ -117,10 +117,10 @@ const ViewBonus = () => {
                 />
               </div>
             </Col>
-            <Col>
+            <Col style={{ textAlign: "end" }}>
               <Button onClick={handleShow}>Create</Button>
             </Col>
-            <Col>
+            <Col style={{ float: "right" }}>
               <Button>Export</Button>
             </Col>
           </Row>

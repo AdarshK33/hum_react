@@ -23,6 +23,7 @@ export const BonusProvider = (props) => {
         state.bonusData = response.data.data;
         toast.info(response.data.message);
         setLoader(false);
+        viewBonus("all", 0);
         return dispatch({
           type: "BONUS_CREATE",
           payload: state.bonusData,
@@ -73,6 +74,8 @@ export const BonusProvider = (props) => {
       state.bonusData = response.data.data;
       setLoader(false);
       toast.info(response.data.message);
+      viewBonus("all", 0);
+
       return dispatch({
         type: "BONUS_UPDATE",
         payload: state.bonusData,
