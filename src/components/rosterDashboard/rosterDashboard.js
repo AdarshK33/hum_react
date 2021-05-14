@@ -7,6 +7,8 @@ import RosterTable from './rosterTable'
 
 const RosterDashboard = () => {
     const [costCenter1, setCostCenter1] = useState();
+    const [month, setMonth] = useState(0);
+    const [year, setYear] = useState(0);
 
     const {costCenterList, costCenter, adminRosterCalculateUtilisationList, adminRosterCalculateUtilisation} = useContext(RosterContext);
 
@@ -45,7 +47,8 @@ const RosterDashboard = () => {
         // if( e.target.value !== "Select month") 
         // adminRosterUtilisationSchedule('M', Number(e.target.value), storeID.storeId, 0, 0, 0, 0, 2021);
         // setCostCenter1(Number(e.target.value))
-        adminRosterCalculateUtilisation(costCenterList[0].costCentreName, Number(e.target.value))
+        setMonth(Number(e.target.value));
+        adminRosterCalculateUtilisation(costCenterList[0].costCentreName, Number(e.target.value), year)
     }
 
     const yearSelected = e => {
@@ -57,7 +60,8 @@ const RosterDashboard = () => {
         // if( e.target.value !== "Select month") 
         // adminRosterUtilisationSchedule('M', Number(e.target.value), storeID.storeId, 0, 0, 0, 0, 2021);
         // setCostCenter1(Number(e.target.value))
-        adminRosterCalculateUtilisation(costCenterList[0].costCentreName, 0, Number(e.target.value))
+        setYear(Number(e.target.value));
+        adminRosterCalculateUtilisation(costCenterList[0].costCentreName, month, Number(e.target.value))
     }
 
     const options1 = {
