@@ -20,6 +20,7 @@
     "chartjs-plugin-datalabels": "^0.7.0",
     "date-fns": "^2.16.1",
     "feather-icons": "^4.28.0",
+    "file-saver": "^2.0.5",
     "firebase": "^7.24.0",
     "google-maps-react": "^2.0.6",
     "js-cookie": "^2.2.1",

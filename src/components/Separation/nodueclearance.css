@@ -5,7 +5,16 @@
   line-height: 3rem;
   font-weight: bold;
   text-align: center;
-  width:1400px
+  width:100%
+}
+.nodue_title_finance{
+	background: #006EBB;
+	font-weight: bold;
+	color: white;
+	line-height: 3rem;
+	font-weight: bold;
+	text-align: center;
+	width:100%
 }
 .nodue_title_admin{
   background: #006EBB;
@@ -20,6 +29,7 @@ nav.nav.nav-tabs a {
   font-size: 1.1rem;
   color: black
 }
+
 .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
   color: #495057;
   background-color: #c7c7c7;
@@ -38,7 +48,28 @@ small.form-text.text-muted{
 }
 title{
   align-content: center;
+  padding :5px;
   overflow: "auto";
+}
+.selectpicker{
+    vertical-align: middle;
+    padding: 5px;
+    color: var(--ag-data-color, var(--ag-foreground-color, #181d1f));
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    border-radius: 5px;
+    background-color: #fff;
+
+}
+.selectActionStatus{
+	float: right;
+	margin-top: 5px;
+    vertical-align: middle;
+    padding: 5px;
+    color: var(--ag-data-color, var(--ag-foreground-color, #181d1f));
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    border-radius: 5px;
+    background-color: #fff;
+
 }
 /* .modal-backdrop {
 background-color: transparent;
@@ -48,11 +79,19 @@ opacity: 1.5;
 .note{
   font-size: 13px;
 }
-
-thead th {
-  position: sticky;
-  top: 0; 
+.rowStyle{
+	word-break: break-all;
+    white-space: nowrap;
+  
+ }
+/* thead th {
+	word-break: break-all;
+    white-space: nowrap;
 }
+tbody td {
+	word-break: break-all;
+    white-space: nowrap;
+} */
 
 .tableFixHead {
  overflow: auto;
@@ -110,5 +149,118 @@ thead th {
   width: 50% !important;
 }
 .selectInputWrapper {
+	float: right;
   width: 50% !important;
+}
+ /* css for table td */
+
+ .cloumnWidth{
+	max-width: 200px
+	;}
+
+
+/* css for toggle switch */
+.switch {
+	position: relative;
+	display: block;
+	vertical-align: top;
+	width: 100px;
+	height: 30px;
+	padding: 3px;
+	margin: 0 10px 10px 0;
+	background: linear-gradient(to bottom, #eeeeee, #FFFFFF 25px);
+	background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF 25px);
+	border-radius: 18px;
+	box-shadow: inset 0 -1px white, inset 0 1px 1px rgba(0, 0, 0, 0.05);
+	cursor: pointer;
+	box-sizing:content-box;
+}
+.switch-input {
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	box-sizing:content-box;
+}
+.switch-label {
+	position: relative;
+	display: block;
+	height: inherit;
+	font-size: 10px;
+	text-transform: uppercase;
+	background: #eceeef;
+	border-radius: inherit;
+	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12), inset 0 0 2px rgba(0, 0, 0, 0.15);
+	box-sizing:content-box;
+}
+.switch-label:before, .switch-label:after {
+	position: absolute;
+	top: 50%;
+	margin-top: -.5em;
+	line-height: 1;
+	-webkit-transition: inherit;
+	-moz-transition: inherit;
+	-o-transition: inherit;
+	transition: inherit;
+	box-sizing:content-box;
+}
+.switch-label:before {
+	content: attr(data-off);
+	right: 11px;
+	color: #aaaaaa;
+	text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+}
+.switch-label:after {
+	content: attr(data-on);
+	left: 11px;
+	color: #FFFFFF;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+	opacity: 0;
+}
+.switch-input:checked ~ .switch-label {
+  background-color: #66bb6a;
+	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), inset 0 0 3px rgba(0, 0, 0, 0.2);
+}
+.switch-input:checked ~ .switch-label:before {
+	opacity: 0;
+}
+.switch-input:checked ~ .switch-label:after {
+	opacity: 1;
+}
+.switch-handle {
+	position: absolute;
+	top: 4px;
+	left: 4px;
+	width: 28px;
+	height: 28px;
+	background: linear-gradient(to bottom, #FFFFFF 40%, #f0f0f0);
+	background-image: -webkit-linear-gradient(top, #FFFFFF 40%, #f0f0f0);
+	border-radius: 100%;
+	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+}
+.switch-handle:before {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -6px 0 0 -6px;
+	width: 12px;
+	height: 12px;
+	background: linear-gradient(to bottom, #eeeeee, #FFFFFF);
+	background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF);
+	border-radius: 6px;
+	box-shadow: inset 0 1px rgba(0, 0, 0, 0.02);
+}
+.switch-input:checked ~ .switch-handle {
+	left: 74px;
+	box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
+}
+ 
+/* Transition
+========================== */
+.switch-label, .switch-handle {
+	transition: All 0.3s ease;
+	-webkit-transition: All 0.3s ease;
+	-moz-transition: All 0.3s ease;
+	-o-transition: All 0.3s ease;
 }
