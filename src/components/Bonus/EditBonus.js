@@ -6,76 +6,80 @@ import React, {
   useMemo,
 } from "react";
 import { Container, Col, Row, Button, Form, Modal } from "react-bootstrap";
-import "./bonus.css";
 import DatePicker from "react-datepicker";
 import { OfferContext } from "../../context/OfferState";
 import { RosterContext } from "../../context/RosterState";
 import { BonusContext } from "../../context/BonusState";
 import moment from "moment";
 
-const BonusForm = (props) => {
-  const [bonusList, setBonusList] = useState({
+const EditBonus = (props) => {
+  const { getBonusDetailsById, updateBonus } = useContext(BonusContext);
+  const { departmentView, departmentName, designationView, designationName } =
+    useContext(OfferContext);
+  const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
+
+  const [state, setState] = useState({
     bonus: "",
     bonusId: "",
     contractType: "",
     department: "",
     designation: "",
+    month: "",
+    year: "",
   });
-  const [month, setMonth] = useState("");
-  const [year, setYear] = useState("");
-  const { departmentView, departmentName, designationView, designationName } =
-    useContext(OfferContext);
-  const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
-  const { bonusCreate, bonusData } = useContext(BonusContext);
   const onCloseModal = () => {
-    /*  const resetValue = {
-                
-             } */
-    const setModal = props.handleClose;
-    setModal();
-  };
-  const submitHandler = (e) => {
-    e.preventDefault();
-    const data = {
-      bonus: bonusList.bonus,
-      bonusId: 0,
-      contractType: bonusList.contractType,
-      department: bonusList.department,
-      designation: bonusList.designation,
-      month: parseInt(moment(month).format("MM")),
-      year: parseInt(moment(year).format("YYYY")),
-    };
-    bonusCreate(data);
-    onCloseModal();
-  };
-  const handleChange = (e) => {
-    setBonusList({ ...bonusList, [e.target.name]: e.target.value });
+    let close = props.handleEditClose;
+    close();
   };
 
+  const handleChange = (e) => {
+    setState({ ...state, [e.target.name]: e.target.value });
+  };
+  const updateBonusDetails = () => {
+    let data = {
+      bonus: state.bonus,
+      bonusId: getBonusDetailsById.bonusId,
+      contractType: state.contractType,
+      department: state.department,
+      designation: state.designation,
+      month: state.month,
+      year: state.year,
+    };
+    updateBonus(data);
+  };
   useEffect(() => {
     departmentView();
-    designationView();
     viewContractTypes();
+    designationView();
   }, []);
+  useEffect(() => {
+    setState({
+      bonus: getBonusDetailsById.bonus,
+      contractType: getBonusDetailsById.contractType,
+      department: getBonusDetailsById.department,
+      designation: getBonusDetailsById.designation,
+      month: getBonusDetailsById.month,
+      year: getBonusDetailsById.year,
+    });
+  }, [getBonusDetailsById]);
   return (
-    <Fragment>
-      <Modal show={props.show} onHide={props.handleClose} centered>
-        <Modal.Header>
-          <Modal.Title>
-            <h4>Create Bonus Structure</h4>
-          </Modal.Title>
-          <button
-            type="button"
-            className="close"
-            data-dismiss="modal"
-            aria-label="Close"
-            onClick={onCloseModal}
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={submitHandler}>
+    console.log(state.month),
+    (
+      <Fragment>
+        <Modal show={props.editmodal} onHide={props.handleEditClose} centered>
+          <Modal.Header>
+            <Modal.Title>Edit Bonus Structure</Modal.Title>
+            <button
+              type="button"
+              className="close"
+              data-dismiss="modal"
+              aria-label="Close"
+              onClick={onCloseModal}
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </Modal.Header>
+          <Modal.Body>
             <Row>
               <Col sm={12}>
                 <Form.Group>
@@ -84,7 +88,7 @@ const BonusForm = (props) => {
                     as="select"
                     name="department"
                     onChange={handleChange}
-                    value={bonusList.department}
+                    value={state.department}
                   >
                     <option value="">Select Department</option>
                     {departmentName !== null &&
@@ -109,7 +113,7 @@ const BonusForm = (props) => {
                     as="select"
                     name="designation"
                     onChange={handleChange}
-                    value={bonusList.designation}
+                    value={state.designation}
                   >
                     <option value="">Select Designation</option>
                     {designationName !== null &&
@@ -134,7 +138,7 @@ const BonusForm = (props) => {
                     as="select"
                     name="contractType"
                     onChange={handleChange}
-                    value={bonusList.contractType}
+                    value={state.contractType}
                   >
                     <option value="">Select Employment Type</option>
                     {shiftContractNames !== null &&
@@ -157,7 +161,7 @@ const BonusForm = (props) => {
                     type="text"
                     name="bonus"
                     onChange={handleChange}
-                    value={bonusList.bonus}
+                    value={state.bonus}
                   ></Form.Control>
                 </Form.Group>
               </Col>
@@ -172,8 +176,8 @@ const BonusForm = (props) => {
                   <DatePicker
                     name="month"
                     className="dateClass"
-                    selected={month}
-                    onChange={(date) => setMonth(date)}
+                    selected={state.month}
+                    //   onChange={(date) => setMonth(date)}
                     placeholderText="Select Start Month"
                     dateFormat="MM"
                     showMonthYearPicker
@@ -189,9 +193,9 @@ const BonusForm = (props) => {
                   <Form.Label>Select Year</Form.Label>
                   <br></br>
                   <DatePicker
-                    selected={year}
+                    selected={state.year}
                     className="dateClass"
-                    onChange={(date) => setYear(date)}
+                    //   onChange={(date) => setYear(date)}
                     placeholderText="Select Start Year"
                     dateFormat="yyyy"
                     showYearPicker
@@ -199,17 +203,14 @@ const BonusForm = (props) => {
                 </Form.Group>
               </Col>
             </Row>
-
-            <Button type="submit" className="submitButton">
-              Save
-            </Button>
+            <Button onClick={updateBonusDetails}>Save</Button>
             <Button className="cancelButton" onClick={onCloseModal}>
               Cancel
             </Button>
-          </Form>
-        </Modal.Body>
-      </Modal>
-    </Fragment>
+          </Modal.Body>
+        </Modal>
+      </Fragment>
+    )
   );
 };
-export default BonusForm;
+export default EditBonus;

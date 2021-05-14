@@ -155,6 +155,13 @@ const EmployeeForm = (props) => {
         );
       });
   }, [yesValue, searchData]);
+
+  useEffect(() => {
+    if (createCandidateResponse === null) {
+      setDisabled(false);
+      setSaveclick(false);
+    }
+  }, [createCandidateResponse]);
   const callback = (yesValue) => {
     setYesValue(yesValue);
     console.log("yesValue", yesValue);

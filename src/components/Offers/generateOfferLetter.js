@@ -126,7 +126,7 @@ const GenerateOfferLetter = () => {
         {submitLetter ? (
           <Modal.Body>
             <div className="offer-letter-message ">
-              <p className="signature-text">Offer Letter Sent to Candidate</p>
+              <p>Offer Letter Sent to Candidate</p>
               <br></br>
               <Link to="/offer-release-list" className="text-center">
                 <Button type="button" onClick={handleClose}>

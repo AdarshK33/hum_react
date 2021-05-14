@@ -59,6 +59,7 @@ const Documents = (props) => {
   const [collegeLetterError, setCollegeLetterError] = useState(false);
   const [CandidateFirstJob, setCandidateFirstJob] = useState(false);
   const [onDocumentPopup, setOnDocumentPopup] = useState(false);
+  const [onDocumentProceed, setOnDocumentProceed] = useState(false);
   // const [fileUpload, setFileUpload] = useState();
   const [workInfoData, setWorkInfoData] = useState();
   useEffect(() => {
@@ -789,15 +790,14 @@ const Documents = (props) => {
     }
   };
 
-  const submitHandler = (e) => {
-    // const value = checkValidations();
+  const saveHandler = () => {
     const value = isAllFilesUploaded();
     console.log("ERROR-->", latestPaySlipsError, state.latestPaySlips);
     console.log(value);
     if (value === true) {
       completeDocumentUpload(candidateProfileData.candidateId);
       console.log(state);
-      setOnDocumentPopup(true);
+      setOnDocumentProceed(true);
       const nextPage = props.NextStep;
       nextPage(true);
     }
@@ -963,15 +963,51 @@ const Documents = (props) => {
       toast.info("Something went wrong");
     }
   };
-
+  const proceedHandler = () => {
+    setOnDocumentProceed(false);
+    setOnDocumentPopup(true);
+  };
   return (
     <Fragment>
       {(localExpact === false) & (internship === false) ? (
         <Row>
           <Modal
+            show={onDocumentProceed}
+            onHide={() => setOnDocumentProceed(false)}
+            centered
+            size="md"
+          >
+            <Container style={{ textAlign: "center", margin: "4rem 0 4rem 0" }}>
+              <Modal.Body>
+                <h3>Thank You</h3>
+                <h6 style={{ marginBottom: "1rem" }}>
+                  Thank you for filling the onboarding details. Do you wish to
+                  proceed?
+                </h6>{" "}
+                <b style={{ color: "red" }}>
+                  Note: Once you click on Yes, no further editing will be
+                  allowed
+                </b>
+                <Button
+                  style={{ margin: "1rem 2rem 0", width: "100px" }}
+                  onClick={() => proceedHandler()}
+                >
+                  Yes
+                </Button>
+                <Button
+                  style={{ margin: "1rem 0 0", width: "100px" }}
+                  onClick={() => setOnDocumentProceed(false)}
+                >
+                  No
+                </Button>
+              </Modal.Body>
+            </Container>
+          </Modal>
+          <Modal
             show={onDocumentPopup}
             onHide={() => setOnDocumentPopup(false)}
             centered
+            size="md"
           >
             <Container style={{ textAlign: "center", margin: "4rem 0 4rem 0" }}>
               <Modal.Body>
@@ -987,8 +1023,11 @@ const Documents = (props) => {
                   }}
                   to="/offer"
                 >
-                  <Button onClick={() => setOnDocumentPopup(false)}>
-                    Return to the Portal
+                  <Button
+                    style={{ width: "100px" }}
+                    onClick={() => setOnDocumentPopup(false)}
+                  >
+                    Close
                   </Button>
                 </Link>
               </Modal.Body>
@@ -1877,7 +1916,7 @@ const Documents = (props) => {
         <button className="stepperButtons" onClick={PrevStep}>
           Back
         </button>
-        <button className="stepperButtons" onClick={submitHandler}>
+        <button className="stepperButtons" onClick={saveHandler}>
           Save & Next
         </button>
       </div>
