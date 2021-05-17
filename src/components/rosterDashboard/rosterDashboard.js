@@ -14,7 +14,11 @@ const RosterDashboard = () => {
 
     const months = [1,2,3,4,5,6,7,8,9,10,11,12];
 
-    const years = [2019, 2020, 2021]
+    const years = [2019, 2020, 2021];
+
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth() + 1;
+
 
     useEffect(() => {
         costCenter()
@@ -23,6 +27,7 @@ const RosterDashboard = () => {
         // console.log(costCenterList, 'costCenterList')
         if(costCenterList && costCenterList.length) {
         // setCostCenter1(costCenterList[0].costCentreName);
+        console.log(currentYear, currentMonth, 'year and month')
         // console.log(costCenterList[0].costCentreName, costCenter1, 'asdasdasd')
             if(costCenter1) {
                 adminRosterCalculateUtilisation(costCenter1);
@@ -49,7 +54,6 @@ const RosterDashboard = () => {
         e.preventDefault();
         // setDisplayTable(true);
         // console.log(typeof Number(e.target.value), 'e.target');
-        const currentYear = new Date().getFullYear();
         // console.log(currentYear, 'currentYear');
         // if( e.target.value !== "Select month") 
         // adminRosterUtilisationSchedule('M', Number(e.target.value), storeID.storeId, 0, 0, 0, 0, 2021);
@@ -252,11 +256,11 @@ const RosterDashboard = () => {
                                 width: '150px', 
                                 height: '40px', 
                                 fontSize: '16px', 
-                                padding: '0px',
+                                padding: '0px 5px',
                                 margin: '0px'
                             }} 
                             as="select" 
-                            defaultValue="Choose..."
+                            defaultValue={currentMonth}
                             onChange={monthSelected}
                         >
                             <option>Select month</option>
@@ -271,11 +275,11 @@ const RosterDashboard = () => {
                                 width: '150px', 
                                 height: '40px', 
                                 fontSize: '16px', 
-                                padding: '0px',
+                                padding: '0px 5px',
                                 margin: '0px'
                             }} 
                             as="select" 
-                            defaultValue="Choose..."
+                            defaultValue={currentYear}
                             onChange={yearSelected}
                         >
                             <option>Select year</option>
