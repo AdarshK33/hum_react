@@ -22,8 +22,13 @@ const RosterDashboard = () => {
         // adminRosterCalculateUtilisation(costCenter1)
         // console.log(costCenterList, 'costCenterList')
         if(costCenterList && costCenterList.length) {
-        setCostCenter1(costCenterList[0].costCentreName);
-        adminRosterCalculateUtilisation(costCenterList[0].costCentreName)
+        // setCostCenter1(costCenterList[0].costCentreName);
+        // console.log(costCenterList[0].costCentreName, costCenter1, 'asdasdasd')
+            if(costCenter1) {
+                adminRosterCalculateUtilisation(costCenter1);
+            } else {
+                adminRosterCalculateUtilisation(costCenterList[0].costCentreName);
+            }
         }
 
         // else 
@@ -36,6 +41,7 @@ const RosterDashboard = () => {
         let data2 = options !== null ? options.value : ''
         setCostCenter1(data2)
         // console.log( data2, costCenter1, 'sdakjsdhashd');
+        adminRosterCalculateUtilisation(data2, month, year);
     }
 
     const monthSelected = e => {
