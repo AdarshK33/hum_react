@@ -28,6 +28,7 @@ const ViewBonus = () => {
     loader,
     viewBonus,
     viewBonusById,
+    exportBonusList,
     getBonusDetailsById,
   } = useContext(BonusContext);
   const [pageCount, setPageCount] = useState(0);
@@ -52,6 +53,7 @@ const ViewBonus = () => {
   const handleEditClose = () => {
     setEditModal(false);
   };
+  /*-----------------pagination ------------------*/
   const handlePageChange = (pageNumber) => {
     setPageCount(pageNumber - 1);
     setCurrentPage(pageNumber);
@@ -62,7 +64,7 @@ const ViewBonus = () => {
     }
     setCurrentRecords(bonusDetails);
   };
-
+  /*--------------------Search -------------------*/
   const searchHandler = (e) => {
     setSearchValue(e.target.value);
   };
@@ -73,6 +75,12 @@ const ViewBonus = () => {
     } else {
       viewBonus("all", pageCount);
     }
+  };
+  /*-----------Search Code End---------------*/
+  /*-----------Export------------------*/
+  const handleExport = (e) => {
+    console.log(e.target.value);
+    exportBonusList();
   };
   useEffect(() => {
     viewBonus("all", pageCount);
@@ -121,7 +129,7 @@ const ViewBonus = () => {
               <Button onClick={handleShow}>Create</Button>
             </Col>
             <Col style={{ float: "right" }}>
-              <Button>Export</Button>
+              <Button onClick={handleExport}>Export</Button>
             </Col>
           </Row>
           <Table className="mt-3">
