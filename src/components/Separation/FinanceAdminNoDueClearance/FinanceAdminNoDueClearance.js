@@ -39,20 +39,21 @@ const FinanaceAdminNoDueClearance = () => {
 /*-----------------Pagination------------------*/
 const [currentPage, setCurrentPage] = useState(1);
 const recordPerPage = 10;
-const totalRecords =  total;
+const totalRecords = financeAdminNoDueClearanceList !== null && financeAdminNoDueClearanceList !== undefined && financeAdminNoDueClearanceList.length;
 const pageRange = 10;
 const indexOfLastRecord = currentPage * recordPerPage;
 const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-const [currentRecords, setCurrentRecords] = useState([]);
+// const [currentRecords, setCurrentRecords] = useState([]);
+const currentRecords = financeAdminNoDueClearanceList !== null && financeAdminNoDueClearanceList !== undefined ? financeAdminNoDueClearanceList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
 useEffect(() => {
   console.log(pageCount,"pageCount")
   viewFinanceAdminClearanceList(searchValue, pageCount,costCenter);
-}, [costCenter,searchValue,pageCount]);
+}, [costCenter,searchValue]);
 
 useEffect(() => {
   if (financeAdminNoDueClearanceList !== null && financeAdminNoDueClearanceList !== undefined) {
-    setCurrentRecords(financeAdminNoDueClearanceList);
+    // setCurrentRecords(financeAdminNoDueClearanceList);
   }
 }, [financeAdminNoDueClearanceList, currentRecords]);
 
@@ -65,15 +66,22 @@ const handlePageChange = (pageNumber) => {
   setPageCount(pageNumber - 1);
   console.log("page change",pageNumber,pageCount)
 
-    setCurrentPage(pageNumber);
-    if (searchValue !== "all" ||costCenter !== "all") {
-      viewFinanceAdminClearanceList(searchValue,pageNumber-1,costCenter);
-    } else {
-      viewFinanceAdminClearanceList("all",pageNumber-1,"all");
-    }
-    setCurrentRecords(financeAdminNoDueClearanceList);
-}
+    // setCurrentPage(pageNumber);
+    // if (searchValue !== "all" ||costCenter !== "all") {
+    //   viewFinanceAdminClearanceList(searchValue,pageNumber-1,costCenter);
+    // } else {
+    //   viewFinanceAdminClearanceList("all",pageNumber-1,"all");
+    // }
+    // setCurrentRecords(financeAdminNoDueClearanceList);
 
+   
+}
+var checkboxSelection = function (params) {
+  return params.columnApi.getRowGroupColumns().length === 0;
+};
+var headerCheckboxSelection = function (params) {
+  return params.columnApi.getRowGroupColumns().length === 0;
+};
   const searchHandler = (e) => {
     setSearchValue(e.target.value)
 
@@ -183,18 +191,45 @@ const renderStatusOptions = (value) => {
     console.log(e)
     let preValue = checkedData
     let formData = e.data
-    console.log(formData,"formdata")
-    formData['disabled'] = true
-    preValue.push(formData)
-    setCheckedData(preValue)
-    console.log(checkedData,"checkbox")
+    
+  
+      console.log(formData.checkboxSelection,"formdata2")
+        if(formData['disabled'] == false){
+          formData['disabled'] = true
+          preValue.push(formData)
+          setCheckedData(preValue)
+      //     preValue.map((item,index)=>{
+      //       if(item['employeeId'] == formData.employeeId){
+      //         item['disabled'] = false
+      //         preValue.splice(index,1)
+      //         setCheckedData(preValue)
+      //       }else{
+      //         formData['disabled'] = true
+      //         preValue.push(formData)
+      //         setCheckedData(preValue)
+      //         console.log(checkedData,"checkbox")
+      //       }
+      // })
+  
+        }else if(formData['disabled'] == true){
+          preValue.map((item,index)=>{
+            if(item.employeeId == formData.employeeId){
+              item['disabled'] = false
+              preValue.splice(index,1)
+              setCheckedData(preValue)
+            }
+          })
+        }
+    console.log(checkedData,"checkedData")
  }
-console.log(checkedData,"hhkjhkhkj")
-  const handleExport = (e) =>{
+ const handleExport = (e) =>{
     const value = e.target.value
     FinanceAdminClearanceExport(value)
-//         
+  
 
+  }
+  const handleChecked = function (params) {
+      return params.columnApi.getRowGroupColumns().length === 0;
   }
   const statusRender = (e,value) => {
 
@@ -292,22 +327,37 @@ console.log(checkedData,"hhkjhkhkj")
             }}
             autoGroupColumnDef={{
               headerName: 'Employee Id',
-              field: 'employeeId',
+              field: 'employeeId',           
+              valueGetter:function (params) {
+                if (params.node.group) {
+                  return params.node.key;
+                } else {
+                  return params.data[params.autoGroupColumnDef.field];
+                }
+              },
+              headerCheckboxSelection: true,
               cellRenderer: 'agGroupCellRenderer',
               cellRendererParams: { checkbox: true},
             }}
+            pagination={true}
+            paginationPageSize={10}
+            debug={true}
+            rowGroupPanelShow={'always'}
+            pivotPanelShow={'always'}
+            enableRangeSelection={true}
             rowSelection={'multiple'}
             groupSelectsChildren={true}
             suppressRowClickSelection={true}
             suppressAggFuncInHeader={true}
             onRowSelected={(e) => onSelectionChanged(e)}
             onGridReady={onGridReady}
+           
           >
           <AgGridColumn width={80} type="checkbox" className="columnColor"  headerName="S No" pinned="left" lockPinned="true" 
           valueGetter={`node.rowIndex+1 + ${indexOfFirstRecord}`}></AgGridColumn>
-            <AgGridColumn className="columnColor"  headerCheckboxSelection={true}
+            <AgGridColumn className="columnColor"  headerCheckboxSelection={handleChecked}
               headerCheckboxSelectionFilteredOnly={true}
-              checkboxSelection={true}
+              checkboxSelection={handleChecked} 
               headerName="Employee Id" field="employeeId"></AgGridColumn>
             <AgGridColumn className="columnColor"  headerName="Employee Name" field="employeeName"></AgGridColumn>
             <AgGridColumn className="columnColor"  headerName="Cost Center Name" field="costCenterName"></AgGridColumn>
@@ -371,15 +421,17 @@ console.log(checkedData,"hhkjhkhkj")
                   </div>
                 ) 
                 :
-         <Pagination
-           itemClass="page-item"
-           linkClass="page-link"
-           activePage={currentPage}
-           itemsCountPerPage={recordPerPage}
-           totalItemsCount={totalRecords}
-           pageRangeDisplayed={pageRange}
-           onChange={handlePageChange}
-         />}
+        //  <Pagination
+        //    itemClass="page-item"
+        //    linkClass="page-link"
+        //    activePage={currentPage}
+        //    itemsCountPerPage={recordPerPage}
+        //    totalItemsCount={totalRecords}
+        //    pageRangeDisplayed={pageRange}
+        //    onChange={handlePageChange}
+        //  />
+        ''
+         }
      </div>
               </div>
               </div>   
@@ -388,4 +440,5 @@ console.log(checkedData,"hhkjhkhkj")
      </div>
   );
 };
+
 export default FinanaceAdminNoDueClearance;
