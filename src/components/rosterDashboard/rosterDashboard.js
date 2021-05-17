@@ -17,7 +17,7 @@ const RosterDashboard = () => {
     const years = [2019, 2020, 2021];
 
     const currentYear = new Date().getFullYear();
-    const currentMonth = new Date().getMonth();
+    const currentMonth = new Date().getMonth() + 1;
 
 
     useEffect(() => {
