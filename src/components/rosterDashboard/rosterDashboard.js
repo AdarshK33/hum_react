@@ -55,7 +55,12 @@ const RosterDashboard = () => {
         // adminRosterUtilisationSchedule('M', Number(e.target.value), storeID.storeId, 0, 0, 0, 0, 2021);
         // setCostCenter1(Number(e.target.value))
         setMonth(Number(e.target.value));
-        adminRosterCalculateUtilisation(costCenterList[0].costCentreName, Number(e.target.value), year)
+        if(costCenter1)
+        {
+            adminRosterCalculateUtilisation(costCenter1, Number(e.target.value), year);
+        } else {
+            adminRosterCalculateUtilisation(costCenterList[0].costCentreName, Number(e.target.value), year)
+        }
     }
 
     const yearSelected = e => {
@@ -68,7 +73,11 @@ const RosterDashboard = () => {
         // adminRosterUtilisationSchedule('M', Number(e.target.value), storeID.storeId, 0, 0, 0, 0, 2021);
         // setCostCenter1(Number(e.target.value))
         setYear(Number(e.target.value));
-        adminRosterCalculateUtilisation(costCenterList[0].costCentreName, month, Number(e.target.value))
+        if(costCenter1) {
+            adminRosterCalculateUtilisation(costCenter1, month, Number(e.target.value));
+        } else {
+            adminRosterCalculateUtilisation(costCenterList[0].costCentreName, month, Number(e.target.value));
+        }
     }
 
     const options1 = {
