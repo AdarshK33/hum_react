@@ -13,6 +13,8 @@ const GroupReducer = (state, action) => {
       return { ...state, getBonusDetailsById: action.payload };
     case "BONUS_UPDATE":
       return { ...state, bonusData: action.payload };
+    case "EXPORT_BONUS_LIST":
+      return { ...state, bonusListExport: action.payload };
   }
 };
 export default GroupReducer;

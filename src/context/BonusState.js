@@ -2,6 +2,7 @@ import React, { createContext, useReducer, useState } from "react";
 import { client } from "../utils/axios";
 import BonusReducer from "../reducers/BonusReducer";
 import { toast } from "react-toastify";
+import { saveAs } from "file-saver";
 
 const initial_state = {
   bonusData: [],
@@ -9,12 +10,13 @@ const initial_state = {
   total: {},
   data: [],
   getBonusDetailsById: [],
+  bonusListExport: {},
 };
 export const BonusContext = createContext();
 export const BonusProvider = (props) => {
   const [state, dispatch] = useReducer(BonusReducer, initial_state);
   const [loader, setLoader] = useState(false);
-
+  /*----------Api to create Bonus ------------*/
   const bonusCreate = (data) => {
     setLoader(true);
     client
@@ -23,6 +25,7 @@ export const BonusProvider = (props) => {
         state.bonusData = response.data.data;
         toast.info(response.data.message);
         setLoader(false);
+        viewBonus("all", 0);
         return dispatch({
           type: "BONUS_CREATE",
           payload: state.bonusData,
@@ -32,6 +35,7 @@ export const BonusProvider = (props) => {
         console.log(error);
       });
   };
+  /*--------------View list of created bonus structures -------------*/
   const viewBonus = (key, page) => {
     setLoader(true);
     client
@@ -55,6 +59,7 @@ export const BonusProvider = (props) => {
         console.log(error);
       });
   };
+  /*-----------------get bonus data using bonusId-----------------*/
   const viewBonusById = (id) => {
     setLoader(true);
     client.get("/api/v1/bonus/" + id).then((response) => {
@@ -66,18 +71,44 @@ export const BonusProvider = (props) => {
       });
     });
   };
-
+  /*------------------api to update bonus structure---------------------------------*/
   const updateBonus = (data) => {
     setLoader(true);
     client.post("/api/v1/bonus/update", data).then((response) => {
       state.bonusData = response.data.data;
       setLoader(false);
       toast.info(response.data.message);
+      viewBonus("all", 0);
+
       return dispatch({
         type: "BONUS_UPDATE",
         payload: state.bonusData,
       });
     });
+  };
+
+  const exportBonusList = () => {
+    client
+      .get("/api/v1/bonus/export", {
+        responseType: "arraybuffer",
+      })
+      .then((response) => {
+        console.log(response, "export excel ");
+        var blob = new Blob([response.data], {
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        });
+        var fileName = "bonusList.xlsx";
+        saveAs(blob, fileName);
+
+        toast.info(response.data.message);
+        return dispatch({
+          type: "EXPORT_BONUS_LIST",
+          payload: state.bonusListExport,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return (
     <BonusContext.Provider
@@ -87,7 +118,9 @@ export const BonusProvider = (props) => {
         setLoader,
         viewBonusById,
         updateBonus,
+        exportBonusList,
         loader: loader,
+        bonusListExport: state.bonusListExport,
         bonusData: state.bonusData,
         bonusDetails: state.bonusDetails,
         total: state.total,
