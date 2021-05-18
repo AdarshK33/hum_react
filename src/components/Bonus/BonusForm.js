@@ -21,8 +21,8 @@ const BonusForm = (props) => {
     department: "",
     designation: "",
   });
-  const [month, setMonth] = useState("");
-  const [year, setYear] = useState("");
+  const [month, setMonth] = useState(new Date());
+  const [year, setYear] = useState(new Date());
   const { departmentView, departmentName, designationView, designationName } =
     useContext(OfferContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
@@ -176,6 +176,7 @@ const BonusForm = (props) => {
                     onChange={(date) => setMonth(date)}
                     placeholderText="Select Start Month"
                     dateFormat="MM"
+                    minDate={new Date()}
                     showMonthYearPicker
                     showFullMonthYearPicker
                   />{" "}
@@ -192,6 +193,7 @@ const BonusForm = (props) => {
                     selected={year}
                     className="dateClass"
                     onChange={(date) => setYear(date)}
+                    minDate={new Date()}
                     placeholderText="Select Start Year"
                     dateFormat="yyyy"
                     showYearPicker
