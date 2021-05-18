@@ -75,6 +75,10 @@ import AdminNoDueClearance from "./components/Separation/AdminNoDueClearance/Adm
 import NoDueClearance from "./components/Separation/NoDueClearance";
 import ViewEditRelease from "./components/OfferReleaseandOnboarding/ViewOfferRelease";
 import Documents from "./components/OnBording/Documents";
+
+import EmployeeExitList from "./components/ManagerApproveEmployeExit/EmployeeExitList";
+import EmployeeExitAction from "./components/ManagerApproveEmployeExit/EmployeeExitAction";
+import ManagerInitiateExit from "./components/ManagerApproveEmployeExit/ManagerInitiateExit";
 import EmpResignation from "./components/employeeSeparation/empResignation";
 import EmployeeSeparationListing from "./components/managerSeparation/employeeSeparationListing";
 
@@ -208,8 +212,18 @@ const RoutePath = () => {
           />
           <Route
             path={`${process.env.PUBLIC_URL}/candidate-verification`}
+            // component={EmployeeExitList}
             component={CandidateVerification}
           />
+          <Route
+            path={`${process.env.PUBLIC_URL}/exit-action/:employeeid`}
+            component={EmployeeExitAction}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/manager-initiate-exit`}
+            component={ManagerInitiateExit}
+          />
+
           <Route
             path={`${process.env.PUBLIC_URL}/offer-relase-and-onboard`}
             component={ViewEditRelease}
@@ -218,6 +232,12 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/verification/:candidateId`}
             component={Verification}
           />
+          {/* <Route
+           
+            path={`${process.env.PUBLIC_URL}/employee-separation-listing`}
+            component={EmployeeExitList}
+          /> */}
+          {/*Rajasekhar */}
 
           <Route
             path={`${process.env.PUBLIC_URL}/employee-resignation`}
@@ -226,7 +246,7 @@ const RoutePath = () => {
 
           <Route
             path={`${process.env.PUBLIC_URL}/employee-separation-listing`}
-            component={EmployeeSeparationListing}
+            component={EmployeeExitList}
           />
 
           {state.MenuPermissionsRoute.map((e) => {

@@ -27,6 +27,20 @@
 .selectInputWrapper {
   width: 50% !important;
 } */
+.rag-red {
+  background-color: rgb(177, 47, 47);
+}
+.selectActionStatus{
+	float: right;
+	margin-top: 5px;
+    vertical-align: middle;
+    padding: 5px;
+    color: var(--ag-data-color, var(--ag-foreground-color, #181d1f));
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    border-radius: 5px;
+    background-color: #fff;
+
+}
 .nodue_title{
   background: #006EBB;
   font-weight: bold;

@@ -629,6 +629,7 @@ const PersonalInformation = (props) => {
   };
 
   const checkValidations = () => {
+    console.log("checkValidations");
     if (
       (PanNumberValidation() === true) &
       (AadharNumberValidation() === true) &
