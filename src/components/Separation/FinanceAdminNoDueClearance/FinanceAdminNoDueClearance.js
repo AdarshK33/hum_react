@@ -30,6 +30,7 @@ const FinanaceAdminNoDueClearance = () => {
 
   const [gridApi, setGridApi] = useState(null);
   const [checkedData,setCheckedData] = useState([])
+  const [checkedValue,setCheckedValue] = useState(false)
   const [gridColumnApi, setGridColumnApi] = useState(null);
   const [costCenter, setCostCenter] = useState("all")
   const [searchValue, setSearchValue] = useState("all");
@@ -178,18 +179,21 @@ const renderStatusOptions = (value) => {
     console.log(e)
     let preValue = checkedData
     let formData = e.data
-    
-  
-      console.log(formData.checkboxSelection,"formdata2")
+    if(checkedValue == false){
+      setCheckedValue(true)
+    }else if(checkedValue == true){
+      setCheckedValue(false)
+    }
+      console.log(checkedValue,"formdata2")
         if(formData['disabled'] == false){
           if(formData['deactivateProfile'] !== null && formData['fullAndFinalCompleteStatus'] !== null && formData['fullAndFinalProcessDate'] !== null && formData['fullAndFinalAmount'] !== null ){
             formData['disabled'] = true
             preValue.push(formData)
             setCheckedData(preValue)
-          }else{
+          }else if(checkedValue == false){
             toast.error("Selected profile is not updated")
           }
- 
+ console.log(checkedValue)
       //     preValue.map((item,index)=>{
       //       if(item['employeeId'] == formData.employeeId){
       //         item['disabled'] = false
@@ -204,6 +208,7 @@ const renderStatusOptions = (value) => {
       // })
   
         }else if(formData['disabled'] == true){
+          if(formData['deactivateProfile'] !== null && formData['fullAndFinalCompleteStatus'] !== null && formData['fullAndFinalProcessDate'] !== null && formData['fullAndFinalAmount'] !== null ){
           preValue.map((item,index)=>{
             if(item.employeeId == formData.employeeId){
               item['disabled'] = false
@@ -212,6 +217,7 @@ const renderStatusOptions = (value) => {
             }
           })
         }
+      }
     console.log(checkedData,"checkedData")
  }
  const handleExport = (e) =>{
