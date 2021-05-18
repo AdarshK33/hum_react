@@ -76,9 +76,10 @@ const WorkInformation = (props) => {
   }, []);
   useEffect(() => {
     let data =
-      candidateData !== undefined &&
-      candidateData.workInformation !== undefined &&
-      candidateData.workInformation;
+      workInfoViewData !== undefined &&
+      workInfoViewData !== null &&
+      workInfoViewData;
+
     if (data !== undefined && data !== null) {
       setState({
         employmentType: data.contractType,
@@ -92,6 +93,9 @@ const WorkInformation = (props) => {
         internship: data.internshipPeriod,
         noticePeriod: data.noticePeriod,
         managerId: data.managerId,
+        expatUser: data.expatUser,
+        nationality: data.nationality,
+        passportNumber: data.passportNumber,
       });
       if (data.costCentre !== null && data.costCentre !== undefined) {
         locationView(data.costCentre);
@@ -99,7 +103,7 @@ const WorkInformation = (props) => {
       }
     }
     // setWorkInformationData(props.workInfo);
-  }, [candidateData]);
+  }, [workInfoViewData]);
 
   useEffect(() => {
     if (locationName !== null && locationName !== undefined) {
@@ -212,6 +216,12 @@ const WorkInformation = (props) => {
     console.log("work information form id", workInfoViewData);
     e.preventDefault();
     console.log(state, "state");
+    if (
+      state.nationality !== "" &&
+      state.expatUser !== "" &&
+      state.passportNumber !== ""
+    ) {
+    }
     if (saveclick === false) {
       console.log("first click");
       setSaveclick(true);
@@ -303,7 +313,8 @@ const WorkInformation = (props) => {
   };
 
   return (
-    console.log(candidateData.workInformation),
+    console.log(state),
+    console.log(state.expatUser),
     (
       <Fragment>
         <Form onSubmit={submitHandler}>
@@ -323,7 +334,7 @@ const WorkInformation = (props) => {
             <Col sm={3}>
               <Form.Group>
                 <Form.Label>Type of Employment</Form.Label>
-                {candidateData.workInformation !== undefined &&
+                {/* {candidateData.workInformation !== undefined &&
                 candidateData.workInformation !== null ? (
                   <Form.Control
                     type="text"
@@ -331,27 +342,27 @@ const WorkInformation = (props) => {
                     className="form-control form-input"
                     readOnly
                   ></Form.Control>
-                ) : (
-                  <Form.Control
-                    as="select"
-                    value={state.employmentType}
-                    className="form-input"
-                    name="employmentType"
-                    onChange={changeHandler}
-                    disabled={disabled}
-                    required
-                  >
-                    <option value="">Select Employment Type</option>
-                    {shiftContractNames !== null &&
-                      shiftContractNames !== undefined &&
-                      shiftContractNames.length > 0 &&
-                      shiftContractNames.map((item) => {
-                        return (
-                          <option key={item.typeId}>{item.contractType}</option>
-                        );
-                      })}
-                  </Form.Control>
-                )}
+                ) : ( */}
+                <Form.Control
+                  as="select"
+                  value={state.employmentType}
+                  className="form-input"
+                  name="employmentType"
+                  onChange={changeHandler}
+                  disabled={disabled}
+                  required
+                >
+                  <option value="">Select Employment Type</option>
+                  {shiftContractNames !== null &&
+                    shiftContractNames !== undefined &&
+                    shiftContractNames.length > 0 &&
+                    shiftContractNames.map((item) => {
+                      return (
+                        <option key={item.typeId}>{item.contractType}</option>
+                      );
+                    })}
+                </Form.Control>
+                {/* )} */}
               </Form.Group>
             </Col>
 
@@ -428,6 +439,7 @@ const WorkInformation = (props) => {
                     onChange={(e) => setCollege(e.target.value)}
                     placeholder="Enter College Name"
                     className="form-input"
+                    disabled={disabled}
                     required
                   />
                 </Form.Group>
@@ -725,18 +737,21 @@ const WorkInformation = (props) => {
             )}
             {(state.employmentType === "Internship" ||
               state.employmentType === "Permanent" ||
+              state.employmentType === "permanent" ||
               state.employmentType === "Parttime") && (
               <Col sm={3}>
                 <Form.Group>
-                  <Form.Label>Local Expert</Form.Label>
+                  <Form.Label>Local Expact</Form.Label>
                   <Form.Control
                     as="select"
                     className="form-input"
                     name="expatUser"
                     value={state.expatUser}
+                    disabled={disabled}
                     onChange={changeHandler}
+                    required
                   >
-                    <option>Seclect </option>
+                    <option value="">Seclect </option>
                     <option value="1">Yes</option>
                     <option value="0">No</option>
                   </Form.Control>
@@ -753,6 +768,8 @@ const WorkInformation = (props) => {
                     value={state.passportNumber}
                     name="passportNumber"
                     onChange={changeHandler}
+                    disabled={disabled}
+                    required
                   />
                 </Form.Group>
               </Col>
@@ -769,8 +786,10 @@ const WorkInformation = (props) => {
                     value={state.nationality}
                     name="nationality"
                     onChange={changeHandler}
+                    disabled={disabled}
+                    required
                   >
-                    <option>Select Nationality</option>
+                    <option value="">Select Nationality</option>
                     {countryList !== null &&
                       countryList !== undefined &&
                       countryList.map((item) => {

@@ -5,6 +5,7 @@ import Select from "react-select";
 import "../OnBording/OnBoard.css";
 import { DocsVerifyContext } from "../../context/DocverificationState";
 import { useParams } from "react-router-dom";
+import DatePicker from "react-datepicker";
 
 const EditPFDeclaration = (props) => {
   const params = useParams();
@@ -28,6 +29,12 @@ const EditPFDeclaration = (props) => {
   const [state, setState] = useState({
     uanNumber: "",
   });
+  const [nominee, setNominee] = useState({
+    nomineeName: "",
+    nomineeRelationship: "",
+    nomineeAddress: "",
+  });
+  const [nomineeDOB, setNomineeDOB] = useState();
   const [uanNumber, setUanNumber] = useState("");
 
   const [required, setRequired] = useState(true);
@@ -71,12 +78,27 @@ const EditPFDeclaration = (props) => {
           setMemberOfPensionSchemeYes(true);
           setMemberOfPensionSchemeNo(false);
         }
-        if (pfDetails.pfNominationHoldHealth === false) {
-          setPfNominationHoldHealthYes(false);
-          setPfNominationHoldHealthNo(true);
-        } else {
+        if (
+          pfDetails.pfNominationHoldDeath !== undefined &&
+          pfDetails.pfNominationHoldHealth === false
+        ) {
           setPfNominationHoldHealthYes(true);
           setPfNominationHoldHealthNo(false);
+        } else {
+          setPfNominationHoldHealthYes(false);
+          setPfNominationHoldHealthNo(true);
+        }
+        if (
+          pfDetails.pfNomination !== null &&
+          pfDetails.pfNomination !== undefined &&
+          pfDetails.pfNominationHoldDeath === false
+        ) {
+          setNomineeDOB(new Date(pfDetails.pfNomination.dateOfBirth));
+          setNominee({
+            nomineeAddress: pfDetails.pfNomination.address,
+            nomineeName: pfDetails.pfNomination.nomineeName,
+            nomineeRelationship: pfDetails.pfNomination.relationship,
+          });
         }
       }
     }
@@ -482,6 +504,102 @@ const EditPFDeclaration = (props) => {
                   </div>
                 </Form.Group>
               </Col>
+              {pfNominationHoldHealthNo === true ? (
+                <div>
+                  {/* first Nominee */}
+                  <label>
+                    <b>Dependent</b>
+                  </label>
+                  <Row style={{ marginBottom: "2rem" }}>
+                    <Col sm={11}>
+                      <Row>
+                        <div className="col-sm-4">
+                          <Form.Group>
+                            <Form.Label>
+                              Dependent Name
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
+                            <Form.Control
+                              type="text"
+                              name="nomineeName"
+                              value={nominee.nomineeName}
+                              readOnly
+                            />
+                          </Form.Group>
+                        </div>
+                        <div className="col-sm-4">
+                          <Form.Group>
+                            <Form.Label>
+                              Relationship{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
+                            <Form.Control
+                              as="select"
+                              name="nomineeRelationship"
+                              value={nominee.nomineeRelationship}
+                              readOnly
+                            >
+                              <option value="">--Select--</option>
+                              <option value="Father">Father</option>
+                              <option value="Mother">Mother</option>
+                              <option value="Father-inlaw">
+                                Father-In-Law
+                              </option>
+                              <option value="Mother-Inlaw">
+                                Mother-In-Law
+                              </option>
+                              <option value="Spouse">Spouse</option>
+                              <option value="Child1">Child 1</option>
+                              <option value="Child2">Child 2</option>
+                            </Form.Control>
+                          </Form.Group>
+                        </div>
+                        <div className="col-sm-4">
+                          <Form.Group>
+                            <Form.Label>
+                              Date Of Birth
+                              <span style={{ color: "red" }}>*</span>
+                            </Form.Label>
+                            <div>
+                              <DatePicker
+                                className="form-control onBoard-view"
+                                selected={nomineeDOB}
+                                dateFormat="yyyy-MM-dd"
+                                readOnly
+                              />
+                            </div>
+                          </Form.Group>
+                        </div>
+                      </Row>
+                    </Col>
+                  </Row>
+                  <Row style={{ marginBottom: "1rem" }}>
+                    <Col sm={11}>
+                      <Row>
+                        <div className="col-sm-4">
+                          <Form.Group>
+                            <Form.Label>
+                              Address<span style={{ color: "red" }}>*</span>
+                            </Form.Label>
+                            <div>
+                              <Form.Control
+                                type="text"
+                                name="nomineeAddress"
+                                value={nominee.nomineeAddress}
+                                placeholder="Dependent Address"
+                                readOnly
+                              />
+                            </div>
+                          </Form.Group>
+                        </div>
+                      </Row>
+                    </Col>
+                    <Col sm={1}></Col>
+                  </Row>
+                </div>
+              ) : (
+                ""
+              )}
               {!candidateId && (
                 <Col sm={2}>
                   <div>

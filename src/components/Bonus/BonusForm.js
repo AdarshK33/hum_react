@@ -21,14 +21,10 @@ const BonusForm = (props) => {
     department: "",
     designation: "",
   });
-  const [month, setMonth] = useState("");
-  const [year, setYear] = useState("");
-  const {
-    departmentView,
-    departmentName,
-    designationView,
-    designationName,
-  } = useContext(OfferContext);
+  const [month, setMonth] = useState(new Date());
+  const [year, setYear] = useState(new Date());
+  const { departmentView, departmentName, designationView, designationName } =
+    useContext(OfferContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const { bonusCreate, bonusData } = useContext(BonusContext);
   const onCloseModal = () => {
@@ -50,6 +46,7 @@ const BonusForm = (props) => {
       year: parseInt(moment(year).format("YYYY")),
     };
     bonusCreate(data);
+    onCloseModal();
   };
   const handleChange = (e) => {
     setBonusList({ ...bonusList, [e.target.name]: e.target.value });
@@ -179,6 +176,7 @@ const BonusForm = (props) => {
                     onChange={(date) => setMonth(date)}
                     placeholderText="Select Start Month"
                     dateFormat="MM"
+                    minDate={new Date()}
                     showMonthYearPicker
                     showFullMonthYearPicker
                   />{" "}
@@ -195,6 +193,7 @@ const BonusForm = (props) => {
                     selected={year}
                     className="dateClass"
                     onChange={(date) => setYear(date)}
+                    minDate={new Date()}
                     placeholderText="Select Start Year"
                     dateFormat="yyyy"
                     showYearPicker

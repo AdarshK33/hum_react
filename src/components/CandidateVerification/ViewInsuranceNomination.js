@@ -666,7 +666,7 @@ const EditInsuranceNomination = (props) => {
                     <div className="col-sm-4">
                       <Form.Group>
                         <Form.Label>
-                          Datte Of Birth
+                          Date Of Birth
                           <span style={{ color: "red" }}>*</span>
                         </Form.Label>
                         <div
@@ -908,7 +908,7 @@ const EditInsuranceNomination = (props) => {
                       <div className="col-sm-4">
                         <Form.Group>
                           <Form.Label>
-                            Datte Of Birth
+                            Date Of Birth
                             <span style={{ color: "red" }}>*</span>
                           </Form.Label>
                           <div
@@ -1159,7 +1159,7 @@ const EditInsuranceNomination = (props) => {
                       <div className="col-sm-4">
                         <Form.Group>
                           <Form.Label>
-                            Datte Of Birth
+                            Date Of Birth
                             <span style={{ color: "red" }}>*</span>
                           </Form.Label>
                           <div
@@ -1332,7 +1332,7 @@ const EditInsuranceNomination = (props) => {
                       <div className="col-sm-4">
                         <Form.Group>
                           <Form.Label>
-                            &nbsp; *Datte Of Birth
+                            Date Of Birth
                             <span style={{ color: "red" }}>*</span>
                           </Form.Label>
                           <div
@@ -1492,7 +1492,7 @@ const EditInsuranceNomination = (props) => {
                       <div className="col-sm-4">
                         <Form.Group>
                           <Form.Label>
-                            Datte Of Birth
+                            Date Of Birth
                             <span style={{ color: "red" }}>*</span>
                           </Form.Label>
                           <div

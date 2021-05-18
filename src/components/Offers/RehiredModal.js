@@ -75,9 +75,9 @@ const RehiredModal = (props) => {
                   )}
                 </p>
               </div>
-              <div style={{ textAlign: "center" }}>
+              {/* <div style={{ textAlign: "center" }}>
                 <p> IS the candidate eligible for rehire</p>
-              </div>
+              </div> */}
               <div style={{ textAlign: "center" }}>
                 <Button
                   size="sm"

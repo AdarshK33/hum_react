@@ -66,6 +66,7 @@ const EditRemunerationInformation = (props) => {
   }, [candidateData.workInformation]);
 
   const submitHandler = (e) => {
+    console.log(saveclick);
     console.log("inside edit submit", candidateData);
     let remunerationinfo;
     let remunerationSubmitData =
@@ -96,28 +97,33 @@ const EditRemunerationInformation = (props) => {
       console.log("remuneration Info5", fixedGross, monthlyBonus, stipened);
       setStipenedError(true);
     } else if (
+      (console.log(".errorr........."),
       (user.role === "ADMIN" &&
-        (candidateData.workInformation.contractType !== "Internship" ||
-          workInfoViewData.contractType !== "Internship") &&
+        ((candidateData.workInformation !== null &&
+          candidateData.workInformation !== undefined &&
+          candidateData.workInformation.contractType !== "Internship") ||
+          (workInfoViewData !== null &&
+            workInfoViewData !== undefined &&
+            workInfoViewData.contractType !== "Internship")) &&
         (typeof fixedGross === "undefined" ||
           fixedGross === "" ||
           stipened <= 0 ||
           (fixedGross + "").includes(" ", "-", ".", "/", "+"))) ||
-      ((candidateData.workInformation.contractType === "Permanent" ||
-        workInfoViewData.contractType === "Permanent") &&
-        fixedGross < 18000) ||
-      ((candidateData.workInformation.contractType === "Parttime" ||
-        workInfoViewData.contractType === "Parttime") &&
-        (fixedGross < 90 || fixedGross > 200) &&
-        (typeof monthlyBonus === "undefined" ||
-          monthlyBonus === "" ||
-          (monthlyBonus + "").includes(" ", "-", ".", "/", "+") ||
-          ((candidateData.workInformation.contractType === "Permanent" ||
-            workInfoViewData.contractType === "Permanent") &&
-            monthlyBonus > 20) ||
-          ((candidateData.workInformation.contractType === "Parttime" ||
-            workInfoViewData.contractType === "Parttime") &&
-            monthlyBonus > 20)))
+        ((candidateData.workInformation.contractType === "Permanent" ||
+          workInfoViewData.contractType === "Permanent") &&
+          fixedGross < 18000) ||
+        ((candidateData.workInformation.contractType === "Parttime" ||
+          workInfoViewData.contractType === "Parttime") &&
+          (fixedGross < 90 || fixedGross > 200) &&
+          (typeof monthlyBonus === "undefined" ||
+            monthlyBonus === "" ||
+            (monthlyBonus + "").includes(" ", "-", ".", "/", "+") ||
+            ((candidateData.workInformation.contractType === "Permanent" ||
+              workInfoViewData.contractType === "Permanent") &&
+              monthlyBonus > 20) ||
+            ((candidateData.workInformation.contractType === "Parttime" ||
+              workInfoViewData.contractType === "Parttime") &&
+              monthlyBonus > 20))))
     ) {
       setFixedGrossError(true);
       setMonthlyBonusError(true);
@@ -137,9 +143,34 @@ const EditRemunerationInformation = (props) => {
         fixedGross > 18000
       ) {
         console.log("inside permanent");
+        remunerationinfo = {
+          candidateId: candidateData.candidateInformation.candidateId,
+          fixedGross:
+            fixedGross === undefined || fixedGross === null ? 0 : fixedGross,
+          monthlyBonus:
+            monthlyBonus === undefined || monthlyBonus === null
+              ? 0
+              : monthlyBonus,
+          remunerationId: remunerationViewData
+            ? remunerationViewData.remunerationId
+            : 0,
+          stipend: stipened === undefined || stipened === null ? 0 : stipened,
+        };
+
         setParmanentGrossLimit(false);
         setFixedGrossError(false);
         setPartTimeGrossLimit(false);
+        if (remunerationinfo.monthlyBonus > 0) {
+          setMonthlyBonusError(false);
+
+          remunerationUpdate(remunerationinfo);
+          viewCandidateId(candidateData.candidateInformation.candidateId);
+          remunerationView(candidateData.candidateInformation.candidateId);
+          setDisabled(true);
+          setEditButton(true);
+        } else {
+          setMonthlyBonusError(true);
+        }
       } else if (
         (candidateData.workInformation.contractType === "Parttime" ||
           workInfoViewData.contractType === "Parttime") &&
@@ -157,6 +188,35 @@ const EditRemunerationInformation = (props) => {
         setPartTimeGrossLimit(false);
         setFixedGrossError(false);
         setParmanentGrossLimit(false);
+        remunerationinfo = {
+          candidateId: candidateData.candidateInformation.candidateId,
+          fixedGross:
+            fixedGross === undefined || fixedGross === null ? 0 : fixedGross,
+          monthlyBonus:
+            monthlyBonus === undefined || monthlyBonus === null
+              ? 0
+              : monthlyBonus,
+          remunerationId: remunerationViewData
+            ? remunerationViewData.remunerationId
+            : 0,
+          stipend: stipened === undefined || stipened === null ? 0 : stipened,
+        };
+        console.log("remunearion inside ....", remunerationinfo);
+        setParmanentGrossLimit(false);
+        setFixedGrossError(false);
+        setPartTimeGrossLimit(false);
+        if (remunerationinfo.monthlyBonus > 0) {
+          setMonthlyBonusError(false);
+
+          remunerationUpdate(remunerationinfo);
+
+          viewCandidateId(candidateData.candidateInformation.candidateId);
+          remunerationView(candidateData.candidateInformation.candidateId);
+          setDisabled(true);
+          setEditButton(true);
+        } else {
+          setMonthlyBonusError(true);
+        }
       } else if (
         (candidateData.workInformation.contractType === "Parttime" ||
           candidateData.workInformation.contractType === "Permanent" ||
@@ -338,6 +398,7 @@ const EditRemunerationInformation = (props) => {
         parmanentGrossLimit === false &&
         partTimeGrossLimit === false &&
         bonusLimit === false
+        // saveclick === false
       ) {
         remunerationUpdate(remunerationinfo);
         viewCandidateId(candidateData.candidateInformation.candidateId);
@@ -356,176 +417,191 @@ const EditRemunerationInformation = (props) => {
   };
 
   return (
-    <Fragment>
-      <Form>
-        <Row>
-          <Fragment>
-            {(candidateData &&
-              candidateData.workInformation &&
-              candidateData.workInformation.contractType !== "Internship") ||
-            workInfoViewData.contractType !== "Internship" ? (
-              <Col sm={6}>
-                <Form.Group as={Row} controlId="formHorizontalEmail">
-                  {/* <Col sm={2}></Col> */}
-                  <Form.Label column sm={3}>
-                    Fixed Gross
-                  </Form.Label>
-                  <Col sm={6}>
-                    <Form.Control
-                      className="form-input"
-                      type="number"
-                      min="0"
-                      name="fixedGross"
-                      value={fixedGross}
-                      onChange={(event) => setFixedGross(event.target.value)}
-                      required
-                      placeholder="1000"
-                      disabled={disabled}
-                    />
-                    {fixedGrossError ? (
-                      <p style={{ color: "red" }}>This field cannot be empty</p>
-                    ) : ((candidateData &&
-                        candidateData.workInformation &&
-                        candidateData.workInformation.contractType ===
-                          "Parttime") ||
-                        workInfoViewData.contractType === "Parttime") &&
-                      (fixedGross < 90 || fixedGross > 200) ? (
-                      <p style={{ color: "red" }}>
-                        Value should be between 90 - 200{" "}
-                      </p>
-                    ) : ((candidateData &&
-                        candidateData.workInformation &&
-                        candidateData.workInformation.contractType ===
-                          "Permanent") ||
-                        workInfoViewData.contractType === "Permanent") &&
-                      fixedGross < 18000 ? (
-                      <p style={{ color: "red" }}>
-                        Value should be greater than 18000{" "}
-                      </p>
-                    ) : (
-                      ""
-                    )}
-                  </Col>
-                </Form.Group>
-              </Col>
-            ) : (
-              <Col sm={6}>
-                <Form.Group as={Row} controlId="formHorizontalEmail">
-                  <Col sm={2}></Col>
-                  <Form.Label column sm={3}>
-                    Stipend
-                  </Form.Label>
-                  <Col sm={6}>
-                    <Form.Control
-                      className="form-input"
-                      type="number"
-                      min="0"
-                      name="stipend"
-                      placeholder="1000"
-                      value={stipened}
-                      onChange={(event) => setStipened(event.target.value)}
-                      required
-                      disabled={disabled}
-                    />
-                    {stipenedError ? (
-                      <p style={{ color: "red" }}>This field cannot be empty</p>
-                    ) : (
-                      ""
-                    )}
-                  </Col>
-                </Form.Group>
-              </Col>
-            )}
+    console.log(monthlyBonusError),
+    (
+      <Fragment>
+        <Form>
+          <Row>
+            <Fragment>
+              {(candidateData &&
+                candidateData.workInformation !== undefined &&
+                candidateData.workInformation !== null &&
+                candidateData.workInformation.contractType !== null &&
+                candidateData.workInformation.contractType !== undefined &&
+                candidateData.workInformation.contractType !== "Internship") ||
+              (workInfoViewData !== null &&
+                workInfoViewData !== undefined &&
+                workInfoViewData.contractType !== "Internship") ? (
+                <Col sm={6}>
+                  <Form.Group as={Row} controlId="formHorizontalEmail">
+                    {/* <Col sm={2}></Col> */}
+                    <Form.Label column sm={3}>
+                      Fixed Gross
+                    </Form.Label>
+                    <Col sm={6}>
+                      <Form.Control
+                        className="form-input"
+                        type="number"
+                        min="0"
+                        name="fixedGross"
+                        value={fixedGross}
+                        onChange={(event) => setFixedGross(event.target.value)}
+                        required
+                        placeholder="1000"
+                        disabled={disabled}
+                      />
+                      {fixedGrossError ? (
+                        <p style={{ color: "red" }}>
+                          This field cannot be empty
+                        </p>
+                      ) : ((candidateData &&
+                          candidateData.workInformation !== null &&
+                          candidateData.workInformation !== undefined &&
+                          candidateData.workInformation.contractType ===
+                            "Parttime") ||
+                          (workInfoViewData !== null &&
+                            workInfoViewData !== undefined &&
+                            workInfoViewData.contractType === "Parttime")) &&
+                        (fixedGross < 90 || fixedGross > 200) ? (
+                        <p style={{ color: "red" }}>
+                          Value should be between 90 - 200{" "}
+                        </p>
+                      ) : ((candidateData &&
+                          candidateData.workInformation &&
+                          candidateData.workInformation.contractType ===
+                            "Permanent") ||
+                          workInfoViewData.contractType === "Permanent") &&
+                        fixedGross < 18000 ? (
+                        <p style={{ color: "red" }}>
+                          Value should be greater than 18000{" "}
+                        </p>
+                      ) : (
+                        ""
+                      )}
+                    </Col>
+                  </Form.Group>
+                </Col>
+              ) : (
+                <Col sm={6}>
+                  <Form.Group as={Row} controlId="formHorizontalEmail">
+                    <Col sm={2}></Col>
+                    <Form.Label column sm={3}>
+                      Stipend
+                    </Form.Label>
+                    <Col sm={6}>
+                      <Form.Control
+                        className="form-input"
+                        type="number"
+                        min="0"
+                        name="stipend"
+                        placeholder="1000"
+                        value={stipened}
+                        onChange={(event) => setStipened(event.target.value)}
+                        required
+                        disabled={disabled}
+                      />
+                      {stipenedError ? (
+                        <p style={{ color: "red" }}>
+                          This field cannot be empty
+                        </p>
+                      ) : (
+                        ""
+                      )}
+                    </Col>
+                  </Form.Group>
+                </Col>
+              )}
 
-            {(candidateData &&
-              candidateData.workInformation &&
-              candidateData.workInformation.contractType !== "Internship") ||
-            (workInfoViewData &&
-              workInfoViewData.contractType !== "Internship") ? (
-              <Fragment>
-                {user ? (
-                  user.role === "ADMIN" ? (
-                    <Col sm={6}>
-                      <Form.Group as={Row} controlId="formHorizontalEmail">
-                        {/* <Form.Label column sm={3}> */}
-                        Monthly Bonus ( % ){/* </Form.Label> */}
-                        <Col sm={6}>
-                          <Form.Control
-                            className="form-input"
-                            type="number"
-                            min="0"
-                            name="monthlyBonus"
-                            value={monthlyBonus}
-                            onChange={(event) =>
-                              setMonthlyBonus(event.target.value)
-                            }
-                            required
-                            placeholder="0"
-                            disabled={disabled}
-                          />
-                          {monthlyBonusError ? (
-                            <p style={{ color: "red" }}>
-                              This field cannot be empty
-                            </p>
-                          ) : monthlyBonus > 20 ? (
-                            <p style={{ color: "red" }}>Maximum Bonus 20 %</p>
-                          ) : (
-                            ""
-                          )}
-                        </Col>
-                      </Form.Group>
-                    </Col>
+              {(candidateData &&
+                candidateData.workInformation &&
+                candidateData.workInformation.contractType !== "Internship") ||
+              (workInfoViewData &&
+                workInfoViewData.contractType !== "Internship") ? (
+                <Fragment>
+                  {user ? (
+                    user.role === "ADMIN" ? (
+                      <Col sm={6}>
+                        <Form.Group as={Row} controlId="formHorizontalEmail">
+                          {/* <Form.Label column sm={3}> */}
+                          Monthly Bonus ( % ){/* </Form.Label> */}
+                          <Col sm={6}>
+                            <Form.Control
+                              className="form-input"
+                              type="number"
+                              min="0"
+                              name="monthlyBonus"
+                              value={monthlyBonus}
+                              onChange={(event) =>
+                                setMonthlyBonus(event.target.value)
+                              }
+                              required
+                              placeholder="0"
+                              disabled={disabled}
+                            />
+                            {monthlyBonusError ? (
+                              <p style={{ color: "red" }}>
+                                This field cannot be empty
+                              </p>
+                            ) : monthlyBonus > 20 ? (
+                              <p style={{ color: "red" }}>Maximum Bonus 20 %</p>
+                            ) : (
+                              ""
+                            )}
+                          </Col>
+                        </Form.Group>
+                      </Col>
+                    ) : (
+                      <Col sm={6}>
+                        <Form.Group as={Row} controlId="formHorizontalEmail">
+                          {/* <Form.Label column sm={3}> */}
+                          Monthly Bonus ( % ){/* </Form.Label> */}
+                          <Col sm={6}>
+                            <Form.Control
+                              className="form-input"
+                              type="number"
+                              min="0"
+                              name="monthlyBonus"
+                              readOnly
+                              disabled={disabled}
+                              placeholder="0"
+                            />
+                            {/* {monthlyBonusError ? (
+                              <p style={{ color: "red" }}>
+                                This field cannot be empty
+                              </p>
+                            ) : (
+                              ""
+                            )} */}
+                          </Col>
+                        </Form.Group>
+                      </Col>
+                    )
                   ) : (
-                    <Col sm={6}>
-                      <Form.Group as={Row} controlId="formHorizontalEmail">
-                        {/* <Form.Label column sm={3}> */}
-                        Monthly Bonus ( % ){/* </Form.Label> */}
-                        <Col sm={6}>
-                          <Form.Control
-                            className="form-input"
-                            type="number"
-                            min="0"
-                            name="monthlyBonus"
-                            readOnly
-                            disabled={disabled}
-                            placeholder="0"
-                          />
-                          {monthlyBonusError ? (
-                            <p style={{ color: "red" }}>
-                              This field cannot be empty
-                            </p>
-                          ) : (
-                            ""
-                          )}
-                        </Col>
-                      </Form.Group>
-                    </Col>
-                  )
-                ) : (
-                  ""
-                )}
-              </Fragment>
+                    ""
+                  )}
+                </Fragment>
+              ) : (
+                ""
+              )}
+            </Fragment>
+          </Row>
+
+          <Row>
+            <Col sm={5}></Col>
+            <Col sm={2}>
+              <Button onClick={submitHandler}>Save</Button>
+            </Col>
+            {editButton === true ? (
+              <Col sm={2}>
+                <Button onClick={editHandler}>Edit</Button>
+              </Col>
             ) : (
               ""
             )}
-          </Fragment>
-        </Row>
-
-        <Row>
-          <Col sm={5}></Col>
-          <Col sm={2}>
-            <Button onClick={submitHandler}>Save</Button>
-          </Col>
-          {editButton === true ? (
-            <Col sm={2}>
-              <Button onClick={editHandler}>Edit</Button>
-            </Col>
-          ) : (
-            ""
-          )}
-        </Row>
-      </Form>
-    </Fragment>
+          </Row>
+        </Form>
+      </Fragment>
+    )
   );
 };
 

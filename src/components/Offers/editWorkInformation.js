@@ -273,14 +273,29 @@ const EditWorkInformation = () => {
                 />
               </Form.Group>
             </Col>
-            <Col sm={3}>
-              <Form.Group className="reactDate">
-                <Form.Label>Type of Employment</Form.Label>
-                {candidateData.workInformation === null ? (
+            {state.employmentType !== "" &&
+            candidateData.workInformation !== "" &&
+            candidateData.workInformation !== null &&
+            candidateData.workInformation !== undefined ? (
+              <Col sm={3}>
+                <Form.Group>
+                  <Form.Label>Type of Employment</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={state.employmentType}
+                    className="form-control form-input"
+                    readOnly
+                  />
+                </Form.Group>
+              </Col>
+            ) : (
+              <Col sm={3}>
+                <Form.Group className="reactDate">
+                  <Form.Label>Type of Employment</Form.Label>
                   <Form.Control
                     as="select"
                     value={state.employmentType}
-                    className="form-input"
+                    className="form-input "
                     name="employmentType"
                     onChange={changeHandler}
                     disabled={disabled}
@@ -295,16 +310,9 @@ const EditWorkInformation = () => {
                         );
                       })}
                   </Form.Control>
-                ) : (
-                  <Form.Control
-                    type="text"
-                    value={state.employmentType}
-                    className="form-control form-input"
-                    readOnly
-                  />
-                )}
-              </Form.Group>
-            </Col>
+                </Form.Group>
+              </Col>
+            )}
             <Col sm={3}>
               <Form.Group>
                 <Form.Label>Designation</Form.Label>
@@ -677,15 +685,17 @@ const EditWorkInformation = () => {
               state.employmentType === "Parttime") && (
               <Col sm={3}>
                 <Form.Group>
-                  <Form.Label>Local Expert</Form.Label>
+                  <Form.Label>Local Expact</Form.Label>
                   <Form.Control
                     as="select"
                     className="form-input"
                     name="expatUser"
                     value={state.expatUser}
                     onChange={changeHandler}
+                    disabled={disabled}
+                    required
                   >
-                    <option>Seclect </option>
+                    <option value=" ">Seclect </option>
                     <option value="1">Yes</option>
                     <option value="0">No</option>
                   </Form.Control>
@@ -702,6 +712,8 @@ const EditWorkInformation = () => {
                     value={state.passportNumber}
                     name="passportNumber"
                     onChange={changeHandler}
+                    disabled={disabled}
+                    required
                   />
                 </Form.Group>
               </Col>
@@ -718,8 +730,10 @@ const EditWorkInformation = () => {
                     value={state.nationality}
                     name="nationality"
                     onChange={changeHandler}
+                    disabled={disabled}
+                    required
                   >
-                    <option>Select Nationality</option>
+                    <option value="">Select Nationality</option>
                     {countryList !== null &&
                       countryList !== undefined &&
                       countryList.map((item) => {

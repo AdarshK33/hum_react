@@ -125,7 +125,7 @@ const CandidateList = () => {
                 {/* <th scope="col">Candidate Profile</th> */}
                 <th scope="col">Application Date</th>
                 <th scope="col">Manager Document Verification Status</th>
-                <th scope="col">Admin Document Verification Status</th>
+                <th scope="col">Verification Team Document Status</th>
                 <th scope="col">UAN Verification Status</th>
                 <th scope="col">Overall Status</th>
                 <th scope="col">Action</th>
@@ -183,8 +183,8 @@ const CandidateList = () => {
 
                       <td>
                         <Link to={"/verification/" + item.candidateId}>
-                          {/* <Link to={"/admin_no_due_clearance"}> */}
-                          {/* <Link to={"/admin-finance-clearance"}> */}
+                               {/* <Link to={"/admin_no_due_clearance"}> */}
+                              {/* <Link to={"/admin-finance-clearance"}> */}
                           {/* <Link to={"/no_due_clearance"}> */}
                           {/* <Link to={"/finance-clearance"}> */}
                           <AlertCircle
