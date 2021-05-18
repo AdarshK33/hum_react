@@ -26,6 +26,7 @@ import { CandidateProvider } from "./context/CandidateState";
 import { OfferProvider } from "./context/OfferState";
 import { OnBoardProvider } from "./context/OnBoardState";
 import { DocsVerificationProvider } from "./context/DocverificationState";
+import { EmploeeSeparationProvider } from "./context/EmployeeSeparationState";
 import { BonusProvider } from "./context/BonusState";
 import {
   SeparationContext,
@@ -64,19 +65,21 @@ function Root() {
                                     <OnBoardProvider>
                                       <CandidateProvider>
                                         <DocsVerificationProvider>
-                                          <SeparationProvider>
-                                            <BonusProvider>
-                                              <BrowserRouter basename={"/"}>
-                                                <ScrollContext>
-                                                  <WithAxios>
-                                                    <CandidateWithAxios>
-                                                      <RoutePath />
-                                                    </CandidateWithAxios>
-                                                  </WithAxios>
-                                                </ScrollContext>
-                                              </BrowserRouter>
-                                            </BonusProvider>
-                                          </SeparationProvider>
+                                          <EmploeeSeparationProvider>
+                                            <SeparationProvider>
+                                              <BonusProvider>
+                                                <BrowserRouter basename={"/"}>
+                                                  <ScrollContext>
+                                                    <WithAxios>
+                                                      <CandidateWithAxios>
+                                                        <RoutePath />
+                                                      </CandidateWithAxios>
+                                                    </WithAxios>
+                                                  </ScrollContext>
+                                                </BrowserRouter>
+                                              </BonusProvider>
+                                            </SeparationProvider>
+                                          </EmploeeSeparationProvider>
                                         </DocsVerificationProvider>
                                       </CandidateProvider>
                                     </OnBoardProvider>
