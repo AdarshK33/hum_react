@@ -302,7 +302,7 @@ const EmployeeForm = (props) => {
         panNumber: null,
         personalEmail: state.personalEmail,
         photo: null,
-        refered: true,
+        referred: yesChecked === true ? true : false,
         rehired: yesValue === true ? true : false,
         status: 1,
         verificationStatus: 0,
@@ -343,7 +343,7 @@ const EmployeeForm = (props) => {
         panNumber: null,
         personalEmail: state.personalEmail,
         photo: null,
-        refered: true,
+        referred: yesChecked === true ? true : false,
         rehired: yesValue === true ? true : false,
 
         status: 1,
