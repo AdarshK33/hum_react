@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import Breadcrumb from "../../common/breadcrumb";
-import { SeparationContext } from "../../../context/SepearationState";
+import { SeparationContext } from "../../../context/SeparationState";
 import {Button,Container, Modal, Row, Col, Form, Table} from "react-bootstrap";
 import Pagination from 'react-js-pagination';
 import Select from 'react-select'
@@ -19,9 +19,6 @@ import {
 
 import ReactExport from 'react-data-export'
 
-const ExcelFile = ReactExport.ExcelFile;
-const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
-const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 const FinanaceAdminNoDueClearance = () => {
   const { total,loader,viewFinanceAdminClearanceList,
     financeAdminNoDueClearanceList,
@@ -62,26 +59,21 @@ useEffect(() => {
   CostCenter();
 }, []);
 
-const handlePageChange = (pageNumber) => {
-  setPageCount(pageNumber - 1);
-  console.log("page change",pageNumber,pageCount)
+// const handlePageChange = (pageNumber) => {
+//   setPageCount(pageNumber - 1);
+//   console.log("page change",pageNumber,pageCount)
 
-    // setCurrentPage(pageNumber);
-    // if (searchValue !== "all" ||costCenter !== "all") {
-    //   viewFinanceAdminClearanceList(searchValue,pageNumber-1,costCenter);
-    // } else {
-    //   viewFinanceAdminClearanceList("all",pageNumber-1,"all");
-    // }
-    // setCurrentRecords(financeAdminNoDueClearanceList);
+//     setCurrentPage(pageNumber);
+//     if (searchValue !== "all" ||costCenter !== "all") {
+//       viewFinanceAdminClearanceList(searchValue,pageNumber-1,costCenter);
+//     } else {
+//       viewFinanceAdminClearanceList("all",pageNumber-1,"all");
+//     }
+//     setCurrentRecords(financeAdminNoDueClearanceList);
 
-   
-}
-var checkboxSelection = function (params) {
-  return params.columnApi.getRowGroupColumns().length === 0;
-};
-var headerCheckboxSelection = function (params) {
-  return params.columnApi.getRowGroupColumns().length === 0;
-};
+// }
+
+
   const searchHandler = (e) => {
     setSearchValue(e.target.value)
 
@@ -149,11 +141,6 @@ const renderStatusOptions = (value) => {
   
 
     )
-//     <label className="switch">
-//     <input className="switch-input" type="checkbox" id="checkbox" name="fullAndFinalCompleteStatus" value={value.data.fullAndFinalCompleteStatus} onChange={(e) => statusRender(e,value)}/>
-// 	<span className="switch-label" data-on="Yes" data-off="No"></span> 
-// 	<span className="switch-handle"></span> 
-// </label>
 
   };
   const renderStatusOptionsTwo = (value) => {
@@ -182,7 +169,7 @@ const renderStatusOptions = (value) => {
   };
   const handleUploadSettlement = () => {
     if (fileUpload !== undefined && fileUpload !== null) {
-      FinanceClearanceUploadSettlement(fileUpload)
+      FinanceClearanceUploadSettlement(fileUpload ,searchValue, pageCount,costCenter)
     } else {
       toast.error("Please select a file to upload")
     }
@@ -195,9 +182,14 @@ const renderStatusOptions = (value) => {
   
       console.log(formData.checkboxSelection,"formdata2")
         if(formData['disabled'] == false){
-          formData['disabled'] = true
-          preValue.push(formData)
-          setCheckedData(preValue)
+          if(formData['deactivateProfile'] !== null && formData['fullAndFinalCompleteStatus'] !== null && formData['fullAndFinalProcessDate'] !== null && formData['fullAndFinalAmount'] !== null ){
+            formData['disabled'] = true
+            preValue.push(formData)
+            setCheckedData(preValue)
+          }else{
+            toast.error("Selected profile is not updated")
+          }
+ 
       //     preValue.map((item,index)=>{
       //       if(item['employeeId'] == formData.employeeId){
       //         item['disabled'] = false

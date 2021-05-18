@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import Breadcrumb from "../common/breadcrumb";
-import { SeparationContext } from "../../context/SepearationState";
+import { SeparationContext } from "../../context/SeparationState";
 import {Button,Container, Modal, Row, Col, Form, Table} from "react-bootstrap";
 import Pagination from 'react-js-pagination';
 import Select from 'react-select'
@@ -216,9 +216,9 @@ const handleActionStatus = (e)=>{
           </div>
           <div className="col-sm-4">
           <select className="selectActionStatus"  name="itClearanceStatus"  onChange={(e) => handleActionStatus(e)}>
-        <option value={"all"}> select </option>
+        <option value={"all"}> select Action</option>
           <option value="Save"> Save </option>
-          <option value="UnSave"> UnSave </option>
+          <option value="NotSaved"> UnSave </option>
         </select>
         </div>
           <div className="col-sm-4">

@@ -1,7 +1,7 @@
 
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import Breadcrumb from "../common/breadcrumb";
-import { SeparationContext } from "../../context/SepearationState";
+import { SeparationContext } from "../../context/SeparationState";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -233,9 +233,9 @@ const FinanceClearanceList = () => {
           </div>
           <div className="col-sm-4">
           <select className="selectActionStatus"  name="itClearanceStatus"  onChange={(e) => handleActionStatus(e)}>
-        <option value={"all"}> select </option>
+        <option value={"all"}> select Action </option>
           <option value="Save"> Save </option>
-          <option value="UnSave"> UnSave </option>
+          <option value="NotSaved"> UnSave </option>
         </select>
         </div>
           <div className="col-sm-4">

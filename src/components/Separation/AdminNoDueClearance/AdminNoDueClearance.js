@@ -1,5 +1,5 @@
 import React, { useEffect, Fragment, useContext, useState } from 'react'
-import { SeparationContext } from "../../../context/SepearationState";
+import { SeparationContext } from "../../../context/SeparationState";
 import { AdminContext } from '../../../context/AdminState'
 import Select from 'react-select'
 import Breadcrumb from "../../common/breadcrumb";
