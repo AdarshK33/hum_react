@@ -15,6 +15,9 @@ const GroupReducer = (state, action) => {
     case "UPDATE_EMPLOYEE_SEPARATION":
       return { ...state, updateResponse: action.payload };
 
+    case "EMPLOYEE_PROFILE_DATA_BY_ID":
+      return { ...state, employeeProfileData: action.payload };
+
     default:
       return state;
   }

@@ -25,7 +25,7 @@
   --disabled-inner: #e1e6f9;
   -webkit-appearance: none;
   -moz-appearance: none;
-  height: 30px;
+  height: 28px;
   width: 5px;
   outline: none;
   display: inline-block;
@@ -72,7 +72,7 @@
   box-shadow: 0 0 0 var(--focus);
 }
 .boxField_2 input[type="checkbox"]:not(.switch) {
-  width: 30px;
+  width: 28px;
 }
 .boxField_2 input[type="checkbox"]:not(.switch):after {
   opacity: var(--o, 0);
@@ -116,7 +116,7 @@
   top: 2px;
   border-radius: 70%;
   width: 30px;
-  height: 30px;
+  height: 28px;
   background: var(--ab, var(--border));
   transform: translateX(var(--x, 0));
 }

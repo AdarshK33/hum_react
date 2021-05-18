@@ -12,6 +12,7 @@ const initial_state = {
   ModeOfSeparationData: {},
   updateResponse: {},
   employeeId: "",
+  employeeProfileData: {},
 };
 
 export const EmploeeSeparationProvider = (props) => {
@@ -28,6 +29,27 @@ export const EmploeeSeparationProvider = (props) => {
       type: "EMPLOYEE_ID",
       payload: state.employeeId,
     });
+  };
+
+  const ViewEmployeeProfile = () => {
+    setLoader(true);
+    client
+      .get("/api/v1/employee/profile")
+      .then((response) => {
+        state.employeeProfileData = response.data.data;
+
+        setLoader(false);
+        console.log("--->", state.employeeProfileData);
+        console.log("response of employee profile", response);
+
+        return dispatch({
+          type: "EMPLOYEE_PROFILE_DATA_BY_ID",
+          payload: state.employeeProfileData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const ViewEmployeeDataById = (employeeId) => {
@@ -124,6 +146,8 @@ export const EmploeeSeparationProvider = (props) => {
         ModeOfSeparationView,
         UpdateEmplyoeeExist,
         changeEmployeeId,
+        ViewEmployeeProfile,
+        employeeProfileData: state.employeeProfileData,
         employeeId: state.employeeId,
         updateResponse: state.updateResponse,
         ModeOfSeparationData: state.ModeOfSeparationData,
