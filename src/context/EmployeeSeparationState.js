@@ -138,6 +138,25 @@ export const EmploeeSeparationProvider = (props) => {
       });
   };
 
+  const CreateEmplyoeeExist = (createInfo) => {
+    setLoader(true);
+    console.log("INSIDE API CALL ");
+    client
+      .post("/api/v1/separation/employee-exit/create", createInfo)
+      .then((response) => {
+        state.updateResponse = response.data.data;
+        toast.info(response.data.message);
+        console.log("updated response", state.updateResponse);
+        return dispatch({
+          type: "UPDATE_EMPLOYEE_SEPARATION",
+          payload: state.updateResponse,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <EmployeeSeparationContext.Provider
       value={{
@@ -147,6 +166,7 @@ export const EmploeeSeparationProvider = (props) => {
         UpdateEmplyoeeExist,
         changeEmployeeId,
         ViewEmployeeProfile,
+        CreateEmplyoeeExist,
         employeeProfileData: state.employeeProfileData,
         employeeId: state.employeeId,
         updateResponse: state.updateResponse,
