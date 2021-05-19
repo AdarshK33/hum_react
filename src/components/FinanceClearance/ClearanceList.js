@@ -51,7 +51,7 @@ const FinanceClearanceList = () => {
   const [costCenter, setCostCenter] = useState("all");
   const [searchValue, setSearchValue] = useState("all");
   const [actionStatus, setActionStatus] = useState("all");
-  const [financeStatusValue,setFinanceStatusValue] = useState(null)
+  const [enableValue , SetEnableValue] = useState(false)
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
   const recordPerPage = 10;
@@ -109,19 +109,23 @@ const FinanceClearanceList = () => {
     const value = e.target.value
     FinanceClearanceExport(value)
   }
-  const handleActionStatus = (e)=>{
-    let statusValue = e.target.value
-    setActionStatus(statusValue)
+  const handleActionStatus = (options)=>{
+    let data2 = options !== null?options.value:''
+    setActionStatus(data2)
     if (actionStatus !== "" && actionStatus !== "all") {
-      separationListView(searchValue, pageCount, statusValue,costCenter);
+      separationListView(searchValue, pageCount, data2,costCenter);
     } else {
       separationListView("all", pageCount,"all" ,"all");
     } 
   }
   const renderStatusOptions = (value) => {
+    console.log(value,"dropdown finance")
+    const enableData = value.data.disabled
+    console.log(enableData,'//////')
+    SetEnableValue(enableData)
     return (
       <div>
-        <select
+        <select disabled ={value.data.disabled}
           name="financeClearanceStatus" className="selectpicker" 
           value={value.data.financeClearanceStatus}
           onChange={(e) => statusRender(e, value)}
@@ -141,7 +145,6 @@ const FinanceClearanceList = () => {
 
   const handleSave = (value) => {
     const formData = value.data;
-    formData["financeClearanceStatus"] = financeStatusValue;
     console.log(formData, pageCount, "handlelsave");
     if(formData.financeClearanceStatus !== "" && formData.financeClearanceStatus !== null ){
      if( formData.financeClearanceStatus == 0 && formData.financeRemarks !==null && formData.financeRemarks !== undefined && formData.financeRemarks !==""){
@@ -163,12 +166,14 @@ const FinanceClearanceList = () => {
     console.log(pageCount, "pageCount");
     separationListView(searchValue, pageCount,actionStatus, costCenter);
   }, [costCenter, searchValue, pageCount,actionStatus]);
+
   const statusRender = (e, value) => {
-    const status = e.target.value;
+    const statusData = e.target.value;
     const clearanceStatus = value.data;
-    setFinanceStatusValue(status)
-    // clearanceStatus["financeClearanceStatus"] = status;
-    // clearanceStatus["disabled"] = true;
+    if(clearanceStatus['itClearanceStatus'] !== null){
+      clearanceStatus['itClearanceStatus']= statusData
+    }
+   
   };
   console.log(separationList, "noDueClearance");
   const renderButton = (e) => {
@@ -207,6 +212,11 @@ const FinanceClearanceList = () => {
   const employeeIdHandle = (e) => {
     console.log(e, "employeeId");
   };
+  const options = [
+    {value: 'all', label: 'All'},
+    { value: 'Save', label: 'Save' },
+    { value: 'NotSaved', label: 'Not Saved' },
+  ];
   return (
     <div>
       <Fragment>
@@ -232,11 +242,22 @@ const FinanceClearanceList = () => {
             />
           </div>
           <div className="col-sm-4">
-          <select className="selectActionStatus"  name="itClearanceStatus"  onChange={(e) => handleActionStatus(e)}>
+          {/* <select className="selectActionStatus"  name="itClearanceStatus"  onChange={(e) => handleActionStatus(e)}>
         <option value={"all"}> select Action </option>
           <option value="Save"> Save </option>
-          <option value="NotSaved"> UnSave </option>
-        </select>
+          <option value="NotSaved"> Not Saved </option>
+        </select> */}
+               <Col className="selectList">
+           <br/>
+            <label className="title" style={{padding:"6px"}}>Select Action</label> &nbsp;&nbsp;
+          <Select
+          className="selectInputWrapper"
+           name="filters"
+          placeholder="Select Action"
+          onChange={handleActionStatus}         
+          options={options}
+                required isSearchable />
+            </Col>
         </div>
           <div className="col-sm-4">
           <Col className="selectList">
@@ -319,6 +340,7 @@ const FinanceClearanceList = () => {
                       <AgGridColumn
                         className="columnColor"
                         headerName="Finance Amount To Be Recovered"
+                        editable ={enableValue}
                         field="financeAmount"
                       ></AgGridColumn>
 
@@ -326,7 +348,7 @@ const FinanceClearanceList = () => {
                         className="columnColor"
                         field="financeClearanceStatus"
                         headerName="Finance Clearance"
-                        editable={true}
+                        editable ={enableValue}
                         colId="status"
                         cellRendererFramework={renderStatusOptions}
                         cellEditorParams={{
@@ -335,15 +357,14 @@ const FinanceClearanceList = () => {
                         }}
                       ></AgGridColumn>
                       <AgGridColumn
-                      // cellClassRules={{
-                      //         'rag-red': `x == null`,
-                      // }}
                         className="columnColor"
+                        editable ={enableValue}
                         headerName="Finance Clearance Remarks"
                         field="financeRemarks"
                       ></AgGridColumn>
                       <AgGridColumn
                         className="columnColor"
+                        editable ={enableValue}
                         headerName="Finance Clearance UpdatedBy"
                         field="financeClearanceUpdatedBy"
                       ></AgGridColumn>

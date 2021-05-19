@@ -37,21 +37,22 @@ const FinanaceAdminNoDueClearance = () => {
 /*-----------------Pagination------------------*/
 const [currentPage, setCurrentPage] = useState(1);
 const recordPerPage = 10;
-const totalRecords = financeAdminNoDueClearanceList !== null && financeAdminNoDueClearanceList !== undefined && financeAdminNoDueClearanceList.length;
+const totalRecords = total
+// const totalRecords = financeAdminNoDueClearanceList !== null && financeAdminNoDueClearanceList !== undefined && financeAdminNoDueClearanceList.length;
 const pageRange = 10;
 const indexOfLastRecord = currentPage * recordPerPage;
 const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
-// const [currentRecords, setCurrentRecords] = useState([]);
-const currentRecords = financeAdminNoDueClearanceList !== null && financeAdminNoDueClearanceList !== undefined ? financeAdminNoDueClearanceList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
+ const [currentRecords, setCurrentRecords] = useState([]);
+// const currentRecords = financeAdminNoDueClearanceList !== null && financeAdminNoDueClearanceList !== undefined ? financeAdminNoDueClearanceList.slice(indexOfFirstRecord, indexOfLastRecord) : [];
 
 useEffect(() => {
   console.log(pageCount,"pageCount")
   viewFinanceAdminClearanceList(searchValue, pageCount,costCenter);
-}, [costCenter,searchValue]);
+}, [costCenter,searchValue,pageCount]);
 
 useEffect(() => {
   if (financeAdminNoDueClearanceList !== null && financeAdminNoDueClearanceList !== undefined) {
-    // setCurrentRecords(financeAdminNoDueClearanceList);
+    setCurrentRecords(financeAdminNoDueClearanceList);
   }
 }, [financeAdminNoDueClearanceList, currentRecords]);
 
@@ -60,19 +61,19 @@ useEffect(() => {
   CostCenter();
 }, []);
 
-// const handlePageChange = (pageNumber) => {
-//   setPageCount(pageNumber - 1);
-//   console.log("page change",pageNumber,pageCount)
+const handlePageChange = (pageNumber) => {
+  setPageCount(pageNumber - 1);
+  console.log("page change",pageNumber,pageCount)
 
-//     setCurrentPage(pageNumber);
-//     if (searchValue !== "all" ||costCenter !== "all") {
-//       viewFinanceAdminClearanceList(searchValue,pageNumber-1,costCenter);
-//     } else {
-//       viewFinanceAdminClearanceList("all",pageNumber-1,"all");
-//     }
-//     setCurrentRecords(financeAdminNoDueClearanceList);
+    setCurrentPage(pageNumber);
+    if (searchValue !== "all" ||costCenter !== "all") {
+      viewFinanceAdminClearanceList(searchValue,pageNumber-1,costCenter);
+    } else {
+      viewFinanceAdminClearanceList("all",pageNumber-1,"all");
+    }
+    setCurrentRecords(financeAdminNoDueClearanceList);
 
-// }
+}
 
 
   const searchHandler = (e) => {
@@ -191,7 +192,7 @@ const renderStatusOptions = (value) => {
             preValue.push(formData)
             setCheckedData(preValue)
           }else if(checkedValue == false){
-            toast.error("Selected profile is not updated")
+            toast.error("Details for the selected record is not present")
           }
  console.log(checkedValue)
       //     preValue.map((item,index)=>{
@@ -337,8 +338,8 @@ const renderStatusOptions = (value) => {
               cellRenderer: 'agGroupCellRenderer',
               cellRendererParams: { checkbox: true},
             }}
-            pagination={true}
-            paginationPageSize={10}
+            // pagination={true}
+            // paginationPageSize={10}
             debug={true}
             rowGroupPanelShow={'always'}
             pivotPanelShow={'always'}
@@ -419,16 +420,15 @@ const renderStatusOptions = (value) => {
                   </div>
                 ) 
                 :
-        //  <Pagination
-        //    itemClass="page-item"
-        //    linkClass="page-link"
-        //    activePage={currentPage}
-        //    itemsCountPerPage={recordPerPage}
-        //    totalItemsCount={totalRecords}
-        //    pageRangeDisplayed={pageRange}
-        //    onChange={handlePageChange}
-        //  />
-        ''
+         <Pagination
+           itemClass="page-item"
+           linkClass="page-link"
+           activePage={currentPage}
+           itemsCountPerPage={recordPerPage}
+           totalItemsCount={totalRecords}
+           pageRangeDisplayed={pageRange}
+           onChange={handlePageChange}
+         />
          }
      </div>
               </div>

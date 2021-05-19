@@ -73,7 +73,7 @@ export const SeparationProvider = (props) => {
           "&page=" +
           page +
           "&size=" +
-          100 +
+          10 +
           "&storeId=" +
           costCenter
           )
