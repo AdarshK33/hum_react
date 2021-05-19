@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import Breadcrumb from "../../common/breadcrumb";
-import { SeparationContext } from "../../../context/SeparationState";
+import { SeparationContext } from "../../../context/SepearationState";
 import {Button,Container, Modal, Row, Col, Form, Table} from "react-bootstrap";
 import Pagination from 'react-js-pagination';
 import Select from 'react-select'

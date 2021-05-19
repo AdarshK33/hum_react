@@ -31,7 +31,7 @@ import { BonusProvider } from "./context/BonusState";
 import {
   SeparationContext,
   SeparationProvider,
-} from "./context/SeparationState";
+} from "./context/SepearationState";
 import RoutePath from "./Route";
 import WithAxios from "./utils/axios";
 import CandidateWithAxios from "./utils/canditateLogin";

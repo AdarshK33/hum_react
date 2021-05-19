@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
 import { AppContext } from "../../context/AppState";
 import "../common/style.css";
-import { SeparationContext } from "../../context/SeparationState";
+import { SeparationContext } from "../../context/SepearationState";
 
 const EmpResignation = () => {
   const [regDate, setRegDate] = useState(new Date());
@@ -51,7 +51,7 @@ const EmpResignation = () => {
       managerId: approver,
       modeOfSeparationId: 1,
       modeOfSeparationReasonId: 1,
-      withdraw: "string",
+      withdraw: null,
     };
     console.log("create", create);
     empResign(create);

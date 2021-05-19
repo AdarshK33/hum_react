@@ -1,7 +1,7 @@
 
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import Breadcrumb from "../common/breadcrumb";
-import { SeparationContext } from "../../context/SeparationState";
+import { SeparationContext } from "../../context/SepearationState";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
