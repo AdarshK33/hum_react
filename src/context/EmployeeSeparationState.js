@@ -13,6 +13,7 @@ const initial_state = {
   updateResponse: {},
   employeeId: "",
   employeeProfileData: {},
+  relivingLetterData: [],
 };
 
 export const EmploeeSeparationProvider = (props) => {
@@ -137,6 +138,17 @@ export const EmploeeSeparationProvider = (props) => {
         console.log(error);
       });
   };
+  const fetchRelievingLetterData = (empId) => {
+    client
+      .get("/api/v1/separation/employee-exit/letter/" + empId)
+      .then((response) => {
+        state.relivingLetterData = response.data.data;
+        return dispatch({
+          type: "FETCH_RELIEVING_LETTER_DATA",
+          payload: state.relivingLetterData,
+        });
+      });
+  };
 
   const CreateEmplyoeeExist = (createInfo) => {
     setLoader(true);
@@ -167,12 +179,14 @@ export const EmploeeSeparationProvider = (props) => {
         changeEmployeeId,
         ViewEmployeeProfile,
         CreateEmplyoeeExist,
+        fetchRelievingLetterData,
         employeeProfileData: state.employeeProfileData,
         employeeId: state.employeeId,
         updateResponse: state.updateResponse,
         ModeOfSeparationData: state.ModeOfSeparationData,
         EmployeeSeparationList: state.EmployeeSeparationList,
         employeeData: state.employeeData,
+        relivingLetterData: state.relivingLetterData,
         loader: loader,
         total: state.total,
       }}

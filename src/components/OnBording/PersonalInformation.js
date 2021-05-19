@@ -318,19 +318,19 @@ const PersonalInformation = (props) => {
         setMarried(false);
       }
 
-      if (
-        candidateProfileData !== undefined &&
-        candidateProfileData.candidateReferences !== null &&
-        candidateProfileData.candidateReferences !== undefined &&
-        candidateProfileData.candidateReferences[0].employeeName !== null &&
-        candidateProfileData.candidateReferences[0].employeeName !== undefined
-      ) {
-        setEmpName1(candidateProfileData.candidateReferences[0].employeeName);
-        setDesignation1(
-          candidateProfileData.candidateReferences[0].designation
-        );
-        setRefEmail1(candidateProfileData.candidateReferences[0].email);
-      }
+      // if (
+      //   candidateProfileData !== undefined &&
+      //   candidateProfileData.candidateReferences !== null &&
+      //   candidateProfileData.candidateReferences !== undefined &&
+      //   candidateProfileData.candidateReferences[0].employeeName !== null &&
+      //   candidateProfileData.candidateReferences[0].employeeName !== undefined
+      // ) {
+      //   setEmpName1(candidateProfileData.candidateReferences[0].employeeName);
+      //   setDesignation1(
+      //     candidateProfileData.candidateReferences[0].designation
+      //   );
+      //   setRefEmail1(candidateProfileData.candidateReferences[0].email);
+      // }
     }
   }, [candidatePersonalInfoData]);
   useEffect(() => {
@@ -629,6 +629,7 @@ const PersonalInformation = (props) => {
   };
 
   const checkValidations = () => {
+    console.log("checkValidations");
     if (
       (PanNumberValidation() === true) &
       (AadharNumberValidation() === true) &
@@ -638,7 +639,6 @@ const PersonalInformation = (props) => {
       (disabilityValidation() === true) &
       (nationalityValidation() === true) &
       (bloodGroupValidation() === true) &
-      (empName1Validation() === true) &
       (PassPortNumberValidations() === true) &
       (disabilityDocValidation() === true) &
       (validateCheckBoxesForGender(
