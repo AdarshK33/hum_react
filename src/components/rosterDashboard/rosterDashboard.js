@@ -29,11 +29,13 @@ const RosterDashboard = () => {
         // setCostCenter1(costCenterList[0].costCentreName);
         console.log(currentYear, currentMonth, 'year and month')
         // console.log(costCenterList[0].costCentreName, costCenter1, 'asdasdasd')
+        setMonth(currentMonth);
+        setYear(currentYear);
             if(costCenter1) {
-                adminRosterCalculateUtilisation(costCenter1);
+                adminRosterCalculateUtilisation(costCenter1, currentMonth, currentYear);
             } else {
                 setCostCenter1(costCenterList[0].costCentreName);
-                adminRosterCalculateUtilisation(costCenterList[0].costCentreName);
+                adminRosterCalculateUtilisation(costCenterList[0].costCentreName, currentMonth, currentYear);
             }
         }
 
