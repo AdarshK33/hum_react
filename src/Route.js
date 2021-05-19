@@ -81,6 +81,8 @@ import EmployeeExitAction from "./components/ManagerApproveEmployeExit/EmployeeE
 import ManagerInitiateExit from "./components/ManagerApproveEmployeExit/ManagerInitiateExit";
 import EmpResignation from "./components/employeeSeparation/empResignation";
 import EmployeeSeparationListing from "./components/managerSeparation/employeeSeparationListing";
+import CostCenterManagerExitListing from "./components/CostcenterManagerApproveExit/exitListing";
+import viewEmployeeInfo from "./components/CostcenterManagerApproveExit/viewEmployeeInfo";
 
 import ViewBonus from "./components/Bonus/ViewBonus";
 const RoutePath = () => {
@@ -248,7 +250,14 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/employee-separation-listing`}
             component={EmployeeExitList}
           />
-
+          <Route
+            path={`${process.env.PUBLIC_URL}/exit-approval`}
+            component={CostCenterManagerExitListing}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/employee-info/:employeeid`}
+            component={viewEmployeeInfo}
+          />
           {state.MenuPermissionsRoute.map((e) => {
             return (
               <div>
