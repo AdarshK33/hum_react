@@ -38,8 +38,7 @@ const NoDueClearance = () => {
   const [costCenter, setCostCenter] = useState("all")
   const [searchValue, setSearchValue] = useState("all");
   const [actionStatus, setActionStatus] = useState("all");
-  const [itStatusValue,setITStatusValue] = useState(null)
-
+  // const [enableValue , SetEnableValue] = useState(false)
 /*-----------------Pagination------------------*/
 const [currentPage, setCurrentPage] = useState(1);
 const recordPerPage = 10;
@@ -104,16 +103,18 @@ const handleCostCenter = (options) => {
      viewITClearanceList("all",pageCount,"all","all");
   }
 } 
-const handleActionStatus = (e)=>{
-  let statusValue = e.target.value
-  setActionStatus(statusValue)
+const handleActionStatus = (options)=>{
+  let data2 = options !== null?options.value:''
+  setActionStatus(data2)
   if (actionStatus !== "" && actionStatus !== "all") {
-    viewITClearanceList(searchValue, pageCount, statusValue,costCenter);
+    viewITClearanceList(searchValue, pageCount, data2,costCenter);
   } else {
     viewITClearanceList("all", pageCount,"all" ,"all");
   } 
 }
   const renderStatusOptions = (value) => {
+    // const enableData = value.data.disabled
+    // SetEnableValue(enableData)
     return (
       <div>
         <select className="selectpicker"  name="itClearanceStatus" value={value.data.itClearanceStatus} onChange={(e) => statusRender(e,value)}>
@@ -129,12 +130,17 @@ const handleActionStatus = (e)=>{
     setGridApi(params.api);
     setGridColumnApi(params.columnApi);
   };
-
+  const statusRender = (e,value) => {
+    e.preventDefault();
+    var statusData = e.target.value
+    const clearanceStatus = value.data
+      clearanceStatus['itClearanceStatus']= statusData
+  
+  };
   const handleSave = (value) => {
     const formData = value.data    
-    formData['itClearanceStatus']= itStatusValue
-
-     if(formData.itClearanceStatus !== "" && formData.itClearanceStatus !== null ){
+    console.log(formData,"handlsave")
+     if(formData.itClearanceStatus !== "" && formData.itClearanceStatus !== null){
       if( formData.itClearanceStatus == 0 && formData.itRemarks !==null && formData.itRemarks !== undefined && formData.itRemarks !==""){
         setCleranceData(formData)
         updateITClearanceList(formData,searchValue, pageCount,actionStatus,costCenter)
@@ -156,12 +162,6 @@ const handleActionStatus = (e)=>{
 
   }, [costCenter,searchValue,pageCount,actionStatus]);
 
-  const statusRender = (e,value) => {
-    const status = e.target.value
-    const clearanceStatus = value.data
-    setITStatusValue(status)
- 
-  };
   const renderButton = (e) => {
     var buttonValue = e.data.disabled
     return (
@@ -189,7 +189,12 @@ const handleActionStatus = (e)=>{
       </button>
     );
   };
-
+  const options = [
+    {value: 'all', label: 'All'},
+    { value: 'Save', label: 'Save' },
+    { value: 'NotSaved', label: 'Not Saved' },
+  ];
+  
   return (
     <div>
       <Fragment>
@@ -215,11 +220,22 @@ const handleActionStatus = (e)=>{
             />
           </div>
           <div className="col-sm-4">
-          <select className="selectActionStatus"  name="itClearanceStatus"  onChange={(e) => handleActionStatus(e)}>
-        <option value={"all"}> select </option>
+          {/* <select className="selectActionStatus"  name="itClearanceStatus"  onChange={(e) => handleActionStatus(e)}>
+        <option value={"all"}> select Action</option>
           <option value="Save"> Save </option>
-          <option value="UnSave"> UnSave </option>
-        </select>
+          <option value="NotSaved"> Not saved </option>
+        </select> */}
+                  <Col className="selectList">
+           <br/>
+            <label className="title" style={{padding:"6px"}}>Select Action</label> &nbsp;&nbsp;
+          <Select
+          className="selectInputWrapper"
+           name="filters"
+          placeholder="Select Action"
+          onChange={handleActionStatus}         
+          options={options}
+                required isSearchable />
+            </Col>
         </div>
           <div className="col-sm-4">
           <Col className="selectList">
@@ -264,12 +280,15 @@ const handleActionStatus = (e)=>{
             <AgGridColumn className="columnColor" editable="false" headerName="Manager Name" field="managerName"></AgGridColumn>
             <AgGridColumn  className="columnColor" editable="false" headerName="Joining Date" field="joiningDate"></AgGridColumn>
             <AgGridColumn className="columnColor" editable="false" headerName="Last Working Day" field="lastWorkingDay"></AgGridColumn>
-            <AgGridColumn className="columnColor" headerName="IT Amount To Be Recovered" field="itAmount"></AgGridColumn>
-
+            <AgGridColumn className="columnColor" 
+            // editable= {enableValue}
+ headerName="IT Amount To Be Recovered" field="itAmount"></AgGridColumn>
+                    
                     <AgGridColumn
                       className="columnColor"
                       field="itClearanceStatus"
                       headerName="IT Clearance"
+                      // editable= {enableValue}
                       colId="status"
                       cellRendererFramework={renderStatusOptions}
                       cellEditorParams={{
@@ -279,11 +298,13 @@ const handleActionStatus = (e)=>{
                     ></AgGridColumn>
                     <AgGridColumn
                       className="columnColor"
+                      // editable= {enableValue}
                       headerName="IT Clearance Remarks"
                       field="itRemarks"
                     ></AgGridColumn>
                     <AgGridColumn
                       className="columnColor"
+                      // editable= {enableValue}
                       headerName="IT Clearance UpdatedBy"
                       field="itClearanceUpdatedBy"
                     ></AgGridColumn>
