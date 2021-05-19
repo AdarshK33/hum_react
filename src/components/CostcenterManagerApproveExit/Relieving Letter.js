@@ -9,21 +9,43 @@ const RelievingLetter = (props) => {
   const [showLetter, setLetter] = useState(false);
   const { relievingLetterData } = useContext(EmployeeSeparationContext);
   const [showSignature, setSignature] = useState(false);
+  const [message, setMessage] = useState(false);
   const handleClose = () => {
     setLetter(false);
   };
   useEffect(() => {
-    if (props.previewLetter === true) {
+    if (props.previewLetter) {
+      console.log(props.previewLetter);
       setLetter(true);
     }
-  });
+  }, [props.previewLetter]);
   const addSignature = () => {
     setSignature(true);
   };
+  const handleSave = () => {
+    setLetter(false);
+    setMessage(true);
+  };
+  const handleClosePopup = () => {
+    setMessage(false);
+  };
   return (
-    console.log(relievingLetterData),
+    console.log(showLetter),
+    console.log(props.previewLetter),
     (
       <Fragment>
+        <Modal show={message} onHide={() => handleClosePopup()} centered>
+          <Container style={{ textAlign: "center", margin: "2rem 0 2rem 0" }}>
+            <Modal.Body>
+              <p style={{ marginBottom: "2rem" }}>
+                {" "}
+                The details have been saved successfully. The relieving letter
+                will be sent to the employee on {moment().format("DD-MM-YYYY")}
+              </p>
+              <Button onClick={() => handleClosePopup()}>OK</Button>
+            </Modal.Body>
+          </Container>
+        </Modal>
         <Modal
           show={showLetter}
           onHide={() => handleClose()}
@@ -31,7 +53,7 @@ const RelievingLetter = (props) => {
           // className="text-center"
         >
           <Container className="mb-5">
-            {/* <Modal.Header closeButton></Modal.Header> */}
+            <Modal.Header closeButton style={{ border: "none" }}></Modal.Header>
             <Modal.Body>
               <p className="float-left mb-5">
                 {" "}
@@ -39,7 +61,6 @@ const RelievingLetter = (props) => {
               </p>
               <br></br>
               <h5 className="text-center"> RELIEVING & EXPERIENCE LETTER</h5>
-              <hr></hr>
               <div className="float-left">
                 <div className="mt-1 mb-5">
                   <p>Name:</p>
@@ -94,7 +115,12 @@ const RelievingLetter = (props) => {
                   </div>
                   {showSignature && (
                     <div className="text-center mt-5 mb-5">
-                      <button className="signatureButtons">Save</button>
+                      <button
+                        className="signatureButtons"
+                        onClick={() => handleSave()}
+                      >
+                        Save
+                      </button>
                     </div>
                   )}
                 </div>

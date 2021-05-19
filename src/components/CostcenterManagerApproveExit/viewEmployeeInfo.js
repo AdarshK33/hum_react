@@ -713,10 +713,7 @@ const EmployeeExitAction = () => {
                       <button
                         // disabled={previewLetter | showSuccessModal}
                         className="resignationButton"
-                        onClick={
-                          () => setPreviewLetter(true)
-                          //   fetchRelievingLetterData(paramsemployeeId))
-                        }
+                        onClick={() => setPreviewLetter(true)}
                       >
                         View Resignation Letter
                       </button>

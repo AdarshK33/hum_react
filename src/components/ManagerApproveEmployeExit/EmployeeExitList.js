@@ -236,7 +236,13 @@ const EmployeeExitList = () => {
                             <td>{item.lastWorkingDate}</td>
                             <td>{item.modeOfSeparationReasonId}</td>
                             <td>{item.noticePeriod}</td>
-                            <td>{item.status}</td>
+                            <td>
+                              {item.status === 0
+                                ? "Pending"
+                                : item.status === 2
+                                ? "Approve"
+                                : ""}
+                            </td>
 
                             <td>
                               <Link to={"/exit-action/" + item.employeeId}>

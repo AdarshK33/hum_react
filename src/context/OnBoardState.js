@@ -41,9 +41,11 @@ const initial_state = {
 // git
 export const OnBoardProvider = (props) => {
   const [state, dispatch] = useReducer(OnBoardReducer, initial_state);
+  const [loader, setLoader] = useState(false);
   const updatePersonalInfo = (updateData) => {
     console.log("Info data -----");
     console.log(updateData);
+    setLoader(true);
     return candidate
       .post("/api/v2/candidate/update", updateData)
       .then((response) => {
@@ -55,6 +57,7 @@ export const OnBoardProvider = (props) => {
         );
         toast.info(response.data.message);
         console.log(response.data.message);
+        setLoader(false);
         return dispatch({
           type: "UPDATE_PERSONAL_INFO",
           payload: state.PersonalInfoResponse,
@@ -66,6 +69,7 @@ export const OnBoardProvider = (props) => {
   };
 
   const CandidatePersonalInfo = (candidateId) => {
+    setLoader(true);
     candidate
       .get("/api/v2/candidate/" + candidateId)
       .then((response) => {
@@ -75,6 +79,7 @@ export const OnBoardProvider = (props) => {
           state.candidatePersonalInfoData
         );
         // toast.info(response.data.message);
+        setLoader(false);
         return dispatch({
           type: "CANDIDATE_PERSONAL_INFODATA",
           payload: state.candidatePersonalInfoData,
@@ -87,11 +92,13 @@ export const OnBoardProvider = (props) => {
   const EmergencyContactCreate = (createData) => {
     console.log("EmergencyContactCreate data -----");
     console.log(createData);
+    setLoader(true);
     return candidate
       .post("/api/v2/candidate/contact/create", createData)
       .then((response) => {
         toast.info(response.data.message);
         console.log(response.data.message);
+        setLoader(false);
         return dispatch({
           type: "EMERGENCY_CONTACT_CREATE",
           payload: state.emergencyContactCreate,
@@ -104,11 +111,13 @@ export const OnBoardProvider = (props) => {
   const EmergencyContactUpdate = (updateData) => {
     console.log("EmergencyContactUpdate data -----");
     console.log(updateData);
+    setLoader(true);
     return candidate
       .post("/api/v2/candidate/contact/update", updateData)
       .then((response) => {
         toast.info(response.data.message);
         console.log(response.data.message);
+        setLoader(false);
         return dispatch({
           type: "EMERGENCY_CONTACT_UPDATE",
           payload: state.emergencyContactCreate,
@@ -119,6 +128,7 @@ export const OnBoardProvider = (props) => {
       });
   };
   const EmergencyContactView = (data) => {
+    setLoader(true);
     candidate
       .get(`/api/v2/candidate/contact/view/${data}`)
       .then((response) => {
@@ -128,6 +138,7 @@ export const OnBoardProvider = (props) => {
           response,
           state.emergencyContactView
         );
+        setLoader(false);
         return dispatch({
           type: "EMERGENCY_CONTACT_VIEW",
           payload: state.emergencyContactView,
@@ -191,11 +202,13 @@ export const OnBoardProvider = (props) => {
       });
   };
   const CandidateProfile = () => {
+    setLoader(true);
     candidate
       .get("/api/v2/candidate/profile")
       .then((response) => {
         state.candidateProfileData = response.data.data;
         console.log("CandidateProfile Response ", state.candidateProfileData);
+        setLoader(false);
         return dispatch({
           type: "CANDIDATE_PROFILE",
           payload: state.candidateProfileData,
@@ -287,6 +300,7 @@ export const OnBoardProvider = (props) => {
   };
 
   const InsuranceNominationDelete = (nomineeId) => {
+    setLoader(true);
     candidate
       .get("/api/v2/candidate/insurance-nomination/delete/" + nomineeId)
       .then((response) => {
@@ -296,6 +310,7 @@ export const OnBoardProvider = (props) => {
           "Candidate Insurance Nomination delete ",
           state.deleteNomineeData
         );
+        setLoader(false);
         return dispatch({
           type: "DELETE_NOMINEE_DATA",
           payload: state.deleteNomineeData,
@@ -306,6 +321,7 @@ export const OnBoardProvider = (props) => {
       });
   };
   const DeleteAllInsuranceNominations = (candidteId) => {
+    setLoader(true);
     candidate
       .get(
         "/api/v2/candidate/insurance-nomination/delete?candidateId=" +
@@ -318,6 +334,7 @@ export const OnBoardProvider = (props) => {
           "Candidate Insurance Nomination delete All ",
           state.deleteAllNomineeData
         );
+        setLoader(false);
         return dispatch({
           type: "DELETE_ALL_NOMINEE_DATA",
           payload: state.deleteAllNomineeData,

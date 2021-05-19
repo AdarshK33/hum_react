@@ -121,11 +121,13 @@ export const SeparationProvider = (props) => {
     // };
 
     // console.log(formData, "updateAdminFinanceClearanceList separation context");
+    setLoader(true);
     return client
       .post("/api/v1/separation/full-and-final/edit", value)
       .then((response) => {
         toast.info(response.data.message);
         viewFinanceAdminClearanceList(key, page, costCenter);
+        setLoader(false);
         return dispatch({
           type: "UPDATE_ADMIN_FINANCE_SEPARATION",
           payload: state.updateAdminFinanceClearance,
@@ -136,6 +138,7 @@ export const SeparationProvider = (props) => {
       });
   };
   const viewAdminITClearanceList = (key, page, costCenter) => {
+    setLoader(true);
     client
       .get(
         "/api/v1/separation/full-and-final/view/no-due-clearance?key=" +
@@ -158,6 +161,7 @@ export const SeparationProvider = (props) => {
           "=====GET FETCH_ADMIN_NODUECLEARANCE_LIST API response=====",
           response.data.data
         );
+        setLoader(false);
         return dispatch({
           type: "FETCH_ADMIN_NODUECLEARANCE_LIST",
           payload: state.adminNoDueClearanceList,
@@ -207,7 +211,7 @@ export const SeparationProvider = (props) => {
       });
   };
 
-  const FinanceClearanceUploadSettlement = (file) => {
+  const FinanceClearanceUploadSettlement = (file, key, page, costCenter) => {
     console.log(file, "file in update ");
     const formData = new FormData();
     formData.append("file", file, file.name);
@@ -221,6 +225,8 @@ export const SeparationProvider = (props) => {
         console.log(response, "upload");
 
         toast.info(response.data.message);
+        viewFinanceAdminClearanceList(key, page, costCenter);
+
         return dispatch({
           type: "FINANCECLEARANCE_UPLOAD_SETTLEMENT",
           payload: state.financeClearanceUpload,
@@ -281,6 +287,7 @@ export const SeparationProvider = (props) => {
   };
   const NoDueClearanceClearanceExport = () => {
     console.log("NoDueClearanceClearanceExport separation context");
+    setLoader(true);
     return client
       .get("/api/v1/separation/it-clearance/download", {
         responseType: "arraybuffer",
@@ -295,6 +302,7 @@ export const SeparationProvider = (props) => {
         saveAs(blob, fileName);
 
         toast.info(response.data.message);
+        setLoader(false);
         return dispatch({
           type: "NO_DUE_CLEARANCE_EXPORT",
           payload: state.noDueClearanceClearanceExport,
@@ -306,6 +314,7 @@ export const SeparationProvider = (props) => {
   };
   const FinanceClearanceExport = () => {
     console.log("FinanceClearanceExport separation context");
+    setLoader(true);
     return client
       .get("/api/v1/separation/finance-clearance/download", {
         responseType: "arraybuffer",
@@ -319,6 +328,7 @@ export const SeparationProvider = (props) => {
         saveAs(blob, fileName);
 
         toast.info(response.data.message);
+        setLoader(false);
         return dispatch({
           type: "FINANCECLEARANCE_EXPORT",
           payload: state.financeClearanceExport,
@@ -352,11 +362,13 @@ export const SeparationProvider = (props) => {
       disabled: true,
     };
     console.log(formData, "updateClearanceList separation context");
+    setLoader(true);
     return client
       .post("/api/v1/separation/it-clearance/edit", formData)
       .then((response) => {
         toast.info(response.data.message);
         viewITClearanceList(key, page, actionStatus, costCenter);
+        setLoader(false);
         return dispatch({
           type: "UPDATE_SEPARATION_LIST",
           payload: state.updateNoDueClearanceList,
@@ -395,6 +407,7 @@ export const SeparationProvider = (props) => {
         state.clearanceList = response.data.data;
         console.log(response.data.data);
         separationListView(key, page, actionStatus, costCenter);
+        setLoader(false);
         dispatch({
           type: "SAVE_FINANCE_LIST",
           payload: state.clearanceList,
@@ -405,13 +418,11 @@ export const SeparationProvider = (props) => {
   };
 
   const empResign = (create) => {
-    setLoader(true);
     console.log("response of loader outside-----", loader);
     return client
       .post("api/v1/separation/employee-exit/create", create)
       .then((response) => {
         toast.info(response.data.message);
-        setLoader(false);
         console.log("response of loader -----", loader);
         return dispatch({
           type: "EMP_RESIGN",

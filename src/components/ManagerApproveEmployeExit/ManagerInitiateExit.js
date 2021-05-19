@@ -652,7 +652,7 @@ const ManagerInitiateExit = () => {
             reason: "string",
             reasonForResignation: "string",
             rehireRemark: "string",
-            status: 0,
+            status: 2,
             withdraw: "string",
           };
           const data = {
@@ -686,7 +686,7 @@ const ManagerInitiateExit = () => {
             reason: null,
             reasonForResignation: null,
             rehireRemark: null,
-            status: 0,
+            status: 2,
             withdraw: null,
           };
           const createExitData = {
@@ -744,7 +744,7 @@ const ManagerInitiateExit = () => {
             reason: "string",
             reasonForResignation: "string",
             rehireRemark: "string",
-            status: 0,
+            status: 2,
             withdraw: "string",
           };
 
