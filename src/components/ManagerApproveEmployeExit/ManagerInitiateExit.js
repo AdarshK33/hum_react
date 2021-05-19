@@ -6,9 +6,11 @@ import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState
 import { OfferContext } from "../../context/OfferState";
 import { PermissionContext } from "../../context/PermissionState";
 import "./EmployeeExit.css";
+import moment from "moment";
 import DatePicker from "react-datepicker";
 import { toast } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
+import { SeparationContext } from "../../context/SepearationState";
 import { setGlobalCssModule } from "reactstrap/es/utils";
 
 const ManagerInitiateExit = () => {
@@ -24,6 +26,11 @@ const ManagerInitiateExit = () => {
   const [remarkError, setRemarkError] = useState(false);
   const [showModal, setModal] = useState(false);
   const [showSuccessModal, setSuccessModal] = useState(false);
+
+  const [showInfoModal, setShowInfoModal] = useState(false);
+  const [checkForExist, setCheckForExist] = useState(false);
+  const [firstTimeUpdate, setFirstTimeUpdate] = useState(true);
+
   const [dateOfResignation, setDateOfResignation] = useState("");
   const [lastWorkingDate, setLastWorkingDate] = useState("");
   const [intern, setIntern] = useState(false);
@@ -60,7 +67,10 @@ const ManagerInitiateExit = () => {
     ModeOfSeparationData,
     ViewEmployeeProfile,
     employeeProfileData,
+    ViewEmployeeDataById,
+    CreateEmplyoeeExist,
   } = useContext(EmployeeSeparationContext);
+  const { empResign } = useContext(SeparationContext);
   const { searchForEmp1, searchEmpData1 } = useContext(OfferContext);
   const { locationDetails, locationDetailsList } = useContext(
     PermissionContext
@@ -68,10 +78,52 @@ const ManagerInitiateExit = () => {
   useEffect(() => {
     ViewEmployeeProfile();
   }, []);
+
   useEffect(() => {
     locationDetails();
   }, []);
   console.log("locationDetailsList", locationDetailsList);
+  useEffect(() => {
+    console.log("state.empI", state.empId);
+    if (
+      state.empId !== "" &&
+      state.empId !== null &&
+      state.empId !== undefined
+    ) {
+      console.log("state.empId", state.empId);
+      ViewEmployeeDataById(state.empId);
+    }
+  }, [EmpName]);
+  console.log("employeeData", employeeData);
+
+  useEffect(() => {
+    if (
+      employeeData &&
+      employeeData &&
+      employeeData !== null &&
+      employeeData !== undefined &&
+      Object.keys(employeeData).length !== 0
+    ) {
+      if (
+        state.empId !== "" &&
+        state.empId !== null &&
+        state.empId !== undefined &&
+        employeeData.employeeId !== null &&
+        employeeData.employeeId !== undefined
+      ) {
+        if (checkForExist === true || firstTimeUpdate === true) {
+          if (state.empId === employeeData.employeeId) {
+            console.log("********");
+            setShowInfoModal(true);
+            setCheckForExist(false);
+            setFirstTimeUpdate(false);
+            toast.info("Employe is in separation list");
+          }
+        }
+      }
+    }
+  }, [EmpName, employeeData, checkForExist]);
+
   useEffect(() => {
     if (
       searchEmpData1 &&
@@ -107,12 +159,31 @@ const ManagerInitiateExit = () => {
           ? searchEmpData1.lastName
           : "";
       state.empId = searchEmpData1.employeeId;
-      setEmpName(searchEmpData1.firstName + " " + temp + " " + state.empId);
+      setEmpName(searchEmpData1.firstName + " " + temp);
 
       state.empContractType = searchEmpData1.contractType;
       state.empCostCenterName = searchEmpData1.costCentre;
       //   state.empLocation = searchEmpData1.location;
       state.empPosition = searchEmpData1.position;
+
+      //   if (
+      //     state.empId !== "" &&
+      //     state.empId !== null &&
+      //     state.empId !== undefined &&
+      //     employeeData.employeeId !== null &&
+      //     employeeData.employeeId !== undefined
+      //   ) {
+      //     if (firstTimeUpdate === true) {
+      //       if (state.empId === employeeData.employeeId) {
+      //         console.log("********");
+      //         setShowInfoModal(true);
+      //         setCheckForExist(false);
+      //         setFirstTimeUpdate(false);
+      //         toast.info("Employe is in separation list");
+      //       }
+      //     }
+      //   }
+
       if (state.empContractType === "Internship") {
         setIntern(true);
       } else {
@@ -144,6 +215,16 @@ const ManagerInitiateExit = () => {
   const searchDataHandler = () => {
     if (EmpName !== null) {
       searchForEmp1(EmpName);
+      setCheckForExist(true);
+      if (
+        employeeData &&
+        employeeData &&
+        employeeData !== null &&
+        employeeData !== undefined &&
+        Object.keys(employeeData).length !== 0
+      ) {
+        employeeData.employeeId = 0;
+      }
       //   setFirstClick(true);
     }
   };
@@ -324,6 +405,7 @@ const ManagerInitiateExit = () => {
   const handleClose = () => {
     setModal(false);
     setSuccessModal(false);
+    setShowInfoModal(false);
   };
   const handleSaveRemarks = () => {
     if (
@@ -522,16 +604,168 @@ const ManagerInitiateExit = () => {
     const value = checkValidations();
     if (value === true) {
       console.log("INSIDE");
-      //   if (
-      //     (intern === false && RehireNo === true && state.remarks === "") ||
-      //     state.remarks === null ||
-      //     state.remarks === undefined
-      //   ) {
-      //     setModal(true);
-      //   } else {
-      //     const createExitData = {};
-      //     setSuccessModal(true);
-      //   }
+      if (
+        (intern === false && RehireNo === true && state.remarks === "") ||
+        state.remarks === null ||
+        state.remarks === undefined
+      ) {
+        setModal(true);
+      } else {
+        if (intern === false) {
+          var reasonId = 0;
+          reasonOfSeparationList.map((item, i) => {
+            if (
+              reasonOfSeparationList[i].label === state.modeOfSeparationReasonId
+            ) {
+              reasonId = reasonOfSeparationList[i].value;
+              console.log(reasonOfSeparationList[i].value);
+            }
+          });
+          const data1 = {
+            company: "string",
+            contractType: "string",
+            costCentreManagerEmailId: "string",
+            costCentreManagerName: "string",
+            costCentreName: "string",
+            dateOfResignation: moment(dateOfResignation).format("YYYY-MM-DD"),
+            emailId: state.emailId,
+            empName: "string",
+            employeeComment: "string",
+            employeeId: state.empId,
+            employeeName: "string",
+            exitId: 0,
+            hoursWorked: 0,
+            lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
+            location: "string",
+            managerCostCentre: "string",
+            managerEmailId: "string",
+            managerId: "string",
+            managerName: "string",
+            managerPosition: "string",
+            modeOfSeparationId: changeInSeparation,
+            modeOfSeparationReasonId: reasonId,
+            noticePeriod: 0,
+            noticePeriodRecovery: RcryYes ? 1 : RcryNo ? 2 : 0,
+            noticePeriodRecoveryDays: parseInt(state.noticePeriodRcryDays),
+            position: "string",
+            reHire: RehireYes ? 1 : RehireNo ? 2 : 0,
+            reason: "string",
+            reasonForResignation: "string",
+            rehireRemark: "string",
+            status: 0,
+            withdraw: "string",
+          };
+          //   const data = {
+          //     company: null,
+          //     contractType: null,
+          //     costCentreManagerEmailId: null,
+          //     costCentreManagerName: null,
+          //     costCentreName: null,
+          //     // dateOfResignation: moment(dateOfResignation).format("YYYY-MM-DD"),
+          //     emailId: state.emailId,
+          //     empName: null,
+          //     employeeComment: null,
+          //     employeeId: state.empId,
+          //     employeeName: null,
+          //     exitId: 0,
+          //     hoursWorked: 0,
+          //     // lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
+          //     location: null,
+          //     managerCostCentre: null,
+          //     managerEmailId: null,
+          //     managerId: null,
+          //     managerName: null,
+          //     managerPosition: null,
+          //     modeOfSeparationId: 1,
+          //     modeOfSeparationReasonId: 1,
+          //     noticePeriod: 0,
+          //     noticePeriodRecovery: 0,
+          //     noticePeriodRecoveryDays: 10,
+          //     position: null,
+          //     reHire: 1,
+          //     reason: null,
+          //     reasonForResignation: null,
+          //     rehireRemark: null,
+          //     status: 0,
+          //     withdraw: null,
+          //   };
+          //   const createExitData = {
+          //     emailId: state.emailId,
+          //     employeeId: state.empId,
+          //     exitId: 0,
+          //     // dateOfResignation: moment(dateOfResignation).format("YYYY-MM-DD"),
+          //     // lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
+          //     modeOfSeparationId: 1,
+          //     // changeInSeparation,
+          //     modeOfSeparationReasonId: 1,
+          //     //  reasonId,
+          //     noticePeriodRecovery: 1,
+          //     //  RcryYes ? 1 : RcryNo ? 2 : 0,
+          //     noticePeriodRecoveryDays: 10,
+          //     // parseInt(state.noticePeriodRcryDays),
+          //     reHire: 1,
+          //     //  RehireYes ? 1 : RehireNo ? 2 : 0,
+          //     // status: 0,
+          //     // rehireRemark: state.remarks !== "" ? state.remarks : null,
+          //   };
+          console.log("createExitData", data1);
+          CreateEmplyoeeExist(data1);
+          //   empResign(data1);
+          setSuccessModal(true);
+        } else if (intern === true) {
+          const data1 = {
+            company: "string",
+            contractType: "string",
+            costCentreManagerEmailId: "string",
+            costCentreManagerName: "string",
+            costCentreName: "string",
+            // dateOfResignation: moment(dateOfResignation).format("YYYY-MM-DD"),
+            emailId: state.emailId,
+            empName: "string",
+            employeeComment: "string",
+            employeeId: state.empId,
+            employeeName: "string",
+            exitId: 0,
+            hoursWorked: 0,
+            // lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
+            location: "string",
+            managerCostCentre: "string",
+            managerEmailId: "string",
+            managerId: "string",
+            managerName: "string",
+            managerPosition: "string",
+            modeOfSeparationId: 3,
+            modeOfSeparationReasonId: 4,
+            noticePeriod: 0,
+            noticePeriodRecovery: 0,
+            noticePeriodRecoveryDays: 10,
+            position: "string",
+            reHire: 0,
+            reason: "string",
+            reasonForResignation: "string",
+            rehireRemark: "string",
+            status: 0,
+            withdraw: "string",
+          };
+
+          const createExitData = {
+            emailId: state.emailId,
+            employeeId: state.empId,
+            exitId: 0,
+            lastWorkingDate: lastWorkingDate,
+            modeOfSeparationId: 3,
+            modeOfSeparationReasonId: 4,
+            noticePeriodRecovery: RcryYes ? 1 : RcryNo ? 2 : 0,
+            noticePeriodRecoveryDays: parseInt(state.noticePeriodRcryDays),
+            reHire: 0,
+            rehireRemark: state.remarks !== "" ? state.remarks : null,
+          };
+          console.log("createExitData", data1);
+          //   empResign(createExitData);
+          CreateEmplyoeeExist(data1);
+          setSuccessModal(true);
+        }
+      }
     }
   };
 
@@ -570,6 +804,23 @@ const ManagerInitiateExit = () => {
           <Modal.Body className="mx-auto">
             <label className="itemResult">
               Exit details saved successfully, the employee has been notified
+            </label>
+
+            <div className="text-center mb-2">
+              <Button onClick={() => handleClose()}>Close</Button>
+            </div>
+          </Modal.Body>
+        </Container>
+      </Modal>
+
+      <Modal show={showInfoModal} onHide={() => handleClose()} centered>
+        <Container>
+          <Modal.Header closeButton className="modalHeader">
+            {/* <Modal.Title>State remarks for disapproval</Modal.Title> */}
+          </Modal.Header>{" "}
+          <Modal.Body className="mx-auto">
+            <label className="itemResult">
+              Resignation for this employee {EmpName} has already been initiated
             </label>
 
             <div className="text-center mb-2">
