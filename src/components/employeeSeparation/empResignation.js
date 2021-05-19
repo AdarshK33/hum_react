@@ -379,6 +379,7 @@ const EmpResignation = () => {
                           as="select"
                           className="non-disable blueTextData"
                           value={approver}
+                          required
                           onChange={(e) => setApprover(e.target.value)}
                         >
                           <option value="">Select Approver</option>
