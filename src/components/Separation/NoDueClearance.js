@@ -51,7 +51,7 @@ const NoDueClearance = () => {
   const [costCenter, setCostCenter] = useState("all");
   const [searchValue, setSearchValue] = useState("all");
   const [actionStatus, setActionStatus] = useState("all");
-  const [enableValue, SetEnableValue] = useState(false);
+  // const [enableValue , SetEnableValue] = useState(false)
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
   const recordPerPage = 10;
@@ -143,12 +143,11 @@ const NoDueClearance = () => {
     }
   };
   const renderStatusOptions = (value) => {
-    const enableData = value.data.disabled;
-    SetEnableValue(enableData);
+    // const enableData = value.data.disabled
+    // SetEnableValue(enableData)
     return (
       <div>
         <select
-          disabled={value.data.disabled}
           className="selectpicker"
           name="itClearanceStatus"
           value={value.data.itClearanceStatus}
@@ -170,9 +169,7 @@ const NoDueClearance = () => {
     e.preventDefault();
     var statusData = e.target.value;
     const clearanceStatus = value.data;
-    if (clearanceStatus["itClearanceStatus"] !== null) {
-      clearanceStatus["itClearanceStatus"] = statusData;
-    }
+    clearanceStatus["itClearanceStatus"] = statusData;
   };
   const handleSave = (value) => {
     const formData = value.data;
@@ -408,7 +405,7 @@ const NoDueClearance = () => {
                       ></AgGridColumn>
                       <AgGridColumn
                         className="columnColor"
-                        editable={enableValue}
+                        // editable= {enableValue}
                         headerName="IT Amount To Be Recovered"
                         field="itAmount"
                       ></AgGridColumn>
@@ -417,7 +414,7 @@ const NoDueClearance = () => {
                         className="columnColor"
                         field="itClearanceStatus"
                         headerName="IT Clearance"
-                        editable={enableValue}
+                        // editable= {enableValue}
                         colId="status"
                         cellRendererFramework={renderStatusOptions}
                         cellEditorParams={{
@@ -427,13 +424,13 @@ const NoDueClearance = () => {
                       ></AgGridColumn>
                       <AgGridColumn
                         className="columnColor"
-                        editable={enableValue}
+                        // editable= {enableValue}
                         headerName="IT Clearance Remarks"
                         field="itRemarks"
                       ></AgGridColumn>
                       <AgGridColumn
                         className="columnColor"
-                        editable={enableValue}
+                        // editable= {enableValue}
                         headerName="IT Clearance UpdatedBy"
                         field="itClearanceUpdatedBy"
                       ></AgGridColumn>

@@ -51,7 +51,7 @@ const FinanceClearanceList = () => {
   const [costCenter, setCostCenter] = useState("all");
   const [searchValue, setSearchValue] = useState("all");
   const [actionStatus, setActionStatus] = useState("all");
-  const [enableValue , SetEnableValue] = useState(false)
+  // const [enableValue , SetEnableValue] = useState(false)
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
   const recordPerPage = 10;
@@ -119,13 +119,13 @@ const FinanceClearanceList = () => {
     } 
   }
   const renderStatusOptions = (value) => {
-    console.log(value,"dropdown finance")
-    const enableData = value.data.disabled
-    console.log(enableData,'//////')
-    SetEnableValue(enableData)
+    // console.log(value,"dropdown finance")
+    // const enableData = value.data.disabled
+    // console.log(enableData,'//////')
+    // SetEnableValue(enableData)
     return (
       <div>
-        <select disabled ={value.data.disabled}
+        <select
           name="financeClearanceStatus" className="selectpicker" 
           value={value.data.financeClearanceStatus}
           onChange={(e) => statusRender(e, value)}
@@ -141,6 +141,14 @@ const FinanceClearanceList = () => {
   const onGridReady = (params) => {
     setGridApi(params.api);
     setGridColumnApi(params.columnApi);
+  };
+
+  const statusRender = (e, value) => {
+    const statusData = e.target.value;
+    const clearanceStatus = value.data;
+    console.log(clearanceStatus ,"before")
+      clearanceStatus['financeClearanceStatus']= statusData
+      console.log(clearanceStatus,"after")    
   };
 
   const handleSave = (value) => {
@@ -167,14 +175,7 @@ const FinanceClearanceList = () => {
     separationListView(searchValue, pageCount,actionStatus, costCenter);
   }, [costCenter, searchValue, pageCount,actionStatus]);
 
-  const statusRender = (e, value) => {
-    const statusData = e.target.value;
-    const clearanceStatus = value.data;
-    if(clearanceStatus['itClearanceStatus'] !== null){
-      clearanceStatus['itClearanceStatus']= statusData
-    }
-   
-  };
+ 
   console.log(separationList, "noDueClearance");
   const renderButton = (e) => {
     console.log(e, "render");
@@ -340,7 +341,7 @@ const FinanceClearanceList = () => {
                       <AgGridColumn
                         className="columnColor"
                         headerName="Finance Amount To Be Recovered"
-                        editable ={enableValue}
+                        // editable ={enableValue}
                         field="financeAmount"
                       ></AgGridColumn>
 
@@ -348,7 +349,7 @@ const FinanceClearanceList = () => {
                         className="columnColor"
                         field="financeClearanceStatus"
                         headerName="Finance Clearance"
-                        editable ={enableValue}
+                        // editable ={enableValue}
                         colId="status"
                         cellRendererFramework={renderStatusOptions}
                         cellEditorParams={{
@@ -358,13 +359,13 @@ const FinanceClearanceList = () => {
                       ></AgGridColumn>
                       <AgGridColumn
                         className="columnColor"
-                        editable ={enableValue}
+                        // editable ={enableValue}
                         headerName="Finance Clearance Remarks"
                         field="financeRemarks"
                       ></AgGridColumn>
                       <AgGridColumn
                         className="columnColor"
-                        editable ={enableValue}
+                        // editable ={enableValue}
                         headerName="Finance Clearance UpdatedBy"
                         field="financeClearanceUpdatedBy"
                       ></AgGridColumn>
