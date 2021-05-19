@@ -51,7 +51,7 @@ const EmpResignation = () => {
       managerId: approver,
       modeOfSeparationId: 1,
       modeOfSeparationReasonId: 1,
-      withdraw: "string",
+      withdraw: null,
     };
     console.log("create", create);
     empResign(create);

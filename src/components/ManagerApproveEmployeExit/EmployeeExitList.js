@@ -62,19 +62,16 @@ const EmployeeExitList = () => {
       }
       EmployeeSeparationList.map((rotate, r) => {
         ModeOfSeparationData.map((item, i) => {
-          if (
+          if (EmployeeSeparationList[r].modeOfSeparationId === 0) {
+            EmployeeSeparationList[r].modeOfSeparationReasonId = " ";
+          } else if (
             EmployeeSeparationList[r].modeOfSeparationId ===
             ModeOfSeparationData[i].modeOfSeparation.separationId
           ) {
-            // console.log(
-            //   "seww",
-            //   ModeOfSeparationData[i].modeOfSeparation.modeOfSeparation
-            // );
-
             ModeOfSeparationData[i].modeOfSeparationReasonList.map(
               (item1, j) => {
                 if (EmployeeSeparationList[r].modeOfSeparationReasonId === 0) {
-                  EmployeeSeparationList[r].modeOfSeparationReasonId = "";
+                  EmployeeSeparationList[r].modeOfSeparationReasonId = " ";
                 } else if (
                   EmployeeSeparationList[r].modeOfSeparationReasonId ===
                   ModeOfSeparationData[i].modeOfSeparationReasonList[j]
@@ -195,6 +192,7 @@ const EmployeeExitList = () => {
                       <th scope="col">Last Working Day</th>
                       <th scope="col">Reason for Resignation</th>
                       <th scope="col">Notice Period</th>
+                      <th scope="col">Status</th>
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
@@ -238,6 +236,7 @@ const EmployeeExitList = () => {
                             <td>{item.lastWorkingDate}</td>
                             <td>{item.modeOfSeparationReasonId}</td>
                             <td>{item.noticePeriod}</td>
+                            <td>{item.status}</td>
 
                             <td>
                               <Link to={"/exit-action/" + item.employeeId}>
