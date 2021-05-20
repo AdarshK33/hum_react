@@ -42,26 +42,26 @@ const EmpResignation = () => {
 
   useEffect(() => {
     locationDetails();
-    if (
-      locationDetailsList &&
-      locationDetailsList &&
-      locationDetailsList !== null &&
-      locationDetailsList !== undefined &&
-      Object.keys(locationDetailsList).length !== 0
-    ) {
-      locationDetailsList.map((item, i) => {
-        if (item.locationId === user.locationId) {
-          user.locationId = item.locationName;
-
-        }
-      });
-    }
-  }, [locationDetailsList,user]);
+  }, []);
+  if (
+    locationDetailsList &&
+    locationDetailsList &&
+    locationDetailsList !== null &&
+    locationDetailsList !== undefined &&
+    Object.keys(locationDetailsList).length !== 0
+  ) {
+    locationDetailsList.map((item, i) => {
+      if (item.locationId === user.locationId) {
+        user['locationName'] = item.locationName;
+      }
+    });
+  }
   console.log("locationDetailsList", locationDetailsList);
   useEffect(() => {
     managerData(user.costCentre);
-  }, [user.costCentre]);
 
+  }, [user.costCentre]);
+console.log(user,"user")
   useEffect(() => {
     modeOfSeparation();
     ModeOfSeparationView();
@@ -99,54 +99,62 @@ const EmpResignation = () => {
 
   const SubmitHandler = (e) => {
     e.preventDefault();
-    // const data1 = {
-    //   company: "string",
-    //   contractType: "string",
-    //   costCentreManagerEmailId: "string",
-    //   costCentreManagerName: "string",
-    //   costCentreName: "string",
-    //   dateOfResignation: moment(dateOfResignation).format("YYYY-MM-DD"),
-    //   emailId: state.emailId,
-    //   empName: "string",
-    //   employeeComment: "string",
-    //   employeeId: state.empId,
-    //   employeeName: "string",
-    //   exitId: 0,
-    //   hoursWorked: 0,
-    //   lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
-    //   location: "string",
-    //   managerCostCentre: "string",
-    //   managerEmailId: "string",
-    //   managerId: "string",
-    //   managerName: "string",
-    //   managerPosition: "string",
-    //   modeOfSeparationId: changeInSeparation,
-    //   modeOfSeparationReasonId: reasonId,
-    //   noticePeriod: 0,
-    //   noticePeriodRecovery: RcryYes ? 1 : RcryNo ? 2 : 0,
-    //   noticePeriodRecoveryDays: parseInt(state.noticePeriodRcryDays),
-    //   position: "string",
-    //   reHire: RehireYes ? 1 : RehireNo ? 2 : 0,
-    //   reason: "string",
-    //   reasonForResignation: "string",
-    //   rehireRemark: "string",
-    //   status: 2,
-    //   withdraw: "string",
-    // };
-
-    const create = {
+    var reasonId = 0;
+          reasonOfSeparationList.map((item, i) => {
+            if (
+              reasonOfSeparationList[i].label === reasonOfSepration
+            ) {
+              reasonId = reasonOfSeparationList[i].value;
+              console.log(reasonOfSeparationList[i].value);
+            }
+          })
+    const data1 = {
+      company: user.company,
+      contractType: user.contractType,
+      costCentreManagerEmailId: null,
+      costCentreManagerName: null,
+      costCentreName: user.costCentre,
+      dateOfResignation: regDate,
       emailId: emailId,
+      empName: user.employeeName,
       employeeComment: comments,
       employeeId: user.employeeId,
+      employeeName: user.employeeName,
       exitId: 0,
-      lastWorkingDate: moment(lastDate).format("YYYY-MM-DD"),
+      hoursWorked: 0,
+      lastWorkingDate: lastDate,
+      location:user.locationId,
+      managerCostCentre: null,
+      managerEmailId: null,
       managerId: approver,
-      modeOfSeparationId: 1,
-      modeOfSeparationReasonId: 1,
-      withdraw: "string",
+      managerName: null,
+      managerPosition: null,
+      modeOfSeparationId: 4,
+      modeOfSeparationReasonId: reasonId,
+      noticePeriod: 0,
+      noticePeriodRecovery:0,
+      noticePeriodRecoveryDays:0,
+      position:user.position,
+      reHire:0,
+      reason: null,
+      reasonForResignation: reasonOfSepration,
+      rehireRemark: null,
+      status: 0,
     };
-    console.log("create", create);
-    empResign(create);
+console.log(data1,"dtat1")
+    // const create = {
+    //   emailId: emailId,
+    //   employeeComment: comments,
+    //   employeeId: user.employeeId,
+    //   exitId: 0,
+    //   lastWorkingDate: moment(lastDate).format("YYYY-MM-DD"),
+    //   managerId: approver,
+    //   modeOfSeparationId: 1,
+    //   modeOfSeparationReasonId: 1,
+    //   withdraw: "string",
+    // };
+    // console.log("create", create);
+     empResign(data1);
     setSubmitted(true);
   };
 
@@ -239,7 +247,7 @@ const EmpResignation = () => {
                     <Col sm="8">
                       <Form.Control
                         type="text"
-                        value={user.locationId}
+                        value={user.locationName}
                         readOnly
                         className="disabledValue blueTextData"
                       />
