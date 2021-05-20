@@ -146,6 +146,7 @@ export const EmploeeSeparationProvider = (props) => {
     client
       .get("/api/v1/separation/employee-exit/letter/" + empId)
       .then((response) => {
+        console.log(response.data.data);
         state.relivingLetterData = response.data.data;
         return dispatch({
           type: "FETCH_RELIEVING_LETTER_DATA",

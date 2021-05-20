@@ -62,12 +62,14 @@ const EmployeeExitAction = () => {
     employeeId,
     loader,
     fetchRelievingLetterData,
+    relivingLetterData,
     terminationConfirmation,
     resignationConfirmation,
   } = useContext(EmployeeSeparationContext);
   console.log("employeeId", employeeId);
   useEffect(() => {
     ViewEmployeeDataById(employeeId);
+    fetchRelievingLetterData(paramsemployeeId);
   }, [employeeId]);
   useEffect(() => {
     console.log(employeeData);
@@ -288,8 +290,9 @@ const EmployeeExitAction = () => {
   };
   const viewResignation = () => {
     setPreviewLetter(true);
-    setSubmit(true);
-    fetchRelievingLetterData(paramsemployeeId);
+    if (relivingLetterData !== undefined) {
+      setSubmit(true);
+    }
   };
 
   return (
@@ -302,7 +305,7 @@ const EmployeeExitAction = () => {
               <p style={{ marginBottom: "2rem" }}>
                 {" "}
                 The details have been saved successfully. The relieving letter
-                will be sent to the employee on {moment().format("DD-MM-YYYY")}
+                will be sent to the employee on {state.lastWorkingDate}
               </p>
               <Button onClick={() => handleClosePopup()}>OK</Button>
             </Modal.Body>

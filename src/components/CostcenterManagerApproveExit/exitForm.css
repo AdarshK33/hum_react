@@ -136,7 +136,7 @@
   margin-left: 40px;
 }
 .relievingLetterContent {
-  margin-top: 200px;
+  margin-top: 60px;
 }
 .confirmButton {
   background: rgb(170, 170, 170) !important;
@@ -145,4 +145,7 @@
   height: 30px;
   color: white;
   margin-left: 40px;
+}
+.relievingLetterHeading {
+  margin-top: 30px;
 }
