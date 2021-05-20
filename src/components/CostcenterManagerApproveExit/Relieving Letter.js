@@ -18,7 +18,6 @@ const RelievingLetter = (props) => {
       console.log(props.previewLetter);
       setLetter(true);
     }
-    console.log(relievingLetterData,"relieving")
   }, [props.previewLetter]);
   const addSignature = () => {
     setSignature(true);
@@ -62,7 +61,7 @@ const RelievingLetter = (props) => {
                 {" "}
                 Date: {moment().format("DD-MM-YYYY")}
               </p>
-              <br></br>    
+              <br></br>
               <h5 className="text-center"> RELIEVING & EXPERIENCE LETTER</h5>
               <div className="relievingLetterHeading">
                 <div className="mt-1">
