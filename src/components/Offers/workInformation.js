@@ -213,6 +213,7 @@ const WorkInformation = (props) => {
 
   const submitHandler = (e) => {
     let createData;
+    let expatValue;
     console.log("work information form id", workInfoViewData);
     e.preventDefault();
     console.log(state, "state");
@@ -221,6 +222,15 @@ const WorkInformation = (props) => {
       state.expatUser !== "" &&
       state.passportNumber !== ""
     ) {
+    }
+    if (
+      (state.employmentType === "Permanent" ||
+        state.employmentType === "permanent") &&
+      state.expatUser
+    ) {
+      expatValue = state.expatUser;
+    } else {
+      expatValue = 0;
     }
     if (saveclick === false) {
       console.log("first click");
@@ -257,7 +267,7 @@ const WorkInformation = (props) => {
         noticePeriod:
           state.employmentType === "Internship" ? 0 : state.noticePeriod,
         sportId: state.sports,
-        expatUser: state.expatUser,
+        expatUser: expatValue,
         nationality: state.nationality,
         passportNumber: state.passportNumber,
       };
@@ -294,7 +304,7 @@ const WorkInformation = (props) => {
         noticePeriod:
           state.employmentType === "Internship" ? 0 : state.noticePeriod,
         sportId: state.sports,
-        expatUser: state.expatUser,
+        expatUser: expatValue,
         nationality: state.nationality,
         passportNumber: state.passportNumber,
       };
@@ -735,13 +745,11 @@ const WorkInformation = (props) => {
                 </Form.Group>
               </Col>
             )}
-            {(state.employmentType === "Internship" ||
-              state.employmentType === "Permanent" ||
-              state.employmentType === "permanent" ||
-              state.employmentType === "Parttime") && (
+            {(state.employmentType === "Permanent" ||
+              state.employmentType === "permanent") && (
               <Col sm={3}>
                 <Form.Group>
-                  <Form.Label>Local Expact</Form.Label>
+                  <Form.Label>Local Expat</Form.Label>
                   <Form.Control
                     as="select"
                     className="form-input"
@@ -758,51 +766,55 @@ const WorkInformation = (props) => {
                 </Form.Group>
               </Col>
             )}
-            {state.expatUser == 1 && (
-              <Col sm={3}>
-                <Form.Group>
-                  <Form.Label>Passport Number</Form.Label>
-                  <Form.Control
-                    type="text"
-                    className="form-input"
-                    value={state.passportNumber}
-                    name="passportNumber"
-                    onChange={changeHandler}
-                    disabled={disabled}
-                    required
-                  />
-                </Form.Group>
-              </Col>
-            )}
+            {state.expatUser == 1 &&
+              (state.employmentType === "Permanent" ||
+                state.employmentType === "permanent") && (
+                <Col sm={3}>
+                  <Form.Group>
+                    <Form.Label>Passport Number</Form.Label>
+                    <Form.Control
+                      type="text"
+                      className="form-input"
+                      value={state.passportNumber}
+                      name="passportNumber"
+                      onChange={changeHandler}
+                      disabled={disabled}
+                      required
+                    />
+                  </Form.Group>
+                </Col>
+              )}
           </Row>
           <Row>
-            {state.expatUser == 1 && (
-              <Col sm={3}>
-                <Form.Group>
-                  <Form.Label>Nationality</Form.Label>
-                  <Form.Control
-                    as="select"
-                    className="form-input"
-                    value={state.nationality}
-                    name="nationality"
-                    onChange={changeHandler}
-                    disabled={disabled}
-                    required
-                  >
-                    <option value="">Select Nationality</option>
-                    {countryList !== null &&
-                      countryList !== undefined &&
-                      countryList.map((item) => {
-                        return (
-                          <option key={item.countryId}>
-                            {item.nationality}
-                          </option>
-                        );
-                      })}
-                  </Form.Control>
-                </Form.Group>
-              </Col>
-            )}
+            {state.expatUser == 1 &&
+              (state.employmentType === "Permanent" ||
+                state.employmentType === "permanent") && (
+                <Col sm={3}>
+                  <Form.Group>
+                    <Form.Label>Nationality</Form.Label>
+                    <Form.Control
+                      as="select"
+                      className="form-input"
+                      value={state.nationality}
+                      name="nationality"
+                      onChange={changeHandler}
+                      disabled={disabled}
+                      required
+                    >
+                      <option value="">Select Nationality</option>
+                      {countryList !== null &&
+                        countryList !== undefined &&
+                        countryList.map((item) => {
+                          return (
+                            <option key={item.countryId}>
+                              {item.nationality}
+                            </option>
+                          );
+                        })}
+                    </Form.Control>
+                  </Form.Group>
+                </Col>
+              )}
           </Row>
           {state.recuritment === "NGO" ? (
             <Row>

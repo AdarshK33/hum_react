@@ -47,6 +47,7 @@ const EditWorkInformation = () => {
     locationView,
     locationName,
     createCandidateWork,
+    viewCandidateId,
     candidateData,
     updateCandidateWork,
     stateList,
@@ -70,6 +71,14 @@ const EditWorkInformation = () => {
     viewCountries();
   }, []);
 
+  useEffect(() => {
+    if (
+      candidateData.candidateInformation !== undefined &&
+      candidateData.candidateInformation !== null
+    ) {
+      viewCandidateId(candidateData.candidateInformation.candidateId);
+    }
+  }, []);
   useEffect(() => {
     let workData =
       candidateData !== null &&
@@ -162,6 +171,7 @@ const EditWorkInformation = () => {
     setStateValue(locationName.stateId);
     setCity(locationName.cityId);
     cityData(locationName.stateId);
+
     console.log(
       "candidateData.candidateInformation",
       candidateData.candidateInformation
@@ -203,7 +213,17 @@ const EditWorkInformation = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    let expatValue;
     console.log(state, "state");
+    if (
+      (state.employmentType === "Permanent" ||
+        state.employmentType === "permanent") &&
+      state.expatUser
+    ) {
+      expatValue = state.expatUser;
+    } else {
+      expatValue = 0;
+    }
     console.log("candidateData work info", candidateData);
     const updateData = {
       candidateId: candidateData.candidateInformation.candidateId,
@@ -240,12 +260,13 @@ const EditWorkInformation = () => {
       noticePeriod:
         state.employmentType === "Internship" ? 0 : state.noticePeriod,
       sportId: state.sports,
-      expatUser: state.expatUser,
+      expatUser: expatValue,
       nationality: state.nationality,
       passportNumber: state.passportNumber,
     };
     console.log("update data", updateData);
     updateCandidateWork(updateData);
+    viewCandidateId(candidateData.candidateInformation.candidateId);
     setDisabled(true);
     setEditButton(true);
   };
@@ -679,13 +700,11 @@ const EditWorkInformation = () => {
                 </Form.Group>
               </Col>
             )}
-            {(state.employmentType === "Internship" ||
-              state.employmentType === "Permanent" ||
-              state.employmentType === "permanent" ||
-              state.employmentType === "Parttime") && (
+            {(state.employmentType === "Permanent" ||
+              state.employmentType === "permanent") && (
               <Col sm={3}>
                 <Form.Group>
-                  <Form.Label>Local Expact</Form.Label>
+                  <Form.Label>Local Expat</Form.Label>
                   <Form.Control
                     as="select"
                     className="form-input"

@@ -360,6 +360,7 @@ const EmpResignation = () => {
                           className="form-control non-disable blueTextData"
                           dateFormat="yyyy-MM-dd"
                           placeholderText="Select Date"
+                          minDate={new Date()}
                           required
                         />
                       </Col>
@@ -446,6 +447,7 @@ const EmpResignation = () => {
                           className="form-control non-disable blueTextData"
                           dateFormat="yyyy-MM-dd"
                           placeholderText="Select Date"
+                          minDate={new Date()}
                           required
                         />
                       </Col>
@@ -480,6 +482,7 @@ const EmpResignation = () => {
                           as="select"
                           className="non-disable blueTextData"
                           value={approver}
+                          required
                           onChange={(e) => setApprover(e.target.value)}
                         >
                           <option value="">Select Approver</option>

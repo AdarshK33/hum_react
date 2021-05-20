@@ -40,7 +40,7 @@ import { AdminContext } from "../../context/AdminState";
 import AppointmentLetter from "./AppointmentLetter";
 import PartTimeAppointmentLetter from "./partTimeAppointmentLetter";
 import InternAppointmentLetter from "./internAppointmentLetter";
-
+import LocalExpatAppointmentLetter from "./localExpactAppointmentLetter";
 const CandidateOnboarding = () => {
   const {
     generateOfferLetter,
@@ -487,10 +487,16 @@ const CandidateOnboarding = () => {
       !previewLetter &&
       candidateData !== undefined &&
       candidateData.workInformation !== undefined ? (
-        candidateData.workInformation.contractType === "Permanent" ? (
+        candidateData.workInformation.contractType === "Permanent" &&
+        candidateData.workInformation.expatUser == 0 ? (
           <AppointmentLetter />
         ) : candidateData.workInformation.contractType === "Parttime" ? (
           <PartTimeAppointmentLetter />
+        ) : candidateData !== undefined &&
+          candidateData.workInformation !== undefined &&
+          candidateData.workInformation.contractType === "Permanent" &&
+          candidateData.workInformation.expatUser == 1 ? (
+          <LocalExpatAppointmentLetter />
         ) : (
           <InternAppointmentLetter />
         )
