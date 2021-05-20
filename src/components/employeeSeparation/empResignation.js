@@ -235,7 +235,7 @@ console.log(data1,"dtat1")
                       />
                     </Col>
                   </Form.Group>
-                </Col>
+                </Col>   
               </Row>
 
               <Row>
