@@ -365,14 +365,23 @@ const EmployeeExitAction = () => {
       <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         {submitLetter ? (
-          <Modal.Body className="mx-auto">
-            <label>
-              The details have been saved successfully. The relieving letter
-              will be sent to the employee on{" "}
-              {relivingLetterData.lastWorkingDate}
-            </label>
-            <div className="text-center mb-2">
-              <Button onClick={handleRelivingClose}>Close</Button>
+          <Modal.Body>
+            <div className="offer-letter-message ">
+              <p>
+                The details have been saved successfully. The relieving letter
+                will be sent to the employee on{" "}
+                {relivingLetterData.lastWorkingDate}
+              </p>
+              <br></br>
+              {/* <Link
+                to="/employee-separation-listing
+              "
+                className="text-center"
+              > */}
+              <Button type="button" onClick={handleRelivingClose}>
+                Close
+              </Button>
+              {/* </Link> */}
             </div>
           </Modal.Body>
         ) : previewLetter || showRelivingModal ? (
@@ -404,7 +413,11 @@ const EmployeeExitAction = () => {
               ) : (
                 <>
                   <br></br>
-                  <Button variant="primary" onClick={digitalSignature}>
+                  <Button
+                    variant="primary"
+                    style={{ marginLeft: "20px" }}
+                    onClick={digitalSignature}
+                  >
                     Add digital signature
                   </Button>
                 </>
@@ -899,8 +912,9 @@ const EmployeeExitAction = () => {
                       {/* <button className="stepperButtons" onClick={PrevStep}>
             Back
           </button> */}
-                      {employeeData.status === 0 ||
-                      updateResponse.status === 0 ? (
+                      {(employeeData.status === 0 ||
+                        updateResponse.status === 0) &&
+                      letterSent === false ? (
                         <button
                           // style={
                           //   showModal | showSuccessModal
@@ -921,7 +935,7 @@ const EmployeeExitAction = () => {
                     {!saveLetter &&
                     (employeeData.status === 2 || showPreview === true) ? (
                       <Row>
-                        <Col sm={5}></Col>
+                        <Col sm={4}></Col>
                         <Col
                           sm={2}
                           style={{

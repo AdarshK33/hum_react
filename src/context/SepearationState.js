@@ -27,6 +27,7 @@ const initial_state = {
   managerList: [],
   modeOfResponse: [],
   reason: {},
+  searchByCostData: [],
 };
 
 export const SeparationContext = createContext();
@@ -474,6 +475,31 @@ export const SeparationProvider = (props) => {
         console.log(error);
       });
   };
+
+  //Search by reference emp name1 or emp id
+  const searchByCostCenter = (key) => {
+    client
+      .get("/api/v1/employee/role_based_search?key=" + key)
+      .then((response) => {
+        if (response.data.data === null) {
+          state.searchByCostData = response.data.data;
+          console.log("response.data.data", response.data.data);
+          toast.info(response.data.message);
+        } else {
+          state.searchByCostData = response.data.data[0];
+          console.log("response.data.data[0]", response.data.data[0]);
+        }
+        console.log("response", response);
+        console.log("search Emp response", state.searchEmpData1);
+        return dispatch({
+          type: "SEARCH_BY_COST_DATA",
+          payload: state.searchByCostData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <SeparationContext.Provider
       value={{
@@ -489,6 +515,7 @@ export const SeparationProvider = (props) => {
         NoDueClearanceAdminClearanceExport,
         NoDueClearanceClearanceExport,
         FinanceClearanceExport,
+        searchByCostCenter,
         financeClearanceExport: state.financeClearanceExport,
 
         updateAdminFinanceClearance: state.updateAdminFinanceClearance,
@@ -513,6 +540,7 @@ export const SeparationProvider = (props) => {
         modeOfResponse: state.modeOfResponse,
         reason: state.reason,
         withdraw,
+        searchByCostData: state.searchByCostData,
       }}
     >
       {props.children}
