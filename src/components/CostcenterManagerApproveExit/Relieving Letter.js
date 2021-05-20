@@ -7,7 +7,7 @@ import calendarImage from "../../assets/images/calendar-image.png";
 import "./exitForm.css";
 const RelievingLetter = (props) => {
   const [showLetter, setLetter] = useState(false);
-  const { relievingLetterData } = useContext(EmployeeSeparationContext);
+  const { relivingLetterData } = useContext(EmployeeSeparationContext);
   const [showSignature, setSignature] = useState(false);
   const [message, setMessage] = useState(false);
   const handleClose = () => {
@@ -32,6 +32,7 @@ const RelievingLetter = (props) => {
   return (
     console.log(showLetter),
     console.log(props.previewLetter),
+    console.log("letterData", relivingLetterData),
     (
       <Fragment>
         {/* <Modal show={message} onHide={() => handleClosePopup()} centered>
@@ -61,17 +62,34 @@ const RelievingLetter = (props) => {
               </p>
               <br></br>
               <h5 className="text-center"> RELIEVING & EXPERIENCE LETTER</h5>
-              <div className="float-left">
-                <div className="mt-1 mb-5">
-                  <p>Name:</p>
-                  <p>EmployeeId:</p>
-                  <p>Designation:</p>
+              <div className="relievingLetterHeading">
+                <div className="mt-1">
+                  <p>
+                    <b>Name:&nbsp;&nbsp; </b>
+                    {relivingLetterData !== undefined &&
+                      relivingLetterData.employeeName}
+                  </p>
+                  <p>
+                    EmployeeId:&nbsp;&nbsp;
+                    {relivingLetterData !== undefined &&
+                      relivingLetterData.employeeId}
+                  </p>
+                  <p>
+                    Designation:&nbsp;&nbsp;
+                    {relivingLetterData !== undefined &&
+                      relivingLetterData.designation}
+                  </p>
                 </div>
               </div>
               <div className="relievingLetterContent mb-5">
                 <p className="mt-5 mb-5">
                   {" "}
-                  Dear <b>Candidate,</b>{" "}
+                  Dear{" "}
+                  <b>
+                    {relivingLetterData !== undefined &&
+                      relivingLetterData.employeeName}
+                    ,
+                  </b>{" "}
                 </p>
                 <p>
                   With reference to your resignation. We would like to inform
