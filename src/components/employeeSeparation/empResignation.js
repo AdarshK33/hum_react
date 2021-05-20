@@ -51,7 +51,7 @@ const EmpResignation = () => {
       managerId: approver,
       modeOfSeparationId: 1,
       modeOfSeparationReasonId: 1,
-      withdraw: null,
+      // withdraw: null,
     };
     console.log("create", create);
     empResign(create);
@@ -260,6 +260,7 @@ const EmpResignation = () => {
                           className="form-control non-disable blueTextData"
                           dateFormat="yyyy-MM-dd"
                           placeholderText="Select Date"
+                          minDate={new Date()}
                           required
                         />
                       </Col>
@@ -345,6 +346,7 @@ const EmpResignation = () => {
                           className="form-control non-disable blueTextData"
                           dateFormat="yyyy-MM-dd"
                           placeholderText="Select Date"
+                          minDate={new Date()}
                           required
                         />
                       </Col>
