@@ -63,6 +63,7 @@ const EmployeeExitAction = () => {
     loader,
     fetchRelievingLetterData,
     terminationConfirmation,
+    resignationConfirmation,
   } = useContext(EmployeeSeparationContext);
   console.log("employeeId", employeeId);
   useEffect(() => {
@@ -270,6 +271,7 @@ const EmployeeExitAction = () => {
       terminationConfirmation(exitId, employeeId);
     }
     if (modeOfSeparation === "Resignation") {
+      resignationConfirmation(exitId, employeeId);
     }
     setModal(true);
   };
@@ -750,9 +752,9 @@ const EmployeeExitAction = () => {
           </button> */}
 
                         <button
-                          disabled={state.status === 4}
+                          disabled={state.status === 4 || state.status === 3}
                           className={
-                            state.status === 4
+                            state.status === 4 || state.status === 3
                               ? "confirmButton"
                               : "stepperButtons"
                           }
@@ -762,17 +764,18 @@ const EmployeeExitAction = () => {
                         >
                           Confirm
                         </button>
-                        {state.status === 4 && (
-                          <button
-                            // disabled={previewLetter | showSuccessModal}
-                            className="resignationButton"
-                            onClick={() => viewResignation()}
-                          >
-                            {modeOfSeparation === "Termination"
-                              ? "View Termination Letter"
-                              : "View Resignation Letter"}
-                          </button>
-                        )}
+                        {state.status === 3 ||
+                          (state.status === 4 && (
+                            <button
+                              // disabled={previewLetter | showSuccessModal}
+                              className="resignationButton"
+                              onClick={() => viewResignation()}
+                            >
+                              {modeOfSeparation === "Termination"
+                                ? "View Termination Letter"
+                                : "View Resignation Letter"}
+                            </button>
+                          ))}
                       </div>
                       {submit === true && (
                         <div className="text-center mb-3">
