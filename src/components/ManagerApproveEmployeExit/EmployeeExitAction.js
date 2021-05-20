@@ -413,7 +413,11 @@ const EmployeeExitAction = () => {
               ) : (
                 <>
                   <br></br>
-                  <Button variant="primary" onClick={digitalSignature}>
+                  <Button
+                    variant="primary"
+                    style={{ marginLeft: "20px" }}
+                    onClick={digitalSignature}
+                  >
                     Add digital signature
                   </Button>
                 </>
@@ -908,8 +912,9 @@ const EmployeeExitAction = () => {
                       {/* <button className="stepperButtons" onClick={PrevStep}>
             Back
           </button> */}
-                      {employeeData.status === 0 ||
-                      updateResponse.status === 0 ? (
+                      {(employeeData.status === 0 ||
+                        updateResponse.status === 0) &&
+                      letterSent === false ? (
                         <button
                           // style={
                           //   showModal | showSuccessModal
@@ -930,7 +935,7 @@ const EmployeeExitAction = () => {
                     {!saveLetter &&
                     (employeeData.status === 2 || showPreview === true) ? (
                       <Row>
-                        <Col sm={5}></Col>
+                        <Col sm={4}></Col>
                         <Col
                           sm={2}
                           style={{

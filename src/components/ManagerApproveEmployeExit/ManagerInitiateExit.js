@@ -86,8 +86,15 @@ const ManagerInitiateExit = () => {
     makeEmployeeDataNull,
     fetchRelievingLetterData,
     relivingLetterData,
+    terminationConfirmation,
+    resignationConfirmation,
   } = useContext(EmployeeSeparationContext);
-  const { empResign, withdraw } = useContext(SeparationContext);
+  const {
+    empResign,
+    withdraw,
+    searchByCostCenter,
+    searchByCostData,
+  } = useContext(SeparationContext);
   const { searchForEmp1, searchEmpData1, makeSearchEmp1DataNull } = useContext(
     OfferContext
   );
@@ -187,11 +194,11 @@ const ManagerInitiateExit = () => {
 
   useEffect(() => {
     if (
-      searchEmpData1 &&
-      searchEmpData1 &&
-      searchEmpData1 !== null &&
-      searchEmpData1 !== undefined &&
-      Object.keys(searchEmpData1).length !== 0 &&
+      searchByCostData &&
+      searchByCostData &&
+      searchByCostData !== null &&
+      searchByCostData !== undefined &&
+      Object.keys(searchByCostData).length !== 0 &&
       locationDetailsList &&
       locationDetailsList &&
       locationDetailsList !== null &&
@@ -199,33 +206,33 @@ const ManagerInitiateExit = () => {
       Object.keys(locationDetailsList).length !== 0
     ) {
       locationDetailsList.map((item, i) => {
-        if (item.locationId === searchEmpData1.locationId) {
+        if (item.locationId === searchByCostData.locationId) {
           state.empLocation = item.locationName;
         }
       });
     }
-  }, [locationDetailsList, searchEmpData1]);
+  }, [locationDetailsList, searchByCostData]);
   useEffect(() => {
     if (
-      searchEmpData1 &&
-      searchEmpData1 &&
-      searchEmpData1 !== null &&
-      searchEmpData1 !== undefined &&
-      Object.keys(searchEmpData1).length !== 0
+      searchByCostData &&
+      searchByCostData &&
+      searchByCostData !== null &&
+      searchByCostData !== undefined &&
+      Object.keys(searchByCostData).length !== 0
     ) {
       // state.empName = searchEmpData1.firstName;
       const temp =
-        searchEmpData1.lastName !== null &&
-        searchEmpData1.lastName !== undefined
-          ? searchEmpData1.lastName
+        searchByCostData.lastName !== null &&
+        searchByCostData.lastName !== undefined
+          ? searchByCostData.lastName
           : "";
-      state.empId = searchEmpData1.employeeId;
-      setEmpName(searchEmpData1.firstName + " " + temp);
+      state.empId = searchByCostData.employeeId;
+      setEmpName(searchByCostData.firstName + " " + temp);
 
-      state.empContractType = searchEmpData1.contractType;
-      state.empCostCenterName = searchEmpData1.costCentre;
+      state.empContractType = searchByCostData.contractType;
+      state.empCostCenterName = searchByCostData.costCentre;
       //   state.empLocation = searchEmpData1.location;
-      state.empPosition = searchEmpData1.position;
+      state.empPosition = searchByCostData.position;
 
       if (state.empContractType === "Internship") {
         setIntern(true);
@@ -233,7 +240,7 @@ const ManagerInitiateExit = () => {
         setIntern(false);
       }
     }
-  }, [searchEmpData1]);
+  }, [searchByCostData]);
 
   useEffect(() => {
     if (
@@ -254,10 +261,10 @@ const ManagerInitiateExit = () => {
     }
   }, [employeeProfileData]);
   console.log(ModeOfSeparationData);
-  console.log("searchEmpData1", searchEmpData1);
+  console.log("searchByCostData", searchByCostData);
   const searchDataHandler = () => {
     if (EmpName !== null) {
-      searchForEmp1(EmpName);
+      searchByCostCenter(EmpName);
       setCheckForExist(true);
       if (
         employeeData &&
@@ -466,6 +473,17 @@ const ManagerInitiateExit = () => {
       setSubmitLetter(true);
       setLetterSent(true);
       setShow(true);
+      // if (state.changeInSeparation == 2) {
+      //   console.log(state.changeInSeparation, "condition termination");
+      //   terminationConfirmation(employeeData.exitId, employeeData.employeeId);
+      // } else if (
+      //   state.changeInSeparation == 1 ||
+      //   state.changeInSeparation == 4
+      // ) {
+      //   console.log(state.modeOfSeparationId, "condition resignation");
+      //   resignationConfirmation(employeeData.exitId, employeeData.employeeId);
+      // }
+
       // finalSubmitOfferLetter(employeeData.employeeId);
     }
   };
@@ -694,7 +712,8 @@ const ManagerInitiateExit = () => {
     }
   };
   const withdrawHandler = () => {
-    // withdraw(state.empId);
+    console.log("exitId", employeeData.exitId);
+    withdraw(employeeData.exitId);
     setWithdrawThis(true);
     ViewEmployeeDataById(state.empId);
     setSubmitted(false);
@@ -775,7 +794,7 @@ const ManagerInitiateExit = () => {
             exitId: 0,
             hoursWorked: null,
             lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
-            location: searchEmpData1.locationId,
+            location: searchByCostData.locationId,
             managerCostCentre: state.managerCostCentre,
             managerEmailId: null,
             managerId: state.mngrId,
@@ -816,7 +835,7 @@ const ManagerInitiateExit = () => {
             exitId: 0,
             hoursWorked: null,
             lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
-            location: searchEmpData1.locationId,
+            location: searchByCostData.locationId,
             managerCostCentre: state.managerCostCentre,
             managerEmailId: null,
             managerId: state.mngrId,
@@ -856,7 +875,7 @@ const ManagerInitiateExit = () => {
               will be sent to the employee on{" "}
               {relivingLetterData.lastWorkingDate}
             </label>
-            <div className="text-center mb-2">
+            <div className="text-center">
               <Button onClick={handleRelivingClose}>Close</Button>
             </div>
           </Modal.Body>
@@ -889,7 +908,11 @@ const ManagerInitiateExit = () => {
               ) : (
                 <>
                   <br></br>
-                  <Button variant="primary" onClick={digitalSignature}>
+                  <Button
+                    variant="primary"
+                    style={{ marginLeft: "20px" }}
+                    onClick={digitalSignature}
+                  >
                     Add digital signature
                   </Button>
                 </>
@@ -1662,10 +1685,12 @@ const ManagerInitiateExit = () => {
                         >
                           {submitted === false ? (
                             <Button onClick={submitHandler}>Save</Button>
-                          ) : (
+                          ) : letterSent === false && submitted === true ? (
                             <Button onClick={withdrawHandler}>
                               WithDraw Resignation
                             </Button>
+                          ) : (
+                            ""
                           )}
                         </Col>
                       </Row>
