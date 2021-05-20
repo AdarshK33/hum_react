@@ -294,7 +294,7 @@ const EmployeeExitAction = () => {
         };
         UpdateEmplyoeeExist(InfoData);
         setSuccessModal(true);
-        console.log("in else");
+        console.log("in else", InfoData);
       }
     }
   };

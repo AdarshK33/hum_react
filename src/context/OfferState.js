@@ -189,6 +189,11 @@ export const OfferProvider = (props) => {
         console.log(error);
       });
   };
+
+  const makeSearchEmp1DataNull = () => {
+    state.searchEmpData1 = [];
+    return dispatch({ type: "SEARCH_EMP1", payload: state.searchEmpData1 });
+  };
   //Search by reference emp name2 or emp id
   const searchForEmp2 = (key) => {
     client
@@ -475,6 +480,7 @@ export const OfferProvider = (props) => {
         cityData,
         adhaarVerificationNotification,
         finalSubmitAppointmentLetter,
+        makeSearchEmp1DataNull,
         searchData: state.searchData,
         departmentName: state.departmentName,
         designationName: state.designationName,

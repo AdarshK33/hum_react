@@ -464,7 +464,7 @@ export const SeparationProvider = (props) => {
 
   const withdraw = (empId) => {
     return client
-      .get(`api/v1/separation/employee-exit/withdraw?employeeId=${empId}`)
+      .get(`/api/v1/separation/employee-exit/withdraw?exitId=${empId}`)
       .then((response) => {
         toast.info(response.data.message);
         console.log("response of withdraw", response.data);

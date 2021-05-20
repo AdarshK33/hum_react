@@ -30,6 +30,8 @@ const ManagerInitiateExit = () => {
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [checkForExist, setCheckForExist] = useState(false);
   const [firstTimeUpdate, setFirstTimeUpdate] = useState(true);
+  const [submitted, setSubmitted] = useState(false);
+  const [withdrwaThis, setWithdrawThis] = useState(false);
 
   const [dateOfResignation, setDateOfResignation] = useState("");
   const [lastWorkingDate, setLastWorkingDate] = useState("");
@@ -69,9 +71,12 @@ const ManagerInitiateExit = () => {
     employeeProfileData,
     ViewEmployeeDataById,
     CreateEmplyoeeExist,
+    makeEmployeeDataNull,
   } = useContext(EmployeeSeparationContext);
-  const { empResign } = useContext(SeparationContext);
-  const { searchForEmp1, searchEmpData1 } = useContext(OfferContext);
+  const { empResign, withdraw } = useContext(SeparationContext);
+  const { searchForEmp1, searchEmpData1, makeSearchEmp1DataNull } = useContext(
+    OfferContext
+  );
   const { locationDetails, locationDetailsList } = useContext(
     PermissionContext
   );
@@ -97,6 +102,46 @@ const ManagerInitiateExit = () => {
   console.log("employeeData", employeeData);
 
   useEffect(() => {
+    console.log("state.empI", state.empId);
+    if (
+      employeeData &&
+      employeeData &&
+      employeeData !== null &&
+      employeeData !== undefined &&
+      Object.keys(employeeData).length !== 0
+    ) {
+      if (withdrwaThis === true) {
+        console.log("state.empId", employeeData.exitId);
+        withdraw(employeeData.exitId);
+        setWithdrawThis(false);
+        setEmpName("");
+        state.empId = "";
+        state.empContractType = "";
+        state.empCostCenterName = "";
+        state.empLocation = "";
+        state.empPosition = "";
+        state.mngrName = "";
+        state.mngrId = "";
+        state.mngrCostCenterName = "";
+        state.mngrPosition = "";
+        state.modeOfSeparationReasonId = "";
+        state.noticePeriod = "";
+        state.emailId = "";
+        state.comments = "";
+        state.noticePeriodRcryDays = "";
+        state.remarks = "";
+        setModeOfSeparation("");
+        setRehireYes(false);
+        setRehireNo(false);
+        setRcryYes(false);
+        setRcryNo(false);
+        setDateOfResignation("");
+        setLastWorkingDate("");
+      }
+    }
+  }, [employeeData]);
+
+  useEffect(() => {
     if (
       employeeData &&
       employeeData &&
@@ -111,13 +156,15 @@ const ManagerInitiateExit = () => {
         employeeData.employeeId !== null &&
         employeeData.employeeId !== undefined
       ) {
-        if (checkForExist === true || firstTimeUpdate === true) {
-          if (state.empId === employeeData.employeeId) {
-            console.log("********");
-            setShowInfoModal(true);
-            setCheckForExist(false);
-            setFirstTimeUpdate(false);
-            toast.info("Employe is in separation list");
+        if (withdrwaThis === false) {
+          if (checkForExist === true || firstTimeUpdate === true) {
+            if (state.empId === employeeData.employeeId) {
+              console.log("********");
+              setShowInfoModal(true);
+              setCheckForExist(false);
+              setFirstTimeUpdate(false);
+              toast.info("Employe is in separation list");
+            }
           }
         }
       }
@@ -165,24 +212,6 @@ const ManagerInitiateExit = () => {
       state.empCostCenterName = searchEmpData1.costCentre;
       //   state.empLocation = searchEmpData1.location;
       state.empPosition = searchEmpData1.position;
-
-      //   if (
-      //     state.empId !== "" &&
-      //     state.empId !== null &&
-      //     state.empId !== undefined &&
-      //     employeeData.employeeId !== null &&
-      //     employeeData.employeeId !== undefined
-      //   ) {
-      //     if (firstTimeUpdate === true) {
-      //       if (state.empId === employeeData.employeeId) {
-      //         console.log("********");
-      //         setShowInfoModal(true);
-      //         setCheckForExist(false);
-      //         setFirstTimeUpdate(false);
-      //         toast.info("Employe is in separation list");
-      //       }
-      //     }
-      //   }
 
       if (state.empContractType === "Internship") {
         setIntern(true);
@@ -405,7 +434,17 @@ const ManagerInitiateExit = () => {
   const handleClose = () => {
     setModal(false);
     setSuccessModal(false);
+  };
+  const handleInfoClose = () => {
     setShowInfoModal(false);
+    setEmpName("");
+    state.empId = "";
+    state.empContractType = "";
+    state.empPosition = "";
+    state.empLocation = "";
+    state.empCostCenterName = "";
+    makeEmployeeDataNull();
+    makeSearchEmp1DataNull();
   };
   const handleSaveRemarks = () => {
     if (
@@ -596,6 +635,12 @@ const ManagerInitiateExit = () => {
       return false;
     }
   };
+  const withdrawHandler = () => {
+    // withdraw(state.empId);
+    setWithdrawThis(true);
+    ViewEmployeeDataById(state.empId);
+    setSubmitted(false);
+  };
 
   const submitHandler = (e) => {
     console.log("submit handler");
@@ -709,6 +754,7 @@ const ManagerInitiateExit = () => {
             // rehireRemark: state.remarks !== "" ? state.remarks : null,
           };
           console.log("createExitData", data1);
+          setSubmitted(true);
           CreateEmplyoeeExist(data1);
           //   empResign(data1);
           setSuccessModal(true);
@@ -813,7 +859,7 @@ const ManagerInitiateExit = () => {
         </Container>
       </Modal>
 
-      <Modal show={showInfoModal} onHide={() => handleClose()} centered>
+      <Modal show={showInfoModal} onHide={() => handleInfoClose()} centered>
         <Container>
           <Modal.Header closeButton className="modalHeader">
             {/* <Modal.Title>State remarks for disapproval</Modal.Title> */}
@@ -824,7 +870,7 @@ const ManagerInitiateExit = () => {
             </label>
 
             <div className="text-center mb-2">
-              <Button onClick={() => handleClose()}>Close</Button>
+              <Button onClick={() => handleInfoClose()}>Close</Button>
             </div>
           </Modal.Body>
         </Container>
@@ -1082,6 +1128,7 @@ const ManagerInitiateExit = () => {
                                       className="form-control onBoard-view"
                                       selected={dateOfResignation}
                                       name="dateOfResignation"
+                                      minDate={moment().toDate()}
                                       // required
                                       onChange={(e) => dateOfBirthHandler(e)}
                                       dateFormat="yyyy-MM-dd"
@@ -1126,6 +1173,7 @@ const ManagerInitiateExit = () => {
                                     className="form-control onBoard-view"
                                     selected={lastWorkingDate}
                                     name="lastWorkingDate"
+                                    minDate={moment().toDate()}
                                     // required
                                     onChange={(e) => dateOfBirthHandler1(e)}
                                     dateFormat="yyyy-MM-dd"
@@ -1503,17 +1551,32 @@ const ManagerInitiateExit = () => {
                       ) : (
                         ""
                       )}
-                      <div
+
+                      <Row>
+                        <Col
+                          style={{
+                            marginTop: "2rem",
+                            marginBottom: "2rem",
+                            textAlign: "center",
+                          }}
+                        >
+                          {submitted === false ? (
+                            <Button onClick={submitHandler}>Save</Button>
+                          ) : (
+                            <Button onClick={withdrawHandler}>
+                              WithDraw Resignation
+                            </Button>
+                          )}
+                        </Col>
+                      </Row>
+
+                      {/* <div
                         style={{
                           marginTop: "2rem",
                           marginBottom: "2rem",
                           textAlign: "center",
                         }}
                       >
-                        {/* <button className="stepperButtons" onClick={PrevStep}>
-            Back
-          </button> */}
-
                         <button
                           // style={
                           //   showModal | showSuccessModal
@@ -1526,7 +1589,7 @@ const ManagerInitiateExit = () => {
                         >
                           Save
                         </button>
-                      </div>
+                      </div> */}
                     </Col>
                   </Row>
                 </Form>

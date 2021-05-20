@@ -73,6 +73,13 @@ export const EmploeeSeparationProvider = (props) => {
         console.log(error);
       });
   };
+  const makeEmployeeDataNull = () => {
+    state.employeeData = {};
+    return dispatch({
+      type: "EMPLOYEE_DATA_BY_ID",
+      payload: state.employeeData,
+    });
+  };
   const EmployeeSeparationListView = (key, pageNumber) => {
     setLoader(true);
     client
@@ -181,6 +188,7 @@ export const EmploeeSeparationProvider = (props) => {
         ViewEmployeeProfile,
         CreateEmplyoeeExist,
         fetchRelievingLetterData,
+        makeEmployeeDataNull,
         employeeProfileData: state.employeeProfileData,
         employeeId: state.employeeId,
         updateResponse: state.updateResponse,
