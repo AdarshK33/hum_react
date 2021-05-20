@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import { PermissionContext } from "../../context/PermissionState";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -6,6 +7,7 @@ import moment from "moment";
 import { AppContext } from "../../context/AppState";
 import "../common/style.css";
 import { SeparationContext } from "../../context/SepearationState";
+import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
 
 const EmpResignation = () => {
   const [regDate, setRegDate] = useState(new Date());
@@ -15,8 +17,17 @@ const EmpResignation = () => {
   const [approver, setApprover] = useState("");
   const [comments, setComments] = useState("");
   const [submitted, setSubmitted] = useState(false);
-
+  const [reasonOfSeparationList, setReasonOfSeparationList] = useState([]);
+  const { locationDetails, locationDetailsList } = useContext(
+    PermissionContext
+  );
   const { user } = useContext(AppContext);
+  const {
+    employeeData,
+    ModeOfSeparationData,
+    ModeOfSeparationView,
+    ViewEmployeeDataById,
+  } = useContext(EmployeeSeparationContext);
   const {
     empResign,
     managerData,
@@ -28,20 +39,101 @@ const EmpResignation = () => {
     loader,
   } = useContext(SeparationContext);
 
+
+  useEffect(() => {
+    locationDetails();
+    if (
+      locationDetailsList &&
+      locationDetailsList &&
+      locationDetailsList !== null &&
+      locationDetailsList !== undefined &&
+      Object.keys(locationDetailsList).length !== 0
+    ) {
+      locationDetailsList.map((item, i) => {
+        if (item.locationId === user.locationId) {
+          user.locationId = item.locationName;
+
+        }
+      });
+    }
+  }, [locationDetailsList,user]);
+  console.log("locationDetailsList", locationDetailsList);
   useEffect(() => {
     managerData(user.costCentre);
   }, [user.costCentre]);
 
   useEffect(() => {
     modeOfSeparation();
+    ModeOfSeparationView();
   }, []);
 
   useEffect(() => {
     console.log("loader in useEffect ", loader, managerList);
   }, [loader]);
 
+  useEffect(() => {
+    if (
+      ModeOfSeparationData &&
+      ModeOfSeparationData !== null &&
+      ModeOfSeparationData !== undefined &&
+      Object.keys(ModeOfSeparationData).length !== 0
+    ) {
+      let tempArray = [];
+      ModeOfSeparationData.map((item, i) => {
+        if (ModeOfSeparationData[i].modeOfSeparation.separationId === 4)
+          ModeOfSeparationData[i].modeOfSeparationReasonList.map((item1, j) => {
+            tempArray.push({
+              label:
+                ModeOfSeparationData[i].modeOfSeparationReasonList[j]
+                  .modeOfSeparationReason,
+              value:
+                ModeOfSeparationData[i].modeOfSeparationReasonList[j]
+                  .separationReasonId,
+            });
+          });
+      });
+      setReasonOfSeparationList(tempArray);
+    }
+  }, [ModeOfSeparationData]);
+  console.log("reasonOfSeparationList", reasonOfSeparationList);
+
   const SubmitHandler = (e) => {
     e.preventDefault();
+    // const data1 = {
+    //   company: "string",
+    //   contractType: "string",
+    //   costCentreManagerEmailId: "string",
+    //   costCentreManagerName: "string",
+    //   costCentreName: "string",
+    //   dateOfResignation: moment(dateOfResignation).format("YYYY-MM-DD"),
+    //   emailId: state.emailId,
+    //   empName: "string",
+    //   employeeComment: "string",
+    //   employeeId: state.empId,
+    //   employeeName: "string",
+    //   exitId: 0,
+    //   hoursWorked: 0,
+    //   lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
+    //   location: "string",
+    //   managerCostCentre: "string",
+    //   managerEmailId: "string",
+    //   managerId: "string",
+    //   managerName: "string",
+    //   managerPosition: "string",
+    //   modeOfSeparationId: changeInSeparation,
+    //   modeOfSeparationReasonId: reasonId,
+    //   noticePeriod: 0,
+    //   noticePeriodRecovery: RcryYes ? 1 : RcryNo ? 2 : 0,
+    //   noticePeriodRecoveryDays: parseInt(state.noticePeriodRcryDays),
+    //   position: "string",
+    //   reHire: RehireYes ? 1 : RehireNo ? 2 : 0,
+    //   reason: "string",
+    //   reasonForResignation: "string",
+    //   rehireRemark: "string",
+    //   status: 2,
+    //   withdraw: "string",
+    // };
+
     const create = {
       emailId: emailId,
       employeeComment: comments,
@@ -51,7 +143,7 @@ const EmpResignation = () => {
       managerId: approver,
       modeOfSeparationId: 1,
       modeOfSeparationReasonId: 1,
-      withdraw: null,
+      withdraw: "string",
     };
     console.log("create", create);
     empResign(create);
@@ -215,8 +307,15 @@ const EmpResignation = () => {
                           value={reasonOfSepration}
                           onChange={(e) => setReasonOfSepration(e.target.value)}
                         >
-                          <option value="">Select Reason</option>
-                          {modeOfResponse !== null &&
+                          {/* <option value="">Select Reason</option> */}
+                          <option value=""></option>
+                          {reasonOfSeparationList.map((item) => {
+                            return (
+                              <option key={item.value}>{item.label}</option>
+                            );
+                          })}
+
+                          {/* {modeOfResponse !== null &&
                             modeOfResponse !== undefined &&
                             modeOfResponse.map((item) => {
                               return (
@@ -227,7 +326,7 @@ const EmpResignation = () => {
                                   {item.modeOfSeparationReason}
                                 </option>
                               );
-                            })}
+                            })} */}
                         </Form.Control>
                       </Col>
                     </Form.Group>
@@ -255,6 +354,7 @@ const EmpResignation = () => {
                       </Form.Label>
                       <Col sm="8">
                         <DatePicker
+                          minDate={moment().toDate()}
                           selected={regDate}
                           onChange={(date) => setRegDate(date)}
                           className="form-control non-disable blueTextData"
@@ -341,6 +441,7 @@ const EmpResignation = () => {
                       <Col sm="8">
                         <DatePicker
                           selected={lastDate}
+                          minDate={moment().toDate()}
                           onChange={(date) => setLastDate(date)}
                           className="form-control non-disable blueTextData"
                           dateFormat="yyyy-MM-dd"
