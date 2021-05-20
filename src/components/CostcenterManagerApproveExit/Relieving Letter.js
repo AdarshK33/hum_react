@@ -18,10 +18,12 @@ const RelievingLetter = (props) => {
       console.log(props.previewLetter);
       setLetter(true);
     }
+    console.log(relievingLetterData,"relieving")
   }, [props.previewLetter]);
   const addSignature = () => {
     setSignature(true);
   };
+
   const handleSave = () => {
     setLetter(false);
     // setMessage(true);
@@ -63,9 +65,9 @@ const RelievingLetter = (props) => {
               <h5 className="text-center"> RELIEVING & EXPERIENCE LETTER</h5>
               <div className="float-left">
                 <div className="mt-1 mb-5">
-                  <p>Name:</p>
-                  <p>EmployeeId:</p>
-                  <p>Designation:</p>
+                  <p>Name: {relievingLetterData !== undefined?relievingLetterData.employeeName:''}</p>
+                  <p>EmployeeId: {relievingLetterData !== undefined?relievingLetterData.employeeId:''}</p>
+                  <p>Designation: {relievingLetterData !== undefined?relievingLetterData.designation:''}</p>
                 </div>
               </div>
               <div className="relievingLetterContent mb-5">

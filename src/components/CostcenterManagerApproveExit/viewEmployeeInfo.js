@@ -91,7 +91,7 @@ const EmployeeExitAction = () => {
       state.mngrCostCenterName = employeeData.managerCostCentre;
       state.mngrPosition = employeeData.managerPosition;
       state.status = employeeData.status;
-      // state.modeOfSeparationId = employeeData.modeOfSeparationId;
+       state.modeOfSeparationId = employeeData.modeOfSeparationId;
       // state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.dateOfResignation = employeeData.dateOfResignation;
       state.noticePeriod = employeeData.noticePeriod;
@@ -267,12 +267,16 @@ const EmployeeExitAction = () => {
   };
 
   const handleConfirmation = (exitId, employeeId) => {
-    if (modeOfSeparation === "Termination") {
+    console.log(state.modeOfSeparationId ,"deepika")
+    if(state.modeOfSeparationId == 2 ) {
+      console.log(state.modeOfSeparationId ,"rajashekar")
       terminationConfirmation(exitId, employeeId);
-    }
-    if (modeOfSeparation === "Resignation") {
+    }else if(state.modeOfSeparationId == 1 ||state.modeOfSeparationId == 4 ) {
+      console.log(state.modeOfSeparationId ,"sachin")
       resignationConfirmation(exitId, employeeId);
     }
+    console.log(state.modeOfSeparationId ,"sravani")
+
     setModal(true);
   };
   const handleClosePopup = () => {
@@ -285,6 +289,7 @@ const EmployeeExitAction = () => {
   const viewResignation = () => {
     setPreviewLetter(true);
     setSubmit(true);
+    fetchRelievingLetterData(paramsemployeeId);
   };
 
   return (
