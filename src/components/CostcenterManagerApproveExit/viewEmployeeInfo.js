@@ -62,12 +62,14 @@ const EmployeeExitAction = () => {
     employeeId,
     loader,
     fetchRelievingLetterData,
+    relivingLetterData,
     terminationConfirmation,
     resignationConfirmation,
   } = useContext(EmployeeSeparationContext);
   console.log("employeeId", employeeId);
   useEffect(() => {
     ViewEmployeeDataById(employeeId);
+    fetchRelievingLetterData(paramsemployeeId);
   }, [employeeId]);
   useEffect(() => {
     console.log(employeeData);
@@ -91,7 +93,7 @@ const EmployeeExitAction = () => {
       state.mngrCostCenterName = employeeData.managerCostCentre;
       state.mngrPosition = employeeData.managerPosition;
       state.status = employeeData.status;
-      // state.modeOfSeparationId = employeeData.modeOfSeparationId;
+       state.modeOfSeparationId = employeeData.modeOfSeparationId;
       // state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.dateOfResignation = employeeData.dateOfResignation;
       state.noticePeriod = employeeData.noticePeriod;
@@ -267,12 +269,16 @@ const EmployeeExitAction = () => {
   };
 
   const handleConfirmation = (exitId, employeeId) => {
-    if (modeOfSeparation === "Termination") {
+    console.log(state.modeOfSeparationId ,"deepika")
+    if(state.modeOfSeparationId == 2 ) {
+      console.log(state.modeOfSeparationId ,"rajashekar")
       terminationConfirmation(exitId, employeeId);
-    }
-    if (modeOfSeparation === "Resignation") {
+    }else if(state.modeOfSeparationId == 1 ||state.modeOfSeparationId == 4 ) {
+      console.log(state.modeOfSeparationId ,"sachin")
       resignationConfirmation(exitId, employeeId);
     }
+    console.log(state.modeOfSeparationId ,"sravani")
+
     setModal(true);
   };
   const handleClosePopup = () => {
@@ -284,7 +290,9 @@ const EmployeeExitAction = () => {
   };
   const viewResignation = () => {
     setPreviewLetter(true);
-    setSubmit(true);
+    if (relivingLetterData !== undefined) {
+      setSubmit(true);
+    }
   };
 
   return (
@@ -297,7 +305,7 @@ const EmployeeExitAction = () => {
               <p style={{ marginBottom: "2rem" }}>
                 {" "}
                 The details have been saved successfully. The relieving letter
-                will be sent to the employee on {moment().format("DD-MM-YYYY")}
+                will be sent to the employee on {state.lastWorkingDate}
               </p>
               <Button onClick={() => handleClosePopup()}>OK</Button>
             </Modal.Body>
