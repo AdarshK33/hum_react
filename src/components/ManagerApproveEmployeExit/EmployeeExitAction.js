@@ -365,22 +365,14 @@ const EmployeeExitAction = () => {
       <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         {submitLetter ? (
-          <Modal.Body>
-            <div className="offer-letter-message ">
-              <p>
-                The details have been saved successfully. The relieving letter
-                will be sent to the employee on {moment().format("DD-MM-YYYY")}
-              </p>
-              <br></br>
-              {/* <Link
-                to="/employee-separation-listing
-              "
-                className="text-center"
-              > */}
-              <Button type="button" onClick={handleRelivingClose}>
-                Close
-              </Button>
-              {/* </Link> */}
+          <Modal.Body className="mx-auto">
+            <label>
+              The details have been saved successfully. The relieving letter
+              will be sent to the employee on{" "}
+              {relivingLetterData.lastWorkingDate}
+            </label>
+            <div className="text-center mb-2">
+              <Button onClick={handleRelivingClose}>Close</Button>
             </div>
           </Modal.Body>
         ) : previewLetter || showRelivingModal ? (
@@ -930,7 +922,14 @@ const EmployeeExitAction = () => {
                     (employeeData.status === 2 || showPreview === true) ? (
                       <Row>
                         <Col sm={5}></Col>
-                        <Col sm={2}>
+                        <Col
+                          sm={2}
+                          style={{
+                            marginTop: "2rem",
+                            marginBottom: "2rem",
+                            textAlign: "center",
+                          }}
+                        >
                           <Button type="button" onClick={relivingLetterClick}>
                             Generate Reliving Letter
                           </Button>
@@ -958,7 +957,11 @@ const EmployeeExitAction = () => {
                             <Button
                               type="button"
                               onClick={submitfinalRelivingLetter}
-                              style={{ textAlign: "center" }}
+                              style={{
+                                marginTop: "2rem",
+                                marginBottom: "2rem",
+                                textAlign: "center",
+                              }}
                             >
                               Submit
                             </Button>

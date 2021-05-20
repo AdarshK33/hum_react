@@ -142,8 +142,8 @@ const EmployeeExitList = () => {
   return (
     <Fragment>
       <Breadcrumb
-        title="Employee Separartion List"
-        parent="Employee Separartion List"
+        title="Employee Separation List"
+        parent="Employee Separation List"
       />
       <Container fluid>
         <Row>
@@ -245,13 +245,17 @@ const EmployeeExitList = () => {
                             </td>
 
                             <td>
-                              <Link to={"/exit-action/" + item.employeeId}>
-                                <Edit2
-                                  onClick={() => {
-                                    fetchEmployeeDetails(item.employeeId);
-                                  }}
-                                />
-                              </Link>
+                              {item.status === 2 ? (
+                                <Edit2 />
+                              ) : (
+                                <Link to={"/exit-action/" + item.employeeId}>
+                                  <Edit2
+                                    onClick={() => {
+                                      fetchEmployeeDetails(item.employeeId);
+                                    }}
+                                  />
+                                </Link>
+                              )}
                             </td>
                           </tr>
                         </tbody>
