@@ -161,11 +161,11 @@ const handleCostCenter = (options) => {
                             <td className="rowStyle">{e.joiningDate}</td>
                             <td className="rowStyle">{e.lastWorkingDay}</td>
                             <td className="rowStyle">{e.itAmount}</td>
-                            <td className="rowStyle">{e.itClearanceStatus == 0?"Due":e.itClearanceStatus == 1?"No Due":"On Hold"}</td>
+                            <td className="rowStyle">{e.itClearanceStatus}</td>
                             <td className="rowStyle">{e.itClearanceRemarks}</td>
                             <td className="rowStyle">{e.itClearanceUpdatedBy}</td>
                             <td className="rowStyle">{e.financeAmount}</td>
-                            <td className="rowStyle">{e.financeClearanceStatus == 0?"Due":e.financeClearanceStatus == 1?"No Due":"On Hold"}</td>
+                            <td className="rowStyle">{e.financeClearanceStatus }</td>
                             <td className="rowStyle">{e.financeClearanceRemarks}</td>
                             <td className="rowStyle">{e.financeClearanceUpdatedBy}</td>
                           </tr>
