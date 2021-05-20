@@ -368,7 +368,8 @@ const EmployeeExitAction = () => {
           <Modal.Body className="mx-auto">
             <label>
               The details have been saved successfully. The relieving letter
-              will be sent to the employee on {moment().format("DD-MM-YYYY")}
+              will be sent to the employee on{" "}
+              {relivingLetterData.lastWorkingDate}
             </label>
             <div className="text-center mb-2">
               <Button onClick={handleRelivingClose}>Close</Button>

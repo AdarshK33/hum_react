@@ -725,44 +725,44 @@ const ManagerInitiateExit = () => {
               console.log(reasonOfSeparationList[i].value);
             }
           });
-          const data1 = {
-            company: "string",
-            contractType: "string",
-            costCentreManagerEmailId: "string",
-            costCentreManagerName: "string",
-            costCentreName: "string",
-            dateOfResignation: moment(dateOfResignation).format("YYYY-MM-DD"),
-            emailId: state.emailId,
-            empName: "string",
-            employeeComment: "string",
-            employeeId: state.empId,
-            employeeName: "string",
-            exitId: 0,
-            hoursWorked: 0,
-            lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
-            location: "string",
-            managerCostCentre: "string",
-            managerEmailId: "string",
-            managerId: "string",
-            managerName: "string",
-            managerPosition: "string",
-            modeOfSeparationId: changeInSeparation,
-            modeOfSeparationReasonId: reasonId,
-            noticePeriod: 0,
-            noticePeriodRecovery: RcryYes ? 1 : RcryNo ? 2 : 0,
-            noticePeriodRecoveryDays: parseInt(state.noticePeriodRcryDays),
-            position: "string",
-            reHire: RehireYes ? 1 : RehireNo ? 2 : 0,
-            reason: "string",
-            reasonForResignation: "string",
-            rehireRemark: "string",
-            status: 2,
-            withdraw: "string",
-          };
+          //   const data1 = {
+          //     company: "string",
+          //     contractType: "string",
+          //     costCentreManagerEmailId: "string",
+          //     costCentreManagerName: "string",
+          //     costCentreName: "string",
+          //     dateOfResignation: moment(dateOfResignation).format("YYYY-MM-DD"),
+          //     emailId: state.emailId,
+          //     empName: "string",
+          //     employeeComment: "string",
+          //     employeeId: state.empId,
+          //     employeeName: "string",
+          //     exitId: 0,
+          //     hoursWorked: 0,
+          //     lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
+          //     location: "string",
+          //     managerCostCentre: "string",
+          //     managerEmailId: "string",
+          //     managerId: "string",
+          //     managerName: "string",
+          //     managerPosition: "string",
+          //     modeOfSeparationId: changeInSeparation,
+          //     modeOfSeparationReasonId: reasonId,
+          //     noticePeriod: 0,
+          //     noticePeriodRecovery: RcryYes ? 1 : RcryNo ? 2 : 0,
+          //     noticePeriodRecoveryDays: parseInt(state.noticePeriodRcryDays),
+          //     position: "string",
+          //     reHire: RehireYes ? 1 : RehireNo ? 2 : 0,
+          //     reason: "string",
+          //     reasonForResignation: "string",
+          //     rehireRemark: "string",
+          //     status: 2,
+          //     withdraw: "string",
+          //   };
 
           const data2 = {
             company: null,
-            contractType: null,
+            contractType: state.empContractType,
             costCentreManagerEmailId: null,
             costCentreManagerName: null,
             costCentreName: null,
@@ -773,14 +773,14 @@ const ManagerInitiateExit = () => {
             employeeId: state.empId,
             employeeName: EmpName,
             exitId: 0,
-            hoursWorked: 0,
+            hoursWorked: null,
             lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
             location: searchEmpData1.locationId,
-            managerCostCentre: null,
+            managerCostCentre: state.managerCostCentre,
             managerEmailId: null,
-            managerId: null,
-            managerName: null,
-            managerPosition: null,
+            managerId: state.mngrId,
+            managerName: state.mngrName,
+            managerPosition: state.mngrPosition,
             modeOfSeparationId: changeInSeparation,
             modeOfSeparationReasonId: reasonId,
             noticePeriod: 0,
@@ -796,14 +796,14 @@ const ManagerInitiateExit = () => {
 
           console.log("createExitData", data2);
           setSubmitted(true);
-          CreateEmplyoeeExist(data1, state.empId);
+          CreateEmplyoeeExist(data2, state.empId);
           setPreview(true);
           //   empResign(data1);
           setSuccessModal(true);
         } else if (intern === true) {
           const data1 = {
             company: null,
-            contractType: null,
+            contractType: state.empContractType,
             costCentreManagerEmailId: null,
             costCentreManagerName: null,
             costCentreName: null,
@@ -814,14 +814,14 @@ const ManagerInitiateExit = () => {
             employeeId: state.empId,
             employeeName: EmpName,
             exitId: 0,
-            hoursWorked: 0,
+            hoursWorked: null,
             lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
             location: searchEmpData1.locationId,
-            managerCostCentre: null,
+            managerCostCentre: state.managerCostCentre,
             managerEmailId: null,
-            managerId: null,
-            managerName: null,
-            managerPosition: null,
+            managerId: state.mngrId,
+            managerName: state.mngrName,
+            managerPosition: state.mngrPosition,
             modeOfSeparationId: 3,
             modeOfSeparationReasonId: 4,
             noticePeriod: 0,
@@ -853,7 +853,8 @@ const ManagerInitiateExit = () => {
           <Modal.Body className="mx-auto">
             <label>
               The details have been saved successfully. The relieving letter
-              will be sent to the employee on {moment().format("DD-MM-YYYY")}
+              will be sent to the employee on{" "}
+              {relivingLetterData.lastWorkingDate}
             </label>
             <div className="text-center mb-2">
               <Button onClick={handleRelivingClose}>Close</Button>
