@@ -369,7 +369,8 @@ const EmployeeExitAction = () => {
             <div className="offer-letter-message ">
               <p>
                 The details have been saved successfully. The relieving letter
-                will be sent to the employee on {moment().format("DD-MM-YYYY")}
+                will be sent to the employee on{" "}
+                {relivingLetterData.lastWorkingDate}
               </p>
               <br></br>
               {/* <Link

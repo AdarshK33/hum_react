@@ -1086,6 +1086,7 @@ const ManagerInitiateExit = () => {
                                       onChange={(e) => dateOfBirthHandler(e)}
                                       dateFormat="yyyy-MM-dd"
                                       placeholderText="YYYY-MM-DD"
+                                      minDate={new Date()}
                                       // disabled={disabled}
                                     />
                                   </div>
@@ -1130,6 +1131,7 @@ const ManagerInitiateExit = () => {
                                     onChange={(e) => dateOfBirthHandler1(e)}
                                     dateFormat="yyyy-MM-dd"
                                     placeholderText="YYYY-MM-DD"
+                                    minDate={new Date()}
                                     // disabled={disabled}
                                   />
                                 </div>
