@@ -14,6 +14,7 @@ const initial_state = {
   employeeId: "",
   employeeProfileData: {},
   relivingLetterData: [],
+  terminationConfirmationStatus: "",
 };
 
 export const EmploeeSeparationProvider = (props) => {
@@ -170,6 +171,26 @@ export const EmploeeSeparationProvider = (props) => {
       });
   };
 
+  const terminationConfirmation = (exitId, empId) => {
+    client
+      .get(
+        "/api/v1/separation/employee-exit/termination-confirmation?exitId=" +
+          exitId
+      )
+      .then((response) => {
+        state.terminationConfirmationStatus = response.data.data;
+        toast.info(response.data.message);
+        ViewEmployeeDataById(empId);
+        return dispatch({
+          type: "TERMINATION_CONFIRMATION",
+          payload: state.terminationConfirmationStatus,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <EmployeeSeparationContext.Provider
       value={{
@@ -181,11 +202,13 @@ export const EmploeeSeparationProvider = (props) => {
         ViewEmployeeProfile,
         CreateEmplyoeeExist,
         fetchRelievingLetterData,
+        terminationConfirmation,
         employeeProfileData: state.employeeProfileData,
         employeeId: state.employeeId,
         updateResponse: state.updateResponse,
         ModeOfSeparationData: state.ModeOfSeparationData,
         EmployeeSeparationList: state.EmployeeSeparationList,
+        terminationConfirmationStatus: state.terminationConfirmationStatus,
         employeeData: state.employeeData,
         relivingLetterData: state.relivingLetterData,
         loader: loader,
