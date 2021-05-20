@@ -289,7 +289,7 @@ const EmployeeExitAction = () => {
           reason: employeeData.reason,
           reasonForResignation: employeeData.reasonForResignation,
           rehireRemark: state.remarks !== "" ? state.remarks : null,
-          status: employeeData.status,
+          status: 2,
           withdraw: employeeData.withdraw,
         };
         UpdateEmplyoeeExist(InfoData);

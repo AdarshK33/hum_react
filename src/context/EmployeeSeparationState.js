@@ -128,6 +128,7 @@ export const EmploeeSeparationProvider = (props) => {
       .then((response) => {
         state.updateResponse = response.data.data;
         toast.info(response.data.message);
+        setLoader(false);
         console.log("updated response", state.updateResponse);
         return dispatch({
           type: "UPDATE_EMPLOYEE_SEPARATION",
