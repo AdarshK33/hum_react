@@ -14,6 +14,7 @@ const initial_state = {
   employeeId: "",
   employeeProfileData: {},
   relivingLetterData: [],
+  terminationConfirmationStatus: "",
 };
 
 export const EmploeeSeparationProvider = (props) => {
@@ -129,7 +130,7 @@ export const EmploeeSeparationProvider = (props) => {
   };
 
   const UpdateEmplyoeeExist = (updateInfo) => {
-    setLoader(true);
+    // setLoader(true);
     client
       .post("/api/v1/separation/employee-exit/update", updateInfo)
       .then((response) => {
@@ -158,7 +159,7 @@ export const EmploeeSeparationProvider = (props) => {
       });
   };
 
-  const CreateEmplyoeeExist = (createInfo) => {
+  const CreateEmplyoeeExist = (createInfo, id) => {
     setLoader(true);
     console.log("INSIDE API CALL ");
     client
@@ -166,10 +167,32 @@ export const EmploeeSeparationProvider = (props) => {
       .then((response) => {
         state.updateResponse = response.data.data;
         toast.info(response.data.message);
+        ViewEmployeeDataById(id);
+        setLoader(false);
         console.log("updated response", state.updateResponse);
         return dispatch({
           type: "UPDATE_EMPLOYEE_SEPARATION",
           payload: state.updateResponse,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const terminationConfirmation = (exitId, empId) => {
+    client
+      .get(
+        "/api/v1/separation/employee-exit/termination-confirmation?exitId=" +
+          exitId
+      )
+      .then((response) => {
+        state.terminationConfirmationStatus = response.data.data;
+        toast.info(response.data.message);
+        ViewEmployeeDataById(empId);
+        return dispatch({
+          type: "TERMINATION_CONFIRMATION",
+          payload: state.terminationConfirmationStatus,
         });
       })
       .catch((error) => {
@@ -189,11 +212,13 @@ export const EmploeeSeparationProvider = (props) => {
         CreateEmplyoeeExist,
         fetchRelievingLetterData,
         makeEmployeeDataNull,
+        terminationConfirmation,
         employeeProfileData: state.employeeProfileData,
         employeeId: state.employeeId,
         updateResponse: state.updateResponse,
         ModeOfSeparationData: state.ModeOfSeparationData,
         EmployeeSeparationList: state.EmployeeSeparationList,
+        terminationConfirmationStatus: state.terminationConfirmationStatus,
         employeeData: state.employeeData,
         relivingLetterData: state.relivingLetterData,
         loader: loader,

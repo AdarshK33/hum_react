@@ -138,3 +138,11 @@
 .relievingLetterContent {
   margin-top: 200px;
 }
+.confirmButton {
+  background: rgb(170, 170, 170) !important;
+  border-color: rgb(170, 170, 170) !important;
+  width: 120px;
+  height: 30px;
+  color: white;
+  margin-left: 40px;
+}

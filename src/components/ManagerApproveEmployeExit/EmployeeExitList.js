@@ -245,13 +245,17 @@ const EmployeeExitList = () => {
                             </td>
 
                             <td>
-                              <Link to={"/exit-action/" + item.employeeId}>
-                                <Edit2
-                                  onClick={() => {
-                                    fetchEmployeeDetails(item.employeeId);
-                                  }}
-                                />
-                              </Link>
+                              {item.status === 2 ? (
+                                <Edit2 />
+                              ) : (
+                                <Link to={"/exit-action/" + item.employeeId}>
+                                  <Edit2
+                                    onClick={() => {
+                                      fetchEmployeeDetails(item.employeeId);
+                                    }}
+                                  />
+                                </Link>
+                              )}
                             </td>
                           </tr>
                         </tbody>

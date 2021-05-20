@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import { PermissionContext } from "../../context/PermissionState";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -17,7 +18,9 @@ const EmpResignation = () => {
   const [comments, setComments] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [reasonOfSeparationList, setReasonOfSeparationList] = useState([]);
-
+  const { locationDetails, locationDetailsList } = useContext(
+    PermissionContext
+  );
   const { user } = useContext(AppContext);
   const {
     employeeData,
@@ -36,6 +39,23 @@ const EmpResignation = () => {
     loader,
   } = useContext(SeparationContext);
 
+  useEffect(() => {
+    locationDetails();
+    if (
+      locationDetailsList &&
+      locationDetailsList &&
+      locationDetailsList !== null &&
+      locationDetailsList !== undefined &&
+      Object.keys(locationDetailsList).length !== 0
+    ) {
+      locationDetailsList.map((item, i) => {
+        if (item.locationId === user.locationId) {
+          user.locationId = item.locationName;
+        }
+      });
+    }
+  }, [locationDetailsList, user]);
+  console.log("locationDetailsList", locationDetailsList);
   useEffect(() => {
     managerData(user.costCentre);
   }, [user.costCentre]);
@@ -121,7 +141,7 @@ const EmpResignation = () => {
       managerId: approver,
       modeOfSeparationId: 1,
       modeOfSeparationReasonId: 1,
-      withdraw: "string",
+      // withdraw: "string",
     };
     console.log("create", create);
     empResign(create);
@@ -332,11 +352,13 @@ const EmpResignation = () => {
                       </Form.Label>
                       <Col sm="8">
                         <DatePicker
+                          minDate={moment().toDate()}
                           selected={regDate}
                           onChange={(date) => setRegDate(date)}
                           className="form-control non-disable blueTextData"
                           dateFormat="yyyy-MM-dd"
                           placeholderText="Select Date"
+                          minDate={new Date()}
                           required
                         />
                       </Col>
@@ -418,10 +440,12 @@ const EmpResignation = () => {
                       <Col sm="8">
                         <DatePicker
                           selected={lastDate}
+                          minDate={moment().toDate()}
                           onChange={(date) => setLastDate(date)}
                           className="form-control non-disable blueTextData"
                           dateFormat="yyyy-MM-dd"
                           placeholderText="Select Date"
+                          minDate={new Date()}
                           required
                         />
                       </Col>
@@ -456,6 +480,7 @@ const EmpResignation = () => {
                           as="select"
                           className="non-disable blueTextData"
                           value={approver}
+                          required
                           onChange={(e) => setApprover(e.target.value)}
                         >
                           <option value="">Select Approver</option>

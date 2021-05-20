@@ -12,6 +12,8 @@ import { toast } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
 import { SeparationContext } from "../../context/SepearationState";
 import { setGlobalCssModule } from "reactstrap/es/utils";
+import RelievingLetter from "./RelivingLetter";
+import calendarImage from "../../assets/images/calendar-image.png";
 
 const ManagerInitiateExit = () => {
   const [modeOfSeparation, setModeOfSeparation] = useState("");
@@ -44,6 +46,16 @@ const ManagerInitiateExit = () => {
   const [lastWorkingDateError, setLastWorkingDateError] = useState(false);
   const [emailError, setEmailError] = useState(false);
 
+  const [showRelivingModal, setShow] = useState(false);
+  //   const [showSuccessModal, setSuccessModal] = useState(false);
+  const [showSignature, setShowSignature] = useState(false);
+  const [saveLetter, setSaveLetter] = useState(false);
+  const [submitLetter, setSubmitLetter] = useState(false);
+  const [previewLetter, setPreviewLetter] = useState(false);
+  const [letterSent, setLetterSent] = useState(false);
+  const [showPreview, setPreview] = useState(false);
+  const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
+
   const [state, setState] = useState({
     empId: "",
     empContractType: "",
@@ -72,6 +84,8 @@ const ManagerInitiateExit = () => {
     ViewEmployeeDataById,
     CreateEmplyoeeExist,
     makeEmployeeDataNull,
+    fetchRelievingLetterData,
+    relivingLetterData,
   } = useContext(EmployeeSeparationContext);
   const { empResign, withdraw } = useContext(SeparationContext);
   const { searchForEmp1, searchEmpData1, makeSearchEmp1DataNull } = useContext(
@@ -156,7 +170,7 @@ const ManagerInitiateExit = () => {
         employeeData.employeeId !== null &&
         employeeData.employeeId !== undefined
       ) {
-        if (withdrwaThis === false) {
+        if (withdrwaThis === false && submitted === false) {
           if (checkForExist === true || firstTimeUpdate === true) {
             if (state.empId === employeeData.employeeId) {
               console.log("********");
@@ -431,6 +445,50 @@ const ManagerInitiateExit = () => {
     setRehireYes(!e.target.checked);
     setRehireNo(e.target.checked);
   };
+
+  //   reliving letter
+  const handleRelivingClose = () => setShow(false);
+
+  const saveOfferLetter = () => {
+    setSaveLetter(true);
+    setShow(false);
+  };
+
+  const digitalSignature = () => {
+    setShowSignature(true);
+  };
+
+  const submitfinalRelivingLetter = () => {
+    if (
+      employeeData.employeeId !== null &&
+      employeeData.employeeId !== undefined
+    ) {
+      setSubmitLetter(true);
+      setLetterSent(true);
+      setShow(true);
+      // finalSubmitOfferLetter(employeeData.employeeId);
+    }
+  };
+
+  const previewRelivingLetter = () => {
+    if (employeeData !== null && employeeData !== undefined) {
+      fetchRelievingLetterData(employeeData.employeeId);
+      setSubmitLetter(false);
+      setPreviewLetter(true);
+      setShow(true);
+    }
+  };
+  const relivingLetterClick = (e) => {
+    e.preventDefault();
+    fetchRelievingLetterData(employeeData.employeeId);
+    handleShow();
+    setPreviewGeneratedLetter(true);
+  };
+  const handleShow = () => {
+    console.log("inside show moodal");
+    setShow(true);
+  };
+  // reliving letter end
   const handleClose = () => {
     setModal(false);
     setSuccessModal(false);
@@ -640,6 +698,7 @@ const ManagerInitiateExit = () => {
     setWithdrawThis(true);
     ViewEmployeeDataById(state.empId);
     setSubmitted(false);
+    setPreview(false);
   };
 
   const submitHandler = (e) => {
@@ -700,115 +759,85 @@ const ManagerInitiateExit = () => {
             status: 2,
             withdraw: "string",
           };
-          const data = {
+
+          const data2 = {
             company: null,
             contractType: null,
             costCentreManagerEmailId: null,
             costCentreManagerName: null,
             costCentreName: null,
-            // dateOfResignation: moment(dateOfResignation).format("YYYY-MM-DD"),
+            dateOfResignation: moment(dateOfResignation).format("YYYY-MM-DD"),
             emailId: state.emailId,
-            empName: null,
+            empName: EmpName,
             employeeComment: null,
             employeeId: state.empId,
-            employeeName: null,
+            employeeName: EmpName,
             exitId: 0,
             hoursWorked: 0,
-            // lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
-            location: null,
+            lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
+            location: searchEmpData1.locationId,
             managerCostCentre: null,
             managerEmailId: null,
             managerId: null,
             managerName: null,
             managerPosition: null,
-            modeOfSeparationId: 1,
-            modeOfSeparationReasonId: 1,
+            modeOfSeparationId: changeInSeparation,
+            modeOfSeparationReasonId: reasonId,
             noticePeriod: 0,
-            noticePeriodRecovery: 0,
-            noticePeriodRecoveryDays: 10,
-            position: null,
-            reHire: 1,
+            noticePeriodRecovery: RcryYes ? 1 : RcryNo ? 2 : 0,
+            noticePeriodRecoveryDays: parseInt(state.noticePeriodRcryDays),
+            position: state.empPosition,
+            reHire: RehireYes ? 1 : RehireNo ? 2 : 0,
             reason: null,
             reasonForResignation: null,
-            rehireRemark: null,
+            rehireRemark: state.remarks !== "" ? state.remarks : null,
             status: 2,
-            withdraw: null,
           };
-          const createExitData = {
-            emailId: state.emailId,
-            employeeId: state.empId,
-            exitId: 0,
-            // dateOfResignation: moment(dateOfResignation).format("YYYY-MM-DD"),
-            // lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
-            modeOfSeparationId: 1,
-            // changeInSeparation,
-            modeOfSeparationReasonId: 1,
-            //  reasonId,
-            noticePeriodRecovery: 1,
-            //  RcryYes ? 1 : RcryNo ? 2 : 0,
-            noticePeriodRecoveryDays: 10,
-            // parseInt(state.noticePeriodRcryDays),
-            reHire: 1,
-            //  RehireYes ? 1 : RehireNo ? 2 : 0,
-            // status: 0,
-            // rehireRemark: state.remarks !== "" ? state.remarks : null,
-          };
-          console.log("createExitData", data1);
+
+          console.log("createExitData", data2);
           setSubmitted(true);
-          CreateEmplyoeeExist(data1);
+          CreateEmplyoeeExist(data1, state.empId);
+          setPreview(true);
           //   empResign(data1);
           setSuccessModal(true);
         } else if (intern === true) {
           const data1 = {
-            company: "string",
-            contractType: "string",
-            costCentreManagerEmailId: "string",
-            costCentreManagerName: "string",
-            costCentreName: "string",
-            // dateOfResignation: moment(dateOfResignation).format("YYYY-MM-DD"),
+            company: null,
+            contractType: null,
+            costCentreManagerEmailId: null,
+            costCentreManagerName: null,
+            costCentreName: null,
+            dateOfResignation: null,
             emailId: state.emailId,
-            empName: "string",
-            employeeComment: "string",
+            empName: EmpName,
+            employeeComment: null,
             employeeId: state.empId,
-            employeeName: "string",
+            employeeName: EmpName,
             exitId: 0,
             hoursWorked: 0,
-            // lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
-            location: "string",
-            managerCostCentre: "string",
-            managerEmailId: "string",
-            managerId: "string",
-            managerName: "string",
-            managerPosition: "string",
+            lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
+            location: searchEmpData1.locationId,
+            managerCostCentre: null,
+            managerEmailId: null,
+            managerId: null,
+            managerName: null,
+            managerPosition: null,
             modeOfSeparationId: 3,
             modeOfSeparationReasonId: 4,
             noticePeriod: 0,
-            noticePeriodRecovery: 0,
-            noticePeriodRecoveryDays: 10,
-            position: "string",
-            reHire: 0,
-            reason: "string",
-            reasonForResignation: "string",
-            rehireRemark: "string",
-            status: 2,
-            withdraw: "string",
-          };
-
-          const createExitData = {
-            emailId: state.emailId,
-            employeeId: state.empId,
-            exitId: 0,
-            lastWorkingDate: lastWorkingDate,
-            modeOfSeparationId: 3,
-            modeOfSeparationReasonId: 4,
             noticePeriodRecovery: RcryYes ? 1 : RcryNo ? 2 : 0,
             noticePeriodRecoveryDays: parseInt(state.noticePeriodRcryDays),
+            position: state.empLocation,
             reHire: 0,
+            reason: null,
+            reasonForResignation: null,
             rehireRemark: state.remarks !== "" ? state.remarks : null,
+            status: 2,
           };
           console.log("createExitData", data1);
           //   empResign(createExitData);
-          CreateEmplyoeeExist(data1);
+          CreateEmplyoeeExist(data1, state.empId);
+          setPreview(true);
           setSuccessModal(true);
         }
       }
@@ -817,6 +846,74 @@ const ManagerInitiateExit = () => {
 
   return (
     <Fragment>
+      {/* reliving letter */}
+      <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        {submitLetter ? (
+          <Modal.Body className="mx-auto">
+            <label>
+              The details have been saved successfully. The relieving letter
+              will be sent to the employee on {moment().format("DD-MM-YYYY")}
+            </label>
+            <div className="text-center mb-2">
+              <Button onClick={handleRelivingClose}>Close</Button>
+            </div>
+          </Modal.Body>
+        ) : previewLetter || showRelivingModal ? (
+          <Modal.Body>
+            {relivingLetterData &&
+            relivingLetterData !== undefined &&
+            relivingLetterData !== null ? (
+              <RelievingLetter />
+            ) : (
+              ""
+            )}
+            <br></br>
+            <Row>
+              {/* <Col sm={6}>
+                <p>Thanking you</p>
+                <p>{employeeData.managerName}</p>
+              </Col> */}
+
+              {showSignature ? (
+                <Fragment>
+                  <br></br>
+                  <img
+                    src={calendarImage}
+                    alt="calendar"
+                    width="50px"
+                    className="digital-signature"
+                  />
+                </Fragment>
+              ) : (
+                <>
+                  <br></br>
+                  <Button variant="primary" onClick={digitalSignature}>
+                    Add digital signature
+                  </Button>
+                </>
+              )}
+            </Row>
+            {showSignature && !previewLetter ? (
+              <Row>
+                <Col sm={4}></Col>
+                <Col sm={5}>
+                  <br></br>
+                  <br></br>
+                  <Button variant="primary" onClick={saveOfferLetter}>
+                    Save Changes
+                  </Button>
+                </Col>
+              </Row>
+            ) : (
+              ""
+            )}
+          </Modal.Body>
+        ) : (
+          ""
+        )}
+      </Modal>
+      {/* reliving letter end */}
       <Modal show={showModal} onHide={() => handleClose()} centered>
         <Container>
           <Modal.Header closeButton className="modalHeader">
@@ -1570,26 +1667,67 @@ const ManagerInitiateExit = () => {
                         </Col>
                       </Row>
 
-                      {/* <div
-                        style={{
-                          marginTop: "2rem",
-                          marginBottom: "2rem",
-                          textAlign: "center",
-                        }}
-                      >
-                        <button
-                          // style={
-                          //   showModal | showSuccessModal
-                          //     ? { borderColor: "#aaa" }
-                          //     : ""
-                          // }
-                          disabled={showModal | showSuccessModal}
-                          className="stepperButtons"
-                          onClick={submitHandler}
-                        >
-                          Save
-                        </button>
-                      </div> */}
+                      {!saveLetter &&
+                      employeeData &&
+                      employeeData &&
+                      employeeData !== null &&
+                      employeeData !== undefined &&
+                      Object.keys(employeeData).length !== 0 &&
+                      (employeeData.status === 2 ||
+                        showPreview === true ||
+                        submitted === true) ? (
+                        <Row>
+                          <Col sm={5}></Col>
+                          <Col
+                            sm={2}
+                            style={{
+                              marginTop: "2rem",
+                              marginBottom: "2rem",
+                              textAlign: "center",
+                            }}
+                          >
+                            <Button type="button" onClick={relivingLetterClick}>
+                              Generate Reliving Letter
+                            </Button>
+                          </Col>
+                        </Row>
+                      ) : (
+                        saveLetter &&
+                        previewGeneratedLetter === true && (
+                          <div className="preview-section">
+                            <Button
+                              type="button"
+                              onClick={previewRelivingLetter}
+                            >
+                              Preview Reliving Letter
+                            </Button>
+                            <br></br>
+                            <br></br>
+                            <img
+                              src={calendarImage}
+                              alt="calendar"
+                              width="200px"
+                            />
+                            <br></br>
+                            <br></br>
+                            {letterSent ? (
+                              ""
+                            ) : (
+                              <Button
+                                type="button"
+                                onClick={submitfinalRelivingLetter}
+                                style={{
+                                  marginTop: "2rem",
+                                  marginBottom: "2rem",
+                                  textAlign: "center",
+                                }}
+                              >
+                                Submit
+                              </Button>
+                            )}
+                          </div>
+                        )
+                      )}
                     </Col>
                   </Row>
                 </Form>

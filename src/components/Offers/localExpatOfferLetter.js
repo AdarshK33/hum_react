@@ -5,7 +5,7 @@ import "./offers.css";
 import { OfferContext } from "../../context/OfferState";
 import moment from "moment";
 
-const PermanentOfferLetter = () => {
+const LocalExpatOfferLetter = () => {
   const {
     createCandidateResponse,
     generateOfferLetter,
@@ -92,44 +92,26 @@ const PermanentOfferLetter = () => {
                 </tr>
                 <tr>
                   <td>Fixed Gross </td>
-                  <td>{Math.round(offerLetterData.fixedGross)}</td>
-                  <td>{Math.round(offerLetterData.fixedGross * 12)}</td>
+                  <td>{offerLetterData.fixedGross}</td>
+                  <td>{offerLetterData.fixedGross * 12}</td>
                   <td>
-                    {Math.round(
-                      offerLetterData.fixedGross + offerLetterData.bonusAmt
-                    )}
+                    {offerLetterData.fixedGross + offerLetterData.bonusAmt}
                   </td>
                   <td>
-                    {Math.round(
-                      (offerLetterData.fixedGross + offerLetterData.bonusAmt) *
-                        12
-                    )}
+                    {(offerLetterData.fixedGross + offerLetterData.bonusAmt) *
+                      12}
                   </td>
                 </tr>
                 <tr>
                   <td>Basic Salary </td>
-                  <td>
-                    {Math.round(offerLetterData.permanentCandidateOffer.basic)}
-                  </td>
-                  <td>
-                    {Math.round(
-                      offerLetterData.permanentCandidateOffer.basic * 12
-                    )}
-                  </td>
-                  <td>
-                    {Math.round(offerLetterData.permanentCandidateOffer.basic)}
-                  </td>
-                  <td>
-                    {Math.round(
-                      offerLetterData.permanentCandidateOffer.basic * 12
-                    )}
-                  </td>
+                  <td>{offerLetterData.permanentCandidateOffer.basic}</td>
+                  <td>{offerLetterData.permanentCandidateOffer.basic * 12}</td>
+                  <td>{offerLetterData.permanentCandidateOffer.basic}</td>
+                  <td>{offerLetterData.permanentCandidateOffer.basic * 12}</td>
                 </tr>
                 <tr>
                   <td>House Rent Allowance </td>
-                  <td>
-                    {Math.round(offerLetterData.permanentCandidateOffer.hra)}
-                  </td>
+                  <td>{offerLetterData.permanentCandidateOffer.hra}</td>
                   <td>
                     {Math.round(
                       offerLetterData.permanentCandidateOffer.hra * 12
@@ -138,11 +120,7 @@ const PermanentOfferLetter = () => {
                   <td>
                     {Math.round(offerLetterData.permanentCandidateOffer.hra)}
                   </td>
-                  <td>
-                    {Math.round(
-                      offerLetterData.permanentCandidateOffer.hra * 12
-                    )}
-                  </td>
+                  <td>{offerLetterData.permanentCandidateOffer.hra * 12}</td>
                 </tr>
                 <tr>
                   <td>Conveyance Allowance </td>
@@ -299,6 +277,17 @@ const PermanentOfferLetter = () => {
               </tbody>
             </Table>
           </div>
+
+          <p>
+            <span style={{ color: "red" }}>*</span> The teammates from countries
+            with whom India does not have a Social Security Agreement (the
+            countries not mentioned in the list on
+            https://www.epfindia.gov.in/site_en/International_workers.php are
+            counties with whom India does not have a Social Security Agreement)
+            can withdraw their Provident Fund amount only after attaining the
+            age of 58 years (retirement age as fixed by the Government of
+            India).
+          </p>
         </Fragment>
       ) : (
         ""
@@ -307,4 +296,4 @@ const PermanentOfferLetter = () => {
   );
 };
 
-export default PermanentOfferLetter;
+export default LocalExpatOfferLetter;

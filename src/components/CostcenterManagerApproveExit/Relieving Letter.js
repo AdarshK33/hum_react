@@ -24,17 +24,17 @@ const RelievingLetter = (props) => {
   };
   const handleSave = () => {
     setLetter(false);
-    setMessage(true);
+    // setMessage(true);
   };
-  const handleClosePopup = () => {
-    setMessage(false);
-  };
+  // const handleClosePopup = () => {
+  //   setMessage(false);
+  // };
   return (
     console.log(showLetter),
     console.log(props.previewLetter),
     (
       <Fragment>
-        <Modal show={message} onHide={() => handleClosePopup()} centered>
+        {/* <Modal show={message} onHide={() => handleClosePopup()} centered>
           <Container style={{ textAlign: "center", margin: "2rem 0 2rem 0" }}>
             <Modal.Body>
               <p style={{ marginBottom: "2rem" }}>
@@ -45,7 +45,7 @@ const RelievingLetter = (props) => {
               <Button onClick={() => handleClosePopup()}>OK</Button>
             </Modal.Body>
           </Container>
-        </Modal>
+        </Modal> */}
         <Modal
           show={showLetter}
           onHide={() => handleClose()}
@@ -94,18 +94,13 @@ const RelievingLetter = (props) => {
                 <p className="mt-5 mb-5">
                   <b>For Decathlon Sports India India Pvt Ltd,</b>
                 </p>
-                <div className="float-right ">
+                <div style={{ textAlign: "end" }}>
                   {showSignature && (
-                    <div className="text-center">
-                      <img
-                        src={calendarImage}
-                        alt="calendar"
-                        width="100px"
-                        className="digital-signature"
-                      />
+                    <div>
+                      <img src={calendarImage} alt="calendar" width="100px" />
                     </div>
                   )}
-                  <div className="text-center">
+                  <div className="mt-3">
                     <button
                       className="signatureButtons"
                       onClick={() => addSignature()}
@@ -113,17 +108,17 @@ const RelievingLetter = (props) => {
                       Add Signature
                     </button>
                   </div>
-                  {showSignature && (
-                    <div className="text-center mt-5 mb-5">
-                      <button
-                        className="signatureButtons"
-                        onClick={() => handleSave()}
-                      >
-                        Save
-                      </button>
-                    </div>
-                  )}
                 </div>
+              </div>
+              <div className="text-center mt-5 mb-5">
+                {showSignature && (
+                  <button
+                    className="signatureButtons"
+                    onClick={() => handleSave()}
+                  >
+                    Save
+                  </button>
+                )}
               </div>
             </Modal.Body>
           </Container>

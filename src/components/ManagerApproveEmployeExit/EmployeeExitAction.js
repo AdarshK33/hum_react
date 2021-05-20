@@ -1,9 +1,13 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Row, Col, Form, Button, Container, Modal } from "react-bootstrap";
 import Breadcrumb from "../common/breadcrumb";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
+import moment from "moment";
 import "./EmployeeExit.css";
 import { setGlobalCssModule } from "reactstrap/es/utils";
+import RelievingLetter from "./RelivingLetter";
+import calendarImage from "../../assets/images/calendar-image.png";
 
 const EmployeeExitAction = () => {
   const [modeOfSeparation, setModeOfSeparation] = useState("");
@@ -16,7 +20,16 @@ const EmployeeExitAction = () => {
   const [rcryDaysError, setRcryDaysError] = useState(false);
   const [remarkError, setRemarkError] = useState(false);
   const [showModal, setModal] = useState(false);
+  const [showRelivingModal, setShow] = useState(false);
   const [showSuccessModal, setSuccessModal] = useState(false);
+  const [showSignature, setShowSignature] = useState(false);
+  const [saveLetter, setSaveLetter] = useState(false);
+  const [submitLetter, setSubmitLetter] = useState(false);
+  const [previewLetter, setPreviewLetter] = useState(false);
+  const [letterSent, setLetterSent] = useState(false);
+  const [showPreview, setPreview] = useState(false);
+  const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
+
   const [state, setState] = useState({
     empName: "",
     empId: "",
@@ -47,11 +60,15 @@ const EmployeeExitAction = () => {
     UpdateEmplyoeeExist,
     employeeId,
     loader,
+    updateResponse,
+    fetchRelievingLetterData,
+    relivingLetterData,
   } = useContext(EmployeeSeparationContext);
   console.log("employeeId", employeeId);
   useEffect(() => {
     ViewEmployeeDataById(employeeId);
   }, [employeeId]);
+  console.log("employeeData", employeeData);
   useEffect(() => {
     if (
       employeeData &&
@@ -182,6 +199,49 @@ const EmployeeExitAction = () => {
     setModal(false);
     state.remarks = "";
   };
+
+  const handleRelivingClose = () => setShow(false);
+
+  const saveOfferLetter = () => {
+    setSaveLetter(true);
+    setShow(false);
+  };
+
+  const digitalSignature = () => {
+    setShowSignature(true);
+  };
+
+  const submitfinalRelivingLetter = () => {
+    if (
+      employeeData.employeeId !== null &&
+      employeeData.employeeId !== undefined
+    ) {
+      setSubmitLetter(true);
+      setLetterSent(true);
+      setShow(true);
+      // finalSubmitOfferLetter(employeeData.employeeId);
+    }
+  };
+
+  const previewRelivingLetter = () => {
+    if (employeeData !== null && employeeData !== undefined) {
+      fetchRelievingLetterData(employeeData.employeeId);
+      setSubmitLetter(false);
+      setPreviewLetter(true);
+      setShow(true);
+    }
+  };
+  const relivingLetterClick = (e) => {
+    e.preventDefault();
+    fetchRelievingLetterData(employeeData.employeeId);
+    handleShow();
+    setPreviewGeneratedLetter(true);
+  };
+
+  const handleShow = () => {
+    console.log("inside show moodal");
+    setShow(true);
+  };
   const handleSaveRemarks = () => {
     if (
       state.remarks !== "" &&
@@ -294,13 +354,80 @@ const EmployeeExitAction = () => {
         };
         UpdateEmplyoeeExist(InfoData);
         setSuccessModal(true);
-        console.log("in else", InfoData);
+        setPreview(true);
+        console.log("in else");
       }
     }
   };
 
   return (
     <Fragment>
+      <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        {submitLetter ? (
+          <Modal.Body className="mx-auto">
+            <label>
+              The details have been saved successfully. The relieving letter
+              will be sent to the employee on {moment().format("DD-MM-YYYY")}
+            </label>
+            <div className="text-center mb-2">
+              <Button onClick={handleRelivingClose}>Close</Button>
+            </div>
+          </Modal.Body>
+        ) : previewLetter || showRelivingModal ? (
+          <Modal.Body>
+            {relivingLetterData &&
+            relivingLetterData !== undefined &&
+            relivingLetterData !== null ? (
+              <RelievingLetter />
+            ) : (
+              ""
+            )}
+            <br></br>
+            <Row>
+              {/* <Col sm={6}>
+                <p>Thanking you</p>
+                <p>{employeeData.managerName}</p>
+              </Col> */}
+
+              {showSignature ? (
+                <Fragment>
+                  <br></br>
+                  <img
+                    src={calendarImage}
+                    alt="calendar"
+                    width="50px"
+                    className="digital-signature"
+                  />
+                </Fragment>
+              ) : (
+                <>
+                  <br></br>
+                  <Button variant="primary" onClick={digitalSignature}>
+                    Add digital signature
+                  </Button>
+                </>
+              )}
+            </Row>
+            {showSignature && !previewLetter ? (
+              <Row>
+                <Col sm={4}></Col>
+                <Col sm={5}>
+                  <br></br>
+                  <br></br>
+                  <Button variant="primary" onClick={saveOfferLetter}>
+                    Save Changes
+                  </Button>
+                </Col>
+              </Row>
+            ) : (
+              ""
+            )}
+          </Modal.Body>
+        ) : (
+          ""
+        )}
+      </Modal>
       <Modal show={showModal} onHide={() => handleClose1()} centered>
         <Container>
           <Modal.Header closeButton className="modalHeader">
@@ -771,20 +898,76 @@ const EmployeeExitAction = () => {
                       {/* <button className="stepperButtons" onClick={PrevStep}>
             Back
           </button> */}
-
-                      <button
-                        // style={
-                        //   showModal | showSuccessModal
-                        //     ? { borderColor: "#aaa" }
-                        //     : ""
-                        // }
-                        disabled={showModal | showSuccessModal}
-                        className="stepperButtons"
-                        onClick={submitHandler}
-                      >
-                        Save
-                      </button>
+                      {employeeData.status === 0 ||
+                      updateResponse.status === 0 ? (
+                        <button
+                          // style={
+                          //   showModal | showSuccessModal
+                          //     ? { borderColor: "#aaa" }
+                          //     : ""
+                          // }
+                          disabled={showModal | showSuccessModal}
+                          className="stepperButtons"
+                          onClick={submitHandler}
+                        >
+                          Save
+                        </button>
+                      ) : (
+                        ""
+                      )}
                     </div>
+
+                    {!saveLetter &&
+                    (employeeData.status === 2 || showPreview === true) ? (
+                      <Row>
+                        <Col sm={5}></Col>
+                        <Col
+                          sm={2}
+                          style={{
+                            marginTop: "2rem",
+                            marginBottom: "2rem",
+                            textAlign: "center",
+                          }}
+                        >
+                          <Button type="button" onClick={relivingLetterClick}>
+                            Generate Reliving Letter
+                          </Button>
+                        </Col>
+                      </Row>
+                    ) : (
+                      saveLetter &&
+                      previewGeneratedLetter === true && (
+                        <div className="preview-section">
+                          <Button type="button" onClick={previewRelivingLetter}>
+                            Preview Reliving Letter
+                          </Button>
+                          <br></br>
+                          <br></br>
+                          <img
+                            src={calendarImage}
+                            alt="calendar"
+                            width="200px"
+                          />
+                          <br></br>
+                          <br></br>
+                          {letterSent ? (
+                            ""
+                          ) : (
+                            <Button
+                              type="button"
+                              onClick={submitfinalRelivingLetter}
+                              style={{
+                                marginTop: "2rem",
+                                marginBottom: "2rem",
+                                textAlign: "center",
+                              }}
+                            >
+                              Submit
+                            </Button>
+                          )}
+                        </div>
+                      )
+                    )}
                   </Form>
                 )}
               </div>
