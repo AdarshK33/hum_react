@@ -18,7 +18,7 @@ const GroupReducer = (state, action) => {
     case "EMPLOYEE_PROFILE_DATA_BY_ID":
       return { ...state, employeeProfileData: action.payload };
     case "FETCH_RELIEVING_LETTER_DATA":
-      return { ...state, relievingLetterData: action.payload };
+      return { ...state, relivingLetterData: action.payload };
     case "TERMINATION_CONFIRMATION":
       return { ...state, terminationConfirmationStatus: action.payload };
     case "RESIGNATION_CONFIRMATION":

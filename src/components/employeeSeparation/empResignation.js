@@ -17,6 +17,7 @@ const EmpResignation = () => {
   const [approver, setApprover] = useState("");
   const [comments, setComments] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [withdrwaThis, setWithdrawThis] = useState(false);
   const [reasonOfSeparationList, setReasonOfSeparationList] = useState([]);
   const { locationDetails, locationDetailsList } = useContext(
     PermissionContext
@@ -27,6 +28,7 @@ const EmpResignation = () => {
     ModeOfSeparationData,
     ModeOfSeparationView,
     ViewEmployeeDataById,
+    CreateEmplyoeeExist,
   } = useContext(EmployeeSeparationContext);
   const {
     empResign,
@@ -38,8 +40,7 @@ const EmpResignation = () => {
     withdraw,
     loader,
   } = useContext(SeparationContext);
-
-
+  console.log("employeeData", employeeData);
   useEffect(() => {
     locationDetails();
   }, []);
@@ -52,16 +53,15 @@ const EmpResignation = () => {
   ) {
     locationDetailsList.map((item, i) => {
       if (item.locationId === user.locationId) {
-        user['locationName'] = item.locationName;
+        user["locationName"] = item.locationName;
       }
     });
   }
   console.log("locationDetailsList", locationDetailsList);
   useEffect(() => {
     managerData(user.costCentre);
-
   }, [user.costCentre]);
-console.log(user,"user")
+  console.log(user, "user");
   useEffect(() => {
     modeOfSeparation();
     ModeOfSeparationView();
@@ -70,7 +70,28 @@ console.log(user,"user")
   useEffect(() => {
     console.log("loader in useEffect ", loader, managerList);
   }, [loader]);
-
+  useEffect(() => {
+    if (
+      employeeData &&
+      employeeData &&
+      employeeData !== null &&
+      employeeData !== undefined &&
+      Object.keys(employeeData).length !== 0
+    ) {
+      if (withdrwaThis === true) {
+        console.log("state.empId", employeeData.exitId);
+        withdraw(employeeData.exitId);
+        setWithdrawThis(false);
+        setRegDate(new Date());
+        setLastDate(new Date());
+        setReasonOfSepration("");
+        setEmailId("");
+        setApprover("");
+        setComments("");
+        setSubmitted(false);
+      }
+    }
+  }, [employeeData]);
   useEffect(() => {
     if (
       ModeOfSeparationData &&
@@ -100,14 +121,12 @@ console.log(user,"user")
   const SubmitHandler = (e) => {
     e.preventDefault();
     var reasonId = 0;
-          reasonOfSeparationList.map((item, i) => {
-            if (
-              reasonOfSeparationList[i].label === reasonOfSepration
-            ) {
-              reasonId = reasonOfSeparationList[i].value;
-              console.log(reasonOfSeparationList[i].value);
-            }
-          })
+    reasonOfSeparationList.map((item, i) => {
+      if (reasonOfSeparationList[i].label === reasonOfSepration) {
+        reasonId = reasonOfSeparationList[i].value;
+        console.log(reasonOfSeparationList[i].value);
+      }
+    });
     const data1 = {
       company: user.company,
       contractType: user.contractType,
@@ -123,7 +142,7 @@ console.log(user,"user")
       exitId: 0,
       hoursWorked: 0,
       lastWorkingDate: lastDate,
-      location:user.locationId,
+      location: user.locationId,
       managerCostCentre: null,
       managerEmailId: null,
       managerId: approver,
@@ -132,16 +151,16 @@ console.log(user,"user")
       modeOfSeparationId: 4,
       modeOfSeparationReasonId: reasonId,
       noticePeriod: 0,
-      noticePeriodRecovery:0,
-      noticePeriodRecoveryDays:0,
-      position:user.position,
-      reHire:0,
+      noticePeriodRecovery: 0,
+      noticePeriodRecoveryDays: 0,
+      position: user.position,
+      reHire: 0,
       reason: null,
       reasonForResignation: reasonOfSepration,
       rehireRemark: null,
       status: 0,
     };
-console.log(data1,"dtat1")
+    console.log(data1, "dtat1");
     // const create = {
     //   emailId: emailId,
     //   employeeComment: comments,
@@ -154,19 +173,31 @@ console.log(data1,"dtat1")
     //   withdraw: "string",
     // };
     // console.log("create", create);
-     empResign(data1);
+    // empResign(data1);
+    CreateEmplyoeeExist(data1, user.employeeId);
+    // ViewEmployeeDataById(user.employeeId);
     setSubmitted(true);
   };
 
   const withdrawHandler = (e) => {
-    withdraw(user.employeeId);
-    setRegDate(new Date());
-    setLastDate(new Date());
-    setReasonOfSepration("");
-    setEmailId("");
-    setApprover("");
-    setComments("");
-    setSubmitted(false);
+    setWithdrawThis(true);
+    ViewEmployeeDataById(user.employeeId);
+    // if (
+    //   employeeData &&
+    //   employeeData &&
+    //   employeeData !== null &&
+    //   employeeData !== undefined &&
+    //   Object.keys(employeeData).length !== 0
+    // ) {
+    //   withdraw(employeeData.exitId);
+    //   setRegDate(new Date());
+    //   setLastDate(new Date());
+    //   setReasonOfSepration("");
+    //   setEmailId("");
+    //   setApprover("");
+    //   setComments("");
+    //   setSubmitted(false);
+    // }
   };
 
   return (
@@ -235,7 +266,7 @@ console.log(data1,"dtat1")
                       />
                     </Col>
                   </Form.Group>
-                </Col>   
+                </Col>
               </Row>
 
               <Row>

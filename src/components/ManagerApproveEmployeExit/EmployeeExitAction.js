@@ -931,7 +931,14 @@ const EmployeeExitAction = () => {
                     (employeeData.status === 2 || showPreview === true) ? (
                       <Row>
                         <Col sm={5}></Col>
-                        <Col sm={2}>
+                        <Col
+                          sm={2}
+                          style={{
+                            marginTop: "2rem",
+                            marginBottom: "2rem",
+                            textAlign: "center",
+                          }}
+                        >
                           <Button type="button" onClick={relivingLetterClick}>
                             Generate Reliving Letter
                           </Button>
@@ -959,7 +966,11 @@ const EmployeeExitAction = () => {
                             <Button
                               type="button"
                               onClick={submitfinalRelivingLetter}
-                              style={{ textAlign: "center" }}
+                              style={{
+                                marginTop: "2rem",
+                                marginBottom: "2rem",
+                                textAlign: "center",
+                              }}
                             >
                               Submit
                             </Button>

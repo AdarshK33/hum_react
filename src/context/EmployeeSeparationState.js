@@ -75,6 +75,13 @@ export const EmploeeSeparationProvider = (props) => {
         console.log(error);
       });
   };
+  const makeEmployeeDataNull = () => {
+    state.employeeData = {};
+    return dispatch({
+      type: "EMPLOYEE_DATA_BY_ID",
+      payload: state.employeeData,
+    });
+  };
   const EmployeeSeparationListView = (key, pageNumber) => {
     setLoader(true);
     client
@@ -142,9 +149,11 @@ export const EmploeeSeparationProvider = (props) => {
       });
   };
   const fetchRelievingLetterData = (empId) => {
+    console.log(empId,"empId000000777")
     client
       .get("/api/v1/separation/employee-exit/letter/" + empId)
       .then((response) => {
+        console.log(response.data.data);
         state.relivingLetterData = response.data.data;
         return dispatch({
           type: "FETCH_RELIEVING_LETTER_DATA",
@@ -153,7 +162,7 @@ export const EmploeeSeparationProvider = (props) => {
       });
   };
 
-  const CreateEmplyoeeExist = (createInfo) => {
+  const CreateEmplyoeeExist = (createInfo, id) => {
     setLoader(true);
     console.log("INSIDE API CALL ");
     client
@@ -161,6 +170,8 @@ export const EmploeeSeparationProvider = (props) => {
       .then((response) => {
         state.updateResponse = response.data.data;
         toast.info(response.data.message);
+        ViewEmployeeDataById(id);
+        setLoader(false);
         console.log("updated response", state.updateResponse);
         return dispatch({
           type: "UPDATE_EMPLOYEE_SEPARATION",
@@ -223,6 +234,7 @@ export const EmploeeSeparationProvider = (props) => {
         ViewEmployeeProfile,
         CreateEmplyoeeExist,
         fetchRelievingLetterData,
+        makeEmployeeDataNull,
         terminationConfirmation,
         resignationConfirmation,
         employeeProfileData: state.employeeProfileData,
