@@ -123,7 +123,7 @@ export const EmploeeSeparationProvider = (props) => {
   };
 
   const UpdateEmplyoeeExist = (updateInfo) => {
-    setLoader(true);
+    // setLoader(true);
     client
       .post("/api/v1/separation/employee-exit/update", updateInfo)
       .then((response) => {
