@@ -669,7 +669,9 @@ const PersonalInformation = (props) => {
     // const submited = props.NextStep; //next component
     // submited();
     e.preventDefault();
+
     const value = checkValidations();
+    console.log("insidelog", value);
     if (value === true) {
       if (saveClick === false) {
         const ReferenceData2 = [
