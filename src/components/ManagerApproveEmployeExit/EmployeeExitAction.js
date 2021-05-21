@@ -223,7 +223,8 @@ const EmployeeExitAction = () => {
     }
   };
 
-  const previewRelivingLetter = () => {
+  const previewRelivingLetter = (e) => {
+    e.preventDefault();
     if (employeeData !== null && employeeData !== undefined) {
       fetchRelievingLetterData(employeeData.employeeId);
       setSubmitLetter(false);
@@ -368,6 +369,7 @@ const EmployeeExitAction = () => {
           <Modal.Body className="mx-auto">
             <label>
               The details have been saved successfully. The relieving letter
+              <br />
               will be sent to the employee on{" "}
               {relivingLetterData.lastWorkingDate}
             </label>
@@ -404,9 +406,12 @@ const EmployeeExitAction = () => {
               ) : (
                 <>
                   <br></br>
-                  <Button variant="primary" onClick={digitalSignature}>
+                  <button
+                    className={"stepperButtons"}
+                    onClick={digitalSignature}
+                  >
                     Add digital signature
-                  </Button>
+                  </button>
                 </>
               )}
             </Row>
@@ -416,9 +421,12 @@ const EmployeeExitAction = () => {
                 <Col sm={5}>
                   <br></br>
                   <br></br>
-                  <Button variant="primary" onClick={saveOfferLetter}>
+                  <button
+                    className={"stepperButtons"}
+                    onClick={saveOfferLetter}
+                  >
                     Save Changes
-                  </Button>
+                  </button>
                 </Col>
               </Row>
             ) : (
@@ -899,16 +907,12 @@ const EmployeeExitAction = () => {
                       {/* <button className="stepperButtons" onClick={PrevStep}>
             Back
           </button> */}
-                      {employeeData.status === 0 ||
-                      updateResponse.status === 0 ? (
+                      {true ? (
                         <button
-                          // style={
-                          //   showModal | showSuccessModal
-                          //     ? { borderColor: "#aaa" }
-                          //     : ""
-                          // }
-                          disabled={showModal | showSuccessModal}
-                          className="stepperButtons"
+                          disabled={showPreview}
+                          className={
+                            showPreview ? "confirmButton" : "stepperButtons"
+                          }
                           onClick={submitHandler}
                         >
                           Save
@@ -916,32 +920,31 @@ const EmployeeExitAction = () => {
                       ) : (
                         ""
                       )}
-                    </div>
 
-                    {!saveLetter &&
-                    (employeeData.status === 2 || showPreview === true) ? (
-                      <Row>
-                        <Col sm={5}></Col>
-                        <Col
-                          sm={2}
-                          style={{
-                            marginTop: "2rem",
-                            marginBottom: "2rem",
-                            textAlign: "center",
-                          }}
+                      {!saveLetter &&
+                      (employeeData.status === 2 || showPreview === true) ? (
+                        <button
+                          // disabled={!submitted}
+                          className={"LettersButtons"}
+                          onClick={relivingLetterClick}
                         >
-                          <Button type="button" onClick={relivingLetterClick}>
-                            Generate Reliving Letter
-                          </Button>
-                        </Col>
-                      </Row>
-                    ) : (
-                      saveLetter &&
-                      previewGeneratedLetter === true && (
+                          Generate Reliving Letter
+                        </button>
+                      ) : (
+                        ""
+                      )}
+                      {saveLetter && previewGeneratedLetter && showPreview ? (
+                        <button
+                          className={"LettersButtons"}
+                          onClick={previewRelivingLetter}
+                        >
+                          Preview Reliving Letter
+                        </button>
+                      ) : (
+                        ""
+                      )}
+                      {saveLetter && previewGeneratedLetter === true && (
                         <div className="preview-section">
-                          <Button type="button" onClick={previewRelivingLetter}>
-                            Preview Reliving Letter
-                          </Button>
                           <br></br>
                           <br></br>
                           <img
@@ -951,24 +954,24 @@ const EmployeeExitAction = () => {
                           />
                           <br></br>
                           <br></br>
-                          {letterSent ? (
-                            ""
-                          ) : (
-                            <Button
-                              type="button"
+                          {true ? (
+                            <button
+                              disabled={letterSent}
+                              className={
+                                letterSent
+                                  ? " confirmButton "
+                                  : "stepperButtons"
+                              }
                               onClick={submitfinalRelivingLetter}
-                              style={{
-                                marginTop: "2rem",
-                                marginBottom: "2rem",
-                                textAlign: "center",
-                              }}
                             >
                               Submit
-                            </Button>
+                            </button>
+                          ) : (
+                            ""
                           )}
                         </div>
-                      )
-                    )}
+                      )}
+                    </div>
                   </Form>
                 )}
               </div>

@@ -88,12 +88,10 @@ const ManagerInitiateExit = () => {
     relivingLetterData,
   } = useContext(EmployeeSeparationContext);
   const { empResign, withdraw } = useContext(SeparationContext);
-  const { searchForEmp1, searchEmpData1, makeSearchEmp1DataNull } = useContext(
-    OfferContext
-  );
-  const { locationDetails, locationDetailsList } = useContext(
-    PermissionContext
-  );
+  const { searchForEmp1, searchEmpData1, makeSearchEmp1DataNull } =
+    useContext(OfferContext);
+  const { locationDetails, locationDetailsList } =
+    useContext(PermissionContext);
   useEffect(() => {
     ViewEmployeeProfile();
   }, []);
@@ -151,6 +149,7 @@ const ManagerInitiateExit = () => {
         setRcryNo(false);
         setDateOfResignation("");
         setLastWorkingDate("");
+        setPreview(false);
       }
     }
   }, [employeeData]);
@@ -466,11 +465,13 @@ const ManagerInitiateExit = () => {
       setSubmitLetter(true);
       setLetterSent(true);
       setShow(true);
+
       // finalSubmitOfferLetter(employeeData.employeeId);
     }
   };
 
-  const previewRelivingLetter = () => {
+  const previewRelivingLetter = (e) => {
+    e.preventDefault();
     if (employeeData !== null && employeeData !== undefined) {
       fetchRelievingLetterData(employeeData.employeeId);
       setSubmitLetter(false);
@@ -581,7 +582,8 @@ const ManagerInitiateExit = () => {
     }
   };
   const emailValidation = () => {
-    const emailValid = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const emailValid =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (
       state.emailId !== "" &&
       state.emailId !== null &&
@@ -852,7 +854,8 @@ const ManagerInitiateExit = () => {
         {submitLetter ? (
           <Modal.Body className="mx-auto">
             <label>
-              The details have been saved successfully. The relieving letter
+              The details have been saved successfully. The relieving letter{" "}
+              <br />
               will be sent to the employee on{" "}
               {relivingLetterData.lastWorkingDate}
             </label>
@@ -889,9 +892,13 @@ const ManagerInitiateExit = () => {
               ) : (
                 <>
                   <br></br>
-                  <Button variant="primary" onClick={digitalSignature}>
+
+                  <button
+                    className={"stepperButtons"}
+                    onClick={digitalSignature}
+                  >
                     Add digital signature
-                  </Button>
+                  </button>
                 </>
               )}
             </Row>
@@ -901,9 +908,12 @@ const ManagerInitiateExit = () => {
                 <Col sm={5}>
                   <br></br>
                   <br></br>
-                  <Button variant="primary" onClick={saveOfferLetter}>
+                  <button
+                    className={"stepperButtons"}
+                    onClick={saveOfferLetter}
+                  >
                     Save Changes
-                  </Button>
+                  </button>
                 </Col>
               </Row>
             ) : (
@@ -1658,77 +1668,105 @@ const ManagerInitiateExit = () => {
                             textAlign: "center",
                           }}
                         >
-                          {submitted === false ? (
-                            <Button onClick={submitHandler}>Save</Button>
-                          ) : (
-                            <Button onClick={withdrawHandler}>
-                              WithDraw Resignation
-                            </Button>
-                          )}
-                        </Col>
-                      </Row>
-
-                      {!saveLetter &&
-                      employeeData &&
-                      employeeData &&
-                      employeeData !== null &&
-                      employeeData !== undefined &&
-                      Object.keys(employeeData).length !== 0 &&
-                      (employeeData.status === 2 ||
-                        showPreview === true ||
-                        submitted === true) ? (
-                        <Row>
-                          <Col sm={5}></Col>
-                          <Col
-                            sm={2}
-                            style={{
-                              marginTop: "2rem",
-                              marginBottom: "2rem",
-                              textAlign: "center",
-                            }}
+                          <button
+                            disabled={submitted}
+                            className={
+                              submitted ? "confirmButton" : "stepperButtons"
+                            }
+                            onClick={submitHandler}
                           >
-                            <Button type="button" onClick={relivingLetterClick}>
+                            Save
+                          </button>
+                          {submitted === false ? (
+                            ""
+                          ) : (
+                            <button
+                              disabled={!submitted || letterSent}
+                              className={
+                                !submitted || letterSent
+                                  ? "LetterCnfButton"
+                                  : "LettersButtons"
+                              }
+                              onClick={withdrawHandler}
+                            >
+                              Withdraw Resignation
+                            </button>
+                          )}
+
+                          {!saveLetter &&
+                          employeeData &&
+                          employeeData &&
+                          employeeData !== null &&
+                          employeeData !== undefined &&
+                          Object.keys(employeeData).length !== 0 &&
+                          employeeData.status === 2 &&
+                          showPreview === true &&
+                          submitted === true ? (
+                            <button
+                              // disabled={!submitted}
+                              className={"LettersButtons"}
+                              onClick={relivingLetterClick}
+                            >
                               Generate Reliving Letter
-                            </Button>
-                          </Col>
-                        </Row>
-                      ) : (
-                        saveLetter &&
-                        previewGeneratedLetter === true && (
-                          <div className="preview-section">
-                            <Button
-                              type="button"
+                            </button>
+                          ) : (
+                            ""
+                          )}
+                          {saveLetter &&
+                          previewGeneratedLetter &&
+                          showPreview ? (
+                            <button
+                              className={"LettersButtons"}
                               onClick={previewRelivingLetter}
                             >
                               Preview Reliving Letter
-                            </Button>
-                            <br></br>
-                            <br></br>
-                            <img
-                              src={calendarImage}
-                              alt="calendar"
-                              width="200px"
-                            />
-                            <br></br>
-                            <br></br>
-                            {letterSent ? (
-                              ""
-                            ) : (
-                              <Button
-                                type="button"
-                                onClick={submitfinalRelivingLetter}
-                                style={{
-                                  marginTop: "2rem",
-                                  marginBottom: "2rem",
-                                  textAlign: "center",
-                                }}
-                              >
-                                Submit
-                              </Button>
-                            )}
-                          </div>
-                        )
-                      )}
+                            </button>
+                          ) : (
+                            ""
+                          )}
+
+                          {saveLetter && previewGeneratedLetter && showPreview && (
+                            <div className="preview-section">
+                              <br></br>
+                              <br></br>
+                              <img
+                                src={calendarImage}
+                                alt="calendar"
+                                width="200px"
+                              />
+                              <br></br>
+                              <br></br>
+
+                              {true ? (
+                                <button
+                                  disabled={letterSent}
+                                  className={
+                                    letterSent
+                                      ? " confirmButton "
+                                      : "stepperButtons"
+                                  }
+                                  onClick={submitfinalRelivingLetter}
+                                >
+                                  Submit
+                                </button>
+                              ) : (
+                                // <Button
+                                //   type="button"
+                                //   onClick={submitfinalRelivingLetter}
+                                //   style={{
+                                //     marginTop: "2rem",
+                                //     marginBottom: "2rem",
+                                //     textAlign: "center",
+                                //   }}
+                                // >
+                                //   Submit
+                                // </Button>
+                                ""
+                              )}
+                            </div>
+                          )}
+                        </Col>
+                      </Row>
                     </Col>
                   </Row>
                 </Form>
