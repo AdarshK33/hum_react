@@ -13,7 +13,7 @@ const RelivingLetter = () => {
     <Fragment>
       {typeof relivingLetterData !== undefined ? (
         <Fragment>
-          <p className=" mb-5"> Date: {moment().format("DD-MM-YYYY")}</p>
+          <p className=""> Date: {moment().format("DD-MM-YYYY")}</p>
           <br></br>
           <h5 className="text-center"> RELIEVING & EXPERIENCE LETTER</h5>
 
