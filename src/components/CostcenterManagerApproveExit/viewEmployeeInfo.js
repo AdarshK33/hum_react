@@ -93,7 +93,7 @@ const EmployeeExitAction = () => {
       state.mngrCostCenterName = employeeData.managerCostCentre;
       state.mngrPosition = employeeData.managerPosition;
       state.status = employeeData.status;
-       state.modeOfSeparationId = employeeData.modeOfSeparationId;
+      state.modeOfSeparationId = employeeData.modeOfSeparationId;
       // state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.dateOfResignation = employeeData.dateOfResignation;
       state.noticePeriod = employeeData.noticePeriod;
@@ -269,15 +269,15 @@ const EmployeeExitAction = () => {
   };
 
   const handleConfirmation = (exitId, employeeId) => {
-    console.log(state.modeOfSeparationId ,"deepika")
-    if(state.modeOfSeparationId == 2 ) {
-      console.log(state.modeOfSeparationId ,"rajashekar")
+    console.log(state.modeOfSeparationId, "deepika");
+    if (state.modeOfSeparationId == 2) {
+      console.log(state.modeOfSeparationId, "rajashekar");
       terminationConfirmation(exitId, employeeId);
-    }else if(state.modeOfSeparationId == 1 ||state.modeOfSeparationId == 4 ) {
-      console.log(state.modeOfSeparationId ,"sachin")
+    } else if (state.modeOfSeparationId == 1 || state.modeOfSeparationId == 4) {
+      console.log(state.modeOfSeparationId, "sachin");
       resignationConfirmation(exitId, employeeId);
     }
-    console.log(state.modeOfSeparationId ,"sravani")
+    console.log(state.modeOfSeparationId, "sravani");
 
     setModal(true);
   };
@@ -332,7 +332,7 @@ const EmployeeExitAction = () => {
               <div className="card" style={{ borderRadius: "1rem" }}>
                 <div>
                   <div className="OnBoardHeading">
-                    <b>EMPLOYEE SEPARATION </b>
+                    <b>EMPLOYEE SEPARATION LISTING</b>
                   </div>
                   {loader === true ? (
                     <div
