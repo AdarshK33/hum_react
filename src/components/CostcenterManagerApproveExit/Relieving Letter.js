@@ -18,7 +18,7 @@ const RelievingLetter = (props) => {
       console.log(props.previewLetter);
       setLetter(true);
     }
-    // console.log(rellievingLetterData,"relieving")
+    // console.log(relievingLetterData,"relieving")
   }, [props.previewLetter]);
   const addSignature = () => {
     setSignature(true);
