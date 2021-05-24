@@ -89,12 +89,18 @@ const ManagerInitiateExit = () => {
     terminationConfirmation,
     resignationConfirmation,
   } = useContext(EmployeeSeparationContext);
-  const { empResign, withdraw, searchByCostCenter, searchByCostData } =
-    useContext(SeparationContext);
-  const { searchForEmp1, searchEmpData1, makeSearchEmp1DataNull } =
-    useContext(OfferContext);
-  const { locationDetails, locationDetailsList } =
-    useContext(PermissionContext);
+  const {
+    empResign,
+    withdraw,
+    searchByCostCenter,
+    searchByCostData,
+  } = useContext(SeparationContext);
+  const { searchForEmp1, searchEmpData1, makeSearchEmp1DataNull } = useContext(
+    OfferContext
+  );
+  const { locationDetails, locationDetailsList } = useContext(
+    PermissionContext
+  );
   useEffect(() => {
     ViewEmployeeProfile();
   }, []);
@@ -585,8 +591,7 @@ const ManagerInitiateExit = () => {
     }
   };
   const emailValidation = () => {
-    const emailValid =
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const emailValid = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (
       state.emailId !== "" &&
       state.emailId !== null &&
@@ -860,8 +865,10 @@ const ManagerInitiateExit = () => {
             <label>
               The details have been saved successfully. The relieving letter{" "}
               <br />
-              will be sent to the employee on{" "}
-              {relivingLetterData.lastWorkingDate}
+              will be sent to the employee on pp{" "}
+              {moment(relivingLetterData.lastWorkingDate, "YYYY-MM-DD")
+                .add(1, "days")
+                .format("YYYY-MM-DD")}
             </label>
             <div className="text-center">
               <Button onClick={handleRelivingClose}>Close</Button>

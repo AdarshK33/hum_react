@@ -65,7 +65,89 @@ const EmpResignation = () => {
   useEffect(() => {
     modeOfSeparation();
     ModeOfSeparationView();
+    ViewEmployeeDataById(user.employeeId);
   }, []);
+
+  useEffect(() => {
+    if (
+      managerList &&
+      managerList &&
+      managerList !== null &&
+      managerList !== undefined &&
+      Object.keys(managerList).length !== 0
+    ) {
+      let managerNames = managerList.filter(
+        (j) => j.employeeId === user.managerId
+      );
+      console.log("managerNames", managerNames, managerList);
+      if (
+        managerNames &&
+        managerNames !== null &&
+        managerNames !== undefined &&
+        Object.keys(managerNames).length !== 0
+      ) {
+        setApprover(managerNames[0].firstName + " " + managerNames[0].lastName);
+      }
+    }
+  }, [managerList]);
+
+  useEffect(() => {
+    if (
+      employeeData &&
+      employeeData &&
+      employeeData !== null &&
+      employeeData !== undefined &&
+      Object.keys(employeeData).length !== 0
+    ) {
+      setRegDate(new Date(employeeData.dateOfResignation));
+      setLastDate(new Date(employeeData.lastWorkingDate));
+      setReasonOfSepration("");
+      setEmailId(employeeData.emailId);
+      setSubmitted(true);
+      setComments(employeeData.employeeComment);
+    }
+  }, [employeeData]);
+
+  useEffect(() => {
+    if (
+      employeeData &&
+      employeeData !== null &&
+      employeeData !== undefined &&
+      Object.keys(employeeData).length !== 0 &&
+      ModeOfSeparationData &&
+      ModeOfSeparationData !== null &&
+      ModeOfSeparationData !== undefined &&
+      Object.keys(ModeOfSeparationData).length !== 0
+    ) {
+      if (employeeData.modeOfSeparationId === 1) {
+        console.log(ModeOfSeparationData[0].modeOfSeparation);
+        console.log(ModeOfSeparationData[0].modeOfSeparation.modeOfSeparation);
+        console.log(ModeOfSeparationData[0].modeOfSeparationReasonList);
+      }
+      let tempArray;
+      ModeOfSeparationData.map((item, i) => {
+        if (employeeData.modeOfSeparationId === 0) {
+          tempArray = " ";
+        } else if (employeeData.modeOfSeparationId === 4) {
+          ModeOfSeparationData[i].modeOfSeparationReasonList.map((item1, j) => {
+            if (employeeData.modeOfSeparationReasonId === 0) {
+              tempArray = " ";
+            } else if (
+              employeeData.modeOfSeparationReasonId ===
+              ModeOfSeparationData[i].modeOfSeparationReasonList[j]
+                .separationReasonId
+            ) {
+              tempArray =
+                ModeOfSeparationData[i].modeOfSeparationReasonList[j]
+                  .modeOfSeparationReason;
+            }
+          });
+        }
+      });
+      console.log("tempArray", tempArray);
+      setReasonOfSepration(tempArray);
+    }
+  }, [employeeData, ModeOfSeparationData]);
 
   useEffect(() => {
     console.log("loader in useEffect ", loader, managerList);
@@ -82,8 +164,8 @@ const EmpResignation = () => {
         console.log("state.empId", employeeData.exitId);
         withdraw(employeeData.exitId);
         setWithdrawThis(false);
-        setRegDate(new Date());
-        setLastDate(new Date());
+        setRegDate();
+        setLastDate();
         setReasonOfSepration("");
         setEmailId("");
         setApprover("");
@@ -517,7 +599,7 @@ const EmpResignation = () => {
                         Approver:
                       </Form.Label>
                       <Col sm="8">
-                        <Form.Control
+                        {/* <Form.Control
                           as="select"
                           className="non-disable blueTextData"
                           value={approver}
@@ -537,7 +619,13 @@ const EmpResignation = () => {
                                 </option>
                               );
                             })}
-                        </Form.Control>
+                        </Form.Control> */}
+                        <Form.Control
+                          type="text"
+                          value={approver}
+                          readOnly
+                          className="disabledValue blueTextData"
+                        />
                       </Col>
                     </Form.Group>
                   )}

@@ -371,7 +371,9 @@ const EmployeeExitAction = () => {
               The details have been saved successfully. The relieving letter
               <br />
               will be sent to the employee on{" "}
-              {relivingLetterData.lastWorkingDate}
+              {moment(relivingLetterData.lastWorkingDate, "YYYY-MM-DD")
+                .add(1, "days")
+                .format("YYYY-MM-DD")}
             </label>
             <div className="text-center mb-2">
               <Button onClick={handleRelivingClose}>Close</Button>
