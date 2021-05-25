@@ -12,6 +12,8 @@ const AdminNoDueClearance =()=> {
   const { total,loader,viewAdminITClearanceList,adminNoDueClearanceList,NoDueClearanceAdminClearanceExport } = useContext(SeparationContext);
   const { CostCenter, costCenterList } = useContext(AdminContext)
 const [pageCount, setPageCount] = useState(0);
+const [itStatus,SetITStatus] =useState("3")
+const [financeStatus,SetFinanceStatus] =useState("3")
 
 const [costCenter, setCostCenter] = useState("all")
 const [searchValue, setSearchValue] = useState("all");
@@ -24,14 +26,8 @@ const indexOfLastRecord = currentPage * recordPerPage;
 const indexOfFirstRecord = indexOfLastRecord - recordPerPage;
 const [currentRecords, setCurrentRecords] = useState([]);
 
-useEffect(() => {
-  console.log(pageCount,"pageCount")
-  viewAdminITClearanceList(searchValue, pageCount,costCenter);
-}, [costCenter,searchValue,pageCount]);
 
-useEffect(() => {
-  CostCenter();
-}, []);
+
 
 useEffect(() => {
   if (adminNoDueClearanceList !== null && adminNoDueClearanceList !== undefined) {
@@ -39,16 +35,19 @@ useEffect(() => {
   }
 }, [adminNoDueClearanceList,currentRecords]);
 
+useEffect(() => {
+  CostCenter();
+}, []);
 
 const handlePageChange = (pageNumber) => {
   setPageCount(pageNumber - 1);
   console.log("page change",pageNumber,pageCount)
 
     setCurrentPage(pageNumber);
-    if (searchValue !== "all" || costCenter !== "all") {
-      viewAdminITClearanceList(searchValue,pageNumber-1,costCenter);
+    if (searchValue !== "all" || costCenter !== "all" || itStatus !== "3" || financeStatus !== "3") {
+      viewAdminITClearanceList(financeStatus,itStatus,searchValue,pageNumber-1,costCenter);
     } else {
-      viewAdminITClearanceList("all",pageNumber-1,"all");
+      viewAdminITClearanceList("3","3","all",pageNumber-1,"all");
     }
     setCurrentRecords(adminNoDueClearanceList);
 }
@@ -60,9 +59,9 @@ const handlePageChange = (pageNumber) => {
   }
   const searchDataHandler = () => {
     if (searchValue !== "" && searchValue !== "all") {
-      viewAdminITClearanceList(searchValue,pageCount,costCenter);
+      viewAdminITClearanceList(financeStatus,itStatus,searchValue,pageCount,costCenter);
     }else{
-      viewAdminITClearanceList("all",pageCount,"all");
+      viewAdminITClearanceList("3","3","all",pageCount,"all");
 
     }
   }
@@ -77,19 +76,83 @@ const handleCostCenter = (options) => {
   console.log(data2)
   setCostCenter(data2)
   if (costCenter !== "" && costCenter !== "all") {
-    return viewAdminITClearanceList(searchValue,pageCount,data2);
+     viewAdminITClearanceList(financeStatus,itStatus,searchValue,pageCount,data2);
   }else{
-    return viewAdminITClearanceList("all",pageCount,"all");
+     viewAdminITClearanceList("3","3","all",pageCount,"all");
   }
 } 
-
- 
+const handleFinanceStatus = (options) => {
+  let data2 = options !== null?options.value:''
+  console.log(data2)
+  SetFinanceStatus(data2)
+  if (financeStatus !== "" && financeStatus !== "all") {
+     viewAdminITClearanceList(data2,itStatus,searchValue,pageCount,costCenter);
+  }else{
+     viewAdminITClearanceList("3","3","all",pageCount,"all");
+  }
+} 
+const handleITStatus = (options) => {
+  let data2 = options !== null?options.value:''
+  console.log(data2)
+  SetITStatus(data2)
+  if (itStatus !== "" && itStatus !== "all") {
+     viewAdminITClearanceList(financeStatus,data2,searchValue,pageCount,costCenter);
+  }else{
+     viewAdminITClearanceList("3","3","all",pageCount,"all");
+  }
+} 
+useEffect(() => {
+  console.log(pageCount,"pageCount")
+  viewAdminITClearanceList(financeStatus,itStatus,searchValue, pageCount,costCenter);
+}, [costCenter,searchValue,pageCount,financeStatus,itStatus]);
+const options1 = [
+  { value: "3", label: "All" },
+  { value: "0", label: "Due" },
+  { value: "1", label: "No Due" },
+  { value: "2", label: "On Hold" },
+];
+const options2 = [
+  { value: "3", label: "All" },
+  { value: "0", label: "Due" },
+  { value: "1", label: "No Due" },
+  { value: "2", label: "On Hold" },
+];
   return (
     <Fragment>
       <Breadcrumb title="No Due Clearance - Admin" parent="No Due Clearance - Admin" />
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
+          <Row className="mt-4 mainWrapper">
+          <div className="col-sm-4">
+          <Col className="selectList">
+            <br/>
+            <label className="title" style={{padding:"6px"}}>IT Clearance Status</label> &nbsp;&nbsp;
+             
+          <Select
+          className="selectInputWrapper"
+           name="filters"
+          placeholder="IT Clearance Status"
+            options={options1}
+            onChange={handleITStatus}
+               required isSearchable />
+          </Col>
+          </div>
+          <div className="col-sm-4">
+          <Col className="selectList">
+            <br/>
+            <label className="title" style={{padding:"6px"}}>Finance Clearance Status</label> &nbsp;&nbsp;
+             
+          <Select
+          className="selectInputWrapper"
+           name="filters"
+          placeholder="Finance Clearance Status"
+          options={options2}
+          onChange={handleFinanceStatus}
+               required isSearchable />
+          </Col>
+          </div>
+        </Row>
           <Row className="mt-4 mainWrapper">
           <div className="col-sm-3">
             {" "}
@@ -178,14 +241,16 @@ const handleCostCenter = (options) => {
 
                 {adminNoDueClearanceList == undefined && adminNoDueClearanceList == null ?
 
-                  <div className="loader-box loader" style={{ width: "100% !important" }}>
-                    <div className="loader">
-                      <div className="line bg-primary"></div>
-                      <div className="line bg-primary"></div>
-                      <div className="line bg-primary"></div>
-                      <div className="line bg-primary"></div>
-                    </div>
-                  </div>
+                  // <div className="loader-box loader" style={{ width: "100% !important" }}>
+                  //   <div className="loader">
+                  //     <div className="line bg-primary"></div>
+                  //     <div className="line bg-primary"></div>
+                  //     <div className="line bg-primary"></div>
+                  //     <div className="line bg-primary"></div>
+                  //   </div>
+                  // </div>
+                 <p style={{ textAlign: "center" }}>No Record Found</p>
+
                   :
                   null}
 

@@ -3,10 +3,13 @@ import Breadcrumb from "../../common/breadcrumb";
 import { SeparationContext } from "../../../context/SepearationState";
 import {Button,Container, Modal, Row, Col, Form, Table} from "react-bootstrap";
 import Pagination from 'react-js-pagination';
+import { Link } from "react-router-dom";
 import Select from 'react-select'
 import { RotateCw, Eye, Search } from "react-feather";
 import { saveAs ,FileSaver} from 'file-saver';
 import { AdminContext } from '../../../context/AdminState'
+import { EmployeeSeparationContext } from "../../../context/EmployeeSeparationState";
+
 import "../nodueclearance.css";
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
 import { ToastContainer, toast } from "react-toastify";
@@ -20,6 +23,7 @@ import {
 import ReactExport from 'react-data-export'
 
 const FinanaceAdminNoDueClearance = () => {
+  const { ViewEmployeeDataById,changeEmployeeId} = useContext(EmployeeSeparationContext);
   const { total,loader,viewFinanceAdminClearanceList,
     financeAdminNoDueClearanceList,
     FinanceClearanceUploadSettlement,financeClearanceUpload,FinanceAdminClearanceExport,
@@ -36,7 +40,7 @@ const FinanaceAdminNoDueClearance = () => {
   const [searchValue, setSearchValue] = useState("all");
 /*-----------------Pagination------------------*/
 const [currentPage, setCurrentPage] = useState(1);
-const recordPerPage = 10;
+const recordPerPage = 20;
 const totalRecords = total
 // const totalRecords = financeAdminNoDueClearanceList !== null && financeAdminNoDueClearanceList !== undefined && financeAdminNoDueClearanceList.length;
 const pageRange = 10;
@@ -60,7 +64,12 @@ useEffect(() => {
 useEffect(() => {
   CostCenter();
 }, []);
+const fetchEmployeeDetails = (employeeId) => {
+  changeEmployeeId(employeeId);
+  ViewEmployeeDataById(employeeId);
+  // ModeOfSeparationView();
 
+};
 const handlePageChange = (pageNumber) => {
   setPageCount(pageNumber - 1);
   console.log("page change",pageNumber,pageCount)
@@ -93,10 +102,14 @@ const handlePageChange = (pageNumber) => {
   };
  
   const renderButtonTwo = (e) => {
-    console.log(e,"render")
+    console.log(e,"render finance")
     var buttonValue = e.data.disabled
     return (
-      <RotateCw/>
+      <Link to={"/history-view/" + e.data.employeeId}>
+      <RotateCw   onClick={() => {
+                                      fetchEmployeeDetails(e.data.employeeId);
+                                    }}/>
+      </Link>
     );
   };
   const changeHandler = (event) => {

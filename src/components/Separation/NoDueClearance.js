@@ -48,13 +48,14 @@ const NoDueClearance = () => {
   });
   const [gridApi, setGridApi] = useState(null);
   const [gridColumnApi, setGridColumnApi] = useState(null);
+  const [dropValue,setDropValue] = useState({value:null})
   const [costCenter, setCostCenter] = useState("all");
   const [searchValue, setSearchValue] = useState("all");
-  const [actionStatus, setActionStatus] = useState("all");
-  // const [enableValue , SetEnableValue] = useState(false)
+  const [actionStatus, setActionStatus] = useState("3");
+   const [enableValue , SetEnableValue] = useState()
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
-  const recordPerPage = 10;
+  const recordPerPage = 20;
   const totalRecords = total;
   const pageRange = 10;
   const indexOfLastRecord = currentPage * recordPerPage;
@@ -73,7 +74,7 @@ const NoDueClearance = () => {
     setCurrentPage(pageNumber);
     if (
       searchValue !== "all" ||
-      actionStatus !== "all" ||
+      actionStatus !== "3" ||
       costCenter !== "all"
     ) {
       console.log(
@@ -119,7 +120,7 @@ const NoDueClearance = () => {
     if (searchValue !== "" && searchValue !== "all") {
       viewITClearanceList(searchValue, pageCount, actionStatus, costCenter);
     } else {
-      viewITClearanceList("all", pageCount, "all", "all");
+      viewITClearanceList("all", pageCount, "3", "all");
     }
   };
 
@@ -130,7 +131,7 @@ const NoDueClearance = () => {
     if (costCenter !== "" && costCenter !== "all") {
       viewITClearanceList(searchValue, pageCount, actionStatus, data2);
     } else {
-      viewITClearanceList("all", pageCount, "all", "all");
+      viewITClearanceList("all", pageCount, "3", "all");
     }
   };
   const handleActionStatus = (options) => {
@@ -139,11 +140,11 @@ const NoDueClearance = () => {
     if (actionStatus !== "" && actionStatus !== "all") {
       viewITClearanceList(searchValue, pageCount, data2, costCenter);
     } else {
-      viewITClearanceList("all", pageCount, "all", "all");
+      viewITClearanceList("all", pageCount, "3", "all");
     }
   };
   const renderStatusOptions = (value) => {
-    // const enableData = value.data.disabled
+    // const enableData = value.data.
     // SetEnableValue(enableData)
     return (
       <div>
@@ -168,8 +169,14 @@ const NoDueClearance = () => {
   const statusRender = (e, value) => {
     e.preventDefault();
     var statusData = e.target.value;
-    const clearanceStatus = value.data;
-    clearanceStatus["itClearanceStatus"] = statusData;
+    var clearanceStatus = value.data;
+    if(clearanceStatus['itClearanceStatus'] !== statusData){
+      console.log(statusData,clearanceStatus,"in if")
+      clearanceStatus["itClearanceStatus"] = statusData;
+    }
+ 
+  
+  console.log(clearanceStatus,"ittttt")
   };
   const handleSave = (value) => {
     const formData = value.data;
@@ -185,6 +192,8 @@ const NoDueClearance = () => {
         formData.itRemarks !== ""
       ) {
         setCleranceData(formData);
+        formData['disabled'] = false
+        console.log(formData,"0")
         updateITClearanceList(
           formData,
           searchValue,
@@ -192,11 +201,12 @@ const NoDueClearance = () => {
           actionStatus,
           costCenter
         );
-        toast.info("IT Clearance fetched successfully");
       } else if (
-        formData.itClearanceStatus == 1 ||
-        formData.itClearanceStatus == 2
+        formData.itClearanceStatus == 1
       ) {
+        console.log(formData,"1")
+
+        formData['disabled'] = true
         setCleranceData(formData);
         updateITClearanceList(
           formData,
@@ -205,7 +215,20 @@ const NoDueClearance = () => {
           actionStatus,
           costCenter
         );
-        toast.info("IT Clearance fetched successfully");
+      } else if (
+        formData.itClearanceStatus == 2
+      ) {
+        formData['disabled'] = false
+
+        console.log(formData,"2")
+        setCleranceData(formData);
+        updateITClearanceList(
+          formData,
+          searchValue,
+          pageCount,
+          actionStatus,
+          costCenter
+        );
       } else {
         toast.error("Please enter IT-remarks");
       }
@@ -251,9 +274,10 @@ const NoDueClearance = () => {
     );
   };
   const options = [
-    { value: "all", label: "All" },
-    { value: "Save", label: "Save" },
-    { value: "NotSaved", label: "Not Saved" },
+    { value: "3", label: "All" },
+    { value: "0", label: "Due" },
+    { value: "1", label: "No Due" },
+    { value: "2", label: "On Hold" },
   ];
 
   return (
@@ -283,7 +307,7 @@ const NoDueClearance = () => {
                       onClick={searchDataHandler}
                     />
                   </div>
-                  <div className="col-sm-4">
+                  <div className="col-sm-5">
                     {/* <select className="selectActionStatus"  name="itClearanceStatus"  onChange={(e) => handleActionStatus(e)}>
         <option value={"all"}> select Action</option>
           <option value="Save"> Save </option>
@@ -292,13 +316,13 @@ const NoDueClearance = () => {
                     <Col className="selectList">
                       <br />
                       <label className="title" style={{ padding: "6px" }}>
-                        Select Action
+                        IT Clearance Status
                       </label>{" "}
                       &nbsp;&nbsp;
                       <Select
-                        className="selectInputWrapper"
+                        className="selectInputWrapperStatus"
                         name="filters"
-                        placeholder="Select Action"
+                        placeholder="IT Clearance Status"
                         onChange={handleActionStatus}
                         options={options}
                         required
@@ -350,9 +374,11 @@ const NoDueClearance = () => {
                     style={{ align: "center", height: 350, width: "100%" }}
                   >
                     <AgGridReact
-                      rowData={noDueClearanceList}
+                      rowData={currentRecords}
                       rowSelection="single"
                       onGridReady={onGridReady}
+                      suppressRowClickSelection={true}
+
                       defaultColDef={{
                         width: 200,
                         editable: true,
@@ -414,9 +440,13 @@ const NoDueClearance = () => {
                         className="columnColor"
                         field="itClearanceStatus"
                         headerName="IT Clearance"
-                        // editable= {enableValue}
+                         editable= {false}
                         colId="status"
+                        singleClickEdit="true"
                         cellRendererFramework={renderStatusOptions}
+                        cellRendererParams={{
+                          suppressEnterExpand: true,
+                        }}
                         cellEditorParams={{
                           values: ["0", "1", "2"],
                           cellRenderer: { statusRender },

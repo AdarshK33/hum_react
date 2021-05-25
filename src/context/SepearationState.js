@@ -43,7 +43,7 @@ export const SeparationProvider = (props) => {
           "&page=" +
           page +
           "&size=" +
-          10 +
+          20 +
           "&status=" +
           actionStatus +
           "&storeId=" +
@@ -76,7 +76,7 @@ export const SeparationProvider = (props) => {
           "&page=" +
           page +
           "&size=" +
-          10 +
+          20 +
           "&storeId=" +
           costCenter
       )
@@ -138,18 +138,23 @@ export const SeparationProvider = (props) => {
         console.log(error);
       });
   };
-  const viewAdminITClearanceList = (key, page, costCenter) => {
+  const viewAdminITClearanceList = (financeStatus,itStatus,key, page, costCenter) => {
     setLoader(true);
+    console.log(financeStatus,itStatus,key, page, costCenter ,"viewAdminIt")
     client
       .get(
-        "/api/v1/separation/full-and-final/view/no-due-clearance?key=" +
-          key +
-          "&page=" +
-          page +
-          "&size=" +
-          10 +
-          "&storeId=" +
-          costCenter
+        "/api/v1/separation/full-and-final/view/no-due-clearance?financeStatus=" +
+        financeStatus +
+            "&itStatus=" +
+            itStatus +
+            "&key=" +
+            key+
+        "&page=" +
+        page +
+        "&size=" +
+        10 +
+        "&storeId=" +
+        costCenter
       )
       .then((response) => {
         state.adminNoDueClearanceList = response.data.data.data;
@@ -176,6 +181,8 @@ export const SeparationProvider = (props) => {
       });
   };
   const viewITClearanceList = (key, page, actionStatus, costCenter) => {
+    console.log(actionStatus,key, page, costCenter ,"viewIt")
+
     setLoader(true);
     client
       .get(
@@ -184,7 +191,7 @@ export const SeparationProvider = (props) => {
           "&page=" +
           page +
           "&size=" +
-          10 +
+          20 +
           "&status=" +
           actionStatus +
           "&storeId=" +
@@ -360,7 +367,7 @@ export const SeparationProvider = (props) => {
       costCentreName: value.costCentreName,
       joiningDate: value.joiningDate,
       managerName: value.managerName,
-      disabled: true,
+      disabled: value.disabled,
     };
     console.log(formData, "updateClearanceList separation context");
     setLoader(true);
@@ -399,8 +406,9 @@ export const SeparationProvider = (props) => {
       costCentre: value.costCentre,
       joiningDate: value.joiningDate,
       managerName: value.managerName,
-      disabled: true,
+      disabled: value.disabled,
     };
+    console.log(formData,"saveFinanceClearanceData")
     setLoader(true);
     return client
       .post("/api/v1/separation/finance-clearance/create", formData)

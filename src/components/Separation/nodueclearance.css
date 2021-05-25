@@ -152,6 +152,10 @@ tbody td {
 	float: right;
   width: 50% !important;
 }
+.selectInputWrapperStatus {
+	float: right;
+  width: 60% !important;
+}
  /* css for table td */
 
  .cloumnWidth{

@@ -75,7 +75,7 @@ import AdminNoDueClearance from "./components/Separation/AdminNoDueClearance/Adm
 import NoDueClearance from "./components/Separation/NoDueClearance";
 import ViewEditRelease from "./components/OfferReleaseandOnboarding/ViewOfferRelease";
 import Documents from "./components/OnBording/Documents";
-
+import HistoryView from "./components/Separation/FinanceAdminNoDueClearance/HistoryView"
 import EmployeeExitList from "./components/ManagerApproveEmployeExit/EmployeeExitList";
 import EmployeeExitAction from "./components/ManagerApproveEmployeExit/EmployeeExitAction";
 import ManagerInitiateExit from "./components/ManagerApproveEmployeExit/ManagerInitiateExit";
@@ -220,6 +220,10 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/exit-action/:employeeid`}
             component={EmployeeExitAction}
+          />
+            <Route
+            path={`${process.env.PUBLIC_URL}/history-view/:employeeid`}
+            component={HistoryView}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/manager-initiate-exit`}
