@@ -3,10 +3,13 @@ import Breadcrumb from "../../common/breadcrumb";
 import { SeparationContext } from "../../../context/SepearationState";
 import {Button,Container, Modal, Row, Col, Form, Table} from "react-bootstrap";
 import Pagination from 'react-js-pagination';
+import { Link } from "react-router-dom";
 import Select from 'react-select'
 import { RotateCw, Eye, Search } from "react-feather";
 import { saveAs ,FileSaver} from 'file-saver';
 import { AdminContext } from '../../../context/AdminState'
+import { EmployeeSeparationContext } from "../../../context/EmployeeSeparationState";
+
 import "../nodueclearance.css";
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
 import { ToastContainer, toast } from "react-toastify";
@@ -20,6 +23,7 @@ import {
 import ReactExport from 'react-data-export'
 
 const FinanaceAdminNoDueClearance = () => {
+  const { ViewEmployeeDataById,changeEmployeeId,ModeOfSeparationView} = useContext(EmployeeSeparationContext);
   const { total,loader,viewFinanceAdminClearanceList,
     financeAdminNoDueClearanceList,
     FinanceClearanceUploadSettlement,financeClearanceUpload,FinanceAdminClearanceExport,
@@ -36,7 +40,7 @@ const FinanaceAdminNoDueClearance = () => {
   const [searchValue, setSearchValue] = useState("all");
 /*-----------------Pagination------------------*/
 const [currentPage, setCurrentPage] = useState(1);
-const recordPerPage = 10;
+const recordPerPage = 20;
 const totalRecords = total
 // const totalRecords = financeAdminNoDueClearanceList !== null && financeAdminNoDueClearanceList !== undefined && financeAdminNoDueClearanceList.length;
 const pageRange = 10;
@@ -60,7 +64,12 @@ useEffect(() => {
 useEffect(() => {
   CostCenter();
 }, []);
+const fetchEmployeeDetails = (employeeId) => {
+  changeEmployeeId(employeeId);
+  ViewEmployeeDataById(employeeId);
+   ModeOfSeparationView();
 
+};
 const handlePageChange = (pageNumber) => {
   setPageCount(pageNumber - 1);
   console.log("page change",pageNumber,pageCount)
@@ -84,19 +93,26 @@ const handlePageChange = (pageNumber) => {
     if (searchValue !== "" && searchValue !== "all") {
       viewFinanceAdminClearanceList(searchValue,pageCount,costCenter);
     }else{
-      viewFinanceAdminClearanceList("all",pageCount,"all");
+      viewFinanceAdminClearanceList(searchValue,pageCount,"all");
 
     }
   }
   const handleSave = () => {
-     UpdateAdminFinanceClearanceList(checkedData,searchValue, pageCount,costCenter)
+    console.log(checkedData,"sub,mit")
+    //  UpdateAdminFinanceClearanceList(checkedData,searchValue, pageCount,costCenter)
   };
- 
+ const handleValidCheck = (e)=>{
+   console.log(e,"handleValidCheck")
+   return true
+ }
   const renderButtonTwo = (e) => {
-    console.log(e,"render")
     var buttonValue = e.data.disabled
     return (
-      <RotateCw/>
+      <Link to={"/history-view/" + e.data.employeeId}>
+      <RotateCw   onClick={() => {
+                                      fetchEmployeeDetails(e.data.employeeId);
+                                    }}/>
+      </Link>
     );
   };
   const changeHandler = (event) => {
@@ -118,7 +134,7 @@ const handleCostCenter = (options) => {
   if (costCenter !== "" && costCenter !== "all") {
     return viewFinanceAdminClearanceList(searchValue,pageCount,data2);
   }else{
-    return viewFinanceAdminClearanceList("all",pageCount,"all");
+    return viewFinanceAdminClearanceList("all",pageCount,data2);
   }
 } 
 const renderStatusOptions = (value) => {
@@ -171,6 +187,7 @@ const renderStatusOptions = (value) => {
   };
   const handleUploadSettlement = () => {
     if (fileUpload !== undefined && fileUpload !== null) {
+      console.log(fileUpload,"in upload")
       FinanceClearanceUploadSettlement(fileUpload ,searchValue, pageCount,costCenter)
     } else {
       toast.error("Please select a file to upload")
@@ -194,7 +211,6 @@ const renderStatusOptions = (value) => {
           }else if(checkedValue == false){
             toast.error("Details for the selected record is not present")
           }
- console.log(checkedValue)
       //     preValue.map((item,index)=>{
       //       if(item['employeeId'] == formData.employeeId){
       //         item['disabled'] = false
@@ -219,8 +235,9 @@ const renderStatusOptions = (value) => {
           })
         }
       }
-    console.log(checkedData,"checkedData")
  }
+ console.log(checkedData,financeAdminNoDueClearanceList,"checkedData")
+
  const handleExport = (e) =>{
     const value = e.target.value
     FinanceAdminClearanceExport(value)
@@ -228,6 +245,7 @@ const renderStatusOptions = (value) => {
 
   }
   const handleChecked = function (params) {
+    console.log(params.columnApi.getRowGroupColumns().length === 0,"handleChecked")
       return params.columnApi.getRowGroupColumns().length === 0;
   }
   const statusRender = (e,value) => {
@@ -338,6 +356,13 @@ const renderStatusOptions = (value) => {
               cellRenderer: 'agGroupCellRenderer',
               cellRendererParams: { checkbox: true},
             }}
+            isRowSelectable={function (rowNode) {
+              return rowNode.data ? ( rowNode.data.deactivateProfile !== null && 
+                rowNode.data.fullAndFinalCompleteStatus !== null
+                  && rowNode.data.fullAndFinalProcessDate !== null 
+                   &&rowNode.data.fullAndFinalAmount !== null 
+                   && rowNode.data.disabled == false) : false;
+            }}
             // pagination={true}
             // paginationPageSize={10}
             debug={true}
@@ -355,7 +380,7 @@ const renderStatusOptions = (value) => {
           <AgGridColumn width={80} type="checkbox" className="columnColor"  headerName="S No" pinned="left" lockPinned="true" 
           valueGetter={`node.rowIndex+1 + ${indexOfFirstRecord}`}></AgGridColumn>
             <AgGridColumn className="columnColor"  headerCheckboxSelection={handleChecked}
-              headerCheckboxSelectionFilteredOnly={true}
+              headerCheckboxSelectionFilteredOnly={handleValidCheck}
               checkboxSelection={handleChecked} 
               headerName="Employee Id" field="employeeId"></AgGridColumn>
             <AgGridColumn className="columnColor"  headerName="Employee Name" field="employeeName"></AgGridColumn>

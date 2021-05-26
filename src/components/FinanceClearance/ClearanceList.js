@@ -50,11 +50,11 @@ const FinanceClearanceList = () => {
   const [gridColumnApi, setGridColumnApi] = useState(null);
   const [costCenter, setCostCenter] = useState("all");
   const [searchValue, setSearchValue] = useState("all");
-  const [actionStatus, setActionStatus] = useState("all");
-  // const [enableValue , SetEnableValue] = useState(false)
+  const [actionStatus, setActionStatus] = useState("3");
+  const [enableValue , SetEnableValue] = useState(null)
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
-  const recordPerPage = 10;
+  const recordPerPage = 20;
   const totalRecords = total;
   const pageRange = 10;
   const indexOfLastRecord = currentPage * recordPerPage;
@@ -63,6 +63,7 @@ const FinanceClearanceList = () => {
 
   useEffect(() => {
     if (separationList !== null && separationList !== undefined) {
+      
       setCurrentRecords(separationList);
     }
   }, [separationList, currentRecords]);
@@ -70,12 +71,12 @@ const FinanceClearanceList = () => {
   const handlePageChange = (pageNumber) => {
     setPageCount(pageNumber - 1);
     setCurrentPage(pageNumber);
-    if (searchValue !== "all" || actionStatus !== "all" || costCenter !== "all") {
+    if (searchValue !== "all" || actionStatus !== "3" || costCenter !== "all") {
 
       separationListView(searchValue, pageNumber - 1,actionStatus, costCenter);
     } else {
 
-      separationListView("all",pageNumber - 1,"all", "all");
+      separationListView("all",pageNumber - 1,"3", "all");
     }
     setCurrentRecords(separationList);
   };
@@ -91,18 +92,19 @@ const FinanceClearanceList = () => {
     if (searchValue !== "" && searchValue !== "all") {
       separationListView(searchValue, pageCount,actionStatus, costCenter);
     } else {
-      separationListView("all", pageCount,"all", "all");
+      separationListView(searchValue, pageCount,"3", "all");
     }
   };
 
   const handleCostCenter = (options) => {
     let data2 = options !== null ? options.value : "";
-    console.log(data2);
     setCostCenter(data2);
     if (costCenter !== "" && costCenter !== "all") {
+      console.log(data2,"if");
        separationListView(searchValue, pageCount,actionStatus, data2);
     } else {
-       separationListView("all", pageCount,"all", "all");
+      console.log(data2,"else");
+       separationListView("all", pageCount,"3", data2);
     }
   };
   const handleExport = (e) =>{
@@ -112,22 +114,19 @@ const FinanceClearanceList = () => {
   const handleActionStatus = (options)=>{
     let data2 = options !== null?options.value:''
     setActionStatus(data2)
-    if (actionStatus !== "" && actionStatus !== "all") {
+    if (actionStatus !== "" && actionStatus !== "3") {
       separationListView(searchValue, pageCount, data2,costCenter);
     } else {
-      separationListView("all", pageCount,"all" ,"all");
+      separationListView("all", pageCount,data2 ,"all");
     } 
   }
   const renderStatusOptions = (value) => {
-    // console.log(value,"dropdown finance")
-    // const enableData = value.data.disabled
-    // console.log(enableData,'//////')
-    // SetEnableValue(enableData)
     return (
       <div>
         <select
           name="financeClearanceStatus" className="selectpicker" 
-          value={value.data.financeClearanceStatus}
+          defaultValue={value.data.financeClearanceStatus}
+          value={enableValue}
           onChange={(e) => statusRender(e, value)}
         >
           <option value={null}> select </option>
@@ -146,6 +145,7 @@ const FinanceClearanceList = () => {
   const statusRender = (e, value) => {
     const statusData = e.target.value;
     const clearanceStatus = value.data;
+    SetEnableValue(statusData)
     console.log(clearanceStatus ,"before")
       clearanceStatus['financeClearanceStatus']= statusData
       console.log(clearanceStatus,"after")    
@@ -156,12 +156,22 @@ const FinanceClearanceList = () => {
     console.log(formData, pageCount, "handlelsave");
     if(formData.financeClearanceStatus !== "" && formData.financeClearanceStatus !== null ){
      if( formData.financeClearanceStatus == 0 && formData.financeRemarks !==null && formData.financeRemarks !== undefined && formData.financeRemarks !==""){
+      formData['disabled'] = false
+      console.log(formData,"0")
       setCleranceData(formData);
-    saveFinanceClearanceData(formData, searchValue, pageCount,actionStatus, costCenter);
+     saveFinanceClearanceData(formData, searchValue, pageCount,actionStatus, costCenter);
     toast.info("Finance Clearance fetched successfully")
-    }else if(formData.financeClearanceStatus == 1 || formData.financeClearanceStatus == 2){
+    }else if(formData.financeClearanceStatus == 1 ){
+      formData['disabled'] = true
+      console.log(formData,"1")
       setCleranceData(formData);
-    saveFinanceClearanceData(formData, searchValue, pageCount,actionStatus, costCenter);
+     saveFinanceClearanceData(formData, searchValue, pageCount,actionStatus, costCenter);
+    toast.info("Finance Clearance fetched successfully")
+    }else if(formData.financeClearanceStatus == 2){
+      formData['disabled'] = false
+      console.log(formData,"2")
+      setCleranceData(formData);
+     saveFinanceClearanceData(formData, searchValue, pageCount,actionStatus, costCenter);
     toast.info("Finance Clearance fetched successfully")
     }else{
       toast.error("Please enter finance-remarks")
@@ -214,9 +224,10 @@ const FinanceClearanceList = () => {
     console.log(e, "employeeId");
   };
   const options = [
-    {value: 'all', label: 'All'},
-    { value: 'Save', label: 'Save' },
-    { value: 'NotSaved', label: 'Not Saved' },
+    { value: "3", label: "All" },
+    { value: "0", label: "Due" },
+    { value: "1", label: "No Due" },
+    { value: "2", label: "On Hold" },
   ];
   return (
     <div>
@@ -242,7 +253,7 @@ const FinanceClearanceList = () => {
               onClick={searchDataHandler}
             />
           </div>
-          <div className="col-sm-4">
+          <div className="col-sm-5">
           {/* <select className="selectActionStatus"  name="itClearanceStatus"  onChange={(e) => handleActionStatus(e)}>
         <option value={"all"}> select Action </option>
           <option value="Save"> Save </option>
@@ -250,11 +261,11 @@ const FinanceClearanceList = () => {
         </select> */}
                <Col className="selectList">
            <br/>
-            <label className="title" style={{padding:"6px"}}>Select Action</label> &nbsp;&nbsp;
+            <label className="title" style={{padding:"6px"}}>Finance Clearance Status</label> &nbsp;&nbsp;
           <Select
-          className="selectInputWrapper"
+          className="selectInputWrapperStatus"
            name="filters"
-          placeholder="Select Action"
+          placeholder="Finance Clearance Status"
           onChange={handleActionStatus}         
           options={options}
                 required isSearchable />
