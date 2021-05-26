@@ -162,3 +162,7 @@
 .roster-center {
   text-align: center;
 }
+
+.small-card {
+  height: 210px;
+}
