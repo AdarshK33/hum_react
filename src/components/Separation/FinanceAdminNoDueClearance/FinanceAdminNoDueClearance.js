@@ -101,7 +101,10 @@ const handlePageChange = (pageNumber) => {
     console.log(checkedData,"sub,mit")
     //  UpdateAdminFinanceClearanceList(checkedData,searchValue, pageCount,costCenter)
   };
- 
+ const handleValidCheck = (e)=>{
+   console.log(e,"handleValidCheck")
+   return true
+ }
   const renderButtonTwo = (e) => {
     var buttonValue = e.data.disabled
     return (
@@ -353,6 +356,13 @@ const renderStatusOptions = (value) => {
               cellRenderer: 'agGroupCellRenderer',
               cellRendererParams: { checkbox: true},
             }}
+            isRowSelectable={function (rowNode) {
+              return rowNode.data ? ( rowNode.data.deactivateProfile !== null && 
+                rowNode.data.fullAndFinalCompleteStatus !== null
+                  && rowNode.data.fullAndFinalProcessDate !== null 
+                   &&rowNode.data.fullAndFinalAmount !== null 
+                   && rowNode.data.disabled == false) : false;
+            }}
             // pagination={true}
             // paginationPageSize={10}
             debug={true}
@@ -370,7 +380,7 @@ const renderStatusOptions = (value) => {
           <AgGridColumn width={80} type="checkbox" className="columnColor"  headerName="S No" pinned="left" lockPinned="true" 
           valueGetter={`node.rowIndex+1 + ${indexOfFirstRecord}`}></AgGridColumn>
             <AgGridColumn className="columnColor"  headerCheckboxSelection={handleChecked}
-              headerCheckboxSelectionFilteredOnly={true}
+              headerCheckboxSelectionFilteredOnly={handleValidCheck}
               checkboxSelection={handleChecked} 
               headerName="Employee Id" field="employeeId"></AgGridColumn>
             <AgGridColumn className="columnColor"  headerName="Employee Name" field="employeeName"></AgGridColumn>
