@@ -51,7 +51,7 @@ const FinanceClearanceList = () => {
   const [costCenter, setCostCenter] = useState("all");
   const [searchValue, setSearchValue] = useState("all");
   const [actionStatus, setActionStatus] = useState("3");
-  // const [enableValue , SetEnableValue] = useState(false)
+  const [enableValue , SetEnableValue] = useState(null)
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
   const recordPerPage = 20;
@@ -98,11 +98,12 @@ const FinanceClearanceList = () => {
 
   const handleCostCenter = (options) => {
     let data2 = options !== null ? options.value : "";
-    console.log(data2);
     setCostCenter(data2);
     if (costCenter !== "" && costCenter !== "all") {
+      console.log(data2,"if");
        separationListView(searchValue, pageCount,actionStatus, data2);
     } else {
+      console.log(data2,"else");
        separationListView("all", pageCount,"3", "all");
     }
   };
@@ -113,22 +114,19 @@ const FinanceClearanceList = () => {
   const handleActionStatus = (options)=>{
     let data2 = options !== null?options.value:''
     setActionStatus(data2)
-    if (actionStatus !== "" && actionStatus !== "all") {
+    if (actionStatus !== "" && actionStatus !== "3") {
       separationListView(searchValue, pageCount, data2,costCenter);
     } else {
       separationListView("all", pageCount,"3" ,"all");
     } 
   }
   const renderStatusOptions = (value) => {
-    // console.log(value,"dropdown finance")
-    // const enableData = value.data.disabled
-    // console.log(enableData,'//////')
-    // SetEnableValue(enableData)
     return (
       <div>
         <select
           name="financeClearanceStatus" className="selectpicker" 
-          value={value.data.financeClearanceStatus}
+          defaultValue={value.data.financeClearanceStatus}
+          value={enableValue}
           onChange={(e) => statusRender(e, value)}
         >
           <option value={null}> select </option>
@@ -147,6 +145,7 @@ const FinanceClearanceList = () => {
   const statusRender = (e, value) => {
     const statusData = e.target.value;
     const clearanceStatus = value.data;
+    SetEnableValue(statusData)
     console.log(clearanceStatus ,"before")
       clearanceStatus['financeClearanceStatus']= statusData
       console.log(clearanceStatus,"after")    

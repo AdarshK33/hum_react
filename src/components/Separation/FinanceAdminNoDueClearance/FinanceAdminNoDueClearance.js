@@ -23,7 +23,7 @@ import {
 import ReactExport from 'react-data-export'
 
 const FinanaceAdminNoDueClearance = () => {
-  const { ViewEmployeeDataById,changeEmployeeId} = useContext(EmployeeSeparationContext);
+  const { ViewEmployeeDataById,changeEmployeeId,ModeOfSeparationView} = useContext(EmployeeSeparationContext);
   const { total,loader,viewFinanceAdminClearanceList,
     financeAdminNoDueClearanceList,
     FinanceClearanceUploadSettlement,financeClearanceUpload,FinanceAdminClearanceExport,
@@ -67,7 +67,7 @@ useEffect(() => {
 const fetchEmployeeDetails = (employeeId) => {
   changeEmployeeId(employeeId);
   ViewEmployeeDataById(employeeId);
-  // ModeOfSeparationView();
+   ModeOfSeparationView();
 
 };
 const handlePageChange = (pageNumber) => {
@@ -98,11 +98,11 @@ const handlePageChange = (pageNumber) => {
     }
   }
   const handleSave = () => {
-     UpdateAdminFinanceClearanceList(checkedData,searchValue, pageCount,costCenter)
+    console.log(checkedData,"sub,mit")
+    //  UpdateAdminFinanceClearanceList(checkedData,searchValue, pageCount,costCenter)
   };
  
   const renderButtonTwo = (e) => {
-    console.log(e,"render finance")
     var buttonValue = e.data.disabled
     return (
       <Link to={"/history-view/" + e.data.employeeId}>
@@ -184,6 +184,7 @@ const renderStatusOptions = (value) => {
   };
   const handleUploadSettlement = () => {
     if (fileUpload !== undefined && fileUpload !== null) {
+      console.log(fileUpload,"in upload")
       FinanceClearanceUploadSettlement(fileUpload ,searchValue, pageCount,costCenter)
     } else {
       toast.error("Please select a file to upload")
@@ -207,7 +208,6 @@ const renderStatusOptions = (value) => {
           }else if(checkedValue == false){
             toast.error("Details for the selected record is not present")
           }
- console.log(checkedValue)
       //     preValue.map((item,index)=>{
       //       if(item['employeeId'] == formData.employeeId){
       //         item['disabled'] = false
@@ -232,8 +232,9 @@ const renderStatusOptions = (value) => {
           })
         }
       }
-    console.log(checkedData,"checkedData")
  }
+ console.log(checkedData,financeAdminNoDueClearanceList,"checkedData")
+
  const handleExport = (e) =>{
     const value = e.target.value
     FinanceAdminClearanceExport(value)
@@ -241,6 +242,7 @@ const renderStatusOptions = (value) => {
 
   }
   const handleChecked = function (params) {
+    console.log(params.columnApi.getRowGroupColumns().length === 0,"handleChecked")
       return params.columnApi.getRowGroupColumns().length === 0;
   }
   const statusRender = (e,value) => {

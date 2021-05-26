@@ -19,7 +19,7 @@ const [costCenter, setCostCenter] = useState("all")
 const [searchValue, setSearchValue] = useState("all");
 /*-----------------Pagination------------------*/
 const [currentPage, setCurrentPage] = useState(1);
-const recordPerPage = 10;
+const recordPerPage = 20;
 const totalRecords = total;
 const pageRange = 10;
 const indexOfLastRecord = currentPage * recordPerPage;
@@ -35,9 +35,7 @@ useEffect(() => {
   }
 }, [adminNoDueClearanceList,currentRecords]);
 
-useEffect(() => {
-  CostCenter();
-}, []);
+
 
 const handlePageChange = (pageNumber) => {
   setPageCount(pageNumber - 1);
@@ -52,7 +50,9 @@ const handlePageChange = (pageNumber) => {
     setCurrentRecords(adminNoDueClearanceList);
 }
 /*-----------------Pagination------------------*/
-
+useEffect(() => {
+  CostCenter();
+}, []);
   const searchHandler = (e) => {
     setSearchValue(e.target.value)
 
@@ -85,7 +85,7 @@ const handleFinanceStatus = (options) => {
   let data2 = options !== null?options.value:''
   console.log(data2)
   SetFinanceStatus(data2)
-  if (financeStatus !== "" && financeStatus !== "all") {
+  if (financeStatus !== "" && financeStatus !== "3") {
      viewAdminITClearanceList(data2,itStatus,searchValue,pageCount,costCenter);
   }else{
      viewAdminITClearanceList("3","3","all",pageCount,"all");
@@ -95,7 +95,7 @@ const handleITStatus = (options) => {
   let data2 = options !== null?options.value:''
   console.log(data2)
   SetITStatus(data2)
-  if (itStatus !== "" && itStatus !== "all") {
+  if (itStatus !== "" && itStatus !== "3") {
      viewAdminITClearanceList(financeStatus,data2,searchValue,pageCount,costCenter);
   }else{
      viewAdminITClearanceList("3","3","all",pageCount,"all");
@@ -104,7 +104,8 @@ const handleITStatus = (options) => {
 useEffect(() => {
   console.log(pageCount,"pageCount")
   viewAdminITClearanceList(financeStatus,itStatus,searchValue, pageCount,costCenter);
-}, [costCenter,searchValue,pageCount,financeStatus,itStatus]);
+}, [financeStatus,itStatus,costCenter,searchValue,pageCount]);
+
 const options1 = [
   { value: "3", label: "All" },
   { value: "0", label: "Due" },
@@ -124,7 +125,7 @@ const options2 = [
         <div className="row">
           <div className="col-sm-12">
           <Row className="mt-4 mainWrapper">
-          <div className="col-sm-4">
+          <div className="col-sm-5">
           <Col className="selectList">
             <br/>
             <label className="title" style={{padding:"6px"}}>IT Clearance Status</label> &nbsp;&nbsp;
@@ -132,13 +133,13 @@ const options2 = [
           <Select
           className="selectInputWrapper"
            name="filters"
-          placeholder="IT Clearance Status"
+          placeholder="IT Clearance "
             options={options1}
             onChange={handleITStatus}
                required isSearchable />
           </Col>
           </div>
-          <div className="col-sm-4">
+          <div className="col-sm-5">
           <Col className="selectList">
             <br/>
             <label className="title" style={{padding:"6px"}}>Finance Clearance Status</label> &nbsp;&nbsp;
@@ -146,7 +147,7 @@ const options2 = [
           <Select
           className="selectInputWrapper"
            name="filters"
-          placeholder="Finance Clearance Status"
+          placeholder="Finance Clearance "
           options={options2}
           onChange={handleFinanceStatus}
                required isSearchable />

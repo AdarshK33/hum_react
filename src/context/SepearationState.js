@@ -35,6 +35,7 @@ export const SeparationProvider = (props) => {
   const [state, dispatch] = useReducer(SepationReducer, initial_state);
   const [loader, setLoader] = useState(false);
   const separationListView = (key, page, actionStatus, costCenter) => {
+    console.log(key, page, actionStatus, costCenter,"finance state")
     setLoader(true);
     client
       .get(
@@ -152,7 +153,7 @@ export const SeparationProvider = (props) => {
         "&page=" +
         page +
         "&size=" +
-        10 +
+        20 +
         "&storeId=" +
         costCenter
       )
@@ -215,12 +216,12 @@ export const SeparationProvider = (props) => {
         });
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error)
       });
   };
 
   const FinanceClearanceUploadSettlement = (file, key, page, costCenter) => {
-    console.log(file, "file in update ");
+    console.log(file, "file in update FinanceClearanceUploadSettlement");
     const formData = new FormData();
     formData.append("file", file, file.name);
     console.log(

@@ -52,7 +52,7 @@ const NoDueClearance = () => {
   const [costCenter, setCostCenter] = useState("all");
   const [searchValue, setSearchValue] = useState("all");
   const [actionStatus, setActionStatus] = useState("3");
-   const [enableValue , SetEnableValue] = useState()
+  const [enableValue , SetEnableValue] = useState(null)
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
   const recordPerPage = 20;
@@ -72,11 +72,7 @@ const NoDueClearance = () => {
   const handlePageChange = (pageNumber) => {
     setPageCount(pageNumber - 1);
     setCurrentPage(pageNumber);
-    if (
-      searchValue !== "all" ||
-      actionStatus !== "3" ||
-      costCenter !== "all"
-    ) {
+    if (searchValue !== "all" ||actionStatus !== "3" || costCenter !== "all") {
       console.log(
         "page change1",
         searchValue,
@@ -99,7 +95,7 @@ const NoDueClearance = () => {
         pageCount
       );
 
-      viewITClearanceList("all", pageNumber - 1, "all", "all");
+      viewITClearanceList("all", pageNumber - 1, "3", "all");
     }
     setCurrentRecords(noDueClearanceList);
   };
@@ -144,14 +140,15 @@ const NoDueClearance = () => {
     }
   };
   const renderStatusOptions = (value) => {
-    // const enableData = value.data.
-    // SetEnableValue(enableData)
+      const data = value.data.itClearanceStatus
+    console.log(value,"renderstatusoption")
     return (
       <div>
         <select
           className="selectpicker"
           name="itClearanceStatus"
-          value={value.data.itClearanceStatus}
+          defaultValue={data}
+          value={enableValue}
           onChange={(e) => statusRender(e, value)}
         >
           <option value={null}> select </option>
@@ -168,7 +165,10 @@ const NoDueClearance = () => {
   };
   const statusRender = (e, value) => {
     e.preventDefault();
+    console.log(e.target.value,"status render")
     var statusData = e.target.value;
+    SetEnableValue(statusData)
+
     var clearanceStatus = value.data;
     if(clearanceStatus['itClearanceStatus'] !== statusData){
       console.log(statusData,clearanceStatus,"in if")
@@ -280,6 +280,12 @@ const NoDueClearance = () => {
     { value: "2", label: "On Hold" },
   ];
 
+
+const itStatusValue = [
+  { value: '0', label: 'Due' },
+  { value: '1', label: 'No Due' },
+  { value: '2', label: 'On Hold' },
+];
   return (
     <div>
       <Fragment>
