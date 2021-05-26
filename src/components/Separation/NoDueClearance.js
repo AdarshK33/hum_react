@@ -116,7 +116,7 @@ const NoDueClearance = () => {
     if (searchValue !== "" && searchValue !== "all") {
       viewITClearanceList(searchValue, pageCount, actionStatus, costCenter);
     } else {
-      viewITClearanceList("all", pageCount, "3", "all");
+      viewITClearanceList(searchValue, pageCount, "3", "all");
     }
   };
 
@@ -127,7 +127,7 @@ const NoDueClearance = () => {
     if (costCenter !== "" && costCenter !== "all") {
       viewITClearanceList(searchValue, pageCount, actionStatus, data2);
     } else {
-      viewITClearanceList("all", pageCount, "3", "all");
+      viewITClearanceList("all", pageCount, "3", data2);
     }
   };
   const handleActionStatus = (options) => {
@@ -136,7 +136,7 @@ const NoDueClearance = () => {
     if (actionStatus !== "" && actionStatus !== "all") {
       viewITClearanceList(searchValue, pageCount, data2, costCenter);
     } else {
-      viewITClearanceList("all", pageCount, "3", "all");
+      viewITClearanceList("all", pageCount, data2, "all");
     }
   };
   const renderStatusOptions = (value) => {

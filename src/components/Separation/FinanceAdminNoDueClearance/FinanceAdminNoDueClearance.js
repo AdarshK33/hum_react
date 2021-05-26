@@ -93,7 +93,7 @@ const handlePageChange = (pageNumber) => {
     if (searchValue !== "" && searchValue !== "all") {
       viewFinanceAdminClearanceList(searchValue,pageCount,costCenter);
     }else{
-      viewFinanceAdminClearanceList("all",pageCount,"all");
+      viewFinanceAdminClearanceList(searchValue,pageCount,"all");
 
     }
   }
@@ -131,7 +131,7 @@ const handleCostCenter = (options) => {
   if (costCenter !== "" && costCenter !== "all") {
     return viewFinanceAdminClearanceList(searchValue,pageCount,data2);
   }else{
-    return viewFinanceAdminClearanceList("all",pageCount,"all");
+    return viewFinanceAdminClearanceList("all",pageCount,data2);
   }
 } 
 const renderStatusOptions = (value) => {

@@ -92,7 +92,7 @@ const FinanceClearanceList = () => {
     if (searchValue !== "" && searchValue !== "all") {
       separationListView(searchValue, pageCount,actionStatus, costCenter);
     } else {
-      separationListView("all", pageCount,"3", "all");
+      separationListView(searchValue, pageCount,"3", "all");
     }
   };
 
@@ -104,7 +104,7 @@ const FinanceClearanceList = () => {
        separationListView(searchValue, pageCount,actionStatus, data2);
     } else {
       console.log(data2,"else");
-       separationListView("all", pageCount,"3", "all");
+       separationListView("all", pageCount,"3", data2);
     }
   };
   const handleExport = (e) =>{
@@ -117,7 +117,7 @@ const FinanceClearanceList = () => {
     if (actionStatus !== "" && actionStatus !== "3") {
       separationListView(searchValue, pageCount, data2,costCenter);
     } else {
-      separationListView("all", pageCount,"3" ,"all");
+      separationListView("all", pageCount,data2 ,"all");
     } 
   }
   const renderStatusOptions = (value) => {

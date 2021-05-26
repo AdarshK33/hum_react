@@ -140,7 +140,6 @@ export const SeparationProvider = (props) => {
       });
   };
   const viewAdminITClearanceList = (financeStatus,itStatus,key, page, costCenter) => {
-    setLoader(true);
     console.log(financeStatus,itStatus,key, page, costCenter ,"viewAdminIt")
     client
       .get(
@@ -168,7 +167,6 @@ export const SeparationProvider = (props) => {
           "=====GET FETCH_ADMIN_NODUECLEARANCE_LIST API response=====",
           response.data.data
         );
-        setLoader(false);
         return dispatch({
           type: "FETCH_ADMIN_NODUECLEARANCE_LIST",
           payload: state.adminNoDueClearanceList,

@@ -61,7 +61,7 @@ useEffect(() => {
     if (searchValue !== "" && searchValue !== "all") {
       viewAdminITClearanceList(financeStatus,itStatus,searchValue,pageCount,costCenter);
     }else{
-      viewAdminITClearanceList("3","3","all",pageCount,"all");
+      viewAdminITClearanceList("3","3",searchValue,pageCount,"all");
 
     }
   }
@@ -78,33 +78,33 @@ const handleCostCenter = (options) => {
   if (costCenter !== "" && costCenter !== "all") {
      viewAdminITClearanceList(financeStatus,itStatus,searchValue,pageCount,data2);
   }else{
-     viewAdminITClearanceList("3","3","all",pageCount,"all");
+     viewAdminITClearanceList("3","3","all",pageCount,data2);
   }
 } 
 const handleFinanceStatus = (options) => {
-  let data2 = options !== null?options.value:''
-  console.log(data2)
-  SetFinanceStatus(data2)
+  let finance = options !== null?options.value:''
+  console.log(finance)
+  SetFinanceStatus(finance)
   if (financeStatus !== "" && financeStatus !== "3") {
-     viewAdminITClearanceList(data2,itStatus,searchValue,pageCount,costCenter);
+     viewAdminITClearanceList(finance,itStatus,searchValue,pageCount,costCenter);
   }else{
-     viewAdminITClearanceList("3","3","all",pageCount,"all");
+     viewAdminITClearanceList(finance,"3","all",pageCount,"all");
   }
 } 
 const handleITStatus = (options) => {
-  let data2 = options !== null?options.value:''
-  console.log(data2)
-  SetITStatus(data2)
+  let itvalue = options !== null?options.value:''
+  console.log(itvalue)
+  SetITStatus(itvalue)
   if (itStatus !== "" && itStatus !== "3") {
-     viewAdminITClearanceList(financeStatus,data2,searchValue,pageCount,costCenter);
+     viewAdminITClearanceList(financeStatus,itvalue,searchValue,pageCount,costCenter);
   }else{
-     viewAdminITClearanceList("3","3","all",pageCount,"all");
+     viewAdminITClearanceList("3",itvalue,"all",pageCount,"all");
   }
 } 
 useEffect(() => {
   console.log(pageCount,"pageCount")
   viewAdminITClearanceList(financeStatus,itStatus,searchValue, pageCount,costCenter);
-}, [financeStatus,itStatus,costCenter,searchValue,pageCount]);
+},[costCenter,searchValue,financeStatus,itStatus,pageCount]);
 
 const options1 = [
   { value: "3", label: "All" },
