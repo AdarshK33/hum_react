@@ -32,6 +32,7 @@ import {
   SeparationContext,
   SeparationProvider,
 } from "./context/SepearationState";
+import { ProbationProvider } from "./context/ProbationState";
 import RoutePath from "./Route";
 import WithAxios from "./utils/axios";
 import CandidateWithAxios from "./utils/canditateLogin";
@@ -67,17 +68,19 @@ function Root() {
                                         <DocsVerificationProvider>
                                           <EmploeeSeparationProvider>
                                             <SeparationProvider>
-                                              <BonusProvider>
-                                                <BrowserRouter basename={"/"}>
-                                                  <ScrollContext>
-                                                    <WithAxios>
-                                                      <CandidateWithAxios>
-                                                        <RoutePath />
-                                                      </CandidateWithAxios>
-                                                    </WithAxios>
-                                                  </ScrollContext>
-                                                </BrowserRouter>
-                                              </BonusProvider>
+                                              <ProbationProvider>
+                                                <BonusProvider>
+                                                  <BrowserRouter basename={"/"}>
+                                                    <ScrollContext>
+                                                      <WithAxios>
+                                                        <CandidateWithAxios>
+                                                          <RoutePath />
+                                                        </CandidateWithAxios>
+                                                      </WithAxios>
+                                                    </ScrollContext>
+                                                  </BrowserRouter>
+                                                </BonusProvider>
+                                              </ProbationProvider>
                                             </SeparationProvider>
                                           </EmploeeSeparationProvider>
                                         </DocsVerificationProvider>

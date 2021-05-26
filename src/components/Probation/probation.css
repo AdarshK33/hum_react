@@ -1,0 +1,57 @@
+.probation_dashboard {
+  background: white;
+  font-weight: bold;
+  color: white;
+  line-height: 3rem;
+  font-weight: bold;
+  text-align: right;
+}
+.FirstButtons {
+  width: 125px;
+  height: 58px;
+  background-color: red !important;
+  color: white;
+  border: 1px solid red !important;
+  border-radius: 3px !important;
+  /* margin-left: 40px; */
+}
+.SecondButtons {
+  width: 125px;
+  height: 58px;
+  background-color: orange !important;
+  color: white;
+  border: 1px solid orange !important;
+  border-radius: 3px !important;
+  /* margin-left: 40px; */
+}
+.ThirdButtons {
+  width: 125px;
+  height: 58px;
+  background-color: yellowgreen !important;
+  color: white;
+  border: 1px solid yellowgreen !important;
+  border-radius: 3px !important;
+  /* margin-left: 40px; */
+}
+.FourthButtons {
+  width: 125px;
+  height: 58px;
+  background-color: green !important;
+  color: white;
+  border: 1px solid green !important;
+  border-radius: 3px !important;
+  /* margin-left: 40px; */
+}
+.clickedButton {
+  background: rgb(170, 170, 170) !important;
+  border-color: rgb(170, 170, 170) !important;
+  width: 125px;
+  height: 58px;
+  color: white;
+  border-radius: 0 !important;
+  /* margin-left: 40px; */
+}
+.lineStyle {
+  margin-top: 0rem;
+  margin-bottom: 0rem;
+}
