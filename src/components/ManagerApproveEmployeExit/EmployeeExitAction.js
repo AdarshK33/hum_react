@@ -446,6 +446,7 @@ const EmployeeExitAction = () => {
           </Modal.Header>{" "}
           <Modal.Body className="mx-auto">
             <label className="itemResult">State remarks:</label>
+            <p>Please state the reason why this employee cannot be re-hired:</p>
             <textarea
               className="remarkText rounded"
               name="remarks"
