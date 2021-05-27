@@ -293,7 +293,7 @@ const RosterDashboard = () => {
                 </Row>
                 <Row>
                     <Col sm={12}>
-                        <Card className='big-card p-30'>
+                        <Card className='big-card p-30 main-card'>
                             <h2 className="roster-center">{adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? (adminRosterCalculateUtilisationList[3].utilisationType + ' Utilisation') : 'Overall Utilisation'}</h2>
                             {/* {console.log(adminRosterCalculateUtilisationList, 'adminRosterCalculateUtilisationList')} */}
                             { options4.data.utilisedValue > 0 || options4.data.unUtilisedValue > 0 ? <Chart

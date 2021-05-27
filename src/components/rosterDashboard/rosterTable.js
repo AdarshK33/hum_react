@@ -141,7 +141,7 @@ const RosterTable = (storeID) => {
             <Container>
                 {/* {console.log(storeID, 'storeID')} */}
                 <Row>
-                    <Col style={{paddingTop: '10px'}}>
+                    <Col style={{paddingTop: '10px', marginRight: '100px', flexGrow: 'unset'}}>
                         <Link onClick={selectDaily} className={"roster-link " + (dailyActive ? 'active-link' : '') }>Daily</Link>
                         <Link onClick={selectNormal} className={"roster-link " + (normalActive ? 'active-link' : '') }>Normal</Link>
                         <Link onClick={selectWeek} className={"roster-link " + (weekActive ? 'active-link' : '') }>Weekly</Link>
