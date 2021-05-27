@@ -152,7 +152,7 @@
 .right {
   display: flex;
   padding-right: 0px !important;
-  justify-content: flex-end;
+  justify-content: flex-start;
 }
 
 .game-cell {
@@ -161,4 +161,12 @@
 
 .roster-center {
   text-align: center;
+}
+
+.small-card {
+  height: 210px;
+}
+
+.main-card {
+  height: 400px;
 }

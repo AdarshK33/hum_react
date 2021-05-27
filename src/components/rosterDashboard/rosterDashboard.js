@@ -293,10 +293,10 @@ const RosterDashboard = () => {
                 </Row>
                 <Row>
                     <Col sm={12}>
-                        <Card className='big-card p-30'>
+                        <Card className='big-card p-30 main-card'>
                             <h2 className="roster-center">{adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? (adminRosterCalculateUtilisationList[3].utilisationType + ' Utilisation') : 'Overall Utilisation'}</h2>
                             {/* {console.log(adminRosterCalculateUtilisationList, 'adminRosterCalculateUtilisationList')} */}
-                            <Chart
+                            { options4.data.utilisedValue > 0 || options4.data.unUtilisedValue > 0 ? <Chart
                                 chartType="PieChart"
                                 data={
                                     [
@@ -310,15 +310,16 @@ const RosterDashboard = () => {
                                 width={"100%"}
                                 height={"300px"}
                                 legend_toggle
-                            />
+                            /> : <h3 style={{margin: 'auto'}}>No data available</h3> 
+                            }
                         </Card>
                     </Col>
                 </Row>
                 <Row>    
                     <Col sm={4} px={0}>
-                        <Card className='small-card1 p-10'>
+                        <Card className='small-card1 p-10 small-card'>
                             <h4 className="roster-center">{adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? (adminRosterCalculateUtilisationList[0].utilisationType + ' Utilisation') : 'Permanent Utilisation'}</h4>
-                            <Chart
+                            { options1.data.utilisedValue > 0 || options1.data.unUtilisedValue > 0 ? <Chart
                                 chartType="PieChart"
                                 data={
                                     [
@@ -332,13 +333,14 @@ const RosterDashboard = () => {
                                 width={"100%"}
                                 height={"150px"}
                                 legend_toggle
-                            />
+                            /> : <h5 style={{margin: 'auto'}}>No data available</h5>
+                            }
                         </Card>
                     </Col>
                     <Col sm={4} px={0}>
-                        <Card className='small-card2 p-10'>
+                        <Card className='small-card2 p-10 small-card'>
                             <h4 className="roster-center">{adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? (adminRosterCalculateUtilisationList[1].utilisationType + ' Utilisation') : 'Part Time Utilisation'}</h4>
-                            <Chart
+                            { options2.data.utilisedValue > 0 || options2.data.unUtilisedValue > 0 ? <Chart
                                 chartType="PieChart"
                                 data={
                                     [
@@ -352,13 +354,14 @@ const RosterDashboard = () => {
                                 width={"100%"}
                                 height={"150px"}
                                 legend_toggle
-                            />
+                            /> : <h5 style={{margin: 'auto'}}>No data available</h5>
+                            }
                         </Card>
                     </Col>
                     <Col sm={4} px={0}>
-                        <Card className='small-card3 p-10'>
+                        <Card className='small-card3 p-10 small-card'>
                             <h4 className="roster-center">{adminRosterCalculateUtilisationList && adminRosterCalculateUtilisationList.length ? (adminRosterCalculateUtilisationList[2].utilisationType + ' Utilisation') : 'Internship Utilisation'}</h4>
-                            <Chart
+                            { options3.data.utilisedValue > 0 || options3.data.unUtilisedValue > 0 ? <Chart
                                 chartType="PieChart"
                                 data={
                                     [
@@ -372,7 +375,8 @@ const RosterDashboard = () => {
                                 width={"100%"}
                                 height={"150px"}
                                 legend_toggle
-                            />
+                            /> : <h5 style={{margin: 'auto'}}>No data available</h5>
+                            }
                         </Card>
                     </Col>
                 </Row>
