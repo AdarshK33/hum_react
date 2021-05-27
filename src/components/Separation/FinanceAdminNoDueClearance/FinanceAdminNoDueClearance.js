@@ -98,8 +98,26 @@ const handlePageChange = (pageNumber) => {
     }
   }
   const handleSave = () => {
-    console.log(checkedData,"sub,mit")
-    //  UpdateAdminFinanceClearanceList(checkedData,searchValue, pageCount,costCenter)
+//     let preValue = checkedData
+//     function removeDuplicates(originalArray, prop) {
+//       var newArray = [];
+//       var lookupObject  = {};
+ 
+//       for(var i in originalArray) {
+//          lookupObject[originalArray[i][prop]] = originalArray[i];
+//       }
+ 
+//       for(i in lookupObject) {
+//           newArray.push(lookupObject[i]);
+//       }
+//        return newArray;
+//   }
+ 
+//  var uniqueArray = removeDuplicates(preValue, "employeeId");
+ console.log(checkedData,"submit")
+
+      // setCheckedData(uniqueArray)             
+  // UpdateAdminFinanceClearanceList(checkedData,searchValue, pageCount,costCenter)
   };
  const handleValidCheck = (e)=>{
    console.log(e,"handleValidCheck")
@@ -162,7 +180,6 @@ const renderStatusOptions = (value) => {
 
   };
   const renderStatusOptionsTwo = (value) => {
-    console.log(value)
     return (
       <div>
       <select name="deactivateProfile" className="selectpicker" disabled={true}
@@ -187,56 +204,89 @@ const renderStatusOptions = (value) => {
   };
   const handleUploadSettlement = () => {
     if (fileUpload !== undefined && fileUpload !== null) {
-      console.log(fileUpload,"in upload")
       FinanceClearanceUploadSettlement(fileUpload ,searchValue, pageCount,costCenter)
     } else {
       toast.error("Please select a file to upload")
     }
   }
   const onSelectionChanged=(e)=>{
-    console.log(e)
-    let preValue = checkedData
     let formData = e.data
+    console.log(e)
     if(checkedValue == false){
       setCheckedValue(true)
     }else if(checkedValue == true){
       setCheckedValue(false)
     }
-      console.log(checkedValue,"formdata2")
-        if(formData['disabled'] == false){
-          if(formData['deactivateProfile'] !== null && formData['fullAndFinalCompleteStatus'] !== null && formData['fullAndFinalProcessDate'] !== null && formData['fullAndFinalAmount'] !== null ){
-            formData['disabled'] = true
-            preValue.push(formData)
-            setCheckedData(preValue)
-          }else if(checkedValue == false){
-            toast.error("Details for the selected record is not present")
-          }
-      //     preValue.map((item,index)=>{
-      //       if(item['employeeId'] == formData.employeeId){
-      //         item['disabled'] = false
-      //         preValue.splice(index,1)
-      //         setCheckedData(preValue)
-      //       }else{
-      //         formData['disabled'] = true
-      //         preValue.push(formData)
-      //         setCheckedData(preValue)
-      //         console.log(checkedData,"checkbox")
-      //       }
-      // })
-  
-        }else if(formData['disabled'] == true){
-          if(formData['deactivateProfile'] !== null && formData['fullAndFinalCompleteStatus'] !== null && formData['fullAndFinalProcessDate'] !== null && formData['fullAndFinalAmount'] !== null ){
-          preValue.map((item,index)=>{
-            if(item.employeeId == formData.employeeId){
-              item['disabled'] = false
-              preValue.splice(index,1)
-              setCheckedData(preValue)
-            }
+        if(formData['disabled'] == true ){
+          let preValue = checkedData
+          let keyValues = []
+          preValue.map((item)=>{
+            keyValues.push(item.employeeId)
           })
-        }
-      }
+          console.log(keyValues,"keyValues")
+          if(formData['deactivateProfile'] !== null && 
+          formData['fullAndFinalCompleteStatus'] !== null && 
+          formData['fullAndFinalProcessDate'] !== null &&
+           formData['fullAndFinalAmount'] !== null ){
+             if(!keyValues.includes(formData.employeeId)){
+               console.log(formData,"push")
+              preValue.push(formData)
+              setCheckedData(preValue)    
+             }else if(keyValues.includes(formData.employeeId)){
+              console.log(formData,"splice")
+
+                preValue.map((item,index)=>{
+                              if(item['employeeId'] == formData.employeeId){
+                    
+                                preValue.splice(index,1)
+                                setCheckedData(preValue)
+                              }
+                  })
+                }
+               
+              }}else{
+            // toast.error("Details for the selected record is not present")
+
+              }
+              // gridApi.forEachNode(function (node) {
+              //   console.log(node.data,node,"node")
+              //   node.setSelected(true);
+              // });
+    //  if(formData['disabled'] == true){
+    //     preValue.push(formData)
+    //     setCheckedData(preValue)
+    //     if(formData['deactivateProfile'] !== null && formData['fullAndFinalCompleteStatus'] !== null && formData['fullAndFinalProcessDate'] !== null && formData['fullAndFinalAmount'] !== null ){
+          
+    //         function removeDuplicates(data, key) {
+  
+    //           return setCheckedData([
+    //             ...new Map(data.map(item => [key(item), item])).values()
+    //           ])
+            
+    //         };
+            
+    //         removeDuplicates(preValue, item => item.employeeId)
+    //         console.log(removeDuplicates(preValue, item => item.employeeId)
+    //         ,checkedData)
+    //       }else if(checkedValue == false){
+    //         toast.error("Details for the selected record is not present")
+    //       }
+    //     }
+
+
+        //     preValue.map((item,index)=>{
+        //             if(item['employeeId'] == formData.employeeId){
+        //               item['disabled'] = false
+        //               preValue.splice(index,1)
+        //               setCheckedData(preValue)
+        //             }else{
+                     
+        //               console.log(checkedData,"checkbox")
+        //             }
+        // })
+  
+
  }
- console.log(checkedData,financeAdminNoDueClearanceList,"checkedData")
 
  const handleExport = (e) =>{
     const value = e.target.value
@@ -335,7 +385,7 @@ const renderStatusOptions = (value) => {
  }}>
           
           <AgGridReact 
-            rowData={financeAdminNoDueClearanceList}
+            rowData={currentRecords}
           
             defaultColDef={{
               width: 200,
@@ -360,8 +410,7 @@ const renderStatusOptions = (value) => {
               return rowNode.data ? ( rowNode.data.deactivateProfile !== null && 
                 rowNode.data.fullAndFinalCompleteStatus !== null
                   && rowNode.data.fullAndFinalProcessDate !== null 
-                   &&rowNode.data.fullAndFinalAmount !== null 
-                   && rowNode.data.disabled == false) : false;
+                   &&rowNode.data.fullAndFinalAmount !== null ) : false;
             }}
             // pagination={true}
             // paginationPageSize={10}
@@ -424,14 +473,14 @@ const renderStatusOptions = (value) => {
                   </AgGridReact>
                 </div>
 
-                {financeAdminNoDueClearanceList === null ? (
+                {currentRecords === null ? (
                   <p style={{ textAlign: "center" }}>No Record Found</p>
                 ) : null}
               </div>
                 
               </div>
               <div>
-       {financeAdminNoDueClearanceList == null && financeAdminNoDueClearanceList == undefined ? (
+       {currentRecords == null && currentRecords == undefined ? (
                   <div
                     className="loader-box loader"
                     style={{ width: "100% !important" }}

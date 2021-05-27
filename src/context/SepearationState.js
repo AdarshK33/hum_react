@@ -71,7 +71,7 @@ export const SeparationProvider = (props) => {
   const viewFinanceAdminClearanceList = (key, page, costCenter) => {
     setLoader(true);
     client
-      .get(
+      .post(
         "/api/v1/separation/full-and-final/view?key=" +
           key +
           "&page=" +
@@ -227,16 +227,32 @@ export const SeparationProvider = (props) => {
       "FinanceClearanceUploadSettlement separation context"
     );
     return client
-      .post("/api/v1/separation/full-and-final/upload", formData)
+      .post( "/api/v1/separation/full-and-final/view?key=" +
+      key +
+      "&page=" +
+      page +
+      "&size=" +
+      20 +
+      "&storeId=" +
+      costCenter, formData)
       .then((response) => {
         console.log(response, "upload");
-
+        state.financeAdminNoDueClearanceList = response.data.data.data;
+        state.data = response.data.data;
+        state.total = state.data.total;
+        console.log(
+          "=====GET financeAdminNoDueClearanceList API response=====",
+          response.data.data
+        );
         toast.info(response.data.message);
-        viewFinanceAdminClearanceList(key, page, costCenter);
+        // viewFinanceAdminClearanceList(key, page, costCenter);
 
         return dispatch({
-          type: "FINANCECLEARANCE_UPLOAD_SETTLEMENT",
-          payload: state.financeClearanceUpload,
+          type: "FETCH_FINANCE_ADMIN_NODUECLEARANCE_LIST",
+          payload: state.financeAdminNoDueClearanceList,
+          loader: loader,
+          data: state.data,
+          total: state.total,
         });
       })
       .catch((error) => {
