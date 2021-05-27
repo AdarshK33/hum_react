@@ -21,7 +21,9 @@ const EmployeeExitList = () => {
     loader,
     total,
     changeEmployeeId,
+    makeEmployeeDataNull,
   } = useContext(EmployeeSeparationContext);
+  const { makeSearchEmp1DataNull } = useContext(OfferContext);
 
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
@@ -31,6 +33,10 @@ const EmployeeExitList = () => {
     EmployeeSeparationListView("all", pageCount);
   }, []);
 
+  useEffect(() => {
+    makeEmployeeDataNull();
+    makeSearchEmp1DataNull();
+  }, []);
   console.log("---->", EmployeeSeparationList);
 
   // useEffect(() => {

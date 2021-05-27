@@ -155,3 +155,7 @@ thead th {
 .selectInputWrapper {
   width: 50% !important;
 }
+.selectInputWrapperStatus {
+	float: right;
+  width: 60% !important;
+}
