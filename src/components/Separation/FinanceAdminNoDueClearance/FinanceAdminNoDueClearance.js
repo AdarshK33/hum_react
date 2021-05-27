@@ -3,10 +3,13 @@ import Breadcrumb from "../../common/breadcrumb";
 import { SeparationContext } from "../../../context/SepearationState";
 import {Button,Container, Modal, Row, Col, Form, Table} from "react-bootstrap";
 import Pagination from 'react-js-pagination';
+import { Link } from "react-router-dom";
 import Select from 'react-select'
 import { RotateCw, Eye, Search } from "react-feather";
 import { saveAs ,FileSaver} from 'file-saver';
 import { AdminContext } from '../../../context/AdminState'
+import { EmployeeSeparationContext } from "../../../context/EmployeeSeparationState";
+
 import "../nodueclearance.css";
 import { AgGridColumn, AgGridReact } from "ag-grid-react";
 import { ToastContainer, toast } from "react-toastify";
@@ -20,6 +23,7 @@ import {
 import ReactExport from 'react-data-export'
 
 const FinanaceAdminNoDueClearance = () => {
+  const { ViewEmployeeDataById,changeEmployeeId,ModeOfSeparationView} = useContext(EmployeeSeparationContext);
   const { total,loader,viewFinanceAdminClearanceList,
     financeAdminNoDueClearanceList,
     FinanceClearanceUploadSettlement,financeClearanceUpload,FinanceAdminClearanceExport,
@@ -36,7 +40,7 @@ const FinanaceAdminNoDueClearance = () => {
   const [searchValue, setSearchValue] = useState("all");
 /*-----------------Pagination------------------*/
 const [currentPage, setCurrentPage] = useState(1);
-const recordPerPage = 10;
+const recordPerPage = 20;
 const totalRecords = total
 // const totalRecords = financeAdminNoDueClearanceList !== null && financeAdminNoDueClearanceList !== undefined && financeAdminNoDueClearanceList.length;
 const pageRange = 10;
@@ -60,7 +64,12 @@ useEffect(() => {
 useEffect(() => {
   CostCenter();
 }, []);
+const fetchEmployeeDetails = (employeeId) => {
+  changeEmployeeId(employeeId);
+  ViewEmployeeDataById(employeeId);
+   ModeOfSeparationView();
 
+};
 const handlePageChange = (pageNumber) => {
   setPageCount(pageNumber - 1);
   console.log("page change",pageNumber,pageCount)
@@ -84,19 +93,44 @@ const handlePageChange = (pageNumber) => {
     if (searchValue !== "" && searchValue !== "all") {
       viewFinanceAdminClearanceList(searchValue,pageCount,costCenter);
     }else{
-      viewFinanceAdminClearanceList("all",pageCount,"all");
+      viewFinanceAdminClearanceList(searchValue,pageCount,"all");
 
     }
   }
   const handleSave = () => {
-     UpdateAdminFinanceClearanceList(checkedData,searchValue, pageCount,costCenter)
-  };
+//     let preValue = checkedData
+//     function removeDuplicates(originalArray, prop) {
+//       var newArray = [];
+//       var lookupObject  = {};
  
+//       for(var i in originalArray) {
+//          lookupObject[originalArray[i][prop]] = originalArray[i];
+//       }
+ 
+//       for(i in lookupObject) {
+//           newArray.push(lookupObject[i]);
+//       }
+//        return newArray;
+//   }
+ 
+//  var uniqueArray = removeDuplicates(preValue, "employeeId");
+ console.log(checkedData,"submit")
+
+      // setCheckedData(uniqueArray)             
+  // UpdateAdminFinanceClearanceList(checkedData,searchValue, pageCount,costCenter)
+  };
+ const handleValidCheck = (e)=>{
+   console.log(e,"handleValidCheck")
+   return true
+ }
   const renderButtonTwo = (e) => {
-    console.log(e,"render")
     var buttonValue = e.data.disabled
     return (
-      <RotateCw/>
+      <Link to={"/history-view/" + e.data.employeeId}>
+      <RotateCw   onClick={() => {
+                                      fetchEmployeeDetails(e.data.employeeId);
+                                    }}/>
+      </Link>
     );
   };
   const changeHandler = (event) => {
@@ -118,7 +152,7 @@ const handleCostCenter = (options) => {
   if (costCenter !== "" && costCenter !== "all") {
     return viewFinanceAdminClearanceList(searchValue,pageCount,data2);
   }else{
-    return viewFinanceAdminClearanceList("all",pageCount,"all");
+    return viewFinanceAdminClearanceList("all",pageCount,data2);
   }
 } 
 const renderStatusOptions = (value) => {
@@ -146,7 +180,6 @@ const renderStatusOptions = (value) => {
 
   };
   const renderStatusOptionsTwo = (value) => {
-    console.log(value)
     return (
       <div>
       <select name="deactivateProfile" className="selectpicker" disabled={true}
@@ -177,50 +210,84 @@ const renderStatusOptions = (value) => {
     }
   }
   const onSelectionChanged=(e)=>{
-    console.log(e)
-    let preValue = checkedData
     let formData = e.data
+    console.log(e)
     if(checkedValue == false){
       setCheckedValue(true)
     }else if(checkedValue == true){
       setCheckedValue(false)
     }
-      console.log(checkedValue,"formdata2")
-        if(formData['disabled'] == false){
-          if(formData['deactivateProfile'] !== null && formData['fullAndFinalCompleteStatus'] !== null && formData['fullAndFinalProcessDate'] !== null && formData['fullAndFinalAmount'] !== null ){
-            formData['disabled'] = true
-            preValue.push(formData)
-            setCheckedData(preValue)
-          }else if(checkedValue == false){
-            toast.error("Details for the selected record is not present")
-          }
- console.log(checkedValue)
-      //     preValue.map((item,index)=>{
-      //       if(item['employeeId'] == formData.employeeId){
-      //         item['disabled'] = false
-      //         preValue.splice(index,1)
-      //         setCheckedData(preValue)
-      //       }else{
-      //         formData['disabled'] = true
-      //         preValue.push(formData)
-      //         setCheckedData(preValue)
-      //         console.log(checkedData,"checkbox")
-      //       }
-      // })
-  
-        }else if(formData['disabled'] == true){
-          if(formData['deactivateProfile'] !== null && formData['fullAndFinalCompleteStatus'] !== null && formData['fullAndFinalProcessDate'] !== null && formData['fullAndFinalAmount'] !== null ){
-          preValue.map((item,index)=>{
-            if(item.employeeId == formData.employeeId){
-              item['disabled'] = false
-              preValue.splice(index,1)
-              setCheckedData(preValue)
-            }
+        if(formData['disabled'] == true ){
+          let preValue = checkedData
+          let keyValues = []
+          preValue.map((item)=>{
+            keyValues.push(item.employeeId)
           })
-        }
-      }
-    console.log(checkedData,"checkedData")
+          console.log(keyValues,"keyValues")
+          if(formData['deactivateProfile'] !== null && 
+          formData['fullAndFinalCompleteStatus'] !== null && 
+          formData['fullAndFinalProcessDate'] !== null &&
+           formData['fullAndFinalAmount'] !== null ){
+             if(!keyValues.includes(formData.employeeId)){
+               console.log(formData,"push")
+              preValue.push(formData)
+              setCheckedData(preValue)    
+             }else if(keyValues.includes(formData.employeeId)){
+              console.log(formData,"splice")
+
+                preValue.map((item,index)=>{
+                              if(item['employeeId'] == formData.employeeId){
+                    
+                                preValue.splice(index,1)
+                                setCheckedData(preValue)
+                              }
+                  })
+                }
+               
+              }}else{
+            // toast.error("Details for the selected record is not present")
+
+              }
+              // gridApi.forEachNode(function (node) {
+              //   console.log(node.data,node,"node")
+              //   node.setSelected(true);
+              // });
+    //  if(formData['disabled'] == true){
+    //     preValue.push(formData)
+    //     setCheckedData(preValue)
+    //     if(formData['deactivateProfile'] !== null && formData['fullAndFinalCompleteStatus'] !== null && formData['fullAndFinalProcessDate'] !== null && formData['fullAndFinalAmount'] !== null ){
+          
+    //         function removeDuplicates(data, key) {
+  
+    //           return setCheckedData([
+    //             ...new Map(data.map(item => [key(item), item])).values()
+    //           ])
+            
+    //         };
+            
+    //         removeDuplicates(preValue, item => item.employeeId)
+    //         console.log(removeDuplicates(preValue, item => item.employeeId)
+    //         ,checkedData)
+    //       }else if(checkedValue == false){
+    //         toast.error("Details for the selected record is not present")
+    //       }
+    //     }
+
+
+        //     preValue.map((item,index)=>{
+        //             if(item['employeeId'] == formData.employeeId){
+        //               item['disabled'] = false
+        //               preValue.splice(index,1)
+        //               setCheckedData(preValue)
+        //             }else{
+                     
+        //               console.log(checkedData,"checkbox")
+        //             }
+        // })
+  
+
  }
+
  const handleExport = (e) =>{
     const value = e.target.value
     FinanceAdminClearanceExport(value)
@@ -228,6 +295,7 @@ const renderStatusOptions = (value) => {
 
   }
   const handleChecked = function (params) {
+    console.log(params.columnApi.getRowGroupColumns().length === 0,"handleChecked")
       return params.columnApi.getRowGroupColumns().length === 0;
   }
   const statusRender = (e,value) => {
@@ -317,7 +385,7 @@ const renderStatusOptions = (value) => {
  }}>
           
           <AgGridReact 
-            rowData={financeAdminNoDueClearanceList}
+            rowData={currentRecords}
           
             defaultColDef={{
               width: 200,
@@ -338,6 +406,12 @@ const renderStatusOptions = (value) => {
               cellRenderer: 'agGroupCellRenderer',
               cellRendererParams: { checkbox: true},
             }}
+            isRowSelectable={function (rowNode) {
+              return rowNode.data ? ( rowNode.data.deactivateProfile !== null && 
+                rowNode.data.fullAndFinalCompleteStatus !== null
+                  && rowNode.data.fullAndFinalProcessDate !== null 
+                   &&rowNode.data.fullAndFinalAmount !== null ) : false;
+            }}
             // pagination={true}
             // paginationPageSize={10}
             debug={true}
@@ -355,7 +429,7 @@ const renderStatusOptions = (value) => {
           <AgGridColumn width={80} type="checkbox" className="columnColor"  headerName="S No" pinned="left" lockPinned="true" 
           valueGetter={`node.rowIndex+1 + ${indexOfFirstRecord}`}></AgGridColumn>
             <AgGridColumn className="columnColor"  headerCheckboxSelection={handleChecked}
-              headerCheckboxSelectionFilteredOnly={true}
+              headerCheckboxSelectionFilteredOnly={handleValidCheck}
               checkboxSelection={handleChecked} 
               headerName="Employee Id" field="employeeId"></AgGridColumn>
             <AgGridColumn className="columnColor"  headerName="Employee Name" field="employeeName"></AgGridColumn>
@@ -399,14 +473,14 @@ const renderStatusOptions = (value) => {
                   </AgGridReact>
                 </div>
 
-                {financeAdminNoDueClearanceList === null ? (
+                {currentRecords === null ? (
                   <p style={{ textAlign: "center" }}>No Record Found</p>
                 ) : null}
               </div>
                 
               </div>
               <div>
-       {financeAdminNoDueClearanceList == null && financeAdminNoDueClearanceList == undefined ? (
+       {currentRecords == null && currentRecords == undefined ? (
                   <div
                     className="loader-box loader"
                     style={{ width: "100% !important" }}
