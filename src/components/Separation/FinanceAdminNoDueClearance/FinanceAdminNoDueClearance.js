@@ -117,7 +117,7 @@ const handlePageChange = (pageNumber) => {
  console.log(checkedData,"submit")
 
       // setCheckedData(uniqueArray)             
-  // UpdateAdminFinanceClearanceList(checkedData,searchValue, pageCount,costCenter)
+   UpdateAdminFinanceClearanceList(checkedData,searchValue, pageCount,costCenter)
   };
  const handleValidCheck = (e)=>{
    console.log(e,"handleValidCheck")
