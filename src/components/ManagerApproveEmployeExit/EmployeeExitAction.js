@@ -191,6 +191,7 @@ const EmployeeExitAction = () => {
   const handleRehireChangeNo = (e) => {
     setRehireYes(!e.target.checked);
     setRehireNo(e.target.checked);
+    state.noticePeriodRcryDays = "";
   };
   const handleClose = () => {
     setSuccessModal(false);
@@ -368,9 +369,9 @@ const EmployeeExitAction = () => {
         {submitLetter ? (
           <Modal.Body className="mx-auto">
             <label>
-              The details have been saved successfully. The relieving letter
+              The details have been saved successfully.
               <br />
-              will be sent to the employee on{" "}
+              The relieving letter will be sent to the employee on{" "}
               {moment(relivingLetterData.lastWorkingDate, "YYYY-MM-DD")
                 .add(1, "days")
                 .format("YYYY-MM-DD")}
@@ -445,8 +446,11 @@ const EmployeeExitAction = () => {
             {/* <Modal.Title>State remarks for disapproval</Modal.Title> */}
           </Modal.Header>{" "}
           <Modal.Body className="mx-auto">
-            <label className="itemResult">State remarks:</label>
-            <p>Please state the reason why this employee cannot be re-hired:</p>
+            {/* <label className="itemResult">State remarks:</label> */}
+            <label className="itemResult">
+              Please state the reason why this employee cannot be re-hired :
+            </label>
+            {/* <p>Please state the reason why this employee cannot be re-hired:</p> */}
             <textarea
               className="remarkText rounded"
               name="remarks"
@@ -471,7 +475,7 @@ const EmployeeExitAction = () => {
             {/* <Modal.Title>State remarks for disapproval</Modal.Title> */}
           </Modal.Header>{" "}
           <Modal.Body className="mx-auto">
-            <label className="itemResult">
+            <label>
               Exit details saved successfully, the employee has been notified
             </label>
 
@@ -931,7 +935,7 @@ const EmployeeExitAction = () => {
                           className={"LettersButtons"}
                           onClick={relivingLetterClick}
                         >
-                          Generate Reliving Letter
+                          Generate Relieving Letter
                         </button>
                       ) : (
                         ""
@@ -941,7 +945,7 @@ const EmployeeExitAction = () => {
                           className={"LettersButtons"}
                           onClick={previewRelivingLetter}
                         >
-                          Preview Reliving Letter
+                          Preview Relieving Letter
                         </button>
                       ) : (
                         ""
