@@ -217,7 +217,6 @@ const RoutePath = () => {
           />
           <Route
             path={`${process.env.PUBLIC_URL}/candidate-verification`}
-            // component={EmployeeExitList}
             component={CandidateVerification}
           />
           <Route
@@ -255,7 +254,11 @@ const RoutePath = () => {
 
           <Route
             path={`${process.env.PUBLIC_URL}/employee-separation-listing`}
-            // component={EmployeeExitList}
+            component={EmployeeExitList}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/probation`}
             component={ProbationList}
           />
           <Route

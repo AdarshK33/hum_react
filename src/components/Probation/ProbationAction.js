@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Row, Col, Form, Button, Container, Modal } from "react-bootstrap";
 import Breadcrumb from "../common/breadcrumb";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
+import { ProbationContext } from "../../context/ProbationState";
 import moment from "moment";
 import DatePicker from "react-datepicker";
 import { setGlobalCssModule } from "reactstrap/es/utils";
@@ -28,13 +29,22 @@ const ProbationAction = () => {
   const [previewLetter, setPreviewLetter] = useState(false);
   const [letterSent, setLetterSent] = useState(false);
   const [showPreview, setPreview] = useState(false);
+
+  const [probationStatus, setProbationStatus] = useState("Confirmed");
+  const [probationMonths, setProbationMonths] = useState("3 Months");
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
+  const [dateOfConfirmation, setDateOfConfirmation] = useState("");
 
   const [state, setState] = useState({
     empName: "",
     empId: "",
-    empContractType: "",
     empCostCenterName: "",
+    empDateOfJoining: "",
+    probationStatus: "",
+    probationMonths: "",
+    reason: "",
+
+    empContractType: "",
     empLocation: "",
     empPosition: "",
     mngrName: "",
@@ -52,146 +62,62 @@ const ProbationAction = () => {
     remarks: "",
   });
   const {
-    EmployeeSeparationListView,
-    EmployeeSeparationList,
-    ViewEmployeeDataById,
     employeeData,
-    ModeOfSeparationData,
     UpdateEmplyoeeExist,
-    employeeId,
-    loader,
-    updateResponse,
     fetchRelievingLetterData,
     relivingLetterData,
   } = useContext(EmployeeSeparationContext);
-  console.log("employeeId", employeeId);
+  const { ViewProbationDataById, probationData, empId, loader } =
+    useContext(ProbationContext);
+  console.log("employeeId", empId);
   useEffect(() => {
-    ViewEmployeeDataById(employeeId);
-  }, [employeeId]);
-  console.log("employeeData", employeeData);
+    ViewProbationDataById(empId);
+  }, [empId]);
+  console.log("probationData->", probationData);
   useEffect(() => {
     if (
-      employeeData &&
-      employeeData &&
-      employeeData !== null &&
-      employeeData !== undefined &&
-      Object.keys(employeeData).length !== 0
+      probationData &&
+      probationData &&
+      probationData !== null &&
+      probationData !== undefined &&
+      Object.keys(probationData).length !== 0
     ) {
-      state.empName = employeeData.employeeName;
-      state.empId = employeeData.employeeId;
-      state.empContractType = employeeData.contractType;
-      state.empCostCenterName = employeeData.costCentreName;
-      state.empLocation = employeeData.location;
-      state.empPosition = employeeData.position;
-      state.mngrName = employeeData.managerName;
-      state.mngrId = employeeData.managerId;
-      state.mngrCostCenterName = employeeData.managerCostCentre;
-      state.mngrPosition = employeeData.managerPosition;
-      // state.modeOfSeparationId = employeeData.modeOfSeparationId;
-      // state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
-      state.dateOfResignation = employeeData.dateOfResignation;
-      state.noticePeriod = employeeData.noticePeriod;
-      state.lastWorkingDate = employeeData.lastWorkingDate;
-      state.emailId = employeeData.emailId;
-      state.comments = employeeData.employeeComment;
-      state.noticePeriodRcryDays =
-        employeeData.noticePeriodRecoveryDays !== null &&
-        employeeData.noticePeriodRecoveryDays !== undefined
-          ? employeeData.noticePeriodRecoveryDays
+      state.empName = probationData.empName;
+      state.empId = probationData.empId;
+      state.empCostCenterName = probationData.costCentre;
+      state.empDateOfJoining = probationData.dateOfJoining;
+      state.probationStatus = probationData.status;
+      state.probationMonths = probationData.probationPeriod;
+      state.reason =
+        probationData.reason !== null && probationData.reason !== undefined
+          ? probationData.reason
           : "";
 
       if (
-        employeeData.noticePeriodRecovery !== null &&
-        employeeData.noticePeriodRecovery !== undefined
+        probationData.probationConfirmationDate !== null &&
+        probationData.probationConfirmationDate !== undefined
       ) {
-        if (employeeData.noticePeriodRecovery === 2) {
-          setRcryNo(true);
-          setRcryYes(false);
-        } else if (employeeData.noticePeriodRecovery === 1) {
-          setRcryNo(false);
-          setRcryYes(true);
-        } else if (employeeData.noticePeriodRecovery === 0) {
-          setRcryNo(false);
-          setRcryYes(false);
-        }
+        setDateOfConfirmation(
+          new Date(probationData.probationConfirmationDate)
+        );
       } else {
-        setRcryNo(false);
-        setRcryYes(false);
+        setDateOfConfirmation("");
       }
-      if (employeeData.reHire !== null && employeeData.reHire !== undefined) {
-        if (employeeData.reHire === 2) {
-          setRehireNo(true);
-          setRehireYes(false);
-        } else if (employeeData.reHire === 1) {
-          setRehireNo(false);
-          setRehireYes(true);
-        } else if (employeeData.reHire === 0) {
-          setRehireNo(false);
-          setRehireYes(false);
-        }
-      } else {
-        setRehireNo(false);
-        setRehireYes(false);
-      }
-    }
-  }, [employeeData, ModeOfSeparationData, employeeId]);
-  useEffect(() => {
-    if (
-      employeeData &&
-      employeeData !== null &&
-      employeeData !== undefined &&
-      Object.keys(employeeData).length !== 0 &&
-      ModeOfSeparationData &&
-      ModeOfSeparationData !== null &&
-      ModeOfSeparationData !== undefined &&
-      Object.keys(ModeOfSeparationData).length !== 0
-    ) {
-      if (employeeData.modeOfSeparationId === 1) {
-        console.log(ModeOfSeparationData[0].modeOfSeparation);
-        console.log(ModeOfSeparationData[0].modeOfSeparation.modeOfSeparation);
-        console.log(ModeOfSeparationData[0].modeOfSeparationReasonList);
-      }
-      ModeOfSeparationData.map((item, i) => {
-        if (
-          employeeData.modeOfSeparationId ===
-          ModeOfSeparationData[i].modeOfSeparation.separationId
-        ) {
-          setModeOfSeparation(
-            ModeOfSeparationData[i].modeOfSeparation.modeOfSeparation
-          );
 
-          ModeOfSeparationData[i].modeOfSeparationReasonList.map((item1, j) => {
-            if (
-              employeeData.modeOfSeparationReasonId ===
-              ModeOfSeparationData[i].modeOfSeparationReasonList[j]
-                .separationReasonId
-            ) {
-              state.modeOfSeparationReasonId =
-                ModeOfSeparationData[i].modeOfSeparationReasonList[
-                  j
-                ].modeOfSeparationReason;
-            }
-          });
-        }
-      });
+      if (probationData.status === 0 || probationData.status === 1) {
+        setProbationStatus("Confirmed");
+      } else if (probationData.status === 2) {
+        setProbationStatus("Extended");
+      }
+      if (probationData.probationPeriod === 6) {
+        setProbationMonths("6 Months");
+      } else {
+        setProbationMonths("3 Months");
+      }
+      console.log("Inside use effect");
     }
-  }, [employeeData, ModeOfSeparationData, employeeId]);
-  const handleNoticePeriodRcryYes = (e) => {
-    setRcryYes(e.target.checked);
-    setRcryNo(!e.target.checked);
-  };
-  const handleNoticePeriodRcryNo = (e) => {
-    setRcryYes(!e.target.checked);
-    setRcryNo(e.target.checked);
-  };
-  const handleRehireChangeYes = (e) => {
-    setRehireYes(e.target.checked);
-    setRehireNo(!e.target.checked);
-  };
-  const handleRehireChangeNo = (e) => {
-    setRehireYes(!e.target.checked);
-    setRehireNo(e.target.checked);
-  };
+  }, [probationData, empId]);
+
   const handleClose = () => {
     setSuccessModal(false);
   };
@@ -262,6 +188,14 @@ const ProbationAction = () => {
     });
     console.log(state);
   };
+  const dateOfBirthHandler = (date) => {
+    var AdjusteddateValue = new Date(
+      date.getTime() - date.getTimezoneOffset() * 60000
+    );
+    console.log("AdjusteddateValue");
+    setDateOfConfirmation(AdjusteddateValue);
+  };
+
   const validateCheckBoxes = (itemYes, itemNo, setError) => {
     if ((itemYes === true) | (itemNo === true)) {
       setError(false);
@@ -312,52 +246,61 @@ const ProbationAction = () => {
     e.preventDefault();
     const value = checkValidations();
     if (value === true) {
-      if (
-        (RehireNo === true && state.remarks === "") ||
-        state.remarks === null ||
-        state.remarks === undefined
-      ) {
-        setModal(true);
-      } else {
-        const InfoData = {
-          company: employeeData.company,
-          contractType: employeeData.contractType,
-          costCentreManagerEmailId: employeeData.costCentreManagerEmailId,
-          costCentreManagerName: employeeData.costCentreManagerName,
-          costCentreName: employeeData.costCentreName,
-          dateOfResignation: employeeData.dateOfResignation,
-          emailId: employeeData.emailId,
-          empName: employeeData.empName,
-          employeeComment: employeeData.employeeComment,
-          employeeId: employeeData.employeeId,
-          employeeName: employeeData.employeeName,
-          exitId: employeeData.exitId,
-          hoursWorked: employeeData.hoursWorked,
-          lastWorkingDate: employeeData.lastWorkingDate,
-          location: employeeData.location,
-          managerCostCentre: employeeData.managerCostCentre,
-          managerEmailId: employeeData.managerEmailId,
-          managerId: employeeData.managerId,
-          managerName: employeeData.managerName,
-          managerPosition: employeeData.managerPosition,
-          modeOfSeparationId: employeeData.modeOfSeparationId,
-          modeOfSeparationReasonId: employeeData.modeOfSeparationReasonId,
-          noticePeriodRecoveryDays: state.noticePeriodRcryDays,
-          noticePeriod: employeeData.noticePeriod,
-          noticePeriodRecovery: RcryYes ? 1 : RcryNo ? 2 : 0,
-          position: employeeData.position,
-          reHire: RehireYes ? 1 : RehireNo ? 2 : 0,
-          reason: employeeData.reason,
-          reasonForResignation: employeeData.reasonForResignation,
-          rehireRemark: state.remarks !== "" ? state.remarks : null,
-          status: 2,
-          withdraw: employeeData.withdraw,
-        };
-        UpdateEmplyoeeExist(InfoData);
-        setSuccessModal(true);
-        setPreview(true);
-        console.log("in else");
-      }
+      const InfoData = {
+        company: probationData.company,
+        costCentre: probationData.costCentre,
+        dateOfJoining: probationData.dateOfJoining,
+        dueDays: probationData.dueDays,
+        emailId: probationData.emailId,
+        empId: probationData.empId,
+        empName: probationData.empName,
+        employeeConformationLetter: probationData.employeeConformationLetter,
+        managerConformationLetter: probationData.managerConformationLetter,
+        probationConfirmationDate: dateOfConfirmation,
+        probationEndDate: probationData.probationEndDate,
+        probationExtension: {
+          emailId: probationData.emailId,
+          empId: probationData.empId,
+          empName: probationData.empName,
+          probationExtensionEndDate: null,
+          probationExtensionId: 0,
+          probationExtensionPeriod:
+            probationMonths === "3 Months"
+              ? 3
+              : probationMonths === "6 Months"
+              ? 6
+              : 0,
+          probationExtensionStartDate: null,
+          probationId: probationData.probationId,
+          reason: state.reason,
+          status:
+            probationStatus === "Confirmed"
+              ? 1
+              : probationStatus === "Extended"
+              ? 2
+              : 0,
+        },
+        probationExtensionPeriod:
+          probationMonths === "3 Months"
+            ? 3
+            : probationMonths === "6 Months"
+            ? 6
+            : 0,
+        probationId: probationData.probationId,
+        probationPeriod: probationData.probationPeriod,
+        probationStartDate: probationData.probationStartDate,
+        reason: state.reason,
+        reminderSent: probationData.reminderSent,
+        status:
+          probationStatus === "Confirmed"
+            ? 1
+            : probationStatus === "Extended"
+            ? 2
+            : 0,
+        //  PENDING(0),
+        // APPROVED(1),
+        // EXTENDED(2);
+      };
     }
   };
 
@@ -368,10 +311,11 @@ const ProbationAction = () => {
         {submitLetter ? (
           <Modal.Body className="mx-auto">
             <label>
-              The details have been saved successfully. The relieving letter
-              <br />
-              will be sent to the employee on{" "}
-              {relivingLetterData.lastWorkingDate}
+              {probationStatus === "Confirmed"
+                ? "Confirmation letter sent to the employee"
+                : probationStatus === "Extended"
+                ? "Extension letter sent to the employee"
+                : ""}
             </label>
             <div className="text-center mb-2">
               <Button onClick={handleRelivingClose}>Close</Button>
@@ -527,8 +471,7 @@ const ProbationAction = () => {
                                 Employee Id:
                                 <label className="itemResult">
                                   {" "}
-                                  &nbsp;&nbsp; {state.empName} &nbsp;
-                                  {state.empId}
+                                  &nbsp;&nbsp;{state.empId}
                                 </label>
                               </label>
                             </div>
@@ -538,7 +481,7 @@ const ProbationAction = () => {
                               <label>
                                 Employee Name:
                                 <label className="itemResult">
-                                  &nbsp;&nbsp; {state.empContractType}
+                                  &nbsp;&nbsp; {state.empName}
                                 </label>
                               </label>
                             </div>
@@ -566,7 +509,7 @@ const ProbationAction = () => {
                               <label>
                                 Date Of Joining:
                                 <label className="itemResult">
-                                  &nbsp;&nbsp; {state.empLocation}
+                                  &nbsp;&nbsp; {state.empDateOfJoining}
                                 </label>
                               </label>
                             </div>
@@ -593,13 +536,13 @@ const ProbationAction = () => {
                                   >
                                     <DatePicker
                                       className="form-control onBoard-view"
-                                      // selected={dateOfResignation}
+                                      selected={dateOfConfirmation}
                                       name="dateOfResignation"
-                                      minDate={moment().toDate()}
-                                      // onChange={(e) => dateOfBirthHandler(e)}
+                                      // minDate={moment().toDate()}
+                                      onChange={(e) => dateOfBirthHandler(e)}
                                       dateFormat="yyyy-MM-dd"
                                       placeholderText="YYYY-MM-DD"
-                                      minDate={new Date()}
+                                      // minDate={new Date()}
                                     />
                                   </div>
                                   {/* {dateOfResignError ? (
@@ -623,16 +566,18 @@ const ProbationAction = () => {
                             <div>
                               {false ? (
                                 <label className="itemResult">
-                                  &nbsp;&nbsp; {state.emailId}
+                                  &nbsp;&nbsp; {probationStatus}
                                 </label>
                               ) : (
                                 <Form.Group>
                                   <Form.Control
                                     as="select"
-                                    name="modeOfSeparationReasonId"
+                                    name="probationStatus"
                                     // options={reasonOfSeparationList}
-                                    value={state.emailId}
-                                    onChange={changeHandler}
+                                    value={probationStatus}
+                                    onChange={(e) =>
+                                      setProbationStatus(e.target.value)
+                                    }
                                     //   disabled={disabled}
                                     style={false ? { borderColor: "red" } : {}}
                                   >
@@ -653,7 +598,7 @@ const ProbationAction = () => {
                             </div>
                           </Col>
                         </Row>
-                        {true ? (
+                        {probationStatus === "Extended" ? (
                           <div>
                             <Row
                               style={{
@@ -671,17 +616,18 @@ const ProbationAction = () => {
                                 <div>
                                   {false ? (
                                     <label className="itemResult">
-                                      &nbsp;&nbsp; {state.emailId}
+                                      &nbsp;&nbsp; {probationMonths}
                                     </label>
                                   ) : (
                                     <Form.Group>
                                       <Form.Control
                                         as="select"
-                                        name="modeOfSeparationReasonId"
+                                        name="probationMonths"
                                         // options={reasonOfSeparationList}
-                                        value={state.emailId}
-                                        onChange={changeHandler}
-                                        //   disabled={disabled}
+                                        value={probationMonths}
+                                        onChange={(e) =>
+                                          setProbationMonths(e.target.value)
+                                        }
                                         style={
                                           false ? { borderColor: "red" } : {}
                                         }
@@ -723,7 +669,7 @@ const ProbationAction = () => {
                                 <div>
                                   {false ? (
                                     <label className="itemResult">
-                                      &nbsp;&nbsp; {state.emailId}
+                                      &nbsp;&nbsp; {state.reason}
                                     </label>
                                   ) : (
                                     <Form.Group>
@@ -731,7 +677,7 @@ const ProbationAction = () => {
                                         as="textarea"
                                         rows={4}
                                         className="non-disable blueTextData"
-                                        // value={comments}
+                                        value={state.reason}
                                         // onChange={(e) =>
                                         //   setComments(e.target.value)
                                         // }

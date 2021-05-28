@@ -10,17 +10,26 @@ const initial_state = {
   probationListByDueDays: [],
   total: {},
   empId: "",
+  probationData: {},
 };
 
 export const ProbationProvider = (props) => {
   const [loader, setLoader] = useState(false);
   const [state, dispatch] = useReducer(ProbationReducer, initial_state);
 
-  const ProbationListView = (key, pageNumber) => {
+  const ProbationListView = (days, key, pageNumber) => {
     setLoader(true);
     client
       .get(
-        "/api/v1/probation/view?key=" + key + "&page=" + pageNumber + "&size=10"
+        "/api/v1/probation/view?days=" +
+          days +
+          "&key=" +
+          key +
+          "&page=" +
+          pageNumber +
+          "&size=10"
+        // "/api/v1/probation/view?key=" + key + "&page=" + pageNumber + "&size=10"
+        // " /api/v1/promotion/view?key=all&page=0&size=10"
       )
       .then((response) => {
         state.probationListData = response.data.data.data;
@@ -32,6 +41,27 @@ export const ProbationProvider = (props) => {
         return dispatch({
           type: "PROBATION_LISTING",
           payload: state.probationListData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const ViewProbationDataById = (employeeId) => {
+    setLoader(true);
+    client
+      .get("/api/v1/probation/view/" + employeeId)
+      .then((response) => {
+        state.probationData = response.data.data;
+
+        setLoader(false);
+        console.log("--->", state.probationData);
+        console.log(response);
+
+        return dispatch({
+          type: "PROBATION_DATA_BY_ID",
+          payload: state.probationData,
         });
       })
       .catch((error) => {
@@ -79,6 +109,8 @@ export const ProbationProvider = (props) => {
         ProbationListView,
         dueDaySearchByDays,
         changeEmpId,
+        ViewProbationDataById,
+        probationData: state.probationData,
         empId: state.empId,
         probationListByDueDays: state.probationListByDueDays,
         probationListData: state.probationListData,

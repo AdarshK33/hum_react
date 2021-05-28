@@ -22,6 +22,8 @@ const ProbationList = () => {
     dueDaySearchByDays,
     probationListByDueDays,
     changeEmpId,
+    ViewProbationDataById,
+    probationData,
     empId,
     loader,
   } = useContext(ProbationContext);
@@ -40,7 +42,8 @@ const ProbationList = () => {
   const [fourthBtn, setFourthBtn] = useState(false);
   const [firstTimeUpdate, setFirstTimeUpdate] = useState(true);
   useEffect(() => {
-    ProbationListView("all", pageCount);
+    // ProbationListView("all", pageCount);
+    ProbationListView(0, "all", pageCount);
     console.log("user role", user);
   }, []);
 
@@ -68,9 +71,18 @@ const ProbationList = () => {
     setPageCount(pageNumber - 1);
     setCurrentPage(pageNumber);
     if (searchValue !== "") {
-      ProbationListView(searchValue, pageNumber - 1);
+      //   ProbationListView(searchValue, pageNumber - 1);
+      ProbationListView(0, searchValue, pageNumber - 1);
+    } else if (firstBtn) {
+      ProbationListView(5, "all", pageNumber - 1);
+    } else if (secondBtn) {
+      ProbationListView(7, "all", pageNumber - 1);
+    } else if (thirdBtn) {
+      ProbationListView(10, "all", pageNumber - 1);
+    } else if (fourthBtn) {
+      ProbationListView(14, "all", pageNumber - 1);
     } else {
-      ProbationListView("all", pageNumber - 1);
+      ProbationListView(0, "all", pageNumber - 1);
     }
     setCurrentRecords(probationListData);
   };
@@ -82,13 +94,15 @@ const ProbationList = () => {
 
   const searchDataHandler = () => {
     if (searchValue !== "") {
-      ProbationListView(searchValue, pageCount);
+      //   ProbationListView(searchValue, pageCount);
+      ProbationListView(0, searchValue, pageCount);
       setFirstBtn(false);
       setSecondBtn(false);
       setThirdBtn(false);
       setFourthBtn(false);
     } else {
-      ProbationListView("all", pageCount);
+      //   ProbationListView("all", pageCount);
+      ProbationListView(0, "all", pageCount);
       setFirstBtn(false);
       setSecondBtn(false);
       setThirdBtn(false);
@@ -99,28 +113,32 @@ const ProbationList = () => {
   const searchByDueDay = (val) => {
     switch (val) {
       case 5:
-        ProbationListView(5, pageCount);
+        // ProbationListView(5, pageCount);
+        ProbationListView(5, "all", pageCount);
         setFirstBtn(true);
         setSecondBtn(false);
         setThirdBtn(false);
         setFourthBtn(false);
         break;
       case 7:
-        ProbationListView(7, pageCount);
+        // ProbationListView(7, pageCount);
+        ProbationListView(7, "all", pageCount);
         setFirstBtn(false);
         setSecondBtn(true);
         setThirdBtn(false);
         setFourthBtn(false);
         break;
       case 10:
-        ProbationListView(10, pageCount);
+        // ProbationListView(10, pageCount);
+        ProbationListView(10, "all", pageCount);
         setFirstBtn(false);
         setSecondBtn(false);
         setThirdBtn(true);
         setFourthBtn(false);
         break;
       case 14:
-        ProbationListView(14, pageCount);
+        // ProbationListView(14, pageCount);
+        ProbationListView(14, "all", pageCount);
         setFirstBtn(false);
         setSecondBtn(false);
         setThirdBtn(false);
@@ -131,17 +149,9 @@ const ProbationList = () => {
         break;
     }
   };
-  //   const fetchCandidateDetails = (candidateId) => {
-  //     // viewCandidateId(candidateId);
-  //     // verificationDocsView(candidateId);
-  //     // personalInfo(candidateId);
-  //     // viewRole();
-  //     // CostCenter();
-  //   };
   const fetchEmployeeDetails = (employeeId) => {
-    // changeEmployeeId(employeeId);
-    // ViewEmployeeDataById(employeeId);
-    // ModeOfSeparationView();
+    changeEmpId(employeeId);
+    ViewProbationDataById(employeeId);
   };
   return (
     <Fragment>
@@ -306,13 +316,6 @@ const ProbationList = () => {
                       <th scope="col">Reminder Date</th>
                       <th scope="col">Status</th>
                       <th scope="col">Action</th>
-                      {user !== null &&
-                      user !== undefined &&
-                      user.role !== "ADMIN" ? (
-                        <th scope="col">Action</th>
-                      ) : (
-                        ""
-                      )}
                     </tr>
                   </thead>
                   {loader === true &&
@@ -337,7 +340,8 @@ const ProbationList = () => {
                     </tbody>
                   ) : currentRecords !== undefined &&
                     currentRecords !== null &&
-                    currentRecords.length > 0 ? (
+                    currentRecords.length > 0 &&
+                    total > 0 ? (
                     currentRecords.map((item, i) => {
                       return (
                         <tbody key={item.probationId}>
@@ -353,8 +357,10 @@ const ProbationList = () => {
                             <td>
                               {item.status === 0
                                 ? "Due for confirmation"
-                                : item.status === 2
+                                : item.status === 1
                                 ? "Confirmed"
+                                : item.status === 2
+                                ? "Extended"
                                 : ""}
                             </td>
 
@@ -413,7 +419,7 @@ const ProbationList = () => {
           </Col>
         </Row>
       </Container>
-      {currentRecords !== null && currentRecords !== undefined && (
+      {currentRecords !== null && currentRecords !== undefined && total > 0 && (
         <Pagination
           itemClass="page-item"
           linkClass="page-link"

@@ -8,6 +8,10 @@ const GroupReducer = (state, action) => {
       console.log("on reducer");
       return { ...state, probationListByDueDays: action.payload };
 
+    case "PROBATION_DATA_BY_ID":
+      console.log("on reducer");
+      return { ...state, probationData: action.payload };
+
     default:
       return state;
   }
