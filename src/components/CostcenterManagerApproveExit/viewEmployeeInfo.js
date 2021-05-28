@@ -305,7 +305,10 @@ const EmployeeExitAction = () => {
               <p style={{ marginBottom: "2rem" }}>
                 {" "}
                 The details have been saved successfully. The relieving letter
-                will be sent to the employee on {state.lastWorkingDate}
+                will be sent to the employee on{" "}
+                {moment(relivingLetterData.lastWorkingDate, "YYYY-MM-DD")
+                  .add(1, "days")
+                  .format("YYYY-MM-DD")}
               </p>
               <Button onClick={() => handleClosePopup()}>OK</Button>
             </Modal.Body>

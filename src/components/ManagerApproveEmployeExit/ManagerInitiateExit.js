@@ -705,7 +705,7 @@ const ManagerInitiateExit = () => {
   };
   const withdrawHandler = () => {
     console.log("exitId", employeeData.exitId);
-    withdraw(employeeData.exitId);
+    // withdraw(employeeData.exitId);
     setWithdrawThis(true);
     ViewEmployeeDataById(state.empId);
     setSubmitted(false);

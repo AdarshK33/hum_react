@@ -10,8 +10,8 @@ import { SeparationContext } from "../../context/SepearationState";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
 
 const EmpResignation = () => {
-  const [regDate, setRegDate] = useState(new Date());
-  const [lastDate, setLastDate] = useState(new Date());
+  const [regDate, setRegDate] = useState();
+  const [lastDate, setLastDate] = useState();
   const [reasonOfSepration, setReasonOfSepration] = useState("");
   const [emailId, setEmailId] = useState("");
   const [approver, setApprover] = useState("");
@@ -168,7 +168,28 @@ const EmpResignation = () => {
         setLastDate();
         setReasonOfSepration("");
         setEmailId("");
-        setApprover("");
+        if (
+          managerList &&
+          managerList &&
+          managerList !== null &&
+          managerList !== undefined &&
+          Object.keys(managerList).length !== 0
+        ) {
+          let managerNames = managerList.filter(
+            (j) => j.employeeId === user.managerId
+          );
+          console.log("managerNames", managerNames, managerList);
+          if (
+            managerNames &&
+            managerNames !== null &&
+            managerNames !== undefined &&
+            Object.keys(managerNames).length !== 0
+          ) {
+            setApprover(
+              managerNames[0].firstName + " " + managerNames[0].lastName
+            );
+          }
+        }
         setComments("");
         setSubmitted(false);
       }
@@ -217,18 +238,18 @@ const EmpResignation = () => {
       costCentreName: user.costCentre,
       dateOfResignation: regDate,
       emailId: emailId,
-      empName: user.employeeName,
+      empName: user.firstName + user.lastName,
       employeeComment: comments,
       employeeId: user.employeeId,
-      employeeName: user.employeeName,
+      employeeName: user.firstName + user.lastName,
       exitId: 0,
       hoursWorked: 0,
       lastWorkingDate: lastDate,
       location: user.locationId,
       managerCostCentre: null,
       managerEmailId: null,
-      managerId: approver,
-      managerName: null,
+      managerId: user.managerId,
+      managerName: approver,
       managerPosition: null,
       modeOfSeparationId: 4,
       modeOfSeparationReasonId: reasonId,
@@ -264,6 +285,8 @@ const EmpResignation = () => {
   const withdrawHandler = (e) => {
     setWithdrawThis(true);
     ViewEmployeeDataById(user.employeeId);
+    managerData(user.costCentre);
+
     // if (
     //   employeeData &&
     //   employeeData &&
