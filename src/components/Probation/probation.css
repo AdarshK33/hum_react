@@ -6,6 +6,22 @@
   font-weight: bold;
   text-align: right;
 }
+.LettersProbButtons {
+  width: 240px;
+  height: 30px;
+  background-color: #006ebb;
+  color: white;
+  border: 1px solid#006ebb;
+  margin-left: 40px;
+}
+.LetterCnfProbButton {
+  background: rgb(170, 170, 170) !important;
+  border-color: rgb(170, 170, 170) !important;
+  width: 240px;
+  height: 30px;
+  color: white;
+  margin-left: 40px;
+}
 .FirstButtons {
   width: 125px;
   height: 58px;

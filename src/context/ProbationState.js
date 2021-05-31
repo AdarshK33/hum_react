@@ -7,10 +7,12 @@ export const ProbationContext = createContext();
 
 const initial_state = {
   probationListData: [],
-  probationListByDueDays: [],
+  probUpdateResponse: {},
   total: {},
   empId: "",
   probationData: {},
+  extensionLetterData: {},
+  cnfLetterData: {},
 };
 
 export const ProbationProvider = (props) => {
@@ -69,26 +71,63 @@ export const ProbationProvider = (props) => {
       });
   };
 
-  const dueDaySearchByDays = (days) => {
+  const updateProbation = (updatedInfo) => {
     setLoader(true);
     client
-      .get("/api/v1/probation/search?days=" + days)
+      .post("/api/v1/probation/update" + updatedInfo)
       .then((response) => {
-        state.probationListData = response.data.data.data;
-        state.total = response.data.data.total;
+        state.probationListData = response.data.data;
         setLoader(false);
-        console.log(state.probationListData);
+        console.log(state.probUpdateResponse);
         console.log("duesearch", response);
 
         return dispatch({
-          type: "PROBATION_LISTING",
-          payload: state.probationListData,
+          type: "UPDATE_PROBATION",
+          payload: state.probUpdateResponse,
         });
 
         // return dispatch({
         //   type: "PROBATION_LISTING_BY_DUE",
         //   payload: state.probationListByDueDays,
         // });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const ViewExtensionLetter = (employeeId) => {
+    setLoader(true);
+    client
+      .get("/api/v1/probation/send/extension/letter/" + employeeId)
+      .then((response) => {
+        state.extensionLetterData = response.data.data;
+        setLoader(false);
+        console.log(state.extensionLetterData);
+        console.log("duesearch", response);
+
+        return dispatch({
+          type: "EXTENSION_LETTER",
+          payload: state.extensionLetterData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const ViewConfirmationLetter = (employeeId) => {
+    setLoader(true);
+    client
+      .get("/api/v1/probation/send/confirmation/letter/" + employeeId)
+      .then((response) => {
+        state.cnfLetterData = response.data.data;
+        setLoader(false);
+        console.log(state.cnfLetterData);
+        console.log("duesearch", response);
+
+        return dispatch({
+          type: "CONFIRMATION_LETTER",
+          payload: state.cnfLetterData,
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -107,12 +146,16 @@ export const ProbationProvider = (props) => {
     <ProbationContext.Provider
       value={{
         ProbationListView,
-        dueDaySearchByDays,
+        updateProbation,
         changeEmpId,
         ViewProbationDataById,
+        ViewExtensionLetter,
+        ViewConfirmationLetter,
+        extensionLetterData: state.extensionLetterData,
+        cnfLetterData: state.cnfLetterData,
         probationData: state.probationData,
         empId: state.empId,
-        probationListByDueDays: state.probationListByDueDays,
+        probUpdateResponse: state.probUpdateResponse,
         probationListData: state.probationListData,
         total: state.total,
         loader: loader,

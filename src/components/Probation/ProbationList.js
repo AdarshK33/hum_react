@@ -19,8 +19,6 @@ const ProbationList = () => {
     ProbationListView,
     probationListData,
     total,
-    dueDaySearchByDays,
-    probationListByDueDays,
     changeEmpId,
     ViewProbationDataById,
     probationData,

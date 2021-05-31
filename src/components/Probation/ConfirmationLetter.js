@@ -3,15 +3,23 @@ import { Modal, Row, Col, Form, Button } from "react-bootstrap";
 import calendarImage from "../../assets/images/calendar-image.png";
 import moment from "moment";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
+import { ProbationContext } from "../../context/ProbationState";
 
 const ConfirmationLetter = () => {
   const { fetchRelievingLetterData, relivingLetterData } = useContext(
     EmployeeSeparationContext
   );
+  const {
+    extensionLetterData,
+    cnfLetterData,
+    ViewExtensionLetter,
+    ViewConfirmationLetter,
+  } = useContext(ProbationContext);
   //   connsole.log("today", moment().format("DD-MM-YYYY"));
   return (
     <Fragment>
-      {typeof relivingLetterData !== undefined ? (
+      {/* {typeof cnfLetterData !== undefined ? ( */}
+      {true ? (
         <Fragment>
           <p className="">
             {" "}
@@ -19,30 +27,37 @@ const ConfirmationLetter = () => {
           </p>
           <br></br>
           <p>
-            <b> To Ms./Mr. {relivingLetterData.employeeName}</b>
+            <b>
+              {" "}
+              To Ms./Mr.
+              {/* {relivingLetterData.employeeName} */}
+            </b>
           </p>
           <p>Address :</p>
-          <p>addressss:{relivingLetterData.employeeId}</p>
-          {/* <p>Designation:{relivingLetterData.designation}</p> */}
+          <p>
+            addressss:
+            {/* {relivingLetterData.employeeId} */}
+          </p>
           <br></br>
           <p className="mt-5 ">
             {" "}
-            <b>Dear {relivingLetterData.employeeName},</b>{" "}
+            <b>
+              Dear
+              {/* {relivingLetterData.employeeName}, */}
+            </b>{" "}
           </p>
           <p>
             <b> Sub: Confirmation of Employment</b>
           </p>
-          {/* <h5 className="text-center">
-            {" "}
-            <u>LETTER OF EXTENSION OF PROBATIONARY PERIOD </u>
-          </h5> */}
 
           <div className=" ">
             <p>
               We are glad to inform you that the management is pleased to
-              confirm you in service with effect from {relivingLetterData.date}.
+              confirm you in service with effect from
+              {/* {relivingLetterData.date}. */}
               All the other terms and conditions of your appointment letter
-              dated {relivingLetterData.date}
+              dated
+              {/* {relivingLetterData.date} */}
               shall remain same.
               <br />
               Please sign the copy of this letter as receipt of acceptance.

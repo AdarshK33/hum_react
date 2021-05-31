@@ -8,6 +8,8 @@ import moment from "moment";
 import DatePicker from "react-datepicker";
 import { setGlobalCssModule } from "reactstrap/es/utils";
 // import RelievingLetter from "../components/ManagerApproveEmployeeExit/RelivingLetter";
+import ConfirmationLetter from "./ConfirmationLetter";
+import ExtensionLetter from "./ExtensionLetter";
 import calendarImage from "../../assets/images/calendar-image.png";
 
 const ProbationAction = () => {
@@ -19,6 +21,8 @@ const ProbationAction = () => {
   const [RcryError, setRcryError] = useState(false);
   const [RehireError, setRehireError] = useState(false);
   const [rcryDaysError, setRcryDaysError] = useState(false);
+  const [dateOfConfError, setDateOfConfError] = useState(false);
+  const [reasonError, setReasonError] = useState(false);
   const [remarkError, setRemarkError] = useState(false);
   const [showModal, setModal] = useState(false);
   const [showRelivingModal, setShow] = useState(false);
@@ -67,8 +71,18 @@ const ProbationAction = () => {
     fetchRelievingLetterData,
     relivingLetterData,
   } = useContext(EmployeeSeparationContext);
-  const { ViewProbationDataById, probationData, empId, loader } =
-    useContext(ProbationContext);
+  const {
+    updateProbation,
+    probUpdateResponse,
+    ViewExtensionLetter,
+    ViewConfirmationLetter,
+    extensionLetterData,
+    cnfLetterData,
+    ViewProbationDataById,
+    probationData,
+    empId,
+    loader,
+  } = useContext(ProbationContext);
   console.log("employeeId", empId);
   useEffect(() => {
     ViewProbationDataById(empId);
@@ -151,16 +165,16 @@ const ProbationAction = () => {
 
   const previewRelivingLetter = (e) => {
     e.preventDefault();
-    if (employeeData !== null && employeeData !== undefined) {
-      fetchRelievingLetterData(employeeData.employeeId);
-      setSubmitLetter(false);
-      setPreviewLetter(true);
-      setShow(true);
-    }
+    // if (employeeData !== null && employeeData !== undefined) {
+    // fetchRelievingLetterData(employeeData.employeeId);
+    setSubmitLetter(false);
+    setPreviewLetter(true);
+    setShow(true);
+    // }
   };
   const relivingLetterClick = (e) => {
     e.preventDefault();
-    fetchRelievingLetterData(employeeData.employeeId);
+    // fetchRelievingLetterData(employeeData.employeeId);
     handleShow();
     setPreviewGeneratedLetter(true);
   };
@@ -225,13 +239,35 @@ const ProbationAction = () => {
       return true;
     }
   };
+  const validateDateOfConfirmation = () => {
+    if (
+      dateOfConfirmation !== "" &&
+      dateOfConfirmation !== null &&
+      dateOfConfirmation !== undefined
+    ) {
+      setDateOfConfError(false);
+      return true;
+    } else {
+      setDateOfConfError(true);
+      return false;
+    }
+  };
+  const validateReason = () => {
+    if (
+      state.reason !== "" &&
+      state.reason !== undefined &&
+      state.reason !== null
+    ) {
+      setReasonError(false);
+      return true;
+    } else {
+      setReasonError(true);
+      return false;
+    }
+  };
   const checkValidations = () => {
     console.log("on validation");
-    if (
-      (validateCheckBoxes(RcryYes, RcryNo, setRcryError) === true) &
-      (validateCheckBoxes(RehireYes, RehireNo, setRehireError) === true) &
-      (validateRcryDays() === true)
-    ) {
+    if ((validateDateOfConfirmation() === true) & (validateReason() === true)) {
       console.log("on true");
       return true;
     } else {
@@ -301,6 +337,10 @@ const ProbationAction = () => {
         // APPROVED(1),
         // EXTENDED(2);
       };
+      console.log("InfoData", InfoData);
+      setPreview(true);
+      ViewProbationDataById(empId);
+      // updateProbation(InfoData)
     }
   };
 
@@ -328,7 +368,13 @@ const ProbationAction = () => {
             relivingLetterData !== null ? (
               // <RelievingLetter />
               <div>
-                <p>reliving letter</p>
+                {probationStatus === "Confirmed" ? (
+                  <ConfirmationLetter />
+                ) : probationStatus === "Extended" ? (
+                  <ExtensionLetter />
+                ) : (
+                  ""
+                )}
               </div>
             ) : (
               ""
@@ -465,34 +511,52 @@ const ProbationAction = () => {
                             marginBottom: "1rem",
                           }}
                         >
-                          <Col sm={4}>
+                          <Col sm={2}>
                             <div>
-                              <label>
-                                Employee Id:
-                                <label className="itemResult">
-                                  {" "}
-                                  &nbsp;&nbsp;{state.empId}
-                                </label>
+                              <label>Employee Id:</label>
+                            </div>
+                          </Col>
+                          <Col sm={2}>
+                            <div>
+                              <label
+                                style={{ marginLeft: "-2rem" }}
+                                className="itemResult"
+                              >
+                                {" "}
+                                {/* &nbsp;&nbsp; */}
+                                {state.empId}
                               </label>
                             </div>
                           </Col>
-                          <Col sm={4}>
+                          <Col sm={2}>
                             <div>
-                              <label>
-                                Employee Name:
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; {state.empName}
-                                </label>
+                              <label>Employee Name:</label>
+                            </div>
+                          </Col>
+                          <Col sm={2}>
+                            <div>
+                              <label
+                                style={{ marginLeft: "-2rem" }}
+                                className="itemResult"
+                              >
+                                {/* &nbsp;&nbsp; */}
+                                {state.empName}
                               </label>
                             </div>
                           </Col>
-                          <Col sm={4}>
+                          <Col sm={2}>
                             <div>
-                              <label>
-                                Cost Center Name:
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; {state.empCostCenterName}
-                                </label>
+                              <label>Cost Center Name:</label>
+                            </div>
+                          </Col>
+                          <Col sm={2}>
+                            <div>
+                              <label
+                                style={{ marginLeft: "-2rem" }}
+                                className="itemResult"
+                              >
+                                {/* &nbsp;&nbsp;  */}
+                                {state.empCostCenterName}
                               </label>
                             </div>
                           </Col>
@@ -504,13 +568,19 @@ const ProbationAction = () => {
                             marginBottom: "2rem",
                           }}
                         >
-                          <Col sm={4}>
+                          <Col sm={2}>
                             <div>
-                              <label>
-                                Date Of Joining:
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; {state.empDateOfJoining}
-                                </label>
+                              <label>Date Of Joining:</label>
+                            </div>
+                          </Col>
+                          <Col sm={2}>
+                            <div>
+                              <label
+                                style={{ marginLeft: "-2rem" }}
+                                className="itemResult"
+                              >
+                                {/* &nbsp;&nbsp; */}
+                                {state.empDateOfJoining}
                               </label>
                             </div>
                           </Col>
@@ -521,9 +591,21 @@ const ProbationAction = () => {
                           </Col>
                           <Col sm={2}>
                             <div>
-                              {false ? (
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; {state.emailId}
+                              {probationData &&
+                              probationData &&
+                              probationData !== null &&
+                              probationData !== undefined &&
+                              Object.keys(probationData).length !== 0 &&
+                              probationData.probationConfirmationDate !== "" &&
+                              probationData.probationConfirmationDate !==
+                                null &&
+                              probationData.probationConfirmationDate !==
+                                undefined ? (
+                                <label
+                                  style={{ marginLeft: "-2rem" }}
+                                  className="itemResult"
+                                >
+                                  {probationData.probationConfirmationDate}
                                 </label>
                               ) : (
                                 <Form.Group>
@@ -537,7 +619,7 @@ const ProbationAction = () => {
                                     <DatePicker
                                       className="form-control onBoard-view"
                                       selected={dateOfConfirmation}
-                                      name="dateOfResignation"
+                                      // name="dateOfResignation"
                                       // minDate={moment().toDate()}
                                       onChange={(e) => dateOfBirthHandler(e)}
                                       dateFormat="yyyy-MM-dd"
@@ -545,14 +627,14 @@ const ProbationAction = () => {
                                       // minDate={new Date()}
                                     />
                                   </div>
-                                  {/* {dateOfResignError ? (
+                                  {dateOfConfError ? (
                                     <p style={{ color: "red" }}>
                                       {" "}
-                                      &nbsp; *Please select valid date
+                                      &nbsp; *Please select date
                                     </p>
                                   ) : (
                                     <p></p>
-                                  )} */}
+                                  )}
                                 </Form.Group>
                               )}
                             </div>
@@ -564,9 +646,24 @@ const ProbationAction = () => {
                           </Col>
                           <Col sm={2}>
                             <div>
-                              {false ? (
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; {probationStatus}
+                              {probationData &&
+                              probationData &&
+                              probationData !== null &&
+                              probationData !== undefined &&
+                              Object.keys(probationData).length !== 0 &&
+                              probationData.status !== 0 &&
+                              probationData.status !== null &&
+                              probationData.status !== undefined ? (
+                                <label
+                                  style={{ marginLeft: "-2rem" }}
+                                  className="itemResult"
+                                >
+                                  {/* &nbsp;&nbsp;{" "} */}
+                                  {probationData.status == 1
+                                    ? "Confirmed"
+                                    : probationData.status == 2
+                                    ? "Extended"
+                                    : ""}
                                 </label>
                               ) : (
                                 <Form.Group>
@@ -640,14 +737,6 @@ const ProbationAction = () => {
                                           6 Months
                                         </option>
                                       </Form.Control>
-                                      {/* {modOfSepReasonError ? (
-                                <p style={{ color: "red" }}>
-                                  {" "}
-                                  &nbsp; *Please choose valid option
-                                </p>
-                              ) : (
-                                <p></p>
-                              )} */}
                                     </Form.Group>
                                   )}
                                 </div>
@@ -667,22 +756,36 @@ const ProbationAction = () => {
                               </Col>
                               <Col sm={8}>
                                 <div>
-                                  {false ? (
+                                  {probationData &&
+                                  probationData &&
+                                  probationData !== null &&
+                                  probationData !== undefined &&
+                                  Object.keys(probationData).length !== 0 &&
+                                  probationData.reason !== "" &&
+                                  probationData.reason !== null &&
+                                  probationData.reason !== undefined ? (
                                     <label className="itemResult">
-                                      &nbsp;&nbsp; {state.reason}
+                                      &nbsp;&nbsp; {probationData.reason}
                                     </label>
                                   ) : (
                                     <Form.Group>
                                       <Form.Control
                                         as="textarea"
                                         rows={4}
+                                        name="reason"
                                         className="non-disable blueTextData"
                                         value={state.reason}
-                                        // onChange={(e) =>
-                                        //   setComments(e.target.value)
-                                        // }
+                                        onChange={changeHandler}
                                         required
                                       />
+                                      {reasonError ? (
+                                        <p style={{ color: "red" }}>
+                                          {" "}
+                                          &nbsp; *Please enter reason
+                                        </p>
+                                      ) : (
+                                        <p></p>
+                                      )}
                                     </Form.Group>
                                   )}
                                 </div>
@@ -719,10 +822,15 @@ const ProbationAction = () => {
                             showPreview === true) ? (
                             <button
                               // disabled={!submitted}
-                              className={"LettersButtons"}
+                              className={"LettersProbButtons"}
                               onClick={relivingLetterClick}
                             >
-                              Generate Reliving Letter
+                              {probationStatus === "Extended"
+                                ? "Generate Extension Letter"
+                                : probationStatus === "Confirmed"
+                                ? "Generate Confirmation Letter"
+                                : ""}
+                              {/* Generate Reliving Letter */}
                             </button>
                           ) : (
                             ""
@@ -731,7 +839,7 @@ const ProbationAction = () => {
                           previewGeneratedLetter &&
                           showPreview ? (
                             <button
-                              className={"LettersButtons"}
+                              className={"LettersProbButtons"}
                               onClick={previewRelivingLetter}
                             >
                               Preview Reliving Letter

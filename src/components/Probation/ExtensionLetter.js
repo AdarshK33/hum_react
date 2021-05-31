@@ -3,15 +3,23 @@ import { Modal, Row, Col, Form, Button } from "react-bootstrap";
 import calendarImage from "../../assets/images/calendar-image.png";
 import moment from "moment";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
+import { ProbationContext } from "../../context/ProbationState";
 
 const ExtensionLetter = () => {
   const { fetchRelievingLetterData, relivingLetterData } = useContext(
     EmployeeSeparationContext
   );
+  const {
+    extensionLetterData,
+    cnfLetterData,
+    ViewExtensionLetter,
+    ViewConfirmationLetter,
+  } = useContext(ProbationContext);
+
   //   connsole.log("today", moment().format("DD-MM-YYYY"));
   return (
     <Fragment>
-      {typeof relivingLetterData !== undefined ? (
+      {typeof extensionLetterData !== undefined ? (
         <Fragment>
           <p className=""> Date: {moment().format("DD-MM-YYYY")}</p>
           <br></br>
