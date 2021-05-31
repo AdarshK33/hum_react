@@ -53,7 +53,7 @@ import MasterMonthlyQuantity from "./components/MasterTables/MasterMonthlyQuanti
 import MasterDailyQty from "./components/MasterTables/MasterDailyQty";
 import MasterCostCenter from "./components/MasterTables/MasterCostCenter";
 import CreateTicket from "./components/support/createTicket";
-
+import PromotionList from "./components/Promotion/PromotionList"
 import OnBoardingStepper from "./components/OnBording/OnBoardingStepper";
 
 import TicketListingPage from "./components/support/ticketListingPage";
@@ -107,10 +107,10 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/no_due_clearance`}
             component={NoDueClearance}
           /> */}
-      {/* <Route
-        path={`${process.env.PUBLIC_URL}/finance-clearance`}
-        component={FinanceClearanceList}
-      /> */}
+      <Route
+        path={`${process.env.PUBLIC_URL}/promotion-list`}
+        component={PromotionList}
+      />
 
       <Route
         //  {/*Rajasekhar */}
@@ -144,6 +144,10 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/profileEdit`}
             component={ProfileEdit}
           /> */}
+           <Route
+        path={`${process.env.PUBLIC_URL}/promotion-list`}
+        component={PromotionList}
+      />
           <Route
             path={`${process.env.PUBLIC_URL}/no_due_clearance`}
             component={NoDueClearance}
