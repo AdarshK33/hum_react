@@ -30,6 +30,7 @@ const initial_state = {
   verificationStateList: [],
   verificationCityList: [],
   verificationPermanentCityList: [],
+  imageData: "",
 };
 export const DocsVerifyContext = createContext();
 export const DocsVerificationProvider = (props) => {
@@ -417,6 +418,20 @@ export const DocsVerificationProvider = (props) => {
       });
   };
 
+  const uploadBase64Image = (base64Data) => {
+    console.log("base64...........", base64Data);
+    return client
+      .post("/api/v1/file/upload", base64Data)
+      .then((response) => {
+        console.log(response);
+        state.imageData = response.data.data;
+        return dispatch({ type: "BASE64_UPLOAD", payload: state.imageData });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     console.log(state),
     (
@@ -444,7 +459,9 @@ export const DocsVerificationProvider = (props) => {
           viewStatesVerification,
           viewCityVerification,
           viewPermanentCityVerification,
+          uploadBase64Image,
           disApproveAadhar: state.disApproveAadhar,
+          imageData: state.imageData,
           step5Status: state.step5Status,
           aadharStatus: state.aadharStatus,
           step6Status: state.step6Status,
