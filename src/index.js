@@ -24,6 +24,7 @@ import { SupportProvider } from "./context/SupportState";
 import { GroupProvider } from "./context/GroupState";
 import { CandidateProvider } from "./context/CandidateState";
 import { OfferProvider } from "./context/OfferState";
+import {PromotionProvider} from "./context/PromotionState"
 import { OnBoardProvider } from "./context/OnBoardState";
 import { DocsVerificationProvider } from "./context/DocverificationState";
 import { EmploeeSeparationProvider } from "./context/EmployeeSeparationState";
@@ -62,6 +63,7 @@ function Root() {
                               <SupportProvider>
                                 <GroupProvider>
                                   <OfferProvider>
+                                    <PromotionProvider>
                                     <OnBoardProvider>
                                       <CandidateProvider>
                                         <DocsVerificationProvider>
@@ -83,6 +85,7 @@ function Root() {
                                         </DocsVerificationProvider>
                                       </CandidateProvider>
                                     </OnBoardProvider>
+                                    </PromotionProvider>
                                   </OfferProvider>
                                   {/* //Support provider 14-12-20*/}
 

@@ -13,6 +13,7 @@ const initial_state = {
   adminNoDueClearanceList: [],
   noDueClearanceList: [],
   updateNoDueClearanceList: [],
+
   separationList: [],
   total: {},
   data: [],
@@ -523,6 +524,7 @@ export const SeparationProvider = (props) => {
         console.log(error);
       });
   };
+ 
   return (
     <SeparationContext.Provider
       value={{
@@ -539,6 +541,7 @@ export const SeparationProvider = (props) => {
         NoDueClearanceClearanceExport,
         FinanceClearanceExport,
         searchByCostCenter,
+
         financeClearanceExport: state.financeClearanceExport,
 
         updateAdminFinanceClearance: state.updateAdminFinanceClearance,
