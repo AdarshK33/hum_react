@@ -13,8 +13,8 @@ import { SeparationContext } from "../../context/SepearationState";
 import { AdminContext } from "../../context/AdminState";
 import { AppContext } from "../../context/AppState";
 const PromotionList = () => {
-  // const { promotionListView, promotionList, loader, total } =
-  //   useContext(PromotionContext);
+  const { promotionListView,promotionEmployeeData,ViewPromotionEmployeeById,
+     promotionList, loader, total } = useContext(PromotionContext);
   const { verificationDocsView, docsToVerify, personalInfo, personalInfoData } =
     useContext(DocsVerifyContext);
   const { user } = useContext(AppContext);
@@ -23,12 +23,6 @@ const PromotionList = () => {
   const [searchValue, setSearchValue] = useState("");
   const { RoleList, viewRole } = useContext(RoleManagementContext);
   const { costCenterList, CostCenter } = useContext(AdminContext);
-  const {
-    total,
-    loader,
-    promotionListView,
-    promotionList,
-  } = useContext(SeparationContext);
   useEffect(() => {
     promotionListView("all", pageCount);
     console.log("user role", user);
@@ -39,6 +33,10 @@ const PromotionList = () => {
       setCurrentRecords(promotionList);
     }
   }, [promotionList, currentRecords]);
+  useEffect(() => {
+    ViewPromotionEmployeeById();
+  }, [promotionEmployeeData]);
+
 
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
@@ -74,7 +72,7 @@ const PromotionList = () => {
   };
 
   const fetchCandidateDetails = (candidateId) => {
-    // viewCandidateId(candidateId);
+    // ViewPromotionEmployeeById(candidateId);
     // verificationDocsView(candidateId);
     // personalInfo(candidateId);
     viewRole();
@@ -105,7 +103,7 @@ const PromotionList = () => {
                     />
                   </div>
                 </div>
-                <Link to="/manager-offer-release">
+                <Link to="/promotion-initiate">
                   <Button className="apply-button btn btn-light mr-2">
                     Initate Promotion
                   </Button>
@@ -130,13 +128,7 @@ const PromotionList = () => {
                       <th scope="col">Date</th>  
                       <th scope="col">Status</th> 
                        <th scope="col">View</th>
-                      {user !== null &&
-                      user !== undefined &&
-                      user.role !== "ADMIN" ? (
-                        <th scope="col">Action</th>
-                      ) : (
-                        ""
-                      )}
+                    
                     </tr>
                   </thead>
                   {loader === true &&
@@ -178,48 +170,17 @@ const PromotionList = () => {
                             <td>{item.approveByCostCentreManagerDate}</td>   
                              <td>{item.approveByHr}</td>
                             <td>{item.hrDate}</td>
-
-                            <td>
-                              {item.status === 5 ||
-                              item.status === 6 ||
-                              item.status === 2 ||
-                              item.status === 3 ? (
-                                <Edit2 />
-                              ) : (
-                                <Link to="/edit-offer-release">
-                                  <Edit2
-                                    onClick={() => {
-                                      // viewCandidateId(item.candidateId);
-                                    }}
-                                  />
-                                </Link>
-                              )}
-                            </td>
-
+                            <td>{item.status}</td>
                             <td>
                               <Link to="/view-offer-release">
                                 <Eye
                                   onClick={() => {
-                                    // viewCandidateId(item.candidateId);
+                                     ViewPromotionEmployeeById(item.employeeId);
                                   }}
                                 />
                               </Link>
                             </td>
-                            {user !== null &&
-                            user !== undefined &&
-                            user.role !== "ADMIN" ? (
-                              <td>
-                                <Link to="/offer-relase-and-onboard">
-                                  <AlertCircle
-                                    onClick={() => {
-                                      // fetchCandidateDetails(item.candidateId);
-                                    }}
-                                  />
-                                </Link>
-                              </td>
-                            ) : (
-                              ""
-                            )}
+                          
                           </tr>
                         </tbody>
                       );

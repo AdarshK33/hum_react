@@ -8,6 +8,11 @@ const PromotionReducer = (state, action) => {
           data: action.data,
           total: action.total,
         };
+        case "PROMOTION_EMPLOYEE_ID":
+          return {
+            ...state,
+            promotionEmployeeData: action.payload,
+          };
      
     }
   };

@@ -13,7 +13,6 @@ const initial_state = {
   adminNoDueClearanceList: [],
   noDueClearanceList: [],
   updateNoDueClearanceList: [],
-  promotionList: [], 
 
   separationList: [],
   total: {},
@@ -525,36 +524,7 @@ export const SeparationProvider = (props) => {
         console.log(error);
       });
   };
-  const promotionListView = (key, page) => {
-    console.log(key, page,"promotion ")
-    setLoader(true);
-    client
-      .get(
-        "/api/v1/promotion/view?key=" +
-          key +
-          "&page=" +
-          page +
-          "&size=" +
-          10
-      )
-      .then((response) => {
-        console.log("response", response.data.data.data);
-        state.promotionList = response.data.data.data;
-        state.data = response.data.data;
-        state.total = state.data.total;
-        setLoader(false);
-        return dispatch({
-          type: "PROMOTION_LIST",
-          payload: state.promotionList,
-          loader: loader,
-          data: state.data,
-          total: state.total,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+ 
   return (
     <SeparationContext.Provider
       value={{
@@ -571,8 +541,7 @@ export const SeparationProvider = (props) => {
         NoDueClearanceClearanceExport,
         FinanceClearanceExport,
         searchByCostCenter,
-        promotionListView,
-        promotionList: state.promotionList,
+
         financeClearanceExport: state.financeClearanceExport,
 
         updateAdminFinanceClearance: state.updateAdminFinanceClearance,

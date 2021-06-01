@@ -8,6 +8,7 @@ import { saveAs } from "file-saver";
 export const PromotionContext = createContext();
 const initial_state = {
   promotionList: [], 
+  promotionEmployeeData:{},
   total: {},
   data: [],
 };
@@ -25,7 +26,12 @@ export const PromotionProvider = (props) => {
           "&page=" +
           page +
           "&size=" +
-          10
+          10,
+          {
+            headers: {
+              'Authorization': "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Ik1BSU4iLCJwaS5hdG0iOiI2In0.eyJzY29wZSI6WyJvcGVuaWQiLCJwcm9maWxlIl0sImNsaWVudF9pZCI6IkM2YTdiNjhkNTJhZDIxYzBkNTU0NmZiZWY3OGMwOTAzYTU1MTkwNDgwIiwiaXNzIjoiaWRwZGVjYXRobG9uLnByZXByb2Qub3JnIiwianRpIjoiOVR1VVdDblR6SyIsInN1YiI6IktOQUdBUjI2IiwidWlkIjoiS05BR0FSMjYiLCJvcmlnaW4iOiJjb3Jwb3JhdGUiLCJleHAiOjE2MjI0NTE3NTh9.yFXiQe7zXeA8rFlzXZbPaP5thK_Nl51_WhQf77UoDo__MSUIDNk7z6laqVhxr-d6NRG472sxNAaf9-Dj6-7Z03_NPCnTRt3nY-jppjQ27lyp0zPoaY8_8EmVz2-L7xl6bG_QWkd_1n0wPIWHtbAI4IvzrwIvwAa6riKksG-fp7HbP6-RH4KTTiMBfAVCbgVsnUAv-zstu8aILUfEe4YL_IDP_9XbYlV4Iw3WPDl_NW1LbDeNfIvrWvrMQr_ztvb7Y4pqrWon79lVnHp9xNap-Lx1djpkAd3RfZunzWgdO8d6xl33tcJC6JM_Mjro3faGPlvjeULzU7To_LVJNNpqYA"
+            }
+          }
       )
       .then((response) => {
         console.log("response", response.data.data.data);
@@ -45,14 +51,37 @@ export const PromotionProvider = (props) => {
         console.log(error);
       });
   };
+
+  const ViewPromotionEmployeeById = (employeeId) => {
+    setLoader(true);
+    client
+      .get("/api/v1/promotion/view/" + employeeId)
+      .then((response) => {
+        state.promotionEmployeeData = response.data.data;
+
+        setLoader(false);
+        console.log("--->", state.promotionEmployeeData);
+        console.log(response);
+
+        return dispatch({
+          type: "PROMOTION_EMPLOYEE_ID",
+          payload: state.promotionEmployeeData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   
   return (
     <PromotionContext.Provider
       value={{
         promotionListView,
+        ViewPromotionEmployeeById,
         setLoader,
         total: state.total,
         promotionList: state.promotionList,
+        promotionEmployeeData:state.promotionEmployeeData,
         loader: state.loader,
   
       }}
@@ -62,128 +91,3 @@ export const PromotionProvider = (props) => {
   );
 };
 
-
-// import React, { createContext, useReducer, useState } from "react";
-// import ProbationReducer from "../reducers/ProbationReducer";
-// import { client } from "../utils/axios";
-// import { toast } from "react-toastify";
-
-// export const ProbationContext = createContext();
-
-// const initial_state = {
-//   probationListData: [],
-//   probationListByDueDays: [],
-//   total: {},
-//   empId: "",
-//   probationData: {},
-// };
-
-// export const ProbationProvider = (props) => {
-//   const [loader, setLoader] = useState(false);
-//   const [state, dispatch] = useReducer(ProbationReducer, initial_state);
-
-//   const ProbationListView = (days, key, pageNumber) => {
-//     setLoader(true);
-//     client
-//       .get(
-//         "/api/v1/probation/view?days=" +
-//           days +
-//           "&key=" +
-//           key +
-//           "&page=" +
-//           pageNumber +
-//           "&size=10"
-//         // "/api/v1/probation/view?key=" + key + "&page=" + pageNumber + "&size=10"
-//         // " /api/v1/promotion/view?key=all&page=0&size=10"
-//       )
-//       .then((response) => {
-//         state.probationListData = response.data.data.data;
-//         state.total = response.data.data.total;
-//         setLoader(false);
-//         console.log(state.total);
-//         console.log(response);
-
-//         return dispatch({
-//           type: "PROBATION_LISTING",
-//           payload: state.probationListData,
-//         });
-//       })
-//       .catch((error) => {
-//         console.log(error);
-//       });
-//   };
-
-//   const ViewProbationDataById = (employeeId) => {
-//     setLoader(true);
-//     client
-//       .get("/api/v1/probation/view/" + employeeId)
-//       .then((response) => {
-//         state.probationData = response.data.data;
-
-//         setLoader(false);
-//         console.log("--->", state.probationData);
-//         console.log(response);
-
-//         return dispatch({
-//           type: "PROBATION_DATA_BY_ID",
-//           payload: state.probationData,
-//         });
-//       })
-//       .catch((error) => {
-//         console.log(error);
-//       });
-//   };
-
-//   const dueDaySearchByDays = (days) => {
-//     setLoader(true);
-//     client
-//       .get("/api/v1/probation/search?days=" + days)
-//       .then((response) => {
-//         state.probationListData = response.data.data.data;
-//         state.total = response.data.data.total;
-//         setLoader(false);
-//         console.log(state.probationListData);
-//         console.log("duesearch", response);
-
-//         return dispatch({
-//           type: "PROBATION_LISTING",
-//           payload: state.probationListData,
-//         });
-
-//         // return dispatch({
-//         //   type: "PROBATION_LISTING_BY_DUE",
-//         //   payload: state.probationListByDueDays,
-//         // });
-//       })
-//       .catch((error) => {
-//         console.log(error);
-//       });
-//   };
-//   const changeEmpId = (employeeId) => {
-//     setLoader(true);
-//     state.empId = employeeId;
-//     setLoader(false);
-//     return dispatch({
-//       type: "EMP_ID",
-//       payload: state.empId,
-//     });
-//   };
-//   return (
-//     <ProbationContext.Provider
-//       value={{
-//         ProbationListView,
-//         dueDaySearchByDays,
-//         changeEmpId,
-//         ViewProbationDataById,
-//         probationData: state.probationData,
-//         empId: state.empId,
-//         probationListByDueDays: state.probationListByDueDays,
-//         probationListData: state.probationListData,
-//         total: state.total,
-//         loader: loader,
-//       }}
-//     >
-//       {props.children}
-//     </ProbationContext.Provider>
-//   );
-// };

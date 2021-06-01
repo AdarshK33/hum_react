@@ -79,6 +79,7 @@ import HistoryView from "./components/Separation/FinanceAdminNoDueClearance/Hist
 import EmployeeExitList from "./components/ManagerApproveEmployeExit/EmployeeExitList";
 import EmployeeExitAction from "./components/ManagerApproveEmployeExit/EmployeeExitAction";
 import ManagerInitiateExit from "./components/ManagerApproveEmployeExit/ManagerInitiateExit";
+import PromotionInitiate from "./components/Promotion/PromotionInitiate"
 import EmpResignation from "./components/employeeSeparation/empResignation";
 import EmployeeSeparationListing from "./components/managerSeparation/employeeSeparationListing";
 import CostCenterManagerExitListing from "./components/CostcenterManagerApproveExit/exitListing";
@@ -111,7 +112,10 @@ const RoutePath = () => {
         path={`${process.env.PUBLIC_URL}/promotion-list`}
         component={PromotionList}
       />
-
+ <Route
+            path={`${process.env.PUBLIC_URL}/promotion-initiate`}
+            component={PromotionInitiate}
+          />
       <Route
         //  {/*Rajasekhar */}
         path={`${process.env.PUBLIC_URL}/onboard`}
