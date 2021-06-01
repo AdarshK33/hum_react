@@ -84,7 +84,7 @@ const EmployeeExitAction = () => {
       state.empLocation = employeeData.location;
       state.empPosition = employeeData.position;
       state.mngrName = employeeData.managerName;
-      state.mngrId = employeeData.managerId;
+      state.mngrId = employeeData.managerId ? employeeData.managerId : "";
       state.mngrCostCenterName = employeeData.managerCostCentre;
       state.mngrPosition = employeeData.managerPosition;
       // state.modeOfSeparationId = employeeData.modeOfSeparationId;
@@ -183,6 +183,7 @@ const EmployeeExitAction = () => {
   const handleNoticePeriodRcryNo = (e) => {
     setRcryYes(!e.target.checked);
     setRcryNo(e.target.checked);
+    state.noticePeriodRcryDays = "";
   };
   const handleRehireChangeYes = (e) => {
     setRehireYes(e.target.checked);
@@ -337,7 +338,7 @@ const EmployeeExitAction = () => {
           location: employeeData.location,
           managerCostCentre: employeeData.managerCostCentre,
           managerEmailId: employeeData.managerEmailId,
-          managerId: employeeData.managerId,
+          managerId: employeeData.managerId ? employeeData.managerId : "",
           managerName: employeeData.managerName,
           managerPosition: employeeData.managerPosition,
           modeOfSeparationId: employeeData.modeOfSeparationId,
@@ -363,21 +364,31 @@ const EmployeeExitAction = () => {
 
   return (
     <Fragment>
-      <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
-        <Modal.Header closeButton className="modal-line"></Modal.Header>
-        {submitLetter ? (
+      {submitLetter ? (
+        <Modal
+          show={showRelivingModal}
+          onHide={handleRelivingClose}
+          size="md"
+          centered
+        >
+          <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
-            <label>
-              The details have been saved successfully. The relieving letter
+            <label className="text-center">
+              The details have been saved successfully.
               <br />
-              will be sent to the employee on{" "}
-              {relivingLetterData.lastWorkingDate}
+              The relieving letter will be sent to the employee on{" "}
+              {moment(relivingLetterData.lastWorkingDate, "YYYY-MM-DD")
+                .add(1, "days")
+                .format("YYYY-MM-DD")}
             </label>
             <div className="text-center mb-2">
               <Button onClick={handleRelivingClose}>Close</Button>
             </div>
           </Modal.Body>
-        ) : previewLetter || showRelivingModal ? (
+        </Modal>
+      ) : previewLetter || showRelivingModal ? (
+        <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
+          <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body>
             {relivingLetterData &&
             relivingLetterData !== undefined &&
@@ -433,17 +444,22 @@ const EmployeeExitAction = () => {
               ""
             )}
           </Modal.Body>
-        ) : (
-          ""
-        )}
-      </Modal>
+        </Modal>
+      ) : (
+        ""
+      )}
+
       <Modal show={showModal} onHide={() => handleClose1()} centered>
         <Container>
           <Modal.Header closeButton className="modalHeader">
             {/* <Modal.Title>State remarks for disapproval</Modal.Title> */}
           </Modal.Header>{" "}
           <Modal.Body className="mx-auto">
-            <label className="itemResult">State remarks:</label>
+            {/* <label className="itemResult">State remarks:</label> */}
+            <label className="itemResult">
+              Please state the reason why this employee cannot be re-hired :
+            </label>
+            {/* <p>Please state the reason why this employee cannot be re-hired:</p> */}
             <textarea
               className="remarkText rounded"
               name="remarks"
@@ -468,8 +484,8 @@ const EmployeeExitAction = () => {
             {/* <Modal.Title>State remarks for disapproval</Modal.Title> */}
           </Modal.Header>{" "}
           <Modal.Body className="mx-auto">
-            <label className="itemResult">
-              Exit details saved successfully, the employee has been notified
+            <label>
+              Exit details saved successfully the employee has been notified
             </label>
 
             <div className="text-center mb-2">
@@ -703,8 +719,8 @@ const EmployeeExitAction = () => {
                       </Col>
                       <Col sm={2}>
                         <div>
-                          <label>
-                            <a href="~/address">
+                          <label className="itemResult">
+                            <a href="~/address" className="itemResult">
                               <u>Exit Feedback Form</u>
                             </a>
                           </label>
@@ -928,7 +944,7 @@ const EmployeeExitAction = () => {
                           className={"LettersButtons"}
                           onClick={relivingLetterClick}
                         >
-                          Generate Reliving Letter
+                          Generate Letter
                         </button>
                       ) : (
                         ""
@@ -938,7 +954,7 @@ const EmployeeExitAction = () => {
                           className={"LettersButtons"}
                           onClick={previewRelivingLetter}
                         >
-                          Preview Reliving Letter
+                          Preview Letter
                         </button>
                       ) : (
                         ""
