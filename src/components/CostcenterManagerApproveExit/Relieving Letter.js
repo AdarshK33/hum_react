@@ -65,14 +65,14 @@ const RelievingLetter = (props) => {
               <div ref={ref}>
                 <p className="float-left mb-5">
                   {" "}
-                  Date: {moment().format("DD-MM-YYYY")}
+                  Date: <b>{moment().format("DD-MM-YYYY")}</b>
                 </p>
                 <br></br>
                 <h5 className="text-center"> RELIEVING & EXPERIENCE LETTER</h5>
                 <div className="relievingLetterHeading">
                   <div className="mt-1">
                     <p>
-                      <b>Name:&nbsp;&nbsp; </b>
+                      Name:&nbsp;&nbsp;
                       {relivingLetterData !== undefined &&
                         relivingLetterData.employeeName}
                     </p>
@@ -127,14 +127,16 @@ const RelievingLetter = (props) => {
                       <img src={calendarImage} alt="calendar" width="100px" />
                     </div>
                   )}
-                  <div className="mt-3">
-                    <button
-                      className="signatureButtons"
-                      onClick={() => addSignature()}
-                    >
-                      Add Signature
-                    </button>
-                  </div>
+                  {!showSignature && (
+                    <div className="mt-3">
+                      <button
+                        className="signatureButtons"
+                        onClick={() => addSignature()}
+                      >
+                        Add Signature
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="text-center mt-5 mb-5">

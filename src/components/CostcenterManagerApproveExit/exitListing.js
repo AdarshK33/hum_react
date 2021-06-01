@@ -173,11 +173,11 @@ const ExitListing = () => {
                     />
                   </div>
                 </div> */}
-                  <Link to="/manager-initiate-exit">
+                  {/* <Link to="/manager-initiate-exit">
                     <Button className="apply-button btn btn-light mr-2">
                       Initiate Exit
                     </Button>
-                  </Link>
+                  </Link> */}
                 </div>
                 <div className="table-responsive">
                   <Table id="table-to-xls" className="table table-hover">
