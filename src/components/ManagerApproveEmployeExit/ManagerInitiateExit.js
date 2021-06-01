@@ -235,7 +235,10 @@ const ManagerInitiateExit = () => {
       //   state.empLocation = searchEmpData1.location;
       state.empPosition = searchByCostData.position;
 
-      if (state.empContractType === "Internship") {
+      if (
+        state.empContractType === "internship" ||
+        state.empContractType === "Internship"
+      ) {
         setIntern(true);
       } else {
         setIntern(false);
@@ -790,7 +793,7 @@ const ManagerInitiateExit = () => {
             location: searchByCostData.locationId,
             managerCostCentre: state.managerCostCentre,
             managerEmailId: null,
-            managerId: state.mngrId,
+            managerId: state.mngrId ? state.mngrId : "",
             managerName: state.mngrName,
             managerPosition: state.mngrPosition,
             modeOfSeparationId: changeInSeparation,
@@ -831,7 +834,7 @@ const ManagerInitiateExit = () => {
             location: searchByCostData.locationId,
             managerCostCentre: state.managerCostCentre,
             managerEmailId: null,
-            managerId: state.mngrId,
+            managerId: state.mngrId ? state.mngrId : "",
             managerName: state.mngrName,
             managerPosition: state.mngrPosition,
             modeOfSeparationId: 3,
@@ -849,6 +852,10 @@ const ManagerInitiateExit = () => {
           console.log("createExitData", data1);
           //   empResign(createExitData);
           CreateEmplyoeeExist(data1, state.empId);
+          // setPreview(true);
+          // setSuccessModal(true);
+          setSubmitted(true);
+          // CreateEmplyoeeExist(data2, state.empId);
           setPreview(true);
           setSuccessModal(true);
         }
@@ -859,11 +866,17 @@ const ManagerInitiateExit = () => {
   return (
     <Fragment>
       {/* reliving letter */}
-      <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
-        <Modal.Header closeButton className="modal-line"></Modal.Header>
-        {submitLetter ? (
+
+      {submitLetter ? (
+        <Modal
+          show={showRelivingModal}
+          onHide={handleRelivingClose}
+          size="md"
+          centered
+        >
+          <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
-            <label>
+            <label className="text-center">
               The details have been saved successfully <br />
               The relieving letter will be sent to the employee on{" "}
               {moment(relivingLetterData.lastWorkingDate, "YYYY-MM-DD")
@@ -874,7 +887,10 @@ const ManagerInitiateExit = () => {
               <Button onClick={handleRelivingClose}>Close</Button>
             </div>
           </Modal.Body>
-        ) : previewLetter || showRelivingModal ? (
+        </Modal>
+      ) : previewLetter || showRelivingModal ? (
+        <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
+          <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body>
             {relivingLetterData &&
             relivingLetterData !== undefined &&
@@ -931,10 +947,11 @@ const ManagerInitiateExit = () => {
               ""
             )}
           </Modal.Body>
-        ) : (
-          ""
-        )}
-      </Modal>
+        </Modal>
+      ) : (
+        ""
+      )}
+
       {/* reliving letter end */}
       <Modal show={showModal} onHide={() => handleClose()} centered>
         <Container>
@@ -972,7 +989,7 @@ const ManagerInitiateExit = () => {
           </Modal.Header>{" "}
           <Modal.Body className="mx-auto">
             <label>
-              Exit details saved successfully, the employee has been notified
+              Exit details saved successfully the employee has been notified
             </label>
 
             <div className="text-center mb-2">
@@ -1706,7 +1723,7 @@ const ManagerInitiateExit = () => {
                               }
                               onClick={withdrawHandler}
                             >
-                              Withdraw Resignation
+                              Withdraw
                             </button>
                           )}
 
@@ -1724,7 +1741,7 @@ const ManagerInitiateExit = () => {
                               className={"LettersButtons"}
                               onClick={relivingLetterClick}
                             >
-                              Generate Relieving Letter
+                              Generate Letter
                             </button>
                           ) : (
                             ""
@@ -1736,7 +1753,7 @@ const ManagerInitiateExit = () => {
                               className={"LettersButtons"}
                               onClick={previewRelivingLetter}
                             >
-                              Preview Relieving Letter
+                              Preview Letter
                             </button>
                           ) : (
                             ""

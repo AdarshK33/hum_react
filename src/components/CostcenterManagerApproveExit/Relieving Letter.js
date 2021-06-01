@@ -60,7 +60,7 @@ const RelievingLetter = (props) => {
             <Modal.Body>
               <p className="float-left mb-5">
                 {" "}
-                Date: {moment().format("DD-MM-YYYY")}
+                Date: <b>{moment().format("DD-MM-YYYY")}</b>
               </p>
               <br></br>
               <h5 className="text-center"> RELIEVING & EXPERIENCE LETTER</h5>
@@ -98,19 +98,20 @@ const RelievingLetter = (props) => {
                   you that your resignation has been accepted and you are
                   relieved from the services of the Decathlon Sports India on
                   the closing of working hours of{" "}
-                  {relivingLetterData.dateOfResignation}. We hereby confirm that
-                  you have been working in Decathlon Sports India since
-                  {relivingLetterData.dateOfJoining}. Please be informed that
-                  you shall be bound by the relevant clause of your appointment
-                  letter which states that you shall not use, disclose, remove
-                  or transfer whether directly or indirectly, to any person,
-                  corporation or organisation, any trade secrets, know-how and
-                  confidential information relating to the business or financial
-                  conditions of Decathlon. During the employment tenure with us,
-                  we found him to be good at work & thank you for your service
-                  and commitment to the Decathlon. He left the services of the
-                  Decathlon on his own accord. We wish him all the best in his
-                  future endeavours.
+                  <b> {relivingLetterData.dateOfResignation}</b>. We hereby
+                  confirm that you have been working in Decathlon Sports India
+                  since
+                  <b>{relivingLetterData.dateOfJoining}</b>. Please be informed
+                  that you shall be bound by the relevant clause of your
+                  appointment letter which states that you shall not use,
+                  disclose, remove or transfer whether directly or indirectly,
+                  to any person, corporation or organisation, any trade secrets,
+                  know-how and confidential information relating to the business
+                  or financial conditions of Decathlon. During the employment
+                  tenure with us, we found him to be good at work & thank you
+                  for your service and commitment to the Decathlon. He left the
+                  services of the Decathlon on his own accord. We wish him all
+                  the best in his future endeavours.
                 </p>
                 <p className="mt-5 mb-5">
                   <b>For Decathlon Sports India India Pvt Ltd,</b>
@@ -121,14 +122,16 @@ const RelievingLetter = (props) => {
                       <img src={calendarImage} alt="calendar" width="100px" />
                     </div>
                   )}
-                  <div className="mt-3">
-                    <button
-                      className="signatureButtons"
-                      onClick={() => addSignature()}
-                    >
-                      Add Signature
-                    </button>
-                  </div>
+                  {!showSignature && (
+                    <div className="mt-3">
+                      <button
+                        className="signatureButtons"
+                        onClick={() => addSignature()}
+                      >
+                        Add Signature
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="text-center mt-5 mb-5">

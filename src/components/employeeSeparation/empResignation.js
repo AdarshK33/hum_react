@@ -262,7 +262,7 @@ const EmpResignation = () => {
       location: user.locationId,
       managerCostCentre: null,
       managerEmailId: null,
-      managerId: user.managerId,
+      managerId: user.managerId ? user.managerId : "",
       managerName: approver,
       managerPosition: null,
       modeOfSeparationId: 4,
