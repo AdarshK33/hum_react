@@ -48,6 +48,8 @@ const GroupReducer = (state, action) => {
       return { ...state, verificationCityList: action.payload };
     case "VIEW_PERMANENT_VERIFICATION_CITY":
       return { ...state, verificationPermanentCityList: action.payload };
+    case "BASE64_UPLOAD":
+      return { ...state, ImageData: action.payload };
   }
 };
 export default GroupReducer;

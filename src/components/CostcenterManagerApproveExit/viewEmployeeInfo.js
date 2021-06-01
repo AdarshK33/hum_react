@@ -7,6 +7,7 @@ import { setGlobalCssModule } from "reactstrap/es/utils";
 import { useParams } from "react-router-dom";
 import moment from "moment";
 import calendarImage from "../../assets/images/calendar-image.png";
+// import PdfExample from "../PdfLetters/pdfexample";
 
 import "./exitForm.css";
 const EmployeeExitAction = () => {
@@ -333,6 +334,7 @@ const EmployeeExitAction = () => {
         </Modal>
         <RelievingLetter previewLetter={previewLetter} />
         <Breadcrumb title="EMPLOYEE SEPARATION" parent="EMPLOYEE SEPARATION" />
+        {/* <PdfExample /> */}
         <div className="container-fluid">
           <div className="row">
             <div className="col-sm-12">
