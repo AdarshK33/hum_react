@@ -11,6 +11,7 @@ const initial_state = {
   promotionCreate:{},
   total: {},
   data: [],
+  promotionLetterData: {},
 };
 
 export const PromotionContext = createContext();
@@ -21,6 +22,7 @@ export const PromotionProvider = (props) => {
 
   const promotionListView = (key, page) => {
     console.log(key, page,client.defaults.headers,"promotion ")
+    console.log(key, page, "promotion ");
     setLoader(true);
      client
       .get(
@@ -90,6 +92,22 @@ export const PromotionProvider = (props) => {
         console.log(error);
       });
   };
+  const generatePromotionLetter = (id) => {
+    console.log("candidate id", id);
+    return client
+      .get("/api/v1/promotion/letter/" + id)
+      .then((response) => {
+        state.promotionLetterData = response.data.data;
+        console.log("offer.message", state.promotionLetterData);
+        return dispatch({
+          type: "PROMOTION_LETTER_DATA",
+          payload: state.promotionLetterData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const PromotionCreate = (create) => {
     setLoader(true);
     let formData = {
@@ -142,6 +160,7 @@ export const PromotionProvider = (props) => {
       });
   };
   
+
   return (
     <PromotionContext.Provider
       value={{
@@ -150,17 +169,18 @@ export const PromotionProvider = (props) => {
         PromotionCreate,
         PositionNew,
         setLoader,
+        generatePromotionLetter,
         total: state.total,
         promotionList: state.promotionList,
         positionNew:state.positionNew,
         promotionEmployeeData:state.promotionEmployeeData,
         promotionCreate:state.promotionCreate,
+        promotionEmployeeData: state.promotionEmployeeData,
         loader: state.loader,
-  
+        promotionLetterData: state.promotionLetterData,
       }}
     >
       {props.children}
     </PromotionContext.Provider>
   );
 };
-

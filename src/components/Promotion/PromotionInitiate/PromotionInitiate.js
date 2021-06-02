@@ -275,9 +275,9 @@ departmentIdError: '',
                                     // disabled={disabled}
                                     value={EmpName}
                                     style={{ borderRadius: "5px" }}
-                                    // style={
-                                    //   empName1Error ? { borderColor: "red" } : {}
-                                    // }
+                                    style={
+                                      stateError.empName1Error.length > 0 ? { borderColor: "red" } : {}
+                                    }
                                     placeholder="Search.."
                                     onChange={(e) => changeHandler(e)}
                                     required
@@ -535,9 +535,9 @@ departmentIdError: '',
                onChange={(e) => changeHandler(e)}
             />
 
-            {/* {
-              <p style={{ color: "red" }}>Please add your reason</p>
-            } */}
+            {
+             stateError.reasonError.length > 0? <p style={{ color: "red" }}>Please add your reason</p>:''
+            }
         
           </Modal.Body>
       
