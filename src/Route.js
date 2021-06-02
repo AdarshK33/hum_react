@@ -85,6 +85,9 @@ import EmployeeSeparationListing from "./components/managerSeparation/employeeSe
 import CostCenterManagerExitListing from "./components/CostcenterManagerApproveExit/exitListing";
 import viewEmployeeInfo from "./components/CostcenterManagerApproveExit/viewEmployeeInfo";
 
+import ProbationList from "./components/Probation/ProbationList";
+import ProbationAction from "./components/Probation/ProbationAction";
+
 import ViewBonus from "./components/Bonus/ViewBonus";
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
@@ -219,7 +222,6 @@ const RoutePath = () => {
           />
           <Route
             path={`${process.env.PUBLIC_URL}/candidate-verification`}
-            // component={EmployeeExitList}
             component={CandidateVerification}
           />
           <Route
@@ -229,6 +231,10 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/history-view/:employeeid`}
             component={HistoryView}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/probation-action/:employeeid`}
+            component={ProbationAction}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/manager-initiate-exit`}
@@ -258,6 +264,11 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/employee-separation-listing`}
             component={EmployeeExitList}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/probation`}
+            component={ProbationList}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/exit-approval`}
