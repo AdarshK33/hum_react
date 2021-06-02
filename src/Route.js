@@ -53,7 +53,7 @@ import MasterMonthlyQuantity from "./components/MasterTables/MasterMonthlyQuanti
 import MasterDailyQty from "./components/MasterTables/MasterDailyQty";
 import MasterCostCenter from "./components/MasterTables/MasterCostCenter";
 import CreateTicket from "./components/support/createTicket";
-
+import PromotionList from "./components/Promotion/PromotionList"
 import OnBoardingStepper from "./components/OnBording/OnBoardingStepper";
 
 import TicketListingPage from "./components/support/ticketListingPage";
@@ -75,10 +75,11 @@ import AdminNoDueClearance from "./components/Separation/AdminNoDueClearance/Adm
 import NoDueClearance from "./components/Separation/NoDueClearance";
 import ViewEditRelease from "./components/OfferReleaseandOnboarding/ViewOfferRelease";
 import Documents from "./components/OnBording/Documents";
-
+import HistoryView from "./components/Separation/FinanceAdminNoDueClearance/HistoryView"
 import EmployeeExitList from "./components/ManagerApproveEmployeExit/EmployeeExitList";
 import EmployeeExitAction from "./components/ManagerApproveEmployeExit/EmployeeExitAction";
 import ManagerInitiateExit from "./components/ManagerApproveEmployeExit/ManagerInitiateExit";
+import PromotionInitiate from "./components/Promotion/PromotionInitiate"
 import EmpResignation from "./components/employeeSeparation/empResignation";
 import EmployeeSeparationListing from "./components/managerSeparation/employeeSeparationListing";
 import CostCenterManagerExitListing from "./components/CostcenterManagerApproveExit/exitListing";
@@ -110,11 +111,14 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/no_due_clearance`}
             component={NoDueClearance}
           /> */}
-      {/* <Route
-        path={`${process.env.PUBLIC_URL}/finance-clearance`}
-        component={FinanceClearanceList}
-      /> */}
-
+      <Route
+        path={`${process.env.PUBLIC_URL}/promotion-list`}
+        component={PromotionList}
+      />
+ <Route
+            path={`${process.env.PUBLIC_URL}/promotion-initiate`}
+            component={PromotionInitiate}
+          />
       <Route
         //  {/*Rajasekhar */}
         path={`${process.env.PUBLIC_URL}/onboard`}
@@ -147,6 +151,10 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/profileEdit`}
             component={ProfileEdit}
           /> */}
+           <Route
+        path={`${process.env.PUBLIC_URL}/promotion-list`}
+        component={PromotionList}
+      />
           <Route
             path={`${process.env.PUBLIC_URL}/no_due_clearance`}
             component={NoDueClearance}
@@ -222,6 +230,10 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/exit-action/:employeeid`}
             component={EmployeeExitAction}
+          />
+            <Route
+            path={`${process.env.PUBLIC_URL}/history-view/:employeeid`}
+            component={HistoryView}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/probation-action/:employeeid`}

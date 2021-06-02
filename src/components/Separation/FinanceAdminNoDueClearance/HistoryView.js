@@ -1,15 +1,15 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Row, Col, Form, Button, Container, Modal } from "react-bootstrap";
-import Breadcrumb from "../common/breadcrumb";
-import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
+import Breadcrumb from "../../common/breadcrumb";
+import { EmployeeSeparationContext } from "../../../context/EmployeeSeparationState";
 import moment from "moment";
-import "./EmployeeExit.css";
+import "../../ManagerApproveEmployeExit/EmployeeExit.css";
 import { setGlobalCssModule } from "reactstrap/es/utils";
 import RelievingLetter from "./RelivingLetter";
-import calendarImage from "../../assets/images/calendar-image.png";
+import calendarImage from "../../../assets/images/calendar-image.png";
 
-const EmployeeExitAction = () => {
+const HistoryView = () => {
   const [modeOfSeparation, setModeOfSeparation] = useState("");
   const [RcryYes, setRcryYes] = useState(false);
   const [RcryNo, setRcryNo] = useState(false);
@@ -66,6 +66,7 @@ const EmployeeExitAction = () => {
   } = useContext(EmployeeSeparationContext);
   console.log("employeeId", employeeId);
   useEffect(() => {
+
     ViewEmployeeDataById(employeeId);
   }, [employeeId]);
   console.log("employeeData", employeeData);
@@ -84,7 +85,7 @@ const EmployeeExitAction = () => {
       state.empLocation = employeeData.location;
       state.empPosition = employeeData.position;
       state.mngrName = employeeData.managerName;
-      state.mngrId = employeeData.managerId ? employeeData.managerId : "";
+      state.mngrId = employeeData.managerId;
       state.mngrCostCenterName = employeeData.managerCostCentre;
       state.mngrPosition = employeeData.managerPosition;
       // state.modeOfSeparationId = employeeData.modeOfSeparationId;
@@ -183,7 +184,6 @@ const EmployeeExitAction = () => {
   const handleNoticePeriodRcryNo = (e) => {
     setRcryYes(!e.target.checked);
     setRcryNo(e.target.checked);
-    state.noticePeriodRcryDays = "";
   };
   const handleRehireChangeYes = (e) => {
     setRehireYes(e.target.checked);
@@ -224,8 +224,7 @@ const EmployeeExitAction = () => {
     }
   };
 
-  const previewRelivingLetter = (e) => {
-    e.preventDefault();
+  const previewRelivingLetter = () => {
     if (employeeData !== null && employeeData !== undefined) {
       fetchRelievingLetterData(employeeData.employeeId);
       setSubmitLetter(false);
@@ -338,7 +337,7 @@ const EmployeeExitAction = () => {
           location: employeeData.location,
           managerCostCentre: employeeData.managerCostCentre,
           managerEmailId: employeeData.managerEmailId,
-          managerId: employeeData.managerId ? employeeData.managerId : "",
+          managerId: employeeData.managerId,
           managerName: employeeData.managerName,
           managerPosition: employeeData.managerPosition,
           modeOfSeparationId: employeeData.modeOfSeparationId,
@@ -364,31 +363,29 @@ const EmployeeExitAction = () => {
 
   return (
     <Fragment>
-      {submitLetter ? (
-        <Modal
-          show={showRelivingModal}
-          onHide={handleRelivingClose}
-          size="md"
-          centered
-        >
-          <Modal.Header closeButton className="modal-line"></Modal.Header>
-          <Modal.Body className="mx-auto">
-            <label className="text-center">
-              The details have been saved successfully.
-              <br />
-              The relieving letter will be sent to the employee on{" "}
-              {moment(relivingLetterData.lastWorkingDate, "YYYY-MM-DD")
-                .add(1, "days")
-                .format("YYYY-MM-DD")}
-            </label>
-            <div className="text-center mb-2">
-              <Button onClick={handleRelivingClose}>Close</Button>
+      <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        {submitLetter ? (
+          <Modal.Body>
+            <div className="offer-letter-message ">
+              <p>
+                The details have been saved successfully. The relieving letter
+                will be sent to the employee on{" "}
+                {relivingLetterData.lastWorkingDate}
+              </p>
+              <br></br>
+              {/* <Link
+                to="/employee-separation-listing
+              "
+                className="text-center"
+              > */}
+              <Button type="button" onClick={handleRelivingClose}>
+                Close
+              </Button>
+              {/* </Link> */}
             </div>
           </Modal.Body>
-        </Modal>
-      ) : previewLetter || showRelivingModal ? (
-        <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
-          <Modal.Header closeButton className="modal-line"></Modal.Header>
+        ) : previewLetter || showRelivingModal ? (
           <Modal.Body>
             {relivingLetterData &&
             relivingLetterData !== undefined &&
@@ -417,12 +414,13 @@ const EmployeeExitAction = () => {
               ) : (
                 <>
                   <br></br>
-                  <button
-                    className={"stepperButtons"}
+                  <Button
+                    variant="primary"
+                    style={{ marginLeft: "20px" }}
                     onClick={digitalSignature}
                   >
                     Add digital signature
-                  </button>
+                  </Button>
                 </>
               )}
             </Row>
@@ -432,34 +430,26 @@ const EmployeeExitAction = () => {
                 <Col sm={5}>
                   <br></br>
                   <br></br>
-                  <button
-                    className={"stepperButtons"}
-                    onClick={saveOfferLetter}
-                  >
+                  <Button variant="primary" onClick={saveOfferLetter}>
                     Save Changes
-                  </button>
+                  </Button>
                 </Col>
               </Row>
             ) : (
               ""
             )}
           </Modal.Body>
-        </Modal>
-      ) : (
-        ""
-      )}
-
+        ) : (
+          ""
+        )}
+      </Modal>
       <Modal show={showModal} onHide={() => handleClose1()} centered>
         <Container>
           <Modal.Header closeButton className="modalHeader">
             {/* <Modal.Title>State remarks for disapproval</Modal.Title> */}
           </Modal.Header>{" "}
           <Modal.Body className="mx-auto">
-            {/* <label className="itemResult">State remarks:</label> */}
-            <label className="itemResult">
-              Please state the reason why this employee cannot be re-hired :
-            </label>
-            {/* <p>Please state the reason why this employee cannot be re-hired:</p> */}
+            <label className="itemResult">State remarks:</label>
             <textarea
               className="remarkText rounded"
               name="remarks"
@@ -484,8 +474,8 @@ const EmployeeExitAction = () => {
             {/* <Modal.Title>State remarks for disapproval</Modal.Title> */}
           </Modal.Header>{" "}
           <Modal.Body className="mx-auto">
-            <label>
-              Exit details saved successfully the employee has been notified
+            <label className="itemResult">
+              Exit details saved successfully, the employee has been notified
             </label>
 
             <div className="text-center mb-2">
@@ -495,7 +485,7 @@ const EmployeeExitAction = () => {
         </Container>
       </Modal>
 
-      <Breadcrumb title="EMPLOYEE SEPARATION" parent="EMPLOYEE SEPARATION" />
+      {/* <Breadcrumb title="EMPLOYEE SEPARATION" parent="EMPLOYEE SEPARATION" /> */}
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
@@ -700,33 +690,7 @@ const EmployeeExitAction = () => {
                         </div>
                       </Col>
                     </Row>
-                    <Row
-                      style={{
-                        marginLeft: "2rem",
-                        marginTop: "1rem",
-                        marginBottom: "3rem",
-                      }}
-                    >
-                      <Col sm={2}>
-                        <div>
-                          <label>
-                            <b>Exit Feedback Form:</b>
-                            <label className="itemResult">
-                              {/* &nbsp;&nbsp; {InfoState.empName} */}
-                            </label>
-                          </label>
-                        </div>
-                      </Col>
-                      <Col sm={2}>
-                        <div>
-                          <label className="itemResult">
-                            <a href="~/address" className="itemResult">
-                              <u>Exit Feedback Form</u>
-                            </a>
-                          </label>
-                        </div>
-                      </Col>
-                    </Row>
+                
                     <Row
                       style={{
                         marginLeft: "2rem",
@@ -774,6 +738,7 @@ const EmployeeExitAction = () => {
                               className="largerCheckbox"
                               type="checkbox"
                               value="yes"
+                              disabled="true"  
                               checked={RcryYes}
                               style={RcryError ? { borderColor: "red" } : {}}
                               // required={required}
@@ -789,6 +754,7 @@ const EmployeeExitAction = () => {
                             <input
                               className="largerCheckbox"
                               type="checkbox"
+                              disabled="true"  
                               value="no"
                               checked={RcryNo}
                               style={RcryError ? { borderColor: "red" } : {}}
@@ -815,6 +781,7 @@ const EmployeeExitAction = () => {
                       <Col sm={2} style={{ marginTop: "0.5rem" }}>
                         <Form.Group>
                           <Form.Control
+                          disabled="true"
                             type="text"
                             placeholder=""
                             required
@@ -862,6 +829,7 @@ const EmployeeExitAction = () => {
                             <input
                               className="largerCheckbox"
                               type="checkbox"
+                              disabled="true"  
                               value="yes"
                               checked={RehireYes}
                               // required={required}
@@ -878,6 +846,7 @@ const EmployeeExitAction = () => {
                             <input
                               className="largerCheckbox"
                               type="checkbox"
+                              disabled="true"  
                               value="no"
                               checked={RehireNo}
                               // required={required}
@@ -923,12 +892,17 @@ const EmployeeExitAction = () => {
                       {/* <button className="stepperButtons" onClick={PrevStep}>
             Back
           </button> */}
-                      {true ? (
+                      {(employeeData.status === 0 ||
+                        updateResponse.status === 0) &&
+                      letterSent === false ? (
                         <button
-                          disabled={showPreview}
-                          className={
-                            showPreview ? "confirmButton" : "stepperButtons"
-                          }
+                          // style={
+                          //   showModal | showSuccessModal
+                          //     ? { borderColor: "#aaa" }
+                          //     : ""
+                          // }
+                          disabled={showModal | showSuccessModal}
+                          className="stepperButtons"
                           onClick={submitHandler}
                         >
                           Save
@@ -936,31 +910,32 @@ const EmployeeExitAction = () => {
                       ) : (
                         ""
                       )}
+                    </div>
 
-                      {!saveLetter &&
-                      (employeeData.status === 2 || showPreview === true) ? (
-                        <button
-                          // disabled={!submitted}
-                          className={"LettersButtons"}
-                          onClick={relivingLetterClick}
+                    {!saveLetter &&
+                    (employeeData.status === 2 || showPreview === true) ? (
+                      <Row>
+                        <Col sm={4}></Col>
+                        <Col
+                          sm={2}
+                          style={{
+                            marginTop: "2rem",
+                            marginBottom: "2rem",
+                            textAlign: "center",
+                          }}
                         >
-                          Generate Letter
-                        </button>
-                      ) : (
-                        ""
-                      )}
-                      {saveLetter && previewGeneratedLetter && showPreview ? (
-                        <button
-                          className={"LettersButtons"}
-                          onClick={previewRelivingLetter}
-                        >
-                          Preview Letter
-                        </button>
-                      ) : (
-                        ""
-                      )}
-                      {saveLetter && previewGeneratedLetter === true && (
+                          {/* <Button disabled="true"    type="button" onClick={relivingLetterClick}>
+                            Generate Reliving Letter
+                          </Button> */}
+                        </Col>
+                      </Row>
+                    ) : (
+                      saveLetter &&
+                      previewGeneratedLetter === true && (
                         <div className="preview-section">
+                          <Button type="button" onClick={previewRelivingLetter}>
+                            Preview Reliving Letter
+                          </Button>
                           <br></br>
                           <br></br>
                           <img
@@ -970,24 +945,25 @@ const EmployeeExitAction = () => {
                           />
                           <br></br>
                           <br></br>
-                          {true ? (
-                            <button
-                              disabled={letterSent}
-                              className={
-                                letterSent
-                                  ? " confirmButton "
-                                  : "stepperButtons"
-                              }
+                          {letterSent ? (
+                            ""
+                          ) : (
+                            <Button
+                              type="button"
+                              disabled="true"
                               onClick={submitfinalRelivingLetter}
+                              style={{
+                                marginTop: "2rem",
+                                marginBottom: "2rem",
+                                textAlign: "center",
+                              }}
                             >
                               Submit
-                            </button>
-                          ) : (
-                            ""
+                            </Button>
                           )}
                         </div>
-                      )}
-                    </div>
+                      )
+                    )}
                   </Form>
                 )}
               </div>
@@ -999,4 +975,4 @@ const EmployeeExitAction = () => {
   );
 };
 
-export default EmployeeExitAction;
+export default HistoryView;

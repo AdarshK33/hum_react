@@ -89,12 +89,18 @@ const ManagerInitiateExit = () => {
     terminationConfirmation,
     resignationConfirmation,
   } = useContext(EmployeeSeparationContext);
-  const { empResign, withdraw, searchByCostCenter, searchByCostData } =
-    useContext(SeparationContext);
-  const { searchForEmp1, searchEmpData1, makeSearchEmp1DataNull } =
-    useContext(OfferContext);
-  const { locationDetails, locationDetailsList } =
-    useContext(PermissionContext);
+  const {
+    empResign,
+    withdraw,
+    searchByCostCenter,
+    searchByCostData,
+  } = useContext(SeparationContext);
+  const { searchForEmp1, searchEmpData1, makeSearchEmp1DataNull } = useContext(
+    OfferContext
+  );
+  const { locationDetails, locationDetailsList } = useContext(
+    PermissionContext
+  );
   useEffect(() => {
     ViewEmployeeProfile();
   }, []);
@@ -229,7 +235,10 @@ const ManagerInitiateExit = () => {
       //   state.empLocation = searchEmpData1.location;
       state.empPosition = searchByCostData.position;
 
-      if (state.empContractType === "Internship") {
+      if (
+        state.empContractType === "internship" ||
+        state.empContractType === "Internship"
+      ) {
         setIntern(true);
       } else {
         setIntern(false);
@@ -438,6 +447,7 @@ const ManagerInitiateExit = () => {
   const handleNoticePeriodRcryNo = (e) => {
     setRcryYes(!e.target.checked);
     setRcryNo(e.target.checked);
+    state.noticePeriodRcryDays = "";
   };
   const handleRehireChangeYes = (e) => {
     setRehireYes(e.target.checked);
@@ -585,8 +595,7 @@ const ManagerInitiateExit = () => {
     }
   };
   const emailValidation = () => {
-    const emailValid =
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const emailValid = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (
       state.emailId !== "" &&
       state.emailId !== null &&
@@ -700,7 +709,7 @@ const ManagerInitiateExit = () => {
   };
   const withdrawHandler = () => {
     console.log("exitId", employeeData.exitId);
-    withdraw(employeeData.exitId);
+    // withdraw(employeeData.exitId);
     setWithdrawThis(true);
     ViewEmployeeDataById(state.empId);
     setSubmitted(false);
@@ -784,7 +793,7 @@ const ManagerInitiateExit = () => {
             location: searchByCostData.locationId,
             managerCostCentre: state.managerCostCentre,
             managerEmailId: null,
-            managerId: state.mngrId,
+            managerId: state.mngrId ? state.mngrId : "",
             managerName: state.mngrName,
             managerPosition: state.mngrPosition,
             modeOfSeparationId: changeInSeparation,
@@ -825,7 +834,7 @@ const ManagerInitiateExit = () => {
             location: searchByCostData.locationId,
             managerCostCentre: state.managerCostCentre,
             managerEmailId: null,
-            managerId: state.mngrId,
+            managerId: state.mngrId ? state.mngrId : "",
             managerName: state.mngrName,
             managerPosition: state.mngrPosition,
             modeOfSeparationId: 3,
@@ -843,6 +852,10 @@ const ManagerInitiateExit = () => {
           console.log("createExitData", data1);
           //   empResign(createExitData);
           CreateEmplyoeeExist(data1, state.empId);
+          // setPreview(true);
+          // setSuccessModal(true);
+          setSubmitted(true);
+          // CreateEmplyoeeExist(data2, state.empId);
           setPreview(true);
           setSuccessModal(true);
         }
@@ -853,21 +866,31 @@ const ManagerInitiateExit = () => {
   return (
     <Fragment>
       {/* reliving letter */}
-      <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
-        <Modal.Header closeButton className="modal-line"></Modal.Header>
-        {submitLetter ? (
+
+      {submitLetter ? (
+        <Modal
+          show={showRelivingModal}
+          onHide={handleRelivingClose}
+          size="md"
+          centered
+        >
+          <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
-            <label>
-              The details have been saved successfully. The relieving letter{" "}
-              <br />
-              will be sent to the employee on{" "}
-              {relivingLetterData.lastWorkingDate}
+            <label className="text-center">
+              The details have been saved successfully <br />
+              The relieving letter will be sent to the employee on{" "}
+              {moment(relivingLetterData.lastWorkingDate, "YYYY-MM-DD")
+                .add(1, "days")
+                .format("YYYY-MM-DD")}
             </label>
             <div className="text-center">
               <Button onClick={handleRelivingClose}>Close</Button>
             </div>
           </Modal.Body>
-        ) : previewLetter || showRelivingModal ? (
+        </Modal>
+      ) : previewLetter || showRelivingModal ? (
+        <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
+          <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body>
             {relivingLetterData &&
             relivingLetterData !== undefined &&
@@ -924,10 +947,11 @@ const ManagerInitiateExit = () => {
               ""
             )}
           </Modal.Body>
-        ) : (
-          ""
-        )}
-      </Modal>
+        </Modal>
+      ) : (
+        ""
+      )}
+
       {/* reliving letter end */}
       <Modal show={showModal} onHide={() => handleClose()} centered>
         <Container>
@@ -935,7 +959,11 @@ const ManagerInitiateExit = () => {
             {/* <Modal.Title>State remarks for disapproval</Modal.Title> */}
           </Modal.Header>{" "}
           <Modal.Body className="mx-auto">
-            <label className="itemResult">State remarks:</label>
+            {/* <label className="itemResult">State remarks:</label> */}
+            <label className="itemResult">
+              Please state the reason why this employee cannot be re-hired :
+            </label>
+            {/* <p>Please state the reason why this employee cannot be re-hired:</p> */}
             <textarea
               className="remarkText rounded"
               name="remarks"
@@ -960,8 +988,8 @@ const ManagerInitiateExit = () => {
             {/* <Modal.Title>State remarks for disapproval</Modal.Title> */}
           </Modal.Header>{" "}
           <Modal.Body className="mx-auto">
-            <label className="itemResult">
-              Exit details saved successfully, the employee has been notified
+            <label>
+              Exit details saved successfully the employee has been notified
             </label>
 
             <div className="text-center mb-2">
@@ -1695,7 +1723,7 @@ const ManagerInitiateExit = () => {
                               }
                               onClick={withdrawHandler}
                             >
-                              Withdraw Resignation
+                              Withdraw
                             </button>
                           )}
 
@@ -1713,7 +1741,7 @@ const ManagerInitiateExit = () => {
                               className={"LettersButtons"}
                               onClick={relivingLetterClick}
                             >
-                              Generate Reliving Letter
+                              Generate Letter
                             </button>
                           ) : (
                             ""
@@ -1725,7 +1753,7 @@ const ManagerInitiateExit = () => {
                               className={"LettersButtons"}
                               onClick={previewRelivingLetter}
                             >
-                              Preview Reliving Letter
+                              Preview Letter
                             </button>
                           ) : (
                             ""

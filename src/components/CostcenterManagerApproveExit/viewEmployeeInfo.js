@@ -7,6 +7,7 @@ import { setGlobalCssModule } from "reactstrap/es/utils";
 import { useParams } from "react-router-dom";
 import moment from "moment";
 import calendarImage from "../../assets/images/calendar-image.png";
+// import PdfExample from "../PdfLetters/pdfexample";
 
 import "./exitForm.css";
 const EmployeeExitAction = () => {
@@ -304,8 +305,11 @@ const EmployeeExitAction = () => {
             <Modal.Body>
               <p style={{ marginBottom: "2rem" }}>
                 {" "}
-                The details have been saved successfully. The relieving letter
-                will be sent to the employee on {state.lastWorkingDate}
+                The details have been saved successfully.
+                <br /> The relieving letter will be sent to the employee on{" "}
+                {moment(relivingLetterData.lastWorkingDate, "YYYY-MM-DD")
+                  .add(1, "days")
+                  .format("YYYY-MM-DD")}
               </p>
               <Button onClick={() => handleClosePopup()}>OK</Button>
             </Modal.Body>
@@ -314,7 +318,11 @@ const EmployeeExitAction = () => {
         <Modal show={showModal} onHide={() => handleClose1()} centered>
           <Container style={{ textAlign: "center", margin: "1rem 0 1rem 0" }}>
             <Modal.Body style={{ marginBottom: "1rem" }}>
-              Thank you for confirming the Resignation/ Termination details
+              <p>
+                {modeOfSeparation === "Termination"
+                  ? "Thank you for confirming the Termination details"
+                  : "Thank you for confirming the Resignation details"}
+              </p>
               <Button
                 style={{ marginTop: "1rem" }}
                 onClick={() => handleClose1()}
@@ -326,6 +334,7 @@ const EmployeeExitAction = () => {
         </Modal>
         <RelievingLetter previewLetter={previewLetter} />
         <Breadcrumb title="EMPLOYEE SEPARATION" parent="EMPLOYEE SEPARATION" />
+        {/* <PdfExample /> */}
         <div className="container-fluid">
           <div className="row">
             <div className="col-sm-12">
@@ -772,18 +781,17 @@ const EmployeeExitAction = () => {
                         >
                           Confirm
                         </button>
-                        {state.status === 3 ||
-                          (state.status === 4 && (
-                            <button
-                              // disabled={previewLetter | showSuccessModal}
-                              className="resignationButton"
-                              onClick={() => viewResignation()}
-                            >
-                              {modeOfSeparation === "Termination"
-                                ? "View Termination Letter"
-                                : "View Resignation Letter"}
-                            </button>
-                          ))}
+                        {(state.status === 3 || state.status === 4) && (
+                          <button
+                            // disabled={previewLetter | showSuccessModal}
+                            className="resignationButton"
+                            onClick={() => viewResignation()}
+                          >
+                            {modeOfSeparation === "Termination"
+                              ? "View Letter"
+                              : "View Letter"}
+                          </button>
+                        )}
                       </div>
                       {submit === true && (
                         <div className="text-center mb-3">

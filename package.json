@@ -98,6 +98,7 @@
     "react-tabs": "^3.1.2",
     "react-tagsinput": "^3.19.0",
     "react-times": "^3.1.12",
+    "react-to-pdf": "0.0.14",
     "react-to-print": "^2.12.2",
     "react-toastify": "^5.5.0",
     "react-vertical-timeline-component": "^2.6.2",

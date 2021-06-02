@@ -247,11 +247,13 @@ const EmployeeExitList = () => {
                                 ? "Pending"
                                 : item.status === 2
                                 ? "Approve"
+                                : item.status === 4
+                                ? "Resigned"
                                 : ""}
                             </td>
 
                             <td>
-                              {item.status === 2 ? (
+                              {item.status === 2 || item.status === 4 ? (
                                 <Edit2 />
                               ) : (
                                 <Link to={"/exit-action/" + item.employeeId}>

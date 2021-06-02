@@ -10,8 +10,8 @@ import { SeparationContext } from "../../context/SepearationState";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
 
 const EmpResignation = () => {
-  const [regDate, setRegDate] = useState(new Date());
-  const [lastDate, setLastDate] = useState(new Date());
+  const [regDate, setRegDate] = useState();
+  const [lastDate, setLastDate] = useState();
   const [reasonOfSepration, setReasonOfSepration] = useState("");
   const [emailId, setEmailId] = useState("");
   const [approver, setApprover] = useState("");
@@ -65,7 +65,103 @@ const EmpResignation = () => {
   useEffect(() => {
     modeOfSeparation();
     ModeOfSeparationView();
+    ViewEmployeeDataById(user.employeeId);
   }, []);
+
+  useEffect(() => {
+    if (
+      managerList &&
+      managerList &&
+      managerList !== null &&
+      managerList !== undefined &&
+      Object.keys(managerList).length !== 0
+    ) {
+      let managerNames = managerList.filter(
+        (j) => j.employeeId === user.managerId
+      );
+      console.log("managerNames", managerNames, managerList);
+      if (
+        managerNames &&
+        managerNames !== null &&
+        managerNames !== undefined &&
+        Object.keys(managerNames).length !== 0
+      ) {
+        setApprover(managerNames[0].firstName + " " + managerNames[0].lastName);
+      }
+    }
+  }, [managerList]);
+
+  useEffect(() => {
+    console.log("profile data", user, employeeData);
+    if (
+      user !== null &&
+      user !== undefined &&
+      (employeeData === null ||
+        employeeData === undefined ||
+        Object.keys(employeeData).length > 0)
+    ) {
+      console.log("profile data", user);
+      setEmailId(user.personalEmail);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (
+      employeeData &&
+      employeeData &&
+      employeeData !== null &&
+      employeeData !== undefined &&
+      Object.keys(employeeData).length !== 0
+    ) {
+      setRegDate(new Date(employeeData.dateOfResignation));
+      setLastDate(new Date(employeeData.lastWorkingDate));
+      setReasonOfSepration("");
+      setEmailId(employeeData.emailId);
+      setSubmitted(true);
+      setComments(employeeData.employeeComment);
+    }
+  }, [employeeData]);
+
+  useEffect(() => {
+    if (
+      employeeData &&
+      employeeData !== null &&
+      employeeData !== undefined &&
+      Object.keys(employeeData).length !== 0 &&
+      ModeOfSeparationData &&
+      ModeOfSeparationData !== null &&
+      ModeOfSeparationData !== undefined &&
+      Object.keys(ModeOfSeparationData).length !== 0
+    ) {
+      if (employeeData.modeOfSeparationId === 1) {
+        console.log(ModeOfSeparationData[0].modeOfSeparation);
+        console.log(ModeOfSeparationData[0].modeOfSeparation.modeOfSeparation);
+        console.log(ModeOfSeparationData[0].modeOfSeparationReasonList);
+      }
+      let tempArray;
+      ModeOfSeparationData.map((item, i) => {
+        if (employeeData.modeOfSeparationId === 0) {
+          tempArray = " ";
+        } else if (employeeData.modeOfSeparationId === 4) {
+          ModeOfSeparationData[i].modeOfSeparationReasonList.map((item1, j) => {
+            if (employeeData.modeOfSeparationReasonId === 0) {
+              tempArray = " ";
+            } else if (
+              employeeData.modeOfSeparationReasonId ===
+              ModeOfSeparationData[i].modeOfSeparationReasonList[j]
+                .separationReasonId
+            ) {
+              tempArray =
+                ModeOfSeparationData[i].modeOfSeparationReasonList[j]
+                  .modeOfSeparationReason;
+            }
+          });
+        }
+      });
+      console.log("tempArray", tempArray);
+      setReasonOfSepration(tempArray);
+    }
+  }, [employeeData, ModeOfSeparationData]);
 
   useEffect(() => {
     console.log("loader in useEffect ", loader, managerList);
@@ -82,11 +178,32 @@ const EmpResignation = () => {
         console.log("state.empId", employeeData.exitId);
         withdraw(employeeData.exitId);
         setWithdrawThis(false);
-        setRegDate(new Date());
-        setLastDate(new Date());
+        setRegDate();
+        setLastDate();
         setReasonOfSepration("");
-        setEmailId("");
-        setApprover("");
+        setEmailId(user.personalEmail);
+        if (
+          managerList &&
+          managerList &&
+          managerList !== null &&
+          managerList !== undefined &&
+          Object.keys(managerList).length !== 0
+        ) {
+          let managerNames = managerList.filter(
+            (j) => j.employeeId === user.managerId
+          );
+          console.log("managerNames", managerNames, managerList);
+          if (
+            managerNames &&
+            managerNames !== null &&
+            managerNames !== undefined &&
+            Object.keys(managerNames).length !== 0
+          ) {
+            setApprover(
+              managerNames[0].firstName + " " + managerNames[0].lastName
+            );
+          }
+        }
         setComments("");
         setSubmitted(false);
       }
@@ -135,18 +252,18 @@ const EmpResignation = () => {
       costCentreName: user.costCentre,
       dateOfResignation: regDate,
       emailId: emailId,
-      empName: user.employeeName,
+      empName: user.firstName + user.lastName,
       employeeComment: comments,
       employeeId: user.employeeId,
-      employeeName: user.employeeName,
+      employeeName: user.firstName + user.lastName,
       exitId: 0,
       hoursWorked: 0,
       lastWorkingDate: lastDate,
       location: user.locationId,
       managerCostCentre: null,
       managerEmailId: null,
-      managerId: approver,
-      managerName: null,
+      managerId: user.managerId ? user.managerId : "",
+      managerName: approver,
       managerPosition: null,
       modeOfSeparationId: 4,
       modeOfSeparationReasonId: reasonId,
@@ -182,6 +299,8 @@ const EmpResignation = () => {
   const withdrawHandler = (e) => {
     setWithdrawThis(true);
     ViewEmployeeDataById(user.employeeId);
+    managerData(user.costCentre);
+
     // if (
     //   employeeData &&
     //   employeeData &&
@@ -232,7 +351,7 @@ const EmpResignation = () => {
                         type="text"
                         value={` ${user.firstName} ${user.lastName}/ ${user.employeeId} `}
                         readOnly
-                        className="disabledValue blueTextData"
+                        className="disabledValue readTextBlue"
                       />
                     </Col>
                   </Form.Group>
@@ -247,7 +366,7 @@ const EmpResignation = () => {
                         type="text"
                         value={user.contractType}
                         readOnly
-                        className="disabledValue blueTextData"
+                        className="disabledValue readTextBlue"
                       />
                     </Col>
                   </Form.Group>
@@ -262,7 +381,7 @@ const EmpResignation = () => {
                         type="text"
                         value={user.costCentre}
                         readOnly
-                        className="disabledValue blueTextData"
+                        className="disabledValue readTextBlue"
                       />
                     </Col>
                   </Form.Group>
@@ -280,7 +399,7 @@ const EmpResignation = () => {
                         type="text"
                         value={user.locationName}
                         readOnly
-                        className="disabledValue blueTextData"
+                        className="disabledValue readTextBlue"
                       />
                     </Col>
                   </Form.Group>
@@ -295,7 +414,7 @@ const EmpResignation = () => {
                         type="text"
                         value={user.position}
                         readOnly
-                        className="disabledValue blueTextData"
+                        className="disabledValue readTextBlue"
                       />
                     </Col>
                   </Form.Group>
@@ -313,7 +432,7 @@ const EmpResignation = () => {
                         type="text"
                         value={reason}
                         readOnly
-                        className="disabledValue blueTextData"
+                        className="disabledValue readTextBlue"
                       />
                     </Col>
                   </Form.Group>
@@ -329,7 +448,7 @@ const EmpResignation = () => {
                           type="text"
                           value={reasonOfSepration}
                           readOnly
-                          className="disabledValue blueTextData"
+                          className="disabledValue readTextBlue"
                         />
                       </Col>
                     </Form.Group>
@@ -382,7 +501,7 @@ const EmpResignation = () => {
                           type="text"
                           value={moment(regDate).format("DD/MM/YYYY")}
                           readOnly
-                          className="disabledValue blueTextData"
+                          className="disabledValue readTextBlue"
                         />
                       </Col>
                     </Form.Group>
@@ -396,7 +515,7 @@ const EmpResignation = () => {
                           minDate={moment().toDate()}
                           selected={regDate}
                           onChange={(date) => setRegDate(date)}
-                          className="form-control non-disable blueTextData"
+                          className="form-control non-disable readTextBlue"
                           dateFormat="yyyy-MM-dd"
                           placeholderText="Select Date"
                           minDate={new Date()}
@@ -419,7 +538,7 @@ const EmpResignation = () => {
                         type="text"
                         value="2 Months"
                         readOnly
-                        className="disabledValue blueTextData"
+                        className="disabledValue readTextBlue"
                       />
                     </Col>
                   </Form.Group>
@@ -435,7 +554,7 @@ const EmpResignation = () => {
                           type="text"
                           value={emailId}
                           readOnly
-                          className="disabledValue blueTextData"
+                          className="disabledValue readTextBlue"
                         />
                       </Col>
                     </Form.Group>
@@ -449,7 +568,7 @@ const EmpResignation = () => {
                         <Form.Control
                           type="email"
                           value={emailId}
-                          className="non-disable blueTextData"
+                          className="non-disable readTextBlue"
                           onChange={(e) => setEmailId(e.target.value)}
                           placeholder="Enter Email Id"
                           required
@@ -469,7 +588,7 @@ const EmpResignation = () => {
                           type="text"
                           value={moment(lastDate).format("DD/MM/YYYY")}
                           readOnly
-                          className="disabledValue blueTextData"
+                          className="disabledValue readTextBlue"
                         />
                       </Col>
                     </Form.Group>
@@ -483,7 +602,7 @@ const EmpResignation = () => {
                           selected={lastDate}
                           minDate={moment().toDate()}
                           onChange={(date) => setLastDate(date)}
-                          className="form-control non-disable blueTextData"
+                          className="form-control non-disable readTextBlue"
                           dateFormat="yyyy-MM-dd"
                           placeholderText="Select Date"
                           minDate={new Date()}
@@ -507,7 +626,7 @@ const EmpResignation = () => {
                           type="text"
                           value={approver}
                           readOnly
-                          className="disabledValue blueTextData"
+                          className="disabledValue readTextBlue"
                         />
                       </Col>
                     </Form.Group>
@@ -517,7 +636,7 @@ const EmpResignation = () => {
                         Approver:
                       </Form.Label>
                       <Col sm="8">
-                        <Form.Control
+                        {/* <Form.Control
                           as="select"
                           className="non-disable blueTextData"
                           value={approver}
@@ -537,7 +656,13 @@ const EmpResignation = () => {
                                 </option>
                               );
                             })}
-                        </Form.Control>
+                        </Form.Control> */}
+                        <Form.Control
+                          type="text"
+                          value={approver}
+                          readOnly
+                          className="disabledValue readTextBlue"
+                        />
                       </Col>
                     </Form.Group>
                   )}
@@ -548,7 +673,9 @@ const EmpResignation = () => {
                       Exit Feedback Form:
                     </Form.Label>
                     <Col sm="7">
-                      <a href="#">Exit Feedback Form</a>
+                      <a href="#" className="readTextBlue">
+                        Exit Feedback Form
+                      </a>
                     </Col>
                   </Form.Group>
                 </Col>
@@ -566,7 +693,7 @@ const EmpResignation = () => {
                           type="text"
                           value={comments}
                           readOnly
-                          className="disabledValue blueTextData"
+                          className="disabledValue readTextBlue"
                         />
                       </Col>
                     </Form.Group>
@@ -580,7 +707,7 @@ const EmpResignation = () => {
                         <Form.Control
                           as="textarea"
                           rows={3}
-                          className="non-disable blueTextData"
+                          className="non-disable readTextBlue"
                           value={comments}
                           onChange={(e) => setComments(e.target.value)}
                           required
