@@ -38,6 +38,7 @@ const ProbationList = () => {
   const [secondBtn, setSecondBtn] = useState(false);
   const [thirdBtn, setThirdBtn] = useState(false);
   const [fourthBtn, setFourthBtn] = useState(false);
+  const [fifthBtn, setFifthBtn] = useState(true);
   const [firstTimeUpdate, setFirstTimeUpdate] = useState(true);
   useEffect(() => {
     // ProbationListView("all", pageCount);
@@ -98,6 +99,7 @@ const ProbationList = () => {
       setSecondBtn(false);
       setThirdBtn(false);
       setFourthBtn(false);
+      setFifthBtn(false);
     } else {
       //   ProbationListView("all", pageCount);
       ProbationListView(0, "all", pageCount);
@@ -105,11 +107,21 @@ const ProbationList = () => {
       setSecondBtn(false);
       setThirdBtn(false);
       setFourthBtn(false);
+      setFifthBtn(true);
     }
   };
 
   const searchByDueDay = (val) => {
     switch (val) {
+      case 0:
+        ProbationListView(0, "all", pageCount);
+        setFifthBtn(true);
+        setFirstBtn(false);
+        setSecondBtn(false);
+        setThirdBtn(false);
+        setFourthBtn(false);
+        break;
+
       case 5:
         // ProbationListView(5, pageCount);
         ProbationListView(5, "all", pageCount);
@@ -117,6 +129,7 @@ const ProbationList = () => {
         setSecondBtn(false);
         setThirdBtn(false);
         setFourthBtn(false);
+        setFifthBtn(false);
         break;
       case 7:
         // ProbationListView(7, pageCount);
@@ -125,6 +138,7 @@ const ProbationList = () => {
         setSecondBtn(true);
         setThirdBtn(false);
         setFourthBtn(false);
+        setFifthBtn(false);
         break;
       case 10:
         // ProbationListView(10, pageCount);
@@ -133,6 +147,7 @@ const ProbationList = () => {
         setSecondBtn(false);
         setThirdBtn(true);
         setFourthBtn(false);
+        setFifthBtn(false);
         break;
       case 14:
         // ProbationListView(14, pageCount);
@@ -141,6 +156,7 @@ const ProbationList = () => {
         setSecondBtn(false);
         setThirdBtn(false);
         setFourthBtn(true);
+        setFifthBtn(false);
         break;
 
       default:
@@ -208,7 +224,7 @@ const ProbationList = () => {
                   }}
                 >
                   <Row>
-                    <Col sm={2}></Col>
+                    <Col sm={1}></Col>
                     <Col sm={2} style={{ marginLeft: "-2rem" }}>
                       <Button
                         disabled={firstBtn}
@@ -290,7 +306,26 @@ const ProbationList = () => {
                         2 Weeks
                       </Button>
                     </Col>
-                    <Col sm={2}></Col>
+                    <Col sm={2}>
+                      <Button
+                        disabled={fifthBtn}
+                        className={fifthBtn ? "clickedButton" : "FifthButtons"}
+                        onClick={() => {
+                          searchByDueDay(0);
+                        }}
+                      >
+                        View
+                        <hr
+                          align="center"
+                          width="60%"
+                          size="10"
+                          color="white"
+                          className={"lineStyle"}
+                        />
+                        All
+                      </Button>
+                    </Col>
+                    <Col sm={1}></Col>
                   </Row>
                 </div>
 
