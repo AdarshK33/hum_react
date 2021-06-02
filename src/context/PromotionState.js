@@ -4,30 +4,34 @@ import PromotionReducer from "../reducers/PromotionReducer";
 import { toast } from "react-toastify";
 import { saveAs } from "file-saver";
 
-export const PromotionContext = createContext();
 const initial_state = {
-  promotionList: [],
-  promotionEmployeeData: {},
+  promotionList: [], 
+  promotionEmployeeData:{},
+  positionNew :[],
+  promotionCreate:{},
   total: {},
   data: [],
   promotionLetterData: {},
 };
 
+export const PromotionContext = createContext();
+
 export const PromotionProvider = (props) => {
   const [state, dispatch] = useReducer(PromotionReducer, initial_state);
   const [loader, setLoader] = useState(false);
+
   const promotionListView = (key, page) => {
+    console.log(key, page,client.defaults.headers,"promotion ")
     console.log(key, page, "promotion ");
     setLoader(true);
-    client
+     client
       .get(
-        "/api/v1/promotion/view?key=" + key + "&page=" + page + "&size=" + 10,
-        {
-          headers: {
-            Authorization:
-              "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6Ik1BSU4iLCJwaS5hdG0iOiI2In0.eyJzY29wZSI6WyJvcGVuaWQiLCJwcm9maWxlIl0sImNsaWVudF9pZCI6IkM2YTdiNjhkNTJhZDIxYzBkNTU0NmZiZWY3OGMwOTAzYTU1MTkwNDgwIiwiaXNzIjoiaWRwZGVjYXRobG9uLnByZXByb2Qub3JnIiwianRpIjoiOVR1VVdDblR6SyIsInN1YiI6IktOQUdBUjI2IiwidWlkIjoiS05BR0FSMjYiLCJvcmlnaW4iOiJjb3Jwb3JhdGUiLCJleHAiOjE2MjI0NTE3NTh9.yFXiQe7zXeA8rFlzXZbPaP5thK_Nl51_WhQf77UoDo__MSUIDNk7z6laqVhxr-d6NRG472sxNAaf9-Dj6-7Z03_NPCnTRt3nY-jppjQ27lyp0zPoaY8_8EmVz2-L7xl6bG_QWkd_1n0wPIWHtbAI4IvzrwIvwAa6riKksG-fp7HbP6-RH4KTTiMBfAVCbgVsnUAv-zstu8aILUfEe4YL_IDP_9XbYlV4Iw3WPDl_NW1LbDeNfIvrWvrMQr_ztvb7Y4pqrWon79lVnHp9xNap-Lx1djpkAd3RfZunzWgdO8d6xl33tcJC6JM_Mjro3faGPlvjeULzU7To_LVJNNpqYA",
-          },
-        }
+        "/api/v1/promotion/view?key=" +
+          key +
+          "&page=" +
+          page +
+          "&size=" +
+          10
       )
       .then((response) => {
         console.log("response", response.data.data.data);
@@ -68,6 +72,26 @@ export const PromotionProvider = (props) => {
         console.log(error);
       });
   };
+  const PositionNew = () => {
+    setLoader(true);
+    client
+      .get("/api/v1/position/view/")
+      .then((response) => {
+        state.positionNew = response.data.data;
+
+        setLoader(false);
+        console.log("--->", state.positionNew);
+        console.log(response);
+
+        return dispatch({
+          type: "POSITION_NEW",
+          payload: state.positionNew,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const generatePromotionLetter = (id) => {
     console.log("candidate id", id);
     return client
@@ -84,16 +108,73 @@ export const PromotionProvider = (props) => {
         console.log(error);
       });
   };
+  const PromotionCreate = (create) => {
+    setLoader(true);
+    let formData = {
+      "approveByAdminName": create.approveByAdminName,
+      "approveByCostCentreManagerName":create.approveByCostCentreManagerName,
+      "bonus": create.bonus,
+      "bonusInPercentage": create.bonusInPercentage,
+      "costCentre": create.costCentre,
+      "costCentreManagerEmail": create.costCentreManagerEmail,
+      "costCentreManagerId": create.costCentreManagerId,
+      "costCentreManagerName": create.costCentreManagerName,
+      "departmentId": create.departmentId,
+      "effectiveDate": create.effectiveDate,
+      "emailId": create.emailId,
+      "empName": create.empName,
+      "employeeId": create.employeeId,
+      "managerId": create.managerId,
+      "managerName": create.managerName,
+      "newDepartment": create.newDepartment,
+      "newFixedGross": create.newFixedGross,
+      "oldDepartment": create.oldDepartment,
+      "oldFixedGross": create.oldFixedGross,
+      "oldPosition": create.oldPosition,
+      "positionId": create.positionId,
+      "promotedPosition": create.promotedPosition,
+      "promotionId": create.promotionId,
+      "promotionLetter": create.promotionLetter,
+      "reason": create.reason,
+      "relocationBonus": create.relocationBonus,
+      "remarks": create.remarks,
+      "status": create.status
+  }
+  console.log(formData,"promotionCreate")
+    client
+      .post("/api/v1/promotion/create",formData)
+      .then((response) => {
+        state.promotionCreate = response.data.data;
+
+        setLoader(false);
+        console.log("--->", state.promotionCreate);
+        console.log(response);
+        toast.info(response.data.message);
+        return dispatch({
+          type: "PROMOTION_CREATE",
+          payload: state.promotionCreate,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  
 
   return (
     <PromotionContext.Provider
       value={{
         promotionListView,
         ViewPromotionEmployeeById,
+        PromotionCreate,
+        PositionNew,
         setLoader,
         generatePromotionLetter,
         total: state.total,
         promotionList: state.promotionList,
+        positionNew:state.positionNew,
+        promotionEmployeeData:state.promotionEmployeeData,
+        promotionCreate:state.promotionCreate,
         promotionEmployeeData: state.promotionEmployeeData,
         loader: state.loader,
         promotionLetterData: state.promotionLetterData,

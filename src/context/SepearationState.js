@@ -182,6 +182,7 @@ export const SeparationProvider = (props) => {
   };
   const viewITClearanceList = (key, page, actionStatus, costCenter) => {
     console.log(actionStatus,key, page, costCenter ,"viewIt")
+    console.log(key, page,client.defaults.headers,"promotion ")
 
     setLoader(true);
     client
