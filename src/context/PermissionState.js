@@ -9,7 +9,6 @@ const initial_state = {
   monthlyQtyDetailsList: [],
   permissionList: [],
   groupList: [],
-  promotionLetterData: {},
 };
 
 export const PermissionContext = createContext();
@@ -158,23 +157,6 @@ export const PermissionProvider = ({ children }) => {
     }
   };
 
-  const generatePromotionLetter = (id) => {
-    console.log("candidate id", id);
-    return client
-      .get("/api/v1/promotion/letter/" + id)
-      .then((response) => {
-        state.promotionLetterData = response.data.data;
-        console.log("offer.message", state.promotionLetterData);
-        return dispatch({
-          type: "PROMOTION_LETTER_DATA",
-          payload: state.promotionLetterData,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
   return (
     <PermissionContext.Provider
       value={{
@@ -185,14 +167,12 @@ export const PermissionProvider = ({ children }) => {
         uploadMonthFile,
         viewServiceGroup,
         createServiceGroup,
-        generatePromotionLetter,
         permission: state.permission,
         locationDetailsList: state.locationDetailsList,
         monthlyQtyDetailsList: state.monthlyQtyDetailsList,
         permissionList: state.permissionList,
         loader: loader,
         groupList: state.groupList,
-        promotionLetterData: state.promotionLetterData,
       }}
     >
       {children}
