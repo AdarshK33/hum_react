@@ -153,7 +153,7 @@ const ProbationList = () => {
   };
   return (
     <Fragment>
-      <Breadcrumb title="Probation Listing" parent="Probation Listing" />
+      <Breadcrumb title="Probation List" parent="Probation List" />
       <Container fluid>
         <Row>
           <Col sm={12}>
@@ -162,7 +162,7 @@ const ProbationList = () => {
                 className="title_bar"
                 style={{ textAlign: "center", fontSize: "larger" }}
               >
-                <b style={{ marginLeft: "13rem" }}>PROBATION LISTING</b>
+                <b style={{ marginLeft: "13rem" }}>PROBATION LIST</b>
                 <div className="job-filter">
                   <div className="faq-form mr-2">
                     <input
@@ -363,7 +363,7 @@ const ProbationList = () => {
                             </td>
 
                             <td>
-                              {false ? (
+                              {item.status !== 0 ? (
                                 <Edit2 />
                               ) : (
                                 <Link to={"/probation-action/" + item.empId}>

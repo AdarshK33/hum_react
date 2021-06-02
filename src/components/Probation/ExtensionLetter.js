@@ -23,14 +23,20 @@ const ExtensionLetter = () => {
         <Fragment>
           <p className=""> Date: {moment().format("DD-MM-YYYY")}</p>
           <br></br>
-          <p>To,</p>
-          <p>Name:{relivingLetterData.employeeName}</p>
-          <p>EmployeeId:{relivingLetterData.employeeId}</p>
+          <p>
+            <b>To,</b>
+          </p>
+          <p>
+            <b>Name: &nbsp;{extensionLetterData.empName}</b>
+          </p>
+          <p>
+            <b>EmployeeId: &nbsp;{extensionLetterData.empId}</b>
+          </p>
           {/* <p>Designation:{relivingLetterData.designation}</p> */}
           <br></br>
           <p className="mt-5 ">
             {" "}
-            Dear <b>{relivingLetterData.employeeName},</b>{" "}
+            Dear &nbsp;<b>{extensionLetterData.empName},</b>{" "}
           </p>
           <h5 className="text-center">
             {" "}
@@ -42,9 +48,10 @@ const ExtensionLetter = () => {
               Based on the probation assessment, we regret to inform you that
               your performance is unsatisfactory and we are unable to confirm
               your employment at this point. We have decided to extend your
-              probationary period for a further {relivingLetterData.number}{" "}
-              months starting from {relivingLetterData.startdate} to{" "}
-              {relivingLetterData.enddate}.
+              probationary period for a further{" "}
+              <b>{extensionLetterData.probationExtensionPeriod}</b> months
+              starting from <b>{extensionLetterData.probationStartDate}</b> to{" "}
+              <b>{extensionLetterData.probationEndDate}</b>.
               <br />
               Within this period, you are advised to improve your skills and
               performance and to work closely with your manager for guidance and
@@ -58,7 +65,8 @@ const ExtensionLetter = () => {
               may decide to terminate your services due to non-confirmation.
               <br />
               All the other terms and conditions of your appointment letter
-              dated {relivingLetterData.date}, shall remain the same.
+              dated <b>{extensionLetterData.probationEndDate}</b>, shall remain
+              the same.
               <br />
               Please sign the copy of this letter as receipt of acceptance.
               <br />

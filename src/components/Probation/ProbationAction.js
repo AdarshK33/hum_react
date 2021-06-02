@@ -100,12 +100,18 @@ const ProbationAction = () => {
       state.empId = probationData.empId;
       state.empCostCenterName = probationData.costCentre;
       state.empDateOfJoining = probationData.dateOfJoining;
-      state.probationStatus = probationData.status;
-      state.probationMonths = probationData.probationPeriod;
-      state.reason =
-        probationData.reason !== null && probationData.reason !== undefined
-          ? probationData.reason
-          : "";
+      // state.probationStatus = probationData.status;
+      // state.probationMonths = probationData.probationPeriod;
+      if (
+        probationData.probationExtension !== null &&
+        probationData.probationExtension !== undefined
+      ) {
+        state.reason =
+          probationData.probationExtension.reason !== null &&
+          probationData.probationExtension.reason !== undefined
+            ? probationData.probationExtension.reason
+            : "";
+      }
 
       if (
         probationData.probationConfirmationDate !== null &&
@@ -151,32 +157,44 @@ const ProbationAction = () => {
     setShowSignature(true);
   };
 
-  const submitfinalRelivingLetter = () => {
-    if (
-      employeeData.employeeId !== null &&
-      employeeData.employeeId !== undefined
-    ) {
+  const submitfinalRelivingLetter = (e) => {
+    e.preventDefault();
+    if (probationData !== null && probationData !== undefined) {
       setSubmitLetter(true);
       setLetterSent(true);
       setShow(true);
+      // setSuccessModal(true);
       // finalSubmitOfferLetter(employeeData.employeeId);
     }
   };
 
-  const previewRelivingLetter = (e) => {
+  const previewLetterViewing = (e) => {
     e.preventDefault();
-    // if (employeeData !== null && employeeData !== undefined) {
-    // fetchRelievingLetterData(employeeData.employeeId);
-    setSubmitLetter(false);
-    setPreviewLetter(true);
-    setShow(true);
-    // }
+    if (probationData !== null && probationData !== undefined) {
+      // fetchRelievingLetterData(employeeData.employeeId);
+      if (probationData.status === 1) {
+        ViewConfirmationLetter(empId);
+      } else if (probationData.status === 2) {
+        ViewExtensionLetter(empId);
+      }
+
+      setSubmitLetter(false);
+      setPreviewLetter(true);
+      setShow(true);
+    }
   };
-  const relivingLetterClick = (e) => {
+  const generateLetterClick = (e) => {
     e.preventDefault();
     // fetchRelievingLetterData(employeeData.employeeId);
-    handleShow();
-    setPreviewGeneratedLetter(true);
+    if (probationData !== null && probationData !== undefined) {
+      if (probationData.status === 1) {
+        ViewConfirmationLetter(empId);
+      } else if (probationData.status === 2) {
+        ViewExtensionLetter(empId);
+      }
+      handleShow();
+      setPreviewGeneratedLetter(true);
+    }
   };
 
   const handleShow = () => {
@@ -248,21 +266,28 @@ const ProbationAction = () => {
       setDateOfConfError(false);
       return true;
     } else {
+      console.log("date error");
       setDateOfConfError(true);
       return false;
     }
   };
   const validateReason = () => {
-    if (
-      state.reason !== "" &&
-      state.reason !== undefined &&
-      state.reason !== null
-    ) {
+    if (probationStatus === "Extended") {
+      if (
+        state.reason !== "" &&
+        state.reason !== undefined &&
+        state.reason !== null
+      ) {
+        setReasonError(false);
+        return true;
+      } else {
+        console.log("reason error");
+        setReasonError(true);
+        return false;
+      }
+    } else {
       setReasonError(false);
       return true;
-    } else {
-      setReasonError(true);
-      return false;
     }
   };
   const checkValidations = () => {
@@ -290,32 +315,40 @@ const ProbationAction = () => {
         emailId: probationData.emailId,
         empId: probationData.empId,
         empName: probationData.empName,
-        employeeConformationLetter: probationData.employeeConformationLetter,
-        managerConformationLetter: probationData.managerConformationLetter,
+        employeeConformationLetter: null,
+        managerConformationLetter: null,
         probationConfirmationDate: dateOfConfirmation,
         probationEndDate: probationData.probationEndDate,
-        probationExtension: {
-          emailId: probationData.emailId,
-          empId: probationData.empId,
-          empName: probationData.empName,
-          probationExtensionEndDate: null,
-          probationExtensionId: 0,
-          probationExtensionPeriod:
-            probationMonths === "3 Months"
-              ? 3
-              : probationMonths === "6 Months"
-              ? 6
-              : 0,
-          probationExtensionStartDate: null,
-          probationId: probationData.probationId,
-          reason: state.reason,
-          status:
-            probationStatus === "Confirmed"
-              ? 1
-              : probationStatus === "Extended"
-              ? 2
-              : 0,
-        },
+        probationExtension:
+          probationStatus === "Confirmed"
+            ? null
+            : {
+                emailId: probationData.emailId,
+                empId: probationData.empId,
+                empName: probationData.empName,
+                probationExtensionEndDate: null,
+                probationExtensionId:
+                  probationData.probationExtension !== null &&
+                  probationData.probationExtension !== undefined &&
+                  probationData.probationExtension.probationExtensionId !== null
+                    ? probationData.probationExtension.probationExtensionId
+                    : 0,
+                probationExtensionPeriod:
+                  probationMonths === "3 Months"
+                    ? 3
+                    : probationMonths === "6 Months"
+                    ? 6
+                    : 0,
+                probationExtensionStartDate: null,
+                probationId: probationData.probationId,
+                reason: state.reason,
+                status:
+                  probationStatus === "Confirmed"
+                    ? 1
+                    : probationStatus === "Extended"
+                    ? 2
+                    : 0,
+              },
         probationExtensionPeriod:
           probationMonths === "3 Months"
             ? 3
@@ -338,9 +371,9 @@ const ProbationAction = () => {
         // EXTENDED(2);
       };
       console.log("InfoData", InfoData);
+      updateProbation(InfoData, probationData.empId);
       setPreview(true);
       ViewProbationDataById(empId);
-      // updateProbation(InfoData)
     }
   };
 
@@ -462,7 +495,11 @@ const ProbationAction = () => {
           </Modal.Header>{" "}
           <Modal.Body className="mx-auto">
             <label className="itemResult">
-              Exit details saved successfully, the employee has been notified
+              {probationData.status === 1
+                ? "Confirmattion letter sent to the employee"
+                : probationData.status === 2
+                ? "Extension letter sent to the employee"
+                : ""}
             </label>
 
             <div className="text-center mb-2">
@@ -620,7 +657,7 @@ const ProbationAction = () => {
                                       className="form-control onBoard-view"
                                       selected={dateOfConfirmation}
                                       // name="dateOfResignation"
-                                      // minDate={moment().toDate()}
+                                      minDate={moment().toDate()}
                                       onChange={(e) => dateOfBirthHandler(e)}
                                       dateFormat="yyyy-MM-dd"
                                       placeholderText="YYYY-MM-DD"
@@ -711,9 +748,27 @@ const ProbationAction = () => {
                               </Col>
                               <Col sm={2}>
                                 <div>
-                                  {false ? (
+                                  {probationData &&
+                                  probationData &&
+                                  probationData !== null &&
+                                  probationData !== undefined &&
+                                  Object.keys(probationData).length !== 0 &&
+                                  probationData.probationExtension !== null &&
+                                  probationData.probationExtension !==
+                                    undefined &&
+                                  probationData.probationExtension
+                                    .probationExtensionPeriod !== 0 &&
+                                  probationData.probationExtension
+                                    .probationExtensionPeriod !== null &&
+                                  probationData.probationExtension
+                                    .probationExtensionPeriod !== undefined ? (
                                     <label className="itemResult">
-                                      &nbsp;&nbsp; {probationMonths}
+                                      &nbsp;&nbsp;{" "}
+                                      {
+                                        probationData.probationExtension
+                                          .probationExtensionPeriod
+                                      }{" "}
+                                      Months
                                     </label>
                                   ) : (
                                     <Form.Group>
@@ -761,11 +816,18 @@ const ProbationAction = () => {
                                   probationData !== null &&
                                   probationData !== undefined &&
                                   Object.keys(probationData).length !== 0 &&
-                                  probationData.reason !== "" &&
-                                  probationData.reason !== null &&
-                                  probationData.reason !== undefined ? (
+                                  probationData.probationExtension !== null &&
+                                  probationData.probationExtension !==
+                                    undefined &&
+                                  probationData.probationExtension.reason !==
+                                    "" &&
+                                  probationData.probationExtension.reason !==
+                                    null &&
+                                  probationData.probationExtension.reason !==
+                                    undefined ? (
                                     <label className="itemResult">
-                                      &nbsp;&nbsp; {probationData.reason}
+                                      &nbsp;&nbsp;{" "}
+                                      {probationData.probationExtension.reason}
                                     </label>
                                   ) : (
                                     <Form.Group>
@@ -818,12 +880,18 @@ const ProbationAction = () => {
                           )}
 
                           {!saveLetter &&
-                          (employeeData.status === 2 ||
+                          ((probationData &&
+                            probationData &&
+                            probationData !== null &&
+                            probationData !== undefined &&
+                            Object.keys(probationData).length !== 0 &&
+                            probationData.status === 2) ||
+                            probationData.status === 1 ||
                             showPreview === true) ? (
                             <button
                               // disabled={!submitted}
                               className={"LettersProbButtons"}
-                              onClick={relivingLetterClick}
+                              onClick={generateLetterClick}
                             >
                               {probationStatus === "Extended"
                                 ? "Generate Extension Letter"
@@ -840,9 +908,13 @@ const ProbationAction = () => {
                           showPreview ? (
                             <button
                               className={"LettersProbButtons"}
-                              onClick={previewRelivingLetter}
+                              onClick={previewLetterViewing}
                             >
-                              Preview Reliving Letter
+                              {probationStatus === "Extended"
+                                ? "Preview Extension Letter"
+                                : probationStatus === "Confirmed"
+                                ? "Preview Confirmation Letter"
+                                : ""}
                             </button>
                           ) : (
                             ""

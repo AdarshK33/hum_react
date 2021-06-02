@@ -18,8 +18,8 @@ const ConfirmationLetter = () => {
   //   connsole.log("today", moment().format("DD-MM-YYYY"));
   return (
     <Fragment>
-      {/* {typeof cnfLetterData !== undefined ? ( */}
-      {true ? (
+      {typeof cnfLetterData !== undefined ? (
+        // {true ? (
         <Fragment>
           <p className="">
             {" "}
@@ -27,24 +27,14 @@ const ConfirmationLetter = () => {
           </p>
           <br></br>
           <p>
-            <b>
-              {" "}
-              To Ms./Mr.
-              {/* {relivingLetterData.employeeName} */}
-            </b>
+            <b> To Ms./Mr. &nbsp;{cnfLetterData.empName}</b>
           </p>
           <p>Address :</p>
-          <p>
-            addressss:
-            {/* {relivingLetterData.employeeId} */}
-          </p>
+          <p>{cnfLetterData.address}</p>
           <br></br>
           <p className="mt-5 ">
             {" "}
-            <b>
-              Dear
-              {/* {relivingLetterData.employeeName}, */}
-            </b>{" "}
+            <b>Dear &nbsp;{cnfLetterData.empName},</b>{" "}
           </p>
           <p>
             <b> Sub: Confirmation of Employment</b>
@@ -53,10 +43,9 @@ const ConfirmationLetter = () => {
           <div className=" ">
             <p>
               We are glad to inform you that the management is pleased to
-              confirm you in service with effect from
-              {/* {relivingLetterData.date}. */}
-              All the other terms and conditions of your appointment letter
-              dated
+              confirm you in service with effect from{" "}
+              <b>{cnfLetterData.confirmationDate}</b>. All the other terms and
+              conditions of your appointment letter dated{" "}
               {/* {relivingLetterData.date} */}
               shall remain same.
               <br />

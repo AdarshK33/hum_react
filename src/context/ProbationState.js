@@ -71,12 +71,15 @@ export const ProbationProvider = (props) => {
       });
   };
 
-  const updateProbation = (updatedInfo) => {
+  const updateProbation = (updatedInfo, empId) => {
     setLoader(true);
+    console.log("updatedInfo", updatedInfo);
     client
-      .post("/api/v1/probation/update" + updatedInfo)
+      .post("/api/v1/probation/update", updatedInfo)
       .then((response) => {
-        state.probationListData = response.data.data;
+        state.probUpdateResponse = response.data.data;
+        toast.info(response.data.message);
+        ViewProbationDataById(empId);
         setLoader(false);
         console.log(state.probUpdateResponse);
         console.log("duesearch", response);
