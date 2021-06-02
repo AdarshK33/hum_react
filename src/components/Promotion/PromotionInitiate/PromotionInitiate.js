@@ -51,7 +51,6 @@ const PromotionInitiate = () => {
   });
   const [stateError,setStateError] = useState({
     empNameError:'',
-    departmentError: '',
 departmentIdError: '',
     positionIdError:'',
     costCentreError:'',
@@ -124,56 +123,65 @@ departmentIdError: '',
 
       state.costCentre = searchByCostData.costCentre;
       state.oldPosition = searchByCostData.position;
-      state.department = searchByCostData.department
 
     }
   }, [searchByCostData]);
   const checkValidations = () => {
 
     if (
-      state.empName == "" ||
-      state.empName == null ||
-      state.empName == undefined
+      state.empName === "" ||
+      state.empName === null ||
+      state.empName === undefined
     ) {
       setStateError({...stateError,empNameError:"Select the Employee Name"})
-    }else if(state.department == "" ||
-    state.department == null ||
-    state.department == undefined){
-      setStateError({...stateError,departmentError:"Select the Department Name"}) 
-    }else if(state.departmentId == "" ||
-    state.departmentId == null ||
-    state.departmentId == undefined){
+      console.log(stateError)
+    }else if(state.departmentId === "" ||
+    state.departmentId === null ||
+    state.departmentId === undefined){
       setStateError({...stateError,departmentIdError:"Select the New Department"}) 
-    }else if(state.positionId == "" ||
-    state.positionId == null ||
-    state.positionId == undefined){
+      console.log(stateError)
+
+    }else if(state.positionId === "" ||
+    state.positionId === null ||
+    state.positionId === undefined){
       setStateError({...stateError,positionIdError:"Select the  New Position "}) 
-    }else if(state.costCentre == "" ||
-    state.costCentre == null ||
-    state.costCentre == undefined){
+      console.log(stateError)
+
+    }else if(state.costCentre === "" ||
+    state.costCentre === null ||
+    state.costCentre === undefined){
       setStateError({...stateError,costCentreError:"Select the costCentre"}) 
-    }else if(state.newFixedGross == "" ||
-    state.newFixedGross == null ||
-    state.newFixedGross == undefined){
+      console.log(stateError)
+
+    }else if(state.newFixedGross === "" ||
+    state.newFixedGross === null ||
+    state.newFixedGross === undefined){
       setStateError({...stateError,newFixedGrossError:"Add New Fixed Gross"}) 
-    }else if(state.department == "" ||
-    state.department == null ||
-    state.department == undefined){
-      setStateError({...stateError,departmentError:"Select the Department Name"}) 
-    }else if(state.reason == "" ||
-    state.reason == null ||
-    state.reason == undefined){
+      console.log(stateError)
+
+    }else if(state.newDepartment === "" ||
+    state.newDepartment === null ||
+    state.newDepartment === undefined){
+      setStateError({...stateError,departmentIdError:"Select the Department Name"})
+      console.log(stateError)
+ 
+    }else if(state.reason === "" ||
+    state.reason === null ||
+    state.reason === undefined){
       setStateError({...stateError,reasonError:"Please Add Reason for Promotion"}) 
+      console.log(stateError)
+
     }
   }
   const submitHandler = (e) => {
     e.preventDefault();
     setState({...state,empName:EmpName})
-    PromotionCreate(state)
+    // PromotionCreate(state)
     const value = checkValidations();
+    console.log(value)
     if (value === true) {
     }
-    console.log("submit handler",state);
+    console.log("submit handler",stateError,state);
   };
   const dateOfBirthHandler = (date) => {
     var AdjusteddateValue = new Date(
@@ -274,10 +282,8 @@ departmentIdError: '',
                                     name="empName"
                                     // disabled={disabled}
                                     value={EmpName}
-                                    style={{ borderRadius: "5px" }}
-                                    // style={
-                                    //   stateError.empName1Error.length > 0 ? { borderColor: "red" } : ''
-                                    // }
+                                    style={stateError.empNameError?{ borderColor: "red" } : { borderRadius: "5px" }}
+                                  
                                     placeholder="Search.."
                                     onChange={(e) => changeHandler(e)}
                                     required
@@ -288,6 +294,9 @@ departmentIdError: '',
                                     onClick={searchDataHandler}
                                   />
                                 </div>
+                                {
+             stateError.empNameError?  <p style={{ color: "red" }}>{stateError.empNameError}</p>:''
+            }
                               </Form.Group>
                             )}
                           </div>
@@ -342,11 +351,10 @@ departmentIdError: '',
                           marginBottom: "1rem",
                         }}
                       >
-                        <Col sm={6}>
-                        
-                          <Form.Group>
-                  <Form.Label>New Position:</Form.Label>
-                  &nbsp;&nbsp; <Form.Control
+                      
+                          <label className="itemResult">
+                          New Position </label>&nbsp;&nbsp; <Form.Group>
+                  <Form.Control
                     as="select"
                     name="positionId"
                     defaultValue={position}
@@ -365,14 +373,21 @@ departmentIdError: '',
                         );
                       })}
                   </Form.Control>
+                  {
+             stateError.positionIdError?  <p style={{ color: "red" }}>{stateError.positionIdError}</p>:''
+            }
                   </Form.Group>
-                        </Col>
-                       
-
-                        <Col sm={6}>
-                        <Form.Group>
-                  <Form.Label>Select Department:</Form.Label>
-                  &nbsp;&nbsp; <Form.Control
+                       </Row>
+                        <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "1rem",
+                          marginBottom: "1rem",
+                        }}
+                      >
+                       <label className="itemResult">
+                       Select Department </label>&nbsp;&nbsp; <Form.Group>
+                   <Form.Control
                     as="select"
                     name="departmentId"
                     defaultValue={departmentNew}
@@ -391,11 +406,10 @@ departmentIdError: '',
                         );
                       })}
                   </Form.Control>
-                </Form.Group>
-                        </Col>
-                      
-
-                       
+                  {
+             stateError.departmentIdError?  <p style={{ color: "red" }}>{stateError.departmentIdError}</p>:''
+            }
+                </Form.Group>                      
                       </Row>
                       <Row
                         style={{
@@ -407,7 +421,7 @@ departmentIdError: '',
                     
                    
 
-                        <Col sm={6}>
+                        <Col sm={4}>
                           <div>
                             <label>
                               Fixed Gross:
@@ -417,7 +431,7 @@ departmentIdError: '',
                             </label>
                           </div>
                         </Col>
-                     <Col sm={3}>
+                     <Col sm={2}>
                           <div>
                             <label>New Fixed Gross:</label>
                           </div>
@@ -434,9 +448,7 @@ departmentIdError: '',
                                   type="text"
                                   placeholder=""
                                   required
-                                  style={{
-                                    borderColor: "#006ebb",
-                                  }}
+                                
                                   name="newFixedGross"
                                   value={state.newFixedGross}
                                   onChange={(e) => changeHandler(e)}
@@ -458,13 +470,13 @@ departmentIdError: '',
                         }}
                       >            
                
-                          <Col sm={3}>
+                          <Col sm={2}>
                             <div>
                               <label> Effective Date :</label>
                             </div>
                           </Col>
                    
-                          <Col sm={3}>
+                          <Col sm={2}>
                             <div>
                   
                                 <Form.Group>
@@ -489,7 +501,7 @@ departmentIdError: '',
                                 </Form.Group>
                             </div>
                           </Col> 
-                     <Col sm={3}>
+                     <Col sm={2}>
                           <div>
                             <label>Relocation Bonus:</label>
                           </div>
@@ -506,9 +518,7 @@ departmentIdError: '',
                                   type="text"
                                   placeholder=""
                                   required
-                                  style={{
-                                    borderColor: "#006ebb",
-                                  }}
+                             
                                   name="relocationBonus"
                                   value={state.relocationBonus}
                                    onChange={(e) => changeHandler(e)}
@@ -534,10 +544,10 @@ departmentIdError: '',
               placeholder="Write here.."
                onChange={(e) => changeHandler(e)}
             />
-{/* 
+
             {
-             ? <p style={{ color: "red" }}>Please add your reason</p>:''
-            } */}
+             stateError.reasonError? <p style={{ color: "red" }}>Please add your reason</p>:''
+            }
         
           </Modal.Body>
       
@@ -555,7 +565,7 @@ departmentIdError: '',
                             }
                              onClick={submitHandler}
                           >
-                            Save
+                            Submit
                           </button>
                         </Col>
                       </Row>
