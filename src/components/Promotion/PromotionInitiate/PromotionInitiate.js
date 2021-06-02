@@ -123,6 +123,7 @@ departmentIdError: '',
 
       state.costCentre = searchByCostData.costCentre;
       state.oldPosition = searchByCostData.position;
+      state.oldDepartment = searchByCostData.position;
 
     }
   }, [searchByCostData]);
@@ -337,7 +338,7 @@ departmentIdError: '',
                             <label>
                               Department:
                               <label className="itemResult">
-                                &nbsp;&nbsp; {state.department}
+                                &nbsp;&nbsp; {state.oldDepartment}
                               </label>
                             </label>
                           </div>
