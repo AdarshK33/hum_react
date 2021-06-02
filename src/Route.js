@@ -132,11 +132,13 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/onboard`}
             component={OnBoardingStepper}
       /> */}
-      <Route
+      {/* <Route
         path={`${process.env.PUBLIC_URL}/onboard-offer`}
         component={LoginOnboard}
-      />
-      <Route path={`${process.env.PUBLIC_URL}/offer`} component={OfferAccept} />
+      /> */}
+      
+      {/* <Route path={`${process.env.PUBLIC_URL}/offer`} component={OfferAccept} /> */}
+
       <Fragment>
         <App>
           {/* dashboard menu */}
@@ -149,14 +151,7 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/profileEdit`}
             component={ProfileEdit}
           /> */}
-       <Route
-        path={`${process.env.PUBLIC_URL}/promotion-list`}
-        component={PromotionList}
-      />
- <Route
-            path={`${process.env.PUBLIC_URL}/promotion-initiate`}
-            component={PromotionInitiate}
-          />
+
           <Route
             path={`${process.env.PUBLIC_URL}/no_due_clearance`}
             component={NoDueClearance}

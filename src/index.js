@@ -69,6 +69,7 @@ function Root() {
                                         <DocsVerificationProvider>
                                           <EmploeeSeparationProvider>
                                             <SeparationProvider>
+                                            <ProbationProvider>
                                             <PromotionProvider>
                                               <BonusProvider>
                                                 <BrowserRouter basename={"/"}>
@@ -82,19 +83,7 @@ function Root() {
                                                 </BrowserRouter>
                                               </BonusProvider>
                                               </PromotionProvider>
-                                              <ProbationProvider>
-                                                <BonusProvider>
-                                                  <BrowserRouter basename={"/"}>
-                                                    <ScrollContext>
-                                                      <WithAxios>
-                                                        <CandidateWithAxios>
-                                                          <RoutePath />
-                                                        </CandidateWithAxios>
-                                                      </WithAxios>
-                                                    </ScrollContext>
-                                                  </BrowserRouter>
-                                                </BonusProvider>
-                                              </ProbationProvider>
+                                            </ProbationProvider>
                                             </SeparationProvider>
                                           </EmploeeSeparationProvider>
                                         </DocsVerificationProvider>

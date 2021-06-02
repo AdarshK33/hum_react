@@ -275,9 +275,9 @@ departmentIdError: '',
                                     // disabled={disabled}
                                     value={EmpName}
                                     style={{ borderRadius: "5px" }}
-                                    style={
-                                      stateError.empName1Error.length > 0 ? { borderColor: "red" } : {}
-                                    }
+                                    // style={
+                                    //   stateError.empName1Error.length > 0 ? { borderColor: "red" } : ''
+                                    // }
                                     placeholder="Search.."
                                     onChange={(e) => changeHandler(e)}
                                     required
@@ -534,10 +534,10 @@ departmentIdError: '',
               placeholder="Write here.."
                onChange={(e) => changeHandler(e)}
             />
-
+{/* 
             {
-             stateError.reasonError.length > 0? <p style={{ color: "red" }}>Please add your reason</p>:''
-            }
+             ? <p style={{ color: "red" }}>Please add your reason</p>:''
+            } */}
         
           </Modal.Body>
       
