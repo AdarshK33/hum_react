@@ -13,7 +13,16 @@ const PromotionReducer = (state, action) => {
             ...state,
             promotionEmployeeData: action.payload,
           };
-     
+          case "PROMOTION_CREATE":
+            return {
+              ...state,
+              promotionCreate: action.payload,
+            };
+            case "POSITION_NEW":
+            return {
+              ...state,
+              positionNew: action.payload,
+            };
     }
   };
   export default PromotionReducer;

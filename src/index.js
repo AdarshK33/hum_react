@@ -63,12 +63,12 @@ function Root() {
                               <SupportProvider>
                                 <GroupProvider>
                                   <OfferProvider>
-                                    <PromotionProvider>
                                     <OnBoardProvider>
                                       <CandidateProvider>
                                         <DocsVerificationProvider>
                                           <EmploeeSeparationProvider>
                                             <SeparationProvider>
+                                            <PromotionProvider>
                                               <BonusProvider>
                                                 <BrowserRouter basename={"/"}>
                                                   <ScrollContext>
@@ -80,12 +80,12 @@ function Root() {
                                                   </ScrollContext>
                                                 </BrowserRouter>
                                               </BonusProvider>
+                                              </PromotionProvider>
                                             </SeparationProvider>
                                           </EmploeeSeparationProvider>
                                         </DocsVerificationProvider>
                                       </CandidateProvider>
                                     </OnBoardProvider>
-                                    </PromotionProvider>
                                   </OfferProvider>
                                   {/* //Support provider 14-12-20*/}
 
