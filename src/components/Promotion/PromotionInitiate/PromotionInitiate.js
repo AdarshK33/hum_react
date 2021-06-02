@@ -357,9 +357,9 @@ departmentIdError: '',
                     {positionNew !== null &&
                       positionNew !== undefined &&
                       positionNew.length > 0 &&
-                      positionNew.map((item) => {
+                      positionNew.map((item,index) => {
                         return (
-                          <option key={item.deptId}  >
+                          <option key={index+1}  >
                             {item.position}
                           </option>
                         );
@@ -383,9 +383,9 @@ departmentIdError: '',
                     {departmentName !== null &&
                       departmentName !== undefined &&
                       departmentName.length > 0 &&
-                      departmentName.map((item) => {
+                      departmentName.map((item,index) => {
                         return (
-                          <option  key={item.deptId}>
+                          <option  key={index+1}>
                             {item.departmentName}
                           </option>
                         );
