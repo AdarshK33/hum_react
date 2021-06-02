@@ -398,7 +398,8 @@ const ProbationList = () => {
                             </td>
 
                             <td>
-                              {item.status !== 0 ? (
+                              {/* {item.status !== 0 ? ( */}
+                              {false ? (
                                 <Edit2 />
                               ) : (
                                 <Link to={"/probation-action/" + item.empId}>
