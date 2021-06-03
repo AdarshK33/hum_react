@@ -6,7 +6,7 @@ import { saveAs } from "file-saver";
 
 const initial_state = {
   promotionList: [], 
-  promotionEmployeeData:{},
+  promotionIdData:{},
   positionNew :[],
   promotionCreate:{},
   total: {},
@@ -52,20 +52,20 @@ export const PromotionProvider = (props) => {
       });
   };
 
-  const ViewPromotionEmployeeById = (employeeId) => {
+  const ViewPromotionById = (promotionId) => {
     setLoader(true);
     client
-      .get("/api/v1/promotion/view/" + employeeId)
+      .get("/api/v1/promotion/search/" + promotionId)
       .then((response) => {
-        state.promotionEmployeeData = response.data.data;
+        state.promotionIdData = response.data.data;
 
         setLoader(false);
-        console.log("--->", state.promotionEmployeeData);
+        console.log("--->", state.promotionIdData);
         console.log(response);
 
         return dispatch({
-          type: "PROMOTION_EMPLOYEE_ID",
-          payload: state.promotionEmployeeData,
+          type: "PROMOTION_ID",
+          payload: state.promotionIdData,
         });
       })
       .catch((error) => {
@@ -165,7 +165,7 @@ export const PromotionProvider = (props) => {
     <PromotionContext.Provider
       value={{
         promotionListView,
-        ViewPromotionEmployeeById,
+        ViewPromotionById,
         PromotionCreate,
         PositionNew,
         setLoader,
@@ -173,9 +173,8 @@ export const PromotionProvider = (props) => {
         total: state.total,
         promotionList: state.promotionList,
         positionNew:state.positionNew,
-        promotionEmployeeData:state.promotionEmployeeData,
+        promotionIdData:state.promotionIdData,
         promotionCreate:state.promotionCreate,
-        promotionEmployeeData: state.promotionEmployeeData,
         loader: state.loader,
         promotionLetterData: state.promotionLetterData,
       }}

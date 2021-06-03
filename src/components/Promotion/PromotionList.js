@@ -13,14 +13,14 @@ import { SeparationContext } from "../../context/SepearationState";
 import { AdminContext } from "../../context/AdminState";
 import { AppContext } from "../../context/AppState";
 const PromotionList = () => {
-  const { promotionListView,promotionEmployeeData,ViewPromotionEmployeeById,
+  const { promotionListView,promotionIdData,ViewPromotionById,
      promotionList, loader, total } = useContext(PromotionContext);
   const { verificationDocsView, docsToVerify, personalInfo, personalInfoData } =
     useContext(DocsVerifyContext);
   const { user } = useContext(AppContext);
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState("all");
   const { RoleList, viewRole } = useContext(RoleManagementContext);
   const { costCenterList, CostCenter } = useContext(AdminContext);
  
@@ -61,7 +61,7 @@ const PromotionList = () => {
   };
 
   const searchDataHandler = () => {
-    if (searchValue !== "") {
+    if (searchValue !== "" && searchValue !== "all") {
       promotionListView(searchValue, pageCount);
     } else {
       promotionListView("all", pageCount);
@@ -76,9 +76,7 @@ const PromotionList = () => {
 
 
   console.log(promotionList,"promotionlist3")
-  useEffect(() => {
-    ViewPromotionEmployeeById();
-  }, [promotionEmployeeData]);
+ 
   return (
     <div>
       <Breadcrumb title="Promotion Listing" parent="Promotion Listing" />
@@ -132,27 +130,7 @@ const PromotionList = () => {
                     
                     </tr>
                   </thead>
-                  {loader === true &&
-                  promotionList !== null &&
-                  promotionList !== undefined ? (
-                    <tbody>
-                      <tr>
-                        <td colSpan="12">
-                          <div
-                            className="loader-box loader"
-                            style={{ width: "100% !important" }}
-                          >
-                            <div className="loader">
-                              <div className="line bg-primary"></div>
-                              <div className="line bg-primary"></div>
-                              <div className="line bg-primary"></div>
-                              <div className="line bg-primary"></div>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  ) : promotionList !== undefined &&
+                  {promotionList !== undefined &&
                     promotionList !== null &&
                     promotionList.length > 0 ? (
                     promotionList.map((item, i) => {
@@ -173,10 +151,10 @@ const PromotionList = () => {
                             <td>{item.hrDate}</td>
                             <td>{item.status == 0?"Pending":item.status == 1 ? "Approved":"Rejected"}</td>
                             <td>
-                              <Link to="/view-offer-release">
+                              <Link to={"/view-promotion/" + item.promotionId}>
                                 <Eye
                                   onClick={() => {
-                                     ViewPromotionEmployeeById(item.employeeId);
+                                     ViewPromotionById(item.promotionId);
                                   }}
                                 />
                               </Link>

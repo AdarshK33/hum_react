@@ -80,6 +80,8 @@ import EmployeeExitList from "./components/ManagerApproveEmployeExit/EmployeeExi
 import EmployeeExitAction from "./components/ManagerApproveEmployeExit/EmployeeExitAction";
 import ManagerInitiateExit from "./components/ManagerApproveEmployeExit/ManagerInitiateExit";
 import PromotionInitiate from "./components/Promotion/PromotionInitiate/PromotionInitiate"
+import PromotionView from "./components/Promotion/PromotionView/PromotionView"
+
 import EmpResignation from "./components/employeeSeparation/empResignation";
 import EmployeeSeparationListing from "./components/managerSeparation/employeeSeparationListing";
 import CostCenterManagerExitListing from "./components/CostcenterManagerApproveExit/exitListing";
@@ -107,15 +109,6 @@ const RoutePath = () => {
       component={OnBoardingStepper}
       /> */}
 
-      {/* <Route
-            path={`${process.env.PUBLIC_URL}/no_due_clearance`}
-            component={NoDueClearance}
-          /> */}
-    
-      {/* <Route
-        path={`${process.env.PUBLIC_URL}/promotion-list`}
-        component={PromotionList}
-      /> */}
 
       <Route
         //  {/*Rajasekhar */}
@@ -132,12 +125,12 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/onboard`}
             component={OnBoardingStepper}
       /> */}
-      {/* <Route
+      <Route
         path={`${process.env.PUBLIC_URL}/onboard-offer`}
         component={LoginOnboard}
-      /> */}
-      
-      {/* <Route path={`${process.env.PUBLIC_URL}/offer`} component={OfferAccept} /> */}
+      />
+
+      <Route path={`${process.env.PUBLIC_URL}/offer`} component={OfferAccept} />
 
       <Fragment>
         <App>
@@ -285,6 +278,10 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/promotion-initiate`}
             component={PromotionInitiate}
+          />
+            <Route
+            path={`${process.env.PUBLIC_URL}/view-promotion/:promotionId`}
+            component={PromotionView}
           />
           {state.MenuPermissionsRoute.map((e) => {
             return (
