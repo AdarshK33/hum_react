@@ -106,39 +106,10 @@ export const PromotionProvider = (props) => {
   };
   const PromotionCreate = (create) => {
     setLoader(true);
-    let formData = {
-      approveByAdminName: create.approveByAdminName,
-      approveByCostCentreManagerName: create.approveByCostCentreManagerName,
-      bonus: create.bonus,
-      bonusInPercentage: create.bonusInPercentage,
-      costCentre: create.costCentre,
-      costCentreManagerEmail: create.costCentreManagerEmail,
-      costCentreManagerId: create.costCentreManagerId,
-      costCentreManagerName: create.costCentreManagerName,
-      departmentId: create.departmentId,
-      effectiveDate: create.effectiveDate,
-      emailId: create.emailId,
-      empName: create.empName,
-      employeeId: create.employeeId,
-      managerId: create.managerId,
-      managerName: create.managerName,
-      newDepartment: create.newDepartment,
-      newFixedGross: create.newFixedGross,
-      oldDepartment: create.oldDepartment,
-      oldFixedGross: create.oldFixedGross,
-      oldPosition: create.oldPosition,
-      positionId: create.positionId,
-      promotedPosition: create.promotedPosition,
-      promotionId: create.promotionId,
-      promotionLetter: create.promotionLetter,
-      reason: create.reason,
-      relocationBonus: create.relocationBonus,
-      remarks: create.remarks,
-      status: create.status,
-    };
-    console.log(formData, "promotionCreate");
+
+  console.log(create,"promotionCreate")
     client
-      .post("/api/v1/promotion/create", formData)
+      .post("/api/v1/promotion/create",create)
       .then((response) => {
         state.promotionCreate = response.data.data;
 
