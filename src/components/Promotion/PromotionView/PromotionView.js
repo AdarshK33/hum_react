@@ -70,6 +70,7 @@ const PromotionView = (props) => {
     total,
     PositionNew,
     positionNew,
+    promotionByEmployee,
   } = useContext(PromotionContext);
   useEffect(() => {
     PositionNew();
@@ -83,45 +84,45 @@ const PromotionView = (props) => {
     ViewPromotionById(id.slice(id.length - 1));
   }, []);
   useEffect(() => {
-    console.log(promotionIdData, props, "promotionIdData");
+    console.log(promotionByEmployee, "promotionByEmployee");
     if (
-      promotionIdData !== null &&
-      promotionIdData !== undefined &&
-      Object.keys(promotionIdData).length !== 0
+      promotionByEmployee !== null &&
+      promotionByEmployee !== undefined &&
+      Object.keys(promotionByEmployee).length !== 0
     ) {
       setState({
-        approveByAdminName: promotionIdData["approveByAdminName"],
+        approveByAdminName: promotionByEmployee["approveByAdminName"],
         approveByCostCentreManagerName:
-          promotionIdData["approveByCostCentreManagerName"],
-        bonus: promotionIdData["bonus"],
-        bonusInPercentage: promotionIdData["bonusInPercentage"],
-        costCentre: promotionIdData["costCentre"],
-        costCentreManagerEmail: promotionIdData["costCentreManagerEmail"],
-        costCentreManagerId: promotionIdData["costCentreManagerId"],
-        costCentreManagerName: promotionIdData["costCentreManagerName"],
-        departmentId: promotionIdData["departmentId"],
-        effectiveDate: promotionIdData["effectiveDate"],
-        emailId: promotionIdData["emailId"],
-        empName: promotionIdData["empName"],
-        employeeId: promotionIdData["employeeId"],
-        managerId: promotionIdData["managerId"],
-        managerName: promotionIdData["managerName"],
-        newDepartment: promotionIdData["newDepartment"],
-        newFixedGross: promotionIdData["newFixedGross"],
-        oldDepartment: promotionIdData["oldDepartment"],
-        oldFixedGross: promotionIdData["oldFixedGross"],
-        oldPosition: promotionIdData["oldPosition"],
-        positionId: promotionIdData["positionId"],
-        promotedPosition: promotionIdData["promotedPosition"],
-        promotionId: promotionIdData["promotionId"],
-        promotionLetter: promotionIdData["promotionLetter"],
-        reason: promotionIdData["reason"],
-        relocationBonus: promotionIdData["relocationBonus"],
-        remarks: promotionIdData["remarks"],
-        status: promotionIdData["status"],
+          promotionByEmployee["approveByCostCentreManagerName"],
+        bonus: promotionByEmployee["bonus"],
+        bonusInPercentage: promotionByEmployee["bonusInPercentage"],
+        costCentre: promotionByEmployee["costCentre"],
+        costCentreManagerEmail: promotionByEmployee["costCentreManagerEmail"],
+        costCentreManagerId: promotionByEmployee["costCentreManagerId"],
+        costCentreManagerName: promotionByEmployee["costCentreManagerName"],
+        departmentId: promotionByEmployee["departmentId"],
+        effectiveDate: promotionByEmployee["effectiveDate"],
+        emailId: promotionByEmployee["emailId"],
+        empName: promotionByEmployee["empName"],
+        employeeId: promotionByEmployee["employeeId"],
+        managerId: promotionByEmployee["managerId"],
+        managerName: promotionByEmployee["managerName"],
+        newDepartment: promotionByEmployee["newDepartment"],
+        newFixedGross: promotionByEmployee["newFixedGross"],
+        oldDepartment: promotionByEmployee["oldDepartment"],
+        oldFixedGross: promotionByEmployee["oldFixedGross"],
+        oldPosition: promotionByEmployee["oldPosition"],
+        positionId: promotionByEmployee["positionId"],
+        promotedPosition: promotionByEmployee["promotedPosition"],
+        promotionId: promotionByEmployee["promotionId"],
+        promotionLetter: promotionByEmployee["promotionLetter"],
+        reason: promotionByEmployee["reason"],
+        relocationBonus: promotionByEmployee["relocationBonus"],
+        remarks: promotionByEmployee["remarks"],
+        status: promotionByEmployee["status"],
       });
     }
-  }, [promotionIdData]);
+  }, [promotionByEmployee]);
 
   const changeHandler = (e) => {
     if (e.target.name === "empName") {
@@ -250,6 +251,16 @@ const PromotionView = (props) => {
                             </label>
                           </div>
                         </Col>
+                        <Col sm={6}>
+                          <div>
+                            <label>
+                              Fixed Gross:
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.oldFixedGross}
+                              </label>
+                            </label>
+                          </div>
+                        </Col>
                       </Row>
                       <Row
                         style={{
@@ -261,15 +272,25 @@ const PromotionView = (props) => {
                         <Col sm={6}>
                           <div>
                             <label>
-                              New Department
+                              New Department:
                               <label className="itemResult">
                                 &nbsp;&nbsp; {state.newDepartment}
                               </label>
                             </label>
                           </div>
                         </Col>
+                        <Col sm={6}>
+                          <div>
+                            <label>
+                              New Fixed Gross:
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.newFixedGross}
+                              </label>
+                            </label>
+                          </div>
+                        </Col>
                       </Row>
-                      <Row
+                      {/* <Row
                         style={{
                           marginLeft: "2rem",
                           marginTop: "1rem",
@@ -296,12 +317,12 @@ const PromotionView = (props) => {
                             </label>
                           </div>
                         </Col>
-                      </Row>
+                      </Row> */}
                       <Row
                         style={{
                           marginLeft: "2rem",
                           marginTop: "1rem",
-                          marginBottom: "3rem",
+                          marginBottom: "2rem",
                         }}
                       >
                         <Col sm={6}>

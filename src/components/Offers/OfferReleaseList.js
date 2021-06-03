@@ -11,10 +11,19 @@ import { RoleManagementContext } from "../../context/RoleManagementState";
 import { AdminContext } from "../../context/AdminState";
 import { AppContext } from "../../context/AppState";
 const OfferReleaseList = () => {
-  const { candidateView, candidateList, loader, total, viewCandidateId } =
-    useContext(OfferContext);
-  const { verificationDocsView, docsToVerify, personalInfo, personalInfoData } =
-    useContext(DocsVerifyContext);
+  const {
+    candidateView,
+    candidateList,
+    loader,
+    total,
+    viewCandidateId,
+  } = useContext(OfferContext);
+  const {
+    verificationDocsView,
+    docsToVerify,
+    personalInfo,
+    personalInfoData,
+  } = useContext(DocsVerifyContext);
   const { user } = useContext(AppContext);
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
@@ -191,13 +200,17 @@ const OfferReleaseList = () => {
                             user !== undefined &&
                             user.role !== "ADMIN" ? (
                               <td>
-                                <Link to="/offer-relase-and-onboard">
-                                  <AlertCircle
-                                    onClick={() => {
-                                      fetchCandidateDetails(item.candidateId);
-                                    }}
-                                  />
-                                </Link>
+                                {item.status === 6 ? (
+                                  <AlertCircle />
+                                ) : (
+                                  <Link to="/offer-relase-and-onboard">
+                                    <AlertCircle
+                                      onClick={() => {
+                                        fetchCandidateDetails(item.candidateId);
+                                      }}
+                                    />
+                                  </Link>
+                                )}
                               </td>
                             ) : (
                               ""
