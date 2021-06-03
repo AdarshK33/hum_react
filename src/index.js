@@ -64,31 +64,31 @@ function Root() {
                               <SupportProvider>
                                 <GroupProvider>
                                   <OfferProvider>
-                                    <PromotionProvider>
                                     <OnBoardProvider>
                                       <CandidateProvider>
                                         <DocsVerificationProvider>
                                           <EmploeeSeparationProvider>
                                             <SeparationProvider>
-                                              <ProbationProvider>
-                                                <BonusProvider>
-                                                  <BrowserRouter basename={"/"}>
-                                                    <ScrollContext>
-                                                      <WithAxios>
-                                                        <CandidateWithAxios>
-                                                          <RoutePath />
-                                                        </CandidateWithAxios>
-                                                      </WithAxios>
-                                                    </ScrollContext>
-                                                  </BrowserRouter>
-                                                </BonusProvider>
-                                              </ProbationProvider>
+                                            <ProbationProvider>
+                                            <PromotionProvider>
+                                              <BonusProvider>
+                                                <BrowserRouter basename={"/"}>
+                                                  <ScrollContext>
+                                                    <WithAxios>
+                                                      <CandidateWithAxios>
+                                                        <RoutePath />
+                                                      </CandidateWithAxios>
+                                                    </WithAxios>
+                                                  </ScrollContext>
+                                                </BrowserRouter>
+                                              </BonusProvider>
+                                              </PromotionProvider>
+                                            </ProbationProvider>
                                             </SeparationProvider>
                                           </EmploeeSeparationProvider>
                                         </DocsVerificationProvider>
                                       </CandidateProvider>
                                     </OnBoardProvider>
-                                    </PromotionProvider>
                                   </OfferProvider>
                                   {/* //Support provider 14-12-20*/}
 
