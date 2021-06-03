@@ -8,10 +8,10 @@ const PromotionReducer = (state, action) => {
           data: action.data,
           total: action.total,
         };
-        case "PROMOTION_EMPLOYEE_ID":
+        case "PROMOTION_ID":
           return {
             ...state,
-            promotionEmployeeData: action.payload,
+            promotionIdData: action.payload,
           };
           case "PROMOTION_CREATE":
             return {
