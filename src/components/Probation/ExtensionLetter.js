@@ -9,6 +9,8 @@ const ExtensionLetter = () => {
   const { fetchRelievingLetterData, relivingLetterData } = useContext(
     EmployeeSeparationContext
   );
+  // const [endDate, setEndDate] = useState("");
+  // const [startDate, setStartDate] = useState("");
   const {
     extensionLetterData,
     cnfLetterData,
@@ -17,6 +19,25 @@ const ExtensionLetter = () => {
   } = useContext(ProbationContext);
 
   //   connsole.log("today", moment().format("DD-MM-YYYY"));
+  // useEffect(() => {
+  //   if (
+  //     extensionLetterData &&
+  //     extensionLetterData !== null &&
+  //     extensionLetterData !== undefined &&
+  //     Object.keys(extensionLetterData).length !== 0 &&
+  //     extensionLetterData.probationStartDate !== null &&
+  //     extensionLetterData.probationStartDate !== undefined
+  //   ) {
+  //     var d = new Date(extensionLetterData.probationStartDate);
+  //     console.log(d.toLocaleDateString());
+  //     d.setMonth(d.getMonth() + 3);
+  //     console.log(d.toLocaleDateString());
+  //     extensionLetterData.probationStartDate = d
+  //     var s = new Date(extensionLetterData.probationStartDate);
+  //     setStartDate(s.toLocaleDateString());
+  //   }
+  // }, [extensionLetterData]);
+
   return (
     <Fragment>
       {typeof extensionLetterData !== undefined ? (
@@ -65,8 +86,8 @@ const ExtensionLetter = () => {
               may decide to terminate your services due to non-confirmation.
               <br />
               All the other terms and conditions of your appointment letter
-              dated <b>{extensionLetterData.probationEndDate}</b>, shall remain
-              the same.
+              dated <b>{extensionLetterData.appointmentLetterDate}</b>, shall
+              remain the same.
               <br />
               Please sign the copy of this letter as receipt of acceptance.
               <br />

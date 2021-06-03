@@ -183,25 +183,22 @@ const PromotionView = (props) => {
                           marginBottom: "1rem",
                         }}
                       >
-                        <Col sm={2}>
+                        <Col sm={6}>
                           <div>
-                            <label>Emp Name/Id:</label>
-                          </div>
-                        </Col>
-                        <Col sm={4}>
-                          <div>
-                            <label className="itemResult">
-                              {" "}
-                              &nbsp;&nbsp; {} &nbsp;{state.empName}
+                            <label>
+                              Emp Name/Id:
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.empName}
+                              </label>
                             </label>
                           </div>
                         </Col>
                         <Col sm={6}>
                           <div>
                             <label>
-                              Position:
+                              Cost Center Name:
                               <label className="itemResult">
-                                &nbsp;&nbsp; {state.oldPosition}
+                                &nbsp;&nbsp; {state.costCentre}
                               </label>
                             </label>
                           </div>
@@ -217,9 +214,9 @@ const PromotionView = (props) => {
                         <Col sm={6}>
                           <div>
                             <label>
-                              Cost Center Name:
+                              Position:
                               <label className="itemResult">
-                                &nbsp;&nbsp; {state.costCentre}
+                                &nbsp;&nbsp; {state.oldPosition}
                               </label>
                             </label>
                           </div>
@@ -241,30 +238,20 @@ const PromotionView = (props) => {
                         style={{
                           marginLeft: "2rem",
                           marginTop: "1rem",
-                          marginBottom: "1rem",
+                          marginBottom: "2rem",
                         }}
                       >
-                        <label className="itemResult">New Position :</label>
-                        &nbsp;&nbsp; {state.promotedPosition}
-                      </Row>
-                      <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "1rem",
-                          marginBottom: "1rem",
-                        }}
-                      >
-                        <label className="itemResult">Select Department </label>
-                        &nbsp;&nbsp; {state.newDepartment}
-                      </Row>
-                      <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "1rem",
-                          marginBottom: "3rem",
-                        }}
-                      >
-                        <Col sm={4}>
+                        <Col sm={6}>
+                          <div>
+                            <label>
+                              New Position :
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.promotedPosition}
+                              </label>
+                            </label>
+                          </div>
+                        </Col>
+                        <Col sm={6}>
                           <div>
                             <label>
                               Fixed Gross:
@@ -274,14 +261,93 @@ const PromotionView = (props) => {
                             </label>
                           </div>
                         </Col>
-                        <Col sm={2}>
+                      </Row>
+                      <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "1rem",
+                          marginBottom: "1rem",
+                        }}
+                      >
+                        <Col sm={6}>
                           <div>
                             <label>
-                              New Fixed Gross:&nbsp;&nbsp; {state.newFixedGross}
+                              New Department:
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.newDepartment}
+                              </label>
+                            </label>
+                          </div>
+                        </Col>
+                        <Col sm={6}>
+                          <div>
+                            <label>
+                              New Fixed Gross:
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.newFixedGross}
+                              </label>
                             </label>
                           </div>
                         </Col>
                       </Row>
+                      {/* <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "1rem",
+                          marginBottom: "3rem",
+                        }}
+                      >
+                        <Col sm={6}>
+                          <div>
+                            <label>
+                              Fixed Gross:
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.oldFixedGross}
+                              </label>
+                            </label>
+                          </div>
+                        </Col>
+                        <Col sm={6}>
+                          <div>
+                            <label>
+                              New Fixed Gross:
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.newFixedGross}
+                              </label>
+                            </label>
+                          </div>
+                        </Col>
+                      </Row> */}
+                      <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "1rem",
+                          marginBottom: "2rem",
+                        }}
+                      >
+                        <Col sm={6}>
+                          <div>
+                            <label>
+                              {" "}
+                              Effective Date :
+                              <label className="itemResult">
+                                &nbsp;&nbsp;{state.effectiveDate}
+                              </label>
+                            </label>
+                          </div>
+                        </Col>
+                        <Col sm={6}>
+                          <div>
+                            <label>
+                              Relocation Bonus:
+                              <label className="itemResult">
+                                &nbsp;&nbsp;{state.relocationBonus}
+                              </label>
+                            </label>
+                          </div>
+                        </Col>
+                      </Row>
+
                       <Row
                         style={{
                           marginLeft: "2rem",
@@ -289,29 +355,17 @@ const PromotionView = (props) => {
                           marginBottom: "3rem",
                         }}
                       >
-                        <Col sm={2}>
+                        <Col sm={10}>
                           <div>
                             <label>
-                              {" "}
-                              Effective Date :&nbsp;&nbsp;{state.effectiveDate}
-                            </label>
-                          </div>
-                        </Col>
-                        <Col sm={2}>
-                          <div>
-                            <label className="itemResult">
-                              Relocation Bonus: &nbsp;&nbsp;{" "}
-                              {state.relocationBonus}
+                              Reason For Promotion:
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.reason}
+                              </label>
                             </label>
                           </div>
                         </Col>
                       </Row>
-
-                      <Modal.Body className="mx-auto">
-                        <label className="itemResult">
-                          Reason For Promotion: &nbsp;&nbsp; {state.reason}
-                        </label>
-                      </Modal.Body>
                     </Col>
                   </Row>
                 </Form>

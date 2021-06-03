@@ -79,8 +79,8 @@ import HistoryView from "./components/Separation/FinanceAdminNoDueClearance/Hist
 import EmployeeExitList from "./components/ManagerApproveEmployeExit/EmployeeExitList";
 import EmployeeExitAction from "./components/ManagerApproveEmployeExit/EmployeeExitAction";
 import ManagerInitiateExit from "./components/ManagerApproveEmployeExit/ManagerInitiateExit";
-import PromotionInitiate from "./components/Promotion/PromotionInitiate/PromotionInitiate"
-import PromotionView from "./components/Promotion/PromotionView/PromotionView"
+import PromotionInitiate from "./components/Promotion/PromotionInitiate/PromotionInitiate";
+import PromotionView from "./components/Promotion/PromotionView/PromotionView";
 
 import EmpResignation from "./components/employeeSeparation/empResignation";
 import EmployeeSeparationListing from "./components/managerSeparation/employeeSeparationListing";
@@ -109,9 +109,12 @@ const RoutePath = () => {
       component={OnBoardingStepper}
       /> */}
 
-
+      {/* <Route
+        path={`${process.env.PUBLIC_URL}/promotion-initiate`}
+        component={PromotionInitiate}
+      /> */}
       <Route
-        //  {/*Rajasekhar */}
+        //  Rajasekhar
         path={`${process.env.PUBLIC_URL}/onboard`}
         component={OnBoardingStepper}
       />
@@ -144,7 +147,6 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/profileEdit`}
             component={ProfileEdit}
           /> */}
-
           <Route
             path={`${process.env.PUBLIC_URL}/no_due_clearance`}
             component={NoDueClearance}
@@ -279,7 +281,7 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/promotion-initiate`}
             component={PromotionInitiate}
           />
-            <Route
+          <Route
             path={`${process.env.PUBLIC_URL}/view-promotion/:promotionId`}
             component={PromotionView}
           />

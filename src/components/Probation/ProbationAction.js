@@ -47,23 +47,6 @@ const ProbationAction = () => {
     probationStatus: "",
     probationMonths: "",
     reason: "",
-
-    empContractType: "",
-    empLocation: "",
-    empPosition: "",
-    mngrName: "",
-    mngrId: "",
-    mngrCostCenterName: "",
-    mngrPosition: "",
-    modeOfSeparationId: "",
-    modeOfSeparationReasonId: "",
-    dateOfResignation: "",
-    noticePeriod: "",
-    lastWorkingDate: "",
-    emailId: "",
-    comments: "",
-    noticePeriodRcryDays: "",
-    remarks: "",
   });
   const {
     employeeData,
@@ -396,10 +379,7 @@ const ProbationAction = () => {
           </Modal.Body>
         ) : previewLetter || showRelivingModal ? (
           <Modal.Body>
-            {relivingLetterData &&
-            relivingLetterData !== undefined &&
-            relivingLetterData !== null ? (
-              // <RelievingLetter />
+            {true ? (
               <div>
                 {probationStatus === "Confirmed" ? (
                   <ConfirmationLetter />
@@ -414,11 +394,6 @@ const ProbationAction = () => {
             )}
             <br></br>
             <Row>
-              {/* <Col sm={6}>
-                <p>Thanking you</p>
-                <p>{employeeData.managerName}</p>
-              </Col> */}
-
               {showSignature ? (
                 <Fragment>
                   <br></br>
@@ -719,14 +694,6 @@ const ProbationAction = () => {
                                     <option value="Confirmed">Confirmed</option>
                                     <option value="Extended">Extended</option>
                                   </Form.Control>
-                                  {/* {modOfSepReasonError ? (
-                                <p style={{ color: "red" }}>
-                                  {" "}
-                                  &nbsp; *Please choose valid option
-                                </p>
-                              ) : (
-                                <p></p>
-                              )} */}
                                 </Form.Group>
                               )}
                             </div>
