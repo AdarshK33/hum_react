@@ -28,7 +28,7 @@ const PromotionInitiate = () => {
     "costCentreManagerEmail": "",
     "costCentreManagerId": "",
     "costCentreManagerName": "",
-    "departmentId": 0,
+    "departmentId": "",
     "effectiveDate": "",
     "emailId": "",
     "empName": "",
@@ -36,11 +36,11 @@ const PromotionInitiate = () => {
     "managerId": "",
     "managerName": "",
     "newDepartment": "",
-    "newFixedGross": 0,
+    "newFixedGross": "",
     "oldDepartment": "",
     "oldFixedGross": 0,
     "oldPosition": "",
-    "positionId": 0,
+    "positionId": "",
     "promotedPosition": "",
     "promotionId": 0,
     "promotionLetter": "",
@@ -49,17 +49,11 @@ const PromotionInitiate = () => {
     "remarks": "",
     "status": 0
   });
-  const [stateError,setStateError] = useState({
-    empNameError:'',
-departmentIdError: '',
-    positionIdError:'',
-    costCentreError:'',
-    newFixedGrossError:'',
-    oldPositionError:'',
-    positionIdError:'',
-    reasonError:'',
-    relocationBonusError:''
-  })
+  const [empNameError,setEmpNameError] = useState('')
+  const [departmentIdError,setDepartmentIdError] = useState('')
+  const [positionIdError,setPositionIdError] =useState('')
+  const [newFixedGrossError,setNewFixedGrossError] =useState('')
+  const [reasonError,setReasonError] =useState('')
   const {
     employeeData,
     ViewEmployeeProfile,
@@ -90,7 +84,6 @@ departmentIdError: '',
     ViewEmployeeProfile();
   }, []);
 
- console.log(positionNew,"positionNew")
   useEffect(() => {
     console.log("state.empI", state.employeeId);
     if (
@@ -118,78 +111,105 @@ departmentIdError: '',
           ? searchByCostData.lastName
           : "";
       state.employeeId = searchByCostData.employeeId;
-      state.empName  = searchByCostData.empName
+      state.empName  = searchByCostData.firstName + " " + temp
       setEmpName(searchByCostData.firstName + " " + temp);
 
       state.costCentre = searchByCostData.costCentre;
       state.oldPosition = searchByCostData.position;
-      state.oldDepartment = searchByCostData.position;
-
+      state.oldDepartment = searchByCostData.department;
+      state.oldFixedGross  = searchByCostData.oldFixedGross
     }
   }, [searchByCostData]);
-  const checkValidations = () => {
 
-    if (
-      state.empName === "" ||
-      state.empName === null ||
-      state.empName === undefined
-    ) {
-      setStateError({...stateError,empNameError:"Select the Employee Name"})
-      console.log(stateError)
-    }else if(state.departmentId === "" ||
-    state.departmentId === null ||
-    state.departmentId === undefined){
-      setStateError({...stateError,departmentIdError:"Select the New Department"}) 
-      console.log(stateError)
+ console.log(state,EmpName,"state")
 
-    }else if(state.positionId === "" ||
-    state.positionId === null ||
-    state.positionId === undefined){
-      setStateError({...stateError,positionIdError:"Select the  New Position "}) 
-      console.log(stateError)
-
-    }else if(state.costCentre === "" ||
-    state.costCentre === null ||
-    state.costCentre === undefined){
-      setStateError({...stateError,costCentreError:"Select the costCentre"}) 
-      console.log(stateError)
-
-    }else if(state.newFixedGross === "" ||
-    state.newFixedGross === null ||
-    state.newFixedGross === undefined){
-      setStateError({...stateError,newFixedGrossError:"Add New Fixed Gross"}) 
-      console.log(stateError)
-
-    }else if(state.newDepartment === "" ||
-    state.newDepartment === null ||
-    state.newDepartment === undefined){
-      setStateError({...stateError,departmentIdError:"Select the Department Name"})
-      console.log(stateError)
- 
-    }else if(state.reason === "" ||
-    state.reason === null ||
-    state.reason === undefined){
-      setStateError({...stateError,reasonError:"Please Add Reason for Promotion"}) 
-      console.log(stateError)
-
-    }
-  }
   const submitHandler = (e) => {
     e.preventDefault();
-    setState({...state,empName:EmpName})
-    // PromotionCreate(state)
-    const value = checkValidations();
-    console.log(value)
-    if (value === true) {
+    //  setState({...state,empName:EmpName})
+    var empName    =   state.empName;
+    if (
+      empName == "" ||
+      empName == null ||
+      empName == undefined
+    ) {
+      setEmpNameError("Select choose the employee name")
+      console.log(empNameError,"empNameError")      
+    }else{
+      setEmpNameError("") 
     }
-    console.log("submit handler",stateError,state);
+
+    var departmentId    =   state.departmentId;
+    if(departmentId == '' ||
+    departmentId == null ||
+    departmentId == undefined){
+      setDepartmentIdError("Please select the department")
+      console.log(departmentIdError)
+  
+    }else{
+      setDepartmentIdError("") 
+    }
+    var positionId    =   state.positionId;
+
+     if(positionId == '' ||
+    positionId == null ||
+    positionId == undefined){
+      setPositionIdError(" Please select the position ")
+      console.log(positionIdError)
+         
+    }else{
+      setPositionIdError("") 
+    }
+
+    var newFixedGross    =   state.newFixedGross;
+     if(newFixedGross == '' ||
+    newFixedGross == null ||
+    newFixedGross == undefined){
+      setNewFixedGrossError(" Please add fixed gross")
+      console.log(newFixedGrossError)
+       
+
+    }else{
+      setNewFixedGrossError("") 
+    }
+
+    var newDepartment    =   state.newDepartment;
+    if(newDepartment == "" ||
+    newDepartment == null ||
+    newDepartment == undefined){
+      setDepartmentIdError("Please select the department")
+      console.log(departmentIdError)
+    }else{
+      setDepartmentIdError("") 
+    }
+
+    var reason    =   state.reason;
+    if(reason == "" ||
+    reason == null ||
+    reason == undefined){
+      setReasonError("Please add reason for promotion")      
+    }else{
+      setReasonError("") 
+    }
+
+    if(newDepartment !== "" && reason !== "" &&   
+     newFixedGross !== "" && positionId !== "" && departmentId !== "" && empName !== ""){
+     PromotionCreate(state)
+   console.log("all okay")
+    }else{
+console.log("NOT OK",empName)
+// toast.error("Data is not filled Properly")
+    }
   };
+
+
   const dateOfBirthHandler = (date) => {
     var AdjusteddateValue = new Date(
       date.getTime() - date.getTimezoneOffset() * 60000
     );
     setState({...state,effectiveDate:AdjusteddateValue});
   };
+
+
   const searchDataHandler = () => {
     if (EmpName !== null) {
       searchByCostCenter(EmpName);
@@ -204,9 +224,15 @@ departmentIdError: '',
       }
     }
   };
+
+
   const changeHandler = (e) => {
     if (e.target.name === "empName") {
       setEmpName(e.target.value);
+      setState({
+        ...state,
+        empName:e.target.value,
+  });
     } else if(e.target.name === "departmentId"){
     let value =  departmentName.filter((item) =>item.departmentName === e.target.value)
     console.log(e.target.value,value,state,"department1")
@@ -225,6 +251,7 @@ departmentIdError: '',
           setState({
             ...state,
             positionId: item.positionId,
+            promotedPosition:item.position
           });
         }
       });
@@ -237,6 +264,8 @@ departmentIdError: '',
     }
     console.log(state,"state");
   };
+
+  
   return (
     <div>
       <Breadcrumb title="PROMOTION INTIATION" parent="PROMOTION INTIATION" />
@@ -249,6 +278,7 @@ departmentIdError: '',
                   <b>PROMOTION INTIATION </b>
                 </div>
                 <Form>
+                  <Container>
                   <Row
                     style={{
                       marginRight: "2rem",
@@ -270,7 +300,7 @@ departmentIdError: '',
                         <Col sm={4}>
                           <div>
                             {false ? (
-                              <label className="itemResult">
+                              <label >
                                 {" "}
                                 &nbsp;&nbsp; {} &nbsp;{state.employeeId}
                               </label>
@@ -283,7 +313,7 @@ departmentIdError: '',
                                     name="empName"
                                     // disabled={disabled}
                                     value={EmpName}
-                                    style={stateError.empNameError?{ borderColor: "red" } : { borderRadius: "5px" }}
+                                    style={empNameError?{ borderColor: "red" } : { borderRadius: "5px" }}
                                   
                                     placeholder="Search.."
                                     onChange={(e) => changeHandler(e)}
@@ -296,7 +326,7 @@ departmentIdError: '',
                                   />
                                 </div>
                                 {
-             stateError.empNameError?  <p style={{ color: "red" }}>{stateError.empNameError}</p>:''
+             empNameError?  <p style={{ color: "red" }}>{empNameError}</p>:''
             }
                               </Form.Group>
                             )}
@@ -311,6 +341,7 @@ departmentIdError: '',
                               </label>
                             </label>
                           </div>
+                   
                         </Col>
                        
                       </Row>
@@ -330,6 +361,7 @@ departmentIdError: '',
                               </label>
                             </label>
                           </div>
+           
                         </Col>
                      
                         <Col sm={6}>
@@ -353,12 +385,13 @@ departmentIdError: '',
                         }}
                       >
                       
-                          <label className="itemResult">
+                          <label >
                           New Position </label>&nbsp;&nbsp; <Form.Group>
                   <Form.Control
                     as="select"
                     name="positionId"
                     defaultValue={position}
+                    style={positionIdError?{ borderColor: "red" } : { borderRadius: "5px" }}
                      onChange={(e) => changeHandler(e)}
 
                   >
@@ -375,7 +408,7 @@ departmentIdError: '',
                       })}
                   </Form.Control>
                   {
-             stateError.positionIdError?  <p style={{ color: "red" }}>{stateError.positionIdError}</p>:''
+             positionIdError?<p style={{ color: "red" }}>{positionIdError}</p>:''
             }
                   </Form.Group>
                        </Row>
@@ -386,11 +419,13 @@ departmentIdError: '',
                           marginBottom: "1rem",
                         }}
                       >
-                       <label className="itemResult">
+                       <label >
                        Select Department </label>&nbsp;&nbsp; <Form.Group>
                    <Form.Control
                     as="select"
                     name="departmentId"
+                    style={departmentIdError?{ borderColor: "red" }:{ borderRadius: "5px" }}
+
                     defaultValue={departmentNew}
                     onChange={(e) => changeHandler(e)}
                   
@@ -408,7 +443,7 @@ departmentIdError: '',
                       })}
                   </Form.Control>
                   {
-             stateError.departmentIdError?  <p style={{ color: "red" }}>{stateError.departmentIdError}</p>:''
+             departmentIdError?<p style={{ color: "red" }}>{departmentIdError}</p>:''
             }
                 </Form.Group>                      
                       </Row>
@@ -431,6 +466,7 @@ departmentIdError: '',
                               </label>
                             </label>
                           </div>
+
                         </Col>
                      <Col sm={2}>
                           <div>
@@ -453,12 +489,15 @@ departmentIdError: '',
                                   name="newFixedGross"
                                   value={state.newFixedGross}
                                   onChange={(e) => changeHandler(e)}
-                                  // style={
-                                  //   emailError ? { borderColor: "red" } : {}
-                                  // }
+                                  style={
+                                    newFixedGrossError?{ borderColor: "red" }:{ borderRadius: "5px" }
+                                  }
                                 />
                               </Form.Group>
                             )}
+                                                      {
+             newFixedGrossError?<p style={{ color: "red" }}>{newFixedGrossError}</p>:''
+            }
                           </div>
                         </Col>
                    
@@ -492,6 +531,7 @@ departmentIdError: '',
                                       name="effectiveDate"
                                       minDate={moment().toDate()}
                                       required
+                                      disabled={true}
                                       onChange={(e) => dateOfBirthHandler(e)}
                                       dateFormat="yyyy-MM-dd"
                                       placeholderText="YYYY-MM-DD"
@@ -537,8 +577,9 @@ departmentIdError: '',
                         </Row>
        
           <Modal.Body className="mx-auto">
-            <label className="itemResult">Reason For Promotion:</label>
+            <label >Reason For Promotion:</label>
             <textarea
+              style={reasonError?{ borderColor: "red" } : { borderRadius: "5px" }}
               className="remarkText rounded"
               name="reason"
               value={state.reason}
@@ -547,7 +588,7 @@ departmentIdError: '',
             />
 
             {
-             stateError.reasonError? <p style={{ color: "red" }}>Please add your reason</p>:''
+             reasonError? <p style={{ color: "red" }}>{reasonError}</p>:''
             }
         
           </Modal.Body>
@@ -572,6 +613,7 @@ departmentIdError: '',
                       </Row>
                     </Col>
                   </Row>
+                  </Container>
                 </Form>
               </div>
             </div>
