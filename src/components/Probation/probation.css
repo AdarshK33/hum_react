@@ -58,6 +58,15 @@
   border-radius: 3px !important;
   /* margin-left: 40px; */
 }
+.FifthButtons {
+  width: 125px;
+  height: 58px;
+  background-color: #006ebb !important;
+  color: white;
+  border: 1px solid #006ebb !important;
+  border-radius: 3px !important;
+  /* margin-left: 40px; */
+}
 .clickedButton {
   background: rgb(170, 170, 170) !important;
   border-color: rgb(170, 170, 170) !important;
