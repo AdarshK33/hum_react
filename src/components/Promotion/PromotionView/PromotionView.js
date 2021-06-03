@@ -6,7 +6,7 @@ import { OfferContext } from "../../../context/OfferState";
 import { SeparationContext } from "../../../context/SepearationState";
 
 import { EmployeeSeparationContext } from "../../../context/EmployeeSeparationState";
-import { PromotionContext, } from "../../../context/PromotionState";
+import { PromotionContext } from "../../../context/PromotionState";
 import { PermissionContext } from "../../../context/PermissionState";
 import moment from "moment";
 import DatePicker from "react-datepicker";
@@ -21,140 +21,142 @@ const PromotionView = (props) => {
   const [departmentNew, setDepartmentNew] = useState();
 
   const [state, setState] = useState({
-    "approveByAdminName": "",
-    "approveByCostCentreManagerName": "",
-    "bonus": 0,
-    "bonusInPercentage": 0,
-    "costCentre": "",
-    "costCentreManagerEmail": "",
-    "costCentreManagerId": "",
-    "costCentreManagerName": "",
-    "departmentId": 0,
-    "effectiveDate": "",
-    "emailId": "",
-    "empName": "",
-    "employeeId": "",
-    "managerId": "",
-    "managerName": "",
-    "newDepartment": "",
-    "newFixedGross": 0,
-    "oldDepartment": "",
-    "oldFixedGross": 0,
-    "oldPosition": "",
-    "positionId": 0,
-    "promotedPosition": "",
-    "promotionId": 0,
-    "promotionLetter": "",
-    "reason": "",
-    "relocationBonus": 0,
-    "remarks": "",
-    "status": 0
+    approveByAdminName: "",
+    approveByCostCentreManagerName: "",
+    bonus: 0,
+    bonusInPercentage: 0,
+    costCentre: "",
+    costCentreManagerEmail: "",
+    costCentreManagerId: "",
+    costCentreManagerName: "",
+    departmentId: 0,
+    effectiveDate: "",
+    emailId: "",
+    empName: "",
+    employeeId: "",
+    managerId: "",
+    managerName: "",
+    newDepartment: "",
+    newFixedGross: 0,
+    oldDepartment: "",
+    oldFixedGross: 0,
+    oldPosition: "",
+    positionId: 0,
+    promotedPosition: "",
+    promotionId: 0,
+    promotionLetter: "",
+    reason: "",
+    relocationBonus: 0,
+    remarks: "",
+    status: 0,
   });
-  const [stateError,setStateError] = useState({
-    empNameError:'',
-departmentIdError: '',
-    positionIdError:'',
-    costCentreError:'',
-    newFixedGrossError:'',
-    oldPositionError:'',
-    positionIdError:'',
-    reasonError:'',
-    relocationBonusError:''
-  })
-  
+  const [stateError, setStateError] = useState({
+    empNameError: "",
+    departmentIdError: "",
+    positionIdError: "",
+    costCentreError: "",
+    newFixedGrossError: "",
+    oldPositionError: "",
+    positionIdError: "",
+    reasonError: "",
+    relocationBonusError: "",
+  });
 
-  const { departmentView,departmentName } = useContext(
-    OfferContext
-  );
-  const { promotionIdData,ViewPromotionById,
-     loader, total,PositionNew,positionNew } = useContext(
-    PromotionContext
-  );
+  const { departmentView, departmentName } = useContext(OfferContext);
+  const {
+    promotionIdData,
+    ViewPromotionById,
+    loader,
+    total,
+    PositionNew,
+    positionNew,
+    promotionByEmployee,
+  } = useContext(PromotionContext);
   useEffect(() => {
-    PositionNew()
+    PositionNew();
     departmentView();
   }, []);
 
   useEffect(() => {
-      var id = props.history.location.pathname
-      
-      console.log(id,id.slice(id.length - 1),'id')
+    var id = props.history.location.pathname;
+
+    console.log(id, id.slice(id.length - 1), "id");
     ViewPromotionById(id.slice(id.length - 1));
   }, []);
   useEffect(() => {
-      console.log(promotionIdData,props,"promotionIdData")
-      if (
-        promotionIdData !== null &&
-        promotionIdData !== undefined &&
-        Object.keys(promotionIdData).length !== 0
-      ) {
-setState({
-    "approveByAdminName": promotionIdData['approveByAdminName'],
-    "approveByCostCentreManagerName": promotionIdData['approveByCostCentreManagerName'],
-    "bonus": promotionIdData['bonus'],
-    "bonusInPercentage": promotionIdData['bonusInPercentage'],
-    "costCentre": promotionIdData['costCentre'],
-    "costCentreManagerEmail": promotionIdData['costCentreManagerEmail'],
-    "costCentreManagerId": promotionIdData['costCentreManagerId'],
-    "costCentreManagerName": promotionIdData['costCentreManagerName'],
-    "departmentId": promotionIdData['departmentId'],
-     "effectiveDate": promotionIdData['effectiveDate'],
-    "emailId": promotionIdData['emailId'],
-    "empName": promotionIdData['empName'],
-    "employeeId": promotionIdData['employeeId'],
-    "managerId": promotionIdData['managerId'],
-    "managerName": promotionIdData['managerName'],
-    "newDepartment": promotionIdData['newDepartment'],
-    "newFixedGross": promotionIdData['newFixedGross'],
-    "oldDepartment": promotionIdData['oldDepartment'],
-    "oldFixedGross": promotionIdData['oldFixedGross'],
-    "oldPosition": promotionIdData['oldPosition'],
-    "positionId": promotionIdData['positionId'],
-    "promotedPosition": promotionIdData['promotedPosition'],
-    "promotionId": promotionIdData['promotionId'],
-    "promotionLetter": promotionIdData['promotionLetter'],
-    "reason": promotionIdData['reason'],
-    "relocationBonus": promotionIdData['relocationBonus'],
-    "remarks": promotionIdData['remarks'],
-    "status": promotionIdData['status']
-  })
+    console.log(promotionByEmployee, "promotionByEmployee");
+    if (
+      promotionByEmployee !== null &&
+      promotionByEmployee !== undefined &&
+      Object.keys(promotionByEmployee).length !== 0
+    ) {
+      setState({
+        approveByAdminName: promotionByEmployee["approveByAdminName"],
+        approveByCostCentreManagerName:
+          promotionByEmployee["approveByCostCentreManagerName"],
+        bonus: promotionByEmployee["bonus"],
+        bonusInPercentage: promotionByEmployee["bonusInPercentage"],
+        costCentre: promotionByEmployee["costCentre"],
+        costCentreManagerEmail: promotionByEmployee["costCentreManagerEmail"],
+        costCentreManagerId: promotionByEmployee["costCentreManagerId"],
+        costCentreManagerName: promotionByEmployee["costCentreManagerName"],
+        departmentId: promotionByEmployee["departmentId"],
+        effectiveDate: promotionByEmployee["effectiveDate"],
+        emailId: promotionByEmployee["emailId"],
+        empName: promotionByEmployee["empName"],
+        employeeId: promotionByEmployee["employeeId"],
+        managerId: promotionByEmployee["managerId"],
+        managerName: promotionByEmployee["managerName"],
+        newDepartment: promotionByEmployee["newDepartment"],
+        newFixedGross: promotionByEmployee["newFixedGross"],
+        oldDepartment: promotionByEmployee["oldDepartment"],
+        oldFixedGross: promotionByEmployee["oldFixedGross"],
+        oldPosition: promotionByEmployee["oldPosition"],
+        positionId: promotionByEmployee["positionId"],
+        promotedPosition: promotionByEmployee["promotedPosition"],
+        promotionId: promotionByEmployee["promotionId"],
+        promotionLetter: promotionByEmployee["promotionLetter"],
+        reason: promotionByEmployee["reason"],
+        relocationBonus: promotionByEmployee["relocationBonus"],
+        remarks: promotionByEmployee["remarks"],
+        status: promotionByEmployee["status"],
+      });
+    }
+  }, [promotionByEmployee]);
 
-}
-  }, [promotionIdData]);
-
- 
   const changeHandler = (e) => {
     if (e.target.name === "empName") {
       setEmpName(e.target.value);
-    } else if(e.target.name === "departmentId"){
-    let value =  departmentName.filter((item) =>item.departmentName === e.target.value)
-    console.log(e.target.value,value,state,"department1")
-          setDepartmentNew(e.target.value)
-          setState({
-            ...state,
-            newDepartment:value[0].departmentName,
-            departmentId: value[0].deptId,
+    } else if (e.target.name === "departmentId") {
+      let value = departmentName.filter(
+        (item) => item.departmentName === e.target.value
+      );
+      console.log(e.target.value, value, state, "department1");
+      setDepartmentNew(e.target.value);
+      setState({
+        ...state,
+        newDepartment: value[0].departmentName,
+        departmentId: value[0].deptId,
       });
-      console.log(e.target.value,value,state,"department2")
-     
-    }else if(e.target.name === "positionId"){
+      console.log(e.target.value, value, state, "department2");
+    } else if (e.target.name === "positionId") {
       positionNew.map((item) => {
         if (item.position === e.target.value) {
-          setPosition(e.target.value)
+          setPosition(e.target.value);
           setState({
             ...state,
             positionId: item.positionId,
           });
         }
       });
-      console.log(e.target.value,state,"value666")
-    }else{
+      console.log(e.target.value, state, "value666");
+    } else {
       setState({
         ...state,
         [e.target.name]: e.target.value,
       });
     }
-    console.log(state,"state");
+    console.log(state, "state");
   };
   return (
     <div>
@@ -188,15 +190,14 @@ setState({
                         </Col>
                         <Col sm={4}>
                           <div>
-                              <label className="itemResult">
-                                {" "}
-                                &nbsp;&nbsp; {} &nbsp;{state.empName}
-                              </label>
-                           
+                            <label className="itemResult">
+                              {" "}
+                              &nbsp;&nbsp; {} &nbsp;{state.empName}
+                            </label>
                           </div>
                         </Col>
                         <Col sm={6}>
-                        <div>
+                          <div>
                             <label>
                               Position:
                               <label className="itemResult">
@@ -205,7 +206,6 @@ setState({
                             </label>
                           </div>
                         </Col>
-                       
                       </Row>
                       <Row
                         style={{
@@ -214,7 +214,7 @@ setState({
                           marginBottom: "2rem",
                         }}
                       >
-                         <Col sm={6}>
+                        <Col sm={6}>
                           <div>
                             <label>
                               Cost Center Name:
@@ -224,9 +224,8 @@ setState({
                             </label>
                           </div>
                         </Col>
-                     
+
                         <Col sm={6}>
-                          
                           <div>
                             <label>
                               Department:
@@ -237,7 +236,7 @@ setState({
                           </div>
                         </Col>
                       </Row>
-                 
+
                       <Row
                         style={{
                           marginLeft: "2rem",
@@ -245,21 +244,18 @@ setState({
                           marginBottom: "1rem",
                         }}
                       >
-                      
-                          <label className="itemResult">
-                          New Position :</label>&nbsp;&nbsp; {state.promotedPosition}
-                     
-                       </Row>
-                        <Row
+                        <label className="itemResult">New Position :</label>
+                        &nbsp;&nbsp; {state.promotedPosition}
+                      </Row>
+                      <Row
                         style={{
                           marginLeft: "2rem",
                           marginTop: "1rem",
                           marginBottom: "1rem",
                         }}
                       >
-                       <label className="itemResult">
-                       Select Department </label>&nbsp;&nbsp; {state.newDepartment}
-                   
+                        <label className="itemResult">Select Department </label>
+                        &nbsp;&nbsp; {state.newDepartment}
                       </Row>
                       <Row
                         style={{
@@ -267,8 +263,7 @@ setState({
                           marginTop: "1rem",
                           marginBottom: "3rem",
                         }}
-                      >            
-
+                      >
                         <Col sm={4}>
                           <div>
                             <label>
@@ -279,49 +274,44 @@ setState({
                             </label>
                           </div>
                         </Col>
-                     <Col sm={2}>
+                        <Col sm={2}>
                           <div>
-                            <label>New Fixed Gross:&nbsp;&nbsp; {state.newFixedGross}</label>
+                            <label>
+                              New Fixed Gross:&nbsp;&nbsp; {state.newFixedGross}
+                            </label>
                           </div>
                         </Col>
-                  
-                   
-                        </Row>
+                      </Row>
                       <Row
                         style={{
                           marginLeft: "2rem",
                           marginTop: "1rem",
                           marginBottom: "3rem",
                         }}
-                      >            
-               
-                          <Col sm={2}>
-                            <div>
-                              <label> Effective Date :&nbsp;&nbsp;{state.effectiveDate}</label>
-                            </div>
-                      
-                              
-                          </Col> 
-                     <Col sm={2}>
+                      >
+                        <Col sm={2}>
                           <div>
-                              <label className="itemResult">
-                              Relocation Bonus: &nbsp;&nbsp; {state.relocationBonus}
-                              </label>
-                          
-                             
-                            
+                            <label>
+                              {" "}
+                              Effective Date :&nbsp;&nbsp;{state.effectiveDate}
+                            </label>
                           </div>
                         </Col>
-                   
-                        </Row>
-       
-          <Modal.Body className="mx-auto">
-            <label className="itemResult">Reason For Promotion:  &nbsp;&nbsp; {state.reason}</label>
-      
-        
-          </Modal.Body>
-      
-      
+                        <Col sm={2}>
+                          <div>
+                            <label className="itemResult">
+                              Relocation Bonus: &nbsp;&nbsp;{" "}
+                              {state.relocationBonus}
+                            </label>
+                          </div>
+                        </Col>
+                      </Row>
+
+                      <Modal.Body className="mx-auto">
+                        <label className="itemResult">
+                          Reason For Promotion: &nbsp;&nbsp; {state.reason}
+                        </label>
+                      </Modal.Body>
                     </Col>
                   </Row>
                 </Form>
@@ -335,5 +325,3 @@ setState({
 };
 
 export default PromotionView;
-
-

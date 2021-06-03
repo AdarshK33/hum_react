@@ -5,13 +5,14 @@ import { toast } from "react-toastify";
 import { saveAs } from "file-saver";
 
 const initial_state = {
-  promotionList: [], 
-  promotionIdData:{},
-  positionNew :[],
-  promotionCreate:{},
+  promotionList: [],
+  promotionIdData: {},
+  positionNew: [],
+  promotionCreate: {},
   total: {},
   data: [],
   promotionLetterData: {},
+  promotionByEmployee: {},
 };
 
 export const PromotionContext = createContext();
@@ -21,17 +22,12 @@ export const PromotionProvider = (props) => {
   const [loader, setLoader] = useState(false);
 
   const promotionListView = (key, page) => {
-    console.log(key, page,client.defaults.headers,"promotion ")
+    console.log(key, page, client.defaults.headers, "promotion ");
     console.log(key, page, "promotion ");
     setLoader(true);
-     client
+    client
       .get(
-        "/api/v1/promotion/view?key=" +
-          key +
-          "&page=" +
-          page +
-          "&size=" +
-          10
+        "/api/v1/promotion/view?key=" + key + "&page=" + page + "&size=" + 10
       )
       .then((response) => {
         console.log("response", response.data.data.data);
@@ -111,38 +107,38 @@ export const PromotionProvider = (props) => {
   const PromotionCreate = (create) => {
     setLoader(true);
     let formData = {
-      "approveByAdminName": create.approveByAdminName,
-      "approveByCostCentreManagerName":create.approveByCostCentreManagerName,
-      "bonus": create.bonus,
-      "bonusInPercentage": create.bonusInPercentage,
-      "costCentre": create.costCentre,
-      "costCentreManagerEmail": create.costCentreManagerEmail,
-      "costCentreManagerId": create.costCentreManagerId,
-      "costCentreManagerName": create.costCentreManagerName,
-      "departmentId": create.departmentId,
-      "effectiveDate": create.effectiveDate,
-      "emailId": create.emailId,
-      "empName": create.empName,
-      "employeeId": create.employeeId,
-      "managerId": create.managerId,
-      "managerName": create.managerName,
-      "newDepartment": create.newDepartment,
-      "newFixedGross": create.newFixedGross,
-      "oldDepartment": create.oldDepartment,
-      "oldFixedGross": create.oldFixedGross,
-      "oldPosition": create.oldPosition,
-      "positionId": create.positionId,
-      "promotedPosition": create.promotedPosition,
-      "promotionId": create.promotionId,
-      "promotionLetter": create.promotionLetter,
-      "reason": create.reason,
-      "relocationBonus": create.relocationBonus,
-      "remarks": create.remarks,
-      "status": create.status
-  }
-  console.log(formData,"promotionCreate")
+      approveByAdminName: create.approveByAdminName,
+      approveByCostCentreManagerName: create.approveByCostCentreManagerName,
+      bonus: create.bonus,
+      bonusInPercentage: create.bonusInPercentage,
+      costCentre: create.costCentre,
+      costCentreManagerEmail: create.costCentreManagerEmail,
+      costCentreManagerId: create.costCentreManagerId,
+      costCentreManagerName: create.costCentreManagerName,
+      departmentId: create.departmentId,
+      effectiveDate: create.effectiveDate,
+      emailId: create.emailId,
+      empName: create.empName,
+      employeeId: create.employeeId,
+      managerId: create.managerId,
+      managerName: create.managerName,
+      newDepartment: create.newDepartment,
+      newFixedGross: create.newFixedGross,
+      oldDepartment: create.oldDepartment,
+      oldFixedGross: create.oldFixedGross,
+      oldPosition: create.oldPosition,
+      positionId: create.positionId,
+      promotedPosition: create.promotedPosition,
+      promotionId: create.promotionId,
+      promotionLetter: create.promotionLetter,
+      reason: create.reason,
+      relocationBonus: create.relocationBonus,
+      remarks: create.remarks,
+      status: create.status,
+    };
+    console.log(formData, "promotionCreate");
     client
-      .post("/api/v1/promotion/create",formData)
+      .post("/api/v1/promotion/create", formData)
       .then((response) => {
         state.promotionCreate = response.data.data;
 
@@ -159,7 +155,24 @@ export const PromotionProvider = (props) => {
         console.log(error);
       });
   };
-  
+
+  const ViewPromotionByEmployee = (id) => {
+    console.log("id", id);
+    return client
+      .get("/api/v1/promotion/view/" + id)
+      .then((response) => {
+        state.promotionByEmployee = response.data.data;
+        console.log(response);
+        toast.info(response.data.message);
+        return dispatch({
+          type: "PROMOTION_VIEW_EMPLOYEE",
+          payload: state.promotionByEmployee,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <PromotionContext.Provider
@@ -170,13 +183,15 @@ export const PromotionProvider = (props) => {
         PositionNew,
         setLoader,
         generatePromotionLetter,
+        ViewPromotionByEmployee,
         total: state.total,
         promotionList: state.promotionList,
-        positionNew:state.positionNew,
-        promotionIdData:state.promotionIdData,
-        promotionCreate:state.promotionCreate,
+        positionNew: state.positionNew,
+        promotionIdData: state.promotionIdData,
+        promotionCreate: state.promotionCreate,
         loader: state.loader,
         promotionLetterData: state.promotionLetterData,
+        promotionByEmployee: state.promotionByEmployee,
       }}
     >
       {props.children}
