@@ -22,6 +22,7 @@ const ProbationAction = () => {
   const [RehireError, setRehireError] = useState(false);
   const [rcryDaysError, setRcryDaysError] = useState(false);
   const [dateOfConfError, setDateOfConfError] = useState(false);
+  const [dateOfExtError, setDateOfExtError] = useState(false);
   const [reasonError, setReasonError] = useState(false);
   const [remarkError, setRemarkError] = useState(false);
   const [showModal, setModal] = useState(false);
@@ -38,6 +39,9 @@ const ProbationAction = () => {
   const [probationMonths, setProbationMonths] = useState("3 Months");
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
   const [dateOfConfirmation, setDateOfConfirmation] = useState("");
+  const [dateOfExtension, setDateOfExtension] = useState("");
+  const [dateDisable, setDateDisable] = useState(true);
+  const [extDATE, setExtDate] = useState("");
 
   const [state, setState] = useState({
     empName: "",
@@ -47,6 +51,7 @@ const ProbationAction = () => {
     probationStatus: "",
     probationMonths: "",
     reason: "",
+    probationPeriod: "",
   });
   const {
     employeeData,
@@ -83,6 +88,9 @@ const ProbationAction = () => {
       state.empId = probationData.empId;
       state.empCostCenterName = probationData.costCentre;
       state.empDateOfJoining = probationData.dateOfJoining;
+      // state.probationPeriod = probationData.probationPeriod;
+      console.log("probationPeriod", probationData.probationPeriod);
+
       // state.probationStatus = probationData.status;
       // state.probationMonths = probationData.probationPeriod;
       if (
@@ -94,6 +102,18 @@ const ProbationAction = () => {
           probationData.probationExtension.reason !== undefined
             ? probationData.probationExtension.reason
             : "";
+        // if (
+        //   probationData.probationExtension.probationExtensionEndDate !== null &&
+        //   probationData.probationExtension.probationExtensionEndDate !==
+        //     undefined &&
+        //   probationData.probationExtension.probationExtensionEndDate !== ""
+        // ) {
+        //   setDateOfExtension(
+        //     new Date(probationData.probationExtension.probationExtensionEndDate)
+        //   );
+        // } else {
+        //   setDateOfExtension("");
+        // }
       }
 
       if (
@@ -103,8 +123,33 @@ const ProbationAction = () => {
         setDateOfConfirmation(
           new Date(probationData.probationConfirmationDate)
         );
+      } else if (
+        probationData.dateOfJoining !== null &&
+        probationData.dateOfJoining !== undefined &&
+        probationData.probationPeriod !== null &&
+        probationData.probationPeriod !== undefined
+      ) {
+        let d = new Date(probationData.dateOfJoining);
+        console.log(d.toLocaleDateString());
+        d.setMonth(d.getMonth() + probationData.probationPeriod);
+        state.probationPeriod = new Date(d.toLocaleDateString());
+        console.log(d.toLocaleDateString(), new Date(d));
+        setDateOfConfirmation(new Date(d.toLocaleDateString()));
+
+        let d1 = new Date(d.toLocaleDateString());
+        console.log(d1.toLocaleDateString());
+        if (probationMonths === "3 Months") {
+          d1.setMonth(d1.getMonth() + 3);
+        } else {
+          d1.setMonth(d1.getMonth() + 6);
+        }
+        setExtDate(new Date(d1.toLocaleDateString()));
+        console.log(d1.toLocaleDateString(), new Date(d1));
+        setDateOfExtension(new Date(d1.toLocaleDateString()));
+        setDateDisable(false);
       } else {
         setDateOfConfirmation("");
+        setDateDisable(true);
       }
 
       if (probationData.status === 0 || probationData.status === 1) {
@@ -120,6 +165,27 @@ const ProbationAction = () => {
       console.log("Inside use effect");
     }
   }, [probationData, empId]);
+
+  useEffect(() => {
+    if (
+      dateOfConfirmation !== null &&
+      dateOfConfirmation !== undefined &&
+      dateOfConfirmation !== ""
+    ) {
+      let d = new Date(dateOfConfirmation);
+      console.log(d.toLocaleDateString());
+      if (probationMonths === "3 Months") {
+        d.setMonth(d.getMonth() + 3);
+      } else {
+        d.setMonth(d.getMonth() + 6);
+      }
+      setExtDate(new Date(d.toLocaleDateString()));
+      console.log(d.toLocaleDateString(), new Date(d));
+      setDateOfExtension(new Date(d.toLocaleDateString()));
+      // setDateOfExtension("");
+      // setDateDisable(false);
+    }
+  }, [probationMonths]);
 
   const handleClose = () => {
     setSuccessModal(false);
@@ -204,11 +270,34 @@ const ProbationAction = () => {
     console.log(state);
   };
   const dateOfBirthHandler = (date) => {
-    var AdjusteddateValue = new Date(
-      date.getTime() - date.getTimezoneOffset() * 60000
-    );
-    console.log("AdjusteddateValue");
-    setDateOfConfirmation(AdjusteddateValue);
+    if (date !== null) {
+      var AdjusteddateValue = new Date(
+        date.getTime() - date.getTimezoneOffset() * 60000
+      );
+      console.log("AdjusteddateValue");
+      setDateOfConfirmation(AdjusteddateValue);
+      let d = new Date(AdjusteddateValue);
+      console.log(d.toLocaleDateString());
+      if (probationMonths === "3 Months") {
+        d.setMonth(d.getMonth() + 3);
+      } else {
+        d.setMonth(d.getMonth() + 6);
+      }
+      setExtDate(new Date(d.toLocaleDateString()));
+      console.log(d.toLocaleDateString(), new Date(d));
+      setDateOfExtension(new Date(d.toLocaleDateString()));
+      // setDateOfExtension("");
+      setDateDisable(false);
+    }
+  };
+  const dateOfBirthHandler1 = (date) => {
+    if (date !== null) {
+      var AdjusteddateValue = new Date(
+        date.getTime() - date.getTimezoneOffset() * 60000
+      );
+      console.log("AdjusteddateValue");
+      setDateOfExtension(AdjusteddateValue);
+    }
   };
 
   const validateCheckBoxes = (itemYes, itemNo, setError) => {
@@ -240,6 +329,27 @@ const ProbationAction = () => {
       return true;
     }
   };
+
+  const validateDateOfExtension = () => {
+    if (probationStatus === "Extended") {
+      if (
+        dateOfExtension !== "" &&
+        dateOfExtension !== null &&
+        dateOfExtension !== undefined
+      ) {
+        setDateOfExtError(false);
+        return true;
+      } else {
+        console.log("dateOfExtension error");
+        setDateOfExtError(true);
+        return false;
+      }
+    } else {
+      setDateOfExtError(false);
+      return true;
+    }
+  };
+
   const validateDateOfConfirmation = () => {
     if (
       dateOfConfirmation !== "" &&
@@ -275,7 +385,11 @@ const ProbationAction = () => {
   };
   const checkValidations = () => {
     console.log("on validation");
-    if ((validateDateOfConfirmation() === true) & (validateReason() === true)) {
+    if (
+      (validateDateOfConfirmation() === true) &
+      (validateReason() === true) &
+      (validateDateOfExtension() === true)
+    ) {
       console.log("on true");
       return true;
     } else {
@@ -309,7 +423,7 @@ const ProbationAction = () => {
                 emailId: probationData.emailId,
                 empId: probationData.empId,
                 empName: probationData.empName,
-                probationExtensionEndDate: null,
+                probationExtensionEndDate: dateOfExtension,
                 probationExtensionId:
                   probationData.probationExtension !== null &&
                   probationData.probationExtension !== undefined &&
@@ -601,7 +715,7 @@ const ProbationAction = () => {
                               <label>Date Of Confirmation:</label>
                             </div>
                           </Col>
-                          <Col sm={2}>
+                          <Col sm={2} style={{ marginLeft: "-2rem" }}>
                             <div>
                               {probationData &&
                               probationData &&
@@ -632,7 +746,13 @@ const ProbationAction = () => {
                                       className="form-control onBoard-view"
                                       selected={dateOfConfirmation}
                                       // name="dateOfResignation"
-                                      minDate={moment().toDate()}
+                                      minDate={
+                                        state.probationPeriod !== null &&
+                                        state.probationPeriod !== undefined &&
+                                        state.probationPeriod !== ""
+                                          ? state.probationPeriod
+                                          : moment().toDate()
+                                      }
                                       onChange={(e) => dateOfBirthHandler(e)}
                                       dateFormat="yyyy-MM-dd"
                                       placeholderText="YYYY-MM-DD"
@@ -651,12 +771,12 @@ const ProbationAction = () => {
                               )}
                             </div>
                           </Col>
-                          <Col sm={2}>
+                          <Col sm={2} style={{ marginLeft: "2rem" }}>
                             <div>
                               <label>Probation Status:</label>
                             </div>
                           </Col>
-                          <Col sm={2}>
+                          <Col sm={2} style={{ marginLeft: "-2rem" }}>
                             <div>
                               {probationData &&
                               probationData &&
@@ -759,6 +879,80 @@ const ProbationAction = () => {
                                           6 Months
                                         </option>
                                       </Form.Control>
+                                    </Form.Group>
+                                  )}
+                                </div>
+                              </Col>
+                              <Col sm={1}></Col>
+                              <Col sm={3}>
+                                <div>
+                                  <label>Date of probation extension:</label>
+                                </div>
+                              </Col>
+                              <Col sm={2}>
+                                <div>
+                                  {probationData &&
+                                  probationData &&
+                                  probationData !== null &&
+                                  probationData !== undefined &&
+                                  Object.keys(probationData).length !== 0 &&
+                                  probationData.probationExtension &&
+                                  probationData.probationExtension !== null &&
+                                  probationData.probationExtension !==
+                                    undefined &&
+                                  probationData.probationExtension
+                                    .probationExtensionEndDate !== "" &&
+                                  probationData.probationExtension
+                                    .probationExtensionEndDate !== null &&
+                                  probationData.probationExtension
+                                    .probationExtensionEndDate !== undefined ? (
+                                    <label
+                                      style={{ marginLeft: "-2rem" }}
+                                      className="itemResult"
+                                    >
+                                      {
+                                        probationData.probationExtension
+                                          .probationExtensionEndDate
+                                      }
+                                    </label>
+                                  ) : (
+                                    <Form.Group>
+                                      <div
+                                        className={
+                                          false
+                                            ? "onBoard-date-error"
+                                            : "onBoard-date"
+                                        }
+                                      >
+                                        <DatePicker
+                                          className="form-control onBoard-view"
+                                          selected={dateOfExtension}
+                                          // name="dateOfResignation"
+                                          // minDate={moment().toDate()}
+                                          minDate={
+                                            extDATE !== null &&
+                                            extDATE !== undefined &&
+                                            extDATE !== ""
+                                              ? extDATE
+                                              : moment().toDate()
+                                          }
+                                          disabled={dateDisable}
+                                          onChange={(e) =>
+                                            dateOfBirthHandler1(e)
+                                          }
+                                          dateFormat="yyyy-MM-dd"
+                                          placeholderText="YYYY-MM-DD"
+                                          // minDate={new Date()}
+                                        />
+                                      </div>
+                                      {dateOfExtError ? (
+                                        <p style={{ color: "red" }}>
+                                          {" "}
+                                          &nbsp; *Please select date
+                                        </p>
+                                      ) : (
+                                        <p></p>
+                                      )}
                                     </Form.Group>
                                   )}
                                 </div>
