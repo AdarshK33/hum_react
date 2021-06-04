@@ -81,6 +81,8 @@ import EmployeeExitAction from "./components/ManagerApproveEmployeExit/EmployeeE
 import ManagerInitiateExit from "./components/ManagerApproveEmployeExit/ManagerInitiateExit";
 import PromotionInitiate from "./components/Promotion/PromotionInitiate/PromotionInitiate";
 import PromotionView from "./components/Promotion/PromotionView/PromotionView";
+import PromotionAdmin from "./components/Promotion/PromotionAdmin/PromotionAdmin"
+import PromotionCostCenterManager from "./components/Promotion/PromotionCostCenterManager/PromotionCostCenterManager"
 
 import EmpResignation from "./components/employeeSeparation/empResignation";
 import EmployeeSeparationListing from "./components/managerSeparation/employeeSeparationListing";
@@ -104,15 +106,15 @@ const RoutePath = () => {
     <Switch>
       <Route path={`${process.env.PUBLIC_URL}/signin`} component={Signin} />
       <Route path={`${process.env.PUBLIC_URL}/login`} component={Login} />
-      {/* <Route
-      path={`${process.env.PUBLIC_URL}/onboard`}
-      component={OnBoardingStepper}
-      /> */}
+      <Route
+      path={`${process.env.PUBLIC_URL}/promotion-admin`}
+      component={PromotionAdmin}
+      />
+      <Route
+        path={`${process.env.PUBLIC_URL}/promotion-costcentermanger`}
+        component={PromotionCostCenterManager}
+      />
 
-      {/* <Route
-        path={`${process.env.PUBLIC_URL}/promotion-initiate`}
-        component={PromotionInitiate}
-      /> */}
       <Route
         //  Rajasekhar
         path={`${process.env.PUBLIC_URL}/onboard`}
