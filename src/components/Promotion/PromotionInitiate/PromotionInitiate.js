@@ -460,7 +460,7 @@ const PromotionInitiate = () => {
                           }}
                         >
                           <Col sm={2}>
-                            <label>Select Department </label>
+                            <label>New Department </label>
                           </Col>
                           <Col sm={8}>
                             <Form.Group>
@@ -504,12 +504,55 @@ const PromotionInitiate = () => {
                             marginBottom: "3rem",
                           }}
                         >
+                            <Col sm={5}>
+                            <label>Is this employee is applicable for promotion and hike </label>
+                          </Col>
+                          <Col sm={2} style={{ marginTop: "0.25rem" }}>
+                          <Form.Group>
+                            <div className="boxField_2 input">
+                              <input
+                                className="largerCheckbox"
+                                type="checkbox"
+                                value="yes"
+                                // checked={RcryYes}
+                                style={ {borderColor:"blue" }}
+                                // required={required}
+                                // onChange={handleNoticePeriodRcryYes}
+                              />
+                              <label className="itemResult">Yes</label>
+                            </div>
+                          </Form.Group>
+                        </Col>
+                        <Col sm={1} style={{ marginTop: "0.25rem" }}>
+                          <Form.Group>
+                            <div className="boxField_2 input">
+                              <input
+                                className="largerCheckbox"
+                                type="checkbox"
+                                value="yes"
+                                // checked={RcryYes}
+                                style={ {borderColor: "blue" }}
+                                // required={required}
+                                // onChange={handleNoticePeriodRcryYes}
+                              />
+                              <label className="itemResult">No</label>
+                            </div>
+                          </Form.Group>
+                        </Col>
+                          </Row>
+                        <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "1rem",
+                            marginBottom: "3rem",
+                          }}
+                        >
                           <Col sm={2}>
                             <div>
                               <label>Fixed Gross:</label>
                             </div>
                           </Col>
-                          <Col sm={3}>
+                          <Col sm={1}>
                             <label className="itemResult">
                               &nbsp;&nbsp; {state.oldFixedGross}
                             </label>
@@ -519,7 +562,7 @@ const PromotionInitiate = () => {
                               <label>New Fixed Gross:</label>
                             </div>
                           </Col>
-                          <Col sm={3}>
+                          <Col sm={1}>
                             <div>
                               {false ? (
                                 <label className="itemResult">
@@ -549,6 +592,32 @@ const PromotionInitiate = () => {
                               ) : (
                                 ""
                               )}
+                            </div>
+                          </Col>
+                          <Col sm={2}>
+                            <div>
+                              <label> Effective Date :</label>
+                            </div>
+                          </Col>
+
+                          <Col sm={2}>
+                            <div>
+                              <Form.Group>
+                                <div className={""}>
+                                  <DatePicker
+                                    className="form-control onBoard-view"
+                                    selected={state.effectiveDate}
+                                    name="effectiveDate"
+                                    minDate={moment().toDate()}
+                                    required
+                                    disabled={true}
+                                    onChange={(e) => dateOfBirthHandler(e)}
+                                    dateFormat="yyyy-MM-dd"
+                                    placeholderText="YYYY-MM-DD"
+                                    minDate={new Date()}
+                                  />
+                                </div>
+                              </Form.Group>
                             </div>
                           </Col>
                         </Row>
