@@ -23,12 +23,8 @@ const PromotionList = () => {
     ViewPromotionByEmployee,
     promotionByEmployee,
   } = useContext(PromotionContext);
-  const {
-    verificationDocsView,
-    docsToVerify,
-    personalInfo,
-    personalInfoData,
-  } = useContext(DocsVerifyContext);
+  const { verificationDocsView, docsToVerify, personalInfo, personalInfoData } =
+    useContext(DocsVerifyContext);
   const { user } = useContext(AppContext);
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
@@ -79,7 +75,7 @@ const PromotionList = () => {
 
   useEffect(() => {
     promotionListView(searchValue, pageCount);
-    console.log("user role", user);
+    console.log("user role------>", user);
   }, [searchValue, pageCount]);
 
   console.log(promotionList, "promotionlist3");
@@ -132,6 +128,7 @@ const PromotionList = () => {
                       <th scope="col">Date</th>
                       <th scope="col">Status</th>
                       <th scope="col">View</th>
+                      <th scope="col">Action</th>
                     </tr>
                   </thead>
                   {promotionList !== undefined &&
@@ -167,6 +164,72 @@ const PromotionList = () => {
                                 />
                               </Link>
                             </td>
+                            {user !== null &&
+                            user !== undefined &&
+                            user.role === "ADMIN" ? (
+                              <td>
+                                {item.status === 2 ? (
+                                  <Link
+                                    to={"/view-promotion/" + item.employeeId}
+                                    //this link have to change according to ADMIN component
+                                  >
+                                    <Edit2
+                                      onClick={() => {
+                                        ViewPromotionByEmployee(
+                                          item.employeeId
+                                        );
+                                      }}
+                                    />
+                                  </Link>
+                                ) : (
+                                  <Edit2 />
+                                )}
+                              </td>
+                            ) : user !== null &&
+                              user !== undefined &&
+                              user.role === "COST_CENTER_MANAGER" ? (
+                              <td>
+                                {item.status === 0 ? (
+                                  <Link
+                                    to={"/view-promotion/" + item.employeeId}
+                                    //this link have to change according to COST CENTER MANAGER component
+                                  >
+                                    <Edit2
+                                      onClick={() => {
+                                        ViewPromotionByEmployee(
+                                          item.employeeId
+                                        );
+                                      }}
+                                    />
+                                  </Link>
+                                ) : (
+                                  <Edit2 />
+                                )}
+                              </td>
+                            ) : user !== null &&
+                              user !== undefined &&
+                              user.role === "MANAGER" ? (
+                              <td>
+                                {item.status === 1 ? (
+                                  <Link
+                                    to={"/view-promotion/" + item.employeeId}
+                                    //this link have to change according to MANAGER component
+                                  >
+                                    <Edit2
+                                      onClick={() => {
+                                        ViewPromotionByEmployee(
+                                          item.employeeId
+                                        );
+                                      }}
+                                    />
+                                  </Link>
+                                ) : (
+                                  <Edit2 />
+                                )}
+                              </td>
+                            ) : (
+                              ""
+                            )}
                           </tr>
                         </tbody>
                       );
