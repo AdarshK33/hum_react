@@ -555,7 +555,7 @@ const handlePromotionTypeNo = (e)=>{
                                 className="largerCheckbox"
                                 type="checkbox"
                                 value="yes"
-                                // checked={state.promotionType?true:false}
+                                 checked={state.promotionType?true:false}
                                 style={ promotionTypeError?{borderColor:"red"}:{borderColor:"blue" }}
                                 // required={required}
                                  onChange={handlePromotionTypeYes}
@@ -571,7 +571,7 @@ const handlePromotionTypeNo = (e)=>{
                                 className="largerCheckbox"
                                 type="checkbox"
                                 value="no"
-                                //  checked={!state.promotionType?true:false}
+                                 checked={!state.promotionType?true:false}
                                 style={ promotionTypeError?{borderColor:"red"}:{borderColor:"blue" }}
                                 // required={required}
                                 onChange={handlePromotionTypeNo}
