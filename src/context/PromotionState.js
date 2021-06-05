@@ -13,6 +13,8 @@ const initial_state = {
   data: [],
   promotionLetterData: {},
   promotionByEmployee: {},
+  approvePromotionData: {},
+  rejectPromotionData: {},
 };
 
 export const PromotionContext = createContext();
@@ -107,9 +109,9 @@ export const PromotionProvider = (props) => {
   const PromotionCreate = (create) => {
     setLoader(true);
 
-  console.log(create,"promotionCreate")
+    console.log(create, "promotionCreate");
     client
-      .post("/api/v1/promotion/create",create)
+      .post("/api/v1/promotion/create", create)
       .then((response) => {
         state.promotionCreate = response.data.data;
 
@@ -145,6 +147,36 @@ export const PromotionProvider = (props) => {
       });
   };
 
+  const approvePromotion = () => {
+    client
+      .get("/api/v1/position/view/")
+      .then((response) => {
+        state.approvePromotionData = response.data.data;
+        return dispatch({
+          type: "APPROVE_PROMOTION_DATA",
+          payload: state.approvePromotionData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const rejectPromotion = () => {
+    client
+      .get("/api/v1/position/view/")
+      .then((response) => {
+        state.rejectPromotionData = response.data.data;
+        return dispatch({
+          type: "REJECT_PROMOTION_DATA",
+          payload: state.rejectPromotionData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <PromotionContext.Provider
       value={{
@@ -155,6 +187,8 @@ export const PromotionProvider = (props) => {
         setLoader,
         generatePromotionLetter,
         ViewPromotionByEmployee,
+        approvePromotion,
+        rejectPromotion,
         total: state.total,
         promotionList: state.promotionList,
         positionNew: state.positionNew,
@@ -163,6 +197,8 @@ export const PromotionProvider = (props) => {
         loader: state.loader,
         promotionLetterData: state.promotionLetterData,
         promotionByEmployee: state.promotionByEmployee,
+        approvePromotionData: state.approvePromotionData,
+        rejectPromotionData: state.rejectPromotionData,
       }}
     >
       {props.children}

@@ -42,6 +42,10 @@ const ExtensionLetter = () => {
     <Fragment>
       {typeof extensionLetterData !== undefined ? (
         <Fragment>
+          <h5 className="text-center">
+            {" "}
+            <u>LETTER OF EXTENSION OF PROBATIONARY PERIOD </u>
+          </h5>
           <p className=""> Date: {moment().format("DD-MM-YYYY")}</p>
           <br></br>
           <p>
@@ -59,10 +63,6 @@ const ExtensionLetter = () => {
             {" "}
             Dear &nbsp;<b>{extensionLetterData.empName},</b>{" "}
           </p>
-          <h5 className="text-center">
-            {" "}
-            <u>LETTER OF EXTENSION OF PROBATIONARY PERIOD </u>
-          </h5>
 
           <div className=" ">
             <p>
@@ -89,8 +89,8 @@ const ExtensionLetter = () => {
               dated <b>{extensionLetterData.appointmentLetterDate}</b>, shall
               remain the same.
               <br />
-              Please sign the copy of this letter as receipt of acceptance.
               <br />
+              Please sign the copy of this letter as receipt of acceptance.
               <br />
               <br />
               Yours Sincerely,

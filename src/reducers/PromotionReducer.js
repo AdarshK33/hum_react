@@ -27,6 +27,10 @@ const PromotionReducer = (state, action) => {
       return { ...state, promotionLetterData: action.payload };
     case "PROMOTION_VIEW_EMPLOYEE":
       return { ...state, promotionByEmployee: action.payload };
+    case "APPROVE_PROMOTION_DATA":
+      return { ...state, approvePromotionData: action.payload };
+    case "REJECT_PROMOTION_DATA":
+      return { ...state, rejectPromotionData: action.payload };
   }
 };
 export default PromotionReducer;
