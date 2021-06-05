@@ -91,6 +91,7 @@ import viewEmployeeInfo from "./components/CostcenterManagerApproveExit/viewEmpl
 
 import ProbationList from "./components/Probation/ProbationList";
 import ProbationAction from "./components/Probation/ProbationAction";
+import ProbationView from "./components/Probation/ProbationView";
 
 import ViewBonus from "./components/Bonus/ViewBonus";
 const RoutePath = () => {
@@ -232,6 +233,10 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/probation-action/:employeeid`}
             component={ProbationAction}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/probation-view/:employeeid`}
+            component={ProbationView}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/manager-initiate-exit`}

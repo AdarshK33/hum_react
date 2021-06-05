@@ -122,9 +122,9 @@ const ProbationList = () => {
         setFourthBtn(false);
         break;
 
-      case 5:
+      case 3:
         // ProbationListView(5, pageCount);
-        ProbationListView(5, "all", pageCount);
+        ProbationListView(3, "all", pageCount);
         setFirstBtn(true);
         setSecondBtn(false);
         setThirdBtn(false);
@@ -179,6 +179,7 @@ const ProbationList = () => {
                 style={{ textAlign: "center", fontSize: "larger" }}
               >
                 <b style={{ marginLeft: "13rem" }}>PROBATION LIST</b>
+
                 <div className="job-filter">
                   <div className="faq-form mr-2">
                     <input
@@ -224,14 +225,15 @@ const ProbationList = () => {
                   }}
                 >
                   <Row>
-                    <Col sm={1}></Col>
+                    <Col sm={2}></Col>
                     <Col sm={2} style={{ marginLeft: "-2rem" }}>
                       <Button
                         disabled={firstBtn}
-                        className={firstBtn ? "clickedButton" : "FirstButtons "}
+                        className={"FirstButtons button"}
+                        // className={firstBtn ? "clickedButton" : "FirstButtons "}
                         // className={"clickedButton"}
                         onClick={() => {
-                          searchByDueDay(5);
+                          searchByDueDay(3);
                         }}
                       >
                         Due In
@@ -242,15 +244,16 @@ const ProbationList = () => {
                           color="white"
                           className={"lineStyle"}
                         />
-                        5 Days
+                        3 Days
                       </Button>
                     </Col>
                     <Col sm={2}>
                       <Button
                         disabled={secondBtn}
-                        className={
-                          secondBtn ? "clickedButton" : "SecondButtons "
-                        }
+                        className={"SecondButtons button"}
+                        // className={
+                        //   secondBtn ? "clickedButton" : "SecondButtons "
+                        // }
                         onClick={() => {
                           searchByDueDay(7);
                         }}
@@ -266,7 +269,7 @@ const ProbationList = () => {
                         1 Week
                       </Button>
                     </Col>
-                    <Col sm={2}>
+                    {/* <Col sm={2}>
                       <Button
                         disabled={thirdBtn}
                         className={thirdBtn ? "clickedButton" : "ThirdButtons"}
@@ -284,13 +287,14 @@ const ProbationList = () => {
                         />
                         10 Days
                       </Button>
-                    </Col>
+                    </Col> */}
                     <Col sm={2}>
                       <Button
                         disabled={fourthBtn}
-                        className={
-                          fourthBtn ? "clickedButton" : "FourthButtons"
-                        }
+                        className={"FourthButtons button"}
+                        // className={
+                        //   fourthBtn ? "clickedButton" : "FourthButtons"
+                        // }
                         onClick={() => {
                           searchByDueDay(14);
                         }}
@@ -309,7 +313,8 @@ const ProbationList = () => {
                     <Col sm={2}>
                       <Button
                         disabled={fifthBtn}
-                        className={fifthBtn ? "clickedButton" : "FifthButtons"}
+                        className={"FifthButtons button"}
+                        // className={fifthBtn ? "clickedButton" : "FifthButtons"}
                         onClick={() => {
                           searchByDueDay(0);
                         }}
@@ -325,7 +330,7 @@ const ProbationList = () => {
                         All
                       </Button>
                     </Col>
-                    <Col sm={1}></Col>
+                    <Col sm={2}></Col>
                   </Row>
                 </div>
 
@@ -348,6 +353,7 @@ const ProbationList = () => {
                       <th scope="col">Due Days</th>
                       <th scope="col">Reminder Date</th>
                       <th scope="col">Status</th>
+                      <th scope="col">View</th>
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
@@ -396,8 +402,18 @@ const ProbationList = () => {
                                 ? "Extended"
                                 : ""}
                             </td>
+                            <td>
+                              <Link to={"/probation-view/" + item.empId}>
+                                <Eye
+                                  onClick={() => {
+                                    fetchEmployeeDetails(item.empId);
+                                  }}
+                                />
+                              </Link>
+                            </td>
 
                             <td>
+                              {/* {false ? ( */}
                               {item.status !== 0 ? (
                                 <Edit2 />
                               ) : (
@@ -411,15 +427,6 @@ const ProbationList = () => {
                               )}
                             </td>
 
-                            {/* <td>
-                              <Link to="/view-offer-release">
-                                <Eye
-                                  onClick={() => {
-                                    viewCandidateId(item.candidateId);
-                                  }}
-                                />
-                              </Link>
-                            </td> */}
                             {/* {user !== null &&
                             user !== undefined &&
                             user.role !== "ADMIN" ? (

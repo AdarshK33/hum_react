@@ -190,7 +190,11 @@ const PromotionList = () => {
                               user.role === "COST_CENTER_MANAGER" ? (
                               <td>
                                 {item.status === 0 ? (
-                                  <Link to={"/promotion-costcentermanger/" + item.employeeId}
+                                  <Link
+                                    to={
+                                      "/promotion-costcentermanger/" +
+                                      item.employeeId
+                                    }
                                   >
                                     <Edit2
                                       onClick={() => {

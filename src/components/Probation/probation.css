@@ -31,12 +31,32 @@
   border-radius: 3px !important;
   /* margin-left: 40px; */
 }
+.FirstButtons:disabled {
+  width: 125px;
+  height: 60px;
+  background-color: red !important;
+  color: white;
+  box-shadow: 5px 10px 9px red;
+  border: 3px solid red !important;
+  border-radius: 3px !important;
+}
+
 .SecondButtons {
   width: 125px;
   height: 58px;
   background-color: orange !important;
   color: white;
   border: 1px solid orange !important;
+  border-radius: 3px !important;
+  /* margin-left: 40px; */
+}
+.SecondButtons:disabled {
+  width: 125px;
+  height: 60px;
+  background-color: orange !important;
+  color: white;
+  box-shadow: 5px 10px 9px darkorange;
+  border: 3px solid orange !important;
   border-radius: 3px !important;
   /* margin-left: 40px; */
 }
@@ -58,6 +78,16 @@
   border-radius: 3px !important;
   /* margin-left: 40px; */
 }
+.FourthButtons:disabled {
+  width: 125px;
+  height: 60px;
+  background-color: green !important;
+  color: white;
+  box-shadow: 5px 10px 9px darkgreen;
+  border: 3px solid green !important;
+  border-radius: 3px !important;
+  /* margin-left: 40px; */
+}
 .FifthButtons {
   width: 125px;
   height: 58px;
@@ -67,13 +97,31 @@
   border-radius: 3px !important;
   /* margin-left: 40px; */
 }
+.FifthButtons:disabled {
+  width: 125px;
+  height: 60px;
+  background-color: #006ebb !important;
+  color: white;
+  box-shadow: 5px 10px 9px #035794;
+  border: 3px solid #006ebb !important;
+  border-radius: 3px !important;
+  /* margin-left: 40px; */
+}
+
 .clickedButton {
-  background: rgb(170, 170, 170) !important;
+  width: 125px;
+  height: 58px;
+  background-color: red !important;
+  color: white;
+  border: 2px solid #aaa !important;
+  border-radius: 3px !important;
+
+  /* background: rgb(170, 170, 170) !important;
   border-color: rgb(170, 170, 170) !important;
   width: 125px;
   height: 58px;
   color: white;
-  border-radius: 0 !important;
+  border-radius: 0 !important; */
   /* margin-left: 40px; */
 }
 .lineStyle {
