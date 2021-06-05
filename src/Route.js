@@ -81,8 +81,8 @@ import EmployeeExitAction from "./components/ManagerApproveEmployeExit/EmployeeE
 import ManagerInitiateExit from "./components/ManagerApproveEmployeExit/ManagerInitiateExit";
 import PromotionInitiate from "./components/Promotion/PromotionInitiate/PromotionInitiate";
 import PromotionView from "./components/Promotion/PromotionView/PromotionView";
-import PromotionAdmin from "./components/Promotion/PromotionAdmin/PromotionAdmin"
-import PromotionCostCenterManager from "./components/Promotion/PromotionCostCenterManager/PromotionCostCenterManager"
+import PromotionAdmin from "./components/Promotion/PromotionAdmin/PromotionAdmin";
+import PromotionCostCenterManager from "./components/Promotion/PromotionCostCenterManager/PromotionCostCenterManager";
 
 import EmpResignation from "./components/employeeSeparation/empResignation";
 import EmployeeSeparationListing from "./components/managerSeparation/employeeSeparationListing";
@@ -92,6 +92,8 @@ import viewEmployeeInfo from "./components/CostcenterManagerApproveExit/viewEmpl
 import ProbationList from "./components/Probation/ProbationList";
 import ProbationAction from "./components/Probation/ProbationAction";
 import ProbationView from "./components/Probation/ProbationView";
+import PromotionManagerEdit from "./components/Promotion/PromotionManagerEdit";
+import PromotionApproval from "./components/Promotion/PromotionCostCenterManager/PromotionCostCenterManager";
 
 import ViewBonus from "./components/Bonus/ViewBonus";
 const RoutePath = () => {
@@ -108,8 +110,8 @@ const RoutePath = () => {
       <Route path={`${process.env.PUBLIC_URL}/signin`} component={Signin} />
       <Route path={`${process.env.PUBLIC_URL}/login`} component={Login} />
       <Route
-      path={`${process.env.PUBLIC_URL}/promotion-admin`}
-      component={PromotionAdmin}
+        path={`${process.env.PUBLIC_URL}/promotion-admin`}
+        component={PromotionAdmin}
       />
       <Route
         path={`${process.env.PUBLIC_URL}/promotion-costcentermanger`}
@@ -292,6 +294,15 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/view-promotion/:promotionId`}
             component={PromotionView}
           />
+          <Route
+            path={`${process.env.PUBLIC_URL}/promotion/:promotionId`}
+            component={PromotionManagerEdit}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/promotion-approval/:promotionId`}
+            component={PromotionApproval}
+          />
+
           {state.MenuPermissionsRoute.map((e) => {
             return (
               <div>

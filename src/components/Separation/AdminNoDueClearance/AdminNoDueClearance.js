@@ -19,7 +19,7 @@ const [costCenter, setCostCenter] = useState("all")
 const [searchValue, setSearchValue] = useState("all");
 /*-----------------Pagination------------------*/
 const [currentPage, setCurrentPage] = useState(1);
-const recordPerPage = 20;
+const recordPerPage = 10;
 const totalRecords = total;
 const pageRange = 10;
 const indexOfLastRecord = currentPage * recordPerPage;
@@ -155,7 +155,8 @@ const options2 = [
           </div>
         </Row>
           <Row className="mt-4 mainWrapper">
-          <div className="col-sm-3">
+      
+          <div className="col-sm-3" style={{marginLeft: '10px'}}>
             {" "}
             <input
               className="form-control searchButton"
@@ -169,7 +170,7 @@ const options2 = [
               onClick={searchDataHandler}
             />
           </div>
-          <div className="col-sm-4">
+          <div className="col-sm-4" style={{marginRight: '110px'}}>
           <Col className="selectList">
             <br/>
             <label className="title" style={{padding:"6px"}}>Select Cost Center</label> &nbsp;&nbsp;

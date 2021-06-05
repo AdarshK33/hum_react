@@ -27,11 +27,12 @@ const ConfirmationLetter = () => {
           </p>
           <br></br>
           <p>
-            <b> To Ms./Mr. &nbsp;{cnfLetterData.empName}</b>
+            To Ms./Mr. &nbsp;<b>{cnfLetterData.empName}</b>
           </p>
           <p>Address :</p>
-          <p>{cnfLetterData.address}</p>
-          <br></br>
+          <p>
+            <b>{cnfLetterData.address}</b>
+          </p>
           <p className="mt-5 ">
             {" "}
             <b>Dear &nbsp;{cnfLetterData.empName},</b>{" "}
