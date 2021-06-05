@@ -170,7 +170,7 @@ const PromotionList = () => {
                               <td>
                                 {item.status === 2 ? (
                                   <Link
-                                    to={"/view-promotion/" + item.employeeId}
+                                    to={"/promotion-admin/" + item.employeeId}
                                     //this link have to change according to ADMIN component
                                   >
                                     <Edit2
@@ -191,8 +191,10 @@ const PromotionList = () => {
                               <td>
                                 {item.status === 0 ? (
                                   <Link
-                                    to={"/view-promotion/" + item.employeeId}
-                                    //this link have to change according to COST CENTER MANAGER component
+                                    to={
+                                      "/promotion-costcentermanger/" +
+                                      item.employeeId
+                                    }
                                   >
                                     <Edit2
                                       onClick={() => {
