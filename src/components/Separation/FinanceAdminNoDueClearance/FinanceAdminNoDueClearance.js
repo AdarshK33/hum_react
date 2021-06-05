@@ -57,7 +57,7 @@ const FinanaceAdminNoDueClearance = () => {
   const [searchValue, setSearchValue] = useState("all");
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
-  const recordPerPage = 20;
+  const recordPerPage = 10;
   const totalRecords = total;
   // const totalRecords = financeAdminNoDueClearanceList !== null && financeAdminNoDueClearanceList !== undefined && financeAdminNoDueClearanceList.length;
   const pageRange = 10;
@@ -467,7 +467,7 @@ const FinanaceAdminNoDueClearance = () => {
 
                   <div
                     className="ag-theme-alpine"
-                    style={{ align: "center", height: 350, width: "100%" }}
+                    style={{ align: "center", height: 490, width: "100%" }}
                   >
                     <AgGridReact
                       rowData={currentRecords}

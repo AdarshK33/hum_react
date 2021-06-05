@@ -45,7 +45,7 @@ export const SeparationProvider = (props) => {
           "&page=" +
           page +
           "&size=" +
-          20 +
+          10 +
           "&status=" +
           actionStatus +
           "&storeId=" +
@@ -78,7 +78,7 @@ export const SeparationProvider = (props) => {
           "&page=" +
           page +
           "&size=" +
-          20 +
+          10 +
           "&storeId=" +
           costCenter
       )
@@ -153,7 +153,7 @@ export const SeparationProvider = (props) => {
         "&page=" +
         page +
         "&size=" +
-        20 +
+      10 +
         "&storeId=" +
         costCenter
       )
@@ -192,7 +192,7 @@ export const SeparationProvider = (props) => {
           "&page=" +
           page +
           "&size=" +
-          20 +
+          10 +
           "&status=" +
           actionStatus +
           "&storeId=" +
@@ -234,7 +234,7 @@ export const SeparationProvider = (props) => {
       "&page=" +
       page +
       "&size=" +
-      20 +
+      10 +
       "&storeId=" +
       costCenter, formData)
       .then((response) => {
