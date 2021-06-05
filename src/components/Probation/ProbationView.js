@@ -299,6 +299,43 @@ const ProbationView = () => {
                                   )}
                                 </div>
                               </Col>
+                              <Col sm={1}></Col>
+                              <Col sm={3}>
+                                <div>
+                                  <label>Date of probation extension:</label>
+                                </div>
+                              </Col>
+                              <Col sm={2}>
+                                <div>
+                                  {probationData &&
+                                  probationData &&
+                                  probationData !== null &&
+                                  probationData !== undefined &&
+                                  Object.keys(probationData).length !== 0 &&
+                                  probationData.probationExtension &&
+                                  probationData.probationExtension !== null &&
+                                  probationData.probationExtension !==
+                                    undefined &&
+                                  probationData.probationExtension
+                                    .probationExtensionEndDate !== "" &&
+                                  probationData.probationExtension
+                                    .probationExtensionEndDate !== null &&
+                                  probationData.probationExtension
+                                    .probationExtensionEndDate !== undefined ? (
+                                    <label
+                                      style={{ marginLeft: "-2rem" }}
+                                      className="itemResult"
+                                    >
+                                      {
+                                        probationData.probationExtension
+                                          .probationExtensionEndDate
+                                      }
+                                    </label>
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
+                              </Col>
                             </Row>
                             <Row
                               style={{

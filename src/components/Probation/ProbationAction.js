@@ -727,10 +727,7 @@ const ProbationAction = () => {
                                 null &&
                               probationData.probationConfirmationDate !==
                                 undefined ? (
-                                <label
-                                  style={{ marginLeft: "-2rem" }}
-                                  className="itemResult"
-                                >
+                                <label className="itemResult">
                                   {probationData.probationConfirmationDate}
                                 </label>
                               ) : (
@@ -786,10 +783,7 @@ const ProbationAction = () => {
                               probationData.status !== 0 &&
                               probationData.status !== null &&
                               probationData.status !== undefined ? (
-                                <label
-                                  style={{ marginLeft: "-2rem" }}
-                                  className="itemResult"
-                                >
+                                <label className="itemResult">
                                   {/* &nbsp;&nbsp;{" "} */}
                                   {probationData.status == 1
                                     ? "Confirmed"

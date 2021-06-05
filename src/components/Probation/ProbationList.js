@@ -413,6 +413,7 @@ const ProbationList = () => {
                             </td>
 
                             <td>
+                              {/* {false ? ( */}
                               {item.status !== 0 ? (
                                 <Edit2 />
                               ) : (
