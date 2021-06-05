@@ -23,12 +23,8 @@ const PromotionList = () => {
     ViewPromotionByEmployee,
     promotionByEmployee,
   } = useContext(PromotionContext);
-  const {
-    verificationDocsView,
-    docsToVerify,
-    personalInfo,
-    personalInfoData,
-  } = useContext(DocsVerifyContext);
+  const { verificationDocsView, docsToVerify, personalInfo, personalInfoData } =
+    useContext(DocsVerifyContext);
   const { user } = useContext(AppContext);
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
@@ -132,7 +128,7 @@ const PromotionList = () => {
                       <th scope="col">Date</th>
                       <th scope="col">Status</th>
                       <th scope="col">View</th>
-                      <th scope="col">Manager Action</th>
+                      {/* <th scope="col">Manager Action</th> */}
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
@@ -169,22 +165,16 @@ const PromotionList = () => {
                                 />
                               </Link>
                             </td>
-                            <td>
-                              <Link to={"/promotion/" + item.employeeId}>
-                                <Eye
-                                  onClick={() => {
-                                    ViewPromotionByEmployee(item.employeeId);
-                                  }}
-                                />
-                              </Link>
-                            </td>
+
                             {user !== null &&
                             user !== undefined &&
                             user.role === "ADMIN" ? (
                               <td>
                                 {item.status === 2 ? (
                                   <Link
-                                    to={"/promotion-admin/" + item.employeeId}
+                                    to={
+                                      "/promotion-approval/" + item.employeeId
+                                    }
                                     //this link have to change according to ADMIN component
                                   >
                                     <Edit2
@@ -206,8 +196,7 @@ const PromotionList = () => {
                                 {item.status === 0 ? (
                                   <Link
                                     to={
-                                      "/promotion-costcentermanger/" +
-                                      item.employeeId
+                                      "/promotion-approval/" + item.employeeId
                                     }
                                   >
                                     <Edit2
@@ -226,11 +215,9 @@ const PromotionList = () => {
                               user !== undefined &&
                               user.role === "MANAGER" ? (
                               <td>
-                                {item.status === 1 ? (
-                                  <Link
-                                    to={"/view-promotion/" + item.employeeId}
-                                    //this link have to change according to MANAGER component
-                                  >
+                                {/* {item.status === 1 ? ( */}
+                                {true ? (
+                                  <Link to={"/promotion/" + item.employeeId}>
                                     <Edit2
                                       onClick={() => {
                                         ViewPromotionByEmployee(

@@ -14,13 +14,28 @@ import { toast } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
 import { setGlobalCssModule } from "reactstrap/es/utils";
 import { set } from "js-cookie";
+import { ProbationContext } from "../../context/ProbationState";
+import ConfirmationLetter from "./ConfirmationLetter";
+import ExtensionLetter from "./ExtensionLetter";
+import calendarImage from "../../assets/images/calendar-image.png";
 
 const PromotionCostCenterManagerEdit = (props) => {
   const [EmpName, setEmpName] = useState();
   const [position, setPosition] = useState();
   const [departmentNew, setDepartmentNew] = useState();
   const [submitted, setSubmitted] = useState(false);
-
+  const [showModal, setModal] = useState(false);
+  const [showRelivingModal, setShow] = useState(false);
+  const [showSuccessModal, setSuccessModal] = useState(false);
+  const [showSignature, setShowSignature] = useState(false);
+  const [saveLetter, setSaveLetter] = useState(false);
+  const [submitLetter, setSubmitLetter] = useState(false);
+  const [previewLetter, setPreviewLetter] = useState(false);
+  const [letterSent, setLetterSent] = useState(false);
+  const [showPreview, setPreview] = useState(false);
+  const [probationStatus, setProbationStatus] = useState("Confirmed");
+  const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
+  const [remarkError, setRemarkError] = useState(false);
   const [state, setState] = useState({
     approveByAdminName: "",
     approveByCostCentreManagerName: "",
@@ -76,6 +91,17 @@ const PromotionCostCenterManagerEdit = (props) => {
     promotionByEmployee,
     PromotionCreate,
   } = useContext(PromotionContext);
+  const {
+    updateProbation,
+    probUpdateResponse,
+    ViewExtensionLetter,
+    ViewConfirmationLetter,
+    extensionLetterData,
+    cnfLetterData,
+    ViewProbationDataById,
+    probationData,
+    empId,
+  } = useContext(ProbationContext);
   useEffect(() => {
     PositionNew();
     departmentView();
@@ -135,15 +161,100 @@ const PromotionCostCenterManagerEdit = (props) => {
       });
     }
   }, [promotionByEmployee]);
-
-  const effectiveHandler = (e) => {
-    console.log("ChangeHandler", e);
-    state.effectiveDate = e;
+  const handleSaveRemarks = () => {
+    console.log(state);
+  };
+  const changeHandler = (e) => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
+    console.log(state);
+  };
+  const handleClose = () => {
+    setSuccessModal(false);
+  };
+  const handleClose1 = () => {
+    setModal(false);
+    state.remarks = "";
   };
 
-  const salaryeEffectiveHandler = (e) => {
-    console.log("ChangeHandler", e);
-    state.salaryEffectiveDate = e;
+  const handleRelivingClose = () => setShow(false);
+
+  const saveOfferLetter = () => {
+    setSaveLetter(true);
+    setShow(false);
+  };
+
+  const digitalSignature = () => {
+    setShowSignature(true);
+  };
+
+  const submitfinalRelivingLetter = (e) => {
+    e.preventDefault();
+    if (probationData !== null && probationData !== undefined) {
+      setSubmitLetter(true);
+      setLetterSent(true);
+      setShow(true);
+      // setSuccessModal(true);
+      // finalSubmitOfferLetter(employeeData.employeeId);
+    }
+  };
+
+  const previewLetterViewing = (e) => {
+    e.preventDefault();
+    if (probationData !== null && probationData !== undefined) {
+      // fetchRelievingLetterData(employeeData.employeeId);
+      if (probationData.status === 1) {
+        ViewConfirmationLetter(empId);
+      } else if (probationData.status === 2) {
+        ViewExtensionLetter(empId);
+      }
+
+      setSubmitLetter(false);
+      setPreviewLetter(true);
+      setShow(true);
+    }
+  };
+  const generateLetterClick = (e) => {
+    e.preventDefault();
+    // fetchRelievingLetterData(employeeData.employeeId);
+    if (probationData !== null && probationData !== undefined) {
+      if (probationData.status === 1) {
+        ViewConfirmationLetter(empId);
+      } else if (probationData.status === 2) {
+        ViewExtensionLetter(empId);
+      }
+      handleShow();
+      setPreviewGeneratedLetter(true);
+    }
+  };
+
+  const handleShow = () => {
+    console.log("inside show moodal");
+    setShow(true);
+  };
+
+  const effectiveHandler = (date) => {
+    console.log("ChangeHandler", date);
+    if (date !== null) {
+      var AdjusteddateValue = new Date(
+        date.getTime() - date.getTimezoneOffset() * 60000
+      );
+      console.log("AdjusteddateValue");
+      setState({ ...state, effectiveDate: AdjusteddateValue });
+    }
+  };
+
+  const salaryeEffectiveHandler = (date) => {
+    console.log("ChangeHandler", date);
+    if (date !== null) {
+      var AdjusteddateValue = new Date(
+        date.getTime() - date.getTimezoneOffset() * 60000
+      );
+      console.log("AdjusteddateValue");
+      setState({ ...state, salaryEffectiveDate: AdjusteddateValue });
+    }
   };
 
   const submitHandler = (e) => {
@@ -180,348 +291,556 @@ const PromotionCostCenterManagerEdit = (props) => {
       remarks: null,
       status: 0,
     };
-    PromotionCreate(infoData);
+    // PromotionCreate(infoData);
     setSubmitted(true);
+    setPreview(true);
     console.log("all okay", infoData);
   };
 
   return (
-    <div>
-      <Breadcrumb title="PROMOTION APPROVAL" parent="PROMOTION APPROVAL" />
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-sm-12">
-            <div className="card" style={{ borderRadius: "1rem" }}>
+    <Fragment>
+      <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        {submitLetter ? (
+          <Modal.Body className="mx-auto">
+            <label>
+              {probationStatus === "Confirmed"
+                ? "Confirmation letter sent to the employee"
+                : probationStatus === "Extended"
+                ? "Extension letter sent to the employee"
+                : ""}
+            </label>
+            <div className="text-center mb-2">
+              <Button onClick={handleRelivingClose}>Close</Button>
+            </div>
+          </Modal.Body>
+        ) : previewLetter || showRelivingModal ? (
+          <Modal.Body>
+            {true ? (
               <div>
-                <div className="OnBoardHeading">
-                  <b>COST CENTER MANAGER PROMOTION APPROVAL </b>
-                </div>
-                <Form>
-                  <Row
-                    style={{
-                      marginRight: "2rem",
-                    }}
+                {probationStatus === "Confirmed" ? (
+                  <ConfirmationLetter />
+                ) : probationStatus === "Extended" ? (
+                  <ExtensionLetter />
+                ) : (
+                  ""
+                )}
+              </div>
+            ) : (
+              ""
+            )}
+            <br></br>
+            <Row>
+              {showSignature ? (
+                <Fragment>
+                  <br></br>
+                  <img
+                    src={calendarImage}
+                    alt="calendar"
+                    width="50px"
+                    className="digital-signature"
+                  />
+                </Fragment>
+              ) : (
+                <>
+                  <br></br>
+                  <button
+                    className={"stepperButtons"}
+                    onClick={digitalSignature}
                   >
-                    <Col>
-                      <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "2rem",
-                          marginBottom: "1rem",
-                        }}
-                      >
-                        <Col sm={6}>
-                          <div>
-                            <label>
-                              Emp Name/Id:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.empName}
-                              </label>
-                            </label>
-                          </div>
-                        </Col>
-                        <Col sm={6}>
-                          <div>
-                            <label>
-                              Cost Center Name:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.costCentre}
-                              </label>
-                            </label>
-                          </div>
-                        </Col>
-                      </Row>
-                      <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "1rem",
-                          marginBottom: "2rem",
-                        }}
-                      >
-                        <Col sm={6}>
-                          <div>
-                            <label>
-                              Position:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.oldPosition}
-                              </label>
-                            </label>
-                          </div>
-                        </Col>
+                    Add digital signature
+                  </button>
+                </>
+              )}
+            </Row>
+            {showSignature && !previewLetter ? (
+              <Row>
+                <Col sm={4}></Col>
+                <Col sm={5}>
+                  <br></br>
+                  <br></br>
+                  <button
+                    className={"stepperButtons"}
+                    onClick={saveOfferLetter}
+                  >
+                    Save Changes
+                  </button>
+                </Col>
+              </Row>
+            ) : (
+              ""
+            )}
+          </Modal.Body>
+        ) : (
+          ""
+        )}
+      </Modal>
+      <Modal show={showModal} onHide={() => handleClose1()} centered>
+        <Container>
+          <Modal.Header closeButton className="modalHeader">
+            {/* <Modal.Title>State remarks for disapproval</Modal.Title> */}
+          </Modal.Header>{" "}
+          <Modal.Body className="mx-auto">
+            <label className="itemResult">State remarks:</label>
+            <textarea
+              className="remarkText rounded"
+              name="remarks"
+              value={state.remarks}
+              placeholder="Write here.."
+              onChange={(e) => changeHandler(e)}
+            />
 
-                        <Col sm={6}>
-                          <div>
-                            <label>
-                              Department:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.oldDepartment}
-                              </label>
-                            </label>
-                          </div>
-                        </Col>
-                      </Row>
+            {remarkError && (
+              <p style={{ color: "red" }}>Please add your remarks</p>
+            )}
+            <div className="text-center mb-2">
+              <Button onClick={() => handleSaveRemarks()}>Save</Button>
+            </div>
+          </Modal.Body>
+        </Container>
+      </Modal>
 
-                      <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "1rem",
-                          marginBottom: "2rem",
-                        }}
-                      >
-                        <Col sm={6}>
-                          <div>
-                            <label>
-                              New Position :
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.promotedPosition}
-                              </label>
-                            </label>
-                          </div>
-                        </Col>
-                        <Col sm={6}>
-                          <div>
-                            <label>
-                              Fixed Gross:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.oldFixedGross}
-                              </label>
-                            </label>
-                          </div>
-                        </Col>
-                      </Row>
-                      <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "1rem",
-                          marginBottom: "1rem",
-                        }}
-                      >
-                        <Col sm={6}>
-                          <div>
-                            <label>
-                              New Department:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.newDepartment}
-                              </label>
-                            </label>
-                          </div>
-                        </Col>
-                        <Col sm={6}>
-                          <div>
-                            <label>
-                              New Fixed Gross:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.newFixedGross}
-                              </label>
-                            </label>
-                          </div>
-                        </Col>
-                      </Row>
-                      <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "1rem",
-                          marginBottom: "3rem",
-                        }}
-                      >
-                        <Col sm={5}>
-                          <label>
-                            Is this employee is applicable for promotion and
-                            hike{" "}
-                          </label>
-                        </Col>
-                        <Col sm={2} style={{ marginTop: "0.25rem" }}>
-                          <Form.Group>
-                            <div className="boxField_2 input">
-                              <input
-                                className="largerCheckbox"
-                                type="checkbox"
-                                value="yes"
-                                disabled={true}
-                                checked={
-                                  promotionByEmployee.promotionType === 1
-                                    ? true
-                                    : false
-                                }
-                                style={{ borderColor: "blue" }}
-                              />
-                              <label className="itemResult">Yes</label>
-                            </div>
-                          </Form.Group>
-                        </Col>
-                        <Col sm={2} style={{ marginTop: "0.25rem" }}>
-                          <Form.Group>
-                            <div className="boxField_2 input">
-                              <input
-                                className="largerCheckbox"
-                                type="checkbox"
-                                value="yes"
-                                disabled={true}
-                                checked={
-                                  promotionByEmployee.promotionType === 0
-                                    ? true
-                                    : false
-                                }
-                                style={{ borderColor: "blue" }}
-                              />
-                              <label className="itemResult">No</label>
-                            </div>
-                          </Form.Group>
-                        </Col>
-                      </Row>
-                      <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "1rem",
-                          marginBottom: "2rem",
-                        }}
-                      >
-                        {promotionByEmployee !== null &&
-                        promotionByEmployee !== undefined &&
-                        promotionByEmployee.promotionType == 0 ? (
-                          <React.Fragment>
-                            <Col sm={3}>
-                              <div>
-                                <label>Effective Date :</label>
-                              </div>
-                            </Col>
+      <Modal show={showSuccessModal} onHide={() => handleClose()} centered>
+        <Container>
+          <Modal.Header closeButton className="modalHeader">
+            {/* <Modal.Title>State remarks for disapproval</Modal.Title> */}
+          </Modal.Header>{" "}
+          <Modal.Body className="mx-auto">
+            <label className="itemResult">
+              {probationData.status === 1
+                ? "Confirmattion letter sent to the employee"
+                : probationData.status === 2
+                ? "Extension letter sent to the employee"
+                : ""}
+            </label>
 
-                            <Col sm={3}>
-                              <div>
-                                <Form.Group>
-                                  <div className={""}>
-                                    <DatePicker
-                                      className="form-control onBoard-view"
-                                      selected={state.effectiveDate}
-                                      name="effectiveDate"
-                                      required
-                                      onChange={(e) => effectiveHandler(e)}
-                                      dateFormat="yyyy-MM-dd"
-                                      placeholderText="YYYY-MM-DD"
-                                      minDate={new Date()}
-                                    />
-                                  </div>
-                                </Form.Group>
-                              </div>
-                            </Col>
-                            <Col sm={3}>
-                              <div>
-                                <label>Salary Effective Date :</label>
-                              </div>
-                            </Col>
-
-                            <Col sm={3}>
-                              <div>
-                                <Form.Group>
-                                  <div className={""}>
-                                    <DatePicker
-                                      className="form-control onBoard-view"
-                                      selected={state.salaryEffectiveDate}
-                                      name="salaryEffectiveDate"
-                                      required
-                                      onChange={(e) =>
-                                        salaryeEffectiveHandler(e)
-                                      }
-                                      dateFormat="yyyy-MM-dd"
-                                      placeholderText="YYYY-MM-DD"
-                                      minDate={new Date()}
-                                    />
-                                  </div>
-                                </Form.Group>
-                              </div>
-                            </Col>
-                          </React.Fragment>
-                        ) : promotionByEmployee !== null &&
-                          promotionByEmployee !== undefined &&
-                          promotionByEmployee.promotionType === 1 ? (
-                          <React.Fragment>
-                            <Col sm={3}>
-                              <div>
-                                <label>Effective Date :</label>
-                              </div>
-                            </Col>
-
-                            <Col sm={3}>
-                              <div>
-                                <Form.Group>
-                                  <div className={""}>
-                                    <DatePicker
-                                      className="form-control onBoard-view"
-                                      selected={state.effectiveDate}
-                                      name="effectiveDate"
-                                      required
-                                      onChange={(e) => effectiveHandler(e)}
-                                      dateFormat="yyyy-MM-dd"
-                                      placeholderText="YYYY-MM-DD"
-                                      minDate={new Date()}
-                                    />
-                                  </div>
-                                </Form.Group>
-                              </div>
-                            </Col>
-                          </React.Fragment>
-                        ) : (
-                          ""
-                        )}
-                        <Col sm={2}>
-                          <div>
-                            <label>Relocation Bonus:</label>
-                          </div>
-                        </Col>
-                        <Col sm={3}>
-                          <div>
-                            <label className="itemResult">
-                              &nbsp;&nbsp; {state.relocationBonus}
-                            </label>
-                          </div>
-                        </Col>
-                      </Row>
-
-                      <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "1rem",
-                          marginBottom: "3rem",
-                        }}
-                      >
-                        <Col sm={10}>
-                          <div>
-                            <label>
-                              Reason For Promotion:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.reason}
-                              </label>
-                            </label>
-                          </div>
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col
+            <div className="text-center mb-2">
+              <Button onClick={() => handleClose()}>Close</Button>
+            </div>
+          </Modal.Body>
+        </Container>
+      </Modal>
+      <div>
+        <Breadcrumb title="PROMOTION APPROVAL" parent="PROMOTION APPROVAL" />
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-sm-12">
+              <div className="card" style={{ borderRadius: "1rem" }}>
+                <div>
+                  <div className="OnBoardHeading">
+                    <b>COST CENTER MANAGER PROMOTION APPROVAL </b>
+                  </div>
+                  <Form>
+                    <Row
+                      style={{
+                        marginRight: "2rem",
+                      }}
+                    >
+                      <Col>
+                        <Row
                           style={{
+                            marginLeft: "2rem",
                             marginTop: "2rem",
-                            marginBottom: "2rem",
-                            textAlign: "center",
+                            marginBottom: "1rem",
                           }}
                         >
-                          <button
-                            className={
-                              submitted ? "confirmButton" : "stepperButtons"
-                            }
-                            onClick={submitHandler}
+                          <Col sm={6}>
+                            <div>
+                              <label>
+                                Emp Name/Id:
+                                <label className="itemResult">
+                                  &nbsp;&nbsp; {state.empName}
+                                </label>
+                              </label>
+                            </div>
+                          </Col>
+                          <Col sm={6}>
+                            <div>
+                              <label>
+                                Cost Center Name:
+                                <label className="itemResult">
+                                  &nbsp;&nbsp; {state.costCentre}
+                                </label>
+                              </label>
+                            </div>
+                          </Col>
+                        </Row>
+                        <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "1rem",
+                            marginBottom: "2rem",
+                          }}
+                        >
+                          <Col sm={6}>
+                            <div>
+                              <label>
+                                Position:
+                                <label className="itemResult">
+                                  &nbsp;&nbsp; {state.oldPosition}
+                                </label>
+                              </label>
+                            </div>
+                          </Col>
+
+                          <Col sm={6}>
+                            <div>
+                              <label>
+                                Department:
+                                <label className="itemResult">
+                                  &nbsp;&nbsp; {state.oldDepartment}
+                                </label>
+                              </label>
+                            </div>
+                          </Col>
+                        </Row>
+
+                        <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "1rem",
+                            marginBottom: "2rem",
+                          }}
+                        >
+                          <Col sm={6}>
+                            <div>
+                              <label>
+                                New Position :
+                                <label className="itemResult">
+                                  &nbsp;&nbsp; {state.promotedPosition}
+                                </label>
+                              </label>
+                            </div>
+                          </Col>
+                          <Col sm={6}>
+                            <div>
+                              <label>
+                                Fixed Gross:
+                                <label className="itemResult">
+                                  &nbsp;&nbsp; {state.oldFixedGross}
+                                </label>
+                              </label>
+                            </div>
+                          </Col>
+                        </Row>
+                        <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "1rem",
+                            marginBottom: "1rem",
+                          }}
+                        >
+                          <Col sm={6}>
+                            <div>
+                              <label>
+                                New Department:
+                                <label className="itemResult">
+                                  &nbsp;&nbsp; {state.newDepartment}
+                                </label>
+                              </label>
+                            </div>
+                          </Col>
+                          <Col sm={6}>
+                            <div>
+                              <label>
+                                New Fixed Gross:
+                                <label className="itemResult">
+                                  &nbsp;&nbsp; {state.newFixedGross}
+                                </label>
+                              </label>
+                            </div>
+                          </Col>
+                        </Row>
+                        <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "1rem",
+                            marginBottom: "3rem",
+                          }}
+                        >
+                          <Col sm={5}>
+                            <label>
+                              Is this employee is applicable for promotion and
+                              hike{" "}
+                            </label>
+                          </Col>
+                          <Col sm={2} style={{ marginTop: "0.25rem" }}>
+                            <Form.Group>
+                              <div className="boxField_2 input">
+                                <input
+                                  className="largerCheckbox"
+                                  type="checkbox"
+                                  value="yes"
+                                  disabled={true}
+                                  checked={
+                                    promotionByEmployee.promotionType === 1
+                                      ? true
+                                      : false
+                                  }
+                                  style={{ borderColor: "blue" }}
+                                />
+                                <label className="itemResult">Yes</label>
+                              </div>
+                            </Form.Group>
+                          </Col>
+                          <Col sm={2} style={{ marginTop: "0.25rem" }}>
+                            <Form.Group>
+                              <div className="boxField_2 input">
+                                <input
+                                  className="largerCheckbox"
+                                  type="checkbox"
+                                  value="yes"
+                                  disabled={true}
+                                  checked={
+                                    promotionByEmployee.promotionType === 0
+                                      ? true
+                                      : false
+                                  }
+                                  style={{ borderColor: "blue" }}
+                                />
+                                <label className="itemResult">No</label>
+                              </div>
+                            </Form.Group>
+                          </Col>
+                        </Row>
+                        <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "1rem",
+                            marginBottom: "2rem",
+                          }}
+                        >
+                          {true ? (
+                            // promotionByEmployee === null ? (
+                            // promotionByEmployee !== undefined &&
+                            // promotionByEmployee.promotionType == 0
+                            <React.Fragment>
+                              <Col sm={3}>
+                                <div>
+                                  <label>Effective Date :</label>
+                                </div>
+                              </Col>
+
+                              <Col sm={3}>
+                                <div>
+                                  <Form.Group>
+                                    <div className={""}>
+                                      <DatePicker
+                                        className="form-control onBoard-view"
+                                        selected={state.effectiveDate}
+                                        name="effectiveDate"
+                                        required
+                                        onChange={(e) => effectiveHandler(e)}
+                                        dateFormat="yyyy-MM-dd"
+                                        placeholderText="YYYY-MM-DD"
+                                        minDate={new Date()}
+                                      />
+                                    </div>
+                                  </Form.Group>
+                                </div>
+                              </Col>
+                              <Col sm={3}>
+                                <div>
+                                  <label>Salary Effective Date :</label>
+                                </div>
+                              </Col>
+
+                              <Col sm={3}>
+                                <div>
+                                  <Form.Group>
+                                    <div className={""}>
+                                      <DatePicker
+                                        className="form-control onBoard-view"
+                                        selected={state.salaryEffectiveDate}
+                                        name="salaryEffectiveDate"
+                                        required
+                                        onChange={(e) =>
+                                          salaryeEffectiveHandler(e)
+                                        }
+                                        dateFormat="yyyy-MM-dd"
+                                        placeholderText="YYYY-MM-DD"
+                                        minDate={new Date()}
+                                      />
+                                    </div>
+                                  </Form.Group>
+                                </div>
+                              </Col>
+                            </React.Fragment>
+                          ) : promotionByEmployee !== null &&
+                            promotionByEmployee !== undefined &&
+                            promotionByEmployee.promotionType === 1 ? (
+                            <React.Fragment>
+                              <Col sm={3}>
+                                <div>
+                                  <label>Effective Date :</label>
+                                </div>
+                              </Col>
+
+                              <Col sm={3}>
+                                <div>
+                                  <Form.Group>
+                                    <div className={""}>
+                                      <DatePicker
+                                        className="form-control onBoard-view"
+                                        selected={state.effectiveDate}
+                                        name="effectiveDate"
+                                        required
+                                        onChange={(e) => effectiveHandler(e)}
+                                        dateFormat="yyyy-MM-dd"
+                                        placeholderText="YYYY-MM-DD"
+                                        minDate={new Date()}
+                                      />
+                                    </div>
+                                  </Form.Group>
+                                </div>
+                              </Col>
+                            </React.Fragment>
+                          ) : (
+                            ""
+                          )}
+                          <Col sm={2}>
+                            <div>
+                              <label>Relocation Bonus:</label>
+                            </div>
+                          </Col>
+                          <Col sm={3}>
+                            <div>
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.relocationBonus}
+                              </label>
+                            </div>
+                          </Col>
+                        </Row>
+
+                        <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "1rem",
+                            marginBottom: "3rem",
+                          }}
+                        >
+                          <Col sm={10}>
+                            <div>
+                              <label>
+                                Reason For Promotion:
+                                <label className="itemResult">
+                                  &nbsp;&nbsp; {state.reason}
+                                </label>
+                              </label>
+                            </div>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col
+                            style={{
+                              marginTop: "2rem",
+                              marginBottom: "2rem",
+                              textAlign: "center",
+                            }}
                           >
-                            Submit
-                          </button>
-                        </Col>
-                      </Row>
-                    </Col>
-                  </Row>
-                </Form>
+                            <div
+                              style={{
+                                marginTop: "2rem",
+                                marginBottom: "2rem",
+                                textAlign: "center",
+                              }}
+                            >
+                              {true ? (
+                                <button
+                                  disabled={showPreview}
+                                  className={
+                                    showPreview
+                                      ? "confirmButton"
+                                      : "stepperButtons"
+                                  }
+                                  onClick={submitHandler}
+                                >
+                                  Save
+                                </button>
+                              ) : (
+                                ""
+                              )}
+                              {!saveLetter &&
+                              ((probationData &&
+                                probationData &&
+                                probationData !== null &&
+                                probationData !== undefined &&
+                                Object.keys(probationData).length !== 0 &&
+                                probationData.status === 2) ||
+                                probationData.status === 1 ||
+                                showPreview === true) ? (
+                                <button
+                                  // disabled={!submitted}
+                                  className={"LettersProbButtons"}
+                                  onClick={generateLetterClick}
+                                >
+                                  {probationStatus === "Extended"
+                                    ? "Generate Extension Letter"
+                                    : probationStatus === "Confirmed"
+                                    ? "Generate Confirmation Letter"
+                                    : ""}
+                                  {/* Generate Reliving Letter */}
+                                </button>
+                              ) : (
+                                ""
+                              )}
+                              {saveLetter &&
+                              previewGeneratedLetter &&
+                              showPreview ? (
+                                <button
+                                  className={"LettersProbButtons"}
+                                  onClick={previewLetterViewing}
+                                >
+                                  {probationStatus === "Extended"
+                                    ? "Preview Extension Letter"
+                                    : probationStatus === "Confirmed"
+                                    ? "Preview Confirmation Letter"
+                                    : ""}
+                                </button>
+                              ) : (
+                                ""
+                              )}
+                              {saveLetter && previewGeneratedLetter === true && (
+                                <div className="preview-section">
+                                  <br></br>
+                                  <br></br>
+                                  <img
+                                    src={calendarImage}
+                                    alt="calendar"
+                                    width="200px"
+                                  />
+                                  <br></br>
+                                  <br></br>
+                                  {true ? (
+                                    <button
+                                      disabled={letterSent}
+                                      className={
+                                        letterSent
+                                          ? " confirmButton "
+                                          : "stepperButtons"
+                                      }
+                                      onClick={submitfinalRelivingLetter}
+                                    >
+                                      Submit
+                                    </button>
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          </Col>
+                        </Row>
+                      </Col>
+                    </Row>
+                  </Form>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </Fragment>
   );
 };
 

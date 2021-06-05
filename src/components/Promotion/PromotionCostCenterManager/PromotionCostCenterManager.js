@@ -14,12 +14,14 @@ import { toast } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
 import { setGlobalCssModule } from "reactstrap/es/utils";
 import { set } from "js-cookie";
+import { AppContext } from "../../../context/AppState";
 
 const PromotionCostCenterManager = (props) => {
   const [EmpName, setEmpName] = useState();
   const [position, setPosition] = useState();
   const [departmentNew, setDepartmentNew] = useState();
   const [submitted, setSubmitted] = useState(false);
+  const { user } = useContext(AppContext);
 
   const [state, setState] = useState({
     approveByAdminName: "",
@@ -129,11 +131,19 @@ const PromotionCostCenterManager = (props) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    approvePromotion(state.promotionId);
+    if (user !== null && user !== undefined && user.role === "ADMIN") {
+      approvePromotion(state.promotionId, 1);
+    } else if (
+      user !== null &&
+      user !== undefined &&
+      user.role === "COST_CENTER_MANAGER"
+    ) {
+      approvePromotion(state.promotionId, 2);
+    }
   };
   const rejectHandler = (e) => {
     e.preventDefault();
-    rejectPromotion(state.promotionId);
+    rejectPromotion(state.promotionId, state.remarks);
   };
   const changeHandler = (e) => {
     if (e.target.name === "empName") {

@@ -56,8 +56,8 @@ const PromotionInitiate = () => {
   const [positionIdError, setPositionIdError] = useState("");
   const [newFixedGrossError, setNewFixedGrossError] = useState("");
   const [reasonError, setReasonError] = useState("");
-  const [salaryEffectiveDateError,setSalaryEffectiveDateError] = useState('');
-  const [promotionTypeError,setPromotionTypeError] = useState('')
+  const [salaryEffectiveDateError, setSalaryEffectiveDateError] = useState("");
+  const [promotionTypeError, setPromotionTypeError] = useState("");
 
   const [submitted, setSubmitted] = useState(false);
   const {
@@ -183,14 +183,24 @@ const PromotionInitiate = () => {
     } else {
       setReasonError("");
     }
-    var promotionType = state.promotionType
-    if (promotionType == "" || promotionType == null || promotionType == undefined) {
-      setPromotionTypeError("Please select is employee is applicable for promotion and hike ");
+    var promotionType = state.promotionType;
+    if (
+      promotionType == "" ||
+      promotionType == null ||
+      promotionType == undefined
+    ) {
+      setPromotionTypeError(
+        "Please select is employee is applicable for promotion and hike "
+      );
     } else {
       setPromotionTypeError("");
     }
-    var salaryEffectiveDate =state.salaryEffectiveDate
-    if ( salaryEffectiveDate == "" || salaryEffectiveDate == null || salaryEffectiveDate == undefined) {
+    var salaryEffectiveDate = state.salaryEffectiveDate;
+    if (
+      salaryEffectiveDate == "" ||
+      salaryEffectiveDate == null ||
+      salaryEffectiveDate == undefined
+    ) {
       setSalaryEffectiveDateError("Please add salary effective date");
     } else {
       setSalaryEffectiveDateError("");
@@ -226,7 +236,7 @@ const PromotionInitiate = () => {
         costCentreManagerId: null,
         costCentreManagerName: null,
         departmentId: state.departmentId,
-        effectiveDate: null,
+        effectiveDate: state.effectiveDate,
         emailId: null,
         empName: state.empName,
         employeeId: state.employeeId,
@@ -248,8 +258,8 @@ const PromotionInitiate = () => {
         salaryEffectiveDate: state.salaryEffectiveDate,
         status: 0,
       };
-      // PromotionCreate(infoData);
-      // setSubmitted(true);
+      PromotionCreate(infoData);
+      setSubmitted(true);
       console.log("all okay", infoData);
     } else {
       console.log("NOT OK", empName);
@@ -283,24 +293,24 @@ const PromotionInitiate = () => {
       }
     }
   };
-const handlePromotionTypeYes = (e)=>{
-if(e.target.value === "yes"){
-  if(state.promotionType == 0){
-    setState({...state,promotionType :1})
-  }else{
-    setState({...state,promotionType :0})
-  }
-}
-}
-const handlePromotionTypeNo = (e)=>{
-  if(e.target.value === "no"){
-    if(state.promotionType == 0){
-      setState({...state,promotionType :1})
-    }else{
-      setState({...state,promotionType :0})
+  const handlePromotionTypeYes = (e) => {
+    if (e.target.value === "yes") {
+      if (state.promotionType == 0) {
+        setState({ ...state, promotionType: 1 });
+      } else {
+        setState({ ...state, promotionType: 0 });
+      }
     }
-  }
-  }
+  };
+  const handlePromotionTypeNo = (e) => {
+    if (e.target.value === "no") {
+      if (state.promotionType == 0) {
+        setState({ ...state, promotionType: 1 });
+      } else {
+        setState({ ...state, promotionType: 0 });
+      }
+    }
+  };
   const changeHandler = (e) => {
     if (e.target.name === "empName") {
       setEmpName(e.target.value);
@@ -545,49 +555,58 @@ const handlePromotionTypeNo = (e)=>{
                             marginBottom: "3rem",
                           }}
                         >
-                            <Col sm={5}>
-                            <label>Is this employee is applicable for promotion and hike </label>
+                          <Col sm={5}>
+                            <label>
+                              Is this employee is applicable for promotion and
+                              hike{" "}
+                            </label>
                           </Col>
                           <Col sm={2} style={{ marginTop: "0.25rem" }}>
-                          <Form.Group>
-                            <div className="boxField_2 input">
-                              <input
-                                className="largerCheckbox"
-                                type="checkbox"
-                                value="yes"
-                                 checked={state.promotionType?true:false}
-                                style={ promotionTypeError?{borderColor:"red"}:{borderColor:"blue" }}
-                                // required={required}
-                                 onChange={handlePromotionTypeYes}
-                              />
-                              <label className="itemResult">Yes</label>
-                            </div>
-                          </Form.Group>
-                        </Col>
-                        <Col sm={1} style={{ marginTop: "0.25rem" }}>
-                          <Form.Group>
-                            <div className="boxField_2 input">
-                              <input
-                                className="largerCheckbox"
-                                type="checkbox"
-                                value="no"
-                                 checked={!state.promotionType?true:false}
-                                style={ promotionTypeError?{borderColor:"red"}:{borderColor:"blue" }}
-                                // required={required}
-                                onChange={handlePromotionTypeNo}
-                              />
-                              <label className="itemResult">No</label>
-                            </div>
-                          </Form.Group>
-                        </Col>
-                        {promotionTypeError ? (
-                                <p style={{ color: "red" }}>
-                                  {promotionTypeError}
-                                </p>
-                              ) : (
-                                ""
-                              )}
-                          </Row>
+                            <Form.Group>
+                              <div className="boxField_2 input">
+                                <input
+                                  className="largerCheckbox"
+                                  type="checkbox"
+                                  value="yes"
+                                  checked={state.promotionType ? true : false}
+                                  style={
+                                    promotionTypeError
+                                      ? { borderColor: "red" }
+                                      : { borderColor: "blue" }
+                                  }
+                                  // required={required}
+                                  onChange={handlePromotionTypeYes}
+                                />
+                                <label className="itemResult">Yes</label>
+                              </div>
+                            </Form.Group>
+                          </Col>
+                          <Col sm={1} style={{ marginTop: "0.25rem" }}>
+                            <Form.Group>
+                              <div className="boxField_2 input">
+                                <input
+                                  className="largerCheckbox"
+                                  type="checkbox"
+                                  value="no"
+                                  checked={!state.promotionType ? true : false}
+                                  style={
+                                    promotionTypeError
+                                      ? { borderColor: "red" }
+                                      : { borderColor: "blue" }
+                                  }
+                                  // required={required}
+                                  onChange={handlePromotionTypeNo}
+                                />
+                                <label className="itemResult">No</label>
+                              </div>
+                            </Form.Group>
+                          </Col>
+                          {promotionTypeError ? (
+                            <p style={{ color: "red" }}>{promotionTypeError}</p>
+                          ) : (
+                            ""
+                          )}
+                        </Row>
                         <Row
                           style={{
                             marginLeft: "2rem",
@@ -672,12 +691,12 @@ const handlePromotionTypeNo = (e)=>{
                               </Form.Group>
                             </div>
                             {salaryEffectiveDateError ? (
-                                <p style={{ color: "red" }}>
-                                  {salaryEffectiveDateError}
-                                </p>
-                              ) : (
-                                ""
-                              )}
+                              <p style={{ color: "red" }}>
+                                {salaryEffectiveDateError}
+                              </p>
+                            ) : (
+                              ""
+                            )}
                           </Col>
                         </Row>
                         <Row
