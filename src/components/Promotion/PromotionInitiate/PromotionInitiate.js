@@ -44,9 +44,11 @@ const PromotionInitiate = () => {
     promotedPosition: "",
     promotionId: 0,
     promotionLetter: "",
+    promotionType: 0,
     reason: "",
     relocationBonus: 0,
     remarks: "",
+    salaryEffectiveDate: "",
     status: 0,
   });
   const [empNameError, setEmpNameError] = useState("");
@@ -54,6 +56,9 @@ const PromotionInitiate = () => {
   const [positionIdError, setPositionIdError] = useState("");
   const [newFixedGrossError, setNewFixedGrossError] = useState("");
   const [reasonError, setReasonError] = useState("");
+  const [salaryEffectiveDateError,setSalaryEffectiveDateError] = useState('');
+  const [promotionTypeError,setPromotionTypeError] = useState('')
+
   const [submitted, setSubmitted] = useState(false);
   const {
     employeeData,
@@ -178,6 +183,18 @@ const PromotionInitiate = () => {
     } else {
       setReasonError("");
     }
+    var promotionType = state.promotionType
+    if (promotionType == "" || promotionType == null || promotionType == undefined) {
+      setPromotionTypeError("Please select is employee is applicable for promotion and hike ");
+    } else {
+      setPromotionTypeError("");
+    }
+    var salaryEffectiveDate =state.salaryEffectiveDate
+    if ( salaryEffectiveDate == "" || salaryEffectiveDate == null || salaryEffectiveDate == undefined) {
+      setSalaryEffectiveDateError("Please add salary effective date");
+    } else {
+      setSalaryEffectiveDateError("");
+    }
 
     if (
       newDepartment !== "" &&
@@ -224,13 +241,15 @@ const PromotionInitiate = () => {
         promotedPosition: state.promotedPosition,
         promotionId: 0,
         promotionLetter: null,
+        promotionType: state.promotionType,
         reason: state.reason,
         relocationBonus: state.relocationBonus,
         remarks: null,
+        salaryEffectiveDate: state.salaryEffectiveDate,
         status: 0,
       };
-      PromotionCreate(infoData);
-      setSubmitted(true);
+      // PromotionCreate(infoData);
+      // setSubmitted(true);
       console.log("all okay", infoData);
     } else {
       console.log("NOT OK", empName);
@@ -244,7 +263,12 @@ const PromotionInitiate = () => {
     );
     setState({ ...state, effectiveDate: AdjusteddateValue });
   };
-
+  const dateOfBirthHandler1 = (date) => {
+    var AdjusteddateValue = new Date(
+      date.getTime() - date.getTimezoneOffset() * 60000
+    );
+    setState({ ...state, salaryEffectiveDate: AdjusteddateValue });
+  };
   const searchDataHandler = () => {
     if (EmpName !== null) {
       searchByCostCenter(EmpName);
@@ -259,7 +283,24 @@ const PromotionInitiate = () => {
       }
     }
   };
-
+const handlePromotionTypeYes = (e)=>{
+if(e.target.value === "yes"){
+  if(state.promotionType == 0){
+    setState({...state,promotionType :1})
+  }else{
+    setState({...state,promotionType :0})
+  }
+}
+}
+const handlePromotionTypeNo = (e)=>{
+  if(e.target.value === "no"){
+    if(state.promotionType == 0){
+      setState({...state,promotionType :1})
+    }else{
+      setState({...state,promotionType :0})
+    }
+  }
+  }
   const changeHandler = (e) => {
     if (e.target.name === "empName") {
       setEmpName(e.target.value);
@@ -514,10 +555,10 @@ const PromotionInitiate = () => {
                                 className="largerCheckbox"
                                 type="checkbox"
                                 value="yes"
-                                // checked={RcryYes}
-                                style={ {borderColor:"blue" }}
+                                // checked={state.promotionType?true:false}
+                                style={ promotionTypeError?{borderColor:"red"}:{borderColor:"blue" }}
                                 // required={required}
-                                // onChange={handleNoticePeriodRcryYes}
+                                 onChange={handlePromotionTypeYes}
                               />
                               <label className="itemResult">Yes</label>
                             </div>
@@ -529,16 +570,23 @@ const PromotionInitiate = () => {
                               <input
                                 className="largerCheckbox"
                                 type="checkbox"
-                                value="yes"
-                                // checked={RcryYes}
-                                style={ {borderColor: "blue" }}
+                                value="no"
+                                //  checked={!state.promotionType?true:false}
+                                style={ promotionTypeError?{borderColor:"red"}:{borderColor:"blue" }}
                                 // required={required}
-                                // onChange={handleNoticePeriodRcryYes}
+                                onChange={handlePromotionTypeNo}
                               />
                               <label className="itemResult">No</label>
                             </div>
                           </Form.Group>
                         </Col>
+                        {promotionTypeError ? (
+                                <p style={{ color: "red" }}>
+                                  {promotionTypeError}
+                                </p>
+                              ) : (
+                                ""
+                              )}
                           </Row>
                         <Row
                           style={{
@@ -596,7 +644,7 @@ const PromotionInitiate = () => {
                           </Col>
                           <Col sm={2}>
                             <div>
-                              <label> Effective Date :</label>
+                              <label>Salary Effective Date :</label>
                             </div>
                           </Col>
 
@@ -606,12 +654,16 @@ const PromotionInitiate = () => {
                                 <div className={""}>
                                   <DatePicker
                                     className="form-control onBoard-view"
-                                    selected={state.effectiveDate}
-                                    name="effectiveDate"
+                                    selected={state.salaryEffectiveDate}
+                                    style={
+                                      salaryEffectiveDateError
+                                        ? { borderRadius: "red" }
+                                        : { borderRadius: "5px" }
+                                    }
+                                    name="salaryEffectiveDate"
                                     minDate={moment().toDate()}
                                     required
-                                    disabled={true}
-                                    onChange={(e) => dateOfBirthHandler(e)}
+                                    onChange={(e) => dateOfBirthHandler1(e)}
                                     dateFormat="yyyy-MM-dd"
                                     placeholderText="YYYY-MM-DD"
                                     minDate={new Date()}
@@ -619,6 +671,13 @@ const PromotionInitiate = () => {
                                 </div>
                               </Form.Group>
                             </div>
+                            {salaryEffectiveDateError ? (
+                                <p style={{ color: "red" }}>
+                                  {salaryEffectiveDateError}
+                                </p>
+                              ) : (
+                                ""
+                              )}
                           </Col>
                         </Row>
                         <Row
@@ -644,7 +703,6 @@ const PromotionInitiate = () => {
                                     name="effectiveDate"
                                     minDate={moment().toDate()}
                                     required
-                                    disabled={true}
                                     onChange={(e) => dateOfBirthHandler(e)}
                                     dateFormat="yyyy-MM-dd"
                                     placeholderText="YYYY-MM-DD"

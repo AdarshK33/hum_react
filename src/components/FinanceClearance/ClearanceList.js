@@ -54,7 +54,7 @@ const FinanceClearanceList = () => {
   const [enableValue , SetEnableValue] = useState(null)
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
-  const recordPerPage = 20;
+  const recordPerPage = 10;
   const totalRecords = total;
   const pageRange = 10;
   const indexOfLastRecord = currentPage * recordPerPage;
@@ -293,7 +293,7 @@ const FinanceClearanceList = () => {
               </div>
          
 
-        <div className="ag-theme-alpine" style={{ align:"center", height: 350, width:'100%'}}>
+        <div className="ag-theme-alpine" style={{ align:"center", height: 490, width:'100%'}}>
           
                     <AgGridReact
                       rowData={separationList}
