@@ -147,9 +147,9 @@ export const PromotionProvider = (props) => {
       });
   };
 
-  const approvePromotion = () => {
+  const approvePromotion = (id, status) => {
     client
-      .get("/api/v1/position/view/")
+      .get("/api/v1/promotion/approve?promotionId=" + id + "&status=" + status)
       .then((response) => {
         state.approvePromotionData = response.data.data;
         return dispatch({
@@ -162,9 +162,9 @@ export const PromotionProvider = (props) => {
       });
   };
 
-  const rejectPromotion = () => {
+  const rejectPromotion = (id, remarks) => {
     client
-      .get("/api/v1/position/view/")
+      .get("/api/v1/promotion/reject?promotionId=" + id + "&remarks=" + remarks)
       .then((response) => {
         state.rejectPromotionData = response.data.data;
         return dispatch({
