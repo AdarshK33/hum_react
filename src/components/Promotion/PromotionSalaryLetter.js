@@ -4,7 +4,7 @@ import calendarImage from "../../assets/images/calendar-image.png";
 import moment from "moment";
 import { PromotionContext } from "../../context/PromotionState";
 
-const PromotionLetter = () => {
+const PromotionSalaryLetter = () => {
   const { promotionLetterData } = useContext(PromotionContext);
 
   return (
@@ -28,21 +28,17 @@ const PromotionLetter = () => {
             </p>
             <br></br>
             <p>
-              <b>Sub: Promotion </b>
+              <b>Sub: Promotion with salary increment</b>
             </p>
             <p>
-              {" "}
-              We are glad to inform you that the management is pleased to
-              promote you as <b>{promotionLetterData.promotedPosition},</b> with
-              effect from <b> {promotionLetterData.effectiveDate},</b>. You will
-              be reporting to Ms./Mr.<b> {promotionLetterData.managerName},</b>{" "}
-              and your bonus rate is upto
-              <b> {promotionLetterData.bonusInPercentage},</b> % per month. All
-              the other terms and conditions of your appointment letter dated{" "}
-              <b>{promotionLetterData.appointmentLetterDate},</b> shall remain
-              the same.
+              We are pleased to promote you as XXX and your new gross salary
+              will be INR. <b>{promotionLetterData.newFixedGross},</b>/- with
+              effect from <b>{promotionLetterData.effectiveDate},</b>. You will
+              be reporting to Ms./Mr. <b>{promotionLetterData.managerName},</b>.
+              All the other terms and conditions of your appointment letter
+              dated <b>{promotionLetterData.appointmentLetterDate},</b> shall
+              remain the same.
             </p>
-
             <p>Please sign the copy of this letter as receipt of acceptance.</p>
             <p className="mt-5 ">
               <p>Yours Sincerely,</p>
@@ -58,4 +54,4 @@ const PromotionLetter = () => {
   );
 };
 
-export default PromotionLetter;
+export default PromotionSalaryLetter;
