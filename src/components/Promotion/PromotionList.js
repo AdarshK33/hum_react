@@ -172,7 +172,8 @@ const PromotionList = () => {
 
                             {user !== null &&
                             user !== undefined &&
-                            user.role === "ADMIN" ? (
+                            (user.role === "ADMIN" ||
+                              user.additionalRole === "1") ? (
                               <td>
                                 {item.status === 2 ? (
                                   <Link
@@ -193,7 +194,8 @@ const PromotionList = () => {
                               </td>
                             ) : user !== null &&
                               user !== undefined &&
-                              user.role === "COST_CENTER_MANAGER" ? (
+                              (user.role === "COST_CENTER_MANAGER" ||
+                                user.additionalRole === "7") ? (
                               <td>
                                 {item.status === 0 ? (
                                   <Link
@@ -213,7 +215,8 @@ const PromotionList = () => {
                               </td>
                             ) : user !== null &&
                               user !== undefined &&
-                              user.role === "MANAGER" ? (
+                              (user.role === "MANAGER" ||
+                                user.additionalRole === "3") ? (
                               <td>
                                 {/* {item.status === 1 ? ( */}
                                 {true ? (
