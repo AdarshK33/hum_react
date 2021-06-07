@@ -124,7 +124,7 @@ const PromotionInitiate = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    setModelStatus(true)
+    // setModelStatus(true)
     
     //  setState({...state,empName:EmpName})
     var empName = state.empName;
@@ -260,8 +260,8 @@ const PromotionInitiate = () => {
         salaryEffectiveDate: state.salaryEffectiveDate,
         status: 0,
       };
-      // PromotionCreate(infoData);
-      // setModelStatus(true)
+      PromotionCreate(infoData);
+      setModelStatus(true)
        setSubmitted(true);
       console.log("all okay", infoData);
     } else {
@@ -359,10 +359,9 @@ const PromotionInitiate = () => {
 
   return (
     <Fragment>
-      <Fragment>
-        {modelStatus?<Modal
-          // show={showRelivingModal}
-          //  onHide={handleRelivingClose}
+        <Modal
+          show={modelStatus}
+           onHide={handleCloseValue}
           size="md"
           centered
         >
@@ -376,7 +375,7 @@ const PromotionInitiate = () => {
               <Button onClick={handleCloseValue}>Close</Button>
             </div>
           </Modal.Body>
-        </Modal> :''}</Fragment>
+        </Modal> 
       <Breadcrumb title="PROMOTION INTIATION" parent="PROMOTION INTIATION" />
       <div className="container-fluid">
         <div className="row">
@@ -638,7 +637,7 @@ const PromotionInitiate = () => {
                             marginBottom: "3rem",
                           }}
                         >
-                          <Col sm={2}>
+                          <Col sm={1}>
                             <div>
                               <label>Fixed Gross:</label>
                             </div>
@@ -648,12 +647,14 @@ const PromotionInitiate = () => {
                               &nbsp;&nbsp; {state.oldFixedGross}
                             </label>
                           </Col>
+                          {state.promotionType==1?(
+                           <>
                           <Col sm={2}>
                             <div>
                               <label>New Fixed Gross:</label>
                             </div>
                           </Col>
-                          <Col sm={1}>
+                          <Col sm={2}>
                             <div>
                               {false ? (
                                 <label className="itemResult">
@@ -685,8 +686,7 @@ const PromotionInitiate = () => {
                               )}
                             </div>
                           </Col>
-                         {state.promotionType==1?(
-                           <>
+                       
 
                          <Col sm={2}>
                             <div>

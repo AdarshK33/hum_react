@@ -142,6 +142,9 @@ const PromotionCostCenterManager = (props) => {
       approvePromotion(state.promotionId, 2);
     }
   };
+ const  cancelHandler = (e)=>{
+  setReject(false)
+ }
   const rejectReasonHandler = (e)=>{
     e.preventDefault();
     console.log(state,"state")
@@ -152,7 +155,6 @@ const PromotionCostCenterManager = (props) => {
     if(e.target.name == "reject"){
       setReject(true)
     }
-    // rejectPromotion(state.promotionId, state.remarks);
   };
   const changeHandler = (e) => {
     if (e.target.name === "empName") {
@@ -284,24 +286,6 @@ const PromotionCostCenterManager = (props) => {
                         <Col sm={6}>
                           <div>
                             <label>
-                              Fixed Gross:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.oldFixedGross}
-                              </label>
-                            </label>
-                          </div>
-                        </Col>
-                      </Row>
-                      <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "1rem",
-                          marginBottom: "1rem",
-                        }}
-                      >
-                        <Col sm={6}>
-                          <div>
-                            <label>
                               New Department:
                               <label className="itemResult">
                                 &nbsp;&nbsp; {state.newDepartment}
@@ -309,7 +293,78 @@ const PromotionCostCenterManager = (props) => {
                             </label>
                           </div>
                         </Col>
-                        <Col sm={6}>
+                      </Row>
+                      <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "1rem",
+                            marginBottom: "3rem",
+                          }}
+                        >
+                          <Col sm={5}>
+                            <label>
+                              Is this employee is applicable for promotion and
+                              hike{" "}
+                            </label>
+                          </Col>
+                          <Col sm={2} style={{ marginTop: "0.25rem" }}>
+                            <Form.Group>
+                              <div className="boxField_2 input">
+                                <input
+                                  className="largerCheckbox"
+                                  type="checkbox"
+                                  value="yes"
+                                  disabled={true}
+                                  checked={
+                                    promotionIdData.promotionType === 1
+                                      ? true
+                                      : false
+                                  }
+                                  style={{ borderColor: "blue" }}
+                                />
+                                <label className="itemResult">Yes</label>
+                              </div>
+                            </Form.Group>
+                          </Col>
+                          <Col sm={2} style={{ marginTop: "0.25rem" }}>
+                            <Form.Group>
+                              <div className="boxField_2 input">
+                                <input
+                                  className="largerCheckbox"
+                                  type="checkbox"
+                                  value="no"
+                                  disabled={true}
+                                  checked={
+                                    promotionIdData.promotionType === 0
+                                      ? true
+                                      : false
+                                  }
+                                  style={{ borderColor: "blue" }}
+                                />
+                                <label className="itemResult">No</label>
+                              </div>
+                            </Form.Group>
+                          </Col>
+                        </Row>
+                      <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "1rem",
+                          marginBottom: "1rem",
+                        }}
+                      >
+                       
+                        <Col sm={3}>
+                          <div>
+                            <label>
+                              Fixed Gross:
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.oldFixedGross}
+                              </label>
+                            </label>
+                          </div>
+                        </Col>
+                        {state.promotionType == 1?<> <Col sm={4}>
                           <div>
                             <label>
                               New Fixed Gross:
@@ -319,6 +374,17 @@ const PromotionCostCenterManager = (props) => {
                             </label>
                           </div>
                         </Col>
+                        <Col sm={4}>
+                          <div>
+                            <label>
+                              {" "}
+                            Salary Effective Date :
+                              <label className="itemResult">
+                                &nbsp;&nbsp;{state.salaryEffectiveDate}
+                              </label>
+                            </label>
+                          </div>
+                        </Col></>:''}
                       </Row>
                       {/* <Row
                         style={{
@@ -405,7 +471,7 @@ const PromotionCostCenterManager = (props) => {
                           }}
                         >
                           <Col sm={2}>
-                            <label>Reason For rejection:</label>
+                            <label>Reason For Rejection:</label>
                           </Col>
                           <Col sm={8}>
                             <Form.Control
@@ -429,14 +495,13 @@ const PromotionCostCenterManager = (props) => {
                           </Col>
                         </Row>
 
-                        <Row>
-                          <Col
-                            style={{
+                        <Row 
+                         style={{
                               marginTop: "2rem",
                               marginBottom: "2rem",
                               textAlign: "center",
-                            }}
-                          >
+                            }}>
+                          <Col>
                             <button
                               className={
                                 submitted ? "confirmButton" : "stepperButtons"
@@ -444,6 +509,17 @@ const PromotionCostCenterManager = (props) => {
                               onClick={rejectReasonHandler}
                             >
                               Submit
+                            </button>
+                          </Col>
+                          <Col  
+                          >
+                            <button
+                              className={
+                                submitted ? "confirmButton" : "stepperButtons"
+                              }
+                              onClick={cancelHandler}
+                            >
+                              Cancel
                             </button>
                           </Col>
                         </Row>
