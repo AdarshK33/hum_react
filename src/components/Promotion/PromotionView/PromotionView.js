@@ -84,45 +84,45 @@ const PromotionView = (props) => {
     ViewPromotionById(id.slice(id.length - 1));
   }, []);
   useEffect(() => {
-    console.log(promotionByEmployee, "promotionByEmployee");
+    console.log(promotionIdData, "promotionIdData");
     if (
-      promotionByEmployee !== null &&
-      promotionByEmployee !== undefined &&
-      Object.keys(promotionByEmployee).length !== 0
+      promotionIdData !== null &&
+      promotionIdData !== undefined &&
+      Object.keys(promotionIdData).length !== 0
     ) {
       setState({
-        approveByAdminName: promotionByEmployee["approveByAdminName"],
+        approveByAdminName: promotionIdData["approveByAdminName"],
         approveByCostCentreManagerName:
-          promotionByEmployee["approveByCostCentreManagerName"],
-        bonus: promotionByEmployee["bonus"],
-        bonusInPercentage: promotionByEmployee["bonusInPercentage"],
-        costCentre: promotionByEmployee["costCentre"],
-        costCentreManagerEmail: promotionByEmployee["costCentreManagerEmail"],
-        costCentreManagerId: promotionByEmployee["costCentreManagerId"],
-        costCentreManagerName: promotionByEmployee["costCentreManagerName"],
-        departmentId: promotionByEmployee["departmentId"],
-        effectiveDate: promotionByEmployee["effectiveDate"],
-        emailId: promotionByEmployee["emailId"],
-        empName: promotionByEmployee["empName"],
-        employeeId: promotionByEmployee["employeeId"],
-        managerId: promotionByEmployee["managerId"],
-        managerName: promotionByEmployee["managerName"],
-        newDepartment: promotionByEmployee["newDepartment"],
-        newFixedGross: promotionByEmployee["newFixedGross"],
-        oldDepartment: promotionByEmployee["oldDepartment"],
-        oldFixedGross: promotionByEmployee["oldFixedGross"],
-        oldPosition: promotionByEmployee["oldPosition"],
-        positionId: promotionByEmployee["positionId"],
-        promotedPosition: promotionByEmployee["promotedPosition"],
-        promotionId: promotionByEmployee["promotionId"],
-        promotionLetter: promotionByEmployee["promotionLetter"],
-        reason: promotionByEmployee["reason"],
-        relocationBonus: promotionByEmployee["relocationBonus"],
-        remarks: promotionByEmployee["remarks"],
-        status: promotionByEmployee["status"],
+          promotionIdData["approveByCostCentreManagerName"],
+        bonus: promotionIdData["bonus"],
+        bonusInPercentage: promotionIdData["bonusInPercentage"],
+        costCentre: promotionIdData["costCentre"],
+        costCentreManagerEmail: promotionIdData["costCentreManagerEmail"],
+        costCentreManagerId: promotionIdData["costCentreManagerId"],
+        costCentreManagerName: promotionIdData["costCentreManagerName"],
+        departmentId: promotionIdData["departmentId"],
+        effectiveDate: promotionIdData["effectiveDate"],
+        emailId: promotionIdData["emailId"],
+        empName: promotionIdData["empName"],
+        employeeId: promotionIdData["employeeId"],
+        managerId: promotionIdData["managerId"],
+        managerName: promotionIdData["managerName"],
+        newDepartment: promotionIdData["newDepartment"],
+        newFixedGross: promotionIdData["newFixedGross"],
+        oldDepartment: promotionIdData["oldDepartment"],
+        oldFixedGross: promotionIdData["oldFixedGross"],
+        oldPosition: promotionIdData["oldPosition"],
+        positionId: promotionIdData["positionId"],
+        promotedPosition: promotionIdData["promotedPosition"],
+        promotionId: promotionIdData["promotionId"],
+        promotionLetter: promotionIdData["promotionLetter"],
+        reason: promotionIdData["reason"],
+        relocationBonus: promotionIdData["relocationBonus"],
+        remarks: promotionIdData["remarks"],
+        status: promotionIdData["status"],
       });
     }
-  }, [promotionByEmployee]);
+  }, [promotionIdData]);
 
   const changeHandler = (e) => {
     if (e.target.name === "empName") {
@@ -279,6 +279,58 @@ const PromotionView = (props) => {
                             </label>
                           </div>
                         </Col>
+                        <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "1rem",
+                            marginBottom: "3rem",
+                          }}
+                        >
+                          <Col sm={5}>
+                            <label>
+                              Is this employee is applicable for promotion and
+                              hike{" "}
+                            </label>
+                          </Col>
+                          <Col sm={2} style={{ marginTop: "0.25rem" }}>
+                            <Form.Group>
+                              <div className="boxField_2 input">
+                                <input
+                                  className="largerCheckbox"
+                                  type="checkbox"
+                                  value="yes"
+                                  disabled={true}
+                                  checked={
+                                    promotionIdData.promotionType === 1
+                                      ? true
+                                      : false
+                                  }
+                                  style={{ borderColor: "blue" }}
+                                />
+                                <label className="itemResult">Yes</label>
+                              </div>
+                            </Form.Group>
+                          </Col>
+                          <Col sm={2} style={{ marginTop: "0.25rem" }}>
+                            <Form.Group>
+                              <div className="boxField_2 input">
+                                <input
+                                  className="largerCheckbox"
+                                  type="checkbox"
+                                  value="no"
+                                  disabled={true}
+                                  checked={
+                                    promotionIdData.promotionType === 0
+                                      ? true
+                                      : false
+                                  }
+                                  style={{ borderColor: "blue" }}
+                                />
+                                <label className="itemResult">No</label>
+                              </div>
+                            </Form.Group>
+                          </Col>
+                        </Row>
                         <Col sm={6}>
                           <div>
                             <label>
@@ -360,7 +412,7 @@ const PromotionView = (props) => {
                             <label>
                               Reason For Promotion:
                               <label className="itemResult">
-                                &nbsp;&nbsp; {state.reason}
+                                &nbsp;&nbsp; {state.remarks}
                               </label>
                             </label>
                           </div>
