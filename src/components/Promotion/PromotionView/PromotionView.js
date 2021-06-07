@@ -78,12 +78,6 @@ const PromotionView = (props) => {
   }, []);
 
   useEffect(() => {
-    var id = props.history.location.pathname;
-
-    console.log(id, id.slice(id.length - 1), "id");
-    ViewPromotionById(id.slice(id.length - 1));
-  }, []);
-  useEffect(() => {
     console.log(promotionIdData, "promotionIdData");
     if (
       promotionIdData !== null &&
@@ -254,13 +248,14 @@ const PromotionView = (props) => {
                         <Col sm={6}>
                           <div>
                             <label>
-                              Fixed Gross:
+                              Relocation Bonus:
                               <label className="itemResult">
-                                &nbsp;&nbsp; {state.oldFixedGross}
+                                &nbsp;&nbsp;{state.relocationBonus}
                               </label>
                             </label>
                           </div>
                         </Col>
+                      
                       </Row>
                       <Row
                         style={{
@@ -279,6 +274,7 @@ const PromotionView = (props) => {
                             </label>
                           </div>
                         </Col>
+                        </Row>
                         <Row
                           style={{
                             marginLeft: "2rem",
@@ -331,7 +327,24 @@ const PromotionView = (props) => {
                             </Form.Group>
                           </Col>
                         </Row>
-                        <Col sm={6}>
+                        <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "1rem",
+                            marginBottom: "3rem",
+                          }}
+                        >        
+                     <Col sm={3}>
+                          <div>
+                            <label>
+                              Fixed Gross:
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.oldFixedGross}
+                              </label>
+                            </label>
+                          </div>
+                        </Col>
+                        {state.promotionType == 1?<><Col sm={4}>
                           <div>
                             <label>
                               New Fixed Gross:
@@ -341,6 +354,17 @@ const PromotionView = (props) => {
                             </label>
                           </div>
                         </Col>
+                        <Col sm={4}>
+                          <div>
+                            <label>
+                              {" "}
+                             Salary Effective Date :
+                              <label className="itemResult">
+                                &nbsp;&nbsp;{state.salaryEffectiveDate}
+                              </label>
+                            </label>
+                          </div>
+                        </Col></>:''}
                       </Row>
                       {/* <Row
                         style={{
@@ -388,16 +412,7 @@ const PromotionView = (props) => {
                             </label>
                           </div>
                         </Col>
-                        <Col sm={6}>
-                          <div>
-                            <label>
-                              Relocation Bonus:
-                              <label className="itemResult">
-                                &nbsp;&nbsp;{state.relocationBonus}
-                              </label>
-                            </label>
-                          </div>
-                        </Col>
+                      
                       </Row>
 
                       <Row
@@ -412,7 +427,7 @@ const PromotionView = (props) => {
                             <label>
                               Reason For Promotion:
                               <label className="itemResult">
-                                &nbsp;&nbsp; {state.remarks}
+                                &nbsp;&nbsp; {state.reason}
                               </label>
                             </label>
                           </div>
