@@ -20,6 +20,7 @@ const PromotionCostCenterManager = (props) => {
   const [EmpName, setEmpName] = useState();
   const [position, setPosition] = useState();
   const [departmentNew, setDepartmentNew] = useState();
+  const [reject,setReject] = useState(false)
   const [submitted, setSubmitted] = useState(false);
   const { user } = useContext(AppContext);
 
@@ -141,9 +142,17 @@ const PromotionCostCenterManager = (props) => {
       approvePromotion(state.promotionId, 2);
     }
   };
+  const rejectReasonHandler = (e)=>{
+    e.preventDefault();
+    console.log(state,"state")
+       // rejectPromotion(state.promotionId, state.remarks);
+  }
   const rejectHandler = (e) => {
     e.preventDefault();
-    rejectPromotion(state.promotionId, state.remarks);
+    if(e.target.name == "reject"){
+      setReject(true)
+    }
+    // rejectPromotion(state.promotionId, state.remarks);
   };
   const changeHandler = (e) => {
     if (e.target.name === "empName") {
@@ -387,6 +396,58 @@ const PromotionCostCenterManager = (props) => {
                           </div>
                         </Col>
                       </Row>
+                      {reject?<>
+                        <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "1rem",
+                            marginBottom: "3rem",
+                          }}
+                        >
+                          <Col sm={2}>
+                            <label>Reason For rejection:</label>
+                          </Col>
+                          <Col sm={8}>
+                            <Form.Control
+                              style={
+                               { borderRadius: "5px" }
+                              }
+                              as="textarea"
+                              rows={4}
+                              name="remarks"
+                              value={state.remarks}
+                              placeholder="Write here.."
+                              onChange={(e) => changeHandler(e)}
+                              required
+                            />
+
+                            {/* {reasonError ? (
+                              <p style={{ color: "red" }}>{reasonError}</p>
+                            ) : (
+                              ""
+                            )} */}
+                          </Col>
+                        </Row>
+
+                        <Row>
+                          <Col
+                            style={{
+                              marginTop: "2rem",
+                              marginBottom: "2rem",
+                              textAlign: "center",
+                            }}
+                          >
+                            <button
+                              className={
+                                submitted ? "confirmButton" : "stepperButtons"
+                              }
+                              onClick={rejectReasonHandler}
+                            >
+                              Submit
+                            </button>
+                          </Col>
+                        </Row>
+                      </>:
                       <Row>
                         <Col
                           style={{
@@ -415,6 +476,7 @@ const PromotionCostCenterManager = (props) => {
                           }}
                         >
                           <button
+                          name="reject"
                             className={
                               submitted ? "confirmButton" : "stepperButtons"
                             }
@@ -423,7 +485,7 @@ const PromotionCostCenterManager = (props) => {
                             Reject
                           </button>
                         </Col>
-                      </Row>
+                      </Row>}
                     </Col>
                   </Row>
                 </Form>
