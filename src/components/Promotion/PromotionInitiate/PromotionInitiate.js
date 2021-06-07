@@ -29,7 +29,7 @@ const PromotionInitiate = () => {
     costCentreManagerId: "",
     costCentreManagerName: "",
     departmentId: "",
-    effectiveDate: "",
+    effectiveDate: null,
     emailId: "",
     empName: "",
     employeeId: "",
