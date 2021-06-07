@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Breadcrumb from "../common/breadcrumb";
 import { Container, Form, Row, Col, Table, Button } from "react-bootstrap";
 import { Edit2, Eye, Search, AlertCircle } from "react-feather";
+import Select from "react-select";
 import { ProbationContext } from "../../context/ProbationState";
 import { OfferContext } from "../../context/OfferState";
 import Pagination from "react-js-pagination";
@@ -33,6 +34,7 @@ const ProbationList = () => {
   const [searchValue, setSearchValue] = useState("");
   const { RoleList, viewRole } = useContext(RoleManagementContext);
   const { costCenterList, CostCenter } = useContext(AdminContext);
+  const [probationStatus, setProbationStatus] = useState("");
 
   const [firstBtn, setFirstBtn] = useState(false);
   const [secondBtn, setSecondBtn] = useState(false);
@@ -80,6 +82,12 @@ const ProbationList = () => {
       ProbationListView(10, "all", pageNumber - 1);
     } else if (fourthBtn) {
       ProbationListView(14, "all", pageNumber - 1);
+    } else if (probationStatus === "Confirmed") {
+      ProbationListView(0, "all", pageNumber - 1, 1);
+    } else if (probationStatus === "Extended") {
+      ProbationListView(0, "all", pageNumber - 1, 2);
+    } else if (probationStatus === "Due for confirmation") {
+      ProbationListView(0, "all", pageNumber - 1, 0);
     } else {
       ProbationListView(0, "all", pageNumber - 1);
     }
@@ -90,7 +98,38 @@ const ProbationList = () => {
   const searchHandler = (e) => {
     setSearchValue(e.target.value);
   };
-
+  const statusHandler = (e) => {
+    setProbationStatus(e.target.value);
+    if (e.target.value === "Confirmed") {
+      ProbationListView(0, "all", pageCount, 1);
+      setFirstBtn(false);
+      setSecondBtn(false);
+      setThirdBtn(false);
+      setFourthBtn(false);
+      setFifthBtn(false);
+    } else if (e.target.value === "Extended") {
+      ProbationListView(0, "all", pageCount, 2);
+      setFirstBtn(false);
+      setSecondBtn(false);
+      setThirdBtn(false);
+      setFourthBtn(false);
+      setFifthBtn(false);
+    } else if (e.target.value === "Due for confirmation") {
+      ProbationListView(0, "all", pageCount, 0);
+      setFirstBtn(false);
+      setSecondBtn(false);
+      setThirdBtn(false);
+      setFourthBtn(false);
+      setFifthBtn(false);
+    } else {
+      ProbationListView(0, "all", pageCount, 3);
+      setFirstBtn(false);
+      setSecondBtn(false);
+      setThirdBtn(false);
+      setFourthBtn(false);
+      setFifthBtn(true);
+    }
+  };
   const searchDataHandler = () => {
     if (searchValue !== "") {
       //   ProbationListView(searchValue, pageCount);
@@ -100,6 +139,7 @@ const ProbationList = () => {
       setThirdBtn(false);
       setFourthBtn(false);
       setFifthBtn(false);
+      setProbationStatus("");
     } else {
       //   ProbationListView("all", pageCount);
       ProbationListView(0, "all", pageCount);
@@ -108,6 +148,7 @@ const ProbationList = () => {
       setThirdBtn(false);
       setFourthBtn(false);
       setFifthBtn(true);
+      setProbationStatus("");
     }
   };
 
@@ -120,6 +161,7 @@ const ProbationList = () => {
         setSecondBtn(false);
         setThirdBtn(false);
         setFourthBtn(false);
+        setProbationStatus("");
         break;
 
       case 3:
@@ -130,6 +172,7 @@ const ProbationList = () => {
         setThirdBtn(false);
         setFourthBtn(false);
         setFifthBtn(false);
+        setProbationStatus("");
         break;
       case 7:
         // ProbationListView(7, pageCount);
@@ -139,6 +182,7 @@ const ProbationList = () => {
         setThirdBtn(false);
         setFourthBtn(false);
         setFifthBtn(false);
+        setProbationStatus("");
         break;
       case 10:
         // ProbationListView(10, pageCount);
@@ -148,6 +192,7 @@ const ProbationList = () => {
         setThirdBtn(true);
         setFourthBtn(false);
         setFifthBtn(false);
+        setProbationStatus("");
         break;
       case 14:
         // ProbationListView(14, pageCount);
@@ -157,6 +202,7 @@ const ProbationList = () => {
         setThirdBtn(false);
         setFourthBtn(true);
         setFifthBtn(false);
+        setProbationStatus("");
         break;
 
       default:
@@ -178,30 +224,66 @@ const ProbationList = () => {
                 className="title_bar"
                 style={{ textAlign: "center", fontSize: "larger" }}
               >
-                <b style={{ marginLeft: "13rem" }}>PROBATION LIST</b>
+                <Row>
+                  <Col>
+                    <div
+                      style={{ width: "55%", float: "left", marginTop: "10px" }}
+                      className="faq-form mr-2"
+                    >
+                      <input
+                        className="form-control searchButton"
+                        type="text"
+                        placeholder="Search.."
+                        onChange={(e) => searchHandler(e)}
+                      />
+                      <Search
+                        className="search-icon"
+                        style={{ color: "#313131" }}
+                        onClick={searchDataHandler}
+                      />
+                      <br></br>
+                    </div>
 
-                <div className="job-filter">
-                  <div className="faq-form mr-2">
-                    <input
-                      className="form-control searchButton"
-                      type="text"
-                      placeholder="Search.."
-                      onChange={(e) => searchHandler(e)}
-                    />
-                    <Search
-                      className="search-icon"
-                      style={{ color: "#313131" }}
-                      onClick={searchDataHandler}
-                    />
-                    <br></br>
-                  </div>
-                </div>
-
-                {/* <Link to="/manager-offer-release">
+                    {/* <Link to="/manager-offer-release">
                   <Button className="apply-button btn btn-light mr-2">
                     Initate Offer
                   </Button>
                 </Link> */}
+                  </Col>
+                  <Col>
+                    <b>PROBATION LIST</b>
+                  </Col>
+                  <Col>
+                    <Form>
+                      <div className="probation_status_search">
+                        {/* className="faq-form mr-2""job-filter" */}
+                        <Form.Group>
+                          <Form.Control
+                            as="select"
+                            name="probationStatus"
+                            value={probationStatus}
+                            onChange={statusHandler}
+                            //   disabled={disabled}"
+
+                            style={
+                              false
+                                ? { borderColor: "red" }
+                                : { borderRadius: "20px" }
+                            }
+                          >
+                            <option value="">Probation status search </option>
+                            <option value="Due for confirmation">
+                              Due for confirmation
+                            </option>
+                            <option value="Confirmed">Confirmed</option>
+                            <option value="Extended">Extended</option>
+                          </Form.Control>
+                        </Form.Group>
+                        {/* <br></br> */}
+                      </div>
+                    </Form>
+                  </Col>
+                </Row>
               </div>
               <div className="probation_dashboard">
                 {/* <Row>
