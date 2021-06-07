@@ -6,6 +6,12 @@
   font-weight: bold;
   text-align: right;
 }
+.probation_status_search {
+  width: 55%;
+  margin-top: 10px;
+  float: right;
+  border-radius: 20px !important;
+}
 .LettersProbButtons {
   width: 240px;
   height: 30px;
