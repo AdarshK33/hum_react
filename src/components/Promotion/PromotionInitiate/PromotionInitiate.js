@@ -58,7 +58,7 @@ const PromotionInitiate = () => {
   const [reasonError, setReasonError] = useState("");
   const [salaryEffectiveDateError, setSalaryEffectiveDateError] = useState("");
   const [promotionTypeError, setPromotionTypeError] = useState("");
-
+  const [modelStatus,setModelStatus] = useState(false)
   const [submitted, setSubmitted] = useState(false);
   const {
     employeeData,
@@ -124,6 +124,8 @@ const PromotionInitiate = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+    setModelStatus(true)
+    
     //  setState({...state,empName:EmpName})
     var empName = state.empName;
     if (empName == "" || empName == null || empName == undefined) {
@@ -258,15 +260,19 @@ const PromotionInitiate = () => {
         salaryEffectiveDate: state.salaryEffectiveDate,
         status: 0,
       };
-      PromotionCreate(infoData);
-      setSubmitted(true);
+      // PromotionCreate(infoData);
+      // setModelStatus(true)
+       setSubmitted(true);
       console.log("all okay", infoData);
     } else {
       console.log("NOT OK", empName);
       // toast.error("Data is not filled Properly")
     }
   };
-
+  console.log(modelStatus,"modelStatus")
+  const handleCloseValue = ()=>{
+    setModelStatus(false)
+  }
   const dateOfBirthHandler = (date) => {
     var AdjusteddateValue = new Date(
       date.getTime() - date.getTimezoneOffset() * 60000
@@ -352,7 +358,25 @@ const PromotionInitiate = () => {
   };
 
   return (
-    <div>
+    <Fragment>
+      <Fragment>
+        {modelStatus?<Modal
+          // show={showRelivingModal}
+          //  onHide={handleRelivingClose}
+          size="md"
+          centered
+        >
+          <Modal.Header closeButton className="modal-line"></Modal.Header>
+          <Modal.Body className="mx-auto">
+            <label className="text-center">
+              Your request has been sent to manager.
+            
+            </label>
+            <div className="text-center mb-2">
+              <Button onClick={handleCloseValue}>Close</Button>
+            </div>
+          </Modal.Body>
+        </Modal> :''}</Fragment>
       <Breadcrumb title="PROMOTION INTIATION" parent="PROMOTION INTIATION" />
       <div className="container-fluid">
         <div className="row">
@@ -661,7 +685,10 @@ const PromotionInitiate = () => {
                               )}
                             </div>
                           </Col>
-                          <Col sm={2}>
+                         {state.promotionType==1?(
+                           <>
+
+                         <Col sm={2}>
                             <div>
                               <label>Salary Effective Date :</label>
                             </div>
@@ -698,6 +725,7 @@ const PromotionInitiate = () => {
                               ""
                             )}
                           </Col>
+                          </>):''}
                         </Row>
                         <Row
                           style={{
@@ -822,7 +850,7 @@ const PromotionInitiate = () => {
           </div>
         </div>
       </div>
-    </div>
+    </Fragment>
   );
 };
 

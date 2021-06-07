@@ -23,8 +23,12 @@ const PromotionList = () => {
     ViewPromotionByEmployee,
     promotionByEmployee,
   } = useContext(PromotionContext);
-  const { verificationDocsView, docsToVerify, personalInfo, personalInfoData } =
-    useContext(DocsVerifyContext);
+  const {
+    verificationDocsView,
+    docsToVerify,
+    personalInfo,
+    personalInfoData,
+  } = useContext(DocsVerifyContext);
   const { user } = useContext(AppContext);
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
@@ -160,7 +164,7 @@ const PromotionList = () => {
                               <Link to={"/view-promotion/" + item.employeeId}>
                                 <Eye
                                   onClick={() => {
-                                    ViewPromotionByEmployee(item.employeeId);
+                                    ViewPromotionById(item.promotionId);
                                   }}
                                 />
                               </Link>
@@ -180,9 +184,7 @@ const PromotionList = () => {
                                   >
                                     <Edit2
                                       onClick={() => {
-                                        ViewPromotionByEmployee(
-                                          item.employeeId
-                                        );
+                                        ViewPromotionById(item.promotionId);
                                       }}
                                     />
                                   </Link>
@@ -203,9 +205,7 @@ const PromotionList = () => {
                                   >
                                     <Edit2
                                       onClick={() => {
-                                        ViewPromotionByEmployee(
-                                          item.employeeId
-                                        );
+                                        ViewPromotionById(item.promotionId);
                                       }}
                                     />
                                   </Link>
@@ -223,9 +223,7 @@ const PromotionList = () => {
                                   <Link to={"/promotion/" + item.employeeId}>
                                     <Edit2
                                       onClick={() => {
-                                        ViewPromotionByEmployee(
-                                          item.employeeId
-                                        );
+                                        ViewPromotionById(item.promotionId);
                                       }}
                                     />
                                   </Link>

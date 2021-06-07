@@ -15,8 +15,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import { setGlobalCssModule } from "reactstrap/es/utils";
 import { set } from "js-cookie";
 import { ProbationContext } from "../../context/ProbationState";
-import ConfirmationLetter from "./ConfirmationLetter";
-import ExtensionLetter from "./ExtensionLetter";
+import PromotionLetters from "./PromotionLetter";
+import PromotionSalaryLetters from "./PromotionSalaryLetter";
 import calendarImage from "../../assets/images/calendar-image.png";
 
 const PromotionCostCenterManagerEdit = (props) => {
@@ -90,6 +90,8 @@ const PromotionCostCenterManagerEdit = (props) => {
     positionNew,
     promotionByEmployee,
     PromotionCreate,
+    generatePromotionLetter,
+    promotionLetterData,
   } = useContext(PromotionContext);
   const {
     updateProbation,
@@ -114,53 +116,53 @@ const PromotionCostCenterManagerEdit = (props) => {
     ViewPromotionById(id.slice(id.length - 1));
   }, []);
   useEffect(() => {
-    console.log(promotionByEmployee, "promotionByEmployee");
+    console.log(promotionIdData, "promotionIdData");
     if (
-      promotionByEmployee !== null &&
-      promotionByEmployee !== undefined &&
-      Object.keys(promotionByEmployee).length !== 0
+      promotionIdData !== null &&
+      promotionIdData !== undefined &&
+      Object.keys(promotionIdData).length !== 0
     ) {
       setState({
-        approveByAdminName: promotionByEmployee["approveByAdminName"],
+        approveByAdminName: promotionIdData["approveByAdminName"],
         approveByCostCentreManagerName:
-          promotionByEmployee["approveByCostCentreManagerName"],
-        bonus: promotionByEmployee["bonus"],
-        bonusInPercentage: promotionByEmployee["bonusInPercentage"],
-        costCentre: promotionByEmployee["costCentre"],
-        costCentreManagerEmail: promotionByEmployee["costCentreManagerEmail"],
-        costCentreManagerId: promotionByEmployee["costCentreManagerId"],
-        costCentreManagerName: promotionByEmployee["costCentreManagerName"],
-        departmentId: promotionByEmployee["departmentId"],
+          promotionIdData["approveByCostCentreManagerName"],
+        bonus: promotionIdData["bonus"],
+        bonusInPercentage: promotionIdData["bonusInPercentage"],
+        costCentre: promotionIdData["costCentre"],
+        costCentreManagerEmail: promotionIdData["costCentreManagerEmail"],
+        costCentreManagerId: promotionIdData["costCentreManagerId"],
+        costCentreManagerName: promotionIdData["costCentreManagerName"],
+        departmentId: promotionIdData["departmentId"],
         effectiveDate:
-          promotionByEmployee["effectiveDate"] !== null
-            ? new Date(promotionByEmployee["effectiveDate"])
+          promotionIdData["effectiveDate"] !== null
+            ? new Date(promotionIdData["effectiveDate"])
             : "",
-        emailId: promotionByEmployee["emailId"],
-        empName: promotionByEmployee["empName"],
-        employeeId: promotionByEmployee["employeeId"],
-        managerId: promotionByEmployee["managerId"],
-        managerName: promotionByEmployee["managerName"],
-        newDepartment: promotionByEmployee["newDepartment"],
-        newFixedGross: promotionByEmployee["newFixedGross"],
-        oldDepartment: promotionByEmployee["oldDepartment"],
-        oldFixedGross: promotionByEmployee["oldFixedGross"],
-        oldPosition: promotionByEmployee["oldPosition"],
-        positionId: promotionByEmployee["positionId"],
-        promotedPosition: promotionByEmployee["promotedPosition"],
-        promotionId: promotionByEmployee["promotionId"],
-        promotionLetter: promotionByEmployee["promotionLetter"],
-        reason: promotionByEmployee["reason"],
-        relocationBonus: promotionByEmployee["relocationBonus"],
-        remarks: promotionByEmployee["remarks"],
+        emailId: promotionIdData["emailId"],
+        empName: promotionIdData["empName"],
+        employeeId: promotionIdData["employeeId"],
+        managerId: promotionIdData["managerId"],
+        managerName: promotionIdData["managerName"],
+        newDepartment: promotionIdData["newDepartment"],
+        newFixedGross: promotionIdData["newFixedGross"],
+        oldDepartment: promotionIdData["oldDepartment"],
+        oldFixedGross: promotionIdData["oldFixedGross"],
+        oldPosition: promotionIdData["oldPosition"],
+        positionId: promotionIdData["positionId"],
+        promotedPosition: promotionIdData["promotedPosition"],
+        promotionId: promotionIdData["promotionId"],
+        promotionLetter: promotionIdData["promotionLetter"],
+        reason: promotionIdData["reason"],
+        relocationBonus: promotionIdData["relocationBonus"],
+        remarks: promotionIdData["remarks"],
         salaryEffectiveDate:
-          promotionByEmployee["salaryEffectiveDate"] !== null
-            ? new Date(promotionByEmployee["salaryEffectiveDate"])
+          promotionIdData["salaryEffectiveDate"] !== null
+            ? new Date(promotionIdData["salaryEffectiveDate"])
             : "",
-        promotionType: promotionByEmployee["promotionType"],
-        status: promotionByEmployee["status"],
+        promotionType: promotionIdData["promotionType"],
+        status: promotionIdData["status"],
       });
     }
-  }, [promotionByEmployee]);
+  }, [promotionIdData]);
   const handleSaveRemarks = () => {
     console.log(state);
   };
@@ -218,16 +220,9 @@ const PromotionCostCenterManagerEdit = (props) => {
   };
   const generateLetterClick = (e) => {
     e.preventDefault();
-    // fetchRelievingLetterData(employeeData.employeeId);
-    if (probationData !== null && probationData !== undefined) {
-      if (probationData.status === 1) {
-        ViewConfirmationLetter(empId);
-      } else if (probationData.status === 2) {
-        ViewExtensionLetter(empId);
-      }
-      handleShow();
-      setPreviewGeneratedLetter(true);
-    }
+    generatePromotionLetter(promotionIdData.employeeId);
+    handleShow();
+    setPreviewGeneratedLetter(true);
   };
 
   const handleShow = () => {
@@ -273,8 +268,8 @@ const PromotionCostCenterManagerEdit = (props) => {
       emailId: null,
       empName: state.empName,
       employeeId: state.employeeId,
-      managerId: promotionByEmployee["managerId"],
-      managerName: promotionByEmployee["managerName"],
+      managerId: promotionIdData["managerId"],
+      managerName: promotionIdData["managerName"],
       newDepartment: state.newDepartment,
       newFixedGross: state.newFixedGross,
       oldDepartment: state.oldDepartment,
@@ -291,7 +286,7 @@ const PromotionCostCenterManagerEdit = (props) => {
       remarks: null,
       status: 0,
     };
-    // PromotionCreate(infoData);
+    PromotionCreate(infoData);
     setSubmitted(true);
     setPreview(true);
     console.log("all okay", infoData);
@@ -303,13 +298,7 @@ const PromotionCostCenterManagerEdit = (props) => {
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         {submitLetter ? (
           <Modal.Body className="mx-auto">
-            <label>
-              {probationStatus === "Confirmed"
-                ? "Confirmation letter sent to the employee"
-                : probationStatus === "Extended"
-                ? "Extension letter sent to the employee"
-                : ""}
-            </label>
+            <label>Promotion Letter sent to the employee</label>
             <div className="text-center mb-2">
               <Button onClick={handleRelivingClose}>Close</Button>
             </div>
@@ -318,10 +307,10 @@ const PromotionCostCenterManagerEdit = (props) => {
           <Modal.Body>
             {true ? (
               <div>
-                {probationStatus === "Confirmed" ? (
-                  <ConfirmationLetter />
-                ) : probationStatus === "Extended" ? (
-                  <ExtensionLetter />
+                {promotionIdData.promotionType === 0 ? (
+                  <PromotionLetters />
+                ) : promotionIdData.promotionType === 1 ? (
+                  <PromotionSalaryLetters />
                 ) : (
                   ""
                 )}
@@ -375,30 +364,6 @@ const PromotionCostCenterManagerEdit = (props) => {
           ""
         )}
       </Modal>
-      <Modal show={showModal} onHide={() => handleClose1()} centered>
-        <Container>
-          <Modal.Header closeButton className="modalHeader">
-            {/* <Modal.Title>State remarks for disapproval</Modal.Title> */}
-          </Modal.Header>{" "}
-          <Modal.Body className="mx-auto">
-            <label className="itemResult">State remarks:</label>
-            <textarea
-              className="remarkText rounded"
-              name="remarks"
-              value={state.remarks}
-              placeholder="Write here.."
-              onChange={(e) => changeHandler(e)}
-            />
-
-            {remarkError && (
-              <p style={{ color: "red" }}>Please add your remarks</p>
-            )}
-            <div className="text-center mb-2">
-              <Button onClick={() => handleSaveRemarks()}>Save</Button>
-            </div>
-          </Modal.Body>
-        </Container>
-      </Modal>
 
       <Modal show={showSuccessModal} onHide={() => handleClose()} centered>
         <Container>
@@ -407,11 +372,7 @@ const PromotionCostCenterManagerEdit = (props) => {
           </Modal.Header>{" "}
           <Modal.Body className="mx-auto">
             <label className="itemResult">
-              {probationData.status === 1
-                ? "Confirmattion letter sent to the employee"
-                : probationData.status === 2
-                ? "Extension letter sent to the employee"
-                : ""}
+              Promotion letter sent to the employee"
             </label>
 
             <div className="text-center mb-2">
@@ -573,7 +534,7 @@ const PromotionCostCenterManagerEdit = (props) => {
                                   value="yes"
                                   disabled={true}
                                   checked={
-                                    promotionByEmployee.promotionType === 1
+                                    promotionIdData.promotionType === 1
                                       ? true
                                       : false
                                   }
@@ -589,10 +550,10 @@ const PromotionCostCenterManagerEdit = (props) => {
                                 <input
                                   className="largerCheckbox"
                                   type="checkbox"
-                                  value="yes"
+                                  value="no"
                                   disabled={true}
                                   checked={
-                                    promotionByEmployee.promotionType === 0
+                                    promotionIdData.promotionType === 0
                                       ? true
                                       : false
                                   }
@@ -611,9 +572,9 @@ const PromotionCostCenterManagerEdit = (props) => {
                           }}
                         >
                           {true ? (
-                            // promotionByEmployee === null ? (
-                            // promotionByEmployee !== undefined &&
-                            // promotionByEmployee.promotionType == 0
+                            // promotionIdData === null ? (
+                            // promotionIdData !== undefined &&
+                            // promotionIdData.promotionType == 0
                             <React.Fragment>
                               <Col sm={3}>
                                 <div>
@@ -666,9 +627,9 @@ const PromotionCostCenterManagerEdit = (props) => {
                                 </div>
                               </Col>
                             </React.Fragment>
-                          ) : promotionByEmployee !== null &&
-                            promotionByEmployee !== undefined &&
-                            promotionByEmployee.promotionType === 1 ? (
+                          ) : promotionIdData !== null &&
+                            promotionIdData !== undefined &&
+                            promotionIdData.promotionType === 1 ? (
                             <React.Fragment>
                               <Col sm={3}>
                                 <div>
@@ -724,7 +685,7 @@ const PromotionCostCenterManagerEdit = (props) => {
                               <label>
                                 Reason For Promotion:
                                 <label className="itemResult">
-                                  &nbsp;&nbsp; {state.reason}
+                                  &nbsp;&nbsp; {state.remarks}
                                 </label>
                               </label>
                             </div>
