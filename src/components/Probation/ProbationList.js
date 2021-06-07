@@ -227,7 +227,12 @@ const ProbationList = () => {
                 <Row>
                   <Col>
                     <div
-                      style={{ width: "55%", float: "left", marginTop: "10px" }}
+                      style={{
+                        width: "55%",
+                        float: "left",
+                        marginTop: "10px",
+                        marginLeft: "4px",
+                      }}
                       className="faq-form mr-2"
                     >
                       <input

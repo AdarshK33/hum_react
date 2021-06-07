@@ -18,13 +18,13 @@ const PromotionSalaryLetter = () => {
           <br></br>
           <h5 className="text-center"> PROMOTION LETTER</h5>
 
-          <p>Name:{promotionLetterData.employeeName}</p>
+          <p>Name:{promotionLetterData.empName}</p>
           <p>EmployeeId:{promotionLetterData.employeeId}</p>
 
           <div className=" ">
             <p className="mt-5 ">
               {" "}
-              Dear <b>{promotionLetterData.employeeName},</b>{" "}
+              Dear <b>{promotionLetterData.empName},</b>{" "}
             </p>
             <br></br>
             <p>
@@ -32,11 +32,11 @@ const PromotionSalaryLetter = () => {
             </p>
             <p>
               We are pleased to promote you as XXX and your new gross salary
-              will be INR. <b>{promotionLetterData.newFixedGross},</b>/- with
-              effect from <b>{promotionLetterData.effectiveDate},</b>. You will
+              will be INR. <b>{promotionLetterData.newFixedGross}</b>/- with
+              effect from <b>{promotionLetterData.effectiveDate}</b>. You will
               be reporting to Ms./Mr. <b>{promotionLetterData.managerName},</b>.
               All the other terms and conditions of your appointment letter
-              dated <b>{promotionLetterData.appointmentLetterDate},</b> shall
+              dated <b>{promotionLetterData.appointmentLetterDate}</b> shall
               remain the same.
             </p>
             <p>Please sign the copy of this letter as receipt of acceptance.</p>

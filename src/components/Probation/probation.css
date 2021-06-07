@@ -7,8 +7,9 @@
   text-align: right;
 }
 .probation_status_search {
-  width: 60%;
+  width: 65%;
   margin-top: 10px;
+  margin-right: 4px;
   float: right;
   border-radius: 20px !important;
 }
