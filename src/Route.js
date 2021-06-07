@@ -127,7 +127,10 @@ const RoutePath = () => {
         path={`${process.env.PUBLIC_URL}/onboard-offer`}
         component={LoginOnboard}
       />
-
+   <Route
+            path={`${process.env.PUBLIC_URL}/promotion-approval/:promotionId`}
+            component={PromotionApproval}
+          />
       <Route path={`${process.env.PUBLIC_URL}/offer`} component={OfferAccept} />
 
       <Fragment>
@@ -288,10 +291,10 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/promotion/:promotionId`}
             component={PromotionManagerEdit}
           />
-          <Route
+          {/* <Route
             path={`${process.env.PUBLIC_URL}/promotion-approval/:promotionId`}
             component={PromotionApproval}
-          />
+          /> */}
 
           {state.MenuPermissionsRoute.map((e) => {
             return (
