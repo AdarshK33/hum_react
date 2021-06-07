@@ -58,7 +58,7 @@ export const PromotionProvider = (props) => {
         state.promotionIdData = response.data.data;
 
         setLoader(false);
-        console.log("--->", state.promotionIdData);
+        console.log("--->promotionIdData", state.promotionIdData);
         console.log(response);
 
         return dispatch({
