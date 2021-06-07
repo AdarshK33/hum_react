@@ -226,7 +226,7 @@ const PromotionInitiate = () => {
         costCentreManagerId: null,
         costCentreManagerName: null,
         departmentId: state.departmentId,
-        effectiveDate: null,
+        effectiveDate: state.effectiveDate,
         emailId: null,
         empName: state.empName,
         employeeId: state.employeeId,
@@ -248,8 +248,8 @@ const PromotionInitiate = () => {
         salaryEffectiveDate: state.salaryEffectiveDate,
         status: 0,
       };
-      // PromotionCreate(infoData);
-      // setSubmitted(true);
+      PromotionCreate(infoData);
+       setSubmitted(true);
       console.log("all okay", infoData);
     } else {
       console.log("NOT OK", empName);
@@ -353,6 +353,27 @@ const handlePromotionTypeNo = (e)=>{
                   <b>PROMOTION INTIATION </b>
                 </div>
                 <Form>
+                <Modal
+          // show={showRelivingModal}
+          //  onHide={handleRelivingClose}
+          size="md"
+          centered
+        >
+          <Modal.Header closeButton className="modal-line"></Modal.Header>
+          <Modal.Body className="mx-auto">
+            <label className="text-center">
+              The details have been saved successfully.
+              <br />
+              The relieving letter will be sent to the employee on{" "}
+              {moment(relivingLetterData.lastWorkingDate, "YYYY-MM-DD")
+                .add(1, "days")
+                .format("YYYY-MM-DD")}
+            </label>
+            <div className="text-center mb-2">
+              <Button onClick={''}>Close</Button>
+            </div>
+          </Modal.Body>
+        </Modal>
                   <Container>
                     <Row
                       style={{
@@ -642,7 +663,10 @@ const handlePromotionTypeNo = (e)=>{
                               )}
                             </div>
                           </Col>
-                          <Col sm={2}>
+                         {state.promotionType==1?(
+                           <div>
+
+                         <Col sm={2}>
                             <div>
                               <label>Salary Effective Date :</label>
                             </div>
@@ -679,6 +703,7 @@ const handlePromotionTypeNo = (e)=>{
                                 ""
                               )}
                           </Col>
+                          </div>):''}
                         </Row>
                         <Row
                           style={{
