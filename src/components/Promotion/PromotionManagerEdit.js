@@ -1,5 +1,13 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
-import { Row, Col, Form, Button, Container, Modal } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Form,
+  Button,
+  Container,
+  Modal,
+  FormLabel,
+} from "react-bootstrap";
 import { Search, PlusCircle, MinusCircle } from "react-feather";
 import Breadcrumb from "../common/breadcrumb";
 import { OfferContext } from "../../context/OfferState";
@@ -156,7 +164,7 @@ const PromotionCostCenterManagerEdit = (props) => {
         remarks: promotionIdData["remarks"],
         salaryEffectiveDate:
           promotionIdData["salaryEffectiveDate"] !== null
-            ? new Date(promotionIdData["salaryEffectiveDate"])
+            ? promotionIdData["salaryEffectiveDate"]
             : "",
         promotionType: promotionIdData["promotionType"],
         status: promotionIdData["status"],
@@ -255,15 +263,16 @@ const PromotionCostCenterManagerEdit = (props) => {
   const submitHandler = (e) => {
     e.preventDefault();
     const infoData = {
-      approveByAdminName: null,
-      approveByCostCentreManagerName: null,
-      bonus: 0,
-      bonusInPercentage: 0,
-      costCentre: state.costCentre,
-      costCentreManagerEmail: null,
-      costCentreManagerId: null,
-      costCentreManagerName: null,
-      departmentId: state.departmentId,
+      approveByAdminName: promotionIdData["approveByAdminName"],
+      approveByCostCentreManagerName:
+        promotionIdData["approveByCostCentreManagerName"],
+      bonus: promotionIdData["bonus"],
+      bonusInPercentage: promotionIdData["bonusInPercentage"],
+      costCentre: promotionIdData["costCentre"],
+      costCentreManagerEmail: promotionIdData["costCentreManagerEmail"],
+      costCentreManagerId: promotionIdData["costCentreManagerId"],
+      costCentreManagerName: promotionIdData["costCentreManagerName"],
+      departmentId: promotionIdData["departmentId"],
       effectiveDate: state.effectiveDate,
       emailId: null,
       empName: state.empName,
@@ -283,8 +292,8 @@ const PromotionCostCenterManagerEdit = (props) => {
       relocationBonus: state.relocationBonus,
       salaryEffectiveDate: state.salaryEffectiveDate,
       promotionType: state.promotionType,
-      remarks: null,
-      status: 0,
+      remarks: promotionIdData["remarks"],
+      status: 3,
     };
     PromotionCreate(infoData);
     setSubmitted(true);
@@ -501,16 +510,22 @@ const PromotionCostCenterManagerEdit = (props) => {
                               </label>
                             </div>
                           </Col>
-                          <Col sm={6}>
-                            <div>
-                              <label>
-                                New Fixed Gross:
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; {state.newFixedGross}
+                          {promotionIdData !== null &&
+                          promotionIdData !== undefined &&
+                          promotionIdData.promotionType === 1 ? (
+                            <Col sm={6}>
+                              <div>
+                                <label>
+                                  New Fixed Gross:
+                                  <label className="itemResult">
+                                    &nbsp;&nbsp; {state.newFixedGross}
+                                  </label>
                                 </label>
-                              </label>
-                            </div>
-                          </Col>
+                              </div>
+                            </Col>
+                          ) : (
+                            ""
+                          )}
                         </Row>
                         <Row
                           style={{
@@ -534,6 +549,8 @@ const PromotionCostCenterManagerEdit = (props) => {
                                   value="yes"
                                   disabled={true}
                                   checked={
+                                    promotionIdData !== null &&
+                                    promotionIdData !== undefined &&
                                     promotionIdData.promotionType === 1
                                       ? true
                                       : false
@@ -553,6 +570,8 @@ const PromotionCostCenterManagerEdit = (props) => {
                                   value="no"
                                   disabled={true}
                                   checked={
+                                    promotionIdData !== null &&
+                                    promotionIdData !== undefined &&
                                     promotionIdData.promotionType === 0
                                       ? true
                                       : false
@@ -571,104 +590,67 @@ const PromotionCostCenterManagerEdit = (props) => {
                             marginBottom: "2rem",
                           }}
                         >
-                          {true ? (
-                            // promotionIdData === null ? (
-                            // promotionIdData !== undefined &&
-                            // promotionIdData.promotionType == 0
-                            <React.Fragment>
-                              <Col sm={3}>
-                                <div>
-                                  <label>Effective Date :</label>
-                                </div>
-                              </Col>
+                          {/* <Col sm={3}>
+                            <div>
+                              
+                            </div>
+                          </Col> */}
 
-                              <Col sm={3}>
-                                <div>
-                                  <Form.Group>
-                                    <div className={""}>
-                                      <DatePicker
-                                        className="form-control onBoard-view"
-                                        selected={state.effectiveDate}
-                                        name="effectiveDate"
-                                        required
-                                        onChange={(e) => effectiveHandler(e)}
-                                        dateFormat="yyyy-MM-dd"
-                                        placeholderText="YYYY-MM-DD"
-                                        minDate={new Date()}
-                                      />
-                                    </div>
-                                  </Form.Group>
-                                </div>
-                              </Col>
-                              <Col sm={3}>
-                                <div>
-                                  <label>Salary Effective Date :</label>
-                                </div>
-                              </Col>
+                          <Col sm={6}>
+                            <div>
+                              <Form.Group>
+                                <FormLabel>Effective Date :</FormLabel>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <DatePicker
+                                  className="form-control onBoard-view"
+                                  selected={state.effectiveDate}
+                                  name="effectiveDate"
+                                  required
+                                  onChange={(e) => effectiveHandler(e)}
+                                  dateFormat="yyyy-MM-dd"
+                                  placeholderText="YYYY-MM-DD"
+                                  minDate={new Date()}
+                                />
+                              </Form.Group>
+                            </div>
+                          </Col>
 
-                              <Col sm={3}>
-                                <div>
-                                  <Form.Group>
-                                    <div className={""}>
-                                      <DatePicker
-                                        className="form-control onBoard-view"
-                                        selected={state.salaryEffectiveDate}
-                                        name="salaryEffectiveDate"
-                                        required
-                                        onChange={(e) =>
-                                          salaryeEffectiveHandler(e)
-                                        }
-                                        dateFormat="yyyy-MM-dd"
-                                        placeholderText="YYYY-MM-DD"
-                                        minDate={new Date()}
-                                      />
-                                    </div>
-                                  </Form.Group>
-                                </div>
-                              </Col>
-                            </React.Fragment>
-                          ) : promotionIdData !== null &&
-                            promotionIdData !== undefined &&
-                            promotionIdData.promotionType === 1 ? (
-                            <React.Fragment>
-                              <Col sm={3}>
-                                <div>
-                                  <label>Effective Date :</label>
-                                </div>
-                              </Col>
-
-                              <Col sm={3}>
-                                <div>
-                                  <Form.Group>
-                                    <div className={""}>
-                                      <DatePicker
-                                        className="form-control onBoard-view"
-                                        selected={state.effectiveDate}
-                                        name="effectiveDate"
-                                        required
-                                        onChange={(e) => effectiveHandler(e)}
-                                        dateFormat="yyyy-MM-dd"
-                                        placeholderText="YYYY-MM-DD"
-                                        minDate={new Date()}
-                                      />
-                                    </div>
-                                  </Form.Group>
-                                </div>
-                              </Col>
-                            </React.Fragment>
+                          {promotionIdData !== null &&
+                          promotionIdData !== undefined &&
+                          promotionIdData.promotionType === 1 ? (
+                            <Col sm={6}>
+                              <div>
+                                <label>
+                                  New Salary Effective Date :
+                                  <label className="itemResult">
+                                    &nbsp;&nbsp; {state.salaryEffectiveDate}
+                                  </label>
+                                </label>
+                              </div>
+                            </Col>
                           ) : (
                             ""
                           )}
-                          <Col sm={2}>
+                        </Row>
+                        <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "1rem",
+                            marginBottom: "2rem",
+                          }}
+                        >
+                          <Col sm={6}>
                             <div>
-                              <label>Relocation Bonus:</label>
-                            </div>
-                          </Col>
-                          <Col sm={3}>
-                            <div>
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.relocationBonus}
+                              <label>
+                                Relocation Bonus:
+                                <label className="itemResult">
+                                  &nbsp;&nbsp; {state.relocationBonus}
+                                </label>
                               </label>
+                            </div>
+
+                            <div>
+                              <label></label>
                             </div>
                           </Col>
                         </Row>
@@ -685,7 +667,7 @@ const PromotionCostCenterManagerEdit = (props) => {
                               <label>
                                 Reason For Promotion:
                                 <label className="itemResult">
-                                  &nbsp;&nbsp; {state.remarks}
+                                  &nbsp;&nbsp; {state.reason}
                                 </label>
                               </label>
                             </div>
@@ -694,7 +676,6 @@ const PromotionCostCenterManagerEdit = (props) => {
                         <Row>
                           <Col
                             style={{
-                              marginTop: "2rem",
                               marginBottom: "2rem",
                               textAlign: "center",
                             }}
@@ -735,12 +716,7 @@ const PromotionCostCenterManagerEdit = (props) => {
                                   className={"LettersProbButtons"}
                                   onClick={generateLetterClick}
                                 >
-                                  {probationStatus === "Extended"
-                                    ? "Generate Extension Letter"
-                                    : probationStatus === "Confirmed"
-                                    ? "Generate Confirmation Letter"
-                                    : ""}
-                                  {/* Generate Reliving Letter */}
+                                  Generate Promotion Letter
                                 </button>
                               ) : (
                                 ""
@@ -752,11 +728,7 @@ const PromotionCostCenterManagerEdit = (props) => {
                                   className={"LettersProbButtons"}
                                   onClick={previewLetterViewing}
                                 >
-                                  {probationStatus === "Extended"
-                                    ? "Preview Extension Letter"
-                                    : probationStatus === "Confirmed"
-                                    ? "Preview Confirmation Letter"
-                                    : ""}
+                                  Preview Promotion Letter
                                 </button>
                               ) : (
                                 ""
