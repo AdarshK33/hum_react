@@ -247,16 +247,7 @@ const PromotionView = (props) => {
                             </label>
                           </div>
                         </Col>
-                        <Col sm={6}>
-                          <div>
-                            <label>
-                              Relocation Bonus:
-                              <label className="itemResult">
-                                &nbsp;&nbsp;{state.relocationBonus}
-                              </label>
-                            </label>
-                          </div>
-                        </Col>
+                      
                       
                       </Row>
                       <Row
@@ -286,8 +277,7 @@ const PromotionView = (props) => {
                         >
                           <Col sm={5}>
                             <label>
-                              Is this employee is applicable for promotion and
-                              hike{" "}
+                              Is this employee is applicable for salary hike{" "}
                             </label>
                           </Col>
                           <Col sm={2} style={{ marginTop: "0.25rem" }}>
@@ -375,34 +365,7 @@ const PromotionView = (props) => {
                           </div>
                         </Col></>:''}
                       </Row>
-                      {/* <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "1rem",
-                          marginBottom: "3rem",
-                        }}
-                      >
-                        <Col sm={6}>
-                          <div>
-                            <label>
-                              Fixed Gross:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.oldFixedGross}
-                              </label>
-                            </label>
-                          </div>
-                        </Col>
-                        <Col sm={6}>
-                          <div>
-                            <label>
-                              New Fixed Gross:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.newFixedGross}
-                              </label>
-                            </label>
-                          </div>
-                        </Col>
-                      </Row> */}
+                     
                       <Row
                         style={{
                           marginLeft: "2rem",
@@ -410,7 +373,17 @@ const PromotionView = (props) => {
                           marginBottom: "2rem",
                         }}
                       >
-                        <Col sm={6}>
+                          <Col sm={4}>
+                          <div>
+                            <label>
+                              Relocation Bonus:
+                              <label className="itemResult">
+                                &nbsp;&nbsp;{state.relocationBonus}
+                              </label>
+                            </label>
+                          </div>
+                        </Col>
+                        <Col sm={4}>
                           <div>
                             <label>
                               {" "}

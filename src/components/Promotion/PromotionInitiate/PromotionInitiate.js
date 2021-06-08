@@ -4,7 +4,7 @@ import { Search, PlusCircle, MinusCircle } from "react-feather";
 import Breadcrumb from "../../common/breadcrumb";
 import { OfferContext } from "../../../context/OfferState";
 import { SeparationContext } from "../../../context/SepearationState";
-
+import { Link } from "react-router-dom";
 import { EmployeeSeparationContext } from "../../../context/EmployeeSeparationState";
 import { PromotionContext } from "../../../context/PromotionState";
 import { PermissionContext } from "../../../context/PermissionState";
@@ -58,6 +58,7 @@ const PromotionInitiate = () => {
   const [reasonError, setReasonError] = useState("");
   const [salaryEffectiveDateError, setSalaryEffectiveDateError] = useState("");
   const [promotionTypeError, setPromotionTypeError] = useState("");
+  const [effectiveDateError, setEffectiveDateError] = useState("");
   const [modelStatus,setModelStatus] = useState(false)
   const [submitted, setSubmitted] = useState(false);
   const {
@@ -198,6 +199,16 @@ const PromotionInitiate = () => {
     // } else {
     //   setPromotionTypeError("");
     // }
+    var effectiveDate = state.effectiveDate;
+    if (state.promotionType == 1 &&
+      effectiveDate == "" ||
+      effectiveDate == null ||
+      effectiveDate == undefined
+    ) {
+      setEffectiveDateError("Please add  effective date");
+    } else {
+      setEffectiveDateError("");
+    }
     var salaryEffectiveDate = state.salaryEffectiveDate;
     if (state.promotionType == 1 &&
       salaryEffectiveDate == "" ||
@@ -375,7 +386,7 @@ const PromotionInitiate = () => {
             
             </label>
             <div className="text-center mb-2">
-              <Button onClick={handleCloseValue}>Close</Button>
+             <Link to={"/promotion-list"}><Button onClick={handleCloseValue}>Close</Button></Link> 
             </div>
           </Modal.Body>
         </Modal> 
@@ -583,8 +594,7 @@ const PromotionInitiate = () => {
                         >
                           <Col sm={5}>
                             <label>
-                              Is this employee is applicable for promotion and
-                              hike{" "}
+                            Is this employee is applicable for salary hike{" "}
                             </label>
                           </Col>
                           <Col sm={2} style={{ marginTop: "0.25rem" }}>
@@ -706,8 +716,8 @@ const PromotionInitiate = () => {
                                     selected={state.salaryEffectiveDate}
                                     style={
                                       salaryEffectiveDateError
-                                        ? { borderRadius: "red" }
-                                        : { borderRadius: "5px" }
+                                      ? { borderColor: "red" }
+                                      : { borderRadius: "5px" }
                                     }
                                     name="salaryEffectiveDate"
                                     minDate={moment().toDate()}
@@ -749,6 +759,11 @@ const PromotionInitiate = () => {
                                 <div className={""}>
                                   <DatePicker
                                     className="form-control onBoard-view"
+                                    style={
+                                      effectiveDateError
+                                      ? { borderColor: "red" }
+                                      : { borderRadius: "5px" }
+                                    }
                                     selected={state.effectiveDate}
                                     name="effectiveDate"
                                     minDate={moment().toDate()}
@@ -761,6 +776,13 @@ const PromotionInitiate = () => {
                                 </div>
                               </Form.Group>
                             </div>
+                            {effectiveDateError ? (
+                              <p style={{ color: "red" }}>
+                                {effectiveDateError}
+                              </p>
+                            ) : (
+                              ""
+                            )}
                           </Col>
                           <Col sm={2}>
                             <div>
