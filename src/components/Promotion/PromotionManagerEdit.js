@@ -136,9 +136,9 @@ const PromotionCostCenterManagerEdit = (props) => {
       Object.keys(promotionIdData).length !== 0
     ) {
       setState({
-        approveByAdminDate:promotionIdData['approveByAdminDate'],
+        approveByAdminDate:promotionIdData['approveByAdminDate']!== null?new Date(promotionIdData["approveByAdminDate"]): null,
         approveByAdminName: promotionIdData["approveByAdminName"],
-        approveByCostCentreManagerDate:promotionIdData['approveByCostCentreManagerDate'],
+        approveByCostCentreManagerDate:promotionIdData['approveByCostCentreManagerDate']!== null?new Date(promotionIdData["approveByCostCentreManagerDate"]): null,
         approveByCostCentreManagerName:promotionIdData["approveByCostCentreManagerName"],
         bonus: promotionIdData["bonus"],
         bonusInPercentage: promotionIdData["bonusInPercentage"],
@@ -147,10 +147,7 @@ const PromotionCostCenterManagerEdit = (props) => {
         costCentreManagerId: promotionIdData["costCentreManagerId"],
         costCentreManagerName: promotionIdData["costCentreManagerName"],
         departmentId: promotionIdData["departmentId"],
-        effectiveDate:
-          promotionIdData["effectiveDate"] !== null
-            ? new Date(promotionIdData["effectiveDate"])
-            : null,
+        effectiveDate:promotionIdData["effectiveDate"] !== null?new Date(promotionIdData["effectiveDate"]): null,
         emailId: promotionIdData["emailId"],
         empName: promotionIdData["empName"],
         employeeId: promotionIdData["employeeId"],
@@ -234,7 +231,7 @@ const PromotionCostCenterManagerEdit = (props) => {
   };
   const generateLetterClick = (e) => {
     e.preventDefault();
-    generatePromotionLetter(promotionIdData.employeeId);
+    generatePromotionLetter(promotionIdData.promotionId);
     handleShow();
     setPreviewGeneratedLetter(true);
   };
@@ -355,7 +352,7 @@ const PromotionCostCenterManagerEdit = (props) => {
           <Modal.Body className="mx-auto">
             <label>Promotion Letter has been sent to the employee</label>
             <div className="text-center mb-2">
-              <Button onClick={handleRelivingClose}>Close</Button>
+            <Link to={"/promotion-list"}><Button onClick={handleRelivingClose}>Close</Button></Link>
             </div>
           </Modal.Body>
         ) : previewLetter || showRelivingModal ? (
