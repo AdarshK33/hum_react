@@ -526,11 +526,20 @@ export const SeparationProvider = (props) => {
       });
   };
  
+  const MakeCostCenterDataNull = () => {
+        state.searchByCostData = []
+        return dispatch({
+          type: "SEARCH_BY_COST_DATA",
+          payload: state.searchByCostData,
+        })
+  };
+ 
   return (
     <SeparationContext.Provider
       value={{
         separationListView,
         viewITClearanceList,
+        MakeCostCenterDataNull,
         setLoader,
         updateITClearanceList,
         viewAdminITClearanceList,
