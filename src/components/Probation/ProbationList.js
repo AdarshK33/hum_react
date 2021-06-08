@@ -268,6 +268,7 @@ const ProbationList = () => {
                             name="probationStatus"
                             value={probationStatus}
                             onChange={statusHandler}
+                            // placeholder="Search.."
                             //   disabled={disabled}"
 
                             style={
@@ -276,7 +277,9 @@ const ProbationList = () => {
                                 : { borderRadius: "20px" }
                             }
                           >
-                            <option value="">Probation status search </option>
+                            <option value="" disabled selected hidden>
+                              Search status
+                            </option>
                             <option value="Due for confirmation">
                               Due for confirmation
                             </option>
