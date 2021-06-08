@@ -48,6 +48,7 @@ const PromotionView = (props) => {
     reason: "",
     relocationBonus: 0,
     remarks: "",
+    salaryEffectiveDate:"",
     status: 0,
   });
   const [stateError, setStateError] = useState({
@@ -113,6 +114,7 @@ const PromotionView = (props) => {
         reason: promotionIdData["reason"],
         relocationBonus: promotionIdData["relocationBonus"],
         remarks: promotionIdData["remarks"],
+        salaryEffectiveDate:promotionIdData["salaryEffectiveDate"],
         status: promotionIdData["status"],
       });
     }
@@ -297,6 +299,8 @@ const PromotionView = (props) => {
                                   value="yes"
                                   disabled={true}
                                   checked={
+                                    promotionIdData !== null &&
+                                    promotionIdData !== undefined &&
                                     promotionIdData.promotionType === 1
                                       ? true
                                       : false
@@ -316,6 +320,8 @@ const PromotionView = (props) => {
                                   value="no"
                                   disabled={true}
                                   checked={
+                                    promotionIdData !== null &&
+                                    promotionIdData !== undefined &&
                                     promotionIdData.promotionType === 0
                                       ? true
                                       : false
@@ -344,7 +350,10 @@ const PromotionView = (props) => {
                             </label>
                           </div>
                         </Col>
-                        {state.promotionType == 1?<><Col sm={4}>
+                        {promotionIdData !== null &&
+                          promotionIdData !== undefined &&
+                          promotionIdData.promotionType === 1
+                        ?<><Col sm={4}>
                           <div>
                             <label>
                               New Fixed Gross:

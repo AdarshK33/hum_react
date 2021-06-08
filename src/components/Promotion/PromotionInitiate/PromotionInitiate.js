@@ -10,7 +10,7 @@ import { PromotionContext } from "../../../context/PromotionState";
 import { PermissionContext } from "../../../context/PermissionState";
 import moment from "moment";
 import DatePicker from "react-datepicker";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from 'react-toastify';
 import "react-datepicker/dist/react-datepicker.css";
 import { setGlobalCssModule } from "reactstrap/es/utils";
 
@@ -36,7 +36,7 @@ const PromotionInitiate = () => {
     managerId: "",
     managerName: "",
     newDepartment: "",
-    newFixedGross: "",
+    newFixedGross: 0,
     oldDepartment: "",
     oldFixedGross: 0,
     oldPosition: "",
@@ -48,7 +48,7 @@ const PromotionInitiate = () => {
     reason: "",
     relocationBonus: 0,
     remarks: "",
-    salaryEffectiveDate: "",
+    salaryEffectiveDate: null,
     status: 0,
   });
   const [empNameError, setEmpNameError] = useState("");
@@ -185,20 +185,21 @@ const PromotionInitiate = () => {
     } else {
       setReasonError("");
     }
-    var promotionType = state.promotionType;
-    if (
-      promotionType == "" ||
-      promotionType == null ||
-      promotionType == undefined
-    ) {
-      setPromotionTypeError(
-        "Please select is employee is applicable for promotion and hike "
-      );
-    } else {
-      setPromotionTypeError("");
-    }
+
+    // var promotionType = state.promotionType;
+    // if (
+    //   promotionType == "" ||
+    //   promotionType == null ||
+    //   promotionType == undefined
+    // ) {
+    //   setPromotionTypeError(
+    //     "Please select is employee is applicable for promotion and hike "
+    //   );
+    // } else {
+    //   setPromotionTypeError("");
+    // }
     var salaryEffectiveDate = state.salaryEffectiveDate;
-    if (
+    if (state.promotionType == 1 &&
       salaryEffectiveDate == "" ||
       salaryEffectiveDate == null ||
       salaryEffectiveDate == undefined
@@ -304,16 +305,17 @@ const PromotionInitiate = () => {
       if (state.promotionType == 0) {
         setState({ ...state, promotionType: 1 });
       } else {
-        setState({ ...state, promotionType: 0 });
+        setState({ ...state, promotionType: 0 ,salaryEffectiveDate:null,newFixedGross:0});
       }
     }
   };
   const handlePromotionTypeNo = (e) => {
     if (e.target.value === "no") {
       if (state.promotionType == 0) {
+
         setState({ ...state, promotionType: 1 });
       } else {
-        setState({ ...state, promotionType: 0 });
+        setState({ ...state, promotionType: 0 ,salaryEffectiveDate:null,newFixedGross:0});
       }
     }
   };
@@ -359,6 +361,7 @@ const PromotionInitiate = () => {
 
   return (
     <Fragment>
+      <ToastContainer/>
         <Modal
           show={modelStatus}
            onHide={handleCloseValue}

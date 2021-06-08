@@ -10,7 +10,7 @@ import { PromotionContext } from "../../../context/PromotionState";
 import { PermissionContext } from "../../../context/PermissionState";
 import moment from "moment";
 import DatePicker from "react-datepicker";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from 'react-toastify';
 import "react-datepicker/dist/react-datepicker.css";
 import { setGlobalCssModule } from "reactstrap/es/utils";
 import { set } from "js-cookie";
@@ -23,6 +23,9 @@ const PromotionCostCenterManager = (props) => {
   const [reject,setReject] = useState(false)
   const [submitted, setSubmitted] = useState(false);
   const { user } = useContext(AppContext);
+const  [modelStatus,setModelStatus] = useState(false)
+const  [modelStatusReject,setModelStatusReject] = useState(false)
+
 
   const [state, setState] = useState({
     approveByAdminName: "",
@@ -49,9 +52,11 @@ const PromotionCostCenterManager = (props) => {
     promotedPosition: "",
     promotionId: 0,
     promotionLetter: "",
+    promotionType: 0,
     reason: "",
     relocationBonus: 0,
     remarks: "",
+    salaryEffectiveDate:"",
     status: 0,
   });
   const [stateError, setStateError] = useState({
@@ -117,9 +122,11 @@ const PromotionCostCenterManager = (props) => {
         promotedPosition: promotionIdData["promotedPosition"],
         promotionId: promotionIdData["promotionId"],
         promotionLetter: promotionIdData["promotionLetter"],
+        promotionType: promotionIdData["promotionType"],
         reason: promotionIdData["reason"],
         relocationBonus: promotionIdData["relocationBonus"],
         remarks: promotionIdData["remarks"],
+        salaryEffectiveDate: promotionIdData['salaryEffectiveDate'],
         status: promotionIdData["status"],
       });
     }
@@ -127,14 +134,21 @@ const PromotionCostCenterManager = (props) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if (user !== null && user !== undefined && user.role === "ADMIN") {
+    setSubmitted(true)
+    if (user !== null &&
+      user !== undefined &&
+      (user.role === "ADMIN" ||
+        user.additionalRole === "1") ) {
       approvePromotion(state.promotionId, 1);
+      setModelStatus(true)
     } else if (
       user !== null &&
       user !== undefined &&
-      user.role === "COST_CENTER_MANAGER"
+      (user.role === "COST_CENTER_MANAGER" ||
+        user.additionalRole === "7")
     ) {
       approvePromotion(state.promotionId, 2);
+      setModelStatus(true)
     }
   };
  const  cancelHandler = (e)=>{
@@ -144,6 +158,8 @@ const PromotionCostCenterManager = (props) => {
     e.preventDefault();
     console.log(state,"state")
        rejectPromotion(state.promotionId, state.remarks);
+       setModelStatusReject(true)
+       setSubmitted(true)
   }
   const rejectHandler = (e) => {
     e.preventDefault();
@@ -185,8 +201,57 @@ const PromotionCostCenterManager = (props) => {
     }
     console.log(state, "state");
   };
+  const handleCloseValue = ()=>{
+    setModelStatus(false)
+    setModelStatusReject(false)
+
+  }
   return (
     <div>
+      <ToastContainer/>
+      <Modal
+          show={modelStatus}
+           onHide={handleCloseValue}
+          size="md"
+          centered
+        >
+          <Modal.Header closeButton className="modal-line"></Modal.Header>
+          <Modal.Body className="mx-auto">
+            <label className="text-center">{
+               (user !== null &&
+                user !== undefined &&
+                (user.role === "ADMIN" ||
+                  user.additionalRole === "1") ) ?"Promotion details saved successfully, request sent to the manager": (
+                user !== null &&
+                user !== undefined &&
+                (user.role === "COST_CENTER_MANAGER" ||
+                  user.additionalRole === "7")
+              ) ?
+                "Promotion confirmed successfully, request sent to Admin":''} 
+            </label>
+            <div className="text-center mb-2">
+              <Button onClick={handleCloseValue}>Close</Button>
+            </div>
+          </Modal.Body>
+        </Modal> 
+
+        <Modal
+          show={modelStatusReject}
+           onHide={handleCloseValue}
+          size="md"
+          centered
+        >
+          <Modal.Header closeButton className="modal-line"></Modal.Header>
+          <Modal.Body className="mx-auto">
+            <label className="text-center">
+             Promotion rejected, the manager has been notified
+            </label>
+            <div className="text-center mb-2">
+              <Button onClick={handleCloseValue}>Close</Button>
+            </div>
+          </Modal.Body>
+        </Modal> 
+
       <Breadcrumb title="PROMOTION APPROVAL" parent="PROMOTION APPROVAL" />
       <div className="container-fluid">
         <div className="row">
@@ -194,7 +259,7 @@ const PromotionCostCenterManager = (props) => {
             <div className="card" style={{ borderRadius: "1rem" }}>
               <div>
                 <div className="OnBoardHeading">
-                  <b>COST CENTER MANAGER PROMOTION APPROVAL </b>
+                  <b> PROMOTION APPROVAL </b>
                 </div>
                 <Form>
                   <Row
@@ -311,7 +376,7 @@ const PromotionCostCenterManager = (props) => {
                                   value="yes"
                                   disabled={true}
                                   checked={
-                                    promotionIdData.promotionType === 1
+                                    promotionIdData.promotionType==1
                                       ? true
                                       : false
                                   }
@@ -330,7 +395,7 @@ const PromotionCostCenterManager = (props) => {
                                   value="no"
                                   disabled={true}
                                   checked={
-                                    promotionIdData.promotionType === 0
+                                    promotionIdData.promotionType==0
                                       ? true
                                       : false
                                   }
@@ -498,6 +563,7 @@ const PromotionCostCenterManager = (props) => {
                             }}>
                           <Col>
                             <button
+                            disabled={submitted}
                               className={
                                 submitted ? "confirmButton" : "stepperButtons"
                               }
@@ -509,6 +575,7 @@ const PromotionCostCenterManager = (props) => {
                           <Col  
                           >
                             <button
+                           disabled={submitted}
                               className={
                                 submitted ? "confirmButton" : "stepperButtons"
                               }
@@ -529,6 +596,7 @@ const PromotionCostCenterManager = (props) => {
                           }}
                         >
                           <button
+                          disabled={submitted}
                             className={
                               submitted ? "confirmButton" : "stepperButtons"
                             }
@@ -547,6 +615,7 @@ const PromotionCostCenterManager = (props) => {
                           }}
                         >
                           <button
+                            disabled={submitted}
                           name="reject"
                             className={
                               submitted ? "confirmButton" : "stepperButtons"
