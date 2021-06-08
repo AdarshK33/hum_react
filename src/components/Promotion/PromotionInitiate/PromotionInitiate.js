@@ -261,9 +261,9 @@ const PromotionInitiate = () => {
         salaryEffectiveDate: state.salaryEffectiveDate,
         status: 0,
       };
-      // PromotionCreate(infoData);
-      // setModelStatus(true)
-      //  setSubmitted(true);
+      PromotionCreate(infoData);
+      setModelStatus(true)
+       setSubmitted(true);
       console.log("all okay", infoData);
     } else {
       console.log("NOT OK", empName);
