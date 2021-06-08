@@ -38,6 +38,9 @@ const PromotionCostCenterManagerEdit = (props) => {
   const [showSignature, setShowSignature] = useState(false);
   const [saveLetter, setSaveLetter] = useState(false);
   const [submitLetter, setSubmitLetter] = useState(false);
+  const [salaryEffectiveDateError, setSalaryEffectiveDateError] = useState("");
+  const [effectiveDateError, setEffectiveDateError] = useState("");
+
   const [previewLetter, setPreviewLetter] = useState(false);
   const [letterSent, setLetterSent] = useState(false);
   const [showPreview, setPreview] = useState(false);
@@ -72,7 +75,7 @@ const PromotionCostCenterManagerEdit = (props) => {
     promotionLetter: "",
     reason: "",
     relocationBonus: 0,
-    salaryEffectiveDate: 0,
+    salaryEffectiveDate:null,
     remarks: "",
     status: 0,
   });
@@ -117,12 +120,12 @@ const PromotionCostCenterManagerEdit = (props) => {
     departmentView();
   }, []);
 
-  useEffect(() => {
-    var id = props.history.location.pathname;
+  // useEffect(() => {
+  //   var id = props.history.location.pathname;
 
-    console.log(id, id.slice(id.length - 1), "id");
-    ViewPromotionById(id.slice(id.length - 1));
-  }, []);
+  //   console.log(id, id.slice(id.length - 1), "id");
+  //   ViewPromotionById(id.slice(id.length - 1));
+  // }, []);
   useEffect(() => {
     console.log(promotionIdData, "promotionIdData");
     if (
@@ -144,7 +147,7 @@ const PromotionCostCenterManagerEdit = (props) => {
         effectiveDate:
           promotionIdData["effectiveDate"] !== null
             ? new Date(promotionIdData["effectiveDate"])
-            : "",
+            : null,
         emailId: promotionIdData["emailId"],
         empName: promotionIdData["empName"],
         employeeId: promotionIdData["employeeId"],
@@ -164,8 +167,8 @@ const PromotionCostCenterManagerEdit = (props) => {
         remarks: promotionIdData["remarks"],
         salaryEffectiveDate:
           promotionIdData["salaryEffectiveDate"] !== null
-            ? promotionIdData["salaryEffectiveDate"]
-            : "",
+            ? new Date(promotionIdData["salaryEffectiveDate"])
+            : null,
         promotionType: promotionIdData["promotionType"],
         status: promotionIdData["status"],
       });
@@ -262,6 +265,27 @@ const PromotionCostCenterManagerEdit = (props) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+
+    var salaryEffectiveDate = state.salaryEffectiveDate;
+    if (state.promotionType == 1 &&
+      salaryEffectiveDate == "" ||
+      salaryEffectiveDate == null ||
+      salaryEffectiveDate == undefined
+    ) {
+      setSalaryEffectiveDateError("Please add salary effective date");
+    } else {
+      setSalaryEffectiveDateError("");
+    }
+    var effectiveDate = state.effectiveDate;
+    if (state.promotionType == 1 &&
+      effectiveDate == "" ||
+      effectiveDate == null ||
+      effectiveDate == undefined
+    ) {
+      setEffectiveDateError("Please add  effective date");
+    } else {
+      setEffectiveDateError("");
+    }
     const infoData = {
       approveByAdminName: promotionIdData["approveByAdminName"],
       approveByCostCentreManagerName:
@@ -295,10 +319,26 @@ const PromotionCostCenterManagerEdit = (props) => {
       remarks: promotionIdData["remarks"],
       status: 3,
     };
-    PromotionCreate(infoData);
-    setSubmitted(true);
-    setPreview(true);
-    console.log("all okay", infoData);
+    if(state.effectiveDate !== "" && state.effectiveDate !== null && state.effectiveDate !== undefined 
+){
+      if(state.promotionType == 1){
+        if(state.salaryEffectiveDate !== "" && state.salaryEffectiveDate !== null && state.salaryEffectiveDate !== undefined){
+          PromotionCreate(infoData);
+          setSubmitted(true);
+          setPreview(true);
+          console.log("all okay", infoData);
+        }
+   
+      }else{
+        PromotionCreate(infoData);
+        setSubmitted(true);
+        setPreview(true);
+      }
+     
+
+    }
+    
+   
   };
 
   return (
@@ -398,7 +438,7 @@ const PromotionCostCenterManagerEdit = (props) => {
               <div className="card" style={{ borderRadius: "1rem" }}>
                 <div>
                   <div className="OnBoardHeading">
-                    <b>COST CENTER MANAGER PROMOTION APPROVAL </b>
+                    <b> MANAGER PROMOTION APPROVAL </b>
                   </div>
                   <Form>
                     <Row
@@ -613,21 +653,45 @@ const PromotionCostCenterManagerEdit = (props) => {
                                 />
                               </Form.Group>
                             </div>
+                            {effectiveDateError ? (
+                              <p style={{ color: "red" }}>
+                                {effectiveDateError}
+                              </p>
+                            ) : (
+                              ""
+                            )}
                           </Col>
 
                           {promotionIdData !== null &&
                           promotionIdData !== undefined &&
                           promotionIdData.promotionType === 1 ? (
                             <Col sm={6}>
-                              <div>
-                                <label>
-                                  New Salary Effective Date :
-                                  <label className="itemResult">
-                                    &nbsp;&nbsp; {state.salaryEffectiveDate}
-                                  </label>
-                                </label>
-                              </div>
-                            </Col>
+                            <div>
+                              <Form.Group>
+                                <FormLabel>
+                                  New Salary Effective Date:
+                                </FormLabel>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <DatePicker
+                                  className="form-control onBoard-view"
+                                  selected={state.salaryEffectiveDate}
+                                  name="salaryEffectiveDate"
+                                  required
+                                  onChange={(e) => salaryeEffectiveHandler(e)}
+                                  dateFormat="yyyy-MM-dd"
+                                  placeholderText="YYYY-MM-DD"
+                                  minDate={new Date()}
+                                />
+                              </Form.Group>
+                            </div>
+                            {salaryEffectiveDateError ? (
+                              <p style={{ color: "red" }}>
+                                {salaryEffectiveDateError}
+                              </p>
+                            ) : (
+                              ""
+                            )}
+                          </Col>
                           ) : (
                             ""
                           )}

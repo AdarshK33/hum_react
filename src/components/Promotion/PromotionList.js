@@ -30,6 +30,7 @@ const PromotionList = () => {
     personalInfoData,
   } = useContext(DocsVerifyContext);
   const { user } = useContext(AppContext);
+  const { MakeCostCenterDataNull } = useContext(SeparationContext);
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [searchValue, setSearchValue] = useState("all");
@@ -52,7 +53,9 @@ const PromotionList = () => {
       console.log(promotionList, "promotionlist2");
     }
   }, [promotionList, currentRecords]);
-
+useEffect(()=>{
+  MakeCostCenterDataNull()
+},[])
   const handlePageChange = (pageNumber) => {
     setPageCount(pageNumber - 1);
     setCurrentPage(pageNumber);
@@ -218,8 +221,8 @@ const PromotionList = () => {
                               (user.role === "MANAGER" ||
                                 user.additionalRole === "3") ? (
                               <td>
-                                {/* {item.status === 1 ? ( */}
-                                {true ? (
+                                {item.status === 1 ? (
+                           
                                   <Link to={"/promotion/" + item.employeeId}>
                                     <Edit2
                                       onClick={() => {
