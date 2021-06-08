@@ -164,7 +164,7 @@ const PromotionCostCenterManagerEdit = (props) => {
         remarks: promotionIdData["remarks"],
         salaryEffectiveDate:
           promotionIdData["salaryEffectiveDate"] !== null
-            ? promotionIdData["salaryEffectiveDate"]
+            ? new Date(promotionIdData["salaryEffectiveDate"])
             : "",
         promotionType: promotionIdData["promotionType"],
         status: promotionIdData["status"],
@@ -620,12 +620,22 @@ const PromotionCostCenterManagerEdit = (props) => {
                           promotionIdData.promotionType === 1 ? (
                             <Col sm={6}>
                               <div>
-                                <label>
-                                  New Salary Effective Date :
-                                  <label className="itemResult">
-                                    &nbsp;&nbsp; {state.salaryEffectiveDate}
-                                  </label>
-                                </label>
+                                <Form.Group>
+                                  <FormLabel>
+                                    New Salary Effective Date:
+                                  </FormLabel>
+                                  &nbsp;&nbsp;&nbsp;&nbsp;
+                                  <DatePicker
+                                    className="form-control onBoard-view"
+                                    selected={state.salaryEffectiveDate}
+                                    name="salaryEffectiveDate"
+                                    required
+                                    onChange={(e) => salaryeEffectiveHandler(e)}
+                                    dateFormat="yyyy-MM-dd"
+                                    placeholderText="YYYY-MM-DD"
+                                    minDate={new Date()}
+                                  />
+                                </Form.Group>
                               </div>
                             </Col>
                           ) : (
