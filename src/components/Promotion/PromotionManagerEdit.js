@@ -75,7 +75,7 @@ const PromotionCostCenterManagerEdit = (props) => {
     promotionLetter: "",
     reason: "",
     relocationBonus: 0,
-    salaryEffectiveDate:null,
+    salaryEffectiveDate: null,
     remarks: "",
     status: 0,
   });
@@ -267,8 +267,8 @@ const PromotionCostCenterManagerEdit = (props) => {
     e.preventDefault();
 
     var salaryEffectiveDate = state.salaryEffectiveDate;
-    if (state.promotionType == 1 &&
-      salaryEffectiveDate == "" ||
+    if (
+      (state.promotionType == 1 && salaryEffectiveDate == "") ||
       salaryEffectiveDate == null ||
       salaryEffectiveDate == undefined
     ) {
@@ -277,8 +277,8 @@ const PromotionCostCenterManagerEdit = (props) => {
       setSalaryEffectiveDateError("");
     }
     var effectiveDate = state.effectiveDate;
-    if (state.promotionType == 1 &&
-      effectiveDate == "" ||
+    if (
+      (state.promotionType == 1 && effectiveDate == "") ||
       effectiveDate == null ||
       effectiveDate == undefined
     ) {
@@ -319,26 +319,28 @@ const PromotionCostCenterManagerEdit = (props) => {
       remarks: promotionIdData["remarks"],
       status: 3,
     };
-    if(state.effectiveDate !== "" && state.effectiveDate !== null && state.effectiveDate !== undefined 
-){
-      if(state.promotionType == 1){
-        if(state.salaryEffectiveDate !== "" && state.salaryEffectiveDate !== null && state.salaryEffectiveDate !== undefined){
+    if (
+      state.effectiveDate !== "" &&
+      state.effectiveDate !== null &&
+      state.effectiveDate !== undefined
+    ) {
+      if (state.promotionType == 1) {
+        if (
+          state.salaryEffectiveDate !== "" &&
+          state.salaryEffectiveDate !== null &&
+          state.salaryEffectiveDate !== undefined
+        ) {
           PromotionCreate(infoData);
           setSubmitted(true);
           setPreview(true);
           console.log("all okay", infoData);
         }
-   
-      }else{
+      } else {
         PromotionCreate(infoData);
         setSubmitted(true);
         setPreview(true);
       }
-     
-
     }
-    
-   
   };
 
   return (
@@ -666,32 +668,32 @@ const PromotionCostCenterManagerEdit = (props) => {
                           promotionIdData !== undefined &&
                           promotionIdData.promotionType === 1 ? (
                             <Col sm={6}>
-                            <div>
-                              <Form.Group>
-                                <FormLabel>
-                                  New Salary Effective Date:
-                                </FormLabel>
-                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                <DatePicker
-                                  className="form-control onBoard-view"
-                                  selected={state.salaryEffectiveDate}
-                                  name="salaryEffectiveDate"
-                                  required
-                                  onChange={(e) => salaryeEffectiveHandler(e)}
-                                  dateFormat="yyyy-MM-dd"
-                                  placeholderText="YYYY-MM-DD"
-                                  minDate={new Date()}
-                                />
-                              </Form.Group>
-                            </div>
-                            {salaryEffectiveDateError ? (
-                              <p style={{ color: "red" }}>
-                                {salaryEffectiveDateError}
-                              </p>
-                            ) : (
-                              ""
-                            )}
-                          </Col>
+                              <div>
+                                <Form.Group>
+                                  <FormLabel>
+                                    New Salary Effective Date:
+                                  </FormLabel>
+                                  &nbsp;&nbsp;&nbsp;&nbsp;
+                                  <DatePicker
+                                    className="form-control onBoard-view"
+                                    selected={state.salaryEffectiveDate}
+                                    name="salaryEffectiveDate"
+                                    required
+                                    onChange={(e) => salaryeEffectiveHandler(e)}
+                                    dateFormat="yyyy-MM-dd"
+                                    placeholderText="YYYY-MM-DD"
+                                    minDate={new Date()}
+                                  />
+                                </Form.Group>
+                              </div>
+                              {salaryEffectiveDateError ? (
+                                <p style={{ color: "red" }}>
+                                  {salaryEffectiveDateError}
+                                </p>
+                              ) : (
+                                ""
+                              )}
+                            </Col>
                           ) : (
                             ""
                           )}
