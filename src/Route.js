@@ -123,6 +123,10 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/onboard`}
             component={OnBoardingStepper}
       /> */}
+         <Route
+            path={`${process.env.PUBLIC_URL}/promotion/:promotionId`}
+            component={PromotionManagerEdit}
+          />
       <Route
         path={`${process.env.PUBLIC_URL}/onboard-offer`}
         component={LoginOnboard}
@@ -287,10 +291,10 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/view-promotion/:promotionId`}
             component={PromotionView}
           />
-          <Route
+          {/* <Route
             path={`${process.env.PUBLIC_URL}/promotion/:promotionId`}
             component={PromotionManagerEdit}
-          />
+          /> */}
           {/* <Route
             path={`${process.env.PUBLIC_URL}/promotion-approval/:promotionId`}
             component={PromotionApproval}

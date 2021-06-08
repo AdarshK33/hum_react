@@ -12,7 +12,7 @@ import { Search, PlusCircle, MinusCircle } from "react-feather";
 import Breadcrumb from "../common/breadcrumb";
 import { OfferContext } from "../../context/OfferState";
 import { SeparationContext } from "../../context/SepearationState";
-
+import { Link } from "react-router-dom";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
 import { PromotionContext } from "../../context/PromotionState";
 import { PermissionContext } from "../../context/PermissionState";
@@ -48,7 +48,9 @@ const PromotionCostCenterManagerEdit = (props) => {
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
   const [remarkError, setRemarkError] = useState(false);
   const [state, setState] = useState({
+    approveByAdminDate:null,
     approveByAdminName: "",
+    approveByCostCentreManagerDate:null,
     approveByCostCentreManagerName: "",
     bonus: 0,
     bonusInPercentage: 0,
@@ -134,9 +136,10 @@ const PromotionCostCenterManagerEdit = (props) => {
       Object.keys(promotionIdData).length !== 0
     ) {
       setState({
+        approveByAdminDate:promotionIdData['approveByAdminDate']!== null?new Date(promotionIdData["approveByAdminDate"]): null,
         approveByAdminName: promotionIdData["approveByAdminName"],
-        approveByCostCentreManagerName:
-          promotionIdData["approveByCostCentreManagerName"],
+        approveByCostCentreManagerDate:promotionIdData['approveByCostCentreManagerDate']!== null?new Date(promotionIdData["approveByCostCentreManagerDate"]): null,
+        approveByCostCentreManagerName:promotionIdData["approveByCostCentreManagerName"],
         bonus: promotionIdData["bonus"],
         bonusInPercentage: promotionIdData["bonusInPercentage"],
         costCentre: promotionIdData["costCentre"],
@@ -144,10 +147,7 @@ const PromotionCostCenterManagerEdit = (props) => {
         costCentreManagerId: promotionIdData["costCentreManagerId"],
         costCentreManagerName: promotionIdData["costCentreManagerName"],
         departmentId: promotionIdData["departmentId"],
-        effectiveDate:
-          promotionIdData["effectiveDate"] !== null
-            ? new Date(promotionIdData["effectiveDate"])
-            : null,
+        effectiveDate:promotionIdData["effectiveDate"] !== null?new Date(promotionIdData["effectiveDate"]): null,
         emailId: promotionIdData["emailId"],
         empName: promotionIdData["empName"],
         employeeId: promotionIdData["employeeId"],
@@ -231,7 +231,7 @@ const PromotionCostCenterManagerEdit = (props) => {
   };
   const generateLetterClick = (e) => {
     e.preventDefault();
-    generatePromotionLetter(promotionIdData.employeeId);
+    generatePromotionLetter(promotionIdData.promotionId);
     handleShow();
     setPreviewGeneratedLetter(true);
   };
@@ -287,9 +287,10 @@ const PromotionCostCenterManagerEdit = (props) => {
       setEffectiveDateError("");
     }
     const infoData = {
+      approveByAdminDate:promotionIdData['approveByAdminDate'],
       approveByAdminName: promotionIdData["approveByAdminName"],
-      approveByCostCentreManagerName:
-        promotionIdData["approveByCostCentreManagerName"],
+      approveByCostCentreManagerDate:promotionIdData['approveByCostCentreManagerDate'],
+      approveByCostCentreManagerName:promotionIdData["approveByCostCentreManagerName"],
       bonus: promotionIdData["bonus"],
       bonusInPercentage: promotionIdData["bonusInPercentage"],
       costCentre: promotionIdData["costCentre"],
@@ -349,9 +350,9 @@ const PromotionCostCenterManagerEdit = (props) => {
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         {submitLetter ? (
           <Modal.Body className="mx-auto">
-            <label>Promotion Letter sent to the employee</label>
+            <label>Promotion Letter has been sent to the employee</label>
             <div className="text-center mb-2">
-              <Button onClick={handleRelivingClose}>Close</Button>
+            <Link to={"/promotion-list"}><Button onClick={handleRelivingClose}>Close</Button></Link>
             </div>
           </Modal.Body>
         ) : previewLetter || showRelivingModal ? (
@@ -578,8 +579,7 @@ const PromotionCostCenterManagerEdit = (props) => {
                         >
                           <Col sm={5}>
                             <label>
-                              Is this employee is applicable for promotion and
-                              hike{" "}
+                            Is this employee is applicable for salary hike{" "}
                             </label>
                           </Col>
                           <Col sm={2} style={{ marginTop: "0.25rem" }}>
