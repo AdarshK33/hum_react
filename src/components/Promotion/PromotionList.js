@@ -154,11 +154,11 @@ const PromotionList = () => {
                             <td>{item.approveByHr}</td>
                             <td>{item.hrDate}</td>
                             <td>
-                              {item.status == 0
-                                ? "Pending"
-                                : item.status == 1
-                                ? "Approved"
-                                : "Rejected"}
+                              {item.statusDesc}
+                              {/* {item.status == 0?"Pending":item.status ==1? "Approved By Admin":
+                item.status == 2?"Approved By CostCentre Manager":
+                item.status == 3? "Approved By Manager":
+                item.status ==4? "Rejected":''} */}
                             </td>
                             <td>
                               <Link to={"/view-promotion/" + item.employeeId}>

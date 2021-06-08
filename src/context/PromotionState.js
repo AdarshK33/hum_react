@@ -152,6 +152,7 @@ export const PromotionProvider = (props) => {
       .get("/api/v1/promotion/approve?promotionId=" + id + "&status=" + status)
       .then((response) => {
         state.approvePromotionData = response.data.data;
+        toast.info(response.data.message);
         return dispatch({
           type: "APPROVE_PROMOTION_DATA",
           payload: state.approvePromotionData,
@@ -167,6 +168,7 @@ export const PromotionProvider = (props) => {
       .get("/api/v1/promotion/reject?promotionId=" + id + "&remarks=" + remarks)
       .then((response) => {
         state.rejectPromotionData = response.data.data;
+        toast.info(response.data.message);
         return dispatch({
           type: "REJECT_PROMOTION_DATA",
           payload: state.rejectPromotionData,
