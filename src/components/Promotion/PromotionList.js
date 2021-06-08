@@ -154,8 +154,8 @@ useEffect(()=>{
                             <td>{item.promotionDate}</td>
                             <td>{item.approveByCostCentreManagerName}</td>
                             <td>{item.approveByCostCentreManagerDate}</td>
-                            <td>{item.approveByHr}</td>
-                            <td>{item.hrDate}</td>
+                            <td>{item.approveByAdminName}</td>
+                            <td>{item.approveByAdminDate}</td>
                             <td>
                               {item.statusDesc}
                               {/* {item.status == 0?"Pending":item.status ==1? "Approved By Admin":
