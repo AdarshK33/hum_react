@@ -83,52 +83,47 @@ const PromotionCostCenterManager = (props) => {
     departmentView();
   }, []);
 
+ 
   useEffect(() => {
-    var id = props.history.location.pathname;
-
-    console.log(id, id.slice(id.length - 1), "id");
-    ViewPromotionById(id.slice(id.length - 1));
-  }, []);
-  useEffect(() => {
-    console.log(promotionByEmployee, "promotionByEmployee");
+    console.log(promotionIdData, "promotionIdData");
     if (
-      promotionByEmployee !== null &&
-      promotionByEmployee !== undefined &&
-      Object.keys(promotionByEmployee).length !== 0
+      promotionIdData !== null &&
+      promotionIdData !== undefined &&
+      Object.keys(promotionIdData).length !== 0
     ) {
       setState({
-        approveByAdminName: promotionByEmployee["approveByAdminName"],
+        approveByAdminName: promotionIdData["approveByAdminName"],
         approveByCostCentreManagerName:
-          promotionByEmployee["approveByCostCentreManagerName"],
-        bonus: promotionByEmployee["bonus"],
-        bonusInPercentage: promotionByEmployee["bonusInPercentage"],
-        costCentre: promotionByEmployee["costCentre"],
-        costCentreManagerEmail: promotionByEmployee["costCentreManagerEmail"],
-        costCentreManagerId: promotionByEmployee["costCentreManagerId"],
-        costCentreManagerName: promotionByEmployee["costCentreManagerName"],
-        departmentId: promotionByEmployee["departmentId"],
-        effectiveDate: promotionByEmployee["effectiveDate"],
-        emailId: promotionByEmployee["emailId"],
-        empName: promotionByEmployee["empName"],
-        employeeId: promotionByEmployee["employeeId"],
-        managerId: promotionByEmployee["managerId"],
-        managerName: promotionByEmployee["managerName"],
-        newDepartment: promotionByEmployee["newDepartment"],
-        newFixedGross: promotionByEmployee["newFixedGross"],
-        oldDepartment: promotionByEmployee["oldDepartment"],
-        oldFixedGross: promotionByEmployee["oldFixedGross"],
-        oldPosition: promotionByEmployee["oldPosition"],
-        positionId: promotionByEmployee["positionId"],
-        promotedPosition: promotionByEmployee["promotedPosition"],
-        promotionId: promotionByEmployee["promotionId"],
-        promotionLetter: promotionByEmployee["promotionLetter"],
-        reason: promotionByEmployee["reason"],
-        relocationBonus: promotionByEmployee["relocationBonus"],
-        remarks: promotionByEmployee["remarks"],
-        status: promotionByEmployee["status"],
+          promotionIdData["approveByCostCentreManagerName"],
+        bonus: promotionIdData["bonus"],
+        bonusInPercentage: promotionIdData["bonusInPercentage"],
+        costCentre: promotionIdData["costCentre"],
+        costCentreManagerEmail: promotionIdData["costCentreManagerEmail"],
+        costCentreManagerId: promotionIdData["costCentreManagerId"],
+        costCentreManagerName: promotionIdData["costCentreManagerName"],
+        departmentId: promotionIdData["departmentId"],
+        effectiveDate: promotionIdData["effectiveDate"],
+        emailId: promotionIdData["emailId"],
+        empName: promotionIdData["empName"],
+        employeeId: promotionIdData["employeeId"],
+        managerId: promotionIdData["managerId"],
+        managerName: promotionIdData["managerName"],
+        newDepartment: promotionIdData["newDepartment"],
+        newFixedGross: promotionIdData["newFixedGross"],
+        oldDepartment: promotionIdData["oldDepartment"],
+        oldFixedGross: promotionIdData["oldFixedGross"],
+        oldPosition: promotionIdData["oldPosition"],
+        positionId: promotionIdData["positionId"],
+        promotedPosition: promotionIdData["promotedPosition"],
+        promotionId: promotionIdData["promotionId"],
+        promotionLetter: promotionIdData["promotionLetter"],
+        reason: promotionIdData["reason"],
+        relocationBonus: promotionIdData["relocationBonus"],
+        remarks: promotionIdData["remarks"],
+        status: promotionIdData["status"],
       });
     }
-  }, [promotionByEmployee]);
+  }, [promotionIdData]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -148,7 +143,7 @@ const PromotionCostCenterManager = (props) => {
   const rejectReasonHandler = (e)=>{
     e.preventDefault();
     console.log(state,"state")
-       // rejectPromotion(state.promotionId, state.remarks);
+       rejectPromotion(state.promotionId, state.remarks);
   }
   const rejectHandler = (e) => {
     e.preventDefault();
