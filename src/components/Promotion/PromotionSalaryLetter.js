@@ -31,13 +31,15 @@ const PromotionSalaryLetter = () => {
               <b>Sub: Promotion with salary increment</b>
             </p>
             <p>
-              We are pleased to promote you as XXX and your new gross salary
-              will be INR. <b>{promotionLetterData.newFixedGross}</b>/- with
-              effect from <b>{promotionLetterData.effectiveDate}</b>. You will
-              be reporting to Ms./Mr. <b>{promotionLetterData.managerName},</b>.
-              All the other terms and conditions of your appointment letter
-              dated <b>{promotionLetterData.appointmentLetterDate}</b> shall
-              remain the same.
+              We are pleased to promote you as{" "}
+              <b>{promotionLetterData.promotedPosition}</b> and your new gross
+              salary will be INR. <b>{promotionLetterData.newFixedGross}</b>/-
+              with effect from <b>{promotionLetterData.effectiveDate}</b>. You
+              will be reporting to Ms./Mr.{" "}
+              <b>{promotionLetterData.managerName},</b>. All the other terms and
+              conditions of your appointment letter dated{" "}
+              <b>{promotionLetterData.appointmentLetterDate}</b> shall remain
+              the same.
             </p>
             <p>Please sign the copy of this letter as receipt of acceptance.</p>
             <p className="mt-5 ">
