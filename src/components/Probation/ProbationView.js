@@ -243,6 +243,8 @@ const ProbationView = () => {
                                     ? "Confirmed"
                                     : probationData.status == 2
                                     ? "Extended"
+                                    : probationData.status == 3
+                                    ? "Rejected"
                                     : ""}
                                 </label>
                               ) : (

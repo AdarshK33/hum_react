@@ -513,7 +513,7 @@ const ProbationAction = () => {
         // EXTENDED(2);
       };
       console.log("InfoData", InfoData);
-      // updateProbation(InfoData, probationData.empId);
+      updateProbation(InfoData, probationData.empId);
       ViewProbationDataById(empId);
       setSubmitted(true);
       if (probationStatus === "Rejected") {
@@ -529,7 +529,7 @@ const ProbationAction = () => {
       <Modal show={showRej} onHide={handleRelivingClose} size="md">
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         <Modal.Body className="mx-auto">
-          <label>Rejected successfully</label>
+          <label>The employee probation has been rejected</label>
           <div className="text-center mb-2">
             <Button onClick={handleRelivingClose}>Close</Button>
           </div>
@@ -848,6 +848,8 @@ const ProbationAction = () => {
                                     ? "Confirmed"
                                     : probationData.status == 2
                                     ? "Extended"
+                                    : probationData.status == 3
+                                    ? "Rejected"
                                     : ""}
                                 </label>
                               ) : (
