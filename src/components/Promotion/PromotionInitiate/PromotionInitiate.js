@@ -18,10 +18,10 @@ const PromotionInitiate = () => {
   const [EmpName, setEmpName] = useState();
   const [position, setPosition] = useState();
   const [departmentNew, setDepartmentNew] = useState();
-
+  const [contractType,setContractType] = useState('')
   const [state, setState] = useState({
-    approveByAdminName: "",
-    approveByCostCentreManagerName: "",
+    validatedByAdminName: "",
+    validatedByCostCentreManagerName: "",
     bonus: 0,
     bonusInPercentage: 0,
     costCentre: "",
@@ -29,6 +29,8 @@ const PromotionInitiate = () => {
     costCentreManagerId: "",
     costCentreManagerName: "",
     departmentId: "",
+    reportingManagerId: "",
+    reportingManagerName: "",
     effectiveDate: null,
     emailId: "",
     empName: "",
@@ -69,7 +71,7 @@ const PromotionInitiate = () => {
     fetchRelievingLetterData,
     relivingLetterData,
   } = useContext(EmployeeSeparationContext);
-  const { empResign, withdraw, searchByCostCenter, searchByCostData } =
+  const { empResign, withdraw,managerList, searchByCostCenter, managerData,searchByCostData } =
     useContext(SeparationContext);
   const { departmentView, departmentName } = useContext(OfferContext);
   const { PositionNew, positionNew, PromotionCreate } =
@@ -112,14 +114,39 @@ const PromotionInitiate = () => {
       state.employeeId = searchByCostData.employeeId;
       state.empName = searchByCostData.firstName + " " + temp;
       setEmpName(searchByCostData.firstName + " " + temp);
-
+      setContractType(searchByCostData.contractType)
+      managerData(searchByCostData.costCentre)
       state.costCentre = searchByCostData.costCentre;
       state.oldPosition = searchByCostData.position;
       state.oldDepartment = searchByCostData.department;
-      // state.oldFixedGross = searchByCostData.oldFixedGross;
+     state.managerId = searchByCostData.managerId;
       state.oldFixedGross = searchByCostData.fixedGross;
-    }
-  }, [searchByCostData]);
+    
+  
+  }}, [searchByCostData]);
+  
+  useEffect(()=>{
+    if (
+      searchByCostData &&
+      searchByCostData &&
+      searchByCostData !== null &&
+      searchByCostData !== undefined &&
+      Object.keys(searchByCostData).length !== 0
+    ) {
+    managerList.map((item)=>{
+      if(item.managerId == searchByCostData.managerId){
+        console.log(item,"managerList1")
+        const temp =
+        item.lastName !== null &&
+        item.lastName !== undefined
+          ? item.lastName
+          : "";
+        state.managerName = item.firstName + " " + temp
+      }
+    })
+  }
+  },[state.mangerName,managerList,searchByCostData])
+  console.log(managerList,state,"managerList2")
 
   console.log(state, EmpName, "state");
 
@@ -241,8 +268,8 @@ const PromotionInitiate = () => {
       empName !== undefined
     ) {
       const infoData = {
-        approveByAdminName: null,
-        approveByCostCentreManagerName: null,
+        validatedByAdminName: null,
+        validatedByCostCentreManagerName:null,
         bonus: 0,
         bonusInPercentage: 0,
         costCentre: state.costCentre,
@@ -250,6 +277,8 @@ const PromotionInitiate = () => {
         costCentreManagerId: null,
         costCentreManagerName: null,
         departmentId: state.departmentId,
+        reportingManagerId: state.reportingManagerId,
+        reportingManagerName: state.reportingManagerName,
         effectiveDate: state.effectiveDate,
         emailId: null,
         empName: state.empName,
@@ -361,7 +390,23 @@ const PromotionInitiate = () => {
         }
       });
       console.log(e.target.value, state, "value666");
-    } else {
+    }else if (e.target.name === "reportingManagerId") {
+      managerList.map((item) => {
+        const temp =
+        item.lastName !== null &&
+        item.lastName !== undefined
+          ? item.lastName
+          : "";
+        if ((item.firstName + " " + temp) === e.target.value) {
+          setState({
+            ...state,
+            reportingManagerId: item.managerId,
+    reportingManagerName:item.firstName + " " + temp,
+          });
+        }
+      });
+      console.log(e.target.value, state, "value666");
+    }else {
       setState({
         ...state,
         [e.target.name]: e.target.value,
@@ -373,6 +418,23 @@ const PromotionInitiate = () => {
   return (
     <Fragment>
       <ToastContainer/>
+      <Modal
+          show={(contractType === "internship"||contractType === "Internship")?true:false}
+           onHide={handleCloseValue}
+          size="md"
+          centered
+        >
+          <Modal.Header closeButton className="modal-line"></Modal.Header>
+          <Modal.Body className="mx-auto">
+            <label className="text-center">
+              This employee cannot be promoted.
+            
+            </label>
+            <div className="text-center mb-2">
+             <Link to={"/promotion-list"}><Button onClick={handleCloseValue}>Close</Button></Link> 
+            </div>
+          </Modal.Body>
+        </Modal> 
         <Modal
           show={modelStatus}
            onHide={handleCloseValue}
@@ -584,6 +646,68 @@ const PromotionInitiate = () => {
                               )}
                             </Form.Group>
                           </Col>
+                        </Row>
+                        <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "1rem",
+                            marginBottom: "1rem",
+                          }}
+                        >
+                            
+                          <Col sm={2}>
+                            <label>Reporting Manager </label>
+                          </Col>
+                          <Col sm={4}>
+                            <Form.Group>
+                              <Form.Control
+                                as="select"
+                                name="reportingManagerId"
+                                style={
+                                  departmentIdError
+                                    ? { borderColor: "red" }
+                                    : { borderRadius: "5px" }
+                                }
+                                defaultValue={departmentNew}
+                                onChange={(e) => changeHandler(e)}
+                              >
+                                <option value="">Select Manager</option>
+                                {managerList !== null &&
+                                  managerList !== undefined &&
+                                  managerList.length > 0 &&
+                                  managerList.map((item, index) => {
+                                    const temp =
+                                    item.lastName !== null &&
+                                    item.lastName !== undefined
+                                      ? item.lastName
+                                      : "";
+                                    return (
+                                      <option key={index + 1}>
+                                        {item.firstName + " " + temp}
+                                      </option>
+                                    );
+                                  })}
+                              </Form.Control>
+                              {departmentIdError ? (
+                                <p style={{ color: "red" }}>
+                                  {departmentIdError}
+                                </p>
+                              ) : (
+                                ""
+                              )}
+                            </Form.Group>
+                          </Col>
+                          <Col sm={4}>
+                          <div>
+                            <label>
+                              {" "}
+                              Current Manager :
+                              <label className="itemResult">
+                                &nbsp;&nbsp;{state.managerName}
+                              </label>
+                            </label>
+                          </div>
+                        </Col>
                         </Row>
                         <Row
                           style={{

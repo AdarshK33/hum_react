@@ -129,9 +129,9 @@ useEffect(()=>{
                       <th scope="col">Position</th>
                       <th scope="col">Position Promoted To</th>
                       <th scope="col">Promotion Date</th>
-                      <th scope="col">Approved By CostCenter Manger</th>
+                      <th scope="col">Validated By CostCenter Manger</th>
                       <th scope="col">Date</th>
-                      <th scope="col">Approved By HR/Admin</th>
+                      <th scope="col">Validated By HR/Admin</th>
                       <th scope="col">Date</th>
                       <th scope="col">Status</th>
                       <th scope="col">View</th>
@@ -162,7 +162,7 @@ useEffect(()=>{
                 item.status == 2?"Approved By CostCentre Manager":
                 item.status == 3? "Approved By Manager":
                 item.status ==4? "Rejected":''} */}
-                  {item.status == 0?"Pending":(item.status ==1 ||item.status == 2)?"Progress":
+                  {item.status == 0?"Pending":(item.status ==1 ||item.status == 2)?"In Progress":
                 item.status == 3? "Approved":
                 item.status == 4? "Rejected":''}
                             </td>

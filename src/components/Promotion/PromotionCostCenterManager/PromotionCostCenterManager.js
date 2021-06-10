@@ -37,6 +37,8 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
     costCentreManagerId: "",
     costCentreManagerName: "",
     departmentId: 0,
+    reportingManagerId: "",
+    reportingManagerName: "",
     effectiveDate: "",
     emailId: "",
     empName: "",
@@ -97,9 +99,9 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
       Object.keys(promotionIdData).length !== 0
     ) {
       setState({
-        approveByAdminName: promotionIdData["approveByAdminName"],
-        approveByCostCentreManagerName:
-          promotionIdData["approveByCostCentreManagerName"],
+        validatedByAdminName: promotionIdData["validatedByAdminName"],
+        validatedByCostCentreManagerName:
+          promotionIdData["validatedByCostCentreManagerName"],
         bonus: promotionIdData["bonus"],
         bonusInPercentage: promotionIdData["bonusInPercentage"],
         costCentre: promotionIdData["costCentre"],
@@ -107,6 +109,8 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
         costCentreManagerId: promotionIdData["costCentreManagerId"],
         costCentreManagerName: promotionIdData["costCentreManagerName"],
         departmentId: promotionIdData["departmentId"],
+        reportingManagerId: promotionIdData["reportingManagerId"],
+        reportingManagerName: promotionIdData["reportingManagerName"],
         effectiveDate: promotionIdData["effectiveDate"],
         emailId: promotionIdData["emailId"],
         empName: promotionIdData["empName"],

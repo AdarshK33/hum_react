@@ -48,10 +48,10 @@ const PromotionCostCenterManagerEdit = (props) => {
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
   const [remarkError, setRemarkError] = useState(false);
   const [state, setState] = useState({
-    approveByAdminDate:null,
-    approveByAdminName: "",
-    approveByCostCentreManagerDate:null,
-    approveByCostCentreManagerName: "",
+    validatedByAdminDate:null,
+    validatedByAdminName: "",
+    validatedByCostCentreManagerDate:null,
+    validatedByCostCentreManagerName: "",
     bonus: 0,
     bonusInPercentage: 0,
     costCentre: "",
@@ -59,6 +59,8 @@ const PromotionCostCenterManagerEdit = (props) => {
     costCentreManagerId: "",
     costCentreManagerName: "",
     departmentId: 0,
+    reportingManagerId: "",
+    reportingManagerName: "",
     effectiveDate: "",
     emailId: "",
     empName: "",
@@ -136,10 +138,10 @@ const PromotionCostCenterManagerEdit = (props) => {
       Object.keys(promotionIdData).length !== 0
     ) {
       setState({
-        approveByAdminDate:promotionIdData['approveByAdminDate']!== null?new Date(promotionIdData["approveByAdminDate"]): null,
-        approveByAdminName: promotionIdData["approveByAdminName"],
-        approveByCostCentreManagerDate:promotionIdData['approveByCostCentreManagerDate']!== null?new Date(promotionIdData["approveByCostCentreManagerDate"]): null,
-        approveByCostCentreManagerName:promotionIdData["approveByCostCentreManagerName"],
+        validatedByAdminDate:promotionIdData['validatedByAdminDate']!== null?new Date(promotionIdData["validatedByAdminDate"]): null,
+        validatedByAdminName: promotionIdData["validatedByAdminName"],
+        validatedByCostCentreManagerDate:promotionIdData['validatedByCostCentreManagerDate']!== null?new Date(promotionIdData["validatedByCostCentreManagerDate"]): null,
+        validatedByCostCentreManagerName:promotionIdData["validatedByCostCentreManagerName"],
         bonus: promotionIdData["bonus"],
         bonusInPercentage: promotionIdData["bonusInPercentage"],
         costCentre: promotionIdData["costCentre"],
@@ -147,6 +149,8 @@ const PromotionCostCenterManagerEdit = (props) => {
         costCentreManagerId: promotionIdData["costCentreManagerId"],
         costCentreManagerName: promotionIdData["costCentreManagerName"],
         departmentId: promotionIdData["departmentId"],
+        reportingManagerId: promotionIdData["reportingManagerId"],
+        reportingManagerName: promotionIdData["reportingManagerName"],
         effectiveDate:promotionIdData["effectiveDate"] !== null?new Date(promotionIdData["effectiveDate"]): null,
         emailId: promotionIdData["emailId"],
         empName: promotionIdData["empName"],
@@ -287,10 +291,10 @@ const PromotionCostCenterManagerEdit = (props) => {
       setEffectiveDateError("");
     }
     const infoData = {
-      approveByAdminDate:promotionIdData['approveByAdminDate'],
-      approveByAdminName: promotionIdData["approveByAdminName"],
-      approveByCostCentreManagerDate:promotionIdData['approveByCostCentreManagerDate'],
-      approveByCostCentreManagerName:promotionIdData["approveByCostCentreManagerName"],
+      validatedByAdminDate:promotionIdData['validatedByAdminDate'],
+      validatedByAdminName: promotionIdData["validatedByAdminName"],
+      validatedByCostCentreManagerDate:promotionIdData['validatedByCostCentreManagerDate'],
+      validatedByCostCentreManagerName:promotionIdData["validatedByCostCentreManagerName"],
       bonus: promotionIdData["bonus"],
       bonusInPercentage: promotionIdData["bonusInPercentage"],
       costCentre: promotionIdData["costCentre"],
@@ -298,6 +302,8 @@ const PromotionCostCenterManagerEdit = (props) => {
       costCentreManagerId: promotionIdData["costCentreManagerId"],
       costCentreManagerName: promotionIdData["costCentreManagerName"],
       departmentId: promotionIdData["departmentId"],
+      reportingManagerId: promotionIdData["reportingManagerId"],
+      reportingManagerName: promotionIdData["reportingManagerName"],
       effectiveDate: state.effectiveDate,
       emailId: null,
       empName: state.empName,
