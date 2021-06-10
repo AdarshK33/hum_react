@@ -376,6 +376,40 @@ const ProbationView = () => {
                               </Col>
                             </Row>
                           </div>
+                        ) : probationData.status === 3 ? (
+                          <div>
+                            <Row
+                              style={{
+                                marginLeft: "2rem",
+                                marginTop: "1rem",
+                                marginBottom: "2rem",
+                              }}
+                            >
+                              <Col sm={3}>
+                                <div>
+                                  <label>Remarks for rejection:</label>
+                                </div>
+                              </Col>
+                              <Col sm={8}>
+                                <div>
+                                  {probationData &&
+                                  probationData &&
+                                  probationData !== null &&
+                                  probationData !== undefined &&
+                                  Object.keys(probationData).length !== 0 &&
+                                  probationData.remarks !== null &&
+                                  probationData.remarks !== undefined &&
+                                  probationData.remarks !== "" ? (
+                                    <label className="itemResult">
+                                      &nbsp;&nbsp; {probationData.remarks}
+                                    </label>
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
+                              </Col>
+                            </Row>
+                          </div>
                         ) : (
                           ""
                         )}

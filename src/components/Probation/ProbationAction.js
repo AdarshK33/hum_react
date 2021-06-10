@@ -34,6 +34,8 @@ const ProbationAction = () => {
   const [previewLetter, setPreviewLetter] = useState(false);
   const [letterSent, setLetterSent] = useState(false);
   const [showPreview, setPreview] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [showRej, setShowRej] = useState(false);
 
   const [probationStatus, setProbationStatus] = useState("Confirmed");
   const [probationMonths, setProbationMonths] = useState("3 Months");
@@ -51,6 +53,7 @@ const ProbationAction = () => {
     probationStatus: "",
     probationMonths: "",
     reason: "",
+    remarks: "",
     probationPeriod: "",
   });
   const {
@@ -88,6 +91,10 @@ const ProbationAction = () => {
       state.empId = probationData.empId;
       state.empCostCenterName = probationData.costCentre;
       state.empDateOfJoining = probationData.dateOfJoining;
+      state.remarks =
+        probationData.remarks !== null && probationData.remarks !== undefined
+          ? probationData.remarks
+          : "";
       // state.probationPeriod = probationData.probationPeriod;
       console.log("probationPeriod", probationData.probationPeriod);
 
@@ -195,7 +202,10 @@ const ProbationAction = () => {
     state.remarks = "";
   };
 
-  const handleRelivingClose = () => setShow(false);
+  const handleRelivingClose = () => {
+    setShowRej(false);
+    setShow(false);
+  };
 
   const saveOfferLetter = () => {
     setSaveLetter(true);
@@ -364,6 +374,25 @@ const ProbationAction = () => {
       return false;
     }
   };
+  const validateRemarks = () => {
+    if (probationStatus === "Rejected") {
+      if (
+        state.remarks !== "" &&
+        state.remarks !== undefined &&
+        state.remarks !== null
+      ) {
+        setRemarkError(false);
+        return true;
+      } else {
+        console.log("reason error");
+        setRemarkError(true);
+        return false;
+      }
+    } else {
+      setRemarkError(false);
+      return true;
+    }
+  };
   const validateReason = () => {
     if (probationStatus === "Extended") {
       if (
@@ -388,6 +417,7 @@ const ProbationAction = () => {
     if (
       (validateDateOfConfirmation() === true) &
       (validateReason() === true) &
+      (validateRemarks() === true) &
       (validateDateOfExtension() === true)
     ) {
       console.log("on true");
@@ -455,27 +485,43 @@ const ProbationAction = () => {
         probationId: probationData.probationId,
         probationPeriod: probationData.probationPeriod,
         probationStartDate: probationData.probationStartDate,
-        reason: state.reason,
+        remarks: probationStatus === "Rejected" ? state.remarks : null,
         reminderSent: probationData.reminderSent,
         status:
           probationStatus === "Confirmed"
             ? 1
             : probationStatus === "Extended"
             ? 2
+            : probationStatus === "Rejected"
+            ? 3
             : 0,
         //  PENDING(0),
         // APPROVED(1),
         // EXTENDED(2);
       };
       console.log("InfoData", InfoData);
-      updateProbation(InfoData, probationData.empId);
-      setPreview(true);
+      // updateProbation(InfoData, probationData.empId);
       ViewProbationDataById(empId);
+      setSubmitted(true);
+      if (probationStatus === "Rejected") {
+        setShowRej(true);
+      } else {
+        setPreview(true);
+      }
     }
   };
 
   return (
     <Fragment>
+      <Modal show={showRej} onHide={handleRelivingClose} size="md">
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        <Modal.Body className="mx-auto">
+          <label>Rejected successfully</label>
+          <div className="text-center mb-2">
+            <Button onClick={handleRelivingClose}>Close</Button>
+          </div>
+        </Modal.Body>
+      </Modal>
       <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         {submitLetter ? (
@@ -806,13 +852,28 @@ const ProbationAction = () => {
                                   >
                                     {/* <option value=""></option> */}
                                     <option value="Confirmed">Confirmed</option>
-                                    <option value="Extended">Extended</option>
+                                    {probationData &&
+                                    probationData &&
+                                    probationData !== null &&
+                                    probationData !== undefined &&
+                                    Object.keys(probationData).length !== 0 &&
+                                    (probationData.probationExtension ===
+                                      null ||
+                                      probationData.probationExtension === "" ||
+                                      probationData.probationExtension ===
+                                        undefined) ? (
+                                      <option value="Extended">Extended</option>
+                                    ) : (
+                                      ""
+                                    )}
+                                    <option value="Rejected">Rejected</option>
                                   </Form.Control>
                                 </Form.Group>
                               )}
                             </div>
                           </Col>
                         </Row>
+
                         {probationStatus === "Extended" ? (
                           <div>
                             <Row
@@ -952,6 +1013,13 @@ const ProbationAction = () => {
                                 </div>
                               </Col>
                             </Row>
+                          </div>
+                        ) : (
+                          ""
+                        )}
+
+                        {probationStatus === "Extended" ? (
+                          <div>
                             <Row
                               style={{
                                 marginLeft: "2rem",
@@ -1012,6 +1080,61 @@ const ProbationAction = () => {
                         ) : (
                           ""
                         )}
+                        {probationStatus === "Rejected" ? (
+                          <div>
+                            <Row
+                              style={{
+                                marginLeft: "2rem",
+                                marginTop: "1rem",
+                                marginBottom: "2rem",
+                              }}
+                            >
+                              <Col sm={3}>
+                                <div>
+                                  <label>Remarks for rejection:</label>
+                                </div>
+                              </Col>
+                              <Col sm={8}>
+                                <div>
+                                  {probationData &&
+                                  probationData &&
+                                  probationData !== null &&
+                                  probationData !== undefined &&
+                                  Object.keys(probationData).length !== 0 &&
+                                  probationData.remarks !== null &&
+                                  probationData.remarks !== undefined &&
+                                  probationData.remarks !== "" ? (
+                                    <label className="itemResult">
+                                      &nbsp;&nbsp; {probationData.remarks}
+                                    </label>
+                                  ) : (
+                                    <Form.Group>
+                                      <Form.Control
+                                        as="textarea"
+                                        rows={4}
+                                        name="remarks"
+                                        className="non-disable blueTextData"
+                                        value={state.remarks}
+                                        onChange={changeHandler}
+                                        required
+                                      />
+                                      {remarkError ? (
+                                        <p style={{ color: "red" }}>
+                                          {" "}
+                                          &nbsp; *Please enter remarks
+                                        </p>
+                                      ) : (
+                                        <p></p>
+                                      )}
+                                    </Form.Group>
+                                  )}
+                                </div>
+                              </Col>
+                            </Row>
+                          </div>
+                        ) : (
+                          ""
+                        )}
 
                         <div
                           style={{
@@ -1022,9 +1145,9 @@ const ProbationAction = () => {
                         >
                           {true ? (
                             <button
-                              disabled={showPreview}
+                              disabled={submitted}
                               className={
-                                showPreview ? "confirmButton" : "stepperButtons"
+                                submitted ? "confirmButton" : "stepperButtons"
                               }
                               onClick={submitHandler}
                             >
