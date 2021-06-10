@@ -49,16 +49,11 @@ const ProbationView = () => {
       state.empDateOfJoining = probationData.dateOfJoining;
       // state.probationStatus = probationData.status;
       // state.probationMonths = probationData.probationPeriod;
-      if (
-        probationData.probationExtension !== null &&
-        probationData.probationExtension !== undefined
-      ) {
-        state.reason =
-          probationData.probationExtension.reason !== null &&
-          probationData.probationExtension.reason !== undefined
-            ? probationData.probationExtension.reason
-            : "";
-      }
+
+      state.reason =
+        probationData.reason !== null && probationData.reason !== undefined
+          ? probationData.reason
+          : "";
 
       if (
         probationData.probationConfirmationDate !== null &&
@@ -248,6 +243,8 @@ const ProbationView = () => {
                                     ? "Confirmed"
                                     : probationData.status == 2
                                     ? "Extended"
+                                    : probationData.status == 3
+                                    ? "Rejected"
                                     : ""}
                                 </label>
                               ) : (
@@ -277,21 +274,15 @@ const ProbationView = () => {
                                   probationData !== null &&
                                   probationData !== undefined &&
                                   Object.keys(probationData).length !== 0 &&
-                                  probationData.probationExtension !== null &&
-                                  probationData.probationExtension !==
-                                    undefined &&
-                                  probationData.probationExtension
-                                    .probationExtensionPeriod !== 0 &&
-                                  probationData.probationExtension
-                                    .probationExtensionPeriod !== null &&
-                                  probationData.probationExtension
-                                    .probationExtensionPeriod !== undefined ? (
+                                  probationData.probationExtensionPeriod !==
+                                    0 &&
+                                  probationData.probationExtensionPeriod !==
+                                    null &&
+                                  probationData.probationExtensionPeriod !==
+                                    undefined ? (
                                     <label className="itemResult">
                                       &nbsp;&nbsp;{" "}
-                                      {
-                                        probationData.probationExtension
-                                          .probationExtensionPeriod
-                                      }{" "}
+                                      {probationData.probationExtensionPeriod}{" "}
                                       Months
                                     </label>
                                   ) : (
@@ -312,24 +303,17 @@ const ProbationView = () => {
                                   probationData !== null &&
                                   probationData !== undefined &&
                                   Object.keys(probationData).length !== 0 &&
-                                  probationData.probationExtension &&
-                                  probationData.probationExtension !== null &&
-                                  probationData.probationExtension !==
-                                    undefined &&
-                                  probationData.probationExtension
-                                    .probationExtensionEndDate !== "" &&
-                                  probationData.probationExtension
-                                    .probationExtensionEndDate !== null &&
-                                  probationData.probationExtension
-                                    .probationExtensionEndDate !== undefined ? (
+                                  probationData.probationExtensionEndDate !==
+                                    "" &&
+                                  probationData.probationExtensionEndDate !==
+                                    null &&
+                                  probationData.probationExtensionEndDate !==
+                                    undefined ? (
                                     <label
                                       style={{ marginLeft: "-2rem" }}
                                       className="itemResult"
                                     >
-                                      {
-                                        probationData.probationExtension
-                                          .probationExtensionEndDate
-                                      }
+                                      {probationData.probationExtensionEndDate}
                                     </label>
                                   ) : (
                                     ""
@@ -356,18 +340,45 @@ const ProbationView = () => {
                                   probationData !== null &&
                                   probationData !== undefined &&
                                   Object.keys(probationData).length !== 0 &&
-                                  probationData.probationExtension !== null &&
-                                  probationData.probationExtension !==
-                                    undefined &&
-                                  probationData.probationExtension.reason !==
-                                    "" &&
-                                  probationData.probationExtension.reason !==
-                                    null &&
-                                  probationData.probationExtension.reason !==
-                                    undefined ? (
+                                  probationData.reason !== "" &&
+                                  probationData.reason !== null &&
+                                  probationData.reason !== undefined ? (
                                     <label className="itemResult">
-                                      &nbsp;&nbsp;{" "}
-                                      {probationData.probationExtension.reason}
+                                      &nbsp;&nbsp; {probationData.reason}
+                                    </label>
+                                  ) : (
+                                    ""
+                                  )}
+                                </div>
+                              </Col>
+                            </Row>
+                          </div>
+                        ) : probationData.status === 3 ? (
+                          <div>
+                            <Row
+                              style={{
+                                marginLeft: "2rem",
+                                marginTop: "1rem",
+                                marginBottom: "2rem",
+                              }}
+                            >
+                              <Col sm={3}>
+                                <div>
+                                  <label>Remarks for rejection:</label>
+                                </div>
+                              </Col>
+                              <Col sm={8}>
+                                <div>
+                                  {probationData &&
+                                  probationData &&
+                                  probationData !== null &&
+                                  probationData !== undefined &&
+                                  Object.keys(probationData).length !== 0 &&
+                                  probationData.remarks !== null &&
+                                  probationData.remarks !== undefined &&
+                                  probationData.remarks !== "" ? (
+                                    <label className="itemResult">
+                                      &nbsp;&nbsp; {probationData.remarks}
                                     </label>
                                   ) : (
                                     ""

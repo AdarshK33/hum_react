@@ -34,6 +34,8 @@ const ProbationAction = () => {
   const [previewLetter, setPreviewLetter] = useState(false);
   const [letterSent, setLetterSent] = useState(false);
   const [showPreview, setPreview] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [showRej, setShowRej] = useState(false);
 
   const [probationStatus, setProbationStatus] = useState("Confirmed");
   const [probationMonths, setProbationMonths] = useState("3 Months");
@@ -51,6 +53,7 @@ const ProbationAction = () => {
     probationStatus: "",
     probationMonths: "",
     reason: "",
+    remarks: "",
     probationPeriod: "",
   });
   const {
@@ -88,33 +91,17 @@ const ProbationAction = () => {
       state.empId = probationData.empId;
       state.empCostCenterName = probationData.costCentre;
       state.empDateOfJoining = probationData.dateOfJoining;
+      state.remarks =
+        probationData.remarks !== null && probationData.remarks !== undefined
+          ? probationData.remarks
+          : "";
       // state.probationPeriod = probationData.probationPeriod;
-      console.log("probationPeriod", probationData.probationPeriod);
+      // console.log("probationPeriod", probationData.probationPeriod);
 
-      // state.probationStatus = probationData.status;
-      // state.probationMonths = probationData.probationPeriod;
-      if (
-        probationData.probationExtension !== null &&
-        probationData.probationExtension !== undefined
-      ) {
-        state.reason =
-          probationData.probationExtension.reason !== null &&
-          probationData.probationExtension.reason !== undefined
-            ? probationData.probationExtension.reason
-            : "";
-        // if (
-        //   probationData.probationExtension.probationExtensionEndDate !== null &&
-        //   probationData.probationExtension.probationExtensionEndDate !==
-        //     undefined &&
-        //   probationData.probationExtension.probationExtensionEndDate !== ""
-        // ) {
-        //   setDateOfExtension(
-        //     new Date(probationData.probationExtension.probationExtensionEndDate)
-        //   );
-        // } else {
-        //   setDateOfExtension("");
-        // }
-      }
+      state.reason =
+        probationData.reason !== null && probationData.reason !== undefined
+          ? probationData.reason
+          : "";
 
       if (
         probationData.probationConfirmationDate !== null &&
@@ -195,7 +182,10 @@ const ProbationAction = () => {
     state.remarks = "";
   };
 
-  const handleRelivingClose = () => setShow(false);
+  const handleRelivingClose = () => {
+    setShowRej(false);
+    setShow(false);
+  };
 
   const saveOfferLetter = () => {
     setSaveLetter(true);
@@ -364,6 +354,25 @@ const ProbationAction = () => {
       return false;
     }
   };
+  const validateRemarks = () => {
+    if (probationStatus === "Rejected") {
+      if (
+        state.remarks !== "" &&
+        state.remarks !== undefined &&
+        state.remarks !== null
+      ) {
+        setRemarkError(false);
+        return true;
+      } else {
+        console.log("reason error");
+        setRemarkError(true);
+        return false;
+      }
+    } else {
+      setRemarkError(false);
+      return true;
+    }
+  };
   const validateReason = () => {
     if (probationStatus === "Extended") {
       if (
@@ -388,6 +397,7 @@ const ProbationAction = () => {
     if (
       (validateDateOfConfirmation() === true) &
       (validateReason() === true) &
+      (validateRemarks() === true) &
       (validateDateOfExtension() === true)
     ) {
       console.log("on true");
@@ -405,6 +415,39 @@ const ProbationAction = () => {
     const value = checkValidations();
     if (value === true) {
       const InfoData = {
+        company: probationData.company,
+        costCentre: probationData.costCentre,
+        dateOfJoining: probationData.dateOfJoining,
+        dueDays: probationData.dueDays,
+        emailId: probationData.emailId,
+        empId: probationData.empId,
+        empName: probationData.empName,
+        probationConfirmationDate: dateOfConfirmation,
+        probationConfirmationLetter: probationData.probationConfirmationLetter,
+        probationExtensionEndDate: dateOfExtension,
+        probationExtensionPeriod:
+          probationMonths === "3 Months"
+            ? 3
+            : probationMonths === "6 Months"
+            ? 6
+            : 0,
+        probationExtensionStartDate: null,
+        probationId: probationData.probationId,
+        reason: state.reason,
+        probationPeriod: probationData.probationPeriod,
+        remarks: probationStatus === "Rejected" ? state.remarks : null,
+        reminderSent: probationData.reminderSent,
+        status:
+          probationStatus === "Confirmed"
+            ? 1
+            : probationStatus === "Extended"
+            ? 2
+            : probationStatus === "Rejected"
+            ? 3
+            : 0,
+      };
+
+      const InfoData1 = {
         company: probationData.company,
         costCentre: probationData.costCentre,
         dateOfJoining: probationData.dateOfJoining,
@@ -455,13 +498,15 @@ const ProbationAction = () => {
         probationId: probationData.probationId,
         probationPeriod: probationData.probationPeriod,
         probationStartDate: probationData.probationStartDate,
-        reason: state.reason,
+        remarks: probationStatus === "Rejected" ? state.remarks : null,
         reminderSent: probationData.reminderSent,
         status:
           probationStatus === "Confirmed"
             ? 1
             : probationStatus === "Extended"
             ? 2
+            : probationStatus === "Rejected"
+            ? 3
             : 0,
         //  PENDING(0),
         // APPROVED(1),
@@ -469,13 +514,27 @@ const ProbationAction = () => {
       };
       console.log("InfoData", InfoData);
       updateProbation(InfoData, probationData.empId);
-      setPreview(true);
       ViewProbationDataById(empId);
+      setSubmitted(true);
+      if (probationStatus === "Rejected") {
+        setShowRej(true);
+      } else {
+        setPreview(true);
+      }
     }
   };
 
   return (
     <Fragment>
+      <Modal show={showRej} onHide={handleRelivingClose} size="md">
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        <Modal.Body className="mx-auto">
+          <label>The employee probation has been rejected</label>
+          <div className="text-center mb-2">
+            <Button onClick={handleRelivingClose}>Close</Button>
+          </div>
+        </Modal.Body>
+      </Modal>
       <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         {submitLetter ? (
@@ -789,6 +848,8 @@ const ProbationAction = () => {
                                     ? "Confirmed"
                                     : probationData.status == 2
                                     ? "Extended"
+                                    : probationData.status == 3
+                                    ? "Rejected"
                                     : ""}
                                 </label>
                               ) : (
@@ -806,13 +867,31 @@ const ProbationAction = () => {
                                   >
                                     {/* <option value=""></option> */}
                                     <option value="Confirmed">Confirmed</option>
-                                    <option value="Extended">Extended</option>
+                                    {probationData &&
+                                    probationData &&
+                                    probationData !== null &&
+                                    probationData !== undefined &&
+                                    Object.keys(probationData).length !== 0 &&
+                                    (probationData.probationExtensionPeriod ===
+                                      null ||
+                                      probationData.probationExtensionPeriod ===
+                                        "" ||
+                                      probationData.probationExtensionPeriod ===
+                                        undefined ||
+                                      probationData.probationExtensionPeriod ===
+                                        0) ? (
+                                      <option value="Extended">Extended</option>
+                                    ) : (
+                                      ""
+                                    )}
+                                    <option value="Rejected">Rejected</option>
                                   </Form.Control>
                                 </Form.Group>
                               )}
                             </div>
                           </Col>
                         </Row>
+
                         {probationStatus === "Extended" ? (
                           <div>
                             <Row
@@ -834,21 +913,15 @@ const ProbationAction = () => {
                                   probationData !== null &&
                                   probationData !== undefined &&
                                   Object.keys(probationData).length !== 0 &&
-                                  probationData.probationExtension !== null &&
-                                  probationData.probationExtension !==
-                                    undefined &&
-                                  probationData.probationExtension
-                                    .probationExtensionPeriod !== 0 &&
-                                  probationData.probationExtension
-                                    .probationExtensionPeriod !== null &&
-                                  probationData.probationExtension
-                                    .probationExtensionPeriod !== undefined ? (
+                                  probationData.probationExtensionPeriod !==
+                                    0 &&
+                                  probationData.probationExtensionPeriod !==
+                                    null &&
+                                  probationData.probationExtensionPeriod !==
+                                    undefined ? (
                                     <label className="itemResult">
                                       &nbsp;&nbsp;{" "}
-                                      {
-                                        probationData.probationExtension
-                                          .probationExtensionPeriod
-                                      }{" "}
+                                      {probationData.probationExtensionPeriod}{" "}
                                       Months
                                     </label>
                                   ) : (
@@ -890,24 +963,17 @@ const ProbationAction = () => {
                                   probationData !== null &&
                                   probationData !== undefined &&
                                   Object.keys(probationData).length !== 0 &&
-                                  probationData.probationExtension &&
-                                  probationData.probationExtension !== null &&
-                                  probationData.probationExtension !==
-                                    undefined &&
-                                  probationData.probationExtension
-                                    .probationExtensionEndDate !== "" &&
-                                  probationData.probationExtension
-                                    .probationExtensionEndDate !== null &&
-                                  probationData.probationExtension
-                                    .probationExtensionEndDate !== undefined ? (
+                                  probationData.probationExtensionEndDate !==
+                                    "" &&
+                                  probationData.probationExtensionEndDate !==
+                                    null &&
+                                  probationData.probationExtensionEndDate !==
+                                    undefined ? (
                                     <label
                                       style={{ marginLeft: "-2rem" }}
                                       className="itemResult"
                                     >
-                                      {
-                                        probationData.probationExtension
-                                          .probationExtensionEndDate
-                                      }
+                                      {probationData.probationExtensionEndDate}
                                     </label>
                                   ) : (
                                     <Form.Group>
@@ -952,6 +1018,13 @@ const ProbationAction = () => {
                                 </div>
                               </Col>
                             </Row>
+                          </div>
+                        ) : (
+                          ""
+                        )}
+
+                        {probationStatus === "Extended" ? (
+                          <div>
                             <Row
                               style={{
                                 marginLeft: "2rem",
@@ -971,18 +1044,11 @@ const ProbationAction = () => {
                                   probationData !== null &&
                                   probationData !== undefined &&
                                   Object.keys(probationData).length !== 0 &&
-                                  probationData.probationExtension !== null &&
-                                  probationData.probationExtension !==
-                                    undefined &&
-                                  probationData.probationExtension.reason !==
-                                    "" &&
-                                  probationData.probationExtension.reason !==
-                                    null &&
-                                  probationData.probationExtension.reason !==
-                                    undefined ? (
+                                  probationData.reason !== "" &&
+                                  probationData.reason !== null &&
+                                  probationData.reason !== undefined ? (
                                     <label className="itemResult">
-                                      &nbsp;&nbsp;{" "}
-                                      {probationData.probationExtension.reason}
+                                      &nbsp;&nbsp; {probationData.reason}
                                     </label>
                                   ) : (
                                     <Form.Group>
@@ -1012,6 +1078,61 @@ const ProbationAction = () => {
                         ) : (
                           ""
                         )}
+                        {probationStatus === "Rejected" ? (
+                          <div>
+                            <Row
+                              style={{
+                                marginLeft: "2rem",
+                                marginTop: "1rem",
+                                marginBottom: "2rem",
+                              }}
+                            >
+                              <Col sm={3}>
+                                <div>
+                                  <label>Remarks for rejection:</label>
+                                </div>
+                              </Col>
+                              <Col sm={8}>
+                                <div>
+                                  {probationData &&
+                                  probationData &&
+                                  probationData !== null &&
+                                  probationData !== undefined &&
+                                  Object.keys(probationData).length !== 0 &&
+                                  probationData.remarks !== null &&
+                                  probationData.remarks !== undefined &&
+                                  probationData.remarks !== "" ? (
+                                    <label className="itemResult">
+                                      &nbsp;&nbsp; {probationData.remarks}
+                                    </label>
+                                  ) : (
+                                    <Form.Group>
+                                      <Form.Control
+                                        as="textarea"
+                                        rows={4}
+                                        name="remarks"
+                                        className="non-disable blueTextData"
+                                        value={state.remarks}
+                                        onChange={changeHandler}
+                                        required
+                                      />
+                                      {remarkError ? (
+                                        <p style={{ color: "red" }}>
+                                          {" "}
+                                          &nbsp; *Please enter remarks
+                                        </p>
+                                      ) : (
+                                        <p></p>
+                                      )}
+                                    </Form.Group>
+                                  )}
+                                </div>
+                              </Col>
+                            </Row>
+                          </div>
+                        ) : (
+                          ""
+                        )}
 
                         <div
                           style={{
@@ -1022,9 +1143,9 @@ const ProbationAction = () => {
                         >
                           {true ? (
                             <button
-                              disabled={showPreview}
+                              disabled={submitted}
                               className={
-                                showPreview ? "confirmButton" : "stepperButtons"
+                                submitted ? "confirmButton" : "stepperButtons"
                               }
                               onClick={submitHandler}
                             >
