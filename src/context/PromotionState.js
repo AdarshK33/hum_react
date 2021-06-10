@@ -23,13 +23,20 @@ export const PromotionProvider = (props) => {
   const [state, dispatch] = useReducer(PromotionReducer, initial_state);
   const [loader, setLoader] = useState(false);
 
-  const promotionListView = (key, page) => {
+  const promotionListView = (key, page, status = 5) => {
     console.log(key, page, client.defaults.headers, "promotion ");
     console.log(key, page, "promotion ");
     setLoader(true);
     client
       .get(
-        "/api/v1/promotion/view?key=" + key + "&page=" + page + "&size=" + 10
+        "/api/v1/promotion/view?key=" +
+          key +
+          "&page=" +
+          page +
+          "&size=" +
+          10 +
+          "&status=" +
+          status
       )
       .then((response) => {
         console.log("response", response.data.data.data);
@@ -196,7 +203,7 @@ export const PromotionProvider = (props) => {
         positionNew: state.positionNew,
         promotionIdData: state.promotionIdData,
         promotionCreate: state.promotionCreate,
-        loader: state.loader,
+        loader: loader,
         promotionLetterData: state.promotionLetterData,
         promotionByEmployee: state.promotionByEmployee,
         approvePromotionData: state.approvePromotionData,
