@@ -21,8 +21,8 @@ const PromotionView = (props) => {
   const [departmentNew, setDepartmentNew] = useState();
 
   const [state, setState] = useState({
-    approveByAdminName: "",
-    approveByCostCentreManagerName: "",
+    validatedByAdminName: "",
+    validatedByCostCentreManagerName: "",
     bonus: 0,
     bonusInPercentage: 0,
     costCentre: "",
@@ -30,6 +30,8 @@ const PromotionView = (props) => {
     costCentreManagerId: "",
     costCentreManagerName: "",
     departmentId: 0,
+    reportingManagerId: "",
+    reportingManagerName: "",
     effectiveDate: "",
     emailId: "",
     empName: "",
@@ -86,9 +88,9 @@ const PromotionView = (props) => {
       Object.keys(promotionIdData).length !== 0
     ) {
       setState({
-        approveByAdminName: promotionIdData["approveByAdminName"],
-        approveByCostCentreManagerName:
-          promotionIdData["approveByCostCentreManagerName"],
+        validatedByAdminName: promotionIdData["validatedByAdminName"],
+        validatedByCostCentreManagerName:
+          promotionIdData["validatedByCostCentreManagerName"],
         bonus: promotionIdData["bonus"],
         bonusInPercentage: promotionIdData["bonusInPercentage"],
         costCentre: promotionIdData["costCentre"],
@@ -96,6 +98,8 @@ const PromotionView = (props) => {
         costCentreManagerId: promotionIdData["costCentreManagerId"],
         costCentreManagerName: promotionIdData["costCentreManagerName"],
         departmentId: promotionIdData["departmentId"],
+        reportingManagerId: promotionIdData["reportingManagerId"],
+        reportingManagerName: promotionIdData["reportingManagerName"],
         effectiveDate: promotionIdData["effectiveDate"],
         emailId: promotionIdData["emailId"],
         empName: promotionIdData["empName"],
@@ -247,25 +251,7 @@ const PromotionView = (props) => {
                             </label>
                           </div>
                         </Col>
-                        <Col sm={6}>
-                          <div>
-                            <label>
-                              Relocation Bonus:
-                              <label className="itemResult">
-                                &nbsp;&nbsp;{state.relocationBonus}
-                              </label>
-                            </label>
-                          </div>
-                        </Col>
                       
-                      </Row>
-                      <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "1rem",
-                          marginBottom: "1rem",
-                        }}
-                      >
                         <Col sm={6}>
                           <div>
                             <label>
@@ -284,10 +270,9 @@ const PromotionView = (props) => {
                             marginBottom: "3rem",
                           }}
                         >
-                          <Col sm={5}>
+                          <Col sm={4}>
                             <label>
-                              Is this employee is applicable for promotion and
-                              hike{" "}
+                              Is this employee is applicable for salary hike{" "}
                             </label>
                           </Col>
                           <Col sm={2} style={{ marginTop: "0.25rem" }}>
@@ -340,7 +325,7 @@ const PromotionView = (props) => {
                             marginBottom: "3rem",
                           }}
                         >        
-                     <Col sm={3}>
+                     <Col sm={4}>
                           <div>
                             <label>
                               Fixed Gross:
@@ -375,34 +360,7 @@ const PromotionView = (props) => {
                           </div>
                         </Col></>:''}
                       </Row>
-                      {/* <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "1rem",
-                          marginBottom: "3rem",
-                        }}
-                      >
-                        <Col sm={6}>
-                          <div>
-                            <label>
-                              Fixed Gross:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.oldFixedGross}
-                              </label>
-                            </label>
-                          </div>
-                        </Col>
-                        <Col sm={6}>
-                          <div>
-                            <label>
-                              New Fixed Gross:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.newFixedGross}
-                              </label>
-                            </label>
-                          </div>
-                        </Col>
-                      </Row> */}
+                     
                       <Row
                         style={{
                           marginLeft: "2rem",
@@ -410,7 +368,17 @@ const PromotionView = (props) => {
                           marginBottom: "2rem",
                         }}
                       >
-                        <Col sm={6}>
+                          <Col sm={4}>
+                          <div>
+                            <label>
+                              Relocation Bonus:
+                              <label className="itemResult">
+                                &nbsp;&nbsp;{state.relocationBonus}
+                              </label>
+                            </label>
+                          </div>
+                        </Col>
+                        <Col sm={4}>
                           <div>
                             <label>
                               {" "}
@@ -431,7 +399,62 @@ const PromotionView = (props) => {
                           marginBottom: "3rem",
                         }}
                       >
-                        <Col sm={10}>
+                       {state.remarks && state.validatedByAdminName && state.validatedByCostCentreManagerName?
+                       <>
+                                           <Col sm={4}>
+                                           <div>
+                                                <label>
+                                                  Approved By:
+                                                  <label className="itemResult">
+                                                    &nbsp;&nbsp; {state.validatedByCostCentreManagerName}
+                                                  </label>
+                                                </label>
+                                                </div>
+                                           </Col>
+                                           <Col sm={4}>
+                                           <div>
+                                                <label>
+                                                  Rejected By:
+                                                  <label className="itemResult">
+                                                    &nbsp;&nbsp; {state.validatedByAdminName}
+                                                  </label>
+                                                </label>
+                                                </div>
+                                           </Col>
+                                           <Col sm={10}>
+                                              <div>
+                                                <label>
+                                                  Reason For Rejection:
+                                                  <label className="itemResult">
+                                                    &nbsp;&nbsp; {state.remarks}
+                                                  </label>
+                                                </label>
+                                              </div>
+                                            </Col></>
+                       :state.remarks && state.validatedByAdminName?
+                       <>
+                                           <Col>
+                                           <div>
+                                                <label>
+                                                  Rejected By:
+                                                  <label className="itemResult">
+                                                    &nbsp;&nbsp; {state.validatedByAdminName}
+                                                  </label>
+                                                </label>
+                                                </div>
+                                           </Col>
+                                           <Col sm={10}>
+                                              <div>
+                                                <label>
+                                                  Reason For Rejection:
+                                                  <label className="itemResult">
+                                                    &nbsp;&nbsp; {state.remarks}
+                                                  </label>
+                                                </label>
+                                              </div>
+                                            </Col></>
+                       :
+                       <Col sm={10}>
                           <div>
                             <label>
                               Reason For Promotion:
@@ -440,7 +463,7 @@ const PromotionView = (props) => {
                               </label>
                             </label>
                           </div>
-                        </Col>
+                        </Col>}
                       </Row>
                     </Col>
                   </Row>

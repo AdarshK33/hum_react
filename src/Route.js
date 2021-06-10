@@ -123,14 +123,19 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/onboard`}
             component={OnBoardingStepper}
       /> */}
+
       <Route
         path={`${process.env.PUBLIC_URL}/onboard-offer`}
         component={LoginOnboard}
       />
-   <Route
-            path={`${process.env.PUBLIC_URL}/promotion-approval/:promotionId`}
-            component={PromotionApproval}
-          />
+      {/* <Route
+        path={`${process.env.PUBLIC_URL}/promotion-approval/:promotionId`}
+        component={PromotionApproval}
+      />
+      <Route
+        path={`${process.env.PUBLIC_URL}/promotion/:promotionId`}
+        component={PromotionManagerEdit}
+      /> */}
       <Route path={`${process.env.PUBLIC_URL}/offer`} component={OfferAccept} />
 
       <Fragment>
@@ -288,9 +293,17 @@ const RoutePath = () => {
             component={PromotionView}
           />
           <Route
+            path={`${process.env.PUBLIC_URL}/promotion-approval/:promotionId`}
+            component={PromotionApproval}
+          />
+          <Route
             path={`${process.env.PUBLIC_URL}/promotion/:promotionId`}
             component={PromotionManagerEdit}
           />
+          {/* <Route
+            path={`${process.env.PUBLIC_URL}/promotion/:promotionId`}
+            component={PromotionManagerEdit}
+          /> */}
           {/* <Route
             path={`${process.env.PUBLIC_URL}/promotion-approval/:promotionId`}
             component={PromotionApproval}

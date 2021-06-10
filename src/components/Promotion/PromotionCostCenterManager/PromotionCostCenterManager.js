@@ -4,7 +4,7 @@ import { Search, PlusCircle, MinusCircle } from "react-feather";
 import Breadcrumb from "../../common/breadcrumb";
 import { OfferContext } from "../../../context/OfferState";
 import { SeparationContext } from "../../../context/SepearationState";
-
+import { Link } from "react-router-dom";
 import { EmployeeSeparationContext } from "../../../context/EmployeeSeparationState";
 import { PromotionContext } from "../../../context/PromotionState";
 import { PermissionContext } from "../../../context/PermissionState";
@@ -37,6 +37,8 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
     costCentreManagerId: "",
     costCentreManagerName: "",
     departmentId: 0,
+    reportingManagerId: "",
+    reportingManagerName: "",
     effectiveDate: "",
     emailId: "",
     empName: "",
@@ -97,9 +99,9 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
       Object.keys(promotionIdData).length !== 0
     ) {
       setState({
-        approveByAdminName: promotionIdData["approveByAdminName"],
-        approveByCostCentreManagerName:
-          promotionIdData["approveByCostCentreManagerName"],
+        validatedByAdminName: promotionIdData["validatedByAdminName"],
+        validatedByCostCentreManagerName:
+          promotionIdData["validatedByCostCentreManagerName"],
         bonus: promotionIdData["bonus"],
         bonusInPercentage: promotionIdData["bonusInPercentage"],
         costCentre: promotionIdData["costCentre"],
@@ -107,6 +109,8 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
         costCentreManagerId: promotionIdData["costCentreManagerId"],
         costCentreManagerName: promotionIdData["costCentreManagerName"],
         departmentId: promotionIdData["departmentId"],
+        reportingManagerId: promotionIdData["reportingManagerId"],
+        reportingManagerName: promotionIdData["reportingManagerName"],
         effectiveDate: promotionIdData["effectiveDate"],
         emailId: promotionIdData["emailId"],
         empName: promotionIdData["empName"],
@@ -230,7 +234,7 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
                 "Promotion confirmed successfully, request sent to Admin":''} 
             </label>
             <div className="text-center mb-2">
-              <Button onClick={handleCloseValue}>Close</Button>
+            <Link to={"/promotion-list"}><Button onClick={handleCloseValue}>Close</Button></Link>
             </div>
           </Modal.Body>
         </Modal> 
@@ -247,7 +251,7 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
              Promotion rejected, the manager has been notified
             </label>
             <div className="text-center mb-2">
-              <Button onClick={handleCloseValue}>Close</Button>
+            <Link to={"/promotion-list"}><Button onClick={handleCloseValue}>Close</Button></Link>
             </div>
           </Modal.Body>
         </Modal> 
@@ -363,8 +367,7 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
                         >
                           <Col sm={5}>
                             <label>
-                              Is this employee is applicable for promotion and
-                              hike{" "}
+                            Is this employee is applicable for salary hike{" "}
                             </label>
                           </Col>
                           <Col sm={2} style={{ marginTop: "0.25rem" }}>
@@ -481,7 +484,17 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
                           marginBottom: "2rem",
                         }}
                       >
-                        <Col sm={6}>
+                          <Col sm={3}>
+                          <div>
+                            <label>
+                              Relocation Bonus:
+                              <label className="itemResult">
+                                &nbsp;&nbsp;{state.relocationBonus}
+                              </label>
+                            </label>
+                          </div>
+                        </Col>
+                        <Col sm={4}>
                           <div>
                             <label>
                               {" "}
@@ -492,16 +505,7 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
                             </label>
                           </div>
                         </Col>
-                        <Col sm={6}>
-                          <div>
-                            <label>
-                              Relocation Bonus:
-                              <label className="itemResult">
-                                &nbsp;&nbsp;{state.relocationBonus}
-                              </label>
-                            </label>
-                          </div>
-                        </Col>
+                      
                       </Row>
 
                       <Row
@@ -555,13 +559,15 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
                           </Col>
                         </Row>
 
-                        <Row 
-                         style={{
-                              marginTop: "2rem",
-                              marginBottom: "2rem",
-                              textAlign: "center",
-                            }}>
-                          <Col>
+                        <Row   
+                      style={{
+                        marginBottom: "2rem",
+                        textAlign: "center",
+                      }}
+                      >
+                        <Col sm={4}>
+                        </Col>
+                        <Col sm={2}> 
                             <button
                             disabled={submitted}
                               className={
@@ -572,8 +578,7 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
                               Submit
                             </button>
                           </Col>
-                          <Col  
-                          >
+                          <Col sm={2}> 
                             <button
                            disabled={submitted}
                               className={
@@ -586,15 +591,15 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
                           </Col>
                         </Row>
                       </>:
-                      <Row>
-                        <Col
-                          style={{
-                            marginTop: "2rem",
-                            marginBottom: "2rem",
-                            marginLeft: "4rem",
-                            textAlign: "center",
-                          }}
-                        >
+                      <Row   
+                      style={{
+                        marginBottom: "2rem",
+                        textAlign: "center",
+                      }}
+                      >
+                        <Col sm={4}>
+                        </Col>
+                        <Col sm={2}> 
                           <button
                           disabled={submitted}
                             className={
@@ -605,15 +610,7 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
                             Approve
                           </button>
                         </Col>
-                        <Col
-                          style={{
-                            marginTop: "2rem",
-                            marginBottom: "2rem",
-                            marginRight: "4rem",
-
-                            textAlign: "center",
-                          }}
-                        >
+                        <Col sm={2}> 
                           <button
                             disabled={submitted}
                           name="reject"
