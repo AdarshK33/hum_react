@@ -19,6 +19,9 @@ const PromotionInitiate = () => {
   const [position, setPosition] = useState();
   const [departmentNew, setDepartmentNew] = useState();
   const [contractType,setContractType] = useState('')
+  const [currentManager,SetCurrentManager] = useState('')
+  const [contractTypeStatus,setContractTypeStatus] = useState(false)
+
   const [state, setState] = useState({
     validatedByAdminName: "",
     validatedByCostCentreManagerName: "",
@@ -61,6 +64,7 @@ const PromotionInitiate = () => {
   const [salaryEffectiveDateError, setSalaryEffectiveDateError] = useState("");
   const [promotionTypeError, setPromotionTypeError] = useState("");
   const [effectiveDateError, setEffectiveDateError] = useState("");
+  const [reportingManagerError,setReportingManagerError] =useState('')
   const [modelStatus,setModelStatus] = useState(false)
   const [submitted, setSubmitted] = useState(false);
   const {
@@ -121,7 +125,9 @@ const PromotionInitiate = () => {
       state.oldDepartment = searchByCostData.department;
      state.managerId = searchByCostData.managerId;
       state.oldFixedGross = searchByCostData.fixedGross;
-    
+    if(searchByCostData.contractType === "intership"||searchByCostData.contractType === "Intership"){
+      setContractTypeStatus(true)
+    }
   
   }}, [searchByCostData]);
   
@@ -133,22 +139,22 @@ const PromotionInitiate = () => {
       searchByCostData !== undefined &&
       Object.keys(searchByCostData).length !== 0
     ) {
-    managerList.map((item)=>{
-      if(item.managerId == searchByCostData.managerId){
-        console.log(item,"managerList1")
-        const temp =
-        item.lastName !== null &&
-        item.lastName !== undefined
-          ? item.lastName
-          : "";
-        state.managerName = item.firstName + " " + temp
-      }
-    })
+   managerList.map((item)=>{
+    if(item.employeeId == searchByCostData.managerId){
+      console.log(item,searchByCostData,"item")
+      const temp =
+      item.lastName !== null &&
+      item.lastName !== undefined
+        ? item.lastName
+        : "";
+      state.managerName = item.firstName + " " + temp
+      SetCurrentManager(item.firstName + " " + temp)
+    }})
+  
   }
-  },[state.mangerName,managerList,searchByCostData])
-  console.log(managerList,state,"managerList2")
+  },[managerList,searchByCostData])
+  console.log(managerList,contractType,state,"managerList2")
 
-  console.log(state, EmpName, "state");
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -185,16 +191,25 @@ const PromotionInitiate = () => {
 
     var newFixedGross = state.newFixedGross;
     if (
-      newFixedGross == "" ||
-      newFixedGross == null ||
-      newFixedGross == undefined
+      newFixedGross !== "" && contractType !== null && contractType !== undefined &&
+      newFixedGross !== null && newFixedGross !== undefined
     ) {
+      if( contractType === "Parttime" ||contractType === "parttime"){
+        if( newFixedGross < 90 || newFixedGross > 200){
+          setNewFixedGrossError("New Fixed Gross not according to contracttype for parttime"); 
+        }else{
+          setNewFixedGrossError('')
+        }
+      }else if(contractType === "Permanent" ||contractType === "permanent"){
+          if(newFixedGross >18000){
+        setNewFixedGrossError("New Fixed Gross not according to contracttype for permanent employee")
+          }else{
+            setNewFixedGrossError('')
+          }
+      }
+    }else{
       setNewFixedGrossError(" Please add fixed gross");
-      console.log(newFixedGrossError);
-    } else {
-      setNewFixedGrossError("");
     }
-
     var newDepartment = state.newDepartment;
     if (
       newDepartment == "" ||
@@ -214,18 +229,18 @@ const PromotionInitiate = () => {
       setReasonError("");
     }
 
-    // var promotionType = state.promotionType;
-    // if (
-    //   promotionType == "" ||
-    //   promotionType == null ||
-    //   promotionType == undefined
-    // ) {
-    //   setPromotionTypeError(
-    //     "Please select is employee is applicable for promotion and hike "
-    //   );
-    // } else {
-    //   setPromotionTypeError("");
-    // }
+    var reportingManagerName = state.reportingManagerName;
+    if (
+      reportingManagerName == "" ||
+      reportingManagerName == null ||
+      reportingManagerName == undefined
+    ) {
+      setReportingManagerError(
+        "Please select reporting manager "
+      );
+    } else {
+      setReportingManagerError("");
+    }
     var effectiveDate = state.effectiveDate;
     if (state.promotionType == 1 &&
       effectiveDate == "" ||
@@ -246,6 +261,9 @@ const PromotionInitiate = () => {
     } else {
       setSalaryEffectiveDateError("");
     }
+
+   
+
 
     if (
       newDepartment !== "" &&
@@ -313,6 +331,7 @@ const PromotionInitiate = () => {
   console.log(modelStatus,"modelStatus")
   const handleCloseValue = ()=>{
     setModelStatus(false)
+    setContractTypeStatus(false)
   }
   const dateOfBirthHandler = (date) => {
     var AdjusteddateValue = new Date(
@@ -400,18 +419,19 @@ const PromotionInitiate = () => {
         if ((item.firstName + " " + temp) === e.target.value) {
           setState({
             ...state,
-            reportingManagerId: item.managerId,
+            reportingManagerId: item.employeeId,
     reportingManagerName:item.firstName + " " + temp,
           });
         }
       });
       console.log(e.target.value, state, "value666");
-    }else {
+    }else{
       setState({
         ...state,
         [e.target.name]: e.target.value,
       });
     }
+  
     console.log(state, "state");
   };
 
@@ -419,7 +439,7 @@ const PromotionInitiate = () => {
     <Fragment>
       <ToastContainer/>
       <Modal
-          show={(contractType === "internship"||contractType === "Internship")?true:false}
+          show={contractTypeStatus}
            onHide={handleCloseValue}
           size="md"
           centered
@@ -688,9 +708,9 @@ const PromotionInitiate = () => {
                                     );
                                   })}
                               </Form.Control>
-                              {departmentIdError ? (
+                              {reportingManagerError ? (
                                 <p style={{ color: "red" }}>
-                                  {departmentIdError}
+                                  {reportingManagerError}
                                 </p>
                               ) : (
                                 ""
@@ -703,7 +723,7 @@ const PromotionInitiate = () => {
                               {" "}
                               Current Manager :
                               <label className="itemResult">
-                                &nbsp;&nbsp;{state.managerName}
+                                &nbsp;&nbsp;{currentManager}
                               </label>
                             </label>
                           </div>
@@ -814,10 +834,14 @@ const PromotionInitiate = () => {
                                   />
                                 </Form.Group>
                               )}
+                                 {/* <p style={{ color: "red" }}>
+                               {(contractType == "parttime" && state.newFixedGross <90 || state.newFixedGross >200)?"parttime invalid":
+                               (contractType == "permanent" && state.newFixedGross < 18000)?"permanent":""}
+                             </p>  */}
                               {newFixedGrossError ? (
-                                <p style={{ color: "red" }}>
-                                  {newFixedGrossError}
-                                </p>
+                               <p style={{ color: "red" }}>
+                               {newFixedGrossError}
+                             </p>
                               ) : (
                                 ""
                               )}

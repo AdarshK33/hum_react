@@ -264,6 +264,35 @@ const PromotionView = (props) => {
                         </Col>
                         </Row>
                         <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "1rem",
+                          marginBottom: "2rem",
+                        }}
+                      >
+                        <Col sm={6}>
+                          <div>
+                            <label>
+                              Reporting Manager:
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.reportingManagerName}
+                              </label>
+                            </label>
+                          </div>
+                        </Col>
+
+                        <Col sm={6}>
+                          <div>
+                            <label>
+                              Current Manager:
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.managerName}
+                              </label>
+                            </label>
+                          </div>
+                        </Col>
+                      </Row>
+                        <Row
                           style={{
                             marginLeft: "2rem",
                             marginTop: "1rem",
