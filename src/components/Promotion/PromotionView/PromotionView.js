@@ -501,6 +501,10 @@ const PromotionView = (props) => {
                       
                       </Row>
 
+                        <>
+                       {state.remarks && state.validatedByAdminName && state.validatedByCostCentreManagerName?
+                       <>
+
                       <Row
                         style={{
                           marginLeft: "2rem",
@@ -508,8 +512,6 @@ const PromotionView = (props) => {
                           marginBottom: "3rem",
                         }}
                       >
-                       {state.remarks && state.validatedByAdminName && state.validatedByCostCentreManagerName?
-                       <>
                          <>
                         <Col sm={2}>
                           <div>
@@ -542,25 +544,42 @@ const PromotionView = (props) => {
                           </div>
                           </Col>
                           </>      
+                          </Row>
+
+                      <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "1rem",
+                          marginBottom: "3rem",
+                        }}
+                      >
                           <>
-                        <Col sm={2}>
+                        <Col sm={3}>
                           <div>
                             <label>
                             Reason For Rejection:
                             </label>
                           </div>
                           </Col>
-                          <Col sm={8}>
+                          <Col sm={7}>
                           <div>
                               <label className="itemResult">
                                 {state.remarks}
                               </label>
                           </div>
                           </Col>
-                          </>        
+                          </>    
+                          </Row>    
                         </>
                        :state.remarks && state.validatedByAdminName?
                        <>
+                                <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "1rem",
+                          marginBottom: "3rem",
+                        }}
+                      >
                                               <>
                        <Col sm={2}>
                          <div>
@@ -569,7 +588,7 @@ const PromotionView = (props) => {
                            </label>
                          </div>
                          </Col>
-                         <Col sm={8}>
+                         <Col sm={2}>
                          <div>
                              <label className="itemResult">
                                {state.validatedByAdminName}
@@ -577,32 +596,42 @@ const PromotionView = (props) => {
                          </div>
                          </Col>
                          </>     
+                         </Row>    
+                         <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "1rem",
+                          marginBottom: "3rem",
+                        }}
+                      >
                          <>
-                       <Col sm={2}>
+                       <Col sm={3}>
                          <div>
                            <label>
                            Reason For Rejection:
                            </label>
                          </div>
                          </Col>
-                         <Col sm={8}>
+                         <Col sm={7}>
                          <div>
                              <label className="itemResult">
                                {state.remarks}
                              </label>
                          </div>
                          </Col>
-                         </></>
+                         </>
+                         </Row>
+                         </>
                        :
                        <>
-                       <Col sm={2}>
+                       <Col sm={3}>
                          <div>
                            <label>
                            Reason For Promotion:
                            </label>
                          </div>
                          </Col>
-                         <Col sm={8}>
+                         <Col sm={7}>
                          <div>
                              <label className="itemResult">
                                {state.reason}
@@ -611,7 +640,7 @@ const PromotionView = (props) => {
                          </Col>
                          </>        
                      }
-                      </Row>
+                     </>
                     </Col>
                   </Row>
                 </Form>

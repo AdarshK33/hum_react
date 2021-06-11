@@ -127,7 +127,7 @@ const PromotionInitiate = () => {
       state.oldDepartment = searchByCostData.department;
      state.currentManagerId = searchByCostData.managerId;
       state.oldFixedGross = searchByCostData.fixedGross;
-    if(searchByCostData.contractType === "intership"||searchByCostData.contractType === "Intership"){
+    if(searchByCostData.contractType === "internship"||searchByCostData.contractType === "Internship"){
       setContractTypeStatus(true)
     }
   
@@ -315,21 +315,20 @@ console.log(newFixedGrossError,"newFixedGrossError")
         salaryEffectiveDate: state.salaryEffectiveDate,
         status: 0,
       };
-      if((contractType == "parttime" ||contractType == "Parttime") &&
+      if((contractType.toLowerCase()=="parttime") &&
        state.newFixedGross >=90 && state.newFixedGross <=200){
      PromotionCreate(infoData);
       setModelStatus(true)
        setSubmitted(true);
     console.log("all okay1", infoData);
-      }else if((contractType == "permanent" ||contractType == "Permanent") && 
+      }else if((contractType.toLowerCase() == "permanent") && 
       state.newFixedGross > 18000){
       PromotionCreate(infoData);
       setModelStatus(true)
        setSubmitted(true);
       console.log("all okay2", infoData);
       }else if(state.promotionType == 0 && 
-        ((contractType == "parttime" ||contractType == "Parttime")||
-        (contractType == "permanent" ||contractType == "Permanent"))){
+        (contractType.toLowerCase()=="parttime"||contractType.toLowerCase()=="permanent")){
         PromotionCreate(infoData);
       setModelStatus(true)
        setSubmitted(true);
