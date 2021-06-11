@@ -23,8 +23,10 @@ const PromotionInitiate = () => {
   const [contractTypeStatus,setContractTypeStatus] = useState(false)
 
   const [state, setState] = useState({
-    validatedByAdminName: "",
-    validatedByCostCentreManagerName: "",
+    validatedAdminId: "",
+    validatedAdminName: "",
+    validatedManagerId: "",
+    validatedManagerName: "",
     bonus: 0,
     bonusInPercentage: 0,
     costCentre: "",
@@ -197,7 +199,7 @@ const PromotionInitiate = () => {
           setNewFixedGrossError('')
         }
       }else if(contractType === "Permanent" ||contractType === "permanent"){
-          if(newFixedGross >18000){
+          if(newFixedGross <18000){
         setNewFixedGrossError("Value should be above 18000")
           }else{
             setNewFixedGrossError('')
@@ -281,8 +283,10 @@ console.log(newFixedGrossError,"newFixedGrossError")
       empName !== undefined
     ) {
       const infoData = {
-        validatedByAdminName: null,
-        validatedByCostCentreManagerName:null,
+        validatedAdminId: null,
+    validatedAdminName: null,
+    validatedManagerId: null,
+    validatedManagerName: null,
         bonus: 0,
         bonusInPercentage: 0,
         costCentre: state.costCentre,
