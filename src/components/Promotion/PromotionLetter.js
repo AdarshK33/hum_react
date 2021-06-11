@@ -35,7 +35,7 @@ const PromotionLetter = () => {
               We are glad to inform you that the management is pleased to
               promote you as <b>{promotionLetterData.promotedPosition}</b> with
               effect from <b> {promotionLetterData.effectiveDate}</b>. You will
-              be reporting to Ms./Mr.<b> {promotionLetterData.managerName}</b>{" "}
+              be reporting to Ms./Mr.<b> {promotionLetterData.reportingManagerName}</b>{" "}
               and your bonus rate is upto
               <b> {promotionLetterData.bonusInPercentage}</b> % per month. All
               the other terms and conditions of your appointment letter dated{" "}
