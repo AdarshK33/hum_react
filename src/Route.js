@@ -91,7 +91,7 @@ import ProbationList from "./components/Probation/ProbationList";
 import ProbationAction from "./components/Probation/ProbationAction";
 import ProbationView from "./components/Probation/ProbationView";
 import PromotionManagerEdit from "./components/Promotion/PromotionManagerEdit";
-import PromotionApproval from "./components/Promotion/PromotionCostCenterManager/PromotionCostCenterManager";
+import PromotionApproval from "./components/Promotion/PromotionApproval/PromotionApproval";
 
 import ViewBonus from "./components/Bonus/ViewBonus";
 const RoutePath = () => {
@@ -128,14 +128,7 @@ const RoutePath = () => {
         path={`${process.env.PUBLIC_URL}/onboard-offer`}
         component={LoginOnboard}
       />
-      {/* <Route
-        path={`${process.env.PUBLIC_URL}/promotion-approval/:promotionId`}
-        component={PromotionApproval}
-      />
-      <Route
-        path={`${process.env.PUBLIC_URL}/promotion/:promotionId`}
-        component={PromotionManagerEdit}
-      /> */}
+      
       <Route path={`${process.env.PUBLIC_URL}/offer`} component={OfferAccept} />
 
       <Fragment>

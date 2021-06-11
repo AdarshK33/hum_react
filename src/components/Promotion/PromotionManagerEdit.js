@@ -20,14 +20,12 @@ import moment from "moment";
 import DatePicker from "react-datepicker";
 import { toast } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
-import { setGlobalCssModule } from "reactstrap/es/utils";
-import { set } from "js-cookie";
 import { ProbationContext } from "../../context/ProbationState";
 import PromotionLetters from "./PromotionLetter";
 import PromotionSalaryLetters from "./PromotionSalaryLetter";
 import calendarImage from "../../assets/images/calendar-image.png";
 
-const PromotionCostCenterManagerEdit = (props) => {
+const PromotionManagerEdit = (props) => {
   const [EmpName, setEmpName] = useState();
   const [position, setPosition] = useState();
   const [departmentNew, setDepartmentNew] = useState();
@@ -44,7 +42,6 @@ const PromotionCostCenterManagerEdit = (props) => {
   const [previewLetter, setPreviewLetter] = useState(false);
   const [letterSent, setLetterSent] = useState(false);
   const [showPreview, setPreview] = useState(false);
-  const [probationStatus, setProbationStatus] = useState("Confirmed");
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
   const [remarkError, setRemarkError] = useState(false);
   const [state, setState] = useState({
@@ -65,8 +62,9 @@ const PromotionCostCenterManagerEdit = (props) => {
     emailId: "",
     empName: "",
     employeeId: "",
-    managerId: "",
-    managerName: "",
+    currentManagerId: "",
+    currentManagerName: "",
+    contractType:"",
     newDepartment: "",
     newFixedGross: 0,
     oldDepartment: "",
@@ -124,12 +122,6 @@ const PromotionCostCenterManagerEdit = (props) => {
     departmentView();
   }, []);
 
-  // useEffect(() => {
-  //   var id = props.history.location.pathname;
-
-  //   console.log(id, id.slice(id.length - 1), "id");
-  //   ViewPromotionById(id.slice(id.length - 1));
-  // }, []);
   useEffect(() => {
     console.log(promotionIdData, "promotionIdData");
     if (
@@ -155,8 +147,9 @@ const PromotionCostCenterManagerEdit = (props) => {
         emailId: promotionIdData["emailId"],
         empName: promotionIdData["empName"],
         employeeId: promotionIdData["employeeId"],
-        managerId: promotionIdData["managerId"],
-        managerName: promotionIdData["managerName"],
+        currentManagerId: promotionIdData["currentManagerId"],
+        currentManagerName: promotionIdData["currentManagerName"],
+        contractType: promotionIdData["contractType"],
         newDepartment: promotionIdData["newDepartment"],
         newFixedGross: promotionIdData["newFixedGross"],
         oldDepartment: promotionIdData["oldDepartment"],
@@ -308,8 +301,9 @@ const PromotionCostCenterManagerEdit = (props) => {
       emailId: null,
       empName: state.empName,
       employeeId: state.employeeId,
-      managerId: promotionIdData["managerId"],
-      managerName: promotionIdData["managerName"],
+      currentManagerId: promotionIdData["currentManagerId"],
+      currentManagerName: promotionIdData["currentManagerName"],
+      contractType: promotionIdData["contractType"],
       newDepartment: state.newDepartment,
       newFixedGross: state.newFixedGross,
       oldDepartment: state.oldDepartment,
@@ -534,7 +528,7 @@ const PromotionCostCenterManagerEdit = (props) => {
                           <Col sm={6}>
                             <div>
                               <label>
-                                Fixed Gross:
+                                Fixed Gross {`${(state.contractType =="parttime" ||state.contractType =="Parttime")?"(per/hr)":''}`}:
                                 <label className="itemResult">
                                   &nbsp;&nbsp; {state.oldFixedGross}
                                 </label>
@@ -565,7 +559,7 @@ const PromotionCostCenterManagerEdit = (props) => {
                             <Col sm={6}>
                               <div>
                                 <label>
-                                  New Fixed Gross:
+                                  New Fixed Gross {`${(state.contractType =="parttime" ||state.contractType =="Parttime")?"(per/hr)":''}`}:
                                   <label className="itemResult">
                                     &nbsp;&nbsp; {state.newFixedGross}
                                   </label>
@@ -599,7 +593,7 @@ const PromotionCostCenterManagerEdit = (props) => {
                             <label>
                               Current Manager:
                               <label className="itemResult">
-                                &nbsp;&nbsp; {state.managerName}
+                                &nbsp;&nbsp; {state.currentManagerName}
                               </label>
                             </label>
                           </div>
@@ -878,4 +872,4 @@ const PromotionCostCenterManagerEdit = (props) => {
   );
 };
 
-export default PromotionCostCenterManagerEdit;
+export default PromotionManagerEdit;

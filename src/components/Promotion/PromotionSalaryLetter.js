@@ -36,7 +36,7 @@ const PromotionSalaryLetter = () => {
               salary will be INR. <b>{promotionLetterData.newFixedGross}</b>/-
               with effect from <b>{promotionLetterData.effectiveDate}</b>. You
               will be reporting to Ms./Mr.{" "}
-              <b>{promotionLetterData.managerName},</b>. All the other terms and
+              <b>{promotionLetterData.reportingManagerName},</b>. All the other terms and
               conditions of your appointment letter dated{" "}
               <b>{promotionLetterData.appointmentLetterDate}</b> shall remain
               the same.

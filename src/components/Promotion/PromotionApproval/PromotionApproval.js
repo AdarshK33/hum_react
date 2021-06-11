@@ -16,7 +16,7 @@ import { setGlobalCssModule } from "reactstrap/es/utils";
 import { set } from "js-cookie";
 import { AppContext } from "../../../context/AppState";
 
-const PromotionCostCenterManager = (props) => {
+const PromotionApproval = (props) => {
   const [EmpName, setEmpName] = useState();
   const [position, setPosition] = useState();
   const [departmentNew, setDepartmentNew] = useState();
@@ -28,8 +28,8 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
 
 
   const [state, setState] = useState({
-    approveByAdminName: "",
-    approveByCostCentreManagerName: "",
+    validatedByAdminName: "",
+    validatedByCostCentreManagerName: "",
     bonus: 0,
     bonusInPercentage: 0,
     costCentre: "",
@@ -43,8 +43,9 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
     emailId: "",
     empName: "",
     employeeId: "",
-    managerId: "",
-    managerName: "",
+    currentManagerId: "",
+    currentManagerName:"",
+    contractType: "",
     newDepartment: "",
     newFixedGross: 0,
     oldDepartment: "",
@@ -115,8 +116,9 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
         emailId: promotionIdData["emailId"],
         empName: promotionIdData["empName"],
         employeeId: promotionIdData["employeeId"],
-        managerId: promotionIdData["managerId"],
-        managerName: promotionIdData["managerName"],
+        currentManagerId: promotionIdData["currentManagerId"],
+        currentManagerName: promotionIdData["currentManagerName"],
+        contractType: promotionIdData["contractType"],
         newDepartment: promotionIdData["newDepartment"],
         newFixedGross: promotionIdData["newFixedGross"],
         oldDepartment: promotionIdData["oldDepartment"],
@@ -381,7 +383,7 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
                             <label>
                               Current Manager:
                               <label className="itemResult">
-                                &nbsp;&nbsp; {state.managerName}
+                                &nbsp;&nbsp; {state.currentManagerName}
                               </label>
                             </label>
                           </div>
@@ -449,7 +451,7 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
                         <Col sm={3}>
                           <div>
                             <label>
-                              Fixed Gross:
+                              Fixed Gross {`${(state.contractType =="parttime" ||state.contractType =="Parttime")?"(per/hr)":''}`}:
                               <label className="itemResult">
                                 &nbsp;&nbsp; {state.oldFixedGross}
                               </label>
@@ -459,7 +461,7 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
                         {state.promotionType == 1?<> <Col sm={4}>
                           <div>
                             <label>
-                              New Fixed Gross:
+                              New Fixed Gross {`${(state.contractType =="parttime" ||state.contractType =="Parttime")?"(per/hr)":''}`}:
                               <label className="itemResult">
                                 &nbsp;&nbsp; {state.newFixedGross}
                               </label>
@@ -478,34 +480,7 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
                           </div>
                         </Col></>:''}
                       </Row>
-                      {/* <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "1rem",
-                          marginBottom: "3rem",
-                        }}
-                      >
-                        <Col sm={6}>
-                          <div>
-                            <label>
-                              Fixed Gross:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.oldFixedGross}
-                              </label>
-                            </label>
-                          </div>
-                        </Col>
-                        <Col sm={6}>
-                          <div>
-                            <label>
-                              New Fixed Gross:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.newFixedGross}
-                              </label>
-                            </label>
-                          </div>
-                        </Col>
-                      </Row> */}
+                     
                       <Row
                         style={{
                           marginLeft: "2rem",
@@ -580,11 +555,6 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
                               required
                             />
 
-                            {/* {reasonError ? (
-                              <p style={{ color: "red" }}>{reasonError}</p>
-                            ) : (
-                              ""
-                            )} */}
                           </Col>
                         </Row>
 
@@ -664,4 +634,4 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
   );
 };
 
-export default PromotionCostCenterManager;
+export default PromotionApproval;
