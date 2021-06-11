@@ -21,8 +21,10 @@ const PromotionView = (props) => {
   const [departmentNew, setDepartmentNew] = useState();
 
   const [state, setState] = useState({
-    validatedByAdminName: "",
-    validatedByCostCentreManagerName: "",
+    validatedAdminId: "",
+    validatedAdminName: "",
+    validatedManagerId: "",
+    validatedManagerName: "",
     bonus: 0,
     bonusInPercentage: 0,
     costCentre: "",
@@ -89,9 +91,10 @@ const PromotionView = (props) => {
       Object.keys(promotionIdData).length !== 0
     ) {
       setState({
-        validatedByAdminName: promotionIdData["validatedByAdminName"],
-        validatedByCostCentreManagerName:
-          promotionIdData["validatedByCostCentreManagerName"],
+        validatedAdminId: promotionIdData["validatedAdminId"],
+        validatedAdminName: promotionIdData["validatedAdminName"],
+        validatedManagerId:promotionIdData["validatedManagerId"],
+        validatedManagerName:promotionIdData["validatedManagerName"],
         bonus: promotionIdData["bonus"],
         bonusInPercentage: promotionIdData["bonusInPercentage"],
         costCentre: promotionIdData["costCentre"],
@@ -502,7 +505,7 @@ const PromotionView = (props) => {
                       </Row>
 
                         <>
-                       {state.remarks && state.validatedByAdminName && state.validatedByCostCentreManagerName?
+                       {state.remarks && state.validatedAdminName && state.validatedManagerName?
                        <>
 
                       <Row
@@ -516,14 +519,14 @@ const PromotionView = (props) => {
                         <Col sm={2}>
                           <div>
                             <label>
-                            Approved By:
+                            Validated By:
                             </label>
                           </div>
                           </Col>
                           <Col sm={2}>
                           <div>
                               <label className="itemResult">
-                                {state.validatedByCostCentreManagerName}
+                                {state.validatedManagerName}
                               </label>
                           </div>
                           </Col>
@@ -539,7 +542,7 @@ const PromotionView = (props) => {
                           <Col sm={2}>
                           <div>
                               <label className="itemResult">
-                                {state.validatedByAdminName}
+                                {state.validatedAdminName}
                               </label>
                           </div>
                           </Col>
@@ -571,7 +574,7 @@ const PromotionView = (props) => {
                           </>    
                           </Row>    
                         </>
-                       :state.remarks && state.validatedByAdminName?
+                       :state.remarks && state.validatedManagerName?
                        <>
                                 <Row
                         style={{
@@ -591,7 +594,7 @@ const PromotionView = (props) => {
                          <Col sm={2}>
                          <div>
                              <label className="itemResult">
-                               {state.validatedByAdminName}
+                               {state.validatedAdminName}
                              </label>
                          </div>
                          </Col>
@@ -622,23 +625,97 @@ const PromotionView = (props) => {
                          </>
                          </Row>
                          </>
-                       :
-                       <>
-                       <Col sm={3}>
-                         <div>
-                           <label>
-                           Reason For Promotion:
-                           </label>
-                         </div>
-                         </Col>
-                         <Col sm={7}>
-                         <div>
-                             <label className="itemResult">
-                               {state.reason}
+                       :<>
+                       <Row
+                         style={{
+                           marginLeft: "2rem",
+                           marginTop: "1rem",
+                           marginBottom: "3rem",
+                         }}
+                       >
+                          <>
+                         <Col sm={2}>
+                           <div>
+                             <label>
+                             Validated By:
                              </label>
-                         </div>
-                         </Col>
-                         </>        
+                           </div>
+                           </Col>
+                           <Col sm={2}>
+                           <div>
+                               <label className="itemResult">
+                                 {state.validatedManagerName}
+                               </label>
+                           </div>
+                           </Col>
+                           </>      
+                           <>
+                         <Col sm={2}>
+                           <div>
+                             <label>
+                             Validated By:
+                             </label>
+                           </div>
+                           </Col>
+                           <Col sm={2}>
+                           <div>
+                               <label className="itemResult">
+                                 {state.validatedAdminName}
+                               </label>
+                           </div>
+                           </Col>
+                           </>      
+                           </Row>
+ 
+                       <Row
+                         style={{
+                           marginLeft: "2rem",
+                           marginTop: "1rem",
+                           marginBottom: "3rem",
+                         }}
+                       >
+                           <>
+                         <Col sm={3}>
+                           <div>
+                             <label>
+                             Reason For Promotion:
+                             </label>
+                           </div>
+                           </Col>
+                           <Col sm={7}>
+                           <div>
+                               <label className="itemResult">
+                                 {state.reason}
+                               </label>
+                           </div>
+                           </Col>
+                           </>    
+                           </Row>    
+                         </>
+                      //  <>
+                      //     <Row
+                      //   style={{
+                      //     marginLeft: "2rem",
+                      //     marginTop: "1rem",
+                      //     marginBottom: "3rem",
+                      //   }}
+                      // >
+                      //  <Col sm={3}>
+                      //    <div>
+                      //      <label>
+                      //      Reason For Promotion:
+                      //      </label>
+                      //    </div>
+                      //    </Col>
+                      //    <Col sm={7}>
+                      //    <div>
+                      //        <label className="itemResult">
+                      //          {state.reason}
+                      //        </label>
+                      //    </div>
+                      //    </Col>
+                      //    </Row>
+                      //    </>        
                      }
                      </>
                     </Col>

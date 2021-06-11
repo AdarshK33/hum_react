@@ -45,10 +45,12 @@ const PromotionManagerEdit = (props) => {
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
   const [remarkError, setRemarkError] = useState(false);
   const [state, setState] = useState({
-    validatedByAdminDate:null,
-    validatedByAdminName: "",
-    validatedByCostCentreManagerDate:null,
-    validatedByCostCentreManagerName: "",
+    adminValidatedDate:null,
+    validatedAdminId: "",
+    validatedAdminName: "",
+    managerValidatedDate:null,
+    validatedManagerId:"",
+    validatedManagerName:"",
     bonus: 0,
     bonusInPercentage: 0,
     costCentre: "",
@@ -130,10 +132,12 @@ const PromotionManagerEdit = (props) => {
       Object.keys(promotionIdData).length !== 0
     ) {
       setState({
-        validatedByAdminDate:promotionIdData['validatedByAdminDate']!== null?new Date(promotionIdData["validatedByAdminDate"]): null,
-        validatedByAdminName: promotionIdData["validatedByAdminName"],
-        validatedByCostCentreManagerDate:promotionIdData['validatedByCostCentreManagerDate']!== null?new Date(promotionIdData["validatedByCostCentreManagerDate"]): null,
-        validatedByCostCentreManagerName:promotionIdData["validatedByCostCentreManagerName"],
+        adminValidatedDate:promotionIdData['adminValidatedDate'],
+        validatedAdminId: promotionIdData["validatedAdminId"],
+        validatedAdminName: promotionIdData["validatedAdminName"],
+        managerValidatedDate:promotionIdData['managerValidatedDate'],
+        validatedManagerId:promotionIdData["validatedManagerId"],
+        validatedManagerName:promotionIdData["validatedManagerName"],
         bonus: promotionIdData["bonus"],
         bonusInPercentage: promotionIdData["bonusInPercentage"],
         costCentre: promotionIdData["costCentre"],
@@ -284,10 +288,12 @@ const PromotionManagerEdit = (props) => {
       setEffectiveDateError("");
     }
     const infoData = {
-      validatedByAdminDate:promotionIdData['validatedByAdminDate'],
-      validatedByAdminName: promotionIdData["validatedByAdminName"],
-      validatedByCostCentreManagerDate:promotionIdData['validatedByCostCentreManagerDate'],
-      validatedByCostCentreManagerName:promotionIdData["validatedByCostCentreManagerName"],
+      adminValidatedDate:promotionIdData['adminValidatedDate'],
+      validatedAdminId: promotionIdData["validatedAdminId"],
+      validatedAdminName: promotionIdData["validatedAdminName"],
+      managerValidatedDate:promotionIdData['managerValidatedDate'],
+      validatedManagerId:promotionIdData["validatedManagerId"],
+      validatedManagerName:promotionIdData["validatedManagerName"],
       bonus: promotionIdData["bonus"],
       bonusInPercentage: promotionIdData["bonusInPercentage"],
       costCentre: promotionIdData["costCentre"],
