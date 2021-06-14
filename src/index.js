@@ -25,6 +25,7 @@ import { GroupProvider } from "./context/GroupState";
 import { CandidateProvider } from "./context/CandidateState";
 import { OfferProvider } from "./context/OfferState";
 import {PromotionProvider} from "./context/PromotionState"
+import {DisciplinaryProvider} from "./context/DisciplinaryState"
 import { OnBoardProvider } from "./context/OnBoardState";
 import { DocsVerificationProvider } from "./context/DocverificationState";
 import { EmploeeSeparationProvider } from "./context/EmployeeSeparationState";
@@ -70,6 +71,7 @@ function Root() {
                                           <EmploeeSeparationProvider>
                                             <SeparationProvider>
                                             <ProbationProvider>
+                                            <DisciplinaryProvider>
                                             <PromotionProvider>
                                               <BonusProvider>
                                                 <BrowserRouter basename={"/"}>
@@ -83,6 +85,7 @@ function Root() {
                                                 </BrowserRouter>
                                               </BonusProvider>
                                               </PromotionProvider>
+                                              </DisciplinaryProvider>
                                             </ProbationProvider>
                                             </SeparationProvider>
                                           </EmploeeSeparationProvider>
