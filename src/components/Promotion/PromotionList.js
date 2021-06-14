@@ -126,11 +126,12 @@ const PromotionList = () => {
                 style={{ textAlign: "center", fontSize: "larger" }}
               >
                 <Row>
-                  <Col sm={3}>
+                  <Col >
                     <div
                       style={{
                         width: "65%",
                         float: "left",
+                        
                         marginTop: "10px",
                         marginLeft: "8px",
                       }}
@@ -157,7 +158,6 @@ const PromotionList = () => {
                   </Button>
                 </Link> */}
                   </Col>
-                  <Col sm={2}></Col>
                   <Col sm={2} style={{ marginTop: "5px" }}>
                     <b>PROMOTION LIST</b>
                   </Col>
@@ -192,7 +192,7 @@ const PromotionList = () => {
                             <option value="" disabled selected hidden>
                               Search status
                             </option>
-                            <option value="all">all</option>
+                            <option value="all">All</option>
                             <option value="Pending">Pending</option>
                             <option value="In Progress">In Progress</option>
                             <option value="Approved">Approved</option>
@@ -280,10 +280,10 @@ const PromotionList = () => {
                             <td>{item.oldPosition}</td>
                             <td>{item.promotedPosition}</td>
                             <td>{item.promotionDate}</td>
-                            <td>{item.validatedByCostCentreManagerName}</td>
-                            <td>{item.validatedByCostCentreManagerDate}</td>
-                            <td>{item.validatedByAdminName}</td>
-                            <td>{item.validatedByAdminDate}</td>
+                            <td>{item.validatedManagerName}</td>
+                            <td>{item.managerValidatedDate}</td>
+                            <td>{item.validatedAdminName}</td>
+                            <td>{item.adminValidatedDate}</td>
                             <td>
                               {/* {item.statusDesc} */}
                               {/* {item.status == 0?"Pending":item.status ==1? "Approved By Admin":
