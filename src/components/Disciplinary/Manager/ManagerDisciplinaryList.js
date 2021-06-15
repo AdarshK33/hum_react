@@ -54,9 +54,9 @@ const ManagerDisciplinaryList = () => {
     setPageCount(pageNumber - 1);
     setCurrentPage(pageNumber);
     if (searchValue !== "") {
-      candidateView(searchValue, pageNumber - 1);
+      disciplinaryListView(searchValue, pageNumber - 1);
     } else {
-      candidateView("all", pageNumber - 1);
+      disciplinaryListView("all", pageNumber - 1);
     }
     setCurrentRecords(candidateList);
   };
@@ -67,10 +67,12 @@ const ManagerDisciplinaryList = () => {
   };
 
   const searchDataHandler = () => {
+    setPageCount(0);
+    setCurrentPage(1);
     if (searchValue !== "") {
-      candidateView(searchValue, pageCount);
+      disciplinaryListView(searchValue, 0);
     } else {
-      candidateView("all", pageCount);
+      disciplinaryListView("all", 0);
     }
   };
 
@@ -112,7 +114,7 @@ const ManagerDisciplinaryList = () => {
                     />
                   </div>
                 </div>
-                <Link to="/manager-offer-release">
+                <Link to="/issue-show-cause-notice">
                   <Button className="apply-button btn btn-light mr-2">
                     Issue Show Cause Notice
                   </Button>

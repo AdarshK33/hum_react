@@ -94,6 +94,7 @@ import PromotionManagerEdit from "./components/Promotion/PromotionManagerEdit";
 import PromotionApproval from "./components/Promotion/PromotionApproval/PromotionApproval";
 
 import ManagerDisciplinaryList from "./components/Disciplinary/Manager/ManagerDisciplinaryList";
+import IssueShowCauseNotice from "./components/Disciplinary/Manager/IssueShowCauseNotice";
 
 import ViewBonus from "./components/Bonus/ViewBonus";
 const RoutePath = () => {
@@ -267,6 +268,11 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/probation`}
             // component={ProbationList}
             component={ManagerDisciplinaryList}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/issue-show-cause-notice`}
+            component={IssueShowCauseNotice}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/exit-approval`}

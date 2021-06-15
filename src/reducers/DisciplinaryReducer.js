@@ -5,6 +5,14 @@ const DisciplinaryReducer = (state, action) => {
 
     case "DISCIPLINARY_SEARCH":
       return { ...state, extensionLetterData: action.disciplinarySearchData };
+    case "DISCIPLINARY_REASONS":
+      return { ...state, extensionLetterData: action.disciplinaryResonsData };
+
+    case "CREATE_SHOW_CAUSE_NOTICE":
+      return {
+        ...state,
+        extensionLetterData: action.showCauseIssueCreateResponse,
+      };
 
     default:
       return state;

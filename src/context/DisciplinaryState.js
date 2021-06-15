@@ -8,6 +8,8 @@ const initial_state = {
   total: {},
   disciplinaryListData: {},
   disciplinarySearchData: {},
+  disciplinaryResonsData: {},
+  showCauseIssueCreateResponse: {},
 };
 
 export const DisciplinaryContext = createContext();
@@ -49,6 +51,7 @@ export const DisciplinaryProvider = (props) => {
       .then((response) => {
         state.disciplinarySearchData = response.data.data;
         setLoader(false);
+        toast.info(response.data.message);
         console.log(response);
         console.log("search data disc", state.disciplinarySearchData);
 
@@ -62,11 +65,60 @@ export const DisciplinaryProvider = (props) => {
       });
   };
 
+  const disciplinaryResonsView = (key) => {
+    setLoader(true);
+    client
+      .get(
+        "/api/v1/disciplinary/view/reason/disciplinary?disciplinaryType= " + key
+      )
+      .then((response) => {
+        state.disciplinaryResonsData = response.data.data;
+        setLoader(false);
+        console.log(response);
+        console.log("disciplinaryResonsData", state.disciplinaryResonsData);
+
+        return dispatch({
+          type: "DISCIPLINARY_REASONS",
+          payload: state.disciplinaryResonsData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const createShowCauseIssue = (updatedInfo, empId) => {
+    setLoader(true);
+    console.log("updatedInfo", updatedInfo);
+    client
+      .post("/api/v1/disciplinary/create", updatedInfo)
+      .then((response) => {
+        state.showCauseIssueCreateResponse = response.data.data;
+        toast.info(response.data.message);
+        disciplinaryEmployeeSearch(empId);
+        setLoader(false);
+        console.log(state.showCauseIssueCreateResponse);
+        console.log("showCauseIssueCreateResponse", response);
+
+        return dispatch({
+          type: "CREATE_SHOW_CAUSE_NOTICE",
+          payload: state.showCauseIssueCreateResponse,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <DisciplinaryContext.Provider
       value={{
         disciplinaryListView,
         disciplinaryEmployeeSearch,
+        disciplinaryResonsView,
+        createShowCauseIssue,
+        showCauseIssueCreateResponse: state.showCauseIssueCreateResponse,
+        disciplinaryResonsData: state.disciplinaryResonsData,
         disciplinarySearchData: state.disciplinarySearchData,
         total: state.total,
         disciplinaryListData: state.disciplinaryListData,
