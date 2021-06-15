@@ -94,6 +94,8 @@ import PromotionManagerEdit from "./components/Promotion/PromotionManagerEdit";
 import PromotionApproval from "./components/Promotion/PromotionApproval/PromotionApproval";
 
 import ViewBonus from "./components/Bonus/ViewBonus";
+
+import ManagerWarningAction from "./components/Disciplinary/Manager/ManagerWarningAction"
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
   console.log(user, state, "route8888888888888");
@@ -114,10 +116,10 @@ const RoutePath = () => {
         component={OnBoardingStepper}
       />
 
-      {/* <Route
-        path={`${process.env.PUBLIC_URL}/finance-clearance`}
-        component={FinanceClearanceList}
-      /> */}
+      <Route
+        path={`${process.env.PUBLIC_URL}/manager-warning-action-view`}
+        component={ManagerWarningAction}
+      />
 
       {/* <Route
             path={`${process.env.PUBLIC_URL}/onboard`}
