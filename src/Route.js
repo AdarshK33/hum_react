@@ -93,6 +93,8 @@ import ProbationView from "./components/Probation/ProbationView";
 import PromotionManagerEdit from "./components/Promotion/PromotionManagerEdit";
 import PromotionApproval from "./components/Promotion/PromotionApproval/PromotionApproval";
 
+import ManagerDisciplinaryList from "./components/Disciplinary/Manager/ManagerDisciplinaryList";
+
 import ViewBonus from "./components/Bonus/ViewBonus";
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
@@ -128,7 +130,7 @@ const RoutePath = () => {
         path={`${process.env.PUBLIC_URL}/onboard-offer`}
         component={LoginOnboard}
       />
-      
+
       <Route path={`${process.env.PUBLIC_URL}/offer`} component={OfferAccept} />
 
       <Fragment>
@@ -263,7 +265,8 @@ const RoutePath = () => {
 
           <Route
             path={`${process.env.PUBLIC_URL}/probation`}
-            component={ProbationList}
+            // component={ProbationList}
+            component={ManagerDisciplinaryList}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/exit-approval`}
