@@ -657,10 +657,7 @@ const ProbationAction = () => {
         </Container>
       </Modal>
 
-      <Breadcrumb
-        title="PROBATION CONFIRMATION"
-        parent="PROBATION CONFIRMATION"
-      />
+      <Breadcrumb title="PROBATION CONFIRMATION" parent="Probation List" />
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
