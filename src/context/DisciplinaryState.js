@@ -10,6 +10,7 @@ const initial_state = {
   disciplinarySearchData: {},
   disciplinaryResonsData: {},
   showCauseIssueCreateResponse: {},
+  issueShowCauseNoticeData: {},
 };
 
 export const DisciplinaryContext = createContext();
@@ -95,7 +96,7 @@ export const DisciplinaryProvider = (props) => {
       .then((response) => {
         state.showCauseIssueCreateResponse = response.data.data;
         toast.info(response.data.message);
-        disciplinaryEmployeeSearch(empId);
+        // disciplinaryEmployeeSearch(empId);
         setLoader(false);
         console.log(state.showCauseIssueCreateResponse);
         console.log("showCauseIssueCreateResponse", response);
@@ -110,6 +111,26 @@ export const DisciplinaryProvider = (props) => {
       });
   };
 
+  const IssueShowCauseNoticeLetter = (empId) => {
+    setLoader(true);
+    client
+      .get("/api/v1/disciplinary/letter/" + empId)
+      .then((response) => {
+        state.issueShowCauseNoticeData = response.data.data;
+        setLoader(false);
+        console.log(response);
+        console.log("issueShowCauseNoticeData", state.issueShowCauseNoticeData);
+
+        return dispatch({
+          type: "ISSUE_SHOW_CAUSE_LETTER",
+          payload: state.issueShowCauseNoticeData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <DisciplinaryContext.Provider
       value={{
@@ -117,6 +138,8 @@ export const DisciplinaryProvider = (props) => {
         disciplinaryEmployeeSearch,
         disciplinaryResonsView,
         createShowCauseIssue,
+        IssueShowCauseNoticeLetter,
+        issueShowCauseNoticeData: state.issueShowCauseNoticeData,
         showCauseIssueCreateResponse: state.showCauseIssueCreateResponse,
         disciplinaryResonsData: state.disciplinaryResonsData,
         disciplinarySearchData: state.disciplinarySearchData,

@@ -3,15 +3,9 @@ import { Row, Col, Form, Button, Container, Modal } from "react-bootstrap";
 import { Search, PlusCircle, MinusCircle } from "react-feather";
 import Breadcrumb from "../../common/breadcrumb";
 import { EmployeeSeparationContext } from "../../../context/EmployeeSeparationState";
-import { OfferContext } from "../../../context/OfferState";
-import { PermissionContext } from "../../../context/PermissionState";
-import moment from "moment";
-import DatePicker from "react-datepicker";
 import { toast } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
-import { SeparationContext } from "../../../context/SepearationState";
-import { setGlobalCssModule } from "reactstrap/es/utils";
-import RelievingLetter from "./RelivingLetter";
+import ShowCauseNotice from "./ShowCauseNotice";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 
@@ -34,7 +28,7 @@ const IssueShowCauseNotice = () => {
   const [showCauseReasonError, setShowCauseReasonError] = useState(false);
   const [reasonForCauseError, setReasonForCauseError] = useState(false);
 
-  const [showRelivingModal, setShow] = useState(false);
+  const [showShowCauseNoticeModal, setShow] = useState(false);
   //   const [showSuccessModal, setSuccessModal] = useState(false);
   const [showSignature, setShowSignature] = useState(false);
   const [saveLetter, setSaveLetter] = useState(false);
@@ -57,6 +51,7 @@ const IssueShowCauseNotice = () => {
     reasonForCause: "",
     reason: "",
     remarks: "",
+    clickOnsubmit: false,
   });
   const [disciplinaryReasonList, setdisciplinaryReasonList] = useState([]);
   const [resonsForShowCauseList, setResonsForShowCauseList] = useState([]);
@@ -66,14 +61,13 @@ const IssueShowCauseNotice = () => {
     disciplinaryResonsView,
     disciplinaryResonsData,
     createShowCauseIssue,
+    showCauseIssueCreateResponse,
+    IssueShowCauseNoticeLetter,
+    issueShowCauseNoticeData,
   } = useContext(DisciplinaryContext);
-  const {
-    employeeData,
-    ViewEmployeeProfile,
-    employeeProfileData,
-    fetchRelievingLetterData,
-    relivingLetterData,
-  } = useContext(EmployeeSeparationContext);
+  const { ViewEmployeeProfile, employeeProfileData } = useContext(
+    EmployeeSeparationContext
+  );
 
   useEffect(() => {
     ViewEmployeeProfile();
@@ -87,7 +81,7 @@ const IssueShowCauseNotice = () => {
       disciplinarySearchData !== undefined &&
       Object.keys(disciplinarySearchData).length !== 0
     ) {
-      if (submitted === false) {
+      if (submitted === false && state.clickOnsubmit === false) {
         if (checkForExist === true || firstTimeUpdate === true) {
           if (
             disciplinarySearchData.disciplinaryAction !== null &&
@@ -102,7 +96,7 @@ const IssueShowCauseNotice = () => {
         }
       }
     }
-  }, [EmpName, disciplinarySearchData, checkForExist]);
+  }, [disciplinarySearchData]);
 
   useEffect(() => {
     if (
@@ -158,6 +152,7 @@ const IssueShowCauseNotice = () => {
     if (EmpName !== null) {
       disciplinaryEmployeeSearch(EmpName);
       setCheckForExist(true);
+      state.clickOnsubmit = false;
     }
   };
 
@@ -195,8 +190,7 @@ const IssueShowCauseNotice = () => {
   }, [disciplinaryResonsData, changeInReason]);
   console.log("resonsForShowCauseList", resonsForShowCauseList);
 
-  //   reliving letter
-  const handleRelivingClose = () => setShow(false);
+  const handleShowCauseLetterClose = () => setShow(false);
 
   const saveOfferLetter = () => {
     setSaveLetter(true);
@@ -207,10 +201,10 @@ const IssueShowCauseNotice = () => {
     setShowSignature(true);
   };
 
-  const submitfinalRelivingLetter = () => {
+  const submitfinalShowCauseLetter = () => {
     if (
-      employeeData.employeeId !== null &&
-      employeeData.employeeId !== undefined
+      disciplinarySearchData.employeeId !== null &&
+      disciplinarySearchData.employeeId !== undefined
     ) {
       setSubmitLetter(true);
       setLetterSent(true);
@@ -220,26 +214,34 @@ const IssueShowCauseNotice = () => {
     }
   };
 
-  const previewRelivingLetter = (e) => {
+  const previewShowCauseLetter = (e) => {
     e.preventDefault();
-    if (employeeData !== null && employeeData !== undefined) {
-      fetchRelievingLetterData(employeeData.employeeId);
+    if (
+      disciplinarySearchData !== null &&
+      disciplinarySearchData !== undefined
+    ) {
+      IssueShowCauseNoticeLetter(disciplinarySearchData.employeeId);
       setSubmitLetter(false);
       setPreviewLetter(true);
       setShow(true);
     }
   };
-  const relivingLetterClick = (e) => {
+  const ShowCauseLetterClick = (e) => {
     e.preventDefault();
-    fetchRelievingLetterData(employeeData.employeeId);
-    handleShow();
-    setPreviewGeneratedLetter(true);
+    if (
+      disciplinarySearchData !== null &&
+      disciplinarySearchData !== undefined
+    ) {
+      IssueShowCauseNoticeLetter(disciplinarySearchData.employeeId);
+      handleShow();
+      setPreviewGeneratedLetter(true);
+    }
   };
   const handleShow = () => {
     console.log("inside show moodal");
     setShow(true);
   };
-  // reliving letter end
+  // end
   const handleClose = () => {
     setModal(false);
     setSuccessModal(false);
@@ -281,7 +283,9 @@ const IssueShowCauseNotice = () => {
     if (e.target.value === "Others") {
       disciplinaryResonsView(2);
       setChangeInReason(2);
+      state.reasonForCause = " ";
     } else {
+      state.reasonForCause = "NA";
       setChangeInReason(1);
     }
 
@@ -345,6 +349,8 @@ const IssueShowCauseNotice = () => {
     console.log("submit handler");
 
     e.preventDefault();
+    setSubmitted(true);
+    setPreview(true);
     const value = checkValidations();
     if (value === true) {
       console.log("INSIDE");
@@ -366,7 +372,8 @@ const IssueShowCauseNotice = () => {
           employeeId: state.empId,
           managerComment: state.reason,
           reasonId: changeInReason,
-          reasonDetailsId: reasonDetailsId,
+          reasonDetailsId:
+            changeInReason === 1 ? changeInReason : reasonDetailsId,
           showCauseLetter: null,
           showCauseNotice: null,
           status: 0,
@@ -401,8 +408,9 @@ const IssueShowCauseNotice = () => {
 
       console.log("createShowCauseData", InfoData);
       setSubmitted(true);
+      state.clickOnsubmit = true;
       //   CreateEmplyoeeExist(data2, state.empId);
-      //   createShowCauseIssue(InfoData,state.empId)
+      createShowCauseIssue(InfoData, state.empId);
       setPreview(true);
       setSuccessModal(true);
     }
@@ -410,12 +418,12 @@ const IssueShowCauseNotice = () => {
 
   return (
     <Fragment>
-      {/* reliving letter */}
+      {/* letter */}
 
       {submitLetter ? (
         <Modal
-          show={showRelivingModal}
-          onHide={handleRelivingClose}
+          show={showShowCauseNoticeModal}
+          onHide={handleShowCauseLetterClose}
           size="md"
           centered
         >
@@ -425,18 +433,22 @@ const IssueShowCauseNotice = () => {
               Show cause letter has been issued to the employee
             </label>
             <div className="text-center">
-              <Button onClick={handleRelivingClose}>Close</Button>
+              <Button onClick={handleShowCauseLetterClose}>Close</Button>
             </div>
           </Modal.Body>
         </Modal>
-      ) : previewLetter || showRelivingModal ? (
-        <Modal show={showRelivingModal} onHide={handleRelivingClose} size="md">
+      ) : previewLetter || showShowCauseNoticeModal ? (
+        <Modal
+          show={showShowCauseNoticeModal}
+          onHide={handleShowCauseLetterClose}
+          size="md"
+        >
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body>
-            {relivingLetterData &&
-            relivingLetterData !== undefined &&
-            relivingLetterData !== null ? (
-              <RelievingLetter />
+            {issueShowCauseNoticeData &&
+            issueShowCauseNoticeData !== undefined &&
+            issueShowCauseNoticeData !== null ? (
+              <ShowCauseNotice />
             ) : (
               ""
             )}
@@ -663,7 +675,7 @@ const IssueShowCauseNotice = () => {
                       <Row
                         style={{
                           marginLeft: "2rem",
-                          marginTop: "1rem",
+                          marginTop: "2rem",
                           marginBottom: "1rem",
                         }}
                       >
@@ -675,7 +687,7 @@ const IssueShowCauseNotice = () => {
 
                         <Col sm={3}>
                           <div>
-                            {false ? (
+                            {submitted === true ? (
                               <label className="itemResult">
                                 &nbsp;&nbsp; {showCauseReason}
                               </label>
@@ -728,6 +740,10 @@ const IssueShowCauseNotice = () => {
                               <label className="itemResult">
                                 &nbsp;&nbsp; NA
                               </label>
+                            ) : submitted === true ? (
+                              <label className="itemResult">
+                                &nbsp;&nbsp;{state.reasonForCause}
+                              </label>
                             ) : (
                               <Form.Group>
                                 <Form.Control
@@ -776,28 +792,38 @@ const IssueShowCauseNotice = () => {
                           <label>State Reason for Show Cause Notice:</label>
                         </Col>
                         <Col sm={10}>
-                          <Form.Control
-                            style={
-                              reasonError
-                                ? { borderColor: "red" }
-                                : { borderRadius: "5px" }
-                            }
-                            as="textarea"
-                            rows={4}
-                            name="reason"
-                            value={state.reason}
-                            placeholder="Write here.."
-                            onChange={(e) => changeHandler(e)}
-                            required
-                          />
+                          <div>
+                            {submitted === true ? (
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.reason}
+                              </label>
+                            ) : (
+                              <Form.Group>
+                                <Form.Control
+                                  style={
+                                    reasonError
+                                      ? { borderColor: "red" }
+                                      : { borderRadius: "5px" }
+                                  }
+                                  as="textarea"
+                                  rows={4}
+                                  name="reason"
+                                  value={state.reason}
+                                  placeholder="Write here.."
+                                  onChange={(e) => changeHandler(e)}
+                                  required
+                                />
 
-                          {reasonError ? (
-                            <p style={{ color: "red" }}>
-                              &nbsp; *Please provide reason
-                            </p>
-                          ) : (
-                            ""
-                          )}
+                                {reasonError ? (
+                                  <p style={{ color: "red" }}>
+                                    &nbsp; *Please provide reason
+                                  </p>
+                                ) : (
+                                  ""
+                                )}
+                              </Form.Group>
+                            )}
+                          </div>
                         </Col>
                       </Row>
 
@@ -820,20 +846,14 @@ const IssueShowCauseNotice = () => {
                           </button>
 
                           {!saveLetter &&
-                          employeeData &&
-                          employeeData &&
-                          employeeData !== null &&
-                          employeeData !== undefined &&
-                          Object.keys(employeeData).length !== 0 &&
-                          employeeData.status === 2 &&
                           showPreview === true &&
                           submitted === true ? (
                             <button
                               // disabled={!submitted}
-                              className={"LettersButtons"}
-                              onClick={relivingLetterClick}
+                              className={"LettersButtonsExtra"}
+                              onClick={ShowCauseLetterClick}
                             >
-                              Generate Letter
+                              Generate Show Cause Notice
                             </button>
                           ) : (
                             ""
@@ -842,10 +862,10 @@ const IssueShowCauseNotice = () => {
                           previewGeneratedLetter &&
                           showPreview ? (
                             <button
-                              className={"LettersButtons"}
-                              onClick={previewRelivingLetter}
+                              className={"LettersButtonsExtra"}
+                              onClick={previewShowCauseLetter}
                             >
-                              Preview Letter
+                              Preview Show Cause Notice
                             </button>
                           ) : (
                             ""
@@ -871,14 +891,14 @@ const IssueShowCauseNotice = () => {
                                       ? " confirmButton "
                                       : "stepperButtons"
                                   }
-                                  onClick={submitfinalRelivingLetter}
+                                  onClick={submitfinalShowCauseLetter}
                                 >
                                   Submit
                                 </button>
                               ) : (
                                 // <Button
                                 //   type="button"
-                                //   onClick={submitfinalRelivingLetter}
+                                //   onClick={submitfinalShowCauseLetter}
                                 //   style={{
                                 //     marginTop: "2rem",
                                 //     marginBottom: "2rem",

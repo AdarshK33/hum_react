@@ -137,6 +137,7 @@ const ManagerDisciplinaryList = () => {
                       <th scope="col">Employee Action</th>
                       <th scope="col">Status</th>
                       <th scope="col">PIP</th>
+                      <th scope="col">View</th>
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
@@ -198,6 +199,17 @@ const ManagerDisciplinaryList = () => {
                               item.disciplinaryWarning !== undefined
                                 ? item.disciplinaryWarning.improvementPeriod
                                 : ""}
+                            </td>
+                            <td>
+                              <Link
+                                to={"/disciplinary-view/" + item.employeeId}
+                              >
+                                <Eye
+                                  onClick={() => {
+                                    disciplinaryEmployeeSearch(item.employeeId);
+                                  }}
+                                />
+                              </Link>
                             </td>
 
                             <td>

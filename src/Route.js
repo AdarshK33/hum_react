@@ -95,6 +95,7 @@ import PromotionApproval from "./components/Promotion/PromotionApproval/Promotio
 
 import ManagerDisciplinaryList from "./components/Disciplinary/Manager/ManagerDisciplinaryList";
 import IssueShowCauseNotice from "./components/Disciplinary/Manager/IssueShowCauseNotice";
+import DisciplinaryView from "./components/Disciplinary/Manager/DisciplinaryView";
 
 import ViewBonus from "./components/Bonus/ViewBonus";
 const RoutePath = () => {
@@ -273,6 +274,10 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/issue-show-cause-notice`}
             component={IssueShowCauseNotice}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/disciplinary-view/:employeeid`}
+            component={DisciplinaryView}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/exit-approval`}
