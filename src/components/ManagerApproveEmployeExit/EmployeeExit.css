@@ -9,6 +9,14 @@
   border: 1px solid#006ebb;
   margin-left: 40px;
 }
+.LettersButtonsExtra {
+  width: 230px;
+  height: 30px;
+  background-color: #006ebb;
+  color: white;
+  border: 1px solid#006ebb;
+  margin-left: 40px;
+}
 .LetterCnfButton {
   background: rgb(170, 170, 170) !important;
   border-color: rgb(170, 170, 170) !important;
