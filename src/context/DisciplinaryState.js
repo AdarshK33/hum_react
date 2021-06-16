@@ -65,6 +65,14 @@ export const DisciplinaryProvider = (props) => {
         console.log(error);
       });
   };
+  const MakedisciplinaryEmployeeSearchNull = () => {
+    state.disciplinarySearchData = {};
+
+    return dispatch({
+      type: "DISCIPLINARY_SEARCH",
+      payload: state.disciplinarySearchData,
+    });
+  };
 
   const disciplinaryResonsView = (key) => {
     setLoader(true);
@@ -139,6 +147,7 @@ export const DisciplinaryProvider = (props) => {
         disciplinaryResonsView,
         createShowCauseIssue,
         IssueShowCauseNoticeLetter,
+        MakedisciplinaryEmployeeSearchNull,
         issueShowCauseNoticeData: state.issueShowCauseNoticeData,
         showCauseIssueCreateResponse: state.showCauseIssueCreateResponse,
         disciplinaryResonsData: state.disciplinaryResonsData,

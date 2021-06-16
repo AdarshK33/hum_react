@@ -23,6 +23,7 @@ const ManagerDisciplinaryList = () => {
     disciplinaryListData,
     disciplinaryEmployeeSearch,
     disciplinarySearchData,
+    MakedisciplinaryEmployeeSearchNull,
   } = useContext(DisciplinaryContext);
   const { user } = useContext(AppContext);
   const [pageCount, setPageCount] = useState(0);
@@ -32,6 +33,7 @@ const ManagerDisciplinaryList = () => {
   const { costCenterList, CostCenter } = useContext(AdminContext);
   useEffect(() => {
     disciplinaryListView("all", pageCount);
+    MakedisciplinaryEmployeeSearchNull();
     console.log("user role", user);
   }, []);
 

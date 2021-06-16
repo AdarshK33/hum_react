@@ -57,6 +57,7 @@ const DisciplinaryView = () => {
       state.empContractType = disciplinarySearchData.contractType;
       state.empCostCenterName = disciplinarySearchData.employeeCostCentre;
       state.empAddress = disciplinarySearchData.employeeAddress;
+      state.mngrId = disciplinarySearchData.managerId;
       state.mngrName = disciplinarySearchData.managerName;
       state.mngrPosition = disciplinarySearchData.managerDesignation;
       state.mngrCostCenterName = disciplinarySearchData.managerCostCentre;
@@ -121,14 +122,14 @@ const DisciplinaryView = () => {
 
   return (
     <Fragment>
-      <Breadcrumb title="DISCIPLINARY ACTION" parent="DISCIPLINARY ACTION" />
+      <Breadcrumb title="DISCIPLINARY VIEW" parent="DISCIPLINARY VIEW" />
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
             <div className="card" style={{ borderRadius: "1rem" }}>
               <div>
                 <div className="OnBoardHeading">
-                  <b>DISCIPLINARY ACTION</b>
+                  <b>DISCIPLINARY VIEW</b>
                 </div>
                 <Form>
                   <Row
@@ -236,7 +237,7 @@ const DisciplinaryView = () => {
                       <Row
                         style={{
                           marginLeft: "2rem",
-                          marginTop: "1rem",
+                          marginTop: "2rem",
                           marginBottom: "1rem",
                         }}
                       >

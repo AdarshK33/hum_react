@@ -8,6 +8,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import ShowCauseNotice from "./ShowCauseNotice";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
+import { useHistory } from "react-router-dom";
 
 const IssueShowCauseNotice = () => {
   const [showCauseReason, setShowCauseReason] = useState("");
@@ -24,6 +25,7 @@ const IssueShowCauseNotice = () => {
 
   const [intern, setIntern] = useState(false);
   const [EmpName, setEmpName] = useState();
+  const history = useHistory();
 
   const [showCauseReasonError, setShowCauseReasonError] = useState(false);
   const [reasonForCauseError, setReasonForCauseError] = useState(false);
@@ -191,6 +193,10 @@ const IssueShowCauseNotice = () => {
   console.log("resonsForShowCauseList", resonsForShowCauseList);
 
   const handleShowCauseLetterClose = () => setShow(false);
+  const handleShowCauseLetterClose1 = () => {
+    setShow(false);
+    history.push("./probation");
+  };
 
   const saveOfferLetter = () => {
     setSaveLetter(true);
@@ -433,7 +439,7 @@ const IssueShowCauseNotice = () => {
               Show cause letter has been issued to the employee
             </label>
             <div className="text-center">
-              <Button onClick={handleShowCauseLetterClose}>Close</Button>
+              <Button onClick={handleShowCauseLetterClose1}>Close</Button>
             </div>
           </Modal.Body>
         </Modal>
