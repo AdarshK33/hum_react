@@ -1,11 +1,7 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Row, Col, Form, Button, Container, Modal } from "react-bootstrap";
-import { Search, PlusCircle, MinusCircle } from "react-feather";
 import Breadcrumb from "../../common/breadcrumb";
-import { toast } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
-import ShowCauseNotice from "./ShowCauseNotice";
-import calendarImage from "../../../assets/images/calendar-image.png";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 
 const DisciplinaryView = () => {
@@ -26,18 +22,12 @@ const DisciplinaryView = () => {
     reason: "",
     remarks: "",
     empRemarks: "",
+    warningReason: "",
+    pip: "",
+    warningComment: "",
   });
-  const [disciplinaryReasonList, setdisciplinaryReasonList] = useState([]);
-  const [resonsForShowCauseList, setResonsForShowCauseList] = useState([]);
-  const {
-    disciplinaryEmployeeSearch,
-    disciplinarySearchData,
-    disciplinaryResonsView,
-    disciplinaryResonsData,
-  } = useContext(DisciplinaryContext);
-  //   useEffect(() => {
-  //     disciplinaryResonsView()
-  //   }, [])
+  const { disciplinaryEmployeeSearch, disciplinarySearchData } =
+    useContext(DisciplinaryContext);
 
   useEffect(() => {
     if (
@@ -73,63 +63,36 @@ const DisciplinaryView = () => {
           disciplinarySearchData.disciplinaryAction.managerComment;
         state.reasonForCause =
           disciplinarySearchData.disciplinaryAction.reasonDetails;
-
-        if (disciplinarySearchData.disciplinaryAction.reasonId === 1) {
-          setShowCauseReason("Non-Performance");
-        } else if (disciplinarySearchData.disciplinaryAction.reasonId === 2) {
-          setShowCauseReason("Others");
-        }
+        setShowCauseReason(disciplinarySearchData.disciplinaryAction.reason);
+      }
+      if (
+        disciplinarySearchData.disciplinaryWarning !== null &&
+        disciplinarySearchData.disciplinaryWarning !== undefined &&
+        disciplinarySearchData.disciplinaryWarning !== ""
+      ) {
+        state.warningReason = disciplinarySearchData.disciplinaryWarning.reason;
+        state.warningComment =
+          disciplinarySearchData.disciplinaryWarning.managerComment;
+        state.pip =
+          disciplinarySearchData.disciplinaryWarning.improvementPeriod;
       }
     }
   }, [disciplinarySearchData]);
-
-  console.log("disciplinaryResonsData", disciplinaryResonsData);
   console.log("disciplinarySearchData", disciplinarySearchData);
-
-  useEffect(() => {
-    let tempArr = [];
-
-    tempArr.push({
-      label: "Non-Performance",
-      value: 1,
-    });
-    tempArr.push({
-      label: "Others",
-      value: 2,
-    });
-    setdisciplinaryReasonList(tempArr);
-  }, []);
-  console.log("disciplinaryReasonList", disciplinaryReasonList);
-
-  useEffect(() => {
-    if (
-      disciplinaryResonsData &&
-      disciplinaryResonsData !== null &&
-      disciplinaryResonsData !== undefined &&
-      Object.keys(disciplinaryResonsData).length !== 0
-    ) {
-      let tempArray = [];
-      disciplinaryResonsData.map((item, i) => {
-        tempArray.push({
-          label: disciplinaryResonsData[i].reason,
-          value: disciplinaryResonsData[i].reasonId,
-        });
-      });
-      setResonsForShowCauseList(tempArray);
-    }
-  }, [disciplinaryResonsData]);
-  console.log("resonsForShowCauseList", resonsForShowCauseList);
 
   return (
     <Fragment>
-      <Breadcrumb title="DISCIPLINARY VIEW" parent="DISCIPLINARY VIEW" />
+      <Breadcrumb
+        title="DISCIPLINARY ACTION VIEW"
+        parent="DISCIPLINARY ACTION VIEW"
+      />
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
             <div className="card" style={{ borderRadius: "1rem" }}>
               <div>
                 <div className="OnBoardHeading">
-                  <b>DISCIPLINARY VIEW</b>
+                  <b>DISCIPLINARY ACTION VIEW</b>
                 </div>
                 <Form>
                   <Row
@@ -325,6 +288,144 @@ const DisciplinaryView = () => {
                           </div>
                         </Col>
                       </Row>
+                      <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "2rem",
+                          marginBottom: "3rem",
+                        }}
+                      >
+                        <Col sm={3}>
+                          <label>Issue Warning Letter </label>
+                        </Col>
+                        <Col sm={2} style={{ marginTop: "0.25rem" }}>
+                          <Form.Group>
+                            <div className="boxField_2 input">
+                              <input
+                                className="largerCheckbox"
+                                type="checkbox"
+                                value="yes"
+                                disabled={true}
+                                checked={
+                                  disciplinarySearchData &&
+                                  disciplinarySearchData &&
+                                  disciplinarySearchData !== null &&
+                                  disciplinarySearchData !== undefined &&
+                                  Object.keys(disciplinarySearchData).length !==
+                                    0 &&
+                                  disciplinarySearchData.disciplinaryWarning !==
+                                    null &&
+                                  disciplinarySearchData.disciplinaryWarning !==
+                                    undefined &&
+                                  disciplinarySearchData.disciplinaryWarning !==
+                                    ""
+                                    ? true
+                                    : false
+                                }
+                                style={{ borderColor: "blue" }}
+                              />
+                              <label className="itemResult">Yes</label>
+                            </div>
+                          </Form.Group>
+                        </Col>
+                        <Col sm={2} style={{ marginTop: "0.25rem" }}>
+                          <Form.Group>
+                            <div className="boxField_2 input">
+                              <input
+                                className="largerCheckbox"
+                                type="checkbox"
+                                value="no"
+                                disabled={true}
+                                checked={
+                                  (disciplinarySearchData &&
+                                    disciplinarySearchData &&
+                                    disciplinarySearchData !== null &&
+                                    disciplinarySearchData !== undefined &&
+                                    Object.keys(disciplinarySearchData)
+                                      .length !== 0 &&
+                                    disciplinarySearchData.disciplinaryWarning ===
+                                      null) ||
+                                  disciplinarySearchData.disciplinaryWarning ===
+                                    undefined ||
+                                  disciplinarySearchData.disciplinaryWarning ===
+                                    ""
+                                    ? true
+                                    : false
+                                }
+                                style={{ borderColor: "blue" }}
+                              />
+                              <label className="itemResult">No</label>
+                            </div>
+                          </Form.Group>
+                        </Col>
+                      </Row>
+                      {disciplinarySearchData &&
+                      disciplinarySearchData &&
+                      disciplinarySearchData !== null &&
+                      disciplinarySearchData !== undefined &&
+                      Object.keys(disciplinarySearchData).length !== 0 &&
+                      disciplinarySearchData.disciplinaryWarning !== null &&
+                      disciplinarySearchData.disciplinaryWarning !==
+                        undefined &&
+                      disciplinarySearchData.disciplinaryWarning !== "" ? (
+                        <div>
+                          <Row
+                            style={{
+                              marginLeft: "2rem",
+                              marginTop: "2rem",
+                              marginBottom: "1rem",
+                            }}
+                          >
+                            <Col sm={6}>
+                              <div>
+                                <label>
+                                  Reason for warning:
+                                  <label className="itemResult">
+                                    &nbsp;&nbsp; {state.warningReason}
+                                  </label>
+                                </label>
+                              </div>
+                            </Col>
+                            <Col sm={6}>
+                              <div>
+                                <label>
+                                  Performance improvement period:
+                                  <label className="itemResult">
+                                    &nbsp;&nbsp;{" "}
+                                    {state.pip !== 0
+                                      ? state.pip === 1
+                                        ? state.pip + " Month"
+                                        : state.pip + " Months"
+                                      : ""}
+                                  </label>
+                                </label>
+                              </div>
+                            </Col>
+                          </Row>
+                          <Row
+                            style={{
+                              marginLeft: "2rem",
+                              marginTop: "2rem",
+                              marginBottom: "1rem",
+                            }}
+                          >
+                            <Col sm={2}>
+                              <div>
+                                <label>State detailed reason:</label>
+                              </div>
+                            </Col>
+                            <Col sm={6}>
+                              <div>
+                                <label className="itemResult">
+                                  &nbsp;&nbsp; {state.warningComment}
+                                </label>
+                              </div>
+                            </Col>
+                          </Row>
+                        </div>
+                      ) : (
+                        ""
+                      )}
                     </Col>
                   </Row>
                 </Form>
