@@ -33,7 +33,7 @@ export const DisciplinaryProvider = (props) => {
       .then((response) => {
         state.disciplinaryListData = response.data.data.data;
         state.total = response.data.data.total;
-        MakedisciplinaryEmployeeSearchNull()
+        MakedisciplinaryEmployeeSearchNull();
         setLoader(false);
         console.log(state.total);
         console.log(response);
@@ -125,9 +125,12 @@ export const DisciplinaryProvider = (props) => {
       .post("/api/v1/disciplinary/create", updatedInfo)
       .then((response) => {
         state.showCauseIssueCreateResponse = response.data.data;
+        console.log(response.data, "createDisciplinary");
+
+        disciplinaryEmployeeSearch(response.data.data.disciplinaryId);
         toast.info(response.data.message);
         // disciplinaryEmployeeSearch(empId);
-        console.log(response.data,"createDisciplinary")
+
         setLoader(false);
         console.log(state.showCauseIssueCreateResponse);
         console.log("showCauseIssueCreateResponse", response);
@@ -162,6 +165,20 @@ export const DisciplinaryProvider = (props) => {
       });
   };
 
+  const SubmitDisciplinaryLetter = (key) => {
+    setLoader(true);
+    client
+      .get("/api/v1/disciplinary/send/" + key)
+      .then((response) => {
+        console.log(response);
+        toast.info(response.data.message);
+        setLoader(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <DisciplinaryContext.Provider
       value={{
@@ -172,6 +189,7 @@ export const DisciplinaryProvider = (props) => {
         IssueShowCauseNoticeLetter,
         MakedisciplinaryEmployeeSearchNull,
         EmployeeSearchWithKey,
+        SubmitDisciplinaryLetter,
         disciplinaryEmpSearchData: state.disciplinaryEmpSearchData,
         issueShowCauseNoticeData: state.issueShowCauseNoticeData,
         showCauseIssueCreateResponse: state.showCauseIssueCreateResponse,

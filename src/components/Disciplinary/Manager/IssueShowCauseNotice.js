@@ -64,7 +64,7 @@ const IssueShowCauseNotice = () => {
     disciplinaryResonsData,
     createShowCauseIssue,
     showCauseIssueCreateResponse,
-    IssueShowCauseNoticeLetter,
+    SubmitDisciplinaryLetter,
     issueShowCauseNoticeData,
     EmployeeSearchWithKey,
     disciplinaryEmpSearchData,
@@ -211,9 +211,18 @@ const IssueShowCauseNotice = () => {
 
   const submitfinalShowCauseLetter = () => {
     if (
-      disciplinaryEmpSearchData.employeeId !== null &&
-      disciplinaryEmpSearchData.employeeId !== undefined
+      disciplinarySearchData &&
+      disciplinarySearchData &&
+      disciplinarySearchData !== null &&
+      disciplinarySearchData !== undefined &&
+      Object.keys(disciplinarySearchData).length !== 0 &&
+      disciplinarySearchData.disciplinaryAction !== null &&
+      disciplinarySearchData.disciplinaryAction !== undefined &&
+      disciplinarySearchData.disciplinaryAction.disciplinaryId !== 0
     ) {
+      SubmitDisciplinaryLetter(
+        disciplinarySearchData.disciplinaryAction.disciplinaryId
+      );
       setSubmitLetter(true);
       setLetterSent(true);
       setShow(true);
@@ -225,10 +234,18 @@ const IssueShowCauseNotice = () => {
   const previewShowCauseLetter = (e) => {
     e.preventDefault();
     if (
-      disciplinaryEmpSearchData !== null &&
-      disciplinaryEmpSearchData !== undefined
+      disciplinarySearchData &&
+      disciplinarySearchData &&
+      disciplinarySearchData !== null &&
+      disciplinarySearchData !== undefined &&
+      Object.keys(disciplinarySearchData).length !== 0 &&
+      disciplinarySearchData.disciplinaryAction !== null &&
+      disciplinarySearchData.disciplinaryAction !== undefined &&
+      disciplinarySearchData.disciplinaryAction.disciplinaryId !== 0
     ) {
-      IssueShowCauseNoticeLetter(disciplinaryEmpSearchData.employeeId);
+      disciplinaryEmployeeSearch(
+        disciplinarySearchData.disciplinaryAction.disciplinaryId
+      );
       setSubmitLetter(false);
       setPreviewLetter(true);
       setShow(true);
@@ -237,10 +254,18 @@ const IssueShowCauseNotice = () => {
   const ShowCauseLetterClick = (e) => {
     e.preventDefault();
     if (
-      disciplinaryEmpSearchData !== null &&
-      disciplinaryEmpSearchData !== undefined
+      disciplinarySearchData &&
+      disciplinarySearchData &&
+      disciplinarySearchData !== null &&
+      disciplinarySearchData !== undefined &&
+      Object.keys(disciplinarySearchData).length !== 0 &&
+      disciplinarySearchData.disciplinaryAction !== null &&
+      disciplinarySearchData.disciplinaryAction !== undefined &&
+      disciplinarySearchData.disciplinaryAction.disciplinaryId !== 0
     ) {
-      IssueShowCauseNoticeLetter(disciplinaryEmpSearchData.employeeId);
+      disciplinaryEmployeeSearch(
+        disciplinarySearchData.disciplinaryAction.disciplinaryId
+      );
       handleShow();
       setPreviewGeneratedLetter(true);
     }
@@ -452,9 +477,13 @@ const IssueShowCauseNotice = () => {
         >
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body>
-            {issueShowCauseNoticeData &&
-            issueShowCauseNoticeData !== undefined &&
-            issueShowCauseNoticeData !== null ? (
+            {disciplinarySearchData &&
+            disciplinarySearchData &&
+            disciplinarySearchData !== null &&
+            disciplinarySearchData !== undefined &&
+            Object.keys(disciplinarySearchData).length !== 0 &&
+            disciplinarySearchData.disciplinaryAction !== null &&
+            disciplinarySearchData.disciplinaryAction !== undefined ? (
               <ShowCauseNotice />
             ) : (
               ""

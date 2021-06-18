@@ -5,6 +5,7 @@ import Breadcrumb from "../../common/breadcrumb";
 import { toast } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
 import ShowCauseNotice from "../Manager/ShowCauseNoticeLetter";
+import WarningLetter from "../WarningManager/WarningLetter";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 import { useHistory } from "react-router-dom";
@@ -368,16 +369,15 @@ const CostCenterManagerAction = () => {
             disciplinarySearchData.disciplinaryWarning !== null &&
             disciplinarySearchData.disciplinaryWarning !== undefined &&
             disciplinarySearchData.disciplinaryWarning !== "" ? (
-              issueShowCauseNoticeData &&
-              issueShowCauseNoticeData !== undefined &&
-              issueShowCauseNoticeData !== null ? (
-                "Warning letter"
-              ) : (
-                ""
-              )
-            ) : issueShowCauseNoticeData &&
-              issueShowCauseNoticeData !== undefined &&
-              issueShowCauseNoticeData !== null ? (
+              <WarningLetter />
+            ) : disciplinarySearchData &&
+              disciplinarySearchData &&
+              disciplinarySearchData !== null &&
+              disciplinarySearchData !== undefined &&
+              Object.keys(disciplinarySearchData).length !== 0 &&
+              disciplinarySearchData.disciplinaryAction !== null &&
+              disciplinarySearchData.disciplinaryAction !== undefined &&
+              disciplinarySearchData.disciplinaryAction !== "" ? (
               <ShowCauseNotice />
             ) : (
               ""
