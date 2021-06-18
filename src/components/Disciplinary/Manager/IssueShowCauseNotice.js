@@ -66,6 +66,8 @@ const IssueShowCauseNotice = () => {
     showCauseIssueCreateResponse,
     IssueShowCauseNoticeLetter,
     issueShowCauseNoticeData,
+    EmployeeSearchWithKey,
+    disciplinaryEmpSearchData,
   } = useContext(DisciplinaryContext);
   const { ViewEmployeeProfile, employeeProfileData } = useContext(
     EmployeeSeparationContext
@@ -77,17 +79,17 @@ const IssueShowCauseNotice = () => {
 
   useEffect(() => {
     if (
-      disciplinarySearchData &&
-      disciplinarySearchData &&
-      disciplinarySearchData !== null &&
-      disciplinarySearchData !== undefined &&
-      Object.keys(disciplinarySearchData).length !== 0
+      disciplinaryEmpSearchData &&
+      disciplinaryEmpSearchData &&
+      disciplinaryEmpSearchData !== null &&
+      disciplinaryEmpSearchData !== undefined &&
+      Object.keys(disciplinaryEmpSearchData).length !== 0
     ) {
       if (submitted === false && state.clickOnsubmit === false) {
         if (checkForExist === true || firstTimeUpdate === true) {
           if (
-            disciplinarySearchData.disciplinaryAction !== null &&
-            disciplinarySearchData.disciplinaryAction !== undefined
+            disciplinaryEmpSearchData.disciplinaryAction !== null &&
+            disciplinaryEmpSearchData.disciplinaryAction !== undefined
           ) {
             console.log("********");
             setShowInfoModal(true);
@@ -98,26 +100,26 @@ const IssueShowCauseNotice = () => {
         }
       }
     }
-  }, [disciplinarySearchData]);
+  }, [disciplinaryEmpSearchData]);
 
   useEffect(() => {
     if (
-      disciplinarySearchData &&
-      disciplinarySearchData &&
-      disciplinarySearchData !== null &&
-      disciplinarySearchData !== undefined &&
-      Object.keys(disciplinarySearchData).length !== 0
+      disciplinaryEmpSearchData &&
+      disciplinaryEmpSearchData &&
+      disciplinaryEmpSearchData !== null &&
+      disciplinaryEmpSearchData !== undefined &&
+      Object.keys(disciplinaryEmpSearchData).length !== 0
     ) {
-      state.empId = disciplinarySearchData.employeeId;
+      state.empId = disciplinaryEmpSearchData.employeeId;
       setEmpName(
-        disciplinarySearchData.employeeName +
+        disciplinaryEmpSearchData.employeeName +
           " " +
-          disciplinarySearchData.employeeId
+          disciplinaryEmpSearchData.employeeId
       );
 
-      state.empContractType = disciplinarySearchData.contractType;
-      state.empCostCenterName = disciplinarySearchData.employeeCostCentre;
-      state.empAddress = disciplinarySearchData.employeeAddress;
+      state.empContractType = disciplinaryEmpSearchData.contractType;
+      state.empCostCenterName = disciplinaryEmpSearchData.employeeCostCentre;
+      state.empAddress = disciplinaryEmpSearchData.employeeAddress;
 
       if (
         state.empContractType === "internship" ||
@@ -128,7 +130,7 @@ const IssueShowCauseNotice = () => {
         setIntern(false);
       }
     }
-  }, [disciplinarySearchData]);
+  }, [disciplinaryEmpSearchData]);
 
   useEffect(() => {
     if (
@@ -149,10 +151,10 @@ const IssueShowCauseNotice = () => {
     }
   }, [employeeProfileData]);
   console.log("disciplinaryResonsData", disciplinaryResonsData);
-  console.log("disciplinarySearchData", disciplinarySearchData);
+  console.log("disciplinaryEmpSearchData", disciplinaryEmpSearchData);
   const searchDataHandler = () => {
     if (EmpName !== null) {
-      disciplinaryEmployeeSearch(EmpName);
+      EmployeeSearchWithKey(EmpName);
       setCheckForExist(true);
       state.clickOnsubmit = false;
     }
@@ -209,8 +211,8 @@ const IssueShowCauseNotice = () => {
 
   const submitfinalShowCauseLetter = () => {
     if (
-      disciplinarySearchData.employeeId !== null &&
-      disciplinarySearchData.employeeId !== undefined
+      disciplinaryEmpSearchData.employeeId !== null &&
+      disciplinaryEmpSearchData.employeeId !== undefined
     ) {
       setSubmitLetter(true);
       setLetterSent(true);
@@ -223,10 +225,10 @@ const IssueShowCauseNotice = () => {
   const previewShowCauseLetter = (e) => {
     e.preventDefault();
     if (
-      disciplinarySearchData !== null &&
-      disciplinarySearchData !== undefined
+      disciplinaryEmpSearchData !== null &&
+      disciplinaryEmpSearchData !== undefined
     ) {
-      IssueShowCauseNoticeLetter(disciplinarySearchData.employeeId);
+      IssueShowCauseNoticeLetter(disciplinaryEmpSearchData.employeeId);
       setSubmitLetter(false);
       setPreviewLetter(true);
       setShow(true);
@@ -235,10 +237,10 @@ const IssueShowCauseNotice = () => {
   const ShowCauseLetterClick = (e) => {
     e.preventDefault();
     if (
-      disciplinarySearchData !== null &&
-      disciplinarySearchData !== undefined
+      disciplinaryEmpSearchData !== null &&
+      disciplinaryEmpSearchData !== undefined
     ) {
-      IssueShowCauseNoticeLetter(disciplinarySearchData.employeeId);
+      IssueShowCauseNoticeLetter(disciplinaryEmpSearchData.employeeId);
       handleShow();
       setPreviewGeneratedLetter(true);
     }
@@ -390,7 +392,7 @@ const IssueShowCauseNotice = () => {
         employeeAddress: state.empAddress,
         employeeCostCentre: state.empCostCenterName,
         employeeId: state.empId,
-        employeeName: disciplinarySearchData.employeeName,
+        employeeName: disciplinaryEmpSearchData.employeeName,
         managerCostCentre: null,
         managerDesignation: null,
         managerId: null,
@@ -415,7 +417,6 @@ const IssueShowCauseNotice = () => {
       console.log("createShowCauseData", InfoData);
       setSubmitted(true);
       state.clickOnsubmit = true;
-      //   CreateEmplyoeeExist(data2, state.empId);
       createShowCauseIssue(InfoData, state.empId);
       setPreview(true);
       setSuccessModal(true);

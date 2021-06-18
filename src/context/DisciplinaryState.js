@@ -11,6 +11,7 @@ const initial_state = {
   disciplinaryResonsData: {},
   showCauseIssueCreateResponse: {},
   issueShowCauseNoticeData: {},
+  disciplinaryEmpSearchData: {},
 };
 
 export const DisciplinaryContext = createContext();
@@ -32,6 +33,7 @@ export const DisciplinaryProvider = (props) => {
       .then((response) => {
         state.disciplinaryListData = response.data.data.data;
         state.total = response.data.data.total;
+        MakedisciplinaryEmployeeSearchNull()
         setLoader(false);
         console.log(state.total);
         console.log(response);
@@ -48,7 +50,7 @@ export const DisciplinaryProvider = (props) => {
   const disciplinaryEmployeeSearch = (key) => {
     setLoader(true);
     client
-      .get("/api/v1/disciplinary/search?key=" + key)
+      .get("/api/v1/disciplinary/view/" + key)
       .then((response) => {
         state.disciplinarySearchData = response.data.data;
         setLoader(false);
@@ -65,12 +67,32 @@ export const DisciplinaryProvider = (props) => {
         console.log(error);
       });
   };
+  const EmployeeSearchWithKey = (key) => {
+    setLoader(true);
+    client
+      .get("/api/v1/disciplinary/search?key=" + key)
+      .then((response) => {
+        state.disciplinaryEmpSearchData = response.data.data;
+        setLoader(false);
+        toast.info(response.data.message);
+        console.log(response);
+        console.log("search data emp", state.disciplinaryEmpSearchData);
+
+        return dispatch({
+          type: "DISCIPLINARY_SEARCH_WITH_KEY",
+          payload: state.disciplinaryEmpSearchData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const MakedisciplinaryEmployeeSearchNull = () => {
-    state.disciplinarySearchData = {};
+    state.disciplinaryEmpSearchData = {};
 
     return dispatch({
-      type: "DISCIPLINARY_SEARCH",
-      payload: state.disciplinarySearchData,
+      type: "DISCIPLINARY_SEARCH_WITH_KEY",
+      payload: state.disciplinaryEmpSearchData,
     });
   };
 
@@ -148,6 +170,8 @@ export const DisciplinaryProvider = (props) => {
         createShowCauseIssue,
         IssueShowCauseNoticeLetter,
         MakedisciplinaryEmployeeSearchNull,
+        EmployeeSearchWithKey,
+        disciplinaryEmpSearchData: state.disciplinaryEmpSearchData,
         issueShowCauseNoticeData: state.issueShowCauseNoticeData,
         showCauseIssueCreateResponse: state.showCauseIssueCreateResponse,
         disciplinaryResonsData: state.disciplinaryResonsData,

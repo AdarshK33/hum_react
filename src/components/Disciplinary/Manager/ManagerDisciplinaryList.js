@@ -35,9 +35,10 @@ const ManagerDisciplinaryList = () => {
     disciplinaryListView("all", pageCount);
     console.log("user role", user);
   }, []);
-  useEffect(() => {
-    MakedisciplinaryEmployeeSearchNull();
-  }, []);
+
+  // useEffect(() => {
+  //   MakedisciplinaryEmployeeSearchNull();
+  // }, []);
 
   useEffect(() => {
     if (disciplinaryListData !== null && disciplinaryListData !== undefined) {
@@ -211,11 +212,39 @@ const ManagerDisciplinaryList = () => {
                               >
                                 <Eye
                                   onClick={() => {
-                                    disciplinaryEmployeeSearch(item.employeeId);
+                                    disciplinaryEmployeeSearch(
+                                      item.disciplinaryAction.disciplinaryId
+                                    );
                                   }}
                                 />
                               </Link>
                             </td>
+                            {user !== null &&
+                            user !== undefined &&
+                            (user.role === "COST_CENTER_MANAGER" ||
+                              user.additionalRole === "7") ? (
+                              <td>
+                                {item.status !== 2 ? (
+                                  <Link
+                                    to={
+                                      "/disciplinary-action/" + item.employeeId
+                                    }
+                                  >
+                                    <Edit2
+                                      onClick={() => {
+                                        disciplinaryEmployeeSearch(
+                                          item.disciplinaryAction.disciplinaryId
+                                        );
+                                      }}
+                                    />
+                                  </Link>
+                                ) : (
+                                  <Edit2 />
+                                )}
+                              </td>
+                            ) : (
+                              ""
+                            )}
 
                             <td>
                               {item.status === 5 ||
