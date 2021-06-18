@@ -127,6 +127,7 @@ export const DisciplinaryProvider = (props) => {
         state.showCauseIssueCreateResponse = response.data.data;
         toast.info(response.data.message);
         // disciplinaryEmployeeSearch(empId);
+        console.log(response.data,"createDisciplinary")
         setLoader(false);
         console.log(state.showCauseIssueCreateResponse);
         console.log("showCauseIssueCreateResponse", response);

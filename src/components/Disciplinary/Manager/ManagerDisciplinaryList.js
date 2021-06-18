@@ -253,7 +253,7 @@ const ManagerDisciplinaryList = () => {
                               item.status === 3 ? (
                                 <Edit2 />
                               ) : (
-                                <Link to="/edit-offer-release">
+                                <Link to={`/manager-warning-action-view/`+item.employeeId}>
                                   <Edit2
                                     onClick={() => {
                                       disciplinaryEmployeeSearch(
