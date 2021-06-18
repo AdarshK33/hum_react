@@ -94,10 +94,12 @@ import PromotionManagerEdit from "./components/Promotion/PromotionManagerEdit";
 import PromotionApproval from "./components/Promotion/PromotionApproval/PromotionApproval";
 
 import ManagerDisciplinaryList from "./components/Disciplinary/Manager/ManagerDisciplinaryList";
+import IssueShowCauseNotice from "./components/Disciplinary/Manager/IssueShowCauseNotice";
+import DisciplinaryView from "./components/Disciplinary/Manager/DisciplinaryView";
 
 import ViewBonus from "./components/Bonus/ViewBonus";
 
-import ManagerWarningAction from "./components/Disciplinary/Manager/ManagerWarningAction"
+import ManagerWarningAction from "./components/Disciplinary/WarningManager/ManagerWarningAction"
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
   console.log(user, state, "route8888888888888");
@@ -118,11 +120,7 @@ const RoutePath = () => {
         component={OnBoardingStepper}
       />
 
-      <Route
-        path={`${process.env.PUBLIC_URL}/manager-warning-action-view`}
-        component={ManagerWarningAction}
-      />
-
+    
       {/* <Route
             path={`${process.env.PUBLIC_URL}/onboard`}
             component={OnBoardingStepper}
@@ -155,6 +153,11 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/admin_no_due_clearance`}
             component={AdminNoDueClearance}
           />
+            <Route
+        path={`${process.env.PUBLIC_URL}/manager-warning-action-view/:employeeId`}
+        component={ManagerWarningAction}
+      />
+
           <Route
             path={`${process.env.PUBLIC_URL}/admin-finance-clearance`}
             component={FinanaceAdminNoDueClearance}
@@ -269,6 +272,15 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/probation`}
             // component={ProbationList}
             component={ManagerDisciplinaryList}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/issue-show-cause-notice`}
+            component={IssueShowCauseNotice}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/disciplinary-view/:employeeid`}
+            component={DisciplinaryView}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/exit-approval`}

@@ -23,6 +23,7 @@ const ManagerDisciplinaryList = () => {
     disciplinaryListData,
     disciplinaryEmployeeSearch,
     disciplinarySearchData,
+    MakedisciplinaryEmployeeSearchNull,
   } = useContext(DisciplinaryContext);
   const { user } = useContext(AppContext);
   const [pageCount, setPageCount] = useState(0);
@@ -32,6 +33,7 @@ const ManagerDisciplinaryList = () => {
   const { costCenterList, CostCenter } = useContext(AdminContext);
   useEffect(() => {
     disciplinaryListView("all", pageCount);
+    MakedisciplinaryEmployeeSearchNull();
     console.log("user role", user);
   }, []);
 
@@ -54,9 +56,9 @@ const ManagerDisciplinaryList = () => {
     setPageCount(pageNumber - 1);
     setCurrentPage(pageNumber);
     if (searchValue !== "") {
-      candidateView(searchValue, pageNumber - 1);
+      disciplinaryListView(searchValue, pageNumber - 1);
     } else {
-      candidateView("all", pageNumber - 1);
+      disciplinaryListView("all", pageNumber - 1);
     }
     setCurrentRecords(candidateList);
   };
@@ -67,10 +69,12 @@ const ManagerDisciplinaryList = () => {
   };
 
   const searchDataHandler = () => {
+    setPageCount(0);
+    setCurrentPage(1);
     if (searchValue !== "") {
-      candidateView(searchValue, pageCount);
+      disciplinaryListView(searchValue, 0);
     } else {
-      candidateView("all", pageCount);
+      disciplinaryListView("all", 0);
     }
   };
 
@@ -112,7 +116,7 @@ const ManagerDisciplinaryList = () => {
                     />
                   </div>
                 </div>
-                <Link to="/manager-offer-release">
+                <Link to="/issue-show-cause-notice">
                   <Button className="apply-button btn btn-light mr-2">
                     Issue Show Cause Notice
                   </Button>
@@ -135,6 +139,7 @@ const ManagerDisciplinaryList = () => {
                       <th scope="col">Employee Action</th>
                       <th scope="col">Status</th>
                       <th scope="col">PIP</th>
+                      <th scope="col">View</th>
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
@@ -197,6 +202,17 @@ const ManagerDisciplinaryList = () => {
                                 ? item.disciplinaryWarning.improvementPeriod
                                 : ""}
                             </td>
+                            <td>
+                              <Link
+                                to={"/disciplinary-view/" + item.employeeId}
+                              >
+                                <Eye
+                                  onClick={() => {
+                                    disciplinaryEmployeeSearch(item.employeeId);
+                                  }}
+                                />
+                              </Link>
+                            </td>
 
                             <td>
                               {item.status === 5 ||
@@ -205,7 +221,7 @@ const ManagerDisciplinaryList = () => {
                               item.status === 3 ? (
                                 <Edit2 />
                               ) : (
-                                <Link to="/edit-offer-release">
+                                <Link to={`/manager-warning-action-view/`+item.employeeId}>
                                   <Edit2
                                     onClick={() => {
                                       disciplinaryEmployeeSearch(
