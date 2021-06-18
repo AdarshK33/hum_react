@@ -5,7 +5,7 @@ import Breadcrumb from "../../common/breadcrumb";
 import { EmployeeSeparationContext } from "../../../context/EmployeeSeparationState";
 import { toast } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
-import ShowCauseNotice from "./ShowCauseNotice";
+import ShowCauseNotice from "./ShowCauseNoticeLetter";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 import { useHistory } from "react-router-dom";
@@ -195,7 +195,7 @@ const IssueShowCauseNotice = () => {
   const handleShowCauseLetterClose = () => setShow(false);
   const handleShowCauseLetterClose1 = () => {
     setShow(false);
-    history.push("./probation");
+    history.push("./disciplinary");
   };
 
   const saveOfferLetter = () => {
