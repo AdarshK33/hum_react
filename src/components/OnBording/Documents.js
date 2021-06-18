@@ -921,13 +921,13 @@ const Documents = (props) => {
     } else if (event.target.name === "collegeLetter") {
       if (CollegeLetterValidation() === true) {
         fileUpload = state.collegeLetter;
-        fileType = 0;
+        fileType = 15;
         UploadedArray[0].ULCollegeLetter = true;
       }
     } else if (event.target.name === "collegeId") {
       if (CollegeIdValidation() === true) {
         fileUpload = state.collegeId;
-        fileType = 0;
+        fileType = 16;
         UploadedArray[0].ULCollegeId = true;
       }
     } else if (event.target.name === "educationCertificate") {
@@ -969,7 +969,7 @@ const Documents = (props) => {
   };
   return (
     <Fragment>
-      {(localExpact === false) & (internship === false) ? (
+      {localExpact === false ? (
         <Row>
           <Modal
             show={onDocumentProceed}
@@ -1548,7 +1548,7 @@ const Documents = (props) => {
                       : "FileInputWithOutStar"
                   }
                 >
-                  <label>Cancelled Cheque</label>
+                  <label>Cancelled Cheque/Pass Book</label>
                 </div>
                 <div className="parentInput">
                   <label className="fileInputField">

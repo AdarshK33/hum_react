@@ -347,7 +347,27 @@ const RemunerationInformation = (props) => {
                 <Form.Group as={Row} controlId="formHorizontalEmail">
                   {/* <Col sm={2}></Col> */}
                   <Form.Label column sm={3}>
-                    Fixed Gross
+                    Fixed Gross{" "}
+                    {(candidateData &&
+                      candidateData.workInformation !== null &&
+                      candidateData.workInformation !== undefined &&
+                      candidateData.workInformation.contractType ===
+                        "Parttime") ||
+                    (workInfoViewData !== null &&
+                      workInfoViewData !== undefined &&
+                      workInfoViewData.contractType === "Parttime")
+                      ? "(Hourly)"
+                      : (candidateData &&
+                          candidateData.workInformation &&
+                          candidateData.workInformation !== null &&
+                          candidateData.workInformation !== undefined &&
+                          candidateData.workInformation.contractType ===
+                            "Permanent") ||
+                        (workInfoViewData !== null &&
+                          workInfoViewData !== undefined &&
+                          workInfoViewData.contractType === "Permanent")
+                      ? ""
+                      : ""}
                   </Form.Label>
                   <Col sm={6}>
                     <Form.Control

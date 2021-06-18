@@ -63,7 +63,7 @@ const EditRemunerationInformation = (props) => {
       setMonthlyBonus(remunerationDataInfo.monthlyBonus);
       setStipened(remunerationDataInfo.stipend);
     }
-  }, [candidateData.workInformation]);
+  }, [candidateData]);
 
   const submitHandler = (e) => {
     console.log(saveclick);
@@ -82,8 +82,7 @@ const EditRemunerationInformation = (props) => {
       user.role,
       typeof stipened,
       typeof fixedGross,
-      typeof monthlyBonus,
-      workInfoViewData.contractType
+      typeof monthlyBonus
     );
     if (
       (typeof stipened === "undefined" ||
@@ -436,7 +435,27 @@ const EditRemunerationInformation = (props) => {
                   <Form.Group as={Row} controlId="formHorizontalEmail">
                     {/* <Col sm={2}></Col> */}
                     <Form.Label column sm={3}>
-                      Fixed Gross
+                      Fixed Gross{" "}
+                      {(candidateData &&
+                        candidateData.workInformation !== null &&
+                        candidateData.workInformation !== undefined &&
+                        candidateData.workInformation.contractType ===
+                          "Parttime") ||
+                      (workInfoViewData !== null &&
+                        workInfoViewData !== undefined &&
+                        workInfoViewData.contractType === "Parttime")
+                        ? "(Hourly)"
+                        : (candidateData &&
+                            candidateData.workInformation &&
+                            candidateData.workInformation !== null &&
+                            candidateData.workInformation !== undefined &&
+                            candidateData.workInformation.contractType ===
+                              "Permanent") ||
+                          (workInfoViewData !== null &&
+                            workInfoViewData !== undefined &&
+                            workInfoViewData.contractType === "Permanent")
+                        ? ""
+                        : ""}
                     </Form.Label>
                     <Col sm={6}>
                       <Form.Control
@@ -466,8 +485,10 @@ const EditRemunerationInformation = (props) => {
                         <p style={{ color: "red" }}>
                           Value should be between 90 - 200{" "}
                         </p>
-                      ) : ((candidateData &&
-                          candidateData.workInformation &&
+                      ) : ((candidateData !== null &&
+                          candidateData !== undefined &&
+                          candidateData.workInformation !== null &&
+                          candidateData.workInformation !== undefined &&
                           candidateData.workInformation.contractType ===
                             "Permanent") ||
                           workInfoViewData.contractType === "Permanent") &&

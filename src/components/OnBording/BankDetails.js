@@ -255,18 +255,18 @@ const BankDetails = (props) => {
             <div>
               <br></br>
               <label>
-                1. The Candidate's name sholud be upload on the cancelled
-                cheque.
+                1. The candidate name should be present on the uploaded
+                cancelled cheque.
               </label>
               <br></br>
               <label>
-                2. If the name of the candidate is not present then you can
-                upload bank statments and passbook.
+                2. If name of the candidate is not present then you can upload
+                the bank statement or passbook
               </label>
               <br></br>
               <label>
-                3. The candidate's name on the documents is mandatory otherwise
-                it will not be considered as valid proof.
+                3. The candidate name on the bank documents are mandatory
+                otherwise it is not considered as valid proof
               </label>
             </div>
           </Col>
