@@ -16,7 +16,7 @@ import { setGlobalCssModule } from "reactstrap/es/utils";
 import { set } from "js-cookie";
 import { AppContext } from "../../../context/AppState";
 
-const PromotionCostCenterManager = (props) => {
+const PromotionApproval = (props) => {
   const [EmpName, setEmpName] = useState();
   const [position, setPosition] = useState();
   const [departmentNew, setDepartmentNew] = useState();
@@ -28,8 +28,10 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
 
 
   const [state, setState] = useState({
-    approveByAdminName: "",
-    approveByCostCentreManagerName: "",
+    validatedAdminId: "",
+    validatedAdminName: "",
+    validatedManagerId: "",
+    validatedManagerName: "",
     bonus: 0,
     bonusInPercentage: 0,
     costCentre: "",
@@ -37,12 +39,15 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
     costCentreManagerId: "",
     costCentreManagerName: "",
     departmentId: 0,
+    reportingManagerId: "",
+    reportingManagerName: "",
     effectiveDate: "",
     emailId: "",
     empName: "",
     employeeId: "",
-    managerId: "",
-    managerName: "",
+    currentManagerId: "",
+    currentManagerName:"",
+    contractType: "",
     newDepartment: "",
     newFixedGross: 0,
     oldDepartment: "",
@@ -97,9 +102,10 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
       Object.keys(promotionIdData).length !== 0
     ) {
       setState({
-        approveByAdminName: promotionIdData["approveByAdminName"],
-        approveByCostCentreManagerName:
-          promotionIdData["approveByCostCentreManagerName"],
+        validatedAdminId: promotionIdData["validatedAdminId"],
+        validatedAdminName: promotionIdData["validatedAdminName"],
+        validatedManagerId:promotionIdData["validatedManagerId"],
+        validatedManagerName:promotionIdData["validatedManagerName"],
         bonus: promotionIdData["bonus"],
         bonusInPercentage: promotionIdData["bonusInPercentage"],
         costCentre: promotionIdData["costCentre"],
@@ -107,12 +113,15 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
         costCentreManagerId: promotionIdData["costCentreManagerId"],
         costCentreManagerName: promotionIdData["costCentreManagerName"],
         departmentId: promotionIdData["departmentId"],
+        reportingManagerId: promotionIdData["reportingManagerId"],
+        reportingManagerName: promotionIdData["reportingManagerName"],
         effectiveDate: promotionIdData["effectiveDate"],
         emailId: promotionIdData["emailId"],
         empName: promotionIdData["empName"],
         employeeId: promotionIdData["employeeId"],
-        managerId: promotionIdData["managerId"],
-        managerName: promotionIdData["managerName"],
+        currentManagerId: promotionIdData["currentManagerId"],
+        currentManagerName: promotionIdData["currentManagerName"],
+        contractType: promotionIdData["contractType"],
         newDepartment: promotionIdData["newDepartment"],
         newFixedGross: promotionIdData["newFixedGross"],
         oldDepartment: promotionIdData["oldDepartment"],
@@ -275,26 +284,38 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
                           marginBottom: "1rem",
                         }}
                       >
-                        <Col sm={6}>
+                        <>
+                        <Col sm={2}>
                           <div>
                             <label>
-                              Emp Name/Id:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.empName}
-                              </label>
+                              Emp Name/Id:         
                             </label>
                           </div>
-                        </Col>
-                        <Col sm={6}>
+                          </Col>
+                          <Col sm={4}>
+                          <div>
+                              <label className="itemResult">
+                                {state.empName}
+                              </label>
+                          </div>
+                          </Col>
+                          </>
+                          <>
+                        <Col sm={2}>
                           <div>
                             <label>
-                              Cost Center Name:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.costCentre}
-                              </label>
+                            Cost Center Name:                            
                             </label>
                           </div>
-                        </Col>
+                          </Col>
+                          <Col sm={4}>
+                          <div>
+                              <label className="itemResult">
+                                {state.costCentre}
+                              </label>
+                          </div>
+                          </Col>
+                          </>
                       </Row>
                       <Row
                         style={{
@@ -303,27 +324,37 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
                           marginBottom: "2rem",
                         }}
                       >
-                        <Col sm={6}>
+                                                 <>
+                        <Col sm={2}>
                           <div>
                             <label>
-                              Position:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.oldPosition}
-                              </label>
+                            Position:
                             </label>
                           </div>
-                        </Col>
-
-                        <Col sm={6}>
+                          </Col>
+                          <Col sm={4}>
+                          <div>
+                              <label className="itemResult">
+                                {state.oldPosition}
+                              </label>
+                          </div>
+                          </Col>
+                          </> <>
+                        <Col sm={2}>
                           <div>
                             <label>
-                              Department:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.oldDepartment}
-                              </label>
+                            Department:                            
                             </label>
                           </div>
-                        </Col>
+                          </Col>
+                          <Col sm={4}>
+                          <div>
+                              <label className="itemResult">
+                                {state.oldDepartment}
+                              </label>
+                          </div>
+                          </Col>
+                          </>
                       </Row>
 
                       <Row
@@ -333,26 +364,79 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
                           marginBottom: "2rem",
                         }}
                       >
-                        <Col sm={6}>
+                                               <>
+                        <Col sm={2}>
                           <div>
                             <label>
-                              New Position :
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.promotedPosition}
-                              </label>
+                            New Position :
                             </label>
                           </div>
-                        </Col>
-                        <Col sm={6}>
+                          </Col>
+                          <Col sm={4}>
+                          <div>
+                              <label className="itemResult">
+                                {state.promotedPosition}
+                              </label>
+                          </div>
+                          </Col>
+                          </>
+                          <>
+                        <Col sm={2}>
                           <div>
                             <label>
-                              New Department:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.newDepartment}
-                              </label>
+                            New Department:
                             </label>
                           </div>
-                        </Col>
+                          </Col>
+                          <Col sm={4}>
+                          <div>
+                              <label className="itemResult">
+                                {state.newDepartment}
+                              </label>
+                          </div>
+                          </Col>
+                          </>
+                      </Row>
+                      <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "1rem",
+                          marginBottom: "2rem",
+                        }}
+                      >
+                                                 <>
+                        <Col sm={2}>
+                          <div>
+                            <label>
+                            Reporting Manager:
+                            </label>
+                          </div>
+                          </Col>
+                          <Col sm={4}>
+                          <div>
+                              <label className="itemResult">
+                                {state.reportingManagerName}
+                              </label>
+                          </div>
+                          </Col>
+                          </>
+                     
+                        <>
+                        <Col sm={2}>
+                          <div>
+                            <label>
+                            Current Manager:
+                            </label>
+                          </div>
+                          </Col>
+                          <Col sm={4}>
+                          <div>
+                              <label className="itemResult">
+                                {state.currentManagerName}
+                              </label>
+                          </div>
+                          </Col>
+                          </>
                       </Row>
                       <Row
                           style={{
@@ -361,7 +445,7 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
                             marginBottom: "3rem",
                           }}
                         >
-                          <Col sm={5}>
+                          <Col sm={4}>
                             <label>
                             Is this employee is applicable for salary hike{" "}
                             </label>
@@ -413,66 +497,60 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
                         }}
                       >
                        
-                        <Col sm={3}>
+                       <>
+                        <Col sm={2}>
                           <div>
                             <label>
-                              Fixed Gross:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.oldFixedGross}
-                              </label>
+                            Fixed Gross {`${(state.contractType =="parttime" ||state.contractType =="Parttime")?"(per/hr)":''}`}:
                             </label>
                           </div>
-                        </Col>
-                        {state.promotionType == 1?<> <Col sm={4}>
+                          </Col>
+                          <Col sm={2}>
+                          <div>
+                              <label className="itemResult">
+                                {state.oldFixedGross}
+                              </label>
+                          </div>
+                          </Col>
+                          </>      
+                        {promotionIdData !== null &&
+                          promotionIdData !== undefined &&
+                        state.promotionType == 1?<> 
+                          <>
+                        <Col sm={2}>
                           <div>
                             <label>
-                              New Fixed Gross:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.newFixedGross}
-                              </label>
+                            New Fixed Gross {`${(state.contractType =="parttime" ||state.contractType =="Parttime")?"(per/hr)":''}`}:
                             </label>
                           </div>
-                        </Col>
-                        <Col sm={4}>
+                          </Col>
+                          <Col sm={2}>
+                          <div>
+                              <label className="itemResult">
+                                {state.newFixedGross}
+                              </label>
+                          </div>
+                          </Col>
+                          </>      
+                          <>
+                        <Col sm={2}>
                           <div>
                             <label>
-                              {" "}
                             Salary Effective Date :
-                              <label className="itemResult">
-                                &nbsp;&nbsp;{state.salaryEffectiveDate}
-                              </label>
                             </label>
                           </div>
-                        </Col></>:''}
+                          </Col>
+                          <Col sm={2}>
+                          <div>
+                              <label className="itemResult">
+                                {state.salaryEffectiveDate}
+                              </label>
+                          </div>
+                          </Col>
+                          </>      
+                      </>:''}
                       </Row>
-                      {/* <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "1rem",
-                          marginBottom: "3rem",
-                        }}
-                      >
-                        <Col sm={6}>
-                          <div>
-                            <label>
-                              Fixed Gross:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.oldFixedGross}
-                              </label>
-                            </label>
-                          </div>
-                        </Col>
-                        <Col sm={6}>
-                          <div>
-                            <label>
-                              New Fixed Gross:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.newFixedGross}
-                              </label>
-                            </label>
-                          </div>
-                        </Col>
-                      </Row> */}
+                     
                       <Row
                         style={{
                           marginLeft: "2rem",
@@ -480,27 +558,38 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
                           marginBottom: "2rem",
                         }}
                       >
-                          <Col sm={3}>
+                                                    <>
+                        <Col sm={2}>
                           <div>
                             <label>
-                              Relocation Bonus:
-                              <label className="itemResult">
-                                &nbsp;&nbsp;{state.relocationBonus}
-                              </label>
+                            Relocation Bonus:
                             </label>
                           </div>
-                        </Col>
-                        <Col sm={4}>
+                          </Col>
+                          <Col sm={2}>
+                          <div>
+                              <label className="itemResult">
+                                {state.relocationBonus}
+                              </label>
+                          </div>
+                          </Col>
+                          </>      
+                          <>
+                        <Col sm={2}>
                           <div>
                             <label>
-                              {" "}
-                              Effective Date :
-                              <label className="itemResult">
-                                &nbsp;&nbsp;{state.effectiveDate}
-                              </label>
+                            Effective Date :
                             </label>
                           </div>
-                        </Col>
+                          </Col>
+                          <Col sm={2}>
+                          <div>
+                              <label className="itemResult">
+                                {state.effectiveDate}
+                              </label>
+                          </div>
+                          </Col>
+                          </>      
                       
                       </Row>
 
@@ -547,11 +636,6 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
                               required
                             />
 
-                            {/* {reasonError ? (
-                              <p style={{ color: "red" }}>{reasonError}</p>
-                            ) : (
-                              ""
-                            )} */}
                           </Col>
                         </Row>
 
@@ -631,4 +715,4 @@ const  [modelStatusReject,setModelStatusReject] = useState(false)
   );
 };
 
-export default PromotionCostCenterManager;
+export default PromotionApproval;

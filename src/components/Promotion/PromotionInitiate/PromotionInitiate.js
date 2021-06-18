@@ -18,10 +18,15 @@ const PromotionInitiate = () => {
   const [EmpName, setEmpName] = useState();
   const [position, setPosition] = useState();
   const [departmentNew, setDepartmentNew] = useState();
+  const [contractType,setContractType] = useState('')
+  const [currentManager,SetCurrentManager] = useState('')
+  const [contractTypeStatus,setContractTypeStatus] = useState(false)
 
   const [state, setState] = useState({
-    approveByAdminName: "",
-    approveByCostCentreManagerName: "",
+    validatedAdminId: "",
+    validatedAdminName: "",
+    validatedManagerId: "",
+    validatedManagerName: "",
     bonus: 0,
     bonusInPercentage: 0,
     costCentre: "",
@@ -29,12 +34,15 @@ const PromotionInitiate = () => {
     costCentreManagerId: "",
     costCentreManagerName: "",
     departmentId: "",
+    reportingManagerId: "",
+    reportingManagerName: "",
     effectiveDate: null,
     emailId: "",
     empName: "",
     employeeId: "",
-    managerId: "",
-    managerName: "",
+    currentManagerId: "",
+    currentManagerName: "",
+    contractType: "",
     newDepartment: "",
     newFixedGross: 0,
     oldDepartment: "",
@@ -59,6 +67,7 @@ const PromotionInitiate = () => {
   const [salaryEffectiveDateError, setSalaryEffectiveDateError] = useState("");
   const [promotionTypeError, setPromotionTypeError] = useState("");
   const [effectiveDateError, setEffectiveDateError] = useState("");
+  const [reportingManagerError,setReportingManagerError] =useState('')
   const [modelStatus,setModelStatus] = useState(false)
   const [submitted, setSubmitted] = useState(false);
   const {
@@ -69,7 +78,7 @@ const PromotionInitiate = () => {
     fetchRelievingLetterData,
     relivingLetterData,
   } = useContext(EmployeeSeparationContext);
-  const { empResign, withdraw, searchByCostCenter, searchByCostData } =
+  const { empResign, withdraw,managerList, searchByCostCenter, managerData,searchByCostData } =
     useContext(SeparationContext);
   const { departmentView, departmentName } = useContext(OfferContext);
   const { PositionNew, positionNew, PromotionCreate } =
@@ -112,26 +121,48 @@ const PromotionInitiate = () => {
       state.employeeId = searchByCostData.employeeId;
       state.empName = searchByCostData.firstName + " " + temp;
       setEmpName(searchByCostData.firstName + " " + temp);
-
+      state.contractType = searchByCostData.contractType
+      setContractType(searchByCostData.contractType)
+      managerData(searchByCostData.costCentre)
       state.costCentre = searchByCostData.costCentre;
       state.oldPosition = searchByCostData.position;
       state.oldDepartment = searchByCostData.department;
-      // state.oldFixedGross = searchByCostData.oldFixedGross;
+     state.currentManagerId = searchByCostData.managerId;
       state.oldFixedGross = searchByCostData.fixedGross;
+    if(searchByCostData.contractType === "internship"||searchByCostData.contractType === "Internship"){
+      setContractTypeStatus(true)
     }
-  }, [searchByCostData]);
+  
+  }}, [searchByCostData]);
+  
+  useEffect(()=>{
+    if (
+      searchByCostData &&
+      searchByCostData &&
+      searchByCostData !== null &&
+      searchByCostData !== undefined &&
+      Object.keys(searchByCostData).length !== 0
+    ) {
+   managerList.map((item)=>{
+    if(item.employeeId == searchByCostData.managerId){
+      const temp =
+      item.lastName !== null &&
+      item.lastName !== undefined
+        ? item.lastName
+        : "";
+      state.currentManagerName = item.firstName + " " + temp
+      SetCurrentManager(item.firstName + " " + temp)
+    }})
+  
+  }
+  },[managerList,searchByCostData])
 
-  console.log(state, EmpName, "state");
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // setModelStatus(true)
-    
-    //  setState({...state,empName:EmpName})
     var empName = state.empName;
     if (empName == "" || empName == null || empName == undefined) {
       setEmpNameError("Select choose the employee name");
-      console.log(empNameError, "empNameError");
     } else {
       setEmpNameError("");
     }
@@ -158,16 +189,25 @@ const PromotionInitiate = () => {
 
     var newFixedGross = state.newFixedGross;
     if (
-      newFixedGross == "" ||
-      newFixedGross == null ||
-      newFixedGross == undefined
+      newFixedGross !== "" && contractType !== null && contractType !== undefined &&
+      newFixedGross !== null && newFixedGross !== undefined
     ) {
-      setNewFixedGrossError(" Please add fixed gross");
-      console.log(newFixedGrossError);
-    } else {
-      setNewFixedGrossError("");
+      if( contractType === "Parttime" ||contractType === "parttime"){
+        if( newFixedGross < 90 || newFixedGross > 200){
+          setNewFixedGrossError("Value should be between 90 - 200"); 
+        }else{
+          setNewFixedGrossError('')
+        }
+      }else if(contractType === "Permanent" ||contractType === "permanent"){
+          if(newFixedGross <18000){
+        setNewFixedGrossError("Value should be above 18000")
+          }else{
+            setNewFixedGrossError('')
+          }
+      }
+    }else{
+      setNewFixedGrossError(" Please add new fixed gross");
     }
-
     var newDepartment = state.newDepartment;
     if (
       newDepartment == "" ||
@@ -187,18 +227,18 @@ const PromotionInitiate = () => {
       setReasonError("");
     }
 
-    // var promotionType = state.promotionType;
-    // if (
-    //   promotionType == "" ||
-    //   promotionType == null ||
-    //   promotionType == undefined
-    // ) {
-    //   setPromotionTypeError(
-    //     "Please select is employee is applicable for promotion and hike "
-    //   );
-    // } else {
-    //   setPromotionTypeError("");
-    // }
+    var reportingManagerName = state.reportingManagerName;
+    if (
+      reportingManagerName == "" ||
+      reportingManagerName == null ||
+      reportingManagerName == undefined
+    ) {
+      setReportingManagerError(
+        "Please select reporting manager "
+      );
+    } else {
+      setReportingManagerError("");
+    }
     var effectiveDate = state.effectiveDate;
     if (state.promotionType == 1 &&
       effectiveDate == "" ||
@@ -220,6 +260,8 @@ const PromotionInitiate = () => {
       setSalaryEffectiveDateError("");
     }
 
+   
+console.log(newFixedGrossError,"newFixedGrossError")
     if (
       newDepartment !== "" &&
       reason !== "" &&
@@ -241,8 +283,10 @@ const PromotionInitiate = () => {
       empName !== undefined
     ) {
       const infoData = {
-        approveByAdminName: null,
-        approveByCostCentreManagerName: null,
+        validatedAdminId: null,
+    validatedAdminName: null,
+    validatedManagerId: null,
+    validatedManagerName: null,
         bonus: 0,
         bonusInPercentage: 0,
         costCentre: state.costCentre,
@@ -250,12 +294,15 @@ const PromotionInitiate = () => {
         costCentreManagerId: null,
         costCentreManagerName: null,
         departmentId: state.departmentId,
+        reportingManagerId: state.reportingManagerId,
+        reportingManagerName: state.reportingManagerName,
         effectiveDate: state.effectiveDate,
         emailId: null,
         empName: state.empName,
         employeeId: state.employeeId,
-        managerId: null,
-        managerName: null,
+        currentManagerId: state.currentManagerId,
+        currentManagerName:state.currentManagerName,
+        contractType: state.contractType,
         newDepartment: state.newDepartment,
         newFixedGross: state.newFixedGross,
         oldDepartment: state.oldDepartment,
@@ -272,18 +319,36 @@ const PromotionInitiate = () => {
         salaryEffectiveDate: state.salaryEffectiveDate,
         status: 0,
       };
+      if((contractType.toLowerCase()=="parttime") &&
+       state.newFixedGross >=90 && state.newFixedGross <=200){
+     PromotionCreate(infoData);
+      setModelStatus(true)
+       setSubmitted(true);
+    console.log("all okay1", infoData);
+      }else if((contractType.toLowerCase() == "permanent") && 
+      state.newFixedGross > 18000){
       PromotionCreate(infoData);
       setModelStatus(true)
        setSubmitted(true);
-      console.log("all okay", infoData);
-    } else {
+      console.log("all okay2", infoData);
+      }else if(state.promotionType == 0 && 
+        (contractType.toLowerCase()=="parttime"||contractType.toLowerCase()=="permanent")){
+        PromotionCreate(infoData);
+      setModelStatus(true)
+       setSubmitted(true);
+        console.log("all okay3", infoData);
+      }else{
+        console.log("NOT OK", infoData);
+      }
+     }else {
       console.log("NOT OK", empName);
       // toast.error("Data is not filled Properly")
     }
   };
-  console.log(modelStatus,"modelStatus")
+  console.log(managerList,"managerList")
   const handleCloseValue = ()=>{
     setModelStatus(false)
+    setContractTypeStatus(false)
   }
   const dateOfBirthHandler = (date) => {
     var AdjusteddateValue = new Date(
@@ -361,18 +426,52 @@ const PromotionInitiate = () => {
         }
       });
       console.log(e.target.value, state, "value666");
-    } else {
+    }else if (e.target.name === "reportingManagerId") {
+      managerList.map((item) => {
+        const temp =
+        item.lastName !== null &&
+        item.lastName !== undefined
+          ? item.lastName
+          : "";
+        if ((item.firstName + " " + temp) === e.target.value) {
+          setState({
+            ...state,
+            reportingManagerId: item.employeeId,
+    reportingManagerName:item.firstName + " " + temp,
+          });
+        }
+      });
+      console.log(e.target.value, state, "value666");
+    }else{
       setState({
         ...state,
         [e.target.name]: e.target.value,
       });
     }
+  
     console.log(state, "state");
   };
 
   return (
     <Fragment>
       <ToastContainer/>
+      <Modal
+          show={contractTypeStatus}
+           onHide={handleCloseValue}
+          size="md"
+          centered
+        >
+          <Modal.Header closeButton className="modal-line"></Modal.Header>
+          <Modal.Body className="mx-auto">
+            <label className="text-center">
+              This employee cannot be promoted.
+            
+            </label>
+            <div className="text-center mb-2">
+             <Link to={"/promotion-list"}><Button onClick={handleCloseValue}>Close</Button></Link> 
+            </div>
+          </Modal.Body>
+        </Modal> 
         <Modal
           show={modelStatus}
            onHide={handleCloseValue}
@@ -589,6 +688,68 @@ const PromotionInitiate = () => {
                           style={{
                             marginLeft: "2rem",
                             marginTop: "1rem",
+                            marginBottom: "1rem",
+                          }}
+                        >
+                          <Col sm={4}>
+                          <div>
+                            <label>
+                              {" "}
+                              Current Manager :
+                              <label className="itemResult">
+                                &nbsp;&nbsp;{currentManager}
+                              </label>
+                            </label>
+                          </div>
+                        </Col>   
+                          <Col sm={2}>
+                            <label>Reporting Manager </label>
+                          </Col>
+                          <Col sm={4}>
+                            <Form.Group>
+                              <Form.Control
+                                as="select"
+                                name="reportingManagerId"
+                                style={
+                                  departmentIdError
+                                    ? { borderColor: "red" }
+                                    : { borderRadius: "5px" }
+                                }
+                                defaultValue={departmentNew}
+                                onChange={(e) => changeHandler(e)}
+                              >
+                                <option value="">Select Manager</option>
+                                {managerList !== null &&
+                                  managerList !== undefined &&
+                                  managerList.length > 0 &&
+                                  managerList.map((item, index) => {
+                                    const temp =
+                                    item.lastName !== null &&
+                                    item.lastName !== undefined
+                                      ? item.lastName
+                                      : "";
+                                    return (
+                                      <option key={index + 1}>
+                                        {item.firstName + " " + temp}
+                                      </option>
+                                    );
+                                  })}
+                              </Form.Control>
+                              {reportingManagerError ? (
+                                <p style={{ color: "red" }}>
+                                  {reportingManagerError}
+                                </p>
+                              ) : (
+                                ""
+                              )}
+                            </Form.Group>
+                          </Col>
+                         
+                        </Row>
+                        <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "1rem",
                             marginBottom: "3rem",
                           }}
                         >
@@ -652,7 +813,7 @@ const PromotionInitiate = () => {
                         >
                           <Col sm={1}>
                             <div>
-                              <label>Fixed Gross:</label>
+                              <label>Fixed Gross{`${(contractType =="parttime" ||contractType =="Parttime")?"(per/hr)":''}`}:</label>
                             </div>
                           </Col>
                           <Col sm={1}>
@@ -664,7 +825,7 @@ const PromotionInitiate = () => {
                            <>
                           <Col sm={2}>
                             <div>
-                              <label>New Fixed Gross:</label>
+                              <label>New Fixed Gross{`${(contractType =="parttime" ||contractType =="Parttime")?"(per/hr)":''}`}:</label>
                             </div>
                           </Col>
                           <Col sm={2}>
@@ -690,10 +851,14 @@ const PromotionInitiate = () => {
                                   />
                                 </Form.Group>
                               )}
+                                 {/* <p style={{ color: "red" }}>
+                               {(contractType == "parttime" && state.newFixedGross <90 || state.newFixedGross >200)?"parttime invalid":
+                               (contractType == "permanent" && state.newFixedGross < 18000)?"permanent":""}
+                             </p>  */}
                               {newFixedGrossError ? (
-                                <p style={{ color: "red" }}>
-                                  {newFixedGrossError}
-                                </p>
+                               <p style={{ color: "red" }}>
+                               {newFixedGrossError}
+                             </p>
                               ) : (
                                 ""
                               )}

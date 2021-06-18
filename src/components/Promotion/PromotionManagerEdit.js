@@ -20,14 +20,12 @@ import moment from "moment";
 import DatePicker from "react-datepicker";
 import { toast } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
-import { setGlobalCssModule } from "reactstrap/es/utils";
-import { set } from "js-cookie";
 import { ProbationContext } from "../../context/ProbationState";
 import PromotionLetters from "./PromotionLetter";
 import PromotionSalaryLetters from "./PromotionSalaryLetter";
 import calendarImage from "../../assets/images/calendar-image.png";
 
-const PromotionCostCenterManagerEdit = (props) => {
+const PromotionManagerEdit = (props) => {
   const [EmpName, setEmpName] = useState();
   const [position, setPosition] = useState();
   const [departmentNew, setDepartmentNew] = useState();
@@ -44,14 +42,15 @@ const PromotionCostCenterManagerEdit = (props) => {
   const [previewLetter, setPreviewLetter] = useState(false);
   const [letterSent, setLetterSent] = useState(false);
   const [showPreview, setPreview] = useState(false);
-  const [probationStatus, setProbationStatus] = useState("Confirmed");
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
   const [remarkError, setRemarkError] = useState(false);
   const [state, setState] = useState({
-    approveByAdminDate:null,
-    approveByAdminName: "",
-    approveByCostCentreManagerDate:null,
-    approveByCostCentreManagerName: "",
+    adminValidatedDate:null,
+    validatedAdminId: "",
+    validatedAdminName: "",
+    managerValidatedDate:null,
+    validatedManagerId:"",
+    validatedManagerName:"",
     bonus: 0,
     bonusInPercentage: 0,
     costCentre: "",
@@ -59,12 +58,15 @@ const PromotionCostCenterManagerEdit = (props) => {
     costCentreManagerId: "",
     costCentreManagerName: "",
     departmentId: 0,
+    reportingManagerId: "",
+    reportingManagerName: "",
     effectiveDate: "",
     emailId: "",
     empName: "",
     employeeId: "",
-    managerId: "",
-    managerName: "",
+    currentManagerId: "",
+    currentManagerName: "",
+    contractType:"",
     newDepartment: "",
     newFixedGross: 0,
     oldDepartment: "",
@@ -122,12 +124,6 @@ const PromotionCostCenterManagerEdit = (props) => {
     departmentView();
   }, []);
 
-  // useEffect(() => {
-  //   var id = props.history.location.pathname;
-
-  //   console.log(id, id.slice(id.length - 1), "id");
-  //   ViewPromotionById(id.slice(id.length - 1));
-  // }, []);
   useEffect(() => {
     console.log(promotionIdData, "promotionIdData");
     if (
@@ -136,10 +132,12 @@ const PromotionCostCenterManagerEdit = (props) => {
       Object.keys(promotionIdData).length !== 0
     ) {
       setState({
-        approveByAdminDate:promotionIdData['approveByAdminDate']!== null?new Date(promotionIdData["approveByAdminDate"]): null,
-        approveByAdminName: promotionIdData["approveByAdminName"],
-        approveByCostCentreManagerDate:promotionIdData['approveByCostCentreManagerDate']!== null?new Date(promotionIdData["approveByCostCentreManagerDate"]): null,
-        approveByCostCentreManagerName:promotionIdData["approveByCostCentreManagerName"],
+        adminValidatedDate:promotionIdData['adminValidatedDate'],
+        validatedAdminId: promotionIdData["validatedAdminId"],
+        validatedAdminName: promotionIdData["validatedAdminName"],
+        managerValidatedDate:promotionIdData['managerValidatedDate'],
+        validatedManagerId:promotionIdData["validatedManagerId"],
+        validatedManagerName:promotionIdData["validatedManagerName"],
         bonus: promotionIdData["bonus"],
         bonusInPercentage: promotionIdData["bonusInPercentage"],
         costCentre: promotionIdData["costCentre"],
@@ -147,12 +145,15 @@ const PromotionCostCenterManagerEdit = (props) => {
         costCentreManagerId: promotionIdData["costCentreManagerId"],
         costCentreManagerName: promotionIdData["costCentreManagerName"],
         departmentId: promotionIdData["departmentId"],
+        reportingManagerId: promotionIdData["reportingManagerId"],
+        reportingManagerName: promotionIdData["reportingManagerName"],
         effectiveDate:promotionIdData["effectiveDate"] !== null?new Date(promotionIdData["effectiveDate"]): null,
         emailId: promotionIdData["emailId"],
         empName: promotionIdData["empName"],
         employeeId: promotionIdData["employeeId"],
-        managerId: promotionIdData["managerId"],
-        managerName: promotionIdData["managerName"],
+        currentManagerId: promotionIdData["currentManagerId"],
+        currentManagerName: promotionIdData["currentManagerName"],
+        contractType: promotionIdData["contractType"],
         newDepartment: promotionIdData["newDepartment"],
         newFixedGross: promotionIdData["newFixedGross"],
         oldDepartment: promotionIdData["oldDepartment"],
@@ -287,10 +288,12 @@ const PromotionCostCenterManagerEdit = (props) => {
       setEffectiveDateError("");
     }
     const infoData = {
-      approveByAdminDate:promotionIdData['approveByAdminDate'],
-      approveByAdminName: promotionIdData["approveByAdminName"],
-      approveByCostCentreManagerDate:promotionIdData['approveByCostCentreManagerDate'],
-      approveByCostCentreManagerName:promotionIdData["approveByCostCentreManagerName"],
+      adminValidatedDate:promotionIdData['adminValidatedDate'],
+      validatedAdminId: promotionIdData["validatedAdminId"],
+      validatedAdminName: promotionIdData["validatedAdminName"],
+      managerValidatedDate:promotionIdData['managerValidatedDate'],
+      validatedManagerId:promotionIdData["validatedManagerId"],
+      validatedManagerName:promotionIdData["validatedManagerName"],
       bonus: promotionIdData["bonus"],
       bonusInPercentage: promotionIdData["bonusInPercentage"],
       costCentre: promotionIdData["costCentre"],
@@ -298,12 +301,15 @@ const PromotionCostCenterManagerEdit = (props) => {
       costCentreManagerId: promotionIdData["costCentreManagerId"],
       costCentreManagerName: promotionIdData["costCentreManagerName"],
       departmentId: promotionIdData["departmentId"],
+      reportingManagerId: promotionIdData["reportingManagerId"],
+      reportingManagerName: promotionIdData["reportingManagerName"],
       effectiveDate: state.effectiveDate,
       emailId: null,
       empName: state.empName,
       employeeId: state.employeeId,
-      managerId: promotionIdData["managerId"],
-      managerName: promotionIdData["managerName"],
+      currentManagerId: promotionIdData["currentManagerId"],
+      currentManagerName: promotionIdData["currentManagerName"],
+      contractType: promotionIdData["contractType"],
       newDepartment: state.newDepartment,
       newFixedGross: state.newFixedGross,
       oldDepartment: state.oldDepartment,
@@ -528,7 +534,7 @@ const PromotionCostCenterManagerEdit = (props) => {
                           <Col sm={6}>
                             <div>
                               <label>
-                                Fixed Gross:
+                                Fixed Gross {`${(state.contractType =="parttime" ||state.contractType =="Parttime")?"(per/hr)":''}`}:
                                 <label className="itemResult">
                                   &nbsp;&nbsp; {state.oldFixedGross}
                                 </label>
@@ -559,7 +565,7 @@ const PromotionCostCenterManagerEdit = (props) => {
                             <Col sm={6}>
                               <div>
                                 <label>
-                                  New Fixed Gross:
+                                  New Fixed Gross {`${(state.contractType =="parttime" ||state.contractType =="Parttime")?"(per/hr)":''}`}:
                                   <label className="itemResult">
                                     &nbsp;&nbsp; {state.newFixedGross}
                                   </label>
@@ -570,6 +576,35 @@ const PromotionCostCenterManagerEdit = (props) => {
                             ""
                           )}
                         </Row>
+                        <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "1rem",
+                          marginBottom: "2rem",
+                        }}
+                      >
+                        <Col sm={6}>
+                          <div>
+                            <label>
+                              Reporting Manager:
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.reportingManagerName}
+                              </label>
+                            </label>
+                          </div>
+                        </Col>
+
+                        <Col sm={6}>
+                          <div>
+                            <label>
+                              Current Manager:
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.currentManagerName}
+                              </label>
+                            </label>
+                          </div>
+                        </Col>
+                      </Row>
                         <Row
                           style={{
                             marginLeft: "2rem",
@@ -843,4 +878,4 @@ const PromotionCostCenterManagerEdit = (props) => {
   );
 };
 
-export default PromotionCostCenterManagerEdit;
+export default PromotionManagerEdit;

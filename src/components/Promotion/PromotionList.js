@@ -9,7 +9,7 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import { DocsVerifyContext } from "../../context/DocverificationState";
 import { RoleManagementContext } from "../../context/RoleManagementState";
 import { SeparationContext } from "../../context/SepearationState";
-
+import "./Promotion.css";
 import { AdminContext } from "../../context/AdminState";
 import { AppContext } from "../../context/AppState";
 const PromotionList = () => {
@@ -23,19 +23,16 @@ const PromotionList = () => {
     ViewPromotionByEmployee,
     promotionByEmployee,
   } = useContext(PromotionContext);
-  const {
-    verificationDocsView,
-    docsToVerify,
-    personalInfo,
-    personalInfoData,
-  } = useContext(DocsVerifyContext);
+  const { verificationDocsView, docsToVerify, personalInfo, personalInfoData } =
+    useContext(DocsVerifyContext);
   const { user } = useContext(AppContext);
   const { MakeCostCenterDataNull } = useContext(SeparationContext);
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
-  const [searchValue, setSearchValue] = useState("all");
+  const [searchValue, setSearchValue] = useState("");
   const { RoleList, viewRole } = useContext(RoleManagementContext);
   const { costCenterList, CostCenter } = useContext(AdminContext);
+  const [promotionStatus, setPromotionStatus] = useState("");
 
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
@@ -53,14 +50,23 @@ const PromotionList = () => {
       console.log(promotionList, "promotionlist2");
     }
   }, [promotionList, currentRecords]);
-useEffect(()=>{
-  MakeCostCenterDataNull()
-},[])
+  useEffect(() => {
+    MakeCostCenterDataNull();
+  }, []);
   const handlePageChange = (pageNumber) => {
     setPageCount(pageNumber - 1);
     setCurrentPage(pageNumber);
     if (searchValue !== "") {
       promotionListView(searchValue, pageNumber - 1);
+    }
+    if (promotionStatus === "Pending") {
+      promotionListView("all", pageNumber - 1, 0);
+    } else if (promotionStatus === "In Progress") {
+      promotionListView("all", pageNumber - 1, 1);
+    } else if (promotionStatus === "Approved") {
+      promotionListView("all", pageNumber - 1, 3);
+    } else if (promotionStatus === "Rejected") {
+      promotionListView("all", pageNumber - 1, 4);
     } else {
       promotionListView("all", pageNumber - 1);
     }
@@ -73,28 +79,133 @@ useEffect(()=>{
   };
 
   const searchDataHandler = () => {
-    if (searchValue !== "" && searchValue !== "all") {
-      promotionListView(searchValue, pageCount);
+    setPromotionStatus("");
+    setPageCount(0);
+    setCurrentPage(1);
+    if (searchValue !== "") {
+      promotionListView(searchValue, 0);
     } else {
-      promotionListView("all", pageCount);
+      promotionListView("all", 0);
     }
   };
 
   useEffect(() => {
     promotionListView(searchValue, pageCount);
     console.log("user role------>", user);
-  }, [searchValue, pageCount]);
+  }, []);
 
   console.log(promotionList, "promotionlist3");
 
+  const statusHandler = (e) => {
+    setPromotionStatus(e.target.value);
+    setPageCount(0);
+    setCurrentPage(1);
+    setSearchValue("");
+    if (e.target.value === "Pending") {
+      promotionListView("all", 0, 0);
+    } else if (e.target.value === "In Progress") {
+      promotionListView("all", 0, 1);
+    } else if (e.target.value === "Approved") {
+      promotionListView("all", 0, 3);
+    } else if (e.target.value === "Rejected") {
+      promotionListView("all", 0, 4);
+    } else {
+      promotionListView("all", 0);
+    }
+  };
+
   return (
-    <div>
-      <Breadcrumb title="Promotion Listing" parent="Promotion Listing" />
+    <Fragment>
+      <Breadcrumb title="PROMOTION LIST" parent="PROMOTION LIST" />
       <Container fluid>
         <Row>
           <Col sm={12}>
             <div className="card" style={{ overflowX: "auto" }}>
-              <div className="title_bar">
+              <div
+                className="title_bar"
+                style={{ textAlign: "center", fontSize: "larger" }}
+              >
+                <Row>
+                  <Col >
+                    <div
+                      style={{
+                        width: "65%",
+                        float: "left",
+                        
+                        marginTop: "10px",
+                        marginLeft: "8px",
+                      }}
+                      className="faq-form mr-2"
+                    >
+                      <input
+                        className="form-control searchButton"
+                        type="text"
+                        value={searchValue}
+                        placeholder="Search.."
+                        onChange={(e) => searchHandler(e)}
+                      />
+                      <Search
+                        className="search-icon"
+                        style={{ color: "#313131" }}
+                        onClick={searchDataHandler}
+                      />
+                      <br></br>
+                    </div>
+
+                    {/* <Link to="/manager-offer-release">
+                  <Button className="apply-button btn btn-light mr-2">
+                    Initate Offer
+                  </Button>
+                </Link> */}
+                  </Col>
+                  <Col sm={2} style={{ marginTop: "5px" }}>
+                    <b>PROMOTION LIST</b>
+                  </Col>
+                  <Col sm={3}>
+                    <div className="promotion_initiate">
+                      <Link to="/promotion-initiate">
+                        <Button className="apply-button btn btn-light mr-2">
+                          Initate Promotion
+                        </Button>
+                      </Link>
+                    </div>
+                  </Col>
+                  <Col sm={2}>
+                    <Form>
+                      <div className="promotion_status_search">
+                        {/* className="faq-form mr-2""job-filter" */}
+                        <Form.Group>
+                          <Form.Control
+                            as="select"
+                            name="probationStatus"
+                            value={promotionStatus}
+                            onChange={statusHandler}
+                            // placeholder="Search.."
+                            //   disabled={disabled}"
+
+                            style={
+                              false
+                                ? { borderColor: "red" }
+                                : { borderRadius: "20px" }
+                            }
+                          >
+                            <option value="" disabled selected hidden>
+                              Search status
+                            </option>
+                            <option value="all">All</option>
+                            <option value="Pending">Pending</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Approved">Approved</option>
+                            <option value="Rejected">Rejected</option>
+                          </Form.Control>
+                        </Form.Group>
+                        {/* <br></br> */}
+                      </div>
+                    </Form>
+                  </Col>
+                </Row>
+              </div>
+              {/* <div className="title_bar">
                 <div className="job-filter">
                   <div className="faq-form mr-2">
                     <input
@@ -110,12 +221,8 @@ useEffect(()=>{
                     />
                   </div>
                 </div>
-                <Link to="/promotion-initiate">
-                  <Button className="apply-button btn btn-light mr-2">
-                    Initate Promotion
-                  </Button>
-                </Link>
-              </div>
+                
+              </div> */}
               <div className="table-responsive">
                 <Table id="table-to-xls" className="table table-hover">
                   <thead
@@ -129,9 +236,9 @@ useEffect(()=>{
                       <th scope="col">Position</th>
                       <th scope="col">Position Promoted To</th>
                       <th scope="col">Promotion Date</th>
-                      <th scope="col">Approved By CostCenter Manger</th>
+                      <th scope="col">Validated By CostCenter Manger</th>
                       <th scope="col">Date</th>
-                      <th scope="col">Approved By HR/Admin</th>
+                      <th scope="col">Validated By HR/Admin</th>
                       <th scope="col">Date</th>
                       <th scope="col">Status</th>
                       <th scope="col">View</th>
@@ -139,10 +246,31 @@ useEffect(()=>{
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
-                  {promotionList !== undefined &&
-                  promotionList !== null &&
-                  promotionList.length > 0 ? (
-                    promotionList.map((item, i) => {
+                  {loader === true &&
+                  currentRecords !== null &&
+                  currentRecords !== undefined ? (
+                    <tbody>
+                      <tr>
+                        <td colSpan="12">
+                          <div
+                            className="loader-box loader"
+                            style={{ width: "100% !important" }}
+                          >
+                            <div className="loader">
+                              <div className="line bg-primary"></div>
+                              <div className="line bg-primary"></div>
+                              <div className="line bg-primary"></div>
+                              <div className="line bg-primary"></div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  ) : currentRecords !== undefined &&
+                    currentRecords !== null &&
+                    currentRecords.length > 0 &&
+                    total > 0 ? (
+                    currentRecords.map((item, i) => {
                       return (
                         <tbody key={item.promotionId}>
                           <tr>
@@ -152,19 +280,25 @@ useEffect(()=>{
                             <td>{item.oldPosition}</td>
                             <td>{item.promotedPosition}</td>
                             <td>{item.promotionDate}</td>
-                            <td>{item.approveByCostCentreManagerName}</td>
-                            <td>{item.approveByCostCentreManagerDate}</td>
-                            <td>{item.approveByAdminName}</td>
-                            <td>{item.approveByAdminDate}</td>
+                            <td>{item.validatedManagerName}</td>
+                            <td>{item.managerValidatedDate}</td>
+                            <td>{item.validatedAdminName}</td>
+                            <td>{item.adminValidatedDate}</td>
                             <td>
                               {/* {item.statusDesc} */}
                               {/* {item.status == 0?"Pending":item.status ==1? "Approved By Admin":
                 item.status == 2?"Approved By CostCentre Manager":
                 item.status == 3? "Approved By Manager":
                 item.status ==4? "Rejected":''} */}
-                  {item.status == 0?"Pending":(item.status ==1 ||item.status == 2)?"Progress":
-                item.status == 3? "Approved":
-                item.status == 4? "Rejected":''}
+                              {item.status == 0
+                                ? "Pending"
+                                : item.status == 1 || item.status == 2
+                                ? "In Progress"
+                                : item.status == 3
+                                ? "Approved"
+                                : item.status == 4
+                                ? "Rejected"
+                                : ""}
                             </td>
                             <td>
                               <Link to={"/view-promotion/" + item.employeeId}>
@@ -225,7 +359,6 @@ useEffect(()=>{
                                 user.additionalRole === "3") ? (
                               <td>
                                 {item.status === 1 ? (
-                           
                                   <Link to={"/promotion/" + item.employeeId}>
                                     <Edit2
                                       onClick={() => {
@@ -257,7 +390,7 @@ useEffect(()=>{
           </Col>
         </Row>
       </Container>
-      {promotionList !== null && promotionList !== undefined && (
+      {currentRecords !== null && currentRecords !== undefined && (
         <Pagination
           itemClass="page-item"
           linkClass="page-link"
@@ -270,7 +403,7 @@ useEffect(()=>{
           lastPageText="Last"
         />
       )}
-    </div>
+    </Fragment>
   );
 };
 

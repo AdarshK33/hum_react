@@ -465,6 +465,7 @@ export const SeparationProvider = (props) => {
     return client
       .get(`api/v1/employee/view/${costCenter}/managers`)
       .then((response) => {
+        console.log(response ,"managerData response")
         state.managerList = response.data.data;
         return dispatch({ type: "MANAGER_LIST", payload: state.managerList });
       });

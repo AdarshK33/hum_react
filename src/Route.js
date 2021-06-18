@@ -91,7 +91,11 @@ import ProbationList from "./components/Probation/ProbationList";
 import ProbationAction from "./components/Probation/ProbationAction";
 import ProbationView from "./components/Probation/ProbationView";
 import PromotionManagerEdit from "./components/Promotion/PromotionManagerEdit";
-import PromotionApproval from "./components/Promotion/PromotionCostCenterManager/PromotionCostCenterManager";
+import PromotionApproval from "./components/Promotion/PromotionApproval/PromotionApproval";
+
+import ManagerDisciplinaryList from "./components/Disciplinary/Manager/ManagerDisciplinaryList";
+import IssueShowCauseNotice from "./components/Disciplinary/Manager/IssueShowCauseNotice";
+import DisciplinaryView from "./components/Disciplinary/Manager/DisciplinaryView";
 
 import ViewBonus from "./components/Bonus/ViewBonus";
 const RoutePath = () => {
@@ -128,14 +132,7 @@ const RoutePath = () => {
         path={`${process.env.PUBLIC_URL}/onboard-offer`}
         component={LoginOnboard}
       />
-      {/* <Route
-        path={`${process.env.PUBLIC_URL}/promotion-approval/:promotionId`}
-        component={PromotionApproval}
-      />
-      <Route
-        path={`${process.env.PUBLIC_URL}/promotion/:promotionId`}
-        component={PromotionManagerEdit}
-      /> */}
+
       <Route path={`${process.env.PUBLIC_URL}/offer`} component={OfferAccept} />
 
       <Fragment>
@@ -270,7 +267,17 @@ const RoutePath = () => {
 
           <Route
             path={`${process.env.PUBLIC_URL}/probation`}
-            component={ProbationList}
+            // component={ProbationList}
+            component={ManagerDisciplinaryList}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/issue-show-cause-notice`}
+            component={IssueShowCauseNotice}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/disciplinary-view/:employeeid`}
+            component={DisciplinaryView}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/exit-approval`}

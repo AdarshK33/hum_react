@@ -19,7 +19,7 @@ export const ProbationProvider = (props) => {
   const [loader, setLoader] = useState(false);
   const [state, dispatch] = useReducer(ProbationReducer, initial_state);
 
-  const ProbationListView = (days, key, pageNumber, status = 3) => {
+  const ProbationListView = (days, key, pageNumber, status = 4) => {
     setLoader(true);
     client
       .get(

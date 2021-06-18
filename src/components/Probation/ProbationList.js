@@ -88,6 +88,8 @@ const ProbationList = () => {
       ProbationListView(0, "all", pageNumber - 1, 2);
     } else if (probationStatus === "Due for confirmation") {
       ProbationListView(0, "all", pageNumber - 1, 0);
+    } else if (probationStatus === "Rejected") {
+      ProbationListView(0, "all", pageNumber - 1, 3);
     } else {
       ProbationListView(0, "all", pageNumber - 1);
     }
@@ -100,29 +102,39 @@ const ProbationList = () => {
   };
   const statusHandler = (e) => {
     setProbationStatus(e.target.value);
+    setPageCount(0);
+    setCurrentPage(1);
+    setSearchValue("");
     if (e.target.value === "Confirmed") {
-      ProbationListView(0, "all", pageCount, 1);
+      ProbationListView(0, "all", 0, 1);
       setFirstBtn(false);
       setSecondBtn(false);
       setThirdBtn(false);
       setFourthBtn(false);
       setFifthBtn(false);
     } else if (e.target.value === "Extended") {
-      ProbationListView(0, "all", pageCount, 2);
+      ProbationListView(0, "all", 0, 2);
       setFirstBtn(false);
       setSecondBtn(false);
       setThirdBtn(false);
       setFourthBtn(false);
       setFifthBtn(false);
     } else if (e.target.value === "Due for confirmation") {
-      ProbationListView(0, "all", pageCount, 0);
+      ProbationListView(0, "all", 0, 0);
+      setFirstBtn(false);
+      setSecondBtn(false);
+      setThirdBtn(false);
+      setFourthBtn(false);
+      setFifthBtn(false);
+    } else if (e.target.value === "Rejected") {
+      ProbationListView(0, "all", 0, 3);
       setFirstBtn(false);
       setSecondBtn(false);
       setThirdBtn(false);
       setFourthBtn(false);
       setFifthBtn(false);
     } else {
-      ProbationListView(0, "all", pageCount, 3);
+      ProbationListView(0, "all", 0);
       setFirstBtn(false);
       setSecondBtn(false);
       setThirdBtn(false);
@@ -131,9 +143,12 @@ const ProbationList = () => {
     }
   };
   const searchDataHandler = () => {
+    setPageCount(0);
+    setCurrentPage(1);
+
     if (searchValue !== "") {
       //   ProbationListView(searchValue, pageCount);
-      ProbationListView(0, searchValue, pageCount);
+      ProbationListView(0, searchValue, 0);
       setFirstBtn(false);
       setSecondBtn(false);
       setThirdBtn(false);
@@ -142,7 +157,7 @@ const ProbationList = () => {
       setProbationStatus("");
     } else {
       //   ProbationListView("all", pageCount);
-      ProbationListView(0, "all", pageCount);
+      ProbationListView(0, "all", 0);
       setFirstBtn(false);
       setSecondBtn(false);
       setThirdBtn(false);
@@ -153,9 +168,12 @@ const ProbationList = () => {
   };
 
   const searchByDueDay = (val) => {
+    setPageCount(0);
+    setCurrentPage(1);
+    setSearchValue("");
     switch (val) {
       case 0:
-        ProbationListView(0, "all", pageCount);
+        ProbationListView(0, "all", 0);
         setFifthBtn(true);
         setFirstBtn(false);
         setSecondBtn(false);
@@ -166,7 +184,7 @@ const ProbationList = () => {
 
       case 3:
         // ProbationListView(5, pageCount);
-        ProbationListView(3, "all", pageCount);
+        ProbationListView(3, "all", 0);
         setFirstBtn(true);
         setSecondBtn(false);
         setThirdBtn(false);
@@ -176,7 +194,7 @@ const ProbationList = () => {
         break;
       case 7:
         // ProbationListView(7, pageCount);
-        ProbationListView(7, "all", pageCount);
+        ProbationListView(7, "all", 0);
         setFirstBtn(false);
         setSecondBtn(true);
         setThirdBtn(false);
@@ -186,7 +204,7 @@ const ProbationList = () => {
         break;
       case 10:
         // ProbationListView(10, pageCount);
-        ProbationListView(10, "all", pageCount);
+        ProbationListView(10, "all", 0);
         setFirstBtn(false);
         setSecondBtn(false);
         setThirdBtn(true);
@@ -196,7 +214,7 @@ const ProbationList = () => {
         break;
       case 14:
         // ProbationListView(14, pageCount);
-        ProbationListView(14, "all", pageCount);
+        ProbationListView(14, "all", 0);
         setFirstBtn(false);
         setSecondBtn(false);
         setThirdBtn(false);
@@ -238,6 +256,7 @@ const ProbationList = () => {
                       <input
                         className="form-control searchButton"
                         type="text"
+                        value={searchValue}
                         placeholder="Search.."
                         onChange={(e) => searchHandler(e)}
                       />
@@ -285,6 +304,7 @@ const ProbationList = () => {
                             </option>
                             <option value="Confirmed">Confirmed</option>
                             <option value="Extended">Extended</option>
+                            <option value="Rejected">Rejected</option>
                           </Form.Control>
                         </Form.Group>
                         {/* <br></br> */}
@@ -490,6 +510,8 @@ const ProbationList = () => {
                                 ? "Confirmed"
                                 : item.status === 2
                                 ? "Extended"
+                                : item.status === 3
+                                ? "Rejected"
                                 : ""}
                             </td>
                             <td>

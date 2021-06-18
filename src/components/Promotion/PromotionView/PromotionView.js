@@ -21,8 +21,10 @@ const PromotionView = (props) => {
   const [departmentNew, setDepartmentNew] = useState();
 
   const [state, setState] = useState({
-    approveByAdminName: "",
-    approveByCostCentreManagerName: "",
+    validatedAdminId: "",
+    validatedAdminName: "",
+    validatedManagerId: "",
+    validatedManagerName: "",
     bonus: 0,
     bonusInPercentage: 0,
     costCentre: "",
@@ -30,12 +32,15 @@ const PromotionView = (props) => {
     costCentreManagerId: "",
     costCentreManagerName: "",
     departmentId: 0,
+    reportingManagerId: "",
+    reportingManagerName: "",
     effectiveDate: "",
     emailId: "",
     empName: "",
     employeeId: "",
-    managerId: "",
-    managerName: "",
+    currentManagerId: "",
+    currentManagerName: "",
+    contractType: "",
     newDepartment: "",
     newFixedGross: 0,
     oldDepartment: "",
@@ -86,9 +91,10 @@ const PromotionView = (props) => {
       Object.keys(promotionIdData).length !== 0
     ) {
       setState({
-        approveByAdminName: promotionIdData["approveByAdminName"],
-        approveByCostCentreManagerName:
-          promotionIdData["approveByCostCentreManagerName"],
+        validatedAdminId: promotionIdData["validatedAdminId"],
+        validatedAdminName: promotionIdData["validatedAdminName"],
+        validatedManagerId:promotionIdData["validatedManagerId"],
+        validatedManagerName:promotionIdData["validatedManagerName"],
         bonus: promotionIdData["bonus"],
         bonusInPercentage: promotionIdData["bonusInPercentage"],
         costCentre: promotionIdData["costCentre"],
@@ -96,12 +102,15 @@ const PromotionView = (props) => {
         costCentreManagerId: promotionIdData["costCentreManagerId"],
         costCentreManagerName: promotionIdData["costCentreManagerName"],
         departmentId: promotionIdData["departmentId"],
+        reportingManagerId: promotionIdData["reportingManagerId"],
+        reportingManagerName: promotionIdData["reportingManagerName"],
         effectiveDate: promotionIdData["effectiveDate"],
         emailId: promotionIdData["emailId"],
         empName: promotionIdData["empName"],
         employeeId: promotionIdData["employeeId"],
-        managerId: promotionIdData["managerId"],
-        managerName: promotionIdData["managerName"],
+        currentManagerId: promotionIdData["currentManagerId"],
+        currentManagerName: promotionIdData["currentManagerName"],
+        contractType: promotionIdData["contractType"],
         newDepartment: promotionIdData["newDepartment"],
         newFixedGross: promotionIdData["newFixedGross"],
         oldDepartment: promotionIdData["oldDepartment"],
@@ -179,26 +188,40 @@ const PromotionView = (props) => {
                           marginBottom: "1rem",
                         }}
                       >
-                        <Col sm={6}>
+                        <>
+                        <Col sm={2}>
                           <div>
                             <label>
                               Emp Name/Id:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.empName}
-                              </label>
+                             
                             </label>
                           </div>
-                        </Col>
-                        <Col sm={6}>
+                          </Col>
+                          <Col sm={4}>
+                          <div>
+                              <label className="itemResult">
+                                {state.empName}
+                              </label>
+                          </div>
+                          </Col>
+                          </>
+                          <>
+                        <Col sm={2}>
                           <div>
                             <label>
-                              Cost Center Name:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.costCentre}
-                              </label>
+                            Cost Center Name:                            
                             </label>
                           </div>
-                        </Col>
+                          </Col>
+                          <Col sm={4}>
+                          <div>
+                              <label className="itemResult">
+                                {state.costCentre}
+                              </label>
+                          </div>
+                          </Col>
+                          </>
+                    
                       </Row>
                       <Row
                         style={{
@@ -207,27 +230,37 @@ const PromotionView = (props) => {
                           marginBottom: "2rem",
                         }}
                       >
-                        <Col sm={6}>
+                         <>
+                        <Col sm={2}>
                           <div>
                             <label>
-                              Position:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.oldPosition}
-                              </label>
+                            Position:
                             </label>
                           </div>
-                        </Col>
-
-                        <Col sm={6}>
+                          </Col>
+                          <Col sm={4}>
+                          <div>
+                              <label className="itemResult">
+                                {state.oldPosition}
+                              </label>
+                          </div>
+                          </Col>
+                          </> <>
+                        <Col sm={2}>
                           <div>
                             <label>
-                              Department:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.oldDepartment}
-                              </label>
+                            Department:                            
                             </label>
                           </div>
-                        </Col>
+                          </Col>
+                          <Col sm={4}>
+                          <div>
+                              <label className="itemResult">
+                                {state.oldDepartment}
+                              </label>
+                          </div>
+                          </Col>
+                          </>
                       </Row>
 
                       <Row
@@ -237,37 +270,80 @@ const PromotionView = (props) => {
                           marginBottom: "2rem",
                         }}
                       >
-                        <Col sm={6}>
+                         <>
+                        <Col sm={2}>
                           <div>
                             <label>
-                              New Position :
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.promotedPosition}
-                              </label>
+                            New Position :
                             </label>
                           </div>
-                        </Col>
-                      
-                      
-                      </Row>
-                      <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "1rem",
-                          marginBottom: "1rem",
-                        }}
-                      >
-                        <Col sm={6}>
+                          </Col>
+                          <Col sm={4}>
+                          <div>
+                              <label className="itemResult">
+                                {state.promotedPosition}
+                              </label>
+                          </div>
+                          </Col>
+                          </>
+                          <>
+                        <Col sm={2}>
                           <div>
                             <label>
-                              New Department:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.newDepartment}
-                              </label>
+                            New Department:
                             </label>
                           </div>
-                        </Col>
+                          </Col>
+                          <Col sm={4}>
+                          <div>
+                              <label className="itemResult">
+                                {state.newDepartment}
+                              </label>
+                          </div>
+                          </Col>
+                          </>
                         </Row>
+                        <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "1rem",
+                          marginBottom: "2rem",
+                        }}
+                      >
+                          <>
+                        <Col sm={2}>
+                          <div>
+                            <label>
+                            Reporting Manager:
+                            </label>
+                          </div>
+                          </Col>
+                          <Col sm={4}>
+                          <div>
+                              <label className="itemResult">
+                                {state.reportingManagerName}
+                              </label>
+                          </div>
+                          </Col>
+                          </>
+                     
+                        <>
+                        <Col sm={2}>
+                          <div>
+                            <label>
+                            Current Manager:
+                            </label>
+                          </div>
+                          </Col>
+                          <Col sm={4}>
+                          <div>
+                              <label className="itemResult">
+                                {state.currentManagerName}
+                              </label>
+                          </div>
+                          </Col>
+                          </>
+                      </Row>
                         <Row
                           style={{
                             marginLeft: "2rem",
@@ -275,7 +351,7 @@ const PromotionView = (props) => {
                             marginBottom: "3rem",
                           }}
                         >
-                          <Col sm={5}>
+                          <Col sm={4}>
                             <label>
                               Is this employee is applicable for salary hike{" "}
                             </label>
@@ -329,41 +405,61 @@ const PromotionView = (props) => {
                             marginTop: "1rem",
                             marginBottom: "3rem",
                           }}
-                        >        
-                     <Col sm={3}>
+                        >  
+                         <>
+                        <Col sm={2}>
                           <div>
                             <label>
-                              Fixed Gross:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.oldFixedGross}
-                              </label>
+                            Fixed Gross {`${(state.contractType =="parttime" ||state.contractType =="Parttime")?"(per/hr)":''}`}:
                             </label>
                           </div>
-                        </Col>
+                          </Col>
+                          <Col sm={2}>
+                          <div>
+                              <label className="itemResult">
+                                {state.oldFixedGross}
+                              </label>
+                          </div>
+                          </Col>
+                          </>      
+                  
                         {promotionIdData !== null &&
                           promotionIdData !== undefined &&
                           promotionIdData.promotionType === 1
-                        ?<><Col sm={4}>
+                        ?<>
+                          <>
+                        <Col sm={2}>
                           <div>
                             <label>
-                              New Fixed Gross:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.newFixedGross}
-                              </label>
+                            New Fixed Gross {`${(state.contractType =="parttime" ||state.contractType =="Parttime")?"(per/hr)":''}`}:
                             </label>
                           </div>
-                        </Col>
-                        <Col sm={4}>
+                          </Col>
+                          <Col sm={2}>
+                          <div>
+                              <label className="itemResult">
+                                {state.newFixedGross}
+                              </label>
+                          </div>
+                          </Col>
+                          </>      
+                          <>
+                        <Col sm={2}>
                           <div>
                             <label>
-                              {" "}
-                             Salary Effective Date :
-                              <label className="itemResult">
-                                &nbsp;&nbsp;{state.salaryEffectiveDate}
-                              </label>
+                            Salary Effective Date :
                             </label>
                           </div>
-                        </Col></>:''}
+                          </Col>
+                          <Col sm={2}>
+                          <div>
+                              <label className="itemResult">
+                                {state.salaryEffectiveDate}
+                              </label>
+                          </div>
+                          </Col>
+                          </>      
+                            </>:''}
                       </Row>
                      
                       <Row
@@ -373,29 +469,44 @@ const PromotionView = (props) => {
                           marginBottom: "2rem",
                         }}
                       >
-                          <Col sm={4}>
+                           <>
+                        <Col sm={2}>
                           <div>
                             <label>
-                              Relocation Bonus:
-                              <label className="itemResult">
-                                &nbsp;&nbsp;{state.relocationBonus}
-                              </label>
+                            Relocation Bonus:
                             </label>
                           </div>
-                        </Col>
-                        <Col sm={4}>
+                          </Col>
+                          <Col sm={2}>
+                          <div>
+                              <label className="itemResult">
+                                {state.relocationBonus}
+                              </label>
+                          </div>
+                          </Col>
+                          </>      
+                          <>
+                        <Col sm={2}>
                           <div>
                             <label>
-                              {" "}
-                              Effective Date :
-                              <label className="itemResult">
-                                &nbsp;&nbsp;{state.effectiveDate}
-                              </label>
+                            Effective Date :
                             </label>
                           </div>
-                        </Col>
+                          </Col>
+                          <Col sm={2}>
+                          <div>
+                              <label className="itemResult">
+                                {state.effectiveDate}
+                              </label>
+                          </div>
+                          </Col>
+                          </>      
                       
                       </Row>
+
+                        <>
+                       {state.remarks && state.validatedAdminName && state.validatedManagerName?
+                       <>
 
                       <Row
                         style={{
@@ -404,17 +515,209 @@ const PromotionView = (props) => {
                           marginBottom: "3rem",
                         }}
                       >
-                        <Col sm={10}>
+                         <>
+                        <Col sm={2}>
                           <div>
                             <label>
-                              Reason For Promotion:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.reason}
-                              </label>
+                            Validated By:
                             </label>
                           </div>
-                        </Col>
-                      </Row>
+                          </Col>
+                          <Col sm={2}>
+                          <div>
+                              <label className="itemResult">
+                                {state.validatedManagerName}
+                              </label>
+                          </div>
+                          </Col>
+                          </>      
+                          <>
+                        <Col sm={2}>
+                          <div>
+                            <label>
+                            Rejected By:
+                            </label>
+                          </div>
+                          </Col>
+                          <Col sm={2}>
+                          <div>
+                              <label className="itemResult">
+                                {state.validatedAdminName}
+                              </label>
+                          </div>
+                          </Col>
+                          </>      
+                          </Row>
+
+                      <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "1rem",
+                          marginBottom: "3rem",
+                        }}
+                      >
+                          <>
+                        <Col sm={3}>
+                          <div>
+                            <label>
+                            Reason For Rejection:
+                            </label>
+                          </div>
+                          </Col>
+                          <Col sm={7}>
+                          <div>
+                              <label className="itemResult">
+                                {state.remarks}
+                              </label>
+                          </div>
+                          </Col>
+                          </>    
+                          </Row>    
+                        </>
+                       :state.remarks && state.validatedManagerName?
+                       <>
+                                <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "1rem",
+                          marginBottom: "3rem",
+                        }}
+                      >
+                                              <>
+                       <Col sm={2}>
+                         <div>
+                           <label>
+                           Rejected By:
+                           </label>
+                         </div>
+                         </Col>
+                         <Col sm={2}>
+                         <div>
+                             <label className="itemResult">
+                               {state.validatedAdminName}
+                             </label>
+                         </div>
+                         </Col>
+                         </>     
+                         </Row>    
+                         <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "1rem",
+                          marginBottom: "3rem",
+                        }}
+                      >
+                         <>
+                       <Col sm={3}>
+                         <div>
+                           <label>
+                           Reason For Rejection:
+                           </label>
+                         </div>
+                         </Col>
+                         <Col sm={7}>
+                         <div>
+                             <label className="itemResult">
+                               {state.remarks}
+                             </label>
+                         </div>
+                         </Col>
+                         </>
+                         </Row>
+                         </>
+                       :<>
+                       <Row
+                         style={{
+                           marginLeft: "2rem",
+                           marginTop: "1rem",
+                           marginBottom: "3rem",
+                         }}
+                       >
+                          <>
+                         <Col sm={2}>
+                           <div>
+                             <label>
+                             Validated By:
+                             </label>
+                           </div>
+                           </Col>
+                           <Col sm={2}>
+                           <div>
+                               <label className="itemResult">
+                                 {state.validatedManagerName}
+                               </label>
+                           </div>
+                           </Col>
+                           </>      
+                           <>
+                         <Col sm={2}>
+                           <div>
+                             <label>
+                             Validated By:
+                             </label>
+                           </div>
+                           </Col>
+                           <Col sm={2}>
+                           <div>
+                               <label className="itemResult">
+                                 {state.validatedAdminName}
+                               </label>
+                           </div>
+                           </Col>
+                           </>      
+                           </Row>
+ 
+                       <Row
+                         style={{
+                           marginLeft: "2rem",
+                           marginTop: "1rem",
+                           marginBottom: "3rem",
+                         }}
+                       >
+                           <>
+                         <Col sm={3}>
+                           <div>
+                             <label>
+                             Reason For Promotion:
+                             </label>
+                           </div>
+                           </Col>
+                           <Col sm={7}>
+                           <div>
+                               <label className="itemResult">
+                                 {state.reason}
+                               </label>
+                           </div>
+                           </Col>
+                           </>    
+                           </Row>    
+                         </>
+                      //  <>
+                      //     <Row
+                      //   style={{
+                      //     marginLeft: "2rem",
+                      //     marginTop: "1rem",
+                      //     marginBottom: "3rem",
+                      //   }}
+                      // >
+                      //  <Col sm={3}>
+                      //    <div>
+                      //      <label>
+                      //      Reason For Promotion:
+                      //      </label>
+                      //    </div>
+                      //    </Col>
+                      //    <Col sm={7}>
+                      //    <div>
+                      //        <label className="itemResult">
+                      //          {state.reason}
+                      //        </label>
+                      //    </div>
+                      //    </Col>
+                      //    </Row>
+                      //    </>        
+                     }
+                     </>
                     </Col>
                   </Row>
                 </Form>
