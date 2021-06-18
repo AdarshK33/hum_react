@@ -33,8 +33,10 @@ const ManagerDisciplinaryList = () => {
   const { costCenterList, CostCenter } = useContext(AdminContext);
   useEffect(() => {
     disciplinaryListView("all", pageCount);
-    MakedisciplinaryEmployeeSearchNull();
     console.log("user role", user);
+  }, []);
+  useEffect(() => {
+    MakedisciplinaryEmployeeSearchNull();
   }, []);
 
   useEffect(() => {
@@ -187,14 +189,14 @@ const ManagerDisciplinaryList = () => {
                               {item.disciplinaryWarning !== null &&
                               item.disciplinaryWarning !== undefined &&
                               item.disciplinaryAction.warningIssued === true
-                                ? item.disciplinaryWarning.employeeActionStatus
+                                ? item.disciplinaryWarning.employeeWarningStatus
                                 : item.disciplinaryAction.employeeActionStatus}
                             </td>
                             <td>
                               {item.disciplinaryWarning !== null &&
                               item.disciplinaryWarning !== undefined
                                 ? item.disciplinaryWarning.statusDesc
-                                : ""}
+                                : item.disciplinaryAction.statusDesc}
                             </td>
                             <td>
                               {item.disciplinaryWarning !== null &&
@@ -204,7 +206,8 @@ const ManagerDisciplinaryList = () => {
                             </td>
                             <td>
                               <Link
-                                to={"/disciplinary-view/" + item.employeeId}
+                                // to={"/disciplinary-view/" + item.employeeId}
+                                to={"/disciplinary-action/" + item.employeeId}
                               >
                                 <Eye
                                   onClick={() => {
