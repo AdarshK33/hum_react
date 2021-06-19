@@ -226,9 +226,14 @@ const CostCenterManagerAction = () => {
       disciplinarySearchData &&
       disciplinarySearchData !== null &&
       disciplinarySearchData !== undefined &&
-      Object.keys(disciplinarySearchData).length !== 0
+      Object.keys(disciplinarySearchData).length !== 0 &&
+      disciplinarySearchData.disciplinaryAction !== null &&
+      disciplinarySearchData.disciplinaryAction !== undefined &&
+      disciplinarySearchData.disciplinaryAction.disciplinaryId !== 0
     ) {
-      IssueShowCauseNoticeLetter(disciplinarySearchData.employeeId);
+      disciplinaryEmployeeSearch(
+        disciplinarySearchData.disciplinaryAction.disciplinaryId
+      );
       setSubmitLetter(false);
       setPreviewLetter(true);
       setShow(true);
@@ -241,9 +246,14 @@ const CostCenterManagerAction = () => {
       disciplinarySearchData &&
       disciplinarySearchData !== null &&
       disciplinarySearchData !== undefined &&
-      Object.keys(disciplinarySearchData).length !== 0
+      Object.keys(disciplinarySearchData).length !== 0 &&
+      disciplinarySearchData.disciplinaryAction !== null &&
+      disciplinarySearchData.disciplinaryAction !== undefined &&
+      disciplinarySearchData.disciplinaryAction.disciplinaryId !== 0
     ) {
-      IssueShowCauseNoticeLetter(disciplinarySearchData.employeeId);
+      disciplinaryEmployeeSearch(
+        disciplinarySearchData.disciplinaryAction.disciplinaryId
+      );
       handleShow();
       setPreviewGeneratedLetter(true);
     }
