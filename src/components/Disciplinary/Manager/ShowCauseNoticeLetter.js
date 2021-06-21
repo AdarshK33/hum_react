@@ -37,13 +37,13 @@ const ShowCauseNotice = () => {
               Dear <b>{disciplinarySearchData.employeeName},</b>{" "}
             </p>
             <p>
-              You have been associated with Decathlon Sports India Private
-              Limited (“Decathlon/Company”), having its registered office at
-              Survey No. 78/10, A2 – 0 Chikkajala Village, Bellary Road,
-              Bangalore 562157, KA, IN, at its Store located at{" "}
-              <b>{disciplinarySearchData.storeLocation}</b> (“Decathlon”). You
-              are currently working at Decathlon{" "}
-              <b>{disciplinarySearchData.department}</b> as{" "}
+              You have been associated with {disciplinarySearchData.company}{" "}
+              Private Limited (“Decathlon/{disciplinarySearchData.company}),
+              having its registered office at Survey No. 78/10, A2 – 0
+              Chikkajala Village, Bellary Road, Bangalore 562157, KA, IN, at its
+              Store located at <b>{disciplinarySearchData.storeLocation}</b>{" "}
+              (“Decathlon/{disciplinarySearchData.company}”). You are currently
+              working at Decathlon <b>{disciplinarySearchData.department}</b> as{" "}
               <b>{disciplinarySearchData.position}</b>.
               <br />
               <b>
@@ -74,7 +74,7 @@ const ShowCauseNotice = () => {
               <br />
             </p>
             <p className="mt-5 ">
-              <b>For Decathlon Sports India Pvt Ltd,</b>
+              <b>{disciplinarySearchData.company} Pvt Ltd,</b>
             </p>
             <div className="float-right "></div>
           </div>

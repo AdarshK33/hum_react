@@ -19,6 +19,7 @@ const CostCenterManagerAction = () => {
   const [intern, setIntern] = useState(false);
   const history = useHistory();
   const [showShowCauseNoticeModal, setShow] = useState(false);
+  const [showShowCauseNoticeModalLink, setShowLink] = useState(false);
   const [showSignature, setShowSignature] = useState(false);
   const [saveLetter, setSaveLetter] = useState(false);
   const [submitLetter, setSubmitLetter] = useState(false);
@@ -196,6 +197,11 @@ const CostCenterManagerAction = () => {
     setShow(false);
     history.push("../disciplinary");
   };
+  const LetterShow = () => {
+    console.log(";;;;;");
+    setShowLink(true);
+  };
+  const handleShowCauseLetterCloseLink = () => setShowLink(false);
 
   const saveOfferLetter = () => {
     setSaveLetter(true);
@@ -345,6 +351,27 @@ const CostCenterManagerAction = () => {
   return (
     <Fragment>
       {/* letter */}
+      <Modal
+        show={showShowCauseNoticeModalLink}
+        onHide={handleShowCauseLetterCloseLink}
+        size="md"
+      >
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        <Modal.Body>
+          {disciplinarySearchData &&
+          disciplinarySearchData &&
+          disciplinarySearchData !== null &&
+          disciplinarySearchData !== undefined &&
+          Object.keys(disciplinarySearchData).length !== 0 &&
+          disciplinarySearchData.disciplinaryAction !== null &&
+          disciplinarySearchData.disciplinaryAction !== undefined &&
+          disciplinarySearchData.disciplinaryAction !== "" ? (
+            <ShowCauseNotice />
+          ) : (
+            ""
+          )}
+        </Modal.Body>
+      </Modal>
 
       {submitLetter ? (
         <Modal
@@ -634,11 +661,9 @@ const CostCenterManagerAction = () => {
                         </Col>
                         <Col sm={6}>
                           <div>
-                            <a
-                              href={require("../../../forms/Form_11_UAN.pdf")}
-                              target="_blank"
-                            >
-                              ShowCauseNotice.pdf
+                            <a onClick={LetterShow}>
+                              {" "}
+                              <u className="itemResult">ShowCauseNotice.pdf</u>
                             </a>
                           </div>
                         </Col>

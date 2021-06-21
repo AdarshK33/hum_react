@@ -3,10 +3,12 @@ import { Row, Col, Form, Button, Container, Modal } from "react-bootstrap";
 import Breadcrumb from "../../common/breadcrumb";
 import "react-datepicker/dist/react-datepicker.css";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
+import ShowCauseNotice from "../Manager/ShowCauseNoticeLetter";
 
 const DisciplinaryView = () => {
   const [showCauseReason, setShowCauseReason] = useState("");
   const [EmpName, setEmpName] = useState();
+  const [showShowCauseNoticeModal, setShow] = useState(false);
 
   const [state, setState] = useState({
     empId: "",
@@ -79,9 +81,35 @@ const DisciplinaryView = () => {
     }
   }, [disciplinarySearchData]);
   console.log("disciplinarySearchData", disciplinarySearchData);
+  const LetterShow = () => {
+    console.log(";;;;;");
+    setShow(true);
+  };
+  const handleShowCauseLetterClose = () => setShow(false);
 
   return (
     <Fragment>
+      <Modal
+        show={showShowCauseNoticeModal}
+        onHide={handleShowCauseLetterClose}
+        size="md"
+      >
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        <Modal.Body>
+          {disciplinarySearchData &&
+          disciplinarySearchData &&
+          disciplinarySearchData !== null &&
+          disciplinarySearchData !== undefined &&
+          Object.keys(disciplinarySearchData).length !== 0 &&
+          disciplinarySearchData.disciplinaryAction !== null &&
+          disciplinarySearchData.disciplinaryAction !== undefined &&
+          disciplinarySearchData.disciplinaryAction !== "" ? (
+            <ShowCauseNotice />
+          ) : (
+            ""
+          )}
+        </Modal.Body>
+      </Modal>
       <Breadcrumb
         title="DISCIPLINARY ACTION VIEW"
         parent="DISCIPLINARY ACTION VIEW"
@@ -259,11 +287,9 @@ const DisciplinaryView = () => {
                         </Col>
                         <Col sm={6}>
                           <div>
-                            <a
-                              href={require("../../../forms/Form_11_UAN.pdf")}
-                              target="_blank"
-                            >
-                              ShowCauseNotice.pdf
+                            <a onClick={LetterShow}>
+                              {" "}
+                              <u className="itemResult">ShowCauseNotice.pdf</u>
                             </a>
                           </div>
                         </Col>
