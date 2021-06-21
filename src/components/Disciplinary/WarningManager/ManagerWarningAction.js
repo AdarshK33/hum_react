@@ -22,7 +22,7 @@ const ManagerWarningAction = (props) => {
   const [initalExit, setInitalExit] = useState(false);
   const [warningManagerReason, setWarningManagerReason] = useState("");
   const [showModal, setModal] = useState(false);
-  const [letterView ,setLetterView] = useState(false)
+  const [letterView, setLetterView] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [showShowCauseNoticeModal, setShow] = useState(false);
@@ -445,8 +445,9 @@ const ManagerWarningAction = (props) => {
   };
 
   const handleShowCauseLetterClose = () => {
-    setLetterView(false)
-    setShow(false);}
+    setLetterView(false);
+    setShow(false);
+  };
   const handleShowCauseLetterClose1 = () => {
     setShow(false);
     props.history.push("./probation");
@@ -501,7 +502,6 @@ const ManagerWarningAction = (props) => {
       setSubmitLetter(false);
       setPreviewLetter(true);
       setShow(true);
-      
     }
   };
   const ShowCauseLetter = (e) => {
@@ -522,9 +522,8 @@ const ManagerWarningAction = (props) => {
       // setSubmitLetter(false);
       // setPreviewLetter(true);
       // setShowSignature(false)
-      setLetterView(true)
+      setLetterView(true);
       // setShow(true);
-      
     }
   };
 
@@ -566,12 +565,14 @@ const ManagerWarningAction = (props) => {
   console.log(issueWarningStatus, "warningstatus");
   return (
     <div>
-            {letterView? <Modal
+      {letterView ? (
+        <Modal
           show={letterView}
           onHide={handleShowCauseLetterClose}
           size="lg"
           centered
-        ><Modal.Header closeButton className="modal-line"></Modal.Header>
+        >
+          <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body>
             {issueShowCauseNoticeData &&
             issueShowCauseNoticeData !== undefined &&
@@ -581,8 +582,11 @@ const ManagerWarningAction = (props) => {
               ""
             )}
             <br></br>
-            </Modal.Body>
-            </Modal>:''}
+          </Modal.Body>
+        </Modal>
+      ) : (
+        ""
+      )}
       {initalExit ? (
         <Modal show={handleClose} onHide={handleClose} size="md" centered>
           <Modal.Header closeButton className="modal-line"></Modal.Header>
@@ -938,19 +942,22 @@ const ManagerWarningAction = (props) => {
                         }}
                       >
                         <>
-                        <Col sm={2}>
-                          <div>
-                            <label>Preview Show Cause Notice:</label>
-                          </div>
-                        </Col>
-                        <Col sm={4}>
-                          <div>
-                                  
-                            <a onClick={ShowCauseLetter}>
-                              ShowCauseNotice.pdf
-                            </a>
-                          </div>
-                        </Col>
+                          <Col sm={2}>
+                            <div>
+                              <label>Preview Show Cause Notice:</label>
+                            </div>
+                          </Col>
+                          <Col sm={6}>
+                            <div>
+                              <a onClick={ShowCauseLetter}>
+                                {" "}
+                                <u className="itemResult">
+                                  ShowCauseNotice.pdf
+                                </u>
+                              </a>
+                            </div>
+                          </Col>
+
                           {/* <Col sm={2}>
                             <div>
                               <label>Preview Show Case Notice:</label>
@@ -988,53 +995,91 @@ const ManagerWarningAction = (props) => {
                           </Col>
                         </>
                       </Row>
-                      <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "1rem",
-                          marginBottom: "3rem",
-                        }}
-                      >
-                        <Col sm={3}>
-                          <label>Issue Warning Letter : </label>
-                        </Col>
-                        <Col sm={1} style={{ marginTop: "0.25rem" }}>
-                          <Form.Group>
-                            <div className="boxField_2 input">
-                              <input
-                                className="largerCheckbox"
-                                type="checkbox"
-                                value="yes"
-                                checked={
-                                  issueWarningStatus == "yes" ? true : false
-                                }
-                                style={{ borderColor: "blue" }}
-                                // required={required}
-                                onChange={handleChangeLetter}
-                              />
-                              <label className="itemResult">Yes</label>
-                            </div>
-                          </Form.Group>
-                        </Col>
-                        <Col sm={1} style={{ marginTop: "0.25rem" }}>
-                          <Form.Group>
-                            <div className="boxField_2 input">
-                              <input
-                                className="largerCheckbox"
-                                type="checkbox"
-                                value="no"
-                                checked={
-                                  issueWarningStatus == "no" ? true : false
-                                }
-                                style={{ borderColor: "blue" }}
-                                // required={required}
-                                onChange={handleChangeLetter}
-                              />
-                              <label className="itemResult">No</label>
-                            </div>
-                          </Form.Group>
-                        </Col>
-                      </Row>
+                      {disciplinarySearchData.disciplinaryAction !== null &&
+                      disciplinarySearchData.disciplinaryAction !== undefined &&
+                      disciplinarySearchData.disciplinaryAction !== "" &&
+                      disciplinarySearchData.disciplinaryAction &&
+                      (disciplinarySearchData.disciplinaryAction.reason !==
+                        "Other" ||
+                        disciplinarySearchData.employeeActionStatus !==
+                          "Responded" ||
+                        disciplinarySearchData.employeeActionStatus !==
+                          "responded") ? (
+                        <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "1rem",
+                            marginBottom: "3rem",
+                          }}
+                        >
+                          <Col sm={3}>
+                            <label>Issue Warning Letter : </label>
+                          </Col>
+                          <Col sm={1} style={{ marginTop: "0.25rem" }}>
+                            <Form.Group>
+                              <div className="boxField_2 input">
+                                <input
+                                  className="largerCheckbox"
+                                  type="checkbox"
+                                  value="yes"
+                                  checked={
+                                    issueWarningStatus == "yes" ? true : false
+                                  }
+                                  style={{ borderColor: "blue" }}
+                                  // required={required}
+                                  onChange={handleChangeLetter}
+                                  disabled={
+                                    disciplinarySearchData.disciplinaryAction !==
+                                      null &&
+                                    disciplinarySearchData.disciplinaryAction !==
+                                      undefined &&
+                                    disciplinarySearchData.disciplinaryAction !==
+                                      "" &&
+                                    disciplinarySearchData.disciplinaryAction
+                                      .reason === "Other"
+                                      ? true
+                                      : false
+                                  }
+                                />
+                                <label className="itemResult">Yes</label>
+                              </div>
+                            </Form.Group>
+                          </Col>
+                          <Col sm={1} style={{ marginTop: "0.25rem" }}>
+                            <Form.Group>
+                              <div className="boxField_2 input">
+                                <input
+                                  className="largerCheckbox"
+                                  type="checkbox"
+                                  value="no"
+                                  checked={
+                                    issueWarningStatus == "no" ? true : false
+                                  }
+                                  style={{ borderColor: "blue" }}
+                                  // required={required}
+                                  onChange={handleChangeLetter}
+                                  disabled={
+                                    disciplinarySearchData.disciplinaryAction !==
+                                      null &&
+                                    disciplinarySearchData.disciplinaryAction !==
+                                      undefined &&
+                                    disciplinarySearchData.disciplinaryAction !==
+                                      "" &&
+                                    disciplinarySearchData.disciplinaryAction
+                                      .reason === "Other"
+                                      ? true
+                                      : false
+                                  }
+                                />
+                                <label className="itemResult">No</label>
+                              </div>
+                            </Form.Group>
+                          </Col>
+                        </Row>
+                      ) : (
+                        ""
+                      )}
+
                       {/* <Row
                         style={{
                           marginLeft: "2rem",
@@ -1144,9 +1189,11 @@ const ManagerWarningAction = (props) => {
                                   <div>
                                     <label className="itemResult">
                                       {state.disciplinaryWarning
-                                        .improvementPeriod == 1 ? state.disciplinaryWarning
-                                        .improvementPeriod +" Month":state.disciplinaryWarning
-                                        .improvementPeriod +" Months"}
+                                        .improvementPeriod == 1
+                                        ? state.disciplinaryWarning
+                                            .improvementPeriod + " Month"
+                                        : state.disciplinaryWarning
+                                            .improvementPeriod + " Months"}
                                     </label>
                                   </div>
                                 </Col>
