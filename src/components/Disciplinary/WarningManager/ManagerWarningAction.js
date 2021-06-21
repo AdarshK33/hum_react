@@ -289,6 +289,7 @@ const ManagerWarningAction = (props) => {
     console.log(infoData, "infoData");
     createShowCauseIssue(infoData);
     setInitalExit(true);
+    setSubmitted(true);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -1087,7 +1088,9 @@ const ManagerWarningAction = (props) => {
                                   <div>
                                     <label className="itemResult">
                                       {state.disciplinaryWarning
-                                        .improvementPeriod + "Month"}
+                                        .improvementPeriod == 1 ? state.disciplinaryWarning
+                                        .improvementPeriod +" Month":state.disciplinaryWarning
+                                        .improvementPeriod +" Months"}
                                     </label>
                                   </div>
                                 </Col>
@@ -1112,21 +1115,21 @@ const ManagerWarningAction = (props) => {
                                         value="1"
                                         key={1}
                                       >
-                                        1 month
+                                        1 Month
                                       </option>
                                       <option
                                         name="InputImprovementPeriod"
                                         value="2"
                                         key={2}
                                       >
-                                        2 months
+                                        2 Months
                                       </option>
                                       <option
                                         name="InputImprovementPeriod"
                                         value="3"
                                         key={2}
                                       >
-                                        3 months
+                                        3 Months
                                       </option>
                                     </Form.Control>
                                     {improvementPeriodError ? (
@@ -1296,7 +1299,10 @@ const ManagerWarningAction = (props) => {
                             }}
                           >
                             <button
-                              className={"stepperButtons"}
+                              disabled={submitted}
+                              className={
+                                submitted ? "confirmButton" : "stepperButtons"
+                              }
                               onClick={handleInitialExit}
                             >
                               Initial Exit
