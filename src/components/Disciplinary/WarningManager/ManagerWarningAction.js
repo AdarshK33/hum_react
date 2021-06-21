@@ -22,7 +22,7 @@ const ManagerWarningAction = (props) => {
   const [initalExit, setInitalExit] = useState(false);
   const [warningManagerReason, setWarningManagerReason] = useState("");
   const [showModal, setModal] = useState(false);
-
+  const [letterView ,setLetterView] = useState(false)
   const [showInfoModal, setShowInfoModal] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [showShowCauseNoticeModal, setShow] = useState(false);
@@ -444,7 +444,9 @@ const ManagerWarningAction = (props) => {
     setSuccessModal(false);
   };
 
-  const handleShowCauseLetterClose = () => setShow(false);
+  const handleShowCauseLetterClose = () => {
+    setLetterView(false)
+    setShow(false);}
   const handleShowCauseLetterClose1 = () => {
     setShow(false);
     props.history.push("./probation");
@@ -499,6 +501,30 @@ const ManagerWarningAction = (props) => {
       setSubmitLetter(false);
       setPreviewLetter(true);
       setShow(true);
+      
+    }
+  };
+  const ShowCauseLetter = (e) => {
+    e.preventDefault();
+    if (
+      disciplinarySearchData &&
+      disciplinarySearchData &&
+      disciplinarySearchData !== null &&
+      disciplinarySearchData !== undefined &&
+      Object.keys(disciplinarySearchData).length !== 0 &&
+      disciplinarySearchData.disciplinaryAction !== null &&
+      disciplinarySearchData.disciplinaryAction !== undefined &&
+      disciplinarySearchData.disciplinaryAction.disciplinaryId !== 0
+    ) {
+      disciplinaryEmployeeSearch(
+        disciplinarySearchData.disciplinaryAction.disciplinaryId
+      );
+      // setSubmitLetter(false);
+      // setPreviewLetter(true);
+      // setShowSignature(false)
+      setLetterView(true)
+      // setShow(true);
+      
     }
   };
 
@@ -540,6 +566,23 @@ const ManagerWarningAction = (props) => {
   console.log(issueWarningStatus, "warningstatus");
   return (
     <div>
+            {letterView? <Modal
+          show={letterView}
+          onHide={handleShowCauseLetterClose}
+          size="lg"
+          centered
+        ><Modal.Header closeButton className="modal-line"></Modal.Header>
+          <Modal.Body>
+            {issueShowCauseNoticeData &&
+            issueShowCauseNoticeData !== undefined &&
+            issueShowCauseNoticeData !== null ? (
+              <WarningLetter />
+            ) : (
+              ""
+            )}
+            <br></br>
+            </Modal.Body>
+            </Modal>:''}
       {initalExit ? (
         <Modal show={handleClose} onHide={handleClose} size="md" centered>
           <Modal.Header closeButton className="modal-line"></Modal.Header>
@@ -895,7 +938,20 @@ const ManagerWarningAction = (props) => {
                         }}
                       >
                         <>
-                          <Col sm={2}>
+                        <Col sm={2}>
+                          <div>
+                            <label>Preview Show Cause Notice:</label>
+                          </div>
+                        </Col>
+                        <Col sm={4}>
+                          <div>
+                                  
+                            <a onClick={ShowCauseLetter}>
+                              ShowCauseNotice.pdf
+                            </a>
+                          </div>
+                        </Col>
+                          {/* <Col sm={2}>
                             <div>
                               <label>Preview Show Case Notice:</label>
                             </div>
@@ -906,7 +962,7 @@ const ManagerWarningAction = (props) => {
                                 {state.disciplinaryAction.showCauseLetter}
                               </label>
                             </div>
-                          </Col>
+                          </Col> */}
                         </>
                       </Row>
 
