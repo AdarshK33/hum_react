@@ -41,9 +41,9 @@ const WarningLetter = () => {
               (“Decathlon/Company”), having its registered office at Survey No.
               78/10, A2 – 0 Chikkajala Village, Bellary Road, Bangalore 562157,
               KA, IN, at its XXXXXXXX located at{" "}
-              {disciplinarySearchData.storeLocation} (“Decathlon”). You are
-              currently working at Decathlon {disciplinarySearchData.department}{" "}
-              as {disciplinarySearchData.position}. On XXXXXXX, Decathlon issued
+              <b>{disciplinarySearchData.storeLocation} </b>(“Decathlon”). You are
+              currently working at Decathlon <b>{disciplinarySearchData.department}</b>{" "}
+              as <b>{disciplinarySearchData.position}</b>. On XXXXXXX, Decathlon issued
               to you a Show Cause notice, asking you for a clear written
               explanation regarding the following accusations – • ( mention it
               from Show cause)
