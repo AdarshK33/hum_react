@@ -353,6 +353,7 @@ const IssueShowCauseNotice = () => {
       state.reason !== null &&
       state.reason !== undefined
     ) {
+      console.log(state.reason, "state.reason");
       setReasonError(false);
       return true;
     } else {
@@ -382,8 +383,6 @@ const IssueShowCauseNotice = () => {
     console.log("submit handler");
 
     e.preventDefault();
-    setSubmitted(true);
-    setPreview(true);
     const value = checkValidations();
     if (value === true) {
       console.log("INSIDE");
@@ -495,7 +494,7 @@ const IssueShowCauseNotice = () => {
                 <p>{employeeData.managerName}</p>
               </Col> */}
 
-              {showSignature ? (
+              {showSignature && !previewLetter ? (
                 <Fragment>
                   <br></br>
                   <img
@@ -742,7 +741,9 @@ const IssueShowCauseNotice = () => {
                                       : {}
                                   }
                                 >
-                                  <option value=""></option>
+                                  <option value="" disabled selected hidden>
+                                    Search Reason
+                                  </option>
                                   {disciplinaryReasonList.map((item) => {
                                     return (
                                       <option key={item.value}>
@@ -795,7 +796,9 @@ const IssueShowCauseNotice = () => {
                                       : {}
                                   }
                                 >
-                                  <option value=""></option>
+                                  <option value="" disabled selected hidden>
+                                    Select Reason For
+                                  </option>
                                   {resonsForShowCauseList.map((item) => {
                                     return (
                                       <option key={item.value}>
