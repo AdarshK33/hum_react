@@ -688,77 +688,89 @@ const CostCenterManagerAction = () => {
                           </div>
                         </Col>
                       </Row>
-                      <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "2rem",
-                          marginBottom: "3rem",
-                        }}
-                      >
-                        <Col sm={3}>
-                          <label>Issue Warning Letter </label>
-                        </Col>
-                        <Col sm={2} style={{ marginTop: "0.25rem" }}>
-                          <Form.Group>
-                            <div className="boxField_2 input">
-                              <input
-                                className="largerCheckbox"
-                                type="checkbox"
-                                value="yes"
-                                disabled={true}
-                                checked={
-                                  disciplinarySearchData &&
-                                  disciplinarySearchData &&
-                                  disciplinarySearchData !== null &&
-                                  disciplinarySearchData !== undefined &&
-                                  Object.keys(disciplinarySearchData).length !==
-                                    0 &&
-                                  disciplinarySearchData.disciplinaryWarning !==
-                                    null &&
-                                  disciplinarySearchData.disciplinaryWarning !==
-                                    undefined &&
-                                  disciplinarySearchData.disciplinaryWarning !==
-                                    ""
-                                    ? true
-                                    : false
-                                }
-                                style={{ borderColor: "blue" }}
-                              />
-                              <label className="itemResult">Yes</label>
-                            </div>
-                          </Form.Group>
-                        </Col>
-                        <Col sm={2} style={{ marginTop: "0.25rem" }}>
-                          <Form.Group>
-                            <div className="boxField_2 input">
-                              <input
-                                className="largerCheckbox"
-                                type="checkbox"
-                                value="no"
-                                disabled={true}
-                                checked={
-                                  (disciplinarySearchData &&
+                      {disciplinarySearchData &&
+                      disciplinarySearchData &&
+                      disciplinarySearchData !== null &&
+                      disciplinarySearchData !== undefined &&
+                      Object.keys(disciplinarySearchData).length !== 0 &&
+                      disciplinarySearchData.disciplinaryWarning !== null &&
+                      disciplinarySearchData.disciplinaryWarning !==
+                        undefined &&
+                      disciplinarySearchData.disciplinaryWarning !== "" ? (
+                        <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "2rem",
+                            marginBottom: "3rem",
+                          }}
+                        >
+                          <Col sm={3}>
+                            <label>Issue Warning Letter </label>
+                          </Col>
+                          <Col sm={2} style={{ marginTop: "0.25rem" }}>
+                            <Form.Group>
+                              <div className="boxField_2 input">
+                                <input
+                                  className="largerCheckbox"
+                                  type="checkbox"
+                                  value="yes"
+                                  disabled={true}
+                                  checked={
+                                    disciplinarySearchData &&
                                     disciplinarySearchData &&
                                     disciplinarySearchData !== null &&
                                     disciplinarySearchData !== undefined &&
                                     Object.keys(disciplinarySearchData)
                                       .length !== 0 &&
+                                    disciplinarySearchData.disciplinaryWarning !==
+                                      null &&
+                                    disciplinarySearchData.disciplinaryWarning !==
+                                      undefined &&
+                                    disciplinarySearchData.disciplinaryWarning !==
+                                      ""
+                                      ? true
+                                      : false
+                                  }
+                                  style={{ borderColor: "blue" }}
+                                />
+                                <label className="itemResult">Yes</label>
+                              </div>
+                            </Form.Group>
+                          </Col>
+                          <Col sm={2} style={{ marginTop: "0.25rem" }}>
+                            <Form.Group>
+                              <div className="boxField_2 input">
+                                <input
+                                  className="largerCheckbox"
+                                  type="checkbox"
+                                  value="no"
+                                  disabled={true}
+                                  checked={
+                                    (disciplinarySearchData &&
+                                      disciplinarySearchData &&
+                                      disciplinarySearchData !== null &&
+                                      disciplinarySearchData !== undefined &&
+                                      Object.keys(disciplinarySearchData)
+                                        .length !== 0 &&
+                                      disciplinarySearchData.disciplinaryWarning ===
+                                        null) ||
                                     disciplinarySearchData.disciplinaryWarning ===
-                                      null) ||
-                                  disciplinarySearchData.disciplinaryWarning ===
-                                    undefined ||
-                                  disciplinarySearchData.disciplinaryWarning ===
-                                    ""
-                                    ? true
-                                    : false
-                                }
-                                style={{ borderColor: "blue" }}
-                              />
-                              <label className="itemResult">No</label>
-                            </div>
-                          </Form.Group>
-                        </Col>
-                      </Row>
+                                      undefined ||
+                                    disciplinarySearchData.disciplinaryWarning ===
+                                      ""
+                                      ? true
+                                      : false
+                                  }
+                                  style={{ borderColor: "blue" }}
+                                />
+                                <label className="itemResult">No</label>
+                              </div>
+                            </Form.Group>
+                          </Col>
+                        </Row>
+                      ) : (
+                        ""
+                      )}
                       {disciplinarySearchData &&
                       disciplinarySearchData &&
                       disciplinarySearchData !== null &&
