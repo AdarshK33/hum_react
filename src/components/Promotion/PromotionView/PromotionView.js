@@ -594,7 +594,7 @@ const PromotionView = (props) => {
                          <Col sm={2}>
                          <div>
                              <label className="itemResult">
-                               {state.validatedAdminName}
+                               {state.validatedManagerName}
                              </label>
                          </div>
                          </Col>
