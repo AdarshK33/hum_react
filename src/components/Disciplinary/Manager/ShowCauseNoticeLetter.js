@@ -5,12 +5,11 @@ import moment from "moment";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 
 const ShowCauseNotice = () => {
-  const { issueShowCauseNoticeData } = useContext(DisciplinaryContext);
+  const { disciplinarySearchData } = useContext(DisciplinaryContext);
   //   connsole.log("today", moment().format("DD-MM-YYYY"));
   return (
     <Fragment>
-      {/* {typeof issueShowCauseNoticeData !== undefined ? ( */}
-      {true ? (
+      {typeof disciplinarySearchData !== undefined ? (
         <Fragment>
           <p className="">
             {" "}
@@ -22,51 +21,52 @@ const ShowCauseNotice = () => {
           <p>To ,</p>
           <p>
             {" "}
-            <b>Ms./Mr.</b> &nbsp; {issueShowCauseNoticeData.employeeName}
+            <b>Ms./Mr.</b> &nbsp; {disciplinarySearchData.employeeName}
           </p>
           <p>
-            <b>EmployeeId:</b> {issueShowCauseNoticeData.employeeId}
+            <b>EmployeeId:</b> {disciplinarySearchData.employeeId}
           </p>
           <p>
-            <b>Residential Address:</b>{" "}
-            {issueShowCauseNoticeData.employeeAddress}
+            <b>Residential Address:</b> {disciplinarySearchData.employeeAddress}
           </p>
 
           <div className=" ">
             <p>Sub: Show cause notice</p>
             <p className="mt-5 ">
               {" "}
-              Dear <b>{issueShowCauseNoticeData.employeeName},</b>{" "}
+              Dear <b>{disciplinarySearchData.employeeName},</b>{" "}
             </p>
             <p>
-              You have been associated with Decathlon Sports India Private
-              Limited (“Decathlon/Company”), having its registered office at
-              Survey No. 78/10, A2 – 0 Chikkajala Village, Bellary Road,
-              Bangalore 562157, KA, IN, at its Store located at{" "}
-              {issueShowCauseNoticeData.storeLocation} (“Decathlon”). You are
-              currently working at Decathlon{" "}
-              {issueShowCauseNoticeData.department} as{" "}
-              {issueShowCauseNoticeData.position}.
+              You have been associated with {disciplinarySearchData.company}{" "}
+              Private Limited (“Decathlon/{disciplinarySearchData.company}),
+              having its registered office at Survey No. 78/10, A2 – 0
+              Chikkajala Village, Bellary Road, Bangalore 562157, KA, IN, at its
+              Store located at <b>{disciplinarySearchData.storeLocation}</b>{" "}
+              (“Decathlon/{disciplinarySearchData.company}”). You are currently
+              working at Decathlon <b>{disciplinarySearchData.department}</b> as{" "}
+              <b>{disciplinarySearchData.position}</b>.
               <br />
-              {issueShowCauseNoticeData !== null &&
-              issueShowCauseNoticeData !== undefined &&
-              issueShowCauseNoticeData.disciplinaryAction !== null &&
-              issueShowCauseNoticeData.disciplinaryAction !== undefined &&
-              Object.keys(issueShowCauseNoticeData).length !== 0
-                ? issueShowCauseNoticeData.disciplinaryAction.managerComment
-                : ""}
+              <b>
+                {disciplinarySearchData !== null &&
+                disciplinarySearchData !== undefined &&
+                disciplinarySearchData.disciplinaryAction !== null &&
+                disciplinarySearchData.disciplinaryAction !== undefined &&
+                Object.keys(disciplinarySearchData).length !== 0
+                  ? disciplinarySearchData.disciplinaryAction.managerComment
+                  : ""}
+              </b>
               .
               <br />
               This acts, as alleged above to have been committed by you, amount
               to Wilful Misconduct and Gross Negligence which, if proved, would
               warrant serious disciplinary action against you. Accordingly, you
-              are hereby required to show cause within 5 days in receipt of this
-              letter as to why you have indulged in such an act of wilful
-              misconduct and Gross Negligence. Such charges, levelled against
-              you, are of grave and serious nature, if you fail to submit the
-              explanation as required, it will be presumed that you admit the
-              charges and have no explanation to offer and the matter will be
-              disposed of without any further reference to you.
+              are hereby required to show cause within <b>5</b> days in receipt
+              of this letter as to why you have indulged in such an act of
+              wilful misconduct and Gross Negligence. Such charges, levelled
+              against you, are of grave and serious nature, if you fail to
+              submit the explanation as required, it will be presumed that you
+              admit the charges and have no explanation to offer and the matter
+              will be disposed of without any further reference to you.
               <br />
               <br />
               <br />
@@ -74,7 +74,7 @@ const ShowCauseNotice = () => {
               <br />
             </p>
             <p className="mt-5 ">
-              <b>For Decathlon Sports India Pvt Ltd,</b>
+              <b>{disciplinarySearchData.company} Pvt Ltd,</b>
             </p>
             <div className="float-right "></div>
           </div>

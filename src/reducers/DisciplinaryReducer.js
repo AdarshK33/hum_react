@@ -19,6 +19,8 @@ const DisciplinaryReducer = (state, action) => {
         ...state,
         issueShowCauseNoticeData: action.payload,
       };
+    case "DISCIPLINARY_SEARCH_WITH_KEY":
+      return { ...state, disciplinaryEmpSearchData: action.payload };
     default:
       return state;
   }

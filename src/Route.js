@@ -99,6 +99,8 @@ import DisciplinaryView from "./components/Disciplinary/Manager/DisciplinaryView
 import CostCenterManagerAction from "./components/Disciplinary/CostCenterManagerAction/CostCenterManagerAction";
 
 import ViewBonus from "./components/Bonus/ViewBonus";
+
+import ManagerWarningAction from "./components/Disciplinary/WarningManager/ManagerWarningAction"
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
   console.log(user, state, "route8888888888888");
@@ -119,11 +121,7 @@ const RoutePath = () => {
         component={OnBoardingStepper}
       />
 
-      {/* <Route
-        path={`${process.env.PUBLIC_URL}/finance-clearance`}
-        component={FinanceClearanceList}
-      /> */}
-
+    
       {/* <Route
             path={`${process.env.PUBLIC_URL}/onboard`}
             component={OnBoardingStepper}
@@ -156,6 +154,11 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/admin_no_due_clearance`}
             component={AdminNoDueClearance}
           />
+            <Route
+        path={`${process.env.PUBLIC_URL}/manager-warning-action-view/:employeeId`}
+        component={ManagerWarningAction}
+      />
+
           <Route
             path={`${process.env.PUBLIC_URL}/admin-finance-clearance`}
             component={FinanaceAdminNoDueClearance}

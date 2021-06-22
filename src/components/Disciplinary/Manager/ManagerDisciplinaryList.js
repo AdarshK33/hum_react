@@ -35,9 +35,10 @@ const ManagerDisciplinaryList = () => {
     disciplinaryListView("all", pageCount);
     console.log("user role", user);
   }, []);
-  useEffect(() => {
-    MakedisciplinaryEmployeeSearchNull();
-  }, []);
+
+  // useEffect(() => {
+  //   MakedisciplinaryEmployeeSearchNull();
+  // }, []);
 
   useEffect(() => {
     if (disciplinaryListData !== null && disciplinaryListData !== undefined) {
@@ -177,13 +178,7 @@ const ManagerDisciplinaryList = () => {
                             <td>{item.employeeName}</td>
                             <td>{item.employeeCostCentre}</td>
                             <td>{item.disciplinaryAction.actionIssuedDate}</td>
-                            <td>
-                              {item.disciplinaryWarning !== null &&
-                              item.disciplinaryWarning !== undefined &&
-                              item.disciplinaryAction.warningIssued === true
-                                ? item.disciplinaryWarning.reasonDetails
-                                : item.disciplinaryAction.reasonDetails}
-                            </td>
+                            <td>{item.disciplinaryAction.reason}</td>
                             <td>{item.disciplinaryAction.actionDueDays}</td>
                             <td>
                               {item.disciplinaryWarning !== null &&
@@ -206,35 +201,71 @@ const ManagerDisciplinaryList = () => {
                             </td>
                             <td>
                               <Link
-                                // to={"/disciplinary-view/" + item.employeeId}
-                                to={"/disciplinary-action/" + item.employeeId}
+                                to={"/disciplinary-view/" + item.employeeId}
+                                // to={"/disciplinary-action/" + item.employeeId}
                               >
                                 <Eye
                                   onClick={() => {
-                                    disciplinaryEmployeeSearch(item.employeeId);
+                                    disciplinaryEmployeeSearch(
+                                      item.disciplinaryAction.disciplinaryId
+                                    );
                                   }}
                                 />
                               </Link>
                             </td>
-
-                            <td>
-                              {item.status === 5 ||
-                              item.status === 6 ||
-                              item.status === 2 ||
-                              item.status === 3 ? (
-                                <Edit2 />
-                              ) : (
-                                <Link to="/edit-offer-release">
-                                  <Edit2
-                                    onClick={() => {
-                                      disciplinaryEmployeeSearch(
-                                        item.employeeId
-                                      );
-                                    }}
-                                  />
-                                </Link>
-                              )}
-                            </td>
+                            {user !== null &&
+                            user !== undefined &&
+                            (user.role === "COST_CENTER_MANAGER" ||
+                              user.additionalRole === "7") ? (
+                              <td>
+                                {item.disciplinaryAction.status !== 2 ? (
+                                  <Link
+                                    to={
+                                      "/disciplinary-action/" + item.employeeId
+                                    }
+                                  >
+                                    <Edit2
+                                      onClick={() => {
+                                        disciplinaryEmployeeSearch(
+                                          item.disciplinaryAction.disciplinaryId
+                                        );
+                                      }}
+                                    />
+                                  </Link>
+                                ) : (
+                                  <Edit2 />
+                                )}
+                              </td>
+                            ) : (
+                              <td>
+                                {item.disciplinaryAction !== null &&
+                                item.disciplinaryAction !== undefined &&
+                                item.disciplinaryAction !== "" &&
+                                item.disciplinaryAction.actionDueDays !== 0 ? (
+                                  //  &&
+                                  // (item.disciplinaryAction
+                                  //   .employeeActionStatus === "Responded" ||
+                                  //   item.disciplinaryAction
+                                  //     .employeeActionStatus === "responded")
+                                  <Link
+                                    to={
+                                      `/manager-warning-action-view/` +
+                                      item.employeeId
+                                    }
+                                  >
+                                    <Edit2
+                                      onClick={() => {
+                                        disciplinaryEmployeeSearch(
+                                          item.disciplinaryAction.disciplinaryId
+                                        );
+                                      }}
+                                    />
+                                  </Link>
+                                ) : (
+                                  <Edit2 />
+                                )}
+                              </td>
+                            )}
                           </tr>
                         </tbody>
                       );
