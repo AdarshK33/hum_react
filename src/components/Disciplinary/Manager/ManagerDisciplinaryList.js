@@ -90,10 +90,7 @@ const ManagerDisciplinaryList = () => {
   };
   return (
     <Fragment>
-      <Breadcrumb
-        title="DISCIPLINARY ACTION LIST"
-        parent="DISCIPLINARY ACTION LIST"
-      />
+      <Breadcrumb title="DISCIPLINARY ACTION" parent="DISCIPLINARY ACTION" />
       <Container fluid>
         <Row>
           <Col sm={12}>
@@ -102,7 +99,7 @@ const ManagerDisciplinaryList = () => {
                 className="title_bar"
                 style={{ textAlign: "center", fontSize: "larger" }}
               >
-                <b style={{ marginLeft: "320px" }}>DISCIPLINARY ACTION LIST</b>
+                <b style={{ marginLeft: "320px" }}>DISCIPLINARY ACTION</b>
 
                 <div className="job-filter">
                   <div className="faq-form mr-2">
@@ -242,11 +239,6 @@ const ManagerDisciplinaryList = () => {
                                 item.disciplinaryAction !== undefined &&
                                 item.disciplinaryAction !== "" &&
                                 item.disciplinaryAction.actionDueDays !== 0 ? (
-                                  //  &&
-                                  // (item.disciplinaryAction
-                                  //   .employeeActionStatus === "Responded" ||
-                                  //   item.disciplinaryAction
-                                  //     .employeeActionStatus === "responded")
                                   <Link
                                     to={
                                       `/manager-warning-action-view/` +
