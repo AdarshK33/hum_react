@@ -363,49 +363,68 @@ const OnBoardingStepper = (props) => {
                         </label>
                         <br></br>
                         <span className={stepArray[3].line}></span>
-
-                        <div
-                          type="button"
-                          onClick={() => {
-                            handleIconChange(stepArray[4].idValue);
-                          }}
-                          className={stepArray[4].step}
-                        >
-                          <div style={{ paddingTop: "4px", fontSize: "27px" }}>
-                            <i className="fa fa-shield"></i>
-                          </div>
-                        </div>
-                        <label
-                          className={stepArray[4].label}
-                          style={{ marginLeft: "15px", textAlign: "center" }}
-                        >
-                          {" "}
-                          Insurance Nomination
-                        </label>
-                        <br></br>
-                        <span className={stepArray[4].line}></span>
-
-                        <div
-                          type="button"
-                          onClick={() => {
-                            handleIconChange(stepArray[5].idValue);
-                          }}
-                          className={stepArray[5].step}
-                        >
-                          <div style={{ paddingTop: "5px", fontSize: "22px" }}>
-                            <i className="fa fa-credit-card-alt"></i>
-                          </div>
-                        </div>
-                        <label
-                          className={stepArray[5].label}
-                          style={{ marginLeft: "15px", textAlign: "center" }}
-                        >
-                          {" "}
-                          Provident Fund Declaration
-                        </label>
-                        <br></br>
-                        <span className={stepArray[5].line}></span>
-
+                        {candidateProfileData.contractType === "Internship" ? (
+                          ""
+                        ) : (
+                          <React.Fragment>
+                            <div
+                              type="button"
+                              onClick={() => {
+                                handleIconChange(stepArray[4].idValue);
+                              }}
+                              className={stepArray[4].step}
+                            >
+                              <div
+                                style={{ paddingTop: "4px", fontSize: "27px" }}
+                              >
+                                <i className="fa fa-shield"></i>
+                              </div>
+                            </div>
+                            <label
+                              className={stepArray[4].label}
+                              style={{
+                                marginLeft: "15px",
+                                textAlign: "center",
+                              }}
+                            >
+                              {" "}
+                              Insurance Nomination
+                            </label>
+                            <br></br>
+                            <span className={stepArray[4].line}></span>
+                          </React.Fragment>
+                        )}
+                        {candidateProfileData.contractType === "Internship" ? (
+                          ""
+                        ) : (
+                          <React.Fragment>
+                            <div
+                              type="button"
+                              onClick={() => {
+                                handleIconChange(stepArray[5].idValue);
+                              }}
+                              className={stepArray[5].step}
+                            >
+                              <div
+                                style={{ paddingTop: "5px", fontSize: "22px" }}
+                              >
+                                <i className="fa fa-credit-card-alt"></i>
+                              </div>
+                            </div>
+                            <label
+                              className={stepArray[5].label}
+                              style={{
+                                marginLeft: "15px",
+                                textAlign: "center",
+                              }}
+                            >
+                              {" "}
+                              Provident Fund Declaration
+                            </label>
+                            <br></br>
+                            <span className={stepArray[5].line}></span>
+                          </React.Fragment>
+                        )}
                         <div
                           type="button"
                           onClick={() => {

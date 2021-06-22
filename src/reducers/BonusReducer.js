@@ -15,6 +15,8 @@ const GroupReducer = (state, action) => {
       return { ...state, bonusData: action.payload };
     case "EXPORT_BONUS_LIST":
       return { ...state, bonusListExport: action.payload };
+    case "VIEW_BONUS_BY_CONTRACT":
+      return { ...state, getBonusByContractType: action.payload };
   }
 };
 export default GroupReducer;

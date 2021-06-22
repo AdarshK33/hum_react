@@ -23,8 +23,9 @@ const EditBonus = (props) => {
     bonusId: "",
     contractType: "",
     department: "",
-    designation: "",
+    position: "",
   });
+  const [contactTypeList, setContactTypeList] = useState();
   const onCloseModal = () => {
     let close = props.handleEditClose;
     close();
@@ -40,7 +41,7 @@ const EditBonus = (props) => {
       bonusId: getBonusDetailsById.bonusId,
       contractType: state.contractType,
       department: state.department,
-      designation: state.designation,
+      position: state.position,
       month:
         typeof month === "number"
           ? month
@@ -58,12 +59,21 @@ const EditBonus = (props) => {
     viewContractTypes();
     designationView();
   }, []);
+
+  useEffect(() => {
+    let contractList = shiftContractNames.filter(
+      (item) => item.contractType !== "Internship"
+    );
+    console.log("contract list", contractList);
+    setContactTypeList(contractList);
+  }, [shiftContractNames]);
+
   useEffect(() => {
     setState({
       bonus: getBonusDetailsById.bonus,
       contractType: getBonusDetailsById.contractType,
       department: getBonusDetailsById.department,
-      designation: getBonusDetailsById.designation,
+      position: getBonusDetailsById.position,
       // month: getBonusDetailsById.month,
       // year: getBonusDetailsById.year,
     });
@@ -80,6 +90,7 @@ const EditBonus = (props) => {
       return moment(month.toString()).format("MM");
     }
   };
+
   return (
     <Fragment>
       <Modal show={props.editmodal} onHide={props.handleEditClose} centered>
@@ -122,14 +133,14 @@ const EditBonus = (props) => {
           <Row>
             <Col sm={12}>
               <Form.Group>
-                <Form.Label>Select Designation:</Form.Label>
+                <Form.Label>Select Position:</Form.Label>
                 <Form.Control
                   as="select"
-                  name="designation"
+                  name="position"
                   onChange={handleChange}
-                  value={state.designation}
+                  value={state.position}
                 >
-                  <option value="">Select Designation</option>
+                  <option value="">Select Position</option>
                   {designationName !== null &&
                     designationName !== undefined &&
                     designationName.length > 0 &&
@@ -155,10 +166,10 @@ const EditBonus = (props) => {
                   value={state.contractType}
                 >
                   <option value="">Select Employment Type</option>
-                  {shiftContractNames !== null &&
-                    shiftContractNames !== undefined &&
-                    shiftContractNames.length > 0 &&
-                    shiftContractNames.map((item) => {
+                  {contactTypeList !== null &&
+                    contactTypeList !== undefined &&
+                    contactTypeList.length > 0 &&
+                    contactTypeList.map((item) => {
                       return (
                         <option key={item.typeId}>{item.contractType}</option>
                       );
