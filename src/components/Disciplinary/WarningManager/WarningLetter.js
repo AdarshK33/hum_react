@@ -6,7 +6,7 @@ import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 
 const WarningLetter = () => {
   const { disciplinarySearchData } = useContext(DisciplinaryContext);
-  //   connsole.log("today", moment().format("DD-MM-YYYY"));
+    console.log(disciplinarySearchData);
   return (
     <Fragment>
       {typeof disciplinarySearchData !== undefined ? (
@@ -40,13 +40,12 @@ const WarningLetter = () => {
               You have been associated Decathlon Sports India Private Limited
               (“Decathlon/Company”), having its registered office at Survey No.
               78/10, A2 – 0 Chikkajala Village, Bellary Road, Bangalore 562157,
-              KA, IN, at its XXXXXXXX located at{" "}
-              <b>{disciplinarySearchData.storeLocation} </b>(“Decathlon”). You are
-              currently working at Decathlon <b>{disciplinarySearchData.department}</b>{" "}
-              as <b>{disciplinarySearchData.position}</b>. On XXXXXXX, Decathlon issued
-              to you a Show Cause notice, asking you for a clear written
-              explanation regarding the following accusations – • ( mention it
-              from Show cause)
+              KA, IN, You are currently working at Decathlon (prodin/indeca)
+              india pvt ltd,<b>{disciplinarySearchData.storeLocation} </b>as a<b>{disciplinarySearchData.position}</b>.
+
+               On ,<b>{disciplinarySearchData.disiplinaryAction.actionIssuedDate} </b>, Decathlon issued to you a Show Cause notice, asking 
+               you for a clear written explanation regarding the following accusations 
+               (<b>{disciplinarySearchData.disiplinaryAction.managerComment} </b>)
               <br />
               In furtherance to your reply to show cause notice is not
               satisfactory and justified. Therefore you are hereby warned to
