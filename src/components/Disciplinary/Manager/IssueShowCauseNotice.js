@@ -147,7 +147,7 @@ const IssueShowCauseNotice = () => {
           : employeeProfileData.firstName;
       state.mngrId = employeeProfileData.employeeId;
       state.mngrCostCenterName = employeeProfileData.costCentre;
-      state.mngrPosition = employeeProfileData.designation;
+      state.mngrPosition = employeeProfileData.position;
     }
   }, [employeeProfileData]);
   console.log("disciplinaryResonsData", disciplinaryResonsData);
@@ -689,7 +689,7 @@ const IssueShowCauseNotice = () => {
                         <Col sm={4}>
                           <div>
                             <label>
-                              Designation:
+                              Position:
                               <label className="itemResult">
                                 &nbsp;&nbsp; {state.mngrPosition}
                               </label>

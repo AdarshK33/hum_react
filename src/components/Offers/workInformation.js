@@ -10,6 +10,7 @@ import { RosterContext } from "../../context/RosterState";
 import { AppContext } from "../../context/AppState";
 import moment from "moment";
 import { MasterFilesContext } from "../../context/MasterFilesState";
+import { BonusContext } from "../../context/BonusState";
 
 const WorkInformation = (props) => {
   const [state, setState] = useState({
@@ -27,8 +28,11 @@ const WorkInformation = (props) => {
     expatUser: "",
     passportNumber: "",
     nationality: "",
+    adminCompany: "",
   });
   const { viewCountries, countryList } = useContext(MasterFilesContext);
+  const { viewBonusByContarctType, getBonusByContractType } =
+    useContext(BonusContext);
 
   const [dateOfJoining, setDateOFJoining] = useState();
   const [dateOfLeaving, setDateOFLeaving] = useState();
@@ -64,7 +68,8 @@ const WorkInformation = (props) => {
   const { user } = useContext(AppContext);
   const [stateValue, setStateValue] = useState();
   const [city, setCity] = useState();
-
+  const [cityId, setCityId] = useState();
+  const [dateOfLeavingError, setDateOfLeavingError] = useState(false);
   useEffect(() => {
     viewSports();
     CostCenter();
@@ -96,6 +101,7 @@ const WorkInformation = (props) => {
         expatUser: data.expatUser,
         nationality: data.nationality,
         passportNumber: data.passportNumber,
+        adminCompany: data.companyName,
       });
       if (data.costCentre !== null && data.costCentre !== undefined) {
         locationView(data.costCentre);
@@ -108,8 +114,9 @@ const WorkInformation = (props) => {
   useEffect(() => {
     if (locationName !== null && locationName !== undefined) {
       setStateValue(locationName.stateId);
-      setCity(locationName.cityId);
+      setCity(locationName.locationId);
       cityData(locationName.stateId);
+      setCityId(locationName.cityId);
       console.log("state in useEffect", locationName);
     }
   }, [locationName]);
@@ -188,6 +195,7 @@ const WorkInformation = (props) => {
 
   const cityHandler = (e) => {
     setCity(e.target.value);
+    // setCityId(locationName.cityId);
     console.log("city", e.target.value);
   };
 
@@ -202,13 +210,31 @@ const WorkInformation = (props) => {
     setCostCenter(e.target.value);
     locationView(e.target.value);
     setStateValue(locationName.stateId);
-    setCity(locationName.cityId);
+    setCity(locationName.locationId);
+    setCityId(locationName.cityId);
   };
   const dateOfJoiningHandler = (date) => {
     setDateOFJoining(date);
   };
   const dateOfLeavingHandler = (date) => {
     setDateOFLeaving(date);
+    let monthCount = monthDiff(new Date(dateOfJoining), new Date(date));
+    if (monthCount > 6) {
+      setDateOfLeavingError(true);
+    } else {
+      setDateOfLeavingError(false);
+    }
+    setState({
+      ...state,
+      internship: monthCount,
+    });
+  };
+  const monthDiff = (dateFrom, dateTo) => {
+    return (
+      dateTo.getMonth() -
+      dateFrom.getMonth() +
+      12 * (dateTo.getFullYear() - dateFrom.getFullYear())
+    );
   };
 
   const submitHandler = (e) => {
@@ -232,14 +258,17 @@ const WorkInformation = (props) => {
     } else {
       expatValue = 0;
     }
-    if (saveclick === false) {
+    if (saveclick === false && dateOfLeavingError === false) {
       console.log("first click");
       setSaveclick(true);
       createData = {
         candidateId: createCandidateResponse.candidateId,
-        cityId: city,
+        cityId: cityId,
         collegeName: college,
-        companyName: user.company,
+        companyName:
+          user.role === "ADMIN" || user.additionalRole == 1
+            ? state.adminCompany
+            : user.company,
         contractType: state.employmentType,
         costCentre: costCenter,
         dateOfJoin: moment(dateOfJoining).format("YYYY-MM-DD"),
@@ -253,7 +282,7 @@ const WorkInformation = (props) => {
         educationCertificate: null,
         internshipPeriod:
           state.employmentType === "Internship" ? state.internship : 0,
-        locationId: locationName.locationId,
+        locationId: city,
         managerId: managerList !== null ? state.managerId : user.employeeId,
         paySlip: null,
         position: state.employmentType === "Internship" ? null : state.position,
@@ -271,12 +300,19 @@ const WorkInformation = (props) => {
         nationality: state.nationality,
         passportNumber: state.passportNumber,
       };
-    } else if (createCandidateResponse.candidateId && saveclick === true) {
+    } else if (
+      createCandidateResponse.candidateId &&
+      saveclick === true &&
+      dateOfLeavingError === false
+    ) {
       createData = {
         candidateId: createCandidateResponse.candidateId,
-        cityId: city,
+        cityId: cityId,
         collegeName: college,
-        companyName: user.company,
+        companyName:
+          user.role === "ADMIN" || user.additionalRole == 1
+            ? state.adminCompany
+            : user.company,
         contractType: state.employmentType,
         costCentre: costCenter,
         dateOfJoin: moment(dateOfJoining).format("YYYY-MM-DD"),
@@ -290,7 +326,7 @@ const WorkInformation = (props) => {
         educationCertificate: null,
         internshipPeriod:
           state.employmentType === "Internship" ? state.internship : 0,
-        locationId: locationName.locationId,
+        locationId: city,
         managerId: managerList !== null ? state.managerId : user.employeeIds,
         paySlip: null,
         position: state.employmentType === "Internship" ? null : state.position,
@@ -310,10 +346,17 @@ const WorkInformation = (props) => {
       };
     }
     console.log("createData", createData);
-    createCandidateWork(createData);
-    viewCandidateId(createCandidateResponse.candidateId);
-    setDisabled(true);
-    setEditButton(true);
+    if (dateOfLeavingError === false) {
+      createCandidateWork(createData);
+      viewCandidateId(createCandidateResponse.candidateId);
+      viewBonusByContarctType(
+        state.employmentType,
+        state.department,
+        state.position
+      );
+      setDisabled(true);
+      setEditButton(true);
+    }
   };
 
   const editHandler = () => {
@@ -332,13 +375,30 @@ const WorkInformation = (props) => {
             <Col sm={3}>
               <Form.Group>
                 <Form.Label>Company Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={user.company}
-                  className="form-input"
-                  name="company"
-                  readOnly
-                />
+                {user.role === "ADMIN" || user.additionalRole == 1 ? (
+                  <Form.Control
+                    as="select"
+                    value={state.adminCompany}
+                    className="form-input"
+                    name="adminCompany"
+                    onChange={changeHandler}
+                    disabled={disabled}
+                    required
+                  >
+                    <option value="">Select Company</option>
+                    <option value="Decathlon Sports India">DSI</option>
+                    <option value="Indeca">Indeca</option>
+                    <option value="Prodin">Prodin</option>
+                  </Form.Control>
+                ) : (
+                  <Form.Control
+                    type="text"
+                    value={user.company}
+                    className="form-input"
+                    name="company"
+                    readOnly
+                  />
+                )}
               </Form.Group>
             </Col>
             <Col sm={3}>
@@ -615,7 +675,7 @@ const WorkInformation = (props) => {
                     cityList !== undefined &&
                     cityList.map((item, i) => {
                       return (
-                        <option key={i} value={item.cityId}>
+                        <option key={i} value={item.locationId}>
                           {item.locationName}/{item.cityName}
                         </option>
                       );
@@ -653,6 +713,13 @@ const WorkInformation = (props) => {
                     placeholderText="Date of Leaving"
                     disabled={disabled}
                   />
+                  {dateOfLeavingError ? (
+                    <p style={{ color: "red" }}>
+                      Internship should not exceed 6 months
+                    </p>
+                  ) : (
+                    ""
+                  )}
                 </Form.Group>
               ) : (
                 <Form.Group>
@@ -682,27 +749,28 @@ const WorkInformation = (props) => {
           <Row>
             <Col sm={3}>
               {state.employmentType === "Internship" ? (
-                <Form.Group>
-                  <Form.Label>Internship Duration</Form.Label>
-                  <Form.Control
-                    as="select"
-                    value={state.internship}
-                    className="form-input"
-                    name="internship"
-                    onChange={changeHandler}
-                    disabled={disabled}
-                    required
-                  >
-                    <option value="">Select Internship Duration</option>
-                    <option value="1">1 Month</option>
-                    <option value="2">2 Month</option>
-                    <option value="3">3 Month</option>
-                    <option value="4">4 Month</option>
-                    <option value="5">5 Month</option>
-                    <option value="6">6 Month</option>
-                  </Form.Control>
-                </Form.Group>
+                ""
               ) : (
+                // <Form.Group>
+                //   <Form.Label>Internship Duration</Form.Label>
+                //   <Form.Control
+                //     as="select"
+                //     value={state.internship}
+                //     className="form-input"
+                //     name="internship"
+                //     onChange={changeHandler}
+                //     disabled={disabled}
+                //     required
+                //   >
+                //     <option value="">Select Internship Duration</option>
+                //     <option value="1">1 Month</option>
+                //     <option value="2">2 Month</option>
+                //     <option value="3">3 Month</option>
+                //     <option value="4">4 Month</option>
+                //     <option value="5">5 Month</option>
+                //     <option value="6">6 Month</option>
+                //   </Form.Control>
+                // </Form.Group>
                 <Form.Group>
                   <Form.Label>Notice Period</Form.Label>
                   <Form.Control
