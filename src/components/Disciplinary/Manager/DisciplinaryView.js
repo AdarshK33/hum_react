@@ -207,7 +207,7 @@ const DisciplinaryView = () => {
                         <Col sm={4}>
                           <div>
                             <label>
-                              Designation:
+                              Position:
                               <label className="itemResult">
                                 &nbsp;&nbsp; {state.mngrPosition}
                               </label>
@@ -289,31 +289,44 @@ const DisciplinaryView = () => {
                           <div>
                             <a onClick={LetterShow}>
                               {" "}
-                              <u className="itemResult">ShowCauseNotice.pdf</u>
+                              <u className="itemResult">
+                                View Show Cause Notice
+                              </u>
                             </a>
                           </div>
                         </Col>
                       </Row>
-                      <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "2rem",
-                          marginBottom: "1rem",
-                        }}
-                      >
-                        <Col sm={2}>
-                          <div>
-                            <label>Add Remarks:</label>
-                          </div>
-                        </Col>
-                        <Col sm={6}>
-                          <div>
-                            <label className="itemResult">
-                              &nbsp;&nbsp; {state.empRemarks}
-                            </label>
-                          </div>
-                        </Col>
-                      </Row>
+                      {disciplinarySearchData &&
+                      disciplinarySearchData &&
+                      disciplinarySearchData !== null &&
+                      disciplinarySearchData !== undefined &&
+                      Object.keys(disciplinarySearchData).length !== 0 &&
+                      disciplinarySearchData.empRemarks !== null &&
+                      disciplinarySearchData.empRemarks !== undefined &&
+                      disciplinarySearchData.empRemarks !== "" ? (
+                        <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "2rem",
+                            marginBottom: "1rem",
+                          }}
+                        >
+                          <Col sm={2}>
+                            <div>
+                              <label>Remarks:</label>
+                            </div>
+                          </Col>
+                          <Col sm={6}>
+                            <div>
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.empRemarks}
+                              </label>
+                            </div>
+                          </Col>
+                        </Row>
+                      ) : (
+                        ""
+                      )}
                       {disciplinarySearchData &&
                       disciplinarySearchData &&
                       disciplinarySearchData !== null &&

@@ -46,6 +46,7 @@ const ShowCauseNotice = () => {
               working at Decathlon <b>{disciplinarySearchData.department}</b> as{" "}
               <b>{disciplinarySearchData.position}</b>.
               <br />
+              <br />
               <b>
                 {disciplinarySearchData !== null &&
                 disciplinarySearchData !== undefined &&
@@ -57,16 +58,21 @@ const ShowCauseNotice = () => {
               </b>
               .
               <br />
+              <br />
               This acts, as alleged above to have been committed by you, amount
               to Wilful Misconduct and Gross Negligence which, if proved, would
-              warrant serious disciplinary action against you. Accordingly, you
-              are hereby required to show cause within <b>5</b> days in receipt
-              of this letter as to why you have indulged in such an act of
-              wilful misconduct and Gross Negligence. Such charges, levelled
-              against you, are of grave and serious nature, if you fail to
-              submit the explanation as required, it will be presumed that you
-              admit the charges and have no explanation to offer and the matter
-              will be disposed of without any further reference to you.
+              warrant serious disciplinary action against you.
+              <br />
+              <br />
+              Accordingly, you are hereby required to show cause within <b>
+                5
+              </b>{" "}
+              days in receipt of this letter as to why you have indulged in such
+              an act of wilful misconduct and Gross Negligence. Such charges,
+              levelled against you, are of grave and serious nature, if you fail
+              to submit the explanation as required, it will be presumed that
+              you admit the charges and have no explanation to offer and the
+              matter will be disposed of without any further reference to you.
               <br />
               <br />
               <br />
