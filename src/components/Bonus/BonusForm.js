@@ -19,7 +19,7 @@ const BonusForm = (props) => {
     bonusId: "",
     contractType: "",
     department: "",
-    designation: "",
+    position: "",
   });
   const [month, setMonth] = useState(new Date());
   const [year, setYear] = useState(new Date());
@@ -27,6 +27,14 @@ const BonusForm = (props) => {
     useContext(OfferContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const { bonusCreate, bonusData } = useContext(BonusContext);
+  const [contactTypeList, setContactTypeList] = useState();
+  const [bonusError, setBonusError] = useState(false);
+  const [bonusLimitError, setBonusLimitError] = useState(false);
+  const [departmentError, setDepartmentError] = useState(false);
+  const [positionError, setPositionError] = useState(false);
+  const [contactTypeError, setContactTypeError] = useState(false);
+  const [monthError, setMonthError] = useState(false);
+  const [yearError, setYearError] = useState(false);
   const onCloseModal = () => {
     /*  const resetValue = {
                 
@@ -34,19 +42,97 @@ const BonusForm = (props) => {
     const setModal = props.handleClose;
     setModal();
   };
+
+  const checkValidation = () => {
+    console.log("inside validation", bonusList);
+    if (bonusList.bonus !== "" && bonusList.bonus > 20) {
+      setBonusError(false);
+      setBonusLimitError(true);
+    } else if (bonusList.bonus !== "" && bonusList.bonus <= 20) {
+      setBonusError(false);
+      setBonusLimitError(false);
+    } else {
+      setBonusError(true);
+      setBonusLimitError(false);
+    }
+
+    if (bonusList.contractType !== "") {
+      setContactTypeError(false);
+    } else {
+      setContactTypeError(true);
+    }
+
+    if (bonusList.department !== "") {
+      setDepartmentError(false);
+    } else {
+      setDepartmentError(true);
+    }
+
+    if (bonusList.position !== "") {
+      setPositionError(false);
+    } else {
+      setPositionError(true);
+    }
+
+    if (month !== "") {
+      setMonthError(false);
+    } else {
+      setMonthError(true);
+    }
+
+    if (year !== "") {
+      setYearError(false);
+    } else {
+      setYearError(true);
+    }
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
+    // checkValidation();
+    console.log(
+      "bonusError",
+      bonusError,
+      bonusList.bonus,
+      "bonusLimitError",
+      bonusLimitError,
+      "contactTypeError",
+      contactTypeError,
+      bonusList.contractType,
+      "positionError",
+      positionError,
+      bonusList.position,
+      "departmentError",
+      departmentError,
+      bonusList.department,
+      "monthError",
+      monthError,
+      month,
+      "yearError",
+      yearError,
+      year
+    );
+    // if (
+    //   bonusError === false &&
+    //   bonusLimitError === false &&
+    //   contactTypeError === false &&
+    //   positionError === false &&
+    //   departmentError === false &&
+    //   monthError === false &&
+    //   yearError === false
+    // ) {
     const data = {
       bonus: bonusList.bonus,
       bonusId: 0,
       contractType: bonusList.contractType,
       department: bonusList.department,
-      designation: bonusList.designation,
+      position: bonusList.position,
       month: parseInt(moment(month).format("MM")),
       year: parseInt(moment(year).format("YYYY")),
     };
     bonusCreate(data);
     onCloseModal();
+    // }
   };
   const handleChange = (e) => {
     setBonusList({ ...bonusList, [e.target.name]: e.target.value });
@@ -57,6 +143,15 @@ const BonusForm = (props) => {
     designationView();
     viewContractTypes();
   }, []);
+
+  useEffect(() => {
+    let contractList = shiftContractNames.filter(
+      (item) => item.contractType !== "Internship"
+    );
+    console.log("contract list", contractList);
+    setContactTypeList(contractList);
+  }, [shiftContractNames]);
+
   return (
     <Fragment>
       <Modal show={props.show} onHide={props.handleClose} centered>
@@ -99,19 +194,24 @@ const BonusForm = (props) => {
                       })}
                   </Form.Control>
                 </Form.Group>
+                {departmentError ? (
+                  <p style={{ color: "red" }}>Please Enter the valid Input</p>
+                ) : (
+                  ""
+                )}
               </Col>
             </Row>
             <Row>
               <Col sm={12}>
                 <Form.Group>
-                  <Form.Label>Select Designation:</Form.Label>
+                  <Form.Label>Select Position:</Form.Label>
                   <Form.Control
                     as="select"
-                    name="designation"
+                    name="position"
                     onChange={handleChange}
-                    value={bonusList.designation}
+                    value={bonusList.position}
                   >
-                    <option value="">Select Designation</option>
+                    <option value="">Select Position</option>
                     {designationName !== null &&
                       designationName !== undefined &&
                       designationName.length > 0 &&
@@ -124,6 +224,11 @@ const BonusForm = (props) => {
                       })}
                   </Form.Control>
                 </Form.Group>
+                {positionError ? (
+                  <p style={{ color: "red" }}>Please Enter the valid Input</p>
+                ) : (
+                  ""
+                )}
               </Col>
             </Row>
             <Row>
@@ -137,16 +242,21 @@ const BonusForm = (props) => {
                     value={bonusList.contractType}
                   >
                     <option value="">Select Employment Type</option>
-                    {shiftContractNames !== null &&
-                      shiftContractNames !== undefined &&
-                      shiftContractNames.length > 0 &&
-                      shiftContractNames.map((item) => {
+                    {contactTypeList !== null &&
+                      contactTypeList !== undefined &&
+                      contactTypeList.length > 0 &&
+                      contactTypeList.map((item) => {
                         return (
                           <option key={item.typeId}>{item.contractType}</option>
                         );
                       })}
                   </Form.Control>
                 </Form.Group>
+                {contactTypeError ? (
+                  <p style={{ color: "red" }}>Please Enter the valid Input</p>
+                ) : (
+                  ""
+                )}
               </Col>
             </Row>
             <Row>
@@ -160,6 +270,13 @@ const BonusForm = (props) => {
                     value={bonusList.bonus}
                   ></Form.Control>
                 </Form.Group>
+                {bonusLimitError ? (
+                  <p style={{ color: "red" }}>Maximum Bonus 20 %</p>
+                ) : bonusError ? (
+                  <p style={{ color: "red" }}>Please Enter the valid Input</p>
+                ) : (
+                  ""
+                )}
               </Col>
             </Row>
 
@@ -182,6 +299,11 @@ const BonusForm = (props) => {
                   />{" "}
                 </div>
                 {/* </Form.Group> */}
+                {monthError ? (
+                  <p style={{ color: "red" }}>Please Enter the valid Input</p>
+                ) : (
+                  ""
+                )}
               </Col>
             </Row>
             <Row>
@@ -199,6 +321,11 @@ const BonusForm = (props) => {
                     showYearPicker
                   />{" "}
                 </Form.Group>
+                {yearError ? (
+                  <p style={{ color: "red" }}>Please Enter the valid Input</p>
+                ) : (
+                  ""
+                )}
               </Col>
             </Row>
 

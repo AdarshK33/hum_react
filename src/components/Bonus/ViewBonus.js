@@ -202,7 +202,7 @@ const ViewBonus = () => {
                 <th>S.No</th>
                 <th>Department</th>
                 <th>Contract Type</th>
-                <th>Designation</th>
+                <th>Position</th>
                 <th>Bonus %</th>
                 <th>Month</th>
                 <th>Year</th>
@@ -240,7 +240,7 @@ const ViewBonus = () => {
                       <td>{item.department}</td>
 
                       <td>{item.contractType}</td>
-                      <td>{item.designation}</td>
+                      <td>{item.position}</td>
                       <td>{item.bonus}</td>
                       <td>{getMonthList(item.month)}</td>
                       <td>{item.year}</td>

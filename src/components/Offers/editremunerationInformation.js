@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { OfferContext } from "../../context/OfferState";
 import { AppContext } from "../../context/AppState";
+import { BonusContext } from "../../context/BonusState";
 
 const EditRemunerationInformation = (props) => {
   const [fixedGross, setFixedGross] = useState();
@@ -34,6 +35,8 @@ const EditRemunerationInformation = (props) => {
   } = useContext(OfferContext);
 
   const { user } = useContext(AppContext);
+  const { viewBonusByContarctType, getBonusByContractType } =
+    useContext(BonusContext);
 
   useEffect(() => {
     console.log("candidateData remuneration", candidateData);
@@ -49,16 +52,28 @@ const EditRemunerationInformation = (props) => {
       viewCandidateId(candidateData.candidateInformation.candidateId);
       setViewApiCall(true);
       workInfoView(candidateData.candidateInformation.candidateId);
+      viewBonusByContarctType(
+        candidateData.workInformation.contractType,
+        candidateData.workInformation.department,
+        candidateData.workInformation.position
+      );
     } else {
       setViewApiCall(false);
     }
-
     let remunerationDataInfo =
       candidateData !== null &&
       candidateData !== undefined &&
       candidateData.remuneration;
 
-    if (remunerationDataInfo !== null && remunerationDataInfo !== undefined) {
+    if (
+      getBonusByContractType !== null &&
+      getBonusByContractType !== undefined
+    ) {
+      setMonthlyBonus(getBonusByContractType.bonus);
+    } else if (
+      remunerationDataInfo !== null &&
+      remunerationDataInfo !== undefined
+    ) {
       setFixedGross(remunerationDataInfo.fixedGross);
       setMonthlyBonus(remunerationDataInfo.monthlyBonus);
       setStipened(remunerationDataInfo.stipend);
@@ -89,9 +104,13 @@ const EditRemunerationInformation = (props) => {
         stipened === "" ||
         stipened === "null" ||
         (stipened + "").includes(" ", "-", ".", "/", "+")) &&
-      (candidateData.workInformation.contractType === "Internship" ||
-        workInfoViewData.contractType === "Internship") &&
-      stipened < "0"
+      ((candidateData.workInformation !== null &&
+        candidateData.workInformation !== undefined &&
+        candidateData.workInformation.contractType === "Internship") ||
+        (workInfoViewData !== null &&
+          workInfoViewData !== undefined &&
+          workInfoViewData.contractType === "Internship" &&
+          stipened < "0"))
     ) {
       console.log("remuneration Info5", fixedGross, monthlyBonus, stipened);
       setStipenedError(true);
@@ -125,7 +144,6 @@ const EditRemunerationInformation = (props) => {
               monthlyBonus > 20))))
     ) {
       setFixedGrossError(true);
-      setMonthlyBonusError(true);
       setStipenedError(false);
       console.log("edit remunation info 2");
       if (
@@ -167,8 +185,6 @@ const EditRemunerationInformation = (props) => {
           remunerationView(candidateData.candidateInformation.candidateId);
           setDisabled(true);
           setEditButton(true);
-        } else {
-          setMonthlyBonusError(true);
         }
       } else if (
         (candidateData.workInformation.contractType === "Parttime" ||
@@ -213,8 +229,6 @@ const EditRemunerationInformation = (props) => {
           remunerationView(candidateData.candidateInformation.candidateId);
           setDisabled(true);
           setEditButton(true);
-        } else {
-          setMonthlyBonusError(true);
         }
       } else if (
         (candidateData.workInformation.contractType === "Parttime" ||
@@ -223,7 +237,6 @@ const EditRemunerationInformation = (props) => {
           workInfoViewData.contractType === "Permanent") &&
         monthlyBonus > 20
       ) {
-        setBonusLimit(true);
         setMonthlyBonusError(false);
       } else if (
         (candidateData.workInformation.contractType === "Parttime" ||
@@ -303,7 +316,7 @@ const EditRemunerationInformation = (props) => {
           monthlyBonus > 20))
     ) {
       console.log("remuneration Info4", fixedGross, monthlyBonus, stipened);
-      setMonthlyBonusError(true);
+
       setStipenedError(false);
       if (
         (candidateData.workInformation.contractType === "Parttime" ||
@@ -312,7 +325,6 @@ const EditRemunerationInformation = (props) => {
           workInfoViewData.contractType === "Permanent") &&
         monthlyBonus > 20
       ) {
-        setBonusLimit(true);
         setMonthlyBonusError(false);
       } else if (
         (candidateData.workInformation.contractType === "Parttime" ||
@@ -557,7 +569,7 @@ const EditRemunerationInformation = (props) => {
                               }
                               required
                               placeholder="0"
-                              disabled={disabled}
+                              readOnly
                             />
                             {monthlyBonusError ? (
                               <p style={{ color: "red" }}>
@@ -582,8 +594,8 @@ const EditRemunerationInformation = (props) => {
                               type="number"
                               min="0"
                               name="monthlyBonus"
+                              value={monthlyBonus}
                               readOnly
-                              disabled={disabled}
                               placeholder="0"
                             />
                             {/* {monthlyBonusError ? (

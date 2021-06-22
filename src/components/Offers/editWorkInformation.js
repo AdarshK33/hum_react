@@ -10,7 +10,7 @@ import { RosterContext } from "../../context/RosterState";
 import { AppContext } from "../../context/AppState";
 import moment from "moment";
 import { MasterFilesContext } from "../../context/MasterFilesState";
-
+import { BonusContext } from "../../context/BonusState";
 const EditWorkInformation = () => {
   const [state, setState] = useState({
     employmentType: "",
@@ -30,7 +30,8 @@ const EditWorkInformation = () => {
     adminCompany: "",
   });
   const { viewCountries, countryList } = useContext(MasterFilesContext);
-
+  const { viewBonusByContarctType, getBonusByContractType } =
+    useContext(BonusContext);
   const [dateOfJoining, setDateOFJoining] = useState();
   const [dateOfLeaving, setDateOFLeaving] = useState();
   const [costCenter, setCostCenter] = useState("");
@@ -110,6 +111,11 @@ const EditWorkInformation = () => {
       setCostCenter(workData.costCentre);
       locationView(workData.costCentre);
       setCollege(workData.collegeName);
+      viewBonusByContarctType(
+        state.employmentType,
+        state.department,
+        state.position
+      );
     }
   }, [candidateData]);
 
@@ -302,6 +308,11 @@ const EditWorkInformation = () => {
       viewCandidateId(candidateData.candidateInformation.candidateId);
       setDisabled(true);
       setEditButton(true);
+      viewBonusByContarctType(
+        state.employmentType,
+        state.department,
+        state.position
+      );
     }
   };
   const editHandler = () => {

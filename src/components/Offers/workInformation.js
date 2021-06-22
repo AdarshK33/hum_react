@@ -10,6 +10,7 @@ import { RosterContext } from "../../context/RosterState";
 import { AppContext } from "../../context/AppState";
 import moment from "moment";
 import { MasterFilesContext } from "../../context/MasterFilesState";
+import { BonusContext } from "../../context/BonusState";
 
 const WorkInformation = (props) => {
   const [state, setState] = useState({
@@ -30,6 +31,8 @@ const WorkInformation = (props) => {
     adminCompany: "",
   });
   const { viewCountries, countryList } = useContext(MasterFilesContext);
+  const { viewBonusByContarctType, getBonusByContractType } =
+    useContext(BonusContext);
 
   const [dateOfJoining, setDateOFJoining] = useState();
   const [dateOfLeaving, setDateOFLeaving] = useState();
@@ -346,6 +349,11 @@ const WorkInformation = (props) => {
     if (dateOfLeavingError === false) {
       createCandidateWork(createData);
       viewCandidateId(createCandidateResponse.candidateId);
+      viewBonusByContarctType(
+        state.employmentType,
+        state.department,
+        state.position
+      );
       setDisabled(true);
       setEditButton(true);
     }
