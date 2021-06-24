@@ -120,8 +120,6 @@ const EmployeWarningLetter = () => {
         disciplinarySearchData.disciplinaryAction !== undefined &&
         disciplinarySearchData.disciplinaryAction !== ""
       ) {
-        state.empRemark =
-          disciplinarySearchData.disciplinaryAction.employeeComment;
         state.reasons =
           disciplinarySearchData.disciplinaryAction.managerComment;
         state.reasonForCause =
@@ -161,6 +159,8 @@ const EmployeWarningLetter = () => {
         disciplinarySearchData.disciplinaryWarning !== undefined &&
         disciplinarySearchData.disciplinaryWarning !== ""
       ) {
+        state.empRemark =
+          disciplinarySearchData.disciplinaryWarning.employeeComment;
         state.warningReason = disciplinarySearchData.disciplinaryWarning.reason;
         state.warningComment =
           disciplinarySearchData.disciplinaryWarning.managerComment;
@@ -315,7 +315,7 @@ const EmployeWarningLetter = () => {
           actionIssuedDate: state.actionIssuedDateSCIN,
           disciplinaryId: state.disciplinaryId,
           employeeActionStatus: state.employeeActionStatusSCIN,
-          employeeComment: state.empRemark,
+          employeeComment: state.employeeCommentSCIN,
           employeeId: state.empId,
           managerComment: state.managerCommentSCIN,
           reasonId: state.reasonIdSCIN,
@@ -334,7 +334,7 @@ const EmployeWarningLetter = () => {
           disciplinarySearchData.disciplinaryWarning !== " "
             ? {
                 disciplinaryId: state.disciplinaryId,
-                employeeComment: state.employeeCommentDW,
+                employeeComment: state.empRemark,
                 employeeWarningStatus: state.employeeWarningStatusDW,
                 improvementPeriod: state.pip,
                 managerComment: state.managerCommentDW,
@@ -716,9 +716,9 @@ const EmployeWarningLetter = () => {
                           </div>
                         </Col>
                         {submitted === true ||
-                        (state.employeeCommentSCIN !== null &&
-                          state.employeeCommentSCIN !== undefined &&
-                          state.employeeCommentSCIN !== "") ? (
+                        (state.employeeCommentDW !== null &&
+                          state.employeeCommentDW !== undefined &&
+                          state.employeeCommentDW !== "") ? (
                           <Col sm={6}>
                             <div>
                               <label className="itemResult">

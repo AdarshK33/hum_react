@@ -44,6 +44,7 @@ const WarningLetter = () => {
               <b>{disciplinarySearchData.storeLocation} </b>as a
               <b>{disciplinarySearchData.position}</b>.
               <br />
+              <br />
               On ,
               <b>
                 {disciplinarySearchData.disciplinaryAction.actionIssuedDate}{" "}
@@ -51,6 +52,7 @@ const WarningLetter = () => {
               , Decathlon issued to you a Show Cause notice, asking you for a
               clear written explanation regarding the following accusations-
               <b>{disciplinarySearchData.disciplinaryAction.managerComment} </b>
+              <br />
               <br />
               In furtherance to your reply to show cause notice is not
               satisfactory and justified. Therefore you are hereby warned to
@@ -60,8 +62,6 @@ const WarningLetter = () => {
               disciplinary action will follow Please note, the Company reserves
               the right to take appropriate action with respect to any
               repetition of similar act.
-              <br />
-              <br />
               <br />
               <br />
             </p>
