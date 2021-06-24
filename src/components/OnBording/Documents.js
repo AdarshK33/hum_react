@@ -569,17 +569,22 @@ const Documents = (props) => {
     }
   };
   const EpfPassBookUploadValidation = () => {
-    if (FandP_Time_Required[0].ReqEpfPassBook === true) {
-      if (UploadedArray[0].ULEpfPassBook === false) {
-        if (EPFValidation() === true) {
-          setEPFError(true);
-          return false;
+    if (
+      pfDeclarationView.memberOfPensionScheme === true &&
+      pfDeclarationView.uanNumber !== ""
+    ) {
+      if (FandP_Time_Required[0].ReqEpfPassBook === true) {
+        if (UploadedArray[0].ULEpfPassBook === false) {
+          if (EPFValidation() === true) {
+            setEPFError(true);
+            return false;
+          }
+        } else {
+          return true;
         }
       } else {
         return true;
       }
-    } else {
-      return true;
     }
   };
   const CancelledChequeUploadValidation = () => {
@@ -1467,9 +1472,19 @@ const Documents = (props) => {
           <Row>
             <Col>
               <Form.Group>
-                <div
+                {/* <div
                   className={
                     FandP_Time_Required[0].ReqEpfPassBook
+                      ? "FileInput"
+                      : "FileInputWithOutStar"
+                  }
+                > */}
+                <div
+                  className={
+                    pfDeclarationView !== null &&
+                    pfDeclarationView !== undefined &&
+                    pfDeclarationView.memberOfPensionScheme === true &&
+                    pfDeclarationView.uanNumber !== ""
                       ? "FileInput"
                       : "FileInputWithOutStar"
                   }

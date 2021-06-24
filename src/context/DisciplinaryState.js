@@ -74,7 +74,7 @@ export const DisciplinaryProvider = (props) => {
       .then((response) => {
         state.disciplinaryEmpSearchData = response.data.data;
         setLoader(false);
-        // toast.info(response.data.message);
+        toast.info(response.data.message);
         console.log(response);
         console.log("search data emp", state.disciplinaryEmpSearchData);
 
