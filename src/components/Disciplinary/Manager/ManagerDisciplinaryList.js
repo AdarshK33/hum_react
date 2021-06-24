@@ -63,7 +63,7 @@ const ManagerDisciplinaryList = () => {
     } else {
       disciplinaryListView("all", pageNumber - 1);
     }
-    setCurrentRecords(candidateList);
+    setCurrentRecords(disciplinaryListData);
   };
 
   /*-----------------Pagination------------------*/
@@ -90,7 +90,10 @@ const ManagerDisciplinaryList = () => {
   };
   return (
     <Fragment>
-      <Breadcrumb title="DISCIPLINARY ACTION" parent="DISCIPLINARY ACTION" />
+      <Breadcrumb
+        title="DISCIPLINARY ACTION LIST"
+        parent="DISCIPLINARY ACTION LIST"
+      />
       <Container fluid>
         <Row>
           <Col sm={12}>
@@ -99,7 +102,7 @@ const ManagerDisciplinaryList = () => {
                 className="title_bar"
                 style={{ textAlign: "center", fontSize: "larger" }}
               >
-                <b style={{ marginLeft: "320px" }}>DISCIPLINARY ACTION</b>
+                <b style={{ marginLeft: "320px" }}>DISCIPLINARY ACTION LIST</b>
 
                 <div className="job-filter">
                   <div className="faq-form mr-2">

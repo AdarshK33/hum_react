@@ -14,6 +14,7 @@ import { set } from "js-cookie";
 import "../Disciplinary.css";
 import { useHistory } from "react-router-dom";
 import { SeparationContext } from "../../../context/SepearationState";
+import StateManager from "react-select";
 const ManagerWarningAction = (props) => {
   const [reasonError, setReasonError] = useState("");
   const [improvementPeriodError, setImprovementPeriodError] = useState("");
@@ -82,7 +83,7 @@ const ManagerWarningAction = (props) => {
     employeeId: null,
     employeeName: null,
     managerCostCentre: null,
-    managerDesignation: null,
+    managerPosition: null,
     managerId: null,
     managerName: null,
     position: null,
@@ -126,8 +127,8 @@ const ManagerWarningAction = (props) => {
       state.employeeAddress = disciplinarySearchData.employeeAddress;
       state.managerId = disciplinarySearchData.managerId;
       state.managerName = disciplinarySearchData.managerName;
-      state.managerDesignation = disciplinarySearchData.managerDesignation;
-      state.employeeDesignation = disciplinarySearchData.employeeDesignation;
+      state.managerPosition = disciplinarySearchData.managerPosition;
+      state.employeePosition = disciplinarySearchData.employeePosition;
       state.managerCostCentre = disciplinarySearchData.managerCostCentre;
 
       if (
@@ -284,7 +285,7 @@ const ManagerWarningAction = (props) => {
       employeeId: state.employeeId,
       employeeName: state.employeeName,
       managerCostCentre: state.managerCostCentre,
-      managerDesignation: state.managerDesignation,
+      managerPosition: state.managerPosition,
       managerId: state.managerId,
       managerName: state.managerName,
       position: state.position,
@@ -402,7 +403,7 @@ const ManagerWarningAction = (props) => {
         employeeId: state.employeeId,
         employeeName: state.employeeName,
         managerCostCentre: state.managerCostCentre,
-        managerDesignation: state.managerDesignation,
+        managerPosition: state.managerPosition,
         managerId: state.managerId,
         managerName: state.managerName,
         position: state.position,
@@ -841,7 +842,7 @@ const ManagerWarningAction = (props) => {
                           <Col sm={2}>
                             <div>
                               <label className="itemResult">
-                                {state.employeeDesignation}
+                                {state.employeePosition}
                               </label>
                             </div>
                           </Col>
@@ -878,7 +879,7 @@ const ManagerWarningAction = (props) => {
                             <Col sm={2}>
                               <div>
                                 <label className="itemResult">
-                                  {state.managerDesignation}
+                                  {state.managerPosition}
                                 </label>
                               </div>
                             </Col>
@@ -993,14 +994,9 @@ const ManagerWarningAction = (props) => {
                           </Col> */}
                         </>
                       </Row>
-                      {disciplinarySearchData &&
-                      disciplinarySearchData &&
-                      disciplinarySearchData !== null &&
-                      disciplinarySearchData !== undefined &&
-                      Object.keys(disciplinarySearchData).length !== 0 &&
-                      disciplinarySearchData.empRemarks !== null &&
-                      disciplinarySearchData.empRemarks !== undefined &&
-                      disciplinarySearchData.empRemarks !== "" ? (
+                      {state.disciplinaryAction.employeeComment !== null &&
+                      state.disciplinaryAction.employeeComment !== undefined &&
+                      state.disciplinaryAction.employeeComment !== "" ? (
                         <Row
                           style={{
                             marginLeft: "2rem",
@@ -1017,7 +1013,7 @@ const ManagerWarningAction = (props) => {
                             <Col sm={10}>
                               <div>
                                 <label className="itemResult">
-                                  {state.employeeComment}
+                                  {state.disciplinaryAction.employeeComment}
                                 </label>
                               </div>
                             </Col>

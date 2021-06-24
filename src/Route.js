@@ -99,8 +99,11 @@ import DisciplinaryView from "./components/Disciplinary/Manager/DisciplinaryView
 import CostCenterManagerAction from "./components/Disciplinary/CostCenterManagerAction/CostCenterManagerAction";
 
 import ViewBonus from "./components/Bonus/ViewBonus";
+import EmployeeDocementsList from "./components/EmployeeLetters/MyDocsList";
+import EmployeShowCaseLetter from "./components/EmployeeLetters/ShowCauseLetter";
+import EmployeWarningLetter from "./components/EmployeeLetters/WarningLetter";
 
-import ManagerWarningAction from "./components/Disciplinary/WarningManager/ManagerWarningAction"
+import ManagerWarningAction from "./components/Disciplinary/WarningManager/ManagerWarningAction";
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
   console.log(user, state, "route8888888888888");
@@ -121,7 +124,6 @@ const RoutePath = () => {
         component={OnBoardingStepper}
       />
 
-    
       {/* <Route
             path={`${process.env.PUBLIC_URL}/onboard`}
             component={OnBoardingStepper}
@@ -154,10 +156,10 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/admin_no_due_clearance`}
             component={AdminNoDueClearance}
           />
-            <Route
-        path={`${process.env.PUBLIC_URL}/manager-warning-action-view/:employeeId`}
-        component={ManagerWarningAction}
-      />
+          <Route
+            path={`${process.env.PUBLIC_URL}/manager-warning-action-view/:employeeId`}
+            component={ManagerWarningAction}
+          />
 
           <Route
             path={`${process.env.PUBLIC_URL}/admin-finance-clearance`}
@@ -276,6 +278,18 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/disciplinary`}
             component={ManagerDisciplinaryList}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/documents`}
+            component={EmployeeDocementsList}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/letters/show-cause`}
+            component={EmployeShowCaseLetter}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/letters/warning`}
+            component={EmployeWarningLetter}
           />
 
           <Route

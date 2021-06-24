@@ -39,11 +39,11 @@ const ShowCauseNotice = () => {
             <p>
               You have been associated with {disciplinarySearchData.company}{" "}
               Private Limited (“Decathlon/{disciplinarySearchData.company}),
-              having its registered office at Survey No. 78/10, A2 – 0
-              Chikkajala Village, Bellary Road, Bangalore 562157, KA, IN, at its
-              Store located at <b>{disciplinarySearchData.storeLocation}</b>{" "}
-              (“Decathlon/{disciplinarySearchData.company}”). You are currently
-              working at Decathlon <b>{disciplinarySearchData.department}</b> as{" "}
+              having its registered office at{" "}
+              {disciplinarySearchData.storeAddressLine}, at its Store located at{" "}
+              <b>{disciplinarySearchData.storeLocation}</b> (“Decathlon/
+              {disciplinarySearchData.company}”). You are currently working at
+              Decathlon <b>{disciplinarySearchData.department}</b> as{" "}
               <b>{disciplinarySearchData.position}</b>.
               <br />
               <br />
