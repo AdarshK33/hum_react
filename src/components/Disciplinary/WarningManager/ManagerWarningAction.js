@@ -12,6 +12,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import { setGlobalCssModule } from "reactstrap/es/utils";
 import { set } from "js-cookie";
 import "../Disciplinary.css";
+import { useHistory } from "react-router-dom";
+import { SeparationContext } from "../../../context/SepearationState";
+import StateManager from "react-select";
 const ManagerWarningAction = (props) => {
   const [reasonError, setReasonError] = useState("");
   const [improvementPeriodError, setImprovementPeriodError] = useState("");
@@ -34,6 +37,7 @@ const ManagerWarningAction = (props) => {
   const [letterSent, setLetterSent] = useState(false);
   const [showPreview, setPreview] = useState(false);
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
+  const history = useHistory();
 
   const [state, setState] = useState({
     company: null,
@@ -79,7 +83,7 @@ const ManagerWarningAction = (props) => {
     employeeId: null,
     employeeName: null,
     managerCostCentre: null,
-    managerDesignation: null,
+    managerPosition: null,
     managerId: null,
     managerName: null,
     position: null,
@@ -96,6 +100,7 @@ const ManagerWarningAction = (props) => {
     disciplinarySearchData,
     SubmitDisciplinaryLetter,
   } = useContext(DisciplinaryContext);
+  const { searchByCostCenter } = useContext(SeparationContext);
 
   useEffect(() => {
     if (
@@ -122,8 +127,8 @@ const ManagerWarningAction = (props) => {
       state.employeeAddress = disciplinarySearchData.employeeAddress;
       state.managerId = disciplinarySearchData.managerId;
       state.managerName = disciplinarySearchData.managerName;
-      state.managerDesignation = disciplinarySearchData.managerDesignation;
-      state.employeeDesignation = disciplinarySearchData.employeeDesignation;
+      state.managerPosition = disciplinarySearchData.managerPosition;
+      state.employeePosition = disciplinarySearchData.employeePosition;
       state.managerCostCentre = disciplinarySearchData.managerCostCentre;
 
       if (
@@ -280,7 +285,7 @@ const ManagerWarningAction = (props) => {
       employeeId: state.employeeId,
       employeeName: state.employeeName,
       managerCostCentre: state.managerCostCentre,
-      managerDesignation: state.managerDesignation,
+      managerPosition: state.managerPosition,
       managerId: state.managerId,
       managerName: state.managerName,
       position: state.position,
@@ -391,14 +396,14 @@ const ManagerWarningAction = (props) => {
                 warningDueDays: 0,
                 warningId: 0,
                 warningIssuedDate: null,
-                warningLetter: null,
+                warningLetter: "WarningLetter.pdf",
               },
         employeeAddress: state.employeeAddress,
         employeeCostCentre: state.employeeCostCentre,
         employeeId: state.employeeId,
         employeeName: state.employeeName,
         managerCostCentre: state.managerCostCentre,
-        managerDesignation: state.managerDesignation,
+        managerPosition: state.managerPosition,
         managerId: state.managerId,
         managerName: state.managerName,
         position: state.position,
@@ -450,7 +455,7 @@ const ManagerWarningAction = (props) => {
   };
   const handleShowCauseLetterClose1 = () => {
     setShow(false);
-    props.history.push("./probation");
+    history.push("./disciplinary");
   };
 
   const saveOfferLetter = () => {
@@ -563,6 +568,22 @@ const ManagerWarningAction = (props) => {
     state.empCostCenterName = "";
   };
   console.log(issueWarningStatus, "warningstatus");
+  const GoToSeperation = () => {
+    if (
+      disciplinarySearchData &&
+      disciplinarySearchData &&
+      disciplinarySearchData !== null &&
+      disciplinarySearchData !== undefined &&
+      Object.keys(disciplinarySearchData).length !== 0
+    ) {
+      setInitalExit(false);
+      setModal(false);
+      setSuccessModal(false);
+      searchByCostCenter(disciplinarySearchData.employeeId);
+      history.push("../manager-initiate-exit");
+      // <Link to=}> </Link>
+    }
+  };
   return (
     <div>
       {letterView ? (
@@ -598,9 +619,10 @@ const ManagerWarningAction = (props) => {
             <div className="text-center">
               <Button onClick={handleClose}>Close</Button>
               <></>
-              <Link to={"/employee-separation-listing"}>
-                <Button style={{ marginLeft: "1rem" }}>Next</Button>
-              </Link>
+
+              <Button onClick={GoToSeperation} style={{ marginLeft: "1rem" }}>
+                Next
+              </Button>
             </div>
           </Modal.Body>
         </Modal>
@@ -814,13 +836,13 @@ const ManagerWarningAction = (props) => {
                           </Col>
                           <Col sm={2}>
                             <div>
-                              <label>Designation:</label>
+                              <label>Position:</label>
                             </div>
                           </Col>
                           <Col sm={2}>
                             <div>
                               <label className="itemResult">
-                                {state.employeeDesignation}
+                                {state.employeePosition}
                               </label>
                             </div>
                           </Col>
@@ -851,13 +873,13 @@ const ManagerWarningAction = (props) => {
                           <>
                             <Col sm={2}>
                               <div>
-                                <label>Designation:</label>
+                                <label> Position:</label>
                               </div>
                             </Col>
                             <Col sm={2}>
                               <div>
                                 <label className="itemResult">
-                                  {state.managerDesignation}
+                                  {state.managerPosition}
                                 </label>
                               </div>
                             </Col>
@@ -952,7 +974,7 @@ const ManagerWarningAction = (props) => {
                               <a onClick={ShowCauseLetter}>
                                 {" "}
                                 <u className="itemResult">
-                                  ShowCauseNotice.pdf
+                                  View Show Cause Notice
                                 </u>
                               </a>
                             </div>
@@ -972,29 +994,34 @@ const ManagerWarningAction = (props) => {
                           </Col> */}
                         </>
                       </Row>
-
-                      <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "1rem",
-                          marginBottom: "3rem",
-                        }}
-                      >
-                        <>
-                          <Col sm={2}>
-                            <div>
-                              <label>Add Remarks</label>
-                            </div>
-                          </Col>
-                          <Col sm={10}>
-                            <div>
-                              <label className="itemResult">
-                                {state.employeeComment}
-                              </label>
-                            </div>
-                          </Col>
-                        </>
-                      </Row>
+                      {state.disciplinaryAction.employeeComment !== null &&
+                      state.disciplinaryAction.employeeComment !== undefined &&
+                      state.disciplinaryAction.employeeComment !== "" ? (
+                        <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "1rem",
+                            marginBottom: "3rem",
+                          }}
+                        >
+                          <>
+                            <Col sm={2}>
+                              <div>
+                                <label>Remarks</label>
+                              </div>
+                            </Col>
+                            <Col sm={10}>
+                              <div>
+                                <label className="itemResult">
+                                  {state.disciplinaryAction.employeeComment}
+                                </label>
+                              </div>
+                            </Col>
+                          </>
+                        </Row>
+                      ) : (
+                        ""
+                      )}
                       {disciplinarySearchData.disciplinaryAction !== null &&
                       disciplinarySearchData.disciplinaryAction !== undefined &&
                       disciplinarySearchData.disciplinaryAction !== "" &&

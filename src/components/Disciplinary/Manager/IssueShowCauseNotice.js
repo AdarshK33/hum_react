@@ -46,6 +46,7 @@ const IssueShowCauseNotice = () => {
     empCostCenterName: "",
     empLocation: "",
     empAddress: "",
+    employeePosition: "",
     mngrName: "",
     mngrId: "",
     mngrCostCenterName: "",
@@ -120,6 +121,7 @@ const IssueShowCauseNotice = () => {
       state.empContractType = disciplinaryEmpSearchData.contractType;
       state.empCostCenterName = disciplinaryEmpSearchData.employeeCostCentre;
       state.empAddress = disciplinaryEmpSearchData.employeeAddress;
+      state.employeePosition = disciplinaryEmpSearchData.employeePosition;
 
       if (
         state.empContractType === "internship" ||
@@ -147,7 +149,7 @@ const IssueShowCauseNotice = () => {
           : employeeProfileData.firstName;
       state.mngrId = employeeProfileData.employeeId;
       state.mngrCostCenterName = employeeProfileData.costCentre;
-      state.mngrPosition = employeeProfileData.designation;
+      state.mngrPosition = employeeProfileData.position;
     }
   }, [employeeProfileData]);
   console.log("disciplinaryResonsData", disciplinaryResonsData);
@@ -285,6 +287,7 @@ const IssueShowCauseNotice = () => {
     state.empId = "";
     state.empContractType = "";
     state.empAddress = "";
+    state.employeePosition = "";
     state.empLocation = "";
     state.empCostCenterName = "";
   };
@@ -406,7 +409,7 @@ const IssueShowCauseNotice = () => {
           reasonId: changeInReason,
           reasonDetailsId:
             changeInReason === 1 ? changeInReason : reasonDetailsId,
-          showCauseLetter: null,
+          showCauseLetter: "ShowCauseLetter.pdf",
           showCauseNotice: null,
           status: 0,
           statusDesc: null,
@@ -414,6 +417,7 @@ const IssueShowCauseNotice = () => {
         },
         disciplinaryWarning: null,
         employeeAddress: state.empAddress,
+        employeePosition: state.employeePosition,
         employeeCostCentre: state.empCostCenterName,
         employeeId: state.empId,
         employeeName: disciplinaryEmpSearchData.employeeName,
@@ -660,10 +664,20 @@ const IssueShowCauseNotice = () => {
                             <label>Address:</label>
                           </div>
                         </Col>
-                        <Col sm={8}>
+                        <Col sm={6}>
                           <div>
                             <label className="itemResult">
                               &nbsp;&nbsp; {state.empAddress}
+                            </label>
+                          </div>
+                        </Col>
+                        <Col sm={4}>
+                          <div>
+                            <label>
+                              Position:
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.employeePosition}
+                              </label>
                             </label>
                           </div>
                         </Col>
@@ -689,7 +703,7 @@ const IssueShowCauseNotice = () => {
                         <Col sm={4}>
                           <div>
                             <label>
-                              Designation:
+                              Position:
                               <label className="itemResult">
                                 &nbsp;&nbsp; {state.mngrPosition}
                               </label>

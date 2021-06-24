@@ -33,10 +33,10 @@ const EmployeeExitList = () => {
     EmployeeSeparationListView("all", pageCount);
   }, []);
 
-  useEffect(() => {
-    makeEmployeeDataNull();
-    makeSearchEmp1DataNull();
-  }, []);
+  // useEffect(() => {
+  //   makeEmployeeDataNull();
+  //   makeSearchEmp1DataNull();
+  // }, []);
   console.log("---->", EmployeeSeparationList);
 
   // useEffect(() => {

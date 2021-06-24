@@ -1,17 +1,16 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Row, Col, Form, Button, Container, Modal } from "react-bootstrap";
 import { Search, PlusCircle, MinusCircle } from "react-feather";
-import Breadcrumb from "../../common/breadcrumb";
+import Breadcrumb from "../common/breadcrumb";
 import { toast } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
-import ShowCauseNotice from "../Manager/ShowCauseNoticeLetter";
-import WarningLetter from "../WarningManager/WarningLetter";
-import calendarImage from "../../../assets/images/calendar-image.png";
-import { DisciplinaryContext } from "../../../context/DisciplinaryState";
+import ShowCauseNotice from "../Disciplinary/Manager/ShowCauseNoticeLetter";
+import calendarImage from "../../assets/images/calendar-image.png";
+import { DisciplinaryContext } from "../../context/DisciplinaryState";
 import { useHistory } from "react-router-dom";
 
 // view-----
-const CostCenterManagerAction = () => {
+const EmployeShowCaseLetter = () => {
   const [showModal, setModal] = useState(false);
   const [showSuccessModal, setSuccessModal] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
@@ -30,6 +29,7 @@ const CostCenterManagerAction = () => {
 
   const [showCauseReason, setShowCauseReason] = useState("");
   const [EmpName, setEmpName] = useState();
+  const [remarksError, setRemarkError] = useState(false);
 
   const [state, setState] = useState({
     empId: "",
@@ -66,6 +66,7 @@ const CostCenterManagerAction = () => {
     showCauseNoticeSCIN: "",
     statusDescSCIN: "",
     warningIssuedSCIN: "",
+    statusSCIN: "",
     employeeCommentDW: "",
     employeeWarningStatusDW: "",
     managerCommentDW: "",
@@ -78,6 +79,7 @@ const CostCenterManagerAction = () => {
     warningIdDW: "",
     warningIssuedDateDW: "",
     warningLetterDW: "",
+    statusDW: "",
   });
   const {
     disciplinaryEmployeeSearch,
@@ -151,6 +153,7 @@ const CostCenterManagerAction = () => {
           disciplinarySearchData.disciplinaryAction.statusDesc;
         state.warningIssuedSCIN =
           disciplinarySearchData.disciplinaryAction.warningIssued;
+        state.statusSCIN = disciplinarySearchData.disciplinaryAction.status;
       }
       if (
         disciplinarySearchData.disciplinaryWarning !== null &&
@@ -189,6 +192,7 @@ const CostCenterManagerAction = () => {
           disciplinarySearchData.disciplinaryWarning.warningIssuedDate;
         state.warningLetterDW =
           disciplinarySearchData.disciplinaryWarning.warningLetter;
+        state.statusDW = disciplinarySearchData.disciplinaryWarning.status;
       }
     }
   }, [disciplinarySearchData]);
@@ -197,7 +201,7 @@ const CostCenterManagerAction = () => {
   const handleShowCauseLetterClose = () => setShow(false);
   const handleShowCauseLetterClose1 = () => {
     setShow(false);
-    history.push("../disciplinary");
+    history.push("../documents");
   };
   const LetterShow = () => {
     console.log(";;;;;");
@@ -275,17 +279,33 @@ const CostCenterManagerAction = () => {
     setModal(false);
     setSuccessModal(false);
   };
+  const validateRemark = () => {
+    if (
+      state.empRemark !== "" &&
+      state.empRemark !== null &&
+      state.empRemark !== undefined
+    ) {
+      console.log(state.empRemark, "state.empRemark");
+      setRemarkError(false);
+      return true;
+    } else {
+      setRemarkError(true);
+      return false;
+    }
+  };
 
   const submitHandler = (e) => {
     console.log("submit handler");
     e.preventDefault();
+    const value = validateRemark();
 
     if (
       disciplinarySearchData &&
       disciplinarySearchData &&
       disciplinarySearchData !== null &&
       disciplinarySearchData !== undefined &&
-      Object.keys(disciplinarySearchData).length !== 0
+      Object.keys(disciplinarySearchData).length !== 0 &&
+      value === true
     ) {
       const InfoData = {
         contractType: state.empContractType,
@@ -294,7 +314,7 @@ const CostCenterManagerAction = () => {
           actionIssuedDate: state.actionIssuedDateSCIN,
           disciplinaryId: state.disciplinaryId,
           employeeActionStatus: state.employeeActionStatusSCIN,
-          employeeComment: state.employeeCommentSCIN,
+          employeeComment: state.empRemark,
           employeeId: state.empId,
           managerComment: state.managerCommentSCIN,
           reasonId: state.reasonIdSCIN,
@@ -303,7 +323,7 @@ const CostCenterManagerAction = () => {
           reasonDetails: state.reasonDetailsSCIN,
           showCauseLetter: state.showCauseLetterSCIN,
           showCauseNotice: state.showCauseNoticeSCIN,
-          status: 2,
+          status: state.statusSCIN,
           statusDesc: state.statusDescSCIN,
           warningIssued: state.warningIssuedSCIN,
         },
@@ -321,7 +341,7 @@ const CostCenterManagerAction = () => {
                 reasonDetails: state.reasonDetailsDW,
                 reasonId: state.reasonIdDW,
                 reasonDetailsId: state.reasonDetailsIdDW,
-                status: 2,
+                status: state.statusDW,
                 statusDesc: state.statusDescDW,
                 warningDueDays: state.warningDueDaysDW,
                 warningId: state.warningIdDW,
@@ -345,10 +365,18 @@ const CostCenterManagerAction = () => {
       setSubmitted(true);
       state.clickOnsubmit = true;
       setPreview(true);
-      setSuccessModal(true);
+      //   setSuccessModal(true);
     } else {
       console.log("search data is null");
     }
+  };
+  const changeHandler = (e) => {
+    setState({
+      ...state,
+      [e.target.name]: e.target.value,
+    });
+
+    console.log(state);
   };
 
   return (
@@ -386,7 +414,7 @@ const CostCenterManagerAction = () => {
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Show cause letter has been issued to the employee
+              Notification has been sent to the manager
             </label>
             <div className="text-center">
               <Button onClick={handleShowCauseLetterClose1}>Close</Button>
@@ -402,22 +430,12 @@ const CostCenterManagerAction = () => {
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body>
             {disciplinarySearchData &&
-            disciplinarySearchData &&
             disciplinarySearchData !== null &&
             disciplinarySearchData !== undefined &&
             Object.keys(disciplinarySearchData).length !== 0 &&
-            disciplinarySearchData.disciplinaryWarning !== null &&
-            disciplinarySearchData.disciplinaryWarning !== undefined &&
-            disciplinarySearchData.disciplinaryWarning !== "" ? (
-              <WarningLetter />
-            ) : disciplinarySearchData &&
-              disciplinarySearchData &&
-              disciplinarySearchData !== null &&
-              disciplinarySearchData !== undefined &&
-              Object.keys(disciplinarySearchData).length !== 0 &&
-              disciplinarySearchData.disciplinaryAction !== null &&
-              disciplinarySearchData.disciplinaryAction !== undefined &&
-              disciplinarySearchData.disciplinaryAction !== "" ? (
+            disciplinarySearchData.disciplinaryAction !== null &&
+            disciplinarySearchData.disciplinaryAction !== undefined &&
+            disciplinarySearchData.disciplinaryAction !== "" ? (
               <ShowCauseNotice />
             ) : (
               ""
@@ -683,21 +701,23 @@ const CostCenterManagerAction = () => {
                           </div>
                         </Col>
                       </Row>
-                      {state.empRemark !== null &&
-                      state.empRemark !== undefined &&
-                      state.empRemark !== "" ? (
-                        <Row
-                          style={{
-                            marginLeft: "2rem",
-                            marginTop: "2rem",
-                            marginBottom: "1rem",
-                          }}
-                        >
-                          <Col sm={2}>
-                            <div>
-                              <label>Remarks:</label>
-                            </div>
-                          </Col>
+
+                      <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "2rem",
+                          marginBottom: "1rem",
+                        }}
+                      >
+                        <Col sm={2}>
+                          <div>
+                            <label> Add Remarks:</label>
+                          </div>
+                        </Col>
+                        {submitted === true ||
+                        (state.employeeCommentSCIN !== null &&
+                          state.employeeCommentSCIN !== undefined &&
+                          state.employeeCommentSCIN !== "") ? (
                           <Col sm={6}>
                             <div>
                               <label className="itemResult">
@@ -705,160 +725,37 @@ const CostCenterManagerAction = () => {
                               </label>
                             </div>
                           </Col>
-                        </Row>
-                      ) : (
-                        ""
-                      )}
-                      {disciplinarySearchData &&
-                      disciplinarySearchData &&
-                      disciplinarySearchData !== null &&
-                      disciplinarySearchData !== undefined &&
-                      Object.keys(disciplinarySearchData).length !== 0 &&
-                      disciplinarySearchData.disciplinaryWarning !== null &&
-                      disciplinarySearchData.disciplinaryWarning !==
-                        undefined &&
-                      disciplinarySearchData.disciplinaryWarning !== "" ? (
-                        <Row
-                          style={{
-                            marginLeft: "2rem",
-                            marginTop: "2rem",
-                            marginBottom: "3rem",
-                          }}
-                        >
-                          <Col sm={3}>
-                            <label>Issue Warning Letter </label>
-                          </Col>
-                          <Col sm={2} style={{ marginTop: "0.25rem" }}>
+                        ) : (
+                          <Col sm={10}>
+                            {" "}
                             <Form.Group>
-                              <div className="boxField_2 input">
-                                <input
-                                  className="largerCheckbox"
-                                  type="checkbox"
-                                  value="yes"
-                                  disabled={true}
-                                  checked={
-                                    disciplinarySearchData &&
-                                    disciplinarySearchData &&
-                                    disciplinarySearchData !== null &&
-                                    disciplinarySearchData !== undefined &&
-                                    Object.keys(disciplinarySearchData)
-                                      .length !== 0 &&
-                                    disciplinarySearchData.disciplinaryWarning !==
-                                      null &&
-                                    disciplinarySearchData.disciplinaryWarning !==
-                                      undefined &&
-                                    disciplinarySearchData.disciplinaryWarning !==
-                                      ""
-                                      ? true
-                                      : false
-                                  }
-                                  style={{ borderColor: "blue" }}
-                                />
-                                <label className="itemResult">Yes</label>
-                              </div>
+                              <Form.Control
+                                style={
+                                  remarksError
+                                    ? { borderColor: "red" }
+                                    : { borderRadius: "5px" }
+                                }
+                                as="textarea"
+                                rows={4}
+                                name="empRemark"
+                                value={state.empRemark}
+                                placeholder="Write here.."
+                                onChange={(e) => changeHandler(e)}
+                                required
+                              />
+
+                              {remarksError ? (
+                                <p style={{ color: "red" }}>
+                                  &nbsp; *Please add remarks
+                                </p>
+                              ) : (
+                                ""
+                              )}
                             </Form.Group>
                           </Col>
-                          <Col sm={2} style={{ marginTop: "0.25rem" }}>
-                            <Form.Group>
-                              <div className="boxField_2 input">
-                                <input
-                                  className="largerCheckbox"
-                                  type="checkbox"
-                                  value="no"
-                                  disabled={true}
-                                  checked={
-                                    (disciplinarySearchData &&
-                                      disciplinarySearchData &&
-                                      disciplinarySearchData !== null &&
-                                      disciplinarySearchData !== undefined &&
-                                      Object.keys(disciplinarySearchData)
-                                        .length !== 0 &&
-                                      disciplinarySearchData.disciplinaryWarning ===
-                                        null) ||
-                                    disciplinarySearchData.disciplinaryWarning ===
-                                      undefined ||
-                                    disciplinarySearchData.disciplinaryWarning ===
-                                      ""
-                                      ? true
-                                      : false
-                                  }
-                                  style={{ borderColor: "blue" }}
-                                />
-                                <label className="itemResult">No</label>
-                              </div>
-                            </Form.Group>
-                          </Col>
-                        </Row>
-                      ) : (
-                        ""
-                      )}
-                      {disciplinarySearchData &&
-                      disciplinarySearchData &&
-                      disciplinarySearchData !== null &&
-                      disciplinarySearchData !== undefined &&
-                      Object.keys(disciplinarySearchData).length !== 0 &&
-                      disciplinarySearchData.disciplinaryWarning !== null &&
-                      disciplinarySearchData.disciplinaryWarning !==
-                        undefined &&
-                      disciplinarySearchData.disciplinaryWarning !== "" ? (
-                        <div>
-                          <Row
-                            style={{
-                              marginLeft: "2rem",
-                              marginTop: "2rem",
-                              marginBottom: "1rem",
-                            }}
-                          >
-                            <Col sm={6}>
-                              <div>
-                                <label>
-                                  Reason for warning:
-                                  <label className="itemResult">
-                                    &nbsp;&nbsp; {state.warningReason}
-                                  </label>
-                                </label>
-                              </div>
-                            </Col>
-                            <Col sm={6}>
-                              <div>
-                                <label>
-                                  Performance improvement period:
-                                  <label className="itemResult">
-                                    &nbsp;&nbsp;{" "}
-                                    {state.pip !== 0
-                                      ? state.pip === 1
-                                        ? state.pip + " Month"
-                                        : state.pip + " Months"
-                                      : ""}
-                                  </label>
-                                </label>
-                              </div>
-                            </Col>
-                          </Row>
-                          <Row
-                            style={{
-                              marginLeft: "2rem",
-                              marginTop: "2rem",
-                              marginBottom: "1rem",
-                            }}
-                          >
-                            <Col sm={2}>
-                              <div>
-                                <label>State detailed reason:</label>
-                              </div>
-                            </Col>
-                            <Col sm={6}>
-                              <div>
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; {state.warningComment}
-                                </label>
-                              </div>
-                            </Col>
-                          </Row>
-                        </div>
-                      ) : (
-                        ""
-                      )}
+                        )}
+                      </Row>
+
                       <Row>
                         <Col
                           style={{
@@ -874,7 +771,7 @@ const CostCenterManagerAction = () => {
                             }
                             onClick={submitHandler}
                           >
-                            Confirm
+                            Save
                           </button>
 
                           {!saveLetter &&
@@ -885,19 +782,7 @@ const CostCenterManagerAction = () => {
                               className={"LettersButtonsExtra"}
                               onClick={ShowCauseLetterClick}
                             >
-                              {disciplinarySearchData &&
-                              disciplinarySearchData &&
-                              disciplinarySearchData !== null &&
-                              disciplinarySearchData !== undefined &&
-                              Object.keys(disciplinarySearchData).length !==
-                                0 &&
-                              disciplinarySearchData.disciplinaryWarning !==
-                                null &&
-                              disciplinarySearchData.disciplinaryWarning !==
-                                undefined &&
-                              disciplinarySearchData.disciplinaryWarning !== ""
-                                ? "Generate Warning Letter"
-                                : "Generate Show Cause Notice"}
+                              Generate Show Cause Notice
                             </button>
                           ) : (
                             ""
@@ -909,19 +794,7 @@ const CostCenterManagerAction = () => {
                               className={"LettersButtonsExtra"}
                               onClick={previewShowCauseLetter}
                             >
-                              {disciplinarySearchData &&
-                              disciplinarySearchData &&
-                              disciplinarySearchData !== null &&
-                              disciplinarySearchData !== undefined &&
-                              Object.keys(disciplinarySearchData).length !==
-                                0 &&
-                              disciplinarySearchData.disciplinaryWarning !==
-                                null &&
-                              disciplinarySearchData.disciplinaryWarning !==
-                                undefined &&
-                              disciplinarySearchData.disciplinaryWarning !== ""
-                                ? "Preview Warning Letter"
-                                : " Preview Show Cause Notice"}
+                              Preview Show Cause Notice
                             </button>
                           ) : (
                             ""
@@ -970,4 +843,4 @@ const CostCenterManagerAction = () => {
   );
 };
 
-export default CostCenterManagerAction;
+export default EmployeShowCaseLetter;

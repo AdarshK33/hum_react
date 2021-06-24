@@ -16,6 +16,7 @@ const DisciplinaryView = () => {
     empCostCenterName: "",
     empLocation: "",
     empAddress: "",
+    employeePosition: "",
     mngrName: "",
     mngrId: "",
     mngrCostCenterName: "",
@@ -23,7 +24,7 @@ const DisciplinaryView = () => {
     reasonForCause: "",
     reason: "",
     remarks: "",
-    empRemarks: "",
+    empRemark: "",
     warningReason: "",
     pip: "",
     warningComment: "",
@@ -49,9 +50,10 @@ const DisciplinaryView = () => {
       state.empContractType = disciplinarySearchData.contractType;
       state.empCostCenterName = disciplinarySearchData.employeeCostCentre;
       state.empAddress = disciplinarySearchData.employeeAddress;
+      state.employeePosition = disciplinarySearchData.employeePosition;
       state.mngrId = disciplinarySearchData.managerId;
       state.mngrName = disciplinarySearchData.managerName;
-      state.mngrPosition = disciplinarySearchData.managerDesignation;
+      state.mngrPosition = disciplinarySearchData.managerPosition;
       state.mngrCostCenterName = disciplinarySearchData.managerCostCentre;
 
       if (
@@ -185,6 +187,16 @@ const DisciplinaryView = () => {
                             </label>
                           </div>
                         </Col>
+                        <Col sm={4}>
+                          <div>
+                            <label>
+                              Position:
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.employeePosition}
+                              </label>
+                            </label>
+                          </div>
+                        </Col>
                       </Row>
                       <Row
                         style={{
@@ -207,7 +219,7 @@ const DisciplinaryView = () => {
                         <Col sm={4}>
                           <div>
                             <label>
-                              Designation:
+                              Position:
                               <label className="itemResult">
                                 &nbsp;&nbsp; {state.mngrPosition}
                               </label>
@@ -289,31 +301,39 @@ const DisciplinaryView = () => {
                           <div>
                             <a onClick={LetterShow}>
                               {" "}
-                              <u className="itemResult">ShowCauseNotice.pdf</u>
+                              <u className="itemResult">
+                                View Show Cause Notice
+                              </u>
                             </a>
                           </div>
                         </Col>
                       </Row>
-                      <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "2rem",
-                          marginBottom: "1rem",
-                        }}
-                      >
-                        <Col sm={2}>
-                          <div>
-                            <label>Add Remarks:</label>
-                          </div>
-                        </Col>
-                        <Col sm={6}>
-                          <div>
-                            <label className="itemResult">
-                              &nbsp;&nbsp; {state.empRemarks}
-                            </label>
-                          </div>
-                        </Col>
-                      </Row>
+                      {state.empRemark !== null &&
+                      state.empRemark !== undefined &&
+                      state.empRemark !== "" ? (
+                        <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "2rem",
+                            marginBottom: "1rem",
+                          }}
+                        >
+                          <Col sm={2}>
+                            <div>
+                              <label>Remarks:</label>
+                            </div>
+                          </Col>
+                          <Col sm={6}>
+                            <div>
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.empRemark}
+                              </label>
+                            </div>
+                          </Col>
+                        </Row>
+                      ) : (
+                        ""
+                      )}
                       {disciplinarySearchData &&
                       disciplinarySearchData &&
                       disciplinarySearchData !== null &&
