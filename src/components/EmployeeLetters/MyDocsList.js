@@ -95,9 +95,9 @@ const EmployeeDocementsList = () => {
                 className="title_bar"
                 style={{ textAlign: "center", fontSize: "larger" }}
               >
-                <b style={{ marginLeft: "120px" }}>MY DOCUMENTS LIST </b>
+                <b>MY DOCUMENTS LIST </b>
 
-                <div className="job-filter">
+                {/* <div className="job-filter">
                   <div className="faq-form mr-2">
                     <input
                       className="form-control searchButton"
@@ -112,7 +112,7 @@ const EmployeeDocementsList = () => {
                     />
                   </div>
                   <br></br>
-                </div>
+                </div> */}
                 {/* <Link to="/issue-show-cause-notice">
                   <Button className="apply-button btn btn-light mr-2">
                     Issue Show Cause Notice
