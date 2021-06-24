@@ -145,6 +145,7 @@ const CandidateOnboarding = () => {
     });
   }, [onBoardData, personalInfoData]);
   useEffect(() => {
+    console.log("employeeData", employeeData);
     if (
       personalInfoData !== undefined &&
       personalInfoData !== null &&
@@ -268,7 +269,8 @@ const CandidateOnboarding = () => {
   };
 
   const validateEmail = (email) => {
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    var re =
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (re.test(email)) {
       if (
         email.indexOf(
@@ -417,7 +419,7 @@ const CandidateOnboarding = () => {
       // setError(true);
       // setFedError(true);
       setMandatory(true);
-      setCostCenterError(true);
+      // setCostCenterError(true);
     }
   };
   const handleIncrement = (key) => {

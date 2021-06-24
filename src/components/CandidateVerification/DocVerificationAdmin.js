@@ -611,8 +611,8 @@ const DocVerification = () => {
                   className="largerCheckbox"
                   type="checkbox"
                   value="yes"
-                  checked={pfData.uanNumber !== "" ? true : false}
-                  disabled="true"
+                  checked={UANYes}
+                  onChange={handleUANYes}
                 />
                 <label>Yes</label>
               </div>
@@ -625,8 +625,8 @@ const DocVerification = () => {
                   className="largerCheckbox"
                   type="checkbox"
                   value="no"
-                  checked={pfData.uanNumber === "" ? true : false}
-                  disabled="true"
+                  checked={UANNo}
+                  onChange={handleUANNo}
                 />
                 <label>Link </label>
               </div>
@@ -645,7 +645,7 @@ const DocVerification = () => {
             <Col sm={6}>
               <Form.Group style={{ borderRadius: " 12.25rem !important" }}>
                 <div className="boxField input">
-                  <label>Enter UAN Number</label>{" "}
+                  <label>UAN Number</label>{" "}
                   <input
                     type="text"
                     name="uannbr"

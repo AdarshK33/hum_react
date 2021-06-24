@@ -11,6 +11,7 @@ const initial_state = {
   data: [],
   getBonusDetailsById: [],
   bonusListExport: {},
+  getBonusByContractType: [],
 };
 export const BonusContext = createContext();
 export const BonusProvider = (props) => {
@@ -110,6 +111,25 @@ export const BonusProvider = (props) => {
         console.log(error);
       });
   };
+  /* bonus according to contract type*/
+  const viewBonusByContarctType = (contractType, department, position) => {
+    client
+      .get(
+        "/api/v1/bonus/view?contractType=" +
+          contractType +
+          "&department=" +
+          department +
+          "&position=" +
+          position
+      )
+      .then((response) => {
+        state.getBonusByContractType = response.data.data;
+        return dispatch({
+          type: "VIEW_BONUS_BY_CONTRACT",
+          payload: state.getBonusByContractType,
+        });
+      });
+  };
   return (
     <BonusContext.Provider
       value={{
@@ -119,12 +139,14 @@ export const BonusProvider = (props) => {
         viewBonusById,
         updateBonus,
         exportBonusList,
+        viewBonusByContarctType,
         loader: loader,
         bonusListExport: state.bonusListExport,
         bonusData: state.bonusData,
         bonusDetails: state.bonusDetails,
         total: state.total,
         getBonusDetailsById: state.getBonusDetailsById,
+        getBonusByContractType: state.getBonusByContractType,
       }}
     >
       {props.children}

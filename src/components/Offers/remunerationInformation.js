@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { OfferContext } from "../../context/OfferState";
 import { AppContext } from "../../context/AppState";
 import { candidate } from "../../utils/canditateLogin";
+import { BonusContext } from "../../context/BonusState";
 
 const RemunerationInformation = (props) => {
   const [fixedGross, setFixedGross] = useState();
@@ -35,6 +36,8 @@ const RemunerationInformation = (props) => {
     remunerationData,
   } = useContext(OfferContext);
   const { user } = useContext(AppContext);
+  const { viewBonusByContarctType, getBonusByContractType } =
+    useContext(BonusContext);
 
   useEffect(() => {
     console.log("candidateData remuneration1", createCandidateResponse);
@@ -48,6 +51,19 @@ const RemunerationInformation = (props) => {
     ) {
       viewCandidateId(createCandidateResponse.candidateId);
       workInfoView(createCandidateResponse.candidateId);
+      if (
+        candidateData !== null &&
+        candidateData !== undefined &&
+        candidateData.workInformation !== null &&
+        candidateData.workInformation !== undefined
+      ) {
+        viewBonusByContarctType(
+          candidateData.workInformation.contractType,
+          candidateData.workInformation.department,
+          candidateData.workInformation.position
+        );
+      }
+
       setViewApiCall(true);
     } else {
       setViewApiCall(false);
@@ -56,6 +72,12 @@ const RemunerationInformation = (props) => {
     console.log("workInformationData remuneration", workInformationData);
     console.log("workInfoViewData", workInfoViewData);
     console.log("user profile", user);
+    if (
+      getBonusByContractType !== null &&
+      getBonusByContractType !== undefined
+    ) {
+      setMonthlyBonus(getBonusByContractType.bonus);
+    }
   }, [candidateData.workInformation]);
 
   const submitHandler = (e) => {
@@ -197,33 +219,6 @@ const RemunerationInformation = (props) => {
         setFixedGrossError(false);
         setParmanentGrossLimit(false);
       }
-    } else if (
-      user.role === "ADMIN" &&
-      workInfoViewData.contractType !== "Internship" &&
-      (typeof monthlyBonus === "undefined" ||
-        monthlyBonus === "" ||
-        monthlyBonus.includes(" ", "-", ".", "/", "+") ||
-        (workInfoViewData.contractType === "Permanent" && monthlyBonus > 20) ||
-        (workInfoViewData.contractType === "Parttime" && monthlyBonus > 20))
-    ) {
-      console.log("remuneration Info4", fixedGross, monthlyBonus, stipened);
-      setMonthlyBonusError(true);
-      setStipenedError(false);
-      if (
-        (workInfoViewData.contractType === "Parttime" ||
-          workInfoViewData.contractType === "Permanent") &&
-        monthlyBonus > 20
-      ) {
-        setBonusLimit(true);
-        setMonthlyBonusError(false);
-      } else if (
-        (workInfoViewData.contractType === "Parttime" ||
-          workInfoViewData.contractType === "Permanent") &&
-        monthlyBonus < 20
-      ) {
-        setBonusLimit(false);
-        setMonthlyBonusError(false);
-      }
     } else {
       // alert("secon else in manager");
       console.log("remuneration Info6", fixedGross, monthlyBonus, stipened);
@@ -347,7 +342,27 @@ const RemunerationInformation = (props) => {
                 <Form.Group as={Row} controlId="formHorizontalEmail">
                   {/* <Col sm={2}></Col> */}
                   <Form.Label column sm={3}>
-                    Fixed Gross
+                    Fixed Gross{" "}
+                    {(candidateData &&
+                      candidateData.workInformation !== null &&
+                      candidateData.workInformation !== undefined &&
+                      candidateData.workInformation.contractType ===
+                        "Parttime") ||
+                    (workInfoViewData !== null &&
+                      workInfoViewData !== undefined &&
+                      workInfoViewData.contractType === "Parttime")
+                      ? "(Hourly)"
+                      : (candidateData &&
+                          candidateData.workInformation &&
+                          candidateData.workInformation !== null &&
+                          candidateData.workInformation !== undefined &&
+                          candidateData.workInformation.contractType ===
+                            "Permanent") ||
+                        (workInfoViewData !== null &&
+                          workInfoViewData !== undefined &&
+                          workInfoViewData.contractType === "Permanent")
+                      ? ""
+                      : ""}
                   </Form.Label>
                   <Col sm={6}>
                     <Form.Control
@@ -419,7 +434,7 @@ const RemunerationInformation = (props) => {
                               setMonthlyBonus(event.target.value)
                             }
                             required
-                            disabled={disabled}
+                            readOnly
                           />
                           {monthlyBonusError ? (
                             <p style={{ color: "red" }}>
@@ -441,7 +456,8 @@ const RemunerationInformation = (props) => {
                         <Col sm={6}>
                           <Form.Control
                             className="form-input"
-                            type="nummber"
+                            value={monthlyBonus}
+                            type="number"
                             name="monthlyBonus"
                             placeholder="0"
                             readOnly
