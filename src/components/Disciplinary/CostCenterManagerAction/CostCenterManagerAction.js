@@ -38,6 +38,7 @@ const CostCenterManagerAction = () => {
     empCostCenterName: "",
     empLocation: "",
     empAddress: "",
+    employeePosition: "",
     mngrName: "",
     mngrId: "",
     mngrCostCenterName: "",
@@ -45,7 +46,7 @@ const CostCenterManagerAction = () => {
     reasonForCause: "",
     reason: "",
     remarks: "",
-    empRemarks: "",
+    empRemark: "",
     warningReason: "",
     pip: "",
     warningComment: "",
@@ -105,9 +106,10 @@ const CostCenterManagerAction = () => {
       state.empContractType = disciplinarySearchData.contractType;
       state.empCostCenterName = disciplinarySearchData.employeeCostCentre;
       state.empAddress = disciplinarySearchData.employeeAddress;
+      state.employeePosition = disciplinarySearchData.employeePosition;
       state.mngrId = disciplinarySearchData.managerId;
       state.mngrName = disciplinarySearchData.managerName;
-      state.mngrPosition = disciplinarySearchData.managerDesignation;
+      state.mngrPosition = disciplinarySearchData.managerPosition;
       state.mngrCostCenterName = disciplinarySearchData.managerCostCentre;
 
       if (
@@ -329,11 +331,12 @@ const CostCenterManagerAction = () => {
             : null,
 
         employeeAddress: state.empAddress,
+        employeePosition: state.employeePosition,
         employeeCostCentre: state.empCostCenterName,
         employeeId: state.empId,
         employeeName: state.empName,
         managerCostCentre: state.mngrCostCenterName,
-        managerDesignation: state.mngrPosition,
+        managerPosition: state.mngrPosition,
         managerId: state.mngrId,
         managerName: state.mngrName,
       };
@@ -559,6 +562,16 @@ const CostCenterManagerAction = () => {
                             </label>
                           </div>
                         </Col>
+                        <Col sm={4}>
+                          <div>
+                            <label>
+                              Position:
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.employeePosition}
+                              </label>
+                            </label>
+                          </div>
+                        </Col>
                       </Row>
                       <Row
                         style={{
@@ -670,14 +683,9 @@ const CostCenterManagerAction = () => {
                           </div>
                         </Col>
                       </Row>
-                      {disciplinarySearchData &&
-                      disciplinarySearchData &&
-                      disciplinarySearchData !== null &&
-                      disciplinarySearchData !== undefined &&
-                      Object.keys(disciplinarySearchData).length !== 0 &&
-                      disciplinarySearchData.empRemarks !== null &&
-                      disciplinarySearchData.empRemarks !== undefined &&
-                      disciplinarySearchData.empRemarks !== "" ? (
+                      {state.empRemark !== null &&
+                      state.empRemark !== undefined &&
+                      state.empRemark !== "" ? (
                         <Row
                           style={{
                             marginLeft: "2rem",
@@ -693,7 +701,7 @@ const CostCenterManagerAction = () => {
                           <Col sm={6}>
                             <div>
                               <label className="itemResult">
-                                &nbsp;&nbsp; {state.empRemarks}
+                                &nbsp;&nbsp; {state.empRemark}
                               </label>
                             </div>
                           </Col>

@@ -16,6 +16,7 @@ const DisciplinaryView = () => {
     empCostCenterName: "",
     empLocation: "",
     empAddress: "",
+    employeePosition: "",
     mngrName: "",
     mngrId: "",
     mngrCostCenterName: "",
@@ -23,7 +24,7 @@ const DisciplinaryView = () => {
     reasonForCause: "",
     reason: "",
     remarks: "",
-    empRemarks: "",
+    empRemark: "",
     warningReason: "",
     pip: "",
     warningComment: "",
@@ -49,9 +50,10 @@ const DisciplinaryView = () => {
       state.empContractType = disciplinarySearchData.contractType;
       state.empCostCenterName = disciplinarySearchData.employeeCostCentre;
       state.empAddress = disciplinarySearchData.employeeAddress;
+      state.employeePosition = disciplinarySearchData.employeePosition;
       state.mngrId = disciplinarySearchData.managerId;
       state.mngrName = disciplinarySearchData.managerName;
-      state.mngrPosition = disciplinarySearchData.managerDesignation;
+      state.mngrPosition = disciplinarySearchData.managerPosition;
       state.mngrCostCenterName = disciplinarySearchData.managerCostCentre;
 
       if (
@@ -185,6 +187,16 @@ const DisciplinaryView = () => {
                             </label>
                           </div>
                         </Col>
+                        <Col sm={4}>
+                          <div>
+                            <label>
+                              Position:
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.employeePosition}
+                              </label>
+                            </label>
+                          </div>
+                        </Col>
                       </Row>
                       <Row
                         style={{
@@ -296,14 +308,9 @@ const DisciplinaryView = () => {
                           </div>
                         </Col>
                       </Row>
-                      {disciplinarySearchData &&
-                      disciplinarySearchData &&
-                      disciplinarySearchData !== null &&
-                      disciplinarySearchData !== undefined &&
-                      Object.keys(disciplinarySearchData).length !== 0 &&
-                      disciplinarySearchData.empRemarks !== null &&
-                      disciplinarySearchData.empRemarks !== undefined &&
-                      disciplinarySearchData.empRemarks !== "" ? (
+                      {state.empRemark !== null &&
+                      state.empRemark !== undefined &&
+                      state.empRemark !== "" ? (
                         <Row
                           style={{
                             marginLeft: "2rem",
@@ -319,7 +326,7 @@ const DisciplinaryView = () => {
                           <Col sm={6}>
                             <div>
                               <label className="itemResult">
-                                &nbsp;&nbsp; {state.empRemarks}
+                                &nbsp;&nbsp; {state.empRemark}
                               </label>
                             </div>
                           </Col>
