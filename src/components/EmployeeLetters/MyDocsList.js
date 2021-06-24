@@ -167,7 +167,9 @@ const EmployeeDocementsList = () => {
                             <td>{item.documentName}</td>
                             <td>{item.issuedOn}</td>
                             <td>{item.signedOn}</td>
-                            <td></td>
+                            <td>
+                              <a href="/documents">{item.documentName}</a>
+                            </td>
                             <td></td>
 
                             <td>

@@ -409,7 +409,7 @@ const IssueShowCauseNotice = () => {
           reasonId: changeInReason,
           reasonDetailsId:
             changeInReason === 1 ? changeInReason : reasonDetailsId,
-          showCauseLetter: null,
+          showCauseLetter: "ShowCauseLetter.pdf",
           showCauseNotice: null,
           status: 0,
           statusDesc: null,

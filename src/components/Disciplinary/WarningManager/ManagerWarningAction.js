@@ -396,7 +396,7 @@ const ManagerWarningAction = (props) => {
                 warningDueDays: 0,
                 warningId: 0,
                 warningIssuedDate: null,
-                warningLetter: null,
+                warningLetter: "WarningLetter.pdf",
               },
         employeeAddress: state.employeeAddress,
         employeeCostCentre: state.employeeCostCentre,
