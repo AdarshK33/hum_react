@@ -447,6 +447,7 @@ const ManagerWarningAction = (props) => {
     setInitalExit(false);
     setModal(false);
     setSuccessModal(false);
+    // setSubmitted(false);
   };
 
   const handleShowCauseLetterClose = () => {
@@ -1435,7 +1436,7 @@ const ManagerWarningAction = (props) => {
                               }
                               onClick={handleInitialExit}
                             >
-                              Initial Exit
+                              Initiate Exit
                             </button>
                           </Col>
                         </Row>

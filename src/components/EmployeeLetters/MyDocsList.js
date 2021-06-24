@@ -129,9 +129,9 @@ const EmployeeDocementsList = () => {
                       <th scope="col">S. No</th>
                       <th scope="col">Document Name</th>
                       <th scope="col">Issued On</th>
-                      <th scope="col">Signed On</th>
+                      {/* <th scope="col">Signed On</th> */}
                       <th scope="col">Documents Link</th>
-                      <th scope="col">Download</th>
+                      {/* <th scope="col">Download</th> */}
                       <th scope="col">View</th>
                       <th scope="col">Action</th>
                     </tr>
@@ -164,13 +164,19 @@ const EmployeeDocementsList = () => {
                         <tbody key={item.employeeId}>
                           <tr>
                             <td>{i + 1 + indexOfFirstRecord}</td>
-                            <td>{item.documentName}</td>
+                            {item.documentType === 21 ? (
+                              <td>Show Cuase Notice</td>
+                            ) : item.documentType === 22 ? (
+                              <td>Warning Notice</td>
+                            ) : (
+                              <td></td>
+                            )}
                             <td>{item.issuedOn}</td>
-                            <td>{item.signedOn}</td>
+                            {/* <td>{item.signedOn}</td> */}
                             <td>
                               <a href="/documents">{item.documentName}</a>
                             </td>
-                            <td></td>
+                            {/* <td></td> */}
 
                             <td>
                               <Link
@@ -180,7 +186,7 @@ const EmployeeDocementsList = () => {
                                 <Eye
                                   onClick={() => {
                                     disciplinaryEmployeeSearch(
-                                      item.disciplinaryAction.disciplinaryId
+                                      item.disciplinaryId
                                     );
                                   }}
                                 />
