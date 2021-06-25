@@ -45,20 +45,17 @@ const PFDeclaration = (props) => {
   const [firstJobNo, setFirstJobNo] = useState(false);
   const [contributingPrevOrgYes, setContributingPrevOrgYes] = useState(false);
   const [contributingPrevOrgNo, setContributingPrevOrgNo] = useState(false);
-  const [memberOfPensionSchemeYes, setMemberOfPensionSchemeYes] = useState(
-    false
-  );
+  const [memberOfPensionSchemeYes, setMemberOfPensionSchemeYes] =
+    useState(false);
   const [memberOfPensionSchemeNo, setMemberOfPensionSchemeNo] = useState(false);
-  const [pfNominationHoldDeathYes, setPfNominationHoldDeathYes] = useState(
-    false
-  );
+  const [pfNominationHoldDeathYes, setPfNominationHoldDeathYes] =
+    useState(true);
   const [pfNominationHoldDeathNo, setPfNominationHoldDeathNo] = useState(false);
 
   const [nomineeNameError, setNomineeNameError] = useState(false);
 
-  const [nomineeRelationshipError, setNomineeRelationshipError] = useState(
-    false
-  );
+  const [nomineeRelationshipError, setNomineeRelationshipError] =
+    useState(false);
 
   const [nomineeDOBError, setNomineeDOBError] = useState(false);
   const [nomineeDOB, setNomineeDOB] = useState();
@@ -85,12 +82,10 @@ const PFDeclaration = (props) => {
   const [required, setRequired] = useState(true);
   const [firstJobError, setFirstJobError] = useState(false);
   const [contributingPrevError, setContributingPrevError] = useState(false);
-  const [memberOfPensionSchemaError, setMemberOfPensionSchemaError] = useState(
-    false
-  );
-  const [pfNominationHoldDeathError, setPfNominationHoldDeathError] = useState(
-    false
-  );
+  const [memberOfPensionSchemaError, setMemberOfPensionSchemaError] =
+    useState(false);
+  const [pfNominationHoldDeathError, setPfNominationHoldDeathError] =
+    useState(false);
   const [nomineeValue, setNomineeValue] = useState(0);
 
   const [uanNumberError, setUanNumberError] = useState(false);
@@ -136,12 +131,12 @@ const PFDeclaration = (props) => {
             form2epf: form2epfDoc,
             formf: formFDoc,
           });
-          setNomineeDOB();
-          setNominee({
-            nomineeAddress: "",
-            nomineeName: "",
-            nomineeRelationship: "",
-          });
+          // setNomineeDOB();
+          // setNominee({
+          //   nomineeAddress: "",
+          //   nomineeName: "",
+          //   nomineeRelationship: "",
+          // });
         });
         console.log(
           "documents prefill",
@@ -248,7 +243,7 @@ const PFDeclaration = (props) => {
       if (
         pfDeclarationView.pfNomination !== null &&
         pfDeclarationView.pfNomination !== undefined &&
-        pfDeclarationView.pfNominationHoldDeath === false
+        pfDeclarationView.pfNominationHoldDeath === true
       ) {
         setNomineeDOB(new Date(pfDeclarationView.pfNomination.dateOfBirth));
         setNominee({
@@ -256,11 +251,11 @@ const PFDeclaration = (props) => {
           nomineeName: pfDeclarationView.pfNomination.nomineeName,
           nomineeRelationship: pfDeclarationView.pfNomination.relationship,
         });
-        setState({
-          form11: "",
-          form2epf: "",
-          formf: "",
-        });
+        // setState({
+        //   form11: "",
+        //   form2epf: "",
+        //   formf: "",
+        // });
       }
 
       if (
@@ -308,7 +303,7 @@ const PFDeclaration = (props) => {
   };
 
   const nomineeNameValidation = () => {
-    if (pfNominationHoldDeathNo === true) {
+    if (pfNominationHoldDeathYes === true) {
       if (
         nominee.nomineeName !== null &&
         nominee.nomineeName !== undefined &&
@@ -326,7 +321,7 @@ const PFDeclaration = (props) => {
   };
 
   const nomineeDobValidation = () => {
-    if (pfNominationHoldDeathNo === true) {
+    if (pfNominationHoldDeathYes === true) {
       if (
         nomineeDOB !== null &&
         nomineeDOB !== undefined &&
@@ -345,7 +340,7 @@ const PFDeclaration = (props) => {
   };
 
   const nomineeRelationValidation = () => {
-    if (pfNominationHoldDeathNo === true) {
+    if (pfNominationHoldDeathYes === true) {
       if (
         nominee.nomineeRelationship !== null &&
         nominee.nomineeRelationship !== undefined &&
@@ -364,7 +359,7 @@ const PFDeclaration = (props) => {
   };
 
   const nomineeAddressValidation = () => {
-    if (pfNominationHoldDeathNo === true) {
+    if (pfNominationHoldDeathYes === true) {
       if (
         nominee.nomineeAddress !== null &&
         nominee.nomineeAddress !== undefined &&
@@ -656,7 +651,10 @@ const PFDeclaration = (props) => {
     }
   };
   const Form11UploadValidation = () => {
-    if (pfNominationHoldDeathYes === true) {
+    if (
+      pfNominationHoldDeathYes === true ||
+      pfNominationHoldDeathYes === false
+    ) {
       if (Form11uploade === false) {
         if (Form11Validation() === true) {
           setForm11Error(true);
@@ -670,7 +668,10 @@ const PFDeclaration = (props) => {
     }
   };
   const Form2EpfUploadValidation = () => {
-    if (pfNominationHoldDeathYes === true) {
+    if (
+      pfNominationHoldDeathYes === true ||
+      pfNominationHoldDeathYes === false
+    ) {
       if (Form2Epfuploade === false) {
         if (Form2EpfValidation() === true) {
           setForm2EpfError(true);
@@ -684,7 +685,10 @@ const PFDeclaration = (props) => {
     }
   };
   const FormFUploadValidation = () => {
-    if (pfNominationHoldDeathYes === true) {
+    if (
+      pfNominationHoldDeathYes === true ||
+      pfNominationHoldDeathYes === false
+    ) {
       if (FormFuploade === false) {
         if (FormFValidation() === true) {
           setFormFError(true);
@@ -928,7 +932,7 @@ const PFDeclaration = (props) => {
                 <input
                   className="largerCheckbox"
                   type="checkbox"
-                  value="yes"
+                  value="no"
                   checked={memberOfPensionSchemeNo}
                   required={required}
                   onChange={handleMemberOfPensionSchemeNoChange}
@@ -1039,183 +1043,6 @@ const PFDeclaration = (props) => {
           </Col>
         </Row>
         {pfNominationHoldDeathYes === true ? (
-          <React.Fragment>
-            <Row style={{ marginLeft: "-2rem" }}>
-              <Col>
-                <Form.Group>
-                  <div className="FileInput">
-                    <label>Form 11 Declaration</label>
-                  </div>
-                  <div className="parentInput">
-                    <label
-                      className="fileInputField"
-                      style={{ marginTop: "0.5rem" }}
-                    >
-                      &nbsp;&nbsp;
-                      {state.form11 !== "" &&
-                      state.form11 !== null &&
-                      state.form11 !== undefined
-                        ? state.form11
-                        : "Select File Here"}
-                      <input
-                        type="file"
-                        accept="image/jpeg,.pdf"
-                        name="form11"
-                        style={{ display: "none" }}
-                        onChange={(e) => {
-                          DocChangeHandler(e);
-                        }}
-                        readOnly
-                      />
-                    </label>
-
-                    <label className="custom-file-upload">
-                      <input
-                        type="button"
-                        name="form11"
-                        className="custom_file_Upload_button"
-                        onClick={(e) => {
-                          handleUpload(e);
-                        }}
-                      />
-                      Upload File{" "}
-                      <i
-                        id="custom_file_upload_icon"
-                        className="fa fa-upload"
-                        aria-hidden="true"
-                      ></i>
-                    </label>
-                  </div>
-                  {Form11Error ? (
-                    <p style={{ color: "red" }}>
-                      {" "}
-                      &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the Form
-                      11 Declaration
-                    </p>
-                  ) : (
-                    <p></p>
-                  )}
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row style={{ marginLeft: "-2rem" }}>
-              <Col>
-                <Form.Group>
-                  <div className="FileInput">
-                    <label>Form 2 EPF Nomination</label>
-                  </div>
-                  <div className="parentInput">
-                    <label
-                      className="fileInputField"
-                      style={{ marginTop: "0.5rem" }}
-                    >
-                      &nbsp;&nbsp;
-                      {state.form2epf !== "" &&
-                      state.form2epf !== null &&
-                      state.form2epf !== undefined
-                        ? state.form2epf
-                        : "Select File Here"}
-                      <input
-                        type="file"
-                        accept="image/jpeg,.pdf"
-                        name="form2epf"
-                        style={{ display: "none" }}
-                        onChange={(e) => {
-                          DocChangeHandler(e);
-                        }}
-                        readOnly
-                      />
-                    </label>
-
-                    <label className="custom-file-upload">
-                      <input
-                        type="button"
-                        name="form2epf"
-                        className="custom_file_Upload_button"
-                        onClick={(e) => {
-                          handleUpload(e);
-                        }}
-                      />
-                      Upload File{" "}
-                      <i
-                        id="custom_file_upload_icon"
-                        className="fa fa-upload"
-                        aria-hidden="true"
-                      ></i>
-                    </label>
-                  </div>
-                  {Form2EpfError ? (
-                    <p style={{ color: "red" }}>
-                      {" "}
-                      &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the Form 2
-                      EPF Nomination
-                    </p>
-                  ) : (
-                    <p></p>
-                  )}
-                </Form.Group>
-              </Col>
-            </Row>
-            <Row style={{ marginLeft: "-2rem" }}>
-              <Col>
-                <Form.Group>
-                  <div className="FileInput">
-                    <label>Form F Gratuity</label>
-                  </div>
-                  <div className="parentInput">
-                    <label
-                      className="fileInputField"
-                      style={{ marginTop: "0.5rem" }}
-                    >
-                      &nbsp;&nbsp;
-                      {state.formf !== "" &&
-                      state.formf !== null &&
-                      state.formf !== undefined
-                        ? state.formf
-                        : "Select File Here"}
-                      <input
-                        type="file"
-                        accept="image/jpeg,.pdf"
-                        name="formf"
-                        style={{ display: "none" }}
-                        onChange={(e) => {
-                          DocChangeHandler(e);
-                        }}
-                        readOnly
-                      />
-                    </label>
-
-                    <label className="custom-file-upload">
-                      <input
-                        type="button"
-                        name="formf"
-                        className="custom_file_Upload_button"
-                        onClick={(e) => {
-                          handleUpload(e);
-                        }}
-                      />
-                      Upload File{" "}
-                      <i
-                        id="custom_file_upload_icon"
-                        className="fa fa-upload"
-                        aria-hidden="true"
-                      ></i>
-                    </label>
-                  </div>
-                  {FormFError ? (
-                    <p style={{ color: "red" }}>
-                      {" "}
-                      &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the Form F
-                      Gratuity
-                    </p>
-                  ) : (
-                    <p></p>
-                  )}
-                </Form.Group>
-              </Col>
-            </Row>
-          </React.Fragment>
-        ) : pfNominationHoldDeathNo === true ? (
           <div>
             {/* first Nominee */}
             <label>
@@ -1362,6 +1189,182 @@ const PFDeclaration = (props) => {
         ) : (
           ""
         )}
+        <React.Fragment>
+          <Row style={{ marginLeft: "-2rem" }}>
+            <Col>
+              <Form.Group>
+                <div className="FileInput">
+                  <label>Form 11 Declaration</label>
+                </div>
+                <div className="parentInput">
+                  <label
+                    className="fileInputField"
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.form11 !== "" &&
+                    state.form11 !== null &&
+                    state.form11 !== undefined
+                      ? state.form11
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="form11"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        DocChangeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
+                  <label className="custom-file-upload">
+                    <input
+                      type="button"
+                      name="form11"
+                      className="custom_file_Upload_button"
+                      onClick={(e) => {
+                        handleUpload(e);
+                      }}
+                    />
+                    Upload File{" "}
+                    <i
+                      id="custom_file_upload_icon"
+                      className="fa fa-upload"
+                      aria-hidden="true"
+                    ></i>
+                  </label>
+                </div>
+                {Form11Error ? (
+                  <p style={{ color: "red" }}>
+                    {" "}
+                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the Form 11
+                    Declaration
+                  </p>
+                ) : (
+                  <p></p>
+                )}
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row style={{ marginLeft: "-2rem" }}>
+            <Col>
+              <Form.Group>
+                <div className="FileInput">
+                  <label>Form 2 EPF Nomination</label>
+                </div>
+                <div className="parentInput">
+                  <label
+                    className="fileInputField"
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.form2epf !== "" &&
+                    state.form2epf !== null &&
+                    state.form2epf !== undefined
+                      ? state.form2epf
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="form2epf"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        DocChangeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
+                  <label className="custom-file-upload">
+                    <input
+                      type="button"
+                      name="form2epf"
+                      className="custom_file_Upload_button"
+                      onClick={(e) => {
+                        handleUpload(e);
+                      }}
+                    />
+                    Upload File{" "}
+                    <i
+                      id="custom_file_upload_icon"
+                      className="fa fa-upload"
+                      aria-hidden="true"
+                    ></i>
+                  </label>
+                </div>
+                {Form2EpfError ? (
+                  <p style={{ color: "red" }}>
+                    {" "}
+                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the Form 2
+                    EPF Nomination
+                  </p>
+                ) : (
+                  <p></p>
+                )}
+              </Form.Group>
+            </Col>
+          </Row>
+          <Row style={{ marginLeft: "-2rem" }}>
+            <Col>
+              <Form.Group>
+                <div className="FileInput">
+                  <label>Form F Gratuity</label>
+                </div>
+                <div className="parentInput">
+                  <label
+                    className="fileInputField"
+                    style={{ marginTop: "0.5rem" }}
+                  >
+                    &nbsp;&nbsp;
+                    {state.formf !== "" &&
+                    state.formf !== null &&
+                    state.formf !== undefined
+                      ? state.formf
+                      : "Select File Here"}
+                    <input
+                      type="file"
+                      accept="image/jpeg,.pdf"
+                      name="formf"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        DocChangeHandler(e);
+                      }}
+                      readOnly
+                    />
+                  </label>
+
+                  <label className="custom-file-upload">
+                    <input
+                      type="button"
+                      name="formf"
+                      className="custom_file_Upload_button"
+                      onClick={(e) => {
+                        handleUpload(e);
+                      }}
+                    />
+                    Upload File{" "}
+                    <i
+                      id="custom_file_upload_icon"
+                      className="fa fa-upload"
+                      aria-hidden="true"
+                    ></i>
+                  </label>
+                </div>
+                {FormFError ? (
+                  <p style={{ color: "red" }}>
+                    {" "}
+                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the Form F
+                    Gratuity
+                  </p>
+                ) : (
+                  <p></p>
+                )}
+              </Form.Group>
+            </Col>
+          </Row>
+        </React.Fragment>
 
         <div
           style={{

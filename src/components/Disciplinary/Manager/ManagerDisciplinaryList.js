@@ -241,7 +241,7 @@ const ManagerDisciplinaryList = () => {
                                 {item.disciplinaryAction !== null &&
                                 item.disciplinaryAction !== undefined &&
                                 item.disciplinaryAction !== "" &&
-                                item.disciplinaryAction.actionDueDays !== 0 ? (
+                                item.disciplinaryAction.actionDueDays === 0 ? (
                                   <Link
                                     to={
                                       `/manager-warning-action-view/` +

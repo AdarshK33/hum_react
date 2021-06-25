@@ -31,10 +31,13 @@ const WarningLetter = () => {
           </p>
 
           <div className=" ">
-            <p>Sub: Show cause notice</p>
             <p className="mt-5 ">
               {" "}
               Dear <b>{disciplinarySearchData.employeeName},</b>{" "}
+            </p>
+            <br></br>
+            <p>
+              <b>Sub:</b> Warning Notice
             </p>
             <p>
               You have been associated Decathlon Sports India Private Limited

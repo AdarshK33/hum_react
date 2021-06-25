@@ -933,7 +933,7 @@ const EmployeWarningLetter = () => {
                               className={"LettersButtonsExtra"}
                               onClick={ShowCauseLetterClick}
                             >
-                              Generate Warning Letter
+                              View Warning Letter
                             </button>
                           ) : (
                             ""
