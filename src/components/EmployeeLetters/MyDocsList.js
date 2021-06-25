@@ -180,7 +180,7 @@ const EmployeeDocementsList = () => {
                                 <Eye
                                   onClick={() => {
                                     disciplinaryEmployeeSearch(
-                                      item.disciplinaryAction.disciplinaryId
+                                      item.disciplinaryId
                                     );
                                   }}
                                 />
