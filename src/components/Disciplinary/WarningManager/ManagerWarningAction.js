@@ -469,6 +469,7 @@ const ManagerWarningAction = (props) => {
     setInitalExit(false);
     setModal(false);
     setSuccessModal(false);
+    // setSubmitted(false);
   };
 
   const handleShowCauseLetterClose = () => {

@@ -187,7 +187,7 @@ const InsuranceNomination = (props) => {
 
     nominee3Age: "",
     nominee3BloodGroup: "",
-    nominee3Gender: "",
+    nominee3Gender: "Male",
     nominee3NominiId: 0,
     nominee3NominiName: "",
     nominee3Relationship: "Father",
@@ -201,7 +201,7 @@ const InsuranceNomination = (props) => {
 
     In_law_nominee1Age: "",
     In_law_nominee1BloodGroup: "",
-    In_law_nominee1Gender: "",
+    In_law_nominee1Gender: "Male",
     In_law_nominee1NominiId: 0,
     In_law_nominee1NominiName: "",
     In_law_nominee1Relationship: "Father In-Law",
@@ -229,7 +229,7 @@ const InsuranceNomination = (props) => {
 
     extra1age: "",
     extra1bloodGroup: "",
-    extra1gender: "",
+    extra1gender: "Male",
     extra1nominiId: 0,
     extra1nominiName: "",
     extra1relationship: "Father",
@@ -1676,12 +1676,14 @@ const InsuranceNomination = (props) => {
       // }
       // for unmarried
       state.extra2relationship = "Mother";
+      state.extra2gender = "Female";
       // for married
       state.nominee2Relationship = "Child 1";
 
       state.nominee4Relationship = "Mother";
-
+      state.nominee4Gender = "Female";
       state.In_law_nominee2Relationship = "Mother In-Law";
+      state.In_law_nominee2Gender = "Female";
 
       if (
         checkAllValidations() === true

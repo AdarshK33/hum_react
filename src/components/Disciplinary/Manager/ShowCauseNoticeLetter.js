@@ -31,10 +31,13 @@ const ShowCauseNotice = () => {
           </p>
 
           <div className=" ">
-            <p>Sub: Show cause notice</p>
             <p className="mt-5 ">
               {" "}
               Dear <b>{disciplinarySearchData.employeeName},</b>{" "}
+            </p>
+            <br></br>
+            <p>
+              <b>Sub:</b> Show Cause Notice
             </p>
             <p>
               You have been associated with {disciplinarySearchData.company}{" "}

@@ -782,7 +782,7 @@ const EmployeShowCaseLetter = () => {
                               className={"LettersButtonsExtra"}
                               onClick={ShowCauseLetterClick}
                             >
-                              Generate Show Cause Notice
+                              View Show Cause Notice
                             </button>
                           ) : (
                             ""
