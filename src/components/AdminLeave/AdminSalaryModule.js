@@ -348,6 +348,7 @@ const AdminSalaryModule = () => {
 
                       <th scope="col">Reason</th>
                       <th scope="col">Extra Hours</th>
+                      <th scope="col">Additional Hours</th>
                       <th scope="col">Total Hours</th>
                       <th scope="col">Status</th>
                       <th></th>
@@ -401,6 +402,7 @@ const AdminSalaryModule = () => {
 
                               <td>{item.reason}</td>
                               <td>{item.extraHours}</td>
+                              <td>{item.additionalHours}</td>
                               <td>{item.totalHours}</td>
                               <td>{item.statusDesc}</td>
                               <td>

@@ -182,7 +182,7 @@ const onSubmit = e => {
       storeIds: props.costCenter,
       year: year
     }
-    salaryEdit(EditSalary, salaryData)
+    salaryEdit(EditSalary, salaryData) 
 
     // history.push("/salary/salaryView");
     const setModal = props.handleEditClose;

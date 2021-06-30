@@ -57,6 +57,7 @@ const AdminShiftModal = (props) => {
   }, [props.shiftDate])
   useEffect(() => {
     setContractType(props.contractType)
+    console.log("props.contractType",props.contractType)
   }, [props.contractType])
 
 

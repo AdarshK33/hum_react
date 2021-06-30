@@ -46,6 +46,7 @@ const ViewTicket = () => {
         serviceGroupView()
     }, [])
 
+
     /* const changeHandler = (e) => {
         let fileObj = e.target.files[0].name;
         console.log("clicked", fileObj)
@@ -235,7 +236,7 @@ const ViewTicket = () => {
         formData.append('file', file)
 
 
-        return client.post('api/v1/ticket/upload', formData)
+        return client.post('/ticket/upload', formData)
             .then((response) => {
 
                 if (response.status === 200) {
@@ -270,7 +271,7 @@ const ViewTicket = () => {
     const deleteFile = (file) => {
         //   alert("file", file)
         if (file !== undefined || file !== null || file !== '') {
-            return client.get('api/v1/ticket/delete/' + file)
+            return client.get('/ticket/delete/' + file)
                 .then((response) => {
                     console.log(response, "responce")
                     toast.info(response.data.message)
@@ -280,7 +281,7 @@ const ViewTicket = () => {
                 })
         }
     }
-
+    
     const validation = () => {
         let flag = true
         if (resolution === '') {
@@ -290,6 +291,7 @@ const ViewTicket = () => {
         }
         return flag;
     }
+    
     const submitHandler = (e) => {
         e.preventDefault();
         const validate = validation()
@@ -303,6 +305,7 @@ const ViewTicket = () => {
             firstName: ticketIdList.firstName,
             groupId: serviceGroup,
             lastName: ticketIdList.lastName,
+            phoneNumber:ticketIdList.phoneNumber,
             position: ticketIdList.position,
             priorityId: ticketIdList.priorityId,
             resolution: resolution,
@@ -325,6 +328,7 @@ const ViewTicket = () => {
         setFileNames([])
         setshowFirst(false)
         setshowSecond(false)
+        history.push("./ticketlistingpage")
         }
 
     }
@@ -349,6 +353,7 @@ const ViewTicket = () => {
     useEffect(() => {
         setServiceGroup(ticketIdList.groupId)
     }, [ticketIdList.groupId])
+
 
     /* useEffect(() => {
         setFileName(ticketIdList.fileName)
@@ -384,7 +389,13 @@ const ViewTicket = () => {
         console.log("e.target.value of service group", e.target.value)
     }
 
-    console.log("ticketid list", ticketIdList.ticketStatus)
+    useEffect(() => {
+        if(ticketIdList.firstName === undefined){
+            history.push("./ticketlistingpage")
+        }
+    },[ticketIdList.firstName])
+
+    console.log("ticketid list first name", ticketIdList.firstName)
     return (
         <Fragment>
             <Breadcrumb title="View Ticket" parent="View Ticket" />
@@ -449,6 +460,16 @@ const ViewTicket = () => {
                                     <Form.Label column sm='4' className='labels'>Position :</Form.Label>
                                     <Col sm='8'>
                                         <Form.Control type='text' value={ticketIdList.position} readOnly className='disabledValue blueText' />
+                                    </Col>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col sm={8}>
+                                <Form.Group as={Row} >
+                                    <Form.Label column sm='3' className='labels'>Phone Number :</Form.Label>
+                                    <Col sm='9'>
+                                        <Form.Control type='text' value={ticketIdList.phoneNumber} readOnly className='disabledValue'/>
                                     </Col>
                                 </Form.Group>
                             </Col>
@@ -577,6 +598,7 @@ const ViewTicket = () => {
                                 </Form.Group>
                             </Col>
                         </Row>
+                       
                         <Row>
                             <Col sm={8}>
                                 <Form.Group as={Row} >
