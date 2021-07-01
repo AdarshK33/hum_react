@@ -662,16 +662,20 @@ const CostCenterManagerAction = () => {
                             </label>
                           </div>
                         </Col>
-                        <Col sm={6}>
-                          <div>
-                            <label>
-                              Reason For Show Cause Notice:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.reasonForCause}
+                        {showCauseReason === "Other" ? (
+                          <Col sm={6}>
+                            <div>
+                              <label>
+                                Reason For Show Cause Notice:
+                                <label className="itemResult">
+                                  &nbsp;&nbsp; {state.reasonForCause}
+                                </label>
                               </label>
-                            </label>
-                          </div>
-                        </Col>
+                            </div>
+                          </Col>
+                        ) : (
+                          ""
+                        )}
                       </Row>
                       <Row
                         style={{
