@@ -264,7 +264,8 @@ const ManagerDisciplinaryList = () => {
                               </td>
                             ) : (
                               <td>
-                                {item.disciplinaryAction !== null &&
+                                {
+                                item.disciplinaryAction !== null &&
                                 item.disciplinaryAction !== undefined &&
                                 item.disciplinaryAction !== "" &&
                                 item.disciplinaryAction.statusDesc ===
@@ -282,7 +283,8 @@ const ManagerDisciplinaryList = () => {
                                       "Warning Letter Approved") &&
                                   moment(
                                     item.disciplinaryWarning.pipEndDate
-                                  ).isBefore(new Date()) === true ? (
+                                  ).isBefore(new Date()) === true 
+                                  ? (
                                     <Link
                                       to={
                                         `/manager-warning-action-view/` +
@@ -329,7 +331,21 @@ const ManagerDisciplinaryList = () => {
                                     />
                                   </Link>
                                 ) : (
-                                  <Edit2 />
+                                  // <Edit2 />
+                                  <Link
+                                  to={
+                                    `/manager-warning-action-view/` +
+                                    item.employeeId
+                                  }
+                                >
+                                  <Edit2
+                                    onClick={() => {
+                                      disciplinaryEmployeeSearch(
+                                        item.disciplinaryAction.disciplinaryId
+                                      );
+                                    }}
+                                  />
+                                </Link>
                                 )}
                               </td>
                             )}
