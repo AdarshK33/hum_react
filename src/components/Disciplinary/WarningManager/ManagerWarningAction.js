@@ -39,6 +39,9 @@ const ManagerWarningAction = (props) => {
   const [showPreview, setPreview] = useState(false);
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
 
+  const [showShowCauseNoticeModalLink1, setShowLink1] = useState(false);
+  const [employeeReasonShow, setEmployeeReasonShow] = useState(false);
+
   const [reasonStatus,setReasonStaus] = useState('')
   const history = useHistory();
 
@@ -564,7 +567,14 @@ const ManagerWarningAction = (props) => {
       // setShow(true);
     }
   };
-
+  const LetterShow1 = () => {
+    console.log(";;;;;");
+    setShowLink1(true);
+  };
+  const handleShowCauseLetterCloseLink = () => {
+    setShow(false);
+    setShowLink1(false);
+  };
   const ShowCauseLetterClick = (e) => {
     e.preventDefault();
     if (
@@ -619,8 +629,56 @@ console.log(state,reasonStatus)
       // <Link to=}> </Link>
     }
   };
+  const employeeReason = () => {
+    console.log(";;;;;");
+    setEmployeeReasonShow(true);
+  };
+  
+  const handleEmployeeReason = () => setEmployeeReasonShow(false);
   return (
     <div>
+          <Modal
+        show={employeeReasonShow}
+        onHide={handleEmployeeReason}
+        size="md"
+      >
+        <Modal.Header closeButton className="modal-line">Employee Reason</Modal.Header>
+        <Modal.Body>
+          {disciplinarySearchData &&
+          disciplinarySearchData &&
+          disciplinarySearchData !== null &&
+          disciplinarySearchData !== undefined &&
+          Object.keys(disciplinarySearchData).length !== 0 &&
+          disciplinarySearchData.disciplinaryWarning !== null &&
+          disciplinarySearchData.disciplinaryWarning !== undefined &&
+          disciplinarySearchData.disciplinaryWarning !== "" ? (
+           <label>{disciplinarySearchData.disciplinaryWarning.employeeComment}</label> 
+          ) : (
+            ""
+          )}
+        </Modal.Body>
+      </Modal>
+        <Modal
+        show={showShowCauseNoticeModalLink1}
+        onHide={handleShowCauseLetterCloseLink}
+        size="md"
+      >
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        <Modal.Body>
+          {disciplinarySearchData &&
+          disciplinarySearchData &&
+          disciplinarySearchData !== null &&
+          disciplinarySearchData !== undefined &&
+          Object.keys(disciplinarySearchData).length !== 0 &&
+          disciplinarySearchData.disciplinaryWarning !== null &&
+          disciplinarySearchData.disciplinaryWarning !== undefined &&
+          disciplinarySearchData.disciplinaryWarning !== "" ? (
+            <WarningLetter />
+          ) : (
+            ""
+          )}
+        </Modal.Body>
+      </Modal>
       {letterView ? (
         <Modal
           show={letterView}
@@ -1369,6 +1427,52 @@ console.log(state,reasonStatus)
                               )}
                             </>
                           </Row>
+                          <Row
+                            style={{
+                              marginLeft: "2rem",
+                              marginTop: "2rem",
+                              marginBottom: "1rem",
+                            }}
+                          >
+                            <Col sm={2}>
+                              <div>
+                                <label>Preview Warning Letter:</label>
+                              </div>
+                            </Col>
+                            <Col sm={6}>
+                              <div>
+                                <a onClick={LetterShow1}>
+                                  {" "}
+                                  <u className="itemResult">
+                                    View Warning Letter
+                                  </u>
+                                </a>
+                              </div>
+                            </Col>
+                          </Row>
+                          <Row
+                            style={{
+                              marginLeft: "2rem",
+                              marginTop: "2rem",
+                              marginBottom: "1rem",
+                            }}
+                          >
+                            <Col sm={2}>
+                              <div>
+                                <label>Reason By Employee:</label>
+                              </div>
+                            </Col>
+                            <Col sm={6}>
+                              <div>
+                                <a onClick={employeeReason}>
+                                  {" "}
+                                  <u className="itemResult">
+                                    Reason By Employee
+                                  </u>
+                                </a>
+                              </div>
+                            </Col>
+                          </Row>
                           <Row>
                             <Col
                               style={{
@@ -1377,7 +1481,10 @@ console.log(state,reasonStatus)
                                 textAlign: "center",
                               }}
                             >
-                              <button
+                             { 
+          disciplinarySearchData.disciplinaryWarning == null ||
+          disciplinarySearchData.disciplinaryWarning == undefined ||
+          disciplinarySearchData.disciplinaryWarning == "" ? <button
                                 disabled={submitted}
                                 className={
                                   submitted ? "confirmButton" : "stepperButtons"
@@ -1385,7 +1492,7 @@ console.log(state,reasonStatus)
                                 onClick={handleSubmit}
                               >
                                 Save
-                              </button>
+                              </button>:''}
 
                               {!saveLetter &&
                               showPreview === true &&
