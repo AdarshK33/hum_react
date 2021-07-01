@@ -4,7 +4,7 @@ import Breadcrumb from "../../common/breadcrumb";
 import "react-datepicker/dist/react-datepicker.css";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 import ShowCauseNotice from "../Manager/ShowCauseNoticeLetter";
-import ReasonByEmployee from "../Manager/ReasonByEmployee"
+import ReasonByEmployee from "../Manager/ReasonByEmployee";
 import WarningLetter from "../WarningManager/WarningLetter";
 
 const DisciplinaryView = () => {
@@ -101,7 +101,7 @@ const DisciplinaryView = () => {
     console.log(";;;;;");
     setShow(true);
   };
-  
+
   const handleShowCauseLetterClose = () => setShow(false);
   const LetterShow1 = () => {
     console.log(";;;;;");
@@ -116,17 +116,12 @@ const DisciplinaryView = () => {
     console.log(";;;;;");
     setEmployeeReasonShow(true);
   };
-  
+
   const handleEmployeeReason = () => setEmployeeReasonShow(false);
-  
 
   return (
     <Fragment>
-        <Modal
-        show={employeeReasonShow}
-        onHide={handleEmployeeReason}
-        size="md"
-      >
+      <Modal show={employeeReasonShow} onHide={handleEmployeeReason} size="md">
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         <Modal.Body>
           {disciplinarySearchData &&
@@ -327,16 +322,20 @@ const DisciplinaryView = () => {
                             </label>
                           </div>
                         </Col>
-                        <Col sm={6}>
-                          <div>
-                            <label>
-                              Reason For Show Cause Notice:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.reasonForCause}
+                        {showCauseReason === "Other" ? (
+                          <Col sm={6}>
+                            <div>
+                              <label>
+                                Reason For Show Cause Notice:
+                                <label className="itemResult">
+                                  &nbsp;&nbsp; {state.reasonForCause}
+                                </label>
                               </label>
-                            </label>
-                          </div>
-                        </Col>
+                            </div>
+                          </Col>
+                        ) : (
+                          ""
+                        )}
                       </Row>
                       <Row
                         style={{
@@ -399,12 +398,10 @@ const DisciplinaryView = () => {
                           </Col>
                           <Col sm={6}>
                             <div>
-                            <a onClick={employeeReason}>
-                              {" "}
-                              <u className="itemResult">
-                                Reason By Employee
-                              </u>
-                            </a>
+                              <a onClick={employeeReason}>
+                                {" "}
+                                <u className="itemResult">Reason By Employee</u>
+                              </a>
                             </div>
                           </Col>
                         </Row>

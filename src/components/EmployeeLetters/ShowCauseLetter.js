@@ -8,8 +8,7 @@ import ShowCauseNotice from "../Disciplinary/Manager/ShowCauseNoticeLetter";
 import calendarImage from "../../assets/images/calendar-image.png";
 import { DisciplinaryContext } from "../../context/DisciplinaryState";
 import { useHistory } from "react-router-dom";
-import ReasonByEmployee from "../Disciplinary/Manager/ReasonByEmployee"
-
+import ReasonByEmployee from "../Disciplinary/Manager/ReasonByEmployee";
 
 // view-----
 const EmployeShowCaseLetter = () => {
@@ -29,7 +28,6 @@ const EmployeShowCaseLetter = () => {
   const [showPreview, setPreview] = useState(false);
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
   const [employeeReasonShow, setEmployeeReasonShow] = useState(false);
-
 
   const [showCauseReason, setShowCauseReason] = useState("");
   const [EmpName, setEmpName] = useState();
@@ -205,7 +203,7 @@ const EmployeShowCaseLetter = () => {
   const handleShowCauseLetterClose = () => setShow(false);
   const handleShowCauseLetterClose1 = () => {
     setShow(false);
-    history.push("../documents");
+    history.push("../my_disciplinary");
   };
   const LetterShow = () => {
     console.log(";;;;;");
@@ -387,16 +385,12 @@ const EmployeShowCaseLetter = () => {
     console.log(";;;;;");
     setEmployeeReasonShow(true);
   };
-  
+
   const handleEmployeeReason = () => setEmployeeReasonShow(false);
   return (
     <Fragment>
       {/* letter */}
-      <Modal
-        show={employeeReasonShow}
-        onHide={handleEmployeeReason}
-        size="md"
-      >
+      <Modal show={employeeReasonShow} onHide={handleEmployeeReason} size="md">
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         <Modal.Body>
           {disciplinarySearchData &&
@@ -467,7 +461,7 @@ const EmployeShowCaseLetter = () => {
             disciplinarySearchData.disciplinaryAction !== null &&
             disciplinarySearchData.disciplinaryAction !== undefined &&
             disciplinarySearchData.disciplinaryAction !== "" ? (
-              <ShowCauseNotice />
+              <ReasonByEmployee />
             ) : (
               ""
             )}
@@ -678,16 +672,20 @@ const EmployeShowCaseLetter = () => {
                             </label>
                           </div>
                         </Col>
-                        <Col sm={6}>
-                          <div>
-                            <label>
-                              Reason For Show Cause Notice:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.reasonForCause}
+                        {showCauseReason === "Other" ? (
+                          <Col sm={6}>
+                            <div>
+                              <label>
+                                Reason For Show Cause Notice:
+                                <label className="itemResult">
+                                  &nbsp;&nbsp; {state.reasonForCause}
+                                </label>
                               </label>
-                            </label>
-                          </div>
-                        </Col>
+                            </div>
+                          </Col>
+                        ) : (
+                          ""
+                        )}
                       </Row>
                       <Row
                         style={{
@@ -742,8 +740,6 @@ const EmployeShowCaseLetter = () => {
                       >
                         <Col sm={2}>
                           <div>
-                            {/* <label> Add Remarks:</label> */}
-                            <label>Reason By Employee:</label>
                             <label>
                               {" "}
                               Add Remarks:
@@ -756,18 +752,10 @@ const EmployeShowCaseLetter = () => {
                           state.employeeCommentSCIN !== undefined &&
                           state.employeeCommentSCIN !== "") ? (
                           <Col sm={6}>
-                            {/* <div>
+                            <div>
                               <label className="itemResult">
                                 &nbsp;&nbsp; {state.empRemark}
                               </label>
-                            </div> */}
-                               <div>
-                            <a onClick={employeeReason}>
-                              {" "}
-                              <u className="itemResult">
-                                Reason By Employee
-                              </u>
-                            </a>
                             </div>
                           </Col>
                         ) : (
