@@ -55,7 +55,7 @@ import MasterCostCenter from "./components/MasterTables/MasterCostCenter";
 import CreateTicket from "./components/support/createTicket";
 import PromotionList from "./components/Promotion/PromotionList";
 import OnBoardingStepper from "./components/OnBording/OnBoardingStepper";
-
+import RosterDashboard from "./components/rosterDashboard/rosterDashboard";
 import TicketListingPage from "./components/support/ticketListingPage";
 import ViewTicket from "./components/support/viewTicket";
 import ViewGroup from "./components/group/ViewGroup";
@@ -194,6 +194,10 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/ViewGroup`}
             component={ViewGroup}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/roster-dashboard`}
+            component={RosterDashboard}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/manager-offer-release`}
