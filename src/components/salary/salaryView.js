@@ -29,9 +29,8 @@ function ViewShift() {
   const [getM, setGetM] = useState("");
 
   const { viewCostCentre } = useContext(DashboardContext);
-  const { viewSalary, salaryList, salaryApproval, loader } = useContext(
-    ClusterContext
-  );
+  const { viewSalary, salaryList, salaryApproval, loader } =
+    useContext(ClusterContext);
 
   const [editModal, setEditModal] = useState(false);
   const [employeeId, setEmployeeId] = useState();
@@ -379,6 +378,7 @@ function ViewShift() {
                       <th scope="col">LOP</th>
                       <th scope="col">Contract Type</th>
                       <th scope="col">Extra Hours</th>
+                      <th scope="col">Additional Hours</th>
                       <th scope="col">Total Hours</th>
                       <th scope="col">Status</th>
                       <th></th>
@@ -452,6 +452,7 @@ function ViewShift() {
                             <td>{item.lop}</td>
                             <td>{item.contractType}</td>
                             <td>{item.extraHours}</td>
+                            <td>{item.additionalHours}</td>
                             <td>{item.totalHours}</td>
                             <td>{item.statusDesc}</td>
                             {user.loginType === "7" ||

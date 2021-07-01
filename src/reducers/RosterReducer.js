@@ -47,6 +47,12 @@ const RosterReducer = (state, action) => {
         case 'ADMIN_CALCULATE_AVAILABLE_WEEKS':
             return { ...state, adminCalculateWeekResult: action.payload };
 
+        case 'ADMIN_CALCULATE_UTILISATION':
+            return { ...state, adminRosterCalculateUtilisationList: action.payload };
+            
+        case 'ADMIN_UTILISATION_SCHEDULE':
+            return { ...state, adminRosterUtilisationScheduleResult: action.payload };    
+
         case 'GET_ADMIN_EMPLOYEE_ROSTER_WEEK_OFF':
             return { ...state, EmployeeListForAdminRosterWeekOff: action.payload };
 

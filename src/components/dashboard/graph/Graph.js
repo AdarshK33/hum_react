@@ -26,20 +26,29 @@ class Graph extends Component {
 	createPareto(){
 		
 		var chart = this.chart;
-		
+		console.log("chart data",chart.data[0].dataPoints)
 		var  yTotal = 0;
 		
 		for(var i = 0; i < chart.data[0].dataPoints.length; i++)
 			yTotal += chart.data[0].dataPoints[i].y;
-	
+	//console.log("yTotal",yTotal)
 		chart.creditText = "";
 		chart.addTo("data",{type:"line",showInLegend: true, name: "Qty Target", yValueFormatString: "0.##"%"", lineDashType: "dash", dataPoints: this.props.Qty});
 		chart.data[1].set("axisYType", "secondary", false);
 		chart.axisY[0].set("maximum", Math.round(yTotal / 10) * 5);
-		chart.axisY2[0].set("maximum", 200);
-		chart.axisY2[0].set("minimum", 0);
+		if(this.props.dayWeekMonth === 'Week'){
+			chart.axisY2[0].set("maximum", 10000);
+			chart.axisY2[0].set("minimum", 0);
+		}else if(this.props.dayWeekMonth === 'Month'){
+			chart.axisY2[0].set("maximum", 20000);
+			chart.axisY2[0].set("minimum", 0);
+		}else {
+			chart.axisY2[0].set("maximum", 1000);
+			chart.axisY2[0].set("minimum", 0);
+		}
 		
 		
+		//console.log("this.props.Qty", this.props.Qty)
 		
 	}
 	render() {
@@ -67,7 +76,7 @@ class Graph extends Component {
 			},
 			axisY2: {
 				title: "Quantity Targets",
-				suffix: "%",
+				//suffix: "%",
 				lineColor: "#C0504E",
 				tickColor: "#C0504E",
 				labelFontColor: "#C0504E"

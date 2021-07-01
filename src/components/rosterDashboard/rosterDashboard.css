@@ -1,0 +1,172 @@
+/* .react-datepicker-wrapper,
+.react-datepicker__input-container,
+.react-datepicker__input-container input {
+  display: inline-block;
+  width: 154px;
+} */
+
+.datePicker div input {
+  display: inline-block;
+  width: 120px;
+  height: 40px;
+  border-radius: 8px;
+  outline: none;
+  border: 1px solid #c4c4c494;
+  padding: 0px 6px;
+  color: #2b2b2b;
+}
+/* table {
+  display: block;
+  width: 100%;
+  margin: 0px;
+  overflow-x: scroll;
+} */
+
+.roster-table {
+  display: block;
+  width: 100%;
+  margin: 0px;
+  overflow-x: scroll;
+  position: sticky;
+  top: 0px;
+}
+
+.roster-table tr {
+  display: flex;
+  justify-content: space-between;
+}
+
+.roster-link {
+  text-decoration: none;
+  margin-right: 10px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.roster-link:active,
+.roster-link:hover {
+  text-decoration: none;
+}
+
+.active-link {
+  /* text-decoration: underline !important; */
+  border-bottom: 3px solid #006ebb;
+}
+
+.header-option {
+  display: flex;
+  width: 200px !important;
+  align-items: center;
+  background: #006ebb;
+  color: white !important;
+  text-align: center;
+  position: sticky;
+  left: 2px;
+  z-index: 100;
+}
+
+.left-option {
+  position: sticky;
+  left: 2px;
+  z-index: 100;
+}
+
+.table-head {
+  margin: 3px;
+  width: 150px;
+  box-shadow: 0px 0px 15px rgb(201, 201, 201);
+  border-radius: 8px;
+  padding: 10px 30px;
+  color: grey;
+}
+
+.bold {
+  font-weight: bold;
+  color: black;
+}
+
+.table-head ul {
+  list-style-type: disc;
+  font-size: 12px;
+  margin: 0;
+  line-height: 20px;
+}
+
+.table-head h6 {
+  margin-left: -20px;
+  font-weight: bold;
+}
+
+.table-empDetails {
+  width: 200px;
+  box-shadow: 0px 0px 15px rgb(201, 201, 201);
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* justify-content: space-between; */
+  margin: 0px 3px 3px 3px;
+  border-radius: 8px;
+  /* border-left: 4px solid #3d87bb; */
+  padding: 10px 15px;
+  background-color: white;
+}
+
+.table-empSchedule {
+  width: 150px !important;
+  align-items: center;
+  border: none !important;
+  background: #4bb642;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.empDetails-left {
+  min-width: 50%;
+  margin-bottom: 5px;
+}
+
+.CircularProgressbar {
+  height: 45px;
+}
+
+/* .empDetails-left div:nth-child(1) {
+  color: #212529;
+  font-size: 14px;
+  line-height: 15px;
+  padding-bottom: 5px;
+} */
+
+.empDetails-left div:nth-child(1) {
+  color: #006ebb;
+  font-size: 10px;
+  padding-bottom: 5px;
+}
+
+.empDetails-left div:nth-child(2) {
+  color: #33373a;
+  line-height: 13px;
+  font-size: 12px;
+}
+
+.right {
+  display: flex;
+  padding-right: 0px !important;
+  justify-content: flex-start;
+}
+
+.game-cell {
+  padding: 20px;
+}
+
+.roster-center {
+  text-align: center;
+}
+
+.small-card {
+  height: 210px;
+}
+
+.main-card {
+  height: 400px;
+}
