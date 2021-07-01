@@ -7,6 +7,7 @@ import { saveAs } from "file-saver";
 const initial_state = {
   total: {},
   myDocsListData: {},
+  myDiscilinaryListData: {},
 };
 
 export const MyDocsContext = createContext();
@@ -44,12 +45,37 @@ export const MyDocsProvider = (props) => {
         console.log(error);
       });
   };
+  const MyDisciplinaryActionListView = (key, pageNumber) => {
+    setLoader(true);
+    client
+      .get("/api/v1/disciplinary/view/employee?employeeId=" + "DSI000053")
+      .then((response) => {
+        console.log("docslist", response);
+        state.myDiscilinaryListData = response.data.data;
+        if (response.data.data !== null) {
+          state.total = 1;
+        }
+        setLoader(false);
+        console.log(state.total);
+        console.log(response);
+
+        return dispatch({
+          type: "MY_DISCIPLINARY_LISTING",
+          payload: state.myDiscilinaryListData,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <MyDocsContext.Provider
       value={{
         MyDocsListView,
+        MyDisciplinaryActionListView,
         total: state.total,
+        myDiscilinaryListData: state.myDiscilinaryListData,
         myDocsListData: state.myDocsListData,
         loader: loader,
       }}

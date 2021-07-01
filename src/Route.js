@@ -284,7 +284,7 @@ const RoutePath = () => {
             component={ManagerDisciplinaryList}
           />
           <Route
-            path={`${process.env.PUBLIC_URL}/documents`}
+            path={`${process.env.PUBLIC_URL}/my_disciplinary`}
             component={EmployeeDocementsList}
           />
           <Route

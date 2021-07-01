@@ -62,9 +62,17 @@ const ShowCauseNotice = () => {
               .
               <br />
               <br />
-              This acts, as alleged above to have been committed by you, amount
-              to Wilful Misconduct and Gross Negligence which, if proved, would
-              warrant serious disciplinary action against you.
+              This acts, as alleged above to have been committed by you,
+              {disciplinarySearchData !== null &&
+              disciplinarySearchData !== undefined &&
+              disciplinarySearchData.disciplinaryAction !== null &&
+              disciplinarySearchData.disciplinaryAction !== undefined &&
+              Object.keys(disciplinarySearchData).length !== 0 &&
+              disciplinarySearchData.disciplinaryAction.reason === "Other"
+                ? "amount to Wilful Misconduct and Gross Negligence which"
+                : "amount to Non-Performance which"}{" "}
+              , if proved, would warrant serious disciplinary action against
+              you.
               <br />
               <br />
               Accordingly, you are hereby required to show cause within <b>

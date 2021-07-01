@@ -20,6 +20,7 @@ const initial_state = {
 
 export const EmploeeSeparationProvider = (props) => {
   const [loader, setLoader] = useState(false);
+  const [DisciplinaryTermination, setDisciplinarytermination] = useState(false);
   const [state, dispatch] = useReducer(
     EmployeeSeparationReducer,
     initial_state
@@ -149,7 +150,7 @@ export const EmploeeSeparationProvider = (props) => {
       });
   };
   const fetchRelievingLetterData = (empId) => {
-    console.log(empId,"empId000000777")
+    console.log(empId, "empId000000777");
     client
       .get("/api/v1/separation/employee-exit/letter/" + empId)
       .then((response) => {
@@ -222,6 +223,13 @@ export const EmploeeSeparationProvider = (props) => {
         console.log(error);
       });
   };
+  const TerminationFromDesciplinary = (VAL) => {
+    setDisciplinarytermination(VAL);
+    return dispatch({
+      type: "DISCIPLINARY_TERMINATION",
+      payload: DisciplinaryTermination,
+    });
+  };
 
   return (
     <EmployeeSeparationContext.Provider
@@ -237,6 +245,7 @@ export const EmploeeSeparationProvider = (props) => {
         makeEmployeeDataNull,
         terminationConfirmation,
         resignationConfirmation,
+        TerminationFromDesciplinary,
         employeeProfileData: state.employeeProfileData,
         resignationConfirmationStatus: state.resignationConfirmationStatus,
         employeeId: state.employeeId,
@@ -247,6 +256,7 @@ export const EmploeeSeparationProvider = (props) => {
         employeeData: state.employeeData,
         relivingLetterData: state.relivingLetterData,
         loader: loader,
+        DisciplinaryTermination: DisciplinaryTermination,
         total: state.total,
       }}
     >

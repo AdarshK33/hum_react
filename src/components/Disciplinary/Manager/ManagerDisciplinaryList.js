@@ -137,6 +137,7 @@ const ManagerDisciplinaryList = () => {
                       <th scope="col">Emp Name</th>
                       <th scope="col">Cost Center Name</th>
                       <th scope="col">Show Cause Date</th>
+                      <th scope="col">Warning Issue Date</th>
                       <th scope="col">Issued For</th>
                       <th scope="col">Due Days</th>
                       <th scope="col">Employee Action</th>
@@ -178,6 +179,12 @@ const ManagerDisciplinaryList = () => {
                             <td>{item.employeeName}</td>
                             <td>{item.employeeCostCentre}</td>
                             <td>{item.disciplinaryAction.actionIssuedDate}</td>
+                            <td>
+                              {item.disciplinaryWarning !== null &&
+                              item.disciplinaryWarning !== undefined
+                                ? item.disciplinaryWarning.warningIssuedDate
+                                : ""}
+                            </td>
                             <td>{item.disciplinaryAction.reason}</td>
                             <td>{item.disciplinaryAction.actionDueDays}</td>
                             <td>
@@ -197,7 +204,7 @@ const ManagerDisciplinaryList = () => {
                               {item.disciplinaryWarning !== null &&
                               item.disciplinaryWarning !== undefined
                                 ? item.disciplinaryWarning.improvementPeriod
-                                : ""}
+                                : "NA"}
                             </td>
                             <td>
                               <Link
@@ -241,7 +248,30 @@ const ManagerDisciplinaryList = () => {
                                 {item.disciplinaryAction !== null &&
                                 item.disciplinaryAction !== undefined &&
                                 item.disciplinaryAction !== "" &&
-                                item.disciplinaryAction.actionDueDays === 0 ? (
+                                item.disciplinaryAction.statusDesc ===
+                                  "Exit Initiated" ? (
+                                  <Edit2 />
+                                ) : (item.disciplinaryAction !== null &&
+                                    item.disciplinaryAction !== undefined &&
+                                    item.disciplinaryAction !== "" &&
+                                    (item.disciplinaryAction
+                                      .employeeActionStatus === "Responded" ||
+                                      item.disciplinaryAction.actionDueDays ===
+                                        0)) ||
+                                  (item.disciplinaryWarning !== null &&
+                                    item.disciplinaryWarning !== undefined &&
+                                    item.disciplinaryWarning !== "" &&
+                                    (item.disciplinaryWarning
+                                      .employeeActionStatus === "Responded" ||
+                                      item.disciplinaryWarning
+                                        .employeeActionStatus ===
+                                        "Responded")) ? (
+                                  //   ||
+                                  // (
+                                  //   new Date(
+                                  //     item.disciplinaryWarning.pipEndDate
+                                  //   ) - new Date()
+                                  // ).getDate() < 15
                                   <Link
                                     to={
                                       `/manager-warning-action-view/` +

@@ -711,7 +711,11 @@ const EmployeShowCaseLetter = () => {
                       >
                         <Col sm={2}>
                           <div>
-                            <label> Add Remarks:</label>
+                            <label>
+                              {" "}
+                              Add Remarks:
+                              <span style={{ color: "red" }}>*</span>
+                            </label>
                           </div>
                         </Col>
                         {submitted === true ||
