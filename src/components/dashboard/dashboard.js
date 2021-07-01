@@ -12,22 +12,40 @@ import { AppContext } from "../../context/AppState";
 
 
 function Dashboard() {
-    const { cosCentreList, viewCostCentre, viewData, graphData } = useContext(DashboardContext);
+    const { cosCentreList, viewCostCentre, viewData, graphData, weekData, weekList,
+        viewDateList, viewDates } = useContext(DashboardContext);
 
     const { user } = useContext(AppContext);
     const [startDate, setStartDate] = useState();
     const [StoreType, setStoreType] = useState('');
     const [ClusterType, setClusterType] = useState('');
     const [ClusterName, setClusterName] = useState('');
+    const [year, setYear] = useState()
+    const [dayWeekMonth, setDayWeekMonth] = useState('Day')
+    const[weekName, setWeekName] = useState('')
+    const [month, setMonth] = useState()
+    var monthList = [{month: 1, monthName: 'January'},{month: 2, monthName: 'February'},{month: 3, monthName: 'March'},
+    {month: 4, monthName: 'April'}, {month: 5, monthName: 'May'},{month: 6, monthName: 'June'},{month: 7, monthName: 'July'},
+    {month: 8, monthName: 'August'},{month: 9, monthName: 'September'},{month: 10, monthName: 'October'},
+    {month: 11, monthName: 'November'},{month: 12, monthName: 'December'}]
+
     var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const today = new Date();
+    let dateValue = new Date()
+    const endDateValue = dateValue.setDate(dateValue.getDate() + 30)
     console.log("graphData0----------", graphData)
+
+    const setYearHandler = (e) => {
+        setYear(e.target.value)
+        console.log("year", e.target.value)
+        weekData(e.target.value)
+    }
     const fromDateHandler = (e) => {
         setStartDate(e);
 
 
         if (StoreType !== "" && ClusterType !== "") {
-            viewData(e, StoreType, ClusterType)
+            viewData(e, e, StoreType, ClusterType)
         }
     }
 
@@ -78,7 +96,7 @@ function Dashboard() {
 
     useEffect(() => {
         setStartDate(today)
-        //viewCluster()
+        console.log("endDateValue",endDateValue)
         viewCostCentre()
 
     }, []);
@@ -122,14 +140,20 @@ function Dashboard() {
         }
     }, [user.costCentre, cosCentreList, clusterCostCenterList]);
 
-    useEffect(() => {
+    useEffect(() => { 
         // viewClusterCostCenter(StoreType)
-        if (StoreType !== undefined && StoreType !== "" && ClusterType !== undefined && ClusterType !== "") {
-            viewData(startDate, StoreType, ClusterType);
-        }
+       
+        if(viewDateList !== null && viewDateList !== undefined && Object.keys(viewDateList).length !== 0 && StoreType !== undefined &&
+             StoreType !== "" && ClusterType !== undefined && ClusterType !== ""){
+                viewData(viewDateList.startDate, viewDateList.endDate, StoreType, ClusterType);
+             }
+             else  if (StoreType !== undefined && StoreType !== "" && ClusterType !== undefined && ClusterType !== "") {
+                viewData(startDate, startDate, StoreType, ClusterType);
+            }
+    
 
 
-    }, [StoreType, ClusterType]);
+    }, [StoreType, ClusterType,viewDateList]);
     useEffect(() => {
         if (StoreType !== undefined && StoreType !== null && StoreType !== "") {
             viewClusterCostCenter(StoreType)
@@ -215,37 +239,96 @@ function Dashboard() {
 
         <div>
             <Row className="Row2" >
-                <Col>
+                <Col sm={6}>
                     <Row>
-                        <div className="col-sm-4">
-                            <div className="form-group" style={{ paddingTop: "35px" }}>
-                                Week no : {startDate !== undefined ? week_no(startDate) : 0}
+                        <Col sm={4}>
+                            <div className="form-group" >
+                               {/*  <label className="name f-w-600">Week no</label>
+                                <div>
+                                {startDate !== undefined ? week_no(startDate) : 0}
+                                </div> */}
+                                <label className="name f-w-600">Year</label>
+                                <select value={year} className='form-control'
+                                 onChange={setYearHandler}>
+                                    <option value=''>Select Year</option>
+                                    <option>2019</option>
+                                    <option>2020</option>
+                                    <option>2021</option>
+                                </select>
+                                
                             </div>
-                        </div>
-                        <div className="col-sm-4">
-                            <div className="form-group" style={{ paddingTop: "35px" }}>
-                                Day :  {startDate !== undefined ? days[startDate.getDay()] : 0}
+                        </Col>
+                        <Col sm={4}>
+                            <div className="form-group">
+                                {/* <label className="name f-w-600">Day</label>
+                                <div>
+                                {startDate !== undefined ? days[startDate.getDay()] : 0}
+                                </div> */}
+                                <label className="name f-w-600">Day/Week/Month</label>
+                                <select value={dayWeekMonth}  className='form-control'
+                                 onChange={(e) => setDayWeekMonth(e.target.value)}>
+                                    <option>Day</option>
+                                    <option>Week</option>
+                                    <option>Month</option>
+                                </select>
                             </div>
-                        </div>
+                        </Col>
                     </Row>
 
                 </Col>
-                <Col xs={6}>
+                <Col sm={6}>
 
                     <Row>
-                        <div className="col-sm-4">
-                            <div className="form-group">
-                                <label className="name f-w-600"> Date<span style={{ color: 'red' }}>*</span> &nbsp;</label>
-                                <DatePicker
-                                    className="form-control Value"
-                                    selected={startDate}
-                                    dateFormat="yyyy-MM-dd"
-                                    // readOnly
-                                    required
-                                    onChange={(e) => fromDateHandler(e)}
-                                />
-                            </div>
-                        </div>
+                        {dayWeekMonth === 'Day' ?
+                         <div className="col-sm-4">
+                         <div className="form-group">
+                             <label className="name f-w-600"> Date<span style={{ color: 'red' }}>*</span> &nbsp;</label>
+                             <DatePicker
+                                 className="form-control Value"
+                                 selected={startDate}
+                                 dateFormat="yyyy-MM-dd"
+                                 // readOnly
+                                 required
+                                 onChange={(e) => fromDateHandler(e)}
+                             />
+                         </div>
+                     </div>:
+                     (dayWeekMonth === 'Week' ? 
+                     <div className="col-sm-4">
+                     <div className="form-group">
+                         <label className="name f-w-600">Week Name</label>
+                         <select value={weekName} className='form-control' onChange={(e) => {
+                            setWeekName(e.target.value); viewDates(0,year,e.target.value)                            
+                         } }>
+                            <option value=''>Select Week Name</option>
+                            {weekList !== null && weekList !== undefined && 
+                            weekList.map((item,i) => {
+                                return(
+                                    <option key={i} value={item.weekName}>{item.weekName}</option>
+                                )
+                            })}
+                         </select>
+                     </div>
+                 </div> : 
+                 (dayWeekMonth === 'Month' ? 
+                 <div className="col-sm-4">
+                 <div className="form-group">
+                 <label className="name f-w-600">Month</label>
+                 <select value={month} className='form-control' onChange={(e) => {
+                    setMonth(e.target.value); viewDates(e.target.value,year)
+                 }}>
+                    <option value=''>Select Month</option>
+                    {monthList.map((item,i) => {
+                        return(
+                            <option key={i} value={item.month}>{item.monthName}</option>
+                        )
+                    })}
+                 </select>
+             </div>
+             </div>
+          : ''))}
+                       
+                  
                         <div className="col-sm-4">
                             <div className="form-group">
                                 <label className="name f-w-600" >Select Store<span style={{ color: 'red' }}>*</span>&nbsp; </label>
@@ -411,11 +494,13 @@ function Dashboard() {
 
             <div>
                 <Row style={{ margin: '7% 0%' }}>
-                    <Col><Graph name="Cluster - Daily Qty vs No. of hours Planned" hours={dpshoursCluster} Qty={dpsQtyCluster} /></Col>
+                    <Col><Graph name="Cluster - Daily Qty vs No. of hours Planned" hours={dpshoursCluster} 
+                    Qty={dpsQtyCluster} dayWeekMonth={dayWeekMonth} /></Col>
 
                 </Row>
                 <Row style={{ margin: '7% 0%', textAlign: "center" }}>
-                    <Col><Graph name="Store - Daily Qty vs No. of hours Planned" hours={dpshoursStore} Qty={dpsQtyStore} /></Col>
+                    <Col><Graph name="Store - Daily Qty vs No. of hours Planned" hours={dpshoursStore} 
+                    Qty={dpsQtyStore} dayWeekMonth={dayWeekMonth} /></Col>
 
                 </Row>
             </div>
