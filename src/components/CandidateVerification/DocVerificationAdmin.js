@@ -114,6 +114,7 @@ const DocVerification = () => {
   const handleUANNo = (e) => {
     setNo(true);
     setYes(false);
+    setUanNumber("");
   };
 
   const handleUANNumber = (e) => {
@@ -637,7 +638,7 @@ const DocVerification = () => {
           </Col>
         </Row>
       )}
-      {UANNo &&
+      {(UANNo || UANYes) &&
         user.role === "ADMIN" &&
         state.adminVerificationStatus === 1 &&
         pfDetails !== null && (
@@ -663,7 +664,7 @@ const DocVerification = () => {
           </Row>
         )}
 
-      {user.role === "ADMIN" &&
+      {/* {user.role === "ADMIN" &&
         state.adminVerificationStatus === 1 &&
         UANYes &&
         pfDetails !== null && (
@@ -688,7 +689,7 @@ const DocVerification = () => {
               </Form.Group>
             </Col>
           </Row>
-        )}
+        )} */}
       <div
         style={{
           marginTop: "2rem",
