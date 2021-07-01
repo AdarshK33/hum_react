@@ -448,17 +448,7 @@ const ManagerWarningAction = (props) => {
     console.log(e.target.value);
     if (e.target.name === "managerComment") {
       setWarningManagerReason(e.target.value);
-    } else if (e.target.value == 1) {
-      setReasonStaus("NA");
-      state.InputImprovementPeriod = "NA";
-      console.log(state, "nA", e.target.value);
-    } else if (e.target.value == 2) {
-      setReasonStaus("");
-      setState({
-        ...state,
-        [e.target.name]: e.target.value,
-      });
-    } else {
+    }else{
       setState({
         ...state,
         [e.target.name]: e.target.value,
@@ -599,7 +589,7 @@ const ManagerWarningAction = (props) => {
     setShow(true);
   };
   // end
-  console.log(state, reasonStatus);
+console.log(state)
   const handleInfoClose = () => {
     setShowInfoModal(false);
     setEmpName("");
@@ -646,12 +636,10 @@ const ManagerWarningAction = (props) => {
           disciplinarySearchData !== null &&
           disciplinarySearchData !== undefined &&
           Object.keys(disciplinarySearchData).length !== 0 &&
-          disciplinarySearchData.disciplinaryWarning !== null &&
-          disciplinarySearchData.disciplinaryWarning !== undefined &&
-          disciplinarySearchData.disciplinaryWarning !== "" ? (
-            <label>
-              {disciplinarySearchData.disciplinaryWarning.employeeComment}
-            </label>
+          disciplinarySearchData.disciplinaryAction !== null &&
+          disciplinarySearchData.disciplinaryAction !== undefined &&
+          disciplinarySearchData.disciplinaryAction !== "" ? (
+           <label>{disciplinarySearchData.disciplinaryAction.employeeComment}</label> 
           ) : (
             ""
           )}
@@ -1011,8 +999,8 @@ const ManagerWarningAction = (props) => {
                             </div>
                           </Col>
                         </>
-                        <>
-                          <Col sm={2}>
+                       {state.disciplinaryAction.reason == "Others"? <>
+                      <Col sm={2}>
                             <div>
                               <label>Reason for Show Case Notice:</label>
                             </div>
@@ -1024,7 +1012,7 @@ const ManagerWarningAction = (props) => {
                               </label>
                             </div>
                           </Col>
-                        </>
+                        </>:''}
                       </Row>
                       <Row
                         style={{
@@ -1114,6 +1102,29 @@ const ManagerWarningAction = (props) => {
                       ) : (
                         ""
                       )}
+                       <Row
+                            style={{
+                              marginLeft: "2rem",
+                              marginTop: "2rem",
+                              marginBottom: "1rem",
+                            }}
+                          >
+                            <Col sm={2}>
+                              <div>
+                                <label>Reason By Employee:</label>
+                              </div>
+                            </Col>
+                            <Col sm={6}>
+                              <div>
+                                <a onClick={employeeReason}>
+                                  {" "}
+                                  <u className="itemResult">
+                                    Reason By Employee
+                                  </u>
+                                </a>
+                              </div>
+                            </Col>
+                          </Row>
                       {disciplinarySearchData.disciplinaryAction !== null &&
                       disciplinarySearchData.disciplinaryAction !== undefined &&
                       disciplinarySearchData.disciplinaryAction !== "" &&
@@ -1298,16 +1309,12 @@ const ManagerWarningAction = (props) => {
                                   <label>Performance Improvement period:</label>
                                 </div>
                               </Col>
-                              {reasonStatus == "NA" ? (
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; NA
-                                </label>
-                              ) : state.disciplinaryWarning
-                                  .improvementPeriod !== null &&
-                                state.disciplinaryWarning.improvementPeriod !==
-                                  undefined &&
-                                state.disciplinaryWarning.improvementPeriod !==
-                                  "" ? (
+                              { (state.disciplinaryWarning.improvementPeriod !==
+                                null &&
+                              state.disciplinaryWarning.improvementPeriod !==
+                                undefined &&
+                              state.disciplinaryWarning.improvementPeriod !==
+                                "" )? (
                                 <Col sm={3}>
                                   <div>
                                     <label className="itemResult">
@@ -1426,7 +1433,9 @@ const ManagerWarningAction = (props) => {
                               )}
                             </>
                           </Row>
-                          <Row
+                         {Object.keys(disciplinarySearchData).length !== 0 &&
+          disciplinarySearchData.disciplinaryWarning !== null &&
+          disciplinarySearchData.disciplinaryWarning !== undefined ? <Row
                             style={{
                               marginLeft: "2rem",
                               marginTop: "2rem",
@@ -1448,30 +1457,8 @@ const ManagerWarningAction = (props) => {
                                 </a>
                               </div>
                             </Col>
-                          </Row>
-                          <Row
-                            style={{
-                              marginLeft: "2rem",
-                              marginTop: "2rem",
-                              marginBottom: "1rem",
-                            }}
-                          >
-                            <Col sm={2}>
-                              <div>
-                                <label>Reason By Employee:</label>
-                              </div>
-                            </Col>
-                            <Col sm={6}>
-                              <div>
-                                <a onClick={employeeReason}>
-                                  {" "}
-                                  <u className="itemResult">
-                                    Reason By Employee
-                                  </u>
-                                </a>
-                              </div>
-                            </Col>
-                          </Row>
+                          </Row>:''}
+                         
                           <Row>
                             <Col
                               style={{
