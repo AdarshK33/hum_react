@@ -20,6 +20,7 @@ const EmployeWarningLetter = () => {
   const history = useHistory();
   const [showShowCauseNoticeModal, setShow] = useState(false);
   const [showShowCauseNoticeModalLink, setShowLink] = useState(false);
+  const [showShowCauseNoticeModalLink1, setShowLink1] = useState(false);
   const [showSignature, setShowSignature] = useState(false);
   const [saveLetter, setSaveLetter] = useState(false);
   const [submitLetter, setSubmitLetter] = useState(false);
@@ -79,6 +80,7 @@ const EmployeWarningLetter = () => {
     warningDueDaysDW: "",
     warningIdDW: "",
     warningIssuedDateDW: "",
+    pipEndDate: "",
     warningLetterDW: "",
     statusDW: "",
   });
@@ -191,6 +193,8 @@ const EmployeWarningLetter = () => {
           disciplinarySearchData.disciplinaryWarning.warningId;
         state.warningIssuedDateDW =
           disciplinarySearchData.disciplinaryWarning.warningIssuedDate;
+        state.pipEndDate =
+          disciplinarySearchData.disciplinaryWarning.pipEndDate;
         state.warningLetterDW =
           disciplinarySearchData.disciplinaryWarning.warningLetter;
         state.statusDW = disciplinarySearchData.disciplinaryWarning.status;
@@ -208,7 +212,14 @@ const EmployeWarningLetter = () => {
     console.log(";;;;;");
     setShowLink(true);
   };
-  const handleShowCauseLetterCloseLink = () => setShowLink(false);
+  const LetterShow1 = () => {
+    console.log(";;;;;");
+    setShowLink1(true);
+  };
+  const handleShowCauseLetterCloseLink = () => {
+    setShowLink(false);
+    setShowLink1(false);
+  };
 
   const saveOfferLetter = () => {
     setSaveLetter(true);
@@ -347,6 +358,7 @@ const EmployeWarningLetter = () => {
                 warningDueDays: state.warningDueDaysDW,
                 warningId: state.warningIdDW,
                 warningIssuedDate: state.warningIssuedDateDW,
+                pipEndDate: state.pipEndDate,
                 warningLetter: state.warningLetterDW,
               }
             : null,
@@ -399,6 +411,27 @@ const EmployeWarningLetter = () => {
           disciplinarySearchData.disciplinaryAction !== undefined &&
           disciplinarySearchData.disciplinaryAction !== "" ? (
             <ShowCauseNotice />
+          ) : (
+            ""
+          )}
+        </Modal.Body>
+      </Modal>
+      <Modal
+        show={showShowCauseNoticeModalLink1}
+        onHide={handleShowCauseLetterCloseLink}
+        size="md"
+      >
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        <Modal.Body>
+          {disciplinarySearchData &&
+          disciplinarySearchData &&
+          disciplinarySearchData !== null &&
+          disciplinarySearchData !== undefined &&
+          Object.keys(disciplinarySearchData).length !== 0 &&
+          disciplinarySearchData.disciplinaryWarning !== null &&
+          disciplinarySearchData.disciplinaryWarning !== undefined &&
+          disciplinarySearchData.disciplinaryWarning !== "" ? (
+            <WarningLetter />
           ) : (
             ""
           )}
@@ -702,60 +735,33 @@ const EmployeWarningLetter = () => {
                           </div>
                         </Col>
                       </Row>
+                      {state.employeeCommentSCIN !== null &&
+                      state.employeeCommentSCIN !== undefined &&
+                      state.employeeCommentSCIN !== "" ? (
+                        <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "2rem",
+                            marginBottom: "1rem",
+                          }}
+                        >
+                          <Col sm={2}>
+                            <div>
+                              <label> Add Remarks:</label>
+                            </div>
+                          </Col>
 
-                      <Row
-                        style={{
-                          marginLeft: "2rem",
-                          marginTop: "2rem",
-                          marginBottom: "1rem",
-                        }}
-                      >
-                        <Col sm={2}>
-                          <div>
-                            <label> Add Remarks:</label>
-                          </div>
-                        </Col>
-                        {submitted === true ||
-                        (state.employeeCommentDW !== null &&
-                          state.employeeCommentDW !== undefined &&
-                          state.employeeCommentDW !== "") ? (
                           <Col sm={6}>
                             <div>
                               <label className="itemResult">
-                                &nbsp;&nbsp; {state.empRemark}
+                                &nbsp;&nbsp; {state.employeeCommentSCIN}
                               </label>
                             </div>
                           </Col>
-                        ) : (
-                          <Col sm={10}>
-                            {" "}
-                            <Form.Group>
-                              <Form.Control
-                                style={
-                                  remarksError
-                                    ? { borderColor: "red" }
-                                    : { borderRadius: "5px" }
-                                }
-                                as="textarea"
-                                rows={4}
-                                name="empRemark"
-                                value={state.empRemark}
-                                placeholder="Write here.."
-                                onChange={(e) => changeHandler(e)}
-                                required
-                              />
-
-                              {remarksError ? (
-                                <p style={{ color: "red" }}>
-                                  &nbsp; *Please add remarks
-                                </p>
-                              ) : (
-                                ""
-                              )}
-                            </Form.Group>
-                          </Col>
-                        )}
-                      </Row>
+                        </Row>
+                      ) : (
+                        ""
+                      )}
                       {disciplinarySearchData &&
                       disciplinarySearchData &&
                       disciplinarySearchData !== null &&
@@ -889,6 +895,34 @@ const EmployeWarningLetter = () => {
                               marginBottom: "1rem",
                             }}
                           >
+                            <Col sm={6}>
+                              <div>
+                                <label>
+                                  Pip Start Date:
+                                  <label className="itemResult">
+                                    &nbsp;&nbsp; {state.warningIssuedDateDW}
+                                  </label>
+                                </label>
+                              </div>
+                            </Col>
+                            <Col sm={6}>
+                              <div>
+                                <label>
+                                  Pip End Date:
+                                  <label className="itemResult">
+                                    &nbsp;&nbsp; {state.pipEndDate}
+                                  </label>
+                                </label>
+                              </div>
+                            </Col>
+                          </Row>
+                          <Row
+                            style={{
+                              marginLeft: "2rem",
+                              marginTop: "2rem",
+                              marginBottom: "1rem",
+                            }}
+                          >
                             <Col sm={2}>
                               <div>
                                 <label>State detailed reason:</label>
@@ -906,80 +940,25 @@ const EmployeWarningLetter = () => {
                       ) : (
                         ""
                       )}
-
-                      <Row>
-                        <Col
-                          style={{
-                            marginTop: "2rem",
-                            marginBottom: "2rem",
-                            textAlign: "center",
-                          }}
-                        >
-                          <button
-                            disabled={submitted}
-                            className={
-                              submitted ? "confirmButton" : "stepperButtons"
-                            }
-                            onClick={submitHandler}
-                          >
-                            Save
-                          </button>
-
-                          {!saveLetter &&
-                          showPreview === true &&
-                          submitted === true ? (
-                            <button
-                              // disabled={!submitted}
-                              className={"LettersButtonsExtra"}
-                              onClick={ShowCauseLetterClick}
-                            >
-                              View Warning Letter
-                            </button>
-                          ) : (
-                            ""
-                          )}
-                          {saveLetter &&
-                          previewGeneratedLetter &&
-                          showPreview ? (
-                            <button
-                              className={"LettersButtonsExtra"}
-                              onClick={previewShowCauseLetter}
-                            >
-                              Preview Warning Letter
-                            </button>
-                          ) : (
-                            ""
-                          )}
-
-                          {saveLetter && previewGeneratedLetter && showPreview && (
-                            <div className="preview-section">
-                              <br></br>
-                              <br></br>
-                              <img
-                                src={calendarImage}
-                                alt="calendar"
-                                width="200px"
-                              />
-                              <br></br>
-                              <br></br>
-
-                              {true ? (
-                                <button
-                                  disabled={letterSent}
-                                  className={
-                                    letterSent
-                                      ? " confirmButton "
-                                      : "stepperButtons"
-                                  }
-                                  onClick={submitfinalShowCauseLetter}
-                                >
-                                  Submit
-                                </button>
-                              ) : (
-                                ""
-                              )}
-                            </div>
-                          )}
+                      <Row
+                        style={{
+                          marginLeft: "2rem",
+                          marginTop: "2rem",
+                          marginBottom: "1rem",
+                        }}
+                      >
+                        <Col sm={2}>
+                          <div>
+                            <label>Preview Warning Letter:</label>
+                          </div>
+                        </Col>
+                        <Col sm={6}>
+                          <div>
+                            <a onClick={LetterShow1}>
+                              {" "}
+                              <u className="itemResult">View Warning Letter</u>
+                            </a>
+                          </div>
                         </Col>
                       </Row>
                     </Col>

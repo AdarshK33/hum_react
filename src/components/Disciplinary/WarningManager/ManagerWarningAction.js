@@ -15,6 +15,7 @@ import "../Disciplinary.css";
 import { useHistory } from "react-router-dom";
 import { SeparationContext } from "../../../context/SepearationState";
 import StateManager from "react-select";
+import { EmployeeSeparationContext } from "../../../context/EmployeeSeparationState";
 const ManagerWarningAction = (props) => {
   const [reasonError, setReasonError] = useState("");
   const [improvementPeriodError, setImprovementPeriodError] = useState("");
@@ -104,6 +105,9 @@ const ManagerWarningAction = (props) => {
     SubmitDisciplinaryLetter,
   } = useContext(DisciplinaryContext);
   const { searchByCostCenter } = useContext(SeparationContext);
+  const { ModeOfSeparationView, TerminationFromDesciplinary } = useContext(
+    EmployeeSeparationContext
+  );
 
   useEffect(() => {
     if (
@@ -609,6 +613,8 @@ console.log(state,reasonStatus)
       setModal(false);
       setSuccessModal(false);
       searchByCostCenter(disciplinarySearchData.employeeId);
+      ModeOfSeparationView();
+      TerminationFromDesciplinary(true);
       history.push("../manager-initiate-exit");
       // <Link to=}> </Link>
     }
