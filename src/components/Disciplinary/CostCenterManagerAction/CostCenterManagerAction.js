@@ -20,6 +20,7 @@ const CostCenterManagerAction = () => {
   const history = useHistory();
   const [showShowCauseNoticeModal, setShow] = useState(false);
   const [showShowCauseNoticeModalLink, setShowLink] = useState(false);
+  const [showShowCauseNoticeModalLink1, setShowLink1] = useState(false);
   const [showSignature, setShowSignature] = useState(false);
   const [saveLetter, setSaveLetter] = useState(false);
   const [submitLetter, setSubmitLetter] = useState(false);
@@ -77,6 +78,7 @@ const CostCenterManagerAction = () => {
     warningDueDaysDW: "",
     warningIdDW: "",
     warningIssuedDateDW: "",
+    pipEndDate: "",
     warningLetterDW: "",
   });
   const {
@@ -187,6 +189,8 @@ const CostCenterManagerAction = () => {
           disciplinarySearchData.disciplinaryWarning.warningId;
         state.warningIssuedDateDW =
           disciplinarySearchData.disciplinaryWarning.warningIssuedDate;
+        state.pipEndDate =
+          disciplinarySearchData.disciplinaryWarning.pipEndDate;
         state.warningLetterDW =
           disciplinarySearchData.disciplinaryWarning.warningLetter;
       }
@@ -203,7 +207,14 @@ const CostCenterManagerAction = () => {
     console.log(";;;;;");
     setShowLink(true);
   };
-  const handleShowCauseLetterCloseLink = () => setShowLink(false);
+  const LetterShow1 = () => {
+    console.log(";;;;;");
+    setShowLink1(true);
+  };
+  const handleShowCauseLetterCloseLink = () => {
+    setShow(false);
+    setShowLink1(false);
+  };
 
   const saveOfferLetter = () => {
     setSaveLetter(true);
@@ -326,6 +337,7 @@ const CostCenterManagerAction = () => {
                 warningDueDays: state.warningDueDaysDW,
                 warningId: state.warningIdDW,
                 warningIssuedDate: state.warningIssuedDateDW,
+                pipEndDate: state.pipEndDate,
                 warningLetter: state.warningLetterDW,
               }
             : null,
@@ -370,6 +382,27 @@ const CostCenterManagerAction = () => {
           disciplinarySearchData.disciplinaryAction !== undefined &&
           disciplinarySearchData.disciplinaryAction !== "" ? (
             <ShowCauseNotice />
+          ) : (
+            ""
+          )}
+        </Modal.Body>
+      </Modal>
+      <Modal
+        show={showShowCauseNoticeModalLink1}
+        onHide={handleShowCauseLetterCloseLink}
+        size="md"
+      >
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        <Modal.Body>
+          {disciplinarySearchData &&
+          disciplinarySearchData &&
+          disciplinarySearchData !== null &&
+          disciplinarySearchData !== undefined &&
+          Object.keys(disciplinarySearchData).length !== 0 &&
+          disciplinarySearchData.disciplinaryWarning !== null &&
+          disciplinarySearchData.disciplinaryWarning !== undefined &&
+          disciplinarySearchData.disciplinaryWarning !== "" ? (
+            <WarningLetter />
           ) : (
             ""
           )}
@@ -842,6 +875,34 @@ const CostCenterManagerAction = () => {
                               marginBottom: "1rem",
                             }}
                           >
+                            <Col sm={6}>
+                              <div>
+                                <label>
+                                  Pip Start Date:
+                                  <label className="itemResult">
+                                    &nbsp;&nbsp; {state.warningIssuedDateDW}
+                                  </label>
+                                </label>
+                              </div>
+                            </Col>
+                            <Col sm={6}>
+                              <div>
+                                <label>
+                                  Pip End Date:
+                                  <label className="itemResult">
+                                    &nbsp;&nbsp; {state.pipEndDate}
+                                  </label>
+                                </label>
+                              </div>
+                            </Col>
+                          </Row>
+                          <Row
+                            style={{
+                              marginLeft: "2rem",
+                              marginTop: "2rem",
+                              marginBottom: "1rem",
+                            }}
+                          >
                             <Col sm={2}>
                               <div>
                                 <label>State detailed reason:</label>
@@ -852,6 +913,29 @@ const CostCenterManagerAction = () => {
                                 <label className="itemResult">
                                   &nbsp;&nbsp; {state.warningComment}
                                 </label>
+                              </div>
+                            </Col>
+                          </Row>
+                          <Row
+                            style={{
+                              marginLeft: "2rem",
+                              marginTop: "2rem",
+                              marginBottom: "1rem",
+                            }}
+                          >
+                            <Col sm={2}>
+                              <div>
+                                <label>Preview Warning Letter:</label>
+                              </div>
+                            </Col>
+                            <Col sm={6}>
+                              <div>
+                                <a onClick={LetterShow1}>
+                                  {" "}
+                                  <u className="itemResult">
+                                    View Warning Letter
+                                  </u>
+                                </a>
                               </div>
                             </Col>
                           </Row>

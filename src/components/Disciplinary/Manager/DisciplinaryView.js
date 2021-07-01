@@ -4,11 +4,13 @@ import Breadcrumb from "../../common/breadcrumb";
 import "react-datepicker/dist/react-datepicker.css";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 import ShowCauseNotice from "../Manager/ShowCauseNoticeLetter";
+import WarningLetter from "../WarningManager/WarningLetter";
 
 const DisciplinaryView = () => {
   const [showCauseReason, setShowCauseReason] = useState("");
   const [EmpName, setEmpName] = useState();
   const [showShowCauseNoticeModal, setShow] = useState(false);
+  const [showShowCauseNoticeModalLink1, setShowLink1] = useState(false);
 
   const [state, setState] = useState({
     empId: "",
@@ -28,6 +30,9 @@ const DisciplinaryView = () => {
     warningReason: "",
     pip: "",
     warningComment: "",
+    employeeCommentDW: "",
+    pipEndDate: "",
+    warningIssuedDateDW: "",
   });
   const { disciplinaryEmployeeSearch, disciplinarySearchData } =
     useContext(DisciplinaryContext);
@@ -74,11 +79,17 @@ const DisciplinaryView = () => {
         disciplinarySearchData.disciplinaryWarning !== undefined &&
         disciplinarySearchData.disciplinaryWarning !== ""
       ) {
+        state.employeeCommentDW =
+          disciplinarySearchData.disciplinaryWarning.employeeComment;
         state.warningReason = disciplinarySearchData.disciplinaryWarning.reason;
         state.warningComment =
           disciplinarySearchData.disciplinaryWarning.managerComment;
         state.pip =
           disciplinarySearchData.disciplinaryWarning.improvementPeriod;
+        state.pipEndDate =
+          disciplinarySearchData.disciplinaryWarning.pipEndDate;
+        state.warningIssuedDateDW =
+          disciplinarySearchData.disciplinaryWarning.warningIssuedDate;
       }
     }
   }, [disciplinarySearchData]);
@@ -87,13 +98,20 @@ const DisciplinaryView = () => {
     console.log(";;;;;");
     setShow(true);
   };
-  const handleShowCauseLetterClose = () => setShow(false);
+  const LetterShow1 = () => {
+    console.log(";;;;;");
+    setShowLink1(true);
+  };
+  const handleShowCauseLetterCloseLink = () => {
+    setShow(false);
+    setShowLink1(false);
+  };
 
   return (
     <Fragment>
       <Modal
         show={showShowCauseNoticeModal}
-        onHide={handleShowCauseLetterClose}
+        onHide={handleShowCauseLetterCloseLink}
         size="md"
       >
         <Modal.Header closeButton className="modal-line"></Modal.Header>
@@ -107,6 +125,27 @@ const DisciplinaryView = () => {
           disciplinarySearchData.disciplinaryAction !== undefined &&
           disciplinarySearchData.disciplinaryAction !== "" ? (
             <ShowCauseNotice />
+          ) : (
+            ""
+          )}
+        </Modal.Body>
+      </Modal>
+      <Modal
+        show={showShowCauseNoticeModalLink1}
+        onHide={handleShowCauseLetterCloseLink}
+        size="md"
+      >
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        <Modal.Body>
+          {disciplinarySearchData &&
+          disciplinarySearchData &&
+          disciplinarySearchData !== null &&
+          disciplinarySearchData !== undefined &&
+          Object.keys(disciplinarySearchData).length !== 0 &&
+          disciplinarySearchData.disciplinaryWarning !== null &&
+          disciplinarySearchData.disciplinaryWarning !== undefined &&
+          disciplinarySearchData.disciplinaryWarning !== "" ? (
+            <WarningLetter />
           ) : (
             ""
           )}
@@ -468,6 +507,34 @@ const DisciplinaryView = () => {
                               marginBottom: "1rem",
                             }}
                           >
+                            <Col sm={6}>
+                              <div>
+                                <label>
+                                  Pip Start Date:
+                                  <label className="itemResult">
+                                    &nbsp;&nbsp; {state.warningIssuedDateDW}
+                                  </label>
+                                </label>
+                              </div>
+                            </Col>
+                            <Col sm={6}>
+                              <div>
+                                <label>
+                                  Pip End Date:
+                                  <label className="itemResult">
+                                    &nbsp;&nbsp; {state.pipEndDate}
+                                  </label>
+                                </label>
+                              </div>
+                            </Col>
+                          </Row>
+                          <Row
+                            style={{
+                              marginLeft: "2rem",
+                              marginTop: "2rem",
+                              marginBottom: "1rem",
+                            }}
+                          >
                             <Col sm={2}>
                               <div>
                                 <label>State detailed reason:</label>
@@ -478,6 +545,29 @@ const DisciplinaryView = () => {
                                 <label className="itemResult">
                                   &nbsp;&nbsp; {state.warningComment}
                                 </label>
+                              </div>
+                            </Col>
+                          </Row>
+                          <Row
+                            style={{
+                              marginLeft: "2rem",
+                              marginTop: "2rem",
+                              marginBottom: "1rem",
+                            }}
+                          >
+                            <Col sm={2}>
+                              <div>
+                                <label>Preview Warning Letter:</label>
+                              </div>
+                            </Col>
+                            <Col sm={6}>
+                              <div>
+                                <a onClick={LetterShow1}>
+                                  {" "}
+                                  <u className="itemResult">
+                                    View Warning Letter
+                                  </u>
+                                </a>
                               </div>
                             </Col>
                           </Row>

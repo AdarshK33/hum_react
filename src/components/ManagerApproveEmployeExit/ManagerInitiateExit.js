@@ -88,19 +88,24 @@ const ManagerInitiateExit = () => {
     relivingLetterData,
     terminationConfirmation,
     resignationConfirmation,
+    TerminationFromDesciplinary,
+    DisciplinaryTermination,
   } = useContext(EmployeeSeparationContext);
-  const {
-    empResign,
-    withdraw,
-    searchByCostCenter,
-    searchByCostData,
-  } = useContext(SeparationContext);
-  const { searchForEmp1, searchEmpData1, makeSearchEmp1DataNull } = useContext(
-    OfferContext
-  );
-  const { locationDetails, locationDetailsList } = useContext(
-    PermissionContext
-  );
+  const { empResign, withdraw, searchByCostCenter, searchByCostData } =
+    useContext(SeparationContext);
+  const { searchForEmp1, searchEmpData1, makeSearchEmp1DataNull } =
+    useContext(OfferContext);
+  const { locationDetails, locationDetailsList } =
+    useContext(PermissionContext);
+  useEffect(() => {
+    if (DisciplinaryTermination === true) {
+      setModeOfSeparation("Termination");
+      setChangeInSeparation(2);
+    } else {
+      setModeOfSeparation("");
+      setChangeInSeparation(0);
+    }
+  }, [DisciplinaryTermination]);
   useEffect(() => {
     ViewEmployeeProfile();
   }, []);
@@ -595,7 +600,8 @@ const ManagerInitiateExit = () => {
     }
   };
   const emailValidation = () => {
-    const emailValid = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const emailValid =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     if (
       state.emailId !== "" &&
       state.emailId !== null &&
@@ -815,6 +821,7 @@ const ManagerInitiateExit = () => {
           setPreview(true);
           //   empResign(data1);
           setSuccessModal(true);
+          TerminationFromDesciplinary(false);
         } else if (intern === true) {
           const data1 = {
             company: null,
@@ -858,6 +865,7 @@ const ManagerInitiateExit = () => {
           // CreateEmplyoeeExist(data2, state.empId);
           setPreview(true);
           setSuccessModal(true);
+          TerminationFromDesciplinary(false);
         }
       }
     }
@@ -1196,7 +1204,7 @@ const ManagerInitiateExit = () => {
                         ) : (
                           <Col sm={2}>
                             <div>
-                              {false ? (
+                              {DisciplinaryTermination === true ? (
                                 <label className="itemResult">
                                   &nbsp;&nbsp; {modeOfSeparation}
                                 </label>
@@ -1242,7 +1250,12 @@ const ManagerInitiateExit = () => {
                         ) : (
                           <Col sm={2}>
                             <div>
-                              <label>Date of Resignation:</label>
+                              <label>
+                                Date of{" "}
+                                {changeInSeparation === 2
+                                  ? "Termination:"
+                                  : "Resignation:"}
+                              </label>
                             </div>
                           </Col>
                         )}
