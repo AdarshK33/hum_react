@@ -22,7 +22,7 @@ const ManagerWarningAction = (props) => {
   const [managerCommentError, setManagerCommentError] = useState("");
   const [showCauseReason, setShowCauseReason] = useState();
   const [EmpName, setEmpName] = useState();
-  const [issueWarningStatus, setIssueWarningStatus] = useState("no");
+  const [issueWarningStatus, setIssueWarningStatus] = useState("");
   const [initalExit, setInitalExit] = useState(false);
   const [warningManagerReason, setWarningManagerReason] = useState("");
   const [showModal, setModal] = useState(false);
@@ -38,6 +38,8 @@ const ManagerWarningAction = (props) => {
   const [letterSent, setLetterSent] = useState(false);
   const [showPreview, setPreview] = useState(false);
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
+
+  const [reasonStatus,setReasonStaus] = useState('')
   const history = useHistory();
 
   const [state, setState] = useState({
@@ -68,6 +70,7 @@ const ManagerWarningAction = (props) => {
       employeeWarningStatus: null,
       improvementPeriod: 0,
       managerComment: null,
+      pipEndDate: null,
       reason: null,
       reasonDetails: null,
       reasonDetailsId: 0,
@@ -175,8 +178,11 @@ const ManagerWarningAction = (props) => {
 
         if (disciplinarySearchData.disciplinaryAction.reasonId === 1) {
           setShowCauseReason("Non-Performance");
+          setIssueWarningStatus("yes");
         } else if (disciplinarySearchData.disciplinaryAction.reasonId === 2) {
           setShowCauseReason("Others");
+          setIssueWarningStatus("");
+
         }
       }
       if (
@@ -186,7 +192,7 @@ const ManagerWarningAction = (props) => {
         disciplinarySearchData.disciplinaryWarning !== ""
       ) {
         setIssueWarningStatus("yes");
-
+      
         setWarningManagerReason(
           disciplinarySearchData.disciplinaryWarning.managerComment
         );
@@ -200,6 +206,8 @@ const ManagerWarningAction = (props) => {
           disciplinarySearchData.disciplinaryWarning.improvementPeriod;
         state.disciplinaryWarning.managerComment =
           disciplinarySearchData.disciplinaryWarning.managerComment;
+          state.disciplinaryWarning.pipEndDate =
+          disciplinarySearchData.disciplinaryWarning.pipEndDate;
         state.disciplinaryWarning.reason =
           disciplinarySearchData.disciplinaryWarning.reason;
         state.disciplinaryWarning.reasonDetails =
@@ -229,7 +237,7 @@ const ManagerWarningAction = (props) => {
           setShowCauseReason("Others");
         }
       } else {
-        setIssueWarningStatus("no");
+        // setIssueWarningStatus("no");
         setWarningManagerReason("");
 
         state.disciplinaryWarning.improvementPeriod = "";
@@ -240,6 +248,12 @@ const ManagerWarningAction = (props) => {
   }, [disciplinarySearchData]);
   const handleInitialExit = (e) => {
     e.preventDefault();
+    var valueStatus = null
+    if(e.target.name === 'issueresolved'){
+      valueStatus = 3
+    }else if(e.target.name === "initiateexit"){
+      valueStatus = 1
+    }
     var infoData = {
       company: state.company,
       contractType: state.contractType,
@@ -258,7 +272,7 @@ const ManagerWarningAction = (props) => {
         reasonId: state.disciplinaryAction.reasonId,
         showCauseLetter: state.disciplinaryAction.showCauseLetter,
         showCauseNotice: state.disciplinaryAction.showCauseNotice,
-        status: 1,
+        status: valueStatus,
         statusDesc: state.disciplinaryAction.statusDesc,
         warningIssued: true,
       },
@@ -272,11 +286,12 @@ const ManagerWarningAction = (props) => {
                 state.disciplinaryWarning.employeeWarningStatus,
               improvementPeriod: state.disciplinaryWarning.improvementPeriod,
               managerComment: state.disciplinaryWarning.managerComment,
+              pipEndDate: state.disciplinaryWarning.pipEndDate,    
               reason: state.disciplinaryWarning.reason,
               reasonDetails: state.disciplinaryWarning.reasonDetails,
               reasonDetailsId: state.disciplinaryWarning.reasonDetailsId,
               reasonId: state.disciplinaryWarning.reasonId,
-              status: 1,
+              status: valueStatus,
               statusDesc: state.disciplinaryWarning.statusDesc,
               warningDueDays: state.disciplinaryWarning.warningDueDays,
               warningId: state.disciplinaryWarning.warningId,
@@ -296,7 +311,7 @@ const ManagerWarningAction = (props) => {
       storeLocation: state.storeLocation,
     };
     console.log(infoData, "infoData");
-    createShowCauseIssue(infoData);
+    // createShowCauseIssue(infoData);
     setInitalExit(true);
     setSubmitted(true);
   };
@@ -371,6 +386,7 @@ const ManagerWarningAction = (props) => {
                   state.disciplinaryWarning.employeeWarningStatus,
                 improvementPeriod: state.disciplinaryWarning.improvementPeriod,
                 managerComment: state.disciplinaryWarning.managerComment,
+                pipEndDate: state.disciplinaryWarning.pipEndDate,    
                 reason: state.disciplinaryWarning.reason,
                 reasonDetails: state.disciplinaryWarning.reasonDetails,
                 reasonDetailsId: state.disciplinaryWarning.reasonDetailsId,
@@ -427,14 +443,26 @@ const ManagerWarningAction = (props) => {
   };
   const changeHandler = (e) => {
     e.preventDefault();
+    console.log(e.target.value)
     if (e.target.name === "managerComment") {
       setWarningManagerReason(e.target.value);
-    } else {
+    }else if(e.target.value == 1){
+      setReasonStaus("NA")
+        state.InputImprovementPeriod = "NA"
+        console.log(state,"nA",e.target.value)
+    }else if(e.target.value == 2){
+      setReasonStaus("")
+      setState({
+        ...state,
+        [e.target.name]: e.target.value,
+      });
+    }else{
       setState({
         ...state,
         [e.target.name]: e.target.value,
       });
     }
+    console.log(state)
   };
 
   const handleChangeLetter = (e) => {
@@ -562,7 +590,7 @@ const ManagerWarningAction = (props) => {
     setShow(true);
   };
   // end
-
+console.log(state,reasonStatus)
   const handleInfoClose = () => {
     setShowInfoModal(false);
     setEmpName("");
@@ -1070,7 +1098,7 @@ const ManagerWarningAction = (props) => {
                                     disciplinarySearchData.disciplinaryAction !==
                                       "" &&
                                     disciplinarySearchData.disciplinaryAction
-                                      .reason === "Other"
+                                      .reason === "Non-performance"
                                       ? true
                                       : false
                                   }
@@ -1100,7 +1128,7 @@ const ManagerWarningAction = (props) => {
                                     disciplinarySearchData.disciplinaryAction !==
                                       "" &&
                                     disciplinarySearchData.disciplinaryAction
-                                      .reason === "Other"
+                                      .reason === "Non-performance"
                                       ? true
                                       : false
                                   }
@@ -1213,12 +1241,16 @@ const ManagerWarningAction = (props) => {
                                   <label>Performance Improvement period:</label>
                                 </div>
                               </Col>
-                              {state.disciplinaryWarning.improvementPeriod !==
+                              { reasonStatus == "NA"?(
+                                <label className="itemResult">
+                                  &nbsp;&nbsp; NA
+                                </label>
+                              ) : (state.disciplinaryWarning.improvementPeriod !==
                                 null &&
                               state.disciplinaryWarning.improvementPeriod !==
                                 undefined &&
                               state.disciplinaryWarning.improvementPeriod !==
-                                "" ? (
+                                "" )? (
                                 <Col sm={3}>
                                   <div>
                                     <label className="itemResult">
@@ -1231,7 +1263,7 @@ const ManagerWarningAction = (props) => {
                                     </label>
                                   </div>
                                 </Col>
-                              ) : (
+                              ):(
                                 <Col sm={3}>
                                   <Form.Group>
                                     <Form.Control
@@ -1426,8 +1458,31 @@ const ManagerWarningAction = (props) => {
                             </Col>
                           </Row>
                         </>
-                      ) : (
+                      ) : issueWarningStatus === "no" ?(
                         <Row>
+                             {(  disciplinarySearchData.disciplinaryWarning !== null &&
+        disciplinarySearchData.disciplinaryWarning !== undefined &&
+        Object.keys(disciplinarySearchData.disciplinaryWarning).length !== 0 &&
+        disciplinarySearchData.disciplinaryWarning !== ""
+                        // state.disciplinaryWarning['pipEndDate'].getTime()/1000 <= new Date().getTime() / 1000
+                               )?  <Col
+                            style={{
+                              marginTop: "2rem",
+                              marginBottom: "2rem",
+                              textAlign: "center",
+                            }}
+                          >
+                            <button
+                              name="issueresolved"
+                              disabled={submitted}
+                              className={
+                                submitted ? "confirmButton" : "stepperButtons"
+                              }
+                              onClick={handleInitialExit}
+                            >
+                              Issue Resolved
+                            </button>
+                          </Col>:''}
                           <Col
                             style={{
                               marginTop: "2rem",
@@ -1436,6 +1491,7 @@ const ManagerWarningAction = (props) => {
                             }}
                           >
                             <button
+                            name="initiateexit"
                               disabled={submitted}
                               className={
                                 submitted ? "confirmButton" : "stepperButtons"
@@ -1446,7 +1502,7 @@ const ManagerWarningAction = (props) => {
                             </button>
                           </Col>
                         </Row>
-                      )}
+                      ):''}
                     </Col>
                   </Row>
                 </Form>
