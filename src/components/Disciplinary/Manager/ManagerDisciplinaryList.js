@@ -245,27 +245,29 @@ const ManagerDisciplinaryList = () => {
                               </td>
                             ) : (
                               <td>
-                                {item.disciplinaryAction !== null &&
-                                item.disciplinaryAction !== undefined &&
-                                item.disciplinaryAction !== "" &&
-                                item.disciplinaryAction.statusDesc ===
-                                  "Exit Initiated" ? (
-                                  <Edit2 />
-                                ) : (item.disciplinaryAction !== null &&
-                                    item.disciplinaryAction !== undefined &&
-                                    item.disciplinaryAction !== "" &&
-                                    (item.disciplinaryAction
-                                      .employeeActionStatus === "Responded" ||
-                                      item.disciplinaryAction.actionDueDays ===
-                                        0)) ||
-                                  (item.disciplinaryWarning !== null &&
-                                    item.disciplinaryWarning !== undefined &&
-                                    item.disciplinaryWarning !== "" &&
-                                    (item.disciplinaryWarning
-                                      .employeeActionStatus === "Responded" ||
-                                      item.disciplinaryWarning
-                                        .employeeActionStatus ===
-                                        "Responded")) ? (
+                                {
+                                // item.disciplinaryAction !== null &&
+                                // item.disciplinaryAction !== undefined &&
+                                // item.disciplinaryAction !== "" &&
+                                // item.disciplinaryAction.statusDesc ===
+                                //   "Exit Initiated" ? (
+                                //   <Edit2 />
+                                // ) : (item.disciplinaryAction !== null &&
+                                //     item.disciplinaryAction !== undefined &&
+                                //     item.disciplinaryAction !== "" &&
+                                //     (item.disciplinaryAction
+                                //       .employeeActionStatus === "Responded" ||
+                                //       item.disciplinaryAction.actionDueDays ===
+                                //         0)) ||
+                                //   (item.disciplinaryWarning !== null &&
+                                //     item.disciplinaryWarning !== undefined &&
+                                //     item.disciplinaryWarning !== "" &&
+                                //     (item.disciplinaryWarning
+                                //       .employeeActionStatus === "Responded" ||
+                                //       item.disciplinaryWarning
+                                //         .employeeActionStatus ===
+                                //         "Responded")) 
+                                       true ? (
                                   //   ||
                                   // (
                                   //   new Date(

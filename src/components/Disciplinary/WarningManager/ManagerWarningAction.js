@@ -42,7 +42,6 @@ const ManagerWarningAction = (props) => {
   const [showShowCauseNoticeModalLink1, setShowLink1] = useState(false);
   const [employeeReasonShow, setEmployeeReasonShow] = useState(false);
 
-  const [reasonStatus,setReasonStaus] = useState('')
   const history = useHistory();
 
   const [state, setState] = useState({
@@ -449,16 +448,6 @@ const ManagerWarningAction = (props) => {
     console.log(e.target.value)
     if (e.target.name === "managerComment") {
       setWarningManagerReason(e.target.value);
-    }else if(e.target.value == 1){
-      setReasonStaus("NA")
-        state.InputImprovementPeriod = "NA"
-        console.log(state,"nA",e.target.value)
-    }else if(e.target.value == 2){
-      setReasonStaus("")
-      setState({
-        ...state,
-        [e.target.name]: e.target.value,
-      });
     }else{
       setState({
         ...state,
@@ -600,7 +589,7 @@ const ManagerWarningAction = (props) => {
     setShow(true);
   };
   // end
-console.log(state,reasonStatus)
+console.log(state)
   const handleInfoClose = () => {
     setShowInfoModal(false);
     setEmpName("");
@@ -649,10 +638,10 @@ console.log(state,reasonStatus)
           disciplinarySearchData !== null &&
           disciplinarySearchData !== undefined &&
           Object.keys(disciplinarySearchData).length !== 0 &&
-          disciplinarySearchData.disciplinaryWarning !== null &&
-          disciplinarySearchData.disciplinaryWarning !== undefined &&
-          disciplinarySearchData.disciplinaryWarning !== "" ? (
-           <label>{disciplinarySearchData.disciplinaryWarning.employeeComment}</label> 
+          disciplinarySearchData.disciplinaryAction !== null &&
+          disciplinarySearchData.disciplinaryAction !== undefined &&
+          disciplinarySearchData.disciplinaryAction !== "" ? (
+           <label>{disciplinarySearchData.disciplinaryAction.employeeComment}</label> 
           ) : (
             ""
           )}
@@ -1012,8 +1001,8 @@ console.log(state,reasonStatus)
                             </div>
                           </Col>
                         </>
-                        <>
-                          <Col sm={2}>
+                       {state.disciplinaryAction.reason == "Others"? <>
+                      <Col sm={2}>
                             <div>
                               <label>Reason for Show Case Notice:</label>
                             </div>
@@ -1025,7 +1014,7 @@ console.log(state,reasonStatus)
                               </label>
                             </div>
                           </Col>
-                        </>
+                        </>:''}
                       </Row>
                       <Row
                         style={{
@@ -1115,6 +1104,29 @@ console.log(state,reasonStatus)
                       ) : (
                         ""
                       )}
+                       <Row
+                            style={{
+                              marginLeft: "2rem",
+                              marginTop: "2rem",
+                              marginBottom: "1rem",
+                            }}
+                          >
+                            <Col sm={2}>
+                              <div>
+                                <label>Reason By Employee:</label>
+                              </div>
+                            </Col>
+                            <Col sm={6}>
+                              <div>
+                                <a onClick={employeeReason}>
+                                  {" "}
+                                  <u className="itemResult">
+                                    Reason By Employee
+                                  </u>
+                                </a>
+                              </div>
+                            </Col>
+                          </Row>
                       {disciplinarySearchData.disciplinaryAction !== null &&
                       disciplinarySearchData.disciplinaryAction !== undefined &&
                       disciplinarySearchData.disciplinaryAction !== "" &&
@@ -1299,11 +1311,7 @@ console.log(state,reasonStatus)
                                   <label>Performance Improvement period:</label>
                                 </div>
                               </Col>
-                              { reasonStatus == "NA"?(
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; NA
-                                </label>
-                              ) : (state.disciplinaryWarning.improvementPeriod !==
+                              { (state.disciplinaryWarning.improvementPeriod !==
                                 null &&
                               state.disciplinaryWarning.improvementPeriod !==
                                 undefined &&
@@ -1427,7 +1435,9 @@ console.log(state,reasonStatus)
                               )}
                             </>
                           </Row>
-                          <Row
+                         {Object.keys(disciplinarySearchData).length !== 0 &&
+          disciplinarySearchData.disciplinaryWarning !== null &&
+          disciplinarySearchData.disciplinaryWarning !== undefined ? <Row
                             style={{
                               marginLeft: "2rem",
                               marginTop: "2rem",
@@ -1449,30 +1459,8 @@ console.log(state,reasonStatus)
                                 </a>
                               </div>
                             </Col>
-                          </Row>
-                          <Row
-                            style={{
-                              marginLeft: "2rem",
-                              marginTop: "2rem",
-                              marginBottom: "1rem",
-                            }}
-                          >
-                            <Col sm={2}>
-                              <div>
-                                <label>Reason By Employee:</label>
-                              </div>
-                            </Col>
-                            <Col sm={6}>
-                              <div>
-                                <a onClick={employeeReason}>
-                                  {" "}
-                                  <u className="itemResult">
-                                    Reason By Employee
-                                  </u>
-                                </a>
-                              </div>
-                            </Col>
-                          </Row>
+                          </Row>:''}
+                         
                           <Row>
                             <Col
                               style={{
