@@ -4,11 +4,14 @@ import Breadcrumb from "../../common/breadcrumb";
 import "react-datepicker/dist/react-datepicker.css";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 import ShowCauseNotice from "../Manager/ShowCauseNoticeLetter";
+import ReasonByEmployee from "../Manager/ReasonByEmployee"
 
 const DisciplinaryView = () => {
   const [showCauseReason, setShowCauseReason] = useState("");
   const [EmpName, setEmpName] = useState();
   const [showShowCauseNoticeModal, setShow] = useState(false);
+  const [employeeReasonShow, setEmployeeReasonShow] = useState(false);
+
 
   const [state, setState] = useState({
     empId: "",
@@ -87,10 +90,40 @@ const DisciplinaryView = () => {
     console.log(";;;;;");
     setShow(true);
   };
+  
   const handleShowCauseLetterClose = () => setShow(false);
+
+  const LetterShow1 = () => {
+    console.log(";;;;;");
+    setEmployeeReasonShow(true);
+  };
+  
+  const handleShowCauseLetterClose1 = () => setEmployeeReasonShow(false);
+  
 
   return (
     <Fragment>
+        <Modal
+        show={employeeReasonShow}
+        onHide={handleShowCauseLetterClose1}
+        size="md"
+      >
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        <Modal.Body>
+          {disciplinarySearchData &&
+          disciplinarySearchData &&
+          disciplinarySearchData !== null &&
+          disciplinarySearchData !== undefined &&
+          Object.keys(disciplinarySearchData).length !== 0 &&
+          disciplinarySearchData.disciplinaryAction !== null &&
+          disciplinarySearchData.disciplinaryAction !== undefined &&
+          disciplinarySearchData.disciplinaryAction !== "" ? (
+            <ReasonByEmployee />
+          ) : (
+            ""
+          )}
+        </Modal.Body>
+      </Modal>
       <Modal
         show={showShowCauseNoticeModal}
         onHide={handleShowCauseLetterClose}
@@ -320,14 +353,18 @@ const DisciplinaryView = () => {
                         >
                           <Col sm={2}>
                             <div>
-                              <label>Remarks:</label>
+                              {/* <label>Remarks:</label> */}
+                              <label>Reason By Employee:</label>
                             </div>
                           </Col>
                           <Col sm={6}>
                             <div>
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.empRemark}
-                              </label>
+                            <a onClick={LetterShow1}>
+                              {" "}
+                              <u className="itemResult">
+                                Reason By Employee
+                              </u>
+                            </a>
                             </div>
                           </Col>
                         </Row>

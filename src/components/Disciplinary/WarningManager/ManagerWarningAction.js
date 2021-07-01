@@ -244,6 +244,12 @@ const ManagerWarningAction = (props) => {
   }, [disciplinarySearchData]);
   const handleInitialExit = (e) => {
     e.preventDefault();
+    var valueStatus = null
+    if(e.target.name === 'issueresolved'){
+      valueStatus = 3
+    }else if(e.target.name === "initiateexit"){
+      valueStatus = 1
+    }
     var infoData = {
       company: state.company,
       contractType: state.contractType,
@@ -262,7 +268,7 @@ const ManagerWarningAction = (props) => {
         reasonId: state.disciplinaryAction.reasonId,
         showCauseLetter: state.disciplinaryAction.showCauseLetter,
         showCauseNotice: state.disciplinaryAction.showCauseNotice,
-        status: 1,
+        status: valueStatus,
         statusDesc: state.disciplinaryAction.statusDesc,
         warningIssued: true,
       },
@@ -281,7 +287,7 @@ const ManagerWarningAction = (props) => {
               reasonDetails: state.disciplinaryWarning.reasonDetails,
               reasonDetailsId: state.disciplinaryWarning.reasonDetailsId,
               reasonId: state.disciplinaryWarning.reasonId,
-              status: 1,
+              status: valueStatus,
               statusDesc: state.disciplinaryWarning.statusDesc,
               warningDueDays: state.disciplinaryWarning.warningDueDays,
               warningId: state.disciplinaryWarning.warningId,
@@ -301,7 +307,7 @@ const ManagerWarningAction = (props) => {
       storeLocation: state.storeLocation,
     };
     console.log(infoData, "infoData");
-    createShowCauseIssue(infoData);
+    // createShowCauseIssue(infoData);
     setInitalExit(true);
     setSubmitted(true);
   };
@@ -1448,7 +1454,12 @@ console.log(state,reasonStatus)
                         </>
                       ) : issueWarningStatus === "no" ?(
                         <Row>
-                                <Col
+                             {(  disciplinarySearchData.disciplinaryWarning !== null &&
+        disciplinarySearchData.disciplinaryWarning !== undefined &&
+        Object.keys(disciplinarySearchData.disciplinaryWarning).length !== 0 &&
+        disciplinarySearchData.disciplinaryWarning !== ""
+                        // state.disciplinaryWarning['pipEndDate'].getTime()/1000 <= new Date().getTime() / 1000
+                               )?  <Col
                             style={{
                               marginTop: "2rem",
                               marginBottom: "2rem",
@@ -1465,7 +1476,7 @@ console.log(state,reasonStatus)
                             >
                               Issue Resolved
                             </button>
-                          </Col>
+                          </Col>:''}
                           <Col
                             style={{
                               marginTop: "2rem",

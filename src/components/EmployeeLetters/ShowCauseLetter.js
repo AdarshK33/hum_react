@@ -8,6 +8,8 @@ import ShowCauseNotice from "../Disciplinary/Manager/ShowCauseNoticeLetter";
 import calendarImage from "../../assets/images/calendar-image.png";
 import { DisciplinaryContext } from "../../context/DisciplinaryState";
 import { useHistory } from "react-router-dom";
+import ReasonByEmployee from "../Disciplinary/Manager/ReasonByEmployee"
+
 
 // view-----
 const EmployeShowCaseLetter = () => {
@@ -26,6 +28,8 @@ const EmployeShowCaseLetter = () => {
   const [letterSent, setLetterSent] = useState(false);
   const [showPreview, setPreview] = useState(false);
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
+  const [employeeReasonShow, setEmployeeReasonShow] = useState(false);
+
 
   const [showCauseReason, setShowCauseReason] = useState("");
   const [EmpName, setEmpName] = useState();
@@ -379,9 +383,36 @@ const EmployeShowCaseLetter = () => {
     console.log(state);
   };
 
+  const employeeReason = () => {
+    console.log(";;;;;");
+    setEmployeeReasonShow(true);
+  };
+  
+  const handleEmployeeReason = () => setEmployeeReasonShow(false);
   return (
     <Fragment>
       {/* letter */}
+      <Modal
+        show={employeeReasonShow}
+        onHide={handleEmployeeReason}
+        size="md"
+      >
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        <Modal.Body>
+          {disciplinarySearchData &&
+          disciplinarySearchData &&
+          disciplinarySearchData !== null &&
+          disciplinarySearchData !== undefined &&
+          Object.keys(disciplinarySearchData).length !== 0 &&
+          disciplinarySearchData.disciplinaryAction !== null &&
+          disciplinarySearchData.disciplinaryAction !== undefined &&
+          disciplinarySearchData.disciplinaryAction !== "" ? (
+            <ReasonByEmployee />
+          ) : (
+            ""
+          )}
+        </Modal.Body>
+      </Modal>
       <Modal
         show={showShowCauseNoticeModalLink}
         onHide={handleShowCauseLetterCloseLink}
@@ -711,7 +742,8 @@ const EmployeShowCaseLetter = () => {
                       >
                         <Col sm={2}>
                           <div>
-                            <label> Add Remarks:</label>
+                            {/* <label> Add Remarks:</label> */}
+                            <label>Reason By Employee:</label>
                           </div>
                         </Col>
                         {submitted === true ||
@@ -719,10 +751,18 @@ const EmployeShowCaseLetter = () => {
                           state.employeeCommentSCIN !== undefined &&
                           state.employeeCommentSCIN !== "") ? (
                           <Col sm={6}>
-                            <div>
+                            {/* <div>
                               <label className="itemResult">
                                 &nbsp;&nbsp; {state.empRemark}
                               </label>
+                            </div> */}
+                               <div>
+                            <a onClick={employeeReason}>
+                              {" "}
+                              <u className="itemResult">
+                                Reason By Employee
+                              </u>
+                            </a>
                             </div>
                           </Col>
                         ) : (
