@@ -214,6 +214,7 @@ const CostCenterManagerAction = () => {
   const handleShowCauseLetterCloseLink = () => {
     setShow(false);
     setShowLink1(false);
+    setShowLink(false);
   };
 
   const saveOfferLetter = () => {

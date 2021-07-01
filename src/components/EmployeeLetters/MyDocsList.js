@@ -249,10 +249,15 @@ const EmployeeDocementsList = () => {
                               </Link>
                             </td>
                             <td>
-                              {item.disciplinaryAction !== null &&
-                              item.disciplinaryAction !== undefined &&
-                              item.disciplinaryAction.employeeActionStatus !==
-                                "Responded" ? (
+                              {item.disciplinaryWarning !== null &&
+                              item.disciplinaryWarning !== undefined ? (
+                                <Edit2 />
+                              ) : item.disciplinaryAction !== null &&
+                                item.disciplinaryAction !== undefined &&
+                                item.disciplinaryAction.statusDesc !==
+                                  "Exit Initiated" &&
+                                item.disciplinaryAction.employeeActionStatus !==
+                                  "Responded" ? (
                                 <Link to="/letters/show-cause">
                                   <Edit2
                                     onClick={() => {

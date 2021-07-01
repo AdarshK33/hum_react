@@ -70,9 +70,9 @@ const ShowCauseNotice = () => {
               disciplinarySearchData.disciplinaryAction !== undefined &&
               Object.keys(disciplinarySearchData).length !== 0 &&
               disciplinarySearchData.disciplinaryAction.reason === "Other" ? (
-                <b>disciplinarySearchData.disciplinaryAction.reasonDetails</b>
+                <b>{disciplinarySearchData.disciplinaryAction.reasonDetails}</b>
               ) : (
-                <b>"Non-Performance"</b>
+                <b>Non-Performance</b>
               )}{" "}
               which, if proved, would warrant serious disciplinary action
               against you.
