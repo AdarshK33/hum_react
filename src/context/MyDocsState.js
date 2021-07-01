@@ -48,7 +48,7 @@ export const MyDocsProvider = (props) => {
   const MyDisciplinaryActionListView = (key, pageNumber) => {
     setLoader(true);
     client
-      .get("/api/v1/disciplinary/view/employee?employeeId=" + "DSI000053")
+      .get("/api/v1/disciplinary/view/employee?employeeId=" + "DSI008426")
       .then((response) => {
         console.log("docslist", response);
         state.myDiscilinaryListData = response.data.data;

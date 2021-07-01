@@ -42,6 +42,7 @@ const ManagerWarningAction = (props) => {
   const [showShowCauseNoticeModalLink1, setShowLink1] = useState(false);
   const [employeeReasonShow, setEmployeeReasonShow] = useState(false);
 
+  const [reasonStatus, setReasonStaus] = useState("");
   const history = useHistory();
 
   const [state, setState] = useState({
@@ -184,7 +185,6 @@ const ManagerWarningAction = (props) => {
         } else if (disciplinarySearchData.disciplinaryAction.reasonId === 2) {
           setShowCauseReason("Others");
           setIssueWarningStatus("");
-
         }
       }
       if (
@@ -194,7 +194,7 @@ const ManagerWarningAction = (props) => {
         disciplinarySearchData.disciplinaryWarning !== ""
       ) {
         setIssueWarningStatus("yes");
-      
+
         setWarningManagerReason(
           disciplinarySearchData.disciplinaryWarning.managerComment
         );
@@ -208,7 +208,7 @@ const ManagerWarningAction = (props) => {
           disciplinarySearchData.disciplinaryWarning.improvementPeriod;
         state.disciplinaryWarning.managerComment =
           disciplinarySearchData.disciplinaryWarning.managerComment;
-          state.disciplinaryWarning.pipEndDate =
+        state.disciplinaryWarning.pipEndDate =
           disciplinarySearchData.disciplinaryWarning.pipEndDate;
         state.disciplinaryWarning.reason =
           disciplinarySearchData.disciplinaryWarning.reason;
@@ -250,11 +250,11 @@ const ManagerWarningAction = (props) => {
   }, [disciplinarySearchData]);
   const handleInitialExit = (e) => {
     e.preventDefault();
-    var valueStatus = null
-    if(e.target.name === 'issueresolved'){
-      valueStatus = 3
-    }else if(e.target.name === "initiateexit"){
-      valueStatus = 1
+    var valueStatus = null;
+    if (e.target.name === "issueresolved") {
+      valueStatus = 3;
+    } else if (e.target.name === "initiateexit") {
+      valueStatus = 1;
     }
     var infoData = {
       company: state.company,
@@ -288,7 +288,7 @@ const ManagerWarningAction = (props) => {
                 state.disciplinaryWarning.employeeWarningStatus,
               improvementPeriod: state.disciplinaryWarning.improvementPeriod,
               managerComment: state.disciplinaryWarning.managerComment,
-              pipEndDate: state.disciplinaryWarning.pipEndDate,    
+              pipEndDate: state.disciplinaryWarning.pipEndDate,
               reason: state.disciplinaryWarning.reason,
               reasonDetails: state.disciplinaryWarning.reasonDetails,
               reasonDetailsId: state.disciplinaryWarning.reasonDetailsId,
@@ -388,7 +388,7 @@ const ManagerWarningAction = (props) => {
                   state.disciplinaryWarning.employeeWarningStatus,
                 improvementPeriod: state.disciplinaryWarning.improvementPeriod,
                 managerComment: state.disciplinaryWarning.managerComment,
-                pipEndDate: state.disciplinaryWarning.pipEndDate,    
+                pipEndDate: state.disciplinaryWarning.pipEndDate,
                 reason: state.disciplinaryWarning.reason,
                 reasonDetails: state.disciplinaryWarning.reasonDetails,
                 reasonDetailsId: state.disciplinaryWarning.reasonDetailsId,
@@ -445,7 +445,7 @@ const ManagerWarningAction = (props) => {
   };
   const changeHandler = (e) => {
     e.preventDefault();
-    console.log(e.target.value)
+    console.log(e.target.value);
     if (e.target.name === "managerComment") {
       setWarningManagerReason(e.target.value);
     }else{
@@ -454,7 +454,7 @@ const ManagerWarningAction = (props) => {
         [e.target.name]: e.target.value,
       });
     }
-    console.log(state)
+    console.log(state);
   };
 
   const handleChangeLetter = (e) => {
@@ -622,16 +622,14 @@ console.log(state)
     console.log(";;;;;");
     setEmployeeReasonShow(true);
   };
-  
+
   const handleEmployeeReason = () => setEmployeeReasonShow(false);
   return (
     <div>
-          <Modal
-        show={employeeReasonShow}
-        onHide={handleEmployeeReason}
-        size="md"
-      >
-        <Modal.Header closeButton className="modal-line">Employee Reason</Modal.Header>
+      <Modal show={employeeReasonShow} onHide={handleEmployeeReason} size="md">
+        <Modal.Header closeButton className="modal-line">
+          Employee Reason
+        </Modal.Header>
         <Modal.Body>
           {disciplinarySearchData &&
           disciplinarySearchData &&
@@ -647,7 +645,7 @@ console.log(state)
           )}
         </Modal.Body>
       </Modal>
-        <Modal
+      <Modal
         show={showShowCauseNoticeModalLink1}
         onHide={handleShowCauseLetterCloseLink}
         size="md"
@@ -1329,7 +1327,7 @@ console.log(state)
                                     </label>
                                   </div>
                                 </Col>
-                              ):(
+                              ) : (
                                 <Col sm={3}>
                                   <Form.Group>
                                     <Form.Control
@@ -1469,18 +1467,26 @@ console.log(state)
                                 textAlign: "center",
                               }}
                             >
-                             { 
-          disciplinarySearchData.disciplinaryWarning == null ||
-          disciplinarySearchData.disciplinaryWarning == undefined ||
-          disciplinarySearchData.disciplinaryWarning == "" ? <button
-                                disabled={submitted}
-                                className={
-                                  submitted ? "confirmButton" : "stepperButtons"
-                                }
-                                onClick={handleSubmit}
-                              >
-                                Save
-                              </button>:''}
+                              {disciplinarySearchData.disciplinaryWarning ==
+                                null ||
+                              disciplinarySearchData.disciplinaryWarning ==
+                                undefined ||
+                              disciplinarySearchData.disciplinaryWarning ==
+                                "" ? (
+                                <button
+                                  disabled={submitted}
+                                  className={
+                                    submitted
+                                      ? "confirmButton"
+                                      : "stepperButtons"
+                                  }
+                                  onClick={handleSubmit}
+                                >
+                                  Save
+                                </button>
+                              ) : (
+                                ""
+                              )}
 
                               {!saveLetter &&
                               showPreview === true &&
@@ -1553,31 +1559,42 @@ console.log(state)
                             </Col>
                           </Row>
                         </>
-                      ) : issueWarningStatus === "no" ?(
+                      ) : issueWarningStatus === "no" ? (
                         <Row>
-                             {(  disciplinarySearchData.disciplinaryWarning !== null &&
-        disciplinarySearchData.disciplinaryWarning !== undefined &&
-        Object.keys(disciplinarySearchData.disciplinaryWarning).length !== 0 &&
-        disciplinarySearchData.disciplinaryWarning !== ""
-                        // state.disciplinaryWarning['pipEndDate'].getTime()/1000 <= new Date().getTime() / 1000
-                               )?  <Col
-                            style={{
-                              marginTop: "2rem",
-                              marginBottom: "2rem",
-                              textAlign: "center",
-                            }}
-                          >
-                            <button
-                              name="issueresolved"
-                              disabled={submitted}
-                              className={
-                                submitted ? "confirmButton" : "stepperButtons"
-                              }
-                              onClick={handleInitialExit}
+                          {disciplinarySearchData.disciplinaryWarning !==
+                            null &&
+                          disciplinarySearchData.disciplinaryWarning !==
+                            undefined &&
+                          Object.keys(
+                            disciplinarySearchData.disciplinaryWarning
+                          ).length !== 0 &&
+                          disciplinarySearchData.disciplinaryWarning !== "" &&
+                          moment(
+                            disciplinarySearchData.disciplinaryWarning
+                              .pipEndDate
+                          ).isBefore(new Date()) === true ? (
+                            // state.disciplinaryWarning['pipEndDate'].getTime()/1000 <= new Date().getTime() / 1000
+                            <Col
+                              style={{
+                                marginTop: "2rem",
+                                marginBottom: "2rem",
+                                textAlign: "center",
+                              }}
                             >
-                              Issue Resolved
-                            </button>
-                          </Col>:''}
+                              <button
+                                name="issueresolved"
+                                disabled={submitted}
+                                className={
+                                  submitted ? "confirmButton" : "stepperButtons"
+                                }
+                                onClick={handleInitialExit}
+                              >
+                                Issue Resolved
+                              </button>
+                            </Col>
+                          ) : (
+                            ""
+                          )}
                           <Col
                             style={{
                               marginTop: "2rem",
@@ -1586,7 +1603,7 @@ console.log(state)
                             }}
                           >
                             <button
-                            name="initiateexit"
+                              name="initiateexit"
                               disabled={submitted}
                               className={
                                 submitted ? "confirmButton" : "stepperButtons"
@@ -1597,7 +1614,9 @@ console.log(state)
                             </button>
                           </Col>
                         </Row>
-                      ):''}
+                      ) : (
+                        ""
+                      )}
                     </Col>
                   </Row>
                 </Form>
