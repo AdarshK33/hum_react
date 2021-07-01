@@ -4,6 +4,8 @@ import { Search, PlusCircle, MinusCircle } from "react-feather";
 import Breadcrumb from "../../common/breadcrumb";
 import { Link } from "react-router-dom";
 import WarningLetter from "./WarningLetter";
+import ShowCauseNotice from "../Manager/ShowCauseNoticeLetter";
+
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 import moment from "moment";
 import { toast } from "react-toastify";
@@ -313,7 +315,7 @@ const ManagerWarningAction = (props) => {
       storeLocation: state.storeLocation,
     };
     console.log(infoData, "infoData");
-    // createShowCauseIssue(infoData);
+     createShowCauseIssue(infoData);
     setInitalExit(true);
     setSubmitted(true);
   };
@@ -678,7 +680,7 @@ console.log(state)
             {issueShowCauseNoticeData &&
             issueShowCauseNoticeData !== undefined &&
             issueShowCauseNoticeData !== null ? (
-              <WarningLetter />
+              <ShowCauseNotice />
             ) : (
               ""
             )}
@@ -999,7 +1001,7 @@ console.log(state)
                             </div>
                           </Col>
                         </>
-                       {state.disciplinaryAction.reason == "Others"? <>
+                       {state.disciplinaryAction.reason == "Other"? <>
                       <Col sm={2}>
                             <div>
                               <label>Reason for Show Case Notice:</label>
@@ -1102,6 +1104,10 @@ console.log(state)
                       ) : (
                         ""
                       )}
+                     {disciplinarySearchData.disciplinaryAction !== null &&
+                      disciplinarySearchData.disciplinaryAction !== undefined &&
+                      disciplinarySearchData.disciplinaryAction.employeeComment !== "" &&
+                      disciplinarySearchData.disciplinaryAction.employeeComment !== null?
                        <Row
                             style={{
                               marginLeft: "2rem",
@@ -1124,7 +1130,7 @@ console.log(state)
                                 </a>
                               </div>
                             </Col>
-                          </Row>
+                          </Row>:''}
                       {disciplinarySearchData.disciplinaryAction !== null &&
                       disciplinarySearchData.disciplinaryAction !== undefined &&
                       disciplinarySearchData.disciplinaryAction !== "" &&
