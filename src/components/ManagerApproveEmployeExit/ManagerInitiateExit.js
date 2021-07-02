@@ -800,7 +800,7 @@ const ManagerInitiateExit = () => {
             employeeName: EmpName,
             exitId: 0,
             hoursWorked: null,
-            lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
+            lastWorkingDate: moment(dateOfResignation).format("YYYY-MM-DD"),
             location: searchByCostData.locationId,
             managerCostCentre: state.managerCostCentre,
             managerEmailId: null,
@@ -826,7 +826,7 @@ const ManagerInitiateExit = () => {
           setPreview(true);
           //   empResign(data1);
           setSuccessModal(true);
-          TerminationFromDesciplinary(false);
+          //  TerminationFromDesciplinary(false);
         } else if (intern === true) {
           const data1 = {
             company: null,
@@ -870,7 +870,7 @@ const ManagerInitiateExit = () => {
           // CreateEmplyoeeExist(data2, state.empId);
           setPreview(true);
           setSuccessModal(true);
-          TerminationFromDesciplinary(false);
+          // TerminationFromDesciplinary(false);
         }
       }
     }
