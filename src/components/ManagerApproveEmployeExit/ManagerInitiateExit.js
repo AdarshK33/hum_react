@@ -616,16 +616,21 @@ const ManagerInitiateExit = () => {
     }
   };
   const lastWarkingDateValidate = () => {
-    if (
-      lastWorkingDate !== "" &&
-      lastWorkingDate !== null &&
-      lastWorkingDate !== undefined
-    ) {
+    if (DisciplinaryTermination === false) {
+      if (
+        lastWorkingDate !== "" &&
+        lastWorkingDate !== null &&
+        lastWorkingDate !== undefined
+      ) {
+        setLastWorkingDateError(false);
+        return true;
+      } else {
+        setLastWorkingDateError(true);
+        return false;
+      }
+    } else {
       setLastWorkingDateError(false);
       return true;
-    } else {
-      setLastWorkingDateError(true);
-      return false;
     }
   };
 
@@ -795,7 +800,7 @@ const ManagerInitiateExit = () => {
             employeeName: EmpName,
             exitId: 0,
             hoursWorked: null,
-            lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
+            lastWorkingDate: moment(dateOfResignation).format("YYYY-MM-DD"),
             location: searchByCostData.locationId,
             managerCostCentre: state.managerCostCentre,
             managerEmailId: null,
@@ -821,7 +826,7 @@ const ManagerInitiateExit = () => {
           setPreview(true);
           //   empResign(data1);
           setSuccessModal(true);
-          TerminationFromDesciplinary(false);
+          //  TerminationFromDesciplinary(false);
         } else if (intern === true) {
           const data1 = {
             company: null,
@@ -865,7 +870,7 @@ const ManagerInitiateExit = () => {
           // CreateEmplyoeeExist(data2, state.empId);
           setPreview(true);
           setSuccessModal(true);
-          TerminationFromDesciplinary(false);
+          // TerminationFromDesciplinary(false);
         }
       }
     }
@@ -1303,51 +1308,59 @@ const ManagerInitiateExit = () => {
                             </div>
                           </Col>
                         )}
-                        <Col sm={2}>
-                          <div>
-                            <label>Preffered Last Working Date:</label>
-                          </div>
-                        </Col>
-                        <Col sm={2}>
-                          <div>
-                            {false ? (
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {lastWorkingDate}
-                              </label>
-                            ) : (
-                              <Form.Group>
-                                <div
-                                  className={
-                                    lastWorkingDateError
-                                      ? "onBoard-date-error"
-                                      : "onBoard-date"
-                                  }
-                                >
-                                  <DatePicker
-                                    className="form-control onBoard-view"
-                                    selected={lastWorkingDate}
-                                    name="lastWorkingDate"
-                                    minDate={moment().toDate()}
-                                    // required
-                                    onChange={(e) => dateOfBirthHandler1(e)}
-                                    dateFormat="yyyy-MM-dd"
-                                    placeholderText="YYYY-MM-DD"
-                                    minDate={new Date()}
-                                    // disabled={disabled}
-                                  />
-                                </div>
-                                {lastWorkingDateError ? (
-                                  <p style={{ color: "red" }}>
-                                    {" "}
-                                    &nbsp; *Please select valid date
-                                  </p>
-                                ) : (
-                                  <p></p>
-                                )}
-                              </Form.Group>
-                            )}
-                          </div>
-                        </Col>
+                        {DisciplinaryTermination === true ? (
+                          ""
+                        ) : (
+                          <Col sm={2}>
+                            <div>
+                              <label>Preffered Last Working Date:</label>
+                            </div>
+                          </Col>
+                        )}
+                        {DisciplinaryTermination === true ? (
+                          ""
+                        ) : (
+                          <Col sm={2}>
+                            <div>
+                              {false ? (
+                                <label className="itemResult">
+                                  &nbsp;&nbsp; {lastWorkingDate}
+                                </label>
+                              ) : (
+                                <Form.Group>
+                                  <div
+                                    className={
+                                      lastWorkingDateError
+                                        ? "onBoard-date-error"
+                                        : "onBoard-date"
+                                    }
+                                  >
+                                    <DatePicker
+                                      className="form-control onBoard-view"
+                                      selected={lastWorkingDate}
+                                      name="lastWorkingDate"
+                                      minDate={moment().toDate()}
+                                      // required
+                                      onChange={(e) => dateOfBirthHandler1(e)}
+                                      dateFormat="yyyy-MM-dd"
+                                      placeholderText="YYYY-MM-DD"
+                                      minDate={new Date()}
+                                      // disabled={disabled}
+                                    />
+                                  </div>
+                                  {lastWorkingDateError ? (
+                                    <p style={{ color: "red" }}>
+                                      {" "}
+                                      &nbsp; *Please select valid date
+                                    </p>
+                                  ) : (
+                                    <p></p>
+                                  )}
+                                </Form.Group>
+                              )}
+                            </div>
+                          </Col>
+                        )}
                         {intern ? (
                           <Col sm={2}>
                             <div>

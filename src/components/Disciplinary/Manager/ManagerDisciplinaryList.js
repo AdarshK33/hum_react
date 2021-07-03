@@ -264,8 +264,7 @@ const ManagerDisciplinaryList = () => {
                               </td>
                             ) : (
                               <td>
-                                {
-                                item.disciplinaryAction !== null &&
+                                {item.disciplinaryAction !== null &&
                                 item.disciplinaryAction !== undefined &&
                                 item.disciplinaryAction !== "" &&
                                 item.disciplinaryAction.statusDesc ===
@@ -330,7 +329,21 @@ const ManagerDisciplinaryList = () => {
                                     />
                                   </Link>
                                 ) : (
-                                  <Edit2 />
+                                  // <Edit2 />
+                                  <Link
+                                    to={
+                                      `/manager-warning-action-view/` +
+                                      item.employeeId
+                                    }
+                                  >
+                                    <Edit2
+                                      onClick={() => {
+                                        disciplinaryEmployeeSearch(
+                                          item.disciplinaryAction.disciplinaryId
+                                        );
+                                      }}
+                                    />
+                                  </Link>
                                 )}
                               </td>
                             )}
