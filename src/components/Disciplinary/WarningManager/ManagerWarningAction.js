@@ -40,6 +40,7 @@ const ManagerWarningAction = (props) => {
   const [letterSent, setLetterSent] = useState(false);
   const [showPreview, setPreview] = useState(false);
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
+  const [acceptEmployeeReason,setAcceptEmployeeReason] = useState("")
 
   const [showShowCauseNoticeModalLink1, setShowLink1] = useState(false);
   const [employeeReasonShow, setEmployeeReasonShow] = useState(false);
@@ -181,14 +182,19 @@ const ManagerWarningAction = (props) => {
         state.disciplinaryAction.warningIssued =
           disciplinarySearchData.disciplinaryAction.warningIssued;
 
-        if (disciplinarySearchData.disciplinaryAction.reasonId === 1) {
+        if (disciplinarySearchData.disciplinaryAction.reasonId === 1 && disciplinarySearchData.disciplinaryAction.actionDueDays !== 0) {
           setShowCauseReason("Non-Performance");
           setIssueWarningStatus("yes");
-        } else if (disciplinarySearchData.disciplinaryAction.reasonId === 2) {
+          state.disciplinaryWarning.reasonId = disciplinarySearchData.disciplinaryAction.reasonId
+          state.disciplinaryWarning.reason =   disciplinarySearchData.disciplinaryAction.reason;
+        }else if(disciplinarySearchData.disciplinaryAction.reasonId === 2) {
           setShowCauseReason("Others");
           setIssueWarningStatus("");
         }
-      }
+        if (disciplinarySearchData.disciplinaryAction.actionDueDays == 0){
+          setIssueWarningStatus("no");
+        }
+        }
       if (
         disciplinarySearchData.disciplinaryWarning !== null &&
         disciplinarySearchData.disciplinaryWarning !== undefined &&
@@ -462,9 +468,27 @@ const ManagerWarningAction = (props) => {
   const handleChangeLetter = (e) => {
     var result = e.target.value;
     console.log(result, "result");
+    if(result == "no"){
+      state.disciplinaryWarning.reasonId = 0
+      state.disciplinaryWarning.reason =  null;
+    }else if(result == "yes"){
+      state.disciplinaryWarning.reasonId = disciplinarySearchData.disciplinaryAction.reasonId
+      state.disciplinaryWarning.reason =   disciplinarySearchData.disciplinaryAction.reason;
+    }
     // var result = document.getElementsByClassName("switch-input")[0].checked ? 'yes' : 'no'
 
     setIssueWarningStatus(result);
+    console.log(result, "radio");
+  };
+
+  const handleAcceptEmployeeReason = (e) => {
+    var result = e.target.value;
+    console.log(result, "result");
+    // var result = document.getElementsByClassName("switch-input")[0].checked ? 'yes' : 'no'
+    if(state.disciplinaryAction.status == 3){
+      setAcceptEmployeeReason("yes")
+    }
+    setAcceptEmployeeReason(result);
     console.log(result, "radio");
   };
 
@@ -515,6 +539,47 @@ const ManagerWarningAction = (props) => {
       // finalSubmitOfferLetter(employeeData.employeeId);
     }
   };
+const handleAcceptEmployeeReasonSubmit =(e)=>{
+  var infoData = {
+    company: state.company,
+    contractType: state.contractType,
+    department: state.department,
+    disciplinaryAction: {
+      actionDueDays: state.disciplinaryAction.actionDueDays,
+      actionIssuedDate: state.disciplinaryAction.actionIssuedDate,
+      disciplinaryId: state.disciplinaryAction.disciplinaryId,
+      employeeActionStatus: state.disciplinaryAction.employeeActionStatus,
+      employeeComment: state.disciplinaryAction.employeeComment,
+      employeeId: state.disciplinaryAction.employeeId,
+      managerComment: state.disciplinaryAction.managerComment,
+      reason: state.disciplinaryAction.reason,
+      reasonDetails: state.disciplinaryAction.reasonDetails,
+      reasonDetailsId: state.disciplinaryAction.reasonDetailsId,
+      reasonId: state.disciplinaryAction.reasonId,
+      showCauseLetter: state.disciplinaryAction.showCauseLetter,
+      showCauseNotice: state.disciplinaryAction.showCauseNotice,
+      status: 4,
+      statusDesc: state.disciplinaryAction.statusDesc,
+      warningIssued: true,
+    },
+    disciplinaryWarning:null,
+    employeeAddress: state.employeeAddress,
+    employeeCostCentre: state.employeeCostCentre,
+    employeeId: state.employeeId,
+    employeeName: state.employeeName,
+    managerCostCentre: state.managerCostCentre,
+    managerPosition: state.managerPosition,
+    managerId: state.managerId,
+    managerName: state.managerName,
+    position: state.position,
+    storeLocation: state.storeLocation,
+  };
+  console.log(infoData, "infoData reason");
+  console.log("all okay reason");
+  createShowCauseIssue(infoData);
+  setSubmitted(true);
+
+}
 
   const previewShowCauseLetter = (e) => {
     e.preventDefault();
@@ -624,7 +689,7 @@ console.log(state)
     console.log(";;;;;");
     setEmployeeReasonShow(true);
   };
-
+console.log(state)
   const handleEmployeeReason = () => setEmployeeReasonShow(false);
   return (
     <div>
@@ -723,9 +788,13 @@ console.log(state)
         >
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
+            {acceptEmployeeReason == "yes"?<label className="text-center">
+                  The reason submitted by the employee has been saved successfully.
+                          </label>:
             <label className="text-center">
-              Warning letter has been issued to the employee
-            </label>
+              {/* Warning letter has been issued to the employee */}
+              Warning letter details saved successfully, sent for manager confirmation.
+            </label>}
             <div className="text-center">
               <Button onClick={handleShowCauseLetterClose1}>Close</Button>
             </div>
@@ -1131,6 +1200,100 @@ console.log(state)
                               </div>
                             </Col>
                           </Row>:''}
+                         {state.disciplinaryAction.actionDueDays == 0?'':<Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "1rem",
+                            marginBottom: "3rem",
+                          }}
+                        >
+                          <Col sm={3}>
+                            <label>Do you accept the reason submitted by the employee? </label>
+                          </Col>
+                          <Col sm={1} style={{ marginTop: "0.25rem" }}>
+                            <Form.Group>
+                              <div className="boxField_2 input">
+                                <input
+                                  className="largerCheckbox"
+                                  type="checkbox"
+                                  value="yes"
+                                  checked={
+                                    acceptEmployeeReason == "yes" ? true : false
+                                  }
+                                  style={{ borderColor: "blue" }}
+                                  // required={required}
+                                  onChange={handleAcceptEmployeeReason}
+                                  // disabled={
+                                  //   disciplinarySearchData.disciplinaryAction !==
+                                  //     null &&
+                                  //   disciplinarySearchData.disciplinaryAction !==
+                                  //     undefined &&
+                                  //   disciplinarySearchData.disciplinaryAction !==
+                                  //     "" &&
+                                  //   disciplinarySearchData.disciplinaryAction
+                                  //     .reason === "Non-performance"
+                                  //     ? true
+                                  //     : false
+                                  // }
+                                />
+                                <label className="itemResult">Yes</label>
+                              </div>
+                            </Form.Group>
+                          </Col>
+                          <Col sm={1} style={{ marginTop: "0.25rem" }}>
+                            <Form.Group>
+                              <div className="boxField_2 input">
+                                <input
+                                  className="largerCheckbox"
+                                  type="checkbox"
+                                  value="no"
+                                  checked={
+                                    acceptEmployeeReason == "no" ? true : false
+                                  }
+                                  style={{ borderColor: "blue" }}
+                                  // required={required}
+                                  onChange={handleAcceptEmployeeReason}
+                                  // disabled={
+                                  //   disciplinarySearchData.disciplinaryAction !==
+                                  //     null &&
+                                  //   disciplinarySearchData.disciplinaryAction !==
+                                  //     undefined &&
+                                  //   disciplinarySearchData.disciplinaryAction !==
+                                  //     "" &&
+                                  //   disciplinarySearchData.disciplinaryAction
+                                  //     .reason === "Non-performance"
+                                  //     ? true
+                                  //     : false
+                                  // }
+                                />
+                                <label className="itemResult">No</label>
+                              </div>
+                            </Form.Group>
+                          </Col>
+                        </Row>}
+                        {acceptEmployeeReason=="yes"?<>
+                        <Row>
+                            <Col
+                              style={{
+                                marginTop: "2rem",
+                                marginBottom: "2rem",
+                                textAlign: "center",
+                              }}
+                            >
+                        <button
+                                  disabled={submitted}
+                                  className={
+                                    submitted
+                                      ? "confirmButton"
+                                      : "stepperButtons"
+                                  }
+                                  onClick={handleAcceptEmployeeReasonSubmit}
+                                >
+                                  Save
+                                </button>
+                                </Col>
+                                </Row>
+                        </>:(acceptEmployeeReason=="no"||state.disciplinaryAction.actionDueDays == 0)?<>
                       {disciplinarySearchData.disciplinaryAction !== null &&
                       disciplinarySearchData.disciplinaryAction !== undefined &&
                       disciplinarySearchData.disciplinaryAction !== "" &&
@@ -1333,7 +1496,7 @@ console.log(state)
                                     </label>
                                   </div>
                                 </Col>
-                              ) : (
+                              ) :state.disciplinaryWarning.reasonId !==2? (
                                 <Col sm={3}>
                                   <Form.Group>
                                     <Form.Control
@@ -1380,7 +1543,7 @@ console.log(state)
                                     )}
                                   </Form.Group>
                                 </Col>
-                              )}
+                              ):''}
                             </>
                           </Row>
                           <Row
@@ -1622,7 +1785,7 @@ console.log(state)
                         </Row>
                       ) : (
                         ""
-                      )}
+                      )}</>:''}
                     </Col>
                   </Row>
                 </Form>
