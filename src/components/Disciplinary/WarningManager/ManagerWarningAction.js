@@ -315,7 +315,7 @@ const ManagerWarningAction = (props) => {
       storeLocation: state.storeLocation,
     };
     console.log(infoData, "infoData");
-     createShowCauseIssue(infoData);
+    createShowCauseIssue(infoData);
     setInitalExit(true);
     setSubmitted(true);
   };
@@ -450,7 +450,7 @@ const ManagerWarningAction = (props) => {
     console.log(e.target.value);
     if (e.target.name === "managerComment") {
       setWarningManagerReason(e.target.value);
-    }else{
+    } else {
       setState({
         ...state,
         [e.target.name]: e.target.value,
@@ -591,7 +591,7 @@ const ManagerWarningAction = (props) => {
     setShow(true);
   };
   // end
-console.log(state)
+  console.log(state);
   const handleInfoClose = () => {
     setShowInfoModal(false);
     setEmpName("");
@@ -616,7 +616,7 @@ console.log(state)
       searchByCostCenter(disciplinarySearchData.employeeId);
       ModeOfSeparationView();
       TerminationFromDesciplinary(true);
-      history.push("../manager-initiate-exit");
+      history.push("../disciplinary-separation");
       // <Link to=}> </Link>
     }
   };
@@ -641,7 +641,9 @@ console.log(state)
           disciplinarySearchData.disciplinaryAction !== null &&
           disciplinarySearchData.disciplinaryAction !== undefined &&
           disciplinarySearchData.disciplinaryAction !== "" ? (
-           <label>{disciplinarySearchData.disciplinaryAction.employeeComment}</label> 
+            <label>
+              {disciplinarySearchData.disciplinaryAction.employeeComment}
+            </label>
           ) : (
             ""
           )}
@@ -1001,20 +1003,24 @@ console.log(state)
                             </div>
                           </Col>
                         </>
-                       {state.disciplinaryAction.reason == "Other"? <>
-                      <Col sm={2}>
-                            <div>
-                              <label>Reason for Show Case Notice:</label>
-                            </div>
-                          </Col>
-                          <Col sm={4}>
-                            <div>
-                              <label className="itemResult">
-                                {state.disciplinaryAction.reasonDetails}
-                              </label>
-                            </div>
-                          </Col>
-                        </>:''}
+                        {state.disciplinaryAction.reason == "Other" ? (
+                          <>
+                            <Col sm={2}>
+                              <div>
+                                <label>Reason for Show Case Notice:</label>
+                              </div>
+                            </Col>
+                            <Col sm={4}>
+                              <div>
+                                <label className="itemResult">
+                                  {state.disciplinaryAction.reasonDetails}
+                                </label>
+                              </div>
+                            </Col>
+                          </>
+                        ) : (
+                          ""
+                        )}
                       </Row>
                       <Row
                         style={{
@@ -1104,33 +1110,36 @@ console.log(state)
                       ) : (
                         ""
                       )}
-                     {disciplinarySearchData.disciplinaryAction !== null &&
+                      {disciplinarySearchData.disciplinaryAction !== null &&
                       disciplinarySearchData.disciplinaryAction !== undefined &&
-                      disciplinarySearchData.disciplinaryAction.employeeComment !== "" &&
-                      disciplinarySearchData.disciplinaryAction.employeeComment !== null?
-                       <Row
-                            style={{
-                              marginLeft: "2rem",
-                              marginTop: "2rem",
-                              marginBottom: "1rem",
-                            }}
-                          >
-                            <Col sm={2}>
-                              <div>
-                                <label>Reason By Employee:</label>
-                              </div>
-                            </Col>
-                            <Col sm={6}>
-                              <div>
-                                <a onClick={employeeReason}>
-                                  {" "}
-                                  <u className="itemResult">
-                                    Reason By Employee
-                                  </u>
-                                </a>
-                              </div>
-                            </Col>
-                          </Row>:''}
+                      disciplinarySearchData.disciplinaryAction
+                        .employeeComment !== "" &&
+                      disciplinarySearchData.disciplinaryAction
+                        .employeeComment !== null ? (
+                        <Row
+                          style={{
+                            marginLeft: "2rem",
+                            marginTop: "2rem",
+                            marginBottom: "1rem",
+                          }}
+                        >
+                          <Col sm={2}>
+                            <div>
+                              <label>Reason By Employee:</label>
+                            </div>
+                          </Col>
+                          <Col sm={6}>
+                            <div>
+                              <a onClick={employeeReason}>
+                                {" "}
+                                <u className="itemResult">Reason By Employee</u>
+                              </a>
+                            </div>
+                          </Col>
+                        </Row>
+                      ) : (
+                        ""
+                      )}
                       {disciplinarySearchData.disciplinaryAction !== null &&
                       disciplinarySearchData.disciplinaryAction !== undefined &&
                       disciplinarySearchData.disciplinaryAction !== "" &&
@@ -1315,12 +1324,12 @@ console.log(state)
                                   <label>Performance Improvement period:</label>
                                 </div>
                               </Col>
-                              { (state.disciplinaryWarning.improvementPeriod !==
+                              {state.disciplinaryWarning.improvementPeriod !==
                                 null &&
                               state.disciplinaryWarning.improvementPeriod !==
                                 undefined &&
                               state.disciplinaryWarning.improvementPeriod !==
-                                "" )? (
+                                "" ? (
                                 <Col sm={3}>
                                   <div>
                                     <label className="itemResult">
@@ -1439,32 +1448,37 @@ console.log(state)
                               )}
                             </>
                           </Row>
-                         {Object.keys(disciplinarySearchData).length !== 0 &&
-          disciplinarySearchData.disciplinaryWarning !== null &&
-          disciplinarySearchData.disciplinaryWarning !== undefined ? <Row
-                            style={{
-                              marginLeft: "2rem",
-                              marginTop: "2rem",
-                              marginBottom: "1rem",
-                            }}
-                          >
-                            <Col sm={2}>
-                              <div>
-                                <label>Preview Warning Letter:</label>
-                              </div>
-                            </Col>
-                            <Col sm={6}>
-                              <div>
-                                <a onClick={LetterShow1}>
-                                  {" "}
-                                  <u className="itemResult">
-                                    View Warning Letter
-                                  </u>
-                                </a>
-                              </div>
-                            </Col>
-                          </Row>:''}
-                         
+                          {Object.keys(disciplinarySearchData).length !== 0 &&
+                          disciplinarySearchData.disciplinaryWarning !== null &&
+                          disciplinarySearchData.disciplinaryWarning !==
+                            undefined ? (
+                            <Row
+                              style={{
+                                marginLeft: "2rem",
+                                marginTop: "2rem",
+                                marginBottom: "1rem",
+                              }}
+                            >
+                              <Col sm={2}>
+                                <div>
+                                  <label>Preview Warning Letter:</label>
+                                </div>
+                              </Col>
+                              <Col sm={6}>
+                                <div>
+                                  <a onClick={LetterShow1}>
+                                    {" "}
+                                    <u className="itemResult">
+                                      View Warning Letter
+                                    </u>
+                                  </a>
+                                </div>
+                              </Col>
+                            </Row>
+                          ) : (
+                            ""
+                          )}
+
                           <Row>
                             <Col
                               style={{

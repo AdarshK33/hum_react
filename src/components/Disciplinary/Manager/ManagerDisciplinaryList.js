@@ -90,11 +90,19 @@ const ManagerDisciplinaryList = () => {
     CostCenter();
   };
   function getDifferenceInDays(date1, date2) {
-    const diffInMs = Math.abs(date2 - date1);
-    const result = diffInMs / (1000 * 60 * 60 * 24);
-    console.log("result", result);
-    return result;
+    const STdate = new Date(date1);
+    const ENDdate = new Date(date2);
+    const diffTime = ENDdate - STdate;
+    const diffDays = diffTime / (1000 * 60 * 60 * 24);
+    console.log(diffTime + " milliseconds");
+    console.log(diffDays + " days");
+    if (diffDays <= 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
+  // console.log(getDifferenceInDays("2021-07-03", "2021-07-04"));
 
   return (
     <Fragment>
@@ -268,7 +276,19 @@ const ManagerDisciplinaryList = () => {
                                 item.disciplinaryAction !== undefined &&
                                 item.disciplinaryAction !== "" &&
                                 item.disciplinaryAction.statusDesc ===
-                                  "Exit Initiated" ? (
+                                  "Employee Reason Accepted" ? (
+                                  <Edit2 />
+                                ) : item.disciplinaryAction !== null &&
+                                  item.disciplinaryAction !== undefined &&
+                                  item.disciplinaryAction !== "" &&
+                                  item.disciplinaryAction.statusDesc ===
+                                    "Issue Resolved" ? (
+                                  <Edit2 />
+                                ) : item.disciplinaryAction !== null &&
+                                  item.disciplinaryAction !== undefined &&
+                                  item.disciplinaryAction !== "" &&
+                                  item.disciplinaryAction.statusDesc ===
+                                    "Exit Initiated" ? (
                                   <Edit2 />
                                 ) : item.disciplinaryAction !== null &&
                                   item.disciplinaryAction !== undefined &&
@@ -276,13 +296,19 @@ const ManagerDisciplinaryList = () => {
                                   item.disciplinaryWarning !== null &&
                                   item.disciplinaryWarning !== undefined &&
                                   item.disciplinaryWarning !== "" ? (
-                                  (item.disciplinaryAction.statusDesc ===
+                                  (item.disciplinaryWarning.statusDesc ===
                                     "Warning Letter Issued" ||
-                                    item.disciplinaryAction.statusDesc ===
+                                    item.disciplinaryWarning.statusDesc ===
                                       "Warning Letter Approved") &&
-                                  moment(
-                                    item.disciplinaryWarning.pipEndDate
-                                  ).isBefore(new Date()) === true ? (
+                                  getDifferenceInDays(
+                                    new Date(
+                                      item.disciplinaryWarning.warningIssuedDate
+                                    ),
+                                    new Date(
+                                      item.disciplinaryWarning.pipEndDate
+                                      // "2021-07-03"
+                                    )
+                                  ) === true ? (
                                     <Link
                                       to={
                                         `/manager-warning-action-view/` +
