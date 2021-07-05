@@ -208,7 +208,7 @@ const EmployeeDocementsList = () => {
                                 {item.disciplinaryWarning.warningIssuedDate}
                               </td>
                             ) : (
-                              <td>-</td>
+                              <td>NA</td>
                             )}
                             {item.disciplinaryWarning !== null &&
                             item.disciplinaryWarning !== undefined ? (
@@ -216,13 +216,13 @@ const EmployeeDocementsList = () => {
                                 {item.disciplinaryWarning.warningIssuedDate}
                               </td>
                             ) : (
-                              <td>-</td>
+                              <td>NA</td>
                             )}
                             {item.disciplinaryWarning !== null &&
                             item.disciplinaryWarning !== undefined ? (
                               <td>{item.disciplinaryWarning.pipEndDate}</td>
                             ) : (
-                              <td>-</td>
+                              <td>NA</td>
                             )}
                             {item.disciplinaryAction !== null &&
                             item.disciplinaryAction !== undefined ? (
