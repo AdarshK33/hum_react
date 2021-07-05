@@ -421,7 +421,8 @@ const CostCenterManagerAction = () => {
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Show cause letter has been issued to the employee
+              Show cause notice issued successfully , the employee has been
+              notified.
             </label>
             <div className="text-center">
               <Button onClick={handleShowCauseLetterClose1}>Close</Button>
@@ -516,7 +517,10 @@ const CostCenterManagerAction = () => {
             {/* <Modal.Title>State remarks for disapproval</Modal.Title> */}
           </Modal.Header>{" "}
           <Modal.Body className="mx-auto">
-            <label>Show cause notice has been issued to the employee</label>
+            <label>
+              Show cause notice issued successfully , the employee has been
+              notified.
+            </label>
 
             <div className="text-center mb-2">
               <Button onClick={() => handleClose()}>Close</Button>

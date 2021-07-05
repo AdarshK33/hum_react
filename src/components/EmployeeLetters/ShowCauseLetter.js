@@ -439,7 +439,7 @@ const EmployeShowCaseLetter = () => {
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Notification has been sent to the manager
+              Show cause details saved successfully, manager has been notified.
             </label>
             <div className="text-center">
               <Button onClick={handleShowCauseLetterClose1}>Close</Button>
@@ -524,7 +524,9 @@ const EmployeShowCaseLetter = () => {
             {/* <Modal.Title>State remarks for disapproval</Modal.Title> */}
           </Modal.Header>{" "}
           <Modal.Body className="mx-auto">
-            <label>Show cause notice has been issued to the employee</label>
+            <label>
+              Show cause details saved successfully, manager has been notified.
+            </label>
 
             <div className="text-center mb-2">
               <Button onClick={() => handleClose()}>Close</Button>

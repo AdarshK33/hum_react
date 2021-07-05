@@ -40,6 +40,7 @@ const ManagerWarningAction = (props) => {
   const [letterSent, setLetterSent] = useState(false);
   const [showPreview, setPreview] = useState(false);
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
+  const [acceptEmployeeReason, setAcceptEmployeeReason] = useState("");
 
   const [showShowCauseNoticeModalLink1, setShowLink1] = useState(false);
   const [employeeReasonShow, setEmployeeReasonShow] = useState(false);
@@ -181,12 +182,22 @@ const ManagerWarningAction = (props) => {
         state.disciplinaryAction.warningIssued =
           disciplinarySearchData.disciplinaryAction.warningIssued;
 
-        if (disciplinarySearchData.disciplinaryAction.reasonId === 1) {
+        if (
+          disciplinarySearchData.disciplinaryAction.reasonId === 1 &&
+          disciplinarySearchData.disciplinaryAction.actionDueDays !== 0
+        ) {
           setShowCauseReason("Non-Performance");
           setIssueWarningStatus("yes");
+          state.disciplinaryWarning.reasonId =
+            disciplinarySearchData.disciplinaryAction.reasonId;
+          state.disciplinaryWarning.reason =
+            disciplinarySearchData.disciplinaryAction.reason;
         } else if (disciplinarySearchData.disciplinaryAction.reasonId === 2) {
           setShowCauseReason("Others");
           setIssueWarningStatus("");
+        }
+        if (disciplinarySearchData.disciplinaryAction.actionDueDays == 0) {
+          setIssueWarningStatus("no");
         }
       }
       if (
@@ -462,9 +473,29 @@ const ManagerWarningAction = (props) => {
   const handleChangeLetter = (e) => {
     var result = e.target.value;
     console.log(result, "result");
+    if (result == "no") {
+      state.disciplinaryWarning.reasonId = 0;
+      state.disciplinaryWarning.reason = null;
+    } else if (result == "yes") {
+      state.disciplinaryWarning.reasonId =
+        disciplinarySearchData.disciplinaryAction.reasonId;
+      state.disciplinaryWarning.reason =
+        disciplinarySearchData.disciplinaryAction.reason;
+    }
     // var result = document.getElementsByClassName("switch-input")[0].checked ? 'yes' : 'no'
 
     setIssueWarningStatus(result);
+    console.log(result, "radio");
+  };
+
+  const handleAcceptEmployeeReason = (e) => {
+    var result = e.target.value;
+    console.log(result, "result");
+    // var result = document.getElementsByClassName("switch-input")[0].checked ? 'yes' : 'no'
+    if (state.disciplinaryAction.status == 3) {
+      setAcceptEmployeeReason("yes");
+    }
+    setAcceptEmployeeReason(result);
     console.log(result, "radio");
   };
 
@@ -514,6 +545,46 @@ const ManagerWarningAction = (props) => {
 
       // finalSubmitOfferLetter(employeeData.employeeId);
     }
+  };
+  const handleAcceptEmployeeReasonSubmit = (e) => {
+    var infoData = {
+      company: state.company,
+      contractType: state.contractType,
+      department: state.department,
+      disciplinaryAction: {
+        actionDueDays: state.disciplinaryAction.actionDueDays,
+        actionIssuedDate: state.disciplinaryAction.actionIssuedDate,
+        disciplinaryId: state.disciplinaryAction.disciplinaryId,
+        employeeActionStatus: state.disciplinaryAction.employeeActionStatus,
+        employeeComment: state.disciplinaryAction.employeeComment,
+        employeeId: state.disciplinaryAction.employeeId,
+        managerComment: state.disciplinaryAction.managerComment,
+        reason: state.disciplinaryAction.reason,
+        reasonDetails: state.disciplinaryAction.reasonDetails,
+        reasonDetailsId: state.disciplinaryAction.reasonDetailsId,
+        reasonId: state.disciplinaryAction.reasonId,
+        showCauseLetter: state.disciplinaryAction.showCauseLetter,
+        showCauseNotice: state.disciplinaryAction.showCauseNotice,
+        status: 4,
+        statusDesc: state.disciplinaryAction.statusDesc,
+        warningIssued: true,
+      },
+      disciplinaryWarning: null,
+      employeeAddress: state.employeeAddress,
+      employeeCostCentre: state.employeeCostCentre,
+      employeeId: state.employeeId,
+      employeeName: state.employeeName,
+      managerCostCentre: state.managerCostCentre,
+      managerPosition: state.managerPosition,
+      managerId: state.managerId,
+      managerName: state.managerName,
+      position: state.position,
+      storeLocation: state.storeLocation,
+    };
+    console.log(infoData, "infoData reason");
+    console.log("all okay reason");
+    createShowCauseIssue(infoData);
+    setSubmitted(true);
   };
 
   const previewShowCauseLetter = (e) => {
@@ -624,8 +695,21 @@ const ManagerWarningAction = (props) => {
     console.log(";;;;;");
     setEmployeeReasonShow(true);
   };
-
+  console.log(state);
   const handleEmployeeReason = () => setEmployeeReasonShow(false);
+  function getDifferenceInDays(date1, date2) {
+    const STdate = new Date(date1);
+    const ENDdate = new Date(date2);
+    const diffTime = ENDdate - STdate;
+    const diffDays = diffTime / (1000 * 60 * 60 * 24);
+    console.log(diffTime + " milliseconds");
+    console.log(diffDays + " days");
+    if (diffDays <= 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   return (
     <div>
       <Modal show={employeeReasonShow} onHide={handleEmployeeReason} size="md">
@@ -725,9 +809,18 @@ const ManagerWarningAction = (props) => {
         >
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
-            <label className="text-center">
-              Warning letter has been issued to the employee
-            </label>
+            {acceptEmployeeReason == "yes" ? (
+              <label className="text-center">
+                The reason submitted by the employee has been saved
+                successfully.
+              </label>
+            ) : (
+              <label className="text-center">
+                {/* Warning letter has been issued to the employee */}
+                Warning letter details saved successfully, sent for manager
+                confirmation.
+              </label>
+            )}
             <div className="text-center">
               <Button onClick={handleShowCauseLetterClose1}>Close</Button>
             </div>
@@ -1140,16 +1233,9 @@ const ManagerWarningAction = (props) => {
                       ) : (
                         ""
                       )}
-                      {disciplinarySearchData.disciplinaryAction !== null &&
-                      disciplinarySearchData.disciplinaryAction !== undefined &&
-                      disciplinarySearchData.disciplinaryAction !== "" &&
-                      disciplinarySearchData.disciplinaryAction &&
-                      (disciplinarySearchData.disciplinaryAction.reason !==
-                        "Other" ||
-                        disciplinarySearchData.employeeActionStatus !==
-                          "Responded" ||
-                        disciplinarySearchData.employeeActionStatus !==
-                          "responded") ? (
+                      {state.disciplinaryAction.actionDueDays == 0 ? (
+                        ""
+                      ) : (
                         <Row
                           style={{
                             marginLeft: "2rem",
@@ -1158,7 +1244,10 @@ const ManagerWarningAction = (props) => {
                           }}
                         >
                           <Col sm={3}>
-                            <label>Issue Warning Letter : </label>
+                            <label>
+                              Do you accept the reason submitted by the
+                              employee?{" "}
+                            </label>
                           </Col>
                           <Col sm={1} style={{ marginTop: "0.25rem" }}>
                             <Form.Group>
@@ -1168,23 +1257,23 @@ const ManagerWarningAction = (props) => {
                                   type="checkbox"
                                   value="yes"
                                   checked={
-                                    issueWarningStatus == "yes" ? true : false
+                                    acceptEmployeeReason == "yes" ? true : false
                                   }
                                   style={{ borderColor: "blue" }}
                                   // required={required}
-                                  onChange={handleChangeLetter}
-                                  disabled={
-                                    disciplinarySearchData.disciplinaryAction !==
-                                      null &&
-                                    disciplinarySearchData.disciplinaryAction !==
-                                      undefined &&
-                                    disciplinarySearchData.disciplinaryAction !==
-                                      "" &&
-                                    disciplinarySearchData.disciplinaryAction
-                                      .reason === "Non-performance"
-                                      ? true
-                                      : false
-                                  }
+                                  onChange={handleAcceptEmployeeReason}
+                                  // disabled={
+                                  //   disciplinarySearchData.disciplinaryAction !==
+                                  //     null &&
+                                  //   disciplinarySearchData.disciplinaryAction !==
+                                  //     undefined &&
+                                  //   disciplinarySearchData.disciplinaryAction !==
+                                  //     "" &&
+                                  //   disciplinarySearchData.disciplinaryAction
+                                  //     .reason === "Non-performance"
+                                  //     ? true
+                                  //     : false
+                                  // }
                                 />
                                 <label className="itemResult">Yes</label>
                               </div>
@@ -1198,34 +1287,148 @@ const ManagerWarningAction = (props) => {
                                   type="checkbox"
                                   value="no"
                                   checked={
-                                    issueWarningStatus == "no" ? true : false
+                                    acceptEmployeeReason == "no" ? true : false
                                   }
                                   style={{ borderColor: "blue" }}
                                   // required={required}
-                                  onChange={handleChangeLetter}
-                                  disabled={
-                                    disciplinarySearchData.disciplinaryAction !==
-                                      null &&
-                                    disciplinarySearchData.disciplinaryAction !==
-                                      undefined &&
-                                    disciplinarySearchData.disciplinaryAction !==
-                                      "" &&
-                                    disciplinarySearchData.disciplinaryAction
-                                      .reason === "Non-performance"
-                                      ? true
-                                      : false
-                                  }
+                                  onChange={handleAcceptEmployeeReason}
+                                  // disabled={
+                                  //   disciplinarySearchData.disciplinaryAction !==
+                                  //     null &&
+                                  //   disciplinarySearchData.disciplinaryAction !==
+                                  //     undefined &&
+                                  //   disciplinarySearchData.disciplinaryAction !==
+                                  //     "" &&
+                                  //   disciplinarySearchData.disciplinaryAction
+                                  //     .reason === "Non-performance"
+                                  //     ? true
+                                  //     : false
+                                  // }
                                 />
                                 <label className="itemResult">No</label>
                               </div>
                             </Form.Group>
                           </Col>
                         </Row>
-                      ) : (
-                        ""
                       )}
+                      {acceptEmployeeReason == "yes" ? (
+                        <>
+                          <Row>
+                            <Col
+                              style={{
+                                marginTop: "2rem",
+                                marginBottom: "2rem",
+                                textAlign: "center",
+                              }}
+                            >
+                              <button
+                                disabled={submitted}
+                                className={
+                                  submitted ? "confirmButton" : "stepperButtons"
+                                }
+                                onClick={handleAcceptEmployeeReasonSubmit}
+                              >
+                                Save
+                              </button>
+                            </Col>
+                          </Row>
+                        </>
+                      ) : acceptEmployeeReason == "no" ||
+                        state.disciplinaryAction.actionDueDays == 0 ? (
+                        <>
+                          {disciplinarySearchData.disciplinaryAction !== null &&
+                          disciplinarySearchData.disciplinaryAction !==
+                            undefined &&
+                          disciplinarySearchData.disciplinaryAction !== "" &&
+                          disciplinarySearchData.disciplinaryAction &&
+                          (disciplinarySearchData.disciplinaryAction.reason !==
+                            "Other" ||
+                            disciplinarySearchData.employeeActionStatus !==
+                              "Responded" ||
+                            disciplinarySearchData.employeeActionStatus !==
+                              "responded") ? (
+                            <Row
+                              style={{
+                                marginLeft: "2rem",
+                                marginTop: "1rem",
+                                marginBottom: "3rem",
+                              }}
+                            >
+                              <Col sm={3}>
+                                <label>Issue Warning Letter : </label>
+                              </Col>
+                              <Col sm={1} style={{ marginTop: "0.25rem" }}>
+                                <Form.Group>
+                                  <div className="boxField_2 input">
+                                    <input
+                                      className="largerCheckbox"
+                                      type="checkbox"
+                                      value="yes"
+                                      checked={
+                                        issueWarningStatus == "yes"
+                                          ? true
+                                          : false
+                                      }
+                                      style={{ borderColor: "blue" }}
+                                      // required={required}
+                                      onChange={handleChangeLetter}
+                                      disabled={
+                                        disciplinarySearchData.disciplinaryAction !==
+                                          null &&
+                                        disciplinarySearchData.disciplinaryAction !==
+                                          undefined &&
+                                        disciplinarySearchData.disciplinaryAction !==
+                                          "" &&
+                                        disciplinarySearchData
+                                          .disciplinaryAction.reason ===
+                                          "Non-performance"
+                                          ? true
+                                          : false
+                                      }
+                                    />
+                                    <label className="itemResult">Yes</label>
+                                  </div>
+                                </Form.Group>
+                              </Col>
+                              <Col sm={1} style={{ marginTop: "0.25rem" }}>
+                                <Form.Group>
+                                  <div className="boxField_2 input">
+                                    <input
+                                      className="largerCheckbox"
+                                      type="checkbox"
+                                      value="no"
+                                      checked={
+                                        issueWarningStatus == "no"
+                                          ? true
+                                          : false
+                                      }
+                                      style={{ borderColor: "blue" }}
+                                      // required={required}
+                                      onChange={handleChangeLetter}
+                                      disabled={
+                                        disciplinarySearchData.disciplinaryAction !==
+                                          null &&
+                                        disciplinarySearchData.disciplinaryAction !==
+                                          undefined &&
+                                        disciplinarySearchData.disciplinaryAction !==
+                                          "" &&
+                                        disciplinarySearchData
+                                          .disciplinaryAction.reason ===
+                                          "Non-performance"
+                                          ? true
+                                          : false
+                                      }
+                                    />
+                                    <label className="itemResult">No</label>
+                                  </div>
+                                </Form.Group>
+                              </Col>
+                            </Row>
+                          ) : (
+                            ""
+                          )}
 
-                      {/* <Row
+                          {/* <Row
                         style={{
                           marginLeft: "2rem",
                           marginTop: "1rem",
@@ -1251,204 +1454,218 @@ const ManagerWarningAction = (props) => {
                       
                       </Row> */}
 
-                      {issueWarningStatus === "yes" ? (
-                        <>
-                          <Row
-                            style={{
-                              marginLeft: "2rem",
-                              marginTop: "1rem",
-                              marginBottom: "2rem",
-                            }}
-                          >
+                          {issueWarningStatus === "yes" ? (
                             <>
-                              <Col sm={3}>
-                                <div>
-                                  <label>Reason for Warning :</label>
-                                </div>
-                              </Col>
-                              {state.disciplinaryWarning.reason !== null &&
-                              state.disciplinaryWarning.reason !== undefined &&
-                              state.disciplinaryWarning.reason !== "" ? (
-                                <Col sm={3}>
-                                  <div>
-                                    <label className="itemResult">
-                                      {state.disciplinaryWarning.reason}
-                                    </label>
-                                  </div>
-                                </Col>
-                              ) : (
-                                <Col sm={3}>
-                                  <Form.Group>
-                                    <Form.Control
-                                      as="select"
-                                      name="inputReasonId"
-                                      defaultValue={state.inputReasonId}
-                                      style={
-                                        reasonError
-                                          ? { borderColor: "red" }
-                                          : { borderRadius: "5px" }
-                                      }
-                                      onChange={(e) => changeHandler(e)}
-                                    >
-                                      <option value="">Select Reason</option>
+                              <Row
+                                style={{
+                                  marginLeft: "2rem",
+                                  marginTop: "1rem",
+                                  marginBottom: "2rem",
+                                }}
+                              >
+                                <>
+                                  <Col sm={3}>
+                                    <div>
+                                      <label>Reason for Warning :</label>
+                                    </div>
+                                  </Col>
+                                  {state.disciplinaryWarning.reason !== null &&
+                                  state.disciplinaryWarning.reason !==
+                                    undefined &&
+                                  state.disciplinaryWarning.reason !== "" ? (
+                                    <Col sm={3}>
+                                      <div>
+                                        <label className="itemResult">
+                                          {state.disciplinaryWarning.reason}
+                                        </label>
+                                      </div>
+                                    </Col>
+                                  ) : (
+                                    <Col sm={3}>
+                                      <Form.Group>
+                                        <Form.Control
+                                          as="select"
+                                          name="inputReasonId"
+                                          defaultValue={state.inputReasonId}
+                                          style={
+                                            reasonError
+                                              ? { borderColor: "red" }
+                                              : { borderRadius: "5px" }
+                                          }
+                                          onChange={(e) => changeHandler(e)}
+                                        >
+                                          <option value="">
+                                            Select Reason
+                                          </option>
 
-                                      <option
-                                        name="inputReasonId"
-                                        value="1"
-                                        key={1}
-                                      >
-                                        Non Performance
-                                      </option>
-                                      <option
-                                        name="inputReasonId"
-                                        value="2"
-                                        key={2}
-                                      >
-                                        Others
-                                      </option>
-                                    </Form.Control>
-                                    {reasonError ? (
-                                      <p style={{ color: "red" }}>
-                                        {reasonError}
-                                      </p>
-                                    ) : (
-                                      ""
-                                    )}
-                                  </Form.Group>
-                                </Col>
-                              )}
-                            </>
-                            <>
-                              <Col sm={3}>
-                                <div>
-                                  <label>Performance Improvement period:</label>
-                                </div>
-                              </Col>
-                              {state.disciplinaryWarning.improvementPeriod !==
-                                null &&
-                              state.disciplinaryWarning.improvementPeriod !==
-                                undefined &&
-                              state.disciplinaryWarning.improvementPeriod !==
-                                "" ? (
-                                <Col sm={3}>
-                                  <div>
-                                    <label className="itemResult">
-                                      {state.disciplinaryWarning
-                                        .improvementPeriod == 1
-                                        ? state.disciplinaryWarning
-                                            .improvementPeriod + " Month"
-                                        : state.disciplinaryWarning
-                                            .improvementPeriod + " Months"}
-                                    </label>
-                                  </div>
-                                </Col>
-                              ) : (
-                                <Col sm={3}>
-                                  <Form.Group>
-                                    <Form.Control
-                                      as="select"
-                                      name="InputImprovementPeriod"
-                                      value={state.InputImprovementPeriod}
-                                      style={
-                                        improvementPeriodError
-                                          ? { borderColor: "red" }
-                                          : { borderRadius: "5px" }
-                                      }
-                                      onChange={(e) => changeHandler(e)}
-                                    >
-                                      <option value="">Select Period</option>
+                                          <option
+                                            name="inputReasonId"
+                                            value="1"
+                                            key={1}
+                                          >
+                                            Non Performance
+                                          </option>
+                                          <option
+                                            name="inputReasonId"
+                                            value="2"
+                                            key={2}
+                                          >
+                                            Others
+                                          </option>
+                                        </Form.Control>
+                                        {reasonError ? (
+                                          <p style={{ color: "red" }}>
+                                            {reasonError}
+                                          </p>
+                                        ) : (
+                                          ""
+                                        )}
+                                      </Form.Group>
+                                    </Col>
+                                  )}
+                                </>
+                                <>
+                                  <Col sm={3}>
+                                    <div>
+                                      <label>
+                                        Performance Improvement period:
+                                      </label>
+                                    </div>
+                                  </Col>
+                                  {state.disciplinaryWarning
+                                    .improvementPeriod !== null &&
+                                  state.disciplinaryWarning
+                                    .improvementPeriod !== undefined &&
+                                  state.disciplinaryWarning
+                                    .improvementPeriod !== "" ? (
+                                    <Col sm={3}>
+                                      <div>
+                                        <label className="itemResult">
+                                          {state.disciplinaryWarning
+                                            .improvementPeriod == 1
+                                            ? state.disciplinaryWarning
+                                                .improvementPeriod + " Month"
+                                            : state.disciplinaryWarning
+                                                .improvementPeriod + " Months"}
+                                        </label>
+                                      </div>
+                                    </Col>
+                                  ) : state.disciplinaryWarning.reasonId !==
+                                    2 ? (
+                                    <Col sm={3}>
+                                      <Form.Group>
+                                        <Form.Control
+                                          as="select"
+                                          name="InputImprovementPeriod"
+                                          value={state.InputImprovementPeriod}
+                                          style={
+                                            improvementPeriodError
+                                              ? { borderColor: "red" }
+                                              : { borderRadius: "5px" }
+                                          }
+                                          onChange={(e) => changeHandler(e)}
+                                        >
+                                          <option value="">
+                                            Select Period
+                                          </option>
 
-                                      <option
-                                        name="InputImprovementPeriod"
-                                        value="1"
-                                        key={1}
-                                      >
-                                        1 Month
-                                      </option>
-                                      <option
-                                        name="InputImprovementPeriod"
-                                        value="2"
-                                        key={2}
-                                      >
-                                        2 Months
-                                      </option>
-                                      <option
-                                        name="InputImprovementPeriod"
-                                        value="3"
-                                        key={2}
-                                      >
-                                        3 Months
-                                      </option>
-                                    </Form.Control>
-                                    {improvementPeriodError ? (
-                                      <p style={{ color: "red" }}>
-                                        {improvementPeriodError}
-                                      </p>
-                                    ) : (
-                                      ""
-                                    )}
-                                  </Form.Group>
-                                </Col>
-                              )}
-                            </>
-                          </Row>
-                          <Row
-                            style={{
-                              marginLeft: "2rem",
-                              marginTop: "1rem",
-                              marginBottom: "3rem",
-                            }}
-                          >
-                            <>
-                              <Col sm={2}>
-                                <div>
-                                  <label>State detailed reason :</label>
-                                </div>
-                              </Col>
-                              {state.disciplinaryWarning.managerComment !==
-                                null &&
-                              state.disciplinaryWarning.managerComment !==
-                                undefined &&
-                              state.disciplinaryWarning.managerComment !==
-                                "" ? (
-                                <Col sm={10}>
-                                  <div>
-                                    <label className="itemResult">
-                                      {state.disciplinaryWarning.managerComment}
-                                    </label>
-                                  </div>
-                                </Col>
-                              ) : (
-                                <Col sm={10}>
-                                  <Form.Control
-                                    style={
-                                      managerCommentError
-                                        ? { borderColor: "red" }
-                                        : { borderRadius: "5px" }
-                                    }
-                                    as="textarea"
-                                    rows={4}
-                                    name="managerComment"
-                                    value={warningManagerReason}
-                                    defaultValue={
-                                      state.disciplinaryWarning.managerComment
-                                    }
-                                    placeholder="Write here.."
-                                    onChange={(e) => changeHandler(e)}
-                                    required
-                                  />
-                                  {managerCommentError ? (
-                                    <p style={{ color: "red" }}>
-                                      {managerCommentError}
-                                    </p>
+                                          <option
+                                            name="InputImprovementPeriod"
+                                            value="1"
+                                            key={1}
+                                          >
+                                            1 Month
+                                          </option>
+                                          <option
+                                            name="InputImprovementPeriod"
+                                            value="2"
+                                            key={2}
+                                          >
+                                            2 Months
+                                          </option>
+                                          <option
+                                            name="InputImprovementPeriod"
+                                            value="3"
+                                            key={2}
+                                          >
+                                            3 Months
+                                          </option>
+                                        </Form.Control>
+                                        {improvementPeriodError ? (
+                                          <p style={{ color: "red" }}>
+                                            {improvementPeriodError}
+                                          </p>
+                                        ) : (
+                                          ""
+                                        )}
+                                      </Form.Group>
+                                    </Col>
                                   ) : (
                                     ""
                                   )}
-                                </Col>
-                              )}
-                            </>
-                          </Row>
-                          {Object.keys(disciplinarySearchData).length !== 0 &&
+                                </>
+                              </Row>
+                              <Row
+                                style={{
+                                  marginLeft: "2rem",
+                                  marginTop: "1rem",
+                                  marginBottom: "3rem",
+                                }}
+                              >
+                                <>
+                                  <Col sm={2}>
+                                    <div>
+                                      <label>State detailed reason :</label>
+                                    </div>
+                                  </Col>
+                                  {state.disciplinaryWarning.managerComment !==
+                                    null &&
+                                  state.disciplinaryWarning.managerComment !==
+                                    undefined &&
+                                  state.disciplinaryWarning.managerComment !==
+                                    "" ? (
+                                    <Col sm={10}>
+                                      <div>
+                                        <label className="itemResult">
+                                          {
+                                            state.disciplinaryWarning
+                                              .managerComment
+                                          }
+                                        </label>
+                                      </div>
+                                    </Col>
+                                  ) : (
+                                    <Col sm={10}>
+                                      <Form.Control
+                                        style={
+                                          managerCommentError
+                                            ? { borderColor: "red" }
+                                            : { borderRadius: "5px" }
+                                        }
+                                        as="textarea"
+                                        rows={4}
+                                        name="managerComment"
+                                        value={warningManagerReason}
+                                        defaultValue={
+                                          state.disciplinaryWarning
+                                            .managerComment
+                                        }
+                                        placeholder="Write here.."
+                                        onChange={(e) => changeHandler(e)}
+                                        required
+                                      />
+                                      {managerCommentError ? (
+                                        <p style={{ color: "red" }}>
+                                          {managerCommentError}
+                                        </p>
+                                      ) : (
+                                        ""
+                                      )}
+                                    </Col>
+                                  )}
+                                </>
+                              </Row>
+                              {/* {Object.keys(disciplinarySearchData).length !== 0 &&
                           disciplinarySearchData.disciplinaryWarning !== null &&
                           disciplinarySearchData.disciplinaryWarning !==
                             undefined ? (
@@ -1477,163 +1694,177 @@ const ManagerWarningAction = (props) => {
                             </Row>
                           ) : (
                             ""
-                          )}
+                          )} */}
 
-                          <Row>
-                            <Col
-                              style={{
-                                marginTop: "2rem",
-                                marginBottom: "2rem",
-                                textAlign: "center",
-                              }}
-                            >
-                              {disciplinarySearchData.disciplinaryWarning ==
-                                null ||
-                              disciplinarySearchData.disciplinaryWarning ==
-                                undefined ||
-                              disciplinarySearchData.disciplinaryWarning ==
-                                "" ? (
+                              <Row>
+                                <Col
+                                  style={{
+                                    marginTop: "2rem",
+                                    marginBottom: "2rem",
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  {disciplinarySearchData.disciplinaryWarning ==
+                                    null ||
+                                  disciplinarySearchData.disciplinaryWarning ==
+                                    undefined ||
+                                  disciplinarySearchData.disciplinaryWarning ==
+                                    "" ? (
+                                    <button
+                                      disabled={submitted}
+                                      className={
+                                        submitted
+                                          ? "confirmButton"
+                                          : "stepperButtons"
+                                      }
+                                      onClick={handleSubmit}
+                                    >
+                                      Save
+                                    </button>
+                                  ) : (
+                                    ""
+                                  )}
+
+                                  {!saveLetter &&
+                                  showPreview === true &&
+                                  submitted === true ? (
+                                    <button
+                                      // disabled={!submitted}
+                                      className={"LettersButtonsExtra"}
+                                      onClick={ShowCauseLetterClick}
+                                    >
+                                      Generate Warning Letter
+                                    </button>
+                                  ) : (
+                                    ""
+                                  )}
+                                  {saveLetter &&
+                                  previewGeneratedLetter &&
+                                  showPreview ? (
+                                    <button
+                                      className={"LettersButtonsExtra"}
+                                      onClick={previewShowCauseLetter}
+                                    >
+                                      Preview Warning Letter
+                                    </button>
+                                  ) : (
+                                    ""
+                                  )}
+
+                                  {saveLetter &&
+                                    previewGeneratedLetter &&
+                                    showPreview && (
+                                      <div className="preview-section">
+                                        <br></br>
+                                        <br></br>
+                                        <img
+                                          src={calendarImage}
+                                          alt="calendar"
+                                          width="200px"
+                                        />
+                                        <br></br>
+                                        <br></br>
+
+                                        {true ? (
+                                          <button
+                                            disabled={letterSent}
+                                            className={
+                                              letterSent
+                                                ? " confirmButton "
+                                                : "stepperButtons"
+                                            }
+                                            onClick={submitfinalShowCauseLetter}
+                                          >
+                                            Submit
+                                          </button>
+                                        ) : (
+                                          // <Button
+                                          //   type="button"
+                                          //   onClick={submitfinalShowCauseLetter}
+                                          //   style={{
+                                          //     marginTop: "2rem",
+                                          //     marginBottom: "2rem",
+                                          //     textAlign: "center",
+                                          //   }}
+                                          // >
+                                          //   Submit
+                                          // </Button>
+                                          ""
+                                        )}
+                                      </div>
+                                    )}
+                                </Col>
+                              </Row>
+                            </>
+                          ) : issueWarningStatus === "no" ? (
+                            <Row>
+                              {disciplinarySearchData.disciplinaryWarning !==
+                                null &&
+                              disciplinarySearchData.disciplinaryWarning !==
+                                undefined &&
+                              Object.keys(
+                                disciplinarySearchData.disciplinaryWarning
+                              ).length !== 0 &&
+                              disciplinarySearchData.disciplinaryWarning !==
+                                "" &&
+                              getDifferenceInDays(
+                                new Date(
+                                  disciplinarySearchData.disciplinaryWarning.warningIssuedDate
+                                ),
+                                new Date(
+                                  disciplinarySearchData.disciplinaryWarning.pipEndDate
+                                  // "2021-07-03"
+                                )
+                              ) === true ? (
+                                // state.disciplinaryWarning['pipEndDate'].getTime()/1000 <= new Date().getTime() / 1000
+                                <Col
+                                  style={{
+                                    marginTop: "2rem",
+                                    marginBottom: "2rem",
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  <button
+                                    name="issueresolved"
+                                    disabled={submitted}
+                                    className={
+                                      submitted
+                                        ? "confirmButton"
+                                        : "stepperButtons"
+                                    }
+                                    onClick={handleInitialExit}
+                                  >
+                                    Issue Resolved
+                                  </button>
+                                </Col>
+                              ) : (
+                                ""
+                              )}
+                              <Col
+                                style={{
+                                  marginTop: "2rem",
+                                  marginBottom: "2rem",
+                                  textAlign: "center",
+                                }}
+                              >
                                 <button
+                                  name="initiateexit"
                                   disabled={submitted}
                                   className={
                                     submitted
                                       ? "confirmButton"
                                       : "stepperButtons"
                                   }
-                                  onClick={handleSubmit}
+                                  onClick={handleInitialExit}
                                 >
-                                  Save
+                                  Initiate Exit
                                 </button>
-                              ) : (
-                                ""
-                              )}
-
-                              {!saveLetter &&
-                              showPreview === true &&
-                              submitted === true ? (
-                                <button
-                                  // disabled={!submitted}
-                                  className={"LettersButtonsExtra"}
-                                  onClick={ShowCauseLetterClick}
-                                >
-                                  Generate Warning Letter
-                                </button>
-                              ) : (
-                                ""
-                              )}
-                              {saveLetter &&
-                              previewGeneratedLetter &&
-                              showPreview ? (
-                                <button
-                                  className={"LettersButtonsExtra"}
-                                  onClick={previewShowCauseLetter}
-                                >
-                                  Preview Warning Letter
-                                </button>
-                              ) : (
-                                ""
-                              )}
-
-                              {saveLetter &&
-                                previewGeneratedLetter &&
-                                showPreview && (
-                                  <div className="preview-section">
-                                    <br></br>
-                                    <br></br>
-                                    <img
-                                      src={calendarImage}
-                                      alt="calendar"
-                                      width="200px"
-                                    />
-                                    <br></br>
-                                    <br></br>
-
-                                    {true ? (
-                                      <button
-                                        disabled={letterSent}
-                                        className={
-                                          letterSent
-                                            ? " confirmButton "
-                                            : "stepperButtons"
-                                        }
-                                        onClick={submitfinalShowCauseLetter}
-                                      >
-                                        Submit
-                                      </button>
-                                    ) : (
-                                      // <Button
-                                      //   type="button"
-                                      //   onClick={submitfinalShowCauseLetter}
-                                      //   style={{
-                                      //     marginTop: "2rem",
-                                      //     marginBottom: "2rem",
-                                      //     textAlign: "center",
-                                      //   }}
-                                      // >
-                                      //   Submit
-                                      // </Button>
-                                      ""
-                                    )}
-                                  </div>
-                                )}
-                            </Col>
-                          </Row>
-                        </>
-                      ) : issueWarningStatus === "no" ? (
-                        <Row>
-                          {disciplinarySearchData.disciplinaryWarning !==
-                            null &&
-                          disciplinarySearchData.disciplinaryWarning !==
-                            undefined &&
-                          Object.keys(
-                            disciplinarySearchData.disciplinaryWarning
-                          ).length !== 0 &&
-                          disciplinarySearchData.disciplinaryWarning !== "" &&
-                          moment(
-                            disciplinarySearchData.disciplinaryWarning
-                              .pipEndDate
-                          ).isBefore(new Date()) === true ? (
-                            // state.disciplinaryWarning['pipEndDate'].getTime()/1000 <= new Date().getTime() / 1000
-                            <Col
-                              style={{
-                                marginTop: "2rem",
-                                marginBottom: "2rem",
-                                textAlign: "center",
-                              }}
-                            >
-                              <button
-                                name="issueresolved"
-                                disabled={submitted}
-                                className={
-                                  submitted ? "confirmButton" : "stepperButtons"
-                                }
-                                onClick={handleInitialExit}
-                              >
-                                Issue Resolved
-                              </button>
-                            </Col>
+                              </Col>
+                            </Row>
                           ) : (
                             ""
                           )}
-                          <Col
-                            style={{
-                              marginTop: "2rem",
-                              marginBottom: "2rem",
-                              textAlign: "center",
-                            }}
-                          >
-                            <button
-                              name="initiateexit"
-                              disabled={submitted}
-                              className={
-                                submitted ? "confirmButton" : "stepperButtons"
-                              }
-                              onClick={handleInitialExit}
-                            >
-                              Initiate Exit
-                            </button>
-                          </Col>
-                        </Row>
+                        </>
                       ) : (
                         ""
                       )}

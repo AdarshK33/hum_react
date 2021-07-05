@@ -1079,7 +1079,7 @@ const DisciplinarySeparation = () => {
                         </Col>
                         <Col sm={2}>
                           <div>
-                            {false ? (
+                            {true ? (
                               <label className="itemResult">
                                 {" "}
                                 &nbsp;&nbsp; {EmpName} &nbsp;{state.empId}
