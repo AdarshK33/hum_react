@@ -365,7 +365,7 @@ const ManagerDisciplinaryList = () => {
                                 )}
                               </td>
                             )}
-                            <td>
+                            {/* <td>
                               <Link
                                 to={
                                   `/manager-warning-action-view/` +
@@ -380,7 +380,7 @@ const ManagerDisciplinaryList = () => {
                                   }}
                                 />
                               </Link>
-                            </td>
+                            </td> */}
                           </tr>
                         </tbody>
                       );
