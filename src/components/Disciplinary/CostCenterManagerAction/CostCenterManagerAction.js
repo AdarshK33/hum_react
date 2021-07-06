@@ -426,11 +426,11 @@ const CostCenterManagerAction = () => {
               disciplinarySearchData !== null &&
               disciplinarySearchData !== undefined &&
               Object.keys(disciplinarySearchData).length !== 0 &&
-              disciplinarySearchData.disciplinaryWarning !== null &&
               disciplinarySearchData.disciplinaryWarning !== undefined &&
-              disciplinarySearchData.disciplinaryWarning !== ""
-                ? "Show cause notice issued successfully , the employee has been notified."
-                : "Warning letter issued successfully , the employee has been notified."}
+              disciplinarySearchData.disciplinaryWarning !== "" &&
+              disciplinarySearchData.disciplinaryWarning !== null
+                ? "Warning letter issued successfully , the employee has been notified.":"Show cause notice issued successfully , the employee has been notified."
+                 }
             </label>
             <div className="text-center">
               <Button onClick={handleShowCauseLetterClose1}>Close</Button>
@@ -534,8 +534,8 @@ const CostCenterManagerAction = () => {
               disciplinarySearchData.disciplinaryWarning !== null &&
               disciplinarySearchData.disciplinaryWarning !== undefined &&
               disciplinarySearchData.disciplinaryWarning !== ""
-                ? "Show cause notice issued successfully , the employee has been notified."
-                : "Warning letter issued successfully , the employee has been notified.."}
+                ?"Warning letter issued successfully , the employee has been notified.": "Show cause notice issued successfully , the employee has been notified."
+                }
             </label>
 
             <div className="text-center mb-2">

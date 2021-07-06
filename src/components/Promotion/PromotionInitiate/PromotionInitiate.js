@@ -141,7 +141,12 @@ const PromotionInitiate = () => {
       searchByCostData &&
       searchByCostData !== null &&
       searchByCostData !== undefined &&
-      Object.keys(searchByCostData).length !== 0
+      Object.keys(searchByCostData).length !== 0 &&
+      managerList &&
+      managerList &&
+      managerList !== null &&
+      managerList !== undefined &&
+      Object.keys(managerList).length !== 0
     ) {
    managerList.map((item)=>{
     if(item.employeeId == searchByCostData.managerId){
