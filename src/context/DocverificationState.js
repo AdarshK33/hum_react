@@ -31,6 +31,7 @@ const initial_state = {
   verificationCityList: [],
   verificationPermanentCityList: [],
   imageData: "",
+  rejectUpdate: [],
 };
 export const DocsVerifyContext = createContext();
 export const DocsVerificationProvider = (props) => {
@@ -276,6 +277,24 @@ export const DocsVerificationProvider = (props) => {
         console.log(error);
       });
   };
+
+  const documentRejectComplete = (candidateId) => {
+    client
+      .get(
+        "/api/v1/candidate/document/reject/complete?candidateId=" + candidateId
+      )
+      .then((response) => {
+        state.rejectUpdate = response.data.message;
+        toast.info(response.data.message);
+        return dispatch({
+          type: "UPDATE_REJECT",
+          payload: state.rejectUpdate,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const costCenterSplit = (costCenterData) => {
     setLoader(true);
     client
@@ -460,6 +479,7 @@ export const DocsVerificationProvider = (props) => {
           viewCityVerification,
           viewPermanentCityVerification,
           uploadBase64Image,
+          documentRejectComplete,
           disApproveAadhar: state.disApproveAadhar,
           imageData: state.imageData,
           step5Status: state.step5Status,
@@ -484,6 +504,7 @@ export const DocsVerificationProvider = (props) => {
           verificationStateList: state.verificationStateList,
           verificationCityList: state.verificationCityList,
           verificationPermanentCityList: state.verificationPermanentCityList,
+          rejectUpdate: state.rejectUpdate,
         }}
       >
         {" "}

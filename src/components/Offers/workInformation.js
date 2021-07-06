@@ -42,6 +42,8 @@ const WorkInformation = (props) => {
   const [saveclick, setSaveclick] = useState(false);
   const [college, setCollege] = useState("");
   const [workInformationData, setWorkInformationData] = useState({});
+  const [dateOfIssue, setDateOfIssue] = useState();
+  const [dateOfValidity, setDateOfValidity] = useState();
 
   const { viewSports, sportsNames } = useContext(ClusterContext);
   const { CostCenter, costCenterList } = useContext(AdminContext);
@@ -216,6 +218,12 @@ const WorkInformation = (props) => {
   const dateOfJoiningHandler = (date) => {
     setDateOFJoining(date);
   };
+  const dateOfIssueHandler = (date) => {
+    setDateOfIssue(date);
+  };
+  const validityHandler = (date) => {
+    setDateOfValidity(date);
+  };
   const dateOfLeavingHandler = (date) => {
     setDateOFLeaving(date);
     let monthCount = monthDiff(new Date(dateOfJoining), new Date(date));
@@ -243,21 +251,21 @@ const WorkInformation = (props) => {
     console.log("work information form id", workInfoViewData);
     e.preventDefault();
     console.log(state, "state");
-    if (
-      state.nationality !== "" &&
-      state.expatUser !== "" &&
-      state.passportNumber !== ""
-    ) {
-    }
-    if (
-      (state.employmentType === "Permanent" ||
-        state.employmentType === "permanent") &&
-      state.expatUser
-    ) {
-      expatValue = state.expatUser;
-    } else {
-      expatValue = 0;
-    }
+    // if (
+    //   state.nationality !== "" &&
+    //   state.expatUser !== "" &&
+    //   state.passportNumber !== ""
+    // ) {
+    // }
+    // if (
+    //   (state.employmentType === "Permanent" ||
+    //     state.employmentType === "permanent") &&
+    //   state.expatUser
+    // ) {
+    //   expatValue = state.expatUser;
+    // } else {
+    //   expatValue = 0;
+    // }
     if (saveclick === false && dateOfLeavingError === false) {
       console.log("first click");
       setSaveclick(true);
@@ -296,9 +304,11 @@ const WorkInformation = (props) => {
         noticePeriod:
           state.employmentType === "Internship" ? 0 : state.noticePeriod,
         sportId: state.sports,
-        expatUser: expatValue,
+        expatUser: 0,
         nationality: state.nationality,
         passportNumber: state.passportNumber,
+        passportExpiryDate: moment(dateOfValidity).format("YYYY-MM-DD"),
+        passportIssuedDate: moment(dateOfIssue).format("YYYY-MM-DD"),
       };
     } else if (
       createCandidateResponse.candidateId &&
@@ -340,9 +350,11 @@ const WorkInformation = (props) => {
         noticePeriod:
           state.employmentType === "Internship" ? 0 : state.noticePeriod,
         sportId: state.sports,
-        expatUser: expatValue,
+        expatUser: 0,
         nationality: state.nationality,
         passportNumber: state.passportNumber,
+        passportExpiryDate: moment(dateOfValidity).format("YYYY-MM-DD"),
+        passportIssuedDate: moment(dateOfIssue).format("YYYY-MM-DD"),
       };
     }
     console.log("createData", createData);
@@ -601,36 +613,35 @@ const WorkInformation = (props) => {
             <Col sm={3}>
               <Form.Group>
                 <Form.Label>Sports</Form.Label>
-                {state.employmentType === "Internship" ? (
+                {/* {state.employmentType === "Internship" ? (
                   <Form.Control
                     type="text"
                     value="N/A"
                     readOnly
                     className="form-input"
                   />
-                ) : (
-                  <Form.Control
-                    as="select"
-                    value={state.sports}
-                    className="form-input"
-                    name="sports"
-                    onChange={changeHandler}
-                    disabled={disabled}
-                    required
-                  >
-                    <option value="">Select Sports</option>
-                    {sportsNames !== null &&
-                      sportsNames !== undefined &&
-                      sportsNames.length > 0 &&
-                      sportsNames.map((item) => {
-                        return (
-                          <option key={item.sportId} value={item.sportId}>
-                            {item.sportName}
-                          </option>
-                        );
-                      })}
-                  </Form.Control>
-                )}
+                ) : ( */}
+                <Form.Control
+                  as="select"
+                  value={state.sports}
+                  className="form-input"
+                  name="sports"
+                  onChange={changeHandler}
+                  disabled={disabled}
+                  required
+                >
+                  <option value="">Select Sports</option>
+                  {sportsNames !== null &&
+                    sportsNames !== undefined &&
+                    sportsNames.length > 0 &&
+                    sportsNames.map((item) => {
+                      return (
+                        <option key={item.sportId} value={item.sportId}>
+                          {item.sportName}
+                        </option>
+                      );
+                    })}
+                </Form.Control>
               </Form.Group>
             </Col>
           </Row>
@@ -813,7 +824,7 @@ const WorkInformation = (props) => {
                 </Form.Group>
               </Col>
             )}
-            {(state.employmentType === "Permanent" ||
+            {/* {(state.employmentType === "Permanent" ||
               state.employmentType === "permanent") && (
               <Col sm={3}>
                 <Form.Group>
@@ -833,30 +844,27 @@ const WorkInformation = (props) => {
                   </Form.Control>
                 </Form.Group>
               </Col>
+            )} */}
+            {state.employmentType === "Local Expat" && (
+              <Col sm={3}>
+                <Form.Group>
+                  <Form.Label>Passport Number</Form.Label>
+                  <Form.Control
+                    type="text"
+                    className="form-input"
+                    value={state.passportNumber}
+                    name="passportNumber"
+                    placeholder="Passport Number"
+                    onChange={changeHandler}
+                    disabled={disabled}
+                    required
+                  />
+                </Form.Group>
+              </Col>
             )}
-            {state.expatUser == 1 &&
-              (state.employmentType === "Permanent" ||
-                state.employmentType === "permanent") && (
-                <Col sm={3}>
-                  <Form.Group>
-                    <Form.Label>Passport Number</Form.Label>
-                    <Form.Control
-                      type="text"
-                      className="form-input"
-                      value={state.passportNumber}
-                      name="passportNumber"
-                      onChange={changeHandler}
-                      disabled={disabled}
-                      required
-                    />
-                  </Form.Group>
-                </Col>
-              )}
-          </Row>
-          <Row>
-            {state.expatUser == 1 &&
-              (state.employmentType === "Permanent" ||
-                state.employmentType === "permanent") && (
+
+            {state.employmentType === "Local Expat" && (
+              <React.Fragment>
                 <Col sm={3}>
                   <Form.Group>
                     <Form.Label>Nationality</Form.Label>
@@ -882,7 +890,37 @@ const WorkInformation = (props) => {
                     </Form.Control>
                   </Form.Group>
                 </Col>
-              )}
+                <Col sm={3}>
+                  <Form.Group className="reactDate">
+                    <Form.Label>Date of Issue</Form.Label>
+                    <DatePicker
+                      className="form-control form-input"
+                      selected={dateOfIssue}
+                      required
+                      onChange={(e) => dateOfIssueHandler(e)}
+                      dateFormat="yyyy-MM-dd"
+                      placeholderText="Date of Issue"
+                      disabled={disabled}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col sm={3}>
+                  <Form.Group className="reactDate">
+                    <Form.Label>Date Of Validity</Form.Label>
+                    <DatePicker
+                      className="form-control form-input"
+                      selected={dateOfValidity}
+                      required
+                      onChange={(e) => validityHandler(e)}
+                      minDate={dateOfIssue}
+                      dateFormat="yyyy-MM-dd"
+                      placeholderText="Date of Validity"
+                      disabled={disabled}
+                    />
+                  </Form.Group>
+                </Col>
+              </React.Fragment>
+            )}
           </Row>
           {state.recuritment === "NGO" ? (
             <Row>

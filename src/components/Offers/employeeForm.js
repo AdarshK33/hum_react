@@ -250,7 +250,11 @@ const EmployeeForm = (props) => {
     console.log(
       "employee form id1",
       typeof createCandidateResponse,
-      createCandidateResponse
+      createCandidateResponse,
+      "yes",
+      yesChecked,
+      "no",
+      noChecked
     );
     if (state.firstName !== "" && !/^[a-zA-Z]*$/g.test(state.firstName)) {
       firstNameError = true;
