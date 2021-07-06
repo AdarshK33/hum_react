@@ -208,7 +208,8 @@ const ManagerWarningAction = (props) => {
 
         if (
           disciplinarySearchData.disciplinaryAction.reasonId === 1 &&
-          disciplinarySearchData.disciplinaryAction.actionDueDays !== 0
+          disciplinarySearchData.disciplinaryAction.actionDueDays !== 0 && 
+          disciplinarySearchData.disciplinaryWarning.pipDueDays !==0
         ) {
           setShowCauseReason("Non-Performance");
           setIssueWarningStatus("yes");
@@ -247,7 +248,9 @@ const ManagerWarningAction = (props) => {
         Object.keys(disciplinarySearchData.disciplinaryWarning).length !== 0 &&
         disciplinarySearchData.disciplinaryWarning !== ""
       ) {
-        setIssueWarningStatus("yes");
+        if(disciplinarySearchData.disciplinaryWarning.pipDueDays == 0){
+          setIssueWarningStatus("no");
+        }
 
         setWarningManagerReason(
           disciplinarySearchData.disciplinaryWarning.managerComment
@@ -1277,6 +1280,8 @@ const ManagerWarningAction = (props) => {
                         .employeeComment !== null &&
                       disciplinarySearchData.disciplinaryAction
                         .employeeComment !== "" &&
+                        disciplinarySearchData.disciplinaryWarning
+                        .pipDueDays !== 0 &&
                       disciplinarySearchData.disciplinaryAction
                         .employeeComment !== undefined ? (
                         // {/* //      ||
@@ -1359,14 +1364,20 @@ const ManagerWarningAction = (props) => {
                             </Col>
                           </Row>
                         </>
-                      ) : acceptEmployeeReason == "no" ||
-                        state.disciplinaryAction.actionDueDays == 0 ? (
+                      ) : (acceptEmployeeReason == "no" ||
+                        state.disciplinaryAction.actionDueDays == 0 ||
+                         disciplinarySearchData.disciplinaryWarning
+                        .pipDueDays == 0) ? (
                         <>
                           {disciplinarySearchData.disciplinaryAction !== null &&
                           disciplinarySearchData.disciplinaryAction !==
                             undefined &&
                           disciplinarySearchData.disciplinaryAction !== "" &&
                           disciplinarySearchData.disciplinaryAction &&
+                          disciplinarySearchData.disciplinaryWarning !== null &&
+                          disciplinarySearchData.disciplinaryWarning !== '' &&
+                          disciplinarySearchData.disciplinaryWarning !== undefined &&
+                          disciplinarySearchData.disciplinaryWarning.pipDueDays !== 0 &&
                           (disciplinarySearchData.disciplinaryAction.reason !==
                             "Other" ||
                             disciplinarySearchData.employeeActionStatus !==
@@ -1840,19 +1851,21 @@ const ManagerWarningAction = (props) => {
                                 </Col>
                               </Row>
                             </>
-                          ) : issueWarningStatus === "no" ? (
+                          ) : issueWarningStatus === "no"?(
                             <Row>
-                              {disciplinarySearchData.disciplinaryWarning !==
-                                null &&
-                              disciplinarySearchData.disciplinaryWarning !==
-                                undefined &&
-                              Object.keys(
-                                disciplinarySearchData.disciplinaryWarning
-                              ).length !== 0 &&
-                              disciplinarySearchData.disciplinaryWarning !==
-                                "" &&
-                              disciplinarySearchData.disciplinaryWarning
-                                .pipDueDays === 0 ? (
+                              {(
+                              //   disciplinarySearchData.disciplinaryWarning !==
+                              //   null &&
+                              // disciplinarySearchData.disciplinaryWarning !==
+                              //   undefined &&
+                              // Object.keys(
+                              //   disciplinarySearchData.disciplinaryWarning
+                              // ).length !== 0 &&
+                              // disciplinarySearchData.disciplinaryWarning !==
+                              //   "" &&
+                              // disciplinarySearchData.disciplinaryWarning
+                              //   .pipDueDays === 0
+                                true)?(
                                 // moment(
                                 //   disciplinarySearchData.disciplinaryWarning
                                 //     .pipEndDate
