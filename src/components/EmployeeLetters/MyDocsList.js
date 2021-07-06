@@ -10,9 +10,16 @@ import { RoleManagementContext } from "../../context/RoleManagementState";
 import { AdminContext } from "../../context/AdminState";
 import { AppContext } from "../../context/AppState";
 import { MyDocsContext } from "../../context/MyDocsState";
+import moment from "moment";
 const EmployeeDocementsList = () => {
-  const { MyDocsListView, myDocsListData, total, loader } =
-    useContext(MyDocsContext);
+  const {
+    MyDocsListView,
+    myDocsListData,
+    total,
+    loader,
+    MyDisciplinaryActionListView,
+    myDiscilinaryListData,
+  } = useContext(MyDocsContext);
 
   const {
     disciplinaryListView,
@@ -29,7 +36,7 @@ const EmployeeDocementsList = () => {
   const { costCenterList, CostCenter } = useContext(AdminContext);
   useEffect(() => {
     if (user !== null && user !== undefined) {
-      MyDocsListView(user.employeeId, pageCount);
+      MyDisciplinaryActionListView(user.employeeId, pageCount);
       console.log("user role", user);
     }
   }, []);
@@ -39,10 +46,11 @@ const EmployeeDocementsList = () => {
   // }, []);
 
   useEffect(() => {
-    if (myDocsListData !== null && myDocsListData !== undefined) {
-      setCurrentRecords(myDocsListData);
+    if (myDiscilinaryListData !== null && myDiscilinaryListData !== undefined) {
+      setCurrentRecords(myDiscilinaryListData);
     }
-  }, [myDocsListData, currentRecords]);
+  }, [myDiscilinaryListData, currentRecords]);
+  console.log("myDiscilinaryListData", myDiscilinaryListData);
 
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
@@ -57,13 +65,13 @@ const EmployeeDocementsList = () => {
     setPageCount(pageNumber - 1);
     setCurrentPage(pageNumber);
     if (searchValue !== "") {
-      MyDocsListView(searchValue, pageNumber - 1);
+      MyDisciplinaryActionListView(searchValue, pageNumber - 1);
     } else {
       if (user !== null && user !== undefined) {
-        MyDocsListView(user.employeeId, pageNumber - 1);
+        MyDisciplinaryActionListView(user.employeeId, pageNumber - 1);
       }
     }
-    setCurrentRecords(myDocsListData);
+    setCurrentRecords(myDiscilinaryListData);
   };
 
   /*-----------------Pagination------------------*/
@@ -75,10 +83,10 @@ const EmployeeDocementsList = () => {
     setPageCount(0);
     setCurrentPage(1);
     if (searchValue !== "") {
-      MyDocsListView(searchValue, 0);
+      MyDisciplinaryActionListView(searchValue, 0);
     } else {
       if (user !== null && user !== undefined) {
-        MyDocsListView(user.employeeId, 0);
+        MyDisciplinaryActionListView(user.employeeId, 0);
       }
     }
   };
@@ -86,7 +94,10 @@ const EmployeeDocementsList = () => {
   const fetchCandidateDetails = (candidateId) => {};
   return (
     <Fragment>
-      <Breadcrumb title="MY DOCUMENTS LIST" parent="MY DOCUMENTS LIST" />
+      <Breadcrumb
+        title="MY DISCIPLINARY ACTION LIST"
+        parent="MY DISCIPLINARY ACTION LIST"
+      />
       <Container fluid>
         <Row>
           <Col sm={12}>
@@ -95,7 +106,7 @@ const EmployeeDocementsList = () => {
                 className="title_bar"
                 style={{ textAlign: "center", fontSize: "larger" }}
               >
-                <b>MY DOCUMENTS LIST </b>
+                <b>MY DISCIPLINARY ACTION LIST </b>
 
                 {/* <div className="job-filter">
                   <div className="faq-form mr-2">
@@ -127,11 +138,15 @@ const EmployeeDocementsList = () => {
                   >
                     <tr>
                       <th scope="col">S. No</th>
-                      <th scope="col">Document Name</th>
-                      <th scope="col">Issued On</th>
+                      <th scope="col">Emloyee Name</th>
+                      <th scope="col">Show Cause Notice Issued Date</th>
                       {/* <th scope="col">Signed On</th> */}
-                      <th scope="col">Documents Link</th>
-                      {/* <th scope="col">Download</th> */}
+                      <th scope="col">Due Days</th>
+                      <th scope="col">Show Cause Issue Status</th>
+                      <th scope="col">Warning Letter Issue Date</th>
+                      <th scope="col">PIP Start Date</th>
+                      <th scope="col">PIP End Date</th>
+                      <th scope="col">PIP Status</th>
                       <th scope="col">View</th>
                       <th scope="col">Action</th>
                     </tr>
@@ -161,59 +176,109 @@ const EmployeeDocementsList = () => {
                     currentRecords.length > 0 ? (
                     currentRecords.map((item, i) => {
                       return (
-                        <tbody key={item.employeeId}>
+                        <tbody key={item.employeeName}>
                           <tr>
                             <td>{i + 1 + indexOfFirstRecord}</td>
-                            {item.documentType === 21 ? (
-                              <td>Show Cuase Notice</td>
-                            ) : item.documentType === 22 ? (
-                              <td>Warning Notice</td>
+                            <td>{item.employeeName}</td>
+                            {item.disciplinaryAction !== null &&
+                            item.disciplinaryAction !== undefined ? (
+                              <td>
+                                {item.disciplinaryAction.actionIssuedDate}
+                              </td>
                             ) : (
                               <td></td>
                             )}
-                            <td>{item.issuedOn}</td>
-                            {/* <td>{item.signedOn}</td> */}
-                            <td>
-                              <a href="/documents">{item.documentName}</a>
-                            </td>
-                            {/* <td></td> */}
+                            {item.disciplinaryAction !== null &&
+                            item.disciplinaryAction !== undefined ? (
+                              <td>{item.disciplinaryAction.actionDueDays}</td>
+                            ) : (
+                              <td></td>
+                            )}
+                            {item.disciplinaryAction !== null &&
+                            item.disciplinaryAction !== undefined ? (
+                              <td>
+                                {item.disciplinaryAction.employeeActionStatus}
+                              </td>
+                            ) : (
+                              <td></td>
+                            )}
+                            {item.disciplinaryWarning !== null &&
+                            item.disciplinaryWarning !== undefined ? (
+                              <td>
+                                {item.disciplinaryWarning.warningIssuedDate}
+                              </td>
+                            ) : (
+                              <td>NA</td>
+                            )}
+                            {item.disciplinaryWarning !== null &&
+                            item.disciplinaryWarning !== undefined ? (
+                              <td>
+                                {item.disciplinaryWarning.warningIssuedDate}
+                              </td>
+                            ) : (
+                              <td>NA</td>
+                            )}
+                            {item.disciplinaryWarning !== null &&
+                            item.disciplinaryWarning !== undefined ? (
+                              <td>{item.disciplinaryWarning.pipEndDate}</td>
+                            ) : (
+                              <td>NA</td>
+                            )}
+                            {item.disciplinaryAction !== null &&
+                            item.disciplinaryAction !== undefined ? (
+                              item.disciplinaryAction.statusDesc ===
+                              "Exit Initiated" ? (
+                                <td> {item.disciplinaryAction.statusDesc}</td>
+                              ) : item.disciplinaryWarning !== null &&
+                                item.disciplinaryWarning !== undefined ? (
+                                // new Date(item.disciplinaryWarning.pipEndDate) -
+                                // new Date()
+                                moment(
+                                  item.disciplinaryWarning.pipEndDate
+                                ).isBefore(new Date()) === false ? (
+                                  <td>PIP In-Progress</td>
+                                ) : (
+                                  <td> PIP Completed</td>
+                                )
+                              ) : (
+                                <td>NA</td>
+                              )
+                            ) : (
+                              <td>NA</td>
+                            )}
 
                             <td>
                               <Link
-                                to={"/disciplinary-view/" + item.employeeId}
+                                to={
+                                  "/disciplinary-view/" +
+                                  item.disciplinaryAction.disciplinaryId
+                                }
                                 // to={"/disciplinary-action/" + item.employeeId}
                               >
                                 <Eye
                                   onClick={() => {
                                     disciplinaryEmployeeSearch(
-                                      item.disciplinaryId
+                                      item.disciplinaryAction.disciplinaryId
                                     );
                                   }}
                                 />
                               </Link>
                             </td>
-
                             <td>
-                              {item.documentType === 21 &&
-                              item.disciplinaryId !== null &&
-                              item.disciplinaryId !== undefined ? (
+                              {item.disciplinaryWarning !== null &&
+                              item.disciplinaryWarning !== undefined ? (
+                                <Edit2 />
+                              ) : item.disciplinaryAction !== null &&
+                                item.disciplinaryAction !== undefined &&
+                                item.disciplinaryAction.statusDesc !==
+                                  "Exit Initiated" &&
+                                item.disciplinaryAction.employeeActionStatus !==
+                                  "Responded" ? (
                                 <Link to="/letters/show-cause">
                                   <Edit2
                                     onClick={() => {
                                       disciplinaryEmployeeSearch(
-                                        item.disciplinaryId
-                                      );
-                                    }}
-                                  />
-                                </Link>
-                              ) : item.documentType === 22 &&
-                                item.disciplinaryId !== null &&
-                                item.disciplinaryId !== undefined ? (
-                                <Link to="/letters/warning">
-                                  <Edit2
-                                    onClick={() => {
-                                      disciplinaryEmployeeSearch(
-                                        item.disciplinaryId
+                                        item.disciplinaryAction.disciplinaryId
                                       );
                                     }}
                                   />

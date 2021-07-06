@@ -23,6 +23,8 @@ const CreateTicket = () => {
     const [urgencyId, setUrgencyId] = useState('');
     const [priority, setPriority] = useState('')
     const [number, setNumber] = useState()
+    const [phoneNumber, setPhoneNumber] = useState('')
+    const [error, setError] = useState(false)
     // const [filesCount, setFilesCount] = useState([])
     const [fileSubmitButtonFirst, setFileSubmitButtonFirst] = useState(false);
     const [fileSubmitButtonSecond, setFileSubmitButtonSecond] = useState(false);
@@ -260,7 +262,7 @@ const CreateTicket = () => {
         formData.append('file', file)
 
 
-        return client.post('api/v1/ticket/upload', formData)
+        return client.post('/ticket/upload', formData)
             .then((response) => {
 
                 if (response.status === 200) {
@@ -295,7 +297,7 @@ const CreateTicket = () => {
     const deleteFile = (file) => {
         //   alert("file", file)
         if (file !== undefined || file !== null || file !== '') {
-            return client.get('api/v1/ticket/delete/' + file)
+            return client.get('/ticket/delete/' + file)
                 .then((response) => {
                     console.log(response, "responce")
                     toast.info(response.data.message)
@@ -306,17 +308,33 @@ const CreateTicket = () => {
         }
     }
 
+    const validateMethod = (e) => {
+        let flag = true
+        var phoneno = /^\d{10}$/;
+        if(phoneNumber.match(phoneno)){
+            setError(false)
+            return flag;
+        }else{
+            setError(true)
+            flag = false;
+            return;
+        }
+    }
+
     const onSubmit = e => {
+        const validate = validateMethod()
 
         if (number === 1) {
 
             e.preventDefault();
+            
 
             const createSingleTicket = {
                 employeeId: user.employeeId,
                 categoryId,
                 completionStatus: 0,
                 description,
+                phoneNumber,
                 priorityId: priorityListId,
                 resolution: null,
                 role,
@@ -328,11 +346,16 @@ const CreateTicket = () => {
                 ticketResolutions: null,
                 ticketFiles: fileNames
             }
-            addCreateTicket(createSingleTicket)
-            console.log(JSON.stringify(createSingleTicket));
-            //alert(JSON.stringify(createSingleTicket));
-            setClear()
-            history.push("./ticketlistingpage")
+            if(validate){
+                addCreateTicket(createSingleTicket)
+                console.log(JSON.stringify(createSingleTicket));
+                //alert(JSON.stringify(createSingleTicket));
+                setClear()
+                history.push("./ticketlistingpage")
+            }else{
+                toast.info("Please Enter all the required fields")
+            }
+           
         }
         else {
             console.log("outside")
@@ -344,6 +367,7 @@ const CreateTicket = () => {
                 categoryId,
                 completionStatus: 0,
                 description,
+                phoneNumber,
                 priorityId: priorityListId,
                 resolution: null,
                 role,
@@ -355,11 +379,16 @@ const CreateTicket = () => {
                 ticketResolutions: null,
                 ticketFiles: null
             }
-            addCreateTicket(createSingleTicket)
-            console.log(JSON.stringify(createSingleTicket));
-            //alert(JSON.stringify(createSingleTicket));
-            setClear()
-            history.push("./ticketlistingpage")
+            if(validate){
+                addCreateTicket(createSingleTicket)
+                console.log(JSON.stringify(createSingleTicket));
+                //alert(JSON.stringify(createSingleTicket));
+                setClear()
+                history.push("./ticketlistingpage")
+            }else{
+                toast.info("Please Enter all the required fields")
+            }
+           
         }
 
     }
@@ -423,6 +452,18 @@ const CreateTicket = () => {
 
                         </Row>
 
+                        <Row>
+                            <Col sm={8}>
+                                <Form.Group as={Row} >
+                                    <Form.Label column sm='4' className='labels'>Phone Number :<span style={{ color: 'red' }}>*</span></Form.Label>
+                                    <Col sm='8'>
+                                        <Form.Control type='text' value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)}
+                                        placeHolder='Enter Phone Number' required onBlur={validateMethod} />
+                                        {error ? <p style={{color:'red'}}>* Phone Number should be 10 digits only.</p> : ''}
+                                    </Col>
+                                </Form.Group>
+                            </Col>
+                        </Row>
 
 
 

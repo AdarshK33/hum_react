@@ -8,6 +8,7 @@ import ShowCauseNotice from "../Disciplinary/Manager/ShowCauseNoticeLetter";
 import calendarImage from "../../assets/images/calendar-image.png";
 import { DisciplinaryContext } from "../../context/DisciplinaryState";
 import { useHistory } from "react-router-dom";
+import ReasonByEmployee from "../Disciplinary/Manager/ReasonByEmployee";
 
 // view-----
 const EmployeShowCaseLetter = () => {
@@ -26,6 +27,7 @@ const EmployeShowCaseLetter = () => {
   const [letterSent, setLetterSent] = useState(false);
   const [showPreview, setPreview] = useState(false);
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
+  const [employeeReasonShow, setEmployeeReasonShow] = useState(false);
 
   const [showCauseReason, setShowCauseReason] = useState("");
   const [EmpName, setEmpName] = useState();
@@ -201,7 +203,7 @@ const EmployeShowCaseLetter = () => {
   const handleShowCauseLetterClose = () => setShow(false);
   const handleShowCauseLetterClose1 = () => {
     setShow(false);
-    history.push("../documents");
+    history.push("../my_disciplinary");
   };
   const LetterShow = () => {
     console.log(";;;;;");
@@ -379,9 +381,32 @@ const EmployeShowCaseLetter = () => {
     console.log(state);
   };
 
+  const employeeReason = () => {
+    console.log(";;;;;");
+    setEmployeeReasonShow(true);
+  };
+
+  const handleEmployeeReason = () => setEmployeeReasonShow(false);
   return (
     <Fragment>
       {/* letter */}
+      <Modal show={employeeReasonShow} onHide={handleEmployeeReason} size="md">
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        <Modal.Body>
+          {disciplinarySearchData &&
+          disciplinarySearchData &&
+          disciplinarySearchData !== null &&
+          disciplinarySearchData !== undefined &&
+          Object.keys(disciplinarySearchData).length !== 0 &&
+          disciplinarySearchData.disciplinaryAction !== null &&
+          disciplinarySearchData.disciplinaryAction !== undefined &&
+          disciplinarySearchData.disciplinaryAction !== "" ? (
+            <ReasonByEmployee />
+          ) : (
+            ""
+          )}
+        </Modal.Body>
+      </Modal>
       <Modal
         show={showShowCauseNoticeModalLink}
         onHide={handleShowCauseLetterCloseLink}
@@ -414,7 +439,7 @@ const EmployeShowCaseLetter = () => {
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Notification has been sent to the manager
+              Show cause details saved successfully, manager has been notified.
             </label>
             <div className="text-center">
               <Button onClick={handleShowCauseLetterClose1}>Close</Button>
@@ -436,7 +461,7 @@ const EmployeShowCaseLetter = () => {
             disciplinarySearchData.disciplinaryAction !== null &&
             disciplinarySearchData.disciplinaryAction !== undefined &&
             disciplinarySearchData.disciplinaryAction !== "" ? (
-              <ShowCauseNotice />
+              <ReasonByEmployee />
             ) : (
               ""
             )}
@@ -499,7 +524,9 @@ const EmployeShowCaseLetter = () => {
             {/* <Modal.Title>State remarks for disapproval</Modal.Title> */}
           </Modal.Header>{" "}
           <Modal.Body className="mx-auto">
-            <label>Show cause notice has been issued to the employee</label>
+            <label>
+              Show cause details saved successfully, manager has been notified.
+            </label>
 
             <div className="text-center mb-2">
               <Button onClick={() => handleClose()}>Close</Button>
@@ -647,16 +674,20 @@ const EmployeShowCaseLetter = () => {
                             </label>
                           </div>
                         </Col>
-                        <Col sm={6}>
-                          <div>
-                            <label>
-                              Reason For Show Cause Notice:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.reasonForCause}
+                        {showCauseReason === "Other" ? (
+                          <Col sm={6}>
+                            <div>
+                              <label>
+                                Reason For Show Cause Notice:
+                                <label className="itemResult">
+                                  &nbsp;&nbsp; {state.reasonForCause}
+                                </label>
                               </label>
-                            </label>
-                          </div>
-                        </Col>
+                            </div>
+                          </Col>
+                        ) : (
+                          ""
+                        )}
                       </Row>
                       <Row
                         style={{
@@ -711,7 +742,11 @@ const EmployeShowCaseLetter = () => {
                       >
                         <Col sm={2}>
                           <div>
-                            <label> Add Remarks:</label>
+                            <label>
+                              {" "}
+                              Add Remarks:
+                              <span style={{ color: "red" }}>*</span>
+                            </label>
                           </div>
                         </Col>
                         {submitted === true ||

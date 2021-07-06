@@ -319,7 +319,7 @@ const IssueShowCauseNotice = () => {
     if (e.target.value === "Others") {
       disciplinaryResonsView(2);
       setChangeInReason(2);
-      state.reasonForCause = " ";
+      state.reasonForCause = "";
     } else {
       state.reasonForCause = "NA";
       setChangeInReason(1);
@@ -465,7 +465,8 @@ const IssueShowCauseNotice = () => {
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Show cause letter has been issued to the employee
+              Show cause notice details saved successfully, sent for manager
+              confirmation.
             </label>
             <div className="text-center">
               <Button onClick={handleShowCauseLetterClose1}>Close</Button>
@@ -550,7 +551,10 @@ const IssueShowCauseNotice = () => {
             {/* <Modal.Title>State remarks for disapproval</Modal.Title> */}
           </Modal.Header>{" "}
           <Modal.Body className="mx-auto">
-            <label>Show cause notice has been issued to the employee</label>
+            <label>
+              Show cause notice details saved successfully, sent for manager
+              confirmation.
+            </label>
 
             <div className="text-center mb-2">
               <Button onClick={() => handleClose()}>Close</Button>
@@ -778,61 +782,63 @@ const IssueShowCauseNotice = () => {
                             )}
                           </div>
                         </Col>
-
-                        <Col sm={3}>
-                          <div>
-                            <label>Reason For Show Cause Notice:</label>
-                          </div>
-                        </Col>
-
-                        <Col sm={3}>
-                          <div>
-                            {changeInReason === 1 ? (
-                              <label className="itemResult">
-                                &nbsp;&nbsp; NA
-                              </label>
-                            ) : submitted === true ? (
-                              <label className="itemResult">
-                                &nbsp;&nbsp;{state.reasonForCause}
-                              </label>
-                            ) : (
-                              <Form.Group>
-                                <Form.Control
-                                  as="select"
-                                  name="reasonForCause"
-                                  options={resonsForShowCauseList}
-                                  value={state.reasonForCause}
-                                  onChange={changeHandler}
-                                  //   disabled={disabled}
-                                  style={
-                                    reasonForCauseError
-                                      ? { borderColor: "red" }
-                                      : {}
-                                  }
-                                >
-                                  <option value="" disabled selected hidden>
-                                    Select Reason For
-                                  </option>
-                                  {resonsForShowCauseList.map((item) => {
-                                    return (
-                                      <option key={item.value}>
-                                        {item.label}
-                                      </option>
-                                    );
-                                  })}
-                                </Form.Control>
-                                {reasonForCauseError ? (
-                                  <p style={{ color: "red" }}>
-                                    {" "}
-                                    &nbsp; *Please choose valid option
-                                  </p>
-                                ) : (
-                                  <p></p>
-                                )}
-                              </Form.Group>
-                            )}
-                          </div>
-                        </Col>
+                        {changeInReason === 1 || showCauseReason === "" ? (
+                          ""
+                        ) : (
+                          <Col sm={3}>
+                            <div>
+                              <label>Reason For Show Cause Notice:</label>
+                            </div>
+                          </Col>
+                        )}
+                        {changeInReason === 1 || showCauseReason === "" ? (
+                          ""
+                        ) : (
+                          <Col sm={3}>
+                            <div>
+                              {submitted === true ? (
+                                <label className="itemResult">
+                                  &nbsp;&nbsp;{state.reasonForCause}
+                                </label>
+                              ) : (
+                                <Form.Group>
+                                  <Form.Control
+                                    as="select"
+                                    name="reasonForCause"
+                                    options={resonsForShowCauseList}
+                                    value={state.reasonForCause}
+                                    onChange={changeHandler}
+                                    //   disabled={disabled}
+                                    style={
+                                      reasonForCauseError
+                                        ? { borderColor: "red" }
+                                        : {}
+                                    }
+                                  >
+                                    <option value="" disabled selected hidden>
+                                      Select Reason For
+                                    </option>
+                                    {resonsForShowCauseList.map((item) => {
+                                      return (
+                                        <option key={item.value}>
+                                          {item.label}
+                                        </option>
+                                      );
+                                    })}
+                                  </Form.Control>
+                                  {reasonForCauseError ? (
+                                    <p style={{ color: "red" }}>
+                                      {" "}
+                                      &nbsp; *Please choose valid option
+                                    </p>
+                                  ) : (
+                                    <p></p>
+                                  )}
+                                </Form.Group>
+                              )}
+                            </div>
+                          </Col>
+                        )}
                       </Row>
                       <Row
                         style={{
