@@ -78,6 +78,7 @@ import Documents from "./components/OnBording/Documents";
 import HistoryView from "./components/Separation/FinanceAdminNoDueClearance/HistoryView";
 import EmployeeExitList from "./components/ManagerApproveEmployeExit/EmployeeExitList";
 import EmployeeExitAction from "./components/ManagerApproveEmployeExit/EmployeeExitAction";
+import EmployeeExitView from "./components/ManagerApproveEmployeExit/EmployeeExitView";
 import ManagerInitiateExit from "./components/ManagerApproveEmployeExit/ManagerInitiateExit";
 import PromotionInitiate from "./components/Promotion/PromotionInitiate/PromotionInitiate";
 import PromotionView from "./components/Promotion/PromotionView/PromotionView";
@@ -233,6 +234,10 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/exit-action/:employeeid`}
             component={EmployeeExitAction}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/exit-view/:employeeid`}
+            component={EmployeeExitView}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/history-view/:employeeid`}
