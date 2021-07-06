@@ -6,6 +6,7 @@ import { OfferContext } from "../../context/OfferState";
 import PartTimeOfferLetter from "../Offers/partTimeOfferLetter";
 import PermanentOfferLetter from "./permanentOfferLetter";
 import InternOfferLetter from "./internOfferLetter";
+import LocalExpatOfferLetter from "./localExpatOfferLetter";
 import { Link } from "react-router-dom";
 
 const ViewOfferLetter = () => {
@@ -96,6 +97,11 @@ const ViewOfferLetter = () => {
               offerLetterData.contractType !== null &&
               offerLetterData.contractType === "Parttime" ? (
               <PartTimeOfferLetter />
+            ) : offerLetterData &&
+              offerLetterData.contractType !== undefined &&
+              offerLetterData.contractType !== null &&
+              offerLetterData.contractType === "Local Expat" ? (
+              <LocalExpatOfferLetter />
             ) : (
               <InternOfferLetter />
             )}

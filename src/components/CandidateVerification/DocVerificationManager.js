@@ -51,6 +51,7 @@ const DocVerification = () => {
     personalInfoData,
     personalInfo,
     rejectMessage,
+    documentRejectComplete,
   } = useContext(DocsVerifyContext);
   const {
     candidateData,
@@ -123,11 +124,19 @@ const DocVerification = () => {
 
   const handleOnboard = () => {
     adhaarVerificationNotification(candidateId);
+    // documentRejectComplete(candidateId);
     setOnboardPopup(true);
   };
+  const handleReupload = () => {
+    // adhaarVerificationNotification(candidateId);
+    documentRejectComplete(candidateId);
+    // setOnboardPopup(true);
+  };
+
   // useEffect(() => {
   var documents = "";
   var educationDocuments = "";
+  console.log("docsToVerify", docsToVerify);
   documents =
     docsToVerify !== undefined &&
     docsToVerify !== null &&
@@ -294,66 +303,97 @@ const DocVerification = () => {
                           )
                         )}
                       </p>
-                      <p
+                      {/* <p
                         style={{ cursor: "pointer" }}
                         onClick={() => downloadDocument(item.documentName)}
+                      > */}
+                      <a
+                        href={
+                          "http://humine-application.s3-website.ap-south-1.amazonaws.com/" +
+                          item.documentName
+                        }
+                        target="_blank"
                       >
                         {downloadedFile && <img src={downloadedFile} alt="" />}
                         {item.documentName}
-                      </p>
+                      </a>
+                      <button
+                        className="downloadButton"
+                        onClick={() => downloadDocument(item.documentName)}
+                      >
+                        Download
+                      </button>
+                      {/* </p> */}
                     </td>
                     {item.statusDesc !== null &&
-                    item.statusDesc !== "Pending" ? (
+                    item.statusDesc !== "Pending" &&
+                    item.documentType !== 4 &&
+                    item.documentType !== 5 ? (
                       <td className="buttonMargin1">{item.statusDesc}</td>
                     ) : (
                       <td className="row text-center buttonMargin">
-                        {user.role === "MANAGER" && item.documentType !== 5 && (
-                          <button
-                            className="approveButton"
-                            style={{ opacity: "10px" }}
-                            disabled={rejectStatus === "FAIL" ? true : false}
-                            onClick={() =>
-                              handleApproveDocument(item.documentId)
-                            }
-                          >
-                            Approve
-                          </button>
-                        )}
+                        {(user.role === "MANAGER" ||
+                          user.role === "COST_CENTER_MANAGER") &&
+                          item.documentType !== 4 &&
+                          item.documentType !== 5 && (
+                            <button
+                              className="approveButton"
+                              style={{ opacity: "10px" }}
+                              disabled={rejectStatus === "FAIL" ? true : false}
+                              onClick={() =>
+                                handleApproveDocument(item.documentId)
+                              }
+                            >
+                              Approve
+                            </button>
+                          )}
 
-                        {user.role === "MANAGER" && item.documentType !== 5 && (
-                          <button
-                            className="approveButton ml-4"
-                            style={
-                              rejectStatus === "FAIL" &&
-                              docType === item.documentType
-                                ? { opacity: "0.6" }
-                                : { opacity: "1" }
-                            }
-                            disabled={
-                              rejectStatus === "FAIL" &&
-                              docType === item.documentType &&
-                              item.documentId
-                                ? true
-                                : false
-                            }
-                            onClick={() =>
-                              handleDisApproveDocument(
-                                item.documentId,
-                                item.documentType
-                              )
-                            }
-                          >
-                            Disapprove
-                          </button>
-                        )}
+                        {(user.role === "MANAGER" ||
+                          user.role === "COST_CENTER_MANAGER") &&
+                          item.documentType !== 4 &&
+                          item.documentType !== 5 && (
+                            <button
+                              className="approveButton ml-4"
+                              style={
+                                rejectStatus === "FAIL" &&
+                                docType === item.documentType
+                                  ? { opacity: "0.6" }
+                                  : { opacity: "1" }
+                              }
+                              disabled={
+                                rejectStatus === "FAIL" &&
+                                docType === item.documentType &&
+                                item.documentId
+                                  ? true
+                                  : false
+                              }
+                              onClick={() =>
+                                handleDisApproveDocument(
+                                  item.documentId,
+                                  item.documentType
+                                )
+                              }
+                            >
+                              Disapprove
+                            </button>
+                          )}
                       </td>
                     )}
                     <td className="buttonMargin1">
-                      {item.remark !== null ? item.remark : "N/A"}
+                      {item.documentType !== 4 && item.documentType !== 5
+                        ? item.remark !== null
+                          ? item.remark
+                          : "N/A"
+                        : ""}
                     </td>
                     <td className="buttonMargin1">
-                      {item.verifiedDate !== null ? item.verifiedDate : "N/A"}
+                      {item.documentType !== 4 && item.documentType !== 5
+                        ? item.verifiedDate !== null
+                          ? item.verifiedDate
+                          : "N/A"
+                        : ""}
                     </td>
+                    :
                   </tr>
                 </tbody>
               );
@@ -459,14 +499,35 @@ const DocVerification = () => {
                           )
                         )}
                       </p>
-                      {item.documentType > 5 && item.documentName}
+                      {item.documentType >= 6 && (
+                        <React.Fragment>
+                          <a
+                            href={
+                              "http://humine-application.s3-website.ap-south-1.amazonaws.com/" +
+                              item.documentName
+                            }
+                            target="_blank"
+                          >
+                            {downloadedFile && (
+                              <img src={downloadedFile} alt="" />
+                            )}
+                            {item.documentName}
+                          </a>
+                          <button
+                            className="downloadButton"
+                            onClick={() => downloadDocument(item.documentName)}
+                          >
+                            Download
+                          </button>
+                        </React.Fragment>
+                      )}
                     </td>
                     {item.statusDesc !== null &&
                     item.statusDesc !== "Pending" &&
-                    item.documentType > 5 ? (
+                    item.documentType >= 6 ? (
                       <td className="buttonMargin1">{item.statusDesc}</td>
                     ) : (
-                      item.documentType > 5 && (
+                      item.documentType >= 6 && (
                         <td className="row text-center buttonMargin">
                           <button
                             className="approveButton"
@@ -476,7 +537,8 @@ const DocVerification = () => {
                           >
                             Approve
                           </button>
-                          {user.role === "MANAGER" && (
+                          {(user.role === "MANAGER" ||
+                            user.role === "COST_CENTER_MANAGER") && (
                             <button
                               className="approveButton ml-4"
                               style={
@@ -513,19 +575,19 @@ const DocVerification = () => {
                     )}
                     {item.remark !== null ? (
                       <td className="buttonMargin1">
-                        {item.documentType > 5 && item.remark}
+                        {item.documentType >= 6 && item.remark}
                       </td>
                     ) : (
-                      item.documentType > 5 && (
+                      item.documentType >= 6 && (
                         <td className="buttonMargin1">NA</td>
                       )
                     )}
                     {item.verifiedDate !== null ? (
                       <td className="buttonMargin1">
-                        {item.documentType > 5 && item.verifiedDate}
+                        {item.documentType >= 6 && item.verifiedDate}
                       </td>
                     ) : (
-                      item.documentType > 5 && (
+                      item.documentType >= 6 && (
                         <td className="buttonMargin1">NA</td>
                       )
                     )}
@@ -603,11 +665,18 @@ const DocVerification = () => {
           textAlign: "center",
         }}
       >
-        {state !== undefined && state.verificationStatus === 1 && (
+        {state !== undefined && state.documentUploaded === 1 && (
           <button className="onboardButton" onClick={() => handleOnboard()}>
             Onboard Candidate
           </button>
         )}
+        {state !== undefined &&
+          state.documentReUploadCount !== 0 &&
+          state.documentUploaded === 0 && (
+            <button className="onboardButton" onClick={() => handleReupload()}>
+              Submit
+            </button>
+          )}
       </div>
     </Fragment>
   );

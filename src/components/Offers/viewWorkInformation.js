@@ -35,6 +35,8 @@ const ViewWorkInformation = () => {
   const { CostCenter, costCenterList } = useContext(AdminContext);
   const [college, setCollege] = useState("");
   const { viewCountries, countryList } = useContext(MasterFilesContext);
+  const [dateOfIssue, setDateOfIssue] = useState();
+  const [dateOfValidity, setDateOfValidity] = useState();
 
   const {
     departmentView,
@@ -94,6 +96,8 @@ const ViewWorkInformation = () => {
       });
       setDateOFJoining(new Date(workData.dateOfJoin));
       setDateOFLeaving(new Date(workData.dateOfLeaving));
+      setDateOfIssue(new Date(workData.passportIssuedDate));
+      setDateOfValidity(new Date(workData.passportExpiryDate));
       setCostCenter(workData.costCentre);
       locationView(workData.costCentre);
       setCollege(workData.collegeName);
@@ -303,33 +307,32 @@ const ViewWorkInformation = () => {
           <Col sm={3}>
             <Form.Group>
               <Form.Label>Sports</Form.Label>
-              {state.employmentType === "Internship" ? (
+              {/* {state.employmentType === "Internship" ? (
                 <Form.Control
                   type="text"
                   value="N/A"
                   readOnly
                   className="form-input"
                 />
-              ) : (
-                <Form.Control
-                  as="select"
-                  value={state.sports}
-                  className="form-input disable-arrow"
-                  name="sports"
-                  disabled="true"
-                >
-                  {sportsNames !== null &&
-                    sportsNames !== undefined &&
-                    sportsNames.length > 0 &&
-                    sportsNames.map((item) => {
-                      return (
-                        <option key={item.sportId} value={item.sportId}>
-                          {item.sportName}
-                        </option>
-                      );
-                    })}
-                </Form.Control>
-              )}
+              ) : ( */}
+              <Form.Control
+                as="select"
+                value={state.sports}
+                className="form-input disable-arrow"
+                name="sports"
+                disabled="true"
+              >
+                {sportsNames !== null &&
+                  sportsNames !== undefined &&
+                  sportsNames.length > 0 &&
+                  sportsNames.map((item) => {
+                    return (
+                      <option key={item.sportId} value={item.sportId}>
+                        {item.sportName}
+                      </option>
+                    );
+                  })}
+              </Form.Control>
             </Form.Group>
           </Col>
         </Row>
@@ -486,7 +489,7 @@ const ViewWorkInformation = () => {
               </Form.Group>
             </Col>
           )}
-          {(state.employmentType === "Internship" ||
+          {/* {(state.employmentType === "Internship" ||
             state.employmentType === "Permanent" ||
             state.employmentType === "permanent" ||
             state.employmentType === "Parttime") && (
@@ -506,8 +509,8 @@ const ViewWorkInformation = () => {
                 </Form.Control>
               </Form.Group>
             </Col>
-          )}
-          {state.expatUser == 1 && (
+          )} */}
+          {state.employmentType === "Local Expat" && (
             <Col sm={3}>
               <Form.Group>
                 <Form.Label>Passport Number</Form.Label>
@@ -521,30 +524,60 @@ const ViewWorkInformation = () => {
               </Form.Group>
             </Col>
           )}
-        </Row>
-        <Row>
-          {state.expatUser == 1 && (
-            <Col sm={3}>
-              <Form.Group>
-                <Form.Label>Nationality</Form.Label>
-                <Form.Control
-                  as="select"
-                  className="form-input disable-arrow"
-                  value={state.nationality}
-                  name="nationality"
-                  disabled={true}
-                >
-                  <option>Select Nationality</option>
-                  {countryList !== null &&
-                    countryList !== undefined &&
-                    countryList.map((item) => {
-                      return (
-                        <option key={item.countryId}>{item.nationality}</option>
-                      );
-                    })}
-                </Form.Control>
-              </Form.Group>
-            </Col>
+
+          {state.employmentType === "Local Expat" && (
+            <React.Fragment>
+              <Col sm={3}>
+                <Form.Group>
+                  <Form.Label>Nationality</Form.Label>
+                  <Form.Control
+                    as="select"
+                    className="form-input disable-arrow"
+                    value={state.nationality}
+                    name="nationality"
+                    disabled={true}
+                  >
+                    <option>Select Nationality</option>
+                    {countryList !== null &&
+                      countryList !== undefined &&
+                      countryList.map((item) => {
+                        return (
+                          <option key={item.countryId}>
+                            {item.nationality}
+                          </option>
+                        );
+                      })}
+                  </Form.Control>
+                </Form.Group>
+              </Col>
+              <Col sm={3}>
+                <Form.Group className="reactDate">
+                  <Form.Label>Date of Issue</Form.Label>
+                  <DatePicker
+                    className="form-control form-input"
+                    selected={dateOfIssue}
+                    required
+                    dateFormat="yyyy-MM-dd"
+                    placeholderText="Date of Issue"
+                    disabled="true"
+                  />
+                </Form.Group>
+              </Col>
+              <Col sm={3}>
+                <Form.Group className="reactDate">
+                  <Form.Label>Date Of Validity</Form.Label>
+                  <DatePicker
+                    className="form-control form-input"
+                    selected={dateOfValidity}
+                    required
+                    minDate={dateOfIssue}
+                    dateFormat="yyyy-MM-dd"
+                    placeholderText="Date of Validity"
+                    disabled="true"
+                  />
+                </Form.Group>
+              </Col>
+            </React.Fragment>
           )}
         </Row>
         {state.recuritment === "NGO" ? (
