@@ -240,7 +240,8 @@ const EmployeeExitList = () => {
                             <td>{item.contractType}</td>
                             <td>{item.dateOfResignation}</td>
                             <td>{item.lastWorkingDate}</td>
-                            <td>{item.modeOfSeparationReasonId}</td>
+                            <td>{item.reasonForResignation}</td>
+                            {/* <td>{item.modeOfSeparationReasonId}</td> */}
                             <td>{item.noticePeriod}</td>
                             <td>
                               {item.status === 0

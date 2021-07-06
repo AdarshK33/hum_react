@@ -535,34 +535,38 @@ const DisciplinaryView = () => {
                               </div>
                             </Col>
                           </Row>
-                          <Row
-                            style={{
-                              marginLeft: "2rem",
-                              marginTop: "2rem",
-                              marginBottom: "1rem",
-                            }}
-                          >
-                            <Col sm={6}>
-                              <div>
-                                <label>
-                                  Pip Start Date:
-                                  <label className="itemResult">
-                                    &nbsp;&nbsp; {state.warningIssuedDateDW}
+                          {showCauseReason === "Other" ? (
+                            ""
+                          ) : (
+                            <Row
+                              style={{
+                                marginLeft: "2rem",
+                                marginTop: "2rem",
+                                marginBottom: "1rem",
+                              }}
+                            >
+                              <Col sm={6}>
+                                <div>
+                                  <label>
+                                    PIP Start Date:
+                                    <label className="itemResult">
+                                      &nbsp;&nbsp; {state.warningIssuedDateDW}
+                                    </label>
                                   </label>
-                                </label>
-                              </div>
-                            </Col>
-                            <Col sm={6}>
-                              <div>
-                                <label>
-                                  Pip End Date:
-                                  <label className="itemResult">
-                                    &nbsp;&nbsp; {state.pipEndDate}
+                                </div>
+                              </Col>
+                              <Col sm={6}>
+                                <div>
+                                  <label>
+                                    PIP End Date:
+                                    <label className="itemResult">
+                                      &nbsp;&nbsp; {state.pipEndDate}
+                                    </label>
                                   </label>
-                                </label>
-                              </div>
-                            </Col>
-                          </Row>
+                                </div>
+                              </Col>
+                            </Row>
+                          )}
                           <Row
                             style={{
                               marginLeft: "2rem",

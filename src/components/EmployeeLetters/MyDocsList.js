@@ -144,7 +144,9 @@ const EmployeeDocementsList = () => {
                       <th scope="col">Due Days</th>
                       <th scope="col">Show Cause Issue Status</th>
                       <th scope="col">Warning Letter Issue Date</th>
-                      <th scope="col">Warning Letter Issue Status</th>
+                      <th scope="col">PIP Start Date</th>
+                      <th scope="col">PIP End Date</th>
+                      <th scope="col">PIP Status</th>
                       <th scope="col">View</th>
                       <th scope="col">Action</th>
                     </tr>
@@ -206,7 +208,21 @@ const EmployeeDocementsList = () => {
                                 {item.disciplinaryWarning.warningIssuedDate}
                               </td>
                             ) : (
-                              <td>-</td>
+                              <td>NA</td>
+                            )}
+                            {item.disciplinaryWarning !== null &&
+                            item.disciplinaryWarning !== undefined ? (
+                              <td>
+                                {item.disciplinaryWarning.warningIssuedDate}
+                              </td>
+                            ) : (
+                              <td>NA</td>
+                            )}
+                            {item.disciplinaryWarning !== null &&
+                            item.disciplinaryWarning !== undefined ? (
+                              <td>{item.disciplinaryWarning.pipEndDate}</td>
+                            ) : (
+                              <td>NA</td>
                             )}
                             {item.disciplinaryAction !== null &&
                             item.disciplinaryAction !== undefined ? (

@@ -226,7 +226,7 @@ const CostCenterManagerAction = () => {
     setShowSignature(true);
   };
 
-  const submitfinalShowCauseLetter = () => {
+  const submitfinalShowCauseLetter = (e) => {
     if (
       disciplinarySearchData.employeeId !== null &&
       disciplinarySearchData.employeeId !== undefined
@@ -234,6 +234,7 @@ const CostCenterManagerAction = () => {
       setSubmitLetter(true);
       setLetterSent(true);
       setShow(true);
+      submitHandler(e);
 
       // finalSubmitOfferLetter(employeeData.employeeId);
     }
@@ -358,7 +359,7 @@ const CostCenterManagerAction = () => {
       setSubmitted(true);
       state.clickOnsubmit = true;
       setPreview(true);
-      setSuccessModal(true);
+      // setSuccessModal(true);
     } else {
       console.log("search data is null");
     }
@@ -420,7 +421,16 @@ const CostCenterManagerAction = () => {
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Show cause letter has been issued to the employee
+              {disciplinarySearchData &&
+              disciplinarySearchData &&
+              disciplinarySearchData !== null &&
+              disciplinarySearchData !== undefined &&
+              Object.keys(disciplinarySearchData).length !== 0 &&
+              disciplinarySearchData.disciplinaryWarning !== null &&
+              disciplinarySearchData.disciplinaryWarning !== undefined &&
+              disciplinarySearchData.disciplinaryWarning !== ""
+                ? "Show cause notice issued successfully , the employee has been notified."
+                : "Warning letter issued successfully , the employee has been notified."}
             </label>
             <div className="text-center">
               <Button onClick={handleShowCauseLetterClose1}>Close</Button>
@@ -515,7 +525,18 @@ const CostCenterManagerAction = () => {
             {/* <Modal.Title>State remarks for disapproval</Modal.Title> */}
           </Modal.Header>{" "}
           <Modal.Body className="mx-auto">
-            <label>Show cause notice has been issued to the employee</label>
+            <label>
+              {disciplinarySearchData &&
+              disciplinarySearchData &&
+              disciplinarySearchData !== null &&
+              disciplinarySearchData !== undefined &&
+              Object.keys(disciplinarySearchData).length !== 0 &&
+              disciplinarySearchData.disciplinaryWarning !== null &&
+              disciplinarySearchData.disciplinaryWarning !== undefined &&
+              disciplinarySearchData.disciplinaryWarning !== ""
+                ? "Show cause notice issued successfully , the employee has been notified."
+                : "Warning letter issued successfully , the employee has been notified.."}
+            </label>
 
             <div className="text-center mb-2">
               <Button onClick={() => handleClose()}>Close</Button>
@@ -873,34 +894,38 @@ const CostCenterManagerAction = () => {
                               </div>
                             </Col>
                           </Row>
-                          <Row
-                            style={{
-                              marginLeft: "2rem",
-                              marginTop: "2rem",
-                              marginBottom: "1rem",
-                            }}
-                          >
-                            <Col sm={6}>
-                              <div>
-                                <label>
-                                  Pip Start Date:
-                                  <label className="itemResult">
-                                    &nbsp;&nbsp; {state.warningIssuedDateDW}
+                          {showCauseReason === "Other" ? (
+                            ""
+                          ) : (
+                            <Row
+                              style={{
+                                marginLeft: "2rem",
+                                marginTop: "2rem",
+                                marginBottom: "1rem",
+                              }}
+                            >
+                              <Col sm={6}>
+                                <div>
+                                  <label>
+                                    PIP Start Date:
+                                    <label className="itemResult">
+                                      &nbsp;&nbsp; {state.warningIssuedDateDW}
+                                    </label>
                                   </label>
-                                </label>
-                              </div>
-                            </Col>
-                            <Col sm={6}>
-                              <div>
-                                <label>
-                                  Pip End Date:
-                                  <label className="itemResult">
-                                    &nbsp;&nbsp; {state.pipEndDate}
+                                </div>
+                              </Col>
+                              <Col sm={6}>
+                                <div>
+                                  <label>
+                                    PIP End Date:
+                                    <label className="itemResult">
+                                      &nbsp;&nbsp; {state.pipEndDate}
+                                    </label>
                                   </label>
-                                </label>
-                              </div>
-                            </Col>
-                          </Row>
+                                </div>
+                              </Col>
+                            </Row>
+                          )}
                           <Row
                             style={{
                               marginLeft: "2rem",
@@ -956,7 +981,7 @@ const CostCenterManagerAction = () => {
                             textAlign: "center",
                           }}
                         >
-                          <button
+                          {/* <button
                             disabled={submitted}
                             className={
                               submitted ? "confirmButton" : "stepperButtons"
@@ -964,11 +989,9 @@ const CostCenterManagerAction = () => {
                             onClick={submitHandler}
                           >
                             Confirm
-                          </button>
+                          </button> */}
 
-                          {!saveLetter &&
-                          showPreview === true &&
-                          submitted === true ? (
+                          {!saveLetter ? (
                             <button
                               // disabled={!submitted}
                               className={"LettersButtonsExtra"}
@@ -985,16 +1008,15 @@ const CostCenterManagerAction = () => {
                               disciplinarySearchData.disciplinaryWarning !==
                                 undefined &&
                               disciplinarySearchData.disciplinaryWarning !== ""
-                                ? "Generate Warning Letter"
-                                : "Generate Show Cause Notice"}
+                                ? "View Warning Letter"
+                                : "View Show Cause Notice"}
                             </button>
                           ) : (
                             ""
                           )}
-                          {saveLetter &&
-                          previewGeneratedLetter &&
-                          showPreview ? (
+                          {saveLetter ? (
                             <button
+                              style={{ marginLeft: "-4px" }}
                               className={"LettersButtonsExtra"}
                               onClick={previewShowCauseLetter}
                             >
@@ -1016,7 +1038,7 @@ const CostCenterManagerAction = () => {
                             ""
                           )}
 
-                          {saveLetter && previewGeneratedLetter && showPreview && (
+                          {saveLetter && (
                             <div className="preview-section">
                               <br></br>
                               <br></br>
