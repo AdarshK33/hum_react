@@ -300,20 +300,7 @@ const ManagerDisciplinaryList = () => {
                                     "Warning Letter Issued" ||
                                     item.disciplinaryWarning.statusDesc ===
                                       "Warning Letter Approved") &&
-                                      moment(
-                                        new Date(item.disciplinaryWarning
-                                          .pipEndDate)
-                                      ).isBefore(new Date()) === true 
-                                  // getDifferenceInDays(
-                                  //   new Date(
-                                  //     item.disciplinaryWarning.warningIssuedDate
-                                  //   ),
-                                  //   new Date(
-                                  //     item.disciplinaryWarning.pipEndDate
-                                  //     // "2021-07-03"
-                                  //   )
-                                  // ) === true
-                                   ? (
+                                  item.disciplinaryWarning.pipDueDays === 0 ? (
                                     <Link
                                       to={
                                         `/manager-warning-action-view/` +

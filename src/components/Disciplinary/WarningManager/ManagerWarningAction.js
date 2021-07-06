@@ -212,29 +212,30 @@ const ManagerWarningAction = (props) => {
         ) {
           setShowCauseReason("Non-Performance");
           setIssueWarningStatus("yes");
-          state.inputReasonId = disciplinarySearchData.disciplinaryAction.reasonId
+          state.inputReasonId =
+            disciplinarySearchData.disciplinaryAction.reasonId;
           state.disciplinaryWarning.reasonId =
             disciplinarySearchData.disciplinaryAction.reasonId;
           state.disciplinaryWarning.reason = "Non-Performance";
           state.disciplinaryWarning.reasonDetailsId = 0;
-          state.disciplinaryWarning.reasonDetails = null
-
+          state.disciplinaryWarning.reasonDetails = null;
         } else if (
           disciplinarySearchData.disciplinaryAction.reasonId === 2 &&
           disciplinarySearchData.disciplinaryAction.actionDueDays !== 0
         ) {
           setShowCauseReason("Other");
           setIssueWarningStatus("");
-          state.inputReasonId = disciplinarySearchData.disciplinaryAction.reasonId
+          state.inputReasonId =
+            disciplinarySearchData.disciplinaryAction.reasonId;
           state.disciplinaryWarning.reasonId =
             disciplinarySearchData.disciplinaryAction.reasonId;
           state.disciplinaryWarning.reason =
             disciplinarySearchData.disciplinaryAction.reason;
 
-            state.disciplinaryWarning.reasonDetailsId =
+          state.disciplinaryWarning.reasonDetailsId =
             disciplinarySearchData.disciplinaryAction.reasonDetailsId;
-          state.disciplinaryWarning.reasonDetails = 
-          disciplinarySearchData.disciplinaryAction.reasonDetails
+          state.disciplinaryWarning.reasonDetails =
+            disciplinarySearchData.disciplinaryAction.reasonDetails;
         }
         if (disciplinarySearchData.disciplinaryAction.actionDueDays == 0) {
           setIssueWarningStatus("no");
@@ -373,19 +374,20 @@ const ManagerWarningAction = (props) => {
     e.preventDefault();
     var reason = state.inputReasonId;
     if (reason == "" || reason == null || reason == undefined) {
-      console.log("in reason")
+      console.log("in reason");
       setReasonError("Please add reason for warning");
     } else {
       setReasonError("");
     }
     var improvementPeriod = state.InputImprovementPeriod;
-    var reasonId = state.disciplinaryAction.reasonId
-    if (reasonId === 1 &&
+    var reasonId = state.disciplinaryAction.reasonId;
+    if (
+      reasonId === 1 &&
       (improvementPeriod == "" ||
-      improvementPeriod == null ||
-      improvementPeriod == undefined)
+        improvementPeriod == null ||
+        improvementPeriod == undefined)
     ) {
-      console.log("in reimprovementPeriodason")
+      console.log("in reimprovementPeriodason");
 
       setImprovementPeriodError("Please add improvement period");
     } else {
@@ -397,15 +399,17 @@ const ManagerWarningAction = (props) => {
       managerComment == null ||
       managerComment == undefined
     ) {
-      console.log("in managerComment")
+      console.log("in managerComment");
 
       setManagerCommentError("Please add reason ");
     } else {
       setManagerCommentError("");
     }
     if (
-      (reasonId === 2 || (improvementPeriod !== "" && improvementPeriod !== undefined &&
-      improvementPeriod !== null)) &&
+      (reasonId === 2 ||
+        (improvementPeriod !== "" &&
+          improvementPeriod !== undefined &&
+          improvementPeriod !== null)) &&
       reason !== "" &&
       managerComment !== "" &&
       reason !== null &&
@@ -630,7 +634,7 @@ const ManagerWarningAction = (props) => {
     console.log("all okay reason");
     setSubmitLetter(true);
     setShow(true);
-     createShowCauseIssue(infoData);
+    createShowCauseIssue(infoData);
   };
 
   const previewShowCauseLetter = (e) => {
@@ -1847,10 +1851,12 @@ const ManagerWarningAction = (props) => {
                               ).length !== 0 &&
                               disciplinarySearchData.disciplinaryWarning !==
                                 "" &&
-                              moment(
-                                disciplinarySearchData.disciplinaryWarning
-                                  .pipEndDate
-                              ).isBefore(new Date()) === true ? (
+                              disciplinarySearchData.disciplinaryWarning
+                                .pipDueDays === 0 ? (
+                                // moment(
+                                //   disciplinarySearchData.disciplinaryWarning
+                                //     .pipEndDate
+                                // ).isBefore(new Date()) === true ? (
                                 // state.disciplinaryWarning['pipEndDate'].getTime()/1000 <= new Date().getTime() / 1000
                                 <Col
                                   style={{
