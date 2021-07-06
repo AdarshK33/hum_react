@@ -212,19 +212,29 @@ const ManagerWarningAction = (props) => {
         ) {
           setShowCauseReason("Non-Performance");
           setIssueWarningStatus("yes");
+          state.inputReasonId = disciplinarySearchData.disciplinaryAction.reasonId
           state.disciplinaryWarning.reasonId =
             disciplinarySearchData.disciplinaryAction.reasonId;
           state.disciplinaryWarning.reason = "Non-Performance";
+          state.disciplinaryWarning.reasonDetailsId = 0;
+          state.disciplinaryWarning.reasonDetails = null
+
         } else if (
           disciplinarySearchData.disciplinaryAction.reasonId === 2 &&
           disciplinarySearchData.disciplinaryAction.actionDueDays !== 0
         ) {
           setShowCauseReason("Other");
           setIssueWarningStatus("");
+          state.inputReasonId = disciplinarySearchData.disciplinaryAction.reasonId
           state.disciplinaryWarning.reasonId =
             disciplinarySearchData.disciplinaryAction.reasonId;
           state.disciplinaryWarning.reason =
             disciplinarySearchData.disciplinaryAction.reason;
+
+            state.disciplinaryWarning.reasonDetailsId =
+            disciplinarySearchData.disciplinaryAction.reasonDetailsId;
+          state.disciplinaryWarning.reasonDetails = 
+          disciplinarySearchData.disciplinaryAction.reasonDetails
         }
         if (disciplinarySearchData.disciplinaryAction.actionDueDays == 0) {
           setIssueWarningStatus("no");
@@ -356,23 +366,27 @@ const ManagerWarningAction = (props) => {
       storeLocation: state.storeLocation,
     };
     console.log(infoData, "infoData");
-    // createShowCauseIssue(infoData);
+    createShowCauseIssue(infoData);
     setInitalExit(true);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
     var reason = state.inputReasonId;
     if (reason == "" || reason == null || reason == undefined) {
+      console.log("in reason")
       setReasonError("Please add reason for warning");
     } else {
       setReasonError("");
     }
     var improvementPeriod = state.InputImprovementPeriod;
-    if (
-      improvementPeriod == "" ||
+    var reasonId = state.disciplinaryAction.reasonId
+    if (reasonId === 1 &&
+      (improvementPeriod == "" ||
       improvementPeriod == null ||
-      improvementPeriod == undefined
+      improvementPeriod == undefined)
     ) {
+      console.log("in reimprovementPeriodason")
+
       setImprovementPeriodError("Please add improvement period");
     } else {
       setImprovementPeriodError("");
@@ -383,19 +397,20 @@ const ManagerWarningAction = (props) => {
       managerComment == null ||
       managerComment == undefined
     ) {
+      console.log("in managerComment")
+
       setManagerCommentError("Please add reason ");
     } else {
       setManagerCommentError("");
     }
     if (
-      improvementPeriod !== "" &&
+      (reasonId === 2 || (improvementPeriod !== "" && improvementPeriod !== undefined &&
+      improvementPeriod !== null)) &&
       reason !== "" &&
       managerComment !== "" &&
       reason !== null &&
-      improvementPeriod !== null &&
       managerComment !== null &&
       reason !== undefined &&
-      improvementPeriod !== undefined &&
       managerComment !== undefined
     ) {
       var infoData = {
@@ -542,7 +557,7 @@ const ManagerWarningAction = (props) => {
   };
   const handleShowCauseLetterClose1 = () => {
     setShow(false);
-    history.push("./disciplinary");
+    history.push("../disciplinary");
   };
 
   const saveOfferLetter = () => {
@@ -615,7 +630,7 @@ const ManagerWarningAction = (props) => {
     console.log("all okay reason");
     setSubmitLetter(true);
     setShow(true);
-    // createShowCauseIssue(infoData);
+     createShowCauseIssue(infoData);
   };
 
   const previewShowCauseLetter = (e) => {
@@ -724,7 +739,7 @@ const ManagerWarningAction = (props) => {
       searchByCostCenter(disciplinarySearchData.employeeId);
       ModeOfSeparationView();
       TerminationFromDesciplinary(true);
-      history.push("../manager-initiate-exit");
+      history.push("../disciplinary-separation");
       // <Link to=}> </Link>
     }
   };
