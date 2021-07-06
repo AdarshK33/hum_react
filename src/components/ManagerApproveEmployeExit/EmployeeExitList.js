@@ -199,6 +199,7 @@ const EmployeeExitList = () => {
                       <th scope="col">Reason for Resignation</th>
                       <th scope="col">Notice Period</th>
                       <th scope="col">Status</th>
+                      <th scope="col">View</th>
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
@@ -251,6 +252,15 @@ const EmployeeExitList = () => {
                                 : item.status === 4
                                 ? "Resigned"
                                 : ""}
+                            </td>
+                            <td>
+                              <Link to={"/exit-view/" + item.employeeId}>
+                                <Eye
+                                  onClick={() => {
+                                    fetchEmployeeDetails(item.employeeId);
+                                  }}
+                                />
+                              </Link>
                             </td>
 
                             <td>
