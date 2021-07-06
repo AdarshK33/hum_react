@@ -141,8 +141,7 @@ const GenerateOfferLetter = () => {
             {offerLetterData &&
             offerLetterData.contractType !== undefined &&
             offerLetterData.contractType !== null &&
-            offerLetterData.contractType === "Permanent" &&
-            offerLetterData.expatUser == 0 ? (
+            offerLetterData.contractType === "Permanent" ? (
               <PermanentOfferLetter />
             ) : offerLetterData &&
               offerLetterData.contractType !== undefined &&
@@ -152,8 +151,7 @@ const GenerateOfferLetter = () => {
             ) : offerLetterData &&
               offerLetterData.contractType !== undefined &&
               offerLetterData.contractType !== null &&
-              offerLetterData.contractType === "Permanent" &&
-              offerLetterData.expatUser == 1 ? (
+              offerLetterData.contractType === "Local Expat" ? (
               <LocalExpatOfferLetter />
             ) : (
               <InternOfferLetter />

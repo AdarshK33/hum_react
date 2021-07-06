@@ -208,8 +208,8 @@ const ManagerWarningAction = (props) => {
 
         if (
           disciplinarySearchData.disciplinaryAction.reasonId === 1 &&
-          disciplinarySearchData.disciplinaryAction.actionDueDays !== 0 && 
-          disciplinarySearchData.disciplinaryWarning.pipDueDays !==0
+          disciplinarySearchData.disciplinaryAction.actionDueDays !== 0 &&
+          disciplinarySearchData.disciplinaryWarning.pipDueDays !== 0
         ) {
           setShowCauseReason("Non-Performance");
           setIssueWarningStatus("yes");
@@ -248,7 +248,7 @@ const ManagerWarningAction = (props) => {
         Object.keys(disciplinarySearchData.disciplinaryWarning).length !== 0 &&
         disciplinarySearchData.disciplinaryWarning !== ""
       ) {
-        if(disciplinarySearchData.disciplinaryWarning.pipDueDays == 0){
+        if (disciplinarySearchData.disciplinaryWarning.pipDueDays == 0) {
           setIssueWarningStatus("no");
         }
 
@@ -312,6 +312,7 @@ const ManagerWarningAction = (props) => {
       valueStatus = 3;
     } else if (e.target.name === "initiateexit") {
       valueStatus = 1;
+      setInitalExit(true);
     }
     var infoData = {
       company: state.company,
@@ -371,7 +372,6 @@ const ManagerWarningAction = (props) => {
     };
     console.log(infoData, "infoData");
     createShowCauseIssue(infoData);
-    setInitalExit(true);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -1280,8 +1280,8 @@ const ManagerWarningAction = (props) => {
                         .employeeComment !== null &&
                       disciplinarySearchData.disciplinaryAction
                         .employeeComment !== "" &&
-                        disciplinarySearchData.disciplinaryWarning
-                        .pipDueDays !== 0 &&
+                      disciplinarySearchData.disciplinaryWarning.pipDueDays !==
+                        0 &&
                       disciplinarySearchData.disciplinaryAction
                         .employeeComment !== undefined ? (
                         // {/* //      ||
@@ -1364,10 +1364,10 @@ const ManagerWarningAction = (props) => {
                             </Col>
                           </Row>
                         </>
-                      ) : (acceptEmployeeReason == "no" ||
+                      ) : acceptEmployeeReason == "no" ||
                         state.disciplinaryAction.actionDueDays == 0 ||
-                         disciplinarySearchData.disciplinaryWarning
-                        .pipDueDays == 0) ? (
+                        disciplinarySearchData.disciplinaryWarning.pipDueDays ==
+                          0 ? (
                         <>
                           {disciplinarySearchData.disciplinaryAction !== null &&
                           disciplinarySearchData.disciplinaryAction !==
@@ -1375,9 +1375,11 @@ const ManagerWarningAction = (props) => {
                           disciplinarySearchData.disciplinaryAction !== "" &&
                           disciplinarySearchData.disciplinaryAction &&
                           disciplinarySearchData.disciplinaryWarning !== null &&
-                          disciplinarySearchData.disciplinaryWarning !== '' &&
-                          disciplinarySearchData.disciplinaryWarning !== undefined &&
-                          disciplinarySearchData.disciplinaryWarning.pipDueDays !== 0 &&
+                          disciplinarySearchData.disciplinaryWarning !== "" &&
+                          disciplinarySearchData.disciplinaryWarning !==
+                            undefined &&
+                          disciplinarySearchData.disciplinaryWarning
+                            .pipDueDays !== 0 &&
                           (disciplinarySearchData.disciplinaryAction.reason !==
                             "Other" ||
                             disciplinarySearchData.employeeActionStatus !==
@@ -1851,10 +1853,9 @@ const ManagerWarningAction = (props) => {
                                 </Col>
                               </Row>
                             </>
-                          ) : issueWarningStatus === "no"?(
+                          ) : issueWarningStatus === "no" ? (
                             <Row>
-                              {(
-                              //   disciplinarySearchData.disciplinaryWarning !==
+                              {//   disciplinarySearchData.disciplinaryWarning !==
                               //   null &&
                               // disciplinarySearchData.disciplinaryWarning !==
                               //   undefined &&
@@ -1865,7 +1866,7 @@ const ManagerWarningAction = (props) => {
                               //   "" &&
                               // disciplinarySearchData.disciplinaryWarning
                               //   .pipDueDays === 0
-                                true)?(
+                              true ? (
                                 // moment(
                                 //   disciplinarySearchData.disciplinaryWarning
                                 //     .pipEndDate

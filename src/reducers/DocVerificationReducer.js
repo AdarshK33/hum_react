@@ -50,6 +50,8 @@ const GroupReducer = (state, action) => {
       return { ...state, verificationPermanentCityList: action.payload };
     case "BASE64_UPLOAD":
       return { ...state, ImageData: action.payload };
+    case "UPDATE_REJECT":
+      return { ...state, rejectUpdate: action.payload };
   }
 };
 export default GroupReducer;

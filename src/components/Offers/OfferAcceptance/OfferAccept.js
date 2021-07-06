@@ -31,11 +31,8 @@ const OfferAccept = (props) => {
   const [noChecked, setNoChecked] = useState(false);
 
   const { CandidateProfile, candidateProfileData } = useContext(OnBoardContext);
-  const {
-    candidateRejectOffer,
-    candidateAcceptOffer,
-    offerAcceptData,
-  } = useContext(CandidateContext);
+  const { candidateRejectOffer, candidateAcceptOffer, offerAcceptData } =
+    useContext(CandidateContext);
   const { viewCandidateId, candidateData } = useContext(OfferContext);
 
   const handleClose = () => setModal(false);
@@ -187,7 +184,7 @@ const OfferAccept = (props) => {
                     View Your Offer Letter
                   </span>
                   <Button onClick={showLetterClick}>Show</Button>
-                  <Button style={{ marginLeft: "1rem" }}>Download</Button>
+                  {/* <Button style={{ marginLeft: "1rem" }}>Download</Button> */}
                 </div>
               </Container>
 
@@ -340,7 +337,7 @@ const OfferAccept = (props) => {
                     View Your Offer Letter
                   </span>
                   <Button onClick={showLetterClick}>Show</Button>
-                  <Button style={{ marginLeft: "1rem" }}>Download</Button>
+                  {/* <Button style={{ marginLeft: "1rem" }}>Download</Button> */}
                 </div>
               </Container>
 
@@ -442,7 +439,7 @@ const OfferAccept = (props) => {
                       View Your Appointment Letter
                     </span>
                     <Button onClick={showAppointmentLetterClick}>Show</Button>
-                    <Button style={{ marginLeft: "1rem" }}>Download</Button>
+                    {/* <Button style={{ marginLeft: "1rem" }}>Download</Button> */}
                   </div>
                 </Container>
               ) : (

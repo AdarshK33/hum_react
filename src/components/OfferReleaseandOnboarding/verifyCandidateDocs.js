@@ -16,7 +16,9 @@ const VerifyCandidateDocs = () => {
   return (
     <Fragment>
       {user.role === "ADMIN" && <VerificationDocsByAdmin />}
-      {user.role === "MANAGER" && <VerificationDocsByManager />}
+      {(user.role === "MANAGER" || user.role === "COST_CENTER_MANAGER") && (
+        <VerificationDocsByManager />
+      )}
     </Fragment>
   );
 };
