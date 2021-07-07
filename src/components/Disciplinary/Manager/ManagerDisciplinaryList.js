@@ -365,22 +365,6 @@ const ManagerDisciplinaryList = () => {
                                 )}
                               </td>
                             )}
-                            <td>
-                              <Link
-                                to={
-                                  `/manager-warning-action-view/` +
-                                  item.employeeId
-                                }
-                              >
-                                <Edit2
-                                  onClick={() => {
-                                    disciplinaryEmployeeSearch(
-                                      item.disciplinaryAction.disciplinaryId
-                                    );
-                                  }}
-                                />
-                              </Link>
-                            </td>
                           </tr>
                         </tbody>
                       );

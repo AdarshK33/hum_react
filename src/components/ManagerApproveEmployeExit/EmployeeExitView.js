@@ -9,7 +9,7 @@ import { setGlobalCssModule } from "reactstrap/es/utils";
 import RelievingLetter from "./RelivingLetter";
 import calendarImage from "../../assets/images/calendar-image.png";
 
-const EmployeeExitAction = () => {
+const EmployeeExitView = () => {
   const [modeOfSeparation, setModeOfSeparation] = useState("");
   const [RcryYes, setRcryYes] = useState(false);
   const [RcryNo, setRcryNo] = useState(false);
@@ -918,81 +918,6 @@ const EmployeeExitAction = () => {
                     ) : (
                       ""
                     )}
-                    <div
-                      style={{
-                        marginTop: "2rem",
-                        marginBottom: "2rem",
-                        textAlign: "center",
-                      }}
-                    >
-                      {/* <button className="stepperButtons" onClick={PrevStep}>
-            Back
-          </button> */}
-                      {true ? (
-                        <button
-                          disabled={showPreview}
-                          className={
-                            showPreview ? "confirmButton" : "stepperButtons"
-                          }
-                          onClick={submitHandler}
-                        >
-                          Save
-                        </button>
-                      ) : (
-                        ""
-                      )}
-
-                      {!saveLetter &&
-                      (employeeData.status === 2 || showPreview === true) ? (
-                        <button
-                          // disabled={!submitted}
-                          className={"LettersButtons"}
-                          onClick={relivingLetterClick}
-                        >
-                          Generate Letter
-                        </button>
-                      ) : (
-                        ""
-                      )}
-                      {saveLetter && previewGeneratedLetter && showPreview ? (
-                        <button
-                          className={"LettersButtons"}
-                          onClick={previewRelivingLetter}
-                        >
-                          Preview Letter
-                        </button>
-                      ) : (
-                        ""
-                      )}
-                      {saveLetter && previewGeneratedLetter === true && (
-                        <div className="preview-section">
-                          <br></br>
-                          <br></br>
-                          <img
-                            src={calendarImage}
-                            alt="calendar"
-                            width="200px"
-                          />
-                          <br></br>
-                          <br></br>
-                          {true ? (
-                            <button
-                              disabled={letterSent}
-                              className={
-                                letterSent
-                                  ? " confirmButton "
-                                  : "stepperButtons"
-                              }
-                              onClick={submitfinalRelivingLetter}
-                            >
-                              Submit
-                            </button>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                      )}
-                    </div>
                   </Form>
                 )}
               </div>
@@ -1004,4 +929,4 @@ const EmployeeExitAction = () => {
   );
 };
 
-export default EmployeeExitAction;
+export default EmployeeExitView;
