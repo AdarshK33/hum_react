@@ -179,19 +179,19 @@ const Documents = (props) => {
     collegeLetter: "",
   });
   const [stateOfDisable, setStateOfDisable] = useState({
-    photoId: "",
-    aadharId: "",
-    panId: "",
-    addressProof: "",
-    passport: "",
-    epfPassBook: "",
-    cancelledCheque: "",
-    educationCertificate: "",
-    relievingLetter: "",
-    latestPaySlips: "",
-    frro: "",
-    collegeId: "",
-    collegeLetter: "",
+    photoId: 0,
+    aadharId: 0,
+    panId: 0,
+    addressProof: 0,
+    passport: 0,
+    epfPassBook: 0,
+    cancelledCheque: 0,
+    educationCertificate: 0,
+    relievingLetter: 0,
+    latestPaySlips: 0,
+    frro: 0,
+    collegeId: 0,
+    collegeLetter: 0,
   });
   const [UploadedArray, setUploadedError] = useState([
     {
@@ -226,19 +226,19 @@ const Documents = (props) => {
       let frroDoc = "";
       let collegeIdDoc = "";
       let collegeLetterDoc = "";
-      let photoStatus = "";
-      let aadharStatus = "";
-      let panStatus = "";
-      let addressStatus = "";
-      let passportDocStatus = "";
-      let epfPassBookDocStatus = "";
-      let cancelledChequeDocStatus = "";
-      let educationCertificateDocStatus = "";
-      let relievingLetterDocStatus = "";
-      let latestPaySlipsDocStatus = "";
-      let frroDocStatus = "";
-      let collegeIdDocStatus = "";
-      let collegeLetterDocStatus = "";
+      let photoStatus = 0;
+      let aadharStatus = 0;
+      let panStatus = 0;
+      let addressStatus = 0;
+      let passportDocStatus = 0;
+      let epfPassBookDocStatus = 0;
+      let cancelledChequeDocStatus = 0;
+      let educationCertificateDocStatus = 0;
+      let relievingLetterDocStatus = 0;
+      let latestPaySlipsDocStatus = 0;
+      let frroDocStatus = 0;
+      let collegeIdDocStatus = 0;
+      let collegeLetterDocStatus = 0;
 
       let tempArray = [...UploadedArray];
 
@@ -247,79 +247,79 @@ const Documents = (props) => {
         if (item.documentType === 0 && item.documentName) {
           console.log("photodoc", item.documentName, item.documentType);
           photo = item.documentName ? item.documentName : "";
-          photoStatus = item.status ? item.status : "";
+          photoStatus = item.status ? item.status : 0;
           tempArray[0].ULPhotoId = true;
         }
 
         if (item.documentType === 1 && item.documentName) {
           aadhar = item.documentName ? item.documentName : "";
-          aadharStatus = item.status ? item.status : "";
+          aadharStatus = item.status ? item.status : 0;
           tempArray[0].ULAdharId = true;
         }
 
         if (item.documentType === 2 && item.documentName) {
           pan = item.documentName ? item.documentName : "";
-          panStatus = item.status ? item.status : "";
+          panStatus = item.status ? item.status : 0;
           tempArray[0].ULPanId = true;
         }
 
         if (item.documentType === 3 && item.documentName) {
           address = item.documentName ? item.documentName : "";
-          addressStatus = item.status ? item.status : "";
+          addressStatus = item.status ? item.status : 0;
           tempArray[0].ULAddressProof = true;
         }
 
         if (item.documentType === 14 && item.documentName) {
           passportDoc = item.documentName ? item.documentName : "";
-          passportDocStatus = item.status ? item.status : "";
+          passportDocStatus = item.status ? item.status : 0;
           tempArray[0].ULPassport = true;
         }
 
         if (item.documentType === 17 && item.documentName) {
           frroDoc = item.documentName ? item.documentName : "";
-          frroDocStatus = item.status ? item.status : "";
+          frroDocStatus = item.status ? item.status : 0;
           tempArray[0].ULFrro = true;
         }
 
         if (item.documentType === 4 && item.documentName) {
           epfPassBookDoc = item.documentName ? item.documentName : "";
-          epfPassBookDocStatus = item.status ? item.status : "";
+          epfPassBookDocStatus = item.status ? item.status : 0;
           tempArray[0].ULEpfPassBook = true;
         }
 
         if (item.documentType === 5 && item.documentName) {
           cancelledChequeDoc = item.documentName ? item.documentName : "";
-          cancelledChequeDocStatus = item.status ? item.status : "";
+          cancelledChequeDocStatus = item.status ? item.status : 0;
           tempArray[0].ULCancelledCheque = true;
         }
 
         if (item.documentType === 15 && item.documentName) {
           collegeLetterDoc = item.documentName ? item.documentName : "";
-          collegeLetterDocStatus = item.status ? item.status : "";
+          collegeLetterDocStatus = item.status ? item.status : 0;
           tempArray[0].ULCollegeLetter = true;
         }
 
         if (item.documentType === 16 && item.documentName) {
           collegeIdDoc = item.documentName ? item.documentName : "";
-          collegeIdDocStatus = item.status ? item.status : "";
+          collegeIdDocStatus = item.status ? item.status : 0;
           tempArray[0].ULCollegeId = true;
         }
 
         if (item.documentType === 6 && item.documentName) {
           educationCertificateDoc = item.documentName ? item.documentName : "";
-          educationCertificateDocStatus = item.status ? item.status : "";
+          educationCertificateDocStatus = item.status ? item.status : 0;
           tempArray[0].ULEducationCer = true;
         }
 
         if (item.documentType === 7 && item.documentName) {
           relievingLetterDoc = item.documentName ? item.documentName : "";
-          relievingLetterDocStatus = item.status ? item.status : "";
+          relievingLetterDocStatus = item.status ? item.status : 0;
           tempArray[0].ULRelivingLetter = true;
         }
 
         if (item.documentType === 8 && item.documentName) {
           latestPaySlipsDoc = item.documentName ? item.documentName : "";
-          latestPaySlipsDocStatus = item.status ? item.status : "";
+          latestPaySlipsDocStatus = item.status ? item.status : 0;
           tempArray[0].ULLatestPaySlip = true;
         }
       });
@@ -1169,14 +1169,22 @@ const Documents = (props) => {
                       onChange={(e) => {
                         changeHandler(e);
                       }}
-                      disabled={stateOfDisable.photoId === 2 ? false : true}
+                      disabled={
+                        (stateOfDisable.photoId === 2 ||
+                          stateOfDisable.photoId === 0) &&
+                        candidateProfileData.documentUploaded === 0
+                          ? false
+                          : true
+                      }
                       readOnly
                     />
                   </label>
 
                   <label
                     className={
-                      stateOfDisable.photoId === 2
+                      (stateOfDisable.photoId === 2 ||
+                        stateOfDisable.photoId === 0) &&
+                      candidateProfileData.documentUploaded === 0
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1185,7 +1193,13 @@ const Documents = (props) => {
                       type="button"
                       className="custom_file_Upload_button"
                       name="photoId"
-                      disabled={stateOfDisable.photoId === 2 ? false : true}
+                      disabled={
+                        (stateOfDisable.photoId === 2 ||
+                          stateOfDisable.photoId === 0) &&
+                        candidateProfileData.documentUploaded === 0
+                          ? false
+                          : true
+                      }
                       onClick={(e) => {
                         handleUpload(e);
                       }}
@@ -1245,7 +1259,13 @@ const Documents = (props) => {
                       type="file"
                       accept="image/jpeg,.pdf"
                       name="aadharId"
-                      disabled={stateOfDisable.aadharId === 2 ? false : true}
+                      disabled={
+                        (stateOfDisable.aadharId === 2 ||
+                          stateOfDisable.aadharId === 0) &&
+                        candidateProfileData.documentUploaded === 0
+                          ? false
+                          : true
+                      }
                       style={{ display: "none" }}
                       onChange={(e) => {
                         changeHandler(e);
@@ -1256,7 +1276,9 @@ const Documents = (props) => {
 
                   <label
                     className={
-                      stateOfDisable.aadharId === 2
+                      (stateOfDisable.aadharId === 2 ||
+                        stateOfDisable.aadharId === 0) &&
+                      candidateProfileData.documentUploaded === 0
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1265,7 +1287,13 @@ const Documents = (props) => {
                       type="button"
                       name="aadharId"
                       className="custom_file_Upload_button"
-                      disabled={stateOfDisable.aadharId === 2 ? false : true}
+                      disabled={
+                        (stateOfDisable.aadharId === 2 ||
+                          stateOfDisable.aadharId === 0) &&
+                        candidateProfileData.documentUploaded === 0
+                          ? false
+                          : true
+                      }
                       onClick={(e) => {
                         handleUpload(e);
                       }}
@@ -1325,14 +1353,22 @@ const Documents = (props) => {
                       onChange={(e) => {
                         changeHandler(e);
                       }}
-                      disabled={stateOfDisable.panId === 2 ? false : true}
+                      disabled={
+                        (stateOfDisable.panId === 2 ||
+                          stateOfDisable.panId === 0) &&
+                        candidateProfileData.documentUploaded === 0
+                          ? false
+                          : true
+                      }
                       readOnly
                     />
                   </label>
 
                   <label
                     className={
-                      stateOfDisable.panId === 2
+                      (stateOfDisable.panId === 2 ||
+                        stateOfDisable.panId === 0) &&
+                      candidateProfileData.documentUploaded === 0
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1344,7 +1380,13 @@ const Documents = (props) => {
                       onClick={(e) => {
                         handleUpload(e);
                       }}
-                      disabled={stateOfDisable.panId === 2 ? false : true}
+                      disabled={
+                        (stateOfDisable.panId === 2 ||
+                          stateOfDisable.panId === 0) &&
+                        candidateProfileData.documentUploaded === 0
+                          ? false
+                          : true
+                      }
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
@@ -1401,14 +1443,20 @@ const Documents = (props) => {
                       }}
                       readOnly
                       disabled={
-                        stateOfDisable.addressProof === 2 ? false : true
+                        (stateOfDisable.addressProof === 2 ||
+                          stateOfDisable.addressProof === 0) &&
+                        candidateProfileData.documentUploaded === 0
+                          ? false
+                          : true
                       }
                     />
                   </label>
 
                   <label
                     className={
-                      stateOfDisable.addressProof === 2
+                      (stateOfDisable.addressProof === 2 ||
+                        stateOfDisable.addressProof === 0) &&
+                      candidateProfileData.documentUploaded === 0
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1421,7 +1469,11 @@ const Documents = (props) => {
                         handleUpload(e);
                       }}
                       disabled={
-                        stateOfDisable.addressProof === 2 ? false : true
+                        (stateOfDisable.addressProof === 2 ||
+                          stateOfDisable.addressProof === 0) &&
+                        candidateProfileData.documentUploaded === 0
+                          ? false
+                          : true
                       }
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
@@ -1477,13 +1529,21 @@ const Documents = (props) => {
                         changeHandler(e);
                       }}
                       readOnly
-                      disabled={stateOfDisable.passport === 2 ? false : true}
+                      disabled={
+                        (stateOfDisable.passport === 2 ||
+                          stateOfDisable.passport === 0) &&
+                        candidateProfileData.documentUploaded === 0
+                          ? false
+                          : true
+                      }
                     />
                   </label>
 
                   <label
                     className={
-                      stateOfDisable.passport === 2
+                      (stateOfDisable.passport === 2 ||
+                        stateOfDisable.passport === 0) &&
+                      candidateProfileData.documentUploaded === 0
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1495,7 +1555,13 @@ const Documents = (props) => {
                       onClick={(e) => {
                         handleUpload(e);
                       }}
-                      disabled={stateOfDisable.passport === 2 ? false : true}
+                      disabled={
+                        (stateOfDisable.passport === 2 ||
+                          stateOfDisable.passport === 0) &&
+                        candidateProfileData.documentUploaded === 0
+                          ? false
+                          : true
+                      }
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
@@ -1550,13 +1616,21 @@ const Documents = (props) => {
                         changeHandler(e);
                       }}
                       readOnly
-                      disabled={stateOfDisable.frro === 2 ? false : true}
+                      disabled={
+                        (stateOfDisable.frro === 2 ||
+                          stateOfDisable.frro === 0) &&
+                        candidateProfileData.documentUploaded === 0
+                          ? false
+                          : true
+                      }
                     />
                   </label>
 
                   <label
                     className={
-                      stateOfDisable.frro === 2
+                      (stateOfDisable.frro === 2 ||
+                        stateOfDisable.frro === 0) &&
+                      candidateProfileData.documentUploaded === 0
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1568,7 +1642,13 @@ const Documents = (props) => {
                       onClick={(e) => {
                         handleUpload(e);
                       }}
-                      disabled={stateOfDisable.frro === 2 ? false : true}
+                      disabled={
+                        (stateOfDisable.frro === 2 ||
+                          stateOfDisable.frro === 0) &&
+                        candidateProfileData.documentUploaded === 0
+                          ? false
+                          : true
+                      }
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
@@ -1641,13 +1721,21 @@ const Documents = (props) => {
                         changeHandler(e);
                       }}
                       readOnly
-                      disabled={stateOfDisable.epfPassBook === 2 ? false : true}
+                      disabled={
+                        (stateOfDisable.epfPassBook === 2 ||
+                          stateOfDisable.epfPassBook === 0) &&
+                        candidateProfileData.documentUploaded === 0
+                          ? false
+                          : true
+                      }
                     />
                   </label>
 
                   <label
                     className={
-                      stateOfDisable.epfPassBook === 2
+                      (stateOfDisable.epfPassBook === 2 ||
+                        stateOfDisable.epfPassBook === 0) &&
+                      candidateProfileData.documentUploaded === 0
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1659,7 +1747,13 @@ const Documents = (props) => {
                       onClick={(e) => {
                         handleUpload(e);
                       }}
-                      disabled={stateOfDisable.epfPassBook === 2 ? false : true}
+                      disabled={
+                        (stateOfDisable.epfPassBook === 2 ||
+                          stateOfDisable.epfPassBook === 0) &&
+                        candidateProfileData.documentUploaded === 0
+                          ? false
+                          : true
+                      }
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
@@ -1719,14 +1813,20 @@ const Documents = (props) => {
                       }}
                       readOnly
                       disabled={
-                        stateOfDisable.cancelledCheque === 2 ? false : true
+                        (stateOfDisable.cancelledCheque === 2 ||
+                          stateOfDisable.cancelledCheque === 0) &&
+                        candidateProfileData.documentUploaded === 0
+                          ? false
+                          : true
                       }
                     />
                   </label>
 
                   <label
                     className={
-                      stateOfDisable.cancelledCheque === 2
+                      (stateOfDisable.cancelledCheque === 2 ||
+                        stateOfDisable.cancelledCheque === 0) &&
+                      candidateProfileData.documentUploaded === 0
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1739,7 +1839,11 @@ const Documents = (props) => {
                         handleUpload(e);
                       }}
                       disabled={
-                        stateOfDisable.cancelledCheque === 2 ? false : true
+                        (stateOfDisable.cancelledCheque === 2 ||
+                          stateOfDisable.cancelledCheque === 0) &&
+                        candidateProfileData.documentUploaded === 0
+                          ? false
+                          : true
                       }
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
@@ -1797,14 +1901,20 @@ const Documents = (props) => {
                       }}
                       readOnly
                       disabled={
-                        stateOfDisable.collegeLetter === 2 ? false : true
+                        (stateOfDisable.collegeLetter === 2 ||
+                          stateOfDisable.collegeLetter === 0) &&
+                        candidateProfileData.documentUploaded === 0
+                          ? false
+                          : true
                       }
                     />
                   </label>
 
                   <label
                     className={
-                      stateOfDisable.collegeLetter === 2
+                      (stateOfDisable.collegeLetter === 2 ||
+                        stateOfDisable.collegeLetter === 0) &&
+                      candidateProfileData.documentUploaded === 0
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1817,7 +1927,11 @@ const Documents = (props) => {
                         handleUpload(e);
                       }}
                       disabled={
-                        stateOfDisable.collegeLetter === 2 ? false : true
+                        (stateOfDisable.collegeLetter === 2 ||
+                          stateOfDisable.collegeLetter === 0) &&
+                        candidateProfileData.documentUploaded === 0
+                          ? false
+                          : true
                       }
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
@@ -1874,13 +1988,21 @@ const Documents = (props) => {
                         changeHandler(e);
                       }}
                       readOnly
-                      disabled={stateOfDisable.collegeId === 2 ? false : true}
+                      disabled={
+                        (stateOfDisable.collegeId === 2 ||
+                          stateOfDisable.collegeId === 0) &&
+                        candidateProfileData.documentUploaded === 0
+                          ? false
+                          : true
+                      }
                     />
                   </label>
 
                   <label
                     className={
-                      stateOfDisable.collegeId === 2
+                      (stateOfDisable.collegeId === 2 ||
+                        stateOfDisable.collegeId === 0) &&
+                      candidateProfileData.documentUploaded === 0
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1892,7 +2014,13 @@ const Documents = (props) => {
                       onClick={(e) => {
                         handleUpload(e);
                       }}
-                      disabled={stateOfDisable.collegeId === 2 ? false : true}
+                      disabled={
+                        (stateOfDisable.collegeId === 2 ||
+                          stateOfDisable.collegeId === 0) &&
+                        candidateProfileData.documentUploaded === 0
+                          ? false
+                          : true
+                      }
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
@@ -1943,14 +2071,20 @@ const Documents = (props) => {
                       }}
                       readOnly
                       disabled={
-                        stateOfDisable.educationCertificate === 2 ? false : true
+                        (stateOfDisable.educationCertificate === 2 ||
+                          stateOfDisable.educationCertificate === 0) &&
+                        candidateProfileData.documentUploaded === 0
+                          ? false
+                          : true
                       }
                     />
                   </label>
 
                   <label
                     className={
-                      stateOfDisable.educationCertificate === 2
+                      (stateOfDisable.educationCertificate === 2 ||
+                        stateOfDisable.educationCertificate === 0) &&
+                      candidateProfileData.documentUploaded === 0
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1963,7 +2097,11 @@ const Documents = (props) => {
                         handleUpload(e);
                       }}
                       disabled={
-                        stateOfDisable.educationCertificate === 2 ? false : true
+                        (stateOfDisable.educationCertificate === 2 ||
+                          stateOfDisable.educationCertificate === 0) &&
+                        candidateProfileData.documentUploaded === 0
+                          ? false
+                          : true
                       }
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
@@ -2013,14 +2151,20 @@ const Documents = (props) => {
                       }}
                       readOnly
                       disabled={
-                        stateOfDisable.relievingLetter === 2 ? false : true
+                        (stateOfDisable.relievingLetter === 2 ||
+                          stateOfDisable.relievingLetter === 0) &&
+                        candidateProfileData.documentUploaded === 0
+                          ? false
+                          : true
                       }
                     />
                   </label>
 
                   <label
                     className={
-                      stateOfDisable.relievingLetter === 2
+                      (stateOfDisable.relievingLetter === 2 ||
+                        stateOfDisable.relievingLetter === 0) &&
+                      candidateProfileData.documentUploaded === 0
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -2033,7 +2177,11 @@ const Documents = (props) => {
                         handleUpload(e);
                       }}
                       disabled={
-                        stateOfDisable.relievingLetter === 2 ? false : true
+                        (stateOfDisable.relievingLetter === 2 ||
+                          stateOfDisable.relievingLetter === 0) &&
+                        candidateProfileData.documentUploaded === 0
+                          ? false
+                          : true
                       }
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
@@ -2083,14 +2231,20 @@ const Documents = (props) => {
                       }}
                       readOnly
                       disabled={
-                        stateOfDisable.latestPaySlips === 2 ? false : true
+                        (stateOfDisable.latestPaySlips === 2 ||
+                          stateOfDisable.latestPaySlips === 0) &&
+                        candidateProfileData.documentUploaded === 0
+                          ? false
+                          : true
                       }
                     />
                   </label>
 
                   <label
                     className={
-                      stateOfDisable.latestPaySlips === 2
+                      (stateOfDisable.latestPaySlips === 2 ||
+                        stateOfDisable.latestPaySlips === 0) &&
+                      candidateProfileData.documentUploaded === 0
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -2103,7 +2257,11 @@ const Documents = (props) => {
                         handleUpload(e);
                       }}
                       disabled={
-                        stateOfDisable.latestPaySlips === 2 ? false : true
+                        (stateOfDisable.latestPaySlips === 2 ||
+                          stateOfDisable.latestPaySlips === 0) &&
+                        candidateProfileData.documentUploaded === 0
+                          ? false
+                          : true
                       }
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}

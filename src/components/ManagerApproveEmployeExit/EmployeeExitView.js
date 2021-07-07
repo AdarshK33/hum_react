@@ -9,7 +9,7 @@ import { setGlobalCssModule } from "reactstrap/es/utils";
 import RelievingLetter from "./RelivingLetter";
 import calendarImage from "../../assets/images/calendar-image.png";
 
-const EmployeeExitAction = () => {
+const EmployeeExitView = () => {
   const [modeOfSeparation, setModeOfSeparation] = useState("");
   const [RcryYes, setRcryYes] = useState(false);
   const [RcryNo, setRcryNo] = useState(false);
@@ -918,7 +918,6 @@ const EmployeeExitAction = () => {
                     ) : (
                       ""
                     )}
-                   
                   </Form>
                 )}
               </div>
@@ -930,4 +929,4 @@ const EmployeeExitAction = () => {
   );
 };
 
-export default EmployeeExitAction;
+export default EmployeeExitView;

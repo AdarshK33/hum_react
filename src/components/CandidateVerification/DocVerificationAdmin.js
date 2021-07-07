@@ -375,8 +375,7 @@ const DocVerification = () => {
                     </td>
                     {item.statusDesc !== null &&
                     item.documentType === 1 &&
-                    item.statusDesc !== "Pending" &&
-                    state.adminVerificationStatus === 1 ? (
+                    item.statusDesc !== "Pending" ? (
                       <td className="buttonMargin1">{item.statusDesc}</td>
                     ) : item.statusDesc !== null &&
                       item.documentType === 5 &&
@@ -430,6 +429,7 @@ const DocVerification = () => {
                         {user.role === "ADMIN" &&
                         item.documentType === 4 &&
                         (state.adminVerificationStatus === 0 ||
+                          state.adminVerificationStatus === 3 ||
                           state.adminVerificationStatus === null) ? (
                           <button
                             className="approveButton ml-4"
