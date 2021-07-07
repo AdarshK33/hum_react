@@ -74,8 +74,7 @@ disciplinarySearchData.disciplinaryAction !== "" ?
              presumed that you have no explanation to show cause and the company will 
              initiate further actions, as deemed fit, based on the materials available.
              </p>
-              <br />
-              <br />
+            
               <br />
               The receipt of this letter should be acknowledged.
               <br />

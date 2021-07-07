@@ -547,6 +547,7 @@ console.log(issueShowCauseNoticeData,"issueShowCauseNoticeData")
   };
 
   const handleAcceptEmployeeReason = (e) => {
+    setIssueWarningStatus("")
     var result = e.target.value;
     console.log(result, "result");
     // var result = document.getElementsByClassName("switch-input")[0].checked ? 'yes' : 'no'
