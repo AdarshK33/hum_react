@@ -1072,43 +1072,14 @@ const DisciplinarySeparation = () => {
                           marginBottom: "1rem",
                         }}
                       >
-                        <Col sm={2}>
+                        <Col sm={4}>
                           <div>
-                            <label>Emp Name/Id:</label>
-                          </div>
-                        </Col>
-                        <Col sm={2}>
-                          <div>
-                            {true ? (
+                            <label>
+                              Emp Name/Id:
                               <label className="itemResult">
-                                {" "}
                                 &nbsp;&nbsp; {EmpName} &nbsp;{state.empId}
                               </label>
-                            ) : (
-                              <Form.Group>
-                                <div className="faq-form ">
-                                  <input
-                                    className="form-control"
-                                    type="text"
-                                    name="empName"
-                                    // disabled={disabled}
-                                    value={EmpName}
-                                    style={{ borderRadius: "5px" }}
-                                    // style={
-                                    //   empName1Error ? { borderColor: "red" } : {}
-                                    // }
-                                    placeholder="Search.."
-                                    onChange={(e) => changeHandler(e)}
-                                    required
-                                  />
-                                  <Search
-                                    className="search-icon"
-                                    style={{ color: "#313131" }}
-                                    onClick={searchDataHandler}
-                                  />
-                                </div>
-                              </Form.Group>
-                            )}
+                            </label>
                           </div>
                         </Col>
 
@@ -1207,175 +1178,68 @@ const DisciplinarySeparation = () => {
                           marginBottom: "1rem",
                         }}
                       >
-                        <Col sm={3}>
+                        <Col sm={4}>
                           <div>
-                            <label>Mode of Separation:</label>
+                            <label>
+                              Mode of Separation:
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {modeOfSeparation}
+                              </label>
+                            </label>
                           </div>
                         </Col>
-                        {intern ? (
-                          <Col sm={3}>
-                            <div>
-                              {true ? (
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; {modeOfSeparation}
-                                </label>
-                              ) : (
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; End Of Internship
-                                </label>
-                              )}
-                            </div>
-                          </Col>
-                        ) : (
-                          <Col sm={3}>
-                            <div>
-                              {DisciplinaryTermination === true ? (
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; {modeOfSeparation}
-                                </label>
-                              ) : (
-                                <Form.Group>
-                                  <Form.Control
-                                    as="select"
-                                    name="lgbt"
-                                    options={modeOfSeparationList}
-                                    value={modeOfSeparation}
-                                    onChange={ModeOfSepchangeHandler}
-                                    //   disabled={disabled}
-                                    style={
-                                      modOfSepError
-                                        ? { borderColor: "red" }
-                                        : {}
-                                    }
-                                  >
-                                    <option value=""></option>
-                                    {modeOfSeparationList.map((item) => {
-                                      return (
-                                        <option key={item.value}>
-                                          {item.label}
-                                        </option>
-                                      );
-                                    })}
-                                  </Form.Control>
-                                  {modOfSepError ? (
-                                    <p style={{ color: "red" }}>
-                                      {" "}
-                                      &nbsp; *Please choose valid option
-                                    </p>
-                                  ) : (
-                                    <p></p>
-                                  )}
-                                </Form.Group>
-                              )}
-                            </div>
-                          </Col>
-                        )}
-                        {intern ? (
-                          ""
-                        ) : (
-                          <Col sm={3}>
-                            <div>
-                              <label>
-                                Date of{" "}
-                                {changeInSeparation === 2
-                                  ? "Termination:"
-                                  : "Resignation:"}
-                              </label>
-                            </div>
-                          </Col>
-                        )}
-                        {intern ? (
-                          ""
-                        ) : (
-                          <Col sm={3}>
-                            <div>
-                              {false ? (
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; {dateOfResignation}
-                                </label>
-                              ) : (
-                                <Form.Group>
-                                  <div
-                                    className={
-                                      dateOfResignError
-                                        ? "onBoard-date-error"
-                                        : "onBoard-date"
-                                    }
-                                  >
-                                    <DatePicker
-                                      className="form-control onBoard-view"
-                                      selected={dateOfResignation}
-                                      name="dateOfResignation"
-                                      minDate={moment().toDate()}
-                                      // required
-                                      onChange={(e) => dateOfBirthHandler(e)}
-                                      dateFormat="yyyy-MM-dd"
-                                      placeholderText="YYYY-MM-DD"
-                                      minDate={new Date()}
-                                      // disabled={disabled}
-                                    />
-                                  </div>
-                                  {dateOfResignError ? (
-                                    <p style={{ color: "red" }}>
-                                      {" "}
-                                      &nbsp; *Please select valid date
-                                    </p>
-                                  ) : (
-                                    <p></p>
-                                  )}
-                                </Form.Group>
-                              )}
-                            </div>
-                          </Col>
-                        )}
 
-                        {intern ? (
-                          <Col sm={2}>
-                            <div>
-                              <label>Notice Period Recovery Days</label>
-                            </div>
-                          </Col>
-                        ) : (
-                          ""
-                        )}
-                        {intern ? (
-                          <Col sm={2} style={{ marginTop: "0.5rem" }}>
+                        <Col sm={2}>
+                          <div>
+                            <label>
+                              Date of{" "}
+                              {changeInSeparation === 2
+                                ? "Termination:"
+                                : "Resignation:"}
+                            </label>
+                          </div>
+                        </Col>
+
+                        <Col sm={2}>
+                          <div>
                             {false ? (
                               <label className="itemResult">
-                                &nbsp;&nbsp; {state.noticePeriodRcryDays}
+                                &nbsp;&nbsp; {dateOfResignation}
                               </label>
                             ) : (
                               <Form.Group>
-                                <Form.Control
-                                  type="text"
-                                  placeholder=""
-                                  required
-                                  style={{
-                                    borderColor: "#006ebb",
-                                  }}
-                                  disabled={!RcryYes}
-                                  name="noticePeriodRcryDays"
-                                  value={state.noticePeriodRcryDays}
-                                  onChange={(e) => changeHandler(e)}
-                                  style={
-                                    rcryDaysError ? { borderColor: "red" } : {}
+                                <div
+                                  className={
+                                    dateOfResignError
+                                      ? "onBoard-date-error"
+                                      : "onBoard-date"
                                   }
-                                />
-
-                                {rcryDaysError ? (
+                                >
+                                  <DatePicker
+                                    className="form-control onBoard-view"
+                                    selected={dateOfResignation}
+                                    name="dateOfResignation"
+                                    minDate={moment().toDate()}
+                                    // required
+                                    onChange={(e) => dateOfBirthHandler(e)}
+                                    dateFormat="yyyy-MM-dd"
+                                    placeholderText="YYYY-MM-DD"
+                                    minDate={new Date()}
+                                    // disabled={disabled}
+                                  />
+                                </div>
+                                {dateOfResignError ? (
                                   <p style={{ color: "red" }}>
                                     {" "}
-                                    &nbsp; *Please enter valid days
+                                    &nbsp; *Please select valid date
                                   </p>
                                 ) : (
                                   <p></p>
                                 )}
                               </Form.Group>
                             )}
-                          </Col>
-                        ) : (
-                          ""
-                        )}
+                          </div>
+                        </Col>
                       </Row>
                       <Row
                         style={{
@@ -1384,76 +1248,23 @@ const DisciplinarySeparation = () => {
                           marginBottom: "3rem",
                         }}
                       >
-                        <Col sm={3}>
+                        <Col sm={4}>
                           <div>
-                            <label>Reason of Separation:</label>
+                            <label>
+                              Reason of Separation:
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.modeOfSeparationReasonId}
+                              </label>
+                            </label>
                           </div>
                         </Col>
-                        {intern ? (
-                          <Col sm={3}>
-                            <div>
-                              {true ? (
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; {state.modeOfSeparationReasonId}
-                                </label>
-                              ) : (
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; End Of Internship
-                                </label>
-                              )}
-                            </div>
-                          </Col>
-                        ) : (
-                          <Col sm={3}>
-                            <div>
-                              {true ? (
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; {state.modeOfSeparationReasonId}
-                                </label>
-                              ) : (
-                                <Form.Group>
-                                  <Form.Control
-                                    as="select"
-                                    name="modeOfSeparationReasonId"
-                                    options={reasonOfSeparationList}
-                                    value={state.modeOfSeparationReasonId}
-                                    onChange={changeHandler}
-                                    //   disabled={disabled}
-                                    style={
-                                      modOfSepReasonError
-                                        ? { borderColor: "red" }
-                                        : {}
-                                    }
-                                  >
-                                    <option value=""></option>
-                                    {reasonOfSeparationList.map((item) => {
-                                      return (
-                                        <option key={item.value}>
-                                          {item.label}
-                                        </option>
-                                      );
-                                    })}
-                                  </Form.Control>
-                                  {modOfSepReasonError ? (
-                                    <p style={{ color: "red" }}>
-                                      {" "}
-                                      &nbsp; *Please choose valid option
-                                    </p>
-                                  ) : (
-                                    <p></p>
-                                  )}
-                                </Form.Group>
-                              )}
-                            </div>
-                          </Col>
-                        )}
 
-                        <Col sm={3}>
+                        <Col sm={2}>
                           <div>
                             <label>Personal Email Id:</label>
                           </div>
                         </Col>
-                        <Col sm={3}>
+                        <Col sm={2}>
                           <div>
                             {false ? (
                               <label className="itemResult">
@@ -1490,51 +1301,7 @@ const DisciplinarySeparation = () => {
                           </div>
                         </Col>
                       </Row>
-                      {/* <Row
-                    style={{
-                      marginLeft: "2rem",
-                      marginTop: "1rem",
-                      marginBottom: "3rem",
-                    }}
-                  >
-                    <Col sm={2}>
-                      <div>
-                        <label>
-                          <b>Exit Feedback Form:</b>
-                          <label className="itemResult">
-                          
-                          </label>
-                        </label>
-                      </div>
-                    </Col>
-                    <Col sm={2}>
-                      <div>
-                        <label>
-                          <a href="~/address">
-                            <u>Exit Feedback Form</u>
-                          </a>
-                        </label>
-                      </div>
-                    </Col>
-                  </Row>
-                  <Row
-                    style={{
-                      marginLeft: "2rem",
-                      marginTop: "1rem",
-                      marginBottom: "3rem",
-                    }}
-                  >
-                    <Col sm={12}>
-                      <div>
-                        <label>
-                          <b>Comments:</b>
-                          <label className="itemResult">
-                            &nbsp;&nbsp; {state.comments}
-                          </label>
-                        </label>
-                      </div>
-                    </Col>
-                  </Row> */}
+
                       {!intern ? (
                         <Row
                           style={{
