@@ -239,8 +239,10 @@ const EmployeeExitList = () => {
                             <td>{item.employeeName}</td>
                             <td>{item.position}</td>
                             <td>{item.contractType}</td>
-                            <td>{item.dateOfResignation}</td>
-                            <td>{item.lastWorkingDate}</td>
+                            <td>{item.dateOfResignation !== null && item.dateOfResignation !== undefined
+                            && item.dateOfResignation !== ""?item.dateOfResignation:"NA"}</td>
+                             <td>{item.lastWorkingDate !== null && item.lastWorkingDate !== undefined
+                            && item.lastWorkingDate !== ""?item.lastWorkingDate:"NA"}</td>
                             <td>{item.reasonForResignation}</td>
                             {/* <td>{item.modeOfSeparationReasonId}</td> */}
                             <td>{item.noticePeriod}</td>
