@@ -5,6 +5,8 @@ import Breadcrumb from "../../common/breadcrumb";
 import { Link } from "react-router-dom";
 import WarningLetter from "./WarningLetter";
 import ShowCauseNotice from "../Manager/ShowCauseNoticeLetter";
+import NonPerformanceLetter from "../Manager/NonPerformanceLetter";
+
 
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 import moment from "moment";
@@ -34,7 +36,7 @@ const ManagerWarningAction = (props) => {
   const [showModal, setModal] = useState(false);
   const [letterView, setLetterView] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [submitted, setSubmitted] = useState({value:false});
   const [showShowCauseNoticeModal, setShow] = useState(false);
   const [showSuccessModal, setSuccessModal] = useState(false);
   const [showSignature, setShowSignature] = useState(false);
@@ -69,7 +71,7 @@ const ManagerWarningAction = (props) => {
       reason: null,
       reasonDetails: null,
       reasonDetailsId: 0,
-      reasonId: null,
+      reasonId: 0,
       showCauseLetter: null,
       showCauseNotice: null,
       status: 0,
@@ -104,7 +106,7 @@ const ManagerWarningAction = (props) => {
     managerName: null,
     position: null,
     storeLocation: null,
-    InputImprovementPeriod: "",
+    InputImprovementPeriod: 0,
     inputReasonId: "",
   });
 
@@ -117,7 +119,7 @@ const ManagerWarningAction = (props) => {
     disciplinarySearchData,
     SubmitDisciplinaryLetter,
   } = useContext(DisciplinaryContext);
-
+console.log(issueShowCauseNoticeData,"issueShowCauseNoticeData")
   const { searchByCostCenter } = useContext(SeparationContext);
   const { ModeOfSeparationView, TerminationFromDesciplinary } = useContext(
     EmployeeSeparationContext
@@ -223,12 +225,12 @@ const ManagerWarningAction = (props) => {
           state.disciplinaryWarning.reasonDetailsId = 0;
           state.disciplinaryWarning.reasonDetails = null;
         } else if (
-          disciplinarySearchData.disciplinaryAction.reasonId === 2 &&
-          disciplinarySearchData.disciplinaryAction.actionDueDays == 0
-        ) {
-          setShowCauseReason("Other");
-          console.log("elseiff");
-          setIssueWarningStatus("");
+          disciplinarySearchData.disciplinaryAction.reasonId === 2) {
+            if (disciplinarySearchData.disciplinaryAction.actionDueDays === 0) {
+              setShowCauseReason("Other");
+              console.log("elseiff");
+              setIssueWarningStatus("");
+            }
           state.inputReasonId =
             disciplinarySearchData.disciplinaryAction.reasonId;
           state.disciplinaryWarning.reasonId =
@@ -240,12 +242,8 @@ const ManagerWarningAction = (props) => {
             disciplinarySearchData.disciplinaryAction.reasonDetailsId;
           state.disciplinaryWarning.reasonDetails =
             disciplinarySearchData.disciplinaryAction.reasonDetails;
-        } else {
-          console.log("elseiff");
-          setIssueWarningStatus("");
-          setShowCauseReason("");
-        }
-        if (disciplinarySearchData.disciplinaryAction.actionDueDays == 0) {
+        } 
+        if (disciplinarySearchData.disciplinaryAction.actionDueDays === 0) {
           setIssueWarningStatus("no");
         }
       }
@@ -255,7 +253,8 @@ const ManagerWarningAction = (props) => {
         Object.keys(disciplinarySearchData.disciplinaryWarning).length !== 0 &&
         disciplinarySearchData.disciplinaryWarning !== ""
       ) {
-        if (disciplinarySearchData.disciplinaryWarning.pipDueDays == 0) {
+        if (disciplinarySearchData.disciplinaryWarning.pipDueDays === 0 
+          && submitted.value === false) {
           setIssueWarningStatus("no");
         }
 
@@ -508,7 +507,7 @@ const ManagerWarningAction = (props) => {
       console.log(infoData, "infoData submit");
       createShowCauseIssue(infoData);
 
-      setSubmitted(true);
+      setSubmitted({value:true});
       setPreview(true);
       setSuccessModal(true);
     } else {
@@ -548,6 +547,7 @@ const ManagerWarningAction = (props) => {
   };
 
   const handleAcceptEmployeeReason = (e) => {
+    setIssueWarningStatus("")
     var result = e.target.value;
     console.log(result, "result");
     // var result = document.getElementsByClassName("switch-input")[0].checked ? 'yes' : 'no'
@@ -564,7 +564,8 @@ const ManagerWarningAction = (props) => {
     setModal(false);
     setSuccessModal(false);
     setIssueResolved(false);
-    // setSubmitted(false);
+    //setSubmitted({value:true});
+
   };
 
   const handleClose1 = (e) => {
@@ -756,7 +757,7 @@ const ManagerWarningAction = (props) => {
       setInitalExit(false);
       setModal(false);
       setSuccessModal(false);
-      setSubmitted(true);
+      setSubmitted({value:true});
       searchByCostCenter(disciplinarySearchData.employeeId);
       ModeOfSeparationView();
       TerminationFromDesciplinary(true);
@@ -825,10 +826,18 @@ const ManagerWarningAction = (props) => {
           <Modal.Body>
             {issueShowCauseNoticeData &&
             issueShowCauseNoticeData !== undefined &&
-            issueShowCauseNoticeData !== null ? (
+            issueShowCauseNoticeData !== null &&
+            disciplinarySearchData &&
+            disciplinarySearchData !== null &&
+            disciplinarySearchData !== undefined &&
+            Object.keys(disciplinarySearchData).length !== 0 &&
+            disciplinarySearchData.disciplinaryAction !== null &&
+            disciplinarySearchData.disciplinaryAction !== undefined &&
+            disciplinarySearchData.disciplinaryAction !== '' &&
+            disciplinarySearchData.disciplinaryAction.reasonId == 2  ? (
               <ShowCauseNotice />
             ) : (
-              ""
+              <NonPerformanceLetter/>
             )}
             <br></br>
           </Modal.Body>
@@ -1321,7 +1330,7 @@ const ManagerWarningAction = (props) => {
                         disciplinarySearchData.disciplinaryWarning !==
                           undefined &&
                         disciplinarySearchData.disciplinaryWarning
-                          .pipDueDays === 0 ? (
+                          .pipDueDays === 0 && submitted.value === false ? (
                           ""
                         ) : (
                           <Row
@@ -1391,9 +1400,9 @@ const ManagerWarningAction = (props) => {
                               }}
                             >
                               <button
-                                disabled={submitted}
+                                disabled={submitted.value}
                                 className={
-                                  submitted ? "confirmButton" : "stepperButtons"
+                                  submitted.value ? "confirmButton" : "stepperButtons"
                                 }
                                 onClick={handleAcceptEmployeeReasonSubmit}
                               >
@@ -1553,7 +1562,8 @@ const ManagerWarningAction = (props) => {
                               ) : (
                                 ""
                               )}
-                              {state.disciplinaryWarning.improvementPeriod !==
+                              {state.disciplinaryWarning.reasonId !== 2 &&
+                              state.disciplinaryWarning.improvementPeriod !==
                                 null &&
                               state.disciplinaryWarning.improvementPeriod !==
                                 undefined &&
@@ -1695,9 +1705,9 @@ const ManagerWarningAction = (props) => {
                               disciplinarySearchData.disciplinaryWarning ==
                                 "" ? (
                                 <button
-                                  disabled={submitted}
+                                  disabled={submitted.value}
                                   className={
-                                    submitted
+                                    submitted.value
                                       ? "confirmButton"
                                       : "stepperButtons"
                                   }
@@ -1711,7 +1721,7 @@ const ManagerWarningAction = (props) => {
 
                               {!saveLetter &&
                               showPreview === true &&
-                              submitted === true ? (
+                              submitted.value === true ? (
                                 <button
                                   // disabled={!submitted}
                                   className={"LettersButtonsExtra"}
@@ -1774,7 +1784,7 @@ const ManagerWarningAction = (props) => {
                       )}
 
                       <Row>
-                        {issueWarningStatus === "no" &&
+                        {(issueWarningStatus === "no" &&
                         disciplinarySearchData !== null &&
                         disciplinarySearchData !== undefined &&
                         Object.keys(disciplinarySearchData).length !== 0 &&
@@ -1782,19 +1792,20 @@ const ManagerWarningAction = (props) => {
                         disciplinarySearchData.disciplinaryWarning !==
                           undefined &&
                         disciplinarySearchData.disciplinaryWarning
-                          .pipDueDays === 0 ? (
+                          .pipDueDays === 0 && submitted.value === false)?(
                           <Col
                             style={{
                               marginTop: "2rem",
                               marginBottom: "2rem",
+                              marginLeft:"2rem",
                               textAlign: "center",
                             }}
                           >
                             <button
                               name="issueresolved"
-                              disabled={submitted}
+                              disabled={submitted.value}
                               className={
-                                submitted ? "confirmButton" : "stepperButtons"
+                                submitted.value ? "confirmButton" : "stepperButtons"
                               }
                               onClick={handleInitialExit}
                             >
@@ -1818,7 +1829,7 @@ const ManagerWarningAction = (props) => {
                             disciplinarySearchData.disciplinaryAction
                               .employeeComment !== undefined ||
                             disciplinarySearchData.disciplinaryAction
-                              .employeeComment !== "")) ? (
+                              .employeeComment !== "" ) && submitted.value == false) ? (
                           <Col
                             style={{
                               marginTop: "2rem",
@@ -1828,9 +1839,9 @@ const ManagerWarningAction = (props) => {
                           >
                             <button
                               name="initiateexit"
-                              disabled={submitted}
+                              disabled={submitted.value}
                               className={
-                                submitted ? "confirmButton" : "stepperButtons"
+                                submitted.value ? "confirmButton" : "stepperButtons"
                               }
                               onClick={handleInitialExit}
                             >

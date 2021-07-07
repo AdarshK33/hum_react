@@ -5,6 +5,7 @@ import Breadcrumb from "../../common/breadcrumb";
 import { toast } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
 import ShowCauseNotice from "../Manager/ShowCauseNoticeLetter";
+import NonPerformanceLetter from "../Manager/NonPerformanceLetter"
 import WarningLetter from "../WarningManager/WarningLetter";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
@@ -382,10 +383,11 @@ const CostCenterManagerAction = () => {
           Object.keys(disciplinarySearchData).length !== 0 &&
           disciplinarySearchData.disciplinaryAction !== null &&
           disciplinarySearchData.disciplinaryAction !== undefined &&
-          disciplinarySearchData.disciplinaryAction !== "" ? (
+          disciplinarySearchData.disciplinaryAction !== "" &&
+          disciplinarySearchData.disciplinaryAction.reasonId == 2 ? (
             <ShowCauseNotice />
           ) : (
-            ""
+            <NonPerformanceLetter/>
           )}
         </Modal.Body>
       </Modal>
@@ -461,10 +463,11 @@ const CostCenterManagerAction = () => {
               Object.keys(disciplinarySearchData).length !== 0 &&
               disciplinarySearchData.disciplinaryAction !== null &&
               disciplinarySearchData.disciplinaryAction !== undefined &&
-              disciplinarySearchData.disciplinaryAction !== "" ? (
+              disciplinarySearchData.disciplinaryAction !== "" &&
+              disciplinarySearchData.disciplinaryAction.reasonId == 2 ? (
               <ShowCauseNotice />
             ) : (
-              ""
+              <NonPerformanceLetter/>
             )}
             <br></br>
             <Row>

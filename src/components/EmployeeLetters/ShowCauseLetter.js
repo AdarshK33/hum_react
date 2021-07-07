@@ -9,6 +9,7 @@ import calendarImage from "../../assets/images/calendar-image.png";
 import { DisciplinaryContext } from "../../context/DisciplinaryState";
 import { useHistory } from "react-router-dom";
 import ReasonByEmployee from "../Disciplinary/Manager/ReasonByEmployee";
+import NonPerformanceLetter from "../Disciplinary/Manager/NonPerformanceLetter";
 
 // view-----
 const EmployeShowCaseLetter = () => {
@@ -421,10 +422,11 @@ const EmployeShowCaseLetter = () => {
           Object.keys(disciplinarySearchData).length !== 0 &&
           disciplinarySearchData.disciplinaryAction !== null &&
           disciplinarySearchData.disciplinaryAction !== undefined &&
-          disciplinarySearchData.disciplinaryAction !== "" ? (
+          disciplinarySearchData.disciplinaryAction !== "" &&
+          disciplinarySearchData.disciplinaryAction.reasonId == 2 ? (
             <ShowCauseNotice />
           ) : (
-            ""
+            <NonPerformanceLetter/>
           )}
         </Modal.Body>
       </Modal>
