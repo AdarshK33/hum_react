@@ -1178,7 +1178,7 @@ const DisciplinarySeparation = () => {
                           marginBottom: "1rem",
                         }}
                       >
-                        <Col sm={6}>
+                        <Col sm={4}>
                           <div>
                             <label>
                               Mode of Separation:
@@ -1189,7 +1189,7 @@ const DisciplinarySeparation = () => {
                           </div>
                         </Col>
 
-                        <Col sm={3}>
+                        <Col sm={2}>
                           <div>
                             <label>
                               Date of{" "}
@@ -1200,7 +1200,7 @@ const DisciplinarySeparation = () => {
                           </div>
                         </Col>
 
-                        <Col sm={3}>
+                        <Col sm={2}>
                           <div>
                             {false ? (
                               <label className="itemResult">
@@ -1248,7 +1248,7 @@ const DisciplinarySeparation = () => {
                           marginBottom: "3rem",
                         }}
                       >
-                        <Col sm={6}>
+                        <Col sm={4}>
                           <div>
                             <label>
                               Reason of Separation:
@@ -1259,12 +1259,12 @@ const DisciplinarySeparation = () => {
                           </div>
                         </Col>
 
-                        <Col sm={3}>
+                        <Col sm={2}>
                           <div>
                             <label>Personal Email Id:</label>
                           </div>
                         </Col>
-                        <Col sm={3}>
+                        <Col sm={2}>
                           <div>
                             {false ? (
                               <label className="itemResult">

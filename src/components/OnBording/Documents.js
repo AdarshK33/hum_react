@@ -1169,14 +1169,22 @@ const Documents = (props) => {
                       onChange={(e) => {
                         changeHandler(e);
                       }}
-                      disabled={stateOfDisable.photoId === 2 ? false : true}
+                      disabled={
+                        stateOfDisable.photoId === 2 ||
+                        documentViewData === null ||
+                        documentViewData === undefined
+                          ? false
+                          : true
+                      }
                       readOnly
                     />
                   </label>
 
                   <label
                     className={
-                      stateOfDisable.photoId === 2
+                      stateOfDisable.photoId === 2 ||
+                      documentViewData === null ||
+                      documentViewData === undefined
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1185,7 +1193,13 @@ const Documents = (props) => {
                       type="button"
                       className="custom_file_Upload_button"
                       name="photoId"
-                      disabled={stateOfDisable.photoId === 2 ? false : true}
+                      disabled={
+                        stateOfDisable.photoId === 2 ||
+                        documentViewData === null ||
+                        documentViewData === undefined
+                          ? false
+                          : true
+                      }
                       onClick={(e) => {
                         handleUpload(e);
                       }}
@@ -1245,7 +1259,13 @@ const Documents = (props) => {
                       type="file"
                       accept="image/jpeg,.pdf"
                       name="aadharId"
-                      disabled={stateOfDisable.aadharId === 2 ? false : true}
+                      disabled={
+                        stateOfDisable.aadharId === 2 ||
+                        documentViewData === null ||
+                        documentViewData === undefined
+                          ? false
+                          : true
+                      }
                       style={{ display: "none" }}
                       onChange={(e) => {
                         changeHandler(e);
@@ -1256,7 +1276,9 @@ const Documents = (props) => {
 
                   <label
                     className={
-                      stateOfDisable.aadharId === 2
+                      stateOfDisable.aadharId === 2 ||
+                      documentViewData === null ||
+                      documentViewData === undefined
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1265,7 +1287,13 @@ const Documents = (props) => {
                       type="button"
                       name="aadharId"
                       className="custom_file_Upload_button"
-                      disabled={stateOfDisable.aadharId === 2 ? false : true}
+                      disabled={
+                        stateOfDisable.aadharId === 2 ||
+                        documentViewData === null ||
+                        documentViewData === undefined
+                          ? false
+                          : true
+                      }
                       onClick={(e) => {
                         handleUpload(e);
                       }}
@@ -1325,14 +1353,22 @@ const Documents = (props) => {
                       onChange={(e) => {
                         changeHandler(e);
                       }}
-                      disabled={stateOfDisable.panId === 2 ? false : true}
+                      disabled={
+                        stateOfDisable.panId === 2 ||
+                        documentViewData === null ||
+                        documentViewData === undefined
+                          ? false
+                          : true
+                      }
                       readOnly
                     />
                   </label>
 
                   <label
                     className={
-                      stateOfDisable.panId === 2
+                      stateOfDisable.panId === 2 ||
+                      documentViewData === null ||
+                      documentViewData === undefined
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1344,7 +1380,13 @@ const Documents = (props) => {
                       onClick={(e) => {
                         handleUpload(e);
                       }}
-                      disabled={stateOfDisable.panId === 2 ? false : true}
+                      disabled={
+                        stateOfDisable.panId === 2 ||
+                        documentViewData === null ||
+                        documentViewData === undefined
+                          ? false
+                          : true
+                      }
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
@@ -1401,14 +1443,20 @@ const Documents = (props) => {
                       }}
                       readOnly
                       disabled={
-                        stateOfDisable.addressProof === 2 ? false : true
+                        stateOfDisable.addressProof === 2 ||
+                        documentViewData === null ||
+                        documentViewData === undefined
+                          ? false
+                          : true
                       }
                     />
                   </label>
 
                   <label
                     className={
-                      stateOfDisable.addressProof === 2
+                      stateOfDisable.addressProof === 2 ||
+                      documentViewData === null ||
+                      documentViewData === undefined
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1421,7 +1469,11 @@ const Documents = (props) => {
                         handleUpload(e);
                       }}
                       disabled={
-                        stateOfDisable.addressProof === 2 ? false : true
+                        stateOfDisable.addressProof === 2 ||
+                        documentViewData === null ||
+                        documentViewData === undefined
+                          ? false
+                          : true
                       }
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
@@ -1477,13 +1529,21 @@ const Documents = (props) => {
                         changeHandler(e);
                       }}
                       readOnly
-                      disabled={stateOfDisable.passport === 2 ? false : true}
+                      disabled={
+                        stateOfDisable.passport === 2 ||
+                        documentViewData === null ||
+                        documentViewData === undefined
+                          ? false
+                          : true
+                      }
                     />
                   </label>
 
                   <label
                     className={
-                      stateOfDisable.passport === 2
+                      stateOfDisable.passport === 2 ||
+                      documentViewData === null ||
+                      documentViewData === undefined
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1495,7 +1555,13 @@ const Documents = (props) => {
                       onClick={(e) => {
                         handleUpload(e);
                       }}
-                      disabled={stateOfDisable.passport === 2 ? false : true}
+                      disabled={
+                        stateOfDisable.passport === 2 ||
+                        documentViewData === null ||
+                        documentViewData === undefined
+                          ? false
+                          : true
+                      }
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
@@ -1550,13 +1616,21 @@ const Documents = (props) => {
                         changeHandler(e);
                       }}
                       readOnly
-                      disabled={stateOfDisable.frro === 2 ? false : true}
+                      disabled={
+                        stateOfDisable.frro === 2 ||
+                        documentViewData === null ||
+                        documentViewData === undefined
+                          ? false
+                          : true
+                      }
                     />
                   </label>
 
                   <label
                     className={
-                      stateOfDisable.frro === 2
+                      stateOfDisable.frro === 2 ||
+                      documentViewData === null ||
+                      documentViewData === undefined
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1568,7 +1642,13 @@ const Documents = (props) => {
                       onClick={(e) => {
                         handleUpload(e);
                       }}
-                      disabled={stateOfDisable.frro === 2 ? false : true}
+                      disabled={
+                        stateOfDisable.frro === 2 ||
+                        documentViewData === null ||
+                        documentViewData === undefined
+                          ? false
+                          : true
+                      }
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
@@ -1641,13 +1721,21 @@ const Documents = (props) => {
                         changeHandler(e);
                       }}
                       readOnly
-                      disabled={stateOfDisable.epfPassBook === 2 ? false : true}
+                      disabled={
+                        stateOfDisable.epfPassBook === 2 ||
+                        documentViewData === null ||
+                        documentViewData === undefined
+                          ? false
+                          : true
+                      }
                     />
                   </label>
 
                   <label
                     className={
-                      stateOfDisable.epfPassBook === 2
+                      stateOfDisable.epfPassBook === 2 ||
+                      documentViewData === null ||
+                      documentViewData === undefined
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1659,7 +1747,13 @@ const Documents = (props) => {
                       onClick={(e) => {
                         handleUpload(e);
                       }}
-                      disabled={stateOfDisable.epfPassBook === 2 ? false : true}
+                      disabled={
+                        stateOfDisable.epfPassBook === 2 ||
+                        documentViewData === null ||
+                        documentViewData === undefined
+                          ? false
+                          : true
+                      }
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
@@ -1719,14 +1813,20 @@ const Documents = (props) => {
                       }}
                       readOnly
                       disabled={
-                        stateOfDisable.cancelledCheque === 2 ? false : true
+                        stateOfDisable.cancelledCheque === 2 ||
+                        documentViewData === null ||
+                        documentViewData === undefined
+                          ? false
+                          : true
                       }
                     />
                   </label>
 
                   <label
                     className={
-                      stateOfDisable.cancelledCheque === 2
+                      stateOfDisable.cancelledCheque === 2 ||
+                      documentViewData === null ||
+                      documentViewData === undefined
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1739,7 +1839,11 @@ const Documents = (props) => {
                         handleUpload(e);
                       }}
                       disabled={
-                        stateOfDisable.cancelledCheque === 2 ? false : true
+                        stateOfDisable.cancelledCheque === 2 ||
+                        documentViewData === null ||
+                        documentViewData === undefined
+                          ? false
+                          : true
                       }
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
@@ -1797,14 +1901,20 @@ const Documents = (props) => {
                       }}
                       readOnly
                       disabled={
-                        stateOfDisable.collegeLetter === 2 ? false : true
+                        stateOfDisable.collegeLetter === 2 ||
+                        documentViewData === null ||
+                        documentViewData === undefined
+                          ? false
+                          : true
                       }
                     />
                   </label>
 
                   <label
                     className={
-                      stateOfDisable.collegeLetter === 2
+                      stateOfDisable.collegeLetter === 2 ||
+                      documentViewData === null ||
+                      documentViewData === undefined
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1817,7 +1927,11 @@ const Documents = (props) => {
                         handleUpload(e);
                       }}
                       disabled={
-                        stateOfDisable.collegeLetter === 2 ? false : true
+                        stateOfDisable.collegeLetter === 2 ||
+                        documentViewData === null ||
+                        documentViewData === undefined
+                          ? false
+                          : true
                       }
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
@@ -1874,13 +1988,21 @@ const Documents = (props) => {
                         changeHandler(e);
                       }}
                       readOnly
-                      disabled={stateOfDisable.collegeId === 2 ? false : true}
+                      disabled={
+                        stateOfDisable.collegeId === 2 ||
+                        documentViewData === null ||
+                        documentViewData === undefined
+                          ? false
+                          : true
+                      }
                     />
                   </label>
 
                   <label
                     className={
-                      stateOfDisable.collegeId === 2
+                      stateOfDisable.collegeId === 2 ||
+                      documentViewData === null ||
+                      documentViewData === undefined
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1892,7 +2014,13 @@ const Documents = (props) => {
                       onClick={(e) => {
                         handleUpload(e);
                       }}
-                      disabled={stateOfDisable.collegeId === 2 ? false : true}
+                      disabled={
+                        stateOfDisable.collegeId === 2 ||
+                        documentViewData === null ||
+                        documentViewData === undefined
+                          ? false
+                          : true
+                      }
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
                     Upload File{" "}
@@ -1943,14 +2071,20 @@ const Documents = (props) => {
                       }}
                       readOnly
                       disabled={
-                        stateOfDisable.educationCertificate === 2 ? false : true
+                        stateOfDisable.educationCertificate === 2 ||
+                        documentViewData === null ||
+                        documentViewData === undefined
+                          ? false
+                          : true
                       }
                     />
                   </label>
 
                   <label
                     className={
-                      stateOfDisable.educationCertificate === 2
+                      stateOfDisable.educationCertificate === 2 ||
+                      documentViewData === null ||
+                      documentViewData === undefined
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -1963,7 +2097,11 @@ const Documents = (props) => {
                         handleUpload(e);
                       }}
                       disabled={
-                        stateOfDisable.educationCertificate === 2 ? false : true
+                        stateOfDisable.educationCertificate === 2 ||
+                        documentViewData === null ||
+                        documentViewData === undefined
+                          ? false
+                          : true
                       }
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
@@ -2013,14 +2151,20 @@ const Documents = (props) => {
                       }}
                       readOnly
                       disabled={
-                        stateOfDisable.relievingLetter === 2 ? false : true
+                        stateOfDisable.relievingLetter === 2 ||
+                        documentViewData === null ||
+                        documentViewData === undefined
+                          ? false
+                          : true
                       }
                     />
                   </label>
 
                   <label
                     className={
-                      stateOfDisable.relievingLetter === 2
+                      stateOfDisable.relievingLetter === 2 ||
+                      documentViewData === null ||
+                      documentViewData === undefined
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -2033,7 +2177,11 @@ const Documents = (props) => {
                         handleUpload(e);
                       }}
                       disabled={
-                        stateOfDisable.relievingLetter === 2 ? false : true
+                        stateOfDisable.relievingLetter === 2 ||
+                        documentViewData === null ||
+                        documentViewData === undefined
+                          ? false
+                          : true
                       }
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
@@ -2083,14 +2231,20 @@ const Documents = (props) => {
                       }}
                       readOnly
                       disabled={
-                        stateOfDisable.latestPaySlips === 2 ? false : true
+                        stateOfDisable.latestPaySlips === 2 ||
+                        documentViewData === null ||
+                        documentViewData === undefined
+                          ? false
+                          : true
                       }
                     />
                   </label>
 
                   <label
                     className={
-                      stateOfDisable.latestPaySlips === 2
+                      stateOfDisable.latestPaySlips === 2 ||
+                      documentViewData === null ||
+                      documentViewData === undefined
                         ? "custom-file-upload"
                         : "custom-file-disable"
                     }
@@ -2103,7 +2257,11 @@ const Documents = (props) => {
                         handleUpload(e);
                       }}
                       disabled={
-                        stateOfDisable.latestPaySlips === 2 ? false : true
+                        stateOfDisable.latestPaySlips === 2 ||
+                        documentViewData === null ||
+                        documentViewData === undefined
+                          ? false
+                          : true
                       }
                     />
                     {/* <i className="fa fa-cloud-upload" />  */}
