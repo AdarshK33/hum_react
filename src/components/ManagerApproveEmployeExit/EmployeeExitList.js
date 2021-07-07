@@ -199,6 +199,7 @@ const EmployeeExitList = () => {
                       <th scope="col">Reason for Resignation</th>
                       <th scope="col">Notice Period</th>
                       <th scope="col">Status</th>
+                      <th scope="col">View</th>
                       <th scope="col">Action</th>
                     </tr>
                   </thead>
@@ -238,8 +239,10 @@ const EmployeeExitList = () => {
                             <td>{item.employeeName}</td>
                             <td>{item.position}</td>
                             <td>{item.contractType}</td>
-                            <td>{item.dateOfResignation}</td>
-                            <td>{item.lastWorkingDate}</td>
+                            <td>{item.dateOfResignation !== null && item.dateOfResignation !== undefined
+                            && item.dateOfResignation !== ""?item.dateOfResignation:"NA"}</td>
+                             <td>{item.lastWorkingDate !== null && item.lastWorkingDate !== undefined
+                            && item.lastWorkingDate !== ""?item.lastWorkingDate:"NA"}</td>
                             <td>{item.reasonForResignation}</td>
                             {/* <td>{item.modeOfSeparationReasonId}</td> */}
                             <td>{item.noticePeriod}</td>
@@ -251,6 +254,15 @@ const EmployeeExitList = () => {
                                 : item.status === 4
                                 ? "Resigned"
                                 : ""}
+                            </td>
+                            <td>
+                              <Link to={"/exit-view/" + item.employeeId}>
+                                <Eye
+                                  onClick={() => {
+                                    fetchEmployeeDetails(item.employeeId);
+                                  }}
+                                />
+                              </Link>
                             </td>
 
                             <td>

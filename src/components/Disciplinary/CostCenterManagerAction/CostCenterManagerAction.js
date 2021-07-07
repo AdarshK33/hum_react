@@ -719,7 +719,7 @@ const CostCenterManagerAction = () => {
                           </div>
                         </Col>
                       </Row>
-                      <Row
+                      {/* <Row
                         style={{
                           marginLeft: "2rem",
                           marginTop: "2rem",
@@ -741,7 +741,7 @@ const CostCenterManagerAction = () => {
                             </a>
                           </div>
                         </Col>
-                      </Row>
+                      </Row> */}
                       {state.empRemark !== null &&
                       state.empRemark !== undefined &&
                       state.empRemark !== "" ? (
