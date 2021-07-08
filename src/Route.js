@@ -106,6 +106,11 @@ import EmployeShowCaseLetter from "./components/EmployeeLetters/ShowCauseLetter"
 import EmployeWarningLetter from "./components/EmployeeLetters/WarningLetter";
 
 import ManagerWarningAction from "./components/Disciplinary/WarningManager/ManagerWarningAction";
+
+/* Transfer Module  */
+import TransfersList from "./components/Transfers/List/TransfersList";
+import TransferInitiation from "./components/Transfers/Initiation/TransferInitiation";
+
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
   console.log(user, state, "route8888888888888");
@@ -346,6 +351,22 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/promotion/:promotionId`}
             component={PromotionManagerEdit}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/transfers`}
+            component={TransfersList}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/transfer-initiate`}
+            component={TransferInitiation}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/view-transfer/:empId`}
+            component={TransferInitiation}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/transfer/:empId`}
+            component={TransferInitiation}
           />
           {/* <Route
             path={`${process.env.PUBLIC_URL}/promotion/:promotionId`}
