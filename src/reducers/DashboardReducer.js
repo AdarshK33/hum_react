@@ -6,6 +6,12 @@ const DashboardReducer = (state, action) => {
         
         case 'FETCH_GRAPHDATA_LIST':
             return { ...state, graphData: action.payload };
+        
+        case 'WEEK_LIST':
+            return {...state, weekList: action.payload};
+
+        case 'VIEW_DATE':
+            return {...state, viewDateList: action.payload}
                
         default: return state;
     }

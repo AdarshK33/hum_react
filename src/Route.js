@@ -55,7 +55,7 @@ import MasterCostCenter from "./components/MasterTables/MasterCostCenter";
 import CreateTicket from "./components/support/createTicket";
 import PromotionList from "./components/Promotion/PromotionList";
 import OnBoardingStepper from "./components/OnBording/OnBoardingStepper";
-
+import RosterDashboard from "./components/rosterDashboard/rosterDashboard";
 import TicketListingPage from "./components/support/ticketListingPage";
 import ViewTicket from "./components/support/viewTicket";
 import ViewGroup from "./components/group/ViewGroup";
@@ -78,6 +78,7 @@ import Documents from "./components/OnBording/Documents";
 import HistoryView from "./components/Separation/FinanceAdminNoDueClearance/HistoryView";
 import EmployeeExitList from "./components/ManagerApproveEmployeExit/EmployeeExitList";
 import EmployeeExitAction from "./components/ManagerApproveEmployeExit/EmployeeExitAction";
+import EmployeeExitView from "./components/ManagerApproveEmployeExit/EmployeeExitView";
 import ManagerInitiateExit from "./components/ManagerApproveEmployeExit/ManagerInitiateExit";
 import PromotionInitiate from "./components/Promotion/PromotionInitiate/PromotionInitiate";
 import PromotionView from "./components/Promotion/PromotionView/PromotionView";
@@ -97,8 +98,12 @@ import ManagerDisciplinaryList from "./components/Disciplinary/Manager/ManagerDi
 import IssueShowCauseNotice from "./components/Disciplinary/Manager/IssueShowCauseNotice";
 import DisciplinaryView from "./components/Disciplinary/Manager/DisciplinaryView";
 import CostCenterManagerAction from "./components/Disciplinary/CostCenterManagerAction/CostCenterManagerAction";
+import DisciplinarySeparation from "./components/Disciplinary/Manager/DiscplinarySeparation";
 
 import ViewBonus from "./components/Bonus/ViewBonus";
+import EmployeeDocementsList from "./components/EmployeeLetters/MyDocsList";
+import EmployeShowCaseLetter from "./components/EmployeeLetters/ShowCauseLetter";
+import EmployeWarningLetter from "./components/EmployeeLetters/WarningLetter";
 
 import ManagerWarningAction from "./components/Disciplinary/WarningManager/ManagerWarningAction";
 
@@ -198,6 +203,10 @@ const RoutePath = () => {
             component={ViewGroup}
           />
           <Route
+            path={`${process.env.PUBLIC_URL}/roster-dashboard`}
+            component={RosterDashboard}
+          />
+          <Route
             path={`${process.env.PUBLIC_URL}/manager-offer-release`}
             component={ManagerOfferRelease}
           />
@@ -230,6 +239,10 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/exit-action/:employeeid`}
             component={EmployeeExitAction}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/exit-view/:employeeid`}
+            component={EmployeeExitView}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/history-view/:employeeid`}
@@ -281,6 +294,18 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/disciplinary`}
             component={ManagerDisciplinaryList}
           />
+          <Route
+            path={`${process.env.PUBLIC_URL}/my_disciplinary`}
+            component={EmployeeDocementsList}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/letters/show-cause`}
+            component={EmployeShowCaseLetter}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/letters/warning`}
+            component={EmployeWarningLetter}
+          />
 
           <Route
             path={`${process.env.PUBLIC_URL}/issue-show-cause-notice`}
@@ -293,6 +318,11 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/disciplinary-action/:employeeid`}
             component={CostCenterManagerAction}
+          />
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/disciplinary-separation`}
+            component={DisciplinarySeparation}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/exit-approval`}

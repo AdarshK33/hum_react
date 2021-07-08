@@ -38,6 +38,8 @@ const EditWorkInformation = () => {
   const [editButton, setEditButton] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [college, setCollege] = useState("");
+  const [dateOfIssue, setDateOfIssue] = useState();
+  const [dateOfValidity, setDateOfValidity] = useState();
 
   const { viewSports, sportsNames } = useContext(ClusterContext);
   const { CostCenter, costCenterList } = useContext(AdminContext);
@@ -108,6 +110,8 @@ const EditWorkInformation = () => {
       });
       setDateOFJoining(new Date(workData.dateOfJoin));
       setDateOFLeaving(new Date(workData.dateOfLeaving));
+      setDateOfIssue(new Date(workData.passportIssuedDate));
+      setDateOfValidity(new Date(workData.passportExpiryDate));
       setCostCenter(workData.costCentre);
       locationView(workData.costCentre);
       setCollege(workData.collegeName);
@@ -219,7 +223,12 @@ const EditWorkInformation = () => {
 
     console.log("locationView", e.target.value);
   };
-
+  const dateOfIssueHandler = (date) => {
+    setDateOfIssue(date);
+  };
+  const validityHandler = (date) => {
+    setDateOfValidity(date);
+  };
   const dateOfJoiningHandler = (date) => {
     setDateOFJoining(date);
   };
@@ -250,15 +259,15 @@ const EditWorkInformation = () => {
     e.preventDefault();
     let expatValue;
     console.log(state, "state");
-    if (
-      (state.employmentType === "Permanent" ||
-        state.employmentType === "permanent") &&
-      state.expatUser
-    ) {
-      expatValue = state.expatUser;
-    } else {
-      expatValue = 0;
-    }
+    // if (
+    //   (state.employmentType === "Permanent" ||
+    //     state.employmentType === "permanent") &&
+    //   state.expatUser
+    // ) {
+    //   expatValue = state.expatUser;
+    // } else {
+    //   expatValue = 0;
+    // }
     console.log("candidateData work info", candidateData);
     const updateData = {
       candidateId: candidateData.candidateInformation.candidateId,
@@ -298,7 +307,7 @@ const EditWorkInformation = () => {
       noticePeriod:
         state.employmentType === "Internship" ? 0 : state.noticePeriod,
       sportId: state.sports,
-      expatUser: expatValue,
+      expatUser: 0,
       nationality: state.nationality,
       passportNumber: state.passportNumber,
     };
@@ -561,36 +570,35 @@ const EditWorkInformation = () => {
             <Col sm={3}>
               <Form.Group>
                 <Form.Label>Sports</Form.Label>
-                {state.employmentType === "Internship" ? (
+                {/* {state.employmentType === "Internship" ? (
                   <Form.Control
                     type="text"
                     value="N/A"
                     readOnly
                     className="form-input"
                   />
-                ) : (
-                  <Form.Control
-                    as="select"
-                    value={state.sports}
-                    className="form-input"
-                    name="sports"
-                    onChange={changeHandler}
-                    disabled={disabled}
-                    required
-                  >
-                    <option value="">Select Sports</option>
-                    {sportsNames !== null &&
-                      sportsNames !== undefined &&
-                      sportsNames.length > 0 &&
-                      sportsNames.map((item) => {
-                        return (
-                          <option key={item.sportId} value={item.sportId}>
-                            {item.sportName}
-                          </option>
-                        );
-                      })}
-                  </Form.Control>
-                )}
+                ) : ( */}
+                <Form.Control
+                  as="select"
+                  value={state.sports}
+                  className="form-input"
+                  name="sports"
+                  onChange={changeHandler}
+                  disabled={disabled}
+                  required
+                >
+                  <option value="">Select Sports</option>
+                  {sportsNames !== null &&
+                    sportsNames !== undefined &&
+                    sportsNames.length > 0 &&
+                    sportsNames.map((item) => {
+                      return (
+                        <option key={item.sportId} value={item.sportId}>
+                          {item.sportName}
+                        </option>
+                      );
+                    })}
+                </Form.Control>
               </Form.Group>
             </Col>
           </Row>
@@ -652,7 +660,7 @@ const EditWorkInformation = () => {
                   selected={dateOfJoining}
                   required
                   onChange={(e) => dateOfJoiningHandler(e)}
-                  minDate={dateOfJoining}
+                  minDate={new Date()}
                   dateFormat="yyyy-MM-dd"
                   placeholderText="Date of Joining"
                   disabled={disabled}
@@ -772,7 +780,7 @@ const EditWorkInformation = () => {
                 </Form.Group>
               </Col>
             )}
-            {(state.employmentType === "Permanent" ||
+            {/* {(state.employmentType === "Permanent" ||
               state.employmentType === "permanent") && (
               <Col sm={3}>
                 <Form.Group>
@@ -792,8 +800,8 @@ const EditWorkInformation = () => {
                   </Form.Control>
                 </Form.Group>
               </Col>
-            )}
-            {state.expatUser == 1 && (
+            )} */}
+            {state.employmentType === "Local Expat" && (
               <Col sm={3}>
                 <Form.Group>
                   <Form.Label>Passport Number</Form.Label>
@@ -802,6 +810,7 @@ const EditWorkInformation = () => {
                     className="form-input"
                     value={state.passportNumber}
                     name="passportNumber"
+                    placeholder="Passport Number"
                     onChange={changeHandler}
                     disabled={disabled}
                     required
@@ -809,34 +818,64 @@ const EditWorkInformation = () => {
                 </Form.Group>
               </Col>
             )}
-          </Row>
-          <Row>
-            {state.expatUser == 1 && (
-              <Col sm={3}>
-                <Form.Group>
-                  <Form.Label>Nationality</Form.Label>
-                  <Form.Control
-                    as="select"
-                    className="form-input"
-                    value={state.nationality}
-                    name="nationality"
-                    onChange={changeHandler}
-                    disabled={disabled}
-                    required
-                  >
-                    <option value="">Select Nationality</option>
-                    {countryList !== null &&
-                      countryList !== undefined &&
-                      countryList.map((item) => {
-                        return (
-                          <option key={item.countryId}>
-                            {item.nationality}
-                          </option>
-                        );
-                      })}
-                  </Form.Control>
-                </Form.Group>
-              </Col>
+
+            {state.employmentType === "Local Expat" && (
+              <React.Fragment>
+                <Col sm={3}>
+                  <Form.Group>
+                    <Form.Label>Nationality</Form.Label>
+                    <Form.Control
+                      as="select"
+                      className="form-input"
+                      value={state.nationality}
+                      name="nationality"
+                      onChange={changeHandler}
+                      disabled={disabled}
+                      required
+                    >
+                      <option value="">Select Nationality</option>
+                      {countryList !== null &&
+                        countryList !== undefined &&
+                        countryList.map((item) => {
+                          return (
+                            <option key={item.countryId}>
+                              {item.nationality}
+                            </option>
+                          );
+                        })}
+                    </Form.Control>
+                  </Form.Group>
+                </Col>
+                <Col sm={3}>
+                  <Form.Group className="reactDate">
+                    <Form.Label>Date of Issue</Form.Label>
+                    <DatePicker
+                      className="form-control form-input"
+                      selected={dateOfIssue}
+                      required
+                      onChange={(e) => dateOfIssueHandler(e)}
+                      dateFormat="yyyy-MM-dd"
+                      placeholderText="Date of Issue"
+                      disabled={disabled}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col sm={3}>
+                  <Form.Group className="reactDate">
+                    <Form.Label>Date Of Validity</Form.Label>
+                    <DatePicker
+                      className="form-control form-input"
+                      selected={dateOfValidity}
+                      required
+                      onChange={(e) => validityHandler(e)}
+                      minDate={dateOfIssue}
+                      dateFormat="yyyy-MM-dd"
+                      placeholderText="Date of Validity"
+                      disabled={disabled}
+                    />
+                  </Form.Group>
+                </Col>
+              </React.Fragment>
             )}
           </Row>
           {state.recuritment === "NGO" ? (

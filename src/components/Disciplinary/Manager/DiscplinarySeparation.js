@@ -1,27 +1,28 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Row, Col, Form, Button, Container, Modal } from "react-bootstrap";
 import { Search, PlusCircle, MinusCircle } from "react-feather";
-import Breadcrumb from "../common/breadcrumb";
-import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
-import { OfferContext } from "../../context/OfferState";
-import { PermissionContext } from "../../context/PermissionState";
-import "./EmployeeExit.css";
+import Breadcrumb from "../../common/breadcrumb";
+import { EmployeeSeparationContext } from "../../../context/EmployeeSeparationState";
+import { OfferContext } from "../../../context/OfferState";
+import { PermissionContext } from "../../../context/PermissionState";
+import "../../ManagerApproveEmployeExit/EmployeeExit.css";
 import moment from "moment";
 import DatePicker from "react-datepicker";
 import { toast } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
-import { SeparationContext } from "../../context/SepearationState";
+import { SeparationContext } from "../../../context/SepearationState";
 import { setGlobalCssModule } from "reactstrap/es/utils";
-import RelievingLetter from "./RelivingLetter";
-import calendarImage from "../../assets/images/calendar-image.png";
+import RelievingLetter from "../../ManagerApproveEmployeExit/RelivingLetter";
+import calendarImage from "../../../assets/images/calendar-image.png";
+import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 
-const ManagerInitiateExit = () => {
+const DisciplinarySeparation = () => {
   const [modeOfSeparation, setModeOfSeparation] = useState("");
   const [changeInSeparation, setChangeInSeparation] = useState(0);
   const [RcryYes, setRcryYes] = useState(false);
   const [RcryNo, setRcryNo] = useState(false);
   const [RehireYes, setRehireYes] = useState(false);
-  const [RehireNo, setRehireNo] = useState(false);
+  const [RehireNo, setRehireNo] = useState(true);
   const [RcryError, setRcryError] = useState(false);
   const [RehireError, setRehireError] = useState(false);
   const [rcryDaysError, setRcryDaysError] = useState(false);
@@ -91,13 +92,39 @@ const ManagerInitiateExit = () => {
     TerminationFromDesciplinary,
     DisciplinaryTermination,
   } = useContext(EmployeeSeparationContext);
+  const { disciplinarySearchData } = useContext(DisciplinaryContext);
   const { empResign, withdraw, searchByCostCenter, searchByCostData } =
     useContext(SeparationContext);
   const { searchForEmp1, searchEmpData1, makeSearchEmp1DataNull } =
     useContext(OfferContext);
   const { locationDetails, locationDetailsList } =
     useContext(PermissionContext);
-
+  useEffect(() => {
+    if (DisciplinaryTermination === true) {
+      setModeOfSeparation("Termination");
+      setChangeInSeparation(2);
+      if (
+        disciplinarySearchData &&
+        disciplinarySearchData &&
+        disciplinarySearchData !== null &&
+        disciplinarySearchData !== undefined &&
+        Object.keys(disciplinarySearchData).length !== 0
+      ) {
+        if (
+          disciplinarySearchData.disciplinaryAction !== null &&
+          disciplinarySearchData.disciplinaryAction !== undefined &&
+          disciplinarySearchData.disciplinaryAction !== ""
+        ) {
+          state.modeOfSeparationReasonId =
+            disciplinarySearchData.disciplinaryAction.reasonDetails;
+        }
+      }
+    } else {
+      setModeOfSeparation("");
+      state.modeOfSeparationReasonId = "";
+      setChangeInSeparation(0);
+    }
+  }, [DisciplinaryTermination]);
   useEffect(() => {
     ViewEmployeeProfile();
   }, []);
@@ -609,16 +636,21 @@ const ManagerInitiateExit = () => {
     }
   };
   const lastWarkingDateValidate = () => {
-    if (
-      lastWorkingDate !== "" &&
-      lastWorkingDate !== null &&
-      lastWorkingDate !== undefined
-    ) {
+    if (DisciplinaryTermination === false) {
+      if (
+        lastWorkingDate !== "" &&
+        lastWorkingDate !== null &&
+        lastWorkingDate !== undefined
+      ) {
+        setLastWorkingDateError(false);
+        return true;
+      } else {
+        setLastWorkingDateError(true);
+        return false;
+      }
+    } else {
       setLastWorkingDateError(false);
       return true;
-    } else {
-      setLastWorkingDateError(true);
-      return false;
     }
   };
 
@@ -695,7 +727,7 @@ const ManagerInitiateExit = () => {
         setModOfSepReasonError
       ) ===
         true) &
-      (lastWarkingDateValidate() === true) &
+      //   (lastWarkingDateValidate() === true) &
       (dateOfresignationValidate() === true) &
       (emailValidation() === true)
     ) {
@@ -788,7 +820,7 @@ const ManagerInitiateExit = () => {
             employeeName: EmpName,
             exitId: 0,
             hoursWorked: null,
-            lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
+            lastWorkingDate: null,
             location: searchByCostData.locationId,
             managerCostCentre: state.managerCostCentre,
             managerEmailId: null,
@@ -830,7 +862,7 @@ const ManagerInitiateExit = () => {
             employeeName: EmpName,
             exitId: 0,
             hoursWorked: null,
-            lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
+            lastWorkingDate: null,
             location: searchByCostData.locationId,
             managerCostCentre: state.managerCostCentre,
             managerEmailId: null,
@@ -1040,43 +1072,14 @@ const ManagerInitiateExit = () => {
                           marginBottom: "1rem",
                         }}
                       >
-                        <Col sm={2}>
+                        <Col sm={4}>
                           <div>
-                            <label>Emp Name/Id:</label>
-                          </div>
-                        </Col>
-                        <Col sm={2}>
-                          <div>
-                            {false ? (
+                            <label>
+                              Emp Name/Id:
                               <label className="itemResult">
-                                {" "}
                                 &nbsp;&nbsp; {EmpName} &nbsp;{state.empId}
                               </label>
-                            ) : (
-                              <Form.Group>
-                                <div className="faq-form ">
-                                  <input
-                                    className="form-control"
-                                    type="text"
-                                    name="empName"
-                                    // disabled={disabled}
-                                    value={EmpName}
-                                    style={{ borderRadius: "5px" }}
-                                    // style={
-                                    //   empName1Error ? { borderColor: "red" } : {}
-                                    // }
-                                    placeholder="Search.."
-                                    onChange={(e) => changeHandler(e)}
-                                    required
-                                  />
-                                  <Search
-                                    className="search-icon"
-                                    style={{ color: "#313131" }}
-                                    onClick={searchDataHandler}
-                                  />
-                                </div>
-                              </Form.Group>
-                            )}
+                            </label>
                           </div>
                         </Col>
 
@@ -1175,131 +1178,25 @@ const ManagerInitiateExit = () => {
                           marginBottom: "1rem",
                         }}
                       >
-                        <Col sm={2}>
+                        <Col sm={4}>
                           <div>
-                            <label>Mode of Separation:</label>
+                            <label>
+                              Mode of Separation:
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {modeOfSeparation}
+                              </label>
+                            </label>
                           </div>
                         </Col>
-                        {intern ? (
-                          <Col sm={2}>
-                            <div>
-                              {false ? (
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; {modeOfSeparation}
-                                </label>
-                              ) : (
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; End Of Internship
-                                </label>
-                              )}
-                            </div>
-                          </Col>
-                        ) : (
-                          <Col sm={2}>
-                            <div>
-                              {false ? (
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; {modeOfSeparation}
-                                </label>
-                              ) : (
-                                <Form.Group>
-                                  <Form.Control
-                                    as="select"
-                                    name="lgbt"
-                                    options={modeOfSeparationList}
-                                    value={modeOfSeparation}
-                                    onChange={ModeOfSepchangeHandler}
-                                    //   disabled={disabled}
-                                    style={
-                                      modOfSepError
-                                        ? { borderColor: "red" }
-                                        : {}
-                                    }
-                                  >
-                                    <option value=""></option>
-                                    {modeOfSeparationList.map((item) => {
-                                      return (
-                                        <option key={item.value}>
-                                          {item.label}
-                                        </option>
-                                      );
-                                    })}
-                                  </Form.Control>
-                                  {modOfSepError ? (
-                                    <p style={{ color: "red" }}>
-                                      {" "}
-                                      &nbsp; *Please choose valid option
-                                    </p>
-                                  ) : (
-                                    <p></p>
-                                  )}
-                                </Form.Group>
-                              )}
-                            </div>
-                          </Col>
-                        )}
-                        {intern ? (
-                          ""
-                        ) : (
-                          <Col sm={2}>
-                            <div>
-                              <label>
-                                Date of{" "}
-                                {changeInSeparation === 2
-                                  ? "Termination:"
-                                  : "Resignation:"}
-                              </label>
-                            </div>
-                          </Col>
-                        )}
-                        {intern ? (
-                          ""
-                        ) : (
-                          <Col sm={2}>
-                            <div>
-                              {false ? (
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; {dateOfResignation}
-                                </label>
-                              ) : (
-                                <Form.Group>
-                                  <div
-                                    className={
-                                      dateOfResignError
-                                        ? "onBoard-date-error"
-                                        : "onBoard-date"
-                                    }
-                                  >
-                                    <DatePicker
-                                      className="form-control onBoard-view"
-                                      selected={dateOfResignation}
-                                      name="dateOfResignation"
-                                      minDate={moment().toDate()}
-                                      // required
-                                      onChange={(e) => dateOfBirthHandler(e)}
-                                      dateFormat="yyyy-MM-dd"
-                                      placeholderText="YYYY-MM-DD"
-                                      minDate={new Date()}
-                                      // disabled={disabled}
-                                    />
-                                  </div>
-                                  {dateOfResignError ? (
-                                    <p style={{ color: "red" }}>
-                                      {" "}
-                                      &nbsp; *Please select valid date
-                                    </p>
-                                  ) : (
-                                    <p></p>
-                                  )}
-                                </Form.Group>
-                              )}
-                            </div>
-                          </Col>
-                        )}
 
                         <Col sm={2}>
                           <div>
-                            <label>Preffered Last Working Date:</label>
+                            <label>
+                              Date of{" "}
+                              {changeInSeparation === 2
+                                ? "Termination:"
+                                : "Resignation:"}
+                            </label>
                           </div>
                         </Col>
 
@@ -1307,31 +1204,31 @@ const ManagerInitiateExit = () => {
                           <div>
                             {false ? (
                               <label className="itemResult">
-                                &nbsp;&nbsp; {lastWorkingDate}
+                                &nbsp;&nbsp; {dateOfResignation}
                               </label>
                             ) : (
                               <Form.Group>
                                 <div
                                   className={
-                                    lastWorkingDateError
+                                    dateOfResignError
                                       ? "onBoard-date-error"
                                       : "onBoard-date"
                                   }
                                 >
                                   <DatePicker
                                     className="form-control onBoard-view"
-                                    selected={lastWorkingDate}
-                                    name="lastWorkingDate"
+                                    selected={dateOfResignation}
+                                    name="dateOfResignation"
                                     minDate={moment().toDate()}
                                     // required
-                                    onChange={(e) => dateOfBirthHandler1(e)}
+                                    onChange={(e) => dateOfBirthHandler(e)}
                                     dateFormat="yyyy-MM-dd"
                                     placeholderText="YYYY-MM-DD"
                                     minDate={new Date()}
                                     // disabled={disabled}
                                   />
                                 </div>
-                                {lastWorkingDateError ? (
+                                {dateOfResignError ? (
                                   <p style={{ color: "red" }}>
                                     {" "}
                                     &nbsp; *Please select valid date
@@ -1343,54 +1240,6 @@ const ManagerInitiateExit = () => {
                             )}
                           </div>
                         </Col>
-
-                        {intern ? (
-                          <Col sm={2}>
-                            <div>
-                              <label>Notice Period Recovery Days</label>
-                            </div>
-                          </Col>
-                        ) : (
-                          ""
-                        )}
-                        {intern ? (
-                          <Col sm={2} style={{ marginTop: "0.5rem" }}>
-                            {false ? (
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.noticePeriodRcryDays}
-                              </label>
-                            ) : (
-                              <Form.Group>
-                                <Form.Control
-                                  type="text"
-                                  placeholder=""
-                                  required
-                                  style={{
-                                    borderColor: "#006ebb",
-                                  }}
-                                  disabled={!RcryYes}
-                                  name="noticePeriodRcryDays"
-                                  value={state.noticePeriodRcryDays}
-                                  onChange={(e) => changeHandler(e)}
-                                  style={
-                                    rcryDaysError ? { borderColor: "red" } : {}
-                                  }
-                                />
-
-                                {rcryDaysError ? (
-                                  <p style={{ color: "red" }}>
-                                    {" "}
-                                    &nbsp; *Please enter valid days
-                                  </p>
-                                ) : (
-                                  <p></p>
-                                )}
-                              </Form.Group>
-                            )}
-                          </Col>
-                        ) : (
-                          ""
-                        )}
                       </Row>
                       <Row
                         style={{
@@ -1399,69 +1248,16 @@ const ManagerInitiateExit = () => {
                           marginBottom: "3rem",
                         }}
                       >
-                        <Col sm={2}>
+                        <Col sm={4}>
                           <div>
-                            <label>Reason of Separation:</label>
+                            <label>
+                              Reason of Separation:
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.modeOfSeparationReasonId}
+                              </label>
+                            </label>
                           </div>
                         </Col>
-                        {intern ? (
-                          <Col sm={2}>
-                            <div>
-                              {false ? (
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; {state.modeOfSeparationReasonId}
-                                </label>
-                              ) : (
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; End Of Internship
-                                </label>
-                              )}
-                            </div>
-                          </Col>
-                        ) : (
-                          <Col sm={2}>
-                            <div>
-                              {false ? (
-                                <label className="itemResult">
-                                  &nbsp;&nbsp; {state.modeOfSeparationReasonId}
-                                </label>
-                              ) : (
-                                <Form.Group>
-                                  <Form.Control
-                                    as="select"
-                                    name="modeOfSeparationReasonId"
-                                    options={reasonOfSeparationList}
-                                    value={state.modeOfSeparationReasonId}
-                                    onChange={changeHandler}
-                                    //   disabled={disabled}
-                                    style={
-                                      modOfSepReasonError
-                                        ? { borderColor: "red" }
-                                        : {}
-                                    }
-                                  >
-                                    <option value=""></option>
-                                    {reasonOfSeparationList.map((item) => {
-                                      return (
-                                        <option key={item.value}>
-                                          {item.label}
-                                        </option>
-                                      );
-                                    })}
-                                  </Form.Control>
-                                  {modOfSepReasonError ? (
-                                    <p style={{ color: "red" }}>
-                                      {" "}
-                                      &nbsp; *Please choose valid option
-                                    </p>
-                                  ) : (
-                                    <p></p>
-                                  )}
-                                </Form.Group>
-                              )}
-                            </div>
-                          </Col>
-                        )}
 
                         <Col sm={2}>
                           <div>
@@ -1504,97 +1300,8 @@ const ManagerInitiateExit = () => {
                             )}
                           </div>
                         </Col>
-                        <Col sm={2}>
-                          <div>
-                            <label>Notice Period Recovery</label>
-                            {RcryError ? (
-                              <p style={{ color: "red" }}>
-                                {" "}
-                                *Please select one of the option
-                              </p>
-                            ) : (
-                              <p></p>
-                            )}
-                          </div>
-                        </Col>
-                        <Col sm={1} style={{ marginTop: "0.5rem" }}>
-                          <Form.Group>
-                            <div className="boxField_2 input">
-                              <input
-                                className="largerCheckbox"
-                                type="checkbox"
-                                value="yes"
-                                checked={RcryYes}
-                                style={RcryError ? { borderColor: "red" } : {}}
-                                // required={required}
-                                onChange={handleNoticePeriodRcryYes}
-                              />
-                              <label className="itemResult">Yes</label>
-                            </div>
-                          </Form.Group>
-                        </Col>
-                        <Col sm={1} style={{ marginTop: "0.5rem" }}>
-                          <Form.Group>
-                            <div className="boxField_2 input">
-                              <input
-                                className="largerCheckbox"
-                                type="checkbox"
-                                value="no"
-                                checked={RcryNo}
-                                style={RcryError ? { borderColor: "red" } : {}}
-                                // required={required}
-                                onChange={handleNoticePeriodRcryNo}
-                              />
-                              <label className="itemResult">No</label>
-                            </div>
-                          </Form.Group>
-                        </Col>
                       </Row>
-                      {/* <Row
-                    style={{
-                      marginLeft: "2rem",
-                      marginTop: "1rem",
-                      marginBottom: "3rem",
-                    }}
-                  >
-                    <Col sm={2}>
-                      <div>
-                        <label>
-                          <b>Exit Feedback Form:</b>
-                          <label className="itemResult">
-                          
-                          </label>
-                        </label>
-                      </div>
-                    </Col>
-                    <Col sm={2}>
-                      <div>
-                        <label>
-                          <a href="~/address">
-                            <u>Exit Feedback Form</u>
-                          </a>
-                        </label>
-                      </div>
-                    </Col>
-                  </Row>
-                  <Row
-                    style={{
-                      marginLeft: "2rem",
-                      marginTop: "1rem",
-                      marginBottom: "3rem",
-                    }}
-                  >
-                    <Col sm={12}>
-                      <div>
-                        <label>
-                          <b>Comments:</b>
-                          <label className="itemResult">
-                            &nbsp;&nbsp; {state.comments}
-                          </label>
-                        </label>
-                      </div>
-                    </Col>
-                  </Row> */}
+
                       {!intern ? (
                         <Row
                           style={{
@@ -1603,12 +1310,61 @@ const ManagerInitiateExit = () => {
                             marginBottom: "2rem",
                           }}
                         >
+                          {" "}
+                          <Col sm={2}>
+                            <div>
+                              <label>Notice Period Recovery</label>
+                              {RcryError ? (
+                                <p style={{ color: "red" }}>
+                                  {" "}
+                                  *Please select one of the option
+                                </p>
+                              ) : (
+                                <p></p>
+                              )}
+                            </div>
+                          </Col>
+                          <Col sm={1} style={{ marginTop: "0.5rem" }}>
+                            <Form.Group>
+                              <div className="boxField_2 input">
+                                <input
+                                  className="largerCheckbox"
+                                  type="checkbox"
+                                  value="yes"
+                                  checked={RcryYes}
+                                  style={
+                                    RcryError ? { borderColor: "red" } : {}
+                                  }
+                                  // required={required}
+                                  onChange={handleNoticePeriodRcryYes}
+                                />
+                                <label className="itemResult">Yes</label>
+                              </div>
+                            </Form.Group>
+                          </Col>
+                          <Col sm={1} style={{ marginTop: "0.5rem" }}>
+                            <Form.Group>
+                              <div className="boxField_2 input">
+                                <input
+                                  className="largerCheckbox"
+                                  type="checkbox"
+                                  value="no"
+                                  checked={RcryNo}
+                                  style={
+                                    RcryError ? { borderColor: "red" } : {}
+                                  }
+                                  // required={required}
+                                  onChange={handleNoticePeriodRcryNo}
+                                />
+                                <label className="itemResult">No</label>
+                              </div>
+                            </Form.Group>
+                          </Col>
                           <Col sm={2}>
                             <div>
                               <label>Notice Period Recovery Days</label>
                             </div>
                           </Col>
-
                           <Col sm={2} style={{ marginTop: "0.5rem" }}>
                             {false ? (
                               <label className="itemResult">
@@ -1643,7 +1399,6 @@ const ManagerInitiateExit = () => {
                               </Form.Group>
                             )}
                           </Col>
-
                           <Col sm={2}>
                             <div>
                               <label>
@@ -1660,7 +1415,6 @@ const ManagerInitiateExit = () => {
                               )}
                             </div>
                           </Col>
-
                           <Col sm={1} style={{ marginTop: "0.5rem" }}>
                             <Form.Group>
                               <div className="boxField_2 input">
@@ -1670,6 +1424,7 @@ const ManagerInitiateExit = () => {
                                   value="yes"
                                   checked={RehireYes}
                                   // required={required}
+                                  disabled={true}
                                   style={
                                     RehireError ? { borderColor: "red" } : {}
                                   }
@@ -1679,7 +1434,6 @@ const ManagerInitiateExit = () => {
                               </div>
                             </Form.Group>
                           </Col>
-
                           <Col sm={1} style={{ marginTop: "0.5rem" }}>
                             <Form.Group>
                               <div className="boxField_2 input">
@@ -1689,6 +1443,7 @@ const ManagerInitiateExit = () => {
                                   value="no"
                                   checked={RehireNo}
                                   // required={required}
+                                  disabled={true}
                                   style={
                                     RehireError ? { borderColor: "red" } : {}
                                   }
@@ -1822,4 +1577,4 @@ const ManagerInitiateExit = () => {
   );
 };
 
-export default ManagerInitiateExit;
+export default DisciplinarySeparation;

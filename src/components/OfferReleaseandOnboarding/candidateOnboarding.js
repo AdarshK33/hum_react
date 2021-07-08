@@ -322,6 +322,7 @@ const CandidateOnboarding = () => {
     }
   };
   const submitAppointLetter = () => {
+    console.log("inside submit", candidateData.candidateInformation);
     if (
       candidateData.candidateInformation !== null &&
       candidateData.candidateInformation !== undefined
@@ -418,7 +419,10 @@ const CandidateOnboarding = () => {
     } else {
       // setError(true);
       // setFedError(true);
-      setMandatory(true);
+      createEmployee(employeeData);
+      saveCostcenterData(costCenterData);
+      submitAppointLetter();
+      setMandatory(false);
       // setCostCenterError(true);
     }
   };
@@ -489,15 +493,13 @@ const CandidateOnboarding = () => {
       !previewLetter &&
       candidateData !== undefined &&
       candidateData.workInformation !== undefined ? (
-        candidateData.workInformation.contractType === "Permanent" &&
-        candidateData.workInformation.expatUser == 0 ? (
+        candidateData.workInformation.contractType === "Permanent" ? (
           <AppointmentLetter />
         ) : candidateData.workInformation.contractType === "Parttime" ? (
           <PartTimeAppointmentLetter />
         ) : candidateData !== undefined &&
           candidateData.workInformation !== undefined &&
-          candidateData.workInformation.contractType === "Permanent" &&
-          candidateData.workInformation.expatUser == 1 ? (
+          candidateData.workInformation.contractType === "Local Expat" ? (
           <LocalExpatAppointmentLetter />
         ) : (
           <InternAppointmentLetter />

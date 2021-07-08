@@ -4,11 +4,17 @@ import Breadcrumb from "../../common/breadcrumb";
 import "react-datepicker/dist/react-datepicker.css";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 import ShowCauseNotice from "../Manager/ShowCauseNoticeLetter";
+import NonPerformanceLetter from "../Manager/NonPerformanceLetter"
+import ReasonByEmployee from "../Manager/ReasonByEmployee";
+import WarningLetter from "../WarningManager/WarningLetter";
 
 const DisciplinaryView = () => {
   const [showCauseReason, setShowCauseReason] = useState("");
   const [EmpName, setEmpName] = useState();
   const [showShowCauseNoticeModal, setShow] = useState(false);
+  const [employeeReasonShow, setEmployeeReasonShow] = useState(false);
+
+  const [showShowCauseNoticeModalLink1, setShowLink1] = useState(false);
 
   const [state, setState] = useState({
     empId: "",
@@ -16,6 +22,7 @@ const DisciplinaryView = () => {
     empCostCenterName: "",
     empLocation: "",
     empAddress: "",
+    employeePosition: "",
     mngrName: "",
     mngrId: "",
     mngrCostCenterName: "",
@@ -23,10 +30,13 @@ const DisciplinaryView = () => {
     reasonForCause: "",
     reason: "",
     remarks: "",
-    empRemarks: "",
+    empRemark: "",
     warningReason: "",
     pip: "",
     warningComment: "",
+    employeeCommentDW: "",
+    pipEndDate: "",
+    warningIssuedDateDW: "",
   });
   const { disciplinaryEmployeeSearch, disciplinarySearchData } =
     useContext(DisciplinaryContext);
@@ -49,9 +59,10 @@ const DisciplinaryView = () => {
       state.empContractType = disciplinarySearchData.contractType;
       state.empCostCenterName = disciplinarySearchData.employeeCostCentre;
       state.empAddress = disciplinarySearchData.employeeAddress;
+      state.employeePosition = disciplinarySearchData.employeePosition;
       state.mngrId = disciplinarySearchData.managerId;
       state.mngrName = disciplinarySearchData.managerName;
-      state.mngrPosition = disciplinarySearchData.managerDesignation;
+      state.mngrPosition = disciplinarySearchData.managerPosition;
       state.mngrCostCenterName = disciplinarySearchData.managerCostCentre;
 
       if (
@@ -72,11 +83,17 @@ const DisciplinaryView = () => {
         disciplinarySearchData.disciplinaryWarning !== undefined &&
         disciplinarySearchData.disciplinaryWarning !== ""
       ) {
+        state.employeeCommentDW =
+          disciplinarySearchData.disciplinaryWarning.employeeComment;
         state.warningReason = disciplinarySearchData.disciplinaryWarning.reason;
         state.warningComment =
           disciplinarySearchData.disciplinaryWarning.managerComment;
         state.pip =
           disciplinarySearchData.disciplinaryWarning.improvementPeriod;
+        state.pipEndDate =
+          disciplinarySearchData.disciplinaryWarning.pipEndDate;
+        state.warningIssuedDateDW =
+          disciplinarySearchData.disciplinaryWarning.warningIssuedDate;
       }
     }
   }, [disciplinarySearchData]);
@@ -85,13 +102,46 @@ const DisciplinaryView = () => {
     console.log(";;;;;");
     setShow(true);
   };
+
   const handleShowCauseLetterClose = () => setShow(false);
+  const LetterShow1 = () => {
+    console.log(";;;;;");
+    setShowLink1(true);
+  };
+  const handleShowCauseLetterCloseLink = () => {
+    setShow(false);
+    setShowLink1(false);
+  };
+
+  const employeeReason = () => {
+    console.log(";;;;;");
+    setEmployeeReasonShow(true);
+  };
+
+  const handleEmployeeReason = () => setEmployeeReasonShow(false);
 
   return (
     <Fragment>
+      <Modal show={employeeReasonShow} onHide={handleEmployeeReason} size="md">
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        <Modal.Body>
+          {disciplinarySearchData &&
+          disciplinarySearchData &&
+          disciplinarySearchData !== null &&
+          disciplinarySearchData !== undefined &&
+          Object.keys(disciplinarySearchData).length !== 0 &&
+          disciplinarySearchData.disciplinaryAction !== null &&
+          disciplinarySearchData.disciplinaryAction !== undefined &&
+          disciplinarySearchData.disciplinaryAction !== "" ? (
+            <ReasonByEmployee />
+          ) : (
+            ""
+          )}
+        </Modal.Body>
+      </Modal>
       <Modal
         show={showShowCauseNoticeModal}
-        onHide={handleShowCauseLetterClose}
+        onHide={handleShowCauseLetterCloseLink}
         size="md"
       >
         <Modal.Header closeButton className="modal-line"></Modal.Header>
@@ -103,8 +153,30 @@ const DisciplinaryView = () => {
           Object.keys(disciplinarySearchData).length !== 0 &&
           disciplinarySearchData.disciplinaryAction !== null &&
           disciplinarySearchData.disciplinaryAction !== undefined &&
-          disciplinarySearchData.disciplinaryAction !== "" ? (
+          disciplinarySearchData.disciplinaryAction !== "" &&
+          disciplinarySearchData.disciplinaryAction.reasonId == 2? (
             <ShowCauseNotice />
+          ) : (
+            <NonPerformanceLetter/>
+          )}
+        </Modal.Body>
+      </Modal>
+      <Modal
+        show={showShowCauseNoticeModalLink1}
+        onHide={handleShowCauseLetterCloseLink}
+        size="md"
+      >
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        <Modal.Body>
+          {disciplinarySearchData &&
+          disciplinarySearchData &&
+          disciplinarySearchData !== null &&
+          disciplinarySearchData !== undefined &&
+          Object.keys(disciplinarySearchData).length !== 0 &&
+          disciplinarySearchData.disciplinaryWarning !== null &&
+          disciplinarySearchData.disciplinaryWarning !== undefined &&
+          disciplinarySearchData.disciplinaryWarning !== "" ? (
+            <WarningLetter />
           ) : (
             ""
           )}
@@ -185,6 +257,16 @@ const DisciplinaryView = () => {
                             </label>
                           </div>
                         </Col>
+                        <Col sm={4}>
+                          <div>
+                            <label>
+                              Position:
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.employeePosition}
+                              </label>
+                            </label>
+                          </div>
+                        </Col>
                       </Row>
                       <Row
                         style={{
@@ -242,16 +324,20 @@ const DisciplinaryView = () => {
                             </label>
                           </div>
                         </Col>
-                        <Col sm={6}>
-                          <div>
-                            <label>
-                              Reason For Show Cause Notice:
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.reasonForCause}
+                        {showCauseReason === "Other" ? (
+                          <Col sm={6}>
+                            <div>
+                              <label>
+                                Reason For Show Cause Notice:
+                                <label className="itemResult">
+                                  &nbsp;&nbsp; {state.reasonForCause}
+                                </label>
                               </label>
-                            </label>
-                          </div>
-                        </Col>
+                            </div>
+                          </Col>
+                        ) : (
+                          ""
+                        )}
                       </Row>
                       <Row
                         style={{
@@ -296,14 +382,9 @@ const DisciplinaryView = () => {
                           </div>
                         </Col>
                       </Row>
-                      {disciplinarySearchData &&
-                      disciplinarySearchData &&
-                      disciplinarySearchData !== null &&
-                      disciplinarySearchData !== undefined &&
-                      Object.keys(disciplinarySearchData).length !== 0 &&
-                      disciplinarySearchData.empRemarks !== null &&
-                      disciplinarySearchData.empRemarks !== undefined &&
-                      disciplinarySearchData.empRemarks !== "" ? (
+                      {state.empRemark !== null &&
+                      state.empRemark !== undefined &&
+                      state.empRemark !== "" ? (
                         <Row
                           style={{
                             marginLeft: "2rem",
@@ -313,14 +394,16 @@ const DisciplinaryView = () => {
                         >
                           <Col sm={2}>
                             <div>
-                              <label>Remarks:</label>
+                              {/* <label>Remarks:</label> */}
+                              <label>Reason By Employee:</label>
                             </div>
                           </Col>
                           <Col sm={6}>
                             <div>
-                              <label className="itemResult">
-                                &nbsp;&nbsp; {state.empRemarks}
-                              </label>
+                              <a onClick={employeeReason}>
+                                {" "}
+                                <u className="itemResult">Reason By Employee</u>
+                              </a>
                             </div>
                           </Col>
                         </Row>
@@ -454,6 +537,38 @@ const DisciplinaryView = () => {
                               </div>
                             </Col>
                           </Row>
+                          {showCauseReason === "Other" ? (
+                            ""
+                          ) : (
+                            <Row
+                              style={{
+                                marginLeft: "2rem",
+                                marginTop: "2rem",
+                                marginBottom: "1rem",
+                              }}
+                            >
+                              <Col sm={6}>
+                                <div>
+                                  <label>
+                                    PIP Start Date:
+                                    <label className="itemResult">
+                                      &nbsp;&nbsp; {state.warningIssuedDateDW}
+                                    </label>
+                                  </label>
+                                </div>
+                              </Col>
+                              <Col sm={6}>
+                                <div>
+                                  <label>
+                                    PIP End Date:
+                                    <label className="itemResult">
+                                      &nbsp;&nbsp; {state.pipEndDate}
+                                    </label>
+                                  </label>
+                                </div>
+                              </Col>
+                            </Row>
+                          )}
                           <Row
                             style={{
                               marginLeft: "2rem",
@@ -471,6 +586,29 @@ const DisciplinaryView = () => {
                                 <label className="itemResult">
                                   &nbsp;&nbsp; {state.warningComment}
                                 </label>
+                              </div>
+                            </Col>
+                          </Row>
+                          <Row
+                            style={{
+                              marginLeft: "2rem",
+                              marginTop: "2rem",
+                              marginBottom: "1rem",
+                            }}
+                          >
+                            <Col sm={2}>
+                              <div>
+                                <label>Preview Warning Letter:</label>
+                              </div>
+                            </Col>
+                            <Col sm={6}>
+                              <div>
+                                <a onClick={LetterShow1}>
+                                  {" "}
+                                  <u className="itemResult">
+                                    View Warning Letter
+                                  </u>
+                                </a>
                               </div>
                             </Col>
                           </Row>

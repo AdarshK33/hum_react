@@ -6,6 +6,7 @@ import { EmployeeSeparationContext } from "../../../context/EmployeeSeparationSt
 import { toast } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
 import ShowCauseNotice from "./ShowCauseNoticeLetter";
+import NonPerformanceLetter from "./NonPerformanceLetter"
 import calendarImage from "../../../assets/images/calendar-image.png";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 import { useHistory } from "react-router-dom";
@@ -46,6 +47,7 @@ const IssueShowCauseNotice = () => {
     empCostCenterName: "",
     empLocation: "",
     empAddress: "",
+    employeePosition: "",
     mngrName: "",
     mngrId: "",
     mngrCostCenterName: "",
@@ -120,6 +122,7 @@ const IssueShowCauseNotice = () => {
       state.empContractType = disciplinaryEmpSearchData.contractType;
       state.empCostCenterName = disciplinaryEmpSearchData.employeeCostCentre;
       state.empAddress = disciplinaryEmpSearchData.employeeAddress;
+      state.employeePosition = disciplinaryEmpSearchData.employeePosition;
 
       if (
         state.empContractType === "internship" ||
@@ -285,6 +288,7 @@ const IssueShowCauseNotice = () => {
     state.empId = "";
     state.empContractType = "";
     state.empAddress = "";
+    state.employeePosition = "";
     state.empLocation = "";
     state.empCostCenterName = "";
   };
@@ -316,7 +320,7 @@ const IssueShowCauseNotice = () => {
     if (e.target.value === "Others") {
       disciplinaryResonsView(2);
       setChangeInReason(2);
-      state.reasonForCause = " ";
+      state.reasonForCause = "";
     } else {
       state.reasonForCause = "NA";
       setChangeInReason(1);
@@ -406,7 +410,7 @@ const IssueShowCauseNotice = () => {
           reasonId: changeInReason,
           reasonDetailsId:
             changeInReason === 1 ? changeInReason : reasonDetailsId,
-          showCauseLetter: null,
+          showCauseLetter: "ShowCauseLetter.pdf",
           showCauseNotice: null,
           status: 0,
           statusDesc: null,
@@ -414,6 +418,7 @@ const IssueShowCauseNotice = () => {
         },
         disciplinaryWarning: null,
         employeeAddress: state.empAddress,
+        employeePosition: state.employeePosition,
         employeeCostCentre: state.empCostCenterName,
         employeeId: state.empId,
         employeeName: disciplinaryEmpSearchData.employeeName,
@@ -461,7 +466,8 @@ const IssueShowCauseNotice = () => {
           <Modal.Header closeButton className="modal-line"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Show cause letter has been issued to the employee
+              Show cause notice details saved successfully, sent for manager
+              confirmation.
             </label>
             <div className="text-center">
               <Button onClick={handleShowCauseLetterClose1}>Close</Button>
@@ -482,10 +488,11 @@ const IssueShowCauseNotice = () => {
             disciplinarySearchData !== undefined &&
             Object.keys(disciplinarySearchData).length !== 0 &&
             disciplinarySearchData.disciplinaryAction !== null &&
-            disciplinarySearchData.disciplinaryAction !== undefined ? (
+            disciplinarySearchData.disciplinaryAction !== undefined && 
+            state.disciplinaryAction !== null && changeInReason == 2? (
               <ShowCauseNotice />
             ) : (
-              ""
+              <NonPerformanceLetter/>
             )}
             <br></br>
             <Row>
@@ -546,7 +553,10 @@ const IssueShowCauseNotice = () => {
             {/* <Modal.Title>State remarks for disapproval</Modal.Title> */}
           </Modal.Header>{" "}
           <Modal.Body className="mx-auto">
-            <label>Show cause notice has been issued to the employee</label>
+            <label>
+              Show cause notice details saved successfully, sent for manager
+              confirmation.
+            </label>
 
             <div className="text-center mb-2">
               <Button onClick={() => handleClose()}>Close</Button>
@@ -660,10 +670,20 @@ const IssueShowCauseNotice = () => {
                             <label>Address:</label>
                           </div>
                         </Col>
-                        <Col sm={8}>
+                        <Col sm={6}>
                           <div>
                             <label className="itemResult">
                               &nbsp;&nbsp; {state.empAddress}
+                            </label>
+                          </div>
+                        </Col>
+                        <Col sm={4}>
+                          <div>
+                            <label>
+                              Position:
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.employeePosition}
+                              </label>
                             </label>
                           </div>
                         </Col>
@@ -764,61 +784,63 @@ const IssueShowCauseNotice = () => {
                             )}
                           </div>
                         </Col>
-
-                        <Col sm={3}>
-                          <div>
-                            <label>Reason For Show Cause Notice:</label>
-                          </div>
-                        </Col>
-
-                        <Col sm={3}>
-                          <div>
-                            {changeInReason === 1 ? (
-                              <label className="itemResult">
-                                &nbsp;&nbsp; NA
-                              </label>
-                            ) : submitted === true ? (
-                              <label className="itemResult">
-                                &nbsp;&nbsp;{state.reasonForCause}
-                              </label>
-                            ) : (
-                              <Form.Group>
-                                <Form.Control
-                                  as="select"
-                                  name="reasonForCause"
-                                  options={resonsForShowCauseList}
-                                  value={state.reasonForCause}
-                                  onChange={changeHandler}
-                                  //   disabled={disabled}
-                                  style={
-                                    reasonForCauseError
-                                      ? { borderColor: "red" }
-                                      : {}
-                                  }
-                                >
-                                  <option value="" disabled selected hidden>
-                                    Select Reason For
-                                  </option>
-                                  {resonsForShowCauseList.map((item) => {
-                                    return (
-                                      <option key={item.value}>
-                                        {item.label}
-                                      </option>
-                                    );
-                                  })}
-                                </Form.Control>
-                                {reasonForCauseError ? (
-                                  <p style={{ color: "red" }}>
-                                    {" "}
-                                    &nbsp; *Please choose valid option
-                                  </p>
-                                ) : (
-                                  <p></p>
-                                )}
-                              </Form.Group>
-                            )}
-                          </div>
-                        </Col>
+                        {changeInReason === 1 || showCauseReason === "" ? (
+                          ""
+                        ) : (
+                          <Col sm={3}>
+                            <div>
+                              <label>Reason For Show Cause Notice:</label>
+                            </div>
+                          </Col>
+                        )}
+                        {changeInReason === 1 || showCauseReason === "" ? (
+                          ""
+                        ) : (
+                          <Col sm={3}>
+                            <div>
+                              {submitted === true ? (
+                                <label className="itemResult">
+                                  &nbsp;&nbsp;{state.reasonForCause}
+                                </label>
+                              ) : (
+                                <Form.Group>
+                                  <Form.Control
+                                    as="select"
+                                    name="reasonForCause"
+                                    options={resonsForShowCauseList}
+                                    value={state.reasonForCause}
+                                    onChange={changeHandler}
+                                    //   disabled={disabled}
+                                    style={
+                                      reasonForCauseError
+                                        ? { borderColor: "red" }
+                                        : {}
+                                    }
+                                  >
+                                    <option value="" disabled selected hidden>
+                                      Select Reason For
+                                    </option>
+                                    {resonsForShowCauseList.map((item) => {
+                                      return (
+                                        <option key={item.value}>
+                                          {item.label}
+                                        </option>
+                                      );
+                                    })}
+                                  </Form.Control>
+                                  {reasonForCauseError ? (
+                                    <p style={{ color: "red" }}>
+                                      {" "}
+                                      &nbsp; *Please choose valid option
+                                    </p>
+                                  ) : (
+                                    <p></p>
+                                  )}
+                                </Form.Group>
+                              )}
+                            </div>
+                          </Col>
+                        )}
                       </Row>
                       <Row
                         style={{

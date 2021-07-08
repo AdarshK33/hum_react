@@ -4,7 +4,7 @@ import calendarImage from "../../../assets/images/calendar-image.png";
 import moment from "moment";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 
-const ShowCauseNotice = () => {
+const NonPerformanceLetter = () => {
   const { disciplinarySearchData } = useContext(DisciplinaryContext);
   //   connsole.log("today", moment().format("DD-MM-YYYY"));
   return (
@@ -50,45 +50,31 @@ const ShowCauseNotice = () => {
               <b>{disciplinarySearchData.position}</b>.
               <br />
               <br />
-              <b>
-                {disciplinarySearchData !== null &&
-                disciplinarySearchData !== undefined &&
-                disciplinarySearchData.disciplinaryAction !== null &&
-                disciplinarySearchData.disciplinaryAction !== undefined &&
-                Object.keys(disciplinarySearchData).length !== 0
-                  ? disciplinarySearchData.disciplinaryAction.managerComment
-                  : ""}
-              </b>
-              .
+              <p>It is reported against you that you have been not been performing
+                   the assigned tasks. Thus, on verifying your performances as detailed below,
+                    it demonstrates very clearly that your performance has been much 
+                    below the performance levels expected by the Company.</p>
+        
+            <p>
+{  disciplinarySearchData.disciplinaryAction !== null &&
+disciplinarySearchData.disciplinaryAction !== undefined &&
+disciplinarySearchData.disciplinaryAction !== "" ?
+  disciplinarySearchData.disciplinaryAction.managerComment:''
+}            </p>
+            <p>
+            We have viewed acts of wilful performance lapses very seriously and such 
+            instances cannot be tolerated by the company.
+            </p>
               <br />
-              <br />
-              This acts, as alleged above to have been committed by you,amount
-              to{" "}
-              {disciplinarySearchData !== null &&
-              disciplinarySearchData !== undefined &&
-              disciplinarySearchData.disciplinaryAction !== null &&
-              disciplinarySearchData.disciplinaryAction !== undefined &&
-              Object.keys(disciplinarySearchData).length !== 0 &&
-              disciplinarySearchData.disciplinaryAction.reason === "Other" ? (
-                <b>{disciplinarySearchData.disciplinaryAction.reasonDetails}</b>
-              ) : (
-                <b>Non-Performance</b>
-              )}{" "}
-              which, if proved, would warrant serious disciplinary action
-              against you.
-              <br />
-              <br />
-              Accordingly, you are hereby required to show cause within <b>
-                5
-              </b>{" "}
-              days in receipt of this letter as to why you have indulged in such
-              an act of wilful misconduct and Gross Negligence. Such charges,
-              levelled against you, are of grave and serious nature, if you fail
-              to submit the explanation as required, it will be presumed that
-              you admit the charges and have no explanation to offer and the
-              matter will be disposed of without any further reference to you.
-              <br />
-              <br />
+             <p>
+             Hence, you are hereby called upon to show cause as to why appropriate 
+             disciplinary actions should not be initiated against you in respect of 
+             acts narrated as above. Your explanation, if any, must be submitted in 
+             writing within 5 days of receipt of this notice, failing which it will be 
+             presumed that you have no explanation to show cause and the company will 
+             initiate further actions, as deemed fit, based on the materials available.
+             </p>
+            
               <br />
               The receipt of this letter should be acknowledged.
               <br />
@@ -106,4 +92,4 @@ const ShowCauseNotice = () => {
   );
 };
 
-export default ShowCauseNotice;
+export default NonPerformanceLetter;

@@ -195,7 +195,8 @@ const CreateClusterModal = (props) => {
                 <div className="form-group">
                   <label htmlFor="exampleFormControlInput1">Cluster Name</label>
 
-                  <input type="text" style={{ fontSize: "0.8rem" }} className="form-control" placeholder="Cluster Name" required value={clusterName} onChange={onChangeHandler} />
+                  <input type="text" style={{ fontSize: "0.8rem" }} className="form-control" 
+                  placeholder="Cluster Name" required value={clusterName} onChange={onChangeHandler} />
 
                 </div>
               </div>
@@ -206,7 +207,8 @@ const CreateClusterModal = (props) => {
                 <div className="form-group">
                   <label htmlFor="exampleFormControlInput1">Cluster Description</label>
 
-                  <input type="text" style={{ fontSize: "0.8rem" }} className="form-control digit" placeholder="Cluster Description" required value={description} onChange={onDescprtion} />
+                  <input type="text" style={{ fontSize: "0.8rem" }} className="form-control digit" 
+                  placeholder="Cluster Description" required value={description} onChange={onDescprtion} />
                 </div>
               </div>
             </div>
@@ -237,7 +239,7 @@ const CreateClusterModal = (props) => {
                           placeholder="Cost Center"
                           //value={costCenter1}
                           style={{ fontSize: "0.9rem" }}
-                          options={costCenterList !== null && costCenterList !== null ?
+                          options={costCenterList !== null && costCenterList !== undefined ?
                              costCenterList.map(e => ({ label: e.costCentreName, value: e.costCentreName })):[]}
                           onChange={getCostCenterName}
                           required isSearchable />

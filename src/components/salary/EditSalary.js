@@ -180,8 +180,14 @@ const onSubmit = e => {
         year: year
 
     }
-    console.log("EditSalary request",EditSalary)
-    salaryEdit(EditSalary, props.costCenter)
+    let flag = localStorage.getItem('flag')
+    const salaryData = {
+      cluster: flag,
+      month: month,
+      storeIds: [props.costCenter],
+      year: year
+    }
+    salaryEdit(EditSalary, salaryData)
 
     // history.push("/salary/salaryView");
     const setModal = props.handleEditClose;

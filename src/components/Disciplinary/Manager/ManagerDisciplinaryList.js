@@ -11,6 +11,7 @@ import { DocsVerifyContext } from "../../../context/DocverificationState";
 import { RoleManagementContext } from "../../../context/RoleManagementState";
 import { AdminContext } from "../../../context/AdminState";
 import { AppContext } from "../../../context/AppState";
+import moment from "moment";
 const ManagerDisciplinaryList = () => {
   const { candidateView, candidateList, viewCandidateId } =
     useContext(OfferContext);
@@ -63,7 +64,7 @@ const ManagerDisciplinaryList = () => {
     } else {
       disciplinaryListView("all", pageNumber - 1);
     }
-    setCurrentRecords(candidateList);
+    setCurrentRecords(disciplinaryListData);
   };
 
   /*-----------------Pagination------------------*/
@@ -88,9 +89,27 @@ const ManagerDisciplinaryList = () => {
     viewRole();
     CostCenter();
   };
+  function getDifferenceInDays(date1, date2) {
+    const STdate = new Date(date1);
+    const ENDdate = new Date(date2);
+    const diffTime = ENDdate - STdate;
+    const diffDays = diffTime / (1000 * 60 * 60 * 24);
+    console.log(diffTime + " milliseconds");
+    console.log(diffDays + " days");
+    if (diffDays <= 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  // console.log(getDifferenceInDays("2021-07-03", "2021-07-04"));
+
   return (
     <Fragment>
-      <Breadcrumb title="DISCIPLINARY ACTION" parent="DISCIPLINARY ACTION" />
+      <Breadcrumb
+        title="DISCIPLINARY ACTION LIST"
+        parent="DISCIPLINARY ACTION LIST"
+      />
       <Container fluid>
         <Row>
           <Col sm={12}>
@@ -99,7 +118,7 @@ const ManagerDisciplinaryList = () => {
                 className="title_bar"
                 style={{ textAlign: "center", fontSize: "larger" }}
               >
-                <b style={{ marginLeft: "320px" }}>DISCIPLINARY ACTION</b>
+                <b style={{ marginLeft: "320px" }}>DISCIPLINARY ACTION LIST</b>
 
                 <div className="job-filter">
                   <div className="faq-form mr-2">
@@ -134,6 +153,7 @@ const ManagerDisciplinaryList = () => {
                       <th scope="col">Emp Name</th>
                       <th scope="col">Cost Center Name</th>
                       <th scope="col">Show Cause Date</th>
+                      <th scope="col">Warning Issue Date</th>
                       <th scope="col">Issued For</th>
                       <th scope="col">Due Days</th>
                       <th scope="col">Employee Action</th>
@@ -175,13 +195,23 @@ const ManagerDisciplinaryList = () => {
                             <td>{item.employeeName}</td>
                             <td>{item.employeeCostCentre}</td>
                             <td>{item.disciplinaryAction.actionIssuedDate}</td>
+                            <td>
+                              {item.disciplinaryWarning !== null &&
+                              item.disciplinaryWarning !== undefined
+                                ? item.disciplinaryWarning.warningIssuedDate
+                                : "NA"}
+                            </td>
                             <td>{item.disciplinaryAction.reason}</td>
                             <td>{item.disciplinaryAction.actionDueDays}</td>
                             <td>
                               {item.disciplinaryWarning !== null &&
                               item.disciplinaryWarning !== undefined &&
-                              item.disciplinaryAction.warningIssued === true
-                                ? item.disciplinaryWarning.employeeWarningStatus
+                              item.disciplinaryWarning !== "" &&
+                              (item.disciplinaryWarning.statusDesc ===
+                                "Warning Letter Issued" ||
+                                item.disciplinaryWarning.statusDesc ===
+                                  "Warning Letter Approved")
+                                ? "NA"
                                 : item.disciplinaryAction.employeeActionStatus}
                             </td>
                             <td>
@@ -194,7 +224,7 @@ const ManagerDisciplinaryList = () => {
                               {item.disciplinaryWarning !== null &&
                               item.disciplinaryWarning !== undefined
                                 ? item.disciplinaryWarning.improvementPeriod
-                                : ""}
+                                : "NA"}
                             </td>
                             <td>
                               <Link
@@ -215,30 +245,97 @@ const ManagerDisciplinaryList = () => {
                             (user.role === "COST_CENTER_MANAGER" ||
                               user.additionalRole === "7") ? (
                               <td>
-                                {item.disciplinaryAction.status !== 2 ? (
-                                  <Link
-                                    to={
-                                      "/disciplinary-action/" + item.employeeId
-                                    }
-                                  >
-                                    <Edit2
-                                      onClick={() => {
-                                        disciplinaryEmployeeSearch(
-                                          item.disciplinaryAction.disciplinaryId
-                                        );
-                                      }}
-                                    />
-                                  </Link>
-                                ) : (
-                                  <Edit2 />
-                                )}
+                                {
+                                  // item.disciplinaryAction.status !== 2
+                                  item.disciplinaryAction !== null &&
+                                  item.disciplinaryAction !== undefined &&
+                                  item.disciplinaryAction !== "" &&
+                                  (item.disciplinaryAction.statusDesc ===
+                                    "Warning Letter Issued" ||
+                                    item.disciplinaryAction.statusDesc ===
+                                      "Show Cause Notice Issued") ? (
+                                    <Link
+                                      to={
+                                        "/disciplinary-action/" +
+                                        item.employeeId
+                                      }
+                                    >
+                                      <Edit2
+                                        onClick={() => {
+                                          disciplinaryEmployeeSearch(
+                                            item.disciplinaryAction
+                                              .disciplinaryId
+                                          );
+                                        }}
+                                      />
+                                    </Link>
+                                  ) : (
+                                    <Edit2 />
+                                  )
+                                }
                               </td>
                             ) : (
                               <td>
                                 {item.disciplinaryAction !== null &&
                                 item.disciplinaryAction !== undefined &&
                                 item.disciplinaryAction !== "" &&
-                                item.disciplinaryAction.actionDueDays !== 0 ? (
+                                item.disciplinaryAction.statusDesc ===
+                                  "Employee Reason Accepted" ? (
+                                  <Edit2 />
+                                ) : item.disciplinaryAction !== null &&
+                                  item.disciplinaryAction !== undefined &&
+                                  item.disciplinaryAction !== "" &&
+                                  item.disciplinaryAction.statusDesc ===
+                                    "Issue Resolved" ? (
+                                  <Edit2 />
+                                ) : item.disciplinaryAction !== null &&
+                                  item.disciplinaryAction !== undefined &&
+                                  item.disciplinaryAction !== "" &&
+                                  item.disciplinaryAction.statusDesc ===
+                                    "Exit Initiated" ? (
+                                  <Edit2 />
+                                ) : item.disciplinaryAction !== null &&
+                                  item.disciplinaryAction !== undefined &&
+                                  item.disciplinaryAction !== "" &&
+                                  item.disciplinaryWarning !== null &&
+                                  item.disciplinaryWarning !== undefined &&
+                                  item.disciplinaryWarning !== "" ? (
+                                  (item.disciplinaryWarning.statusDesc ===
+                                    "Warning Letter Issued" ||
+                                    item.disciplinaryWarning.statusDesc ===
+                                      "Warning Letter Approved") &&
+                                  item.disciplinaryWarning.pipDueDays === 0 ? (
+                                    <Link
+                                      to={
+                                        `/manager-warning-action-view/` +
+                                        item.employeeId
+                                      }
+                                    >
+                                      <Edit2
+                                        onClick={() => {
+                                          disciplinaryEmployeeSearch(
+                                            item.disciplinaryAction
+                                              .disciplinaryId
+                                          );
+                                        }}
+                                      />
+                                    </Link>
+                                  ) : (
+                                    <Edit2 />
+                                  )
+                                ) : item.disciplinaryAction !== null &&
+                                  item.disciplinaryAction !== undefined &&
+                                  item.disciplinaryAction !== "" &&
+                                  (item.disciplinaryAction
+                                    .employeeActionStatus === "Responded" ||
+                                    item.disciplinaryAction.actionDueDays ===
+                                      0) ? (
+                                  //   ||
+                                  // (
+                                  //   new Date(
+                                  //     item.disciplinaryWarning.pipEndDate
+                                  //   ) - new Date()
+                                  // ).getDate() < 15
                                   <Link
                                     to={
                                       `/manager-warning-action-view/` +
@@ -254,10 +351,40 @@ const ManagerDisciplinaryList = () => {
                                     />
                                   </Link>
                                 ) : (
-                                  <Edit2 />
+                                  // <Edit2 />
+                                  <Link
+                                    to={
+                                      `/manager-warning-action-view/` +
+                                      item.employeeId
+                                    }
+                                  >
+                                    <Edit2
+                                      onClick={() => {
+                                        disciplinaryEmployeeSearch(
+                                          item.disciplinaryAction.disciplinaryId
+                                        );
+                                      }}
+                                    />
+                                  </Link>
                                 )}
                               </td>
                             )}
+                            {/* <td>
+                              <Link
+                                to={
+                                  `/manager-warning-action-view/` +
+                                  item.employeeId
+                                }
+                              >
+                                <Edit2
+                                  onClick={() => {
+                                    disciplinaryEmployeeSearch(
+                                      item.disciplinaryAction.disciplinaryId
+                                    );
+                                  }}
+                                />
+                              </Link>
+                            </td> */}
                           </tr>
                         </tbody>
                       );

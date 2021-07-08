@@ -10,7 +10,7 @@ const EditEmployeeForm = () => {
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [email, setEmail] = useState();
-  const [yesChecked, setYesChecked] = useState(true);
+  const [yesChecked, setYesChecked] = useState(false);
   const [noChecked, setNoChecked] = useState(false);
   const [secondRef, setSecondRef] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -86,25 +86,38 @@ const EditEmployeeForm = () => {
     candidateRefData.candidateReferences[1];
   /*  console.log("data1", data1);
   console.log("data2", data2); */
-
   useEffect(() => {
+    console.log("check", candidateRefData, data1);
     if (
-      candidateRefData !== null &&
-      candidateRefData !== undefined &&
-      data1 !== undefined &&
-      data1 !== null &&
-      data1.employeeName === ""
+      candidateData !== null &&
+      candidateData !== undefined &&
+      candidateData.candidateInformation !== null &&
+      candidateData.candidateInformation !== undefined &&
+      candidateData.candidateInformation.referred === false
     ) {
       setYesChecked(false);
       setNoChecked(true);
     }
+  }, [candidateData.candidateInformation]);
+  useEffect(() => {
+    console.log("check", candidateRefData, data1);
+    // if (
+    //   candidateRefData !== null &&
+    //   candidateRefData !== undefined &&
+    //   candidateRefData.referred === false &&
+    //   data1 !== undefined &&
+    //   data1 !== null
+    // ) {
+    //   setYesChecked(false);
+    //   setNoChecked(true);
+    // }
 
     if (
       candidateRefData !== null &&
       candidateRefData !== undefined &&
+      candidateRefData.referred === false &&
       data2 !== undefined &&
-      data2 !== null &&
-      data2.employeeName === ""
+      data2 !== null
     ) {
       setSecondRef(false);
     } else {
@@ -139,7 +152,13 @@ const EditEmployeeForm = () => {
             setYesChecked(true);
             setNoChecked(false);
           } */
-
+      if (candidateRefData.referred == false) {
+        setYesChecked(false);
+        setNoChecked(true);
+      } else {
+        setYesChecked(true);
+        setNoChecked(false);
+      }
       const data1 =
         candidateRefData.candidateReferences !== null &&
         candidateRefData.candidateReferences !== undefined &&
@@ -224,12 +243,12 @@ const EditEmployeeForm = () => {
   };
 
   const checkedYesHandler = () => {
-    setYesChecked(!yesChecked);
-    setNoChecked(yesChecked);
+    setYesChecked(true);
+    setNoChecked(false);
   };
   const checkedNoHandler = () => {
-    setNoChecked(!noChecked);
-    setYesChecked(noChecked);
+    setNoChecked(true);
+    setYesChecked(false);
     setSecondRef(false);
   };
 

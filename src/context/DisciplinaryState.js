@@ -54,7 +54,7 @@ export const DisciplinaryProvider = (props) => {
       .then((response) => {
         state.disciplinarySearchData = response.data.data;
         setLoader(false);
-        toast.info(response.data.message);
+        // toast.info(response.data.message);
         console.log(response);
         console.log("search data disc", state.disciplinarySearchData);
 
