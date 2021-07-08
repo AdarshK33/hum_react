@@ -24,12 +24,13 @@ import { SupportProvider } from "./context/SupportState";
 import { GroupProvider } from "./context/GroupState";
 import { CandidateProvider } from "./context/CandidateState";
 import { OfferProvider } from "./context/OfferState";
-import {PromotionProvider} from "./context/PromotionState"
-import {DisciplinaryProvider} from "./context/DisciplinaryState"
+import { PromotionProvider } from "./context/PromotionState";
+import { DisciplinaryProvider } from "./context/DisciplinaryState";
 import { OnBoardProvider } from "./context/OnBoardState";
 import { DocsVerificationProvider } from "./context/DocverificationState";
 import { EmploeeSeparationProvider } from "./context/EmployeeSeparationState";
 import { BonusProvider } from "./context/BonusState";
+import { TransferProvider } from "./context/TransferState";
 import {
   SeparationContext,
   SeparationProvider,
@@ -70,23 +71,27 @@ function Root() {
                                         <DocsVerificationProvider>
                                           <EmploeeSeparationProvider>
                                             <SeparationProvider>
-                                            <ProbationProvider>
-                                            <DisciplinaryProvider>
-                                            <PromotionProvider>
-                                              <BonusProvider>
-                                                <BrowserRouter basename={"/"}>
-                                                  <ScrollContext>
-                                                    <WithAxios>
-                                                      <CandidateWithAxios>
-                                                        <RoutePath />
-                                                      </CandidateWithAxios>
-                                                    </WithAxios>
-                                                  </ScrollContext>
-                                                </BrowserRouter>
-                                              </BonusProvider>
-                                              </PromotionProvider>
-                                              </DisciplinaryProvider>
-                                            </ProbationProvider>
+                                              <ProbationProvider>
+                                                <DisciplinaryProvider>
+                                                  <PromotionProvider>
+                                                    <BonusProvider>
+                                                      <TransferProvider>
+                                                        <BrowserRouter
+                                                          basename={"/"}
+                                                        >
+                                                          <ScrollContext>
+                                                            <WithAxios>
+                                                              <CandidateWithAxios>
+                                                                <RoutePath />
+                                                              </CandidateWithAxios>
+                                                            </WithAxios>
+                                                          </ScrollContext>
+                                                        </BrowserRouter>
+                                                      </TransferProvider>
+                                                    </BonusProvider>
+                                                  </PromotionProvider>
+                                                </DisciplinaryProvider>
+                                              </ProbationProvider>
                                             </SeparationProvider>
                                           </EmploeeSeparationProvider>
                                         </DocsVerificationProvider>

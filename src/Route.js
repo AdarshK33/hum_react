@@ -100,7 +100,12 @@ import CostCenterManagerAction from "./components/Disciplinary/CostCenterManager
 
 import ViewBonus from "./components/Bonus/ViewBonus";
 
-import ManagerWarningAction from "./components/Disciplinary/WarningManager/ManagerWarningAction"
+import ManagerWarningAction from "./components/Disciplinary/WarningManager/ManagerWarningAction";
+
+/* Transfer Module  */
+import TransfersList from "./components/Transfers/List/TransfersList";
+import TransferInitiation from "./components/Transfers/Initiation/TransferInitiation";
+
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
   console.log(user, state, "route8888888888888");
@@ -121,7 +126,6 @@ const RoutePath = () => {
         component={OnBoardingStepper}
       />
 
-    
       {/* <Route
             path={`${process.env.PUBLIC_URL}/onboard`}
             component={OnBoardingStepper}
@@ -154,10 +158,10 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/admin_no_due_clearance`}
             component={AdminNoDueClearance}
           />
-            <Route
-        path={`${process.env.PUBLIC_URL}/manager-warning-action-view/:employeeId`}
-        component={ManagerWarningAction}
-      />
+          <Route
+            path={`${process.env.PUBLIC_URL}/manager-warning-action-view/:employeeId`}
+            component={ManagerWarningAction}
+          />
 
           <Route
             path={`${process.env.PUBLIC_URL}/admin-finance-clearance`}
@@ -317,6 +321,22 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/promotion/:promotionId`}
             component={PromotionManagerEdit}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/transfers`}
+            component={TransfersList}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/transfer-initiate`}
+            component={TransferInitiation}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/view-transfer/:empId`}
+            component={TransferInitiation}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/transfer/:empId`}
+            component={TransferInitiation}
           />
           {/* <Route
             path={`${process.env.PUBLIC_URL}/promotion/:promotionId`}
