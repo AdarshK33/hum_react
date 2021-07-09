@@ -217,14 +217,10 @@ const TransferPage = () => {
                     </Row>
                   </div>
                   <div className="table-list">
-                    {tableBody.length === 0 ? (
-                      <NoDataComp msg="No Data Found" />
-                    ) : (
-                      <TableComponent
-                        tableHeaders={TableHeaders}
-                        tableBody={tableBody}
-                      />
-                    )}
+                    <TableComponent
+                      tableHeaders={TableHeaders}
+                      tableBody={tableBody}
+                    />
                   </div>
                 </div>
               )}

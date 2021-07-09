@@ -15,67 +15,77 @@ const TableComponent = ({ tableHeaders, tableBody }) => {
             ))}
           </tr>
         </thead>
-        <tbody>
-          {tableBody.map((item, itemIndex) => (
-            <tr key={`${item.sno}_${itemIndex}`}>
-              {Object.entries(item).map(([key, value], index) => {
-                if (key === "view") {
-                  return (
-                    <td key={`${item.sno}_${itemIndex}_${index}_${key}`}>
-                      {value.link !== "" ? (
-                        <Link to={value.link}>
+        {tableBody !== null &&
+        tableBody !== undefined &&
+        Object.keys(tableBody).length !== 0 ? (
+          <tbody>
+            {tableBody.map((item, itemIndex) => (
+              <tr key={`${item.sno}_${itemIndex}`}>
+                {Object.entries(item).map(([key, value], index) => {
+                  if (key === "view") {
+                    return (
+                      <td key={`${item.sno}_${itemIndex}_${index}_${key}`}>
+                        {value.link !== "" ? (
+                          <Link to={value.link}>
+                            <TableActionButton
+                              disabled={!value.active}
+                              type={key}
+                            />
+                          </Link>
+                        ) : (
                           <TableActionButton
                             disabled={!value.active}
                             type={key}
                           />
-                        </Link>
-                      ) : (
-                        <TableActionButton
-                          disabled={!value.active}
-                          type={key}
-                        />
-                      )}
-                    </td>
-                  );
-                } else if (key === "action") {
-                  return (
-                    <td key={`${item.sno}_${itemIndex}_${index}_${key}`}>
-                      <Row>
-                        {Object.entries(value).map(([actKey, actValue]) => {
-                          if (actValue.link !== "") {
-                            return (
-                              <Link to={actValue.link}>
+                        )}
+                      </td>
+                    );
+                  } else if (key === "action") {
+                    return (
+                      <td key={`${item.sno}_${itemIndex}_${index}_${key}`}>
+                        <Row>
+                          {Object.entries(value).map(([actKey, actValue]) => {
+                            if (actValue.link !== "") {
+                              return (
+                                <Link to={actValue.link}>
+                                  <TableActionButton
+                                    key={`${item.sno}_${itemIndex}_${index}_${key}_${actKey}`}
+                                    disabled={!actValue.active}
+                                    type={actKey}
+                                  />
+                                </Link>
+                              );
+                            } else {
+                              return (
                                 <TableActionButton
                                   key={`${item.sno}_${itemIndex}_${index}_${key}_${actKey}`}
                                   disabled={!actValue.active}
                                   type={actKey}
                                 />
-                              </Link>
-                            );
-                          } else {
-                            return (
-                              <TableActionButton
-                                key={`${item.sno}_${itemIndex}_${index}_${key}_${actKey}`}
-                                disabled={!actValue.active}
-                                type={actKey}
-                              />
-                            );
-                          }
-                        })}
-                      </Row>
-                    </td>
-                  );
-                } else {
-                  return (
-                    <td key={`${item.sno}_${itemIndex}_${index}_${key}`}>
-                      {value}
-                    </td>
-                  );
-                }
-              })}
+                              );
+                            }
+                          })}
+                        </Row>
+                      </td>
+                    );
+                  } else {
+                    return (
+                      <td key={`${item.sno}_${itemIndex}_${index}_${key}`}>
+                        {value}
+                      </td>
+                    );
+                  }
+                })}
+              </tr>
+            ))}
+          </tbody>
+        ) : (
+          <tbody>
+            <tr>
+              <td colSpan="14">No Record Found</td>
             </tr>
-          ))}
-        </tbody>
+          </tbody>
+        )}
       </Table>
     </div>
   );

@@ -9,6 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { TransferContext } from "../../../context/TransferState";
 import TransferInitationLetter from "./TransferInitiationLetter";
 import calendarImage from "../../../assets/images/calendar-image.png";
+import { useHistory } from "react-router-dom";
 
 const TransferInitiation = () => {
   const {
@@ -59,6 +60,7 @@ const TransferInitiation = () => {
   const [previewTransferLetter, setPreviewTransferLetter] = useState(false);
   const [letterSent, setLetterSent] = useState(false);
   const [showLetterSubmitModal, setShowLetterSubmitModal] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     if (searchValue !== "") {
@@ -192,11 +194,16 @@ const TransferInitiation = () => {
     setPreviewTransferLetter(true);
   };
 
-  const showTransferLetterModal = () => setShowInitiationLetter(true);
+  const showTransferLetterModal = (e) => {
+    e.preventDefault();
+    setShowInitiationLetter(true);
+  };
 
-  const submitfinalTransferLetter = () => {
+  const submitfinalTransferLetter = (e) => {
+    e.preventDefault();
     setLetterSent(true);
     setShowLetterSubmitModal(true);
+    history.push("./transfers");
   };
 
   const handleLetterSubmitModalClose = () => setShowLetterSubmitModal(false);
@@ -356,13 +363,13 @@ const TransferInitiation = () => {
         </Modal.Footer>
       </Modal>
 
-      <Breadcrumb title="TRANSFER INTIATION" parent="TRANSFER INTIATION" />
+      <Breadcrumb title="TRANSFER INITIATION" parent="TRANSFER INITIATION" />
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12">
             <div className="card" style={{ borderRadius: "1rem" }}>
               <div className="OnBoardHeading">
-                <b className="align-middle">TRANSFER INTIATION </b>
+                <b className="align-middle">TRANSFER INITIATION </b>
               </div>
               <Container className="ml-4 mt-4">
                 <div className="transfer-initiation-form">
@@ -669,7 +676,7 @@ const TransferInitiation = () => {
                             <Col md={{ span: 3, offset: 2 }}>
                               <Form.Control
                                 type="text"
-                                placeholder=""
+                                placeholder="New Fixed Gross"
                                 value={newGross}
                                 className="text-primary"
                                 onChange={changeGrossHandler}
@@ -688,7 +695,7 @@ const TransferInitiation = () => {
                             <Col md={3}>
                               <Form.Control
                                 type="text"
-                                placeholder=""
+                                placeholder="Bonus In Percent"
                                 value={bonus}
                                 className="text-primary"
                                 id="transferInitiationCurrentPercent"
@@ -701,7 +708,7 @@ const TransferInitiation = () => {
                             <Col md={3}>
                               <Form.Control
                                 type="text"
-                                placeholder=""
+                                placeholder="Relocation Bonus"
                                 value={relocationBonus}
                                 className="text-primary"
                                 id="transferInitiationBonus"
@@ -739,68 +746,61 @@ const TransferInitiation = () => {
                               </span>
                             )}
                           </Form.Group>
-                          <Form.Group
-                            as={Row}
-                            className="mb-3 mt-4"
-                            controlId="transferInitiationFooter"
-                          >
+                          <Row>
                             <Col
-                              md={10}
-                              className="d-flex justify-content-around ml-5"
+                              style={{
+                                marginTop: "2rem",
+                                marginBottom: "2rem",
+                                textAlign: "center",
+                              }}
                             >
-                              <Button
-                                variant={`${
-                                  formValid ? "secondary" : "primary"
-                                }`}
-                                className="px-4"
-                                type="button"
+                              <button
                                 disabled={formValid}
+                                className={
+                                  formValid ? "confirmButton" : "stepperButtons"
+                                }
                                 onClick={submitHandler}
                               >
                                 Save
-                              </Button>
+                              </button>
                               {searchValue !== "" && initiationStatus && (
-                                <Button
-                                  variant="primary"
-                                  type="button"
+                                <button
+                                  className={"LettersButtons"}
                                   onClick={showTransferLetterModal}
                                 >
                                   {previewTransferLetter
                                     ? "Preview Transfer Letter"
                                     : "Generate Transfer Letter"}
-                                </Button>
+                                </button>
                               )}
+
+                              {searchValue !== "" &&
+                                initiationStatus &&
+                                previewTransferLetter && (
+                                  <div className="preview-section">
+                                    <br></br>
+                                    <br></br>
+                                    <img
+                                      src={calendarImage}
+                                      alt="calendar"
+                                      width="200px"
+                                    />
+                                    <br></br>
+                                    <button
+                                      disabled={letterSent}
+                                      className={
+                                        letterSent
+                                          ? "confirmButton"
+                                          : "stepperButtons"
+                                      }
+                                      onClick={submitfinalTransferLetter}
+                                    >
+                                      Submit
+                                    </button>
+                                  </div>
+                                )}
                             </Col>
-                          </Form.Group>
-                          {searchValue !== "" &&
-                            initiationStatus &&
-                            previewTransferLetter && (
-                              <Form.Group
-                                className="mb-3 mt-4 mr-5 preview-section"
-                                controlId="transferInitiationLetterSubmit"
-                              >
-                                <Col>
-                                  <img
-                                    src={calendarImage}
-                                    alt="calendar"
-                                    width="200px"
-                                    className="text-center"
-                                  />
-                                </Col>
-                                <Col className="text-center">
-                                  <Button
-                                    variant={`${
-                                      letterSent ? "secondary" : "primary"
-                                    }`}
-                                    className="mt-3 text-center"
-                                    disabled={letterSent}
-                                    onClick={submitfinalTransferLetter}
-                                  >
-                                    Submit
-                                  </Button>
-                                </Col>
-                              </Form.Group>
-                            )}
+                          </Row>
                         </div>
                       )}
                   </Form>
