@@ -63,14 +63,14 @@ const TransferPage = () => {
           newManager: item.promotedManagerName,
           newLocation: item.promotedLocationName,
           status: item.statusDesc,
+          view: {
+            active: true,
+            link: `/view-transfer/${item.transferId}`,
+          },
           action: {
             edit: {
               active: true,
-              link: `/transfer/${item.currentEmployeeId}`,
-            },
-            view: {
-              active: true,
-              link: `/view-transfer/${item.currentEmployeeId}`,
+              link: `/transfer/${item.transferId}`,
             },
           },
         };
