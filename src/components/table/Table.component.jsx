@@ -19,7 +19,25 @@ const TableComponent = ({ tableHeaders, tableBody }) => {
           {tableBody.map((item, itemIndex) => (
             <tr key={`${item.sno}_${itemIndex}`}>
               {Object.entries(item).map(([key, value], index) => {
-                if (key === "action") {
+                if (key === "view") {
+                  return (
+                    <td key={`${item.sno}_${itemIndex}_${index}_${key}`}>
+                      {value.link !== "" ? (
+                        <Link to={value.link}>
+                          <TableActionButton
+                            disabled={!value.active}
+                            type={key}
+                          />
+                        </Link>
+                      ) : (
+                        <TableActionButton
+                          disabled={!value.active}
+                          type={key}
+                        />
+                      )}
+                    </td>
+                  );
+                } else if (key === "action") {
                   return (
                     <td key={`${item.sno}_${itemIndex}_${index}_${key}`}>
                       <Row>
