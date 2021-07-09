@@ -110,6 +110,7 @@ import ManagerWarningAction from "./components/Disciplinary/WarningManager/Manag
 /* Transfer Module  */
 import TransfersList from "./components/Transfers/List/TransfersList";
 import TransferInitiation from "./components/Transfers/Initiation/TransferInitiation";
+import TransferView from "./components/Transfers/view/TransferView";
 
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
@@ -361,12 +362,12 @@ const RoutePath = () => {
             component={TransferInitiation}
           />
           <Route
-            path={`${process.env.PUBLIC_URL}/view-transfer/:empId`}
-            component={TransferInitiation}
+            path={`${process.env.PUBLIC_URL}/view-transfer/:transferId`}
+            component={TransferView}
           />
           <Route
-            path={`${process.env.PUBLIC_URL}/transfer/:empId`}
-            component={TransferInitiation}
+            path={`${process.env.PUBLIC_URL}/transfer/:transferId`}
+            component={TransferView}
           />
           {/* <Route
             path={`${process.env.PUBLIC_URL}/promotion/:promotionId`}

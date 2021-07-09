@@ -76,11 +76,23 @@ const TransferReducer = (state, action) => {
       return {
         ...state,
         initiationStatus: true,
+        initiationTransferId: action.transferId,
       };
     case "INITIATION_CREATE_ERR":
       return {
         ...state,
         initiationStatus: false,
+        initiationTransferId: "",
+      };
+    case "FETCH_TRANSFER_DATA":
+      return {
+        ...state,
+        transferData: action.payload,
+      };
+    case "FETCH_TRANSFER_DATA_ERR":
+      return {
+        ...state,
+        transferData: {},
       };
     default:
       return state;

@@ -1,5 +1,6 @@
 import React, { createContext, useReducer, useState } from "react";
 import { client } from "../utils/axios";
+import { toast } from "react-toastify";
 import TransferReducer from "../reducers/TransferReducer";
 
 const initialState = {
@@ -12,6 +13,8 @@ const initialState = {
   costCentreManagersData: [],
   costCentreLocationData: {},
   initiationStatus: false,
+  initiationTransferId: "",
+  transferData: {},
 };
 
 export const TransferContext = createContext();
@@ -46,6 +49,7 @@ export const TransferProvider = (props) => {
       .get(`/api/v1/transfer/search?key=${empID}`)
       .then((response) => {
         setLoader(false);
+        toast.info(response.data.message);
         return dispatch({
           type: "FETCH_INITIATION_EMP_DATA",
           payload: response.data.data,
@@ -155,20 +159,40 @@ export const TransferProvider = (props) => {
   };
 
   const createTransferInitiation = (initiationData) => {
-    console.log(initiationData);
     setLoader(true);
     client
       .post("/api/v1/transfer/create", initiationData)
       .then((response) => {
         setLoader(false);
+        toast.info(response.data.message);
         return dispatch({
           type: "INITIATION_CREATE",
+          transferId: response.data.data.transferId,
         });
       })
       .catch(() => {
         setLoader(false);
         return dispatch({
           type: "INITIATION_CREATE_ERR",
+        });
+      });
+  };
+
+  const getTransferData = (transferId) => {
+    setLoader(true);
+    client
+      .get(`/api/v1/transfer/view/transferId?transferId=${transferId}`)
+      .then((response) => {
+        setLoader(false);
+        return dispatch({
+          type: "FETCH_TRANSFER_DATA",
+          payload: response.data.data,
+        });
+      })
+      .catch(() => {
+        setLoader(false);
+        return dispatch({
+          type: "FETCH_TRANSFER_DATA_ERR",
         });
       });
   };
@@ -194,6 +218,9 @@ export const TransferProvider = (props) => {
         costCentreLocationData: state.costCentreLocationData,
         createTransferInitiation,
         initiationStatus: state.initiationStatus,
+        getTransferData,
+        transferData: state.transferData,
+        initiationTransferId: state.initiationTransferId,
       }}
     >
       {props.children}

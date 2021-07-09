@@ -14,7 +14,8 @@ const TRANSFER_TABLE_HEADERS = {
     newManager: "New Manager",
     newLocation: "New Location",
     status: "Status",
-    action: "Edit/View",
+    view: "View",
+    action: "Action",
   },
   entity: {
     sno: "SNo",
@@ -31,7 +32,8 @@ const TRANSFER_TABLE_HEADERS = {
     newManager: "New Manager",
     newLocation: "New Location",
     status: "Status",
-    action: "Edit/View",
+    view: "View",
+    action: "Action",
   },
   international: {
     sno: "SNo",
@@ -48,7 +50,8 @@ const TRANSFER_TABLE_HEADERS = {
     newManager: "New Manager",
     newLocation: "New Location",
     status: "Status",
-    action: "Edit/View",
+    view: "View",
+    action: "Action",
   },
   employment: {
     sno: "SNo",
@@ -65,7 +68,8 @@ const TRANSFER_TABLE_HEADERS = {
     newManager: "New Manager",
     newLocation: "New Location",
     status: "Status",
-    action: "Edit/View",
+    view: "View",
+    action: "Action",
   },
 };
 
