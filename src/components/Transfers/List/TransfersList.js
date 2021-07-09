@@ -145,12 +145,13 @@ const TransferPage = () => {
                     style={{ textAlign: "center", fontSize: "larger" }}
                   >
                     <Row className="pt-2 mx-2">
-                      <Col md={2}>
+                      <Col md={2} style={{ marginTop: "-10px" }}>
                         <Form.Control
                           as="select"
                           aria-label="Select Transfer Type"
                           value={transferType}
                           onChange={changeTransferType}
+                          className="probation_status_search"
                         >
                           <option disabled>Select Transfer Type</option>
                           <option value="Regular Transfer">
@@ -167,12 +168,14 @@ const TransferPage = () => {
                           </option>
                         </Form.Control>
                       </Col>
-                      <Col md={2}>
+
+                      <Col md={2} style={{ marginTop: "1px" }}>
                         <Form.Control
                           type="text"
                           value={searchInput}
                           placeholder="Search"
                           onChange={searchInputHandler}
+                          className="form-control searchButton"
                         />
                         <Search
                           className="search-icon mr-1"
@@ -181,27 +184,28 @@ const TransferPage = () => {
                         />
                       </Col>
                       <Col
-                        md={3}
+                        md={4}
                         className="font-weight-bold text-uppercase text-center my-auto"
                       >
                         {listHeading}
                       </Col>
-                      <Col md={3}>
+                      <Col md={2} style={{ marginTop: "-5px" }}>
                         <Link
                           to="/transfer-initiate"
                           className="text-decoration-none"
                         >
-                          <Button variant="light" block>
+                          <Button className="apply-button btn btn-light mr-2">
                             Initiate Transfer
                           </Button>
                         </Link>
                       </Col>
-                      <Col md={2}>
+                      <Col md={2} style={{ marginTop: "-10px" }}>
                         <Form.Control
                           as="select"
                           aria-label="Choose Status"
                           value={status}
                           onChange={statusHandler}
+                          className="probation_status_search"
                         >
                           <option disabled>Choose Status</option>
                           <option value="0">In Progress</option>
