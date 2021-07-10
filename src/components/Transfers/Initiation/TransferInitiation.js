@@ -203,10 +203,12 @@ const TransferInitiation = () => {
     e.preventDefault();
     setLetterSent(true);
     setShowLetterSubmitModal(true);
-    history.push("./transfers");
   };
 
-  const handleLetterSubmitModalClose = () => setShowLetterSubmitModal(false);
+  const handleLetterSubmitModalClose = () => {
+    setShowLetterSubmitModal(false);
+    history.push("./transfers");
+  };
 
   /* Validate form */
   const validateForm = () => {

@@ -84,6 +84,20 @@ const RegularTransferView = ({ transferData }) => {
           {transferData.promotedJoiningDate}
         </Col>
       </Row>
+      {transferData.remark !== null &&
+      transferData.remark !== undefined &&
+      transferData.remark !== "" ? (
+        <Row className="mb-4">
+          <Col md={2} className="py-0">
+            Reason for transfer rejection
+          </Col>
+          <Col md={3} className="text-primary">
+            {transferData.remark}
+          </Col>
+        </Row>
+      ) : (
+        ""
+      )}
     </Fragment>
   );
 };
