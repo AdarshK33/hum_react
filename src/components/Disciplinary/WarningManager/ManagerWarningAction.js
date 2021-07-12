@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import WarningLetter from "./WarningLetter";
 import ShowCauseNotice from "../Manager/ShowCauseNoticeLetter";
 import NonPerformanceLetter from "../Manager/NonPerformanceLetter";
-
+import ReasonByEmployee from "../Manager/ReasonByEmployee";
 
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 import moment from "moment";
@@ -36,7 +36,7 @@ const ManagerWarningAction = (props) => {
   const [showModal, setModal] = useState(false);
   const [letterView, setLetterView] = useState(false);
   const [showInfoModal, setShowInfoModal] = useState(false);
-  const [submitted, setSubmitted] = useState({value:false});
+  const [submitted, setSubmitted] = useState({ value: false });
   const [showShowCauseNoticeModal, setShow] = useState(false);
   const [showSuccessModal, setSuccessModal] = useState(false);
   const [showSignature, setShowSignature] = useState(false);
@@ -119,7 +119,7 @@ const ManagerWarningAction = (props) => {
     disciplinarySearchData,
     SubmitDisciplinaryLetter,
   } = useContext(DisciplinaryContext);
-console.log(issueShowCauseNoticeData,"issueShowCauseNoticeData")
+  console.log(issueShowCauseNoticeData, "issueShowCauseNoticeData");
   const { searchByCostCenter } = useContext(SeparationContext);
   const { ModeOfSeparationView, TerminationFromDesciplinary } = useContext(
     EmployeeSeparationContext
@@ -224,13 +224,12 @@ console.log(issueShowCauseNoticeData,"issueShowCauseNoticeData")
           state.disciplinaryWarning.reason = "Non-Performance";
           state.disciplinaryWarning.reasonDetailsId = 0;
           state.disciplinaryWarning.reasonDetails = null;
-        } else if (
-          disciplinarySearchData.disciplinaryAction.reasonId === 2) {
-            if (disciplinarySearchData.disciplinaryAction.actionDueDays === 0) {
-              setShowCauseReason("Other");
-              console.log("elseiff");
-              setIssueWarningStatus("");
-            }
+        } else if (disciplinarySearchData.disciplinaryAction.reasonId === 2) {
+          if (disciplinarySearchData.disciplinaryAction.actionDueDays === 0) {
+            setShowCauseReason("Other");
+            console.log("elseiff");
+            setIssueWarningStatus("");
+          }
           state.inputReasonId =
             disciplinarySearchData.disciplinaryAction.reasonId;
           state.disciplinaryWarning.reasonId =
@@ -242,7 +241,7 @@ console.log(issueShowCauseNoticeData,"issueShowCauseNoticeData")
             disciplinarySearchData.disciplinaryAction.reasonDetailsId;
           state.disciplinaryWarning.reasonDetails =
             disciplinarySearchData.disciplinaryAction.reasonDetails;
-        } 
+        }
         if (disciplinarySearchData.disciplinaryAction.actionDueDays === 0) {
           setIssueWarningStatus("no");
         }
@@ -253,8 +252,10 @@ console.log(issueShowCauseNoticeData,"issueShowCauseNoticeData")
         Object.keys(disciplinarySearchData.disciplinaryWarning).length !== 0 &&
         disciplinarySearchData.disciplinaryWarning !== ""
       ) {
-        if (disciplinarySearchData.disciplinaryWarning.pipDueDays === 0 
-          && submitted.value === false) {
+        if (
+          disciplinarySearchData.disciplinaryWarning.pipDueDays === 0 &&
+          submitted.value === false
+        ) {
           setIssueWarningStatus("no");
         }
 
@@ -507,7 +508,7 @@ console.log(issueShowCauseNoticeData,"issueShowCauseNoticeData")
       console.log(infoData, "infoData submit");
       createShowCauseIssue(infoData);
 
-      setSubmitted({value:true});
+      setSubmitted({ value: true });
       setPreview(true);
       setSuccessModal(true);
     } else {
@@ -547,7 +548,7 @@ console.log(issueShowCauseNoticeData,"issueShowCauseNoticeData")
   };
 
   const handleAcceptEmployeeReason = (e) => {
-    setIssueWarningStatus("")
+    // setIssueWarningStatus("");
     var result = e.target.value;
     console.log(result, "result");
     // var result = document.getElementsByClassName("switch-input")[0].checked ? 'yes' : 'no'
@@ -565,7 +566,6 @@ console.log(issueShowCauseNoticeData,"issueShowCauseNoticeData")
     setSuccessModal(false);
     setIssueResolved(false);
     //setSubmitted({value:true});
-
   };
 
   const handleClose1 = (e) => {
@@ -757,7 +757,7 @@ console.log(issueShowCauseNoticeData,"issueShowCauseNoticeData")
       setInitalExit(false);
       setModal(false);
       setSuccessModal(false);
-      setSubmitted({value:true});
+      setSubmitted({ value: true });
       searchByCostCenter(disciplinarySearchData.employeeId);
       ModeOfSeparationView();
       TerminationFromDesciplinary(true);
@@ -786,9 +786,7 @@ console.log(issueShowCauseNoticeData,"issueShowCauseNoticeData")
           disciplinarySearchData.disciplinaryAction !== null &&
           disciplinarySearchData.disciplinaryAction !== undefined &&
           disciplinarySearchData.disciplinaryAction !== "" ? (
-            <label>
-              {disciplinarySearchData.disciplinaryAction.employeeComment}
-            </label>
+            <ReasonByEmployee />
           ) : (
             ""
           )}
@@ -833,11 +831,11 @@ console.log(issueShowCauseNoticeData,"issueShowCauseNoticeData")
             Object.keys(disciplinarySearchData).length !== 0 &&
             disciplinarySearchData.disciplinaryAction !== null &&
             disciplinarySearchData.disciplinaryAction !== undefined &&
-            disciplinarySearchData.disciplinaryAction !== '' &&
-            disciplinarySearchData.disciplinaryAction.reasonId == 2  ? (
+            disciplinarySearchData.disciplinaryAction !== "" &&
+            disciplinarySearchData.disciplinaryAction.reasonId == 2 ? (
               <ShowCauseNotice />
             ) : (
-              <NonPerformanceLetter/>
+              <NonPerformanceLetter />
             )}
             <br></br>
           </Modal.Body>
@@ -1225,24 +1223,23 @@ console.log(issueShowCauseNoticeData,"issueShowCauseNoticeData")
                           marginBottom: "3rem",
                         }}
                       >
-                        <>
-                          <Col sm={2}>
-                            <div>
-                              <label>Preview Show Cause Notice:</label>
-                            </div>
-                          </Col>
-                          <Col sm={6}>
-                            <div>
-                              <a onClick={ShowCauseLetter}>
-                                {" "}
-                                <u className="itemResult">
-                                  View Show Cause Notice
-                                </u>
-                              </a>
-                            </div>
-                          </Col>
+                        <Col sm={2}>
+                          <div>
+                            <label>Preview Show Cause Notice:</label>
+                          </div>
+                        </Col>
+                        <Col sm={6}>
+                          <div>
+                            <a onClick={ShowCauseLetter}>
+                              {" "}
+                              <u className="itemResult">
+                                View Show Cause Notice
+                              </u>
+                            </a>
+                          </div>
+                        </Col>
 
-                          {/* <Col sm={2}>
+                        {/* <Col sm={2}>
                             <div>
                               <label>Preview Show Case Notice:</label>
                             </div>
@@ -1254,7 +1251,6 @@ console.log(issueShowCauseNoticeData,"issueShowCauseNoticeData")
                               </label>
                             </div>
                           </Col> */}
-                        </>
                       </Row>
                       {state.disciplinaryAction.employeeComment !== null &&
                       state.disciplinaryAction.employeeComment !== undefined &&
@@ -1294,7 +1290,7 @@ console.log(issueShowCauseNoticeData,"issueShowCauseNoticeData")
                           style={{
                             marginLeft: "2rem",
                             marginTop: "2rem",
-                            marginBottom: "1rem",
+                            marginBottom: "3rem",
                           }}
                         >
                           <Col sm={2}>
@@ -1330,7 +1326,8 @@ console.log(issueShowCauseNoticeData,"issueShowCauseNoticeData")
                         disciplinarySearchData.disciplinaryWarning !==
                           undefined &&
                         disciplinarySearchData.disciplinaryWarning
-                          .pipDueDays === 0 && submitted.value === false ? (
+                          .pipDueDays === 0 &&
+                        submitted.value === false ? (
                           ""
                         ) : (
                           <Row
@@ -1402,7 +1399,9 @@ console.log(issueShowCauseNoticeData,"issueShowCauseNoticeData")
                               <button
                                 disabled={submitted.value}
                                 className={
-                                  submitted.value ? "confirmButton" : "stepperButtons"
+                                  submitted.value
+                                    ? "confirmButton"
+                                    : "stepperButtons"
                                 }
                                 onClick={handleAcceptEmployeeReasonSubmit}
                               >
@@ -1784,7 +1783,7 @@ console.log(issueShowCauseNoticeData,"issueShowCauseNoticeData")
                       )}
 
                       <Row>
-                        {(issueWarningStatus === "no" &&
+                        {issueWarningStatus === "no" &&
                         disciplinarySearchData !== null &&
                         disciplinarySearchData !== undefined &&
                         Object.keys(disciplinarySearchData).length !== 0 &&
@@ -1792,12 +1791,13 @@ console.log(issueShowCauseNoticeData,"issueShowCauseNoticeData")
                         disciplinarySearchData.disciplinaryWarning !==
                           undefined &&
                         disciplinarySearchData.disciplinaryWarning
-                          .pipDueDays === 0 && submitted.value === false)?(
+                          .pipDueDays === 0 &&
+                        submitted.value === false ? (
                           <Col
                             style={{
                               marginTop: "2rem",
                               marginBottom: "2rem",
-                              marginLeft:"2rem",
+                              marginLeft: "2rem",
                               textAlign: "center",
                             }}
                           >
@@ -1805,7 +1805,9 @@ console.log(issueShowCauseNoticeData,"issueShowCauseNoticeData")
                               name="issueresolved"
                               disabled={submitted.value}
                               className={
-                                submitted.value ? "confirmButton" : "stepperButtons"
+                                submitted.value
+                                  ? "confirmButton"
+                                  : "stepperButtons"
                               }
                               onClick={handleInitialExit}
                             >
@@ -1829,7 +1831,8 @@ console.log(issueShowCauseNoticeData,"issueShowCauseNoticeData")
                             disciplinarySearchData.disciplinaryAction
                               .employeeComment !== undefined ||
                             disciplinarySearchData.disciplinaryAction
-                              .employeeComment !== "" ) && submitted.value == false) ? (
+                              .employeeComment !== "") &&
+                          submitted.value == false) ? (
                           <Col
                             style={{
                               marginTop: "2rem",
@@ -1841,7 +1844,9 @@ console.log(issueShowCauseNoticeData,"issueShowCauseNoticeData")
                               name="initiateexit"
                               disabled={submitted.value}
                               className={
-                                submitted.value ? "confirmButton" : "stepperButtons"
+                                submitted.value
+                                  ? "confirmButton"
+                                  : "stepperButtons"
                               }
                               onClick={handleInitialExit}
                             >
