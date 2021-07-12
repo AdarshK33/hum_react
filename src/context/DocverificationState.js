@@ -32,6 +32,7 @@ const initial_state = {
   verificationPermanentCityList: [],
   imageData: "",
   rejectUpdate: [],
+  adminRejectUpdate: [],
 };
 export const DocsVerifyContext = createContext();
 export const DocsVerificationProvider = (props) => {
@@ -295,6 +296,25 @@ export const DocsVerificationProvider = (props) => {
         console.log(error);
       });
   };
+
+  const adminRejectComplete = (candidateId) => {
+    client
+      .get(
+        "/api/v1/candidate/document/disapprove/complete?candidateId=" +
+          candidateId
+      )
+      .then((response) => {
+        state.adminRejectUpdate = response.data.message;
+        toast.info(response.data.message);
+        return dispatch({
+          type: "ADMIN_UPDATE_REJECT",
+          payload: state.adminRejectUpdate,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const costCenterSplit = (costCenterData) => {
     setLoader(true);
     client
@@ -480,6 +500,7 @@ export const DocsVerificationProvider = (props) => {
           viewPermanentCityVerification,
           uploadBase64Image,
           documentRejectComplete,
+          adminRejectComplete,
           disApproveAadhar: state.disApproveAadhar,
           imageData: state.imageData,
           step5Status: state.step5Status,
@@ -505,6 +526,7 @@ export const DocsVerificationProvider = (props) => {
           verificationCityList: state.verificationCityList,
           verificationPermanentCityList: state.verificationPermanentCityList,
           rejectUpdate: state.rejectUpdate,
+          adminRejectUpdate: state.adminRejectUpdate,
         }}
       >
         {" "}

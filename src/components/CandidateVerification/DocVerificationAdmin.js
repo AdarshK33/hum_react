@@ -56,6 +56,7 @@ const DocVerification = () => {
     pfDetails,
     fetchPfDetails,
     documentRejectComplete,
+    adminRejectComplete,
   } = useContext(DocsVerifyContext);
   const {
     candidateData,
@@ -161,14 +162,14 @@ const DocVerification = () => {
   };
 
   const handleOnboard = () => {
-    adhaarVerificationNotification(candidateId);
+    // adhaarVerificationNotification(candidateId);
     // documentRejectComplete(candidateId);
     setOnboardPopup(true);
   };
 
   const handleReupload = () => {
     // adhaarVerificationNotification(candidateId);
-    documentRejectComplete(candidateId);
+    adminRejectComplete(candidateId);
     // setOnboardPopup(true);
   };
   var documents =
