@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { Fragment, useContext, useEffect } from "react";
 import moment from "moment";
 import { TransferContext } from "../../../context/TransferState";
 import LoaderIcon from "../../Loader/LoaderIcon";
@@ -13,39 +13,45 @@ const TransferInitationLetter = ({ transferId }) => {
   }, [transferId]);
 
   return (
-    <>
+    <Fragment>
       {loader ? (
         <LoaderIcon />
       ) : (
-        <>
-          <div className="font-weight-bold mb-4">
-            Date: {moment().format("DD-MM-YYYY")}
-          </div>
-          <div className="font-weight-bold">To</div>
-          <div className="font-weight-bold">{transferData.employeeName}</div>
-          <div className="font-weight-bold">
-            {transferData.currentEmployeeId}
-          </div>
-          <div className="font-weight-bold my-5">
-            Dear {transferData.employeeName}
-          </div>
+        <Fragment>
+          <p className="">
+            {" "}
+            Date: <b>{moment().format("DD-MM-YYYY")}</b>
+          </p>
+          <br></br>
+          <h5 className="text-center"> TRANSFER LETTER</h5>
+          <p>To,</p>
+          <p>Name:{transferData.employeeName}</p>
+          <p>EmployeeId: {transferData.currentEmployeeId}</p>
 
-          <div className="mb-4">
-            This is bring to your kind notice that your position has been
-            changes to {transferData.currentPosition} and working location to{" "}
-            {transferData.currentLocationName} effective from{" "}
-            {transferData.promotedJoiningDate}
-          </div>
+          <div className=" ">
+            <p className="mt-5 ">
+              {" "}
+              Dear <b>{transferData.employeeName},</b>{" "}
+            </p>
 
-          <div className="mb-4">
-            All the rules mentioned in your appointment letter will remain
-            unchanged
+            <p>
+              This is bring to your kind notice that your position has been
+              changes to {transferData.currentPosition} and working location to{" "}
+              {transferData.currentLocationName} effective from{" "}
+              {transferData.promotedJoiningDate}.
+              <br />
+              <br />
+              All the rules mentioned in your appointment letter will remain
+              unchanged.
+            </p>
+            <p className="mt-5 ">
+              <b>For Decathlon Sports India India Pvt Ltd,</b>
+            </p>
+            <div className="float-right "></div>
           </div>
-
-          <div className="mb-4">Decathlon Sports India Pvt Ltd</div>
-        </>
+        </Fragment>
       )}
-    </>
+    </Fragment>
   );
 };
 
