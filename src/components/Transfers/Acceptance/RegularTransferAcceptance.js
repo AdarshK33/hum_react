@@ -260,7 +260,7 @@ const RegularTransferAcceptance = () => {
         promotedTermOfProject: transferData.promotedTermOfProject,
         remark: null,
         status: 1,
-        transferId: 0,
+        transferId: transferData.transferId,
         transferLetter: null,
         transferType: transferData.transferType,
       };
@@ -309,7 +309,7 @@ const RegularTransferAcceptance = () => {
         promotedTermOfProject: transferData.promotedTermOfProject,
         remark: state.remarks,
         status: 2,
-        transferId: 0,
+        transferId: transferData.transferId,
         transferLetter: null,
         transferType: transferData.transferType,
       };

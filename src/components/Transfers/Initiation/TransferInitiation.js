@@ -46,10 +46,10 @@ const TransferInitiation = () => {
   const [managerErrMsg, setManagerErrMsg] = useState("");
   const [newLocation, setNewLocation] = useState("");
   const [locationErrMsg, setLocationErrMsg] = useState("");
-  const [newGross, setNewGross] = useState("");
+  const [newGross, setNewGross] = useState();
   const [grossErrMsg, setGrossErrMsg] = useState("");
-  const [bonus, setBonus] = useState("");
-  const [relocationBonus, setRelocationBonus] = useState("");
+  const [bonus, setBonus] = useState();
+  const [relocationBonus, setRelocationBonus] = useState();
   const [relocationBonusErrMsg, setRelocationBonusErrMsg] = useState("");
   const [effectiveDate, setEffectiveDate] = useState(new Date());
   const [effectiveDateErrMsg, setEffectiveDateErrMsg] = useState("");
@@ -95,13 +95,16 @@ const TransferInitiation = () => {
         ...initiationEmpData,
         promotedCostCentre: newCostCentre,
         promotedDepartment: newDeptName,
-        promotedFixedGross: newGross,
+        promotedFixedGross: parseInt(newGross),
         promotedJoiningDate: moment(effectiveDate).format("YYYY-MM-DD"),
-        promotedLocation: newLocation,
+        promotedLocation: parseInt(newLocation),
         promotedManagerId: newManager,
         promotedPosition: newPositionName,
-        promotedMonthlyBonus: bonus,
-        promotedRelocationBonus: relocationBonus,
+        promotedMonthlyBonus:
+          bonus !== "" && bonus !== null && bonus !== undefined
+            ? parseInt(bonus)
+            : 0,
+        promotedRelocationBonus: parseInt(relocationBonus),
         status: 0,
         transferId: 0,
         transferType: transferType,
@@ -283,7 +286,7 @@ const TransferInitiation = () => {
     <div className="transfer-initiation">
       <ToastContainer />
       <Modal show={modalShow} onHide={handleModalClose} size="md" centered>
-        <Modal.Header closeButton className="modal-line"></Modal.Header>
+        {/* <Modal.Header closeButton className="modal-line"></Modal.Header>
         <Modal.Body className="mx-auto">
           <label className="text-center">
             Tansfer Initiation done successfully!
@@ -293,7 +296,19 @@ const TransferInitiation = () => {
           <Button variant="primary" onClick={handleModalClose}>
             Close
           </Button>
-        </Modal.Footer>
+        </Modal.Footer> */}
+        <Container>
+          <Modal.Header closeButton className="modalHeader"></Modal.Header>
+          <Modal.Body className="mx-auto">
+            <label className="text-center">
+              Tansfer Initiation done successfully!
+            </label>
+
+            <div className="text-center mb-2">
+              <Button onClick={handleModalClose}>Close</Button>
+            </div>
+          </Modal.Body>
+        </Container>
       </Modal>
 
       <Modal
@@ -352,8 +367,8 @@ const TransferInitiation = () => {
         size="md"
         centered
       >
-        <Modal.Header closeButton className="modal-line"></Modal.Header>
-        <Modal.Body className="mx-auto">
+        {/*<Modal.Header closeButton className="modal-line"></Modal.Header>
+         <Modal.Body className="mx-auto">
           <label className="text-center">
             Tansfer Initiation letter generated successfully!
           </label>
@@ -362,7 +377,19 @@ const TransferInitiation = () => {
           <Button variant="primary" onClick={handleLetterSubmitModalClose}>
             Close
           </Button>
-        </Modal.Footer>
+        </Modal.Footer> */}
+        <Container>
+          <Modal.Header closeButton className="modalHeader"></Modal.Header>
+          <Modal.Body className="mx-auto">
+            <label className="text-center">
+              Tansfer Initiation letter generated successfully!
+            </label>
+
+            <div className="text-center mb-2">
+              <Button onClick={handleLetterSubmitModalClose}>Close</Button>
+            </div>
+          </Modal.Body>
+        </Container>
       </Modal>
 
       <Breadcrumb title="TRANSFER INITIATION" parent="TRANSFER INITIATION" />
