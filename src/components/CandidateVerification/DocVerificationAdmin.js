@@ -375,23 +375,21 @@ const DocVerification = () => {
                     </td>
                     {item.statusDesc !== null &&
                     item.documentType === 1 &&
-                    item.statusDesc !== "Pending" ? (
-                      <td className="buttonMargin1">{item.statusDesc}</td>
+                    (item.adminStatus === 1 || item.adminStatus === 2) ? (
+                      <td className="buttonMargin1">{item.adminStatusDesc}</td>
                     ) : item.statusDesc !== null &&
                       item.documentType === 5 &&
-                      item.statusDesc !== "Pending" ? (
-                      <td className="buttonMargin1">{item.statusDesc}</td>
+                      (item.adminStatus === 1 || item.adminStatus === 2) ? (
+                      <td className="buttonMargin1">{item.adminStatusDesc}</td>
                     ) : item.statusDesc !== null &&
                       item.documentType === 4 &&
-                      item.statusDesc !== "Pending" ? (
-                      <td className="buttonMargin1">{item.statusDesc}</td>
+                      (item.adminStatus === 1 || item.adminStatus === 2) ? (
+                      <td className="buttonMargin1">{item.adminStatusDesc}</td>
                     ) : (
                       <td className="row text-center buttonMargin">
                         {user.role === "ADMIN" &&
                         item.documentType === 1 &&
-                        (state.adminVerificationStatus === 0 ||
-                          state.adminVerificationStatus === 3 ||
-                          state.adminVerificationStatus === null) ? (
+                        item.adminStatus === 0 ? (
                           <button
                             className="approveButton ml-4"
                             onClick={() =>
@@ -408,14 +406,12 @@ const DocVerification = () => {
                         )}
                         {user.role === "ADMIN" &&
                         item.documentType === 5 &&
-                        (state.adminVerificationStatus === 0 ||
-                          state.adminVerificationStatus === 3 ||
-                          state.adminVerificationStatus === null) ? (
+                        item.adminStatus === 0 ? (
                           <button
                             className="approveButton ml-4"
                             disabled={rejectStatus === "FAIL" ? true : false}
                             onClick={() =>
-                              handleChequeApproveDocument(
+                              handleApproveDocument(
                                 item.documentId,
                                 candidateId
                               )
@@ -428,14 +424,12 @@ const DocVerification = () => {
                         )}
                         {user.role === "ADMIN" &&
                         item.documentType === 4 &&
-                        (state.adminVerificationStatus === 0 ||
-                          state.adminVerificationStatus === 3 ||
-                          state.adminVerificationStatus === null) ? (
+                        item.adminStatus === 0 ? (
                           <button
                             className="approveButton ml-4"
                             disabled={rejectStatus === "FAIL" ? true : false}
                             onClick={() =>
-                              handleChequeApproveDocument(
+                              handleApproveDocument(
                                 item.documentId,
                                 candidateId
                               )
@@ -448,9 +442,7 @@ const DocVerification = () => {
                         )}
                         {user.role === "ADMIN" &&
                         item.documentType === 1 &&
-                        (state.adminVerificationStatus === 0 ||
-                          state.adminVerificationStatus === 3 ||
-                          state.adminVerificationStatus === null) ? (
+                        item.adminStatus === 0 ? (
                           <button
                             className="approveButton ml-4"
                             disabled={
@@ -473,26 +465,23 @@ const DocVerification = () => {
                           </button>
                         ) : user.role === "ADMIN" &&
                           item.documentType === 5 &&
-                          (state.adminVerificationStatus === 0 ||
-                            state.adminVerificationStatus === 3 ||
-                            state.adminVerificationStatus === null) ? (
+                          item.adminStatus === 0 ? (
                           <button
                             className="approveButton ml-4"
                             disabled={
-                              rejectStatus === "FAIL" &&
-                              docType === item.documentType &&
-                              item.documentId
+                              disApproveAadhar !== undefined &&
+                              disApproveAadhar === "FAIL"
                                 ? true
                                 : false
                             }
                             style={
-                              rejectStatus === "FAIL" &&
-                              docType === item.documentType
+                              disApproveAadhar !== undefined &&
+                              disApproveAadhar === "FAIL"
                                 ? { opacity: "0.6" }
                                 : { opacity: "1" }
                             }
                             onClick={() =>
-                              handleChequeDisApproveDocument(item.documentId)
+                              handleDisApproveDocument(item.documentId)
                             }
                           >
                             Disapprove
@@ -502,26 +491,23 @@ const DocVerification = () => {
                         )}
                         {user.role === "ADMIN" &&
                         item.documentType === 4 &&
-                        (state.adminVerificationStatus === 0 ||
-                          state.adminVerificationStatus === 3 ||
-                          state.adminVerificationStatus === null) ? (
+                        item.adminStatus === 0 ? (
                           <button
                             className="approveButton ml-4"
                             disabled={
-                              rejectStatus === "FAIL" &&
-                              docType === item.documentType &&
-                              item.documentId
+                              disApproveAadhar !== undefined &&
+                              disApproveAadhar === "FAIL"
                                 ? true
                                 : false
                             }
                             style={
-                              rejectStatus === "FAIL" &&
-                              docType === item.documentType
+                              disApproveAadhar !== undefined &&
+                              disApproveAadhar === "FAIL"
                                 ? { opacity: "0.6" }
                                 : { opacity: "1" }
                             }
                             onClick={() =>
-                              handleChequeDisApproveDocument(item.documentId)
+                              handleDisApproveDocument(item.documentId)
                             }
                           >
                             Disapprove
@@ -533,22 +519,18 @@ const DocVerification = () => {
                     )}
                     {(item.documentType === 1 ||
                       item.documentType === 5 ||
-                      item.documentType === 4) &&
-                      state.verificationStatus === 1 && (
-                        <td className="buttonMargin1">
-                          {item.remark !== null ? item.remark : "N/A"}
-                        </td>
-                      )}
+                      item.documentType === 4) && (
+                      <td className="buttonMargin1">
+                        {item.remark !== null ? item.remark : "N/A"}
+                      </td>
+                    )}
                     {(item.documentType === 1 ||
                       item.documentType === 5 ||
-                      item.documentType === 4) &&
-                      state.verificationStatus === 1 && (
-                        <td className="buttonMargin1">
-                          {item.verifiedDate !== null
-                            ? item.verifiedDate
-                            : "N/A"}
-                        </td>
-                      )}
+                      item.documentType === 4) && (
+                      <td className="buttonMargin1">
+                        {item.verifiedDate !== null ? item.verifiedDate : "N/A"}
+                      </td>
+                    )}
                   </tr>
                 </tbody>
               );
@@ -688,7 +670,6 @@ const DocVerification = () => {
                     <td>
                       {item.verifiedDate !== null &&
                         item.documentType >= 6 &&
-                        item.documentType === 1 &&
                         item.verifiedDate}
                     </td>
                   </tr>
@@ -704,7 +685,7 @@ const DocVerification = () => {
           )}
         </Table>
       </div>
-      {user.role === "ADMIN" && state.adminVerificationStatus === 1 && (
+      {user.role === "ADMIN" && (
         <Row className="mx-2">
           <label>Is UAN Number Generated ?</label>
           <Col sm={2}>
@@ -740,31 +721,28 @@ const DocVerification = () => {
           </Col>
         </Row>
       )}
-      {(UANYes || UANNo) &&
-        user.role === "ADMIN" &&
-        state.adminVerificationStatus === 1 &&
-        pfDetails !== null && (
-          <Row>
-            <Col sm={6}>
-              <Form.Group style={{ borderRadius: " 12.25rem !important" }}>
-                <div className="boxField input">
-                  <label>UAN Number</label>{" "}
-                  <input
-                    type="text"
-                    name="uannbr"
-                    value={uanNumber}
-                    className="form-control"
-                    // required={required}
-                    onChange={(e) => handleUANNumber(e)}
-                  />
-                </div>
-              </Form.Group>
-              {uanError && (
-                <p style={{ color: "red" }}>Please Enter UAN Number</p>
-              )}
-            </Col>
-          </Row>
-        )}
+      {(UANYes || UANNo) && user.role === "ADMIN" && pfDetails !== null && (
+        <Row>
+          <Col sm={6}>
+            <Form.Group style={{ borderRadius: " 12.25rem !important" }}>
+              <div className="boxField input">
+                <label>UAN Number</label>{" "}
+                <input
+                  type="text"
+                  name="uannbr"
+                  value={uanNumber}
+                  className="form-control"
+                  // required={required}
+                  onChange={(e) => handleUANNumber(e)}
+                />
+              </div>
+            </Form.Group>
+            {uanError && (
+              <p style={{ color: "red" }}>Please Enter UAN Number</p>
+            )}
+          </Col>
+        </Row>
+      )}
 
       {/* {user.role === "ADMIN" &&
         state.adminVerificationStatus === 1 &&
@@ -795,26 +773,37 @@ const DocVerification = () => {
           textAlign: "center",
         }}
       >
-        {state.uanStatus !== 1 && state.adminVerificationStatus === 1 && (
-          <button className="stepperButtons" onClick={() => handleDocSave()}>
-            Save
-          </button>
-        )}
-
-        {state !== undefined &&
-          state.adminVerificationStatus === 1 &&
-          state.documentUploaded === 1 && (
-            <button className="onboardButton" onClick={() => handleOnboard()}>
-              Onboard Candidate
+        {state.uanStatus !== 1 &&
+          (state.adminVerificationStatus === 1 ||
+            state.adminVerificationStatus === 2) && (
+            <button className="stepperButtons" onClick={() => handleDocSave()}>
+              Save
             </button>
           )}
 
         {state !== undefined &&
-          state.adminVerificationStatus === 0 &&
+          state.uanStatus === 1 &&
+          state.adminVerificationStatus === 1 &&
+          state.documentUploaded === 1 && (
+            <Link to="/candidate-verification">
+              <button className="onboardButton" onClick={() => handleOnboard()}>
+                Onboard Candidate
+              </button>
+            </Link>
+          )}
+
+        {state !== undefined &&
+          state.uanStatus === 1 &&
+          state.adminVerificationStatus === 2 &&
           state.documentUploaded === 0 && (
-            <button className="onboardButton" onClick={() => handleReupload()}>
-              Submit
-            </button>
+            <Link to="/candidate-verification">
+              <button
+                className="onboardButton"
+                onClick={() => handleReupload()}
+              >
+                Submit
+              </button>
+            </Link>
           )}
       </div>
     </Fragment>

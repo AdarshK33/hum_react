@@ -115,13 +115,14 @@ const EditEmployeeForm = () => {
     if (
       candidateRefData !== null &&
       candidateRefData !== undefined &&
-      candidateRefData.referred === false &&
+      candidateRefData.referred === true &&
       data2 !== undefined &&
-      data2 !== null
+      data2 !== null &&
+      data2.employeeName !== ""
     ) {
-      setSecondRef(false);
-    } else {
       setSecondRef(true);
+    } else {
+      setSecondRef(false);
     }
   }, [data1, data2]);
 

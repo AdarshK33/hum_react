@@ -13,13 +13,8 @@ const CandidateList = () => {
   const [currentRecords, setCurrentRecords] = useState([]);
   const [searchValue, setSearchValue] = useState("");
 
-  const {
-    candidateView,
-    candidateList,
-    loader,
-    total,
-    viewCandidateId,
-  } = useContext(OfferContext);
+  const { candidateView, candidateList, loader, total, viewCandidateId } =
+    useContext(OfferContext);
 
   const {
     fetchNominationDetails,
@@ -174,17 +169,20 @@ const CandidateList = () => {
                       <td>{item.createdDate}</td>
                       <td>{item.verificationStatusDesc}</td>
                       <td>
-                        {item.adminVerificationStatus === 0
+                        {item.adminVerificationStatus === 0 ||
+                        item.adminVerificationStatus === 3
                           ? "Pending Verification"
-                          : "Approved"}
+                          : item.adminVerificationStatus === 1
+                          ? "Approved"
+                          : "Rejected"}
                       </td>
                       <td>{item.uanStatusDesc}</td>
                       <td>{item.statusDesc}</td>
 
                       <td>
                         <Link to={"/verification/" + item.candidateId}>
-                               {/* <Link to={"/admin_no_due_clearance"}> */}
-                              {/* <Link to={"/admin-finance-clearance"}> */}
+                          {/* <Link to={"/admin_no_due_clearance"}> */}
+                          {/* <Link to={"/admin-finance-clearance"}> */}
                           {/* <Link to={"/no_due_clearance"}> */}
                           {/* <Link to={"/finance-clearance"}> */}
                           <AlertCircle

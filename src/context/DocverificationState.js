@@ -187,7 +187,7 @@ export const DocsVerificationProvider = (props) => {
   const approveAadharByAdmin = (docId, candidateId) => {
     setLoader(true);
     client
-      .get("/api/v1/candidate/aadhaar/" + docId + "/accept")
+      .get("/api/v1/candidate/document/" + docId + "/approve")
       .then((response) => {
         state.aadharStatus = response.data.message;
         toast.info(response.data.message);
@@ -208,11 +208,11 @@ export const DocsVerificationProvider = (props) => {
     setLoader(true);
     client
       .get(
-        "/api/v1/candidate/aadhaar/" +
+        "/api/v1/candidate/document/" +
           docId +
-          "/reject?candidateId=" +
+          "/disapprove?candidateId=" +
           candidateId +
-          "&remarks=" +
+          "&remark=" +
           remarks
       )
       .then((response) => {

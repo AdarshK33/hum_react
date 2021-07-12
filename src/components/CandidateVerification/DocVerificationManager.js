@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import { DocsVerifyContext } from "../../context/DocverificationState";
 import { AppContext } from "../../context/AppState";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import "./ManageCandidate.css";
 import {
   Button,
@@ -380,14 +380,18 @@ const DocVerification = () => {
                       </td>
                     )}
                     <td className="buttonMargin1">
-                      {item.documentType !== 4 && item.documentType !== 5
+                      {item.documentType !== 4 &&
+                      item.documentType !== 5 &&
+                      item.status === 2
                         ? item.remark !== null
                           ? item.remark
                           : "N/A"
                         : ""}
                     </td>
                     <td className="buttonMargin1">
-                      {item.documentType !== 4 && item.documentType !== 5
+                      {item.documentType !== 4 &&
+                      item.documentType !== 5 &&
+                      (item.status === 2 || item.status === 1)
                         ? item.verifiedDate !== null
                           ? item.verifiedDate
                           : "N/A"
@@ -575,14 +579,15 @@ const DocVerification = () => {
                     )}
                     {item.remark !== null ? (
                       <td className="buttonMargin1">
-                        {item.documentType >= 6 && item.remark}
+                        {item.documentType >= 6 &&
+                          item.status === 2 &&
+                          item.remark}
                       </td>
                     ) : (
-                      item.documentType >= 6 && (
-                        <td className="buttonMargin1">NA</td>
-                      )
+                      item.documentType >= 6 &&
+                      item.status !== 1 && <td className="buttonMargin1">NA</td>
                     )}
-                    {item.verifiedDate !== null ? (
+                    {item.verifiedDate !== null && item.status !== 0 ? (
                       <td className="buttonMargin1">
                         {item.documentType >= 6 && item.verifiedDate}
                       </td>
@@ -665,18 +670,20 @@ const DocVerification = () => {
           textAlign: "center",
         }}
       >
-        {state !== undefined && state.documentUploaded === 1 && (
-          <button className="onboardButton" onClick={() => handleOnboard()}>
-            Onboard Candidate
-          </button>
+        {state !== undefined && state.verificationStatus === 1 && (
+          <Link to="/candidate-verification">
+            <button className="onboardButton" onClick={() => handleOnboard()}>
+              Onboard Candidate
+            </button>
+          </Link>
         )}
-        {state !== undefined &&
-          state.documentReUploadCount !== 0 &&
-          state.documentUploaded === 0 && (
+        {state !== undefined && state.verificationStatus === 2 && (
+          <Link to="/candidate-verification">
             <button className="onboardButton" onClick={() => handleReupload()}>
               Submit
             </button>
-          )}
+          </Link>
+        )}
       </div>
     </Fragment>
   );
