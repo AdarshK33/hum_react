@@ -4,6 +4,7 @@ import Breadcrumb from "../../common/breadcrumb";
 import "react-datepicker/dist/react-datepicker.css";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 import ShowCauseNotice from "../Manager/ShowCauseNoticeLetter";
+import NonPerformanceLetter from "../Manager/NonPerformanceLetter"
 import ReasonByEmployee from "../Manager/ReasonByEmployee";
 import WarningLetter from "../WarningManager/WarningLetter";
 
@@ -152,10 +153,11 @@ const DisciplinaryView = () => {
           Object.keys(disciplinarySearchData).length !== 0 &&
           disciplinarySearchData.disciplinaryAction !== null &&
           disciplinarySearchData.disciplinaryAction !== undefined &&
-          disciplinarySearchData.disciplinaryAction !== "" ? (
+          disciplinarySearchData.disciplinaryAction !== "" &&
+          disciplinarySearchData.disciplinaryAction.reasonId == 2? (
             <ShowCauseNotice />
           ) : (
-            ""
+            <NonPerformanceLetter/>
           )}
         </Modal.Body>
       </Modal>

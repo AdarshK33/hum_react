@@ -31,6 +31,7 @@ import { OnBoardProvider } from "./context/OnBoardState";
 import { DocsVerificationProvider } from "./context/DocverificationState";
 import { EmploeeSeparationProvider } from "./context/EmployeeSeparationState";
 import { BonusProvider } from "./context/BonusState";
+import { TransferProvider } from "./context/TransferState";
 import {
   SeparationContext,
   SeparationProvider,
@@ -76,17 +77,19 @@ function Root() {
                                                   <MyDocsProvider>
                                                     <PromotionProvider>
                                                       <BonusProvider>
-                                                        <BrowserRouter
-                                                          basename={"/"}
-                                                        >
-                                                          <ScrollContext>
-                                                            <WithAxios>
-                                                              <CandidateWithAxios>
-                                                                <RoutePath />
-                                                              </CandidateWithAxios>
-                                                            </WithAxios>
-                                                          </ScrollContext>
-                                                        </BrowserRouter>
+                                                        <TransferProvider>
+                                                          <BrowserRouter
+                                                            basename={"/"}
+                                                          >
+                                                            <ScrollContext>
+                                                              <WithAxios>
+                                                                <CandidateWithAxios>
+                                                                  <RoutePath />
+                                                                </CandidateWithAxios>
+                                                              </WithAxios>
+                                                            </ScrollContext>
+                                                          </BrowserRouter>
+                                                        </TransferProvider>
                                                       </BonusProvider>
                                                     </PromotionProvider>
                                                   </MyDocsProvider>

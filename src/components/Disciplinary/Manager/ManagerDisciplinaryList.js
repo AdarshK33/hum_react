@@ -206,8 +206,12 @@ const ManagerDisciplinaryList = () => {
                             <td>
                               {item.disciplinaryWarning !== null &&
                               item.disciplinaryWarning !== undefined &&
-                              item.disciplinaryAction.warningIssued === true
-                                ? item.disciplinaryWarning.employeeWarningStatus
+                              item.disciplinaryWarning !== "" &&
+                              (item.disciplinaryWarning.statusDesc ===
+                                "Warning Letter Issued" ||
+                                item.disciplinaryWarning.statusDesc ===
+                                  "Warning Letter Approved")
+                                ? "NA"
                                 : item.disciplinaryAction.employeeActionStatus}
                             </td>
                             <td>
