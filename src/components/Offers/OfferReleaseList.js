@@ -11,19 +11,10 @@ import { RoleManagementContext } from "../../context/RoleManagementState";
 import { AdminContext } from "../../context/AdminState";
 import { AppContext } from "../../context/AppState";
 const OfferReleaseList = () => {
-  const {
-    candidateView,
-    candidateList,
-    loader,
-    total,
-    viewCandidateId,
-  } = useContext(OfferContext);
-  const {
-    verificationDocsView,
-    docsToVerify,
-    personalInfo,
-    personalInfoData,
-  } = useContext(DocsVerifyContext);
+  const { candidateView, candidateList, loader, total, viewCandidateId } =
+    useContext(OfferContext);
+  const { verificationDocsView, docsToVerify, personalInfo, personalInfoData } =
+    useContext(DocsVerifyContext);
   const { user } = useContext(AppContext);
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
