@@ -69,9 +69,14 @@ const TransferPage = () => {
           },
           action: {
             edit: {
-              active: item.statusDesc === "REJECTED" ? false : true,
+              active:
+                item.statusDesc === "REJECTED" ||
+                item.statusDesc === "INITIATED"
+                  ? false
+                  : true,
               link:
-                item.statusDesc === "REJECTED"
+                item.statusDesc === "REJECTED" ||
+                item.statusDesc === "INITIATED"
                   ? ""
                   : `/transfer/${item.transferId}`,
               // item.transferType === "Regular Transfer"
