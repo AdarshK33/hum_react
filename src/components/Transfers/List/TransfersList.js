@@ -47,46 +47,81 @@ const TransferPage = () => {
       transferList !== undefined &&
       transferList.length > 0
     ) {
-      const tableData = transferList.map((item, index) => {
-        return {
-          sno: index + 1,
-          empId: item.currentEmployeeId,
-          empName: item.employeeName,
-          curDept: item.currentDepartment,
-          curPos: item.currentPosition,
-          curCostCent: item.currentCostCentre,
-          curManager: item.currentManagerName,
-          curLocation: item.currentLocationName,
-          newDept: item.promotedDepartment,
-          newPos: item.promotedPosition,
-          newCostCent: item.promotedCostCentre,
-          newManager: item.promotedManagerName,
-          newLocation: item.promotedLocationName,
-          status: item.statusDesc,
-          view: {
-            active: true,
-            link: `/view-transfer/${item.transferId}`,
-          },
-          action: {
-            edit: {
-              active:
-                item.statusDesc === "REJECTED" ||
-                item.statusDesc === "INITIATED"
-                  ? false
-                  : true,
-              link:
-                item.statusDesc === "REJECTED" ||
-                item.statusDesc === "INITIATED"
-                  ? ""
-                  : `/transfer/${item.transferId}`,
-              // item.transferType === "Regular Transfer"
-              //   ? `/transfer/${item.transferId}`
-              //   : "/transfers",
+      if (transferType === "Regular Transfer") {
+        let tableData = transferList.map((item, index) => {
+          return {
+            sno: index + 1,
+            empId: item.currentEmployeeId,
+            empName: item.employeeName,
+            curDept: item.currentDepartment,
+            curPos: item.currentPosition,
+            curCostCent: item.currentCostCentre,
+            curManager: item.currentManagerName,
+            curLocation: item.currentLocationName,
+            newDept: item.promotedDepartment,
+            newPos: item.promotedPosition,
+            newCostCent: item.promotedCostCentre,
+            newManager: item.promotedManagerName,
+            newLocation: item.promotedLocationName,
+            status: item.statusDesc,
+            view: {
+              active: true,
+              link: `/view-transfer/${item.transferId}`,
             },
-          },
-        };
-      });
-      setTableBody(tableData);
+            action: {
+              edit: {
+                active:
+                  item.statusDesc === "REJECTED" ||
+                  item.statusDesc === "INITIATED"
+                    ? false
+                    : true,
+                link:
+                  item.statusDesc === "REJECTED" ||
+                  item.statusDesc === "INITIATED"
+                    ? ""
+                    : `/transfer/${item.transferId}`,
+                // item.transferType === "Regular Transfer"
+                //   ? `/transfer/${item.transferId}`
+                //   : "/transfers",
+              },
+            },
+          };
+        });
+        setTableBody(tableData);
+      } else if (transferType === "Entity Transfer") {
+        let tableData = transferList.map((item, index) => {
+          return {
+            sno: index + 1,
+            empId: item.currentEmployeeId,
+            empName: item.employeeName,
+            oldEntity: item.currentCompany,
+            newEntity: item.promotedCompany,
+            newManager: item.promotedManagerName,
+            effectiveDate: item.promotedJoiningDate,
+            status: item.statusDesc,
+
+            view: {
+              active: true,
+              link: `/view-transfer/${item.transferId}`,
+            },
+            action: {
+              edit: {
+                active:
+                  item.statusDesc === "REJECTED" ||
+                  item.statusDesc === "INITIATED"
+                    ? false
+                    : true,
+                link:
+                  item.statusDesc === "REJECTED" ||
+                  item.statusDesc === "INITIATED"
+                    ? ""
+                    : `/transfer/${item.transferId}`,
+              },
+            },
+          };
+        });
+        setTableBody(tableData);
+      }
     } else {
       setTableBody([]);
     }

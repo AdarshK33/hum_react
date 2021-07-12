@@ -774,9 +774,7 @@ const ManagerWarningAction = (props) => {
   return (
     <div>
       <Modal show={employeeReasonShow} onHide={handleEmployeeReason} size="md">
-        <Modal.Header closeButton className="modal-line">
-          Employee Reason
-        </Modal.Header>
+        <Modal.Header closeButton className="modal-line"></Modal.Header>
         <Modal.Body>
           {disciplinarySearchData &&
           disciplinarySearchData &&
