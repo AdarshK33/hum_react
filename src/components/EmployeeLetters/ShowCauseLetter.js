@@ -426,7 +426,7 @@ const EmployeShowCaseLetter = () => {
           disciplinarySearchData.disciplinaryAction.reasonId == 2 ? (
             <ShowCauseNotice />
           ) : (
-            <NonPerformanceLetter/>
+            <NonPerformanceLetter />
           )}
         </Modal.Body>
       </Modal>
@@ -746,7 +746,7 @@ const EmployeShowCaseLetter = () => {
                           <div>
                             <label>
                               {" "}
-                              Add Remarks:
+                              Respond To Show Cause Notice:
                               <span style={{ color: "red" }}>*</span>
                             </label>
                           </div>
