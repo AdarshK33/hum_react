@@ -47,46 +47,85 @@ const TransferPage = () => {
       transferList !== undefined &&
       transferList.length > 0
     ) {
-      const tableData = transferList.map((item, index) => {
-        return {
-          sno: index + 1,
-          empId: item.currentEmployeeId,
-          empName: item.employeeName,
-          curDept: item.currentDepartment,
-          curPos: item.currentPosition,
-          curCostCent: item.currentCostCentre,
-          curManager: item.currentManagerName,
-          curLocation: item.currentLocationName,
-          newDept: item.promotedDepartment,
-          newPos: item.promotedPosition,
-          newCostCent: item.promotedCostCentre,
-          newManager: item.promotedManagerName,
-          newLocation: item.promotedLocationName,
-          status: item.statusDesc,
-          view: {
-            active: true,
-            link: `/view-transfer/${item.transferId}`,
-          },
-          action: {
-            edit: {
-              active:
-                item.statusDesc === "REJECTED" ||
-                item.statusDesc === "INITIATED"
-                  ? false
-                  : true,
-              link:
-                item.statusDesc === "REJECTED" ||
-                item.statusDesc === "INITIATED"
-                  ? ""
-                  : `/transfer/${item.transferId}`,
-              // item.transferType === "Regular Transfer"
-              //   ? `/transfer/${item.transferId}`
-              //   : "/transfers",
+      if (transferType === "Regular Transfer") {
+        let tableData = transferList.map((item, index) => {
+          return {
+            sno: index + 1,
+            empId: item.currentEmployeeId,
+            empName: item.employeeName,
+            curDept: item.currentDepartment,
+            curPos: item.currentPosition,
+            curCostCent: item.currentCostCentre,
+            curManager: item.currentManagerName,
+            curLocation: item.currentLocationName,
+            newDept: item.promotedDepartment,
+            newPos: item.promotedPosition,
+            newCostCent: item.promotedCostCentre,
+            newManager: item.promotedManagerName,
+            newLocation: item.promotedLocationName,
+            status: item.statusDesc,
+            view: {
+              active: true,
+              link: `/view-transfer/${item.transferId}`,
             },
-          },
-        };
-      });
-      setTableBody(tableData);
+            action: {
+              edit: {
+                active:
+                  item.statusDesc === "REJECTED" ||
+                  item.statusDesc === "INITIATED" ||
+                  item.statusDesc === "Rejected" ||
+                  item.statusDesc === "Initiated"
+                    ? false
+                    : true,
+                link:
+                  item.statusDesc === "REJECTED" ||
+                  item.statusDesc === "INITIATED" ||
+                  item.statusDesc === "Rejected" ||
+                  item.statusDesc === "Initiated"
+                    ? ""
+                    : `/transfer/${item.transferId}`,
+                // item.transferType === "Regular Transfer"
+                //   ? `/transfer/${item.transferId}`
+                //   : "/transfers",
+              },
+            },
+          };
+        });
+        setTableBody(tableData);
+      } else if (transferType === "Entity Transfer") {
+        let tableData = transferList.map((item, index) => {
+          return {
+            sno: index + 1,
+            empId: item.currentEmployeeId,
+            empName: item.employeeName,
+            oldEntity: item.currentCompany,
+            newEntity: item.promotedCompany,
+            newManager: item.promotedManagerName,
+            effectiveDate: item.promotedJoiningDate,
+            status: item.statusDesc,
+
+            view: {
+              active: true,
+              link: `/view-transfer/${item.transferId}`,
+            },
+            action: {
+              edit: {
+                active:
+                  item.statusDesc === "REJECTED" ||
+                  item.statusDesc === "INITIATED"
+                    ? false
+                    : true,
+                link:
+                  item.statusDesc === "REJECTED" ||
+                  item.statusDesc === "INITIATED"
+                    ? ""
+                    : `/entity-transfer/${item.transferId}`,
+              },
+            },
+          };
+        });
+        setTableBody(tableData);
+      }
     } else {
       setTableBody([]);
     }
@@ -147,94 +186,92 @@ const TransferPage = () => {
         <Row>
           <Col sm={12}>
             <div className="card" style={{ overflowX: "auto" }}>
-              {loader ? (
-                <LoaderIcon />
-              ) : (
-                <div className="transfer-list-page">
-                  <div
-                    className="title_bar"
-                    style={{ textAlign: "center", fontSize: "larger" }}
-                  >
-                    <Row className="pt-2 mx-2">
-                      <Col md={2} style={{ marginTop: "-10px" }}>
-                        <Form.Control
-                          as="select"
-                          aria-label="Select Transfer Type"
-                          value={transferType}
-                          onChange={changeTransferType}
-                          className="probation_status_search"
-                        >
-                          <option disabled>Select Transfer Type</option>
-                          <option value="Regular Transfer">
-                            Regular Transfer
-                          </option>
-                          <option value="Entity Transfer">
-                            Entity Transfer
-                          </option>
-                          <option value="International Transfer">
-                            International Transfer
-                          </option>
-                          <option value="Employment Type Transfer">
-                            Employment Type Transfer
-                          </option>
-                        </Form.Control>
-                      </Col>
-
-                      <Col md={2} style={{ marginTop: "1px" }}>
-                        <Form.Control
-                          type="text"
-                          value={searchInput}
-                          placeholder="Search"
-                          onChange={searchInputHandler}
-                          className="form-control searchButton"
-                        />
-                        <Search
-                          className="search-icon mr-1"
-                          style={{ color: "#313131" }}
-                          onClick={searchDataHandler}
-                        />
-                      </Col>
-                      <Col
-                        md={4}
-                        className="font-weight-bold text-uppercase text-center my-auto"
+              <div className="transfer-list-page">
+                <div
+                  className="title_bar"
+                  style={{ textAlign: "center", fontSize: "larger" }}
+                >
+                  <Row className="pt-2 mx-2">
+                    <Col md={2} style={{ marginTop: "-10px" }}>
+                      <Form.Control
+                        as="select"
+                        aria-label="Select Transfer Type"
+                        value={transferType}
+                        onChange={changeTransferType}
+                        className="probation_status_search"
                       >
-                        {listHeading}
-                      </Col>
-                      <Col md={2} style={{ marginTop: "-5px" }}>
-                        <Link
-                          to="/transfer-initiate"
-                          className="text-decoration-none"
-                        >
-                          <Button className="apply-button btn btn-light mr-2">
-                            Initiate Transfer
-                          </Button>
-                        </Link>
-                      </Col>
-                      <Col md={2} style={{ marginTop: "-10px" }}>
-                        <Form.Control
-                          as="select"
-                          aria-label="Choose Status"
-                          value={status}
-                          onChange={statusHandler}
-                          className="probation_status_search"
-                        >
-                          <option disabled>Choose Status</option>
-                          <option value="0">In Progress</option>
-                          <option value="1">Initiated</option>
-                          <option value="2">Rejected</option>
-                          <option value="5">All</option>
-                        </Form.Control>
-                      </Col>
-                    </Row>
-                  </div>
-                  <div className="table-list">
+                        <option disabled>Select Transfer Type</option>
+                        <option value="Regular Transfer">
+                          Regular Transfer
+                        </option>
+                        <option value="Entity Transfer">Entity Transfer</option>
+                        <option value="International Transfer">
+                          International Transfer
+                        </option>
+                        <option value="Employment Type Transfer">
+                          Employment Type Transfer
+                        </option>
+                      </Form.Control>
+                    </Col>
+
+                    <Col md={2} style={{ marginTop: "1px" }}>
+                      <Form.Control
+                        type="text"
+                        value={searchInput}
+                        placeholder="Search"
+                        onChange={searchInputHandler}
+                        className="form-control searchButton"
+                      />
+                      <Search
+                        className="search-icon mr-1"
+                        style={{ color: "#313131" }}
+                        onClick={searchDataHandler}
+                      />
+                    </Col>
+                    <Col
+                      md={4}
+                      className="font-weight-bold text-uppercase text-center my-auto"
+                    >
+                      {listHeading}
+                    </Col>
+                    <Col md={2} style={{ marginTop: "-5px" }}>
+                      <Link
+                        to="/transfer-initiate"
+                        className="text-decoration-none"
+                      >
+                        <Button className="apply-button btn btn-light mr-2">
+                          Initiate Transfer
+                        </Button>
+                      </Link>
+                    </Col>
+                    <Col md={2} style={{ marginTop: "-10px" }}>
+                      <Form.Control
+                        as="select"
+                        aria-label="Choose Status"
+                        value={status}
+                        onChange={statusHandler}
+                        className="probation_status_search"
+                      >
+                        <option disabled>Choose Status</option>
+                        <option value="0">In Progress</option>
+                        <option value="1">Approved</option>
+                        <option value="2">Rejected</option>
+                        <option value="5">All</option>
+                      </Form.Control>
+                    </Col>
+                  </Row>
+                </div>
+                <div className="table-list">
+                  {loader ? (
+                    <LoaderIcon />
+                  ) : (
                     <TableComponent
                       tableHeaders={TableHeaders}
                       tableBody={tableBody}
                     />
-                  </div>
+                  )}
                 </div>
-              )}
+              </div>
             </div>
           </Col>
         </Row>
