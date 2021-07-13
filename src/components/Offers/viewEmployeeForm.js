@@ -18,12 +18,8 @@ const ViewEmployeeForm = () => {
   const [desgination1, setDesignation1] = useState();
   const [desgination2, setDesignation2] = useState();
 
-  const {
-    candidateData,
-    searchForEmp1,
-    editCandidate,
-    searchForEmp2,
-  } = useContext(OfferContext);
+  const { candidateData, searchForEmp1, editCandidate, searchForEmp2 } =
+    useContext(OfferContext);
 
   var candidateRefData =
     candidateData !== null &&
@@ -43,15 +39,30 @@ const ViewEmployeeForm = () => {
   console.log("data2", data2);
 
   useEffect(() => {
-    if (data1.employeeName === "") {
+    console.log("check", candidateRefData, data1);
+    if (
+      candidateData !== null &&
+      candidateData !== undefined &&
+      candidateData.candidateInformation !== null &&
+      candidateData.candidateInformation !== undefined &&
+      candidateData.candidateInformation.referred === false
+    ) {
       setYesChecked(false);
       setNoChecked(true);
     }
-
-    if (data2.employeeName === "") {
-      setSecondRef(false);
-    } else {
+  }, [candidateData.candidateInformation]);
+  useEffect(() => {
+    if (
+      candidateRefData !== null &&
+      candidateRefData !== undefined &&
+      candidateRefData.referred === true &&
+      data2 !== undefined &&
+      data2 !== null &&
+      data2.employeeName !== ""
+    ) {
       setSecondRef(true);
+    } else {
+      setSecondRef(false);
     }
   }, [data1, data2]);
 

@@ -2698,6 +2698,7 @@ const InsuranceNomination = (props) => {
                       }
                     >
                       <option value="Spouse">Spouse</option>
+                      <option value="Myself">Myself</option>
                       <option value="Child 1">Child 1</option>
                       <option value="Child 2">Child 2</option>
                       <option value="Child 3">Child 3</option>
@@ -2954,6 +2955,7 @@ const InsuranceNomination = (props) => {
                       <option value="Mother">Mother</option>
                       <option value="Brother">Brother</option>
                       <option value="Sister">Sister</option>
+                      <option value="Myself">Myself</option>
                     </Form.Control>
                     {extra1relationshipError_1 ? (
                       <p style={{ color: "red" }}>
