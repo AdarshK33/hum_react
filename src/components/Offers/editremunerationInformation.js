@@ -52,11 +52,6 @@ const EditRemunerationInformation = (props) => {
       viewCandidateId(candidateData.candidateInformation.candidateId);
       setViewApiCall(true);
       workInfoView(candidateData.candidateInformation.candidateId);
-      viewBonusByContarctType(
-        candidateData.workInformation.contractType,
-        candidateData.workInformation.department,
-        candidateData.workInformation.position
-      );
     } else {
       setViewApiCall(false);
     }
@@ -79,6 +74,30 @@ const EditRemunerationInformation = (props) => {
       setStipened(remunerationDataInfo.stipend);
     }
   }, [candidateData]);
+  useEffect(() => {
+    console.log("candidateData remuneration1", createCandidateResponse);
+
+    if (
+      candidateData !== null &&
+      candidateData !== undefined &&
+      candidateData.workInformation !== null &&
+      candidateData.workInformation !== undefined
+    ) {
+      viewBonusByContarctType(
+        candidateData.workInformation.contractType,
+        candidateData.workInformation.department,
+        candidateData.workInformation.position
+      );
+    }
+    console.log("candidateData remuneration2", candidateData);
+
+    if (
+      getBonusByContractType !== null &&
+      getBonusByContractType !== undefined
+    ) {
+      setMonthlyBonus(getBonusByContractType.bonus);
+    }
+  }, [candidateData.workInformation]);
 
   const submitHandler = (e) => {
     console.log(saveclick);

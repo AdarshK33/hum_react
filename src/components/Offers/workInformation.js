@@ -361,6 +361,7 @@ const WorkInformation = (props) => {
     if (dateOfLeavingError === false) {
       createCandidateWork(createData);
       viewCandidateId(createCandidateResponse.candidateId);
+      workInfoView(createCandidateResponse.candidateId);
       viewBonusByContarctType(
         state.employmentType,
         state.department,

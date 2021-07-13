@@ -80,6 +80,32 @@ const RemunerationInformation = (props) => {
     }
   }, [candidateData.workInformation]);
 
+  useEffect(() => {
+    console.log("candidateData remuneration1", createCandidateResponse);
+
+    if (
+      candidateData !== null &&
+      candidateData !== undefined &&
+      candidateData.workInformation !== null &&
+      candidateData.workInformation !== undefined
+    ) {
+      viewBonusByContarctType(
+        candidateData.workInformation.contractType,
+        candidateData.workInformation.department,
+        candidateData.workInformation.position
+      );
+    }
+    console.log("candidateData remuneration2", candidateData);
+    console.log("workInformationData remuneration", workInformationData);
+
+    if (
+      getBonusByContractType !== null &&
+      getBonusByContractType !== undefined
+    ) {
+      setMonthlyBonus(getBonusByContractType.bonus);
+    }
+  }, [candidateData.workInformation]);
+
   const submitHandler = (e) => {
     // alert("in sumbit handler");
     console.log("inside submit", candidateData);

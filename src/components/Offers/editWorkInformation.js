@@ -59,6 +59,7 @@ const EditWorkInformation = () => {
     cityData,
     cityList,
     managerList,
+    workInfoView,
   } = useContext(OfferContext);
   const { viewContractTypes, shiftContractNames } = useContext(RosterContext);
   const { user } = useContext(AppContext);
@@ -315,6 +316,7 @@ const EditWorkInformation = () => {
     if (dateOfLeavingError === false) {
       updateCandidateWork(updateData);
       viewCandidateId(candidateData.candidateInformation.candidateId);
+      workInfoView(candidateData.candidateInformation.candidateId);
       setDisabled(true);
       setEditButton(true);
       viewBonusByContarctType(
