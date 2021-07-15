@@ -240,10 +240,10 @@ const PersonalInformation = (props) => {
           candidatePersonalInfoData.aadhaarNumber !== null
             ? candidatePersonalInfoData.aadhaarNumber
             : "",
-        // passPortNo:
-        //   candidatePersonalInfoData.passPortNo !== null
-        //     ? candidatePersonalInfoData.passPortNo
-        //     : "",
+        passPortNo:
+          candidatePersonalInfoData.passportNumber !== null
+            ? candidatePersonalInfoData.passportNumber
+            : "",
         panNumber:
           candidatePersonalInfoData.panNumber !== null
             ? candidatePersonalInfoData.panNumber
@@ -475,9 +475,10 @@ const PersonalInformation = (props) => {
       candidateViewInfo !== null &&
       candidateViewInfo !== undefined &&
       Object.keys(candidateViewInfo).length !== 0 &&
-      candidateViewInfo.contractType === "Localexpact"
+      candidateViewInfo.contractType === "Local Expat"
     ) {
-      if (state.passPortNo !== "" && passPortValid.test(state.passPortNo)) {
+      // if (state.passport !== "" && passPortValid.test(state.passport)) {
+      if (state.passPortNo !== "") {
         setPassPortError(false);
         console.log("passPortsucess");
         return true;
@@ -769,6 +770,7 @@ const PersonalInformation = (props) => {
               ? candidateProfileData.personalEmail
               : null,
           photo: null,
+          passportNumber: state.passPortNo !== null ? state.passPortNo : null,
           referred: true,
           status:
             candidateProfileData.status !== null
@@ -987,7 +989,13 @@ const PersonalInformation = (props) => {
           <div className="col-sm-4">
             <Form.Group>
               <Form.Label>
-                Name as per Aadhaar<span style={{ color: "red" }}>*</span>
+                {candidateViewInfo !== null &&
+                candidateViewInfo !== undefined &&
+                Object.keys(candidateViewInfo).length !== 0 &&
+                candidateViewInfo.contractType === "Local Expat"
+                  ? "Name as per Passport"
+                  : "Name as per Aadhaar"}{" "}
+                <span style={{ color: "red" }}>*</span>
               </Form.Label>
               <Form.Control
                 type="text"
@@ -1204,10 +1212,10 @@ const PersonalInformation = (props) => {
             {candidateViewInfo !== null &&
             candidateViewInfo !== undefined &&
             Object.keys(candidateViewInfo).length !== 0 &&
-            candidateViewInfo.contractType === "Localexpact" ? (
+            candidateViewInfo.contractType === "Local Expat" ? (
               <Form.Group>
                 <Form.Label>
-                  Pass Port Number<span style={{ color: "red" }}>*</span>
+                  Passport Number<span style={{ color: "red" }}>*</span>
                 </Form.Label>
                 <Form.Control
                   type="text"
@@ -1216,7 +1224,7 @@ const PersonalInformation = (props) => {
                   onChange={changeHandler}
                   required
                   maxLength="12"
-                  placeholder="Pass Port No"
+                  placeholder="Passport Number"
                   disabled={disabled}
                   style={passPortNoError ? { borderColor: "red" } : {}}
                 />

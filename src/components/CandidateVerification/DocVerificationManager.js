@@ -213,6 +213,7 @@ const DocVerification = () => {
           <thead>
             <tr>
               <th></th>
+              <th>Download</th>
               <th>Status</th>
               <th>Remarks</th>
               <th>Date</th>
@@ -260,21 +261,33 @@ const DocVerification = () => {
                             <span style={{ color: "black", fontSize: "16px" }}>
                               Aadhar Card
                             </span>{" "}
-                            <span style={{ color: "red" }}>*</span>
+                            {personalInfoData.contractType !== "Local Expat" ? (
+                              <span style={{ color: "red" }}>*</span>
+                            ) : (
+                              ""
+                            )}
                           </label>
                         ) : item.documentType === 2 ? (
                           <label>
                             <span style={{ color: "black", fontSize: "16px" }}>
                               Pan Number
                             </span>{" "}
-                            <span style={{ color: "red" }}>*</span>
+                            {personalInfoData.contractType !== "Local Expat" ? (
+                              <span style={{ color: "red" }}>*</span>
+                            ) : (
+                              ""
+                            )}
                           </label>
                         ) : item.documentType === 3 ? (
                           <label>
                             <span style={{ color: "black", fontSize: "16px" }}>
                               Address Proof
                             </span>{" "}
-                            <span style={{ color: "red" }}>*</span>
+                            {personalInfoData.contractType !== "Local Expat" ? (
+                              <span style={{ color: "red" }}>*</span>
+                            ) : (
+                              ""
+                            )}
                           </label>
                         ) : item.documentType === 4 ? (
                           <label>
@@ -317,13 +330,21 @@ const DocVerification = () => {
                         {downloadedFile && <img src={downloadedFile} alt="" />}
                         {item.documentName}
                       </a>
+                      {/* <button
+                        className="downloadButton"
+                        onClick={() => downloadDocument(item.documentName)}
+                      >
+                        Download
+                      </button> */}
+                      {/* </p> */}
+                    </td>
+                    <td className="buttonMargin1">
                       <button
                         className="downloadButton"
                         onClick={() => downloadDocument(item.documentName)}
                       >
                         Download
                       </button>
-                      {/* </p> */}
                     </td>
                     {item.statusDesc !== null &&
                     item.statusDesc !== "Pending" &&
@@ -490,13 +511,20 @@ const DocVerification = () => {
                             </span>{" "}
                             <span style={{ color: "red" }}>*</span>
                           </p>
+                        ) : item.documentType === 16 ? (
+                          <p>
+                            <span style={{ color: "black", fontSize: "16px" }}>
+                              CollegeId
+                            </span>{" "}
+                            <span style={{ color: "red" }}>*</span>
+                          </p>
                         ) : (
-                          item.documentType === 16 && (
+                          item.documentType === 17 && (
                             <p>
                               <span
                                 style={{ color: "black", fontSize: "16px" }}
                               >
-                                CollegeId
+                                FRRO
                               </span>{" "}
                               <span style={{ color: "red" }}>*</span>
                             </p>
@@ -517,14 +545,22 @@ const DocVerification = () => {
                             )}
                             {item.documentName}
                           </a>
-                          <button
+                          {/* <button
                             className="downloadButton"
                             onClick={() => downloadDocument(item.documentName)}
                           >
                             Download
-                          </button>
+                          </button> */}
                         </React.Fragment>
                       )}
+                    </td>
+                    <td className="buttonMargin1">
+                      <button
+                        className="downloadButton"
+                        onClick={() => downloadDocument(item.documentName)}
+                      >
+                        Download
+                      </button>
                     </td>
                     {item.statusDesc !== null &&
                     item.statusDesc !== "Pending" &&
@@ -585,7 +621,7 @@ const DocVerification = () => {
                       </td>
                     ) : (
                       item.documentType >= 6 &&
-                      item.status !== 1 && <td className="buttonMargin1">NA</td>
+                      item.status === 1 && <td className="buttonMargin1">NA</td>
                     )}
                     {item.verifiedDate !== null && item.status !== 0 ? (
                       <td className="buttonMargin1">
