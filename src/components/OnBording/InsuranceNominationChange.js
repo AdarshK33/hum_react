@@ -16,7 +16,7 @@ import { OnBoardContext } from "../../context/OnBoardState";
 import { setSeconds } from "date-fns";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import moment from "moment";
 const InsuranceNomination = (props) => {
   const {
     CandidatePersonalInfo,
@@ -164,6 +164,25 @@ const InsuranceNomination = (props) => {
   const [topupError, setTopupError] = useState(false);
   const [sumInsured, setSumInsured] = useState("");
   const [topupValueError, setTopupValueError] = useState(false);
+  const [insuranceHoldDeathYes, setInsuranceHoldDeathYes] = useState(true);
+  const [insuranceHoldDeathNo, setInsuranceHoldDeathNo] = useState(false);
+  const [required, setRequired] = useState(true);
+  const [insuranceHoldDeathError, setInsuranceHoldDeathError] = useState(false);
+  const [nomineeValue, setNomineeValue] = useState(0);
+  const [nomineeNameError, setNomineeNameError] = useState(false);
+
+  const [nomineeRelationshipError, setNomineeRelationshipError] =
+    useState(false);
+
+  const [nomineeDOBError, setNomineeDOBError] = useState(false);
+  const [nomineeDOB, setNomineeDOB] = useState();
+
+  const [nomineeAddressError, setNomineeAddressError] = useState(false);
+  const [nominee, setNominee] = useState({
+    nomineeName: "",
+    nomineeRelationship: "",
+    nomineeAddress: "",
+  });
   const [InfoState, setInfoState] = useState({
     empName: "",
     gender: "",
@@ -961,6 +980,88 @@ const InsuranceNomination = (props) => {
     deleteNomineeData,
   ]);
 
+  useEffect(() => {
+    if (
+      candidateInsuranceNominationData !== undefined &&
+      candidateInsuranceNominationData !== null &&
+      Object.keys(candidateInsuranceNominationData).length !== 0 &&
+      candidateInsuranceNominationData[0].insuranceNominationHoldDeath !==
+        undefined &&
+      candidateInsuranceNominationData[0].insuranceNominationHoldDeath == true
+    ) {
+      console.log("deepikatest", candidateInsuranceNominationData);
+      console.log("deepika1", candidateInsuranceNominationData[0]);
+      console.log(
+        "deepika2",
+        candidateInsuranceNominationData[0].insuranceNominationHoldDeath
+      );
+      setInsuranceHoldDeathYes(
+        candidateInsuranceNominationData[0].insuranceNominationHoldDeath
+      );
+      setInsuranceHoldDeathNo(false);
+    } else if (
+      candidateInsuranceNominationData !== undefined &&
+      candidateInsuranceNominationData !== null &&
+      Object.keys(candidateInsuranceNominationData).length !== 0 &&
+      candidateInsuranceNominationData[0].insuranceNominationHoldDeath !==
+        undefined &&
+      candidateInsuranceNominationData[0].insuranceNominationHoldDeath == false
+    ) {
+      setInsuranceHoldDeathNo(true);
+      setInsuranceHoldDeathYes(false);
+    }
+
+    if (
+      candidateInsuranceNominationData !== undefined &&
+      candidateInsuranceNominationData !== null &&
+      Object.keys(candidateInsuranceNominationData).length !== 0 &&
+      candidateInsuranceNominationData[0].candidateInsuranceDeathNomination !==
+        null &&
+      candidateInsuranceNominationData[0].candidateInsuranceDeathNomination !==
+        undefined &&
+      candidateInsuranceNominationData[0].candidateInsuranceDeathNomination
+        .nomineeId !== undefined
+    ) {
+      console.log(
+        "candidateInsuranceNominationData.nomineeId",
+        candidateInsuranceNominationData[0].candidateInsuranceDeathNomination
+          .nomineeId
+      );
+      setNomineeValue(
+        candidateInsuranceNominationData[0].candidateInsuranceDeathNomination
+          .nomineeId
+      );
+    }
+
+    if (
+      candidateInsuranceNominationData !== undefined &&
+      candidateInsuranceNominationData !== null &&
+      Object.keys(candidateInsuranceNominationData).length !== 0 &&
+      candidateInsuranceNominationData[0].candidateInsuranceDeathNomination !==
+        null &&
+      candidateInsuranceNominationData[0].candidateInsuranceDeathNomination !==
+        undefined &&
+      candidateInsuranceNominationData[0].insuranceNominationHoldDeath === true
+    ) {
+      setNomineeDOB(
+        new Date(
+          candidateInsuranceNominationData[0].candidateInsuranceDeathNomination.dateOfBirth
+        )
+      );
+      setNominee({
+        nomineeAddress:
+          candidateInsuranceNominationData[0].candidateInsuranceDeathNomination
+            .address,
+        nomineeName:
+          candidateInsuranceNominationData[0].candidateInsuranceDeathNomination
+            .nomineeName,
+        nomineeRelationship:
+          candidateInsuranceNominationData[0].candidateInsuranceDeathNomination
+            .relationship,
+      });
+    }
+  }, [candidateInsuranceNominationData]);
+
   const TopupYesChange = () => {
     console.log("TopupYesChange");
     setTopupYes(true);
@@ -971,6 +1072,104 @@ const InsuranceNomination = (props) => {
     console.log("TopupNoChange");
     setTopupNo(true);
     setTopupYes(false);
+  };
+
+  const nomineeHandler = (e) => {
+    console.log("inside nominee handler");
+    setNominee({
+      ...nominee,
+      [e.target.name]: e.target.value,
+    });
+    console.log("nominee", nominee);
+  };
+
+  const nomineeNameValidation = () => {
+    if (insuranceHoldDeathYes === true) {
+      if (
+        nominee.nomineeName !== null &&
+        nominee.nomineeName !== undefined &&
+        nominee.nomineeName !== ""
+      ) {
+        setNomineeNameError(false);
+        return true;
+      } else {
+        setNomineeNameError(true);
+        return false;
+      }
+    } else {
+      return true;
+    }
+  };
+
+  const nomineeDobValidation = () => {
+    if (insuranceHoldDeathYes === true) {
+      if (
+        nomineeDOB !== null &&
+        nomineeDOB !== undefined &&
+        nomineeDOB !== ""
+      ) {
+        console.log("uan number");
+        setNomineeDOBError(false);
+        return true;
+      } else {
+        setNomineeDOBError(true);
+        return false;
+      }
+    } else {
+      return true;
+    }
+  };
+
+  const nomineeRelationValidation = () => {
+    if (insuranceHoldDeathYes === true) {
+      if (
+        nominee.nomineeRelationship !== null &&
+        nominee.nomineeRelationship !== undefined &&
+        nominee.nomineeRelationship !== ""
+      ) {
+        console.log("uan number");
+        setNomineeRelationshipError(false);
+        return true;
+      } else {
+        setNomineeRelationshipError(true);
+        return false;
+      }
+    } else {
+      return true;
+    }
+  };
+
+  const nomineeAddressValidation = () => {
+    if (insuranceHoldDeathYes === true) {
+      if (
+        nominee.nomineeAddress !== null &&
+        nominee.nomineeAddress !== undefined &&
+        nominee.nomineeAddress !== ""
+      ) {
+        setNomineeAddressError(false);
+        return true;
+      } else {
+        setNomineeAddressError(true);
+        return false;
+      }
+    } else {
+      return true;
+    }
+  };
+
+  const nomineeDateOfBirthHandler = (e) => {
+    console.log("selected date", e);
+    let minAge = moment().subtract(18, "years");
+    console.log("minAge1", minAge);
+    if (moment(e).isBefore(minAge)) {
+      console.log("birth date is above 18 years");
+      setNomineeDOB(e);
+      setNomineeDOBError(false);
+    } else {
+      console.log("birth date is below 18 years");
+      setNomineeDOB(e);
+      setNomineeDOBError(true);
+    }
   };
 
   const sumInsuredChange = (e) => {
@@ -1582,7 +1781,11 @@ const InsuranceNomination = (props) => {
       (relCompareChild2() === true) &
       (relCompareParent2() === true) &
       (relCompareExtra2() === true) &
-      (relCompareExtra3() === true)
+      (relCompareExtra3() === true) &
+      (nomineeNameValidation() === true) &
+      (nomineeDobValidation() === true) &
+      (nomineeAddressValidation() === true) &
+      (nomineeRelationValidation() === true)
     ) {
       return true;
     } else {
@@ -1632,7 +1835,23 @@ const InsuranceNomination = (props) => {
     var Data4_nominiId = 0;
     var Data5_nominiId = 0;
   }
+  const insuranceHoldDeathYesChange = (e) => {
+    console.log("insuranceHoldDeathYesChange");
+    setInsuranceHoldDeathYes(true);
+    setInsuranceHoldDeathNo(false);
+    {
+      required ? setRequired(!required) : setRequired(required);
+    }
+  };
+  const insuranceHoldDeathNoChange = (e) => {
+    console.log("insuranceHoldDeathNoChange");
+    setInsuranceHoldDeathNo(true);
+    setInsuranceHoldDeathYes(false);
 
+    {
+      required ? setRequired(!required) : setRequired(required);
+    }
+  };
   const submitHandler = (e) => {
     // const nextPage = props.NextStep;
     // nextPage();
@@ -1641,7 +1860,7 @@ const InsuranceNomination = (props) => {
     // }
 
     // for unmarried
-
+    console.log("submit", insuranceHoldDeathYes, insuranceHoldDeathNo);
     if (NAcheck2 === true) {
       if (
         candidateInsuranceNominationData &&
@@ -1776,6 +1995,15 @@ const InsuranceNomination = (props) => {
           nominiId: state.nominiId,
           nominiName: state.nominiName !== null ? state.nominiName : null,
           relationship: state.relationship !== null ? state.relationship : null,
+          insuranceNominationHoldDeath:
+            insuranceHoldDeathYes === true ? true : false,
+          candidateInsuranceDeathNomination: {
+            address: nominee.nomineeAddress,
+            dateOfBirth: moment(nomineeDOB).format("YYYY-MM-DD"),
+            nomineeId: nomineeValue,
+            nomineeName: nominee.nomineeName,
+            relationship: nominee.nomineeRelationship,
+          },
         };
         const second_nomine_info = {
           age: state.nominee2Age,
@@ -1800,6 +2028,15 @@ const InsuranceNomination = (props) => {
           nominiId: state.nominee2NominiId,
           nominiName: state.nominee2NominiName,
           relationship: state.nominee2Relationship,
+          insuranceNominationHoldDeath:
+            insuranceHoldDeathYes === true ? true : false,
+          candidateInsuranceDeathNomination: {
+            address: nominee.nomineeAddress,
+            dateOfBirth: moment(nomineeDOB).format("YYYY-MM-DD"),
+            nomineeId: nomineeValue,
+            nomineeName: nominee.nomineeName,
+            relationship: nominee.nomineeRelationship,
+          },
         };
         const third_nomine_info = {
           age: state.nominee3Age,
@@ -1824,6 +2061,15 @@ const InsuranceNomination = (props) => {
           nominiId: state.nominee3NominiId,
           nominiName: state.nominee3NominiName,
           relationship: state.nominee3Relationship,
+          insuranceNominationHoldDeath:
+            insuranceHoldDeathYes === true ? true : false,
+          candidateInsuranceDeathNomination: {
+            address: nominee.nomineeAddress,
+            dateOfBirth: moment(nomineeDOB).format("YYYY-MM-DD"),
+            nomineeId: nomineeValue,
+            nomineeName: nominee.nomineeName,
+            relationship: nominee.nomineeRelationship,
+          },
         };
         const fourth_nomine_info = {
           age: state.nominee4Age,
@@ -1849,6 +2095,15 @@ const InsuranceNomination = (props) => {
           nominiId: state.nominee4NominiId,
           nominiName: state.nominee4NominiName,
           relationship: state.nominee4Relationship,
+          insuranceNominationHoldDeath:
+            insuranceHoldDeathYes === true ? true : false,
+          candidateInsuranceDeathNomination: {
+            address: nominee.nomineeAddress,
+            dateOfBirth: moment(nomineeDOB).format("YYYY-MM-DD"),
+            nomineeId: nomineeValue,
+            nomineeName: nominee.nomineeName,
+            relationship: nominee.nomineeRelationship,
+          },
         };
         const fifth_nomine_info = {
           age: state.nominee5Age,
@@ -1873,6 +2128,15 @@ const InsuranceNomination = (props) => {
           nominiId: state.nominee5NominiId,
           nominiName: state.nominee5NominiName,
           relationship: state.nominee5Relationship,
+          insuranceNominationHoldDeath:
+            insuranceHoldDeathYes === true ? true : false,
+          candidateInsuranceDeathNomination: {
+            address: nominee.nomineeAddress,
+            dateOfBirth: moment(nomineeDOB).format("YYYY-MM-DD"),
+            nomineeId: nomineeValue,
+            nomineeName: nominee.nomineeName,
+            relationship: nominee.nomineeRelationship,
+          },
         };
 
         const sixth_nomine_info = {
@@ -1898,6 +2162,15 @@ const InsuranceNomination = (props) => {
           nominiId: state.In_law_nominee1NominiId,
           nominiName: state.In_law_nominee1NominiName,
           relationship: state.In_law_nominee1Relationship,
+          insuranceNominationHoldDeath:
+            insuranceHoldDeathYes === true ? true : false,
+          candidateInsuranceDeathNomination: {
+            address: nominee.nomineeAddress,
+            dateOfBirth: moment(nomineeDOB).format("YYYY-MM-DD"),
+            nomineeId: nomineeValue,
+            nomineeName: nominee.nomineeName,
+            relationship: nominee.nomineeRelationship,
+          },
         };
         const seventh_nomine_info = {
           age: state.In_law_nominee2Age,
@@ -1922,6 +2195,15 @@ const InsuranceNomination = (props) => {
           nominiId: state.In_law_nominee2NominiId,
           nominiName: state.In_law_nominee2NominiName,
           relationship: state.In_law_nominee2Relationship,
+          insuranceNominationHoldDeath:
+            insuranceHoldDeathYes === true ? true : false,
+          candidateInsuranceDeathNomination: {
+            address: nominee.nomineeAddress,
+            dateOfBirth: moment(nomineeDOB).format("YYYY-MM-DD"),
+            nomineeId: nomineeValue,
+            nomineeName: nominee.nomineeName,
+            relationship: nominee.nomineeRelationship,
+          },
         };
 
         const Eight_nomine_info = {
@@ -1950,6 +2232,15 @@ const InsuranceNomination = (props) => {
             state.extra1nominiName !== null ? state.extra1nominiName : null,
           relationship:
             state.extra1relationship !== null ? state.extra1relationship : null,
+          insuranceNominationHoldDeath:
+            insuranceHoldDeathYes === true ? true : false,
+          candidateInsuranceDeathNomination: {
+            address: nominee.nomineeAddress,
+            dateOfBirth: moment(nomineeDOB).format("YYYY-MM-DD"),
+            nomineeId: nomineeValue,
+            nomineeName: nominee.nomineeName,
+            relationship: nominee.nomineeRelationship,
+          },
         };
         const Ninenth_nomine_info = {
           age: state.extra2age !== null ? state.extra2age : null,
@@ -1977,6 +2268,15 @@ const InsuranceNomination = (props) => {
             state.extra2nominiName !== null ? state.extra2nominiName : null,
           relationship:
             state.extra2relationship !== null ? state.extra2relationship : null,
+          insuranceNominationHoldDeath:
+            insuranceHoldDeathYes === true ? true : false,
+          candidateInsuranceDeathNomination: {
+            address: nominee.nomineeAddress,
+            dateOfBirth: moment(nomineeDOB).format("YYYY-MM-DD"),
+            nomineeId: nomineeValue,
+            nomineeName: nominee.nomineeName,
+            relationship: nominee.nomineeRelationship,
+          },
         };
 
         const tenth_nomine_info = {
@@ -2002,6 +2302,15 @@ const InsuranceNomination = (props) => {
           nominiId: state.nominee5NominiId1,
           nominiName: state.nominee5NominiName1,
           relationship: state.nominee5Relationship1,
+          insuranceNominationHoldDeath:
+            insuranceHoldDeathYes === true ? true : false,
+          candidateInsuranceDeathNomination: {
+            address: nominee.nomineeAddress,
+            dateOfBirth: moment(nomineeDOB).format("YYYY-MM-DD"),
+            nomineeId: nomineeValue,
+            nomineeName: nominee.nomineeName,
+            relationship: nominee.nomineeRelationship,
+          },
         };
 
         const NominiInfo = [{}, {}, {}, {}, {}];
@@ -5079,6 +5388,193 @@ const InsuranceNomination = (props) => {
         ""
       )}
 
+      <Row style={{ marginBottom: "2rem" }}>
+        <Col sm={5}>
+          <div>
+            <label>Does the Insurance hold good in case of Death ?</label>
+            {insuranceHoldDeathError ? (
+              <p style={{ color: "red" }}> *Please select one of the option</p>
+            ) : (
+              <p></p>
+            )}
+          </div>
+        </Col>
+        <Col sm={2}>
+          <Form.Group>
+            <div className="boxField input">
+              <input
+                className="largerCheckbox"
+                type="checkbox"
+                value="yes"
+                checked={insuranceHoldDeathYes}
+                required={required}
+                onChange={insuranceHoldDeathYesChange}
+              />
+              <label>Yes</label>
+            </div>
+          </Form.Group>
+        </Col>
+        <Col sm={2}>
+          <Form.Group>
+            <div className="boxField input">
+              <input
+                className="largerCheckbox"
+                type="checkbox"
+                value="no"
+                checked={insuranceHoldDeathNo}
+                required={required}
+                onChange={insuranceHoldDeathNoChange}
+              />
+              <label>No </label>
+            </div>
+          </Form.Group>
+        </Col>
+      </Row>
+      {insuranceHoldDeathYes === true ? (
+        <div>
+          {/* first Nominee */}
+          <label>
+            <b>Dependent</b>
+          </label>
+          <Row style={{ marginBottom: "2rem" }}>
+            <Col sm={11}>
+              <Row>
+                <div className="col-sm-4">
+                  <Form.Group>
+                    <Form.Label>
+                      Dependent Name
+                      <span style={{ color: "red" }}>*</span>
+                    </Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="nomineeName"
+                      value={nominee.nomineeName}
+                      onChange={nomineeHandler}
+                      required
+                      style={nomineeNameError ? { borderColor: "red" } : {}}
+                      placeholder="Dependent Name"
+                    />
+                    {nomineeNameError ? (
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        &nbsp; *Please enter valid name
+                      </p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </Form.Group>
+                </div>
+                <div className="col-sm-4">
+                  <Form.Group>
+                    <Form.Label>
+                      Relationship <span style={{ color: "red" }}>*</span>
+                    </Form.Label>
+                    <Form.Control
+                      as="select"
+                      name="nomineeRelationship"
+                      value={nominee.nomineeRelationship}
+                      onChange={nomineeHandler}
+                      style={
+                        nomineeRelationshipError ? { borderColor: "red" } : {}
+                      }
+                    >
+                      <option value="">--Select--</option>
+                      <option value="Father">Father</option>
+                      <option value="Mother">Mother</option>
+                      <option value="Father-inlaw">Father-In-Law</option>
+                      <option value="Mother-Inlaw">Mother-In-Law</option>
+                      <option value="Spouse">Spouse</option>
+                      <option value="Child1">Child 1</option>
+                      <option value="Child2">Child 2</option>
+                    </Form.Control>
+                    {nomineeRelationshipError ? (
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        &nbsp; *Please select relationship
+                      </p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </Form.Group>
+                </div>
+                <div className="col-sm-4">
+                  <Form.Group>
+                    <Form.Label>
+                      Date Of Birth<span style={{ color: "red" }}>*</span>
+                    </Form.Label>
+                    <div
+                      className={
+                        nomineeDOBError ? "onBoard-date-error" : "onBoard-date"
+                      }
+                    >
+                      <DatePicker
+                        className="form-control onBoard-view"
+                        selected={nomineeDOB}
+                        required
+                        onChange={(e) => nomineeDateOfBirthHandler(e, "1")}
+                        dateFormat="yyyy-MM-dd"
+                        placeholderText="YYYY-MM-DD"
+                        style={nomineeDOBError ? { borderColor: "red" } : {}}
+                      />
+                    </div>
+                    {nomineeDOBError ? (
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        &nbsp; *Please select valid date
+                      </p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </Form.Group>
+                </div>
+              </Row>
+            </Col>
+          </Row>
+          <Row style={{ marginBottom: "1rem" }}>
+            <Col sm={11}>
+              <Row>
+                <div className="col-sm-4">
+                  <Form.Group>
+                    <Form.Label>
+                      Address<span style={{ color: "red" }}>*</span>
+                    </Form.Label>
+                    <div
+                      className={
+                        nomineeAddressError
+                          ? "onBoard-date-error"
+                          : "onBoard-date"
+                      }
+                    >
+                      <Form.Control
+                        type="text"
+                        name="nomineeAddress"
+                        value={nominee.nomineeAddress}
+                        onChange={nomineeHandler}
+                        required
+                        style={
+                          nomineeAddressError ? { borderColor: "red" } : {}
+                        }
+                        placeholder="Dependent Address"
+                      />
+                    </div>
+                    {nomineeAddressError ? (
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        &nbsp; *Please Enter valid address
+                      </p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </Form.Group>
+                </div>
+              </Row>
+            </Col>
+            <Col sm={1}></Col>
+          </Row>
+        </div>
+      ) : (
+        ""
+      )}
       <Row style={{ marginBottom: "2rem" }}>
         <Col sm={5}>
           <div>
