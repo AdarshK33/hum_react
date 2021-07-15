@@ -5,6 +5,7 @@ import { Row, Col, Container } from "react-bootstrap";
 import { TransferContext } from "../../../context/TransferState";
 import NoDataComp from "../../no-data/NoData.component";
 import RegularTransferView from "./RegularTransfer";
+import EntityTransfer from "./EntityTransfer";
 import LoaderIcon from "../../Loader/LoaderIcon";
 
 const TransferView = () => {
@@ -45,24 +46,13 @@ const TransferView = () => {
                       {transferData.currentEmployeeId}
                     </Col>
                   </Row>
-                  <Row className="mb-4">
-                    <Col
-                      md={{ span: 3, offset: 2 }}
-                      className="font-weight-bold my-2"
-                    >
-                      Current
-                    </Col>
-                    <Col
-                      md={{ span: 3, offset: 2 }}
-                      className="font-weight-bold my-2"
-                    >
-                      New
-                    </Col>
-                  </Row>
+
                   {transferData.transferType === "Regular Transfer" ? (
                     <RegularTransferView transferData={transferData} />
+                  ) : transferData.transferType === "Entity Transfer" ? (
+                    <EntityTransfer transferData={transferData} />
                   ) : (
-                    <RegularTransferView transferData={transferData} />
+                    ""
                   )}
                 </Container>
               ) : (

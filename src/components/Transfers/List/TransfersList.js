@@ -125,6 +125,39 @@ const TransferPage = () => {
           };
         });
         setTableBody(tableData);
+      } else if (transferType === "Employment Type Transfer") {
+        let tableData = transferList.map((item, index) => {
+          return {
+            sno: index + 1,
+            empId: item.currentEmployeeId,
+            empName: item.employeeName,
+            oldEmpContractType: item.currentContractType,
+            newEmpContractType: item.promotedContractType,
+            effectiveDate: item.promotedJoiningDate,
+            dateOfTransfer: item.promotedJoiningDate,
+            status: item.statusDesc,
+
+            view: {
+              active: true,
+              link: `/view-transfer/${item.transferId}`,
+            },
+            action: {
+              edit: {
+                active:
+                  item.statusDesc === "REJECTED" ||
+                  item.statusDesc === "INITIATED"
+                    ? false
+                    : true,
+                link:
+                  item.statusDesc === "REJECTED" ||
+                  item.statusDesc === "INITIATED"
+                    ? ""
+                    : `/entity-transfer/${item.transferId}`,
+              },
+            },
+          };
+        });
+        setTableBody(tableData);
       }
     } else {
       setTableBody([]);

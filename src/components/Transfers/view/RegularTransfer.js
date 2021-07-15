@@ -5,6 +5,14 @@ const RegularTransferView = ({ transferData }) => {
   return (
     <Fragment>
       <Row className="mb-4">
+        <Col md={{ span: 3, offset: 2 }} className="font-weight-bold my-2">
+          Current
+        </Col>
+        <Col md={{ span: 3, offset: 2 }} className="font-weight-bold my-2">
+          New
+        </Col>
+      </Row>
+      <Row className="mb-4">
         <Col md={2}>Department</Col>
         <Col md={3} className="text-primary">
           {transferData.currentDepartment}
