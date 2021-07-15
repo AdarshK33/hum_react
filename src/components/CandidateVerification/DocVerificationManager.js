@@ -621,7 +621,7 @@ const DocVerification = () => {
                       </td>
                     ) : (
                       item.documentType >= 6 &&
-                      item.status !== 1 && <td className="buttonMargin1">NA</td>
+                      item.status === 1 && <td className="buttonMargin1">NA</td>
                     )}
                     {item.verifiedDate !== null && item.status !== 0 ? (
                       <td className="buttonMargin1">
