@@ -15,6 +15,7 @@ const initialState = {
   initiationStatus: false,
   initiationTransferId: "",
   transferData: {},
+  TRANSFERtype: "Regular Transfer",
 };
 
 export const TransferContext = createContext();
@@ -22,6 +23,13 @@ export const TransferContext = createContext();
 export const TransferProvider = (props) => {
   const [state, dispatch] = useReducer(TransferReducer, initialState);
   const [loader, setLoader] = useState(false);
+  const chnageTransferType = (val) => {
+    console.log("changeInTransferType->", val);
+    return dispatch({
+      type: "TRANSFR_TYPE_CHANGE",
+      payload: val,
+    });
+  };
 
   const getTransferList = (apiUrl) => {
     setLoader(true);
@@ -221,6 +229,8 @@ export const TransferProvider = (props) => {
         getTransferData,
         transferData: state.transferData,
         initiationTransferId: state.initiationTransferId,
+        TRANSFERtype: state.TRANSFERtype,
+        chnageTransferType,
       }}
     >
       {props.children}

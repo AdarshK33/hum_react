@@ -1,5 +1,11 @@
 const TransferReducer = (state, action) => {
   switch (action.type) {
+    case "TRANSFR_TYPE_CHANGE":
+      return {
+        ...state,
+        TRANSFERtype: action.payload,
+        initiationStatus: false,
+      };
     case "FETCH_TRANSFER_LIST":
       return {
         ...state,

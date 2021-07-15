@@ -714,6 +714,7 @@ const RegularTransfer = () => {
                     className="text-primary form-control"
                     selected={effectiveDate}
                     closeOnScroll={true}
+                    minDate={moment().toDate()}
                     dateFormat="yyyy-MM-dd"
                     onChange={(date) => {
                       changeEffectiveDateHandler(date);

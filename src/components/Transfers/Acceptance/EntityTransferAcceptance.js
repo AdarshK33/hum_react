@@ -36,6 +36,7 @@ const EntityTransferAcceptance = () => {
     transferData,
   } = useContext(TransferContext);
   const { user } = useContext(AppContext);
+  const [showImg, setSWhowImg] = useState(false);
   const [transferType, setTransferType] = useState("Entity Transfer");
   const [newEntity, setNewEntity] = useState("");
   const [newEntityErrMsg, setNewEntityErrMsg] = useState("");
@@ -54,9 +55,9 @@ const EntityTransferAcceptance = () => {
   const [locationErrMsg, setLocationErrMsg] = useState("");
   const [effectiveDate, setEffectiveDate] = useState(new Date());
   const [effectiveDateErrMsg, setEffectiveDateErrMsg] = useState("");
-  const [relocationBonus, setRelocationBonus] = useState();
+  const [relocationBonus, setRelocationBonus] = useState("");
   const [relocationBonusErrMsg, setRelocationBonusErrMsg] = useState("");
-  const [newGross, setNewGross] = useState();
+  const [newGross, setNewGross] = useState("");
   const [grossErrMsg, setGrossErrMsg] = useState("");
   const [formValid, setFormValid] = useState(false);
   const [modalShow, setModalShow] = useState(false);
@@ -220,6 +221,7 @@ const EntityTransferAcceptance = () => {
   /* Validate form */
   const validateForm = () => {
     let validForm = true;
+    console.log("newGross->", newGross);
 
     if (searchInput === "") {
       validForm = false;
@@ -252,6 +254,7 @@ const EntityTransferAcceptance = () => {
     }
     if (newGross === "") {
       validForm = false;
+
       setGrossErrMsg("Please enter fixed gross");
     }
     if (
@@ -284,24 +287,24 @@ const EntityTransferAcceptance = () => {
         currentManagerId: initiationEmpData.currentManagerId,
         currentMonthlyBonus: initiationEmpData.currentMonthlyBonus,
         currentPosition: initiationEmpData.currentPosition,
-        promotedCompany: newEntity,
+        promotedCompany: initiationEmpData.promotedCompany,
         promotedContractType: initiationEmpData.promotedContractType,
-        promotedCostCentre: initiationEmpData.promotedCostCentre,
+        promotedCostCentre: newCostCentre,
         promotedCountry: initiationEmpData.promotedCountry,
         promotedDateOfReturn: initiationEmpData.promotedDateOfReturn,
-        promotedDepartment: initiationEmpData.promotedDepartment,
+        promotedDepartment: newDeptName,
         promotedDesignation: initiationEmpData.promotedDesignation,
         promotedEmployeeId: initiationEmpData.promotedEmployeeId,
-        promotedFixedGross: initiationEmpData.promotedFixedGross,
+        promotedFixedGross: newGross,
         promotedJoiningDate: moment(effectiveDate).format("YYYY-MM-DD"),
-        promotedLocation: initiationEmpData.promotedLocation,
+        promotedLocation: newLocation,
         promotedManagerId: initiationEmpData.promotedManagerId,
         promotedMonthlyBonus: initiationEmpData.promotedMonthlyBonus,
-        promotedPosition: initiationEmpData.promotedPosition,
-        promotedRelocationBonus: initiationEmpData.promotedRelocationBonus,
+        promotedPosition: newPosition,
+        promotedRelocationBonus: relocationBonus,
         promotedTermOfProject: initiationEmpData.promotedTermOfProject,
         remark: null,
-        status: 0,
+        status: 1,
         transferId: 0,
         transferLetter: null,
         transferType: transferType,
@@ -311,10 +314,43 @@ const EntityTransferAcceptance = () => {
       setFormValid(true);
     }
   };
+  const handleCloseImg = () => {
+    setSWhowImg(false);
+  };
+  const handleOpenImg = () => {
+    setSWhowImg(true);
+  };
 
   return (
     <Fragment>
       <ToastContainer />
+      <Modal show={showImg} onHide={handleCloseImg} size="md" centered>
+        <Container>
+          <Modal.Header closeButton className="modalHeader"></Modal.Header>
+          <Modal.Body className="mx-auto">
+            <img
+              src={
+                transferData !== null &&
+                transferData !== undefined &&
+                Object.keys(transferData).length !== 0 &&
+                transferData.internationalTransfer !== null &&
+                transferData.internationalTransfer !== undefined &&
+                transferData.internationalTransfer.aadhaarNumberDoc !== null &&
+                transferData.internationalTransfer.aadhaarNumberDoc !==
+                  undefined
+                  ? "http://humine-application.s3-website.ap-south-1.amazonaws.com/" +
+                    transferData.internationalTransfer.aadhaarNumberDoc
+                  : ""
+              }
+              className="img-fluid"
+            />
+
+            <div className="text-center mb-2">
+              <Button onClick={handleCloseImg}>Close</Button>
+            </div>
+          </Modal.Body>
+        </Container>
+      </Modal>
       <Modal show={modalShow} onHide={handleModalClose} size="md" centered>
         {/* <Modal.Header closeButton className="modal-line"></Modal.Header>
         <Modal.Body className="mx-auto">
@@ -509,34 +545,63 @@ const EntityTransferAcceptance = () => {
                             <Form.Label>UAN Number:</Form.Label>
                           </Col>
                           <Col md={3} className="text-primary">
-                            {transferData.currentManagerCostCentre}
+                            {transferData !== null &&
+                            transferData !== undefined &&
+                            Object.keys(transferData).length !== 0 &&
+                            transferData.internationalTransfer !== null &&
+                            transferData.internationalTransfer !== undefined
+                              ? transferData.internationalTransfer.uanNumber
+                              : ""}
                             &nbsp;&nbsp;
-                            {true ? (
-                              "(No Documents Available)"
-                            ) : (
+                            {transferData !== null &&
+                            transferData !== undefined &&
+                            Object.keys(transferData).length !== 0 &&
+                            transferData.internationalTransfer !== null &&
+                            transferData.internationalTransfer !== undefined &&
+                            transferData.internationalTransfer.uanNumberDoc !==
+                              null &&
+                            transferData.internationalTransfer.uanNumberDoc !==
+                              undefined ? (
                               <a
                               // onClick={LetterShow}
                               >
                                 {" "}
                                 <u className="text-primary">View</u>
                               </a>
+                            ) : (
+                              "(No Documents Available)"
                             )}
                           </Col>
                           <Col md={2}>
                             <Form.Label>Bank Account Number:</Form.Label>
                           </Col>
                           <Col md={3} className="text-primary">
-                            {transferData.currentManagerContractType}
+                            {transferData !== null &&
+                            transferData !== undefined &&
+                            Object.keys(transferData).length !== 0 &&
+                            transferData.internationalTransfer !== null &&
+                            transferData.internationalTransfer !== undefined
+                              ? transferData.internationalTransfer
+                                  .bankAccountNumber
+                              : ""}
                             &nbsp;&nbsp;
-                            {true ? (
-                              "(No Documents Available)"
-                            ) : (
+                            {transferData !== null &&
+                            transferData !== undefined &&
+                            Object.keys(transferData).length !== 0 &&
+                            transferData.internationalTransfer !== null &&
+                            transferData.internationalTransfer !== undefined &&
+                            transferData.internationalTransfer
+                              .bankAccountNumberDoc !== null &&
+                            transferData.internationalTransfer
+                              .bankAccountNumberDoc !== undefined ? (
                               <a
                               // onClick={LetterShow}
                               >
                                 {" "}
                                 <u className="text-primary">View</u>
                               </a>
+                            ) : (
+                              "(No Documents Available)"
                             )}
                           </Col>
                         </Form.Group>
@@ -549,34 +614,67 @@ const EntityTransferAcceptance = () => {
                             <Form.Label>PAN Number:</Form.Label>
                           </Col>
                           <Col md={3} className="text-primary">
-                            {transferData.currentManagerCostCentre}
+                            {transferData !== null &&
+                            transferData !== undefined &&
+                            Object.keys(transferData).length !== 0 &&
+                            transferData.internationalTransfer !== null &&
+                            transferData.internationalTransfer !== undefined
+                              ? transferData.internationalTransfer.panNumber
+                              : ""}
                             &nbsp;&nbsp;
-                            {true ? (
-                              "(No Documents Available)"
-                            ) : (
+                            {transferData !== null &&
+                            transferData !== undefined &&
+                            Object.keys(transferData).length !== 0 &&
+                            transferData.internationalTransfer !== null &&
+                            transferData.internationalTransfer !== undefined &&
+                            transferData.internationalTransfer.panNumberDoc !==
+                              null &&
+                            transferData.internationalTransfer.panNumberDoc !==
+                              undefined ? (
                               <a
                               // onClick={LetterShow}
                               >
                                 {" "}
                                 <u className="text-primary">View</u>
                               </a>
+                            ) : (
+                              "(No Documents Available)"
                             )}
                           </Col>
                           <Col md={2}>
                             <Form.Label>Aadhaar Number:</Form.Label>
                           </Col>
                           <Col md={3} className="text-primary">
-                            {transferData.currentManagerContractType}
+                            {transferData !== null &&
+                            transferData !== undefined &&
+                            Object.keys(transferData).length !== 0 &&
+                            transferData.internationalTransfer !== null &&
+                            transferData.internationalTransfer !== undefined
+                              ? transferData.internationalTransfer.aadhaarNumber
+                              : ""}
                             &nbsp;&nbsp;
-                            {true ? (
-                              "(No Documents Available)"
-                            ) : (
+                            {transferData !== null &&
+                            transferData !== undefined &&
+                            Object.keys(transferData).length !== 0 &&
+                            transferData.internationalTransfer !== null &&
+                            transferData.internationalTransfer !== undefined &&
+                            transferData.internationalTransfer
+                              .aadhaarNumberDoc !== null &&
+                            transferData.internationalTransfer
+                              .aadhaarNumberDoc !== undefined ? (
                               <a
-                              // onClick={LetterShow}
+                                onClick={handleOpenImg}
+                                // href={
+                                //   "http://humine-application.s3-website.ap-south-1.amazonaws.com/" +
+                                //   transferData.internationalTransfer
+                                //     .aadhaarNumberDoc
+                                // }
                               >
                                 {" "}
                                 <u className="text-primary">View</u>
                               </a>
+                            ) : (
+                              "(No Documents Available)"
                             )}
                           </Col>
                         </Form.Group>
@@ -612,18 +710,26 @@ const EntityTransferAcceptance = () => {
                           <Col md={2}>
                             <Form.Label>New Fixed Gross:</Form.Label>
                           </Col>
-                          <Col md={3} className="text-primary">
-                            <Form.Control
-                              type="text"
-                              placeholder="New Fixed Gross"
-                              value={newGross}
-                              className="text-primary"
-                              onChange={changeGrossHandler}
-                            ></Form.Control>
-                            {grossErrMsg !== "" && (
-                              <span className="text-danger">{grossErrMsg}</span>
-                            )}
-                          </Col>
+                          {transferData.promotedFixedGross ? (
+                            <Col md={3} className="text-primary">
+                              {transferData.promotedFixedGross}
+                            </Col>
+                          ) : (
+                            <Col md={3} className="text-primary">
+                              <Form.Control
+                                type="text"
+                                placeholder="New Fixed Gross"
+                                value={newGross}
+                                className="text-primary"
+                                onChange={changeGrossHandler}
+                              ></Form.Control>
+                              {grossErrMsg !== "" && (
+                                <span className="text-danger">
+                                  {grossErrMsg}
+                                </span>
+                              )}
+                            </Col>
+                          )}
                         </Form.Group>
                         <Form.Group
                           as={Row}
@@ -639,20 +745,26 @@ const EntityTransferAcceptance = () => {
                           <Col md={2}>
                             <Form.Label>Relocation Bonus:</Form.Label>
                           </Col>
-                          <Col md={3}>
-                            <Form.Control
-                              type="text"
-                              placeholder="Relocation Bonus"
-                              value={relocationBonus}
-                              className="text-primary"
-                              onChange={changeRelocationBonusHandler}
-                            ></Form.Control>
-                            {relocationBonusErrMsg !== "" && (
-                              <span className="text-danger">
-                                {relocationBonusErrMsg}
-                              </span>
-                            )}
-                          </Col>
+                          {transferData.promotedRelocationBonus ? (
+                            <Col md={3} className="text-primary">
+                              {transferData.promotedRelocationBonus}
+                            </Col>
+                          ) : (
+                            <Col md={3}>
+                              <Form.Control
+                                type="text"
+                                placeholder="Relocation Bonus"
+                                value={relocationBonus}
+                                className="text-primary"
+                                onChange={changeRelocationBonusHandler}
+                              ></Form.Control>
+                              {relocationBonusErrMsg !== "" && (
+                                <span className="text-danger">
+                                  {relocationBonusErrMsg}
+                                </span>
+                              )}
+                            </Col>
+                          )}
                         </Form.Group>
                         <Form.Group
                           as={Row}
@@ -662,66 +774,78 @@ const EntityTransferAcceptance = () => {
                           <Col md={2}>
                             <Form.Label>New Cost Center:</Form.Label>
                           </Col>
-                          <Col md={3}>
-                            <Form.Control
-                              as="select"
-                              className="text-primary"
-                              aria-label="transferInitiationCostCentre"
-                              value={newCostCentre}
-                              placeholder="Select Cost Centre"
-                              onChange={changeCostCentreHandler}
-                            >
-                              <option>Select Cost Centre</option>
-                              {costCentreData !== null &&
-                                costCentreData !== undefined &&
-                                costCentreData.length > 0 &&
-                                costCentreData.map((item) => {
-                                  return (
-                                    <option
-                                      key={`cost_centre_${item.costCentreName}`}
-                                      value={item.costCentreName}
-                                    >
-                                      {item.costCentreName}
-                                    </option>
-                                  );
-                                })}
-                            </Form.Control>
-                            {costCentreErrMsg !== "" && (
-                              <span className="text-danger">
-                                {costCentreErrMsg}
-                              </span>
-                            )}
-                          </Col>
+                          {transferData.promotedCostCentre ? (
+                            <Col md={3} className="text-primary">
+                              {transferData.promotedCostCentre}
+                            </Col>
+                          ) : (
+                            <Col md={3}>
+                              <Form.Control
+                                as="select"
+                                className="text-primary"
+                                aria-label="transferInitiationCostCentre"
+                                value={newCostCentre}
+                                placeholder="Select Cost Centre"
+                                onChange={changeCostCentreHandler}
+                              >
+                                <option>Select Cost Centre</option>
+                                {costCentreData !== null &&
+                                  costCentreData !== undefined &&
+                                  costCentreData.length > 0 &&
+                                  costCentreData.map((item) => {
+                                    return (
+                                      <option
+                                        key={`cost_centre_${item.costCentreName}`}
+                                        value={item.costCentreName}
+                                      >
+                                        {item.costCentreName}
+                                      </option>
+                                    );
+                                  })}
+                              </Form.Control>
+                              {costCentreErrMsg !== "" && (
+                                <span className="text-danger">
+                                  {costCentreErrMsg}
+                                </span>
+                              )}
+                            </Col>
+                          )}
                           <Col md={2}>
                             <Form.Label>New Location:</Form.Label>
                           </Col>
-                          <Col md={3}>
-                            <Form.Control
-                              as="select"
-                              className="text-primary"
-                              aria-label="transferInitiationLocation"
-                              value={newLocation}
-                              placeholder="Select Location"
-                              onChange={changeLocationHandler}
-                            >
-                              <option>Select Location</option>
-                              {costCentreLocationData !== null &&
-                                costCentreLocationData !== undefined &&
-                                Object.keys(costCentreLocationData).length !==
-                                  0 && (
-                                  <option
-                                    value={costCentreLocationData.locationId}
-                                  >
-                                    {costCentreLocationData.locationName}
-                                  </option>
-                                )}
-                            </Form.Control>
-                            {locationErrMsg !== "" && (
-                              <span className="text-danger">
-                                {locationErrMsg}
-                              </span>
-                            )}
-                          </Col>
+                          {transferData.promotedLocation ? (
+                            <Col md={3} className="text-primary">
+                              {transferData.promotedLocation}
+                            </Col>
+                          ) : (
+                            <Col md={3}>
+                              <Form.Control
+                                as="select"
+                                className="text-primary"
+                                aria-label="transferInitiationLocation"
+                                value={newLocation}
+                                placeholder="Select Location"
+                                onChange={changeLocationHandler}
+                              >
+                                <option>Select Location</option>
+                                {costCentreLocationData !== null &&
+                                  costCentreLocationData !== undefined &&
+                                  Object.keys(costCentreLocationData).length !==
+                                    0 && (
+                                    <option
+                                      value={costCentreLocationData.locationId}
+                                    >
+                                      {costCentreLocationData.locationName}
+                                    </option>
+                                  )}
+                              </Form.Control>
+                              {locationErrMsg !== "" && (
+                                <span className="text-danger">
+                                  {locationErrMsg}
+                                </span>
+                              )}
+                            </Col>
+                          )}
                         </Form.Group>
                         <Form.Group
                           as={Row}
@@ -737,34 +861,42 @@ const EntityTransferAcceptance = () => {
                           <Col md={2}>
                             <Form.Label>New Department:</Form.Label>
                           </Col>
-                          <Col md={3}>
-                            <Form.Control
-                              as="select"
-                              className="text-primary"
-                              aria-label="department"
-                              value={newDept}
-                              placeholder="Select Location"
-                              onChange={departmentChangeHandler}
-                            >
-                              <option>Select Department</option>
-                              {deptDetails !== null &&
-                                deptDetails !== undefined &&
-                                deptDetails.length > 0 &&
-                                deptDetails.map((item) => {
-                                  return (
-                                    <option
-                                      key={`dept_${item.deptId}`}
-                                      value={item.deptId}
-                                    >
-                                      {item.departmentName}
-                                    </option>
-                                  );
-                                })}
-                            </Form.Control>
-                            {deptErrMsg !== "" && (
-                              <span className="text-danger">{deptErrMsg}</span>
-                            )}
-                          </Col>
+                          {transferData.promotedDepartment ? (
+                            <Col md={3} className="text-primary">
+                              {transferData.promotedDepartment}
+                            </Col>
+                          ) : (
+                            <Col md={3}>
+                              <Form.Control
+                                as="select"
+                                className="text-primary"
+                                aria-label="department"
+                                value={newDept}
+                                placeholder="Select Location"
+                                onChange={departmentChangeHandler}
+                              >
+                                <option>Select Department</option>
+                                {deptDetails !== null &&
+                                  deptDetails !== undefined &&
+                                  deptDetails.length > 0 &&
+                                  deptDetails.map((item) => {
+                                    return (
+                                      <option
+                                        key={`dept_${item.deptId}`}
+                                        value={item.deptId}
+                                      >
+                                        {item.departmentName}
+                                      </option>
+                                    );
+                                  })}
+                              </Form.Control>
+                              {deptErrMsg !== "" && (
+                                <span className="text-danger">
+                                  {deptErrMsg}
+                                </span>
+                              )}
+                            </Col>
+                          )}
                         </Form.Group>
                         <Form.Group
                           as={Row}
@@ -774,36 +906,42 @@ const EntityTransferAcceptance = () => {
                           <Col md={2}>
                             <Form.Label>New Position:</Form.Label>
                           </Col>
-                          <Col md={3}>
-                            <Form.Control
-                              as="select"
-                              className="text-primary"
-                              aria-label="transferInitiationPosition"
-                              value={newPosition}
-                              placeholder="Select Position"
-                              onChange={changePositionHandler}
-                            >
-                              <option>Select Position</option>
-                              {deptPositionData !== null &&
-                                deptPositionData !== undefined &&
-                                deptPositionData.length > 0 &&
-                                deptPositionData.map((item) => {
-                                  return (
-                                    <option
-                                      key={`pos_${item.positionId}`}
-                                      value={item.positionId}
-                                    >
-                                      {item.position}
-                                    </option>
-                                  );
-                                })}
-                            </Form.Control>
-                            {positionErrMsg !== "" && (
-                              <span className="text-danger">
-                                {positionErrMsg}
-                              </span>
-                            )}
-                          </Col>
+                          {transferData.promotedPosition ? (
+                            <Col md={3} className="text-primary">
+                              {transferData.promotedPosition}
+                            </Col>
+                          ) : (
+                            <Col md={3}>
+                              <Form.Control
+                                as="select"
+                                className="text-primary"
+                                aria-label="transferInitiationPosition"
+                                value={newPosition}
+                                placeholder="Select Position"
+                                onChange={changePositionHandler}
+                              >
+                                <option>Select Position</option>
+                                {deptPositionData !== null &&
+                                  deptPositionData !== undefined &&
+                                  deptPositionData.length > 0 &&
+                                  deptPositionData.map((item) => {
+                                    return (
+                                      <option
+                                        key={`pos_${item.positionId}`}
+                                        value={item.positionId}
+                                      >
+                                        {item.position}
+                                      </option>
+                                    );
+                                  })}
+                              </Form.Control>
+                              {positionErrMsg !== "" && (
+                                <span className="text-danger">
+                                  {positionErrMsg}
+                                </span>
+                              )}
+                            </Col>
+                          )}
                           <Col md={2}>
                             <Form.Label>Date Of Joining:</Form.Label>
                           </Col>
@@ -813,6 +951,7 @@ const EntityTransferAcceptance = () => {
                               className="text-primary form-control"
                               selected={effectiveDate}
                               closeOnScroll={true}
+                              minDate={moment().toDate()}
                               dateFormat="yyyy-MM-dd"
                               onChange={(date) => {
                                 changeEffectiveDateHandler(date);
