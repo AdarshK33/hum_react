@@ -15,6 +15,8 @@ const initialState = {
   initiationStatus: false,
   initiationTransferId: "",
   transferData: {},
+  countryDetails: [],
+  designationDetails: [],
 };
 
 export const TransferContext = createContext();
@@ -197,6 +199,44 @@ export const TransferProvider = (props) => {
       });
   };
 
+  const getCountryDetails = () => {
+    setLoader(true);
+    client
+      .get("/api/v1/country/view")
+      .then((response) => {
+        setLoader(false);
+        return dispatch({
+          type: "FETCH_COUNTRY_DATA",
+          payload: response.data.data,
+        });
+      })
+      .catch(() => {
+        setLoader(false);
+        return dispatch({
+          type: "FETCH_COUNTRY_DATA_ERR",
+        });
+      });
+  }
+
+  const getDesignationDetails = () => {
+    setLoader(true);
+    client
+      .get("api/v1/designation/view")
+      .then((response) => {
+        setLoader(false);
+        return dispatch({
+          type: "FETCH_DESIGNATION_DATA",
+          payload: response.data.data,
+        });
+      })
+      .catch(() => {
+        setLoader(false);
+        return dispatch({
+          type: "FETCH_DESIGNATION_DATA_ERR",
+        });
+      });
+  }
+
   return (
     <TransferContext.Provider
       value={{
@@ -221,6 +261,10 @@ export const TransferProvider = (props) => {
         getTransferData,
         transferData: state.transferData,
         initiationTransferId: state.initiationTransferId,
+        getCountryDetails,
+        countryDetails: state.countryDetails,
+        getDesignationDetails,
+        designationDetails: state.designationDetails,
       }}
     >
       {props.children}

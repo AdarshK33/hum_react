@@ -95,6 +95,26 @@ const TransferReducer = (state, action) => {
         ...state,
         transferData: {},
       };
+    case "FETCH_COUNTRY_DATA":
+      return {
+        ...state,
+        countryDetails: action.payload,
+      };
+    case "FETCH_COUNTRY_DATA_ERR":
+      return {
+        ...state,
+        countryDetails: [],
+      };
+    case "FETCH_DESIGNATION_DATA":
+      return {
+        ...state,
+        designationDetails: action.payload,
+      };
+    case "FETCH_DESIGNATION_DATA_ERR":
+      return {
+        ...state,
+        designationDetails: [],
+      };
     default:
       return state;
   }

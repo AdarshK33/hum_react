@@ -5,6 +5,7 @@ import { Row, Col, Container } from "react-bootstrap";
 import { TransferContext } from "../../../context/TransferState";
 import NoDataComp from "../../no-data/NoData.component";
 import RegularTransferView from "./RegularTransfer";
+import InternationalTransferView from "./InternationalTransferView";
 import LoaderIcon from "../../Loader/LoaderIcon";
 
 const TransferView = () => {
@@ -61,6 +62,8 @@ const TransferView = () => {
                   </Row>
                   {transferData.transferType === "Regular Transfer" ? (
                     <RegularTransferView transferData={transferData} />
+                  ) : transferData.transferType === "International Transfer" ? (
+                    <InternationalTransferView transferData={transferData} />
                   ) : (
                     <RegularTransferView transferData={transferData} />
                   )}
