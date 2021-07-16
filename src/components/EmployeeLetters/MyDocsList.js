@@ -230,15 +230,13 @@ const EmployeeDocementsList = () => {
                             ) : (
                               <td>NA</td>
                             )}
-                            {(item.disciplinaryAction !== null &&
-                              item.disciplinaryAction !== undefined) ||
+                            {/* {((item.disciplinaryAction !== null &&
+                              item.disciplinaryAction !== undefined &&item.disciplinaryAction.statusDesc ===
+                              "Exit Initiated") ||
                             (item.disciplinaryWarning !== null &&
-                              item.disciplinaryWarning !== undefined) ? (
-                              item.disciplinaryAction.statusDesc ===
-                                "Exit Initiated" ||
-                              item.disciplinaryWarning.statusDesc === "NA" ||
+                              item.disciplinaryWarning !== undefined&&(item.disciplinaryWarning.statusDesc === "NA" ||
                               item.disciplinaryWarning.statusDesc ===
-                                "Exit Initiated" ? (
+                                "Exit Initiated"))) ? (
                                 <td> NA</td>
                               ) : item.disciplinaryWarning !== null &&
                                 item.disciplinaryWarning !== undefined ? (
@@ -254,6 +252,13 @@ const EmployeeDocementsList = () => {
                               ) : (
                                 <td>NA</td>
                               )
+                            ) : (
+                              <td>NA</td>
+                            )} */}
+
+                            {item.disciplinaryWarning !== null &&
+                            item.disciplinaryWarning !== undefined ? (
+                              <td>{item.disciplinaryWarning.statusDesc}</td>
                             ) : (
                               <td>NA</td>
                             )}
