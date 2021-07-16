@@ -444,85 +444,131 @@ const OnBoardingStepper = (props) => {
                         </label>
                       </div>
                     </Col>
-                    <Col
-                      sm={10}
-                      style={{ marginTop: "1rem", marginLeft: "2rem" }}
-                    >
-                      {(() => {
-                        switch (stepCount) {
-                          case 0:
-                            return (
-                              <PersonalInformation
-                                NextStep={NextStep}
-                                PrevStep={PrevStep}
-                                MakeFalse={MakeFalse}
-                              />
-                            );
-
-                          case 1:
-                            return (
-                              <Address
-                                NextStep={NextStep}
-                                PrevStep={PrevStep}
-                              />
-                            );
-                          case 2:
-                            return (
-                              <EmergencyContact
-                                NextStep={NextStep}
-                                PrevStep={PrevStep}
-                              />
-                            );
-                          case 3:
-                            return (
-                              <BankDetails
-                                NextStep={NextStep}
-                                PrevStep={PrevStep}
-                              />
-                            );
-                          case 4:
-                            return (
-                              <InsuranceNomination
-                                NextStep={NextStep}
-                                PrevStep={PrevStep}
-                              />
-                            );
-                          case 5:
-                            return (
-                              <PFDeclaration
-                                NextStep={NextStep}
-                                PrevStep={PrevStep}
-                              />
-                            );
-                          case 6:
-                            if (window.location.href.includes("verification")) {
-                              return <DocVerification />;
-                            } else {
+                    {candidateProfileData.contractType === "Internship" ? (
+                      <Col
+                        sm={10}
+                        style={{ marginTop: "1rem", marginLeft: "2rem" }}
+                      >
+                        {(() => {
+                          switch (stepCount) {
+                            case 0:
                               return (
-                                <Documents
+                                <PersonalInformation
+                                  NextStep={NextStep}
+                                  PrevStep={PrevStep}
+                                  MakeFalse={MakeFalse}
+                                />
+                              );
+
+                            case 1:
+                              return (
+                                <Address
                                   NextStep={NextStep}
                                   PrevStep={PrevStep}
                                 />
                               );
-                            }
-                          default:
-                            return <div>OnBoarding</div>;
-                        }
-                      })()}
+                            case 2:
+                              return (
+                                <EmergencyContact
+                                  NextStep={NextStep}
+                                  PrevStep={PrevStep}
+                                />
+                              );
+                            case 3:
+                              return (
+                                <BankDetails
+                                  NextStep={NextStep}
+                                  PrevStep={PrevStep}
+                                />
+                              );
+                            case 4:
+                              if (
+                                window.location.href.includes("verification")
+                              ) {
+                                return <DocVerification />;
+                              } else {
+                                return (
+                                  <Documents
+                                    NextStep={NextStep}
+                                    PrevStep={PrevStep}
+                                  />
+                                );
+                              }
+                            // default:
+                            //   return <div>OnBoarding</div>;
+                          }
+                        })()}
+                      </Col>
+                    ) : (
+                      <Col
+                        sm={10}
+                        style={{ marginTop: "1rem", marginLeft: "2rem" }}
+                      >
+                        {(() => {
+                          switch (stepCount) {
+                            case 0:
+                              return (
+                                <PersonalInformation
+                                  NextStep={NextStep}
+                                  PrevStep={PrevStep}
+                                  MakeFalse={MakeFalse}
+                                />
+                              );
 
-                      {/* <div style={{ marginTop: "2rem", textAlign: "center" }}>
-                        <button className="stepperButtons" onClick={PrevStep}>
-                          Back
-                        </button>
-                        <button
-                          className="stepperButtons"
-                          type="submit"
-                          onClick={NextStep}
-                        >
-                          Save & Next
-                        </button>
-                      </div> */}
-                    </Col>
+                            case 1:
+                              return (
+                                <Address
+                                  NextStep={NextStep}
+                                  PrevStep={PrevStep}
+                                />
+                              );
+                            case 2:
+                              return (
+                                <EmergencyContact
+                                  NextStep={NextStep}
+                                  PrevStep={PrevStep}
+                                />
+                              );
+                            case 3:
+                              return (
+                                <BankDetails
+                                  NextStep={NextStep}
+                                  PrevStep={PrevStep}
+                                />
+                              );
+                            case 4:
+                              return (
+                                <InsuranceNomination
+                                  NextStep={NextStep}
+                                  PrevStep={PrevStep}
+                                />
+                              );
+                            case 5:
+                              return (
+                                <PFDeclaration
+                                  NextStep={NextStep}
+                                  PrevStep={PrevStep}
+                                />
+                              );
+                            case 6:
+                              if (
+                                window.location.href.includes("verification")
+                              ) {
+                                return <DocVerification />;
+                              } else {
+                                return (
+                                  <Documents
+                                    NextStep={NextStep}
+                                    PrevStep={PrevStep}
+                                  />
+                                );
+                              }
+                            default:
+                              return <div>OnBoarding</div>;
+                          }
+                        })()}
+                      </Col>
+                    )}
                   </Row>
                 </div>
               </div>

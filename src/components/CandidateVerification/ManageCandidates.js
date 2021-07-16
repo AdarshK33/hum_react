@@ -171,7 +171,7 @@ const CandidateList = () => {
                       <td>
                         {item.adminVerificationStatus === 0 ||
                         item.adminVerificationStatus === 3
-                          ? "Pending Verification"
+                          ? "Pending"
                           : item.adminVerificationStatus === 1
                           ? "Approved"
                           : "Rejected"}
