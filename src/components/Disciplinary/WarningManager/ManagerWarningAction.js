@@ -1263,7 +1263,7 @@ const ManagerWarningAction = (props) => {
                           <>
                             <Col sm={2}>
                               <div>
-                                <label>Remarks</label>
+                                <label>Respond To Show Cause Notice:</label>
                               </div>
                             </Col>
                             <Col sm={10}>

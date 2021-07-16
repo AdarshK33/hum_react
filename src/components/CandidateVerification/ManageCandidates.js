@@ -12,7 +12,7 @@ const CandidateList = () => {
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [searchValue, setSearchValue] = useState("");
-
+  const [docStatus, setDocStatus] = useState("");
   const { candidateView, candidateList, loader, total, viewCandidateId } =
     useContext(OfferContext);
 
@@ -49,6 +49,15 @@ const CandidateList = () => {
     setCurrentPage(pageNumber);
     if (searchValue !== "") {
       candidateView(searchValue, pageNumber - 1);
+    }
+    if (docStatus === "Pending") {
+      candidateView("all", pageNumber - 1, 0);
+    } else if (docStatus === "In Progress") {
+      candidateView("all", pageNumber - 1, 3);
+    } else if (docStatus === "Approved") {
+      candidateView("all", pageNumber - 1, 1);
+    } else if (docStatus === "Rejected") {
+      candidateView("all", pageNumber - 1, 2);
     } else {
       candidateView("all", pageNumber - 1);
     }
@@ -60,6 +69,9 @@ const CandidateList = () => {
   };
 
   const searchDataHandler = () => {
+    setDocStatus("");
+    setPageCount(0);
+    setCurrentPage(1);
     if (searchValue !== "") {
       candidateView(searchValue, pageCount);
     } else {
@@ -78,6 +90,25 @@ const CandidateList = () => {
     addressInfo(candidateId);
     personalInfo(candidateId);
   };
+
+  const statusHandler = (e) => {
+    setDocStatus(e.target.value);
+    setPageCount(0);
+    setCurrentPage(1);
+    setSearchValue("");
+    if (e.target.value === "Pending") {
+      candidateView("all", 0, 0);
+    } else if (e.target.value === "In Progress") {
+      candidateView("all", 0, 3);
+    } else if (e.target.value === "Approved") {
+      candidateView("all", 0, 1);
+    } else if (e.target.value === "Rejected") {
+      candidateView("all", 0, 2);
+    } else {
+      candidateView("all", 0);
+    }
+  };
+
   return (
     <Fragment>
       <Breadcrumb
@@ -86,7 +117,35 @@ const CandidateList = () => {
       />
       <div className="container-fluid">
         <div className="row headingWrapper px-4 mx-auto">
-          <div className="col-md-10">
+          <div className="col-md-2 ">
+            <Form>
+              <div className="promotion_status_search">
+                {/* className="faq-form mr-2""job-filter" */}
+                <Form.Group>
+                  <Form.Control
+                    as="select"
+                    name="probationStatus"
+                    value={docStatus}
+                    onChange={statusHandler}
+                    style={
+                      false ? { borderColor: "red" } : { borderRadius: "20px" }
+                    }
+                  >
+                    <option value="" disabled selected hidden>
+                      Search status
+                    </option>
+                    <option value="all">All</option>
+                    <option value="Pending">Pending</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Rejected">Rejected</option>
+                  </Form.Control>
+                </Form.Group>
+                {/* <br></br> */}
+              </div>
+            </Form>
+          </div>
+          <div className="col-md-8">
             <b className="text-uppercase text-center">
               Candidate Verification listing
             </b>
@@ -122,7 +181,7 @@ const CandidateList = () => {
                 <th scope="col">Manager Document Verification Status</th>
                 <th scope="col">Verification Team Document Status</th>
                 <th scope="col">UAN Verification Status</th>
-                <th scope="col">Overall Status</th>
+                <th scope="col">Final Status</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
@@ -169,15 +228,16 @@ const CandidateList = () => {
                       <td>{item.createdDate}</td>
                       <td>{item.verificationStatusDesc}</td>
                       <td>
-                        {item.adminVerificationStatus === 0 ||
-                        item.adminVerificationStatus === 3
+                        {item.adminVerificationStatus === 0
                           ? "Pending"
+                          : item.adminVerificationStatus === 3
+                          ? "In Progress"
                           : item.adminVerificationStatus === 1
                           ? "Approved"
                           : "Rejected"}
                       </td>
                       <td>{item.uanStatusDesc}</td>
-                      <td>{item.statusDesc}</td>
+                      <td>{item.overallStatusDesc}</td>
 
                       <td>
                         <Link to={"/verification/" + item.candidateId}>
