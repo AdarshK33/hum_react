@@ -7,7 +7,6 @@ import Breadcrumb from "../../common/breadcrumb";
 import { TransferContext } from "../../../context/TransferState";
 import TRANSFER_TABLE_HEADERS from "./TableHeaders";
 import TableComponent from "../../table/Table.component";
-import NoDataComp from "../../no-data/NoData.component";
 import LoaderIcon from "../../Loader/LoaderIcon";
 
 const TransferPage = () => {
@@ -164,6 +163,35 @@ const TransferPage = () => {
           };
         });
         setTableBody(tableData);
+      } else if (transferType === "International Transfer") {
+        let tableData = transferList.map((item, index) => {
+          return {
+            sno: index + 1,
+            empId: item.currentEmployeeId,
+            empName: item.employeeName,
+            oldCountry: item.currentCountry,
+            oldDesignation: item.currentDesignation,
+            newCountry: item.promotedCountry,
+            newDesignation: item.promotedDesignation,
+            effDate: item.promotedJoiningDate,
+            dateOfReturn: item.promotedDateOfReturn,
+            termOfProject: item.promotedTermOfProject,
+            status: item.statusDesc,
+            view: {
+              active: true,
+              link: `/view-transfer/${item.transferId}`,
+            },
+            action: {
+              edit: {
+                active: true,
+                link: `/international-transfer/${item.transferId}`,
+              },
+            },
+          };
+        });
+        setTableBody(tableData);
+      } else {
+        setTableBody([]);
       }
     } else {
       setTableBody([]);

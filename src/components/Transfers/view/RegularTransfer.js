@@ -5,6 +5,18 @@ const RegularTransferView = ({ transferData }) => {
   return (
     <Fragment>
       <Row className="mb-4">
+        <Col md={2}>Transfer Type</Col>
+        <Col md={8} className="text-primary">
+          {transferData.transferType}
+        </Col>
+      </Row>
+      <Row className="mb-4">
+        <Col md={2}>Employee Name</Col>
+        <Col md={8} className="text-primary">
+          {transferData.employeeName} {transferData.currentEmployeeId}
+        </Col>
+      </Row>
+      <Row className="mb-4">
         <Col md={{ span: 3, offset: 2 }} className="font-weight-bold my-2">
           Current
         </Col>

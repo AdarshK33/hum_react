@@ -255,6 +255,7 @@ const DocVerification = () => {
           <thead>
             <tr>
               <th></th>
+              <th>Download</th>
               <th>Status</th>
               <th>Remarks</th>
               <th>Date</th>
@@ -367,6 +368,14 @@ const DocVerification = () => {
                         {item.documentName}
                       </a>
                       {/* </p> */}
+                      {/* <button
+                        className="downloadButton"
+                        onClick={() => downloadDocument(item.documentName)}
+                      >
+                        Download
+                      </button> */}
+                    </td>
+                    <td className="buttonMargin1">
                       <button
                         className="downloadButton"
                         onClick={() => downloadDocument(item.documentName)}
@@ -651,28 +660,36 @@ const DocVerification = () => {
                             )}
                             {item.documentName}
                           </a>
-                          <button
+                          {/* <button
                             className="downloadButton"
                             onClick={() => downloadDocument(item.documentName)}
                           >
                             Download
-                          </button>
+                          </button> */}
                         </React.Fragment>
                       )}
                     </td>
-                    {item.reviewStatus !== null && item.documentType >= 6 && (
+                    <td className="buttonMargin1">
+                      <button
+                        className="downloadButton"
+                        onClick={() => downloadDocument(item.documentName)}
+                      >
+                        Download
+                      </button>
+                    </td>
+                    {/* {item.reviewStatus !== null && item.documentType >= 6 && (
                       <td>{item.reviewStatus}</td>
-                    )}
-                    <td>
+                    )} */}
+                    {/* <td>
                       {item.remark !== null &&
                         item.documentType >= 6 &&
                         item.remark}
-                    </td>
-                    <td>
+                    </td> */}
+                    {/* <td>
                       {item.verifiedDate !== null &&
                         item.documentType >= 6 &&
                         item.verifiedDate}
-                    </td>
+                    </td> */}
                   </tr>
                 </tbody>
               );
@@ -686,64 +703,72 @@ const DocVerification = () => {
           )}
         </Table>
       </div>
-      {user.role === "ADMIN" && (
-        <Row className="mx-2">
-          <label>Is UAN Number Generated ?</label>
-          <Col sm={2}>
-            <Form.Group>
-              <div className="boxField input">
-                <input
-                  className="largerCheckbox"
-                  type="checkbox"
-                  value="yes"
-                  checked={UANYes}
-                  onChange={handleUANYes}
-                />
-                <label>Yes</label>
-              </div>
-            </Form.Group>
-          </Col>
-          <Col sm={2}>
-            <Form.Group>
-              <div className="boxField input">
-                <input
-                  className="largerCheckbox"
-                  type="checkbox"
-                  value="no"
-                  checked={UANNo}
-                  onChange={handleUANNo}
-                />
-                <label>Link </label>
-              </div>
-            </Form.Group>
-            {uanError && (
-              <p style={{ color: "red" }}>Please Enter UAN Number</p>
-            )}
-          </Col>
-        </Row>
-      )}
-      {(UANYes || UANNo) && user.role === "ADMIN" && pfDetails !== null && (
-        <Row>
-          <Col sm={6}>
-            <Form.Group style={{ borderRadius: " 12.25rem !important" }}>
-              <div className="boxField input">
-                <label>UAN Number</label>{" "}
-                <input
-                  type="text"
-                  name="uannbr"
-                  value={uanNumber}
-                  className="form-control"
-                  // required={required}
-                  onChange={(e) => handleUANNumber(e)}
-                />
-              </div>
-            </Form.Group>
-            {uanError && (
-              <p style={{ color: "red" }}>Please Enter UAN Number</p>
-            )}
-          </Col>
-        </Row>
-      )}
+      {user.role === "ADMIN" &&
+        personalInfoData.contractType !== "Internship" &&
+        (state.adminVerificationStatus === 1 ||
+          state.adminVerificationStatus === 2) && (
+          <Row className="mx-2">
+            <label>Is UAN Number Generated ?</label>
+            <Col sm={2}>
+              <Form.Group>
+                <div className="boxField input">
+                  <input
+                    className="largerCheckbox"
+                    type="checkbox"
+                    value="yes"
+                    checked={UANYes}
+                    onChange={handleUANYes}
+                  />
+                  <label>Yes</label>
+                </div>
+              </Form.Group>
+            </Col>
+            <Col sm={2}>
+              <Form.Group>
+                <div className="boxField input">
+                  <input
+                    className="largerCheckbox"
+                    type="checkbox"
+                    value="no"
+                    checked={UANNo}
+                    onChange={handleUANNo}
+                  />
+                  <label>Link </label>
+                </div>
+              </Form.Group>
+              {uanError && (
+                <p style={{ color: "red" }}>Please Enter UAN Number</p>
+              )}
+            </Col>
+          </Row>
+        )}
+      {(UANYes || UANNo) &&
+        user.role === "ADMIN" &&
+        personalInfoData.contractType !== "Internship" &&
+        (state.adminVerificationStatus === 1 ||
+          state.adminVerificationStatus === 2) &&
+        pfDetails !== null && (
+          <Row>
+            <Col sm={6}>
+              <Form.Group style={{ borderRadius: " 12.25rem !important" }}>
+                <div className="boxField input">
+                  <label>UAN Number</label>{" "}
+                  <input
+                    type="text"
+                    name="uannbr"
+                    value={uanNumber}
+                    className="form-control"
+                    // required={required}
+                    onChange={(e) => handleUANNumber(e)}
+                  />
+                </div>
+              </Form.Group>
+              {uanError && (
+                <p style={{ color: "red" }}>Please Enter UAN Number</p>
+              )}
+            </Col>
+          </Row>
+        )}
 
       {/* {user.role === "ADMIN" &&
         state.adminVerificationStatus === 1 &&
@@ -774,7 +799,8 @@ const DocVerification = () => {
           textAlign: "center",
         }}
       >
-        {state.uanStatus !== 1 &&
+        {personalInfoData.contractType !== "Internship" &&
+          state.uanStatus !== 1 &&
           (state.adminVerificationStatus === 1 ||
             state.adminVerificationStatus === 2) && (
             <button className="stepperButtons" onClick={() => handleDocSave()}>
@@ -782,30 +808,21 @@ const DocVerification = () => {
             </button>
           )}
 
-        {state !== undefined &&
-          state.uanStatus === 1 &&
-          state.adminVerificationStatus === 1 &&
-          state.documentUploaded === 1 && (
-            <Link to="/candidate-verification">
-              <button className="onboardButton" onClick={() => handleOnboard()}>
-                Onboard Candidate
-              </button>
-            </Link>
-          )}
+        {state !== undefined && state.adminVerificationStatus === 1 && (
+          <Link to="/candidate-verification">
+            <button className="onboardButton" onClick={() => handleOnboard()}>
+              Onboard Candidate
+            </button>
+          </Link>
+        )}
 
-        {state !== undefined &&
-          state.uanStatus === 1 &&
-          state.adminVerificationStatus === 2 &&
-          state.documentUploaded === 0 && (
-            <Link to="/candidate-verification">
-              <button
-                className="onboardButton"
-                onClick={() => handleReupload()}
-              >
-                Submit
-              </button>
-            </Link>
-          )}
+        {state !== undefined && state.adminVerificationStatus === 2 && (
+          <Link to="/candidate-verification">
+            <button className="onboardButton" onClick={() => handleReupload()}>
+              Submit
+            </button>
+          </Link>
+        )}
       </div>
     </Fragment>
   );

@@ -113,7 +113,7 @@ const OfferReleaseList = () => {
                       <th scope="col">Candidate Name</th>
                       <th scope="col">Application Date</th>
                       <th scope="col">Document Verification Status</th>
-                      <th scope="col">Overall Status</th>
+                      <th scope="col">Candidate Application Status</th>
                       <th scope="col">Edit</th>
                       <th scope="col">View</th>
                       {user !== null &&
@@ -158,7 +158,7 @@ const OfferReleaseList = () => {
                               {item.firstName} {item.lastName}
                             </td>
                             <td>{item.createdDate}</td>
-                            <td>{item.verificationStatusDesc}</td>
+                            <td>{item.overallStatusDesc}</td>
                             <td>{item.statusDesc}</td>
 
                             <td>

@@ -113,6 +113,7 @@ import Initiations from "./components/Transfers/Initiation/Initiations";
 import TransferView from "./components/Transfers/view/TransferView";
 import RegularTransferAcceptance from "./components/Transfers/Acceptance/RegularTransferAcceptance";
 import EntityTransferAcceptance from "./components/Transfers/Acceptance/EntityTransferAcceptance";
+import InternationalTransferAcceptance from "./components/Transfers/Acceptance/InternationalTransferAcceptance";
 
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
@@ -374,6 +375,10 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/entity-transfer/:transferId`}
             component={EntityTransferAcceptance}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/international-transfer/:transferId`}
+            component={InternationalTransferAcceptance}
           />
           {/* <Route
             path={`${process.env.PUBLIC_URL}/promotion/:promotionId`}

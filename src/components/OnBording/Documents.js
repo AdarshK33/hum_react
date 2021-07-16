@@ -135,7 +135,7 @@ const Documents = (props) => {
         setParTime(false);
         setFullTime(false);
         setLocalExpact(false);
-      } else if (workInfoData.contractType === "Others") {
+      } else if (workInfoData.contractType === "Local Expat") {
         setLocalExpact(true);
         setParTime(false);
         setFullTime(false);
@@ -899,7 +899,7 @@ const Documents = (props) => {
       console.log(state);
       setOnDocumentProceed(true);
       const nextPage = props.NextStep;
-      nextPage(true);
+      // nextPage(true);
     }
   };
 
@@ -997,13 +997,13 @@ const Documents = (props) => {
     } else if (event.target.name === "passport") {
       if (PassPortValidation() === true) {
         fileUpload = state.passport;
-        fileType = 0;
+        fileType = 14;
         UploadedArray[0].ULPassport = true;
       }
     } else if (event.target.name === "frro") {
       if (FrroValidation() === true) {
         fileUpload = state.frro;
-        fileType = 0;
+        fileType = 17;
         UploadedArray[0].ULFrro = true;
       }
     } else if (event.target.name === "epfPassBook") {
@@ -1069,71 +1069,70 @@ const Documents = (props) => {
   };
   return (
     <Fragment>
-      {localExpact === false ? (
-        <Row>
-          <Modal
-            show={onDocumentProceed}
-            onHide={() => setOnDocumentProceed(false)}
-            centered
-            size="md"
-          >
-            <Container style={{ textAlign: "center", margin: "4rem 0 4rem 0" }}>
-              <Modal.Body>
-                <h3>Thank You</h3>
-                <h6 style={{ marginBottom: "1rem" }}>
-                  Thank you for filling the onboarding details. Do you wish to
-                  proceed?
-                </h6>{" "}
-                <b style={{ color: "red" }}>
-                  Note: Once you click on Yes, no further editing will be
-                  allowed
-                </b>
+      <Row>
+        <Modal
+          show={onDocumentProceed}
+          onHide={() => setOnDocumentProceed(false)}
+          centered
+          size="md"
+        >
+          <Container style={{ textAlign: "center", margin: "4rem 0 4rem 0" }}>
+            <Modal.Body>
+              <h3>Thank You</h3>
+              <h6 style={{ marginBottom: "1rem" }}>
+                Thank you for filling the onboarding details. Do you wish to
+                proceed?
+              </h6>{" "}
+              <b style={{ color: "red" }}>
+                Note: Once you click on Yes, no further editing will be allowed
+              </b>
+              <Button
+                style={{ margin: "1rem 2rem 0", width: "100px" }}
+                onClick={() => proceedHandler()}
+              >
+                Yes
+              </Button>
+              <Button
+                style={{ margin: "1rem 0 0", width: "100px" }}
+                onClick={() => setOnDocumentProceed(false)}
+              >
+                No
+              </Button>
+            </Modal.Body>
+          </Container>
+        </Modal>
+        <Modal
+          show={onDocumentPopup}
+          onHide={() => setOnDocumentPopup(false)}
+          centered
+          size="md"
+        >
+          <Container style={{ textAlign: "center", margin: "4rem 0 4rem 0" }}>
+            <Modal.Body>
+              <h3>Thank You</h3>
+              <h6 style={{ marginBottom: "1rem" }}>
+                Your details have been sent to our verification team, please
+                wait to hear from us
+              </h6>{" "}
+              <Link
+                style={{
+                  color: "#ffffff",
+                  textDecoration: "none !important",
+                }}
+                to="/offer"
+              >
                 <Button
-                  style={{ margin: "1rem 2rem 0", width: "100px" }}
-                  onClick={() => proceedHandler()}
+                  style={{ width: "100px" }}
+                  onClick={() => setOnDocumentPopup(false)}
                 >
-                  Yes
+                  Close
                 </Button>
-                <Button
-                  style={{ margin: "1rem 0 0", width: "100px" }}
-                  onClick={() => setOnDocumentProceed(false)}
-                >
-                  No
-                </Button>
-              </Modal.Body>
-            </Container>
-          </Modal>
-          <Modal
-            show={onDocumentPopup}
-            onHide={() => setOnDocumentPopup(false)}
-            centered
-            size="md"
-          >
-            <Container style={{ textAlign: "center", margin: "4rem 0 4rem 0" }}>
-              <Modal.Body>
-                <h3>Thank You</h3>
-                <h6 style={{ marginBottom: "1rem" }}>
-                  Your details have been sent to our verification team, please
-                  wait to hear from us
-                </h6>{" "}
-                <Link
-                  style={{
-                    color: "#ffffff",
-                    textDecoration: "none !important",
-                  }}
-                  to="/offer"
-                >
-                  <Button
-                    style={{ width: "100px" }}
-                    onClick={() => setOnDocumentPopup(false)}
-                  >
-                    Close
-                  </Button>
-                </Link>
-              </Modal.Body>
-            </Container>
-          </Modal>
-          <ToastContainer />
+              </Link>
+            </Modal.Body>
+          </Container>
+        </Modal>
+        <ToastContainer />
+        {localExpact !== true ? (
           <Col>
             <div className="parent">
               <button
@@ -1152,10 +1151,11 @@ const Documents = (props) => {
               </button>
             </div>
           </Col>
-        </Row>
-      ) : (
-        ""
-      )}
+        ) : (
+          ""
+        )}
+      </Row>
+
       {/* personal documents */}
       <Form>
         {isChecked === false ? (
@@ -1535,7 +1535,7 @@ const Documents = (props) => {
                       : "FileInputWithOutStar"
                   }
                 >
-                  <label>Pass Port</label>
+                  <label>Passport</label>
                 </div>
                 <div className="parentInput">
                   <label className="fileInputField">
@@ -1809,9 +1809,7 @@ const Documents = (props) => {
           ""
         )}
 
-        {(isChecked === false) |
-        (localExpact === true) |
-        (internship === true) ? (
+        {isChecked === false ? (
           // not required for local expact
           // required in internship, full ,part time
           <Row>
@@ -2160,166 +2158,172 @@ const Documents = (props) => {
               </Form.Group>
             </Col>
           </Row>
-          <Row>
-            <Col>
-              <Form.Group>
-                <div
-                  className={
-                    CandidateFirstJob ? "FileInput" : "FileInputWithOutStar"
-                  }
-                >
-                  <label>Relieving Letter</label>
-                </div>
-                <div className="parentInput">
-                  <label className="fileInputField">
-                    &nbsp;&nbsp;
-                    {stateOfName.relievingLetter !== ""
-                      ? stateOfName.relievingLetter
-                      : "Select File Here"}
-                    <input
-                      type="file"
-                      accept="image/jpeg,.pdf"
-                      name="relievingLetter"
-                      style={{ display: "none" }}
-                      onChange={(e) => {
-                        changeHandler(e);
-                      }}
-                      readOnly
-                      disabled={
-                        (stateOfDisable.relievingLetter === 2 ||
-                          stateOfDisable.relievingLetter === 0) &&
-                        candidateProfileData.documentUploaded === 0
-                          ? false
-                          : true
+          {candidateProfileData.contractType !== "Internship" ? (
+            <React.Fragment>
+              <Row>
+                <Col>
+                  <Form.Group>
+                    <div
+                      className={
+                        CandidateFirstJob ? "FileInput" : "FileInputWithOutStar"
                       }
-                    />
-                  </label>
+                    >
+                      <label>Relieving Letter</label>
+                    </div>
+                    <div className="parentInput">
+                      <label className="fileInputField">
+                        &nbsp;&nbsp;
+                        {stateOfName.relievingLetter !== ""
+                          ? stateOfName.relievingLetter
+                          : "Select File Here"}
+                        <input
+                          type="file"
+                          accept="image/jpeg,.pdf"
+                          name="relievingLetter"
+                          style={{ display: "none" }}
+                          onChange={(e) => {
+                            changeHandler(e);
+                          }}
+                          readOnly
+                          disabled={
+                            (stateOfDisable.relievingLetter === 2 ||
+                              stateOfDisable.relievingLetter === 0) &&
+                            candidateProfileData.documentUploaded === 0
+                              ? false
+                              : true
+                          }
+                        />
+                      </label>
 
-                  <label
-                    className={
-                      (stateOfDisable.relievingLetter === 2 ||
-                        stateOfDisable.relievingLetter === 0) &&
-                      candidateProfileData.documentUploaded === 0
-                        ? "custom-file-upload"
-                        : "custom-file-disable"
-                    }
-                  >
-                    <input
-                      type="button"
-                      name="relievingLetter"
-                      className="custom_file_Upload_button"
-                      onClick={(e) => {
-                        handleUpload(e);
-                      }}
-                      disabled={
-                        (stateOfDisable.relievingLetter === 2 ||
-                          stateOfDisable.relievingLetter === 0) &&
-                        candidateProfileData.documentUploaded === 0
-                          ? false
-                          : true
+                      <label
+                        className={
+                          (stateOfDisable.relievingLetter === 2 ||
+                            stateOfDisable.relievingLetter === 0) &&
+                          candidateProfileData.documentUploaded === 0
+                            ? "custom-file-upload"
+                            : "custom-file-disable"
+                        }
+                      >
+                        <input
+                          type="button"
+                          name="relievingLetter"
+                          className="custom_file_Upload_button"
+                          onClick={(e) => {
+                            handleUpload(e);
+                          }}
+                          disabled={
+                            (stateOfDisable.relievingLetter === 2 ||
+                              stateOfDisable.relievingLetter === 0) &&
+                            candidateProfileData.documentUploaded === 0
+                              ? false
+                              : true
+                          }
+                        />
+                        {/* <i className="fa fa-cloud-upload" />  */}
+                        Upload File{" "}
+                        <i
+                          id="custom_file_upload_icon"
+                          className="fa fa-upload"
+                          aria-hidden="true"
+                        ></i>
+                      </label>
+                    </div>
+                    {relievingLetterError ? (
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the
+                        relieving letter
+                      </p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </Form.Group>
+                </Col>
+              </Row>
+              <Row>
+                <Col>
+                  <Form.Group>
+                    <div
+                      className={
+                        CandidateFirstJob ? "FileInput" : "FileInputWithOutStar"
                       }
-                    />
-                    {/* <i className="fa fa-cloud-upload" />  */}
-                    Upload File{" "}
-                    <i
-                      id="custom_file_upload_icon"
-                      className="fa fa-upload"
-                      aria-hidden="true"
-                    ></i>
-                  </label>
-                </div>
-                {relievingLetterError ? (
-                  <p style={{ color: "red" }}>
-                    {" "}
-                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the
-                    relieving letter
-                  </p>
-                ) : (
-                  <p></p>
-                )}
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Form.Group>
-                <div
-                  className={
-                    CandidateFirstJob ? "FileInput" : "FileInputWithOutStar"
-                  }
-                >
-                  <label>Latest Payslips</label>
-                </div>
-                <div className="parentInput">
-                  <label className="fileInputField">
-                    &nbsp;&nbsp;
-                    {stateOfName.latestPaySlips !== ""
-                      ? stateOfName.latestPaySlips
-                      : "Select File Here"}
-                    <input
-                      type="file"
-                      accept="image/jpeg,.pdf"
-                      name="latestPaySlips"
-                      style={{ display: "none" }}
-                      onChange={(e) => {
-                        changeHandler(e);
-                      }}
-                      readOnly
-                      disabled={
-                        (stateOfDisable.latestPaySlips === 2 ||
-                          stateOfDisable.latestPaySlips === 0) &&
-                        candidateProfileData.documentUploaded === 0
-                          ? false
-                          : true
-                      }
-                    />
-                  </label>
+                    >
+                      <label>Latest Payslips</label>
+                    </div>
+                    <div className="parentInput">
+                      <label className="fileInputField">
+                        &nbsp;&nbsp;
+                        {stateOfName.latestPaySlips !== ""
+                          ? stateOfName.latestPaySlips
+                          : "Select File Here"}
+                        <input
+                          type="file"
+                          accept="image/jpeg,.pdf"
+                          name="latestPaySlips"
+                          style={{ display: "none" }}
+                          onChange={(e) => {
+                            changeHandler(e);
+                          }}
+                          readOnly
+                          disabled={
+                            (stateOfDisable.latestPaySlips === 2 ||
+                              stateOfDisable.latestPaySlips === 0) &&
+                            candidateProfileData.documentUploaded === 0
+                              ? false
+                              : true
+                          }
+                        />
+                      </label>
 
-                  <label
-                    className={
-                      (stateOfDisable.latestPaySlips === 2 ||
-                        stateOfDisable.latestPaySlips === 0) &&
-                      candidateProfileData.documentUploaded === 0
-                        ? "custom-file-upload"
-                        : "custom-file-disable"
-                    }
-                  >
-                    <input
-                      type="button"
-                      name="latestPaySlips"
-                      className="custom_file_Upload_button"
-                      onClick={(e) => {
-                        handleUpload(e);
-                      }}
-                      disabled={
-                        (stateOfDisable.latestPaySlips === 2 ||
-                          stateOfDisable.latestPaySlips === 0) &&
-                        candidateProfileData.documentUploaded === 0
-                          ? false
-                          : true
-                      }
-                    />
-                    {/* <i className="fa fa-cloud-upload" />  */}
-                    Upload File{" "}
-                    <i
-                      id="custom_file_upload_icon"
-                      className="fa fa-upload"
-                      aria-hidden="true"
-                    ></i>
-                  </label>
-                </div>
-                {latestPaySlipsError ? (
-                  <p style={{ color: "red" }}>
-                    {" "}
-                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the latest
-                    payslips
-                  </p>
-                ) : (
-                  <p></p>
-                )}
-              </Form.Group>
-            </Col>
-          </Row>
+                      <label
+                        className={
+                          (stateOfDisable.latestPaySlips === 2 ||
+                            stateOfDisable.latestPaySlips === 0) &&
+                          candidateProfileData.documentUploaded === 0
+                            ? "custom-file-upload"
+                            : "custom-file-disable"
+                        }
+                      >
+                        <input
+                          type="button"
+                          name="latestPaySlips"
+                          className="custom_file_Upload_button"
+                          onClick={(e) => {
+                            handleUpload(e);
+                          }}
+                          disabled={
+                            (stateOfDisable.latestPaySlips === 2 ||
+                              stateOfDisable.latestPaySlips === 0) &&
+                            candidateProfileData.documentUploaded === 0
+                              ? false
+                              : true
+                          }
+                        />
+                        {/* <i className="fa fa-cloud-upload" />  */}
+                        Upload File{" "}
+                        <i
+                          id="custom_file_upload_icon"
+                          className="fa fa-upload"
+                          aria-hidden="true"
+                        ></i>
+                      </label>
+                    </div>
+                    {latestPaySlipsError ? (
+                      <p style={{ color: "red" }}>
+                        {" "}
+                        &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the
+                        latest payslips
+                      </p>
+                    ) : (
+                      <p></p>
+                    )}
+                  </Form.Group>
+                </Col>
+              </Row>
+            </React.Fragment>
+          ) : (
+            ""
+          )}
         </Form>
       ) : (
         ""
