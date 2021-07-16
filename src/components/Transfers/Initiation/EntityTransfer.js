@@ -464,36 +464,12 @@ const EntityTransfer = () => {
                 controlId="transferInitiationCostCentre"
               >
                 <Col md={2}>
-                  <Form.Label>New Cost Center:</Form.Label>
+                  <Form.Label>Old Fixed Gross:</Form.Label>
                 </Col>
-                <Col md={3}>
-                  <Form.Control
-                    as="select"
-                    className="text-primary"
-                    aria-label="transferInitiationCostCentre"
-                    value={newCostCentre}
-                    placeholder="Select Cost Centre"
-                    onChange={changeCostCentreHandler}
-                  >
-                    <option>Select Cost Centre</option>
-                    {costCentreData !== null &&
-                      costCentreData !== undefined &&
-                      costCentreData.length > 0 &&
-                      costCentreData.map((item) => {
-                        return (
-                          <option
-                            key={`cost_centre_${item.costCentreName}`}
-                            value={item.costCentreName}
-                          >
-                            {item.costCentreName}
-                          </option>
-                        );
-                      })}
-                  </Form.Control>
-                  {costCentreErrMsg !== "" && (
-                    <span className="text-danger">{costCentreErrMsg}</span>
-                  )}
+                <Col md={3} className="text-primary">
+                  {initiationEmpData.currentFixedGross}
                 </Col>
+
                 <Col md={2}>
                   <Form.Label>New Manager:</Form.Label>
                 </Col>
@@ -530,12 +506,6 @@ const EntityTransfer = () => {
                 controlId="transferInitiationCostCentre"
               >
                 <Col md={2}>
-                  <Form.Label>Old Fixed Gross:</Form.Label>
-                </Col>
-                <Col md={3} className="text-primary">
-                  {initiationEmpData.currentFixedGross}
-                </Col>
-                <Col md={2}>
                   <Form.Label>Effective Date:</Form.Label>
                 </Col>
                 <Col md={3}>
@@ -551,6 +521,37 @@ const EntityTransfer = () => {
                   />
                   {effectiveDateErrMsg !== "" && (
                     <span className="text-danger">{effectiveDateErrMsg}</span>
+                  )}
+                </Col>
+                <Col md={2}>
+                  <Form.Label>New Cost Center:</Form.Label>
+                </Col>
+                <Col md={3}>
+                  <Form.Control
+                    as="select"
+                    className="text-primary"
+                    aria-label="transferInitiationCostCentre"
+                    value={newCostCentre}
+                    placeholder="Select Cost Centre"
+                    onChange={changeCostCentreHandler}
+                  >
+                    <option>Select Cost Centre</option>
+                    {costCentreData !== null &&
+                      costCentreData !== undefined &&
+                      costCentreData.length > 0 &&
+                      costCentreData.map((item) => {
+                        return (
+                          <option
+                            key={`cost_centre_${item.costCentreName}`}
+                            value={item.costCentreName}
+                          >
+                            {item.costCentreName}
+                          </option>
+                        );
+                      })}
+                  </Form.Control>
+                  {costCentreErrMsg !== "" && (
+                    <span className="text-danger">{costCentreErrMsg}</span>
                   )}
                 </Col>
               </Form.Group>

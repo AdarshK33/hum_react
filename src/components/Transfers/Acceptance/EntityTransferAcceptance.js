@@ -36,7 +36,6 @@ const EntityTransferAcceptance = () => {
     transferData,
   } = useContext(TransferContext);
   const { user } = useContext(AppContext);
-  const [showImg, setSWhowImg] = useState(false);
   const [transferType, setTransferType] = useState("Entity Transfer");
   const [newEntity, setNewEntity] = useState("");
   const [newEntityErrMsg, setNewEntityErrMsg] = useState("");
@@ -109,6 +108,17 @@ const EntityTransferAcceptance = () => {
       getCostCentreLocationDetails(newCostCentre);
     }
   }, [newCostCentre]);
+  useEffect(() => {
+    if (
+      transferData !== null &&
+      transferData !== undefined &&
+      Object.keys(transferData).length !== 0
+    ) {
+      setEffectiveDate(new Date(transferData.promotedJoiningDate));
+    } else {
+      setEffectiveDate(new Date());
+    }
+  }, [transferData]);
 
   //   useEffect(() => {
   //     if (formValid === true) {
@@ -314,43 +324,11 @@ const EntityTransferAcceptance = () => {
       setFormValid(true);
     }
   };
-  const handleCloseImg = () => {
-    setSWhowImg(false);
-  };
-  const handleOpenImg = () => {
-    setSWhowImg(true);
-  };
 
   return (
     <Fragment>
       <ToastContainer />
-      <Modal show={showImg} onHide={handleCloseImg} size="md" centered>
-        <Container>
-          <Modal.Header closeButton className="modalHeader"></Modal.Header>
-          <Modal.Body className="mx-auto">
-            <img
-              src={
-                transferData !== null &&
-                transferData !== undefined &&
-                Object.keys(transferData).length !== 0 &&
-                transferData.internationalTransfer !== null &&
-                transferData.internationalTransfer !== undefined &&
-                transferData.internationalTransfer.aadhaarNumberDoc !== null &&
-                transferData.internationalTransfer.aadhaarNumberDoc !==
-                  undefined
-                  ? "http://humine-application.s3-website.ap-south-1.amazonaws.com/" +
-                    transferData.internationalTransfer.aadhaarNumberDoc
-                  : ""
-              }
-              className="img-fluid"
-            />
 
-            <div className="text-center mb-2">
-              <Button onClick={handleCloseImg}>Close</Button>
-            </div>
-          </Modal.Body>
-        </Container>
-      </Modal>
       <Modal show={modalShow} onHide={handleModalClose} size="md" centered>
         {/* <Modal.Header closeButton className="modal-line"></Modal.Header>
         <Modal.Body className="mx-auto">
@@ -467,7 +445,10 @@ const EntityTransferAcceptance = () => {
                       <div className="line bg-primary"></div>
                     </div>
                   </div>
-                ) : (
+                ) : transferData &&
+                  transferData !== null &&
+                  transferData !== undefined &&
+                  Object.keys(transferData).length !== 0 ? (
                   <Form>
                     <Row
                       style={{
@@ -551,26 +532,7 @@ const EntityTransferAcceptance = () => {
                             transferData.internationalTransfer !== null &&
                             transferData.internationalTransfer !== undefined
                               ? transferData.internationalTransfer.uanNumber
-                              : ""}
-                            &nbsp;&nbsp;
-                            {transferData !== null &&
-                            transferData !== undefined &&
-                            Object.keys(transferData).length !== 0 &&
-                            transferData.internationalTransfer !== null &&
-                            transferData.internationalTransfer !== undefined &&
-                            transferData.internationalTransfer.uanNumberDoc !==
-                              null &&
-                            transferData.internationalTransfer.uanNumberDoc !==
-                              undefined ? (
-                              <a
-                              // onClick={LetterShow}
-                              >
-                                {" "}
-                                <u className="text-primary">View</u>
-                              </a>
-                            ) : (
-                              "(No Documents Available)"
-                            )}
+                              : "(No Documents Available)"}
                           </Col>
                           <Col md={2}>
                             <Form.Label>Bank Account Number:</Form.Label>
@@ -583,26 +545,7 @@ const EntityTransferAcceptance = () => {
                             transferData.internationalTransfer !== undefined
                               ? transferData.internationalTransfer
                                   .bankAccountNumber
-                              : ""}
-                            &nbsp;&nbsp;
-                            {transferData !== null &&
-                            transferData !== undefined &&
-                            Object.keys(transferData).length !== 0 &&
-                            transferData.internationalTransfer !== null &&
-                            transferData.internationalTransfer !== undefined &&
-                            transferData.internationalTransfer
-                              .bankAccountNumberDoc !== null &&
-                            transferData.internationalTransfer
-                              .bankAccountNumberDoc !== undefined ? (
-                              <a
-                              // onClick={LetterShow}
-                              >
-                                {" "}
-                                <u className="text-primary">View</u>
-                              </a>
-                            ) : (
-                              "(No Documents Available)"
-                            )}
+                              : "(No Documents Available)"}
                           </Col>
                         </Form.Group>
                         <Form.Group
@@ -632,7 +575,12 @@ const EntityTransferAcceptance = () => {
                             transferData.internationalTransfer.panNumberDoc !==
                               undefined ? (
                               <a
-                              // onClick={LetterShow}
+                                href={
+                                  "http://humine-application.s3-website.ap-south-1.amazonaws.com/" +
+                                  transferData.internationalTransfer
+                                    .panNumberDoc
+                                }
+                                target="_blank"
                               >
                                 {" "}
                                 <u className="text-primary">View</u>
@@ -663,12 +611,12 @@ const EntityTransferAcceptance = () => {
                             transferData.internationalTransfer
                               .aadhaarNumberDoc !== undefined ? (
                               <a
-                                onClick={handleOpenImg}
-                                // href={
-                                //   "http://humine-application.s3-website.ap-south-1.amazonaws.com/" +
-                                //   transferData.internationalTransfer
-                                //     .aadhaarNumberDoc
-                                // }
+                                href={
+                                  "http://humine-application.s3-website.ap-south-1.amazonaws.com/" +
+                                  transferData.internationalTransfer
+                                    .aadhaarNumberDoc
+                                }
+                                target="_blank"
                               >
                                 {" "}
                                 <u className="text-primary">View</u>
@@ -904,6 +852,28 @@ const EntityTransferAcceptance = () => {
                           controlId="transferInitiationCostCentre"
                         >
                           <Col md={2}>
+                            <Form.Label>Date Of Joining:</Form.Label>
+                          </Col>
+
+                          <Col md={3}>
+                            <DatePicker
+                              className="text-primary form-control"
+                              selected={effectiveDate}
+                              closeOnScroll={true}
+                              minDate={moment().toDate()}
+                              dateFormat="yyyy-MM-dd"
+                              onChange={(date) => {
+                                changeEffectiveDateHandler(date);
+                              }}
+                            />
+
+                            {effectiveDateErrMsg !== "" && (
+                              <span className="text-danger">
+                                {effectiveDateErrMsg}
+                              </span>
+                            )}
+                          </Col>
+                          <Col md={2}>
                             <Form.Label>New Position:</Form.Label>
                           </Col>
                           {transferData.promotedPosition ? (
@@ -942,28 +912,6 @@ const EntityTransferAcceptance = () => {
                               )}
                             </Col>
                           )}
-                          <Col md={2}>
-                            <Form.Label>Date Of Joining:</Form.Label>
-                          </Col>
-
-                          <Col md={3}>
-                            <DatePicker
-                              className="text-primary form-control"
-                              selected={effectiveDate}
-                              closeOnScroll={true}
-                              minDate={moment().toDate()}
-                              dateFormat="yyyy-MM-dd"
-                              onChange={(date) => {
-                                changeEffectiveDateHandler(date);
-                              }}
-                            />
-
-                            {effectiveDateErrMsg !== "" && (
-                              <span className="text-danger">
-                                {effectiveDateErrMsg}
-                              </span>
-                            )}
-                          </Col>
                         </Form.Group>
 
                         <Row>
@@ -1024,6 +972,8 @@ const EntityTransferAcceptance = () => {
                       </Col>
                     </Row>
                   </Form>
+                ) : (
+                  ""
                 )}
               </div>
             </div>
