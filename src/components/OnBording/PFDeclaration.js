@@ -287,18 +287,23 @@ const PFDeclaration = (props) => {
     }
   };
   const UanNumberValidation = () => {
-    if (
-      uanNumber !== null &&
-      uanNumber !== undefined &&
-      uanNumber !== "" &&
-      uanNumber.length == 12
-    ) {
-      console.log("uan number");
+    if (contributingPrevOrgYes === true) {
+      if (
+        uanNumber !== null &&
+        uanNumber !== undefined &&
+        uanNumber !== "" &&
+        uanNumber.length == 12
+      ) {
+        console.log("uan number");
+        setUanNumberError(false);
+        return true;
+      } else {
+        setUanNumberError(true);
+        return false;
+      }
+    } else {
       setUanNumberError(false);
       return true;
-    } else {
-      setUanNumberError(true);
-      return false;
     }
   };
 
@@ -561,6 +566,8 @@ const PFDeclaration = (props) => {
   const handleContributingPrevOrgYesChange = (e) => {
     setContributingPrevOrgYes(e.target.checked);
     setContributingPrevOrgNo(!e.target.checked);
+    setMemberOfPensionSchemeNo(false);
+    setMemberOfPensionSchemeYes(false);
     {
       required ? setRequired(!required) : setRequired(required);
     }
@@ -568,6 +575,8 @@ const PFDeclaration = (props) => {
   const handleContributingPrevOrgNoChange = (e) => {
     setContributingPrevOrgNo(e.target.checked);
     setContributingPrevOrgYes(!e.target.checked);
+    setMemberOfPensionSchemeNo(e.target.checked);
+    setMemberOfPensionSchemeYes(!e.target.checked);
     // setState({ uanNumber: "" });
     setUanNumber("");
     {
@@ -919,7 +928,7 @@ const PFDeclaration = (props) => {
                   value="yes"
                   checked={memberOfPensionSchemeYes}
                   required={required}
-                  disabled={contributingPrevOrgNo}
+                  disabled={memberOfPensionSchemeNo}
                   onChange={handleMemberOfPensionSchemeYesChange}
                 />
                 <label>Yes</label>
