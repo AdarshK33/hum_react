@@ -469,60 +469,6 @@ const EntityTransfer = () => {
                 <Col md={3} className="text-primary">
                   {initiationEmpData.currentFixedGross}
                 </Col>
-
-                <Col md={2}>
-                  <Form.Label>New Manager:</Form.Label>
-                </Col>
-                <Col md={3}>
-                  <Form.Control
-                    as="select"
-                    className="text-primary"
-                    aria-label="transferInitiationManager"
-                    value={newManager}
-                    placeholder="Select Manager"
-                    onChange={changeManagerHandler}
-                  >
-                    <option>Select Manager</option>
-                    {costCentreManagersData !== null &&
-                      costCentreManagersData !== undefined &&
-                      costCentreManagersData.length !== 0 &&
-                      costCentreManagersData.map((item) => {
-                        return (
-                          <option
-                            key={`manager_${item.employeeId}`}
-                            value={item.employeeId}
-                          >{`${item.firstName} ${item.lastName}`}</option>
-                        );
-                      })}
-                  </Form.Control>
-                  {managerErrMsg !== "" && (
-                    <span className="text-danger">{managerErrMsg}</span>
-                  )}
-                </Col>
-              </Form.Group>
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="transferInitiationCostCentre"
-              >
-                <Col md={2}>
-                  <Form.Label>Effective Date:</Form.Label>
-                </Col>
-                <Col md={3}>
-                  <DatePicker
-                    className="text-primary form-control"
-                    selected={effectiveDate}
-                    closeOnScroll={true}
-                    minDate={moment().toDate()}
-                    dateFormat="yyyy-MM-dd"
-                    onChange={(date) => {
-                      changeEffectiveDateHandler(date);
-                    }}
-                  />
-                  {effectiveDateErrMsg !== "" && (
-                    <span className="text-danger">{effectiveDateErrMsg}</span>
-                  )}
-                </Col>
                 <Col md={2}>
                   <Form.Label>New Cost Center:</Form.Label>
                 </Col>
@@ -552,6 +498,59 @@ const EntityTransfer = () => {
                   </Form.Control>
                   {costCentreErrMsg !== "" && (
                     <span className="text-danger">{costCentreErrMsg}</span>
+                  )}
+                </Col>
+              </Form.Group>
+              <Form.Group
+                as={Row}
+                className="mb-3"
+                controlId="transferInitiationCostCentre"
+              >
+                <Col md={2}>
+                  <Form.Label>Effective Date:</Form.Label>
+                </Col>
+                <Col md={3}>
+                  <DatePicker
+                    className="text-primary form-control"
+                    selected={effectiveDate}
+                    closeOnScroll={true}
+                    minDate={moment().toDate()}
+                    dateFormat="yyyy-MM-dd"
+                    onChange={(date) => {
+                      changeEffectiveDateHandler(date);
+                    }}
+                  />
+                  {effectiveDateErrMsg !== "" && (
+                    <span className="text-danger">{effectiveDateErrMsg}</span>
+                  )}
+                </Col>
+                <Col md={2}>
+                  <Form.Label>New Manager:</Form.Label>
+                </Col>
+                <Col md={3}>
+                  <Form.Control
+                    as="select"
+                    className="text-primary"
+                    aria-label="transferInitiationManager"
+                    value={newManager}
+                    placeholder="Select Manager"
+                    onChange={changeManagerHandler}
+                  >
+                    <option>Select Manager</option>
+                    {costCentreManagersData !== null &&
+                      costCentreManagersData !== undefined &&
+                      costCentreManagersData.length !== 0 &&
+                      costCentreManagersData.map((item) => {
+                        return (
+                          <option
+                            key={`manager_${item.employeeId}`}
+                            value={item.employeeId}
+                          >{`${item.firstName} ${item.lastName}`}</option>
+                        );
+                      })}
+                  </Form.Control>
+                  {managerErrMsg !== "" && (
+                    <span className="text-danger">{managerErrMsg}</span>
                   )}
                 </Col>
               </Form.Group>

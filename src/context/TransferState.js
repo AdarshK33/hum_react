@@ -16,6 +16,7 @@ const initialState = {
   initiationTransferId: "",
   transferData: {},
   TRANSFERtype: "Regular Transfer",
+  offerLetterData: {},
 };
 
 export const TransferContext = createContext();
@@ -204,6 +205,22 @@ export const TransferProvider = (props) => {
         });
       });
   };
+  const getApointmentLetter = (EmployeeId) => {
+    setLoader(true);
+    client
+      .get("/api/v1/transfer/offer/" + EmployeeId)
+      .then((response) => {
+        setLoader(false);
+        return dispatch({
+          type: "FETCH_APOINTMENT_LETTER_DATA",
+          payload: response.data.data,
+        });
+      })
+      .catch(() => {
+        setLoader(false);
+        console.log("apointment letter api error");
+      });
+  };
 
   return (
     <TransferContext.Provider
@@ -231,6 +248,8 @@ export const TransferProvider = (props) => {
         initiationTransferId: state.initiationTransferId,
         TRANSFERtype: state.TRANSFERtype,
         chnageTransferType,
+        getApointmentLetter,
+        offerLetterData: state.offerLetterData,
       }}
     >
       {props.children}

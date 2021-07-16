@@ -101,6 +101,11 @@ const TransferReducer = (state, action) => {
         ...state,
         transferData: {},
       };
+    case "FETCH_APOINTMENT_LETTER_DATA":
+      return {
+        ...state,
+        offerLetterData: {},
+      };
     default:
       return state;
   }

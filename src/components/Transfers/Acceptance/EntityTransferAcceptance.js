@@ -233,10 +233,10 @@ const EntityTransferAcceptance = () => {
     let validForm = true;
     console.log("newGross->", newGross);
 
-    if (searchInput === "") {
-      validForm = false;
-      setEmpErrMsg("Please enter employee id or employee name");
-    }
+    // if (searchInput === "") {
+    //   validForm = false;
+    //   setEmpErrMsg("Please enter employee id or employee name");
+    // }
 
     // if (newEntity === "") {
     //   validForm = false;
@@ -245,27 +245,34 @@ const EntityTransferAcceptance = () => {
     if (newDept === "") {
       validForm = false;
       setDeptErrMsg("Please select department");
+      console.log("newGross->", newGross);
+      console.log("validForm", validForm);
     }
     if (newPosition === "") {
       validForm = false;
       setPositionErrMsg("Please select position");
+      console.log("validForm", validForm);
     }
     if (newCostCentre === "") {
       validForm = false;
       setCostCentreErrMsg("Please select cost centre");
+      console.log("validForm", validForm);
     }
     if (newLocation === "") {
       validForm = false;
       setLocationErrMsg("Please select location");
+      console.log("validForm", validForm);
     }
     if (relocationBonus === "") {
       validForm = false;
       setRelocationBonusErrMsg("Please enter relocation bonus");
+      console.log("validForm", validForm);
     }
     if (newGross === "") {
       validForm = false;
 
       setGrossErrMsg("Please enter fixed gross");
+      console.log("validForm", validForm);
     }
     if (
       effectiveDate === "" ||
@@ -274,6 +281,7 @@ const EntityTransferAcceptance = () => {
     ) {
       validForm = false;
       setEffectiveDateErrMsg("Please enter effective date");
+      console.log("validFormRes", validForm);
     }
 
     return validForm;
@@ -282,42 +290,43 @@ const EntityTransferAcceptance = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     const validFormRes = validateForm();
+    console.log("validFormRes", validFormRes);
     if (validFormRes === true) {
       const InfoData = {
-        currentCompany: initiationEmpData.currentCompany,
-        currentContractType: initiationEmpData.currentContractType,
-        currentCostCentre: initiationEmpData.currentCostCentre,
-        currentCountry: initiationEmpData.currentCountry,
-        currentDepartment: initiationEmpData.currentDepartment,
-        currentDesignation: initiationEmpData.currentDesignation,
-        currentEmployeeId: initiationEmpData.currentEmployeeId,
-        currentFixedGross: initiationEmpData.currentFixedGross,
-        currentJoiningDate: initiationEmpData.currentJoiningDate,
-        currentLocation: initiationEmpData.currentLocation,
-        currentManagerId: initiationEmpData.currentManagerId,
-        currentMonthlyBonus: initiationEmpData.currentMonthlyBonus,
-        currentPosition: initiationEmpData.currentPosition,
-        promotedCompany: initiationEmpData.promotedCompany,
-        promotedContractType: initiationEmpData.promotedContractType,
+        currentCompany: transferData.currentCompany,
+        currentContractType: transferData.currentContractType,
+        currentCostCentre: transferData.currentCostCentre,
+        currentCountry: transferData.currentCountry,
+        currentDepartment: transferData.currentDepartment,
+        currentDesignation: transferData.currentDesignation,
+        currentEmployeeId: transferData.currentEmployeeId,
+        currentFixedGross: transferData.currentFixedGross,
+        currentJoiningDate: transferData.currentJoiningDate,
+        currentLocation: transferData.currentLocation,
+        currentManagerId: transferData.currentManagerId,
+        currentMonthlyBonus: transferData.currentMonthlyBonus,
+        currentPosition: transferData.currentPosition,
+        promotedCompany: transferData.promotedCompany,
+        promotedContractType: transferData.promotedContractType,
         promotedCostCentre: newCostCentre,
-        promotedCountry: initiationEmpData.promotedCountry,
-        promotedDateOfReturn: initiationEmpData.promotedDateOfReturn,
+        promotedCountry: transferData.promotedCountry,
+        promotedDateOfReturn: transferData.promotedDateOfReturn,
         promotedDepartment: newDeptName,
-        promotedDesignation: initiationEmpData.promotedDesignation,
-        promotedEmployeeId: initiationEmpData.promotedEmployeeId,
+        promotedDesignation: transferData.promotedDesignation,
+        promotedEmployeeId: transferData.promotedEmployeeId,
         promotedFixedGross: newGross,
         promotedJoiningDate: moment(effectiveDate).format("YYYY-MM-DD"),
         promotedLocation: newLocation,
-        promotedManagerId: initiationEmpData.promotedManagerId,
-        promotedMonthlyBonus: initiationEmpData.promotedMonthlyBonus,
-        promotedPosition: newPosition,
+        promotedManagerId: transferData.promotedManagerId,
+        promotedMonthlyBonus: transferData.promotedMonthlyBonus,
+        promotedPosition: newPositionName,
         promotedRelocationBonus: relocationBonus,
-        promotedTermOfProject: initiationEmpData.promotedTermOfProject,
+        promotedTermOfProject: transferData.promotedTermOfProject,
         remark: null,
         status: 1,
-        transferId: 0,
+        transferId: transferData.transferId,
         transferLetter: null,
-        transferType: transferType,
+        transferType: transferData.transferType,
       };
       console.log(InfoData);
       createTransferInitiation(InfoData);
@@ -722,42 +731,42 @@ const EntityTransferAcceptance = () => {
                           <Col md={2}>
                             <Form.Label>New Cost Center:</Form.Label>
                           </Col>
-                          {transferData.promotedCostCentre ? (
+                          {/* {transferData.promotedCostCentre ? (
                             <Col md={3} className="text-primary">
                               {transferData.promotedCostCentre}
                             </Col>
-                          ) : (
-                            <Col md={3}>
-                              <Form.Control
-                                as="select"
-                                className="text-primary"
-                                aria-label="transferInitiationCostCentre"
-                                value={newCostCentre}
-                                placeholder="Select Cost Centre"
-                                onChange={changeCostCentreHandler}
-                              >
-                                <option>Select Cost Centre</option>
-                                {costCentreData !== null &&
-                                  costCentreData !== undefined &&
-                                  costCentreData.length > 0 &&
-                                  costCentreData.map((item) => {
-                                    return (
-                                      <option
-                                        key={`cost_centre_${item.costCentreName}`}
-                                        value={item.costCentreName}
-                                      >
-                                        {item.costCentreName}
-                                      </option>
-                                    );
-                                  })}
-                              </Form.Control>
-                              {costCentreErrMsg !== "" && (
-                                <span className="text-danger">
-                                  {costCentreErrMsg}
-                                </span>
-                              )}
-                            </Col>
-                          )}
+                          ) : ( */}
+                          <Col md={3}>
+                            <Form.Control
+                              as="select"
+                              className="text-primary"
+                              aria-label="transferInitiationCostCentre"
+                              value={newCostCentre}
+                              placeholder="Select Cost Centre"
+                              onChange={changeCostCentreHandler}
+                            >
+                              <option>Select Cost Centre</option>
+                              {costCentreData !== null &&
+                                costCentreData !== undefined &&
+                                costCentreData.length > 0 &&
+                                costCentreData.map((item) => {
+                                  return (
+                                    <option
+                                      key={`cost_centre_${item.costCentreName}`}
+                                      value={item.costCentreName}
+                                    >
+                                      {item.costCentreName}
+                                    </option>
+                                  );
+                                })}
+                            </Form.Control>
+                            {costCentreErrMsg !== "" && (
+                              <span className="text-danger">
+                                {costCentreErrMsg}
+                              </span>
+                            )}
+                          </Col>
+                          {/* )} */}
                           <Col md={2}>
                             <Form.Label>New Location:</Form.Label>
                           </Col>

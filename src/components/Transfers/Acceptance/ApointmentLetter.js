@@ -6,7 +6,7 @@ import React, {
   useEffect,
 } from "react";
 import { Fragment } from "react";
-import { OfferContext } from "../../context/OfferState";
+import { TransferContext } from "../../../context/TransferState";
 import {
   Button,
   Container,
@@ -20,13 +20,7 @@ import moment from "moment";
 import "../../Offers/offers.css";
 
 const AppointmentLetter = (props) => {
-  const {
-    generateOfferLetter,
-    offerLetterData,
-    candidateData,
-    finalSubmitAppointmentLetter,
-    submitAppointmentLetter,
-  } = useContext(OfferContext);
+  const { offerLetterData } = useContext(TransferContext);
   const [showLetter, setShow] = useState(true);
   const [previewClick, setPreviewClick] = useState(false);
   const handleClose = () => {
