@@ -35,11 +35,20 @@ export const OfferProvider = (props) => {
   const [loader, setLoader] = useState(false);
 
   // Offer List api
-  const candidateView = (key, page) => {
+  const candidateView = (key, page, status = 5) => {
     setLoader(true);
     client
       .get(
-        "/api/v1/candidate/view?key=" + key + "&page=" + page + "&size=" + 10
+        "/api/v1/candidate/view?key=" +
+          key +
+          "&overAllStatus=" +
+          status +
+          "&page=" +
+          page +
+          "&size=" +
+          10 +
+          "&superManager=" +
+          0
       )
       .then((response) => {
         state.candidateList = response.data.data.data;

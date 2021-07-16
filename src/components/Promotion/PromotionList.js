@@ -126,12 +126,12 @@ const PromotionList = () => {
                 style={{ textAlign: "center", fontSize: "larger" }}
               >
                 <Row>
-                  <Col >
+                  <Col>
                     <div
                       style={{
                         width: "65%",
                         float: "left",
-                        
+
                         marginTop: "10px",
                         marginLeft: "8px",
                       }}
@@ -312,8 +312,8 @@ const PromotionList = () => {
 
                             {user !== null &&
                             user !== undefined &&
-                            (user.role === "ADMIN" ||
-                              user.additionalRole === "1") ? (
+                            (user.additionalRole === "1" ||
+                              user.loginType == "1") ? (
                               <td>
                                 {item.status === 2 ? (
                                   <Link
@@ -334,8 +334,9 @@ const PromotionList = () => {
                               </td>
                             ) : user !== null &&
                               user !== undefined &&
-                              (user.role === "COST_CENTER_MANAGER" ||
-                                user.additionalRole === "7") ? (
+                              (user.loginType == 7 ||
+                                user.additionalRole === "7") &&
+                              user.isManager === true ? (
                               <td>
                                 {item.status === 0 ? (
                                   <Link
@@ -355,8 +356,8 @@ const PromotionList = () => {
                               </td>
                             ) : user !== null &&
                               user !== undefined &&
-                              (user.role === "MANAGER" ||
-                                user.additionalRole === "3") ? (
+                              (user.additionalRole === "3" ||
+                                user.isManager === true) ? (
                               <td>
                                 {item.status === 1 ? (
                                   <Link to={"/promotion/" + item.employeeId}>

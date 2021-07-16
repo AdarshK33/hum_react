@@ -4,7 +4,7 @@ import Breadcrumb from "../../common/breadcrumb";
 import "react-datepicker/dist/react-datepicker.css";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 import ShowCauseNotice from "../Manager/ShowCauseNoticeLetter";
-import NonPerformanceLetter from "../Manager/NonPerformanceLetter"
+import NonPerformanceLetter from "../Manager/NonPerformanceLetter";
 import ReasonByEmployee from "../Manager/ReasonByEmployee";
 import WarningLetter from "../WarningManager/WarningLetter";
 
@@ -154,10 +154,10 @@ const DisciplinaryView = () => {
           disciplinarySearchData.disciplinaryAction !== null &&
           disciplinarySearchData.disciplinaryAction !== undefined &&
           disciplinarySearchData.disciplinaryAction !== "" &&
-          disciplinarySearchData.disciplinaryAction.reasonId == 2? (
+          disciplinarySearchData.disciplinaryAction.reasonId == 2 ? (
             <ShowCauseNotice />
           ) : (
-            <NonPerformanceLetter/>
+            <NonPerformanceLetter />
           )}
         </Modal.Body>
       </Modal>
@@ -521,21 +521,25 @@ const DisciplinaryView = () => {
                                 </label>
                               </div>
                             </Col>
-                            <Col sm={6}>
-                              <div>
-                                <label>
-                                  Performance improvement period:
-                                  <label className="itemResult">
-                                    &nbsp;&nbsp;{" "}
-                                    {state.pip !== 0
-                                      ? state.pip === 1
-                                        ? state.pip + " Month"
-                                        : state.pip + " Months"
-                                      : ""}
+                            {showCauseReason === "Other" ? (
+                              ""
+                            ) : (
+                              <Col sm={6}>
+                                <div>
+                                  <label>
+                                    Performance improvement period:
+                                    <label className="itemResult">
+                                      &nbsp;&nbsp;{" "}
+                                      {state.pip !== 0
+                                        ? state.pip === 1
+                                          ? state.pip + " Month"
+                                          : state.pip + " Months"
+                                        : ""}
+                                    </label>
                                   </label>
-                                </label>
-                              </div>
-                            </Col>
+                                </div>
+                              </Col>
+                            )}
                           </Row>
                           {showCauseReason === "Other" ? (
                             ""
