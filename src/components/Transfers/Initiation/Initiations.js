@@ -1,11 +1,11 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState } from "react";
 import Breadcrumb from "../../common/breadcrumb";
-import { Row, Col, Form, Button, Modal, Container } from "react-bootstrap";
+import { Row, Col, Form, Container } from "react-bootstrap";
 import { ToastContainer } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
-import { TransferContext } from "../../../context/TransferState";
 import RegularTransfer from "./RegularTransfer";
 import EntityTransfer from "./EntityTransfer";
+import InternationalTransfer from "./InternationalTransfer";
 
 const Initiations = () => {
   const [transferType, setTransferType] = useState("");
@@ -13,6 +13,7 @@ const Initiations = () => {
 
   const transferTypeHandler = (e) => {
     setTransferType(e.target.value);
+    console.log(transferType);
     setTransferErrMsg("");
   };
 
@@ -70,9 +71,9 @@ const Initiations = () => {
                           <RegularTransfer />
                         ) : transferType === "Entity Transfer" ? (
                           <EntityTransfer />
-                        ) : (
-                          ""
-                        )}
+                        ) : transferType === "International Transfer" ? (
+                          <InternationalTransfer />
+                        ) : null}
                       </Col>
                     </Row>
                   </Form>
