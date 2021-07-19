@@ -133,7 +133,7 @@ export const SupportProvider = ({ children }) => {
     } */
   const downloadFile = (fileName) => {
     Axios({
-      url: `${process.env.REACT_APP_BASEURL}//api/v1/ticket/download?name=${fileName}`,
+      url: `${process.env.REACT_APP_BASEURL}api/v1/ticket/download?name=${fileName}`,
       method: "GET",
       responseType: "blob",
       headers: {

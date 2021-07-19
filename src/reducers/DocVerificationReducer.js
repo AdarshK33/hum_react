@@ -52,6 +52,8 @@ const GroupReducer = (state, action) => {
       return { ...state, ImageData: action.payload };
     case "UPDATE_REJECT":
       return { ...state, rejectUpdate: action.payload };
+    case "ADMIN_UPDATE_REJECT":
+      return { ...state, adminRejectUpdate: action.payload };
   }
 };
 export default GroupReducer;

@@ -106,6 +106,15 @@ import EmployeShowCaseLetter from "./components/EmployeeLetters/ShowCauseLetter"
 import EmployeWarningLetter from "./components/EmployeeLetters/WarningLetter";
 
 import ManagerWarningAction from "./components/Disciplinary/WarningManager/ManagerWarningAction";
+
+/* Transfer Module  */
+import TransfersList from "./components/Transfers/List/TransfersList";
+import Initiations from "./components/Transfers/Initiation/Initiations";
+import TransferView from "./components/Transfers/view/TransferView";
+import RegularTransferAcceptance from "./components/Transfers/Acceptance/RegularTransferAcceptance";
+import EntityTransferAcceptance from "./components/Transfers/Acceptance/EntityTransferAcceptance";
+import InternationalTransferAcceptance from "./components/Transfers/Acceptance/InternationalTransferAcceptance";
+
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
   console.log(user, state, "route8888888888888");
@@ -346,6 +355,30 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/promotion/:promotionId`}
             component={PromotionManagerEdit}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/transfers`}
+            component={TransfersList}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/transfer-initiate`}
+            component={Initiations}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/view-transfer/:transferId`}
+            component={TransferView}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/transfer/:transferId`}
+            component={RegularTransferAcceptance}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/entity-transfer/:transferId`}
+            component={EntityTransferAcceptance}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/international-transfer/:transferId`}
+            component={InternationalTransferAcceptance}
           />
           {/* <Route
             path={`${process.env.PUBLIC_URL}/promotion/:promotionId`}

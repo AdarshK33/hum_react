@@ -351,21 +351,21 @@ const ManagerDisciplinaryList = () => {
                                     />
                                   </Link>
                                 ) : (
-                                  // <Edit2 />
-                                  <Link
-                                    to={
-                                      `/manager-warning-action-view/` +
-                                      item.employeeId
-                                    }
-                                  >
-                                    <Edit2
-                                      onClick={() => {
-                                        disciplinaryEmployeeSearch(
-                                          item.disciplinaryAction.disciplinaryId
-                                        );
-                                      }}
-                                    />
-                                  </Link>
+                                  <Edit2 />
+                                  // <Link
+                                  //   to={
+                                  //     `/manager-warning-action-view/` +
+                                  //     item.employeeId
+                                  //   }
+                                  // >
+                                  //   <Edit2
+                                  //     onClick={() => {
+                                  //       disciplinaryEmployeeSearch(
+                                  //         item.disciplinaryAction.disciplinaryId
+                                  //       );
+                                  //     }}
+                                  //   />
+                                  // </Link>
                                 )}
                               </td>
                             )}

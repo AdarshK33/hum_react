@@ -1,0 +1,21 @@
+.transfer-table {
+  border-collapse: separate;
+  border-spacing: 2px;
+  border: none !important;
+}
+
+.transfer-table thead th {
+  color: #0084ffd1;
+}
+
+.transfer-table thead th:nth-child(odd) {
+  background-color: rgba(143, 225, 245, 0.788);
+}
+
+.transfer-table thead th:nth-child(even) {
+  background-color: rgba(238, 245, 207, 0.699);
+}
+
+.transfer-table tbody td {
+  border: 1px solid #0084ffd1;
+}

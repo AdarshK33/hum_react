@@ -32,6 +32,7 @@ const initial_state = {
   verificationPermanentCityList: [],
   imageData: "",
   rejectUpdate: [],
+  adminRejectUpdate: [],
 };
 export const DocsVerifyContext = createContext();
 export const DocsVerificationProvider = (props) => {
@@ -187,7 +188,7 @@ export const DocsVerificationProvider = (props) => {
   const approveAadharByAdmin = (docId, candidateId) => {
     setLoader(true);
     client
-      .get("/api/v1/candidate/aadhaar/" + docId + "/accept")
+      .get("/api/v1/candidate/document/" + docId + "/approve")
       .then((response) => {
         state.aadharStatus = response.data.message;
         toast.info(response.data.message);
@@ -208,11 +209,11 @@ export const DocsVerificationProvider = (props) => {
     setLoader(true);
     client
       .get(
-        "/api/v1/candidate/aadhaar/" +
+        "/api/v1/candidate/document/" +
           docId +
-          "/reject?candidateId=" +
+          "/disapprove?candidateId=" +
           candidateId +
-          "&remarks=" +
+          "&remark=" +
           remarks
       )
       .then((response) => {
@@ -289,6 +290,25 @@ export const DocsVerificationProvider = (props) => {
         return dispatch({
           type: "UPDATE_REJECT",
           payload: state.rejectUpdate,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const adminRejectComplete = (candidateId) => {
+    client
+      .get(
+        "/api/v1/candidate/document/disapprove/complete?candidateId=" +
+          candidateId
+      )
+      .then((response) => {
+        state.adminRejectUpdate = response.data.message;
+        toast.info(response.data.message);
+        return dispatch({
+          type: "ADMIN_UPDATE_REJECT",
+          payload: state.adminRejectUpdate,
         });
       })
       .catch((error) => {
@@ -480,6 +500,7 @@ export const DocsVerificationProvider = (props) => {
           viewPermanentCityVerification,
           uploadBase64Image,
           documentRejectComplete,
+          adminRejectComplete,
           disApproveAadhar: state.disApproveAadhar,
           imageData: state.imageData,
           step5Status: state.step5Status,
@@ -505,6 +526,7 @@ export const DocsVerificationProvider = (props) => {
           verificationCityList: state.verificationCityList,
           verificationPermanentCityList: state.verificationPermanentCityList,
           rejectUpdate: state.rejectUpdate,
+          adminRejectUpdate: state.adminRejectUpdate,
         }}
       >
         {" "}

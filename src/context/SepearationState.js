@@ -36,7 +36,7 @@ export const SeparationProvider = (props) => {
   const [state, dispatch] = useReducer(SepationReducer, initial_state);
   const [loader, setLoader] = useState(false);
   const separationListView = (key, page, actionStatus, costCenter) => {
-    console.log(key, page, actionStatus, costCenter,"finance state")
+    console.log(key, page, actionStatus, costCenter, "finance state");
     setLoader(true);
     client
       .get(
@@ -140,22 +140,28 @@ export const SeparationProvider = (props) => {
         console.log(error);
       });
   };
-  const viewAdminITClearanceList = (financeStatus,itStatus,key, page, costCenter) => {
-    console.log(financeStatus,itStatus,key, page, costCenter ,"viewAdminIt")
+  const viewAdminITClearanceList = (
+    financeStatus,
+    itStatus,
+    key,
+    page,
+    costCenter
+  ) => {
+    console.log(financeStatus, itStatus, key, page, costCenter, "viewAdminIt");
     client
       .get(
         "/api/v1/separation/full-and-final/view/no-due-clearance?financeStatus=" +
-        financeStatus +
-            "&itStatus=" +
-            itStatus +
-            "&key=" +
-            key+
-        "&page=" +
-        page +
-        "&size=" +
-      10 +
-        "&storeId=" +
-        costCenter
+          financeStatus +
+          "&itStatus=" +
+          itStatus +
+          "&key=" +
+          key +
+          "&page=" +
+          page +
+          "&size=" +
+          10 +
+          "&storeId=" +
+          costCenter
       )
       .then((response) => {
         state.adminNoDueClearanceList = response.data.data.data;
@@ -181,8 +187,8 @@ export const SeparationProvider = (props) => {
       });
   };
   const viewITClearanceList = (key, page, actionStatus, costCenter) => {
-    console.log(actionStatus,key, page, costCenter ,"viewIt")
-    console.log(key, page,client.defaults.headers,"promotion ")
+    console.log(actionStatus, key, page, costCenter, "viewIt");
+    console.log(key, page, client.defaults.headers, "promotion ");
 
     setLoader(true);
     client
@@ -216,7 +222,7 @@ export const SeparationProvider = (props) => {
         });
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
       });
   };
 
@@ -229,14 +235,17 @@ export const SeparationProvider = (props) => {
       "FinanceClearanceUploadSettlement separation context"
     );
     return client
-      .post( "/api/v1/separation/full-and-final/view?key=" +
-      key +
-      "&page=" +
-      page +
-      "&size=" +
-      10 +
-      "&storeId=" +
-      costCenter, formData)
+      .post(
+        "/api/v1/separation/full-and-final/view?key=" +
+          key +
+          "&page=" +
+          page +
+          "&size=" +
+          10 +
+          "&storeId=" +
+          costCenter,
+        formData
+      )
       .then((response) => {
         console.log(response, "upload");
         state.financeAdminNoDueClearanceList = response.data.data.data;
@@ -264,14 +273,13 @@ export const SeparationProvider = (props) => {
   const NoDueClearanceAdminClearanceExport = () => {
     console.log("NoDueClearanceAdminClearanceExport separation context");
     return client
-      .get("/api/v1/separation/full-and-final/noDueClearance/download", {
+      .get("/api/v1/separation/full-and-final/no-due-clearance/download", {
         responseType: "arraybuffer",
       })
       .then((response) => {
         console.log(response, "export excel ");
         var blob = new Blob([response.data], {
-          type:
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         });
         var fileName = "AdminNoDueClearanceListing.xlsx";
         saveAs(blob, fileName);
@@ -294,8 +302,7 @@ export const SeparationProvider = (props) => {
       })
       .then((response) => {
         var blob = new Blob([response.data], {
-          type:
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         });
         var fileName = "F&FListing.xlsx";
         saveAs(blob, fileName);
@@ -320,8 +327,7 @@ export const SeparationProvider = (props) => {
       .then((response) => {
         console.log(response, "export excel ");
         var blob = new Blob([response.data], {
-          type:
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         });
         var fileName = "NoDueClearanceListing.xlsx";
         saveAs(blob, fileName);
@@ -346,8 +352,7 @@ export const SeparationProvider = (props) => {
       })
       .then((response) => {
         var blob = new Blob([response.data], {
-          type:
-            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         });
         var fileName = "FinanceClearnace.xlsx";
         saveAs(blob, fileName);
@@ -425,7 +430,7 @@ export const SeparationProvider = (props) => {
       managerName: value.managerName,
       disabled: value.disabled,
     };
-    console.log(formData,"saveFinanceClearanceData")
+    console.log(formData, "saveFinanceClearanceData");
     setLoader(true);
     return client
       .post("/api/v1/separation/finance-clearance/create", formData)
@@ -465,7 +470,7 @@ export const SeparationProvider = (props) => {
     return client
       .get(`api/v1/employee/view/${costCenter}/managers`)
       .then((response) => {
-        console.log(response ,"managerData response")
+        console.log(response, "managerData response");
         state.managerList = response.data.data;
         return dispatch({ type: "MANAGER_LIST", payload: state.managerList });
       });
@@ -526,15 +531,15 @@ export const SeparationProvider = (props) => {
         console.log(error);
       });
   };
- 
+
   const MakeCostCenterDataNull = () => {
-        state.searchByCostData = []
-        return dispatch({
-          type: "SEARCH_BY_COST_DATA",
-          payload: state.searchByCostData,
-        })
+    state.searchByCostData = [];
+    return dispatch({
+      type: "SEARCH_BY_COST_DATA",
+      payload: state.searchByCostData,
+    });
   };
- 
+
   return (
     <SeparationContext.Provider
       value={{

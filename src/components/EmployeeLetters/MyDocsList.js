@@ -211,7 +211,10 @@ const EmployeeDocementsList = () => {
                               <td>NA</td>
                             )}
                             {item.disciplinaryWarning !== null &&
-                            item.disciplinaryWarning !== undefined ? (
+                            item.disciplinaryWarning !== undefined &&
+                            item.disciplinaryWarning.pipEndDate !== null &&
+                            item.disciplinaryWarning.pipEndDate !==
+                              undefined ? (
                               <td>
                                 {item.disciplinaryWarning.warningIssuedDate}
                               </td>
@@ -219,16 +222,22 @@ const EmployeeDocementsList = () => {
                               <td>NA</td>
                             )}
                             {item.disciplinaryWarning !== null &&
-                            item.disciplinaryWarning !== undefined ? (
+                            item.disciplinaryWarning !== undefined &&
+                            item.disciplinaryWarning.pipEndDate !== null &&
+                            item.disciplinaryWarning.pipEndDate !==
+                              undefined ? (
                               <td>{item.disciplinaryWarning.pipEndDate}</td>
                             ) : (
                               <td>NA</td>
                             )}
-                            {item.disciplinaryAction !== null &&
-                            item.disciplinaryAction !== undefined ? (
-                              item.disciplinaryAction.statusDesc ===
-                              "Exit Initiated" ? (
-                                <td> {item.disciplinaryAction.statusDesc}</td>
+                            {/* {((item.disciplinaryAction !== null &&
+                              item.disciplinaryAction !== undefined &&item.disciplinaryAction.statusDesc ===
+                              "Exit Initiated") ||
+                            (item.disciplinaryWarning !== null &&
+                              item.disciplinaryWarning !== undefined&&(item.disciplinaryWarning.statusDesc === "NA" ||
+                              item.disciplinaryWarning.statusDesc ===
+                                "Exit Initiated"))) ? (
+                                <td> NA</td>
                               ) : item.disciplinaryWarning !== null &&
                                 item.disciplinaryWarning !== undefined ? (
                                 // new Date(item.disciplinaryWarning.pipEndDate) -
@@ -243,6 +252,13 @@ const EmployeeDocementsList = () => {
                               ) : (
                                 <td>NA</td>
                               )
+                            ) : (
+                              <td>NA</td>
+                            )} */}
+
+                            {item.disciplinaryWarning !== null &&
+                            item.disciplinaryWarning !== undefined ? (
+                              <td>{item.disciplinaryWarning.statusDesc}</td>
                             ) : (
                               <td>NA</td>
                             )}

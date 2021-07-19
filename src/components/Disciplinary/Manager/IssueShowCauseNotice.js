@@ -6,7 +6,7 @@ import { EmployeeSeparationContext } from "../../../context/EmployeeSeparationSt
 import { toast } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
 import ShowCauseNotice from "./ShowCauseNoticeLetter";
-import NonPerformanceLetter from "./NonPerformanceLetter"
+import NonPerformanceLetter from "./NonPerformanceLetter";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
 import { useHistory } from "react-router-dom";
@@ -488,11 +488,12 @@ const IssueShowCauseNotice = () => {
             disciplinarySearchData !== undefined &&
             Object.keys(disciplinarySearchData).length !== 0 &&
             disciplinarySearchData.disciplinaryAction !== null &&
-            disciplinarySearchData.disciplinaryAction !== undefined && 
-            state.disciplinaryAction !== null && changeInReason == 2? (
+            disciplinarySearchData.disciplinaryAction !== undefined &&
+            state.disciplinaryAction !== null &&
+            changeInReason == 2 ? (
               <ShowCauseNotice />
             ) : (
-              <NonPerformanceLetter/>
+              <NonPerformanceLetter />
             )}
             <br></br>
             <Row>

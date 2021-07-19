@@ -11,19 +11,10 @@ import { RoleManagementContext } from "../../context/RoleManagementState";
 import { AdminContext } from "../../context/AdminState";
 import { AppContext } from "../../context/AppState";
 const OfferReleaseList = () => {
-  const {
-    candidateView,
-    candidateList,
-    loader,
-    total,
-    viewCandidateId,
-  } = useContext(OfferContext);
-  const {
-    verificationDocsView,
-    docsToVerify,
-    personalInfo,
-    personalInfoData,
-  } = useContext(DocsVerifyContext);
+  const { candidateView, candidateList, loader, total, viewCandidateId } =
+    useContext(OfferContext);
+  const { verificationDocsView, docsToVerify, personalInfo, personalInfoData } =
+    useContext(DocsVerifyContext);
   const { user } = useContext(AppContext);
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
@@ -122,7 +113,7 @@ const OfferReleaseList = () => {
                       <th scope="col">Candidate Name</th>
                       <th scope="col">Application Date</th>
                       <th scope="col">Document Verification Status</th>
-                      <th scope="col">Overall Status</th>
+                      <th scope="col">Candidate Application Status</th>
                       <th scope="col">Edit</th>
                       <th scope="col">View</th>
                       {user !== null &&
@@ -167,7 +158,7 @@ const OfferReleaseList = () => {
                               {item.firstName} {item.lastName}
                             </td>
                             <td>{item.createdDate}</td>
-                            <td>{item.verificationStatusDesc}</td>
+                            <td>{item.overallStatusDesc}</td>
                             <td>{item.statusDesc}</td>
 
                             <td>

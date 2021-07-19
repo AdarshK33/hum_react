@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import { DocsVerifyContext } from "../../context/DocverificationState";
 import { AppContext } from "../../context/AppState";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import "./ManageCandidate.css";
 import {
   Button,
@@ -213,6 +213,7 @@ const DocVerification = () => {
           <thead>
             <tr>
               <th></th>
+              <th>Download</th>
               <th>Status</th>
               <th>Remarks</th>
               <th>Date</th>
@@ -260,21 +261,33 @@ const DocVerification = () => {
                             <span style={{ color: "black", fontSize: "16px" }}>
                               Aadhar Card
                             </span>{" "}
-                            <span style={{ color: "red" }}>*</span>
+                            {personalInfoData.contractType !== "Local Expat" ? (
+                              <span style={{ color: "red" }}>*</span>
+                            ) : (
+                              ""
+                            )}
                           </label>
                         ) : item.documentType === 2 ? (
                           <label>
                             <span style={{ color: "black", fontSize: "16px" }}>
                               Pan Number
                             </span>{" "}
-                            <span style={{ color: "red" }}>*</span>
+                            {personalInfoData.contractType !== "Local Expat" ? (
+                              <span style={{ color: "red" }}>*</span>
+                            ) : (
+                              ""
+                            )}
                           </label>
                         ) : item.documentType === 3 ? (
                           <label>
                             <span style={{ color: "black", fontSize: "16px" }}>
                               Address Proof
                             </span>{" "}
-                            <span style={{ color: "red" }}>*</span>
+                            {personalInfoData.contractType !== "Local Expat" ? (
+                              <span style={{ color: "red" }}>*</span>
+                            ) : (
+                              ""
+                            )}
                           </label>
                         ) : item.documentType === 4 ? (
                           <label>
@@ -317,13 +330,21 @@ const DocVerification = () => {
                         {downloadedFile && <img src={downloadedFile} alt="" />}
                         {item.documentName}
                       </a>
+                      {/* <button
+                        className="downloadButton"
+                        onClick={() => downloadDocument(item.documentName)}
+                      >
+                        Download
+                      </button> */}
+                      {/* </p> */}
+                    </td>
+                    <td className="buttonMargin1">
                       <button
                         className="downloadButton"
                         onClick={() => downloadDocument(item.documentName)}
                       >
                         Download
                       </button>
-                      {/* </p> */}
                     </td>
                     {item.statusDesc !== null &&
                     item.statusDesc !== "Pending" &&
@@ -380,14 +401,18 @@ const DocVerification = () => {
                       </td>
                     )}
                     <td className="buttonMargin1">
-                      {item.documentType !== 4 && item.documentType !== 5
+                      {item.documentType !== 4 &&
+                      item.documentType !== 5 &&
+                      item.status === 2
                         ? item.remark !== null
                           ? item.remark
                           : "N/A"
                         : ""}
                     </td>
                     <td className="buttonMargin1">
-                      {item.documentType !== 4 && item.documentType !== 5
+                      {item.documentType !== 4 &&
+                      item.documentType !== 5 &&
+                      (item.status === 2 || item.status === 1)
                         ? item.verifiedDate !== null
                           ? item.verifiedDate
                           : "N/A"
@@ -486,13 +511,20 @@ const DocVerification = () => {
                             </span>{" "}
                             <span style={{ color: "red" }}>*</span>
                           </p>
+                        ) : item.documentType === 16 ? (
+                          <p>
+                            <span style={{ color: "black", fontSize: "16px" }}>
+                              CollegeId
+                            </span>{" "}
+                            <span style={{ color: "red" }}>*</span>
+                          </p>
                         ) : (
-                          item.documentType === 16 && (
+                          item.documentType === 17 && (
                             <p>
                               <span
                                 style={{ color: "black", fontSize: "16px" }}
                               >
-                                CollegeId
+                                FRRO
                               </span>{" "}
                               <span style={{ color: "red" }}>*</span>
                             </p>
@@ -513,14 +545,22 @@ const DocVerification = () => {
                             )}
                             {item.documentName}
                           </a>
-                          <button
+                          {/* <button
                             className="downloadButton"
                             onClick={() => downloadDocument(item.documentName)}
                           >
                             Download
-                          </button>
+                          </button> */}
                         </React.Fragment>
                       )}
+                    </td>
+                    <td className="buttonMargin1">
+                      <button
+                        className="downloadButton"
+                        onClick={() => downloadDocument(item.documentName)}
+                      >
+                        Download
+                      </button>
                     </td>
                     {item.statusDesc !== null &&
                     item.statusDesc !== "Pending" &&
@@ -575,14 +615,15 @@ const DocVerification = () => {
                     )}
                     {item.remark !== null ? (
                       <td className="buttonMargin1">
-                        {item.documentType >= 6 && item.remark}
+                        {item.documentType >= 6 &&
+                          item.status === 2 &&
+                          item.remark}
                       </td>
                     ) : (
-                      item.documentType >= 6 && (
-                        <td className="buttonMargin1">NA</td>
-                      )
+                      item.documentType >= 6 &&
+                      item.status === 1 && <td className="buttonMargin1">NA</td>
                     )}
-                    {item.verifiedDate !== null ? (
+                    {item.verifiedDate !== null && item.status !== 0 ? (
                       <td className="buttonMargin1">
                         {item.documentType >= 6 && item.verifiedDate}
                       </td>
@@ -665,18 +706,20 @@ const DocVerification = () => {
           textAlign: "center",
         }}
       >
-        {state !== undefined && state.documentUploaded === 1 && (
-          <button className="onboardButton" onClick={() => handleOnboard()}>
-            Onboard Candidate
-          </button>
+        {state !== undefined && state.verificationStatus === 1 && (
+          <Link to="/candidate-verification">
+            <button className="onboardButton" onClick={() => handleOnboard()}>
+              Onboard Candidate
+            </button>
+          </Link>
         )}
-        {state !== undefined &&
-          state.documentReUploadCount !== 0 &&
-          state.documentUploaded === 0 && (
+        {state !== undefined && state.verificationStatus === 2 && (
+          <Link to="/candidate-verification">
             <button className="onboardButton" onClick={() => handleReupload()}>
               Submit
             </button>
-          )}
+          </Link>
+        )}
       </div>
     </Fragment>
   );

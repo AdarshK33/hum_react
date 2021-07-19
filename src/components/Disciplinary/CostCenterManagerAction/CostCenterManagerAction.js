@@ -5,7 +5,7 @@ import Breadcrumb from "../../common/breadcrumb";
 import { toast } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
 import ShowCauseNotice from "../Manager/ShowCauseNoticeLetter";
-import NonPerformanceLetter from "../Manager/NonPerformanceLetter"
+import NonPerformanceLetter from "../Manager/NonPerformanceLetter";
 import WarningLetter from "../WarningManager/WarningLetter";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import { DisciplinaryContext } from "../../../context/DisciplinaryState";
@@ -387,7 +387,7 @@ const CostCenterManagerAction = () => {
           disciplinarySearchData.disciplinaryAction.reasonId == 2 ? (
             <ShowCauseNotice />
           ) : (
-            <NonPerformanceLetter/>
+            <NonPerformanceLetter />
           )}
         </Modal.Body>
       </Modal>
@@ -431,8 +431,8 @@ const CostCenterManagerAction = () => {
               disciplinarySearchData.disciplinaryWarning !== undefined &&
               disciplinarySearchData.disciplinaryWarning !== "" &&
               disciplinarySearchData.disciplinaryWarning !== null
-                ? "Warning letter issued successfully , the employee has been notified.":"Show cause notice issued successfully , the employee has been notified."
-                 }
+                ? "Warning letter issued successfully , the employee has been notified."
+                : "Show cause notice issued successfully , the employee has been notified."}
             </label>
             <div className="text-center">
               <Button onClick={handleShowCauseLetterClose1}>Close</Button>
@@ -467,7 +467,7 @@ const CostCenterManagerAction = () => {
               disciplinarySearchData.disciplinaryAction.reasonId == 2 ? (
               <ShowCauseNotice />
             ) : (
-              <NonPerformanceLetter/>
+              <NonPerformanceLetter />
             )}
             <br></br>
             <Row>
@@ -537,8 +537,8 @@ const CostCenterManagerAction = () => {
               disciplinarySearchData.disciplinaryWarning !== null &&
               disciplinarySearchData.disciplinaryWarning !== undefined &&
               disciplinarySearchData.disciplinaryWarning !== ""
-                ?"Warning letter issued successfully , the employee has been notified.": "Show cause notice issued successfully , the employee has been notified."
-                }
+                ? "Warning letter issued successfully , the employee has been notified."
+                : "Show cause notice issued successfully , the employee has been notified."}
             </label>
 
             <div className="text-center mb-2">
@@ -757,7 +757,7 @@ const CostCenterManagerAction = () => {
                         >
                           <Col sm={2}>
                             <div>
-                              <label>Remarks:</label>
+                              <label>Respond To Show Cause Notice:</label>
                             </div>
                           </Col>
                           <Col sm={6}>
@@ -881,21 +881,25 @@ const CostCenterManagerAction = () => {
                                 </label>
                               </div>
                             </Col>
-                            <Col sm={6}>
-                              <div>
-                                <label>
-                                  Performance improvement period:
-                                  <label className="itemResult">
-                                    &nbsp;&nbsp;{" "}
-                                    {state.pip !== 0
-                                      ? state.pip === 1
-                                        ? state.pip + " Month"
-                                        : state.pip + " Months"
-                                      : ""}
+                            {showCauseReason === "Other" ? (
+                              ""
+                            ) : (
+                              <Col sm={6}>
+                                <div>
+                                  <label>
+                                    Performance improvement period:
+                                    <label className="itemResult">
+                                      &nbsp;&nbsp;{" "}
+                                      {state.pip !== 0
+                                        ? state.pip === 1
+                                          ? state.pip + " Month"
+                                          : state.pip + " Months"
+                                        : ""}
+                                    </label>
                                   </label>
-                                </label>
-                              </div>
-                            </Col>
+                                </div>
+                              </Col>
+                            )}
                           </Row>
                           {showCauseReason === "Other" ? (
                             ""
@@ -1000,19 +1004,7 @@ const CostCenterManagerAction = () => {
                               className={"LettersButtonsExtra"}
                               onClick={ShowCauseLetterClick}
                             >
-                              {disciplinarySearchData &&
-                              disciplinarySearchData &&
-                              disciplinarySearchData !== null &&
-                              disciplinarySearchData !== undefined &&
-                              Object.keys(disciplinarySearchData).length !==
-                                0 &&
-                              disciplinarySearchData.disciplinaryWarning !==
-                                null &&
-                              disciplinarySearchData.disciplinaryWarning !==
-                                undefined &&
-                              disciplinarySearchData.disciplinaryWarning !== ""
-                                ? "View Warning Letter"
-                                : "View Show Cause Notice"}
+                              Add Digital Signature
                             </button>
                           ) : (
                             ""
