@@ -102,11 +102,9 @@ const EntityTransfer = () => {
   //     }
   //   }, [formValid]);
 
-  //   useEffect(() => {
-  //     searchValue !== "" && initiationStatus === true
-  //       ? setModalShow(true)
-  //       : setModalShow(false);
-  //   }, [initiationStatus]);
+  useEffect(() => {
+    initiationStatus === true ? setModalShow(true) : setModalShow(false);
+  }, [initiationStatus]);
 
   useEffect(() => {
     initiationEmpData !== null &&
@@ -248,7 +246,7 @@ const EntityTransfer = () => {
       console.log(InfoData);
       createTransferInitiation(InfoData);
       setFormValid(true);
-      setModalShow(true);
+      // setModalShow(true);
     }
   };
 

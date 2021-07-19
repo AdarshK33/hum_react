@@ -289,7 +289,9 @@ const EntityTransfer = ({ transferData }) => {
             <Col md={2}>
               <Form.Label>New Position:</Form.Label>
             </Col>
-            <Col md={3}>{transferData.promotedPosition}</Col>
+            <Col md={3} className="text-primary">
+              {transferData.promotedPosition}
+            </Col>
             <Col md={2}>
               <Form.Label>Date Of Joining:</Form.Label>
             </Col>

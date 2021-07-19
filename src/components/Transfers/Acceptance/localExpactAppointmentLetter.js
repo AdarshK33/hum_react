@@ -6,6 +6,7 @@ import React, {
   useEffect,
 } from "react";
 import { Fragment } from "react";
+import calendarImage from "../../../assets/images/calendar-image.png";
 import { TransferContext } from "../../../context/TransferState";
 import {
   Button,
@@ -17,26 +18,26 @@ import {
   Table,
 } from "react-bootstrap";
 import moment from "moment";
-import "../../Offers/offers.css";
+// import "../Offers/offers.css";
 
-const AppointmentLetter = () => {
+const LocalExpactAppointmentLetter = () => {
   const { offerLetterData } = useContext(TransferContext);
   const [showLetter, setShow] = useState(true);
   const [previewClick, setPreviewClick] = useState(false);
   const handleClose = () => {
     setShow(false);
   };
-  //   useEffect(() => {
-  //     console.log(
-  //       "inside full appointment letter",
-  //       offerLetterData,
-  //       props.previewLetter
-  //     );
-  //     if (props.previewLetter === true) {
-  //       setShow(true);
-  //       setPreviewClick(true);
-  //     }
-  //   }, [offerLetterData]);
+  // useEffect(() => {
+  //   console.log(
+  //     "inside full appointment letter",
+  //     offerLetterData,
+  //     props.previewLetter
+  //   );
+  //   if (props.previewLetter === true) {
+  //     setShow(true);
+  //     setPreviewClick(true);
+  //   }
+  // }, [offerLetterData]);
   const [signaturePad, setSignature] = useState(false);
   const [saveLetter, setSaveLetter] = useState(false);
   const addSignature = () => {
@@ -47,7 +48,6 @@ const AppointmentLetter = () => {
     setShow(false);
     /*saveAppointmentLetter */
   };
-  console.log("offerLetterData->", offerLetterData);
   return (
     <Fragment>
       {offerLetterData && offerLetterData.permanentCandidateOffer ? (
@@ -293,7 +293,11 @@ const AppointmentLetter = () => {
                   <td>
                     {Math.round(offerLetterData.permanentCandidateOffer.hra)}
                   </td>
-                  <td>{offerLetterData.permanentCandidateOffer.hra * 12}</td>
+                  <td>
+                    {Math.round(
+                      offerLetterData.permanentCandidateOffer.hra * 12
+                    )}
+                  </td>
                 </tr>
 
                 <tr>
@@ -399,6 +403,16 @@ const AppointmentLetter = () => {
                 <tr>
                   <td colSpan={8}>
                     <p>
+                      <span style={{ color: "red" }}>*</span> The teammates from
+                      countries with whom India does not have a Social Security
+                      Agreement (the countries not mentioned in the list on
+                      https://www.epfindia.gov.in/site_en/International_workers.php
+                      are counties with whom India does not have a Social
+                      Security Agreement) can withdraw their Provident Fund
+                      amount only after attaining the age of 58 years
+                      (retirement age as fixed by the Government of India).
+                    </p>
+                    <p>
                       * Please note that if you are drawing a monthly gross
                       salary upto 21000 then you would get a minimum of INR.
                       583/per month for the number of months that you have
@@ -424,29 +438,31 @@ const AppointmentLetter = () => {
                 <p>For {offerLetterData.companyName}</p>
                 <p>Authorised Signatory</p>
                 {/* <button
-                  className="signatureButtons"
-                  onClick={() => addSignature()}
-                >
-                  Add Signature
-                </button>
-              </Col>
-              <Col style={{ textAlign: "end" }}>
-                <p>Accepted By Me</p>
-                <p>Employee Signature</p>
-                <button className=" signatureButtons">Add Signature</button> */}
+                      className="signatureButtons"
+                      onClick={() => addSignature()}
+                    >
+                      Add Signature
+                    </button>
+                  </Col>
+                  <Col style={{ textAlign: "end" }}>
+                    <p>Accepted By Me</p>
+                    <p>Employee Signature</p>
+                    <button className=" signatureButtons">Add Signature</button> */}
               </Col>
             </Row>
           </div>
           {/* {signaturePad && !saveLetter && (
-            <div className="text-center mb-4">
-              <button
-                className=" signatureButtons"
-                onClick={saveAppointmentLetter}
-              >
-                Save Changes
-              </button>
-            </div>
-          )} */}
+                <div className="text-center mb-4">
+                  <button
+                    className=" signatureButtons"
+                    onClick={saveAppointmentLetter}
+                  >
+                    Save Changes
+                  </button>
+                </div>
+              )} */}
+          {/* </Container>
+          </Modal> */}
         </div>
       ) : (
         ""
@@ -454,4 +470,4 @@ const AppointmentLetter = () => {
     </Fragment>
   );
 };
-export default AppointmentLetter;
+export default LocalExpactAppointmentLetter;

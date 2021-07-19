@@ -104,7 +104,7 @@ const TransferReducer = (state, action) => {
     case "FETCH_APOINTMENT_LETTER_DATA":
       return {
         ...state,
-        offerLetterData: {},
+        offerLetterData: action.payload,
       };
     case "FETCH_COUNTRY_DATA":
       return {

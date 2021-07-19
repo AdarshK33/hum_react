@@ -176,6 +176,13 @@ export const TransferProvider = (props) => {
       .then((response) => {
         setLoader(false);
         toast.info(response.data.message);
+        // if (
+        //   response.data.data.promotedEmployeeId !== null &&
+        //   response.data.data.promotedEmployeeId !== "" &&
+        //   response.data.data.promotedEmployeeId !== undefined
+        // ) {
+        //   getApointmentLetter(response.data.data.promotedEmployeeId);
+        // }
         return dispatch({
           type: "INITIATION_CREATE",
           transferId: response.data.data.transferId,
