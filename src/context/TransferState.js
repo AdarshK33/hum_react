@@ -15,6 +15,8 @@ const initialState = {
   initiationStatus: false,
   initiationTransferId: "",
   transferData: {},
+  TRANSFERtype: "Regular Transfer",
+  offerLetterData: {},
   countryDetails: [],
   designationDetails: [],
 };
@@ -24,6 +26,13 @@ export const TransferContext = createContext();
 export const TransferProvider = (props) => {
   const [state, dispatch] = useReducer(TransferReducer, initialState);
   const [loader, setLoader] = useState(false);
+  const chnageTransferType = (val) => {
+    console.log("changeInTransferType->", val);
+    return dispatch({
+      type: "TRANSFR_TYPE_CHANGE",
+      payload: val,
+    });
+  };
 
   const getTransferList = (apiUrl) => {
     setLoader(true);
@@ -167,6 +176,13 @@ export const TransferProvider = (props) => {
       .then((response) => {
         setLoader(false);
         toast.info(response.data.message);
+        // if (
+        //   response.data.data.promotedEmployeeId !== null &&
+        //   response.data.data.promotedEmployeeId !== "" &&
+        //   response.data.data.promotedEmployeeId !== undefined
+        // ) {
+        //   getApointmentLetter(response.data.data.promotedEmployeeId);
+        // }
         return dispatch({
           type: "INITIATION_CREATE",
           transferId: response.data.data.transferId,
@@ -198,6 +214,22 @@ export const TransferProvider = (props) => {
         });
       });
   };
+  const getApointmentLetter = (EmployeeId) => {
+    setLoader(true);
+    client
+      .get("/api/v1/transfer/offer/" + EmployeeId)
+      .then((response) => {
+        setLoader(false);
+        return dispatch({
+          type: "FETCH_APOINTMENT_LETTER_DATA",
+          payload: response.data.data,
+        });
+      })
+      .catch(() => {
+        setLoader(false);
+        console.log("apointment letter api error");
+      });
+  };
 
   const getCountryDetails = () => {
     setLoader(true);
@@ -216,7 +248,7 @@ export const TransferProvider = (props) => {
           type: "FETCH_COUNTRY_DATA_ERR",
         });
       });
-  }
+  };
 
   const getDesignationDetails = () => {
     setLoader(true);
@@ -235,7 +267,7 @@ export const TransferProvider = (props) => {
           type: "FETCH_DESIGNATION_DATA_ERR",
         });
       });
-  }
+  };
 
   return (
     <TransferContext.Provider
@@ -261,6 +293,10 @@ export const TransferProvider = (props) => {
         getTransferData,
         transferData: state.transferData,
         initiationTransferId: state.initiationTransferId,
+        TRANSFERtype: state.TRANSFERtype,
+        chnageTransferType,
+        getApointmentLetter,
+        offerLetterData: state.offerLetterData,
         getCountryDetails,
         countryDetails: state.countryDetails,
         getDesignationDetails,

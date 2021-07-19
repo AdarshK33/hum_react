@@ -12,9 +12,15 @@ import LoaderIcon from "../../Loader/LoaderIcon";
 const TransferPage = () => {
   const recordsPerPage = 10;
   const pageRange = 10;
-  const { getTransferList, transferList, loader, total } =
-    useContext(TransferContext);
-  const [transferType, setTransferType] = useState("Regular Transfer");
+  const {
+    getTransferList,
+    transferList,
+    loader,
+    total,
+    chnageTransferType,
+    TRANSFERtype,
+  } = useContext(TransferContext);
+  const [transferType, setTransferType] = useState(TRANSFERtype);
   const [searchValue, setSearchValue] = useState("all");
   const [searchInput, setSearchInput] = useState("");
   const [status, setStatus] = useState(5);
@@ -124,6 +130,39 @@ const TransferPage = () => {
           };
         });
         setTableBody(tableData);
+      } else if (transferType === "Employment Type Transfer") {
+        let tableData = transferList.map((item, index) => {
+          return {
+            sno: index + 1,
+            empId: item.currentEmployeeId,
+            empName: item.employeeName,
+            oldEmpContractType: item.currentContractType,
+            newEmpContractType: item.promotedContractType,
+            effectiveDate: item.promotedJoiningDate,
+            dateOfTransfer: item.promotedJoiningDate,
+            status: item.statusDesc,
+
+            view: {
+              active: true,
+              link: `/view-transfer/${item.transferId}`,
+            },
+            action: {
+              edit: {
+                active:
+                  item.statusDesc === "REJECTED" ||
+                  item.statusDesc === "INITIATED"
+                    ? false
+                    : true,
+                link:
+                  item.statusDesc === "REJECTED" ||
+                  item.statusDesc === "INITIATED"
+                    ? ""
+                    : `/entity-transfer/${item.transferId}`,
+              },
+            },
+          };
+        });
+        setTableBody(tableData);
       } else if (transferType === "International Transfer") {
         let tableData = transferList.map((item, index) => {
           return {
@@ -137,6 +176,7 @@ const TransferPage = () => {
             effDate: item.promotedJoiningDate,
             dateOfReturn: item.promotedDateOfReturn,
             termOfProject: item.promotedTermOfProject,
+            status: item.statusDesc,
             view: {
               active: true,
               link: `/view-transfer/${item.transferId}`,
@@ -167,11 +207,12 @@ const TransferPage = () => {
     );
   };
 
-  const changeTransferType = (e) => {
+  const changeInTransferType = (e) => {
     const transfer = e.target.value;
     setTransferType(transfer);
     setListHeading(`${transfer} Listings`);
     setActivePage(1);
+    chnageTransferType(transfer);
     setApiUrl(
       `/api/v1/transfer/view?key=${searchValue}&page=${
         activePage - 1
@@ -224,7 +265,7 @@ const TransferPage = () => {
                         as="select"
                         aria-label="Select Transfer Type"
                         value={transferType}
-                        onChange={changeTransferType}
+                        onChange={changeInTransferType}
                         className="probation_status_search"
                       >
                         <option disabled>Select Transfer Type</option>

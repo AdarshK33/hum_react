@@ -45,6 +45,7 @@ const InternationalTransferAcceptance = () => {
     ) {
       setEffectiveDate(new Date(transferData.promotedJoiningDate));
       setReturnDate(new Date(transferData.promotedDateOfReturn));
+      setCountryInsurance(transferData.isInsuranceCovered);
     }
   }, [transferData]);
 
@@ -77,7 +78,7 @@ const InternationalTransferAcceptance = () => {
         promotedManagerId: transferData.promotedManagerId,
         promotedMonthlyBonus: transferData.promotedMonthlyBonus,
         remark: null,
-        status: 2,
+        status: 1,
         transferId: transferData.transferId,
         transferLetter: null,
         transferType: transferData.transferType,
@@ -425,12 +426,7 @@ const InternationalTransferAcceptance = () => {
                       </Form.Group>
                     </Col>
                   </Row>
-                  <Row className="my-5">
-                    <Col>
-                      Note: Kindly contact payroll team to check on dual
-                      taxation assesment
-                    </Col>
-                  </Row>
+
                   <Row className="my-5">
                     <Col className="text-center mr-5">
                       <button

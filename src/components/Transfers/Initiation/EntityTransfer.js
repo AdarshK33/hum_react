@@ -36,9 +36,12 @@ const EntityTransfer = () => {
   const [searchInput, setSearchInput] = useState("");
   const [empErrMsg, setEmpErrMsg] = useState("");
   const [newDept, setNewDept] = useState("");
-  const [newCostCentre, setNewCostCentre] = useState("");
   const [effectiveDate, setEffectiveDate] = useState(new Date());
   const [effectiveDateErrMsg, setEffectiveDateErrMsg] = useState("");
+  const [newCostCentre, setNewCostCentre] = useState("");
+  const [costCentreErrMsg, setCostCentreErrMsg] = useState("");
+  const [newManager, setNewManager] = useState("");
+  const [managerErrMsg, setManagerErrMsg] = useState("");
   const [formValid, setFormValid] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [showSignature, setShowSignature] = useState(false);
@@ -100,9 +103,7 @@ const EntityTransfer = () => {
   //   }, [formValid]);
 
   useEffect(() => {
-    searchValue !== "" && initiationStatus === true
-      ? setModalShow(true)
-      : setModalShow(false);
+    initiationStatus === true ? setModalShow(true) : setModalShow(false);
   }, [initiationStatus]);
 
   useEffect(() => {
@@ -133,7 +134,10 @@ const EntityTransfer = () => {
     setEffectiveDateErrMsg("");
   };
 
-  const handleModalClose = () => setModalShow(false);
+  const handleModalClose = () => {
+    setModalShow(false);
+    history.push("./transfers");
+  };
 
   const addDigitalSignature = () => setShowSignature(true);
 
@@ -155,7 +159,14 @@ const EntityTransfer = () => {
 
   const handleLetterSubmitModalClose = () => {
     setShowLetterSubmitModal(false);
-    history.push("./transfers");
+  };
+  const changeCostCentreHandler = (e) => {
+    setNewCostCentre(e.target.value);
+    setCostCentreErrMsg("");
+  };
+  const changeManagerHandler = (e) => {
+    setNewManager(e.target.value);
+    setManagerErrMsg("");
   };
 
   /* Validate form */
@@ -170,6 +181,14 @@ const EntityTransfer = () => {
     if (newEntity === "") {
       validForm = false;
       setNewEntityErrMsg("Please select new entity");
+    }
+    if (newCostCentre === "") {
+      validForm = false;
+      setCostCentreErrMsg("Please select cost centre");
+    }
+    if (newManager === "") {
+      validForm = false;
+      setManagerErrMsg("Please select manager");
     }
 
     if (
@@ -204,7 +223,7 @@ const EntityTransfer = () => {
         currentPosition: initiationEmpData.currentPosition,
         promotedCompany: newEntity,
         promotedContractType: initiationEmpData.promotedContractType,
-        promotedCostCentre: initiationEmpData.promotedCostCentre,
+        promotedCostCentre: newCostCentre,
         promotedCountry: initiationEmpData.promotedCountry,
         promotedDateOfReturn: initiationEmpData.promotedDateOfReturn,
         promotedDepartment: initiationEmpData.promotedDepartment,
@@ -213,7 +232,7 @@ const EntityTransfer = () => {
         promotedFixedGross: initiationEmpData.promotedFixedGross,
         promotedJoiningDate: moment(effectiveDate).format("YYYY-MM-DD"),
         promotedLocation: initiationEmpData.promotedLocation,
-        promotedManagerId: initiationEmpData.promotedManagerId,
+        promotedManagerId: newManager,
         promotedMonthlyBonus: initiationEmpData.promotedMonthlyBonus,
         promotedPosition: initiationEmpData.promotedPosition,
         promotedRelocationBonus: initiationEmpData.promotedRelocationBonus,
@@ -227,6 +246,7 @@ const EntityTransfer = () => {
       console.log(InfoData);
       createTransferInitiation(InfoData);
       setFormValid(true);
+      // setModalShow(true);
     }
   };
 
@@ -448,6 +468,43 @@ const EntityTransfer = () => {
                   {initiationEmpData.currentFixedGross}
                 </Col>
                 <Col md={2}>
+                  <Form.Label>New Cost Center:</Form.Label>
+                </Col>
+                <Col md={3}>
+                  <Form.Control
+                    as="select"
+                    className="text-primary"
+                    aria-label="transferInitiationCostCentre"
+                    value={newCostCentre}
+                    placeholder="Select Cost Centre"
+                    onChange={changeCostCentreHandler}
+                  >
+                    <option>Select Cost Centre</option>
+                    {costCentreData !== null &&
+                      costCentreData !== undefined &&
+                      costCentreData.length > 0 &&
+                      costCentreData.map((item) => {
+                        return (
+                          <option
+                            key={`cost_centre_${item.costCentreName}`}
+                            value={item.costCentreName}
+                          >
+                            {item.costCentreName}
+                          </option>
+                        );
+                      })}
+                  </Form.Control>
+                  {costCentreErrMsg !== "" && (
+                    <span className="text-danger">{costCentreErrMsg}</span>
+                  )}
+                </Col>
+              </Form.Group>
+              <Form.Group
+                as={Row}
+                className="mb-3"
+                controlId="transferInitiationCostCentre"
+              >
+                <Col md={2}>
                   <Form.Label>Effective Date:</Form.Label>
                 </Col>
                 <Col md={3}>
@@ -455,6 +512,7 @@ const EntityTransfer = () => {
                     className="text-primary form-control"
                     selected={effectiveDate}
                     closeOnScroll={true}
+                    minDate={moment().toDate()}
                     dateFormat="yyyy-MM-dd"
                     onChange={(date) => {
                       changeEffectiveDateHandler(date);
@@ -462,6 +520,35 @@ const EntityTransfer = () => {
                   />
                   {effectiveDateErrMsg !== "" && (
                     <span className="text-danger">{effectiveDateErrMsg}</span>
+                  )}
+                </Col>
+                <Col md={2}>
+                  <Form.Label>New Manager:</Form.Label>
+                </Col>
+                <Col md={3}>
+                  <Form.Control
+                    as="select"
+                    className="text-primary"
+                    aria-label="transferInitiationManager"
+                    value={newManager}
+                    placeholder="Select Manager"
+                    onChange={changeManagerHandler}
+                  >
+                    <option>Select Manager</option>
+                    {costCentreManagersData !== null &&
+                      costCentreManagersData !== undefined &&
+                      costCentreManagersData.length !== 0 &&
+                      costCentreManagersData.map((item) => {
+                        return (
+                          <option
+                            key={`manager_${item.employeeId}`}
+                            value={item.employeeId}
+                          >{`${item.firstName} ${item.lastName}`}</option>
+                        );
+                      })}
+                  </Form.Control>
+                  {managerErrMsg !== "" && (
+                    <span className="text-danger">{managerErrMsg}</span>
                   )}
                 </Col>
               </Form.Group>
@@ -481,7 +568,7 @@ const EntityTransfer = () => {
                   >
                     Save
                   </button>
-                  {searchValue !== "" && initiationStatus && (
+                  {/* {searchValue !== "" && initiationStatus && (
                     <button
                       className={"LettersButtons"}
                       onClick={showTransferLetterModal}
@@ -490,9 +577,9 @@ const EntityTransfer = () => {
                         ? "Preview Transfer Letter"
                         : "Generate Transfer Letter"}
                     </button>
-                  )}
+                  )} */}
 
-                  {searchValue !== "" &&
+                  {/* {searchValue !== "" &&
                     initiationStatus &&
                     previewTransferLetter && (
                       <div className="preview-section">
@@ -510,7 +597,7 @@ const EntityTransfer = () => {
                           Submit
                         </button>
                       </div>
-                    )}
+                    )} */}
                 </Col>
               </Row>
             </div>

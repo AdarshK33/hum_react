@@ -59,6 +59,7 @@ const RegularTransfer = () => {
   const [previewTransferLetter, setPreviewTransferLetter] = useState(false);
   const [letterSent, setLetterSent] = useState(false);
   const [showLetterSubmitModal, setShowLetterSubmitModal] = useState(false);
+  const [depNoChange, setDepNoChange] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -447,9 +448,12 @@ const RegularTransfer = () => {
                   Current
                 </Col>
                 <Col
-                  md={{ span: 3, offset: 2 }}
+                  md={{ span: 2, offset: 1 }}
                   className="font-weight-bold my-2"
                 >
+                  No Change
+                </Col>
+                <Col md={{ span: 1 }} className="font-weight-bold my-2">
                   New
                 </Col>
               </Form.Group>
@@ -461,10 +465,22 @@ const RegularTransfer = () => {
                 <Form.Label column md={2}>
                   Department
                 </Form.Label>
-                <Col md={3} className="text-primary">
+                <Col md={{ span: 4 }} className="text-primary">
                   {initiationEmpData.currentDepartment}
                 </Col>
-                <Col md={{ span: 3, offset: 2 }}>
+                <Col md={{ span: 1 }}>
+                  <div className="boxField input">
+                    <input
+                      className="largerCheckbox"
+                      type="checkbox"
+                      value="yes"
+                      checked={depNoChange}
+                      onChange={() => setDepNoChange(!depNoChange)}
+                    />
+                  </div>
+                </Col>
+
+                <Col md={{ span: 3 }}>
                   <Form.Control
                     as="select"
                     className="text-primary"
@@ -713,6 +729,7 @@ const RegularTransfer = () => {
                     className="text-primary form-control"
                     selected={effectiveDate}
                     closeOnScroll={true}
+                    minDate={moment().toDate()}
                     dateFormat="yyyy-MM-dd"
                     onChange={(date) => {
                       changeEffectiveDateHandler(date);

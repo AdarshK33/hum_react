@@ -119,9 +119,7 @@ const InternationalTransfer = () => {
   }, [formValid]);
 
   useEffect(() => {
-    searchValue !== "" && initiationStatus === true
-      ? setModalShow(true)
-      : setModalShow(false);
+    initiationStatus === true ? setModalShow(true) : setModalShow(false);
   }, [initiationStatus]);
 
   const searchInputHandler = (e) => {
@@ -670,12 +668,7 @@ const InternationalTransfer = () => {
                 </Form.Group>
               </Col>
             </Row>
-            <Row className="my-5">
-              <Col>
-                Note: Kindly contact payroll team to check on dual taxation
-                assesment
-              </Col>
-            </Row>
+
             <Row className="my-5">
               <Col className="text-center mr-5">
                 <button
