@@ -231,15 +231,24 @@ const ManagerInitiateExit = () => {
       state.empCostCenterName = searchByCostData.costCentre;
       //   state.empLocation = searchEmpData1.location;
       state.empPosition = searchByCostData.position;
-      state.emailId = searchByCostData.email;
-
+      state.emailId = searchByCostData.personalEmail;
+      console.log(searchByCostData)
       if (
         state.empContractType === "internship" ||
         state.empContractType === "Internship"
       ) {
         setIntern(true);
+        setLastWorkingDate(new Date(searchByCostData.joiningDate).setMonth(new Date(searchByCostData.joiningDate).getMonth() + (((searchByCostData.internshipPeriod !== null && searchByCostData.internshipPeriod !== undefined)?searchByCostData.internshipPeriod:0))))
+      } else if (
+        state.empContractType === "permanent" ||
+        state.empContractType === "Permanent" ||state.empContractType === "parttime" ||
+        state.empContractType === "PartTime"
+      ) {
+        setIntern(false);
+        setLastWorkingDate(new Date().setMonth(new Date().getMonth() + searchByCostData.noticePeriod))
       } else {
         setIntern(false);
+        setLastWorkingDate("")
       }
     }
   }, [searchByCostData]);
@@ -513,6 +522,7 @@ const ManagerInitiateExit = () => {
     state.empPosition = "";
     state.empLocation = "";
     state.empCostCenterName = "";
+    state.emailId = ""
     makeEmployeeDataNull();
     makeSearchEmp1DataNull();
   };
@@ -781,7 +791,7 @@ const ManagerInitiateExit = () => {
             costCentreManagerName: null,
             costCentreName: null,
             dateOfResignation: moment(dateOfResignation).format("YYYY-MM-DD"),
-            emailId: state.emailId,
+            personalEmail: state.emailId,
             empName: EmpName,
             employeeComment: null,
             employeeId: state.empId,
@@ -823,7 +833,7 @@ const ManagerInitiateExit = () => {
             costCentreManagerName: null,
             costCentreName: null,
             dateOfResignation: null,
-            emailId: state.emailId,
+            personalEmail: state.emailId,
             empName: EmpName,
             employeeComment: null,
             employeeId: state.empId,
@@ -847,7 +857,7 @@ const ManagerInitiateExit = () => {
             reason: null,
             reasonForResignation: null,
             rehireRemark: state.remarks !== "" ? state.remarks : null,
-            status: 2,
+            status: 5,
           };
           console.log("createExitData", data1);
           //   empResign(createExitData);
@@ -1742,7 +1752,7 @@ const ManagerInitiateExit = () => {
                           employeeData !== null &&
                           employeeData !== undefined &&
                           Object.keys(employeeData).length !== 0 &&
-                          employeeData.status === 2 &&
+                          (employeeData.status === 2 || employeeData.status === 5) &&
                           showPreview === true &&
                           submitted === true ? (
                             <button

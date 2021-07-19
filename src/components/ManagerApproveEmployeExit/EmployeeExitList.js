@@ -253,7 +253,8 @@ const EmployeeExitList = () => {
                                 ? "Approve"
                                 : item.status === 4
                                 ? "Resigned"
-                                : ""}
+                                :item.status === 5
+                                ? "End of Internship":""}
                             </td>
                             <td>
                               <Link to={"/exit-view/" + item.employeeId}>
@@ -266,7 +267,7 @@ const EmployeeExitList = () => {
                             </td>
 
                             <td>
-                              {item.status === 2 || item.status === 4 ? (
+                              {item.status === 2 || item.status === 4 || item.status === 5 ? (
                                 <Edit2 />
                               ) : (
                                 <Link to={"/exit-action/" + item.employeeId}>
