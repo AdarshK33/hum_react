@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Breadcrumb from "../../common/breadcrumb";
 import { Row, Col, Form, Container } from "react-bootstrap";
 import { ToastContainer } from "react-toastify";
@@ -6,13 +6,17 @@ import "react-datepicker/dist/react-datepicker.css";
 import RegularTransfer from "./RegularTransfer";
 import EntityTransfer from "./EntityTransfer";
 import InternationalTransfer from "./InternationalTransfer";
+import ChangeEmployementType from "./ChangeEmployementType";
+import { TransferContext } from "../../../context/TransferState";
 
 const Initiations = () => {
-  const [transferType, setTransferType] = useState("");
+  const { chnageTransferType, TRANSFERtype } = useContext(TransferContext);
+  const [transferType, setTransferType] = useState(TRANSFERtype);
   const [transferErrMsg, setTransferErrMsg] = useState("");
 
   const transferTypeHandler = (e) => {
     setTransferType(e.target.value);
+    chnageTransferType(e.target.value);
     console.log(transferType);
     setTransferErrMsg("");
   };
@@ -73,6 +77,8 @@ const Initiations = () => {
                           <EntityTransfer />
                         ) : transferType === "International Transfer" ? (
                           <InternationalTransfer />
+                        ) : transferType === "Employment Type Transfer" ? (
+                          <ChangeEmployementType />
                         ) : null}
                       </Col>
                     </Row>

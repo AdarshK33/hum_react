@@ -10,8 +10,9 @@ import { TransferContext } from "../../../context/TransferState";
 import TransferInitationLetter from "./TransferInitiationLetter";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import { useHistory } from "react-router-dom";
+import "../../Transfers/Transfers.css";
 
-const EntityTransfer = () => {
+const ChangeEmployementType = () => {
   const {
     getTransferInitiationEmpData,
     initiationEmpData,
@@ -30,18 +31,22 @@ const EntityTransfer = () => {
     initiationTransferId,
   } = useContext(TransferContext);
   const [transferType, setTransferType] = useState("Entity Transfer");
-  const [newEntity, setNewEntity] = useState("");
-  const [newEntityErrMsg, setNewEntityErrMsg] = useState("");
+  const [newEmployement, setNewEmployement] = useState("");
+  const [newEmployementErrMsg, setNewEmployementErrMsg] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [searchInput, setSearchInput] = useState("");
   const [empErrMsg, setEmpErrMsg] = useState("");
   const [newDept, setNewDept] = useState("");
   const [effectiveDate, setEffectiveDate] = useState(new Date());
   const [effectiveDateErrMsg, setEffectiveDateErrMsg] = useState("");
+  const [DateOfTransfer, setDateOfTransfer] = useState(new Date());
+  const [DateOfTransferErrMsg, setDateOfTransferErrMsg] = useState("");
   const [newCostCentre, setNewCostCentre] = useState("");
   const [costCentreErrMsg, setCostCentreErrMsg] = useState("");
   const [newManager, setNewManager] = useState("");
   const [managerErrMsg, setManagerErrMsg] = useState("");
+  const [newGross, setNewGross] = useState("");
+  const [grossErrMsg, setGrossErrMsg] = useState("");
   const [formValid, setFormValid] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [showSignature, setShowSignature] = useState(false);
@@ -124,14 +129,18 @@ const EntityTransfer = () => {
     setSearchValue(searchInput);
   };
 
-  const changeEntityHandler = (e) => {
-    setNewEntity(e.target.value);
-    setNewEntityErrMsg("");
+  const changeEmployementHandler = (e) => {
+    setNewEmployement(e.target.value);
+    setNewEmployementErrMsg("");
   };
 
   const changeEffectiveDateHandler = (date) => {
     setEffectiveDate(date);
     setEffectiveDateErrMsg("");
+  };
+  const changeDateOfTransferHandler = (date) => {
+    setDateOfTransfer(date);
+    setDateOfTransferErrMsg("");
   };
 
   const handleModalClose = () => {
@@ -168,6 +177,10 @@ const EntityTransfer = () => {
     setNewManager(e.target.value);
     setManagerErrMsg("");
   };
+  const changeGrossHandler = (e) => {
+    setNewGross(e.target.value);
+    setGrossErrMsg("");
+  };
 
   /* Validate form */
   const validateForm = () => {
@@ -178,17 +191,17 @@ const EntityTransfer = () => {
       setEmpErrMsg("Please enter employee id or employee name");
     }
 
-    if (newEntity === "") {
+    if (newEmployement === "") {
       validForm = false;
-      setNewEntityErrMsg("Please select new entity");
+      setNewEmployementErrMsg("Please select new Employement");
     }
-    if (newCostCentre === "") {
+    // if (newCostCentre === "") {
+    //   validForm = false;
+    //   setCostCentreErrMsg("Please select cost centre");
+    // }
+    if (newGross === "") {
       validForm = false;
-      setCostCentreErrMsg("Please select cost centre");
-    }
-    if (newManager === "") {
-      validForm = false;
-      setManagerErrMsg("Please select manager");
+      setGrossErrMsg("Please enter fixed gross");
     }
 
     if (
@@ -200,6 +213,14 @@ const EntityTransfer = () => {
       setEffectiveDateErrMsg("Please enter effective date");
     }
 
+    if (
+      DateOfTransfer === "" ||
+      DateOfTransfer === undefined ||
+      DateOfTransfer === null
+    ) {
+      validForm = false;
+      setDateOfTransferErrMsg("Please enter effective date");
+    }
     return validForm;
   };
 
@@ -221,7 +242,7 @@ const EntityTransfer = () => {
         currentManagerId: initiationEmpData.currentManagerId,
         currentMonthlyBonus: initiationEmpData.currentMonthlyBonus,
         currentPosition: initiationEmpData.currentPosition,
-        promotedCompany: newEntity,
+        promotedCompany: newEmployement,
         promotedContractType: initiationEmpData.promotedContractType,
         promotedCostCentre: newCostCentre,
         promotedCountry: initiationEmpData.promotedCountry,
@@ -244,7 +265,7 @@ const EntityTransfer = () => {
         transferType: transferType,
       };
       console.log(InfoData);
-      createTransferInitiation(InfoData);
+      //   createTransferInitiation(InfoData);
       setFormValid(true);
       // setModalShow(true);
     }
@@ -364,7 +385,7 @@ const EntityTransfer = () => {
             >
               <option>Select Transfer Type</option>
               <option value="Regular Transfer">Regular Transfer</option>
-              <option value="Entity Transfer">Entity Transfer</option>
+              <option value="Employement Transfer">Entity Transfer</option>
               <option value="International Transfer">
                 International Transfer
               </option>
@@ -423,87 +444,45 @@ const EntityTransfer = () => {
                   {initiationEmpData.currentContractType}
                 </Col>
               </Form.Group>
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="transferInitiationPosition"
-              >
-                <Col md={2}>
-                  <Form.Label>Old Entity:</Form.Label>
+              <Row className="my-3">
+                <Col className="font-weight-bold">
+                  <u>Work Information</u>
                 </Col>
-                <Col md={3} className="text-primary">
-                  {initiationEmpData.currentCompany}
-                </Col>
+              </Row>
+              <Row>
                 <Col md={2}>
-                  <Form.Label>New Entity:</Form.Label>
+                  <Form.Label>Change Employement:</Form.Label>
                 </Col>
                 <Col md={3}>
                   <Form.Control
                     as="select"
                     className="text-primary"
                     aria-label="transferInitiationPosition"
-                    value={newEntity}
+                    value={newEmployement}
                     placeholder="Select Position"
-                    onChange={changeEntityHandler}
+                    onChange={changeEmployementHandler}
                   >
-                    <option value="">Select New Entity</option>
-                    <option value="INDECA">INDECA</option>
-                    <option value="DSI">DSI</option>
-                    <option value="PRODIN">PRODIN</option>
+                    <option value="">Select Change Employement</option>
+                    <option value="From Temporary to Permanent Part Time">
+                      From Temporary to Permanent Part Time
+                    </option>
+                    <option value="From Temporary to Permanent Full Time">
+                      From Temporary to Permanent Full Time
+                    </option>
+                    <option value="From Permanent Part Time to Permanent Full Time">
+                      From Permanent Part Time to Permanent Full Time
+                    </option>
+                    <option value="From Permanent Full Time to Permanent Part Time">
+                      From Permanent Full Time to Permanent Part Time
+                    </option>
+                    <option value="From Permanent Part time to Temporary Part Time">
+                      From Permanent Part time to Temporary Part Time
+                    </option>
                   </Form.Control>
-                  {newEntityErrMsg !== "" && (
-                    <span className="text-danger">{newEntityErrMsg}</span>
+                  {newEmployementErrMsg !== "" && (
+                    <span className="text-danger">{newEmployementErrMsg}</span>
                   )}
                 </Col>
-              </Form.Group>
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="transferInitiationCostCentre"
-              >
-                <Col md={2}>
-                  <Form.Label>Old Fixed Gross:</Form.Label>
-                </Col>
-                <Col md={3} className="text-primary">
-                  {initiationEmpData.currentFixedGross}
-                </Col>
-                <Col md={2}>
-                  <Form.Label>New Cost Center:</Form.Label>
-                </Col>
-                <Col md={3}>
-                  <Form.Control
-                    as="select"
-                    className="text-primary"
-                    aria-label="transferInitiationCostCentre"
-                    value={newCostCentre}
-                    placeholder="Select Cost Centre"
-                    onChange={changeCostCentreHandler}
-                  >
-                    <option>Select Cost Centre</option>
-                    {costCentreData !== null &&
-                      costCentreData !== undefined &&
-                      costCentreData.length > 0 &&
-                      costCentreData.map((item) => {
-                        return (
-                          <option
-                            key={`cost_centre_${item.costCentreName}`}
-                            value={item.costCentreName}
-                          >
-                            {item.costCentreName}
-                          </option>
-                        );
-                      })}
-                  </Form.Control>
-                  {costCentreErrMsg !== "" && (
-                    <span className="text-danger">{costCentreErrMsg}</span>
-                  )}
-                </Col>
-              </Form.Group>
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="transferInitiationCostCentre"
-              >
                 <Col md={2}>
                   <Form.Label>Effective Date:</Form.Label>
                 </Col>
@@ -524,33 +503,61 @@ const EntityTransfer = () => {
                     <span className="text-danger">{effectiveDateErrMsg}</span>
                   )}
                 </Col>
+              </Row>
+              <Row className="my-3">
+                <Col className="font-weight-bold">
+                  <u>Remuneration Information</u>
+                </Col>
+              </Row>
+              <Form.Group as={Row} className="mb-3" controlId="effectiveDate">
                 <Col md={2}>
-                  <Form.Label>New Manager:</Form.Label>
+                  <Form.Label>Salary Type:</Form.Label>
+                </Col>
+                <Col md={3} className="text-primary">
+                  <Form.Control
+                    type="text"
+                    placeholder="Monthly"
+                    value={newGross}
+                    className="text-primary"
+                    disabled={true}
+                  ></Form.Control>
+                </Col>
+                <Col md={2}>
+                  <Form.Label>Fixed Gross:</Form.Label>
+                </Col>
+                <Col md={3} className="text-primary">
+                  <Form.Control
+                    type="text"
+                    placeholder="Fixed Gross"
+                    value={newGross}
+                    className="text-primary"
+                    onChange={changeGrossHandler}
+                  ></Form.Control>
+                  {grossErrMsg !== "" && (
+                    <span className="text-danger">{grossErrMsg}</span>
+                  )}
+                </Col>
+              </Form.Group>
+
+              <Form.Group as={Row} className="mb-3" controlId="effectiveDate">
+                <Col md={2}>
+                  <Form.Label>Effective Date:</Form.Label>
                 </Col>
                 <Col md={3}>
-                  <Form.Control
-                    as="select"
-                    className="text-primary"
-                    aria-label="transferInitiationManager"
-                    value={newManager}
-                    placeholder="Select Manager"
-                    onChange={changeManagerHandler}
-                  >
-                    <option>Select Manager</option>
-                    {costCentreManagersData !== null &&
-                      costCentreManagersData !== undefined &&
-                      costCentreManagersData.length !== 0 &&
-                      costCentreManagersData.map((item) => {
-                        return (
-                          <option
-                            key={`manager_${item.employeeId}`}
-                            value={item.employeeId}
-                          >{`${item.firstName} ${item.lastName}`}</option>
-                        );
-                      })}
-                  </Form.Control>
-                  {managerErrMsg !== "" && (
-                    <span className="text-danger">{managerErrMsg}</span>
+                  <div className="transfers-date">
+                    <DatePicker
+                      className="text-primary form-control"
+                      selected={DateOfTransfer}
+                      closeOnScroll={true}
+                      minDate={moment().toDate()}
+                      dateFormat="yyyy-MM-dd"
+                      onChange={(date) => {
+                        changeDateOfTransferHandler(date);
+                      }}
+                    />
+                  </div>
+                  {DateOfTransferErrMsg !== "" && (
+                    <span className="text-danger">{effectiveDateErrMsg}</span>
                   )}
                 </Col>
               </Form.Group>
@@ -618,4 +625,4 @@ const EntityTransfer = () => {
   );
 };
 
-export default EntityTransfer;
+export default ChangeEmployementType;
