@@ -243,7 +243,12 @@ const ChangeEmployementType = () => {
         currentMonthlyBonus: initiationEmpData.currentMonthlyBonus,
         currentPosition: initiationEmpData.currentPosition,
         promotedCompany: newEmployement,
-        promotedContractType: initiationEmpData.promotedContractType,
+        promotedContractType:
+          newEmployement !== null && newEmployement !== ""
+            ? (newEmployement = "From Part Time to Full Time"
+                ? "Permanent"
+                : "Parttime")
+            : "",
         promotedCostCentre: newCostCentre,
         promotedCountry: initiationEmpData.promotedCountry,
         promotedDateOfReturn: initiationEmpData.promotedDateOfReturn,
@@ -467,20 +472,12 @@ const ChangeEmployementType = () => {
                         onChange={changeEmployementHandler}
                       >
                         <option value="">Select Change Employement</option>
+
                         <option value="From Temporary to Permanent Part Time">
-                          From Temporary to Permanent Part Time
+                          From Part Time to Full Time
                         </option>
                         <option value="From Temporary to Permanent Full Time">
-                          From Temporary to Permanent Full Time
-                        </option>
-                        <option value="From Permanent Part Time to Permanent Full Time">
-                          From Permanent Part Time to Permanent Full Time
-                        </option>
-                        <option value="From Permanent Full Time to Permanent Part Time">
-                          From Permanent Full Time to Permanent Part Time
-                        </option>
-                        <option value="From Permanent Part time to Temporary Part Time">
-                          From Permanent Part time to Temporary Part Time
+                          From Full Time to Part Time
                         </option>
                       </Form.Control>
                       {newEmployementErrMsg !== "" && (
@@ -531,7 +528,13 @@ const ChangeEmployementType = () => {
                 <Col md={4} className="text-primary">
                   <Form.Control
                     type="text"
-                    placeholder="Monthly"
+                    placeholder={
+                      newEmployement !== null && newEmployement !== ""
+                        ? (newEmployement = "From Part Time to Full Time"
+                            ? "Monthly"
+                            : "Hourly")
+                        : ""
+                    }
                     value={newGross}
                     className="text-primary"
                     disabled={true}
