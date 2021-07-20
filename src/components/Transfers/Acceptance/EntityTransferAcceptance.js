@@ -488,13 +488,7 @@ const EntityTransferAcceptance = () => {
                 transferData !== undefined &&
                 Object.keys(transferData).length !== 0 ? (
                   <Form>
-                    <Row
-                      style={{
-                        marginTop: "2rem",
-                        marginLeft: "2rem",
-                        marginBpottom: "2rem",
-                      }}
-                    >
+                    <Row className="mx-5 mt-5">
                       <Col>
                         <Row className="mb-4">
                           <Col md={2}>Transfer Type: </Col>
@@ -519,19 +513,19 @@ const EntityTransferAcceptance = () => {
                           <Col md={2}>
                             <Form.Label>Cost Center Name:</Form.Label>
                           </Col>
-                          <Col md={3} className="text-primary">
+                          <Col md={4} className="text-primary">
                             {transferData.currentCostCentre}
                           </Col>
                           <Col md={2}>
                             <Form.Label>Contract Type:</Form.Label>
                           </Col>
-                          <Col md={3} className="text-primary">
+                          <Col md={4} className="text-primary">
                             {transferData.currentContractType}
                           </Col>
                         </Form.Group>
                         <Row className="mb-4">
                           <Col md={2}>Manager Name</Col>
-                          <Col md={8} className="text-primary">
+                          <Col md={10} className="text-primary">
                             {transferData.currentManagerName +
                               " " +
                               transferData.currentManagerId}
@@ -545,13 +539,13 @@ const EntityTransferAcceptance = () => {
                           <Col md={2}>
                             <Form.Label>Cost Center Name:</Form.Label>
                           </Col>
-                          <Col md={3} className="text-primary">
+                          <Col md={4} className="text-primary">
                             {transferData.currentManagerCostCentre}
                           </Col>
                           <Col md={2}>
                             <Form.Label>Contract Type:</Form.Label>
                           </Col>
-                          <Col md={3} className="text-primary">
+                          <Col md={4} className="text-primary">
                             {transferData.currentManagerContractType}
                           </Col>
                         </Form.Group>
@@ -563,7 +557,7 @@ const EntityTransferAcceptance = () => {
                           <Col md={2}>
                             <Form.Label>UAN Number:</Form.Label>
                           </Col>
-                          <Col md={3} className="text-primary">
+                          <Col md={4} className="text-primary">
                             {transferData !== null &&
                             transferData !== undefined &&
                             Object.keys(transferData).length !== 0 &&
@@ -575,7 +569,7 @@ const EntityTransferAcceptance = () => {
                           <Col md={2}>
                             <Form.Label>Bank Account Number:</Form.Label>
                           </Col>
-                          <Col md={3} className="text-primary">
+                          <Col md={4} className="text-primary">
                             {transferData !== null &&
                             transferData !== undefined &&
                             Object.keys(transferData).length !== 0 &&
@@ -594,7 +588,7 @@ const EntityTransferAcceptance = () => {
                           <Col md={2}>
                             <Form.Label>PAN Number:</Form.Label>
                           </Col>
-                          <Col md={3} className="text-primary">
+                          <Col md={4} className="text-primary">
                             {transferData !== null &&
                             transferData !== undefined &&
                             Object.keys(transferData).length !== 0 &&
@@ -630,7 +624,7 @@ const EntityTransferAcceptance = () => {
                           <Col md={2}>
                             <Form.Label>Aadhaar Number:</Form.Label>
                           </Col>
-                          <Col md={3} className="text-primary">
+                          <Col md={4} className="text-primary">
                             {transferData !== null &&
                             transferData !== undefined &&
                             Object.keys(transferData).length !== 0 &&
@@ -672,13 +666,13 @@ const EntityTransferAcceptance = () => {
                           <Col md={2}>
                             <Form.Label>Old Entity:</Form.Label>
                           </Col>
-                          <Col md={3} className="text-primary">
+                          <Col md={4} className="text-primary">
                             {transferData.currentCompany}
                           </Col>
                           <Col md={2}>
                             <Form.Label>New Entity:</Form.Label>
                           </Col>
-                          <Col md={3} className="text-primary">
+                          <Col md={4} className="text-primary">
                             {transferData.promotedCompany}
                           </Col>
                         </Form.Group>
@@ -690,7 +684,7 @@ const EntityTransferAcceptance = () => {
                           <Col md={2}>
                             <Form.Label>Old Fixed Gross:</Form.Label>
                           </Col>
-                          <Col md={3} className="text-primary">
+                          <Col md={4} className="text-primary">
                             {transferData.currentFixedGross}
                           </Col>
                           <Col md={2}>
@@ -701,7 +695,7 @@ const EntityTransferAcceptance = () => {
                               {transferData.promotedFixedGross}
                             </Col>
                           ) : (
-                            <Col md={3} className="text-primary">
+                            <Col md={4} className="text-primary">
                               <Form.Control
                                 type="text"
                                 placeholder="New Fixed Gross"
@@ -725,18 +719,18 @@ const EntityTransferAcceptance = () => {
                           <Col md={2}>
                             <Form.Label>Effective Date:</Form.Label>
                           </Col>
-                          <Col md={3} className="text-primary">
+                          <Col md={4} className="text-primary">
                             {transferData.promotedJoiningDate}
                           </Col>
                           <Col md={2}>
                             <Form.Label>Relocation Bonus:</Form.Label>
                           </Col>
                           {transferData.promotedRelocationBonus ? (
-                            <Col md={3} className="text-primary">
+                            <Col md={4} className="text-primary">
                               {transferData.promotedRelocationBonus}
                             </Col>
                           ) : (
-                            <Col md={3}>
+                            <Col md={4}>
                               <Form.Control
                                 type="text"
                                 placeholder="Relocation Bonus"
@@ -765,7 +759,7 @@ const EntityTransferAcceptance = () => {
                               {transferData.promotedCostCentre}
                             </Col>
                           ) : ( */}
-                          <Col md={3}>
+                          <Col md={4}>
                             <Form.Control
                               as="select"
                               className="text-primary"
@@ -800,11 +794,11 @@ const EntityTransferAcceptance = () => {
                             <Form.Label>New Location:</Form.Label>
                           </Col>
                           {transferData.promotedLocation ? (
-                            <Col md={3} className="text-primary">
+                            <Col md={4} className="text-primary">
                               {transferData.promotedLocation}
                             </Col>
                           ) : (
-                            <Col md={3}>
+                            <Col md={4}>
                               <Form.Control
                                 as="select"
                                 className="text-primary"
@@ -841,18 +835,18 @@ const EntityTransferAcceptance = () => {
                           <Col md={2}>
                             <Form.Label>Company:</Form.Label>
                           </Col>
-                          <Col md={3} className="text-primary">
+                          <Col md={4} className="text-primary">
                             {transferData.promotedCompany}
                           </Col>
                           <Col md={2}>
                             <Form.Label>New Department:</Form.Label>
                           </Col>
                           {transferData.promotedDepartment ? (
-                            <Col md={3} className="text-primary">
+                            <Col md={4} className="text-primary">
                               {transferData.promotedDepartment}
                             </Col>
                           ) : (
-                            <Col md={3}>
+                            <Col md={4}>
                               <Form.Control
                                 as="select"
                                 className="text-primary"
@@ -917,11 +911,11 @@ const EntityTransferAcceptance = () => {
                             <Form.Label>New Position:</Form.Label>
                           </Col>
                           {transferData.promotedPosition ? (
-                            <Col md={3} className="text-primary">
+                            <Col md={4} className="text-primary">
                               {transferData.promotedPosition}
                             </Col>
                           ) : (
-                            <Col md={3}>
+                            <Col md={4}>
                               <Form.Control
                                 as="select"
                                 className="text-primary"

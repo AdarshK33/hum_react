@@ -22,6 +22,7 @@ const TransferReducer = (state, action) => {
     case "FETCH_INITIATION_EMP_DATA":
       return {
         ...state,
+        initiationStatus: false,
         initiationEmpData: action.payload,
       };
     case "FETCH_INITIATION_EMP_DATA_ERR":

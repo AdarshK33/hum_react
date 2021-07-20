@@ -434,13 +434,13 @@ const ChangeEmployementType = () => {
                 <Col md={2}>
                   <Form.Label>Cost Center Name:</Form.Label>
                 </Col>
-                <Col md={3} className="text-primary">
+                <Col md={4} className="text-primary">
                   {initiationEmpData.currentCostCentre}
                 </Col>
                 <Col md={2}>
                   <Form.Label>Contract Type:</Form.Label>
                 </Col>
-                <Col md={3} className="text-primary">
+                <Col md={4} className="text-primary">
                   {initiationEmpData.currentContractType}
                 </Col>
               </Form.Group>
@@ -449,59 +449,74 @@ const ChangeEmployementType = () => {
                   <u>Work Information</u>
                 </Col>
               </Row>
-              <Row>
-                <Col md={2}>
-                  <Form.Label>Change Employement:</Form.Label>
+
+              <Row className="my-3">
+                <Col md={6}>
+                  <Form.Group as={Row} controlId="transferInitiationCostCentre">
+                    <Form.Label column md={5}>
+                      Change Employement:
+                    </Form.Label>
+
+                    <Col md={7}>
+                      <Form.Control
+                        as="select"
+                        className="text-primary"
+                        aria-label="transferInitiationPosition"
+                        value={newEmployement}
+                        placeholder="Select Position"
+                        onChange={changeEmployementHandler}
+                      >
+                        <option value="">Select Change Employement</option>
+                        <option value="From Temporary to Permanent Part Time">
+                          From Temporary to Permanent Part Time
+                        </option>
+                        <option value="From Temporary to Permanent Full Time">
+                          From Temporary to Permanent Full Time
+                        </option>
+                        <option value="From Permanent Part Time to Permanent Full Time">
+                          From Permanent Part Time to Permanent Full Time
+                        </option>
+                        <option value="From Permanent Full Time to Permanent Part Time">
+                          From Permanent Full Time to Permanent Part Time
+                        </option>
+                        <option value="From Permanent Part time to Temporary Part Time">
+                          From Permanent Part time to Temporary Part Time
+                        </option>
+                      </Form.Control>
+                      {newEmployementErrMsg !== "" && (
+                        <span className="text-danger">
+                          {newEmployementErrMsg}
+                        </span>
+                      )}
+                    </Col>
+                  </Form.Group>
                 </Col>
-                <Col md={3}>
-                  <Form.Control
-                    as="select"
-                    className="text-primary"
-                    aria-label="transferInitiationPosition"
-                    value={newEmployement}
-                    placeholder="Select Position"
-                    onChange={changeEmployementHandler}
-                  >
-                    <option value="">Select Change Employement</option>
-                    <option value="From Temporary to Permanent Part Time">
-                      From Temporary to Permanent Part Time
-                    </option>
-                    <option value="From Temporary to Permanent Full Time">
-                      From Temporary to Permanent Full Time
-                    </option>
-                    <option value="From Permanent Part Time to Permanent Full Time">
-                      From Permanent Part Time to Permanent Full Time
-                    </option>
-                    <option value="From Permanent Full Time to Permanent Part Time">
-                      From Permanent Full Time to Permanent Part Time
-                    </option>
-                    <option value="From Permanent Part time to Temporary Part Time">
-                      From Permanent Part time to Temporary Part Time
-                    </option>
-                  </Form.Control>
-                  {newEmployementErrMsg !== "" && (
-                    <span className="text-danger">{newEmployementErrMsg}</span>
-                  )}
-                </Col>
-                <Col md={2}>
-                  <Form.Label>Effective Date:</Form.Label>
-                </Col>
-                <Col md={3}>
-                  <div className="transfers-date">
-                    <DatePicker
-                      className="text-primary form-control"
-                      selected={effectiveDate}
-                      closeOnScroll={true}
-                      minDate={moment().toDate()}
-                      dateFormat="yyyy-MM-dd"
-                      onChange={(date) => {
-                        changeEffectiveDateHandler(date);
-                      }}
-                    />
-                  </div>
-                  {effectiveDateErrMsg !== "" && (
-                    <span className="text-danger">{effectiveDateErrMsg}</span>
-                  )}
+                <Col md={6}>
+                  <Form.Group as={Row} controlId="transferInitiationCostCentre">
+                    <Form.Label column md={5}>
+                      Effective Date:
+                    </Form.Label>
+
+                    <Col md={7}>
+                      <div className="transfers-date">
+                        <DatePicker
+                          className="text-primary form-control"
+                          selected={effectiveDate}
+                          closeOnScroll={true}
+                          minDate={moment().toDate()}
+                          dateFormat="yyyy-MM-dd"
+                          onChange={(date) => {
+                            changeEffectiveDateHandler(date);
+                          }}
+                        />
+                      </div>
+                      {effectiveDateErrMsg !== "" && (
+                        <span className="text-danger">
+                          {effectiveDateErrMsg}
+                        </span>
+                      )}
+                    </Col>
+                  </Form.Group>
                 </Col>
               </Row>
               <Row className="my-3">
@@ -513,7 +528,7 @@ const ChangeEmployementType = () => {
                 <Col md={2}>
                   <Form.Label>Salary Type:</Form.Label>
                 </Col>
-                <Col md={3} className="text-primary">
+                <Col md={4} className="text-primary">
                   <Form.Control
                     type="text"
                     placeholder="Monthly"
@@ -525,7 +540,7 @@ const ChangeEmployementType = () => {
                 <Col md={2}>
                   <Form.Label>Fixed Gross:</Form.Label>
                 </Col>
-                <Col md={3} className="text-primary">
+                <Col md={4} className="text-primary">
                   <Form.Control
                     type="text"
                     placeholder="Fixed Gross"
@@ -543,7 +558,7 @@ const ChangeEmployementType = () => {
                 <Col md={2}>
                   <Form.Label>Effective Date:</Form.Label>
                 </Col>
-                <Col md={3}>
+                <Col md={4}>
                   <div className="transfers-date">
                     <DatePicker
                       className="text-primary form-control"

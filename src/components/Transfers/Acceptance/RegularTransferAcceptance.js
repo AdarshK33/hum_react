@@ -462,13 +462,7 @@ const RegularTransferAcceptance = () => {
                   </div>
                 ) : (
                   <Form>
-                    <Row
-                      style={{
-                        marginLeft: "2rem",
-                        marginTop: "2rem",
-                        marginBottom: "1rem",
-                      }}
-                    >
+                    <Row className="mx-5 mt-5">
                       <Col>
                         <Row className="mb-4">
                           <Col md={2}>Transfer Type</Col>
@@ -485,13 +479,13 @@ const RegularTransferAcceptance = () => {
                         </Row>
                         <Row className="mb-4">
                           <Col
-                            md={{ span: 3, offset: 2 }}
+                            md={{ span: 4, offset: 2 }}
                             className="font-weight-bold my-2"
                           >
                             Current
                           </Col>
                           <Col
-                            md={{ span: 3, offset: 2 }}
+                            md={{ span: 4, offset: 2 }}
                             className="font-weight-bold my-2"
                           >
                             New
@@ -499,11 +493,11 @@ const RegularTransferAcceptance = () => {
                         </Row>
                         <Row className="mb-4">
                           <Col md={2}>Department</Col>
-                          <Col md={3} className="text-primary">
+                          <Col md={4} className="text-primary">
                             {transferData.currentDepartment}
                           </Col>
                           <Col
-                            md={{ span: 3, offset: 2 }}
+                            md={{ span: 4, offset: 2 }}
                             className="text-primary"
                           >
                             {transferData.promotedDepartment}
@@ -511,11 +505,11 @@ const RegularTransferAcceptance = () => {
                         </Row>
                         <Row className="mb-4">
                           <Col md={2}>Position</Col>
-                          <Col md={3} className="text-primary">
+                          <Col md={4} className="text-primary">
                             {transferData.currentPosition}
                           </Col>
                           <Col
-                            md={{ span: 3, offset: 2 }}
+                            md={{ span: 4, offset: 2 }}
                             className="text-primary"
                           >
                             {transferData.promotedPosition}
@@ -523,11 +517,11 @@ const RegularTransferAcceptance = () => {
                         </Row>
                         <Row className="mb-4">
                           <Col md={2}>Cost Centre</Col>
-                          <Col md={3} className="text-primary">
+                          <Col md={4} className="text-primary">
                             {transferData.currentCostCentre}
                           </Col>
                           <Col
-                            md={{ span: 3, offset: 2 }}
+                            md={{ span: 4, offset: 2 }}
                             className="text-primary"
                           >
                             {transferData.promotedCostCentre}
@@ -535,11 +529,11 @@ const RegularTransferAcceptance = () => {
                         </Row>
                         <Row className="mb-4">
                           <Col md={2}>Manager</Col>
-                          <Col md={3} className="text-primary">
+                          <Col md={4} className="text-primary">
                             {transferData.currentManagerName}
                           </Col>
                           <Col
-                            md={{ span: 3, offset: 2 }}
+                            md={{ span: 4, offset: 2 }}
                             className="text-primary"
                           >
                             {transferData.promotedManagerName}
@@ -553,10 +547,10 @@ const RegularTransferAcceptance = () => {
                           <Form.Label column md={2}>
                             Location
                           </Form.Label>
-                          <Col md={3} className="text-primary">
+                          <Col md={4} className="text-primary">
                             {transferData.currentLocationName}
                           </Col>
-                          <Col md={{ span: 3, offset: 2 }}>
+                          <Col md={{ span: 4, offset: 2 }}>
                             <Form.Control
                               as="select"
                               className="text-primary"
@@ -592,10 +586,10 @@ const RegularTransferAcceptance = () => {
                           <Form.Label column md={2}>
                             Fixed Gross
                           </Form.Label>
-                          <Col md={3} className="text-primary">
+                          <Col md={4} className="text-primary">
                             {transferData.currentFixedGross}
                           </Col>
-                          <Col md={{ span: 3, offset: 2 }}>
+                          <Col md={{ span: 4, offset: 2 }}>
                             <Form.Control
                               type="text"
                               placeholder=""
@@ -610,10 +604,10 @@ const RegularTransferAcceptance = () => {
                           </Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3">
-                          <Form.Label column md={2}>
+                          <Form.Label column md={2} className="py-0">
                             Bonus In Percent (Optional)
                           </Form.Label>
-                          <Col md={3}>
+                          <Col md={4}>
                             <Form.Control
                               type="text"
                               placeholder=""
@@ -624,10 +618,10 @@ const RegularTransferAcceptance = () => {
                               onChange={changeHandler}
                             ></Form.Control>
                           </Col>
-                          <Col md={2} className="pt-2">
+                          <Col md={2} className="pt-2" className="py-0">
                             Relocation Bonus
                           </Col>
-                          <Col md={3}>
+                          <Col md={4}>
                             <Form.Control
                               type="text"
                               placeholder=""
@@ -648,7 +642,7 @@ const RegularTransferAcceptance = () => {
                           <Col md={2} className="py-0">
                             Effective Date
                           </Col>
-                          <Col md={3} className="text-primary">
+                          <Col md={4} className="text-primary">
                             {transferData.promotedJoiningDate}
                           </Col>
                         </Row>
@@ -659,7 +653,7 @@ const RegularTransferAcceptance = () => {
                             <Col md={2} className="py-0">
                               Reason for transfer rejection
                             </Col>
-                            <Col md={3} className="text-primary">
+                            <Col md={4} className="text-primary">
                               {state.remarks}
                             </Col>
                           </Row>
