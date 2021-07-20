@@ -244,16 +244,18 @@ const InternationalTransferAcceptance = () => {
                           Onward Date
                         </Form.Label>
                         <Col md={7}>
-                          <DatePicker
-                            className="text-primary form-control"
-                            selected={effectiveDate}
-                            minDate={effectiveDate}
-                            closeOnScroll={true}
-                            dateFormat="yyyy-MM-dd"
-                            onChange={(date) => {
-                              changeEffectiveDateHandler(date);
-                            }}
-                          />
+                          <div className="transfers-date">
+                            <DatePicker
+                              className="text-primary form-control"
+                              selected={effectiveDate}
+                              minDate={effectiveDate}
+                              closeOnScroll={true}
+                              dateFormat="yyyy-MM-dd"
+                              onChange={(date) => {
+                                changeEffectiveDateHandler(date);
+                              }}
+                            />
+                          </div>
                         </Col>
                         {effectiveDateErrMsg !== "" && (
                           <span className="text-danger">
@@ -270,17 +272,20 @@ const InternationalTransferAcceptance = () => {
                         <Form.Label column md={5}>
                           Return Date
                         </Form.Label>
+
                         <Col md={7}>
-                          <DatePicker
-                            className="text-primary form-control"
-                            selected={returnDate}
-                            minDate={returnDate}
-                            closeOnScroll={true}
-                            dateFormat="yyyy-MM-dd"
-                            onChange={(date) => {
-                              changeReturnDateHandler(date);
-                            }}
-                          />
+                          <div className="transfers-date">
+                            <DatePicker
+                              className="text-primary form-control"
+                              selected={returnDate}
+                              minDate={returnDate}
+                              closeOnScroll={true}
+                              dateFormat="yyyy-MM-dd"
+                              onChange={(date) => {
+                                changeReturnDateHandler(date);
+                              }}
+                            />
+                          </div>
                         </Col>
                         {returnDateErrMsg !== "" && (
                           <span className="text-danger">

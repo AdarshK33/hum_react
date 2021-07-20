@@ -25,7 +25,7 @@ const TransferPage = () => {
   const [searchInput, setSearchInput] = useState("");
   const [status, setStatus] = useState(5);
   const [activePage, setActivePage] = useState(1);
-  const [listHeading, setListHeading] = useState(`${transferType} Listings`);
+  const [listHeading, setListHeading] = useState(`${transferType} List`);
   const [apiUrl, setApiUrl] = useState(
     `/api/v1/transfer/view?key=${searchValue}&page=${
       activePage - 1

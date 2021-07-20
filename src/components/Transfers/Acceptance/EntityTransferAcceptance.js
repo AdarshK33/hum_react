@@ -14,6 +14,7 @@ import calendarImage from "../../../assets/images/calendar-image.png";
 import { useHistory, useParams } from "react-router-dom";
 import { Fragment } from "react";
 import { AppContext } from "../../../context/AppState";
+import LoaderIcon from "../../Loader/LoaderIcon";
 
 const EntityTransferAcceptance = () => {
   const { transferId } = useParams();
@@ -384,13 +385,15 @@ const EntityTransferAcceptance = () => {
       >
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         <Modal.Body>
-          {transferData !== null &&
-          transferData !== undefined &&
-          Object.keys(transferData).length !== 0 &&
-          transferData.currentContractType !== null &&
-          transferData.currentContractType !== undefined &&
-          (transferData.currentContractType !== "Permanent" ||
-            transferData.currentContractType !== "permanent") ? (
+          {loader ? (
+            <LoaderIcon />
+          ) : transferData !== null &&
+            transferData !== undefined &&
+            Object.keys(transferData).length !== 0 &&
+            transferData.currentContractType !== null &&
+            transferData.currentContractType !== undefined &&
+            (transferData.currentContractType !== "Permanent" ||
+              transferData.currentContractType !== "permanent") ? (
             <ApointmentLetter />
           ) : transferData !== null &&
             transferData !== undefined &&
@@ -884,17 +887,19 @@ const EntityTransferAcceptance = () => {
                             <Form.Label>Date Of Joining:</Form.Label>
                           </Col>
 
-                          <Col md={4}>
-                            <DatePicker
-                              className="text-primary form-control"
-                              selected={effectiveDate}
-                              closeOnScroll={true}
-                              minDate={moment().toDate()}
-                              dateFormat="yyyy-MM-dd"
-                              onChange={(date) => {
-                                changeEffectiveDateHandler(date);
-                              }}
-                            />
+                          <Col md={3}>
+                            <div className="transfers-date">
+                              <DatePicker
+                                className="text-primary form-control"
+                                selected={effectiveDate}
+                                closeOnScroll={true}
+                                minDate={moment().toDate()}
+                                dateFormat="yyyy-MM-dd"
+                                onChange={(date) => {
+                                  changeEffectiveDateHandler(date);
+                                }}
+                              />
+                            </div>
 
                             {effectiveDateErrMsg !== "" && (
                               <span className="text-danger">
@@ -962,12 +967,12 @@ const EntityTransferAcceptance = () => {
                             </button>
                             {initiationStatus && (
                               <button
-                                className={"LettersButtons"}
+                                className={"LettersProbButtons"}
                                 onClick={showTransferLetterModal}
                               >
                                 {previewTransferLetter
-                                  ? "Preview Transfer Letter"
-                                  : "Generate Transfer Letter"}
+                                  ? "Preview Appointment Letter"
+                                  : "Generate Appointment Letter"}
                               </button>
                             )}
 

@@ -805,16 +805,18 @@ const RegularTransfer = () => {
               Effective Date
             </Form.Label>
             <Col md={4}>
-              <DatePicker
-                className="text-primary form-control"
-                selected={effectiveDate}
-                closeOnScroll={true}
-                minDate={moment().toDate()}
-                dateFormat="yyyy-MM-dd"
-                onChange={(date) => {
-                  changeEffectiveDateHandler(date);
-                }}
-              />
+              <div className="transfers-date">
+                <DatePicker
+                  className="text-primary form-control"
+                  selected={effectiveDate}
+                  closeOnScroll={true}
+                  minDate={moment().toDate()}
+                  dateFormat="yyyy-MM-dd"
+                  onChange={(date) => {
+                    changeEffectiveDateHandler(date);
+                  }}
+                />
+              </div>
             </Col>
             {effectiveDateErrMsg !== "" && (
               <span className="text-danger">{effectiveDateErrMsg}</span>
