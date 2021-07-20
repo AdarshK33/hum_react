@@ -254,17 +254,6 @@ const EntityTransfer = () => {
     <div className="transfer-initiation">
       <ToastContainer />
       <Modal show={modalShow} onHide={handleModalClose} size="md" centered>
-        {/* <Modal.Header closeButton className="modal-line"></Modal.Header>
-        <Modal.Body className="mx-auto">
-          <label className="text-center">
-            Tansfer Initiation done successfully!
-          </label>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={handleModalClose}>
-            Close
-          </Button>
-        </Modal.Footer> */}
         <Container>
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
@@ -350,33 +339,6 @@ const EntityTransfer = () => {
       </Modal>
 
       <Form>
-        {/* <Form.Group as={Row} className="mb-3" controlId="chooseTransferType">
-          <Form.Label column md={2}>
-            Transfer Type
-          </Form.Label>
-          <Col md={8}>
-            <Form.Control
-              as="select"
-              aria-label="chooseTransferType"
-              value={transferType}
-              placeholder="Select Transfer Type"
-              onChange={transferTypeHandler}
-            >
-              <option>Select Transfer Type</option>
-              <option value="Regular Transfer">Regular Transfer</option>
-              <option value="Entity Transfer">Entity Transfer</option>
-              <option value="International Transfer">
-                International Transfer
-              </option>
-              <option value="Employment Type Transfer">
-                Employment Type Transfer
-              </option>
-            </Form.Control>
-            {transferErrMsg !== "" && (
-              <span className="text-danger">{transferErrMsg}</span>
-            )}
-          </Col>
-        </Form.Group> */}
         <Form.Group as={Row} className="mb-3" controlId="employeeType">
           <Form.Label column md={2}>
             Employee Name
@@ -403,8 +365,7 @@ const EntityTransfer = () => {
           initiationEmpData !== null &&
           initiationEmpData !== undefined &&
           Object.keys(initiationEmpData).length > 0 ? (
-            <div>
-              <Row style={{ marginTop: "2rem" }}></Row>
+            <div className="mt-5 mr-5">
               <Form.Group
                 as={Row}
                 className="mb-3"
@@ -413,13 +374,13 @@ const EntityTransfer = () => {
                 <Col md={2}>
                   <Form.Label>Cost Center Name:</Form.Label>
                 </Col>
-                <Col md={3} className="text-primary">
+                <Col md={4} className="text-primary">
                   {initiationEmpData.currentCostCentre}
                 </Col>
                 <Col md={2}>
                   <Form.Label>Contract Type:</Form.Label>
                 </Col>
-                <Col md={3} className="text-primary">
+                <Col md={4} className="text-primary">
                   {initiationEmpData.currentContractType}
                 </Col>
               </Form.Group>
@@ -431,13 +392,13 @@ const EntityTransfer = () => {
                 <Col md={2}>
                   <Form.Label>Old Entity:</Form.Label>
                 </Col>
-                <Col md={3} className="text-primary">
+                <Col md={4} className="text-primary">
                   {initiationEmpData.currentCompany}
                 </Col>
                 <Col md={2}>
                   <Form.Label>New Entity:</Form.Label>
                 </Col>
-                <Col md={3}>
+                <Col md={4}>
                   <Form.Control
                     as="select"
                     className="text-primary"
@@ -464,13 +425,13 @@ const EntityTransfer = () => {
                 <Col md={2}>
                   <Form.Label>Old Fixed Gross:</Form.Label>
                 </Col>
-                <Col md={3} className="text-primary">
+                <Col md={4} className="text-primary">
                   {initiationEmpData.currentFixedGross}
                 </Col>
                 <Col md={2}>
                   <Form.Label>New Cost Center:</Form.Label>
                 </Col>
-                <Col md={3}>
+                <Col md={4}>
                   <Form.Control
                     as="select"
                     className="text-primary"
@@ -507,7 +468,7 @@ const EntityTransfer = () => {
                 <Col md={2}>
                   <Form.Label>Effective Date:</Form.Label>
                 </Col>
-                <Col md={3}>
+                <Col md={4}>
                   <DatePicker
                     className="text-primary form-control"
                     selected={effectiveDate}
@@ -525,7 +486,7 @@ const EntityTransfer = () => {
                 <Col md={2}>
                   <Form.Label>New Manager:</Form.Label>
                 </Col>
-                <Col md={3}>
+                <Col md={4}>
                   <Form.Control
                     as="select"
                     className="text-primary"
