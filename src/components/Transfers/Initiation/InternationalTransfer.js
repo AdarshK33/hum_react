@@ -612,7 +612,7 @@ const InternationalTransfer = () => {
             <Row className="my-3">
               <Col md={4}>
                 <Form.Group as={Row} controlId="transferInitiationGrossPay">
-                  <Form.Label column md={4}>
+                  <Form.Label column md={4} className="py-0">
                     Fixed Gross
                   </Form.Label>
                   <Col md={8}>
@@ -631,7 +631,7 @@ const InternationalTransfer = () => {
               </Col>
               <Col md={4}>
                 <Form.Group as={Row} controlId="transferInitiationCurrency">
-                  <Form.Label column md={4}>
+                  <Form.Label column md={4} className="py-0">
                     Different Currency
                   </Form.Label>
                   <Col md={8}>
