@@ -525,6 +525,15 @@ const DocVerification = () => {
                               </span>{" "}
                               <span style={{ color: "red" }}>*</span>
                             </p>
+                          ) : item.documentType === 17 ? (
+                            <p>
+                              <span
+                                style={{ color: "black", fontSize: "16px" }}
+                              >
+                                FRRO
+                              </span>{" "}
+                              <span style={{ color: "red" }}>*</span>
+                            </p>
                           ) : (
                             item.documentType === 16 && (
                               <p>

@@ -191,9 +191,8 @@ const OfferReleaseList = () => {
                             user !== undefined &&
                             user.role !== "ADMIN" ? (
                               <td>
-                                {item.status === 6 ? (
-                                  <AlertCircle />
-                                ) : (
+                                {item.overallStatus === 1 &&
+                                item.status === 2 ? (
                                   <Link to="/offer-relase-and-onboard">
                                     <AlertCircle
                                       onClick={() => {
@@ -201,6 +200,19 @@ const OfferReleaseList = () => {
                                       }}
                                     />
                                   </Link>
+                                ) : item.overallStatus === 0 ||
+                                  item.overallStatus === 2 ||
+                                  item.status === 6 ? (
+                                  <AlertCircle />
+                                ) : (
+                                  <AlertCircle />
+                                  // <Link to="/offer-relase-and-onboard">
+                                  //   <AlertCircle
+                                  //     onClick={() => {
+                                  //       fetchCandidateDetails(item.candidateId);
+                                  //     }}
+                                  //   />
+                                  // </Link>
                                 )}
                               </td>
                             ) : (

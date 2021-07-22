@@ -174,7 +174,6 @@ const CandidateOnboarding = () => {
             : empData.firstName,
         ["fatherName"]: empData.fatherName,
         ["gender"]: empData.gender,
-        ["joiningDate"]: empData.joiningDate,
         ["locationId"]: empData.locationId,
         ["lastName"]: empData.lastName,
         ["loginType"]: empData.loginType,
@@ -197,6 +196,30 @@ const CandidateOnboarding = () => {
       });
     }
   }, [empData]);
+
+  useEffect(() => {
+    if (
+      candidateData !== undefined &&
+      candidateData.workInformation !== undefined &&
+      candidateData.workInformation !== null
+    ) {
+      setEmployeeData({
+        ...employeeData,
+        ["joiningDate"]:
+          candidateData !== undefined &&
+          candidateData !== null &&
+          Object.keys(candidateData).length !== 0 &&
+          candidateData.workInformation !== undefined &&
+          candidateData.workInformation !== null &&
+          candidateData.workInformation.dateOfJoin !== null &&
+          candidateData.workInformation.dateOfJoin !== undefined &&
+          candidateData.workInformation.dateOfJoin !== ""
+            ? new Date(candidateData.workInformation.dateOfJoin)
+            : new Date(),
+      });
+    }
+  }, [candidateData]);
+
   const [employeeData, setEmployeeData] = useState(
     {
       active: "",
@@ -239,7 +262,16 @@ const CandidateOnboarding = () => {
     []
   );
 
+  // console.log("joining date", employeeData.joiningDate);
+  const dateOfJoiningHandler = (date) => {
+    setEmployeeData({
+      ...employeeData,
+      ["joiningDate"]: moment(date).format("YYYY-MM-DD"),
+    });
+  };
+
   const handleChange = (e) => {
+    console.log("handleChange names", e);
     setError(false);
     setFedError(false);
     if (e.target.name === "email") {
@@ -341,6 +373,7 @@ const CandidateOnboarding = () => {
   };
 
   const handleDataSave = () => {
+    console.log("emdata", employeeData);
     const costCenterData = {
       costCenterSplitId: 0,
       costCentreA: costCenterA,
@@ -515,8 +548,12 @@ const CandidateOnboarding = () => {
           <AppointmentLetter previewLetter={previewLetter} />
         ) : candidateData.workInformation.contractType === "Parttime" ? (
           <PartTimeAppointmentLetter previewLetter={previewLetter} />
+        ) : candidateData !== undefined &&
+          candidateData.workInformation !== undefined &&
+          candidateData.workInformation.contractType === "Local Expat" ? (
+          <LocalExpatAppointmentLetter />
         ) : (
-          <InternAppointmentLetter previewLetter={previewLetter} />
+          <InternAppointmentLetter />
         )
       ) : (
         ""
@@ -541,7 +578,7 @@ const CandidateOnboarding = () => {
       {employeeData !== null && employeeData !== undefined ? (
         <div className="px-5 mx-auto">
           <h5 style={{ fontWeight: 700 }}>Work Details</h5>
-          <Row className="mt-4">
+          {/* <Row className="mt-4">
             <Col sm={3}>Candidate date of joining</Col>
             <Col sm={6}>
               {candidateData !== undefined &&
@@ -550,6 +587,31 @@ const CandidateOnboarding = () => {
                     "YYYY-MM-DD"
                   )
                 : ""}
+            </Col>
+          </Row> */}
+
+          <Row className="mt-4">
+            <Col sm={3}>
+              <Form.Label> Candidate date of joining</Form.Label>
+            </Col>
+            <Col sm={6}>
+              <DatePicker
+                className=" joiningField"
+                selected={
+                  employeeData !== undefined &&
+                  employeeData !== null &&
+                  employeeData.joiningDate !== undefined &&
+                  employeeData.joiningDate !== null &&
+                  employeeData.joiningDate !== ""
+                    ? moment(employeeData.joiningDate).toDate()
+                    : new Date()
+                }
+                required
+                onChange={(e) => dateOfJoiningHandler(e)}
+                minDate={new Date()}
+                dateFormat="yyyy-MM-dd"
+                placeholderText="Date of Joining"
+              />
             </Col>
           </Row>
           <Row className="mt-4">
@@ -662,30 +724,48 @@ const CandidateOnboarding = () => {
             </label>
           </Col>
         </Row>
-        <Row>
-          <Col sm={4}>
-            <label className="mr-3">Fixed Gross:</label>
-            <label>
-              {candidateData.remuneration !== undefined &&
-              candidateData.remuneration !== null ? (
-                <p>{candidateData.remuneration.fixedGross}</p>
-              ) : (
-                <p>N/A</p>
-              )}
-            </label>
-          </Col>
-          <Col sm={4}>
-            <label className="mr-3">Bonus (in %):</label>
-            <label>
-              {candidateData.remuneration !== undefined &&
-              candidateData.remuneration !== null ? (
-                <p>{candidateData.remuneration.monthlyBonus}</p>
-              ) : (
-                <p>N/A</p>
-              )}
-            </label>
-          </Col>
-        </Row>
+        {candidateData !== undefined &&
+        candidateData.workInformation !== undefined &&
+        candidateData.workInformation.contractType !== "Internship" ? (
+          <Row>
+            <Col sm={4}>
+              <label className="mr-3">Fixed Gross:</label>
+              <label>
+                {candidateData.remuneration !== undefined &&
+                candidateData.remuneration !== null ? (
+                  <p>{candidateData.remuneration.fixedGross}</p>
+                ) : (
+                  <p>N/A</p>
+                )}
+              </label>
+            </Col>
+            <Col sm={4}>
+              <label className="mr-3">Bonus (in %):</label>
+              <label>
+                {candidateData.remuneration !== undefined &&
+                candidateData.remuneration !== null ? (
+                  <p>{candidateData.remuneration.monthlyBonus}</p>
+                ) : (
+                  <p>N/A</p>
+                )}
+              </label>
+            </Col>
+          </Row>
+        ) : (
+          <Row>
+            <Col sm={4}>
+              <label className="mr-3">Stipend:</label>
+              <label>
+                {candidateData.remuneration !== undefined &&
+                candidateData.remuneration !== null ? (
+                  <p>{candidateData.remuneration.stipend}</p>
+                ) : (
+                  <p>N/A</p>
+                )}
+              </label>
+            </Col>
+          </Row>
+        )}
       </div>
       <div className="px-5  mt-4">
         <h5 style={{ fontWeight: 700 }}>Cost Center Split</h5>

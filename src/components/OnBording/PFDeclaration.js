@@ -1002,54 +1002,6 @@ const PFDeclaration = (props) => {
               </label>
             </div>
           </Col> */}
-
-          <Col sm={5}>
-            <label>Please fill the forms below</label>
-            <br />
-            <a href={require("../../forms/Form_11_UAN.pdf")} target="_blank">
-              Download Form 11 Declaration
-            </a>
-            <br />
-            <a
-              href={require("../../forms/Form_2_EPF_Nomination.pdf")}
-              target="_blank"
-            >
-              Download Form 2 EPF nomination
-            </a>
-            <br />
-            <a
-              href={require("../../forms/Form_F_Gratuity.pdf")}
-              target="_blank"
-            >
-              Download Form F Gratuity
-            </a>
-            <br />
-          </Col>
-          <Col sm={5}>
-            <label></label>
-            <br />
-            <a
-              href={require("../../forms/Form_11_(PF_declaration)_Sample_copy.pdf")}
-              target="_blank"
-            >
-              Sample Form 11 Declaration
-            </a>
-            <br />
-            <a
-              href={require("../../forms/Form_2_(PF_nomination)_Sample_copy.pdf")}
-              target="_blank"
-            >
-              Sample Form 2 EPF nomination
-            </a>
-            <br />
-            <a
-              href={require("../../forms/Form_F_(Gratuity)_Sample_copy.pdf")}
-              target="_blank"
-            >
-              Sample Form F Gratuity
-            </a>
-            <br />
-          </Col>
         </Row>
         {pfNominationHoldDeathYes === true ? (
           <div>
@@ -1198,8 +1150,57 @@ const PFDeclaration = (props) => {
         ) : (
           ""
         )}
+        <Row>
+          <Col sm={5}>
+            <label>Please fill the forms below</label>
+            <br />
+            <a href={require("../../forms/Form_11_UAN.pdf")} target="_blank">
+              Download Form 11 Declaration
+            </a>
+            <br />
+            <a
+              href={require("../../forms/Form_2_EPF_Nomination.pdf")}
+              target="_blank"
+            >
+              Download Form 2 EPF nomination
+            </a>
+            <br />
+            <a
+              href={require("../../forms/Form_F_Gratuity.pdf")}
+              target="_blank"
+            >
+              Download Form F Gratuity
+            </a>
+            <br />
+          </Col>
+          <Col sm={5}>
+            <label></label>
+            <br />
+            <a
+              href={require("../../forms/Form_11_(PF_declaration)_Sample_copy.pdf")}
+              target="_blank"
+            >
+              Sample Form 11 Declaration
+            </a>
+            <br />
+            <a
+              href={require("../../forms/Form_2_(PF_nomination)_Sample_copy.pdf")}
+              target="_blank"
+            >
+              Sample Form 2 EPF nomination
+            </a>
+            <br />
+            <a
+              href={require("../../forms/Form_F_(Gratuity)_Sample_copy.pdf")}
+              target="_blank"
+            >
+              Sample Form F Gratuity
+            </a>
+            <br />
+          </Col>
+        </Row>
         <React.Fragment>
-          <Row style={{ marginLeft: "-2rem" }}>
+          <Row style={{ marginLeft: "-2rem", marginTop: "2rem" }}>
             <Col>
               <Form.Group>
                 <div className="FileInput">
