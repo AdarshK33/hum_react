@@ -7,6 +7,27 @@ const InternationalTransferView = ({ transferData }) => {
       <Row className="mb-3">
         <Col md={6}>
           <Row>
+            <Col md={5}>Transfer Type</Col>
+            <Col md={7} className="text-primary">
+              {transferData.transferType}
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+      <Row className="mb-3">
+        <Col md={6}>
+          <Row>
+            <Col md={5}>Empployee Name</Col>
+            <Col md={7} className="text-primary">
+              {transferData.employeeName} {transferData.currentEmployeeId}
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+
+      <Row className="mb-3">
+        <Col md={6}>
+          <Row>
             <Col md={5}>Cost Centre Name</Col>
             <Col md={7} className="text-primary">
               {transferData.currentCostCentre}

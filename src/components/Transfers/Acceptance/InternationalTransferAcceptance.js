@@ -45,6 +45,7 @@ const InternationalTransferAcceptance = () => {
     ) {
       setEffectiveDate(new Date(transferData.promotedJoiningDate));
       setReturnDate(new Date(transferData.promotedDateOfReturn));
+      setCountryInsurance(transferData.isInsuranceCovered);
     }
   }, [transferData]);
 
@@ -77,7 +78,7 @@ const InternationalTransferAcceptance = () => {
         promotedManagerId: transferData.promotedManagerId,
         promotedMonthlyBonus: transferData.promotedMonthlyBonus,
         remark: null,
-        status: 2,
+        status: 1,
         transferId: transferData.transferId,
         transferLetter: null,
         transferType: transferData.transferType,
@@ -243,16 +244,18 @@ const InternationalTransferAcceptance = () => {
                           Onward Date
                         </Form.Label>
                         <Col md={7}>
-                          <DatePicker
-                            className="text-primary form-control"
-                            selected={effectiveDate}
-                            minDate={effectiveDate}
-                            closeOnScroll={true}
-                            dateFormat="yyyy-MM-dd"
-                            onChange={(date) => {
-                              changeEffectiveDateHandler(date);
-                            }}
-                          />
+                          <div className="transfers-date">
+                            <DatePicker
+                              className="text-primary form-control"
+                              selected={effectiveDate}
+                              minDate={effectiveDate}
+                              closeOnScroll={true}
+                              dateFormat="yyyy-MM-dd"
+                              onChange={(date) => {
+                                changeEffectiveDateHandler(date);
+                              }}
+                            />
+                          </div>
                         </Col>
                         {effectiveDateErrMsg !== "" && (
                           <span className="text-danger">
@@ -269,17 +272,20 @@ const InternationalTransferAcceptance = () => {
                         <Form.Label column md={5}>
                           Return Date
                         </Form.Label>
+
                         <Col md={7}>
-                          <DatePicker
-                            className="text-primary form-control"
-                            selected={returnDate}
-                            minDate={returnDate}
-                            closeOnScroll={true}
-                            dateFormat="yyyy-MM-dd"
-                            onChange={(date) => {
-                              changeReturnDateHandler(date);
-                            }}
-                          />
+                          <div className="transfers-date">
+                            <DatePicker
+                              className="text-primary form-control"
+                              selected={returnDate}
+                              minDate={returnDate}
+                              closeOnScroll={true}
+                              dateFormat="yyyy-MM-dd"
+                              onChange={(date) => {
+                                changeReturnDateHandler(date);
+                              }}
+                            />
+                          </div>
                         </Col>
                         {returnDateErrMsg !== "" && (
                           <span className="text-danger">
@@ -425,12 +431,7 @@ const InternationalTransferAcceptance = () => {
                       </Form.Group>
                     </Col>
                   </Row>
-                  <Row className="my-5">
-                    <Col>
-                      Note: Kindly contact payroll team to check on dual
-                      taxation assesment
-                    </Col>
-                  </Row>
+
                   <Row className="my-5">
                     <Col className="text-center mr-5">
                       <button

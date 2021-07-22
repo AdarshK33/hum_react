@@ -8,13 +8,14 @@ import { AppContext } from "../../context/AppState";
 import "../common/style.css";
 import { SeparationContext } from "../../context/SepearationState";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
-
 const EmpResignation = () => {
   const [regDate, setRegDate] = useState();
-  const [lastDate, setLastDate] = useState();
+  const [noticePeriod,setNoticePeriod] = useState(null)
+  const [lastDate, setLastDate] = useState(new Date(new Date().setMonth(new Date().getMonth() + (noticePeriod !== undefined && noticePeriod !== null)?noticePeriod:0)));
   const [reasonOfSepration, setReasonOfSepration] = useState("");
   const [emailId, setEmailId] = useState("");
   const [approver, setApprover] = useState("");
+  const [approverId, setApproverId] = useState("");
   const [comments, setComments] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [withdrwaThis, setWithdrawThis] = useState(false);
@@ -87,6 +88,7 @@ const EmpResignation = () => {
         Object.keys(managerNames).length !== 0
       ) {
         setApprover(managerNames[0].firstName + " " + managerNames[0].lastName);
+        setApproverId(managerNames[0].employeeId)
       }
     }
   }, [managerList]);
@@ -101,7 +103,7 @@ const EmpResignation = () => {
         Object.keys(employeeData).length > 0)
     ) {
       console.log("profile data", user);
-      setEmailId(user.personalEmail);
+      setEmailId(user.email);
     }
   }, [user]);
 
@@ -113,12 +115,15 @@ const EmpResignation = () => {
       employeeData !== undefined &&
       Object.keys(employeeData).length !== 0
     ) {
+      console.log(employeeData,"employeedata")
       setRegDate(new Date(employeeData.dateOfResignation));
       setLastDate(new Date(employeeData.lastWorkingDate));
+      setNoticePeriod(employeeData.noticePeriod)
       setReasonOfSepration("");
       setEmailId(employeeData.emailId);
       setSubmitted(true);
       setComments(employeeData.employeeComment);
+      console.log(noticePeriod,"98098098098")
     }
   }, [employeeData]);
 
@@ -181,7 +186,7 @@ const EmpResignation = () => {
         setRegDate();
         setLastDate();
         setReasonOfSepration("");
-        setEmailId(user.personalEmail);
+        setEmailId(user.email);
         if (
           managerList &&
           managerList &&
@@ -234,7 +239,7 @@ const EmpResignation = () => {
     }
   }, [ModeOfSeparationData]);
   console.log("reasonOfSeparationList", reasonOfSeparationList);
-
+  console.log(lastDate,"lastDate")
   const SubmitHandler = (e) => {
     e.preventDefault();
     var reasonId = 0;
@@ -513,6 +518,8 @@ const EmpResignation = () => {
                       <Col sm="8">
                         <DatePicker
                           minDate={moment().toDate()}
+                          value={moment().format("DD/MM/YYYY")}
+                          disabled={true}
                           selected={regDate}
                           onChange={(date) => setRegDate(date)}
                           className="form-control non-disable readTextBlue"
@@ -599,6 +606,8 @@ const EmpResignation = () => {
                       </Form.Label>
                       <Col sm="8">
                         <DatePicker
+                      
+                          value={moment(lastDate).format("DD/MM/YYYY")}
                           selected={lastDate}
                           minDate={moment().toDate()}
                           onChange={(date) => setLastDate(date)}
@@ -628,6 +637,7 @@ const EmpResignation = () => {
                           readOnly
                           className="disabledValue readTextBlue"
                         />
+                        <label style={{color:'#006ebb',textAlign:"center",paddingLeft:"10px"}}>{approverId}</label>
                       </Col>
                     </Form.Group>
                   ) : (
@@ -663,6 +673,7 @@ const EmpResignation = () => {
                           readOnly
                           className="disabledValue readTextBlue"
                         />
+                        <label style={{color:'#006ebb',textAlign:"center",paddingLeft:"10px"}}>{approverId}</label>
                       </Col>
                     </Form.Group>
                   )}

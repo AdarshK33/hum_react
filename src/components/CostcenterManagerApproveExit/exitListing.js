@@ -242,13 +242,13 @@ const ExitListing = () => {
                               <td>{item.noticePeriod}</td>
 
                               <td>
-                                <Link to={"/employee-info/" + item.employeeId}>
+                                {(item.status === 4||item.status === 5)?<Edit2/>:<Link to={"/employee-info/" + item.employeeId}>
                                   <Edit2
                                     onClick={() => {
                                       fetchEmployeeDetails(item.employeeId);
                                     }}
                                   />
-                                </Link>
+                                </Link>}
                               </td>
                             </tr>
                           </tbody>

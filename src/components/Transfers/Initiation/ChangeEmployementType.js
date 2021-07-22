@@ -10,8 +10,9 @@ import { TransferContext } from "../../../context/TransferState";
 import TransferInitationLetter from "./TransferInitiationLetter";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import { useHistory } from "react-router-dom";
+import "../../Transfers/Transfers.css";
 
-const EntityTransfer = () => {
+const ChangeEmployementType = () => {
   const {
     getTransferInitiationEmpData,
     initiationEmpData,
@@ -30,18 +31,22 @@ const EntityTransfer = () => {
     initiationTransferId,
   } = useContext(TransferContext);
   const [transferType, setTransferType] = useState("Entity Transfer");
-  const [newEntity, setNewEntity] = useState("");
-  const [newEntityErrMsg, setNewEntityErrMsg] = useState("");
+  const [newEmployement, setNewEmployement] = useState("");
+  const [newEmployementErrMsg, setNewEmployementErrMsg] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [searchInput, setSearchInput] = useState("");
   const [empErrMsg, setEmpErrMsg] = useState("");
   const [newDept, setNewDept] = useState("");
   const [effectiveDate, setEffectiveDate] = useState(new Date());
   const [effectiveDateErrMsg, setEffectiveDateErrMsg] = useState("");
+  const [DateOfTransfer, setDateOfTransfer] = useState(new Date());
+  const [DateOfTransferErrMsg, setDateOfTransferErrMsg] = useState("");
   const [newCostCentre, setNewCostCentre] = useState("");
   const [costCentreErrMsg, setCostCentreErrMsg] = useState("");
   const [newManager, setNewManager] = useState("");
   const [managerErrMsg, setManagerErrMsg] = useState("");
+  const [newGross, setNewGross] = useState("");
+  const [grossErrMsg, setGrossErrMsg] = useState("");
   const [formValid, setFormValid] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [showSignature, setShowSignature] = useState(false);
@@ -124,14 +129,18 @@ const EntityTransfer = () => {
     setSearchValue(searchInput);
   };
 
-  const changeEntityHandler = (e) => {
-    setNewEntity(e.target.value);
-    setNewEntityErrMsg("");
+  const changeEmployementHandler = (e) => {
+    setNewEmployement(e.target.value);
+    setNewEmployementErrMsg("");
   };
 
   const changeEffectiveDateHandler = (date) => {
     setEffectiveDate(date);
     setEffectiveDateErrMsg("");
+  };
+  const changeDateOfTransferHandler = (date) => {
+    setDateOfTransfer(date);
+    setDateOfTransferErrMsg("");
   };
 
   const handleModalClose = () => {
@@ -168,6 +177,10 @@ const EntityTransfer = () => {
     setNewManager(e.target.value);
     setManagerErrMsg("");
   };
+  const changeGrossHandler = (e) => {
+    setNewGross(e.target.value);
+    setGrossErrMsg("");
+  };
 
   /* Validate form */
   const validateForm = () => {
@@ -178,17 +191,17 @@ const EntityTransfer = () => {
       setEmpErrMsg("Please enter employee id or employee name");
     }
 
-    if (newEntity === "") {
+    if (newEmployement === "") {
       validForm = false;
-      setNewEntityErrMsg("Please select new entity");
+      setNewEmployementErrMsg("Please select new Employement");
     }
-    if (newCostCentre === "") {
+    // if (newCostCentre === "") {
+    //   validForm = false;
+    //   setCostCentreErrMsg("Please select cost centre");
+    // }
+    if (newGross === "") {
       validForm = false;
-      setCostCentreErrMsg("Please select cost centre");
-    }
-    if (newManager === "") {
-      validForm = false;
-      setManagerErrMsg("Please select manager");
+      setGrossErrMsg("Please enter fixed gross");
     }
 
     if (
@@ -200,6 +213,14 @@ const EntityTransfer = () => {
       setEffectiveDateErrMsg("Please enter effective date");
     }
 
+    if (
+      DateOfTransfer === "" ||
+      DateOfTransfer === undefined ||
+      DateOfTransfer === null
+    ) {
+      validForm = false;
+      setDateOfTransferErrMsg("Please enter effective date");
+    }
     return validForm;
   };
 
@@ -221,7 +242,7 @@ const EntityTransfer = () => {
         currentManagerId: initiationEmpData.currentManagerId,
         currentMonthlyBonus: initiationEmpData.currentMonthlyBonus,
         currentPosition: initiationEmpData.currentPosition,
-        promotedCompany: newEntity,
+        promotedCompany: newEmployement,
         promotedContractType: initiationEmpData.promotedContractType,
         promotedCostCentre: newCostCentre,
         promotedCountry: initiationEmpData.promotedCountry,
@@ -244,7 +265,7 @@ const EntityTransfer = () => {
         transferType: transferType,
       };
       console.log(InfoData);
-      createTransferInitiation(InfoData);
+      //   createTransferInitiation(InfoData);
       setFormValid(true);
       // setModalShow(true);
     }
@@ -254,6 +275,17 @@ const EntityTransfer = () => {
     <div className="transfer-initiation">
       <ToastContainer />
       <Modal show={modalShow} onHide={handleModalClose} size="md" centered>
+        {/* <Modal.Header closeButton className="modal-line"></Modal.Header>
+        <Modal.Body className="mx-auto">
+          <label className="text-center">
+            Tansfer Initiation done successfully!
+          </label>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleModalClose}>
+            Close
+          </Button>
+        </Modal.Footer> */}
         <Container>
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
@@ -338,245 +370,239 @@ const EntityTransfer = () => {
         </Container>
       </Modal>
 
-      <Form>
-        <Form.Group as={Row} className="mb-3" controlId="employeeType">
+      {/* <Form.Group as={Row} className="mb-3" controlId="chooseTransferType">
           <Form.Label column md={2}>
-            Employee Name
+            Transfer Type
           </Form.Label>
           <Col md={8}>
             <Form.Control
-              type="text"
-              placeholder="search employee"
-              value={searchInput}
-              onChange={searchInputHandler}
-            />
-            <Search
-              className="search-icon mr-1"
-              style={{ color: "#313131" }}
-              onClick={searchValueHandler}
-            />
-            {empErrMsg !== "" && (
-              <span className="text-danger">{empErrMsg}</span>
+              as="select"
+              aria-label="chooseTransferType"
+              value={transferType}
+              placeholder="Select Transfer Type"
+              onChange={transferTypeHandler}
+            >
+              <option>Select Transfer Type</option>
+              <option value="Regular Transfer">Regular Transfer</option>
+              <option value="Employement Transfer">Entity Transfer</option>
+              <option value="International Transfer">
+                International Transfer
+              </option>
+              <option value="Employment Type Transfer">
+                Employment Type Transfer
+              </option>
+            </Form.Control>
+            {transferErrMsg !== "" && (
+              <span className="text-danger">{transferErrMsg}</span>
             )}
           </Col>
-        </Form.Group>
-        {
-          // searchValue !== "" &&
-          initiationEmpData !== null &&
-          initiationEmpData !== undefined &&
-          Object.keys(initiationEmpData).length > 0 ? (
-            <div className="mt-5 mr-5">
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="transferInitiationDept"
-              >
-                <Col md={2}>
-                  <Form.Label>Cost Center Name:</Form.Label>
-                </Col>
-                <Col md={4} className="text-primary">
-                  {initiationEmpData.currentCostCentre}
-                </Col>
-                <Col md={2}>
-                  <Form.Label>Contract Type:</Form.Label>
-                </Col>
-                <Col md={4} className="text-primary">
-                  {initiationEmpData.currentContractType}
-                </Col>
-              </Form.Group>
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="transferInitiationPosition"
-              >
-                <Col md={2}>
-                  <Form.Label>Old Entity:</Form.Label>
-                </Col>
-                <Col md={4} className="text-primary">
-                  {initiationEmpData.currentCompany}
-                </Col>
-                <Col md={2}>
-                  <Form.Label>New Entity:</Form.Label>
-                </Col>
-                <Col md={4}>
-                  <Form.Control
-                    as="select"
-                    className="text-primary"
-                    aria-label="transferInitiationPosition"
-                    value={newEntity}
-                    placeholder="Select Position"
-                    onChange={changeEntityHandler}
-                  >
-                    <option value="">Select New Entity</option>
-                    <option value="INDECA">INDECA</option>
-                    <option value="DSI">DSI</option>
-                    <option value="PRODIN">PRODIN</option>
-                  </Form.Control>
-                  {newEntityErrMsg !== "" && (
-                    <span className="text-danger">{newEntityErrMsg}</span>
-                  )}
-                </Col>
-              </Form.Group>
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="transferInitiationCostCentre"
-              >
-                <Col md={2}>
-                  <Form.Label>Old Fixed Gross:</Form.Label>
-                </Col>
-                <Col md={4} className="text-primary">
-                  {initiationEmpData.currentFixedGross}
-                </Col>
-                <Col md={2}>
-                  <Form.Label>New Cost Center:</Form.Label>
-                </Col>
-                <Col md={4}>
-                  <Form.Control
-                    as="select"
-                    className="text-primary"
-                    aria-label="transferInitiationCostCentre"
-                    value={newCostCentre}
-                    placeholder="Select Cost Centre"
-                    onChange={changeCostCentreHandler}
-                  >
-                    <option>Select Cost Centre</option>
-                    {costCentreData !== null &&
-                      costCentreData !== undefined &&
-                      costCentreData.length > 0 &&
-                      costCentreData.map((item) => {
-                        return (
-                          <option
-                            key={`cost_centre_${item.costCentreName}`}
-                            value={item.costCentreName}
-                          >
-                            {item.costCentreName}
-                          </option>
-                        );
-                      })}
-                  </Form.Control>
-                  {costCentreErrMsg !== "" && (
-                    <span className="text-danger">{costCentreErrMsg}</span>
-                  )}
-                </Col>
-              </Form.Group>
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="transferInitiationCostCentre"
-              >
-                <Col md={2}>
-                  <Form.Label>Effective Date:</Form.Label>
-                </Col>
-                <Col md={4}>
-                  <div className="transfers-date">
-                    <DatePicker
-                      className="text-primary form-control"
-                      selected={effectiveDate}
-                      closeOnScroll={true}
-                      minDate={moment().toDate()}
-                      dateFormat="yyyy-MM-dd"
-                      onChange={(date) => {
-                        changeEffectiveDateHandler(date);
-                      }}
-                    />
-                  </div>
-                  {effectiveDateErrMsg !== "" && (
-                    <span className="text-danger">{effectiveDateErrMsg}</span>
-                  )}
-                </Col>
-                <Col md={2}>
-                  <Form.Label>New Manager:</Form.Label>
-                </Col>
-                <Col md={4}>
-                  <Form.Control
-                    as="select"
-                    className="text-primary"
-                    aria-label="transferInitiationManager"
-                    value={newManager}
-                    placeholder="Select Manager"
-                    onChange={changeManagerHandler}
-                  >
-                    <option>Select Manager</option>
-                    {costCentreManagersData !== null &&
-                      costCentreManagersData !== undefined &&
-                      costCentreManagersData.length !== 0 &&
-                      costCentreManagersData.map((item) => {
-                        return (
-                          <option
-                            key={`manager_${item.employeeId}`}
-                            value={item.employeeId}
-                          >{`${item.firstName} ${item.lastName}`}</option>
-                        );
-                      })}
-                  </Form.Control>
-                  {managerErrMsg !== "" && (
-                    <span className="text-danger">{managerErrMsg}</span>
-                  )}
-                </Col>
-              </Form.Group>
+        </Form.Group> */}
+      <Form.Group as={Row} className="mb-3" controlId="employeeType">
+        <Form.Label column md={2}>
+          Employee Name
+        </Form.Label>
+        <Col md={8}>
+          <Form.Control
+            type="text"
+            placeholder="search employee"
+            value={searchInput}
+            onChange={searchInputHandler}
+          />
+          <Search
+            className="search-icon mr-1"
+            style={{ color: "#313131" }}
+            onClick={searchValueHandler}
+          />
+          {empErrMsg !== "" && <span className="text-danger">{empErrMsg}</span>}
+        </Col>
+      </Form.Group>
+      {
+        // searchValue !== "" &&
+        initiationEmpData !== null &&
+        initiationEmpData !== undefined &&
+        Object.keys(initiationEmpData).length > 0 ? (
+          <div className="mt-5 mr-5">
+            <Row className="mb-3">
+              <Col md={6}>
+                <Row>
+                  <Col md={5}>Cost Center Name:</Col>
+                  <Col md={7} className="text-primary">
+                    {initiationEmpData.currentCostCentre}
+                  </Col>
+                </Row>
+              </Col>
+              <Col md={6}>
+                <Row>
+                  <Col md={5}>Contract Type:</Col>
+                  <Col md={7} className="text-primary">
+                    {initiationEmpData.currentContractType}
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+            <Row className="my-3">
+              <Col className="font-weight-bold">
+                <u>Work Information</u>
+              </Col>
+            </Row>
+            <Row className="my-3">
+              <Col md={6}>
+                <Form.Group as={Row} controlId="transferInitiationCostCentre">
+                  <Form.Label column md={5} className="py-0">
+                    Change Employement:
+                  </Form.Label>
 
-              <Row>
-                <Col
-                  style={{
-                    marginTop: "2rem",
-                    marginBottom: "2rem",
-                    textAlign: "center",
-                  }}
-                >
-                  <button
-                    disabled={formValid}
-                    className={formValid ? "confirmButton" : "stepperButtons"}
-                    onClick={submitHandler}
-                  >
-                    Save
-                  </button>
-                  {/* {searchValue !== "" && initiationStatus && (
-                    <button
-                      className={"LettersButtons"}
-                      onClick={showTransferLetterModal}
+                  <Col md={7}>
+                    <Form.Control
+                      as="select"
+                      className="text-primary"
+                      aria-label="transferInitiationPosition"
+                      value={newEmployement}
+                      placeholder="Select Position"
+                      onChange={changeEmployementHandler}
                     >
-                      {previewTransferLetter
-                        ? "Preview Transfer Letter"
-                        : "Generate Transfer Letter"}
-                    </button>
-                  )} */}
+                      <option value="">Select Change Employement</option>
+                      <option value="From Temporary to Permanent Part Time">
+                        From Temporary to Permanent Part Time
+                      </option>
+                      <option value="From Temporary to Permanent Full Time">
+                        From Temporary to Permanent Full Time
+                      </option>
+                      <option value="From Permanent Part Time to Permanent Full Time">
+                        From Permanent Part Time to Permanent Full Time
+                      </option>
+                      <option value="From Permanent Full Time to Permanent Part Time">
+                        From Permanent Full Time to Permanent Part Time
+                      </option>
+                      <option value="From Permanent Part time to Temporary Part Time">
+                        From Permanent Part time to Temporary Part Time
+                      </option>
+                    </Form.Control>
+                    {newEmployementErrMsg !== "" && (
+                      <span className="text-danger">
+                        {newEmployementErrMsg}
+                      </span>
+                    )}
+                  </Col>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group as={Row} controlId="transferInitiationCostCentre">
+                  <Form.Label column md={5}>
+                    Effective Date:
+                  </Form.Label>
 
-                  {/* {searchValue !== "" &&
-                    initiationStatus &&
-                    previewTransferLetter && (
-                      <div className="preview-section">
-                        <br></br>
-                        <br></br>
-                        <img src={calendarImage} alt="calendar" width="200px" />
-                        <br></br>
-                        <button
-                          disabled={letterSent}
-                          className={
-                            letterSent ? "confirmButton" : "stepperButtons"
-                          }
-                          onClick={submitfinalTransferLetter}
-                        >
-                          Submit
-                        </button>
-                      </div>
-                    )} */}
-                </Col>
-              </Row>
-            </div>
-          ) : (
-            ""
-          )
-        }
-      </Form>
-      {/* </div>
-              </Container>
-            </div>
+                  <Col md={7}>
+                    <div className="transfers-date">
+                      <DatePicker
+                        className="text-primary form-control"
+                        selected={effectiveDate}
+                        closeOnScroll={true}
+                        minDate={moment().toDate()}
+                        dateFormat="yyyy-MM-dd"
+                        onChange={(date) => {
+                          changeEffectiveDateHandler(date);
+                        }}
+                      />
+                    </div>
+                    {effectiveDateErrMsg !== "" && (
+                      <span className="text-danger">{effectiveDateErrMsg}</span>
+                    )}
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row className="my-3">
+              <Col className="font-weight-bold">
+                <u>Remuneration Information</u>
+              </Col>
+            </Row>
+            <Row className="my-3">
+              <Col md={6}>
+                <Form.Group as={Row} controlId="transferInitiationMonthlyType">
+                  <Form.Label column md={5}>
+                    Salary Type:
+                  </Form.Label>
+                  <Col md={7} className="text-primary">
+                    <Form.Control
+                      type="text"
+                      placeholder="Monthly"
+                      value={newGross}
+                      className="text-primary"
+                      disabled={true}
+                    ></Form.Control>
+                  </Col>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group as={Row} controlId="transferInitiationFixedGross">
+                  <Form.Label column md={5}>
+                    Fixed Gross:
+                  </Form.Label>
+                  <Col md={7} className="text-primary">
+                    <Form.Control
+                      type="text"
+                      placeholder="Fixed Gross"
+                      value={newGross}
+                      className="text-primary"
+                      onChange={changeGrossHandler}
+                    ></Form.Control>
+                    {grossErrMsg !== "" && (
+                      <span className="text-danger">{grossErrMsg}</span>
+                    )}
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row className="my-3">
+              <Col md={6}>
+                <Form.Group
+                  as={Row}
+                  controlId="transferInitiationRenumerationDate"
+                >
+                  <Form.Label column md={5}>
+                    Effective Date:
+                  </Form.Label>
+                  <Col md={7}>
+                    <div className="transfers-date">
+                      <DatePicker
+                        className="text-primary form-control"
+                        selected={DateOfTransfer}
+                        closeOnScroll={true}
+                        minDate={moment().toDate()}
+                        dateFormat="yyyy-MM-dd"
+                        onChange={(date) => {
+                          changeDateOfTransferHandler(date);
+                        }}
+                      />
+                    </div>
+                    {DateOfTransferErrMsg !== "" && (
+                      <span className="text-danger">{effectiveDateErrMsg}</span>
+                    )}
+                  </Col>
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row className="my-5">
+              <Col className="text-center">
+                <button
+                  disabled={formValid}
+                  className={formValid ? "confirmButton" : "stepperButtons"}
+                  onClick={submitHandler}
+                >
+                  Save
+                </button>
+              </Col>
+            </Row>
           </div>
-        </div>
-      </div>*/}
+        ) : (
+          ""
+        )
+      }
     </div>
   );
 };
 
-export default EntityTransfer;
+export default ChangeEmployementType;
