@@ -352,7 +352,7 @@ const DocVerification = () => {
                     item.documentType !== 5 ? (
                       <td className="buttonMargin1">{item.statusDesc}</td>
                     ) : (
-                      <td className="row text-center buttonMargin">
+                      <td className="buttonMargin1">
                         {(user.role === "MANAGER" ||
                           user.role === "COST_CENTER_MANAGER") &&
                           item.documentType !== 4 &&
@@ -531,7 +531,7 @@ const DocVerification = () => {
                           )
                         )}
                       </p>
-                      {item.documentType >= 6 && (
+                      {item.documentType >= 6 && item.documentType !== 24 ? (
                         <React.Fragment>
                           <a
                             href={
@@ -552,83 +552,94 @@ const DocVerification = () => {
                             Download
                           </button> */}
                         </React.Fragment>
+                      ) : (
+                        ""
                       )}
                     </td>
-                    <td className="buttonMargin1">
-                      <button
-                        className="downloadButton"
-                        onClick={() => downloadDocument(item.documentName)}
-                      >
-                        Download
-                      </button>
-                    </td>
+                    {item.documentType >= 6 && item.documentType !== 24 ? (
+                      <td className="buttonMargin1">
+                        <button
+                          className="downloadButton"
+                          onClick={() => downloadDocument(item.documentName)}
+                        >
+                          Download
+                        </button>
+                      </td>
+                    ) : (
+                      ""
+                    )}
                     {item.statusDesc !== null &&
                     item.statusDesc !== "Pending" &&
-                    item.documentType >= 6 ? (
+                    item.documentType >= 6 &&
+                    item.documentType !== 24 ? (
                       <td className="buttonMargin1">{item.statusDesc}</td>
-                    ) : (
-                      item.documentType >= 6 && (
-                        <td className="row text-center buttonMargin">
+                    ) : item.documentType >= 6 && item.documentType !== 24 ? (
+                      <td className="buttonMargin1">
+                        <button
+                          className="approveButton"
+                          onClick={() => handleApproveDocument(item.documentId)}
+                        >
+                          Approve
+                        </button>
+                        {(user.role === "MANAGER" ||
+                          user.role === "COST_CENTER_MANAGER") && (
                           <button
-                            className="approveButton"
+                            className="approveButton ml-4"
+                            style={
+                              rejectStatus === "FAIL" &&
+                              docType === item.documentType
+                                ? { opacity: "0.6" }
+                                : { opacity: "1" }
+                            }
+                            disabled={
+                              rejectStatus === "FAIL" &&
+                              docType === item.documentType &&
+                              item.documentId
+                                ? true
+                                : false
+                            }
                             onClick={() =>
-                              handleApproveDocument(item.documentId)
+                              handleDisApproveDocument(
+                                item.documentId,
+                                item.documentType
+                              )
                             }
                           >
-                            Approve
+                            Disapprove
                           </button>
-                          {(user.role === "MANAGER" ||
-                            user.role === "COST_CENTER_MANAGER") && (
-                            <button
-                              className="approveButton ml-4"
-                              style={
-                                rejectStatus === "FAIL" &&
-                                docType === item.documentType
-                                  ? { opacity: "0.6" }
-                                  : { opacity: "1" }
-                              }
-                              disabled={
-                                rejectStatus === "FAIL" &&
-                                docType === item.documentType &&
-                                item.documentId
-                                  ? true
-                                  : false
-                              }
-                              onClick={() =>
-                                handleDisApproveDocument(
-                                  item.documentId,
-                                  item.documentType
-                                )
-                              }
-                            >
-                              Disapprove
-                            </button>
+                        )}
+                        {rejectStatus === "FAIL" &&
+                          docType === item.documentType && (
+                            <p style={{ color: "red" }}>
+                              Maximum attempst had reached
+                            </p>
                           )}
-                          {rejectStatus === "FAIL" &&
-                            docType === item.documentType && (
-                              <p style={{ color: "red" }}>
-                                Maximum attempst had reached
-                              </p>
-                            )}
-                        </td>
-                      )
+                      </td>
+                    ) : (
+                      ""
                     )}
+
                     {item.remark !== null ? (
                       <td className="buttonMargin1">
                         {item.documentType >= 6 &&
+                          item.documentType !== 24 &&
                           item.status === 2 &&
                           item.remark}
                       </td>
                     ) : (
                       item.documentType >= 6 &&
+                      item.documentType !== 24 &&
                       item.status === 1 && <td className="buttonMargin1">NA</td>
                     )}
                     {item.verifiedDate !== null && item.status !== 0 ? (
                       <td className="buttonMargin1">
-                        {item.documentType >= 6 && item.verifiedDate}
+                        {item.documentType >= 6 &&
+                          item.documentType !== 24 &&
+                          item.verifiedDate}
                       </td>
                     ) : (
-                      item.documentType >= 6 && (
+                      item.documentType >= 6 &&
+                      item.documentType !== 24 && (
                         <td className="buttonMargin1">NA</td>
                       )
                     )}

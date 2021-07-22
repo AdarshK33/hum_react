@@ -94,13 +94,9 @@ const DocVerification = () => {
       pfDetails !== null &&
       pfDetails.uanNumber !== ""
     ) {
-      setYes(true);
-      setNo(false);
       setUanNumber(pfDetails.uanNumber);
       setUanError(false);
     } else {
-      setYes(false);
-      setNo(true);
       setUanNumber("");
     }
   }, [pfDetails]);
@@ -396,7 +392,7 @@ const DocVerification = () => {
                       (item.adminStatus === 1 || item.adminStatus === 2) ? (
                       <td className="buttonMargin1">{item.adminStatusDesc}</td>
                     ) : (
-                      <td className="row text-center buttonMargin">
+                      <td className=" buttonMargin1">
                         {user.role === "ADMIN" &&
                         item.documentType === 1 &&
                         item.adminStatus === 0 ? (

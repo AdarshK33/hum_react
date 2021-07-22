@@ -81,45 +81,71 @@ const WorkInformation = (props) => {
     stateData();
     viewCountries();
   }, []);
-  useEffect(() => {
-    let data =
-      workInfoViewData !== undefined &&
-      workInfoViewData !== null &&
-      workInfoViewData;
+  // useEffect(() => {
+  //   let data =
+  //     workInfoViewData !== undefined &&
+  //     workInfoViewData !== null &&
+  //     workInfoViewData;
 
-    if (data !== undefined && data !== null) {
-      setState({
-        employmentType: data.contractType,
-        department: data.department,
-        position: data.position,
-        designation: data.designation,
-        sports: data.sportId !== null ? data.sportId : "",
-        probation: data.probationPeriod,
-        recuritment: data.recruitmentSource,
-        ngoDetail: data.ngoDetails !== null ? data.ngoDetails : "",
-        internship: data.internshipPeriod,
-        noticePeriod: data.noticePeriod,
-        managerId: data.managerId,
-        expatUser: data.expatUser,
-        nationality: data.nationality,
-        passportNumber: data.passportNumber,
-        adminCompany: data.companyName,
-      });
-      if (data.costCentre !== null && data.costCentre !== undefined) {
-        locationView(data.costCentre);
-        setCostCenter(data.costCenter);
+  //   if (data !== undefined && data !== null) {
+  //     setState({
+  //       employmentType: data.contractType,
+  //       department: data.department,
+  //       position: data.position,
+  //       designation: data.designation,
+  //       sports: data.sportId !== null ? data.sportId : "",
+  //       probation: data.probationPeriod,
+  //       recuritment: data.recruitmentSource,
+  //       ngoDetail: data.ngoDetails !== null ? data.ngoDetails : "",
+  //       internship: data.internshipPeriod,
+  //       noticePeriod: data.noticePeriod,
+  //       managerId: data.managerId,
+  //       expatUser: data.expatUser,
+  //       nationality: data.nationality,
+  //       passportNumber: data.passportNumber,
+  //       adminCompany: data.companyName,
+  //     });
+  //     if (data.costCentre !== null && data.costCentre !== undefined) {
+  //       locationView(data.costCentre);
+  //       setCostCenter(data.costCenter);
+  //     }
+  //   }
+  //   // setWorkInformationData(props.workInfo);
+  // }, [workInfoViewData]);
+  // useEffect(() => {
+  //   if (
+  //     createCandidateResponse === null ||
+  //     createCandidateResponse === undefined ||
+  //     Object.keys(createCandidateResponse).length === 0
+  //   ) {
+  //     setState({
+  //       employmentType: "",
+  //       department: "",
+  //       position: "",
+  //       designation: "",
+  //       sports: "",
+  //       probation: "",
+  //       recuritment: "",
+  //       ngoDetail: "",
+  //       internship: "",
+  //       noticePeriod: "",
+  //       managerId: "",
+  //       expatUser: "",
+  //       nationality: "",
+  //       passportNumber: "",
+  //       adminCompany: "",
+  //     });
+  //   }
+  // }, [createCandidateResponse]);
+  useEffect(() => {
+    if (costCenter !== "") {
+      if (locationName !== null && locationName !== undefined) {
+        setStateValue(locationName.stateId);
+        setCity(locationName.locationId);
+        cityData(locationName.stateId);
+        setCityId(locationName.cityId);
+        console.log("state in useEffect", locationName);
       }
-    }
-    // setWorkInformationData(props.workInfo);
-  }, [workInfoViewData]);
-
-  useEffect(() => {
-    if (locationName !== null && locationName !== undefined) {
-      setStateValue(locationName.stateId);
-      setCity(locationName.locationId);
-      cityData(locationName.stateId);
-      setCityId(locationName.cityId);
-      console.log("state in useEffect", locationName);
     }
   }, [locationName]);
   // useEffect(() => {
