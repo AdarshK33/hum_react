@@ -266,7 +266,7 @@ const CandidateOnboarding = () => {
   const dateOfJoiningHandler = (date) => {
     setEmployeeData({
       ...employeeData,
-      ["joiningDate"]: parseInt(moment(date).format("YYYY-MM-DD")),
+      ["joiningDate"]: moment(date).format("YYYY-MM-DD"),
     });
   };
 

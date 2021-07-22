@@ -403,11 +403,10 @@ const DocVerification = () => {
                     <td className="buttonMargin1">
                       {item.documentType !== 4 &&
                       item.documentType !== 5 &&
-                      item.status === 2
-                        ? item.remark !== null
-                          ? item.remark
-                          : "N/A"
-                        : ""}
+                      item.status === 2 &&
+                      item.remark !== null
+                        ? item.remark
+                        : "N/A"}
                     </td>
                     <td className="buttonMargin1">
                       {item.documentType !== 4 &&
