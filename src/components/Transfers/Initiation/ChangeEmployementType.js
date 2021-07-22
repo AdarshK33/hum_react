@@ -221,14 +221,14 @@ const ChangeEmployementType = () => {
       setGrossErrMsg("Please enter fixed gross");
     }
 
-    if (
-      effectiveDate === "" ||
-      effectiveDate === undefined ||
-      effectiveDate === null
-    ) {
-      validForm = false;
-      setEffectiveDateErrMsg("Please enter effective date");
-    }
+    // if (
+    //   effectiveDate === "" ||
+    //   effectiveDate === undefined ||
+    //   effectiveDate === null
+    // ) {
+    //   validForm = false;
+    //   setEffectiveDateErrMsg("Please enter effective date");
+    // }
 
     if (
       DateOfTransfer === "" ||
@@ -281,12 +281,12 @@ const ChangeEmployementType = () => {
               : null,
           promotedCostCentre: initiationEmpData.promotedCostCentre,
           promotedCountry: initiationEmpData.promotedCountry,
-          promotedDateOfReturn: moment(DateOfTransfer).format("YYYY-MM-DD"),
+          // promotedDateOfReturn: moment(DateOfTransfer).format("YYYY-MM-DD"),
           promotedDepartment: initiationEmpData.promotedDepartment,
           promotedDesignation: initiationEmpData.promotedDesignation,
           promotedEmployeeId: initiationEmpData.currentEmployeeId,
           promotedFixedGross: parseInt(newGross),
-          promotedJoiningDate: moment(effectiveDate).format("YYYY-MM-DD"),
+          promotedJoiningDate: moment(DateOfTransfer).format("YYYY-MM-DD"),
           promotedLocation: initiationEmpData.currentLocation,
           promotedManagerId: initiationEmpData.currentManagerId,
           promotedMonthlyBonus: initiationEmpData.currentMonthlyBonus,
@@ -502,7 +502,7 @@ const ChangeEmployementType = () => {
             <Row className="mb-3">
               <Col md={6}>
                 <Row>
-                  <Col md={5}>Cost Center Name:</Col>
+                  <Col md={5}>Cost Center </Col>
                   <Col md={7} className="text-primary">
                     {initiationEmpData.currentCostCentre}
                   </Col>
@@ -551,7 +551,7 @@ const ChangeEmployementType = () => {
                   </Col>
                 </Form.Group>
               </Col>
-              <Col md={6}>
+              {/* <Col md={6}>
                 <Form.Group as={Row} controlId="transferInitiationCostCentre">
                   <Form.Label column md={5}>
                     Effective Date:
@@ -575,7 +575,7 @@ const ChangeEmployementType = () => {
                     )}
                   </Col>
                 </Form.Group>
-              </Col>
+              </Col> */}
             </Row>
             <Row className="my-3">
               <Col className="font-weight-bold">

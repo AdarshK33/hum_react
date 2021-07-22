@@ -137,7 +137,6 @@ const TransferPage = () => {
             oldEmpContractType: item.currentContractType,
             newEmpContractType: item.promotedContractType,
             effectiveDate: item.promotedJoiningDate,
-            dateOfTransfer: item.promotedJoiningDate,
             status: item.statusDesc,
 
             view: {
@@ -252,8 +251,13 @@ const TransferPage = () => {
                   className="title_bar"
                   style={{ textAlign: "center", fontSize: "larger" }}
                 >
-                  <Row className="pt-2 mx-2">
-                    <Col md={2} style={{ marginTop: "-10px" }}>
+                  <Row
+                    style={{
+                      marginLeft: "1rem",
+                      marginRight: "1rem",
+                    }}
+                  >
+                    <Col md={2} style={{ marginTop: "-3px" }}>
                       <Form.Control
                         as="select"
                         aria-label="Select Transfer Type"
@@ -270,12 +274,12 @@ const TransferPage = () => {
                           International Transfer
                         </option>
                         <option value="Employment Type Transfer">
-                          Employment Type Transfer
+                          Change In Employement Type Transfer
                         </option>
                       </Form.Control>
                     </Col>
 
-                    <Col md={2} style={{ marginTop: "1px" }}>
+                    <Col md={2} style={{ marginTop: "7px" }}>
                       <Form.Control
                         type="text"
                         value={searchInput}
@@ -293,9 +297,11 @@ const TransferPage = () => {
                       md={4}
                       className="font-weight-bold text-uppercase text-center my-auto"
                     >
-                      {listHeading}
+                      {transferType === "Employment Type Transfer"
+                        ? "Change In Employement Type Transfer"
+                        : listHeading}
                     </Col>
-                    <Col md={2} style={{ marginTop: "-5px" }}>
+                    <Col md={2}>
                       <Link
                         to="/transfer-initiate"
                         className="text-decoration-none"
@@ -305,7 +311,7 @@ const TransferPage = () => {
                         </Button>
                       </Link>
                     </Col>
-                    <Col md={2} style={{ marginTop: "-10px" }}>
+                    <Col md={2} style={{ marginTop: "-3px" }}>
                       <Form.Control
                         as="select"
                         aria-label="Choose Status"

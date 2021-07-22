@@ -615,6 +615,25 @@ const InternationalTransfer = () => {
             </Row>
             <Row className="my-3">
               <Col md={4}>
+                <Form.Group as={Row} controlId="transferInitiationCurrency">
+                  <Form.Label column md={4}>
+                    Currency:
+                  </Form.Label>
+                  <Col md={8}>
+                    <Form.Control
+                      type="text"
+                      placeholder="Currency"
+                      value={newCurrency}
+                      className="text-primary"
+                      onChange={changeCurrencyHandler}
+                    ></Form.Control>
+                    {newCurrencyErrMsg !== "" && (
+                      <span className="text-danger">{newCurrencyErrMsg}</span>
+                    )}
+                  </Col>
+                </Form.Group>
+              </Col>
+              <Col md={4}>
                 <Form.Group as={Row} controlId="transferInitiationGrossPay">
                   <Form.Label column md={4}>
                     Fixed Gross:
@@ -633,25 +652,7 @@ const InternationalTransfer = () => {
                   </Col>
                 </Form.Group>
               </Col>
-              <Col md={4}>
-                <Form.Group as={Row} controlId="transferInitiationCurrency">
-                  <Form.Label column md={4}>
-                    Different Currency:
-                  </Form.Label>
-                  <Col md={8}>
-                    <Form.Control
-                      type="text"
-                      placeholder="Currency"
-                      value={newCurrency}
-                      className="text-primary"
-                      onChange={changeCurrencyHandler}
-                    ></Form.Control>
-                    {newCurrencyErrMsg !== "" && (
-                      <span className="text-danger">{newCurrencyErrMsg}</span>
-                    )}
-                  </Col>
-                </Form.Group>
-              </Col>
+
               <Col md={4}>
                 <Form.Group as={Row} controlId="transferInitiationBonus">
                   <Form.Label column md={5}>

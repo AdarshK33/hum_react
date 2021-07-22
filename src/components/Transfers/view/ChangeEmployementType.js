@@ -11,7 +11,9 @@ const ChangeEmployementType = ({ transferData }) => {
           <Row className="mb-4">
             <Col md={2}>Transfer Type: </Col>
             <Col md={8} className="text-primary">
-              {transferData.transferType}
+              {transferData.transferType === "Employment Type Transfer"
+                ? "Change In Employement Type Transfer"
+                : transferData.transferType}
             </Col>
           </Row>
           <Row className="mb-4">
@@ -34,7 +36,7 @@ const ChangeEmployementType = ({ transferData }) => {
             className="mb-3"
             controlId="transferInitiationDept"
           >
-            <Col md={2}>Cost Center Name:</Col>
+            <Col md={2}>Cost Center:</Col>
             <Col md={4} className="text-primary">
               {transferData.currentCostCentre}
             </Col>
@@ -56,12 +58,6 @@ const ChangeEmployementType = ({ transferData }) => {
 
             <Col md={4} className="text-primary">
               {transferData.promotedContractType}
-            </Col>
-
-            <Col md={2}>Effective Date:</Col>
-
-            <Col md={4} className="text-primary">
-              {transferData.promotedDateOfReturn}
             </Col>
           </Form.Group>
           <Form.Group

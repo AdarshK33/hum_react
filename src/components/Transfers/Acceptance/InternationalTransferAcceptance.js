@@ -378,20 +378,21 @@ const InternationalTransferAcceptance = () => {
                   <Row className="my-3">
                     <Col md={4}>
                       <Row>
+                        <Col md={4}> Currency</Col>
+                        <Col md={8} className="text-primary">
+                          {transferData.currency}
+                        </Col>
+                      </Row>
+                    </Col>
+                    <Col md={4}>
+                      <Row>
                         <Col md={4}>Fixed Gross</Col>
                         <Col md={8} className="text-primary">
                           {transferData.promotedFixedGross}
                         </Col>
                       </Row>
                     </Col>
-                    <Col md={4}>
-                      <Row>
-                        <Col md={4}>Different Currency</Col>
-                        <Col md={8} className="text-primary">
-                          {transferData.currency}
-                        </Col>
-                      </Row>
-                    </Col>
+
                     <Col md={4}>
                       <Row>
                         <Col md={5}>Bonus</Col>

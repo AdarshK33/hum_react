@@ -373,7 +373,7 @@ const EntityTransfer = () => {
                 controlId="transferInitiationDept"
               >
                 <Col md={2}>
-                  <Form.Label>Cost Center Name:</Form.Label>
+                  <Form.Label>Cost Center:</Form.Label>
                 </Col>
                 <Col md={4} className="text-primary">
                   {initiationEmpData.currentCostCentre}

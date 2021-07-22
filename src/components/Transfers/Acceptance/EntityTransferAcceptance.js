@@ -332,7 +332,7 @@ const EntityTransferAcceptance = () => {
         promotedJoiningDate: moment(effectiveDate).format("YYYY-MM-DD"),
         promotedLocation: parseInt(newLocation),
         promotedManagerId: transferData.promotedManagerId,
-        promotedMonthlyBonus: transferData.promotedMonthlyBonus,
+        promotedMonthlyBonus: transferData.currentMonthlyBonus,
         promotedPosition: newPositionName,
         promotedRelocationBonus: parseInt(relocationBonus),
         promotedTermOfProject: transferData.promotedTermOfProject,
@@ -392,29 +392,30 @@ const EntityTransferAcceptance = () => {
             Object.keys(transferData).length !== 0 &&
             transferData.currentContractType !== null &&
             transferData.currentContractType !== undefined &&
-            (transferData.currentContractType !== "Permanent" ||
-              transferData.currentContractType !== "permanent") ? (
+            (transferData.currentContractType === "Permanent" ||
+              transferData.currentContractType === "permanent") ? (
             <ApointmentLetter />
           ) : transferData !== null &&
             transferData !== undefined &&
             Object.keys(transferData).length !== 0 &&
             transferData.currentContractType !== null &&
             transferData.currentContractType !== undefined &&
-            (transferData.currentContractType !== "parttime" ||
-              transferData.currentContractType !== "Parttime") ? (
+            (transferData.currentContractType === "parttime" ||
+              transferData.currentContractType === "Parttime") ? (
             <PartTimeAppointmentLetter />
           ) : transferData !== null &&
             transferData !== undefined &&
             Object.keys(transferData).length !== 0 &&
             transferData.currentContractType !== null &&
             transferData.currentContractType !== undefined &&
-            (transferData.currentContractType !== "Local Expat" ||
-              transferData.currentContractType !== "local expat") ? (
+            (transferData.currentContractType === "Local Expat" ||
+              transferData.currentContractType === "local expat") ? (
             <LocalExpactAppointmentLetter />
           ) : (
             ""
           )}
           <br></br>
+
           <Row>
             {showSignature ? (
               <>
@@ -511,7 +512,7 @@ const EntityTransferAcceptance = () => {
                           controlId="transferInitiationDept"
                         >
                           <Col md={2}>
-                            <Form.Label>Cost Center Name:</Form.Label>
+                            <Form.Label>Cost Center:</Form.Label>
                           </Col>
                           <Col md={4} className="text-primary">
                             {transferData.currentCostCentre}
@@ -537,7 +538,7 @@ const EntityTransferAcceptance = () => {
                           controlId="transferInitiationDept"
                         >
                           <Col md={2}>
-                            <Form.Label>Cost Center Name:</Form.Label>
+                            <Form.Label>Cost Center:</Form.Label>
                           </Col>
                           <Col md={4} className="text-primary">
                             {transferData.currentManagerCostCentre}
@@ -547,6 +548,20 @@ const EntityTransferAcceptance = () => {
                           </Col>
                           <Col md={4} className="text-primary">
                             {transferData.currentManagerContractType}
+                          </Col>
+                        </Form.Group>
+                        <Form.Group
+                          as={Row}
+                          className="mb-3"
+                          controlId="transferInitiationDept"
+                        ></Form.Group>
+                        <Form.Group
+                          as={Row}
+                          className="mb-3"
+                          controlId="transferInitiationDept"
+                        >
+                          <Col className="font-weight-bold">
+                            <u>Documents</u>
                           </Col>
                         </Form.Group>
                         <Form.Group
@@ -658,19 +673,34 @@ const EntityTransferAcceptance = () => {
                             )}
                           </Col>
                         </Form.Group>
+                        <Row style={{ marginTop: "3rem" }}></Row>
+                        <Row className="mb-4">
+                          <Col
+                            md={{ span: 4, offset: 2 }}
+                            className="font-weight-bold my-2"
+                          >
+                            Current
+                          </Col>
+                          <Col
+                            md={{ span: 3, offset: 2 }}
+                            className="font-weight-bold my-2"
+                          >
+                            New
+                          </Col>
+                        </Row>
                         <Form.Group
                           as={Row}
                           className="mb-3"
                           controlId="transferInitiationPosition"
                         >
                           <Col md={2}>
-                            <Form.Label>Old Entity:</Form.Label>
+                            <Form.Label> Entity:</Form.Label>
                           </Col>
                           <Col md={4} className="text-primary">
                             {transferData.currentCompany}
                           </Col>
                           <Col md={2}>
-                            <Form.Label>New Entity:</Form.Label>
+                            <Form.Label> Entity:</Form.Label>
                           </Col>
                           <Col md={4} className="text-primary">
                             {transferData.promotedCompany}
@@ -682,13 +712,13 @@ const EntityTransferAcceptance = () => {
                           controlId="transferInitiationCostCentre"
                         >
                           <Col md={2}>
-                            <Form.Label>Old Fixed Gross:</Form.Label>
+                            <Form.Label> Fixed Gross:</Form.Label>
                           </Col>
                           <Col md={4} className="text-primary">
                             {transferData.currentFixedGross}
                           </Col>
                           <Col md={2}>
-                            <Form.Label>New Fixed Gross:</Form.Label>
+                            <Form.Label> Fixed Gross:</Form.Label>
                           </Col>
                           {transferData.promotedFixedGross ? (
                             <Col md={3} className="text-primary">
@@ -711,48 +741,20 @@ const EntityTransferAcceptance = () => {
                             </Col>
                           )}
                         </Form.Group>
+
                         <Form.Group
                           as={Row}
                           className="mb-3"
                           controlId="transferInitiationCostCentre"
                         >
                           <Col md={2}>
-                            <Form.Label>Effective Date:</Form.Label>
+                            <Form.Label> Cost Center:</Form.Label>
                           </Col>
                           <Col md={4} className="text-primary">
-                            {transferData.promotedJoiningDate}
+                            {transferData.currentCostCentre}
                           </Col>
                           <Col md={2}>
-                            <Form.Label>Relocation Bonus:</Form.Label>
-                          </Col>
-                          {transferData.promotedRelocationBonus ? (
-                            <Col md={4} className="text-primary">
-                              {transferData.promotedRelocationBonus}
-                            </Col>
-                          ) : (
-                            <Col md={4}>
-                              <Form.Control
-                                type="text"
-                                placeholder="Relocation Bonus"
-                                value={relocationBonus}
-                                className="text-primary"
-                                onChange={changeRelocationBonusHandler}
-                              ></Form.Control>
-                              {relocationBonusErrMsg !== "" && (
-                                <span className="text-danger">
-                                  {relocationBonusErrMsg}
-                                </span>
-                              )}
-                            </Col>
-                          )}
-                        </Form.Group>
-                        <Form.Group
-                          as={Row}
-                          className="mb-3"
-                          controlId="transferInitiationCostCentre"
-                        >
-                          <Col md={2}>
-                            <Form.Label>New Cost Center:</Form.Label>
+                            <Form.Label> Cost Center:</Form.Label>
                           </Col>
                           {initiationStatus ? (
                             <Col md={4} className="text-primary">
@@ -790,8 +792,21 @@ const EntityTransferAcceptance = () => {
                               )}
                             </Col>
                           )}
+                        </Form.Group>
+                        <Form.Group
+                          as={Row}
+                          className="mb-3"
+                          controlId="transferInitiationCostCentre"
+                        >
                           <Col md={2}>
-                            <Form.Label>New Location:</Form.Label>
+                            <Form.Label> Location:</Form.Label>
+                          </Col>
+                          <Col md={4} className="text-primary">
+                            {transferData.currentLocationName}
+                          </Col>
+
+                          <Col md={2}>
+                            <Form.Label> Location:</Form.Label>
                           </Col>
                           {transferData.promotedLocation ? (
                             <Col md={4} className="text-primary">
@@ -833,13 +848,13 @@ const EntityTransferAcceptance = () => {
                           controlId="transferInitiationCostCentre"
                         >
                           <Col md={2}>
-                            <Form.Label>Company:</Form.Label>
+                            <Form.Label> Department:</Form.Label>
                           </Col>
                           <Col md={4} className="text-primary">
-                            {transferData.promotedCompany}
+                            {transferData.currentDepartment}
                           </Col>
                           <Col md={2}>
-                            <Form.Label>New Department:</Form.Label>
+                            <Form.Label> Department:</Form.Label>
                           </Col>
                           {transferData.promotedDepartment ? (
                             <Col md={4} className="text-primary">
@@ -884,36 +899,13 @@ const EntityTransferAcceptance = () => {
                           controlId="transferInitiationCostCentre"
                         >
                           <Col md={2}>
-                            <Form.Label>Date Of Joining:</Form.Label>
+                            <Form.Label> Position:</Form.Label>
                           </Col>
-                          {initiationStatus ? (
-                            <Col md={4} className="text-primary">
-                              {transferData.promotedJoiningDate}
-                            </Col>
-                          ) : (
-                            <Col md={4}>
-                              <div className="transfers-date">
-                                <DatePicker
-                                  className="text-primary form-control"
-                                  selected={effectiveDate}
-                                  closeOnScroll={true}
-                                  minDate={moment().toDate()}
-                                  dateFormat="yyyy-MM-dd"
-                                  onChange={(date) => {
-                                    changeEffectiveDateHandler(date);
-                                  }}
-                                />
-                              </div>
-
-                              {effectiveDateErrMsg !== "" && (
-                                <span className="text-danger">
-                                  {effectiveDateErrMsg}
-                                </span>
-                              )}
-                            </Col>
-                          )}
+                          <Col md={4} className="text-primary">
+                            {transferData.currentPosition}
+                          </Col>
                           <Col md={2}>
-                            <Form.Label>New Position:</Form.Label>
+                            <Form.Label> Position:</Form.Label>
                           </Col>
                           {transferData.promotedPosition ? (
                             <Col md={4} className="text-primary">
@@ -947,6 +939,77 @@ const EntityTransferAcceptance = () => {
                               {positionErrMsg !== "" && (
                                 <span className="text-danger">
                                   {positionErrMsg}
+                                </span>
+                              )}
+                            </Col>
+                          )}
+                        </Form.Group>
+                        <Row style={{ marginTop: "3rem" }}></Row>
+                        <Form.Group
+                          as={Row}
+                          className="mb-3"
+                          controlId="transferInitiationCostCentre"
+                        >
+                          <Col md={2}>
+                            <Form.Label>Effective Date:</Form.Label>
+                          </Col>
+                          <Col md={4} className="text-primary">
+                            {transferData.promotedJoiningDate}
+                          </Col>
+                          <Col md={2}>
+                            <Form.Label>Relocation Bonus:</Form.Label>
+                          </Col>
+                          {transferData.promotedRelocationBonus ? (
+                            <Col md={4} className="text-primary">
+                              {transferData.promotedRelocationBonus}
+                            </Col>
+                          ) : (
+                            <Col md={4}>
+                              <Form.Control
+                                type="text"
+                                placeholder="Relocation Bonus"
+                                value={relocationBonus}
+                                className="text-primary"
+                                onChange={changeRelocationBonusHandler}
+                              ></Form.Control>
+                              {relocationBonusErrMsg !== "" && (
+                                <span className="text-danger">
+                                  {relocationBonusErrMsg}
+                                </span>
+                              )}
+                            </Col>
+                          )}
+                        </Form.Group>
+                        <Form.Group
+                          as={Row}
+                          className="mb-3"
+                          controlId="transferInitiationCostCentre"
+                        >
+                          <Col md={2}>
+                            <Form.Label>Date Of Joining:</Form.Label>
+                          </Col>
+                          {initiationStatus ? (
+                            <Col md={4} className="text-primary">
+                              {transferData.promotedJoiningDate}
+                            </Col>
+                          ) : (
+                            <Col md={4}>
+                              <div className="transfers-date">
+                                <DatePicker
+                                  className="text-primary form-control"
+                                  selected={effectiveDate}
+                                  closeOnScroll={true}
+                                  minDate={moment().toDate()}
+                                  dateFormat="yyyy-MM-dd"
+                                  onChange={(date) => {
+                                    changeEffectiveDateHandler(date);
+                                  }}
+                                />
+                              </div>
+
+                              {effectiveDateErrMsg !== "" && (
+                                <span className="text-danger">
+                                  {effectiveDateErrMsg}
                                 </span>
                               )}
                             </Col>
