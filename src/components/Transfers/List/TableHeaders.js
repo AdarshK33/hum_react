@@ -51,7 +51,6 @@ const TRANSFER_TABLE_HEADERS = {
     oldEmpContractType: "Old Employement Contract Type",
     newEmpContractType: "New Employement Contract Type",
     effectiveDate: "Effective Date",
-    dateOfTransfer: "Date Of Transfer",
     status: "Status",
     view: "View",
     action: "Action",

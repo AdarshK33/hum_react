@@ -253,7 +253,7 @@ const PartTimeAppointmentLetter = () => {
             </Modal> */}
         </div>
       ) : (
-        "no data "
+        " "
       )}
     </Fragment>
   );

@@ -7,6 +7,7 @@ import NoDataComp from "../../no-data/NoData.component";
 import RegularTransferView from "./RegularTransfer";
 import EntityTransfer from "./EntityTransfer";
 import InternationalTransferView from "./InternationalTransferView";
+import ChangeEmployementType from "./ChangeEmployementType";
 import LoaderIcon from "../../Loader/LoaderIcon";
 
 const TransferView = () => {
@@ -34,14 +35,15 @@ const TransferView = () => {
               transferData !== undefined &&
               Object.keys(transferData).length > 0 ? (
                 <Container className="ml-4 mt-4">
-                  
-
                   {transferData.transferType === "Regular Transfer" ? (
                     <RegularTransferView transferData={transferData} />
                   ) : transferData.transferType === "Entity Transfer" ? (
                     <EntityTransfer transferData={transferData} />
                   ) : transferData.transferType === "International Transfer" ? (
                     <InternationalTransferView transferData={transferData} />
+                  ) : transferData.transferType ===
+                    "Employment Type Transfer" ? (
+                    <ChangeEmployementType transferData={transferData} />
                   ) : (
                     ""
                   )}
