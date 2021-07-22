@@ -368,7 +368,7 @@ const EntityTransferAcceptance = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Tansfer Initiation done successfully!
+              Tansfer Approved details saved successfully
             </label>
 
             <div className="text-center mb-2">
@@ -465,7 +465,7 @@ const EntityTransferAcceptance = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Tansfer Initiation letter generated successfully!
+              Tansfer letter details saved successfully, employee has notified
             </label>
 
             <div className="text-center mb-2">
@@ -754,42 +754,42 @@ const EntityTransferAcceptance = () => {
                           <Col md={2}>
                             <Form.Label>New Cost Center:</Form.Label>
                           </Col>
-                          {/* {transferData.promotedCostCentre ? (
-                            <Col md={3} className="text-primary">
+                          {initiationStatus ? (
+                            <Col md={4} className="text-primary">
                               {transferData.promotedCostCentre}
                             </Col>
-                          ) : ( */}
-                          <Col md={4}>
-                            <Form.Control
-                              as="select"
-                              className="text-primary"
-                              aria-label="transferInitiationCostCentre"
-                              value={newCostCentre}
-                              placeholder="Select Cost Centre"
-                              onChange={changeCostCentreHandler}
-                            >
-                              <option>Select Cost Centre</option>
-                              {costCentreData !== null &&
-                                costCentreData !== undefined &&
-                                costCentreData.length > 0 &&
-                                costCentreData.map((item) => {
-                                  return (
-                                    <option
-                                      key={`cost_centre_${item.costCentreName}`}
-                                      value={item.costCentreName}
-                                    >
-                                      {item.costCentreName}
-                                    </option>
-                                  );
-                                })}
-                            </Form.Control>
-                            {costCentreErrMsg !== "" && (
-                              <span className="text-danger">
-                                {costCentreErrMsg}
-                              </span>
-                            )}
-                          </Col>
-                          {/* )} */}
+                          ) : (
+                            <Col md={4}>
+                              <Form.Control
+                                as="select"
+                                className="text-primary"
+                                aria-label="transferInitiationCostCentre"
+                                value={newCostCentre}
+                                placeholder="Select Cost Centre"
+                                onChange={changeCostCentreHandler}
+                              >
+                                <option>Select Cost Centre</option>
+                                {costCentreData !== null &&
+                                  costCentreData !== undefined &&
+                                  costCentreData.length > 0 &&
+                                  costCentreData.map((item) => {
+                                    return (
+                                      <option
+                                        key={`cost_centre_${item.costCentreName}`}
+                                        value={item.costCentreName}
+                                      >
+                                        {item.costCentreName}
+                                      </option>
+                                    );
+                                  })}
+                              </Form.Control>
+                              {costCentreErrMsg !== "" && (
+                                <span className="text-danger">
+                                  {costCentreErrMsg}
+                                </span>
+                              )}
+                            </Col>
+                          )}
                           <Col md={2}>
                             <Form.Label>New Location:</Form.Label>
                           </Col>
@@ -886,27 +886,32 @@ const EntityTransferAcceptance = () => {
                           <Col md={2}>
                             <Form.Label>Date Of Joining:</Form.Label>
                           </Col>
+                          {initiationStatus ? (
+                            <Col md={4} className="text-primary">
+                              {transferData.promotedJoiningDate}
+                            </Col>
+                          ) : (
+                            <Col md={4}>
+                              <div className="transfers-date">
+                                <DatePicker
+                                  className="text-primary form-control"
+                                  selected={effectiveDate}
+                                  closeOnScroll={true}
+                                  minDate={moment().toDate()}
+                                  dateFormat="yyyy-MM-dd"
+                                  onChange={(date) => {
+                                    changeEffectiveDateHandler(date);
+                                  }}
+                                />
+                              </div>
 
-                          <Col md={3}>
-                            <div className="transfers-date">
-                              <DatePicker
-                                className="text-primary form-control"
-                                selected={effectiveDate}
-                                closeOnScroll={true}
-                                minDate={moment().toDate()}
-                                dateFormat="yyyy-MM-dd"
-                                onChange={(date) => {
-                                  changeEffectiveDateHandler(date);
-                                }}
-                              />
-                            </div>
-
-                            {effectiveDateErrMsg !== "" && (
-                              <span className="text-danger">
-                                {effectiveDateErrMsg}
-                              </span>
-                            )}
-                          </Col>
+                              {effectiveDateErrMsg !== "" && (
+                                <span className="text-danger">
+                                  {effectiveDateErrMsg}
+                                </span>
+                              )}
+                            </Col>
+                          )}
                           <Col md={2}>
                             <Form.Label>New Position:</Form.Label>
                           </Col>

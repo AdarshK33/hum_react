@@ -216,11 +216,14 @@ const RegularTransfer = () => {
 
   const noChangeDeptHandler = (e) => {
     if (e.target.checked === true) {
-      setDepNoChange(true);
       const department = deptDetails.find((dept) => {
-        return dept.departmentName === initiationEmpData.currentDepartment;
+        return (
+          dept.departmentName.toLowerCase() ===
+          initiationEmpData.currentDepartment.toLowerCase()
+        );
       });
       if (department !== undefined && Object.keys(department).length > 0) {
+        setDepNoChange(true);
         setNewDept(department.deptId);
         setNewDeptName(department.departmentName);
       }
@@ -232,11 +235,15 @@ const RegularTransfer = () => {
 
   const noChangePositionHandler = (e) => {
     if (e.target.checked === true) {
-      setPositionNoChange(true);
       const positions = deptPositionData.find((position) => {
-        return position.position === initiationEmpData.currentPosition;
+        return (
+          position.position.toLowerCase() ===
+          initiationEmpData.currentPosition.toLowerCase()
+        );
       });
+      console.log("positions->", positions);
       if (positions !== undefined && Object.keys(positions).length > 0) {
+        setPositionNoChange(true);
         setNewPosition(positions.positionId);
         setNewPositionName(positions.position);
       }
@@ -246,7 +253,12 @@ const RegularTransfer = () => {
   };
 
   const noChangeCostCentreHandler = (e) => {
-    if (e.target.checked === true) {
+    if (
+      e.target.checked === true &&
+      initiationEmpData.currentCostCentre !== null &&
+      initiationEmpData.currentCostCentre !== undefined &&
+      initiationEmpData.currentCostCentre !== ""
+    ) {
       setCostCentreNoChange(true);
       setNewCostCentre(initiationEmpData.currentCostCentre);
     } else {
@@ -255,7 +267,12 @@ const RegularTransfer = () => {
   };
 
   const noChangeManagerHandler = (e) => {
-    if (e.target.checked === true) {
+    if (
+      e.target.checked === true &&
+      initiationEmpData.currentManagerId !== null &&
+      initiationEmpData.currentManagerId !== undefined &&
+      initiationEmpData.currentManagerId !== ""
+    ) {
       setManagerNoChange(true);
       setNewManager(initiationEmpData.currentManagerId);
     } else {
@@ -264,7 +281,12 @@ const RegularTransfer = () => {
   };
 
   const noChangeLocationHandler = (e) => {
-    if (e.target.checked === true) {
+    if (
+      e.target.checked === true &&
+      initiationEmpData.currentLocation !== null &&
+      initiationEmpData.currentLocation !== undefined &&
+      initiationEmpData.currentLocation !== ""
+    ) {
       setLocationNoChange(true);
       setNewLocation(initiationEmpData.currentLocation);
     } else {
@@ -273,7 +295,12 @@ const RegularTransfer = () => {
   };
 
   const noChangeGrossHandler = (e) => {
-    if (e.target.checked === true) {
+    if (
+      e.target.checked === true &&
+      initiationEmpData.currentFixedGross !== null &&
+      initiationEmpData.currentFixedGross !== undefined &&
+      initiationEmpData.currentFixedGross !== ""
+    ) {
       setGrossNoChange(true);
       setNewGross(initiationEmpData.currentFixedGross);
     } else {
@@ -363,7 +390,7 @@ const RegularTransfer = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Tansfer Initiation done successfully!
+              Tansfer initiation details saved successfully
             </label>
 
             <div className="text-center mb-2">
@@ -377,7 +404,6 @@ const RegularTransfer = () => {
         show={showInitiationLetter}
         onHide={handleTransferLetterModalClose}
         size="md"
-        centered
       >
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         <Modal.Body>
@@ -433,7 +459,7 @@ const RegularTransfer = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Tansfer Initiation letter generated successfully!
+              Tansfer letter details saved successfully, manager has notified
             </label>
 
             <div className="text-center mb-2">

@@ -258,7 +258,8 @@ const EntityTransfer = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Tansfer Initiation done successfully!
+              Tansfer initiation details saved successfully, manager has
+              notified
             </label>
 
             <div className="text-center mb-2">

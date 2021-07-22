@@ -254,7 +254,7 @@ const EntityTransfer = ({ transferData }) => {
               <Form.Label>New Cost Center:</Form.Label>
             </Col>
             <Col md={3} className="text-primary">
-              {transferData.promotedCostCenter}
+              {transferData.promotedCostCentre}
             </Col>
             <Col md={2}>
               <Form.Label>New Location:</Form.Label>

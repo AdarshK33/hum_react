@@ -280,7 +280,7 @@ const InternationalTransfer = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Tansfer Initiation done successfully!
+              Tansfer initiation details saved successfully, Admin has notified
             </label>
             <div className="text-center mb-2">
               <Button onClick={handleModalClose}>Close</Button>

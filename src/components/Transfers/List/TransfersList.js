@@ -8,6 +8,7 @@ import { TransferContext } from "../../../context/TransferState";
 import TRANSFER_TABLE_HEADERS from "./TableHeaders";
 import TableComponent from "../../table/Table.component";
 import LoaderIcon from "../../Loader/LoaderIcon";
+import { AppContext } from "../../../context/AppState";
 
 const TransferPage = () => {
   const recordsPerPage = 10;
@@ -20,6 +21,7 @@ const TransferPage = () => {
     chnageTransferType,
     TRANSFERtype,
   } = useContext(TransferContext);
+  const { user } = useContext(AppContext);
   const [transferType, setTransferType] = useState(TRANSFERtype);
   const [searchValue, setSearchValue] = useState("all");
   const [searchInput, setSearchInput] = useState("");
@@ -76,19 +78,15 @@ const TransferPage = () => {
             action: {
               edit: {
                 active:
-                  item.statusDesc === "REJECTED" ||
-                  item.statusDesc === "INITIATED" ||
-                  item.statusDesc === "Rejected" ||
-                  item.statusDesc === "Initiated"
-                    ? false
-                    : true,
+                  item.promotedManagerId === user.employeeId &&
+                  item.statusDesc === "In Progress"
+                    ? true
+                    : false,
                 link:
-                  item.statusDesc === "REJECTED" ||
-                  item.statusDesc === "INITIATED" ||
-                  item.statusDesc === "Rejected" ||
-                  item.statusDesc === "Initiated"
-                    ? ""
-                    : `/transfer/${item.transferId}`,
+                  item.promotedManagerId === user.employeeId &&
+                  item.statusDesc === "In Progress"
+                    ? `/transfer/${item.transferId}`
+                    : "",
                 // item.transferType === "Regular Transfer"
                 //   ? `/transfer/${item.transferId}`
                 //   : "/transfers",
@@ -116,15 +114,15 @@ const TransferPage = () => {
             action: {
               edit: {
                 active:
-                  item.statusDesc === "REJECTED" ||
-                  item.statusDesc === "INITIATED"
-                    ? false
-                    : true,
+                  item.promotedManagerId === user.employeeId &&
+                  item.statusDesc === "In Progress"
+                    ? true
+                    : false,
                 link:
-                  item.statusDesc === "REJECTED" ||
-                  item.statusDesc === "INITIATED"
-                    ? ""
-                    : `/entity-transfer/${item.transferId}`,
+                  item.promotedManagerId === user.employeeId &&
+                  item.statusDesc === "In Progress"
+                    ? `/entity-transfer/${item.transferId}`
+                    : "",
               },
             },
           };
@@ -148,16 +146,7 @@ const TransferPage = () => {
             },
             action: {
               edit: {
-                active:
-                  item.statusDesc === "REJECTED" ||
-                  item.statusDesc === "INITIATED"
-                    ? false
-                    : true,
-                link:
-                  item.statusDesc === "REJECTED" ||
-                  item.statusDesc === "INITIATED"
-                    ? ""
-                    : `/entity-transfer/${item.transferId}`,
+                active: false,
               },
             },
           };
@@ -170,7 +159,7 @@ const TransferPage = () => {
             empId: item.currentEmployeeId,
             empName: item.employeeName,
             oldCountry: item.currentCountry,
-            oldDesignation: item.currentDesignation,
+            oldDesignation: item.currentPosition,
             newCountry: item.promotedCountry,
             newDesignation: item.promotedDesignation,
             effDate: item.promotedJoiningDate,
@@ -183,7 +172,11 @@ const TransferPage = () => {
             },
             action: {
               edit: {
-                active: true,
+                active:
+                  (user.additionalRole === "1" || user.loginType == "1") &&
+                  item.statusDesc === "In Progress"
+                    ? true
+                    : false,
                 link: `/international-transfer/${item.transferId}`,
               },
             },
@@ -246,7 +239,7 @@ const TransferPage = () => {
       }&transferType=${transferType}`
     );
   };
-
+  console.log("user->", user);
   return (
     <Fragment>
       <Breadcrumb title="TRANSFERS LIST" parent="TRANSFERS LIST" />

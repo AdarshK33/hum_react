@@ -357,8 +357,8 @@ const RegularTransferAcceptance = () => {
           <Modal.Body className="mx-auto">
             <label className="text-center">
               {reject === true
-                ? "Tansfer rejected submitted successfully!"
-                : "Tansfer action submitted successfully!"}
+                ? "Tansfer rejected details saved successfully!"
+                : "Tansfer accepted details saved successfully"}
             </label>
 
             <div className="text-center mb-2">
@@ -371,7 +371,7 @@ const RegularTransferAcceptance = () => {
       <Modal
         show={showInitiationLetter}
         onHide={handleTransferLetterModalClose}
-        centered
+        size="md"
       >
         <Container>
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
@@ -428,7 +428,7 @@ const RegularTransferAcceptance = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Tansfer Initiation letter submitted successfully!
+              Tansfer letter details saved successfully, employee has notified
             </label>
 
             <div className="text-center mb-2">

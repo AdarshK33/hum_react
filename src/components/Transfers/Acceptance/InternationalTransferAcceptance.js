@@ -156,7 +156,7 @@ const InternationalTransferAcceptance = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Tansfer Acceptance done successfully!
+              Tansfer Approved details saved successfully, employee has notified
             </label>
             <div className="text-center mb-2">
               <Button onClick={handleModalClose}>Close</Button>
