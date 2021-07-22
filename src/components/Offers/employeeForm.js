@@ -210,6 +210,12 @@ const EmployeeForm = (props) => {
     setNoChecked(!noChecked);
     setYesChecked(noChecked);
     setSecondRef(false);
+    setEmpName1("");
+    setEmpName2("");
+    setRefEmail1("");
+    setRefEmail2("");
+    setDesignation1("");
+    setDesignation2("");
   };
   const changeHandler = (e) => {
     setState({
