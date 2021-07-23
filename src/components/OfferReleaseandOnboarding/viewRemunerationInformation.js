@@ -298,10 +298,9 @@ const ViewRemunerationInformation = (props) => {
         <Form>
           <Row>
             <Fragment>
-              {(candidateData &&
-                candidateData.workInformation &&
-                candidateData.workInformation.contractType !== "Internship") ||
-              workInfoViewData.contractType !== "Internship" ? (
+              {candidateData &&
+              candidateData.workInformation &&
+              candidateData.workInformation.contractType !== "Internship" ? (
                 <Col sm={6}>
                   <Form.Group as={Row} controlId="formHorizontalEmail">
                     {/* <Col sm={2}></Col> */}
@@ -361,11 +360,9 @@ const ViewRemunerationInformation = (props) => {
                 </Col>
               )}
 
-              {(candidateData &&
-                candidateData.workInformation &&
-                candidateData.workInformation.contractType !== "Internship") ||
-              (workInfoViewData &&
-                workInfoViewData.contractType !== "Internship") ? (
+              {candidateData &&
+              candidateData.workInformation &&
+              candidateData.workInformation.contractType !== "Internship" ? (
                 <Fragment>
                   {user ? (
                     // user.role === "ADMIN" ? (

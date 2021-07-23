@@ -8,7 +8,7 @@ const ViewEmployeeForm = () => {
   const [firstName, setFirstName] = useState();
   const [lastName, setLastName] = useState();
   const [email, setEmail] = useState();
-  const [yesChecked, setYesChecked] = useState(true);
+  const [yesChecked, setYesChecked] = useState(false);
   const [noChecked, setNoChecked] = useState(false);
   const [secondRef, setSecondRef] = useState(false);
   const [empName1, setEmpName1] = useState("");
@@ -45,8 +45,12 @@ const ViewEmployeeForm = () => {
       candidateData !== undefined &&
       candidateData.candidateInformation !== null &&
       candidateData.candidateInformation !== undefined &&
-      candidateData.candidateInformation.referred === false
+      candidateData.candidateInformation.referred === true &&
+      data1.employeeName !== ""
     ) {
+      setYesChecked(true);
+      setNoChecked(false);
+    } else {
       setYesChecked(false);
       setNoChecked(true);
     }
