@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useMemo } from "react";
 import { Row, Col, Form, Button, Container, Modal } from "react-bootstrap";
 import { Search } from "react-feather";
 import DatePicker from "react-datepicker";
@@ -48,8 +48,8 @@ const InternationalTransfer = () => {
   const [newCurrency, setNewCurrency] = useState("");
   const [newCurrencyErrMsg, setNewCurrencyErrMsg] = useState("");
   const [countryInsurance, setCountryInsurance] = useState(false);
-  const [projectTerm, setProjectTerm] = useState("");
-  const [projectTermErrMsg, setProjectTermErrMsg] = useState("");
+  // const [projectTerm, setProjectTerm] = useState("");
+  // const [projectTermErrMsg, setProjectTermErrMsg] = useState("");
   const [formValid, setFormValid] = useState(false);
   const [modalShow, setModalShow] = useState(false);
 
@@ -112,7 +112,7 @@ const InternationalTransfer = () => {
         isInsuranceCovered: countryInsurance,
         currency: newCurrency,
         promotedManagerEmailId: newMangerMailId,
-        promotedTermOfProject: projectTerm,
+        promotedTermOfProject: calProjectTerm,
       };
       createTransferInitiation(initiationData);
     }
@@ -161,6 +161,22 @@ const InternationalTransfer = () => {
     setReturnDateErrMsg("");
   };
 
+  const calProjectTerm = useMemo(() => {
+    const eDate = moment(effectiveDate);
+    const rDate = moment(returnDate);
+    const years = rDate.diff(eDate, "year");
+    eDate.add(years, "years");
+    const months = rDate.diff(eDate, "months");
+    eDate.add(months, "months");
+    const days = rDate.diff(eDate, "days");
+    const projectDuration = `${
+      years > 0 ? (years > 1 ? years + " Years" : years + " Year") : ""
+    } ${
+      months > 0 ? (months > 1 ? months + " months" : months + " month") : ""
+    } ${days > 0 ? (days > 1 ? days + " days" : days + " day") : ""}`;
+    return projectDuration.trim() === "" ? "0 days" : projectDuration.trim();
+  }, [effectiveDate, returnDate]);
+
   const changeCostCentreHandler = (e) => {
     setNewCostCentre(e.target.value);
     setCostCentreErrMsg("");
@@ -188,10 +204,10 @@ const InternationalTransfer = () => {
     setNewCurrencyErrMsg("");
   };
 
-  const changeProjectTermHandler = (e) => {
-    setProjectTerm(e.target.value);
-    setProjectTermErrMsg("");
-  };
+  // const changeProjectTermHandler = (e) => {
+  //   setProjectTerm(e.target.value);
+  //   setProjectTermErrMsg("");
+  // };
 
   /* Validate form */
   const validateForm = () => {
@@ -252,10 +268,10 @@ const InternationalTransfer = () => {
       setNewBonusErrMsg("Please enter bonus");
     }
 
-    if (projectTerm === "") {
-      validForm = false;
-      setProjectTermErrMsg("Please enter project term");
-    }
+    // if (projectTerm === "") {
+    //   validForm = false;
+    //   setProjectTermErrMsg("Please enter project term");
+    // }
 
     return validForm;
   };
@@ -417,7 +433,7 @@ const InternationalTransfer = () => {
                       <DatePicker
                         className="text-primary form-control"
                         selected={effectiveDate}
-                        minDate={effectiveDate}
+                        minDate={new Date()}
                         closeOnScroll={true}
                         dateFormat="yyyy-MM-dd"
                         onChange={(date) => {
@@ -441,7 +457,7 @@ const InternationalTransfer = () => {
                       <DatePicker
                         className="text-primary form-control"
                         selected={returnDate}
-                        minDate={returnDate}
+                        minDate={effectiveDate}
                         closeOnScroll={true}
                         dateFormat="yyyy-MM-dd"
                         onChange={(date) => {
@@ -599,13 +615,10 @@ const InternationalTransfer = () => {
                     <Form.Control
                       type="text"
                       placeholder="Project term"
-                      value={projectTerm}
+                      value={calProjectTerm}
                       className="text-primary"
-                      onChange={changeProjectTermHandler}
+                      disabled
                     ></Form.Control>
-                    {projectTermErrMsg !== "" && (
-                      <span className="text-danger">{projectTermErrMsg}</span>
-                    )}
                   </Col>
                 </Form.Group>
               </Col>

@@ -115,6 +115,9 @@ import RegularTransferAcceptance from "./components/Transfers/Acceptance/Regular
 import EntityTransferAcceptance from "./components/Transfers/Acceptance/EntityTransferAcceptance";
 import InternationalTransferAcceptance from "./components/Transfers/Acceptance/InternationalTransferAcceptance";
 
+/* All module reports */
+import ModuleReports from "./components/ModuleReports/ModuleReports";
+
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
   console.log(user, state, "route8888888888888");
@@ -380,14 +383,11 @@ const RoutePath = () => {
             path={`${process.env.PUBLIC_URL}/international-transfer/:transferId`}
             component={InternationalTransferAcceptance}
           />
-          {/* <Route
-            path={`${process.env.PUBLIC_URL}/promotion/:promotionId`}
-            component={PromotionManagerEdit}
-          /> */}
-          {/* <Route
-            path={`${process.env.PUBLIC_URL}/promotion-approval/:promotionId`}
-            component={PromotionApproval}
-          /> */}
+
+          <Route
+            path={`${process.env.PUBLIC_URL}/reports/module-reports`}
+            component={ModuleReports}
+          />
 
           {state.MenuPermissionsRoute.map((e) => {
             return (
