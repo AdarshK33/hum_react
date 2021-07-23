@@ -5,11 +5,8 @@ import moment from "moment";
 import { OfferContext } from "../../context/OfferState";
 
 const InternAppointmentLetter = (props) => {
-  const {
-    createCandidateResponse,
-    generateOfferLetter,
-    offerLetterData,
-  } = useContext(OfferContext);
+  const { createCandidateResponse, generateOfferLetter, offerLetterData } =
+    useContext(OfferContext);
   const [showLetter, setShow] = useState(true);
   const [saveLetter, setSaveLetter] = useState(false);
   const [previewClick, setPreviewClick] = useState(false);
@@ -39,7 +36,9 @@ const InternAppointmentLetter = (props) => {
   return (
     <Fragment>
       {typeof offerLetterData &&
-      offerLetterData.internshipCandidateOffer !== undefined ? (
+      offerLetterData.internshipCandidateOffer !== undefined &&
+      offerLetterData.internshipCandidateOffer !== null &&
+      Object.keys(offerLetterData.internshipCandidateOffer).length !== 0 ? (
         <Fragment>
           <div className="appointmentLetter">
             <Modal show={showLetter} onHide={() => handleClose()} size="md">
