@@ -7,7 +7,8 @@ import moment from "moment";
 import { ToastContainer } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
 import { TransferContext } from "../../../context/TransferState";
-import TransferInitationLetter from "./TransferInitiationLetter";
+import PartTimeToFullTimeLetter from "./partTimeToFullTimeLetter";
+import FullTimeToPartTimeLetter from "./fullTimeToPartTimeLetter";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import { useHistory } from "react-router-dom";
 import "../../Transfers/Transfers.css";
@@ -29,6 +30,8 @@ const ChangeEmployementType = () => {
     createTransferInitiation,
     initiationStatus,
     initiationTransferId,
+    getApointmentLetter,
+    transferData,
   } = useContext(TransferContext);
   const [transferType, setTransferType] = useState("Entity Transfer");
   const [newEmployement, setNewEmployement] = useState("");
@@ -49,6 +52,7 @@ const ChangeEmployementType = () => {
   const [grossErrMsg, setGrossErrMsg] = useState("");
   const [formValid, setFormValid] = useState(false);
   const [modalShow, setModalShow] = useState(false);
+  const [infoModalShow, setInfoModalShow] = useState(false);
   const [showSignature, setShowSignature] = useState(false);
   const [showInitiationLetter, setShowInitiationLetter] = useState(false);
   const [previewTransferLetter, setPreviewTransferLetter] = useState(false);
@@ -145,7 +149,7 @@ const ChangeEmployementType = () => {
 
   const handleModalClose = () => {
     setModalShow(false);
-    history.push("./transfers");
+    setInfoModalShow(false);
   };
 
   const addDigitalSignature = () => setShowSignature(true);
@@ -157,7 +161,19 @@ const ChangeEmployementType = () => {
 
   const showTransferLetterModal = (e) => {
     e.preventDefault();
-    setShowInitiationLetter(true);
+    // getApointmentLetter("DSI003877");
+    // setShowInitiationLetter(true);
+    if (
+      transferData !== null &&
+      transferData !== undefined &&
+      Object.keys(transferData).length !== 0 &&
+      transferData.promotedEmployeeId !== null &&
+      transferData.promotedEmployeeId !== undefined &&
+      transferData.promotedEmployeeId !== ""
+    ) {
+      getApointmentLetter(transferData.promotedEmployeeId);
+      setShowInitiationLetter(true);
+    }
   };
 
   const submitfinalTransferLetter = (e) => {
@@ -168,6 +184,7 @@ const ChangeEmployementType = () => {
 
   const handleLetterSubmitModalClose = () => {
     setShowLetterSubmitModal(false);
+    history.push("./transfers");
   };
   const changeCostCentreHandler = (e) => {
     setNewCostCentre(e.target.value);
@@ -204,14 +221,14 @@ const ChangeEmployementType = () => {
       setGrossErrMsg("Please enter fixed gross");
     }
 
-    if (
-      effectiveDate === "" ||
-      effectiveDate === undefined ||
-      effectiveDate === null
-    ) {
-      validForm = false;
-      setEffectiveDateErrMsg("Please enter effective date");
-    }
+    // if (
+    //   effectiveDate === "" ||
+    //   effectiveDate === undefined ||
+    //   effectiveDate === null
+    // ) {
+    //   validForm = false;
+    //   setEffectiveDateErrMsg("Please enter effective date");
+    // }
 
     if (
       DateOfTransfer === "" ||
@@ -226,54 +243,88 @@ const ChangeEmployementType = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    const validFormRes = validateForm();
-    if (validFormRes === true) {
-      const InfoData = {
-        currentCompany: initiationEmpData.currentCompany,
-        currentContractType: initiationEmpData.currentContractType,
-        currentCostCentre: initiationEmpData.currentCostCentre,
-        currentCountry: initiationEmpData.currentCountry,
-        currentDepartment: initiationEmpData.currentDepartment,
-        currentDesignation: initiationEmpData.currentDesignation,
-        currentEmployeeId: initiationEmpData.currentEmployeeId,
-        currentFixedGross: initiationEmpData.currentFixedGross,
-        currentJoiningDate: initiationEmpData.currentJoiningDate,
-        currentLocation: initiationEmpData.currentLocation,
-        currentManagerId: initiationEmpData.currentManagerId,
-        currentMonthlyBonus: initiationEmpData.currentMonthlyBonus,
-        currentPosition: initiationEmpData.currentPosition,
-        promotedCompany: newEmployement,
-        promotedContractType: initiationEmpData.promotedContractType,
-        promotedCostCentre: newCostCentre,
-        promotedCountry: initiationEmpData.promotedCountry,
-        promotedDateOfReturn: initiationEmpData.promotedDateOfReturn,
-        promotedDepartment: initiationEmpData.promotedDepartment,
-        promotedDesignation: initiationEmpData.promotedDesignation,
-        promotedEmployeeId: initiationEmpData.promotedEmployeeId,
-        promotedFixedGross: initiationEmpData.promotedFixedGross,
-        promotedJoiningDate: moment(effectiveDate).format("YYYY-MM-DD"),
-        promotedLocation: initiationEmpData.promotedLocation,
-        promotedManagerId: newManager,
-        promotedMonthlyBonus: initiationEmpData.promotedMonthlyBonus,
-        promotedPosition: initiationEmpData.promotedPosition,
-        promotedRelocationBonus: initiationEmpData.promotedRelocationBonus,
-        promotedTermOfProject: initiationEmpData.promotedTermOfProject,
-        remark: null,
-        status: 0,
-        transferId: 0,
-        transferLetter: null,
-        transferType: transferType,
-      };
-      console.log(InfoData);
-      //   createTransferInitiation(InfoData);
-      setFormValid(true);
-      // setModalShow(true);
+
+    if (
+      initiationEmpData.currentContractType === "internship" ||
+      initiationEmpData.currentContractType === "Internship"
+    ) {
+      setInfoModalShow(true);
+    } else {
+      const validFormRes = validateForm();
+      if (validFormRes === true) {
+        const InfoData = {
+          currentCompany: initiationEmpData.currentCompany,
+          currentContractType: initiationEmpData.currentContractType,
+          currentCostCentre: initiationEmpData.currentCostCentre,
+          currentCountry: initiationEmpData.currentCountry,
+          currentDepartment: initiationEmpData.currentDepartment,
+          currentDesignation: initiationEmpData.currentDesignation,
+          currentEmployeeId: initiationEmpData.currentEmployeeId,
+          currentFixedGross: initiationEmpData.currentFixedGross,
+          currentJoiningDate: initiationEmpData.currentJoiningDate,
+          currentLocation: initiationEmpData.currentLocation,
+          currentManagerId: initiationEmpData.currentManagerId,
+          currentMonthlyBonus: initiationEmpData.currentMonthlyBonus,
+          currentPosition: initiationEmpData.currentPosition,
+          promotedCompany: initiationEmpData.currentCompany,
+          promotedContractType:
+            newEmployement !== null && newEmployement !== ""
+              ? newEmployement === "From Part Time to Full Time"
+                ? "permanent"
+                : "parttime"
+              : null,
+          salaryType:
+            newEmployement !== null && newEmployement !== ""
+              ? newEmployement === "From Part Time to Full Time"
+                ? "Monthly"
+                : "Hourly"
+              : null,
+          promotedCostCentre: initiationEmpData.promotedCostCentre,
+          promotedCountry: initiationEmpData.promotedCountry,
+          // promotedDateOfReturn: moment(DateOfTransfer).format("YYYY-MM-DD"),
+          promotedDepartment: initiationEmpData.promotedDepartment,
+          promotedDesignation: initiationEmpData.promotedDesignation,
+          promotedEmployeeId: initiationEmpData.currentEmployeeId,
+          promotedFixedGross: parseInt(newGross),
+          promotedJoiningDate: moment(DateOfTransfer).format("YYYY-MM-DD"),
+          promotedLocation: initiationEmpData.currentLocation,
+          promotedManagerId: initiationEmpData.currentManagerId,
+          promotedMonthlyBonus: initiationEmpData.currentMonthlyBonus,
+          promotedPosition: initiationEmpData.currentPosition,
+          promotedRelocationBonus: initiationEmpData.currentMonthlyBonus,
+          promotedTermOfProject: initiationEmpData.promotedTermOfProject,
+          remark: null,
+          status: 0,
+          transferId: 0,
+          transferLetter: null,
+          transferType: "Employment Type Transfer",
+        };
+        console.log(InfoData);
+        createTransferInitiation(InfoData);
+        setFormValid(true);
+        // setModalShow(true);
+      }
     }
   };
 
   return (
     <div className="transfer-initiation">
       <ToastContainer />
+      <Modal show={infoModalShow} onHide={handleModalClose} size="md" centered>
+        <Container>
+          <Modal.Header closeButton className="modalHeader"></Modal.Header>
+          <Modal.Body className="mx-auto">
+            <label className="text-center">
+              The employee is intern, employement change transfer is not
+              available for interns
+            </label>
+
+            <div className="text-center mb-2">
+              <Button onClick={handleModalClose}>Close</Button>
+            </div>
+          </Modal.Body>
+        </Container>
+      </Modal>
       <Modal show={modalShow} onHide={handleModalClose} size="md" centered>
         {/* <Modal.Header closeButton className="modal-line"></Modal.Header>
         <Modal.Body className="mx-auto">
@@ -290,7 +341,7 @@ const ChangeEmployementType = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Tansfer Initiation done successfully!
+              Tansfer initiation details saved successfully!
             </label>
 
             <div className="text-center mb-2">
@@ -304,11 +355,32 @@ const ChangeEmployementType = () => {
         show={showInitiationLetter}
         onHide={handleTransferLetterModalClose}
         size="md"
-        centered
       >
         <Modal.Header closeButton className="modal-line"></Modal.Header>
         <Modal.Body>
-          <TransferInitationLetter transferId={initiationTransferId} />
+          {transferData !== null &&
+          transferData !== undefined &&
+          Object.keys(transferData).length !== 0 &&
+          transferData.promotedContractType !== null &&
+          transferData.promotedContractType !== undefined &&
+          transferData.promotedContractType !== "" &&
+          (transferData.promotedContractType === "Permanent" ||
+            transferData.promotedContractType === "permanent") ? (
+            <PartTimeToFullTimeLetter />
+          ) : transferData !== null &&
+            transferData !== undefined &&
+            Object.keys(transferData).length !== 0 &&
+            transferData.promotedContractType !== null &&
+            transferData.promotedContractType !== undefined &&
+            transferData.promotedContractType !== "" &&
+            (transferData.promotedContractType === "parttime" ||
+              transferData.promotedContractType === "Parttime") ? (
+            <FullTimeToPartTimeLetter />
+          ) : (
+            ""
+          )}
+
+          {/* <TransferInitationLetter transferId={initiationTransferId} /> */}
           <br></br>
           <Row>
             {showSignature ? (
@@ -360,7 +432,7 @@ const ChangeEmployementType = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Tansfer Initiation letter generated successfully!
+              Tansfer initiation letter details saved successfully
             </label>
 
             <div className="text-center mb-2">
@@ -422,10 +494,15 @@ const ChangeEmployementType = () => {
         initiationEmpData !== undefined &&
         Object.keys(initiationEmpData).length > 0 ? (
           <div className="mt-5 mr-5">
+            <Row className="my-3">
+              <Col className="font-weight-bold">
+                <u>Work Information</u>
+              </Col>
+            </Row>
             <Row className="mb-3">
               <Col md={6}>
                 <Row>
-                  <Col md={5}>Cost Center Name:</Col>
+                  <Col md={5}>Cost Center </Col>
                   <Col md={7} className="text-primary">
                     {initiationEmpData.currentCostCentre}
                   </Col>
@@ -440,11 +517,7 @@ const ChangeEmployementType = () => {
                 </Row>
               </Col>
             </Row>
-            <Row className="my-3">
-              <Col className="font-weight-bold">
-                <u>Work Information</u>
-              </Col>
-            </Row>
+
             <Row className="my-3">
               <Col md={6}>
                 <Form.Group as={Row} controlId="transferInitiationCostCentre">
@@ -462,20 +535,12 @@ const ChangeEmployementType = () => {
                       onChange={changeEmployementHandler}
                     >
                       <option value="">Select Change Employement</option>
-                      <option value="From Temporary to Permanent Part Time">
-                        From Temporary to Permanent Part Time
+
+                      <option value="From Part Time to Full Time">
+                        From Part Time to Full Time
                       </option>
                       <option value="From Temporary to Permanent Full Time">
-                        From Temporary to Permanent Full Time
-                      </option>
-                      <option value="From Permanent Part Time to Permanent Full Time">
-                        From Permanent Part Time to Permanent Full Time
-                      </option>
-                      <option value="From Permanent Full Time to Permanent Part Time">
-                        From Permanent Full Time to Permanent Part Time
-                      </option>
-                      <option value="From Permanent Part time to Temporary Part Time">
-                        From Permanent Part time to Temporary Part Time
+                        From Full Time to Part Time
                       </option>
                     </Form.Control>
                     {newEmployementErrMsg !== "" && (
@@ -486,7 +551,7 @@ const ChangeEmployementType = () => {
                   </Col>
                 </Form.Group>
               </Col>
-              <Col md={6}>
+              {/* <Col md={6}>
                 <Form.Group as={Row} controlId="transferInitiationCostCentre">
                   <Form.Label column md={5}>
                     Effective Date:
@@ -510,7 +575,7 @@ const ChangeEmployementType = () => {
                     )}
                   </Col>
                 </Form.Group>
-              </Col>
+              </Col> */}
             </Row>
             <Row className="my-3">
               <Col className="font-weight-bold">
@@ -526,8 +591,14 @@ const ChangeEmployementType = () => {
                   <Col md={7} className="text-primary">
                     <Form.Control
                       type="text"
-                      placeholder="Monthly"
-                      value={newGross}
+                      placeholder="Salary Type"
+                      value={
+                        newEmployement !== null && newEmployement !== ""
+                          ? newEmployement === "From Part Time to Full Time"
+                            ? "Monthly"
+                            : "Hourly"
+                          : ""
+                      }
                       className="text-primary"
                       disabled={true}
                     ></Form.Control>
@@ -585,8 +656,14 @@ const ChangeEmployementType = () => {
               </Col>
             </Row>
 
-            <Row className="my-5">
-              <Col className="text-center">
+            <Row>
+              <Col
+                style={{
+                  marginTop: "2rem",
+                  marginBottom: "2rem",
+                  textAlign: "center",
+                }}
+              >
                 <button
                   disabled={formValid}
                   className={formValid ? "confirmButton" : "stepperButtons"}
@@ -594,6 +671,35 @@ const ChangeEmployementType = () => {
                 >
                   Save
                 </button>
+
+                {initiationStatus && (
+                  <button
+                    className={"LettersButtons"}
+                    onClick={showTransferLetterModal}
+                  >
+                    {previewTransferLetter
+                      ? "Preview Transfer Letter"
+                      : "Generate Transfer Letter"}
+                  </button>
+                )}
+
+                {initiationStatus && previewTransferLetter && (
+                  <div className="preview-section">
+                    <br></br>
+                    <br></br>
+                    <img src={calendarImage} alt="calendar" width="200px" />
+                    <br></br>
+                    <button
+                      disabled={letterSent}
+                      className={
+                        letterSent ? "confirmButton" : "stepperButtons"
+                      }
+                      onClick={submitfinalTransferLetter}
+                    >
+                      Submit
+                    </button>
+                  </div>
+                )}
               </Col>
             </Row>
           </div>

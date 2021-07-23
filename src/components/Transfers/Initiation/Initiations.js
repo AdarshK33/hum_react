@@ -59,7 +59,7 @@ const Initiations = () => {
                             International Transfer
                           </option>
                           <option value="Employment Type Transfer">
-                            Employment Type Transfer
+                            Change In Employement Type Transfer
                           </option>
                         </Form.Control>
                         {transferErrMsg !== "" && (

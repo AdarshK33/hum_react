@@ -258,7 +258,8 @@ const EntityTransfer = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Tansfer Initiation done successfully!
+              Tansfer initiation details saved successfully, manager has
+              notified
             </label>
 
             <div className="text-center mb-2">
@@ -372,7 +373,7 @@ const EntityTransfer = () => {
                 controlId="transferInitiationDept"
               >
                 <Col md={2}>
-                  <Form.Label>Cost Center Name:</Form.Label>
+                  <Form.Label>Cost Center:</Form.Label>
                 </Col>
                 <Col md={4} className="text-primary">
                   {initiationEmpData.currentCostCentre}

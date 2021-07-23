@@ -547,15 +547,19 @@ const DocVerification = () => {
                             )
                           )}
                         </p>
-                        {item.documentType > 5 && item.documentName}
+                        {item.documentType > 5 &&
+                          item.documentType !== 24 &&
+                          item.documentName}
                       </td>
 
                       {item.statusDesc !== null &&
                       item.statusDesc !== "Pending" &&
-                      item.documentType > 5 ? (
+                      item.documentType > 5 &&
+                      item.documentType !== 24 ? (
                         <td className="buttonMargin1">{item.statusDesc}</td>
                       ) : (
-                        item.documentType > 5 && (
+                        item.documentType > 5 &&
+                        item.documentType !== 24 && (
                           <td className="row text-center buttonMargin">
                             <button
                               className="approveButton"
@@ -602,19 +606,25 @@ const DocVerification = () => {
                       )}
                       {item.remark !== null ? (
                         <td className="buttonMargin1">
-                          {item.documentType > 5 && item.remark}
+                          {item.documentType > 5 &&
+                            item.documentType !== 24 &&
+                            item.remark}
                         </td>
                       ) : (
-                        item.documentType > 5 && (
+                        item.documentType > 5 &&
+                        item.documentType !== 24 && (
                           <td className="buttonMargin1">NA</td>
                         )
                       )}
                       {item.verifiedDate !== null ? (
                         <td className="buttonMargin1">
-                          {item.documentType > 5 && item.verifiedDate}
+                          {item.documentType > 5 &&
+                            item.documentType !== 24 &&
+                            item.verifiedDate}
                         </td>
                       ) : (
-                        item.documentType > 5 && (
+                        item.documentType > 5 &&
+                        item.documentType !== 24 && (
                           <td className="buttonMargin1">NA</td>
                         )
                       )}
