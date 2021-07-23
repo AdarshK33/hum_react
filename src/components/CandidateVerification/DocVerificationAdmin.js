@@ -29,8 +29,9 @@ const DocVerification = () => {
   const [onBoardPopup, setOnboardPopup] = useState(false);
   const [UANYes, setYes] = useState(false);
   const [UANNo, setNo] = useState(false);
-  const [uanNumber, setUanNumber] = useState("");
+  const [uanNumber, setUanNumber] = useState();
   const [uanError, setUanError] = useState(false);
+  const [uanValueError, setUanValueError] = useState(false);
   const [shiftingTheStatus, setShiftingTheStatus] = useState("");
   const [disApproveTheStatus, setDisApproveTheStatus] = useState("");
   const [docType, setDocType] = useState("");
@@ -108,12 +109,14 @@ const DocVerification = () => {
   const handleUANYes = (e) => {
     setYes(true);
     setNo(false);
+    setUanError(false);
   };
 
   const handleUANNo = (e) => {
     setNo(true);
     setYes(false);
     setUanNumber("");
+    setUanError(false);
   };
 
   const handleUANNumber = (e) => {
@@ -160,12 +163,47 @@ const DocVerification = () => {
   const handleOnboard = () => {
     // adhaarVerificationNotification(candidateId);
     // documentRejectComplete(candidateId);
-    setOnboardPopup(true);
+    console.log("uan value", uanNumber);
+    if (personalInfoData.contractType !== "Internship") {
+      if (UANNo === false && UANYes === false) {
+        setUanError(true);
+      } else if (
+        uanNumber === "" ||
+        uanNumber === null ||
+        uanNumber === undefined
+      ) {
+        setUanValueError(true);
+      } else {
+        updateUANNumber(personalInfoData.candidateId, uanNumber);
+        setUanError(false);
+        setUanValueError(false);
+        setOnboardPopup(true);
+      }
+    } else {
+      setOnboardPopup(true);
+    }
   };
 
   const handleReupload = () => {
     // adhaarVerificationNotification(candidateId);
-    adminRejectComplete(candidateId);
+    if (personalInfoData.contractType !== "Internship") {
+      if (UANNo === false && UANYes === false) {
+        setUanError(true);
+      } else if (
+        uanNumber === "" ||
+        uanNumber === null ||
+        uanNumber === undefined
+      ) {
+        setUanValueError(true);
+      } else {
+        updateUANNumber(personalInfoData.candidateId, uanNumber);
+        setUanError(false);
+        setUanValueError(false);
+        adminRejectComplete(candidateId);
+      }
+    } else {
+      adminRejectComplete(candidateId);
+    }
     // setOnboardPopup(true);
   };
   var documents =
@@ -189,7 +227,7 @@ const DocVerification = () => {
     if (uanNumber !== "") {
       updateUANNumber(personalInfoData.candidateId, uanNumber);
     } else {
-      setUanError(true);
+      setUanValueError(true);
     }
   };
   return (
@@ -226,7 +264,9 @@ const DocVerification = () => {
               The documents have been verified successfully, notification sent
               to the manager to complete candidate onboarding
             </h6>{" "}
-            <Button onClick={() => setOnboardPopup(false)}>OK</Button>
+            <Link to="/candidate-verification">
+              <Button onClick={() => setOnboardPopup(false)}>OK</Button>
+            </Link>
           </Modal.Body>
         </Container>
       </Modal>
@@ -354,10 +394,7 @@ const DocVerification = () => {
                         onClick={() => downloadDocument(item.documentName)}
                       > */}
                       <a
-                        href={
-                          "http://humine-application.s3-website.ap-south-1.amazonaws.com/" +
-                          item.documentName
-                        }
+                        href={process.env.REACT_APP_S3_URL + item.documentName}
                         target="_blank"
                       >
                         {downloadedFile && <img src={downloadedFile} alt="" />}
@@ -646,8 +683,7 @@ const DocVerification = () => {
                         <React.Fragment>
                           <a
                             href={
-                              "http://humine-application.s3-website.ap-south-1.amazonaws.com/" +
-                              item.documentName
+                              process.env.REACT_APP_S3_URL + item.documentName
                             }
                             target="_blank"
                           >
@@ -732,9 +768,7 @@ const DocVerification = () => {
                   <label>Link </label>
                 </div>
               </Form.Group>
-              {uanError && (
-                <p style={{ color: "red" }}>Please Enter UAN Number</p>
-              )}
+              {uanError && <p style={{ color: "red" }}>Please Select UAN</p>}
             </Col>
           </Row>
         )}
@@ -759,7 +793,7 @@ const DocVerification = () => {
                   />
                 </div>
               </Form.Group>
-              {uanError && (
+              {uanValueError && (
                 <p style={{ color: "red" }}>Please Enter UAN Number</p>
               )}
             </Col>
@@ -795,29 +829,29 @@ const DocVerification = () => {
           textAlign: "center",
         }}
       >
-        {personalInfoData.contractType !== "Internship" &&
+        {/* {personalInfoData.contractType !== "Internship" &&
           state.uanStatus !== 1 &&
           (state.adminVerificationStatus === 1 ||
             state.adminVerificationStatus === 2) && (
             <button className="stepperButtons" onClick={() => handleDocSave()}>
               Save
             </button>
-          )}
+          )} */}
 
         {state !== undefined && state.adminVerificationStatus === 1 && (
-          <Link to="/candidate-verification">
-            <button className="onboardButton" onClick={() => handleOnboard()}>
-              Onboard Candidate
-            </button>
-          </Link>
+          // <Link to="/candidate-verification">
+          <button className="onboardButton" onClick={() => handleOnboard()}>
+            Onboard Candidate
+          </button>
+          // </Link>
         )}
 
         {state !== undefined && state.adminVerificationStatus === 2 && (
-          <Link to="/candidate-verification">
-            <button className="onboardButton" onClick={() => handleReupload()}>
-              Submit
-            </button>
-          </Link>
+          // <Link to="/candidate-verification">
+          <button className="onboardButton" onClick={() => handleReupload()}>
+            Submit
+          </button>
+          /* </Link> */
         )}
       </div>
     </Fragment>

@@ -188,7 +188,9 @@ const DocVerification = () => {
               The documents have been verified successfully, please complete the
               steps to onboard the candidate
             </h6>{" "}
-            <Button onClick={() => setOnboardPopup(false)}>OK</Button>
+            <Link to="/candidate-verification">
+              <Button onClick={() => setOnboardPopup(false)}>OK</Button>
+            </Link>
           </Modal.Body>
         </Container>
       </Modal>
@@ -321,10 +323,7 @@ const DocVerification = () => {
                         onClick={() => downloadDocument(item.documentName)}
                       > */}
                       <a
-                        href={
-                          "http://humine-application.s3-website.ap-south-1.amazonaws.com/" +
-                          item.documentName
-                        }
+                        href={process.env.REACT_APP_S3_URL + item.documentName}
                         target="_blank"
                       >
                         {downloadedFile && <img src={downloadedFile} alt="" />}
@@ -534,8 +533,7 @@ const DocVerification = () => {
                         <React.Fragment>
                           <a
                             href={
-                              "http://humine-application.s3-website.ap-south-1.amazonaws.com/" +
-                              item.documentName
+                              process.env.REACT_APP_S3_URL + item.documentName
                             }
                             target="_blank"
                           >
@@ -717,18 +715,18 @@ const DocVerification = () => {
         }}
       >
         {state !== undefined && state.verificationStatus === 1 && (
-          <Link to="/candidate-verification">
-            <button className="onboardButton" onClick={() => handleOnboard()}>
-              Onboard Candidate
-            </button>
-          </Link>
+          // <Link to="/candidate-verification">
+          <button className="onboardButton" onClick={() => handleOnboard()}>
+            Onboard Candidate
+          </button>
+          // </Link>
         )}
         {state !== undefined && state.verificationStatus === 2 && (
-          <Link to="/candidate-verification">
-            <button className="onboardButton" onClick={() => handleReupload()}>
-              Submit
-            </button>
-          </Link>
+          // <Link to="/candidate-verification">
+          <button className="onboardButton" onClick={() => handleReupload()}>
+            Submit
+          </button>
+          // </Link>
         )}
       </div>
     </Fragment>
