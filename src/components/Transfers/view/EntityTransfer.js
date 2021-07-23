@@ -50,21 +50,21 @@ const EntityTransfer = ({ transferData }) => {
             controlId="transferInitiationDept"
           >
             <Col md={2}>
-              <Form.Label>Cost Center Name:</Form.Label>
+              <Form.Label>Cost Center:</Form.Label>
             </Col>
-            <Col md={3} className="text-primary">
+            <Col md={4} className="text-primary">
               {transferData.currentCostCentre}
             </Col>
             <Col md={2}>
               <Form.Label>Contract Type:</Form.Label>
             </Col>
-            <Col md={3} className="text-primary">
+            <Col md={4} className="text-primary">
               {transferData.currentContractType}
             </Col>
           </Form.Group>
           <Row className="mb-4">
             <Col md={2}>Manager Name</Col>
-            <Col md={8} className="text-primary">
+            <Col md={10} className="text-primary">
               {transferData.currentManagerName +
                 " " +
                 transferData.currentManagerId}
@@ -76,16 +76,30 @@ const EntityTransfer = ({ transferData }) => {
             controlId="transferInitiationDept"
           >
             <Col md={2}>
-              <Form.Label>Cost Center Name:</Form.Label>
+              <Form.Label>Cost Center:</Form.Label>
             </Col>
-            <Col md={3} className="text-primary">
+            <Col md={4} className="text-primary">
               {transferData.currentManagerCostCentre}
             </Col>
             <Col md={2}>
               <Form.Label>Contract Type:</Form.Label>
             </Col>
-            <Col md={3} className="text-primary">
+            <Col md={4} className="text-primary">
               {transferData.currentManagerContractType}
+            </Col>
+          </Form.Group>
+          <Form.Group
+            as={Row}
+            className="mb-3"
+            controlId="transferInitiationDept"
+          ></Form.Group>
+          <Form.Group
+            as={Row}
+            className="mb-3"
+            controlId="transferInitiationDept"
+          >
+            <Col className="font-weight-bold">
+              <u>Documents</u>
             </Col>
           </Form.Group>
           <Form.Group
@@ -96,7 +110,7 @@ const EntityTransfer = ({ transferData }) => {
             <Col md={2}>
               <Form.Label>UAN Number:</Form.Label>
             </Col>
-            <Col md={3} className="text-primary">
+            <Col md={4} className="text-primary">
               {transferData !== null &&
               transferData !== undefined &&
               Object.keys(transferData).length !== 0 &&
@@ -108,7 +122,7 @@ const EntityTransfer = ({ transferData }) => {
             <Col md={2}>
               <Form.Label>Bank Account Number:</Form.Label>
             </Col>
-            <Col md={3} className="text-primary">
+            <Col md={4} className="text-primary">
               {transferData !== null &&
               transferData !== undefined &&
               Object.keys(transferData).length !== 0 &&
@@ -126,7 +140,7 @@ const EntityTransfer = ({ transferData }) => {
             <Col md={2}>
               <Form.Label>PAN Number:</Form.Label>
             </Col>
-            <Col md={3} className="text-primary">
+            <Col md={4} className="text-primary">
               {transferData !== null &&
               transferData !== undefined &&
               Object.keys(transferData).length !== 0 &&
@@ -159,7 +173,7 @@ const EntityTransfer = ({ transferData }) => {
             <Col md={2}>
               <Form.Label>Aadhaar Number:</Form.Label>
             </Col>
-            <Col md={3} className="text-primary">
+            <Col md={4} className="text-primary">
               {transferData !== null &&
               transferData !== undefined &&
               Object.keys(transferData).length !== 0 &&
@@ -191,21 +205,30 @@ const EntityTransfer = ({ transferData }) => {
               )}
             </Col>
           </Form.Group>
+          <Row style={{ marginTop: "3rem" }}></Row>
+          <Row className="mb-4">
+            <Col md={{ span: 4, offset: 2 }} className="font-weight-bold my-2">
+              Current
+            </Col>
+            <Col md={{ span: 3, offset: 2 }} className="font-weight-bold my-2">
+              New
+            </Col>
+          </Row>
           <Form.Group
             as={Row}
             className="mb-3"
             controlId="transferInitiationPosition"
           >
             <Col md={2}>
-              <Form.Label>Old Entity:</Form.Label>
+              <Form.Label> Entity:</Form.Label>
             </Col>
-            <Col md={3} className="text-primary">
+            <Col md={4} className="text-primary">
               {transferData.currentCompany}
             </Col>
             <Col md={2}>
-              <Form.Label>New Entity:</Form.Label>
+              <Form.Label> Entity:</Form.Label>
             </Col>
-            <Col md={3} className="text-primary">
+            <Col md={4} className="text-primary">
               {transferData.promotedCompany}
             </Col>
           </Form.Group>
@@ -215,34 +238,35 @@ const EntityTransfer = ({ transferData }) => {
             controlId="transferInitiationCostCentre"
           >
             <Col md={2}>
-              <Form.Label>Old Fixed Gross:</Form.Label>
+              <Form.Label> Fixed Gross:</Form.Label>
             </Col>
-            <Col md={3} className="text-primary">
+            <Col md={4} className="text-primary">
               {transferData.currentFixedGross}
             </Col>
             <Col md={2}>
-              <Form.Label>New Fixed Gross:</Form.Label>
+              <Form.Label> Fixed Gross:</Form.Label>
             </Col>
-            <Col md={3} className="text-primary">
+            <Col md={4} className="text-primary">
               {transferData.promotedFixedGross}
             </Col>
           </Form.Group>
+
           <Form.Group
             as={Row}
             className="mb-3"
             controlId="transferInitiationCostCentre"
           >
             <Col md={2}>
-              <Form.Label>Effective Date:</Form.Label>
+              <Form.Label> Cost Center:</Form.Label>
             </Col>
-            <Col md={3} className="text-primary">
-              {transferData.promotedJoiningDate}
+            <Col md={4} className="text-primary">
+              {transferData.currentCostCentre}
             </Col>
             <Col md={2}>
-              <Form.Label>Relocation Bonus:</Form.Label>
+              <Form.Label> Cost Center:</Form.Label>
             </Col>
-            <Col md={3} className="text-primary">
-              {transferData.promotedRelocationBonus}
+            <Col md={4} className="text-primary">
+              {transferData.promotedCostCentre}
             </Col>
           </Form.Group>
           <Form.Group
@@ -251,15 +275,16 @@ const EntityTransfer = ({ transferData }) => {
             controlId="transferInitiationCostCentre"
           >
             <Col md={2}>
-              <Form.Label>New Cost Center:</Form.Label>
+              <Form.Label> Location:</Form.Label>
             </Col>
-            <Col md={3} className="text-primary">
-              {transferData.promotedCostCenter}
+            <Col md={4} className="text-primary">
+              {transferData.currentLocationName}
             </Col>
+
             <Col md={2}>
-              <Form.Label>New Location:</Form.Label>
+              <Form.Label> Location:</Form.Label>
             </Col>
-            <Col md={3} className="text-primary">
+            <Col md={4} className="text-primary">
               {transferData.promotedLocationName}
             </Col>
           </Form.Group>
@@ -269,15 +294,15 @@ const EntityTransfer = ({ transferData }) => {
             controlId="transferInitiationCostCentre"
           >
             <Col md={2}>
-              <Form.Label>Company:</Form.Label>
+              <Form.Label> Department:</Form.Label>
             </Col>
-            <Col md={3} className="text-primary">
-              {transferData.promotedCompany}
+            <Col md={4} className="text-primary">
+              {transferData.currentDepartment}
             </Col>
             <Col md={2}>
-              <Form.Label>New Department:</Form.Label>
+              <Form.Label> Department:</Form.Label>
             </Col>
-            <Col md={3} className="text-primary">
+            <Col md={4} className="text-primary">
               {transferData.promotedDepartment}
             </Col>
           </Form.Group>
@@ -287,16 +312,46 @@ const EntityTransfer = ({ transferData }) => {
             controlId="transferInitiationCostCentre"
           >
             <Col md={2}>
-              <Form.Label>New Position:</Form.Label>
+              <Form.Label> Position:</Form.Label>
             </Col>
-            <Col md={3} className="text-primary">
+            <Col md={4} className="text-primary">
+              {transferData.currentPosition}
+            </Col>
+            <Col md={2}>
+              <Form.Label> Position:</Form.Label>
+            </Col>
+            <Col md={4} className="text-primary">
               {transferData.promotedPosition}
             </Col>
+          </Form.Group>
+          <Row style={{ marginTop: "3rem" }}></Row>
+          <Form.Group
+            as={Row}
+            className="mb-3"
+            controlId="transferInitiationCostCentre"
+          >
+            <Col md={2}>
+              <Form.Label>Effective Date:</Form.Label>
+            </Col>
+            <Col md={4} className="text-primary">
+              {transferData.promotedJoiningDate}
+            </Col>
+            <Col md={2}>
+              <Form.Label>Relocation Bonus:</Form.Label>
+            </Col>
+            <Col md={4} className="text-primary">
+              {transferData.promotedJoiningDate}
+            </Col>
+          </Form.Group>
+          <Form.Group
+            as={Row}
+            className="mb-3"
+            controlId="transferInitiationCostCentre"
+          >
             <Col md={2}>
               <Form.Label>Date Of Joining:</Form.Label>
             </Col>
-
-            <Col md={3} className="text-primary">
+            <Col md={4} className="text-primary">
               {transferData.promotedJoiningDate}
             </Col>
           </Form.Group>

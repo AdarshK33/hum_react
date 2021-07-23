@@ -176,13 +176,13 @@ export const TransferProvider = (props) => {
       .then((response) => {
         setLoader(false);
         toast.info(response.data.message);
-        // if (
-        //   response.data.data.promotedEmployeeId !== null &&
-        //   response.data.data.promotedEmployeeId !== "" &&
-        //   response.data.data.promotedEmployeeId !== undefined
-        // ) {
-        //   getApointmentLetter(response.data.data.promotedEmployeeId);
-        // }
+        if (
+          response.data.data.transferId !== null &&
+          response.data.data.transferId !== 0 &&
+          response.data.data.transferId !== undefined
+        ) {
+          getTransferData(response.data.data.transferId);
+        }
         return dispatch({
           type: "INITIATION_CREATE",
           transferId: response.data.data.transferId,
