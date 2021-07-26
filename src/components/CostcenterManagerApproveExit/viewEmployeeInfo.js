@@ -48,6 +48,7 @@ const EmployeeExitAction = () => {
     noticePeriod: "",
     lastWorkingDate: "",
     emailId: "",
+    personalEmailId:"",
     comments: "",
     noticePeriodRcryDays: "",
     remarks: "",
@@ -97,6 +98,7 @@ const EmployeeExitAction = () => {
       state.modeOfSeparationId = employeeData.modeOfSeparationId;
       // state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.dateOfResignation = employeeData.dateOfResignation;
+      state.personalEmailId = employeeData.personalEmailId;
       state.noticePeriod = employeeData.noticePeriod;
       state.lastWorkingDate = employeeData.lastWorkingDate;
       state.emailId = employeeData.emailId;
@@ -533,7 +535,7 @@ const EmployeeExitAction = () => {
                             <label>
                               <b>Personal Email Id:</b>
                               <label className="itemResult">
-                                &nbsp;&nbsp; {state.emailId}
+                                &nbsp;&nbsp; {state.personalEmailId}
                               </label>
                             </label>
                           </div>

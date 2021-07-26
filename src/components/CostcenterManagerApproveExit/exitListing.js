@@ -26,7 +26,7 @@ const ExitListing = () => {
   const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
-    EmployeeSeparationListView("all", pageCount);
+    EmployeeSeparationListView("all", pageCount,6);
   }, []);
 
   console.log("---->", EmployeeSeparationList);
@@ -110,9 +110,9 @@ const ExitListing = () => {
     setPageCount(pageNumber - 1);
     setCurrentPage(pageNumber);
     if (searchValue !== "") {
-      EmployeeSeparationListView(searchValue, pageNumber - 1);
+      EmployeeSeparationListView(searchValue, pageNumber - 1,6);
     } else {
-      EmployeeSeparationListView("all", pageNumber - 1);
+      EmployeeSeparationListView("all", pageNumber - 1,6);
     }
     setCurrentRecords(EmployeeSeparationList);
   };
@@ -124,9 +124,9 @@ const ExitListing = () => {
 
   const searchDataHandler = () => {
     if (searchValue !== "") {
-      EmployeeSeparationListView(searchValue, pageCount);
+      EmployeeSeparationListView(searchValue, pageCount,6);
     } else {
-      EmployeeSeparationListView("all", pageCount);
+      EmployeeSeparationListView("all", pageCount,6);
     }
   };
 

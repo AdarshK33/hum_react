@@ -9,9 +9,9 @@ import "../common/style.css";
 import { SeparationContext } from "../../context/SepearationState";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
 const EmpResignation = () => {
-  const [regDate, setRegDate] = useState();
+  const [regDate, setRegDate] = useState(new Date());
   const [noticePeriod,setNoticePeriod] = useState(null)
-  const [lastDate, setLastDate] = useState(new Date(new Date().setMonth(new Date().getMonth() + (noticePeriod !== undefined && noticePeriod !== null)?noticePeriod:0)));
+  const [lastDate, setLastDate] = useState(new Date(new Date().setMonth(new Date().getMonth() + noticePeriod )));
   const [reasonOfSepration, setReasonOfSepration] = useState("");
   const [emailId, setEmailId] = useState("");
   const [approver, setApprover] = useState("");
@@ -239,7 +239,7 @@ const EmpResignation = () => {
     }
   }, [ModeOfSeparationData]);
   console.log("reasonOfSeparationList", reasonOfSeparationList);
-  console.log(lastDate,"lastDate")
+  console.log(lastDate,regDate,"lastDate")
   const SubmitHandler = (e) => {
     e.preventDefault();
     var reasonId = 0;
@@ -430,7 +430,7 @@ const EmpResignation = () => {
                 <Col sm={4}>
                   <Form.Group as={Row}>
                     <Form.Label column sm="4" className="labels-data">
-                      Mode of Separation:
+                      Type of Separation:
                     </Form.Label>
                     <Col sm="8">
                       <Form.Control
@@ -518,7 +518,7 @@ const EmpResignation = () => {
                       <Col sm="8">
                         <DatePicker
                           minDate={moment().toDate()}
-                          value={moment().format("DD/MM/YYYY")}
+                          value={moment(regDate).format("DD/MM/YYYY")}
                           disabled={true}
                           selected={regDate}
                           onChange={(date) => setRegDate(date)}
