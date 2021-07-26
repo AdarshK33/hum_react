@@ -24,13 +24,14 @@ const EmployeeExitList = () => {
     makeEmployeeDataNull,
   } = useContext(EmployeeSeparationContext);
   const { makeSearchEmp1DataNull } = useContext(OfferContext);
-
+  const [actionStatus, setActionStatus] = useState("6");
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+  const [employeeExitStatus, setEmployeeExitStatus] = useState("");
 
   useEffect(() => {
-    EmployeeSeparationListView("all", pageCount);
+    EmployeeSeparationListView("all", pageCount,actionStatus);
   }, []);
 
   // useEffect(() => {
@@ -115,9 +116,9 @@ const EmployeeExitList = () => {
     setPageCount(pageNumber - 1);
     setCurrentPage(pageNumber);
     if (searchValue !== "") {
-      EmployeeSeparationListView(searchValue, pageNumber - 1);
+      EmployeeSeparationListView(searchValue, pageNumber - 1,actionStatus);
     } else {
-      EmployeeSeparationListView("all", pageNumber - 1);
+      EmployeeSeparationListView("all", pageNumber - 1,actionStatus);
     }
     setCurrentRecords(EmployeeSeparationList);
   };
@@ -126,7 +127,28 @@ const EmployeeExitList = () => {
   const searchHandler = (e) => {
     setSearchValue(e.target.value);
   };
-
+  const statusHandler = (e) => {
+    setEmployeeExitStatus(e.target.value);
+    setActionStatus(e.target.value)
+    setPageCount(0);
+    setCurrentPage(1);
+    setSearchValue("");
+    if (e.target.value === "0") {
+      EmployeeSeparationListView("all", 0, 0);
+    } else if (e.target.value === "1") {
+      EmployeeSeparationListView("all", 0, 1);
+    } else if (e.target.value === "2") {
+      EmployeeSeparationListView("all", 0, 2);
+    } else if (e.target.value === "3") {
+      EmployeeSeparationListView("all", 0, 3);
+    }else if (e.target.value === "4") {
+      EmployeeSeparationListView("all", 0, 4);
+    } else if (e.target.value === "5") {
+      EmployeeSeparationListView("all", 0, 5);
+    }  else {
+      EmployeeSeparationListView("all", 0,6);
+    }
+  };
   const searchDataHandler = () => {
     if (searchValue !== "") {
       EmployeeSeparationListView(searchValue, pageCount);
@@ -159,8 +181,10 @@ const EmployeeExitList = () => {
                 className="title_bar"
                 style={{ textAlign: "center", fontSize: "larger" }}
               >
+                <Row>
+              <Col sm="8">                
                 <b>EMPLOYEE SEPARATION LISTING</b>
-
+                </Col>
                 {/* <div className="job-filter">
                   <div className="faq-form mr-2">
                     <input
@@ -176,11 +200,53 @@ const EmployeeExitList = () => {
                     />
                   </div>
                 </div> */}
+                 <Col sm={2}>
+                    <div className="promotion_initiate">
                 <Link to="/manager-initiate-exit">
-                  <Button className="apply-button btn btn-light mr-2">
+                <Button className="apply-button btn btn-light mr-2">
                     Initiate Exit
                   </Button>
                 </Link>
+                </div>
+                </Col>
+                  <Col sm={2}>
+                    <Form>
+                      <div className="promotion_status_search">
+                        {/* className="faq-form mr-2""job-filter" */}
+                        <Form.Group>
+                          <Form.Control
+                            as="select"
+                            name="employeeExitStatus"
+                            value={employeeExitStatus}
+                            onChange={statusHandler}
+                            // placeholder="Search.."
+                            //   disabled={disabled}"
+
+                            style={
+                              false
+                                ? { borderColor: "red" }
+                                : { borderRadius: "20px" }
+                            }
+                          >
+                            <option value="" disabled selected hidden>
+                              Search status
+                            </option>
+                            <option value="6">All</option>
+                            <option value="0">Pending</option>
+                            <option value="1">Withdraw</option>
+                            <option value="2">Confirmed</option>
+                            <option value="3">Terminated</option>
+                            <option value="4">Resigned</option>
+                            <option value="5">End of InternShip</option>
+
+                          </Form.Control>
+                        </Form.Group>
+                        {/* <br></br> */}
+                      </div>
+                    </Form>
+                  </Col>
+                 
+                </Row>
               </div>
               <div className="table-responsive">
                 <Table id="table-to-xls" className="table table-hover">
@@ -245,12 +311,12 @@ const EmployeeExitList = () => {
                             && item.lastWorkingDate !== ""?item.lastWorkingDate:"NA"}</td>
                             <td>{item.reasonForResignation}</td>
                             {/* <td>{item.modeOfSeparationReasonId}</td> */}
-                            <td>{item.noticePeriod}</td>
+                            <td>{item.contractType.toLowerCase() === 'internship' ?"NA":item.noticePeriod}</td>
                             <td>
                               {item.status === 0
                                 ? "Pending"
                                 : item.status === 2
-                                ? "Approve"
+                                ? "Confirmed"
                                 : item.status === 4
                                 ? "Resigned"
                                 :item.status === 5
