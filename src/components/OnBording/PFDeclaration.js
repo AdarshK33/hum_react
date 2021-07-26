@@ -110,42 +110,36 @@ const PFDeclaration = (props) => {
       let form11Doc = "";
       let form2epfDoc = "";
       let formFDoc = "";
-      if (pfDeclarationView.pfNominationHoldDeath === true) {
-        console.log("inside condition 2", documentViewData);
-        documentViewData.map((item) => {
-          console.log("item.documentType", item.documentType, item);
-          if (item.documentType === 10 && item.documentName) {
-            form11Doc = item.documentName ? item.documentName : "";
-            setForm11Uploade(true);
-          }
-          if (item.documentType === 11 && item.documentName) {
-            form2epfDoc = item.documentName ? item.documentName : "";
-            setForm2EpfUploade(true);
-          }
-          if (item.documentType === 12 && item.documentName) {
-            formFDoc = item.documentName ? item.documentName : "";
-            setFormFUploade(true);
-          }
-          setState({
-            form11: form11Doc,
-            form2epf: form2epfDoc,
-            formf: formFDoc,
-          });
-          // setNomineeDOB();
-          // setNominee({
-          //   nomineeAddress: "",
-          //   nomineeName: "",
-          //   nomineeRelationship: "",
-          // });
+      // if (pfDeclarationView.pfNominationHoldDeath === true) {
+      console.log("inside condition 2", documentViewData);
+      documentViewData.map((item) => {
+        console.log("item.documentType", item.documentType, item);
+        if (item.documentType === 10 && item.documentName) {
+          form11Doc = item.documentName ? item.documentName : "";
+          setForm11Uploade(true);
+        }
+        if (item.documentType === 11 && item.documentName) {
+          form2epfDoc = item.documentName ? item.documentName : "";
+          setForm2EpfUploade(true);
+        }
+        if (item.documentType === 12 && item.documentName) {
+          formFDoc = item.documentName ? item.documentName : "";
+          setFormFUploade(true);
+        }
+        setState({
+          form11: form11Doc,
+          form2epf: form2epfDoc,
+          formf: formFDoc,
         });
-        console.log(
-          "documents prefill",
-          form11Doc,
-          form2epfDoc,
-          formFDoc,
-          state
-        );
-      }
+        // setNomineeDOB();
+        // setNominee({
+        //   nomineeAddress: "",
+        //   nomineeName: "",
+        //   nomineeRelationship: "",
+        // });
+      });
+      console.log("documents prefill", form11Doc, form2epfDoc, formFDoc, state);
+      // }
     }
   }, [documentViewData, pfDeclarationView]);
   console.log("---->", documentViewData);
@@ -1002,54 +996,6 @@ const PFDeclaration = (props) => {
               </label>
             </div>
           </Col> */}
-
-          <Col sm={5}>
-            <label>Please fill the forms below</label>
-            <br />
-            <a href={require("../../forms/Form_11_UAN.pdf")} target="_blank">
-              Download Form 11 Declaration
-            </a>
-            <br />
-            <a
-              href={require("../../forms/Form_2_EPF_Nomination.pdf")}
-              target="_blank"
-            >
-              Download Form 2 EPF nomination
-            </a>
-            <br />
-            <a
-              href={require("../../forms/Form_F_Gratuity.pdf")}
-              target="_blank"
-            >
-              Download Form F Gratuity
-            </a>
-            <br />
-          </Col>
-          <Col sm={5}>
-            <label></label>
-            <br />
-            <a
-              href={require("../../forms/Form_11_(PF_declaration)_Sample_copy.pdf")}
-              target="_blank"
-            >
-              Sample Form 11 Declaration
-            </a>
-            <br />
-            <a
-              href={require("../../forms/Form_2_(PF_nomination)_Sample_copy.pdf")}
-              target="_blank"
-            >
-              Sample Form 2 EPF nomination
-            </a>
-            <br />
-            <a
-              href={require("../../forms/Form_F_(Gratuity)_Sample_copy.pdf")}
-              target="_blank"
-            >
-              Sample Form F Gratuity
-            </a>
-            <br />
-          </Col>
         </Row>
         {pfNominationHoldDeathYes === true ? (
           <div>
@@ -1198,8 +1144,57 @@ const PFDeclaration = (props) => {
         ) : (
           ""
         )}
+        <Row>
+          <Col sm={5}>
+            <label>Please fill the forms below</label>
+            <br />
+            <a href={require("../../forms/Form_11_UAN.pdf")} target="_blank">
+              Download Form 11 Declaration
+            </a>
+            <br />
+            <a
+              href={require("../../forms/Form_2_EPF_Nomination.pdf")}
+              target="_blank"
+            >
+              Download Form 2 EPF nomination
+            </a>
+            <br />
+            <a
+              href={require("../../forms/Form_F_Gratuity.pdf")}
+              target="_blank"
+            >
+              Download Form F Gratuity
+            </a>
+            <br />
+          </Col>
+          <Col sm={5}>
+            <label></label>
+            <br />
+            <a
+              href={require("../../forms/Form_11_(PF_declaration)_Sample_copy.pdf")}
+              target="_blank"
+            >
+              Sample Form 11 Declaration
+            </a>
+            <br />
+            <a
+              href={require("../../forms/Form_2_(PF_nomination)_Sample_copy.pdf")}
+              target="_blank"
+            >
+              Sample Form 2 EPF nomination
+            </a>
+            <br />
+            <a
+              href={require("../../forms/Form_F_(Gratuity)_Sample_copy.pdf")}
+              target="_blank"
+            >
+              Sample Form F Gratuity
+            </a>
+            <br />
+          </Col>
+        </Row>
         <React.Fragment>
-          <Row style={{ marginLeft: "-2rem" }}>
+          <Row style={{ marginLeft: "-2rem", marginTop: "2rem" }}>
             <Col>
               <Form.Group>
                 <div className="FileInput">

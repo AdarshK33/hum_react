@@ -8,6 +8,7 @@ import { TransferContext } from "../../../context/TransferState";
 import TRANSFER_TABLE_HEADERS from "./TableHeaders";
 import TableComponent from "../../table/Table.component";
 import LoaderIcon from "../../Loader/LoaderIcon";
+import { AppContext } from "../../../context/AppState";
 
 const TransferPage = () => {
   const recordsPerPage = 10;
@@ -20,12 +21,13 @@ const TransferPage = () => {
     chnageTransferType,
     TRANSFERtype,
   } = useContext(TransferContext);
+  const { user } = useContext(AppContext);
   const [transferType, setTransferType] = useState(TRANSFERtype);
   const [searchValue, setSearchValue] = useState("all");
   const [searchInput, setSearchInput] = useState("");
   const [status, setStatus] = useState(5);
   const [activePage, setActivePage] = useState(1);
-  const [listHeading, setListHeading] = useState(`${transferType} Listings`);
+  const [listHeading, setListHeading] = useState(`${transferType} List`);
   const [apiUrl, setApiUrl] = useState(
     `/api/v1/transfer/view?key=${searchValue}&page=${
       activePage - 1
@@ -76,19 +78,15 @@ const TransferPage = () => {
             action: {
               edit: {
                 active:
-                  item.statusDesc === "REJECTED" ||
-                  item.statusDesc === "INITIATED" ||
-                  item.statusDesc === "Rejected" ||
-                  item.statusDesc === "Initiated"
-                    ? false
-                    : true,
+                  item.promotedManagerId === user.employeeId &&
+                  item.statusDesc === "In Progress"
+                    ? true
+                    : false,
                 link:
-                  item.statusDesc === "REJECTED" ||
-                  item.statusDesc === "INITIATED" ||
-                  item.statusDesc === "Rejected" ||
-                  item.statusDesc === "Initiated"
-                    ? ""
-                    : `/transfer/${item.transferId}`,
+                  item.promotedManagerId === user.employeeId &&
+                  item.statusDesc === "In Progress"
+                    ? `/transfer/${item.transferId}`
+                    : "",
                 // item.transferType === "Regular Transfer"
                 //   ? `/transfer/${item.transferId}`
                 //   : "/transfers",
@@ -116,15 +114,15 @@ const TransferPage = () => {
             action: {
               edit: {
                 active:
-                  item.statusDesc === "REJECTED" ||
-                  item.statusDesc === "INITIATED"
-                    ? false
-                    : true,
+                  item.promotedManagerId === user.employeeId &&
+                  item.statusDesc === "In Progress"
+                    ? true
+                    : false,
                 link:
-                  item.statusDesc === "REJECTED" ||
-                  item.statusDesc === "INITIATED"
-                    ? ""
-                    : `/entity-transfer/${item.transferId}`,
+                  item.promotedManagerId === user.employeeId &&
+                  item.statusDesc === "In Progress"
+                    ? `/entity-transfer/${item.transferId}`
+                    : "",
               },
             },
           };
@@ -139,7 +137,6 @@ const TransferPage = () => {
             oldEmpContractType: item.currentContractType,
             newEmpContractType: item.promotedContractType,
             effectiveDate: item.promotedJoiningDate,
-            dateOfTransfer: item.promotedJoiningDate,
             status: item.statusDesc,
 
             view: {
@@ -148,16 +145,7 @@ const TransferPage = () => {
             },
             action: {
               edit: {
-                active:
-                  item.statusDesc === "REJECTED" ||
-                  item.statusDesc === "INITIATED"
-                    ? false
-                    : true,
-                link:
-                  item.statusDesc === "REJECTED" ||
-                  item.statusDesc === "INITIATED"
-                    ? ""
-                    : `/entity-transfer/${item.transferId}`,
+                active: false,
               },
             },
           };
@@ -170,7 +158,7 @@ const TransferPage = () => {
             empId: item.currentEmployeeId,
             empName: item.employeeName,
             oldCountry: item.currentCountry,
-            oldDesignation: item.currentDesignation,
+            oldDesignation: item.currentPosition,
             newCountry: item.promotedCountry,
             newDesignation: item.promotedDesignation,
             effDate: item.promotedJoiningDate,
@@ -183,7 +171,11 @@ const TransferPage = () => {
             },
             action: {
               edit: {
-                active: true,
+                active:
+                  (user.additionalRole === "1" || user.loginType == "1") &&
+                  item.statusDesc === "In Progress"
+                    ? true
+                    : false,
                 link: `/international-transfer/${item.transferId}`,
               },
             },
@@ -246,7 +238,7 @@ const TransferPage = () => {
       }&transferType=${transferType}`
     );
   };
-
+  console.log("user->", user);
   return (
     <Fragment>
       <Breadcrumb title="TRANSFERS LIST" parent="TRANSFERS LIST" />
@@ -259,8 +251,13 @@ const TransferPage = () => {
                   className="title_bar"
                   style={{ textAlign: "center", fontSize: "larger" }}
                 >
-                  <Row className="pt-2 mx-2">
-                    <Col md={2} style={{ marginTop: "-10px" }}>
+                  <Row
+                    style={{
+                      marginLeft: "1rem",
+                      marginRight: "1rem",
+                    }}
+                  >
+                    <Col md={2} style={{ marginTop: "-3px" }}>
                       <Form.Control
                         as="select"
                         aria-label="Select Transfer Type"
@@ -277,12 +274,12 @@ const TransferPage = () => {
                           International Transfer
                         </option>
                         <option value="Employment Type Transfer">
-                          Employment Type Transfer
+                          Change In Employement Type Transfer
                         </option>
                       </Form.Control>
                     </Col>
 
-                    <Col md={2} style={{ marginTop: "1px" }}>
+                    <Col md={2} style={{ marginTop: "7px" }}>
                       <Form.Control
                         type="text"
                         value={searchInput}
@@ -300,9 +297,11 @@ const TransferPage = () => {
                       md={4}
                       className="font-weight-bold text-uppercase text-center my-auto"
                     >
-                      {listHeading}
+                      {transferType === "Employment Type Transfer"
+                        ? "Change In Employement Type Transfer"
+                        : listHeading}
                     </Col>
-                    <Col md={2} style={{ marginTop: "-5px" }}>
+                    <Col md={2}>
                       <Link
                         to="/transfer-initiate"
                         className="text-decoration-none"
@@ -312,7 +311,7 @@ const TransferPage = () => {
                         </Button>
                       </Link>
                     </Col>
-                    <Col md={2} style={{ marginTop: "-10px" }}>
+                    <Col md={2} style={{ marginTop: "-3px" }}>
                       <Form.Control
                         as="select"
                         aria-label="Choose Status"

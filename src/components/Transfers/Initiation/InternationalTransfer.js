@@ -280,7 +280,7 @@ const InternationalTransfer = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Tansfer Initiation done successfully!
+              Tansfer initiation details saved successfully, Admin has notified
             </label>
             <div className="text-center mb-2">
               <Button onClick={handleModalClose}>Close</Button>
@@ -322,7 +322,7 @@ const InternationalTransfer = () => {
               </Col>
               <Col md={6}>
                 <Row>
-                  <Col md={5}>Contract Type</Col>
+                  <Col md={5}>Contract Type:</Col>
                   <Col md={7} className="text-primary">
                     {initiationEmpData.currentContractType}
                   </Col>
@@ -333,7 +333,7 @@ const InternationalTransfer = () => {
               <Col md={6}>
                 <Form.Group as={Row} controlId="transferInitiationCountry">
                   <Form.Label column md={5}>
-                    Coutry Moving To
+                    Coutry Moving To:
                   </Form.Label>
                   <Col md={7}>
                     <Form.Control
@@ -368,7 +368,7 @@ const InternationalTransfer = () => {
               <Col md={6}>
                 <Form.Group as={Row} controlId="transferInitiationDesignation">
                   <Form.Label column md={5}>
-                    Designation
+                    Designation:
                   </Form.Label>
                   <Col md={7}>
                     <Form.Control
@@ -410,19 +410,21 @@ const InternationalTransfer = () => {
                   controlId="transferInitiationEffectiveDate"
                 >
                   <Form.Label column md={5}>
-                    Onward Date
+                    Onward Date:
                   </Form.Label>
                   <Col md={7}>
-                    <DatePicker
-                      className="text-primary form-control"
-                      selected={effectiveDate}
-                      minDate={effectiveDate}
-                      closeOnScroll={true}
-                      dateFormat="yyyy-MM-dd"
-                      onChange={(date) => {
-                        changeEffectiveDateHandler(date);
-                      }}
-                    />
+                    <div className="transfers-date">
+                      <DatePicker
+                        className="text-primary form-control"
+                        selected={effectiveDate}
+                        minDate={effectiveDate}
+                        closeOnScroll={true}
+                        dateFormat="yyyy-MM-dd"
+                        onChange={(date) => {
+                          changeEffectiveDateHandler(date);
+                        }}
+                      />
+                    </div>
                   </Col>
                   {effectiveDateErrMsg !== "" && (
                     <span className="text-danger">{effectiveDateErrMsg}</span>
@@ -432,19 +434,21 @@ const InternationalTransfer = () => {
               <Col md={6}>
                 <Form.Group as={Row} controlId="transferInitiationReturnDate">
                   <Form.Label column md={5}>
-                    Return Date
+                    Return Date:
                   </Form.Label>
                   <Col md={7}>
-                    <DatePicker
-                      className="text-primary form-control"
-                      selected={returnDate}
-                      minDate={returnDate}
-                      closeOnScroll={true}
-                      dateFormat="yyyy-MM-dd"
-                      onChange={(date) => {
-                        changeReturnDateHandler(date);
-                      }}
-                    />
+                    <div className="transfers-date">
+                      <DatePicker
+                        className="text-primary form-control"
+                        selected={returnDate}
+                        minDate={returnDate}
+                        closeOnScroll={true}
+                        dateFormat="yyyy-MM-dd"
+                        onChange={(date) => {
+                          changeReturnDateHandler(date);
+                        }}
+                      />
+                    </div>
                   </Col>
                   {returnDateErrMsg !== "" && (
                     <span className="text-danger">{returnDateErrMsg}</span>
@@ -456,7 +460,7 @@ const InternationalTransfer = () => {
               <Col md={6}>
                 <Form.Group as={Row} controlId="transferInitiationCostCentre">
                   <Form.Label column md={5}>
-                    Cost centre of the host country
+                    Cost centre of the host country:
                   </Form.Label>
                   <Col md={7}>
                     <Form.Control
@@ -491,7 +495,7 @@ const InternationalTransfer = () => {
               <Col md={6}>
                 <Form.Group as={Row} controlId="transferInitiationManager">
                   <Form.Label column md={5}>
-                    Name of global mobility manager
+                    Name of global mobility manager:
                   </Form.Label>
                   <Col md={7}>
                     <Form.Control
@@ -530,7 +534,7 @@ const InternationalTransfer = () => {
                   controlId="transferInitiationManagerMailId"
                 >
                   <Form.Label column md={5}>
-                    Email id of global mobility manager
+                    Email id of global mobility manager:
                   </Form.Label>
                   <Col md={7}>
                     <Form.Control
@@ -589,7 +593,7 @@ const InternationalTransfer = () => {
               <Col md={6}>
                 <Form.Group as={Row} controlId="transferInitiationProjectTerm">
                   <Form.Label column md={5}>
-                    Term of the project
+                    Term of the project:
                   </Form.Label>
                   <Col md={7}>
                     <Form.Control
@@ -611,28 +615,9 @@ const InternationalTransfer = () => {
             </Row>
             <Row className="my-3">
               <Col md={4}>
-                <Form.Group as={Row} controlId="transferInitiationGrossPay">
-                  <Form.Label column md={4}>
-                    Fixed Gross
-                  </Form.Label>
-                  <Col md={8}>
-                    <Form.Control
-                      type="text"
-                      placeholder="Gross Pay"
-                      value={newGross}
-                      className="text-primary"
-                      onChange={changeGrossHandler}
-                    ></Form.Control>
-                    {newGrossErrMsg !== "" && (
-                      <span className="text-danger">{newGrossErrMsg}</span>
-                    )}
-                  </Col>
-                </Form.Group>
-              </Col>
-              <Col md={4}>
                 <Form.Group as={Row} controlId="transferInitiationCurrency">
                   <Form.Label column md={4}>
-                    Different Currency
+                    Currency:
                   </Form.Label>
                   <Col md={8}>
                     <Form.Control
@@ -649,9 +634,29 @@ const InternationalTransfer = () => {
                 </Form.Group>
               </Col>
               <Col md={4}>
+                <Form.Group as={Row} controlId="transferInitiationGrossPay">
+                  <Form.Label column md={4}>
+                    Fixed Gross:
+                  </Form.Label>
+                  <Col md={8}>
+                    <Form.Control
+                      type="text"
+                      placeholder="Gross Pay"
+                      value={newGross}
+                      className="text-primary"
+                      onChange={changeGrossHandler}
+                    ></Form.Control>
+                    {newGrossErrMsg !== "" && (
+                      <span className="text-danger">{newGrossErrMsg}</span>
+                    )}
+                  </Col>
+                </Form.Group>
+              </Col>
+
+              <Col md={4}>
                 <Form.Group as={Row} controlId="transferInitiationBonus">
                   <Form.Label column md={5}>
-                    Bonus
+                    Bonus:
                   </Form.Label>
                   <Col md={7}>
                     <Form.Control

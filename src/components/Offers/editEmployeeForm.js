@@ -251,6 +251,12 @@ const EditEmployeeForm = () => {
     setNoChecked(true);
     setYesChecked(false);
     setSecondRef(false);
+    setEmpName1("");
+    setEmpName2("");
+    setRefEmail1("");
+    setRefEmail2("");
+    setDesignation1("");
+    setDesignation2("");
   };
 
   const submitHandler = (e) => {
@@ -312,12 +318,12 @@ const EditEmployeeForm = () => {
       verificationStatusDesc:
         candidateData.candidateInformation.verificationStatusDesc,
     };
-    let refValue =
-      updateData.candidateReferences[0].email === null ||
-      !updateData.candidateReferences[0].email
-        ? false
-        : true;
-
+    // let refValue =
+    //   updateData.candidateReferences[0].email === null ||
+    //   !updateData.candidateReferences[0].email
+    //     ? false
+    //     : true;
+    let refValue = candidateData.candidateInformation.referred;
     if (
       firstNameError === false &&
       lastNameError === false &&

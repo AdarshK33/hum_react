@@ -156,7 +156,7 @@ const InternationalTransferAcceptance = () => {
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
           <Modal.Body className="mx-auto">
             <label className="text-center">
-              Tansfer Acceptance done successfully!
+              Tansfer Approved details saved successfully, employee has notified
             </label>
             <div className="text-center mb-2">
               <Button onClick={handleModalClose}>Close</Button>
@@ -244,16 +244,18 @@ const InternationalTransferAcceptance = () => {
                           Onward Date
                         </Form.Label>
                         <Col md={7}>
-                          <DatePicker
-                            className="text-primary form-control"
-                            selected={effectiveDate}
-                            minDate={effectiveDate}
-                            closeOnScroll={true}
-                            dateFormat="yyyy-MM-dd"
-                            onChange={(date) => {
-                              changeEffectiveDateHandler(date);
-                            }}
-                          />
+                          <div className="transfers-date">
+                            <DatePicker
+                              className="text-primary form-control"
+                              selected={effectiveDate}
+                              minDate={effectiveDate}
+                              closeOnScroll={true}
+                              dateFormat="yyyy-MM-dd"
+                              onChange={(date) => {
+                                changeEffectiveDateHandler(date);
+                              }}
+                            />
+                          </div>
                         </Col>
                         {effectiveDateErrMsg !== "" && (
                           <span className="text-danger">
@@ -270,17 +272,20 @@ const InternationalTransferAcceptance = () => {
                         <Form.Label column md={5}>
                           Return Date
                         </Form.Label>
+
                         <Col md={7}>
-                          <DatePicker
-                            className="text-primary form-control"
-                            selected={returnDate}
-                            minDate={returnDate}
-                            closeOnScroll={true}
-                            dateFormat="yyyy-MM-dd"
-                            onChange={(date) => {
-                              changeReturnDateHandler(date);
-                            }}
-                          />
+                          <div className="transfers-date">
+                            <DatePicker
+                              className="text-primary form-control"
+                              selected={returnDate}
+                              minDate={returnDate}
+                              closeOnScroll={true}
+                              dateFormat="yyyy-MM-dd"
+                              onChange={(date) => {
+                                changeReturnDateHandler(date);
+                              }}
+                            />
+                          </div>
                         </Col>
                         {returnDateErrMsg !== "" && (
                           <span className="text-danger">
@@ -373,20 +378,21 @@ const InternationalTransferAcceptance = () => {
                   <Row className="my-3">
                     <Col md={4}>
                       <Row>
+                        <Col md={4}> Currency</Col>
+                        <Col md={8} className="text-primary">
+                          {transferData.currency}
+                        </Col>
+                      </Row>
+                    </Col>
+                    <Col md={4}>
+                      <Row>
                         <Col md={4}>Fixed Gross</Col>
                         <Col md={8} className="text-primary">
                           {transferData.promotedFixedGross}
                         </Col>
                       </Row>
                     </Col>
-                    <Col md={4}>
-                      <Row>
-                        <Col md={4}>Different Currency</Col>
-                        <Col md={8} className="text-primary">
-                          {transferData.currency}
-                        </Col>
-                      </Row>
-                    </Col>
+
                     <Col md={4}>
                       <Row>
                         <Col md={5}>Bonus</Col>

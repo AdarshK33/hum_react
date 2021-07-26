@@ -1,0 +1,7 @@
+.transfers-date .react-datepicker-wrapper {
+  width: 100% !important;
+}
+.transfers-date input.form-control.onBoard-view {
+  height: 34px;
+  width: 150%;
+}

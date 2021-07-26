@@ -17,6 +17,7 @@ import { setSeconds } from "date-fns";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import moment from "moment";
+import { TRUE } from "node-sass";
 const InsuranceNomination = (props) => {
   const {
     CandidatePersonalInfo,
@@ -188,7 +189,8 @@ const InsuranceNomination = (props) => {
     insurenceForm: "",
   });
   const [nomineuploade, setNomineUploade] = useState(false);
-  const [insuranceError, setInsuranceError] = useState(false);
+  // const [insuranceError, setInsuranceError] = useState(false);
+
   const [nominee, setNominee] = useState({
     nomineeName: "",
     nomineeRelationship: "",
@@ -477,46 +479,6 @@ const InsuranceNomination = (props) => {
       //   }
     }
   }, [candidatePersonalInfoData]);
-
-  useEffect(() => {
-    if (
-      documentViewData &&
-      documentViewData !== null &&
-      documentViewData !== undefined &&
-      candidateInsuranceNominationData &&
-      candidateInsuranceNominationData !== null &&
-      candidateInsuranceNominationData !== undefined &&
-      Object.keys(candidateInsuranceNominationData).length !== 0 &&
-      Object.keys(documentViewData).length !== 0
-    ) {
-      console.log("inside condition 1", candidateInsuranceNominationData);
-      let insuranceDoc = "";
-
-      if (
-        candidateInsuranceNominationData[0].insuranceNominationHoldDeath ===
-        true
-      ) {
-        console.log("inside condition 2", documentViewData);
-        documentViewData.map((item) => {
-          console.log("item.documentType", item.documentType, item);
-          if (item.documentType === 24 && item.documentName) {
-            insuranceDoc = item.documentName ? item.documentName : "";
-            setNomineUploade(true);
-          }
-
-          setStateNomine({
-            insurenceForm: insuranceDoc,
-          });
-        });
-        console.log("documents prefill", insuranceDoc);
-      } else {
-        setNomineUploade(false);
-        setStateNomine({
-          insurenceForm: "",
-        });
-      }
-    }
-  }, [documentViewData, candidateInsuranceNominationData]);
 
   useEffect(() => {
     if (
@@ -1065,8 +1027,6 @@ const InsuranceNomination = (props) => {
       candidateInsuranceNominationData !== undefined &&
       candidateInsuranceNominationData !== null &&
       Object.keys(candidateInsuranceNominationData).length !== 0 &&
-      candidateInsuranceNominationData[0].insuranceNominationHoldDeath ===
-        true &&
       candidateInsuranceNominationData[0].candidateInsuranceDeathNomination !==
         null &&
       candidateInsuranceNominationData[0].candidateInsuranceDeathNomination !==
@@ -1110,13 +1070,6 @@ const InsuranceNomination = (props) => {
         nomineeRelationship:
           candidateInsuranceNominationData[0].candidateInsuranceDeathNomination
             .relationship,
-      });
-    } else {
-      setNomineeDOB();
-      setNominee({
-        nomineeAddress: "",
-        nomineeName: "",
-        nomineeRelationship: "",
       });
     }
   }, [candidateInsuranceNominationData]);
@@ -1254,11 +1207,11 @@ const InsuranceNomination = (props) => {
     let fileType;
     let fileUpload;
     if (event.target.name === "insurenceForm") {
-      if (insuranceValidation() === true) {
-        setNomineUploade(true);
-        fileUpload = ObjNomineState.insurenceForm;
-        fileType = 24;
-      }
+      // if (Form11Validation() === true) {
+      setNomineUploade(true);
+      fileUpload = ObjNomineState.insurenceForm;
+      fileType = 24;
+      // }
     }
 
     if (fileUpload) {
@@ -1367,34 +1320,6 @@ const InsuranceNomination = (props) => {
       }
     }
   };
-
-  const insuranceValidation = () => {
-    if (stateNomine.insurenceForm !== "") {
-      setInsuranceError(false);
-      console.log("insurenceFormSucess");
-      return true;
-    } else {
-      setInsuranceError(true);
-      console.log("insurenceFormFail");
-      return false;
-    }
-  };
-
-  const insuranceUploadValidation = () => {
-    if (insuranceHoldDeathYes === true) {
-      if (nomineuploade === false) {
-        if (insuranceValidation() === true) {
-          setInsuranceError(true);
-          return false;
-        }
-      } else {
-        return true;
-      }
-    } else {
-      return true;
-    }
-  };
-
   const CheckValidationsNomine_1 = () => {
     if (addFirst === true) {
       if (
@@ -1896,6 +1821,33 @@ const InsuranceNomination = (props) => {
     }
   };
 
+  // const InsuranceValidation = () => {
+  //   if (stateNomine.insurenceForm !== "") {
+  //     setInsuranceError(false);
+  //     console.log("Form11Sucess");
+  //     return true;
+  //   } else {
+  //     setInsuranceError(true);
+  //     console.log("Form11Fail");
+  //     return false;
+  //   }
+  // };
+
+  // const InsuranceUploadValidation = () => {
+  //   if (insuranceHoldDeathYes === true) {
+  //     if (nomineuploade === false) {
+  //       if (InsuranceValidation() === true) {
+  //         setInsuranceError(true);
+  //         return false;
+  //       }
+  //     } else {
+  //       return true;
+  //     }
+  //   } else {
+  //     return true;
+  //   }
+  // };
+
   const checkAllValidations = () => {
     if (
       (CheckValidationsNomine_1() === true) &
@@ -1917,8 +1869,9 @@ const InsuranceNomination = (props) => {
       (nomineeNameValidation() === true) &
       (nomineeDobValidation() === true) &
       (nomineeAddressValidation() === true) &
-      (nomineeRelationValidation() === true) &
-      (insuranceUploadValidation() === true)
+      (nomineeRelationValidation() === true)
+      //  &
+      // (InsuranceUploadValidation() === true)
     ) {
       return true;
     } else {
@@ -1984,16 +1937,6 @@ const InsuranceNomination = (props) => {
     {
       required ? setRequired(!required) : setRequired(required);
     }
-    setNomineUploade(false);
-    setStateNomine({
-      insurenceForm: "",
-    });
-    setNomineeDOB();
-    setNominee({
-      nomineeAddress: "",
-      nomineeName: "",
-      nomineeRelationship: "",
-    });
   };
   const submitHandler = (e) => {
     // const nextPage = props.NextStep;
@@ -3873,7 +3816,7 @@ const InsuranceNomination = (props) => {
                       style={extra2genderError_1 ? { borderColor: "red" } : {}}
                     >
                       {/* <option value="">Gender</option>
-                      <option value="Male">Male</option> */}
+                        <option value="Male">Male</option> */}
                       <option value="Female">Female</option>
                       <option value="Others">Others</option>
                     </Form.Control>
@@ -4450,47 +4393,47 @@ const InsuranceNomination = (props) => {
         ""
       )}
       {/* {(() => {
-              switch (NomineeCount) {
-                case 1:
-                  return <NomineeForm />;
-                case 2:
-                  return (
-                    <div>
-                      <NomineeForm />
-                      <NomineeForm />{" "}
-                    </div>
-                  );
-                case 3:
-                  return (
-                    <div>
-                      <NomineeForm />
-                      <NomineeForm />
-                      <NomineeForm />
-                    </div>
-                  );
-                case 4:
-                  return (
-                    <div>
-                      <NomineeForm />
-                      <NomineeForm />
-                      <NomineeForm />
-                      <NomineeForm />
-                    </div>
-                  );
-                case 5:
-                  return (
-                    <div>
-                      <NomineeForm />
-                      <NomineeForm />
-                      <NomineeForm />
-                      <NomineeForm />
-                      <NomineeForm />
-                    </div>
-                  );
-                default:
-                  return <div>Nominees.</div>;
-              }
-            })()} */}
+                switch (NomineeCount) {
+                  case 1:
+                    return <NomineeForm />;
+                  case 2:
+                    return (
+                      <div>
+                        <NomineeForm />
+                        <NomineeForm />{" "}
+                      </div>
+                    );
+                  case 3:
+                    return (
+                      <div>
+                        <NomineeForm />
+                        <NomineeForm />
+                        <NomineeForm />
+                      </div>
+                    );
+                  case 4:
+                    return (
+                      <div>
+                        <NomineeForm />
+                        <NomineeForm />
+                        <NomineeForm />
+                        <NomineeForm />
+                      </div>
+                    );
+                  case 5:
+                    return (
+                      <div>
+                        <NomineeForm />
+                        <NomineeForm />
+                        <NomineeForm />
+                        <NomineeForm />
+                        <NomineeForm />
+                      </div>
+                    );
+                  default:
+                    return <div>Nominees.</div>;
+                }
+              })()} */}
       {buttonOne === true &&
       (addExtraSecond === false) | (addExtraThird === false) ? (
         <Row>
@@ -4889,7 +4832,7 @@ const InsuranceNomination = (props) => {
                       style={genderError_4 ? { borderColor: "red" } : {}}
                     >
                       {/* <option value="">Gender</option>
-                      <option value="Male">Male</option> */}
+                        <option value="Male">Male</option> */}
                       <option value="Female">Female</option>
                       <option value="Others">Others</option>
                     </Form.Control>
@@ -5362,7 +5305,7 @@ const InsuranceNomination = (props) => {
                       style={In_law_genderError_2 ? { borderColor: "red" } : {}}
                     >
                       {/* <option value="">Gender</option>
-                      <option value="Male">Male</option> */}
+                        <option value="Male">Male</option> */}
                       <option value="Female">Female</option>
                       <option value="Others">Others</option>
                     </Form.Control>
@@ -5719,7 +5662,7 @@ const InsuranceNomination = (props) => {
               <label>Please fill the forms below</label>
               <br />
               <a
-                href={require("../../forms/Nomine_Nomination.pdf")}
+                href={require("../../forms/Nomine_Nomination.docx")}
                 target="_blank"
               >
                 Download Insurance Nomination Form
@@ -5774,15 +5717,15 @@ const InsuranceNomination = (props) => {
                     ></i>
                   </label>
                 </div>
-                {insuranceError ? (
-                  <p style={{ color: "red" }}>
-                    {" "}
-                    &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the
-                    Insurance Form
-                  </p>
-                ) : (
-                  <p></p>
-                )}
+                {/* {insuranceError ? (
+                    <p style={{ color: "red" }}>
+                      {" "}
+                      &nbsp;&nbsp;&nbsp;&nbsp;*Please select & upload the
+                      Insurance form
+                    </p>
+                  ) : (
+                    <p></p>
+                  )} */}
               </Form.Group>
             </Col>
           </Row>

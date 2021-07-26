@@ -7,6 +7,7 @@ import { Edit2, Eye, Search, AlertCircle } from "react-feather";
 import Pagination from "react-js-pagination";
 import "./ManageCandidate.css";
 import { DocsVerifyContext } from "../../context/DocverificationState";
+import { AppContext } from "../../context/AppState";
 
 const CandidateList = () => {
   const [pageCount, setPageCount] = useState(0);
@@ -15,6 +16,8 @@ const CandidateList = () => {
   const [docStatus, setDocStatus] = useState("");
   const { candidateView, candidateList, loader, total, viewCandidateId } =
     useContext(OfferContext);
+
+  const { user } = useContext(AppContext);
 
   const {
     fetchNominationDetails,
@@ -56,7 +59,7 @@ const CandidateList = () => {
       candidateView("all", pageNumber - 1, 3);
     } else if (docStatus === "Approved") {
       candidateView("all", pageNumber - 1, 1);
-    } else if (docStatus === "Rejected") {
+    } else if (docStatus === "Disapproved") {
       candidateView("all", pageNumber - 1, 2);
     } else {
       candidateView("all", pageNumber - 1);
@@ -102,7 +105,7 @@ const CandidateList = () => {
       candidateView("all", 0, 3);
     } else if (e.target.value === "Approved") {
       candidateView("all", 0, 1);
-    } else if (e.target.value === "Rejected") {
+    } else if (e.target.value === "Disapproved") {
       candidateView("all", 0, 2);
     } else {
       candidateView("all", 0);
@@ -138,7 +141,7 @@ const CandidateList = () => {
                     <option value="Pending">Pending</option>
                     <option value="In Progress">In Progress</option>
                     <option value="Approved">Approved</option>
-                    <option value="Rejected">Rejected</option>
+                    <option value="Disapproved">Disapproved</option>
                   </Form.Control>
                 </Form.Group>
                 {/* <br></br> */}
@@ -234,23 +237,40 @@ const CandidateList = () => {
                           ? "In Progress"
                           : item.adminVerificationStatus === 1
                           ? "Approved"
-                          : "Rejected"}
+                          : "Disapproved"}
                       </td>
                       <td>{item.uanStatusDesc}</td>
                       <td>{item.overallStatusDesc}</td>
 
                       <td>
-                        <Link to={"/verification/" + item.candidateId}>
-                          {/* <Link to={"/admin_no_due_clearance"}> */}
-                          {/* <Link to={"/admin-finance-clearance"}> */}
-                          {/* <Link to={"/no_due_clearance"}> */}
-                          {/* <Link to={"/finance-clearance"}> */}
-                          <AlertCircle
-                            onClick={() => {
-                              FetchCandidateData(item.candidateId);
-                            }}
-                          />
-                        </Link>
+                        {user !== null &&
+                        user !== undefined &&
+                        user.role === "ADMIN" &&
+                        (item.adminVerificationStatus === 0 ||
+                          item.adminVerificationStatus === 3) &&
+                        item.uanStatus !== 1 ? (
+                          <Link to={"/verification/" + item.candidateId}>
+                            <AlertCircle
+                              onClick={() => {
+                                FetchCandidateData(item.candidateId);
+                              }}
+                            />
+                          </Link>
+                        ) : user !== null &&
+                          user !== undefined &&
+                          user.role !== "ADMIN" &&
+                          (item.verificationStatus === 0 ||
+                            item.verificationStatus === 3) ? (
+                          <Link to={"/verification/" + item.candidateId}>
+                            <AlertCircle
+                              onClick={() => {
+                                FetchCandidateData(item.candidateId);
+                              }}
+                            />
+                          </Link>
+                        ) : (
+                          <AlertCircle />
+                        )}
                       </td>
                     </tr>
                   </tbody>

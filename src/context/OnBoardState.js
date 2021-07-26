@@ -353,7 +353,7 @@ export const OnBoardProvider = (props) => {
           status
       )
       .then((response) => {
-        toast.info(response.data.message);
+        // toast.info(response.data.message);
         // state.deleteNomineeData = response.data;
         console.log("Candidate Insurance Nomination status ", response);
         // return dispatch({

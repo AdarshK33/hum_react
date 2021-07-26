@@ -1004,7 +1004,14 @@ const PersonalInformation = (props) => {
                 onChange={changeHandler}
                 required
                 style={adharNameError ? { borderColor: "red" } : {}}
-                placeholder="Name as per adhaar"
+                placeholder={
+                  candidateViewInfo !== null &&
+                  candidateViewInfo !== undefined &&
+                  Object.keys(candidateViewInfo).length !== 0 &&
+                  candidateViewInfo.contractType === "Local Expat"
+                    ? "Name as per Passport"
+                    : "Name as per Aadhaar"
+                }
                 disabled={disabled}
               />
 
