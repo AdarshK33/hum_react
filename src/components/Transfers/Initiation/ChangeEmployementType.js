@@ -502,7 +502,7 @@ const ChangeEmployementType = () => {
             <Row className="mb-3">
               <Col md={6}>
                 <Row>
-                  <Col md={5}>Cost Center </Col>
+                  <Col md={5}>Cost Center: </Col>
                   <Col md={7} className="text-primary">
                     {initiationEmpData.currentCostCentre}
                   </Col>
@@ -522,7 +522,7 @@ const ChangeEmployementType = () => {
               <Col md={6}>
                 <Form.Group as={Row} controlId="transferInitiationCostCentre">
                   <Form.Label column md={5} className="py-0">
-                    Change Employement:
+                    Change Contract Type:
                   </Form.Label>
 
                   <Col md={7}>
@@ -608,12 +608,22 @@ const ChangeEmployementType = () => {
               <Col md={6}>
                 <Form.Group as={Row} controlId="transferInitiationFixedGross">
                   <Form.Label column md={5}>
-                    Fixed Gross:
+                    {newEmployement !== null && newEmployement !== ""
+                      ? newEmployement === "From Part Time to Full Time"
+                        ? "Fixed Gross:"
+                        : "Hourly Pay:"
+                      : "Fixed Gross:"}
                   </Form.Label>
                   <Col md={7} className="text-primary">
                     <Form.Control
                       type="text"
-                      placeholder="Fixed Gross"
+                      placeholder={
+                        newEmployement !== null && newEmployement !== ""
+                          ? newEmployement === "From Part Time to Full Time"
+                            ? "Fixed Gross:"
+                            : "Hourly Pay:"
+                          : "Fixed Gross:"
+                      }
                       value={newGross}
                       className="text-primary"
                       onChange={changeGrossHandler}

@@ -421,7 +421,8 @@ const InternationalTransferAcceptance = () => {
                             onChange={changeContractStatusHandler}
                           >
                             <option>Select Status</option>
-                            <option value="freeze">Freeze</option>
+                            <option value="Freeze">Freeze</option>
+                            <option value="Un Freeze">Un Freeze</option>
                           </Form.Control>
                           {contractStatusErrMsg !== "" && (
                             <span className="text-danger">

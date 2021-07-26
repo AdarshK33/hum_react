@@ -102,6 +102,7 @@ const TransferPage = () => {
             empId: item.currentEmployeeId,
             empName: item.employeeName,
             oldEntity: item.currentCompany,
+            newEmpId: item.promotedEmployeeId,
             newEntity: item.promotedCompany,
             newManager: item.promotedManagerName,
             effectiveDate: item.promotedJoiningDate,

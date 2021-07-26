@@ -9,6 +9,7 @@ import { TransferContext } from "../../../context/TransferState";
 import TransferInitationLetter from "./TransferInitiationLetter";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import { useHistory } from "react-router-dom";
+import { BonusContext } from "../../../context/BonusState";
 
 const RegularTransfer = () => {
   const {
@@ -28,6 +29,8 @@ const RegularTransfer = () => {
     initiationStatus,
     initiationTransferId,
   } = useContext(TransferContext);
+  const { viewBonusByContarctType, getBonusByContractType } =
+    useContext(BonusContext);
   const [transferType, setTransferType] = useState("Regular Transfer");
   const [transferErrMsg, setTransferErrMsg] = useState("");
   const [searchValue, setSearchValue] = useState("");
@@ -48,12 +51,13 @@ const RegularTransfer = () => {
   const [newGross, setNewGross] = useState();
   const [grossErrMsg, setGrossErrMsg] = useState("");
   const [bonus, setBonus] = useState();
-  const [relocationBonus, setRelocationBonus] = useState();
+  const [relocationBonus, setRelocationBonus] = useState("");
   const [relocationBonusErrMsg, setRelocationBonusErrMsg] = useState("");
   const [effectiveDate, setEffectiveDate] = useState(new Date());
   const [effectiveDateErrMsg, setEffectiveDateErrMsg] = useState("");
   const [formValid, setFormValid] = useState(false);
   const [modalShow, setModalShow] = useState(false);
+  const [modalWarning, setModalWrong] = useState(false);
   const [showSignature, setShowSignature] = useState(false);
   const [showInitiationLetter, setShowInitiationLetter] = useState(false);
   const [previewTransferLetter, setPreviewTransferLetter] = useState(false);
@@ -67,7 +71,35 @@ const RegularTransfer = () => {
   const [grossNoChange, setGrossNoChange] = useState(false);
 
   const history = useHistory();
-
+  useEffect(() => {
+    if (
+      initiationEmpData !== null &&
+      initiationEmpData !== undefined &&
+      Object.keys(initiationEmpData).length !== 0 &&
+      newDeptName !== "" &&
+      newDeptName !== null &&
+      newDeptName !== undefined &&
+      newPositionName !== "" &&
+      newPositionName !== null &&
+      newPositionName !== undefined
+    ) {
+      viewBonusByContarctType(
+        initiationEmpData.currentContractType,
+        newDeptName,
+        newPositionName
+      );
+    }
+  }, [newDeptName, newPositionName]);
+  console.log("getBonusByContractType->", getBonusByContractType);
+  useEffect(() => {
+    if (
+      getBonusByContractType !== null &&
+      getBonusByContractType !== undefined &&
+      Object.keys(getBonusByContractType).length !== 0
+    ) {
+      setBonus(getBonusByContractType.bonus);
+    }
+  }, [getBonusByContractType]);
   useEffect(() => {
     if (searchValue !== "") {
       getTransferInitiationEmpData(searchValue);
@@ -175,10 +207,10 @@ const RegularTransfer = () => {
     setLocationErrMsg("");
   };
 
-  const changeGrossHandler = (e) => {
-    setNewGross(e.target.value);
-    setGrossErrMsg("");
-  };
+  // const changeGrossHandler = (e) => {
+  //   setNewGross(e.target.value);
+  //   setGrossErrMsg("");
+  // };
 
   const changeBonusHandler = (e) => {
     setBonus(e.target.value);
@@ -194,7 +226,10 @@ const RegularTransfer = () => {
     setEffectiveDateErrMsg("");
   };
 
-  const handleModalClose = () => setModalShow(false);
+  const handleModalClose = () => {
+    setModalWrong(false);
+    setModalShow(false);
+  };
 
   const addDigitalSignature = () => setShowSignature(true);
 
@@ -229,6 +264,8 @@ const RegularTransfer = () => {
       }
     } else {
       setDepNoChange(false);
+      setNewDept("");
+      setNewDeptName("");
       // setPositionNoChange(false);
     }
   };
@@ -249,6 +286,8 @@ const RegularTransfer = () => {
       }
     } else {
       setPositionNoChange(false);
+      setNewPosition("");
+      setNewPositionName("");
     }
   };
 
@@ -263,6 +302,7 @@ const RegularTransfer = () => {
       setNewCostCentre(initiationEmpData.currentCostCentre);
     } else {
       setCostCentreNoChange(false);
+      setNewCostCentre("");
     }
   };
 
@@ -277,6 +317,7 @@ const RegularTransfer = () => {
       setNewManager(initiationEmpData.currentManagerId);
     } else {
       setManagerNoChange(false);
+      setNewManager("");
     }
   };
 
@@ -291,6 +332,7 @@ const RegularTransfer = () => {
       setNewLocation(initiationEmpData.currentLocation);
     } else {
       setLocationNoChange(false);
+      setNewLocation("");
     }
   };
 
@@ -316,6 +358,7 @@ const RegularTransfer = () => {
   /* Validate form */
   const validateForm = () => {
     let validForm = true;
+    console.log("relocationBonus", relocationBonus);
 
     if (transferType === "") {
       validForm = false;
@@ -352,14 +395,17 @@ const RegularTransfer = () => {
       setLocationErrMsg("Please select location");
     }
 
-    if (newGross === "") {
-      validForm = false;
-      setGrossErrMsg("Please enter fixed gross");
-    }
+    // if (newGross === "") {
+    //   validForm = false;
+    //   setGrossErrMsg("Please enter fixed gross");
+    // }
 
     if (relocationBonus === "") {
       validForm = false;
       setRelocationBonusErrMsg("Please enter relocation bonus");
+    } else if (relocationBonus.length !== 2) {
+      validForm = false;
+      setRelocationBonusErrMsg("Please enter two digits bonus");
     }
 
     if (
@@ -373,11 +419,25 @@ const RegularTransfer = () => {
 
     return validForm;
   };
+  const isAllNoChangesAreChecked = () => {
+    if (
+      depNoChange === true &&
+      positionNoChange === true &&
+      costCentreNoChange === true &&
+      managerNoChange === true &&
+      locationNoChange === true
+    ) {
+      setModalWrong(true);
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
     const validFormRes = validateForm();
-    if (validFormRes === true) {
+    if (validFormRes === true && isAllNoChangesAreChecked() === false) {
       setFormValid(true);
     }
   };
@@ -385,6 +445,20 @@ const RegularTransfer = () => {
   return (
     <div className="transfer-initiation">
       <ToastContainer />
+      <Modal show={modalWarning} onHide={handleModalClose} size="md" centered>
+        <Container>
+          <Modal.Header closeButton className="modalHeader"></Modal.Header>
+          <Modal.Body className="mx-auto">
+            <label className="text-center">
+              Tansfer can't be proceed with out change
+            </label>
+
+            <div className="text-center mb-2">
+              <Button onClick={handleModalClose}>Close</Button>
+            </div>
+          </Modal.Body>
+        </Container>
+      </Modal>
       <Modal show={modalShow} onHide={handleModalClose} size="md" centered>
         <Container>
           <Modal.Header closeButton className="modalHeader"></Modal.Header>
@@ -509,107 +583,6 @@ const RegularTransfer = () => {
           <Form.Group
             as={Row}
             className="mb-3"
-            controlId="transferInitiationDept"
-          >
-            <Form.Label column md={2}>
-              Department
-            </Form.Label>
-            <Col md={4} className="text-primary">
-              {initiationEmpData.currentDepartment}
-            </Col>
-            <Col md={2}>
-              <div className="boxField input">
-                <input
-                  className="largerCheckbox"
-                  type="checkbox"
-                  id="no-dept-change"
-                  checked={depNoChange}
-                  onChange={noChangeDeptHandler}
-                />
-              </div>
-            </Col>
-            <Col md={4}>
-              <Form.Control
-                as="select"
-                className="text-primary"
-                aria-label="transferInitiationDept"
-                value={newDept}
-                placeholder="Select Department"
-                disabled={depNoChange}
-                onChange={departmentChangeHandler}
-              >
-                <option>Select Department</option>
-                {deptDetails !== null &&
-                  deptDetails !== undefined &&
-                  deptDetails.length > 0 &&
-                  deptDetails.map((item) => {
-                    return (
-                      <option key={`dept_${item.deptId}`} value={item.deptId}>
-                        {item.departmentName}
-                      </option>
-                    );
-                  })}
-              </Form.Control>
-              {deptErrMsg !== "" && (
-                <span className="text-danger">{deptErrMsg}</span>
-              )}
-            </Col>
-          </Form.Group>
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="transferInitiationPosition"
-          >
-            <Form.Label column md={2}>
-              Position
-            </Form.Label>
-            <Col md={4} className="text-primary">
-              {initiationEmpData.currentPosition}
-            </Col>
-            <Col md={2}>
-              <div className="boxField input">
-                <input
-                  className="largerCheckbox"
-                  type="checkbox"
-                  id="no-position-change"
-                  checked={positionNoChange}
-                  onChange={noChangePositionHandler}
-                />
-              </div>
-            </Col>
-            <Col md={4}>
-              <Form.Control
-                as="select"
-                className="text-primary"
-                aria-label="transferInitiationPosition"
-                value={newPosition}
-                placeholder="Select Position"
-                disabled={positionNoChange}
-                onChange={changePositionHandler}
-              >
-                <option>Select Position</option>
-                {deptPositionData !== null &&
-                  deptPositionData !== undefined &&
-                  deptPositionData.length > 0 &&
-                  deptPositionData.map((item) => {
-                    return (
-                      <option
-                        key={`pos_${item.positionId}`}
-                        value={item.positionId}
-                      >
-                        {item.position}
-                      </option>
-                    );
-                  })}
-              </Form.Control>
-              {positionErrMsg !== "" && (
-                <span className="text-danger">{positionErrMsg}</span>
-              )}
-            </Col>
-          </Form.Group>
-          <Form.Group
-            as={Row}
-            className="mb-3"
             controlId="transferInitiationCostCentre"
           >
             <Form.Label column md={2}>
@@ -712,6 +685,108 @@ const RegularTransfer = () => {
           <Form.Group
             as={Row}
             className="mb-3"
+            controlId="transferInitiationDept"
+          >
+            <Form.Label column md={2}>
+              Department
+            </Form.Label>
+            <Col md={4} className="text-primary">
+              {initiationEmpData.currentDepartment}
+            </Col>
+            <Col md={2}>
+              <div className="boxField input">
+                <input
+                  className="largerCheckbox"
+                  type="checkbox"
+                  id="no-dept-change"
+                  checked={depNoChange}
+                  onChange={noChangeDeptHandler}
+                />
+              </div>
+            </Col>
+            <Col md={4}>
+              <Form.Control
+                as="select"
+                className="text-primary"
+                aria-label="transferInitiationDept"
+                value={newDept}
+                placeholder="Select Department"
+                disabled={depNoChange}
+                onChange={departmentChangeHandler}
+              >
+                <option>Select Department</option>
+                {deptDetails !== null &&
+                  deptDetails !== undefined &&
+                  deptDetails.length > 0 &&
+                  deptDetails.map((item) => {
+                    return (
+                      <option key={`dept_${item.deptId}`} value={item.deptId}>
+                        {item.departmentName}
+                      </option>
+                    );
+                  })}
+              </Form.Control>
+              {deptErrMsg !== "" && (
+                <span className="text-danger">{deptErrMsg}</span>
+              )}
+            </Col>
+          </Form.Group>
+          <Form.Group
+            as={Row}
+            className="mb-3"
+            controlId="transferInitiationPosition"
+          >
+            <Form.Label column md={2}>
+              Position
+            </Form.Label>
+            <Col md={4} className="text-primary">
+              {initiationEmpData.currentPosition}
+            </Col>
+            <Col md={2}>
+              <div className="boxField input">
+                <input
+                  className="largerCheckbox"
+                  type="checkbox"
+                  id="no-position-change"
+                  checked={positionNoChange}
+                  onChange={noChangePositionHandler}
+                />
+              </div>
+            </Col>
+            <Col md={4}>
+              <Form.Control
+                as="select"
+                className="text-primary"
+                aria-label="transferInitiationPosition"
+                value={newPosition}
+                placeholder="Select Position"
+                disabled={positionNoChange}
+                onChange={changePositionHandler}
+              >
+                <option>Select Position</option>
+                {deptPositionData !== null &&
+                  deptPositionData !== undefined &&
+                  deptPositionData.length > 0 &&
+                  deptPositionData.map((item) => {
+                    return (
+                      <option
+                        key={`pos_${item.positionId}`}
+                        value={item.positionId}
+                      >
+                        {item.position}
+                      </option>
+                    );
+                  })}
+              </Form.Control>
+              {positionErrMsg !== "" && (
+                <span className="text-danger">{positionErrMsg}</span>
+              )}
+            </Col>
+          </Form.Group>
+
+          <Form.Group
+            as={Row}
+            className="mb-3"
             controlId="transferInitiationLocation"
           >
             <Form.Label column md={2}>
@@ -755,7 +830,7 @@ const RegularTransfer = () => {
               )}
             </Col>
           </Form.Group>
-          <Form.Group
+          {/* <Form.Group
             as={Row}
             className="mb-3"
             controlId="transferInitiationFixedGross"
@@ -790,10 +865,10 @@ const RegularTransfer = () => {
                 <span className="text-danger">{grossErrMsg}</span>
               )}
             </Col>
-          </Form.Group>
+          </Form.Group> */}
           <Form.Group as={Row} className="mb-3">
             <Form.Label column md={2} className="py-0">
-              Bonus In Percent (Optional)
+              Bonus In Percent
             </Form.Label>
             <Col md={4}>
               <Form.Control
@@ -803,10 +878,11 @@ const RegularTransfer = () => {
                 className="text-primary"
                 id="transferInitiationCurrentPercent"
                 onChange={changeBonusHandler}
+                disabled={true}
               ></Form.Control>
             </Col>
             <Col md={2} className="py-0">
-              Relocation Bonus
+              Relocation Bonus (%)
             </Col>
             <Col md={4}>
               <Form.Control
