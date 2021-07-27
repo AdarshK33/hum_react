@@ -151,7 +151,7 @@ const NoDueClearance = () => {
           value={enableValue}
           onChange={(e) => statusRender(e, value)}
         >
-          <option value={null}> select </option>
+          <option value={null}> Yet to Approve </option>
           <option value="0"> Due </option>
           <option value="1"> No Due </option>
           <option value="2"> On Hold </option>
@@ -275,6 +275,7 @@ const NoDueClearance = () => {
   };
   const options = [
     { value: "3", label: "All" },
+    { value: "4", label: "Yet to Approve" },
     { value: "0", label: "Due" },
     { value: "1", label: "No Due" },
     { value: "2", label: "On Hold" },
@@ -380,7 +381,7 @@ const itStatusValue = [
                     style={{ align: "center", height: 490, width: "100%" }}
                   >
                     <AgGridReact
-                      rowData={currentRecords}
+                      rowData={noDueClearanceList}
                       rowSelection="single"
                       onGridReady={onGridReady}
                       suppressRowClickSelection={true}
@@ -454,7 +455,7 @@ const itStatusValue = [
                           suppressEnterExpand: true,
                         }}
                         cellEditorParams={{
-                          values: ["0", "1", "2"],
+                          values: ["0", "1", "2", "4"],
                           cellRenderer: { statusRender },
                         }}
                       ></AgGridColumn>

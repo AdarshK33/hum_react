@@ -108,12 +108,14 @@ useEffect(() => {
 
 const options1 = [
   { value: "3", label: "All" },
+  { value: "4", label: "Yet to Approve" },
   { value: "0", label: "Due" },
   { value: "1", label: "No Due" },
   { value: "2", label: "On Hold" },
 ];
 const options2 = [
   { value: "3", label: "All" },
+  { value: "4", label: "Yet to Approve" },
   { value: "0", label: "Due" },
   { value: "1", label: "No Due" },
   { value: "2", label: "On Hold" },

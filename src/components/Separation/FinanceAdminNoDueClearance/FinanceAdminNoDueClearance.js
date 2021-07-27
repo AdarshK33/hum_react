@@ -262,7 +262,7 @@ const FinanaceAdminNoDueClearance = () => {
   };
   const onSelectionChanged = (e) => {
     let formData = e.data;
-    console.log(e);
+    console.log(e.data,"formData");
     if (checkedValue == false) {
       setCheckedValue(true);
     } else if (checkedValue == true) {
@@ -470,7 +470,7 @@ const FinanaceAdminNoDueClearance = () => {
                     style={{ align: "center", height: 490, width: "100%" }}
                   >
                     <AgGridReact
-                      rowData={currentRecords}
+                      rowData={financeAdminNoDueClearanceList}
                       defaultColDef={{
                         width: 200,
                         resizable: true,
@@ -491,6 +491,7 @@ const FinanaceAdminNoDueClearance = () => {
                         cellRendererParams: { checkbox: true },
                       }}
                       isRowSelectable={function (rowNode) {
+                        console.log(rowNode,"rownode****")
                         return rowNode.data
                           ? rowNode.data.deactivateProfile !== null &&
                               rowNode.data.fullAndFinalCompleteStatus !==

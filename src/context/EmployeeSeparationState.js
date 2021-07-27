@@ -83,7 +83,7 @@ export const EmploeeSeparationProvider = (props) => {
       payload: state.employeeData,
     });
   };
-  const EmployeeSeparationListView = (key, pageNumber) => {
+  const EmployeeSeparationListView = (key, pageNumber,status) => {
     setLoader(true);
     client
       .get(
@@ -91,7 +91,8 @@ export const EmploeeSeparationProvider = (props) => {
           key +
           "&page=" +
           pageNumber +
-          "&size=10"
+          "&size=10" +
+          "&status=" + status
       )
       .then((response) => {
         state.EmployeeSeparationList = response.data.data.data;
