@@ -760,7 +760,7 @@ const PFDeclaration = (props) => {
       console.log("handleUpload", fileInfo);
       uploadFile(fileInfo);
     } else {
-      toast.info("Something went wrong");
+      toast.info("Please select file");
     }
   };
   return (
@@ -863,7 +863,10 @@ const PFDeclaration = (props) => {
             <div>
               <label>Provide your UAN number</label>
               {uanNumberError ? (
-                <p style={{ color: "red" }}> *Please enter your UAN number</p>
+                <p style={{ color: "red" }}>
+                  {" "}
+                  *Please enter your 12 digit UAN number
+                </p>
               ) : (
                 <p></p>
               )}

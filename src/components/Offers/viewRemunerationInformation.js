@@ -73,7 +73,7 @@ const ViewRemunerationInformation = (props) => {
                       type="number"
                       name="fixedGross"
                       value={fixedGross}
-                      placeholder="1000"
+                      placeholder=""
                       readOnly
                     />
                   </Col>
@@ -92,7 +92,7 @@ const ViewRemunerationInformation = (props) => {
                       type="number"
                       name="stipend"
                       value={stipend}
-                      placeholder="1000"
+                      placeholder=""
                       readOnly
                     />
                   </Col>
@@ -113,7 +113,7 @@ const ViewRemunerationInformation = (props) => {
                         type="number"
                         name="monthlyBonus"
                         value={monthlyBonus}
-                        placeholder="0"
+                        placeholder=""
                         readOnly
                       />
                     </Col>

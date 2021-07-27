@@ -339,14 +339,14 @@ const ViewWorkInformation = () => {
         <Row>
           <Col sm={3}>
             <Form.Group>
-              <Form.Label>Work Location state</Form.Label>
+              <Form.Label>Work Location</Form.Label>
               <Form.Control
                 as="select"
                 value={stateValue}
                 className="form-input disable-arrow"
                 disabled="true"
               >
-                <option value="">Select State</option>
+                <option value="">Select Location</option>
                 {stateList !== null &&
                   stateList !== undefined &&
                   stateList.map((item, i) => {
@@ -361,14 +361,14 @@ const ViewWorkInformation = () => {
           </Col>
           <Col sm={3}>
             <Form.Group>
-              <Form.Label>Work Location City</Form.Label>
+              <Form.Label>Site</Form.Label>
               <Form.Control
                 as="select"
                 value={city}
                 className="form-input disable-arrow"
                 disabled="true"
               >
-                <option value="">Select City</option>
+                <option value="">Select Site</option>
                 {cityList !== null &&
                   cityList !== undefined &&
                   cityList.map((item, i) => {
