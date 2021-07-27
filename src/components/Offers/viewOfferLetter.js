@@ -59,60 +59,76 @@ const ViewOfferLetter = () => {
 
   return (
     <Fragment>
-      <Form>
-        <Row>
-          <Col sm={5}></Col>
-          <Col sm={2}>
-            <Button type="button" onClick={offerLetterClick}>
-              Preview Offer Letter
-            </Button>
-          </Col>
-        </Row>
-      </Form>
-
-      <Modal show={showModal} onHide={handleClose} size="md">
-        <Modal.Header closeButton className="modal-line"></Modal.Header>
-        {submitLetter ? (
-          <Modal.Body>
-            <div className="offer-letter-message ">
-              <p className="signature-text">Offer Letter Sent to Candidate</p>
-              <br></br>
-              <Link to="/offer-release-list" className="text-center">
-                <Button type="button" onClick={handleClose}>
-                  Close
-                </Button>
-              </Link>
-            </div>
-          </Modal.Body>
-        ) : previewLetter || showModal ? (
-          <Modal.Body>
-            {}
-            {offerLetterData &&
-            offerLetterData.contractType !== undefined &&
-            offerLetterData.contractType !== null &&
-            offerLetterData.contractType === "Permanent" ? (
-              <PermanentOfferLetter />
-            ) : offerLetterData &&
-              offerLetterData.contractType !== undefined &&
-              offerLetterData.contractType !== null &&
-              offerLetterData.contractType === "Parttime" ? (
-              <PartTimeOfferLetter />
-            ) : offerLetterData &&
-              offerLetterData.contractType !== undefined &&
-              offerLetterData.contractType !== null &&
-              offerLetterData.contractType === "Local Expat" ? (
-              <LocalExpatOfferLetter />
-            ) : (
-              <InternOfferLetter />
-            )}
-            <br></br>
+      {candidateData !== null &&
+      candidateData !== undefined &&
+      Object.keys(candidateData).length !== 0 &&
+      candidateData.candidateInformation !== null &&
+      candidateData.candidateInformation !== undefined &&
+      Object.keys(candidateData.candidateInformation).length !== 0 &&
+      candidateData.workInformation !== "" &&
+      candidateData.workInformation !== null &&
+      candidateData.workInformation !== undefined &&
+      Object.keys(candidateData.workInformation).length !== 0 &&
+      candidateData.remuneration !== null &&
+      candidateData.remuneration !== undefined &&
+      Object.keys(candidateData.remuneration) !== 0 ? (
+        <Fragment>
+          <Form>
             <Row>
-              <Col sm={6}>
-                <p>Thanking you</p>
-                <p>{offerLetterData.managerName}</p>
+              <Col sm={5}></Col>
+              <Col sm={2}>
+                <Button type="button" onClick={offerLetterClick}>
+                  Preview Offer Letter
+                </Button>
               </Col>
-              <Col sm={6} className="signature-center-text">
-                {/* {showSignature ? (
+            </Row>
+          </Form>
+
+          <Modal show={showModal} onHide={handleClose} size="md">
+            <Modal.Header closeButton className="modal-line"></Modal.Header>
+            {submitLetter ? (
+              <Modal.Body>
+                <div className="offer-letter-message ">
+                  <p className="signature-text">
+                    Offer Letter Sent to Candidate
+                  </p>
+                  <br></br>
+                  <Link to="/offer-release-list" className="text-center">
+                    <Button type="button" onClick={handleClose}>
+                      Close
+                    </Button>
+                  </Link>
+                </div>
+              </Modal.Body>
+            ) : previewLetter || showModal ? (
+              <Modal.Body>
+                {}
+                {offerLetterData &&
+                offerLetterData.contractType !== undefined &&
+                offerLetterData.contractType !== null &&
+                offerLetterData.contractType === "Permanent" ? (
+                  <PermanentOfferLetter />
+                ) : offerLetterData &&
+                  offerLetterData.contractType !== undefined &&
+                  offerLetterData.contractType !== null &&
+                  offerLetterData.contractType === "Parttime" ? (
+                  <PartTimeOfferLetter />
+                ) : offerLetterData &&
+                  offerLetterData.contractType !== undefined &&
+                  offerLetterData.contractType !== null &&
+                  offerLetterData.contractType === "Local Expat" ? (
+                  <LocalExpatOfferLetter />
+                ) : (
+                  <InternOfferLetter />
+                )}
+                <br></br>
+                <Row>
+                  <Col sm={6}>
+                    <p>Thanking you</p>
+                    <p>{offerLetterData.managerName}</p>
+                  </Col>
+                  <Col sm={6} className="signature-center-text">
+                    {/* {showSignature ? (
                   <img
                     src={calendarImage}
                     alt="calendar"
@@ -132,22 +148,28 @@ const ViewOfferLetter = () => {
                   </>
                 )} */}
 
-                <>
-                  <p className="signature-text">Your signature</p>
-                  <img
-                    src={calendarImage}
-                    alt="calendar"
-                    width="50px"
-                    className="digital-signature"
-                  />
-                </>
-              </Col>
-            </Row>
-          </Modal.Body>
-        ) : (
-          ""
-        )}
-      </Modal>
+                    <>
+                      <p className="signature-text">Your signature</p>
+                      <img
+                        src={calendarImage}
+                        alt="calendar"
+                        width="50px"
+                        className="digital-signature"
+                      />
+                    </>
+                  </Col>
+                </Row>
+              </Modal.Body>
+            ) : (
+              ""
+            )}
+          </Modal>
+        </Fragment>
+      ) : (
+        <p style={{ color: "red", textAlign: "center" }}>
+          Please check all the details to preview offer letter
+        </p>
+      )}
     </Fragment>
   );
 };

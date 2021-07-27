@@ -1271,7 +1271,7 @@ const InsuranceNomination = (props) => {
       console.log("handleUpload", fileInfo);
       uploadFile(fileInfo);
     } else {
-      toast.info("Something went wrong");
+      toast.info("Please select file");
     }
   };
   const sumInsuredChange = (e) => {

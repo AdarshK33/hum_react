@@ -49,7 +49,7 @@ const RemunerationInformation = (props) => {
       candidateData.workInformation.contractType &&
       viewApiCall === false
     ) {
-      viewCandidateId(createCandidateResponse.candidateId);
+      // viewCandidateId(createCandidateResponse.candidateId);
       workInfoView(createCandidateResponse.candidateId);
       if (
         candidateData !== null &&
