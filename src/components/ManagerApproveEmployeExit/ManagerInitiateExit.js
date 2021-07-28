@@ -158,6 +158,7 @@ const ManagerInitiateExit = () => {
         setDateOfResignation("");
         setLastWorkingDate("");
         setPreview(false);
+        ViewEmployeeDataById(state.empId)
       }
     }
   }, [employeeData]);
@@ -231,7 +232,12 @@ const ManagerInitiateExit = () => {
 
       state.empContractType = searchByCostData.contractType;
       state.empCostCenterName = searchByCostData.costCentre;
-      state.noticePeriod = searchByCostData.noticePeriod
+      if(searchByCostData.department == "AFS" ||searchByCostData.department == "IT" ||searchByCostData.department == "Legal" ||searchByCostData.department == "Finance"){
+        state.noticePeriod = 2
+      }else{
+        state.noticePeriod = 1
+      }
+      // state.noticePeriod = searchByCostData.noticePeriod
       //   state.empLocation = searchEmpData1.location;
       state.empPosition = searchByCostData.position;
       state.emailId = searchByCostData.personalEmail;
@@ -247,17 +253,22 @@ const ManagerInitiateExit = () => {
         state.empContractType === "Permanent" ||state.empContractType === "parttime" ||
         state.empContractType === "PartTime"
       ) {
-        let dateValue = new Date(new Date().setMonth(new Date().getMonth() + searchByCostData.noticePeriod))
+              var dateValue =  new Date(new Date().setMonth(new Date().getMonth() + (state.noticePeriod)))
+        let aboveDateValue = new Date(new Date().setMonth(new Date().getMonth() + (parseInt(state.noticePeriod) + 1)))
         setIntern(false);
-        if(dateValue.getDate()>=1 &&  dateValue.getDate()<=20 && searchByCostData.noticePeriod == 0){
-          setLastDateSelection(dateValue.setDate("20"))
-          setLastWorkingDate(dateValue)
-        }else {
-          var aboveDateValue =  new Date(new Date().setMonth(new Date().getMonth() + (parseInt(searchByCostData.noticePeriod) + 1)))
-          setLastDateSelection(aboveDateValue.setDate(20))
-          setLastWorkingDate(aboveDateValue.setDate(dateValue.getDate()-20))
-        }
-console.log(dateValue.setDate("20"),aboveDateValue,searchByCostData)
+        setLastDateSelection(aboveDateValue)
+        setLastWorkingDate(dateValue)
+
+//         if(dateValue.getDate()>=1 &&  dateValue.getDate()<=20 && searchByCostData.noticePeriod == 0){
+//           setLastDateSelection(dateValue.setDate("20"))
+//           setLastWorkingDate(dateValue)
+//         }else {
+//           var aboveDateValue =  new Date(new Date().setMonth(new Date().getMonth() + (parseInt(searchByCostData.noticePeriod) + 1)))
+//           setLastDateSelection(aboveDateValue.setDate(20))
+//           setLastWorkingDate(aboveDateValue.setDate(dateValue.getDate()-20))
+//         }
+// console.log(dateValue.setDate("20"),aboveDateValue,searchByCostData)
+
       } else {
         setIntern(false);
         setLastWorkingDate("")
@@ -481,6 +492,7 @@ console.log(dateValue.setDate("20"),aboveDateValue,searchByCostData)
   const handleRelivingClose = () => setShow(false);
 
   const saveOfferLetter = () => {
+    setPreviewGeneratedLetter(true);
     setSaveLetter(true);
     setShow(false);
   };
@@ -515,7 +527,7 @@ console.log(dateValue.setDate("20"),aboveDateValue,searchByCostData)
     e.preventDefault();
     fetchRelievingLetterData(employeeData.employeeId);
     handleShow();
-    setPreviewGeneratedLetter(true);
+    // setPreviewGeneratedLetter(true);
   };
   const handleShow = () => {
     console.log("inside show moodal");
@@ -636,7 +648,7 @@ console.log(dateValue.setDate("20"),aboveDateValue,searchByCostData)
     if (
       lastWorkingDate !== "" &&
       lastWorkingDate !== null &&
-      lastWorkingDate !== undefined || (lastWorkingDate.getDate() >=1 && lastWorkingDate.getDate() <=20)
+      lastWorkingDate !== undefined
     ) {
       setLastWorkingDateError(false);
       return true;
@@ -1376,7 +1388,7 @@ console.log(intern,"8098709809808")
                                 {lastWorkingDateError ? (
                                   <p style={{ color: "red" }}>
                                     {" "}
-                                    &nbsp; *Please enter days between 1 to 20 
+                                    &nbsp; *Please enter valid date
                                   </p>
                                 ) : (
                                   <p></p>
