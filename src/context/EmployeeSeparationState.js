@@ -7,6 +7,7 @@ export const EmployeeSeparationContext = createContext();
 
 const initial_state = {
   EmployeeSeparationList: [],
+  EmployeeSeparationExitList:[],
   total: {},
   employeeData: {},
   ModeOfSeparationData: {},
@@ -83,11 +84,12 @@ export const EmploeeSeparationProvider = (props) => {
       payload: state.employeeData,
     });
   };
+  
   const EmployeeSeparationListView = (key, pageNumber,status) => {
     setLoader(true);
     client
       .get(
-        "/api/v1/separation/employee-exit/view?key=" +
+        "/api/v1/separation/employee-exit/view/exit-initiate?key=" +
           key +
           "&page=" +
           pageNumber +
@@ -105,6 +107,35 @@ export const EmploeeSeparationProvider = (props) => {
         return dispatch({
           type: "EMPLOYEE_SEPARATION_LISTING",
           payload: state.EmployeeSeparationList,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const EmployeeSeparationListExitView = (key, pageNumber,status) => {
+    setLoader(true);
+    client
+      .get(
+        "/api/v1/separation/employee-exit/view?key=" +
+          key +
+          "&page=" +
+          pageNumber +
+          "&size=10" +
+          "&status=" + status
+      )
+      .then((response) => {
+        state.EmployeeSeparationExitList = response.data.data.data;
+        state.total = response.data.data.total;
+        setLoader(false);
+        console.log(state.total);
+        console.log(response);
+        ModeOfSeparationView();
+
+        return dispatch({
+          type: "EMPLOYEE_SEPARATION_LISTING_EXIT",
+          payload: state.EmployeeSeparationExitList,
         });
       })
       .catch((error) => {
@@ -247,11 +278,13 @@ export const EmploeeSeparationProvider = (props) => {
         terminationConfirmation,
         resignationConfirmation,
         TerminationFromDesciplinary,
+        EmployeeSeparationListExitView,
         employeeProfileData: state.employeeProfileData,
         resignationConfirmationStatus: state.resignationConfirmationStatus,
         employeeId: state.employeeId,
         updateResponse: state.updateResponse,
         ModeOfSeparationData: state.ModeOfSeparationData,
+        EmployeeSeparationExitList:state.EmployeeSeparationExitList,
         EmployeeSeparationList: state.EmployeeSeparationList,
         terminationConfirmationStatus: state.terminationConfirmationStatus,
         employeeData: state.employeeData,

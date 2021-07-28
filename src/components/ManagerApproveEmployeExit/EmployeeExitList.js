@@ -311,7 +311,9 @@ const EmployeeExitList = () => {
                             && item.lastWorkingDate !== ""?item.lastWorkingDate:"NA"}</td>
                             <td>{item.reasonForResignation}</td>
                             {/* <td>{item.modeOfSeparationReasonId}</td> */}
-                            <td>{item.contractType.toLowerCase() === 'internship' ?"NA":item.noticePeriod}</td>
+                            <td>{item.contractType.toLowerCase() === 'internship' ?"NA":
+                            (item.department == "AFS" ||item.department == "IT" ||item.department == "Legal" ||item.department == "Finance")?2:1
+  }</td>
                             <td>
                               {item.status === 0
                                 ? "Pending"
