@@ -247,8 +247,7 @@ const CandidateList = () => {
                         user !== undefined &&
                         user.role === "ADMIN" &&
                         (item.adminVerificationStatus === 0 ||
-                          item.adminVerificationStatus === 3) &&
-                        item.uanStatus !== 1 ? (
+                          item.adminVerificationStatus === 3) ? (
                           <Link to={"/verification/" + item.candidateId}>
                             <AlertCircle
                               onClick={() => {

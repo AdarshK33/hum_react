@@ -92,11 +92,17 @@ export const OfferProvider = (props) => {
 
   //take candidate id
   const viewCandidateId = (id) => {
+    console.log("viewCandidateData id", id);
     client
       .get("/api/v1/candidate/" + id)
       .then((response) => {
-        state.candidateData = response.data.data;
-        console.log("viewCandidateData response", state.candidateData);
+        if (id !== 0) {
+          state.candidateData = response.data.data;
+          console.log("viewCandidateData response", state.candidateData);
+        } else {
+          state.candidateData = {};
+          console.log("viewCandidateData response 0", state.candidateData);
+        }
         return dispatch({
           type: "VIEW_CANDIDATE_ID",
           payload: state.candidateData,

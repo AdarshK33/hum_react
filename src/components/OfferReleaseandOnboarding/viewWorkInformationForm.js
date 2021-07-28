@@ -310,7 +310,7 @@ const EditWorkInformation = () => {
           <Row className="mt-4">
             <Col sm={3}>
               <Form.Group>
-                <Form.Label>Work Location state</Form.Label>
+                <Form.Label>Work Location</Form.Label>
                 <br></br>
                 <Form.Label className="headingColor">
                   {filterArray !== undefined && filterArray[0] !== undefined
@@ -321,7 +321,7 @@ const EditWorkInformation = () => {
             </Col>
             <Col sm={3}>
               <Form.Group>
-                <Form.Label>Work Location City</Form.Label>
+                <Form.Label>Site</Form.Label>
                 <br></br>
                 <Form.Label className="headingColor">
                   {filterArray !== undefined && filterArray[0] !== undefined
