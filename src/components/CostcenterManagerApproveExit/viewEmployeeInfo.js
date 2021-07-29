@@ -48,6 +48,7 @@ const EmployeeExitAction = () => {
     noticePeriod: "",
     lastWorkingDate: "",
     emailId: "",
+    personalEmailId:"",
     comments: "",
     noticePeriodRcryDays: "",
     remarks: "",
@@ -97,7 +98,13 @@ const EmployeeExitAction = () => {
       state.modeOfSeparationId = employeeData.modeOfSeparationId;
       // state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.dateOfResignation = employeeData.dateOfResignation;
-      state.noticePeriod = employeeData.noticePeriod;
+      state.personalEmailId = employeeData.personalEmailId;
+      if(employeeData.department == "AFS" ||employeeData.department == "IT" ||employeeData.department == "Legal" ||employeeData.department == "Finance"){
+        state.noticePeriod = 2
+      }else{
+        state.noticePeriod = 1
+      }
+      // state.noticePeriod = employeeData.noticePeriod;
       state.lastWorkingDate = employeeData.lastWorkingDate;
       state.emailId = employeeData.emailId;
       state.comments = employeeData.employeeComment;
@@ -533,7 +540,7 @@ const EmployeeExitAction = () => {
                             <label>
                               <b>Personal Email Id:</b>
                               <label className="itemResult">
-                                &nbsp;&nbsp; {state.emailId}
+                                &nbsp;&nbsp; {state.personalEmailId}
                               </label>
                             </label>
                           </div>
@@ -559,8 +566,8 @@ const EmployeeExitAction = () => {
                         <Col sm={2}>
                           <div>
                             <label>
-                              <a href="~/address">
-                                <u>Exit Feedback Form</u>
+                              <a href="https://docs.google.com/forms/d/e/1FAIpQLSf4F8RzZMXnhc_vaowkpMgtDe9Hh3i7JYT3zML3miyany5I8Q/viewform">
+                                <u>Click here</u>
                               </a>
                             </label>
                           </div>

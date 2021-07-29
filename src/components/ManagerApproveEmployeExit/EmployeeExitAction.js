@@ -90,7 +90,11 @@ const EmployeeExitAction = () => {
       // state.modeOfSeparationId = employeeData.modeOfSeparationId;
       // state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
       state.dateOfResignation = employeeData.dateOfResignation;
-      state.noticePeriod = employeeData.noticePeriod;
+      if(employeeData.department == "AFS" ||employeeData.department == "IT" ||employeeData.department == "Legal" ||employeeData.department == "Finance"){
+        state.noticePeriod = 2
+      }else{
+        state.noticePeriod = 1
+      }
       state.lastWorkingDate = employeeData.lastWorkingDate;
       state.emailId = employeeData.emailId;
       state.comments = employeeData.employeeComment;
@@ -720,8 +724,8 @@ const EmployeeExitAction = () => {
                       <Col sm={2}>
                         <div>
                           <label className="itemResult">
-                            <a href="~/address" className="itemResult">
-                              <u>Exit Feedback Form</u>
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSf4F8RzZMXnhc_vaowkpMgtDe9Hh3i7JYT3zML3miyany5I8Q/viewform" className="itemResult">
+                              <u>Click here</u>
                             </a>
                           </label>
                         </div>

@@ -509,6 +509,11 @@ const InsuranceNomination = (props) => {
           });
         });
         console.log("documents prefill", insuranceDoc);
+      } else {
+        setNomineUploade(false);
+        setStateNomine({
+          insurenceForm: "",
+        });
       }
     }
   }, [documentViewData, candidateInsuranceNominationData]);
@@ -1060,6 +1065,8 @@ const InsuranceNomination = (props) => {
       candidateInsuranceNominationData !== undefined &&
       candidateInsuranceNominationData !== null &&
       Object.keys(candidateInsuranceNominationData).length !== 0 &&
+      candidateInsuranceNominationData[0].insuranceNominationHoldDeath ===
+        true &&
       candidateInsuranceNominationData[0].candidateInsuranceDeathNomination !==
         null &&
       candidateInsuranceNominationData[0].candidateInsuranceDeathNomination !==
@@ -1103,6 +1110,13 @@ const InsuranceNomination = (props) => {
         nomineeRelationship:
           candidateInsuranceNominationData[0].candidateInsuranceDeathNomination
             .relationship,
+      });
+    } else {
+      setNomineeDOB();
+      setNominee({
+        nomineeAddress: "",
+        nomineeName: "",
+        nomineeRelationship: "",
       });
     }
   }, [candidateInsuranceNominationData]);
@@ -1257,7 +1271,7 @@ const InsuranceNomination = (props) => {
       console.log("handleUpload", fileInfo);
       uploadFile(fileInfo);
     } else {
-      toast.info("Something went wrong");
+      toast.info("Please select file");
     }
   };
   const sumInsuredChange = (e) => {
@@ -1970,6 +1984,16 @@ const InsuranceNomination = (props) => {
     {
       required ? setRequired(!required) : setRequired(required);
     }
+    setNomineUploade(false);
+    setStateNomine({
+      insurenceForm: "",
+    });
+    setNomineeDOB();
+    setNominee({
+      nomineeAddress: "",
+      nomineeName: "",
+      nomineeRelationship: "",
+    });
   };
   const submitHandler = (e) => {
     // const nextPage = props.NextStep;

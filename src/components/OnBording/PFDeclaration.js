@@ -110,42 +110,36 @@ const PFDeclaration = (props) => {
       let form11Doc = "";
       let form2epfDoc = "";
       let formFDoc = "";
-      if (pfDeclarationView.pfNominationHoldDeath === true) {
-        console.log("inside condition 2", documentViewData);
-        documentViewData.map((item) => {
-          console.log("item.documentType", item.documentType, item);
-          if (item.documentType === 10 && item.documentName) {
-            form11Doc = item.documentName ? item.documentName : "";
-            setForm11Uploade(true);
-          }
-          if (item.documentType === 11 && item.documentName) {
-            form2epfDoc = item.documentName ? item.documentName : "";
-            setForm2EpfUploade(true);
-          }
-          if (item.documentType === 12 && item.documentName) {
-            formFDoc = item.documentName ? item.documentName : "";
-            setFormFUploade(true);
-          }
-          setState({
-            form11: form11Doc,
-            form2epf: form2epfDoc,
-            formf: formFDoc,
-          });
-          // setNomineeDOB();
-          // setNominee({
-          //   nomineeAddress: "",
-          //   nomineeName: "",
-          //   nomineeRelationship: "",
-          // });
+      // if (pfDeclarationView.pfNominationHoldDeath === true) {
+      console.log("inside condition 2", documentViewData);
+      documentViewData.map((item) => {
+        console.log("item.documentType", item.documentType, item);
+        if (item.documentType === 10 && item.documentName) {
+          form11Doc = item.documentName ? item.documentName : "";
+          setForm11Uploade(true);
+        }
+        if (item.documentType === 11 && item.documentName) {
+          form2epfDoc = item.documentName ? item.documentName : "";
+          setForm2EpfUploade(true);
+        }
+        if (item.documentType === 12 && item.documentName) {
+          formFDoc = item.documentName ? item.documentName : "";
+          setFormFUploade(true);
+        }
+        setState({
+          form11: form11Doc,
+          form2epf: form2epfDoc,
+          formf: formFDoc,
         });
-        console.log(
-          "documents prefill",
-          form11Doc,
-          form2epfDoc,
-          formFDoc,
-          state
-        );
-      }
+        // setNomineeDOB();
+        // setNominee({
+        //   nomineeAddress: "",
+        //   nomineeName: "",
+        //   nomineeRelationship: "",
+        // });
+      });
+      console.log("documents prefill", form11Doc, form2epfDoc, formFDoc, state);
+      // }
     }
   }, [documentViewData, pfDeclarationView]);
   console.log("---->", documentViewData);
@@ -766,7 +760,7 @@ const PFDeclaration = (props) => {
       console.log("handleUpload", fileInfo);
       uploadFile(fileInfo);
     } else {
-      toast.info("Something went wrong");
+      toast.info("Please select file");
     }
   };
   return (
@@ -869,7 +863,10 @@ const PFDeclaration = (props) => {
             <div>
               <label>Provide your UAN number</label>
               {uanNumberError ? (
-                <p style={{ color: "red" }}> *Please enter your UAN number</p>
+                <p style={{ color: "red" }}>
+                  {" "}
+                  *Please enter your 12 digit UAN number
+                </p>
               ) : (
                 <p></p>
               )}

@@ -27,6 +27,7 @@ const EditWorkInformation = () => {
     expatUser: "",
     passportNumber: "",
     nationality: "",
+    adminCompany: "",
   });
   const [dateOfJoining, setDateOFJoining] = useState();
   const [dateOfLeaving, setDateOFLeaving] = useState();
@@ -34,6 +35,8 @@ const EditWorkInformation = () => {
   const [editButton, setEditButton] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [college, setCollege] = useState("");
+  const [dateOfIssue, setDateOfIssue] = useState();
+  const [dateOfValidity, setDateOfValidity] = useState();
 
   const { viewSports, sportsNames } = useContext(ClusterContext);
   const { CostCenter, costCenterList } = useContext(AdminContext);
@@ -65,6 +68,7 @@ const EditWorkInformation = () => {
     viewContractTypes();
     designationView();
     stateData();
+    viewCountries();
   }, []);
 
   useEffect(() => {
@@ -89,9 +93,12 @@ const EditWorkInformation = () => {
         expatUser: workData.expatUser,
         passportNumber: workData.passportNumber,
         nationality: workData.nationality,
+        adminCompany: workData.companyName,
       });
       setDateOFJoining(new Date(workData.dateOfJoin));
       setDateOFLeaving(new Date(workData.dateOfLeaving));
+      setDateOfIssue(new Date(workData.passportIssuedDate));
+      setDateOfValidity(new Date(workData.passportExpiryDate));
       setCostCenter(workData.costCentre);
       locationView(workData.costCentre);
       setCollege(workData.collegeName);
@@ -271,40 +278,39 @@ const EditWorkInformation = () => {
             <Col sm={3}>
               <Form.Group>
                 <Form.Label>Sports</Form.Label>
-                {state.employmentType === "Internship" ? (
+                {/* {state.employmentType === "Internship" ? (
                   <Form.Label>N/A</Form.Label>
-                ) : (
-                  <Form.Control
-                    as="select"
-                    value={state.sports}
-                    name="sports"
-                    disabled="true"
-                    className=" disable-arrow"
-                    style={{
-                      border: "0px",
-                      color: "#0020a5",
-                      backgroundColor: "#fafafa",
-                    }}
-                  >
-                    {sportsNames !== null &&
-                      sportsNames !== undefined &&
-                      sportsNames.length > 0 &&
-                      sportsNames.map((item) => {
-                        return (
-                          <option key={item.sportId} value={item.sportId}>
-                            {item.sportName}
-                          </option>
-                        );
-                      })}
-                  </Form.Control>
-                )}
+                ) : ( */}
+                <Form.Control
+                  as="select"
+                  value={state.sports}
+                  name="sports"
+                  disabled="true"
+                  className=" disable-arrow"
+                  style={{
+                    border: "0px",
+                    color: "#0020a5",
+                    backgroundColor: "#fafafa",
+                  }}
+                >
+                  {sportsNames !== null &&
+                    sportsNames !== undefined &&
+                    sportsNames.length > 0 &&
+                    sportsNames.map((item) => {
+                      return (
+                        <option key={item.sportId} value={item.sportId}>
+                          {item.sportName}
+                        </option>
+                      );
+                    })}
+                </Form.Control>
               </Form.Group>
             </Col>
           </Row>
           <Row className="mt-4">
             <Col sm={3}>
               <Form.Group>
-                <Form.Label>Work Location state</Form.Label>
+                <Form.Label>Work Location</Form.Label>
                 <br></br>
                 <Form.Label className="headingColor">
                   {filterArray !== undefined && filterArray[0] !== undefined
@@ -315,7 +321,7 @@ const EditWorkInformation = () => {
             </Col>
             <Col sm={3}>
               <Form.Group>
-                <Form.Label>Work Location City</Form.Label>
+                <Form.Label>Site</Form.Label>
                 <br></br>
                 <Form.Label className="headingColor">
                   {filterArray !== undefined && filterArray[0] !== undefined
@@ -357,14 +363,15 @@ const EditWorkInformation = () => {
           <Row className="mt-4">
             <Col sm={3}>
               {state.employmentType === "Internship" ? (
-                <Form.Group>
-                  <Form.Label>Internship Duration</Form.Label>
-                  <br></br>
-                  <Form.Label className="headingColor">
-                    {state.internship} Month
-                  </Form.Label>
-                </Form.Group>
+                ""
               ) : (
+                // <Form.Group>
+                //   <Form.Label>Internship Duration</Form.Label>
+                //   <br></br>
+                //   <Form.Label className="headingColor">
+                //     {state.internship} Month
+                //   </Form.Label>
+                // </Form.Group>
                 <Form.Group>
                   <Form.Label>Notice Period</Form.Label>
                   <br></br>
@@ -387,7 +394,7 @@ const EditWorkInformation = () => {
                 </Form.Group>
               </Col>
             )}
-            {(state.employmentType === "Internship" ||
+            {/* {(state.employmentType === "Internship" ||
               state.employmentType === "Permanent" ||
               state.employmentType === "permanent" ||
               state.employmentType === "Parttime") && (
@@ -400,8 +407,8 @@ const EditWorkInformation = () => {
                   </Form.Label>
                 </Form.Group>
               </Col>
-            )}
-            {state.expatUser == 1 && (
+            )} */}
+            {state.employmentType === "Local Expat" && (
               <Col sm={3}>
                 <Form.Group>
                   <Form.Label>Passport Number</Form.Label>
@@ -414,16 +421,36 @@ const EditWorkInformation = () => {
             )}
           </Row>
           <Row>
-            {state.expatUser == 1 && (
-              <Col sm={3}>
-                <Form.Group>
-                  <Form.Label>Nationality</Form.Label>
-                  <br></br>
-                  <Form.Label className="headingColor">
-                    {state.nationality}
-                  </Form.Label>
-                </Form.Group>
-              </Col>
+            {state.employmentType === "Local Expat" && (
+              <React.Fragment>
+                <Col sm={3}>
+                  <Form.Group>
+                    <Form.Label>Nationality</Form.Label>
+                    <br></br>
+                    <Form.Label className="headingColor">
+                      {state.nationality}
+                    </Form.Label>
+                  </Form.Group>
+                </Col>
+                <Col sm={3}>
+                  <Form.Group className="reactDate">
+                    <Form.Label>Date of Issue</Form.Label>
+                    <br></br>
+                    <Form.Label className="headingColor">
+                      {moment(dateOfIssue).format("YYYY-MM-DD")}
+                    </Form.Label>
+                  </Form.Group>
+                </Col>
+                <Col sm={3}>
+                  <Form.Group className="reactDate">
+                    <Form.Label>Date Of Validity</Form.Label>
+                    <br></br>
+                    <Form.Label className="headingColor">
+                      {moment(dateOfValidity).format("YYYY-MM-DD")}
+                    </Form.Label>
+                  </Form.Group>
+                </Col>
+              </React.Fragment>
             )}
           </Row>
           {state.recuritment === "NGO" ? (

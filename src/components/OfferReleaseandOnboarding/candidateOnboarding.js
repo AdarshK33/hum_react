@@ -110,7 +110,8 @@ const CandidateOnboarding = () => {
   const [costCenterError, setCostCenterError] = useState(false);
   const [fedError, setFedError] = useState(false);
   const [mandatory, setMandatory] = useState(false);
-
+  const [generateAppoint, setGenerateAppoint] = useState(false);
+  const [joiningError, setJoiningError] = useState(false);
   useEffect(() => {
     if (
       candidateData !== undefined &&
@@ -156,7 +157,13 @@ const CandidateOnboarding = () => {
     }
   }, [personalInfoData]);
   useEffect(() => {
-    if (empData !== undefined && empData !== null) {
+    if (
+      empData !== undefined &&
+      empData !== null &&
+      candidateData !== undefined &&
+      candidateData !== null &&
+      Object.keys(candidateData).length !== 0
+    ) {
       setEmployeeData({
         ...employeeData,
         ["active"]: empData !== undefined ? empData.active : "",
@@ -174,6 +181,30 @@ const CandidateOnboarding = () => {
             : empData.firstName,
         ["fatherName"]: empData.fatherName,
         ["gender"]: empData.gender,
+        // ["joiningDate"]:
+        //   candidateData !== undefined &&
+        //   candidateData !== null &&
+        //   Object.keys(candidateData).length !== 0 &&
+        //   candidateData.workInformation !== undefined &&
+        //   candidateData.workInformation !== null &&
+        //   candidateData.workInformation.dateOfJoin !== null &&
+        //   candidateData.workInformation.dateOfJoin !== undefined &&
+        //   candidateData.workInformation.dateOfJoin !== ""
+        //     ? new Date(candidateData.workInformation.dateOfJoin)
+        //     : new Date(),
+        ["joiningDate"]:
+          candidateData !== undefined &&
+          candidateData !== null &&
+          Object.keys(candidateData).length !== 0 &&
+          candidateData.workInformation !== undefined &&
+          candidateData.workInformation !== null &&
+          candidateData.workInformation.dateOfJoin !== null &&
+          candidateData.workInformation.dateOfJoin !== undefined &&
+          candidateData.workInformation.dateOfJoin !== ""
+            ? moment(candidateData.workInformation.dateOfJoin).format(
+                "YYYY-MM-DD"
+              )
+            : moment().format("YYYY-MM-DD"),
         ["locationId"]: empData.locationId,
         ["lastName"]: empData.lastName,
         ["loginType"]: empData.loginType,
@@ -197,28 +228,28 @@ const CandidateOnboarding = () => {
     }
   }, [empData]);
 
-  useEffect(() => {
-    if (
-      candidateData !== undefined &&
-      candidateData.workInformation !== undefined &&
-      candidateData.workInformation !== null
-    ) {
-      setEmployeeData({
-        ...employeeData,
-        ["joiningDate"]:
-          candidateData !== undefined &&
-          candidateData !== null &&
-          Object.keys(candidateData).length !== 0 &&
-          candidateData.workInformation !== undefined &&
-          candidateData.workInformation !== null &&
-          candidateData.workInformation.dateOfJoin !== null &&
-          candidateData.workInformation.dateOfJoin !== undefined &&
-          candidateData.workInformation.dateOfJoin !== ""
-            ? new Date(candidateData.workInformation.dateOfJoin)
-            : new Date(),
-      });
-    }
-  }, [candidateData]);
+  // useEffect(() => {
+  //   if (
+  //     candidateData !== undefined &&
+  //     candidateData.workInformation !== undefined &&
+  //     candidateData.workInformation !== null
+  //   ) {
+  //     setEmployeeData({
+  //       ...employeeData,
+  //       ["joiningDate"]:
+  //         candidateData !== undefined &&
+  //         candidateData !== null &&
+  //         Object.keys(candidateData).length !== 0 &&
+  //         candidateData.workInformation !== undefined &&
+  //         candidateData.workInformation !== null &&
+  //         candidateData.workInformation.dateOfJoin !== null &&
+  //         candidateData.workInformation.dateOfJoin !== undefined &&
+  //         candidateData.workInformation.dateOfJoin !== ""
+  //           ? new Date(candidateData.workInformation.dateOfJoin)
+  //           : new Date(),
+  //     });
+  //   }
+  // }, [candidateData]);
 
   const [employeeData, setEmployeeData] = useState(
     {
@@ -373,7 +404,7 @@ const CandidateOnboarding = () => {
   };
 
   const handleDataSave = () => {
-    console.log("emdata", employeeData);
+    console.log("emdata", employeeData, moment().format("YYYY-MM-DD"));
     const costCenterData = {
       costCenterSplitId: 0,
       costCentreA: costCenterA,
@@ -413,52 +444,50 @@ const CandidateOnboarding = () => {
     if (
       // (validateEmail(employeeData.email) &&
       //   alphaNumeric(employeeData.fedId) &&
-      (employeeData.role !== "" &&
-        employeeData.email !== "" &&
-        employeeData.fedId !== "" &&
-        costCenterData.costCentreA !== "" &&
-        costCenterData.endMonthA !== "" &&
-        costCenterData.startMonthA !== "" &&
-        costCenterData.startYearA !== "" &&
-        costCenterData.endYearA !== "") ||
-      (costCenterData.costCentreB !== "" &&
-        costCenterData.startYearB !== "" &&
-        costCenterData.startMonthB !== "" &&
-        costCenterData.endMonthB !== "" &&
-        costCenterData.endYearB !== "") ||
-      (costCenterData.costCentreC !== "" &&
-        costCenterData.startYearC !== "" &&
-        costCenterData.startMonthC !== "" &&
-        costCenterData.endMonthC !== "" &&
-        costCenterData.endYearC !== "") ||
-      (costCenterData.costCentreD !== "" &&
-        costCenterData.startYearD !== "" &&
-        costCenterData.startMonthD !== "" &&
-        costCenterData.endMonthD !== "" &&
-        costCenterData.endYearD !== "") ||
-      (costCenterData.costCentreE !== "" &&
-        costCenterData.startYearE !== "" &&
-        costCenterData.startMonthE !== "" &&
-        costCenterData.endMonthE !== "" &&
-        costCenterData.endYearE !== "")
+      employeeData.role !== null &&
+      employeeData.role !== "" &&
+      employeeData.email !== null &&
+      employeeData.email !== "" &&
+      employeeData.fedId !== null &&
+      employeeData.fedId !== "" &&
+      employeeData.joiningDate !== null &&
+      employeeData.joiningDate !== ""
     ) {
+      console.log("inside if");
       createEmployee(employeeData);
       saveCostcenterData(costCenterData);
       setError(false);
-      setCostCenterError(false);
+      setFedError(false);
       setMandatory(false);
-      submitAppointLetter();
-      // }
+      setJoiningError(false);
+      setGenerateAppoint(true);
     } else {
-      // setError(true);
-      // setFedError(true);
-      createEmployee(employeeData);
-      saveCostcenterData(costCenterData);
-      submitAppointLetter();
-      setMandatory(false);
+      console.log("inside else");
+      if (employeeData.email === "" || employeeData.email === null) {
+        setError(true);
+      }
+      if (employeeData.fedId === "" || employeeData.fedId === null) {
+        setFedError(true);
+      }
+      if (
+        employeeData.joiningDate === null ||
+        employeeData.joiningDate === ""
+      ) {
+        setJoiningError(true);
+      }
+
+      // createEmployee(employeeData);
+      // saveCostcenterData(costCenterData);
+      setMandatory(true);
+      setGenerateAppoint(false);
       // setCostCenterError(true);
     }
   };
+
+  const handleDataSubmit = () => {
+    submitAppointLetter();
+  };
+
   const handleIncrement = (key) => {
     console.log(key);
     setClicked(true);
@@ -596,7 +625,7 @@ const CandidateOnboarding = () => {
             </Col>
             <Col sm={6}>
               <DatePicker
-                className=" joiningField"
+                className="joiningField"
                 selected={
                   employeeData !== undefined &&
                   employeeData !== null &&
@@ -612,6 +641,9 @@ const CandidateOnboarding = () => {
                 dateFormat="yyyy-MM-dd"
                 placeholderText="Date of Joining"
               />
+              {joiningError === true && (
+                <span style={{ color: "red" }}>Please enter a valid date</span>
+              )}
             </Col>
           </Row>
           <Row className="mt-4">
@@ -729,7 +761,11 @@ const CandidateOnboarding = () => {
         candidateData.workInformation.contractType !== "Internship" ? (
           <Row>
             <Col sm={4}>
-              <label className="mr-3">Fixed Gross:</label>
+              {candidateData.workInformation.contractType === "Parttime" ? (
+                <label className="mr-3">Fixed Gross (Hourly) :</label>
+              ) : (
+                <label className="mr-3">Fixed Gross :</label>
+              )}
               <label>
                 {candidateData.remuneration !== undefined &&
                 candidateData.remuneration !== null ? (
@@ -1183,49 +1219,65 @@ const CandidateOnboarding = () => {
             </Col>
           </Row> */}
       </div>
-      {!previewLetter ? (
-        <div className="px-5 mx-auto mt-5">
-          <h5 style={{ fontWeight: 700 }}>GENERATE APPOINTMENT LETTER</h5>
-          <Row className="text-center mt-4">
-            <Button
-              type="button"
-              className="px-5 mb-4 previewButton"
-              onClick={() => generateAppointmentLetter()}
-            >
-              Generate Appointment Letter
-            </Button>
-          </Row>
-        </div>
-      ) : (
-        <div className="px-5 mx-auto mt-5">
-          <h5 style={{ fontWeight: 700 }}>APPOINTMENT LETTER</h5>
-          <div className="preview-section">
-            {/* <Row className="text-center mt-3"> */}
-            <Button
-              type="button"
-              className="px-5 mb-4 previewButton"
-              onClick={() => previewAppointmentLetter()}
-            >
-              Preview Appointment Letter
-            </Button>
-            <br></br>
-            <br></br>
-            <img src={calendarImage} alt="calendar" width="300px" />
-            <br></br>
-            <br></br>
-            {letterSent ? (
-              ""
-            ) : (
+      {!previewLetter && generateAppoint === false && (
+        <Row className="text-center mt-4">
+          <Button
+            type="button"
+            className="px-5 mb-4 previewButton"
+            onClick={handleDataSave}
+          >
+            Save
+          </Button>
+        </Row>
+      )}
+      {generateAppoint === true ? (
+        !previewLetter ? (
+          <div className="px-5 mx-auto mt-5">
+            <h5 style={{ fontWeight: 700 }}>GENERATE APPOINTMENT LETTER</h5>
+            <Row className="text-center mt-4">
               <Button
                 type="button"
-                onClick={handleDataSave}
-                style={{ textAlign: "center" }}
+                className="px-5 mb-4 previewButton"
+                onClick={() => generateAppointmentLetter()}
               >
-                Save & Submit
+                Generate Appointment Letter
               </Button>
-            )}
-            {/* </Row> */}
+            </Row>
           </div>
+        ) : (
+          <div className="px-5 mx-auto mt-5">
+            <h5 style={{ fontWeight: 700 }}>APPOINTMENT LETTER</h5>
+            <div className="preview-section">
+              {/* <Row className="text-center mt-3"> */}
+              <Button
+                type="button"
+                className="px-5 mb-4 previewButton"
+                onClick={() => previewAppointmentLetter()}
+              >
+                Preview Appointment Letter
+              </Button>
+              <br></br>
+              <br></br>
+              <img src={calendarImage} alt="calendar" width="300px" />
+              <br></br>
+              <br></br>
+
+              {/* </Row> */}
+            </div>
+          </div>
+        )
+      ) : (
+        ""
+      )}
+      {previewLetter === true && letterSent === false && (
+        <div className="preview-section">
+          <Button
+            type="button"
+            onClick={handleDataSubmit}
+            style={{ textAlign: "center" }}
+          >
+            Save & Submit
+          </Button>
         </div>
       )}
       {/* <div

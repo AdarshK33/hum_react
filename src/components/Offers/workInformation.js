@@ -675,7 +675,7 @@ const WorkInformation = (props) => {
           <Row>
             <Col sm={3}>
               <Form.Group>
-                <Form.Label>Work Location state</Form.Label>
+                <Form.Label>Work Location</Form.Label>
                 <Form.Control
                   as="select"
                   value={costCenter === "" ? "" : stateValue}
@@ -684,7 +684,7 @@ const WorkInformation = (props) => {
                   disabled={disabled}
                   required
                 >
-                  <option value="">Select State</option>
+                  <option value="">Select Location</option>
                   {stateList !== null &&
                     stateList !== undefined &&
                     stateList.map((item, i) => {
@@ -699,7 +699,7 @@ const WorkInformation = (props) => {
             </Col>
             <Col sm={3}>
               <Form.Group>
-                <Form.Label>Work Location City</Form.Label>
+                <Form.Label>Site</Form.Label>
                 <Form.Control
                   as="select"
                   value={city}
@@ -708,7 +708,7 @@ const WorkInformation = (props) => {
                   disabled={disabled}
                   required
                 >
-                  <option value="">Select City</option>
+                  <option value="">Select Site</option>
                   {cityList !== null &&
                     cityList !== undefined &&
                     cityList.map((item, i) => {

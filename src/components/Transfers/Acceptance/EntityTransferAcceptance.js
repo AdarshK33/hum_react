@@ -698,7 +698,7 @@ const EntityTransferAcceptance = () => {
                               undefined ? (
                               <a
                                 href={
-                                  "http://humine-application.s3-website.ap-south-1.amazonaws.com/" +
+                                  process.env.REACT_APP_S3_URL +
                                   transferData.internationalTransfer
                                     .panNumberDoc
                                 }
@@ -734,7 +734,7 @@ const EntityTransferAcceptance = () => {
                               .aadhaarNumberDoc !== undefined ? (
                               <a
                                 href={
-                                  "http://humine-application.s3-website.ap-south-1.amazonaws.com/" +
+                                  process.env.REACT_APP_S3_URL +
                                   transferData.internationalTransfer
                                     .aadhaarNumberDoc
                                 }

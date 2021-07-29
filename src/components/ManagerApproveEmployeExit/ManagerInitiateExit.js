@@ -6,14 +6,16 @@ import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState
 import { OfferContext } from "../../context/OfferState";
 import { PermissionContext } from "../../context/PermissionState";
 import "./EmployeeExit.css";
-import moment from "moment";
+import moment, { months } from "moment";
 import DatePicker from "react-datepicker";
 import { toast } from "react-toastify";
 import "react-datepicker/dist/react-datepicker.css";
 import { SeparationContext } from "../../context/SepearationState";
 import { setGlobalCssModule } from "reactstrap/es/utils";
 import RelievingLetter from "./RelivingLetter";
+import InternShipLetter from "./InternShipLetter"
 import calendarImage from "../../assets/images/calendar-image.png";
+import { setDate } from "date-fns";
 
 const ManagerInitiateExit = () => {
   const [modeOfSeparation, setModeOfSeparation] = useState("");
@@ -55,7 +57,7 @@ const ManagerInitiateExit = () => {
   const [letterSent, setLetterSent] = useState(false);
   const [showPreview, setPreview] = useState(false);
   const [previewGeneratedLetter, setPreviewGeneratedLetter] = useState(false);
-
+  const [lastDateSelection ,setLastDateSelection] = useState(new Date())
   const [state, setState] = useState({
     empId: "",
     empContractType: "",
@@ -156,6 +158,7 @@ const ManagerInitiateExit = () => {
         setDateOfResignation("");
         setLastWorkingDate("");
         setPreview(false);
+        ViewEmployeeDataById(state.empId)
       }
     }
   }, [employeeData]);
@@ -229,6 +232,12 @@ const ManagerInitiateExit = () => {
 
       state.empContractType = searchByCostData.contractType;
       state.empCostCenterName = searchByCostData.costCentre;
+      if(searchByCostData.department == "AFS" ||searchByCostData.department == "IT" ||searchByCostData.department == "Legal" ||searchByCostData.department == "Finance"){
+        state.noticePeriod = 2
+      }else{
+        state.noticePeriod = 1
+      }
+      // state.noticePeriod = searchByCostData.noticePeriod
       //   state.empLocation = searchEmpData1.location;
       state.empPosition = searchByCostData.position;
       state.emailId = searchByCostData.personalEmail;
@@ -244,8 +253,22 @@ const ManagerInitiateExit = () => {
         state.empContractType === "Permanent" ||state.empContractType === "parttime" ||
         state.empContractType === "PartTime"
       ) {
+              var dateValue =  new Date(new Date().setMonth(new Date().getMonth() + (state.noticePeriod)))
+        let aboveDateValue = new Date(new Date().setMonth(new Date().getMonth() + (parseInt(state.noticePeriod) + 1)))
         setIntern(false);
-        setLastWorkingDate(new Date().setMonth(new Date().getMonth() + searchByCostData.noticePeriod))
+        setLastDateSelection(aboveDateValue)
+        setLastWorkingDate(dateValue)
+
+//         if(dateValue.getDate()>=1 &&  dateValue.getDate()<=20 && searchByCostData.noticePeriod == 0){
+//           setLastDateSelection(dateValue.setDate("20"))
+//           setLastWorkingDate(dateValue)
+//         }else {
+//           var aboveDateValue =  new Date(new Date().setMonth(new Date().getMonth() + (parseInt(searchByCostData.noticePeriod) + 1)))
+//           setLastDateSelection(aboveDateValue.setDate(20))
+//           setLastWorkingDate(aboveDateValue.setDate(dateValue.getDate()-20))
+//         }
+// console.log(dateValue.setDate("20"),aboveDateValue,searchByCostData)
+
       } else {
         setIntern(false);
         setLastWorkingDate("")
@@ -469,6 +492,7 @@ const ManagerInitiateExit = () => {
   const handleRelivingClose = () => setShow(false);
 
   const saveOfferLetter = () => {
+    setPreviewGeneratedLetter(true);
     setSaveLetter(true);
     setShow(false);
   };
@@ -503,7 +527,7 @@ const ManagerInitiateExit = () => {
     e.preventDefault();
     fetchRelievingLetterData(employeeData.employeeId);
     handleShow();
-    setPreviewGeneratedLetter(true);
+    // setPreviewGeneratedLetter(true);
   };
   const handleShow = () => {
     console.log("inside show moodal");
@@ -523,6 +547,8 @@ const ManagerInitiateExit = () => {
     state.empLocation = "";
     state.empCostCenterName = "";
     state.emailId = ""
+    state.noticePeriod = ""
+    setLastWorkingDate("");
     makeEmployeeDataNull();
     makeSearchEmp1DataNull();
   };
@@ -650,6 +676,7 @@ const ManagerInitiateExit = () => {
     }
   };
   const validateCheckBoxes = (itemYes, itemNo, setError) => {
+    if (intern === false) {
     if ((itemYes === true) | (itemNo === true)) {
       setError(false);
       console.log(itemYes, itemNo);
@@ -658,6 +685,9 @@ const ManagerInitiateExit = () => {
       setError(true);
       return false;
     }
+  } else {
+    return true;
+  }
   };
   const validateCheckBoxes1 = (itemYes, itemNo, setError) => {
     if (intern === false) {
@@ -675,12 +705,13 @@ const ManagerInitiateExit = () => {
   };
   const validateRcryDays = () => {
     const Valid = /^[0-9\b]+$/;
-    if (RcryYes === true) {
+    var noticeDays = state.noticePeriod * 30
+      if (RcryYes === true && intern === false) {
       if (
         state.noticePeriodRcryDays !== "" &&
         state.noticePeriodRcryDays !== null &&
         state.noticePeriodRcryDays !== undefined &&
-        Valid.test(state.noticePeriodRcryDays)
+        Valid.test(state.noticePeriodRcryDays ) && state.noticePeriodRcryDays <= noticeDays
       ) {
         setRcryDaysError(false);
         return true;
@@ -691,6 +722,7 @@ const ManagerInitiateExit = () => {
     } else {
       return true;
     }
+  
   };
   const checkValidations = () => {
     console.log("on validation");
@@ -807,7 +839,7 @@ const ManagerInitiateExit = () => {
             managerPosition: state.mngrPosition,
             modeOfSeparationId: changeInSeparation,
             modeOfSeparationReasonId: reasonId,
-            noticePeriod: 0,
+            noticePeriod: state.noticePeriod,
             noticePeriodRecovery: RcryYes ? 1 : RcryNo ? 2 : 0,
             noticePeriodRecoveryDays: parseInt(state.noticePeriodRcryDays),
             position: state.empPosition,
@@ -849,7 +881,7 @@ const ManagerInitiateExit = () => {
             managerPosition: state.mngrPosition,
             modeOfSeparationId: 3,
             modeOfSeparationReasonId: 4,
-            noticePeriod: 0,
+            noticePeriod: state.noticePeriod,
             noticePeriodRecovery: RcryYes ? 1 : RcryNo ? 2 : 0,
             noticePeriodRecoveryDays: parseInt(state.noticePeriodRcryDays),
             position: state.empLocation,
@@ -873,7 +905,7 @@ const ManagerInitiateExit = () => {
       }
     }
   };
-
+console.log(intern,"8098709809808")
   return (
     <Fragment>
       {/* reliving letter */}
@@ -905,10 +937,10 @@ const ManagerInitiateExit = () => {
           <Modal.Body>
             {relivingLetterData &&
             relivingLetterData !== undefined &&
-            relivingLetterData !== null ? (
+            relivingLetterData !== null && intern === false? (
               <RelievingLetter />
             ) : (
-              ""
+              <InternShipLetter/>
             )}
             <br></br>
             <Row>
@@ -1138,6 +1170,16 @@ const ManagerInitiateExit = () => {
                             </label>
                           </div>
                         </Col>
+                       {state.empContractType !== "internship"? <Col sm={4}>
+                        <div>
+                            <label>
+                            Notice Period:
+                              <label className="itemResult">
+                                &nbsp;&nbsp; {state.noticePeriod === 1?`${state.noticePeriod} Month`:(state.noticePeriod>1)?`${state.noticePeriod} Months`:state.noticePeriod}
+                              </label>
+                            </label>
+                          </div>
+                </Col>:''}
                       </Row>
                       <Row
                         style={{
@@ -1187,7 +1229,7 @@ const ManagerInitiateExit = () => {
                       >
                         <Col sm={2}>
                           <div>
-                            <label>Mode of Separation:</label>
+                            <label>Type of Separation:</label>
                           </div>
                         </Col>
                         {intern ? (
@@ -1332,19 +1374,21 @@ const ManagerInitiateExit = () => {
                                     className="form-control onBoard-view"
                                     selected={lastWorkingDate}
                                     name="lastWorkingDate"
+                                    minDate={new Date()}
                                     minDate={moment().toDate()}
+                                      maxDate={lastDateSelection}
                                     // required
                                     onChange={(e) => dateOfBirthHandler1(e)}
                                     dateFormat="yyyy-MM-dd"
                                     placeholderText="YYYY-MM-DD"
-                                    minDate={new Date()}
+                                    
                                     // disabled={disabled}
                                   />
                                 </div>
                                 {lastWorkingDateError ? (
                                   <p style={{ color: "red" }}>
                                     {" "}
-                                    &nbsp; *Please select valid date
+                                    &nbsp; *Please enter valid date
                                   </p>
                                 ) : (
                                   <p></p>
@@ -1353,8 +1397,8 @@ const ManagerInitiateExit = () => {
                             )}
                           </div>
                         </Col>
-
-                        {intern ? (
+{/* 
+                        {intern === false ? (
                           <Col sm={2}>
                             <div>
                               <label>Notice Period Recovery Days</label>
@@ -1363,7 +1407,7 @@ const ManagerInitiateExit = () => {
                         ) : (
                           ""
                         )}
-                        {intern ? (
+                        {intern === false ? (
                           <Col sm={2} style={{ marginTop: "0.5rem" }}>
                             {false ? (
                               <label className="itemResult">
@@ -1400,7 +1444,7 @@ const ManagerInitiateExit = () => {
                           </Col>
                         ) : (
                           ""
-                        )}
+                        )} */}
                       </Row>
                       <Row
                         style={{
@@ -1514,7 +1558,7 @@ const ManagerInitiateExit = () => {
                             )}
                           </div>
                         </Col>
-                        <Col sm={2}>
+                       {intern === false?<><Col sm={2}>
                           <div>
                             <label>Notice Period Recovery</label>
                             {RcryError ? (
@@ -1558,7 +1602,7 @@ const ManagerInitiateExit = () => {
                               <label className="itemResult">No</label>
                             </div>
                           </Form.Group>
-                        </Col>
+                        </Col></>:""}
                       </Row>
                       {/* <Row
                     style={{

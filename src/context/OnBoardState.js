@@ -606,7 +606,7 @@ export const OnBoardProvider = (props) => {
         toast.info(response.data.message);
       })
       .catch((error) => {
-        toast.info("Please upload a valid file");
+        // toast.info("Please upload a valid file");
         console.log(error);
       });
   };

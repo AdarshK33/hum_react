@@ -73,7 +73,7 @@ const ViewRemunerationInformation = (props) => {
                       type="number"
                       name="fixedGross"
                       value={fixedGross}
-                      placeholder="1000"
+                      placeholder=""
                       readOnly
                     />
                   </Col>
@@ -92,7 +92,7 @@ const ViewRemunerationInformation = (props) => {
                       type="number"
                       name="stipend"
                       value={stipend}
-                      placeholder="1000"
+                      placeholder=""
                       readOnly
                     />
                   </Col>
@@ -103,41 +103,22 @@ const ViewRemunerationInformation = (props) => {
             candidateData.workInformation &&
             candidateData.workInformation.contractType !== "Internship" ? (
               <Fragment>
-                {user.role === "ADMIN" ? (
-                  <Col sm={6}>
-                    <Form.Group as={Row} controlId="formHorizontalEmail">
-                      {/* <Form.Label column sm={3}> */}
-                      Monthly Bonus ( % ){/* </Form.Label> */}
-                      <Col sm={6}>
-                        <Form.Control
-                          className="form-input"
-                          type="number"
-                          name="monthlyBonus"
-                          value={monthlyBonus}
-                          placeholder="0"
-                          readOnly
-                        />
-                      </Col>
-                    </Form.Group>
-                  </Col>
-                ) : (
-                  <Col sm={6}>
-                    <Form.Group as={Row} controlId="formHorizontalEmail">
-                      {/* <Form.Label column sm={3}> */}
-                      Monthly Bonus ( % ){/* </Form.Label> */}
-                      <Col sm={6}>
-                        <Form.Control
-                          className="form-input"
-                          type="nummber"
-                          name="monthlyBonus"
-                          readOnly
-                          disabled="true"
-                          placeholder="0"
-                        />
-                      </Col>
-                    </Form.Group>
-                  </Col>
-                )}
+                <Col sm={6}>
+                  <Form.Group as={Row} controlId="formHorizontalEmail">
+                    {/* <Form.Label column sm={3}> */}
+                    Monthly Bonus ( % ){/* </Form.Label> */}
+                    <Col sm={6}>
+                      <Form.Control
+                        className="form-input"
+                        type="number"
+                        name="monthlyBonus"
+                        value={monthlyBonus}
+                        placeholder=""
+                        readOnly
+                      />
+                    </Col>
+                  </Form.Group>
+                </Col>
               </Fragment>
             ) : (
               ""
