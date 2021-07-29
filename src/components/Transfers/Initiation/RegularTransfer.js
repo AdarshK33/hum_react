@@ -50,7 +50,7 @@ const RegularTransfer = () => {
   const [locationErrMsg, setLocationErrMsg] = useState("");
   const [newGross, setNewGross] = useState();
   const [grossErrMsg, setGrossErrMsg] = useState("");
-  const [bonus, setBonus] = useState();
+  const [bonus, setBonus] = useState("");
   const [relocationBonus, setRelocationBonus] = useState("");
   const [relocationBonusErrMsg, setRelocationBonusErrMsg] = useState("");
   const [effectiveDate, setEffectiveDate] = useState(new Date());
@@ -98,6 +98,8 @@ const RegularTransfer = () => {
       Object.keys(getBonusByContractType).length !== 0
     ) {
       setBonus(getBonusByContractType.bonus);
+    } else {
+      setBonus("");
     }
   }, [getBonusByContractType]);
   useEffect(() => {
@@ -353,11 +355,15 @@ const RegularTransfer = () => {
   const handleLetterSubmitModalClose = () => {
     setShowLetterSubmitModal(false);
     history.push("./transfers");
+    setBonus("");
+    setNewPositionName("");
+    setNewDeptName("");
   };
 
   /* Validate form */
   const validateForm = () => {
     let validForm = true;
+    const Valid = /^[0-9\b]+$/;
     console.log("relocationBonus", relocationBonus);
 
     if (transferType === "") {
@@ -403,7 +409,7 @@ const RegularTransfer = () => {
     if (relocationBonus === "") {
       validForm = false;
       setRelocationBonusErrMsg("Please enter relocation bonus");
-    } else if (relocationBonus.length !== 2) {
+    } else if (relocationBonus.length > 2 || !Valid.test(relocationBonus)) {
       validForm = false;
       setRelocationBonusErrMsg("Please enter two digits bonus");
     }

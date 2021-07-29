@@ -79,12 +79,12 @@ const TransferPage = () => {
               edit: {
                 active:
                   item.promotedManagerId === user.employeeId &&
-                  item.statusDesc === "In Progress"
+                  item.status === 0
                     ? true
                     : false,
                 link:
                   item.promotedManagerId === user.employeeId &&
-                  item.statusDesc === "In Progress"
+                  item.status === 0
                     ? `/transfer/${item.transferId}`
                     : "",
                 // item.transferType === "Regular Transfer"
@@ -116,12 +116,12 @@ const TransferPage = () => {
               edit: {
                 active:
                   item.promotedManagerId === user.employeeId &&
-                  item.statusDesc === "In Progress"
+                  item.status === 0
                     ? true
                     : false,
                 link:
                   item.promotedManagerId === user.employeeId &&
-                  item.statusDesc === "In Progress"
+                  item.status === 0
                     ? `/entity-transfer/${item.transferId}`
                     : "",
               },
@@ -165,7 +165,8 @@ const TransferPage = () => {
             effDate: item.promotedJoiningDate,
             dateOfReturn: item.promotedDateOfReturn,
             termOfProject: item.promotedTermOfProject,
-            status: item.statusDesc,
+            status:
+              item.status === 0 ? "Request Sent To Admin" : item.statusDesc,
             view: {
               active: true,
               link: `/view-transfer/${item.transferId}`,
@@ -174,10 +175,14 @@ const TransferPage = () => {
               edit: {
                 active:
                   (user.additionalRole === "1" || user.loginType == "1") &&
-                  item.statusDesc === "In Progress"
+                  item.status === 0
                     ? true
                     : false,
-                link: `/international-transfer/${item.transferId}`,
+                link:
+                  (user.additionalRole === "1" || user.loginType == "1") &&
+                  item.status === 0
+                    ? `/international-transfer/${item.transferId}`
+                    : "",
               },
             },
           };
@@ -312,21 +317,69 @@ const TransferPage = () => {
                         </Button>
                       </Link>
                     </Col>
-                    <Col md={2} style={{ marginTop: "-3px" }}>
-                      <Form.Control
-                        as="select"
-                        aria-label="Choose Status"
-                        value={status}
-                        onChange={statusHandler}
-                        className="probation_status_search"
-                      >
-                        <option disabled>Choose Status</option>
-                        <option value="0">In Progress</option>
-                        <option value="1">Approved</option>
-                        <option value="2">Rejected</option>
-                        <option value="5">All</option>
-                      </Form.Control>
-                    </Col>
+                    {transferType === "Regular Transfer" ? (
+                      <Col md={2} style={{ marginTop: "-3px" }}>
+                        <Form.Control
+                          as="select"
+                          aria-label="Choose Status"
+                          value={status}
+                          onChange={statusHandler}
+                          className="probation_status_search"
+                        >
+                          <option disabled>Choose Status</option>
+                          <option value="0">Request Sent To Manager</option>
+                          <option value="1">Completed</option>
+                          <option value="2">Rejected</option>
+                          <option value="5">All</option>
+                        </Form.Control>
+                      </Col>
+                    ) : transferType === "Entity Transfer" ? (
+                      <Col md={2} style={{ marginTop: "-3px" }}>
+                        <Form.Control
+                          as="select"
+                          aria-label="Choose Status"
+                          value={status}
+                          onChange={statusHandler}
+                          className="probation_status_search"
+                        >
+                          <option disabled>Choose Status</option>
+                          <option value="0">Request Sent To Manager</option>
+                          <option value="1">Completed</option>
+                          <option value="5">All</option>
+                        </Form.Control>
+                      </Col>
+                    ) : transferType === "International Transfer" ? (
+                      <Col md={2} style={{ marginTop: "-3px" }}>
+                        <Form.Control
+                          as="select"
+                          aria-label="Choose Status"
+                          value={status}
+                          onChange={statusHandler}
+                          className="probation_status_search"
+                        >
+                          <option disabled>Choose Status</option>
+                          <option value="0">Request Sent To Admin</option>
+                          <option value="1">Completed</option>
+                          <option value="5">All</option>
+                        </Form.Control>
+                      </Col>
+                    ) : transferType === "Employment Type Transfer" ? (
+                      <Col md={2} style={{ marginTop: "-3px" }}>
+                        <Form.Control
+                          as="select"
+                          aria-label="Choose Status"
+                          value={status}
+                          onChange={statusHandler}
+                          className="probation_status_search"
+                        >
+                          <option disabled>Choose Status</option>
+                          <option value="0">Request Sent To Manager</option>
+                          <option value="5">All</option>
+                        </Form.Control>
+                      </Col>
+                    ) : (
+                      ""
+                    )}
                   </Row>
                 </div>
                 <div className="table-list">

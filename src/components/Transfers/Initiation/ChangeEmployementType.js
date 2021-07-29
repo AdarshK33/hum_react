@@ -202,6 +202,7 @@ const ChangeEmployementType = () => {
   /* Validate form */
   const validateForm = () => {
     let validForm = true;
+    const Valid = /^[0-9\b]+$/;
 
     if (searchInput === "") {
       validForm = false;
@@ -216,9 +217,44 @@ const ChangeEmployementType = () => {
     //   validForm = false;
     //   setCostCentreErrMsg("Please select cost centre");
     // }
+
     if (newGross === "") {
       validForm = false;
+
       setGrossErrMsg("Please enter fixed gross");
+      console.log("validForm", validForm);
+    } else if (
+      newEmployement !== null &&
+      newEmployement !== undefined &&
+      newEmployement !== "" &&
+      newEmployement === "From Part Time to Full Time"
+    ) {
+      if (Valid.test(newGross)) {
+        if (parseInt(newGross) < 18000) {
+          validForm = false;
+          setGrossErrMsg("Value should be greater than 18000");
+          console.log("validForm", validForm);
+        }
+      } else {
+        validForm = false;
+        setGrossErrMsg("Value should be number");
+      }
+    } else if (
+      newEmployement !== null &&
+      newEmployement !== undefined &&
+      newEmployement !== "" &&
+      newEmployement === "From Full Time to Part Time"
+    ) {
+      if (Valid.test(newGross)) {
+        if (parseInt(newGross) < 90 || parseInt(newGross) > 200) {
+          validForm = false;
+          setGrossErrMsg("Value should be between 90 - 200");
+          console.log("validForm", validForm);
+        }
+      } else {
+        validForm = false;
+        setGrossErrMsg("Value should be number");
+      }
     }
 
     // if (
@@ -539,7 +575,7 @@ const ChangeEmployementType = () => {
                       <option value="From Part Time to Full Time">
                         From Part Time to Full Time
                       </option>
-                      <option value="From Temporary to Permanent Full Time">
+                      <option value="From Full Time to Part Time">
                         From Full Time to Part Time
                       </option>
                     </Form.Control>

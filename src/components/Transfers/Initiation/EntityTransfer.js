@@ -10,6 +10,7 @@ import { TransferContext } from "../../../context/TransferState";
 import TransferInitationLetter from "./TransferInitiationLetter";
 import calendarImage from "../../../assets/images/calendar-image.png";
 import { useHistory } from "react-router-dom";
+import { BonusContext } from "../../../context/BonusState";
 
 const EntityTransfer = () => {
   const {
@@ -29,6 +30,8 @@ const EntityTransfer = () => {
     initiationStatus,
     initiationTransferId,
   } = useContext(TransferContext);
+  const { viewBonusByContarctType, getBonusByContractType } =
+    useContext(BonusContext);
   const [transferType, setTransferType] = useState("Entity Transfer");
   const [newEntity, setNewEntity] = useState("");
   const [newEntityErrMsg, setNewEntityErrMsg] = useState("");
@@ -38,7 +41,13 @@ const EntityTransfer = () => {
   const [newDept, setNewDept] = useState("");
   const [effectiveDate, setEffectiveDate] = useState(new Date());
   const [effectiveDateErrMsg, setEffectiveDateErrMsg] = useState("");
+  const [effectiveJoinigDate, setEffectiveJoinigDate] = useState(new Date());
+  const [effectiveJoinigDateErrMsg, setEffectiveJoinigDateErrMsg] =
+    useState("");
   const [newCostCentre, setNewCostCentre] = useState("");
+  const [newGross, setNewGross] = useState("");
+  const [grossErrMsg, setGrossErrMsg] = useState("");
+  const [bonus, setBonus] = useState("");
   const [costCentreErrMsg, setCostCentreErrMsg] = useState("");
   const [newManager, setNewManager] = useState("");
   const [managerErrMsg, setManagerErrMsg] = useState("");
@@ -77,6 +86,38 @@ const EntityTransfer = () => {
       getCostCentreLocationDetails(newCostCentre);
     }
   }, [newCostCentre]);
+
+  useEffect(() => {
+    if (
+      initiationEmpData !== null &&
+      initiationEmpData !== undefined &&
+      Object.keys(initiationEmpData).length !== 0 &&
+      initiationEmpData.currentDepartment !== "" &&
+      initiationEmpData.currentDepartment !== null &&
+      initiationEmpData.currentDepartment !== undefined &&
+      initiationEmpData.currentPosition !== "" &&
+      initiationEmpData.currentPosition !== null &&
+      initiationEmpData.currentPosition !== undefined
+    ) {
+      viewBonusByContarctType(
+        initiationEmpData.currentContractType,
+        initiationEmpData.currentDepartment,
+        initiationEmpData.currentPosition
+      );
+    }
+  }, [initiationEmpData]);
+  console.log("getBonusByContractType->", getBonusByContractType);
+  useEffect(() => {
+    if (
+      getBonusByContractType !== null &&
+      getBonusByContractType !== undefined &&
+      Object.keys(getBonusByContractType).length !== 0
+    ) {
+      setBonus(getBonusByContractType.bonus);
+    } else {
+      setBonus("");
+    }
+  }, [getBonusByContractType]);
 
   //   useEffect(() => {
   //     if (formValid === true) {
@@ -133,6 +174,10 @@ const EntityTransfer = () => {
     setEffectiveDate(date);
     setEffectiveDateErrMsg("");
   };
+  const changeEffectiveDateHandler1 = (date) => {
+    setEffectiveJoinigDate(date);
+    setEffectiveJoinigDateErrMsg("");
+  };
 
   const handleModalClose = () => {
     setModalShow(false);
@@ -168,6 +213,10 @@ const EntityTransfer = () => {
     setNewManager(e.target.value);
     setManagerErrMsg("");
   };
+  const changeGrossHandler = (e) => {
+    setNewGross(e.target.value);
+    setGrossErrMsg("");
+  };
 
   /* Validate form */
   const validateForm = () => {
@@ -190,6 +239,37 @@ const EntityTransfer = () => {
       validForm = false;
       setManagerErrMsg("Please select manager");
     }
+    // if (newGross === "") {
+    //   validForm = false;
+
+    //   setGrossErrMsg("Please enter fixed gross");
+    //   console.log("validForm", validForm);
+    // } else if (
+    //   initiationEmpData !== null &&
+    //   initiationEmpData !== undefined &&
+    //   Object.keys(initiationEmpData).length !== 0 &&
+    //   (initiationEmpData.currentContractType === "Permanent" ||
+    //     initiationEmpData.currentContractType === "permanent")
+    // ) {
+    //   if (parseInt(newGross) < 18000) {
+    //     validForm = false;
+    //     setGrossErrMsg("Value should be greater than 18000");
+    //     console.log("validForm", validForm);
+    //   } else {
+    //     console.log("elseee");
+    //   }
+    // } else if (
+    //   initiationEmpData !== null &&
+    //   initiationEmpData !== undefined &&
+    //   Object.keys(initiationEmpData).length !== 0 &&
+    //   (initiationEmpData.currentContractType === "Parttime" ||
+    //     initiationEmpData.currentContractType === "parttime")
+    // ) {
+    //   if (parseInt(newGross) < 90 || parseInt(newGross) > 200) {
+    //     setGrossErrMsg("Value should be between 90 - 200");
+    //     console.log("validForm", validForm);
+    //   }
+    // }
 
     if (
       effectiveDate === "" ||
@@ -198,6 +278,14 @@ const EntityTransfer = () => {
     ) {
       validForm = false;
       setEffectiveDateErrMsg("Please enter effective date");
+    }
+    if (
+      effectiveJoinigDate === "" ||
+      effectiveJoinigDate === undefined ||
+      effectiveJoinigDate === null
+    ) {
+      validForm = false;
+      setEffectiveJoinigDate("Please enter effective date");
     }
 
     return validForm;
@@ -233,7 +321,10 @@ const EntityTransfer = () => {
         promotedJoiningDate: moment(effectiveDate).format("YYYY-MM-DD"),
         promotedLocation: initiationEmpData.promotedLocation,
         promotedManagerId: newManager,
-        promotedMonthlyBonus: initiationEmpData.promotedMonthlyBonus,
+        promotedMonthlyBonus:
+          bonus !== "" && bonus !== null && bonus !== undefined
+            ? parseInt(bonus)
+            : 0,
         promotedPosition: initiationEmpData.promotedPosition,
         promotedRelocationBonus: initiationEmpData.promotedRelocationBonus,
         promotedTermOfProject: initiationEmpData.promotedTermOfProject,
@@ -367,6 +458,20 @@ const EntityTransfer = () => {
           initiationEmpData !== undefined &&
           Object.keys(initiationEmpData).length > 0 ? (
             <div className="mt-5 mr-5">
+              <Row className="mb-4">
+                <Col
+                  md={{ span: 4, offset: 2 }}
+                  className="font-weight-bold my-2"
+                >
+                  Current
+                </Col>
+                <Col
+                  md={{ span: 3, offset: 2 }}
+                  className="font-weight-bold my-2"
+                >
+                  New
+                </Col>
+              </Row>
               <Form.Group
                 as={Row}
                 className="mb-3"
@@ -379,58 +484,7 @@ const EntityTransfer = () => {
                   {initiationEmpData.currentCostCentre}
                 </Col>
                 <Col md={2}>
-                  <Form.Label>Contract Type:</Form.Label>
-                </Col>
-                <Col md={4} className="text-primary">
-                  {initiationEmpData.currentContractType}
-                </Col>
-              </Form.Group>
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="transferInitiationPosition"
-              >
-                <Col md={2}>
-                  <Form.Label>Old Entity:</Form.Label>
-                </Col>
-                <Col md={4} className="text-primary">
-                  {initiationEmpData.currentCompany}
-                </Col>
-                <Col md={2}>
-                  <Form.Label>New Entity:</Form.Label>
-                </Col>
-                <Col md={4}>
-                  <Form.Control
-                    as="select"
-                    className="text-primary"
-                    aria-label="transferInitiationPosition"
-                    value={newEntity}
-                    placeholder="Select Position"
-                    onChange={changeEntityHandler}
-                  >
-                    <option value="">Select New Entity</option>
-                    <option value="INDECA">INDECA</option>
-                    <option value="DSI">DSI</option>
-                    <option value="PRODIN">PRODIN</option>
-                  </Form.Control>
-                  {newEntityErrMsg !== "" && (
-                    <span className="text-danger">{newEntityErrMsg}</span>
-                  )}
-                </Col>
-              </Form.Group>
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="transferInitiationCostCentre"
-              >
-                <Col md={2}>
-                  <Form.Label>Old Fixed Gross:</Form.Label>
-                </Col>
-                <Col md={4} className="text-primary">
-                  {initiationEmpData.currentFixedGross}
-                </Col>
-                <Col md={2}>
-                  <Form.Label>New Cost Center:</Form.Label>
+                  <Form.Label>Cost Center:</Form.Label>
                 </Col>
                 <Col md={4}>
                   <Form.Control
@@ -460,34 +514,26 @@ const EntityTransfer = () => {
                     <span className="text-danger">{costCentreErrMsg}</span>
                   )}
                 </Col>
+                {/* <Col md={2}>
+                  <Form.Label>Contract Type:</Form.Label>
+                </Col>
+                <Col md={4} className="text-primary">
+                  {initiationEmpData.currentContractType}
+                </Col> */}
               </Form.Group>
               <Form.Group
                 as={Row}
                 className="mb-3"
-                controlId="transferInitiationCostCentre"
+                controlId="transferInitiationPosition"
               >
                 <Col md={2}>
-                  <Form.Label>Effective Date:</Form.Label>
+                  <Form.Label>Manager:</Form.Label>
                 </Col>
-                <Col md={4}>
-                  <div className="transfers-date">
-                    <DatePicker
-                      className="text-primary form-control"
-                      selected={effectiveDate}
-                      closeOnScroll={true}
-                      minDate={moment().toDate()}
-                      dateFormat="yyyy-MM-dd"
-                      onChange={(date) => {
-                        changeEffectiveDateHandler(date);
-                      }}
-                    />
-                  </div>
-                  {effectiveDateErrMsg !== "" && (
-                    <span className="text-danger">{effectiveDateErrMsg}</span>
-                  )}
+                <Col md={4} className="text-primary">
+                  {initiationEmpData.currentManagerName}
                 </Col>
                 <Col md={2}>
-                  <Form.Label>New Manager:</Form.Label>
+                  <Form.Label> Manager:</Form.Label>
                 </Col>
                 <Col md={4}>
                   <Form.Control
@@ -516,7 +562,174 @@ const EntityTransfer = () => {
                   )}
                 </Col>
               </Form.Group>
+              <Form.Group
+                as={Row}
+                className="mb-3"
+                controlId="transferInitiationPosition"
+              >
+                <Col md={2}>
+                  <Form.Label>Entity:</Form.Label>
+                </Col>
+                <Col md={4} className="text-primary">
+                  {initiationEmpData.currentCompany}
+                </Col>
+                <Col md={2}>
+                  <Form.Label>Entity:</Form.Label>
+                </Col>
+                <Col md={4}>
+                  <Form.Control
+                    as="select"
+                    className="text-primary"
+                    aria-label="transferInitiationPosition"
+                    value={newEntity}
+                    placeholder="Select Position"
+                    onChange={changeEntityHandler}
+                  >
+                    <option value="">Select New Entity</option>
 
+                    {initiationEmpData !== null &&
+                    initiationEmpData !== undefined &&
+                    Object.keys(initiationEmpData).length !== 0 &&
+                    (initiationEmpData.currentCompany.charAt(0) === "D" ||
+                      initiationEmpData.currentCompany.charAt(0) === "d") ? (
+                      ""
+                    ) : (
+                      <option value="DSI">DSI</option>
+                    )}
+                    {initiationEmpData !== null &&
+                    initiationEmpData !== undefined &&
+                    Object.keys(initiationEmpData).length !== 0 &&
+                    (initiationEmpData.currentCompany.charAt(0) === "I" ||
+                      initiationEmpData.currentCompany.charAt(0) === "i") ? (
+                      ""
+                    ) : (
+                      <option value="INDECA">INDECA</option>
+                    )}
+                    {initiationEmpData !== null &&
+                    initiationEmpData !== undefined &&
+                    Object.keys(initiationEmpData).length !== 0 &&
+                    (initiationEmpData.currentCompany.charAt(0) === "P" ||
+                      initiationEmpData.currentCompany.charAt(0) === "p") ? (
+                      ""
+                    ) : (
+                      <option value="PRODIN">PRODIN</option>
+                    )}
+                  </Form.Control>
+                  {newEntityErrMsg !== "" && (
+                    <span className="text-danger">{newEntityErrMsg}</span>
+                  )}
+                </Col>
+              </Form.Group>
+              <Form.Group
+                as={Row}
+                className="mb-3"
+                controlId="transferInitiationCostCentre"
+              >
+                <Col md={2}>
+                  <Form.Label> Fixed Gross:</Form.Label>
+                </Col>
+                <Col md={4} className="text-primary">
+                  {initiationEmpData.currentFixedGross}
+                </Col>
+                {/* <Col md={2}>
+                  <Form.Label> Fixed Gross:</Form.Label>
+                </Col>
+                {initiationEmpData.promotedFixedGross ? (
+                  <Col md={3} className="text-primary">
+                    {initiationEmpData.promotedFixedGross}
+                  </Col>
+                ) : (
+                  <Col md={4} className="text-primary">
+                    <Form.Control
+                      type="text"
+                      placeholder="New Fixed Gross"
+                      value={newGross}
+                      className="text-primary"
+                      onChange={changeGrossHandler}
+                    ></Form.Control>
+                    {grossErrMsg !== "" && (
+                      <span className="text-danger">{grossErrMsg}</span>
+                    )}
+                  </Col>
+                )} */}
+              </Form.Group>
+              <Row style={{ marginTop: "3rem" }}></Row>
+
+              <Form.Group
+                as={Row}
+                className="mb-3"
+                controlId="transferInitiationCostCentre"
+              >
+                <Col md={2}>
+                  <Form.Label>Bonus (%):</Form.Label>
+                </Col>
+                <Col md={4} className="text-primary">
+                  <Form.Control
+                    type="text"
+                    placeholder="Bonus In Percent"
+                    value={bonus}
+                    className="text-primary"
+                    id="transferInitiationBonusPercent"
+                    // onChange={changeBonusHandler}
+                    disabled={true}
+                  ></Form.Control>
+                </Col>
+                <Col md={2}>
+                  <Form.Label>Effective Date:</Form.Label>
+                </Col>
+                <Col md={4}>
+                  <div className="transfers-date">
+                    <DatePicker
+                      className="text-primary form-control"
+                      selected={effectiveDate}
+                      closeOnScroll={true}
+                      minDate={moment().toDate()}
+                      dateFormat="yyyy-MM-dd"
+                      onChange={(date) => {
+                        changeEffectiveDateHandler(date);
+                      }}
+                    />
+                  </div>
+                  {effectiveDateErrMsg !== "" && (
+                    <span className="text-danger">{effectiveDateErrMsg}</span>
+                  )}
+                </Col>
+              </Form.Group>
+              <Form.Group
+                as={Row}
+                className="mb-3"
+                controlId="transferInitiationCostCentre"
+              >
+                <Col md={2}>
+                  <Form.Label>Date Of Joining The Group:</Form.Label>
+                </Col>
+                <Col md={4}>
+                  <div className="transfers-date">
+                    <DatePicker
+                      className="text-primary form-control"
+                      selected={
+                        initiationEmpData !== null &&
+                        initiationEmpData !== undefined &&
+                        Object.keys(initiationEmpData).length !== 0
+                          ? new Date(initiationEmpData.currentJoiningDate)
+                          : new Date()
+                      }
+                      closeOnScroll={true}
+                      minDate={moment().toDate()}
+                      dateFormat="yyyy-MM-dd"
+                      disabled={true}
+                      onChange={(date) => {
+                        changeEffectiveDateHandler1(date);
+                      }}
+                    />
+                  </div>
+                  {effectiveJoinigDateErrMsg !== "" && (
+                    <span className="text-danger">
+                      {effectiveJoinigDateErrMsg}
+                    </span>
+                  )}
+                </Col>
+              </Form.Group>
               <Row>
                 <Col
                   style={{

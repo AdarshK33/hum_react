@@ -30,6 +30,8 @@ const InternationalTransferAcceptance = () => {
   const [contractStatusErrMsg, setContractStatusErrMsg] = useState("");
   const [formValid, setFormValid] = useState(false);
   const [modalShow, setModalShow] = useState(false);
+  const [projectTerm, setProjectTerm] = useState(0);
+  const [projectTermErrMsg, setProjectTermErrMsg] = useState("");
 
   useEffect(() => {
     if (transferId !== null && transferId !== undefined) {
@@ -45,6 +47,23 @@ const InternationalTransferAcceptance = () => {
     ) {
       setEffectiveDate(new Date(transferData.promotedJoiningDate));
       setReturnDate(new Date(transferData.promotedDateOfReturn));
+      setProjectTerm(
+        transferData.promotedTermOfProject !== null &&
+          transferData.promotedTermOfProject !== "" &&
+          transferData.promotedTermOfProject !== undefined
+          ? transferData.promotedTermOfProject === "1 Year"
+            ? 1
+            : transferData.promotedTermOfProject === "2 Years"
+            ? 2
+            : transferData.promotedTermOfProject === "3 Years"
+            ? 3
+            : transferData.promotedTermOfProject === "4 Years"
+            ? 4
+            : transferData.promotedTermOfProject === "5 Years"
+            ? 5
+            : 0
+          : 0
+      );
       setCountryInsurance(transferData.isInsuranceCovered);
     }
   }, [transferData]);
@@ -76,6 +95,7 @@ const InternationalTransferAcceptance = () => {
         promotedFixedGross: transferData.promotedFixedGross,
         promotedJoiningDate: moment(effectiveDate).format("YYYY-MM-DD"),
         promotedManagerId: transferData.promotedManagerId,
+        promotedManagerName: transferData.promotedManagerName,
         promotedMonthlyBonus: transferData.promotedMonthlyBonus,
         remark: null,
         status: 1,
@@ -85,18 +105,36 @@ const InternationalTransferAcceptance = () => {
         isInsuranceCovered: countryInsurance,
         currency: transferData.currency,
         promotedManagerEmailId: transferData.promotedManagerEmailId,
-        promotedTermOfProject: transferData.promotedTermOfProject,
+        promotedTermOfProject:
+          projectTerm !== "0" && projectTerm === "1"
+            ? projectTerm + " Year"
+            : projectTerm + " Years",
         contractStatus: contractStatus,
       };
       createTransferInitiation(initiationData);
     }
   }, [formValid]);
-
-  const changeEffectiveDateHandler = (date) => {
-    setEffectiveDate(date);
+  const changeEffectiveDateHandler = (Val) => {
+    setEffectiveDate(Val);
     setEffectiveDateErrMsg("");
+    let date = Val;
+    console.log(date);
+    // console.log("i am here", date.length);
+    if (date !== "" && date !== null && date !== undefined) {
+      ChangeReturnDate(date);
+      var fullDate = new Date(
+        date.setFullYear(date.getFullYear() - parseInt(projectTerm))
+      );
+    } else {
+      setReturnDate(new Date());
+    }
   };
-
+  const ChangeReturnDate = (date) => {
+    var fullDate = new Date(
+      date.setFullYear(date.getFullYear() + parseInt(projectTerm))
+    );
+    setReturnDate(fullDate);
+  };
   const changeReturnDateHandler = (date) => {
     setReturnDate(date);
     setReturnDateErrMsg("");
@@ -112,7 +150,27 @@ const InternationalTransferAcceptance = () => {
     setContractStatus(e.target.value);
     setContractStatusErrMsg("");
   };
-
+  const changeProjectTermHandler = (e) => {
+    setProjectTerm(e.target.value);
+    console.log("year->", e.target.value);
+    setProjectTermErrMsg("");
+    if (
+      effectiveDate !== null &&
+      effectiveDate !== undefined &&
+      effectiveDate !== "" &&
+      e.target.value !== "0"
+    ) {
+      setReturnDate(
+        new Date(
+          returnDate.setFullYear(
+            effectiveDate.getFullYear() + parseInt(e.target.value)
+          )
+        )
+      );
+    } else {
+      setReturnDate(new Date());
+    }
+  };
   /* Validate form */
   const validateForm = () => {
     let validForm = true;
@@ -130,6 +188,10 @@ const InternationalTransferAcceptance = () => {
     if (contractStatus === "") {
       validForm = false;
       setContractStatusErrMsg("Please select contract status");
+    }
+    if (projectTerm === "" || projectTerm === "0" || projectTerm === 0) {
+      validForm = false;
+      setProjectTermErrMsg("Please enter project term");
     }
 
     return validForm;
@@ -181,15 +243,17 @@ const InternationalTransferAcceptance = () => {
                   <Row className="mb-3">
                     <Col md={6}>
                       <Row>
-                        <Col md={5}>Transfer Type</Col>
+                        <Col md={5}>Transfer Type:</Col>
                         <Col md={7} className="text-primary">
                           {transferData.transferType}
                         </Col>
                       </Row>
                     </Col>
+                  </Row>
+                  <Row className="mb-3">
                     <Col md={6}>
                       <Row>
-                        <Col md={5}>Employee Name</Col>
+                        <Col md={5}>Employee Name:</Col>
                         <Col md={7} className="text-primary">
                           {transferData.employeeName}
                           {" - "}
@@ -198,10 +262,11 @@ const InternationalTransferAcceptance = () => {
                       </Row>
                     </Col>
                   </Row>
+                  <Row style={{ marginTop: "2rem" }}></Row>
                   <Row className="mb-3">
                     <Col md={6}>
                       <Row>
-                        <Col md={5}>Cost Centre Name</Col>
+                        <Col md={5}>Cost Centre Name:</Col>
                         <Col md={7} className="text-primary">
                           {transferData.currentCostCentre}
                         </Col>
@@ -209,9 +274,9 @@ const InternationalTransferAcceptance = () => {
                     </Col>
                     <Col md={6}>
                       <Row>
-                        <Col md={5}>Contract Type</Col>
+                        <Col md={5}>Cost centre of the host country:</Col>
                         <Col md={7} className="text-primary">
-                          {transferData.currentContractType}
+                          {transferData.promotedCostCentre}
                         </Col>
                       </Row>
                     </Col>
@@ -219,7 +284,7 @@ const InternationalTransferAcceptance = () => {
                   <Row className="my-3">
                     <Col md={6}>
                       <Row>
-                        <Col md={5}>Coutry Moving To</Col>
+                        <Col md={5}>Coutry Moving To:</Col>
                         <Col md={7} className="text-primary">
                           {transferData.promotedCountry}
                         </Col>
@@ -227,9 +292,28 @@ const InternationalTransferAcceptance = () => {
                     </Col>
                     <Col md={6}>
                       <Row>
-                        <Col md={5}>Designation</Col>
+                        <Col md={5}>Designation:</Col>
                         <Col md={7} className="text-primary">
                           {transferData.promotedDesignation}
+                        </Col>
+                      </Row>
+                    </Col>
+                  </Row>
+
+                  <Row className="my-3">
+                    <Col md={6}>
+                      <Row>
+                        <Col md={5}>Name of global mobility manager:</Col>
+                        <Col md={7} className="text-primary">
+                          {transferData.promotedManagerName}
+                        </Col>
+                      </Row>
+                    </Col>
+                    <Col md={6}>
+                      <Row>
+                        <Col md={5}>Email id of global mobility manager:</Col>
+                        <Col md={7} className="text-primary">
+                          {transferData.promotedManagerEmailId}
                         </Col>
                       </Row>
                     </Col>
@@ -241,7 +325,7 @@ const InternationalTransferAcceptance = () => {
                         controlId="transferInitiationEffectiveDate"
                       >
                         <Form.Label column md={5}>
-                          Onward Date
+                          Onward Date:
                         </Form.Label>
                         <Col md={7}>
                           <div className="transfers-date">
@@ -251,9 +335,7 @@ const InternationalTransferAcceptance = () => {
                               minDate={effectiveDate}
                               closeOnScroll={true}
                               dateFormat="yyyy-MM-dd"
-                              onChange={(date) => {
-                                changeEffectiveDateHandler(date);
-                              }}
+                              onChange={(e) => changeEffectiveDateHandler(e)}
                             />
                           </div>
                         </Col>
@@ -270,7 +352,7 @@ const InternationalTransferAcceptance = () => {
                         controlId="transferInitiationReturnDate"
                       >
                         <Form.Label column md={5}>
-                          Return Date
+                          Return Date:
                         </Form.Label>
 
                         <Col md={7}>
@@ -297,31 +379,40 @@ const InternationalTransferAcceptance = () => {
                   </Row>
                   <Row className="my-3">
                     <Col md={6}>
-                      <Row>
-                        <Col md={5}>Cost centre of the host country</Col>
-                        <Col md={7} className="text-primary">
-                          {transferData.promotedCostCentre}
+                      <Form.Group
+                        as={Row}
+                        controlId="transferInitiationProjectTerm"
+                      >
+                        <Form.Label column md={5}>
+                          Term of the project:
+                        </Form.Label>
+                        <Col md={7}>
+                          <Form.Control
+                            as="select"
+                            className="text-primary"
+                            value={projectTerm}
+                            placeholder="Select Location"
+                            onChange={changeProjectTermHandler}
+                          >
+                            <option value="0">Select Term Of Project</option>
+                            <option value="1">1 Year</option>
+                            <option value="2">2 Years</option>
+                            <option value="3">3 Years</option>
+                            <option value="4">4 Years</option>
+                            <option value="5">5 Years</option>
+                          </Form.Control>
+
+                          {projectTermErrMsg !== "" && (
+                            <span className="text-danger">
+                              {projectTermErrMsg}
+                            </span>
+                          )}
                         </Col>
-                      </Row>
-                    </Col>
-                    <Col md={6}>
-                      <Row>
-                        <Col md={5}>Name of global mobility manager</Col>
-                        <Col md={7} className="text-primary">
-                          {transferData.promotedManagerName}
-                        </Col>
-                      </Row>
+                      </Form.Group>
                     </Col>
                   </Row>
+                  <Row style={{ marginTop: "2rem" }}></Row>
                   <Row className="my-3">
-                    <Col md={6}>
-                      <Row>
-                        <Col md={5}>Email id of global mobility manager</Col>
-                        <Col md={7} className="text-primary">
-                          {transferData.promotedManagerEmailId}
-                        </Col>
-                      </Row>
-                    </Col>
                     <Col md={6}>
                       <Row>
                         <Col md={7}>
@@ -362,23 +453,17 @@ const InternationalTransferAcceptance = () => {
                       </Row>
                     </Col>
                   </Row>
+
                   <Row className="my-3">
-                    <Col md={6}>
-                      <Row>
-                        <Col md={5}>Term of the project</Col>
-                        <Col md={7} className="text-primary">
-                          {transferData.promotedTermOfProject}
-                        </Col>
-                      </Row>
+                    <Col className="font-weight-bold">
+                      {" "}
+                      <u>Remuneration</u>
                     </Col>
-                  </Row>
-                  <Row className="my-3">
-                    <Col className="font-weight-bold">Renumeration</Col>
                   </Row>
                   <Row className="my-3">
                     <Col md={4}>
                       <Row>
-                        <Col md={4}> Currency</Col>
+                        <Col md={4}> Currency:</Col>
                         <Col md={8} className="text-primary">
                           {transferData.currency}
                         </Col>
@@ -386,7 +471,7 @@ const InternationalTransferAcceptance = () => {
                     </Col>
                     <Col md={4}>
                       <Row>
-                        <Col md={4}>Fixed Gross</Col>
+                        <Col md={4}>Fixed Gross:</Col>
                         <Col md={8} className="text-primary">
                           {transferData.promotedFixedGross}
                         </Col>
@@ -395,13 +480,14 @@ const InternationalTransferAcceptance = () => {
 
                     <Col md={4}>
                       <Row>
-                        <Col md={5}>Bonus</Col>
+                        <Col md={5}>Bonus (%):</Col>
                         <Col md={7} className="text-primary">
                           {transferData.promotedMonthlyBonus}
                         </Col>
                       </Row>
                     </Col>
                   </Row>
+                  <Row style={{ marginTop: "2rem" }}></Row>
                   <Row className="my-5">
                     <Col md={6}>
                       <Form.Group
@@ -409,7 +495,7 @@ const InternationalTransferAcceptance = () => {
                         controlId="transferInitiationContractStatus"
                       >
                         <Form.Label column md={5}>
-                          Contract Status
+                          Contract Status:
                         </Form.Label>
                         <Col md={7}>
                           <Form.Control
