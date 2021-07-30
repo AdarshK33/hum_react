@@ -107,7 +107,7 @@ const EditWorkInformation = () => {
 
   useEffect(() => {
     setStateValue(locationName.stateId);
-    setCity(locationName.cityId);
+    setCity(locationName.locationId);
     cityData(locationName.stateId);
   }, [locationName]);
 
@@ -311,23 +311,53 @@ const EditWorkInformation = () => {
             <Col sm={3}>
               <Form.Group>
                 <Form.Label>Work Location</Form.Label>
-                <br></br>
-                <Form.Label className="headingColor">
-                  {filterArray !== undefined && filterArray[0] !== undefined
-                    ? filterArray[0].stateName
-                    : ""}
-                </Form.Label>
+                <Form.Control
+                  as="select"
+                  value={stateValue}
+                  disabled="true"
+                  className=" disable-arrow"
+                  style={{
+                    border: "0px",
+                    color: "#0020a5",
+                    backgroundColor: "#fafafa",
+                  }}
+                >
+                  {stateList !== null &&
+                    stateList !== undefined &&
+                    stateList.map((item, i) => {
+                      return (
+                        <option key={i} value={item.stateId}>
+                          {item.stateName}
+                        </option>
+                      );
+                    })}
+                </Form.Control>
               </Form.Group>
             </Col>
             <Col sm={3}>
               <Form.Group>
                 <Form.Label>Site</Form.Label>
-                <br></br>
-                <Form.Label className="headingColor">
-                  {filterArray !== undefined && filterArray[0] !== undefined
-                    ? filterArray[0].cityName
-                    : ""}
-                </Form.Label>
+                <Form.Control
+                  as="select"
+                  value={city}
+                  disabled="true"
+                  className=" disable-arrow"
+                  style={{
+                    border: "0px",
+                    color: "#0020a5",
+                    backgroundColor: "#fafafa",
+                  }}
+                >
+                  {cityList !== null &&
+                    cityList !== undefined &&
+                    cityList.map((item, i) => {
+                      return (
+                        <option key={i} value={item.locationId}>
+                          {item.locationName}/{item.cityName}
+                        </option>
+                      );
+                    })}
+                </Form.Control>
               </Form.Group>
             </Col>
 

@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useContext, useEffect } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
-import { Search, PlusCircle, MinusCircle } from "react-feather";
+import { Search, PlusCircle, MinusCircle, LogOut } from "react-feather";
 import "./offers.css";
 import { OfferContext } from "../../context/OfferState";
 import { useHistory } from "react-router-dom";
@@ -246,6 +246,13 @@ const EditEmployeeForm = () => {
   const checkedYesHandler = () => {
     setYesChecked(true);
     setNoChecked(false);
+    setSecondRef(false);
+    setEmpName1("");
+    setEmpName2("");
+    setRefEmail1("");
+    setRefEmail2("");
+    setDesignation1("");
+    setDesignation2("");
   };
   const checkedNoHandler = () => {
     setNoChecked(true);
@@ -261,16 +268,16 @@ const EditEmployeeForm = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    let firstNameError;
-    let lastNameError;
+    let firstNameError = false;
+    let lastNameError = false;
 
-    if (firstName !== "" && !/^[a-zA-Z]*$/g.test(firstName)) {
+    if (firstName !== !/^[a-zA-Z]*$/g.test(firstName)) {
       firstNameError = true;
     } else {
       firstNameError = false;
     }
 
-    if (lastName !== "" && !/^[a-zA-Z]*$/g.test(lastName)) {
+    if (lastName !== !/^[a-zA-Z]*$/g.test(lastName)) {
       lastNameError = true;
     } else {
       lastNameError = false;
@@ -311,7 +318,7 @@ const EditEmployeeForm = () => {
       panNumber: null,
       personalEmail: email,
       photo: null,
-      referred: candidateData.candidateInformation.referred,
+      referred: yesChecked === true ? true : false,
       status: candidateData.candidateInformation.status,
       statusDesc: candidateData.candidateInformation.statusDesc,
       verificationStatus: candidateData.candidateInformation.verificationStatus,
@@ -323,17 +330,32 @@ const EditEmployeeForm = () => {
     //   !updateData.candidateReferences[0].email
     //     ? false
     //     : true;
+    let sameEmail = false;
     let refValue = candidateData.candidateInformation.referred;
     if (
-      firstNameError === false &&
-      lastNameError === false &&
-      refValue === true
+      yesChecked === true &&
+      searchEmpData1 !== null &&
+      searchEmpData2 !== null
+    ) {
+      if (searchEmpData1.email === searchEmpData2.email) {
+        sameEmail = true;
+      } else {
+        sameEmail = false;
+      }
+    }
+    if (
+      // firstNameError === false &&
+      // lastNameError === false
+
+      // // &&
+      refValue === true &&
+      sameEmail === false
     ) {
       editCandidate(updateData);
       setDisabled(true);
       setEditButton(true);
     } else {
-      toast.info("Please Enter Valid Input");
+      toast.info("Please Enter Valid Reference");
     }
   };
   const editHandler = () => {

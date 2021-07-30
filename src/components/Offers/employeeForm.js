@@ -251,8 +251,8 @@ const EmployeeForm = (props) => {
   const submitHandler = (e) => {
     e.preventDefault();
     let CandidateInfo;
-    let firstNameError;
-    let lastNameError;
+    let firstNameError = false;
+    let lastNameError = false;
     console.log(
       "employee form id1",
       typeof createCandidateResponse,
@@ -262,13 +262,13 @@ const EmployeeForm = (props) => {
       "no",
       noChecked
     );
-    if (state.firstName !== "" && !/^[a-zA-Z]*$/g.test(state.firstName)) {
+    if (state.firstName !== !/^[a-zA-Z]*$/g.test(state.firstName)) {
       firstNameError = true;
     } else {
       firstNameError = false;
     }
 
-    if (state.lastName !== "" && !/^[a-zA-Z]*$/g.test(state.lastName)) {
+    if (state.lastName !== !/^[a-zA-Z]*$/g.test(state.lastName)) {
       lastNameError = true;
     } else {
       lastNameError = false;
@@ -365,7 +365,7 @@ const EmployeeForm = (props) => {
     console.log("firstNameError info", firstNameError, lastNameError);
     console.log("saveclick", saveclick);
     console.log("createCandidateResponse saveclick", createCandidateResponse);
-    var sameEmail;
+    var sameEmail = false;
     var validEmail1;
     var validEmail2;
     let refValue =
@@ -380,8 +380,6 @@ const EmployeeForm = (props) => {
       } else {
         sameEmail = false;
       }
-    } else {
-      sameEmail = false;
     }
     if (yesChecked === true && searchEmpData1 !== null) {
       let EmailId = searchEmpData1.email;
@@ -422,14 +420,17 @@ const EmployeeForm = (props) => {
     console.log("sameemail..................", sameEmail);
     console.log("validEmail1.......", validEmail1);
     console.log("validEmail2.............", validEmail2);
+    console.log("firstNameError.......", firstNameError);
+    console.log("lastNameError.............", lastNameError);
     // console.log("empdata.......", searchEmpData1.length);
     if (
-      firstNameError === false &&
-      lastNameError === false &&
+      // firstNameError === false &&
+      // lastNameError === false &&
       refValue === true &&
-      sameEmail === false &&
-      validEmail1 === true &&
-      validEmail2 === true
+      sameEmail === false
+      // &&
+      // validEmail1 === true &&
+      // validEmail2 === true
     ) {
       console.log("inif...........");
       if (
@@ -449,7 +450,7 @@ const EmployeeForm = (props) => {
       const checkedInput = props.checkedHandler;
       checkedInput();
     } else {
-      toast.info("Please Enter Valid Input");
+      toast.info("Please Enter Valid Reference");
     }
   };
 
