@@ -141,18 +141,17 @@ export const SeparationProvider = (props) => {
       });
   };
   const viewAdminITClearanceList = (
-    financeStatus,
     itStatus,
     key,
     page,
     costCenter
   ) => {
-    console.log(financeStatus, itStatus, key, page, costCenter, "viewAdminIt");
+      // financeStatus +
+          // "&itStatus=" +
+    console.log( itStatus, key, page, costCenter, "viewAdminIt");
     client
       .get(
-        "/api/v1/separation/full-and-final/view/no-due-clearance?financeStatus=" +
-          financeStatus +
-          "&itStatus=" +
+        "/api/v1/separation/full-and-final/view/no-due-clearance?itStatus=" +
           itStatus +
           "&key=" +
           key +
@@ -533,7 +532,7 @@ export const SeparationProvider = (props) => {
   };
 
   const MakeCostCenterDataNull = () => {
-    state.searchByCostData = [];
+    state.searchByCostData = null;
     return dispatch({
       type: "SEARCH_BY_COST_DATA",
       payload: state.searchByCostData,

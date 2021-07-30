@@ -3,7 +3,9 @@ import { Row, Col, Form, Button, Container, Modal } from "react-bootstrap";
 import Breadcrumb from "../common/breadcrumb";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
 import RelievingLetter from "./Relieving Letter";
+import TerminationLetter from "./TerminationLetter"
 import { setGlobalCssModule } from "reactstrap/es/utils";
+import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import moment from "moment";
 import calendarImage from "../../assets/images/calendar-image.png";
@@ -23,6 +25,8 @@ const EmployeeExitAction = () => {
   const [showModal, setModal] = useState(false);
   const [showSuccessModal, setSuccessModal] = useState(false);
   const [previewLetter, setPreviewLetter] = useState(false);
+  const [terminationLetter, setTerminationLetter] = useState(false);
+
   const [submit, setSubmit] = useState(false);
   const [message, setMessage] = useState(false);
 
@@ -64,6 +68,8 @@ const EmployeeExitAction = () => {
     employeeId,
     loader,
     fetchRelievingLetterData,
+    terminationLetterData,
+    fetchTerminationLetterData,
     relivingLetterData,
     terminationConfirmation,
     resignationConfirmation,
@@ -72,6 +78,7 @@ const EmployeeExitAction = () => {
   useEffect(() => {
     ViewEmployeeDataById(employeeId);
     fetchRelievingLetterData(paramsemployeeId);
+    fetchTerminationLetterData(paramsemployeeId)
   }, [employeeId]);
   useEffect(() => {
     console.log(employeeData);
@@ -281,9 +288,11 @@ const EmployeeExitAction = () => {
     if (state.modeOfSeparationId == 2) {
       console.log(state.modeOfSeparationId, "rajashekar");
       terminationConfirmation(exitId, employeeId);
+      viewTermination()
     } else if (state.modeOfSeparationId == 1 || state.modeOfSeparationId == 4) {
       console.log(state.modeOfSeparationId, "sachin");
       resignationConfirmation(exitId, employeeId);
+      viewResignation()
     }
     console.log(state.modeOfSeparationId, "sravani");
 
@@ -295,6 +304,12 @@ const EmployeeExitAction = () => {
 
   const handleSubmit = () => {
     setMessage(true);
+  };
+  const viewTermination = () => {
+    setTerminationLetter(true);
+    if (terminationLetterData !== undefined) {
+      setSubmit(true);
+    }
   };
   const viewResignation = () => {
     setPreviewLetter(true);
@@ -314,11 +329,12 @@ const EmployeeExitAction = () => {
                 {" "}
                 The details have been saved successfully.
                 <br /> The relieving letter will be sent to the employee on{" "}
-                {moment(relivingLetterData.lastWorkingDate, "YYYY-MM-DD")
+                {moment(((terminationLetterData !== null && terminationLetterData !== undefined )|| (relivingLetterData !== null && relivingLetterData !== undefined )) && (modeOfSeparation == "Termination" || modeOfSeparation == 2)?
+              terminationLetterData.lastWorkingDate:relivingLetterData.lastWorkingDate, "YYYY-MM-DD")
                   .add(1, "days")
                   .format("YYYY-MM-DD")}
               </p>
-              <Button onClick={() => handleClosePopup()}>OK</Button>
+              <Link to={"/exit-approval"}> <Button onClick={() => handleClosePopup()}>OK</Button></Link>
             </Modal.Body>
           </Container>
         </Modal>
@@ -340,6 +356,7 @@ const EmployeeExitAction = () => {
           </Container>
         </Modal>
         <RelievingLetter previewLetter={previewLetter} />
+        <TerminationLetter terminationLetter={terminationLetter} />
         <Breadcrumb title="EMPLOYEE SEPARATION" parent="EMPLOYEE SEPARATION" />
         {/* <PdfExample /> */}
         <div className="container-fluid">
@@ -775,7 +792,7 @@ const EmployeeExitAction = () => {
             Back
           </button> */}
 
-                        <button
+                        {/* <button
                           disabled={state.status === 4 || state.status === 3}
                           className={
                             state.status === 4 || state.status === 3
@@ -787,18 +804,19 @@ const EmployeeExitAction = () => {
                           }
                         >
                           Confirm
-                        </button>
-                        {(state.status === 3 || state.status === 4) && (
+                        </button> */}
+                       
                           <button
                             // disabled={previewLetter | showSuccessModal}
                             className="resignationButton"
-                            onClick={() => viewResignation()}
+                            onClick={() => {
+                              handleConfirmation(state.exitId, paramsemployeeId)}}
                           >
                             {modeOfSeparation === "Termination"
                               ? "View Letter"
                               : "View Letter"}
                           </button>
-                        )}
+                        
                       </div>
                       {submit === true && (
                         <div className="text-center mb-3">
@@ -814,7 +832,8 @@ const EmployeeExitAction = () => {
                       {submit === true && (
                         <div className="text-center mb-2">
                           <button
-                            className="stepperButtons"
+                           className={message?"confirmButton":"stepperButtons"}
+                                                      
                             // style={{ textAlign: "center" }}
                             onClick={() => handleSubmit()}
                           >
