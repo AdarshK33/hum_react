@@ -10,8 +10,8 @@ import { SeparationContext } from "../../context/SepearationState";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
 const EmpResignation = () => {
   const [regDate, setRegDate] = useState(new Date());
-  const [noticePeriod,setNoticePeriod] = useState(null)
-  const [lastDate, setLastDate] = useState(new Date(new Date().setMonth(new Date().getMonth() + noticePeriod )));
+  const [noticePeriod,setNoticePeriod] = useState(0)
+  const [lastDate, setLastDate] = useState(new Date(new Date().setMonth(new Date().getMonth() + (noticePeriod + 1) )));
   const [reasonOfSepration, setReasonOfSepration] = useState("");
   const [emailId, setEmailId] = useState("");
   const [approver, setApprover] = useState("");
@@ -41,7 +41,7 @@ const EmpResignation = () => {
     withdraw,
     loader,
   } = useContext(SeparationContext);
-  console.log("employeeData", employeeData);
+  console.log("employeeData",user, employeeData);
   useEffect(() => {
     locationDetails();
   }, []);
@@ -64,10 +64,18 @@ const EmpResignation = () => {
   }, [user.costCentre]);
   console.log(user, "user");
   useEffect(() => {
+    if(employeeData == null){
+    ViewEmployeeDataById(user.employeeId);
+    setSubmitted(false)
+    modeOfSeparation();
+    ModeOfSeparationView(); 
+    }
+  }, [employeeData]);
+  useEffect(() => {
     modeOfSeparation();
     ModeOfSeparationView();
     ViewEmployeeDataById(user.employeeId);
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     if (
@@ -104,6 +112,11 @@ const EmpResignation = () => {
     ) {
       console.log("profile data", user);
       setEmailId(user.email);
+      if(user.department == "AFS" || user.department == "IT" ||user.department == "Legal" ||user.department == "Finance"){
+        setNoticePeriod(2)
+      }else{
+        setNoticePeriod(1)
+      }
     }
   }, [user]);
 
@@ -115,10 +128,14 @@ const EmpResignation = () => {
       employeeData !== undefined &&
       Object.keys(employeeData).length !== 0
     ) {
-      console.log(employeeData,"employeedata")
+      console.log(employeeData,"inuse")
       setRegDate(new Date(employeeData.dateOfResignation));
       setLastDate(new Date(employeeData.lastWorkingDate));
-      setNoticePeriod(employeeData.noticePeriod)
+      if(employeeData.department == "AFS" || employeeData.department == "IT" ||employeeData.department == "Legal" ||employeeData.department == "Finance"){
+        setNoticePeriod(2)
+      }else{
+        setNoticePeriod(1)
+      }
       setReasonOfSepration("");
       setEmailId(employeeData.emailId);
       setSubmitted(true);
@@ -126,7 +143,7 @@ const EmpResignation = () => {
       console.log(noticePeriod,"98098098098")
     }
   }, [employeeData]);
-
+console.log(employeeData)
   useEffect(() => {
     if (
       employeeData &&
@@ -272,7 +289,7 @@ const EmpResignation = () => {
       managerPosition: null,
       modeOfSeparationId: 4,
       modeOfSeparationReasonId: reasonId,
-      noticePeriod: 0,
+      noticePeriod: noticePeriod,
       noticePeriodRecovery: 0,
       noticePeriodRecoveryDays: 0,
       position: user.position,
@@ -543,7 +560,7 @@ const EmpResignation = () => {
                     <Col sm="8">
                       <Form.Control
                         type="text"
-                        value="2 Months"
+                        value={`${noticePeriod ==1?`${noticePeriod} Month`:noticePeriod>1?`${noticePeriod} Months`:""}`}
                         readOnly
                         className="disabledValue readTextBlue"
                       />
@@ -684,8 +701,8 @@ const EmpResignation = () => {
                       Exit Feedback Form:
                     </Form.Label>
                     <Col sm="7">
-                      <a href="#" className="readTextBlue">
-                        Exit Feedback Form
+                      <a href="https://docs.google.com/forms/d/e/1FAIpQLSf4F8RzZMXnhc_vaowkpMgtDe9Hh3i7JYT3zML3miyany5I8Q/viewform" className="readTextBlue">
+                        Click here
                       </a>
                     </Col>
                   </Form.Group>

@@ -33,7 +33,7 @@ const RelivingLetter = () => {
               With reference to your resignation. We would like to inform you
               that your resignation has been accepted and you are relieved from
               the services of the Decathlon Sports India on the closing of
-              working hours of <b>{relivingLetterData.dateOfResignation}</b>. We
+              working hours of <b>{relivingLetterData.lastWorkingDate}</b>. We
               hereby confirm that you have been working in Decathlon Sports
               India since <b>{relivingLetterData.dateOfJoining}</b>. Please be
               informed that you shall be bound by the relevant clause of your

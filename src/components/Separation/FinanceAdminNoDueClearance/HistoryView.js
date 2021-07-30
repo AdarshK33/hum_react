@@ -90,6 +90,11 @@ const HistoryView = () => {
       state.mngrPosition = employeeData.managerPosition;
       // state.modeOfSeparationId = employeeData.modeOfSeparationId;
       // state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
+      if(employeeData.department == "AFS" ||employeeData.department == "IT" ||employeeData.department == "Legal" ||employeeData.department == "Finance"){
+        state.noticePeriod = 2
+      }else{
+        state.noticePeriod = 1
+      }
       state.dateOfResignation = employeeData.dateOfResignation;
       state.noticePeriod = employeeData.noticePeriod;
       state.lastWorkingDate = employeeData.lastWorkingDate;
