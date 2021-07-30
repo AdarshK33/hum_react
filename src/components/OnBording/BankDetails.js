@@ -203,6 +203,7 @@ const BankDetails = (props) => {
                 required
                 placeholder="Bank Account No"
                 disabled={disabled}
+                maxLength="20"
                 style={accountNumberError ? { borderColor: "red" } : {}}
               />
               {accountNumberError ? (
@@ -228,6 +229,7 @@ const BankDetails = (props) => {
                 required
                 placeholder="IFSC Code"
                 disabled={disabled}
+                maxLength="20"
                 style={ifscCodeError ? { borderColor: "red" } : {}}
               />
               {ifscCodeError ? (

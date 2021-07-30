@@ -90,6 +90,7 @@ const PersonalInformation = (props) => {
   const [emp1EmailError, setEmp1EmailError] = useState(false);
   const [emp2EmailError, setEmp2EmailError] = useState(false);
   const [saveClick, setSaveClick] = useState(false);
+  const [disabilityStatus, setDisabilityStatus] = useState(false);
   const [state, setState] = useState({
     aadhaarName: "",
     fatherName: "",
@@ -344,6 +345,7 @@ const PersonalInformation = (props) => {
         console.log("item.documentType", item.documentType, item);
         if (item.documentType === 13 && item.documentName) {
           setDocName(item.documentName ? item.documentName : "");
+          setDisabilityStatus(item.status ? item.status : 0);
           setDisabilityUploaded(true);
         }
       });
@@ -1056,6 +1058,7 @@ const PersonalInformation = (props) => {
                   selected={DOB}
                   required
                   onChange={(e) => dateOfBirthHandler(e)}
+                  maxDate={new Date()}
                   dateFormat="yyyy-MM-dd"
                   placeholderText="YYYY-MM-DD"
                   disabled={disabled}
@@ -1435,6 +1438,16 @@ const PersonalInformation = (props) => {
                           type="file"
                           accept="image/jpeg,.pdf"
                           style={{ display: "none" }}
+                          disabled={
+                            (candidateProfileData.documentUploaded === 1 &&
+                              candidateProfileData.verificationStatus === 2 &&
+                              (disabilityStatus === 0 ||
+                                disabilityStatus === 2)) ||
+                            (candidateProfileData.verificationStatus === 0 &&
+                              candidateProfileData.documentUploaded === 0)
+                              ? false
+                              : true
+                          }
                           onChange={(e) => {
                             DisabilityDocChange(e);
                           }}
@@ -1442,7 +1455,18 @@ const PersonalInformation = (props) => {
                         />
                       </label>
 
-                      <label className="custom-file-upload">
+                      <label
+                        className={
+                          (candidateProfileData.documentUploaded === 1 &&
+                            candidateProfileData.verificationStatus === 2 &&
+                            (disabilityStatus === 0 ||
+                              disabilityStatus === 2)) ||
+                          (candidateProfileData.verificationStatus === 0 &&
+                            candidateProfileData.documentUploaded === 0)
+                            ? "custom-file-upload"
+                            : "custom-file-disable"
+                        }
+                      >
                         <input
                           type="button"
                           name="disabilityDocument"
@@ -1450,6 +1474,16 @@ const PersonalInformation = (props) => {
                           onClick={(e) => {
                             handleUpload(e);
                           }}
+                          disabled={
+                            (candidateProfileData.documentUploaded === 1 &&
+                              candidateProfileData.verificationStatus === 2 &&
+                              (disabilityStatus === 0 ||
+                                disabilityStatus === 2)) ||
+                            (candidateProfileData.verificationStatus === 0 &&
+                              candidateProfileData.documentUploaded === 0)
+                              ? false
+                              : true
+                          }
                         />
                         {/* <i className="fa fa-cloud-upload" />  */}
                         Upload File{" "}

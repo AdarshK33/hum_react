@@ -61,6 +61,18 @@ const ManagerOfferRelease = () => {
     }
   };
 
+  const generateOfferClick = (e) => {
+    console.log("inside generateOfferClick");
+    if (
+      candidateData !== null &&
+      candidateData !== undefined &&
+      candidateData.candidateInformation !== null &&
+      candidateData.candidateInformation !== undefined
+    ) {
+      viewCandidateId(candidateData.candidateInformation.candidateId);
+    }
+  };
+
   // const workInformationClick = (e) => {
   //   console.log("inside workInformationClick");
   //   if (
@@ -137,7 +149,7 @@ const ManagerOfferRelease = () => {
               </AccordionItemPanel>
             </AccordionItem>
 
-            <AccordionItem>
+            <AccordionItem onClick={generateOfferClick}>
               <AccordionItemHeading>
                 <AccordionItemButton>
                   Step 4: Generate Offer Letter

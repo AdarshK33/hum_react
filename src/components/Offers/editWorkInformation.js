@@ -681,6 +681,7 @@ const EditWorkInformation = () => {
                     required
                     onChange={(e) => dateOfLeavingHandler(e)}
                     dateFormat="yyyy-MM-dd"
+                    minDate={dateOfJoining}
                     placeholderText="Date of Leaving"
                     disabled={disabled}
                   />

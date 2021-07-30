@@ -103,6 +103,7 @@ const DocVerification = () => {
   const handleDisApproveDocument = (docId, type) => {
     setDisApproveTheStatus(docId);
     setModal(true);
+    setremarks("");
     setdocId(docId);
     setDocType(type);
 
@@ -699,6 +700,7 @@ const DocVerification = () => {
                   type="text"
                   name="uannbr"
                   value={uanNumber}
+                  maxLength="12"
                   // required={required}
                   onChange={(e) => handleUANNumber(e)}
                 />
@@ -719,14 +721,14 @@ const DocVerification = () => {
           <button className="onboardButton" onClick={() => handleOnboard()}>
             Onboard Candidate
           </button>
-          // </Link>
+          /* </Link> */
         )}
         {state !== undefined && state.verificationStatus === 2 && (
           // <Link to="/candidate-verification">
           <button className="onboardButton" onClick={() => handleReupload()}>
             Submit
           </button>
-          // </Link>
+          /* </Link> */
         )}
       </div>
     </Fragment>
