@@ -76,11 +76,12 @@ const LocalExpactAppointmentLetter = () => {
               Dear <b>{offerLetterData.candidateName},</b>{" "}
             </p>
             <p>
-              Thank for your interest in choosing {offerLetterData.companyName}.
-              As we believe your passion for sport and your values match those
-              of our Company, we, at {offerLetterData.companyName}, are pleased
-              to appoint you as a Decathlon Permanent Employee on a Full Time
-              basis, and your responsibilities would be those of a{" "}
+              Thank for your interest in choosing{" "}
+              <b>{offerLetterData.companyName}</b>. As we believe your passion
+              for sport and your values match those of our Company, we, at{" "}
+              <b>{offerLetterData.companyName}</b>, are pleased to appoint you
+              as a Decathlon Permanent Employee on a Full Time basis, and your
+              responsibilities would be those of a{" "}
               <b>{offerLetterData.position}</b> at our{" "}
               <b>{offerLetterData.location} </b>
               location effective

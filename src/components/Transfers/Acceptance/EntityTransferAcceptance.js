@@ -61,7 +61,7 @@ const EntityTransferAcceptance = () => {
   const [locationErrMsg, setLocationErrMsg] = useState("");
   const [effectiveDate, setEffectiveDate] = useState(new Date());
   const [effectiveDateErrMsg, setEffectiveDateErrMsg] = useState("");
-  const [bonus, setBonus] = useState("");
+  const [bonus, setBonus] = useState(0);
   const [relocationBonus, setRelocationBonus] = useState("");
   const [relocationBonusErrMsg, setRelocationBonusErrMsg] = useState("");
   const [newGross, setNewGross] = useState("");
@@ -108,7 +108,7 @@ const EntityTransferAcceptance = () => {
     ) {
       setBonus(getBonusByContractType.bonus);
     } else {
-      setBonus("");
+      setBonus(0);
     }
   }, [getBonusByContractType]);
 
@@ -318,7 +318,7 @@ const EntityTransferAcceptance = () => {
       setRelocationBonusErrMsg("Please enter relocation bonus");
     } else if (relocationBonus.length !== 2) {
       validForm = false;
-      setRelocationBonusErrMsg("Please enter two digits bonus");
+      setRelocationBonusErrMsg("Please enter two digits figure");
     }
     if (newGross === "") {
       validForm = false;
@@ -901,13 +901,14 @@ const EntityTransferAcceptance = () => {
                                 {costCentreLocationData !== null &&
                                   costCentreLocationData !== undefined &&
                                   Object.keys(costCentreLocationData).length !==
-                                    0 && (
-                                    <option
-                                      value={costCentreLocationData.locationId}
-                                    >
-                                      {costCentreLocationData.locationName}
-                                    </option>
-                                  )}
+                                    0 &&
+                                  costCentreLocationData.map((item) => {
+                                    return (
+                                      <option value={item.stateId}>
+                                        {item.stateName}
+                                      </option>
+                                    );
+                                  })}
                               </Form.Control>
                               {locationErrMsg !== "" && (
                                 <span className="text-danger">

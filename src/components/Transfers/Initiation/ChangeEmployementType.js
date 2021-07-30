@@ -136,6 +136,7 @@ const ChangeEmployementType = () => {
   const changeEmployementHandler = (e) => {
     setNewEmployement(e.target.value);
     setNewEmployementErrMsg("");
+    setGrossErrMsg("");
   };
 
   const changeEffectiveDateHandler = (date) => {

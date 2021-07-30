@@ -130,6 +130,13 @@ export const BonusProvider = (props) => {
         });
       });
   };
+  const makeBonusByContractTypeEmpty = () => {
+    state.getBonusByContractType = null;
+    return dispatch({
+      type: "VIEW_BONUS_BY_CONTRACT",
+      payload: state.getBonusByContractType,
+    });
+  };
   return (
     <BonusContext.Provider
       value={{
@@ -140,6 +147,7 @@ export const BonusProvider = (props) => {
         updateBonus,
         exportBonusList,
         viewBonusByContarctType,
+        makeBonusByContractTypeEmpty,
         loader: loader,
         bonusListExport: state.bonusListExport,
         bonusData: state.bonusData,

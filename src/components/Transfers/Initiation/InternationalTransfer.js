@@ -357,7 +357,7 @@ const InternationalTransfer = () => {
       setNewBonusErrMsg("Please enter relocation bonus");
     } else if (newBonus.length > 2 || !Valid.test(newBonus)) {
       validForm = false;
-      setNewBonusErrMsg("Please enter two digits bonus");
+      setNewBonusErrMsg("Please enter two digits figure");
     }
 
     if (projectTerm === "" || projectTerm === "0" || projectTerm === 0) {

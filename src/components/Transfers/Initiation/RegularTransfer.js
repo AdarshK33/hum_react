@@ -50,7 +50,7 @@ const RegularTransfer = () => {
   const [locationErrMsg, setLocationErrMsg] = useState("");
   const [newGross, setNewGross] = useState();
   const [grossErrMsg, setGrossErrMsg] = useState("");
-  const [bonus, setBonus] = useState("");
+  const [bonus, setBonus] = useState(0);
   const [relocationBonus, setRelocationBonus] = useState("");
   const [relocationBonusErrMsg, setRelocationBonusErrMsg] = useState("");
   const [effectiveDate, setEffectiveDate] = useState(new Date());
@@ -99,7 +99,7 @@ const RegularTransfer = () => {
     ) {
       setBonus(getBonusByContractType.bonus);
     } else {
-      setBonus("");
+      setBonus(0);
     }
   }, [getBonusByContractType]);
   useEffect(() => {
@@ -128,6 +128,7 @@ const RegularTransfer = () => {
       getCostCentreLocationDetails(newCostCentre);
     }
   }, [newCostCentre]);
+  console.log("costCentreLocationData", costCentreLocationData);
 
   useEffect(() => {
     if (formValid === true) {
@@ -355,7 +356,7 @@ const RegularTransfer = () => {
   const handleLetterSubmitModalClose = () => {
     setShowLetterSubmitModal(false);
     history.push("./transfers");
-    setBonus("");
+    setBonus(0);
     setNewPositionName("");
     setNewDeptName("");
   };
@@ -411,7 +412,7 @@ const RegularTransfer = () => {
       setRelocationBonusErrMsg("Please enter relocation bonus");
     } else if (relocationBonus.length > 2 || !Valid.test(relocationBonus)) {
       validForm = false;
-      setRelocationBonusErrMsg("Please enter two digits bonus");
+      setRelocationBonusErrMsg("Please enter two digits figure");
     }
 
     if (
@@ -825,12 +826,16 @@ const RegularTransfer = () => {
                 <option>Select Location</option>
                 {costCentreLocationData !== null &&
                   costCentreLocationData !== undefined &&
-                  Object.keys(costCentreLocationData).length !== 0 && (
-                    <option value={costCentreLocationData.locationId}>
-                      {costCentreLocationData.locationName}
-                    </option>
-                  )}
+                  Object.keys(costCentreLocationData).length !== 0 &&
+                  costCentreLocationData.map((item) => {
+                    return (
+                      <option value={item.stateId}>{item.stateName}</option>
+                    );
+                  })}
               </Form.Control>
+              {/* <option value={costCentreLocationData.stateId}>
+                      {costCentreLocationData.stateName}
+                    </option> */}
               {locationErrMsg !== "" && (
                 <span className="text-danger">{locationErrMsg}</span>
               )}

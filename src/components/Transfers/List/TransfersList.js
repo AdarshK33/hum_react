@@ -9,6 +9,7 @@ import TRANSFER_TABLE_HEADERS from "./TableHeaders";
 import TableComponent from "../../table/Table.component";
 import LoaderIcon from "../../Loader/LoaderIcon";
 import { AppContext } from "../../../context/AppState";
+import { BonusContext } from "../../../context/BonusState";
 
 const TransferPage = () => {
   const recordsPerPage = 10;
@@ -21,6 +22,7 @@ const TransferPage = () => {
     chnageTransferType,
     TRANSFERtype,
   } = useContext(TransferContext);
+  const { makeBonusByContractTypeEmpty } = useContext(BonusContext);
   const { user } = useContext(AppContext);
   const [transferType, setTransferType] = useState(TRANSFERtype);
   const [searchValue, setSearchValue] = useState("all");
@@ -47,6 +49,9 @@ const TransferPage = () => {
     getTransferList(apiUrl);
   }, [apiUrl]);
 
+  useEffect(() => {
+    makeBonusByContractTypeEmpty();
+  }, []);
   /* Creating Table Body Data */
   useEffect(() => {
     if (
@@ -138,7 +143,7 @@ const TransferPage = () => {
             oldEmpContractType: item.currentContractType,
             newEmpContractType: item.promotedContractType,
             effectiveDate: item.promotedJoiningDate,
-            status: item.statusDesc,
+            status: item.status === 0 ? "Completed" : item.statusDesc,
 
             view: {
               active: true,
@@ -373,7 +378,7 @@ const TransferPage = () => {
                           className="probation_status_search"
                         >
                           <option disabled>Choose Status</option>
-                          <option value="0">Request Sent To Manager</option>
+                          <option value="0">Completed</option>
                           <option value="5">All</option>
                         </Form.Control>
                       </Col>

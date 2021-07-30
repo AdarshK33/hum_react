@@ -47,7 +47,7 @@ const EntityTransfer = () => {
   const [newCostCentre, setNewCostCentre] = useState("");
   const [newGross, setNewGross] = useState("");
   const [grossErrMsg, setGrossErrMsg] = useState("");
-  const [bonus, setBonus] = useState("");
+  const [bonus, setBonus] = useState(0);
   const [costCentreErrMsg, setCostCentreErrMsg] = useState("");
   const [newManager, setNewManager] = useState("");
   const [managerErrMsg, setManagerErrMsg] = useState("");
@@ -115,7 +115,7 @@ const EntityTransfer = () => {
     ) {
       setBonus(getBonusByContractType.bonus);
     } else {
-      setBonus("");
+      setBonus(0);
     }
   }, [getBonusByContractType]);
 

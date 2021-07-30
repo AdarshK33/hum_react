@@ -153,7 +153,7 @@ export const TransferProvider = (props) => {
   const getCostCentreLocationDetails = (costCentreId) => {
     setLoader(true);
     client
-      .get(`/api/v1/location/view/${costCentreId}`)
+      .get(`/api/v1/state/view`)
       .then((response) => {
         setLoader(false);
         return dispatch({

@@ -363,6 +363,7 @@ const InternationalTransferAcceptance = () => {
                               minDate={returnDate}
                               closeOnScroll={true}
                               dateFormat="yyyy-MM-dd"
+                              disabled={true}
                               onChange={(date) => {
                                 changeReturnDateHandler(date);
                               }}
