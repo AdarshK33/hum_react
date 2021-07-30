@@ -331,16 +331,16 @@ const EntityTransfer = ({ transferData }) => {
             controlId="transferInitiationCostCentre"
           >
             <Col md={2}>
-              <Form.Label>Effective Date:</Form.Label>
+              <Form.Label>Bonus (%):</Form.Label>
             </Col>
             <Col md={4} className="text-primary">
-              {transferData.promotedJoiningDate}
+              {transferData.promotedMonthlyBonus}
             </Col>
             <Col md={2}>
               <Form.Label>Relocation Bonus:</Form.Label>
             </Col>
             <Col md={4} className="text-primary">
-              {transferData.promotedJoiningDate}
+              {transferData.promotedRelocationBonus}
             </Col>
           </Form.Group>
           <Form.Group
@@ -349,10 +349,29 @@ const EntityTransfer = ({ transferData }) => {
             controlId="transferInitiationCostCentre"
           >
             <Col md={2}>
+              <Form.Label>Effective Date:</Form.Label>
+            </Col>
+            <Col md={4} className="text-primary">
+              {transferData.promotedJoiningDate}
+            </Col>
+            <Col md={2}>
               <Form.Label>Date Of Joining:</Form.Label>
             </Col>
             <Col md={4} className="text-primary">
               {transferData.promotedJoiningDate}
+            </Col>
+          </Form.Group>
+
+          <Form.Group
+            as={Row}
+            className="mb-3"
+            controlId="transferInitiationCostCentre"
+          >
+            <Col md={2}>
+              <Form.Label>Date Of Joining The Group:</Form.Label>
+            </Col>
+            <Col md={4} className="text-primary">
+              {transferData.currentJoiningDate}
             </Col>
           </Form.Group>
         </Form>

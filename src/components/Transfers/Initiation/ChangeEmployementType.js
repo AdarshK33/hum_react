@@ -136,6 +136,7 @@ const ChangeEmployementType = () => {
   const changeEmployementHandler = (e) => {
     setNewEmployement(e.target.value);
     setNewEmployementErrMsg("");
+    setGrossErrMsg("");
   };
 
   const changeEffectiveDateHandler = (date) => {
@@ -202,6 +203,7 @@ const ChangeEmployementType = () => {
   /* Validate form */
   const validateForm = () => {
     let validForm = true;
+    const Valid = /^[0-9\b]+$/;
 
     if (searchInput === "") {
       validForm = false;
@@ -216,9 +218,44 @@ const ChangeEmployementType = () => {
     //   validForm = false;
     //   setCostCentreErrMsg("Please select cost centre");
     // }
+
     if (newGross === "") {
       validForm = false;
+
       setGrossErrMsg("Please enter fixed gross");
+      console.log("validForm", validForm);
+    } else if (
+      newEmployement !== null &&
+      newEmployement !== undefined &&
+      newEmployement !== "" &&
+      newEmployement === "From Part Time to Full Time"
+    ) {
+      if (Valid.test(newGross)) {
+        if (parseInt(newGross) < 18000) {
+          validForm = false;
+          setGrossErrMsg("Value should be greater than 18000");
+          console.log("validForm", validForm);
+        }
+      } else {
+        validForm = false;
+        setGrossErrMsg("Value should be number");
+      }
+    } else if (
+      newEmployement !== null &&
+      newEmployement !== undefined &&
+      newEmployement !== "" &&
+      newEmployement === "From Full Time to Part Time"
+    ) {
+      if (Valid.test(newGross)) {
+        if (parseInt(newGross) < 90 || parseInt(newGross) > 200) {
+          validForm = false;
+          setGrossErrMsg("Value should be between 90 - 200");
+          console.log("validForm", validForm);
+        }
+      } else {
+        validForm = false;
+        setGrossErrMsg("Value should be number");
+      }
     }
 
     // if (
@@ -502,7 +539,7 @@ const ChangeEmployementType = () => {
             <Row className="mb-3">
               <Col md={6}>
                 <Row>
-                  <Col md={5}>Cost Center </Col>
+                  <Col md={5}>Cost Center: </Col>
                   <Col md={7} className="text-primary">
                     {initiationEmpData.currentCostCentre}
                   </Col>
@@ -522,7 +559,7 @@ const ChangeEmployementType = () => {
               <Col md={6}>
                 <Form.Group as={Row} controlId="transferInitiationCostCentre">
                   <Form.Label column md={5} className="py-0">
-                    Change Employement:
+                    Change Contract Type:
                   </Form.Label>
 
                   <Col md={7}>
@@ -539,7 +576,7 @@ const ChangeEmployementType = () => {
                       <option value="From Part Time to Full Time">
                         From Part Time to Full Time
                       </option>
-                      <option value="From Temporary to Permanent Full Time">
+                      <option value="From Full Time to Part Time">
                         From Full Time to Part Time
                       </option>
                     </Form.Control>
@@ -608,12 +645,22 @@ const ChangeEmployementType = () => {
               <Col md={6}>
                 <Form.Group as={Row} controlId="transferInitiationFixedGross">
                   <Form.Label column md={5}>
-                    Fixed Gross:
+                    {newEmployement !== null && newEmployement !== ""
+                      ? newEmployement === "From Part Time to Full Time"
+                        ? "Fixed Gross:"
+                        : "Hourly Pay:"
+                      : "Fixed Gross:"}
                   </Form.Label>
                   <Col md={7} className="text-primary">
                     <Form.Control
                       type="text"
-                      placeholder="Fixed Gross"
+                      placeholder={
+                        newEmployement !== null && newEmployement !== ""
+                          ? newEmployement === "From Part Time to Full Time"
+                            ? "Fixed Gross:"
+                            : "Hourly Pay:"
+                          : "Fixed Gross:"
+                      }
                       value={newGross}
                       className="text-primary"
                       onChange={changeGrossHandler}

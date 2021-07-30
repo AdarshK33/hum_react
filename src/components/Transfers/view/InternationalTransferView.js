@@ -7,7 +7,7 @@ const InternationalTransferView = ({ transferData }) => {
       <Row className="mb-3">
         <Col md={6}>
           <Row>
-            <Col md={5}>Transfer Type</Col>
+            <Col md={5}>Transfer Type:</Col>
             <Col md={7} className="text-primary">
               {transferData.transferType}
             </Col>
@@ -17,18 +17,19 @@ const InternationalTransferView = ({ transferData }) => {
       <Row className="mb-3">
         <Col md={6}>
           <Row>
-            <Col md={5}>Empployee Name</Col>
+            <Col md={5}>Empployee Name:</Col>
             <Col md={7} className="text-primary">
               {transferData.employeeName} {transferData.currentEmployeeId}
             </Col>
           </Row>
         </Col>
       </Row>
+      <Row style={{ marginTop: "2rem" }}></Row>
 
       <Row className="mb-3">
         <Col md={6}>
           <Row>
-            <Col md={5}>Cost Centre Name</Col>
+            <Col md={5}>Cost Centre Name:</Col>
             <Col md={7} className="text-primary">
               {transferData.currentCostCentre}
             </Col>
@@ -36,9 +37,9 @@ const InternationalTransferView = ({ transferData }) => {
         </Col>
         <Col md={6}>
           <Row>
-            <Col md={5}>Contract Type</Col>
+            <Col md={5}>Cost centre of the host country:</Col>
             <Col md={7} className="text-primary">
-              {transferData.currentContractType}
+              {transferData.promotedCostCentre}
             </Col>
           </Row>
         </Col>
@@ -46,7 +47,7 @@ const InternationalTransferView = ({ transferData }) => {
       <Row className="my-3">
         <Col md={6}>
           <Row>
-            <Col md={5}>Coutry Moving To</Col>
+            <Col md={5}>Coutry Moving To:</Col>
             <Col md={7} className="text-primary">
               {transferData.promotedCountry}
             </Col>
@@ -54,7 +55,7 @@ const InternationalTransferView = ({ transferData }) => {
         </Col>
         <Col md={6}>
           <Row>
-            <Col md={5}>Designation</Col>
+            <Col md={5}>Designation:</Col>
             <Col md={7} className="text-primary">
               {transferData.promotedDesignation}
             </Col>
@@ -64,7 +65,25 @@ const InternationalTransferView = ({ transferData }) => {
       <Row className="my-3">
         <Col md={6}>
           <Row>
-            <Col md={5}>Onward Date</Col>
+            <Col md={5}>Name of global mobility manager:</Col>
+            <Col md={7} className="text-primary">
+              {transferData.promotedManagerName}
+            </Col>
+          </Row>
+        </Col>
+        <Col md={6}>
+          <Row>
+            <Col md={5}>Email id of global mobility manager:</Col>
+            <Col md={7} className="text-primary">
+              {transferData.promotedManagerEmailId}
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+      <Row className="my-3">
+        <Col md={6}>
+          <Row>
+            <Col md={5}>Onward Date:</Col>
             <Col md={7} className="text-primary">
               {transferData.promotedJoiningDate}
             </Col>
@@ -72,7 +91,7 @@ const InternationalTransferView = ({ transferData }) => {
         </Col>
         <Col md={6}>
           <Row>
-            <Col md={5}>Return Date</Col>
+            <Col md={5}>Return Date:</Col>
             <Col md={7} className="text-primary">
               {transferData.promotedDateOfReturn}
             </Col>
@@ -82,30 +101,15 @@ const InternationalTransferView = ({ transferData }) => {
       <Row className="my-3">
         <Col md={6}>
           <Row>
-            <Col md={5}>Cost centre of the host country</Col>
+            <Col md={5}>Term of the project:</Col>
             <Col md={7} className="text-primary">
-              {transferData.promotedCostCentre}
-            </Col>
-          </Row>
-        </Col>
-        <Col md={6}>
-          <Row>
-            <Col md={5}>Name of global mobility manager</Col>
-            <Col md={7} className="text-primary">
-              {transferData.promotedManagerName}
+              {transferData.promotedTermOfProject}
             </Col>
           </Row>
         </Col>
       </Row>
+
       <Row className="my-3">
-        <Col md={6}>
-          <Row>
-            <Col md={5}>Email id of global mobility manager</Col>
-            <Col md={7} className="text-primary">
-              {transferData.promotedManagerEmailId}
-            </Col>
-          </Row>
-        </Col>
         <Col md={6}>
           <Row>
             <Col md={6}>Are you covered under insurance in host country?</Col>
@@ -140,23 +144,16 @@ const InternationalTransferView = ({ transferData }) => {
           </Row>
         </Col>
       </Row>
+
       <Row className="my-3">
-        <Col md={6}>
-          <Row>
-            <Col md={5}>Term of the project</Col>
-            <Col md={7} className="text-primary">
-              {transferData.promotedTermOfProject}
-            </Col>
-          </Row>
+        <Col className="font-weight-bold">
+          <u>Remuneration</u>
         </Col>
-      </Row>
-      <Row className="my-3">
-        <Col className="font-weight-bold">Renumeration</Col>
       </Row>
       <Row className="mt-3">
         <Col md={4}>
           <Row>
-            <Col md={4}> Currency</Col>
+            <Col md={4}> Currency:</Col>
             <Col md={8} className="text-primary">
               {transferData.currency}
             </Col>
@@ -164,7 +161,7 @@ const InternationalTransferView = ({ transferData }) => {
         </Col>
         <Col md={4}>
           <Row>
-            <Col md={4}>Fixed Gross</Col>
+            <Col md={4}>Fixed Gross:</Col>
             <Col md={8} className="text-primary">
               {transferData.promotedFixedGross}
             </Col>
@@ -173,19 +170,20 @@ const InternationalTransferView = ({ transferData }) => {
 
         <Col md={4}>
           <Row>
-            <Col md={5}>Bonus</Col>
+            <Col md={5}>Bonus (%):</Col>
             <Col md={7} className="text-primary">
               {transferData.promotedMonthlyBonus}
             </Col>
           </Row>
         </Col>
       </Row>
+      <Row style={{ marginTop: "2rem" }}></Row>
       {transferData.contractStatus !== null &&
         transferData.contractStatus !== undefined && (
           <Row className="mt-3">
             <Col md={6}>
               <Row>
-                <Col md={5}>Contract Status</Col>
+                <Col md={5}>Contract Status:</Col>
                 <Col md={7} className="text-primary">
                   {transferData.contractStatus}
                 </Col>

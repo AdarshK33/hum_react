@@ -250,13 +250,13 @@ const RegularTransferAcceptance = () => {
         promotedDepartment: transferData.promotedDepartment,
         promotedDesignation: transferData.promotedDesignation,
         promotedEmployeeId: transferData.promotedEmployeeId,
-        promotedFixedGross: state.newGross,
+        promotedFixedGross: transferData.promotedFixedGross,
         promotedJoiningDate: transferData.promotedJoiningDate,
         promotedLocation: newLocation,
         promotedManagerId: transferData.promotedManagerId,
-        promotedMonthlyBonus: state.bonus !== "" ? state.bonus : null,
+        promotedMonthlyBonus: transferData.promotedMonthlyBonus,
         promotedPosition: transferData.promotedPosition,
-        promotedRelocationBonus: state.relocationBonus,
+        promotedRelocationBonus: transferData.promotedRelocationBonus,
         promotedTermOfProject: transferData.promotedTermOfProject,
         remark: null,
         status: 1,
@@ -492,30 +492,6 @@ const RegularTransferAcceptance = () => {
                           </Col>
                         </Row>
                         <Row className="mb-4">
-                          <Col md={2}>Department</Col>
-                          <Col md={4} className="text-primary">
-                            {transferData.currentDepartment}
-                          </Col>
-                          <Col
-                            md={{ span: 4, offset: 2 }}
-                            className="text-primary"
-                          >
-                            {transferData.promotedDepartment}
-                          </Col>
-                        </Row>
-                        <Row className="mb-4">
-                          <Col md={2}>Position</Col>
-                          <Col md={4} className="text-primary">
-                            {transferData.currentPosition}
-                          </Col>
-                          <Col
-                            md={{ span: 4, offset: 2 }}
-                            className="text-primary"
-                          >
-                            {transferData.promotedPosition}
-                          </Col>
-                        </Row>
-                        <Row className="mb-4">
                           <Col md={2}>Cost Centre</Col>
                           <Col md={4} className="text-primary">
                             {transferData.currentCostCentre}
@@ -539,6 +515,31 @@ const RegularTransferAcceptance = () => {
                             {transferData.promotedManagerName}
                           </Col>
                         </Row>
+                        <Row className="mb-4">
+                          <Col md={2}>Department</Col>
+                          <Col md={4} className="text-primary">
+                            {transferData.currentDepartment}
+                          </Col>
+                          <Col
+                            md={{ span: 4, offset: 2 }}
+                            className="text-primary"
+                          >
+                            {transferData.promotedDepartment}
+                          </Col>
+                        </Row>
+                        <Row className="mb-4">
+                          <Col md={2}>Position</Col>
+                          <Col md={4} className="text-primary">
+                            {transferData.currentPosition}
+                          </Col>
+                          <Col
+                            md={{ span: 4, offset: 2 }}
+                            className="text-primary"
+                          >
+                            {transferData.promotedPosition}
+                          </Col>
+                        </Row>
+
                         <Form.Group
                           as={Row}
                           className="mb-3"
@@ -578,64 +579,29 @@ const RegularTransferAcceptance = () => {
                             )}
                           </Col>
                         </Form.Group>
-                        <Form.Group
-                          as={Row}
-                          className="mb-3"
-                          controlId="transferAcceptanceFixedGross"
-                        >
-                          <Form.Label column md={2}>
-                            Fixed Gross
-                          </Form.Label>
-                          <Col md={4} className="text-primary">
-                            {transferData.currentFixedGross}
-                          </Col>
-                          <Col md={{ span: 4, offset: 2 }}>
-                            <Form.Control
-                              type="text"
-                              placeholder=""
-                              name="newGross"
-                              value={state.newGross}
-                              className="text-primary"
-                              onChange={changeHandler}
-                            ></Form.Control>
-                            {grossErrMsg !== "" && (
-                              <span className="text-danger">{grossErrMsg}</span>
-                            )}
-                          </Col>
-                        </Form.Group>
+
                         <Form.Group as={Row} className="mb-3">
                           <Form.Label column md={2} className="py-0">
-                            Bonus In Percent (Optional)
+                            Bonus In Percent
                           </Form.Label>
-                          <Col md={4}>
-                            <Form.Control
-                              type="text"
-                              placeholder=""
-                              name="bonus"
-                              value={state.bonus}
-                              className="text-primary"
-                              id="transferInitiationCurrentPercent"
-                              onChange={changeHandler}
-                            ></Form.Control>
+                          <Col md={4} className="text-primary">
+                            {transferData.promotedMonthlyBonus !== null &&
+                            transferData.promotedMonthlyBonus !== undefined &&
+                            transferData.promotedMonthlyBonus !== 0
+                              ? transferData.promotedMonthlyBonus + "%"
+                              : "NA"}
                           </Col>
+
                           <Col md={2} className="pt-2" className="py-0">
                             Relocation Bonus
                           </Col>
-                          <Col md={4}>
-                            <Form.Control
-                              type="text"
-                              placeholder=""
-                              name="relocationBonus"
-                              value={state.relocationBonus}
-                              className="text-primary"
-                              id="transferInitiationBonus"
-                              onChange={changeHandler}
-                            ></Form.Control>
-                            {relocationBonusErrMsg !== "" && (
-                              <span className="text-danger">
-                                {relocationBonusErrMsg}
-                              </span>
-                            )}
+                          <Col md={4} className="text-primary">
+                            {transferData.promotedRelocationBonus !== null &&
+                            transferData.promotedRelocationBonus !==
+                              undefined &&
+                            transferData.promotedRelocationBonus !== ""
+                              ? transferData.promotedRelocationBonus + "%"
+                              : "NA"}
                           </Col>
                         </Form.Group>
                         <Row className="mb-4">
