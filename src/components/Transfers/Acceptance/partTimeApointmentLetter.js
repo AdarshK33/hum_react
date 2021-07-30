@@ -67,10 +67,11 @@ const PartTimeAppointmentLetter = () => {
             Dear <b>{offerLetterData.candidateName}</b>,
           </p>
           <p>
-            Thank for your interest in choosing Decathlon Sports India Pvt Ltd
-            (DSIPL). As we believe your passion for sport and your values match
-            those of our Company, we, at DSIPL, are pleased to appoint you as a
-            Decathlon Permanent Employee on a part time basis, and your
+            Thank for your interest in choosing{" "}
+            <b>{offerLetterData.companyName}</b>. As we believe your passion for
+            sport and your values match those of our Company, we, at{" "}
+            <b>{offerLetterData.companyName}</b>, are pleased to appoint you as
+            a Decathlon Permanent Employee on a part time basis, and your
             responsibilities would be those of a{" "}
             <b>{offerLetterData.position}</b> at our{" "}
             <b>{offerLetterData.location}</b> location effective{" "}
@@ -79,11 +80,11 @@ const PartTimeAppointmentLetter = () => {
           <br></br>
           <p>
             Your gross fixed compensation would be INR.{" "}
-            <b>{offerLetterData.partTimeCandidateOffer.grossSalary}</b> per
-            hour. You are entitled to all the social security benefits like PF,
-            ESIC (as per applicability), & bonus as specified in the respective
-            statutory acts. Further, sufficient holidays keep one motivated in a
-            work environment.{" "}
+            <b>{offerLetterData.partTimeCandidateOffer.rate}</b> per hour. You
+            are entitled to all the social security benefits like PF, ESIC (as
+            per applicability), & bonus as specified in the respective statutory
+            acts. Further, sufficient holidays keep one motivated in a work
+            environment.{" "}
           </p>
           <p>
             You would be entitled to non-statutory benefits such as Health &
