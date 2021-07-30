@@ -251,8 +251,8 @@ const EmployeeForm = (props) => {
   const submitHandler = (e) => {
     e.preventDefault();
     let CandidateInfo;
-    let firstNameError;
-    let lastNameError;
+    let firstNameError = false;
+    let lastNameError = false;
     console.log(
       "employee form id1",
       typeof createCandidateResponse,
@@ -262,13 +262,13 @@ const EmployeeForm = (props) => {
       "no",
       noChecked
     );
-    if (state.firstName !== "" && !/^[a-zA-Z]*$/g.test(state.firstName)) {
+    if (state.firstName !== !/^[a-zA-Z]*$/g.test(state.firstName)) {
       firstNameError = true;
     } else {
       firstNameError = false;
     }
 
-    if (state.lastName !== "" && !/^[a-zA-Z]*$/g.test(state.lastName)) {
+    if (state.lastName !== !/^[a-zA-Z]*$/g.test(state.lastName)) {
       lastNameError = true;
     } else {
       lastNameError = false;
@@ -365,9 +365,10 @@ const EmployeeForm = (props) => {
     console.log("firstNameError info", firstNameError, lastNameError);
     console.log("saveclick", saveclick);
     console.log("createCandidateResponse saveclick", createCandidateResponse);
-    var sameEmail;
-    var validEmail1;
-    var validEmail2;
+    var sameEmail = false;
+    var validEmail1 = false;
+    var validEmail2 = false;
+
     let refValue =
       searchEmpData1 === null || searchEmpData2 === null ? false : true;
     if (
@@ -380,56 +381,71 @@ const EmployeeForm = (props) => {
       } else {
         sameEmail = false;
       }
-    } else {
-      sameEmail = false;
     }
+    console.log("searchEmpData1", searchEmpData1);
     if (yesChecked === true && searchEmpData1 !== null) {
-      let EmailId = searchEmpData1.email;
-      console.log(searchEmpData2);
       if (
         searchEmpData1.email !== undefined &&
         searchEmpData1.email !== null &&
+        searchEmpData1.email !== "" &&
         searchEmpData1.email.length > 0 &&
-        searchEmpData1.email.includes("decathlon.com")
+        searchEmpData1.email.includes("decathlon.com") &&
+        refEmail1 !== undefined &&
+        refEmail1 !== null &&
+        refEmail1 !== "" &&
+        refEmail1.includes("decathlon.com")
       ) {
         console.log("inside.........");
-        validEmail1 = true;
-      } else {
         validEmail1 = false;
+      } else {
+        validEmail1 = true;
       }
     } else {
-      validEmail1 = true;
+      validEmail1 = false;
     }
+    console.log("searchEmpData2", searchEmpData2);
 
     if (
       yesChecked === true &&
+      secondRef === true &&
       searchEmpData2 !== null &&
-      searchEmpData2.email !== undefined &&
-      searchEmpData1.email !== null &&
-      searchEmpData2.email.length > 0
+      Object.keys(searchEmpData2).length !== 0
     ) {
-      if (searchEmpData2.email.includes("decathlon.com")) {
-        validEmail2 = true;
-      } else {
+      if (
+        searchEmpData2.email !== undefined &&
+        searchEmpData2.email !== "" &&
+        searchEmpData2.email !== null &&
+        searchEmpData2.email.length > 0 &&
+        searchEmpData2.email.includes("decathlon.com") &&
+        refEmail2 !== undefined &&
+        refEmail2 !== null &&
+        refEmail2 !== "" &&
+        refEmail2.includes("decathlon.com")
+      ) {
         validEmail2 = false;
+      } else {
+        validEmail2 = true;
       }
     } else {
-      validEmail2 = true;
+      validEmail2 = false;
     }
+
     console.log("emp...", searchEmpData1);
     console.log("emp2...", searchEmpData2);
     console.log("refValue...........", refValue);
     console.log("sameemail..................", sameEmail);
     console.log("validEmail1.......", validEmail1);
     console.log("validEmail2.............", validEmail2);
+    console.log("firstNameError.......", firstNameError);
+    console.log("lastNameError.............", lastNameError);
     // console.log("empdata.......", searchEmpData1.length);
     if (
-      firstNameError === false &&
-      lastNameError === false &&
+      // firstNameError === false &&
+      // lastNameError === false &&
       refValue === true &&
       sameEmail === false &&
-      validEmail1 === true &&
-      validEmail2 === true
+      validEmail1 === false &&
+      validEmail2 === false
     ) {
       console.log("inif...........");
       if (
@@ -449,7 +465,7 @@ const EmployeeForm = (props) => {
       const checkedInput = props.checkedHandler;
       checkedInput();
     } else {
-      toast.info("Please Enter Valid Input");
+      toast.info("Please Enter Valid Reference");
     }
   };
 
@@ -595,6 +611,7 @@ const EmployeeForm = (props) => {
                     /*  value={refEmail1} */
                     onChange={(e) => setRefEmail1(e.target.value)}
                     readOnly
+                    required
                   />
                 </Form.Group>
               </Col>
@@ -608,6 +625,7 @@ const EmployeeForm = (props) => {
                     /*  value={desgination1} */
                     onChange={(e) => setDesignation1(e.target.value)}
                     readOnly
+                    required
                   />
                 </Form.Group>
               </Col>
@@ -653,6 +671,7 @@ const EmployeeForm = (props) => {
                   className="form-input"
                   type="text"
                   readOnly
+                  required
                   value={empName2 === "" ? "" : refEmail2}
                   /*  value={refEmail2} */
                   onChange={(e) => setRefEmail2(e.target.value)}
@@ -665,6 +684,7 @@ const EmployeeForm = (props) => {
                 <Form.Control
                   className="form-input"
                   type="text"
+                  required
                   value={empName2 === "" ? "" : desgination2}
                   /* value={desgination2} */
                   onChange={(e) => setDesignation2(e.target.value)}

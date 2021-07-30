@@ -19,9 +19,10 @@ const TRANSFER_TABLE_HEADERS = {
   },
   entity: {
     sno: "SNo",
-    empId: "Emp ID",
+    empId: "Old Emp ID",
     empName: "Emp Name",
     oldEntity: "Old Entity",
+    newEmpId: "New Emp ID",
     newEntity: "New Entity",
     newManager: "New Manager",
     effectiveDate: "Effective Date",

@@ -25,24 +25,6 @@ const RegularTransferView = ({ transferData }) => {
         </Col>
       </Row>
       <Row className="mb-4">
-        <Col md={2}>Department</Col>
-        <Col md={3} className="text-primary">
-          {transferData.currentDepartment}
-        </Col>
-        <Col md={{ span: 3, offset: 2 }} className="text-primary">
-          {transferData.promotedDepartment}
-        </Col>
-      </Row>
-      <Row className="mb-4">
-        <Col md={2}>Position</Col>
-        <Col md={3} className="text-primary">
-          {transferData.currentPosition}
-        </Col>
-        <Col md={{ span: 3, offset: 2 }} className="text-primary">
-          {transferData.promotedPosition}
-        </Col>
-      </Row>
-      <Row className="mb-4">
         <Col md={2}>Cost Centre</Col>
         <Col md={3} className="text-primary">
           {transferData.currentCostCentre}
@@ -61,6 +43,25 @@ const RegularTransferView = ({ transferData }) => {
         </Col>
       </Row>
       <Row className="mb-4">
+        <Col md={2}>Department</Col>
+        <Col md={3} className="text-primary">
+          {transferData.currentDepartment}
+        </Col>
+        <Col md={{ span: 3, offset: 2 }} className="text-primary">
+          {transferData.promotedDepartment}
+        </Col>
+      </Row>
+      <Row className="mb-4">
+        <Col md={2}>Position</Col>
+        <Col md={3} className="text-primary">
+          {transferData.currentPosition}
+        </Col>
+        <Col md={{ span: 3, offset: 2 }} className="text-primary">
+          {transferData.promotedPosition}
+        </Col>
+      </Row>
+
+      <Row className="mb-4">
         <Col md={2}>Location</Col>
         <Col md={3} className="text-primary">
           {transferData.currentLocationName}
@@ -69,7 +70,7 @@ const RegularTransferView = ({ transferData }) => {
           {transferData.promotedLocationName}
         </Col>
       </Row>
-      <Row className="mb-4">
+      {/* <Row className="mb-4">
         <Col md={2}>Fixed Gross</Col>
         <Col md={3} className="text-primary">
           {transferData.currentFixedGross}
@@ -77,15 +78,15 @@ const RegularTransferView = ({ transferData }) => {
         <Col md={{ span: 3, offset: 2 }} className="text-primary">
           {transferData.promotedFixedGross}
         </Col>
-      </Row>
+      </Row> */}
       <Row className="mb-4">
         <Col md={2} className="py-0">
-          Bonus In Percent (Optional)
+          Bonus In Percent
         </Col>
         <Col md={3} className="text-primary">
           {transferData.promotedMonthlyBonus !== null &&
           transferData.promotedMonthlyBonus !== undefined &&
-          transferData.promotedMonthlyBonus !== ""
+          transferData.promotedMonthlyBonus !== 0
             ? transferData.promotedMonthlyBonus + "%"
             : "NA"}
         </Col>
@@ -93,7 +94,11 @@ const RegularTransferView = ({ transferData }) => {
           Relocation Bonus
         </Col>
         <Col md={3} className="text-primary">
-          {transferData.promotedRelocationBonus}
+          {transferData.promotedRelocationBonus !== null &&
+          transferData.promotedRelocationBonus !== undefined &&
+          transferData.promotedRelocationBonus !== ""
+            ? transferData.promotedRelocationBonus + "%"
+            : "NA"}
         </Col>
       </Row>
       <Row className="mb-4">

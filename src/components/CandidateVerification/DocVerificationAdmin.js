@@ -145,6 +145,7 @@ const DocVerification = () => {
   const handleDisApproveDocument = (docId) => {
     setModal(true);
     setdocId(docId);
+    setremarks("");
   };
   const handleClose = () => setModal(false);
   const handleChange = (e) => {
@@ -161,6 +162,13 @@ const DocVerification = () => {
   };
 
   const handleOnboard = () => {
+    console.log(
+      "onboard logs check",
+      personalInfoData.contractType,
+      UANNo,
+      UANYes,
+      uanNumber
+    );
     // adhaarVerificationNotification(candidateId);
     // documentRejectComplete(candidateId);
     console.log("uan value", uanNumber);
@@ -186,8 +194,16 @@ const DocVerification = () => {
 
   const handleReupload = () => {
     // adhaarVerificationNotification(candidateId);
+    console.log(
+      "submit logs check",
+      personalInfoData.contractType,
+      UANNo,
+      UANYes,
+      uanNumber
+    );
     if (personalInfoData.contractType !== "Internship") {
       if (UANNo === false && UANYes === false) {
+        console.log("inside yes");
         setUanError(true);
       } else if (
         uanNumber === "" ||
@@ -788,6 +804,7 @@ const DocVerification = () => {
                     name="uannbr"
                     value={uanNumber}
                     className="form-control"
+                    maxLength="12"
                     // required={required}
                     onChange={(e) => handleUANNumber(e)}
                   />
@@ -843,7 +860,7 @@ const DocVerification = () => {
           <button className="onboardButton" onClick={() => handleOnboard()}>
             Onboard Candidate
           </button>
-          // </Link>
+          /* </Link> */
         )}
 
         {state !== undefined && state.adminVerificationStatus === 2 && (
