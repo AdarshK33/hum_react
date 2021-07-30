@@ -17,7 +17,8 @@ import InternShipLetter from "./InternShipLetter"
 import TerminationLetter from "./TerminationLetter"
 import calendarImage from "../../assets/images/calendar-image.png";
 import { setDate } from "date-fns";
-const ManagerInitiateExit = () => {
+
+const ManagerInitiateAction = () => {
   const [modeOfSeparation, setModeOfSeparation] = useState("");
   const [changeInSeparation, setChangeInSeparation] = useState(0);
   const [RcryYes, setRcryYes] = useState(false);
@@ -40,7 +41,7 @@ const ManagerInitiateExit = () => {
   const [dateOfResignation, setDateOfResignation] = useState(new Date());
   const [lastWorkingDate, setLastWorkingDate] = useState("");
   const [intern, setIntern] = useState(false);
-  const [EmpName, setEmpName] = useState();
+  const [EmpName, setEmpName] = useState('');
 
   const [modOfSepError, setModOfSepError] = useState(false);
   const [modOfSepReasonError, setModOfSepReasonError] = useState(false);
@@ -62,8 +63,8 @@ const ManagerInitiateExit = () => {
   const [showAddModal, setShowAddModal] = useState(false);
 
   const [state, setState] = useState({
-    exitId: "",
     empId: "",
+    exitId:'',
     empContractType: "",
     empCostCenterName: "",
     empLocation: "",
@@ -73,11 +74,13 @@ const ManagerInitiateExit = () => {
     mngrCostCenterName: "",
     mngrPosition: "",
     modeOfSeparationReasonId: "",
+    reasonForResignation:"",
     noticePeriod: "",
     emailId: "",
     comments: "",
     noticePeriodRcryDays: "",
     remarks: "",
+    status:0,
   });
   const [modeOfSeparationList, setModeOfSeparationList] = useState([]);
   const [reasonOfSeparationList, setReasonOfSeparationList] = useState([]);
@@ -86,8 +89,8 @@ const ManagerInitiateExit = () => {
     employeeData,
     ModeOfSeparationData,
     ViewEmployeeProfile,
-    employeeId,
     employeeProfileData,
+    employeeId,
     ViewEmployeeDataById,
     CreateEmplyoeeExist,
     makeEmployeeDataNull,
@@ -107,7 +110,6 @@ const ManagerInitiateExit = () => {
     useContext(OfferContext);
   const { locationDetails, locationDetailsList } =
     useContext(PermissionContext);
-    console.log(employeeData,"state",state,"7795")
 
   useEffect(() => {
     ViewEmployeeProfile();
@@ -116,7 +118,7 @@ const ManagerInitiateExit = () => {
   useEffect(() => {
     locationDetails();
   }, []);
-  console.log("locationDetailsList", locationDetailsList);
+  console.log("locationDetailsList", ModeOfSeparationData);
   useEffect(() => {
     console.log("state.empI", state.empId);
     if (
@@ -129,141 +131,7 @@ const ManagerInitiateExit = () => {
     }
   }, [EmpName]);
   console.log("employeeData", employeeData);
-  useEffect(() => {
-    if (
-      employeeData &&
-      employeeData &&
-      employeeData !== null &&
-      employeeData !== undefined &&
-      Object.keys(employeeData).length !== 0
-    ) {
-      state.empName = employeeData.employeeName;
-      state.exitId  = employeeData.exitId;
 
-      state.empId = employeeData.employeeId;
-      state.empContractType = employeeData.contractType;
-      state.empCostCenterName = employeeData.costCentreName;
-      state.empLocation = employeeData.location;
-      state.empPosition = employeeData.position;
-      state.mngrName = employeeData.managerName;
-      state.mngrId = employeeData.managerId ? employeeData.managerId : "";
-      state.mngrCostCenterName = employeeData.managerCostCentre;
-      state.mngrPosition = employeeData.managerPosition;
-      // state.modeOfSeparationId = employeeData.modeOfSeparationId;
-      // state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
-      state.dateOfResignation = employeeData.dateOfResignation;
-      if(employeeData.department == "AFS" ||employeeData.department == "IT" ||employeeData.department == "Legal" ||employeeData.department == "Finance"){
-        state.noticePeriod = 2
-      }else{
-        state.noticePeriod = 1
-      }
-      if (
-        state.empContractType === "internship" ||
-        state.empContractType === "Internship"
-      ) {
-        state.lastWorkingDate = (new Date(employeeData.joiningDate).setMonth(new Date(employeeData.joiningDate).getMonth() + (((employeeData.internshipPeriod !== null && employeeData.internshipPeriod !== undefined)?employeeData.internshipPeriod:0))))
-      } else if (
-        state.empContractType === "permanent" ||
-        state.empContractType === "Permanent" ||state.empContractType === "parttime" ||
-        state.empContractType === "PartTime"
-      ) {
-              var dateValue =  new Date(new Date().setMonth(new Date().getMonth() + (state.noticePeriod)))
-        let aboveDateValue = new Date(new Date().setMonth(new Date().getMonth() + (parseInt(state.noticePeriod) + 1)))
-        setLastDateSelection(aboveDateValue)
-        state.lastWorkingDate = dateValue
-
-      } else {
-        state.lastWorkingDate = ""
-      }
-      state.lastWorkingDate = (employeeData.lastWorkingDate !==null && employeeData.lastWorkingDate !== undefined)?new Date(employeeData.lastWorkingDate):new Date();
-      state.personalEmailId = employeeData.personalEmailId;
-      state.comments = employeeData.employeeComment;
-      state.noticePeriodRcryDays =
-        employeeData.noticePeriodRecoveryDays !== null &&
-        employeeData.noticePeriodRecoveryDays !== undefined
-          ? employeeData.noticePeriodRecoveryDays
-          : "";
-          if(employeeData.status === 8){
-            setSuccessModal(true);
-            setPreview(true);
-          }
-
-      if (
-        employeeData.noticePeriodRecovery !== null &&
-        employeeData.noticePeriodRecovery !== undefined
-      ) {
-        if (employeeData.noticePeriodRecovery === 2) {
-          setRcryNo(true);
-          setRcryYes(false);
-        } else if (employeeData.noticePeriodRecovery === 1) {
-          setRcryNo(false);
-          setRcryYes(true);
-        } else if (employeeData.noticePeriodRecovery === 0) {
-          setRcryNo(false);
-          setRcryYes(false);
-        }
-      } else {
-        setRcryNo(false);
-        setRcryYes(false);
-      }
-      if (employeeData.reHire !== null && employeeData.reHire !== undefined) {
-        if (employeeData.reHire === 2) {
-          setRehireNo(true);
-          setRehireYes(false);
-        } else if (employeeData.reHire === 1) {
-          setRehireNo(false);
-          setRehireYes(true);
-        } else if (employeeData.reHire === 0) {
-          setRehireNo(false);
-          setRehireYes(false);
-        }
-      } else {
-        setRehireNo(false);
-        setRehireYes(false);
-      }
-    }
-  }, [employeeData, ModeOfSeparationData, employeeId]);
-  useEffect(() => {
-    if (
-      employeeData &&
-      employeeData !== null &&
-      employeeData !== undefined &&
-      Object.keys(employeeData).length !== 0 &&
-      ModeOfSeparationData &&
-      ModeOfSeparationData !== null &&
-      ModeOfSeparationData !== undefined &&
-      Object.keys(ModeOfSeparationData).length !== 0
-    ) {
-      if (employeeData.modeOfSeparationId === 1) {
-        console.log(ModeOfSeparationData[0].modeOfSeparation);
-        console.log(ModeOfSeparationData[0].modeOfSeparation.modeOfSeparation);
-        console.log(ModeOfSeparationData[0].modeOfSeparationReasonList);
-      }
-      ModeOfSeparationData.map((item, i) => {
-        if (
-          employeeData.modeOfSeparationId ===
-          ModeOfSeparationData[i].modeOfSeparation.separationId
-        ) {
-          setModeOfSeparation(
-            ModeOfSeparationData[i].modeOfSeparation.modeOfSeparation
-          );
-
-          ModeOfSeparationData[i].modeOfSeparationReasonList.map((item1, j) => {
-            if (
-              employeeData.modeOfSeparationReasonId ===
-              ModeOfSeparationData[i].modeOfSeparationReasonList[j]
-                .separationReasonId
-            ) {
-              state.modeOfSeparationReasonId =
-                ModeOfSeparationData[i].modeOfSeparationReasonList[
-                  j
-                ].modeOfSeparationReason;
-            }
-          });
-        }
-      });
-    }
-  }, [employeeData, ModeOfSeparationData, employeeId]);
   useEffect(() => {
     console.log("state.empI", state.empId);
     if (
@@ -293,6 +161,7 @@ const ManagerInitiateExit = () => {
         state.comments = "";
         state.noticePeriodRcryDays = "";
         state.remarks = "";
+        state.exitId = "";
         setModeOfSeparation("");
         setRehireYes(false);
         setRehireNo(false);
@@ -383,7 +252,7 @@ const ManagerInitiateExit = () => {
       // state.noticePeriod = searchByCostData.noticePeriod
       //   state.empLocation = searchEmpData1.location;
       state.empPosition = searchByCostData.position;
-      state.emailId = searchByCostData.personalEmail;
+      state.emailId = searchByCostData.personalEmailId;
       console.log(searchByCostData)
       if (
         state.empContractType === "internship" ||
@@ -402,23 +271,113 @@ const ManagerInitiateExit = () => {
         setLastDateSelection(aboveDateValue)
         setLastWorkingDate(dateValue)
 
-//         if(dateValue.getDate()>=1 &&  dateValue.getDate()<=20 && searchByCostData.noticePeriod == 0){
-//           setLastDateSelection(dateValue.setDate("20"))
-//           setLastWorkingDate(dateValue)
-//         }else {
-//           var aboveDateValue =  new Date(new Date().setMonth(new Date().getMonth() + (parseInt(searchByCostData.noticePeriod) + 1)))
-//           setLastDateSelection(aboveDateValue.setDate(20))
-//           setLastWorkingDate(aboveDateValue.setDate(dateValue.getDate()-20))
-//         }
-// console.log(dateValue.setDate("20"),aboveDateValue,searchByCostData)
-
       } else {
         setIntern(false);
         setLastWorkingDate("")
       }
     }
   }, [searchByCostData]);
+  useEffect(() => {
+    if (
+      employeeData &&
+      employeeData &&
+      employeeData !== null &&
+      employeeData !== undefined &&
+      Object.keys(employeeData).length !== 0
+    ) {
+      setEmpName(employeeData.employeeName)
+       state.exitId = employeeData.exitId;
+      state.empName = employeeData.employeeName;
+      state.empId = employeeData.employeeId;
+      state.empContractType = employeeData.contractType;
+      state.empCostCenterName = employeeData.costCentreName;
+      state.empLocation = employeeData.location;
+      state.empPosition = employeeData.position;
+      state.mngrName = employeeData.managerName;
+      state.mngrId = employeeData.managerId ? employeeData.managerId : "";
+      state.mngrCostCenterName = employeeData.managerCostCentre;
+      state.mngrPosition = employeeData.managerPosition;
+      state.status = employeeData.status;
+      setModeOfSeparation(employeeData.modeOfSeparationId)
+      setChangeInSeparation(employeeData.modeOfSeparationId)
+      state.emailId = employeeData.personalEmailId;
+      state.comments = employeeData.employeeComment;
+      state.reasonForResignation = employeeData.reasonForResignation
+       state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
+      state.dateOfResignation = employeeData.dateOfResignation;
+      if(employeeData.department == "AFS" ||employeeData.department == "IT" ||employeeData.department == "Legal" ||employeeData.department == "Finance"){
+        state.noticePeriod = 2
+      }else{
+        state.noticePeriod = 1
+      }
+      if (
+        state.empContractType === "internship" ||
+        state.empContractType === "Internship"
+      ) {
+        state.lastWorkingDate = (new Date(employeeData.joiningDate).setMonth(new Date(employeeData.joiningDate).getMonth() + (((employeeData.internshipPeriod !== null && employeeData.internshipPeriod !== undefined)?employeeData.internshipPeriod:0))))
+      } else if (
+        state.empContractType === "permanent" ||
+        state.empContractType === "Permanent" ||state.empContractType === "parttime" ||
+        state.empContractType === "PartTime"
+      ) {
+              var dateValue =  new Date(new Date().setMonth(new Date().getMonth() + (state.noticePeriod)))
+        let aboveDateValue = new Date(new Date().setMonth(new Date().getMonth() + (parseInt(state.noticePeriod) + 1)))
+        setLastDateSelection(aboveDateValue)
+        setLastWorkingDate(dateValue)
 
+      } else {
+        setLastWorkingDate('')
+
+      }
+      setLastWorkingDate((employeeData.lastWorkingDate !==null && employeeData.lastWorkingDate !== undefined)?new Date(employeeData.lastWorkingDate):new Date())
+     
+      state.noticePeriodRcryDays =
+        employeeData.noticePeriodRecoveryDays !== null &&
+        employeeData.noticePeriodRecoveryDays !== undefined
+          ? employeeData.noticePeriodRecoveryDays
+          : "";
+          if(employeeData.status === 8){
+            setSubmitted(true);
+            // setSuccessModal(true);
+            setPreview(true);
+            setSaveLetter(false)
+          }
+
+      if (
+        employeeData.noticePeriodRecovery !== null &&
+        employeeData.noticePeriodRecovery !== undefined
+      ) {
+        if (employeeData.noticePeriodRecovery === 2) {
+          setRcryNo(true);
+          setRcryYes(false);
+        } else if (employeeData.noticePeriodRecovery === 1) {
+          setRcryNo(false);
+          setRcryYes(true);
+        } else if (employeeData.noticePeriodRecovery === 0) {
+          setRcryNo(false);
+          setRcryYes(false);
+        }
+      } else {
+        setRcryNo(false);
+        setRcryYes(false);
+      }
+      if (employeeData.reHire !== null && employeeData.reHire !== undefined) {
+        if (employeeData.reHire === 2) {
+          setRehireNo(true);
+          setRehireYes(false);
+        } else if (employeeData.reHire === 1) {
+          setRehireNo(false);
+          setRehireYes(true);
+        } else if (employeeData.reHire === 0) {
+          setRehireNo(false);
+          setRehireYes(false);
+        }
+      } else {
+        setRehireNo(false);
+        setRehireYes(false);
+      }
+    }
+  }, [employeeData, ModeOfSeparationData, employeeId]);
   useEffect(() => {
     if (
       employeeProfileData &&
@@ -437,7 +396,6 @@ const ManagerInitiateExit = () => {
       state.mngrPosition = employeeProfileData.position;
     }
   }, [employeeProfileData]);
-  console.log(ModeOfSeparationData);
   console.log("searchByCostData", searchByCostData);
   const searchDataHandler = () => {
     if (EmpName !== null) {
@@ -455,72 +413,7 @@ const ManagerInitiateExit = () => {
       //   setFirstClick(true);
     }
   };
-  //   useEffect(() => {
-  //     if (
-  //       employeeData &&
-  //       employeeData &&
-  //       employeeData !== null &&
-  //       employeeData !== undefined &&
-  //       Object.keys(employeeData).length !== 0
-  //     ) {
-  //       //   state.empName = employeeData.employeeName;
-  //       state.empId = employeeData.employeeId;
-  //       state.empContractType = employeeData.contractType;
-  //       state.empCostCenterName = employeeData.costCentreName;
-  //       state.empLocation = employeeData.location;
-  //       state.empPosition = employeeData.position;
-  //       state.mngrName = employeeData.managerName;
-  //       state.mngrId = employeeData.managerId;
-  //       state.mngrCostCenterName = employeeData.managerCostCentre;
-  //       state.mngrPosition = employeeData.managerPosition;
-  //       // state.modeOfSeparationId = employeeData.modeOfSeparationId;
-  //       // state.modeOfSeparationReasonId = employeeData.modeOfSeparationReasonId;
-  //       state.dateOfResignation = employeeData.dateOfResignation;
-  //       state.noticePeriod = employeeData.noticePeriod;
-  //       state.lastWorkingDate = employeeData.lastWorkingDate;
-  //       state.emailId = employeeData.emailId;
-  //       state.comments = employeeData.employeeComment;
-  //       state.noticePeriodRcryDays =
-  //         employeeData.noticePeriodRecoveryDays !== null &&
-  //         employeeData.noticePeriodRecoveryDays !== undefined
-  //           ? employeeData.noticePeriodRecoveryDays
-  //           : "";
-
-  //       if (
-  //         employeeData.noticePeriodRecovery !== null &&
-  //         employeeData.noticePeriodRecovery !== undefined
-  //       ) {
-  //         if (employeeData.noticePeriodRecovery === 2) {
-  //           setRcryNo(true);
-  //           setRcryYes(false);
-  //         } else if (employeeData.noticePeriodRecovery === 1) {
-  //           setRcryNo(false);
-  //           setRcryYes(true);
-  //         } else if (employeeData.noticePeriodRecovery === 0) {
-  //           setRcryNo(false);
-  //           setRcryYes(false);
-  //         }
-  //       } else {
-  //         setRcryNo(false);
-  //         setRcryYes(false);
-  //       }
-  //       if (employeeData.reHire !== null && employeeData.reHire !== undefined) {
-  //         if (employeeData.reHire === 2) {
-  //           setRehireNo(true);
-  //           setRehireYes(false);
-  //         } else if (employeeData.reHire === 1) {
-  //           setRehireNo(false);
-  //           setRehireYes(true);
-  //         } else if (employeeData.reHire === 0) {
-  //           setRehireNo(false);
-  //           setRehireYes(false);
-  //         }
-  //       } else {
-  //         setRehireNo(false);
-  //         setRehireYes(false);
-  //       }
-  //     }
-  //   }, [employeeData]);
+  
   useEffect(() => {
     if (
       ModeOfSeparationData &&
@@ -573,46 +466,12 @@ const ManagerInitiateExit = () => {
           });
       });
       setReasonOfSeparationList(tempArray);
+      console.log(tempArray,reasonOfSeparationList,"ppp")
+
     }
   }, [ModeOfSeparationData, changeInSeparation]);
-  console.log("reasonOfSeparationList", reasonOfSeparationList);
 
-  //   useEffect(() => {
-  //     if (
-  //       employeeData &&
-  //       employeeData !== null &&
-  //       employeeData !== undefined &&
-  //       Object.keys(employeeData).length !== 0 &&
-  //       ModeOfSeparationData &&
-  //       ModeOfSeparationData !== null &&
-  //       ModeOfSeparationData !== undefined &&
-  //       Object.keys(ModeOfSeparationData).length !== 0
-  //     ) {
-  //       ModeOfSeparationData.map((item, i) => {
-  //         if (
-  //           employeeData.modeOfSeparationId ===
-  //           ModeOfSeparationData[i].modeOfSeparation.separationId
-  //         ) {
-  //           setModeOfSeparation(
-  //             ModeOfSeparationData[i].modeOfSeparation.modeOfSeparation
-  //           );
-
-  //           ModeOfSeparationData[i].modeOfSeparationReasonList.map((item1, j) => {
-  //             if (
-  //               employeeData.modeOfSeparationReasonId ===
-  //               ModeOfSeparationData[i].modeOfSeparationReasonList[j]
-  //                 .separationReasonId
-  //             ) {
-  //               state.modeOfSeparationReasonId =
-  //                 ModeOfSeparationData[i].modeOfSeparationReasonList[
-  //                   j
-  //                 ].modeOfSeparationReason;
-  //             }
-  //           });
-  //         }
-  //       });
-  //     }
-  //   }, [employeeData, ModeOfSeparationData]);
+ 
   const handleNoticePeriodRcryYes = (e) => {
     setRcryYes(e.target.checked);
     setRcryNo(!e.target.checked);
@@ -651,13 +510,13 @@ const ManagerInitiateExit = () => {
     const value = checkValidations();
     if (value === true) {
       console.log("INSIDE");
-      if (
-        (intern === false && RehireNo === true && state.remarks === "") ||
-        state.remarks === null ||
-        state.remarks === undefined
-      ) {
-        setModal(true);
-      } else {
+      // if (
+      //   (intern === false && RehireNo === true && state.remarks === "") ||
+      //   state.remarks === null ||
+      //   state.remarks === undefined
+      // ) {
+      //   setModal(true);
+      // } else {
         if (intern === false) {
           var reasonId = 0;
           reasonOfSeparationList.map((item, i) => {
@@ -744,7 +603,7 @@ const ManagerInitiateExit = () => {
           console.log("createExitData", data1);
           UpdateEmplyoeeExist(data1);
        
-        }
+        // }
       }
     }
     if (
@@ -781,7 +640,6 @@ const ManagerInitiateExit = () => {
         console.log("termination")
 
     }
- 
     // setPreviewGeneratedLetter(true);
   };
   const handleShow = () => {
@@ -1036,40 +894,6 @@ const ManagerInitiateExit = () => {
               console.log(reasonOfSeparationList[i].value);
             }
           });
-          //   const data1 = {
-          //     company: "string",
-          //     contractType: "string",
-          //     costCentreManagerEmailId: "string",
-          //     costCentreManagerName: "string",
-          //     costCentreName: "string",
-          //     dateOfResignation: moment(dateOfResignation).format("YYYY-MM-DD"),
-          //     emailId: state.emailId,
-          //     empName: "string",
-          //     employeeComment: "string",
-          //     employeeId: state.empId,
-          //     employeeName: "string",
-          //     exitId: 0,
-          //     hoursWorked: 0,
-          //     lastWorkingDate: moment(lastWorkingDate).format("YYYY-MM-DD"),
-          //     location: "string",
-          //     managerCostCentre: "string",
-          //     managerEmailId: "string",
-          //     managerId: "string",
-          //     managerName: "string",
-          //     managerPosition: "string",
-          //     modeOfSeparationId: changeInSeparation,
-          //     modeOfSeparationReasonId: reasonId,
-          //     noticePeriod: 0,
-          //     noticePeriodRecovery: RcryYes ? 1 : RcryNo ? 2 : 0,
-          //     noticePeriodRecoveryDays: parseInt(state.noticePeriodRcryDays),
-          //     position: "string",
-          //     reHire: RehireYes ? 1 : RehireNo ? 2 : 0,
-          //     reason: "string",
-          //     reasonForResignation: "string",
-          //     rehireRemark: "string",
-          //     status: 2,
-          //     withdraw: "string",
-          //   };
 
           const data2 = {
             company: null,
@@ -1144,7 +968,7 @@ const ManagerInitiateExit = () => {
             reason: null,
             reasonForResignation: null,
             rehireRemark: state.remarks !== "" ? state.remarks : null,
-            status: 6,
+            status: 5,
           };
           console.log("createExitData", data1);
           //   empResign(createExitData);
@@ -1160,7 +984,7 @@ const ManagerInitiateExit = () => {
       }
     }
   };
-console.log(intern,"8098709809808")
+console.log(state,modeOfSeparation,changeInSeparation,"8098709809808",relivingLetterData,terminationLetterData)
   return (
     <Fragment>
       {/* reliving letter */}
@@ -1210,13 +1034,13 @@ console.log(intern,"8098709809808")
           <Modal.Body>
             {relivingLetterData &&
             relivingLetterData !== undefined &&
-            relivingLetterData !== null && intern === false  && (modeOfSeparation == "1" || modeOfSeparation == "Resignation") ? (
+            relivingLetterData !== null && intern === false && modeOfSeparation == 1? (
               <RelievingLetter />
-            ) : terminationLetterData &&
+            ) :terminationLetterData &&
             terminationLetterData !== undefined &&
-            terminationLetterData !== null && intern === false  && (modeOfSeparation == "2" || modeOfSeparation == "Termination")? (
+            terminationLetterData !== null && intern === false && modeOfSeparation == 2? (
               <TerminationLetter />
-            ) :(
+            ) : (
               <InternShipLetter/>
             )}
             <br></br>
@@ -1366,12 +1190,12 @@ console.log(intern,"8098709809808")
                         </Col>
                         <Col sm={2}>
                           <div>
-                            {false ? (
+                            {state.empId?(
                               <label className="itemResult">
                                 {" "}
                                 &nbsp;&nbsp; {EmpName} &nbsp;{state.empId}
                               </label>
-                            ) : (
+                            ):(
                               <Form.Group>
                                 <div className="faq-form ">
                                   <input
@@ -1379,6 +1203,7 @@ console.log(intern,"8098709809808")
                                     type="text"
                                     name="empName"
                                     // disabled={disabled}
+                                    defaultValue={EmpName}
                                     value={EmpName}
                                     style={{ borderRadius: "5px" }}
                                     // style={
@@ -1533,7 +1358,7 @@ console.log(intern,"8098709809808")
                               ) : (
                                 <Form.Group>
                                   <Form.Control
-                                    as="select"
+                                   as="select"
                                     name="lgbt"
                                     options={modeOfSeparationList}
                                     value={modeOfSeparation}
@@ -1548,7 +1373,7 @@ console.log(intern,"8098709809808")
                                     <option value=""></option>
                                     {modeOfSeparationList.map((item) => {
                                       return (
-                                        <option key={item.value}>
+                                        <option selected value={item.value}key={item.value}>
                                           {item.label}
                                         </option>
                                       );
@@ -1759,9 +1584,11 @@ console.log(intern,"8098709809808")
                               ) : (
                                 <Form.Group>
                                   <Form.Control
-                                    as="select"
+                                        as="select"
+                                             
                                     name="modeOfSeparationReasonId"
                                     options={reasonOfSeparationList}
+                                    defaultValue={state.modeOfSeparationReasonId}
                                     value={state.modeOfSeparationReasonId}
                                     onChange={changeHandler}
                                     //   disabled={disabled}
@@ -1774,7 +1601,7 @@ console.log(intern,"8098709809808")
                                     <option value=""></option>
                                     {reasonOfSeparationList.map((item) => {
                                       return (
-                                        <option key={item.value}>
+                                        <option selected value={item.value} key={item.value}>
                                           {item.label}
                                         </option>
                                       );
@@ -2073,12 +1900,12 @@ console.log(intern,"8098709809808")
                           employeeData !== null &&
                           employeeData !== undefined &&
                           Object.keys(employeeData).length !== 0 &&
-                          (employeeData.status === 2 ||employeeData.status === 8 || employeeData.status === 6) &&
+                          (employeeData.status === 8||employeeData.status === 2 || employeeData.status === 6) &&
                           showPreview === true &&
                           submitted === true ? (
                             <button
                               // disabled={!submitted}
-                               value={modeOfSeparation}
+                              value={modeOfSeparation}
                               className={"LettersButtons"}
                               onClick={relivingLetterClick}
                             >
@@ -2155,4 +1982,4 @@ console.log(intern,"8098709809808")
   );
 };
 
-export default ManagerInitiateExit;
+export default ManagerInitiateAction;

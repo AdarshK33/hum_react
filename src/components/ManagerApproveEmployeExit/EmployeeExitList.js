@@ -7,6 +7,7 @@ import { OfferContext } from "../../context/OfferState";
 import Pagination from "react-js-pagination";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
+import { SeparationContext } from "../../context/SepearationState";
 // import { RoleManagementContext } from "../../context/RoleManagementState";
 // import { AdminContext } from "../../context/AdminState";
 
@@ -23,8 +24,9 @@ const EmployeeExitList = () => {
     changeEmployeeId,
     makeEmployeeDataNull,
   } = useContext(EmployeeSeparationContext);
+  const {MakeCostCenterDataNull} = useContext(SeparationContext)
   const { makeSearchEmp1DataNull } = useContext(OfferContext);
-  const [actionStatus, setActionStatus] = useState("6");
+  const [actionStatus, setActionStatus] = useState("9");
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
   const [searchValue, setSearchValue] = useState("");
@@ -35,8 +37,8 @@ const EmployeeExitList = () => {
   }, []);
 
   // useEffect(() => {
-  //   makeEmployeeDataNull();
-  //   makeSearchEmp1DataNull();
+  //   MakeCostCenterDataNull();
+  //   makeEmployeeDataNull()
   // }, []);
   console.log("---->", EmployeeSeparationList);
 
@@ -145,8 +147,14 @@ const EmployeeExitList = () => {
       EmployeeSeparationListView("all", 0, 4);
     } else if (e.target.value === "5") {
       EmployeeSeparationListView("all", 0, 5);
-    }  else {
-      EmployeeSeparationListView("all", 0,6);
+    }else if (e.target.value === "6") {
+      EmployeeSeparationListView("all", 0, 6);
+    }else if (e.target.value === "7") {
+      EmployeeSeparationListView("all", 0, 7);
+    }else if (e.target.value === "8") {
+      EmployeeSeparationListView("all", 0, 8);
+    }else{
+      EmployeeSeparationListView("all", 0,9);
     }
   };
   const searchDataHandler = () => {
@@ -231,13 +239,15 @@ const EmployeeExitList = () => {
                             <option value="" disabled selected hidden>
                               Search status
                             </option>
-                            <option value="6">All</option>
-                            <option value="0">Pending</option>
+                            <option value="8">All</option>
+                            <option value="0">Resignation Applied</option>
                             <option value="1">Withdraw</option>
-                            <option value="2">Confirmed</option>
-                            <option value="3">Terminated</option>
-                            <option value="4">Resigned</option>
-                            <option value="5">End of InternShip</option>
+                            <option value="2">Resignation Confirmed</option>
+                            <option value="3">Resignation Approved</option>
+                            <option value="4">Terminated Confirmed</option>
+                            <option value="5">Terminated Approved</option>
+                            <option value="6">End of InternShip</option>
+                            <option value="7">End of Probation</option>
 
                           </Form.Control>
                         </Form.Group>
@@ -316,13 +326,18 @@ const EmployeeExitList = () => {
   }</td>
                             <td>
                               {item.status === 0
-                                ? "Pending"
-                                : item.status === 2
-                                ? "Confirmed"
-                                : item.status === 4
-                                ? "Resigned"
-                                :item.status === 5
-                                ? "End of Internship":""}
+                                ? "Resignation Applied"
+                                : item.status === 1
+                                ? "Withdraw":
+                                 item.status === 2
+                                ? "Resignation Confirmed"
+                                : item.status === 3
+                                ? "Resignation Approved"
+                                :item.status === 4
+                                ? "Terminated Confirmed": item.status === 5
+                                ? "Terminated Approved":item.status === 6 ?
+                              "End of InternShip":item.status === 7?
+                            "End of Probation":item.status === 8?"Not Confirmed":''}
                             </td>
                             <td>
                               <Link to={"/exit-view/" + item.employeeId}>
@@ -333,11 +348,18 @@ const EmployeeExitList = () => {
                                 />
                               </Link>
                             </td>
-
+                            
                             <td>
-                              {item.status === 2 || item.status === 4 || item.status === 5 ? (
+                              {item.status === 2 || item.status === 3|| item.status === 4 || item.status === 5 ? (
                                 <Edit2 />
-                              ) : (
+                              ) : item.status == 8?(
+                                <Link to={"/exit-initiate-action/" + item.employeeId}>
+                              <Edit2
+                                onClick={() => {
+                                  fetchEmployeeDetails(item.employeeId);
+                                }}
+                              />
+                            </Link>):(
                                 <Link to={"/exit-action/" + item.employeeId}>
                                   <Edit2
                                     onClick={() => {
