@@ -61,6 +61,9 @@ const PFDeclaration = (props) => {
   const [nomineeDOB, setNomineeDOB] = useState();
 
   const [nomineeAddressError, setNomineeAddressError] = useState(false);
+  const [form11DocStatus, setForm11DocStatus] = useState(false);
+  const [form2epfDocStatus, setForm2epfDocStatus] = useState(false);
+  const [formfDocStatus, setFormfDocStatus] = useState(false);
   const [state, setState] = useState({
     form11: "",
     form2epf: "",
@@ -116,14 +119,17 @@ const PFDeclaration = (props) => {
         console.log("item.documentType", item.documentType, item);
         if (item.documentType === 10 && item.documentName) {
           form11Doc = item.documentName ? item.documentName : "";
+          setForm11DocStatus(item.status ? item.status : 0);
           setForm11Uploade(true);
         }
         if (item.documentType === 11 && item.documentName) {
           form2epfDoc = item.documentName ? item.documentName : "";
+          setForm2epfDocStatus(item.status ? item.status : 0);
           setForm2EpfUploade(true);
         }
         if (item.documentType === 12 && item.documentName) {
           formFDoc = item.documentName ? item.documentName : "";
+          setFormfDocStatus(item.status ? item.status : 0);
           setFormFUploade(true);
         }
         setState({
@@ -206,12 +212,20 @@ const PFDeclaration = (props) => {
       ) {
         setPfNominationHoldDeathYes(pfDeclarationView.pfNominationHoldDeath);
         setPfNominationHoldDeathNo(false);
+        setNomineeValue(pfDeclarationView.pfNomination.nomineeId);
       } else if (
         pfDeclarationView.pfNominationHoldDeath !== undefined &&
         pfDeclarationView.pfNominationHoldDeath == false
       ) {
         setPfNominationHoldDeathNo(true);
         setPfNominationHoldDeathYes(false);
+        setNomineeDOB();
+        setNomineeValue(0);
+        setNominee({
+          nomineeAddress: "",
+          nomineeName: "",
+          nomineeRelationship: "",
+        });
       } else if (pfDeclarationView.epfPassbookCopy !== undefined) {
         setEpfPassbookCopy(pfDeclarationView.epfPassbookCopy);
       }
@@ -222,17 +236,17 @@ const PFDeclaration = (props) => {
         );
         setDeclarationIdValue(pfDeclarationView.declarationId);
       }
-      if (
-        pfDeclarationView.pfNomination !== null &&
-        pfDeclarationView.pfNomination !== undefined &&
-        pfDeclarationView.pfNomination.nomineeId !== undefined
-      ) {
-        console.log(
-          "pfDeclarationView.pfNomination.nomineeId",
-          pfDeclarationView.pfNomination.nomineeId
-        );
-        setNomineeValue(pfDeclarationView.pfNomination.nomineeId);
-      }
+      // if (
+      //   pfDeclarationView.pfNomination !== null &&
+      //   pfDeclarationView.pfNomination !== undefined &&
+      //   pfDeclarationView.pfNomination.nomineeId !== undefined
+      // ) {
+      //   console.log(
+      //     "pfDeclarationView.pfNomination.nomineeId",
+      //     pfDeclarationView.pfNomination.nomineeId
+      //   );
+      //   setNomineeValue(pfDeclarationView.pfNomination.nomineeId);
+      // }
 
       if (
         pfDeclarationView.pfNomination !== null &&
@@ -1084,6 +1098,7 @@ const PFDeclaration = (props) => {
                           selected={nomineeDOB}
                           required
                           onChange={(e) => dateOfBirthHandler(e, "1")}
+                          maxDate={new Date()}
                           dateFormat="yyyy-MM-dd"
                           placeholderText="YYYY-MM-DD"
                           style={nomineeDOBError ? { borderColor: "red" } : {}}
@@ -1219,6 +1234,15 @@ const PFDeclaration = (props) => {
                       accept="image/jpeg,.pdf"
                       name="form11"
                       style={{ display: "none" }}
+                      disabled={
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (form11DocStatus === 0 || form11DocStatus === 2)) ||
+                        (candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.documentUploaded === 0)
+                          ? false
+                          : true
+                      }
                       onChange={(e) => {
                         DocChangeHandler(e);
                       }}
@@ -1226,7 +1250,17 @@ const PFDeclaration = (props) => {
                     />
                   </label>
 
-                  <label className="custom-file-upload">
+                  <label
+                    className={
+                      (candidateProfileData.documentUploaded === 1 &&
+                        candidateProfileData.verificationStatus === 2 &&
+                        (form11DocStatus === 0 || form11DocStatus === 2)) ||
+                      (candidateProfileData.verificationStatus === 0 &&
+                        candidateProfileData.documentUploaded === 0)
+                        ? "custom-file-upload"
+                        : "custom-file-disable"
+                    }
+                  >
                     <input
                       type="button"
                       name="form11"
@@ -1234,6 +1268,15 @@ const PFDeclaration = (props) => {
                       onClick={(e) => {
                         handleUpload(e);
                       }}
+                      disabled={
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (form11DocStatus === 0 || form11DocStatus === 2)) ||
+                        (candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.documentUploaded === 0)
+                          ? false
+                          : true
+                      }
                     />
                     Upload File{" "}
                     <i
@@ -1277,6 +1320,16 @@ const PFDeclaration = (props) => {
                       accept="image/jpeg,.pdf"
                       name="form2epf"
                       style={{ display: "none" }}
+                      disabled={
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (form2epfDocStatus === 0 ||
+                            form2epfDocStatus === 2)) ||
+                        (candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.documentUploaded === 0)
+                          ? false
+                          : true
+                      }
                       onChange={(e) => {
                         DocChangeHandler(e);
                       }}
@@ -1284,11 +1337,31 @@ const PFDeclaration = (props) => {
                     />
                   </label>
 
-                  <label className="custom-file-upload">
+                  <label
+                    className={
+                      (candidateProfileData.documentUploaded === 1 &&
+                        candidateProfileData.verificationStatus === 2 &&
+                        (form2epfDocStatus === 0 || form2epfDocStatus === 2)) ||
+                      (candidateProfileData.verificationStatus === 0 &&
+                        candidateProfileData.documentUploaded === 0)
+                        ? "custom-file-upload"
+                        : "custom-file-disable"
+                    }
+                  >
                     <input
                       type="button"
                       name="form2epf"
                       className="custom_file_Upload_button"
+                      disabled={
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (form2epfDocStatus === 0 ||
+                            form2epfDocStatus === 2)) ||
+                        (candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.documentUploaded === 0)
+                          ? false
+                          : true
+                      }
                       onClick={(e) => {
                         handleUpload(e);
                       }}
@@ -1335,6 +1408,15 @@ const PFDeclaration = (props) => {
                       accept="image/jpeg,.pdf"
                       name="formf"
                       style={{ display: "none" }}
+                      disabled={
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (formfDocStatus === 0 || formfDocStatus === 2)) ||
+                        (candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.documentUploaded === 0)
+                          ? false
+                          : true
+                      }
                       onChange={(e) => {
                         DocChangeHandler(e);
                       }}
@@ -1342,11 +1424,30 @@ const PFDeclaration = (props) => {
                     />
                   </label>
 
-                  <label className="custom-file-upload">
+                  <label
+                    className={
+                      (candidateProfileData.documentUploaded === 1 &&
+                        candidateProfileData.verificationStatus === 2 &&
+                        (formfDocStatus === 0 || formfDocStatus === 2)) ||
+                      (candidateProfileData.verificationStatus === 0 &&
+                        candidateProfileData.documentUploaded === 0)
+                        ? "custom-file-upload"
+                        : "custom-file-disable"
+                    }
+                  >
                     <input
                       type="button"
                       name="formf"
                       className="custom_file_Upload_button"
+                      disabled={
+                        (candidateProfileData.documentUploaded === 1 &&
+                          candidateProfileData.verificationStatus === 2 &&
+                          (formfDocStatus === 0 || formfDocStatus === 2)) ||
+                        (candidateProfileData.verificationStatus === 0 &&
+                          candidateProfileData.documentUploaded === 0)
+                          ? false
+                          : true
+                      }
                       onClick={(e) => {
                         handleUpload(e);
                       }}
