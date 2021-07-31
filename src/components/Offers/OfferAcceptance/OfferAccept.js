@@ -251,12 +251,12 @@ const OfferAccept = (props) => {
               )}
               {(candidateProfileData.status === 2 &&
                 candidateProfileData.documentUploaded === 0 &&
-                candidateProfileData.documentReUploadCount !== 3 &&
+                candidateProfileData.documentReUploadCount !== 4 &&
                 candidateProfileData.adminVerificationStatus === 0 &&
                 candidateProfileData.verificationStatus === 0) ||
               (candidateProfileData.status === 2 &&
                 candidateProfileData.documentUploaded === 1 &&
-                candidateProfileData.documentReUploadCount !== 3 &&
+                candidateProfileData.documentReUploadCount !== 4 &&
                 (candidateProfileData.adminVerificationStatus === 2 ||
                   candidateProfileData.verificationStatus === 2)) ? (
                 <Link
