@@ -387,6 +387,7 @@ const Documents = (props) => {
       ReqPassport: false,
       ReqCollegeId: false,
       ReqCollegeLetter: false,
+      HigestEducationLetter: false,
     },
   ]);
 
@@ -403,6 +404,7 @@ const Documents = (props) => {
       tempArray[0].ReqPassport = false;
       tempArray[0].ReqCollegeId = false;
       tempArray[0].ReqCollegeLetter = false;
+      tempArray[0].HigestEducationLetter = true;
       setFandP_Required(tempArray);
     }
     if (localExpact === true) {
@@ -417,6 +419,7 @@ const Documents = (props) => {
       tempArray[0].ReqPassport = true;
       tempArray[0].ReqCollegeId = false;
       tempArray[0].ReqCollegeLetter = false;
+      tempArray[0].HigestEducationLetter = false;
     }
     if (internship === true) {
       let tempArray = [...FandP_Time_Required];
@@ -430,6 +433,7 @@ const Documents = (props) => {
       tempArray[0].ReqPassport = false;
       tempArray[0].ReqCollegeId = true;
       tempArray[0].ReqCollegeLetter = true;
+      tempArray[0].HigestEducationLetter = false;
     }
   };
   // whichOneIsRequired();
@@ -738,10 +742,14 @@ const Documents = (props) => {
   };
 
   const EduCetificateUploadValidation = () => {
-    if (UploadedArray[0].ULEducationCer === false) {
-      if (EducationCertificatesValidation() === true) {
-        setEduCertificatesError(true);
-        return false;
+    if (FandP_Time_Required[0].HigestEducationLetter === true) {
+      if (UploadedArray[0].ULEducationCer === false) {
+        if (EducationCertificatesValidation() === true) {
+          setEduCertificatesError(true);
+          return false;
+        }
+      } else {
+        return true;
       }
     } else {
       return true;
@@ -2194,7 +2202,13 @@ const Documents = (props) => {
           <Row style={{ marginTop: "2rem" }}>
             <Col>
               <Form.Group>
-                <div className="FileInput">
+                <div
+                  className={
+                    FandP_Time_Required[0].HigestEducationLetter
+                      ? "FileInput"
+                      : "FileInputWithOutStar"
+                  }
+                >
                   <label>Highest education certification</label>
                 </div>
                 <div className="parentInput">
