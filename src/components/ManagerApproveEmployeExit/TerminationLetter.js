@@ -32,10 +32,10 @@ const TerminationLetter = () => {
             </p>
             <p>
             You have been associated Decathlon Sports India Private Limited
-               (“Decathlon/Company”) at its XXXXXXXX located at {terminationLetterData.location} 
+               (“Decathlon/Company”) at its XXXXXXXX located at {terminationLetterData.location?terminationLetterData.location:''} 
                {terminationLetterData.company}. It has come to our notice that you were working 
                as {terminationLetterData.designation}.  This is reference to the Show
-                Cause letter dated on {terminationLetterData.dateOfResignation}. 
+                Cause letter dated on {terminationLetterData.dateOfResignation?terminationLetterData.dateOfResignation:''}. 
                 It has come to our knowledge that on XXXXXXXXXXX, you have indulged 
                 in act of misconduct {terminationLetterData.reason} at in Decathlon 
                 XXXXXXXXXX.  The facts of the same are as below 
@@ -43,7 +43,7 @@ const TerminationLetter = () => {
                 Hence the above acts of yours have constituted serious misconduct in 
                 connection with the employer’s business or property.
                 Therefore, you are hereby terminated from your employment with Decathlon
-                 with immediate effect as on {terminationLetterData.lastWorkingDate}. 
+                 with immediate effect as on {terminationLetterData.lastWorkingDate?terminationLetterData.lastWorkingDate:''}. 
                  Your full and final settlement post calculations of any dues from you
                   will be recovered and shall be paid to you during the next payroll cycle.
 

@@ -700,7 +700,7 @@ const ManagerInitiateExit = () => {
             reason: null,
             reasonForResignation: null,
             rehireRemark: state.remarks !== "" ? state.remarks : null,
-            status:(modeOfSeparation == 1)?2:4,
+            status:(modeOfSeparation == 1 || modeOfSeparation == "Resignation")?2:4,
           };
 
           console.log("createExitData", data2);
@@ -1194,8 +1194,8 @@ console.log(intern,"8098709809808")
             <label className="text-center">
               The details have been saved successfully <br />
               The relieving letter will be sent to the employee on{" "}
-              {moment(((terminationLetterData !== null && terminationLetterData !== undefined )|| (relivingLetterData !== null && relivingLetterData !== undefined )) && (modeOfSeparation == "Termination" || modeOfSeparation == 2)?
-              terminationLetterData.lastWorkingDate:relivingLetterData.lastWorkingDate, "YYYY-MM-DD")
+              {moment(((terminationLetterData !== null && terminationLetterData !== undefined )) && (modeOfSeparation == "Termination" || modeOfSeparation == 2)?
+              terminationLetterData.lastWorkingDate:((relivingLetterData !== null && relivingLetterData !== undefined )) && (modeOfSeparation == "Resignation" || modeOfSeparation == 1)?relivingLetterData.lastWorkingDate:new Date(), "YYYY-MM-DD")
                 .add(1, "days")
                 .format("YYYY-MM-DD")}
             </label>

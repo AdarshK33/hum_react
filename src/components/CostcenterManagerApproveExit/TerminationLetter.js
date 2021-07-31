@@ -11,7 +11,7 @@ const ref = React.createRef();
 
 const TerminationLetter = (props) => {
   const [showLetter, setLetter] = useState(false);
-  const { terminationLetterData } = useContext(EmployeeSeparationContext);
+  const { terminationLetterData ,fetchTerminationLetterData} = useContext(EmployeeSeparationContext);
   const [showSignature, setSignature] = useState(false);
   const [message, setMessage] = useState(false);
   const handleClose = () => {
@@ -88,18 +88,18 @@ const TerminationLetter = (props) => {
                   </p>
                   <p>
                   You have been associated Decathlon Sports India Private Limited
-               (“Decathlon/Company”) at its XXXXXXXX located at {terminationLetterData.location} 
-               {terminationLetterData.company}. It has come to our notice that you were working 
-               as {terminationLetterData.designation}.  This is reference to the Show
-                Cause letter dated on {terminationLetterData.dateOfResignation}. 
+               (“Decathlon/Company”) at its XXXXXXXX located at {terminationLetterData !== undefined && terminationLetterData.location} 
+               {terminationLetterData !== undefined && terminationLetterData.company}. It has come to our notice that you were working 
+               as {terminationLetterData !== undefined && terminationLetterData.designation}.  This is reference to the Show
+                Cause letter dated on {terminationLetterData !== undefined && terminationLetterData.dateOfResignation}. 
                 It has come to our knowledge that on XXXXXXXXXXX, you have indulged 
-                in act of misconduct {terminationLetterData.reason} at in Decathlon 
+                in act of misconduct {terminationLetterData !== undefined && terminationLetterData.reason} at in Decathlon 
                 XXXXXXXXXX.  The facts of the same are as below 
 
                 Hence the above acts of yours have constituted serious misconduct in 
                 connection with the employer’s business or property.
                 Therefore, you are hereby terminated from your employment with Decathlon
-                 with immediate effect as on {terminationLetterData.lastWorkingDate}. 
+                 with immediate effect as on {terminationLetterData !== undefined && terminationLetterData.lastWorkingDate}. 
                  Your full and final settlement post calculations of any dues from you
                   will be recovered and shall be paid to you during the next payroll cycle.
                   </p>
