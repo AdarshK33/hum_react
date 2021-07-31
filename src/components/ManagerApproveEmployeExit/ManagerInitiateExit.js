@@ -779,7 +779,9 @@ const ManagerInitiateExit = () => {
         fetchTerminationLetterData(employeeData.employeeId)
         handleShow();
         console.log("termination")
-
+    }else if(intern == true){
+      fetchRelievingLetterData(employeeData.employeeId);
+      handleShow();  
     }
  
     // setPreviewGeneratedLetter(true);

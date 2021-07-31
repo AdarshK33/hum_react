@@ -350,7 +350,7 @@ const EmployeeExitList = () => {
                             </td>
                             
                             <td>
-                              {item.status === 2 || item.status === 3|| item.status === 4 || item.status === 5 ? (
+                              {(item.status === 2 || item.status === 3|| item.status === 4 ||item.status === 5|| item.status === 6 )? (
                                 <Edit2 />
                               ) : item.status == 8?(
                                 <Link to={"/exit-initiate-action/" + item.employeeId}>

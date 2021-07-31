@@ -532,7 +532,7 @@ export const SeparationProvider = (props) => {
   };
 
   const MakeCostCenterDataNull = () => {
-    state.searchByCostData = null;
+    state.searchByCostData = {};
     return dispatch({
       type: "SEARCH_BY_COST_DATA",
       payload: state.searchByCostData,
