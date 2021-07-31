@@ -97,7 +97,7 @@ const EmployeeExitView = () => {
       }
       // state.noticePeriod = employeeData.noticePeriod;
       state.lastWorkingDate = employeeData.lastWorkingDate;
-      state.emailId = employeeData.emailId;
+      state.emailId = employeeData.personEmailId;
       state.comments = employeeData.employeeComment;
       state.noticePeriodRcryDays =
         employeeData.noticePeriodRecoveryDays !== null &&
