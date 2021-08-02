@@ -197,6 +197,8 @@ export const EmploeeSeparationProvider = ({children}) => {
           type: "FETCH_RELIEVING_LETTER_DATA",
           payload: state.relivingLetterData,
         });
+      }) .catch((error) => {
+        console.log(error);
       });
   };
   const fetchTerminationLetterData = (empId) => {
@@ -210,6 +212,8 @@ export const EmploeeSeparationProvider = ({children}) => {
           type: "FETCH_TERMINATION_LETTER_DATA",
           payload: state.terminationLetterData,
         });
+      }) .catch((error) => {
+        console.log(error);
       });
   };
 

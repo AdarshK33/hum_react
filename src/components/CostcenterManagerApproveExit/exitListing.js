@@ -7,7 +7,7 @@ import { OfferContext } from "../../context/OfferState";
 import Pagination from "react-js-pagination";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState";
-
+import {AppContext} from "../../context/AppState"
 const ExitListing = () => {
   const {
     EmployeeSeparationExitList,
@@ -19,7 +19,9 @@ const ExitListing = () => {
     loader,
     total,
     changeEmployeeId,
+    ViewEmployeeProfile
   } = useContext(EmployeeSeparationContext);
+  const { user } = useContext(AppContext);
 
   const [pageCount, setPageCount] = useState(0);
   const [currentRecords, setCurrentRecords] = useState([]);
@@ -96,7 +98,7 @@ const ExitListing = () => {
       setCurrentRecords(EmployeeSeparationExitList);
     }
   }, [EmployeeSeparationExitList, ModeOfSeparationData]);
-
+console.log(user,"user")
   /*-----------------Pagination------------------*/
   const [currentPage, setCurrentPage] = useState(1);
   const recordPerPage = 10;
@@ -243,7 +245,56 @@ const ExitListing = () => {
                             (item.department == "AFS" ||item.department == "IT" ||item.department == "Legal" ||item.department == "Finance")?2:1}</td>
 
                               <td>
-                                {(item.status === 3||item.status === 5)?<Edit2/>:(item.status === 0 ||item.status === 8)?<Link to={"/exit-action/" + item.employeeId}>
+                              {/* {(item !== null &&
+                                item !== undefined &&
+                                Object.keys(item).length !== 0)?(
+                                (item.loginType == 7 || item.additionalRole == 7) && item.isManager === true?(
+                                  (item.status === 2 ||
+                                    item.status === 3 ||
+                                      item.status === 5)?(
+                                        <Edit2 />
+                                            ) : (
+                                                <Link
+                        to={"/exit-action/" + item.employeeId}
+                                    >
+                                        <Edit2
+                                            onClick={() => {
+                                        fetchEmployeeDetails(
+                          item.employeeId
+                                        );
+                                            }}
+                          />
+                      </Link>
+                      )
+                    ) : (item.status === 0 || item.status === 8) ? (
+                        <Link
+              to={"/exit-action/" + item.employeeId}
+                >
+                            <Edit2  
+                      onClick={() => {
+                        fetchEmployeeDetails(item.employeeId);
+                                          }}
+                                            />
+                                </Link>
+                                  ) : (
+                                  <Link
+                                  to={"/employee-info/" + item.employeeId}
+                                  >
+                                  <Edit2
+                                  onClick={() => {
+                                  fetchEmployeeDetails(item.employeeId);
+                                  }}
+                                  />
+                                  </Link>
+                                  )
+                                  ) : (
+                                  <Edit2 />
+                                  )}         */}
+
+
+
+                                {(item.status === 3||item.status === 5|| item.status === 6)?<Edit2/>:((
+                                ((user.loginType == 7 ||user.additionalRole == (7||3||9) )&& item.isManager == true)) && item.status == 2)?<Edit2/>:(item.status === 0 ||item.status === 8)?<Link to={"/exit-action/" + item.employeeId}>
                                   <Edit2
                                     onClick={() => {
                                       fetchEmployeeDetails(item.employeeId);

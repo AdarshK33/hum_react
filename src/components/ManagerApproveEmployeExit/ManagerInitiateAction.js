@@ -111,9 +111,9 @@ const ManagerInitiateAction = () => {
   const { locationDetails, locationDetailsList } =
     useContext(PermissionContext);
 
-  useEffect(() => {
-    ViewEmployeeProfile();
-  }, []);
+    useEffect(() => {
+      ViewEmployeeDataById(employeeId);
+    }, [employeeId]);
 
   useEffect(() => {
     locationDetails();
@@ -175,35 +175,35 @@ const ManagerInitiateAction = () => {
     }
   }, [employeeData]);
 
-  useEffect(() => {
-    if (
-      employeeData &&
-      employeeData &&
-      employeeData !== null &&
-      employeeData !== undefined &&
-      Object.keys(employeeData).length !== 0
-    ) {
-      if (
-        state.empId !== "" &&
-        state.empId !== null &&
-        state.empId !== undefined &&
-        employeeData.employeeId !== null &&
-        employeeData.employeeId !== undefined 
-      ) {
-        if (withdrwaThis === false && submitted === false) {
-          if (checkForExist === true || firstTimeUpdate === true) {
-            if (state.empId === employeeData.employeeId) {
-              console.log("********");
-              setShowInfoModal(true);
-              setCheckForExist(false);
-              setFirstTimeUpdate(false);
-              toast.info("Employe is in separation list");
-            }
-          }
-        }
-      }
-    }
-  }, [EmpName, employeeData, checkForExist]);
+  // useEffect(() => {
+  //   if (
+  //     employeeData &&
+  //     employeeData &&
+  //     employeeData !== null &&
+  //     employeeData !== undefined &&
+  //     Object.keys(employeeData).length !== 0
+  //   ) {
+  //     if (
+  //       state.empId !== "" &&
+  //       state.empId !== null &&
+  //       state.empId !== undefined &&
+  //       employeeData.employeeId !== null &&
+  //       employeeData.employeeId !== undefined 
+  //     ) {
+  //       if (withdrwaThis === false && submitted === false) {
+  //         if (checkForExist === true || firstTimeUpdate === true) {
+  //           if (state.empId === employeeData.employeeId) {
+  //             console.log("********");
+  //             setShowInfoModal(true);
+  //             setCheckForExist(false);
+  //             setFirstTimeUpdate(false);
+  //             toast.info("Employe is in separation list");
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  // }, [EmpName, employeeData, checkForExist]);
 
   useEffect(() => {
     if (
@@ -1034,11 +1034,11 @@ console.log(state,modeOfSeparation,changeInSeparation,"8098709809808",relivingLe
           <Modal.Body>
             {relivingLetterData &&
             relivingLetterData !== undefined &&
-            relivingLetterData !== null && intern === false && modeOfSeparation == 1? (
+            relivingLetterData !== null && intern === false &&  (modeOfSeparation == "1" || modeOfSeparation == "Resignation")? (
               <RelievingLetter />
             ) :terminationLetterData &&
             terminationLetterData !== undefined &&
-            terminationLetterData !== null && intern === false && modeOfSeparation == 2? (
+            terminationLetterData !== null && intern === false &&  (modeOfSeparation == "2" || modeOfSeparation == "Termination")? (
               <TerminationLetter />
             ) : (
               <InternShipLetter/>
