@@ -81,13 +81,13 @@ const RegularTransferView = ({ transferData }) => {
       </Row> */}
       <Row className="mb-4">
         <Col md={2} className="py-0">
-          Bonus In Percent
+          Bonus
         </Col>
         <Col md={3} className="text-primary">
           {transferData.promotedMonthlyBonus !== null &&
           transferData.promotedMonthlyBonus !== undefined &&
           transferData.promotedMonthlyBonus !== 0
-            ? transferData.promotedMonthlyBonus + "%"
+            ? transferData.promotedMonthlyBonus
             : "NA"}
         </Col>
         <Col md={2} className="py-0">
@@ -97,7 +97,7 @@ const RegularTransferView = ({ transferData }) => {
           {transferData.promotedRelocationBonus !== null &&
           transferData.promotedRelocationBonus !== undefined &&
           transferData.promotedRelocationBonus !== ""
-            ? transferData.promotedRelocationBonus + "%"
+            ? transferData.promotedRelocationBonus
             : "NA"}
         </Col>
       </Row>

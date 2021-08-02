@@ -331,7 +331,7 @@ const EntityTransfer = ({ transferData }) => {
             controlId="transferInitiationCostCentre"
           >
             <Col md={2}>
-              <Form.Label>Bonus (%):</Form.Label>
+              <Form.Label>Bonus:</Form.Label>
             </Col>
             <Col md={4} className="text-primary">
               {transferData.promotedMonthlyBonus}

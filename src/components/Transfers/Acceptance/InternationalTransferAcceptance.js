@@ -61,6 +61,10 @@ const InternationalTransferAcceptance = () => {
             ? 4
             : transferData.promotedTermOfProject === "5 Years"
             ? 5
+            : transferData.promotedTermOfProject === "3 Months"
+            ? 30
+            : transferData.promotedTermOfProject === "6 Months"
+            ? 60
             : 0
           : 0
       );
@@ -106,9 +110,13 @@ const InternationalTransferAcceptance = () => {
         currency: transferData.currency,
         promotedManagerEmailId: transferData.promotedManagerEmailId,
         promotedTermOfProject:
-          projectTerm !== "0" && projectTerm === "1"
-            ? projectTerm + " Year"
-            : projectTerm + " Years",
+          projectTerm !== "0"
+            ? parseInt(projectTerm) <= 10
+              ? projectTerm === "1"
+                ? projectTerm + " Year"
+                : projectTerm + " Years"
+              : parseInt(projectTerm) / 10 + " Months"
+            : null,
         contractStatus: contractStatus,
       };
       createTransferInitiation(initiationData);
@@ -119,21 +127,31 @@ const InternationalTransferAcceptance = () => {
     setEffectiveDateErrMsg("");
     let date = Val;
     console.log(date);
-    // console.log("i am here", date.length);
+
     if (date !== "" && date !== null && date !== undefined) {
-      ChangeReturnDate(date);
-      var fullDate = new Date(
-        date.setFullYear(date.getFullYear() - parseInt(projectTerm))
-      );
+      if (parseInt(projectTerm) <= 10) {
+        var fullDate = new Date(
+          date.setFullYear(date.getFullYear() + parseInt(projectTerm))
+        );
+        ChangeReturnDate(fullDate);
+        fullDate = new Date(
+          date.setFullYear(date.getFullYear() - parseInt(projectTerm))
+        );
+      } else {
+        var fullDate = new Date(
+          date.setMonth(date.getMonth() + parseInt(projectTerm) / 10)
+        );
+        ChangeReturnDate(fullDate);
+        fullDate = new Date(
+          date.setMonth(date.getMonth() - parseInt(projectTerm) / 10)
+        );
+      }
     } else {
       setReturnDate(new Date());
     }
   };
   const ChangeReturnDate = (date) => {
-    var fullDate = new Date(
-      date.setFullYear(date.getFullYear() + parseInt(projectTerm))
-    );
-    setReturnDate(fullDate);
+    setReturnDate(date);
   };
   const changeReturnDateHandler = (date) => {
     setReturnDate(date);
@@ -396,6 +414,8 @@ const InternationalTransferAcceptance = () => {
                             onChange={changeProjectTermHandler}
                           >
                             <option value="0">Select Term Of Project</option>
+                            <option value="30">3 Months</option>
+                            <option value="60">6 Months</option>
                             <option value="1">1 Year</option>
                             <option value="2">2 Years</option>
                             <option value="3">3 Years</option>
