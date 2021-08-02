@@ -114,6 +114,7 @@ import TransferView from "./components/Transfers/view/TransferView";
 import RegularTransferAcceptance from "./components/Transfers/Acceptance/RegularTransferAcceptance";
 import EntityTransferAcceptance from "./components/Transfers/Acceptance/EntityTransferAcceptance";
 import InternationalTransferAcceptance from "./components/Transfers/Acceptance/InternationalTransferAcceptance";
+import ManagerInitiateAction from "./components/ManagerApproveEmployeExit/ManagerInitiateAction";
 
 const RoutePath = () => {
   const { user, state } = useContext(AppContext);
@@ -243,6 +244,10 @@ const RoutePath = () => {
           <Route
             path={`${process.env.PUBLIC_URL}/exit-action/:employeeid`}
             component={EmployeeExitAction}
+          />
+          <Route
+            path={`${process.env.PUBLIC_URL}/exit-initiate-action/:employeeid`}
+            component={ManagerInitiateAction}
           />
           <Route
             path={`${process.env.PUBLIC_URL}/exit-view/:employeeid`}

@@ -26,7 +26,7 @@ const ExitListing = () => {
   const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
-    EmployeeSeparationListExitView("all", pageCount,6);
+    EmployeeSeparationListExitView("all", pageCount,9);
   }, []);
 
   console.log("---->", EmployeeSeparationExitList);
@@ -110,9 +110,9 @@ const ExitListing = () => {
     setPageCount(pageNumber - 1);
     setCurrentPage(pageNumber);
     if (searchValue !== "") {
-      EmployeeSeparationListExitView(searchValue, pageNumber - 1,6);
+      EmployeeSeparationListExitView(searchValue, pageNumber - 1,9);
     } else {
-      EmployeeSeparationListExitView("all", pageNumber - 1,6);
+      EmployeeSeparationListExitView("all", pageNumber - 1,9);
     }
     setCurrentRecords(EmployeeSeparationExitList);
   };
@@ -124,9 +124,9 @@ const ExitListing = () => {
 
   const searchDataHandler = () => {
     if (searchValue !== "") {
-      EmployeeSeparationListExitView(searchValue, pageCount,6);
+      EmployeeSeparationListExitView(searchValue, pageCount,9);
     } else {
-      EmployeeSeparationListExitView("all", pageCount,6);
+      EmployeeSeparationListExitView("all", pageCount,9);
     }
   };
 
@@ -237,13 +237,19 @@ const ExitListing = () => {
                               <td>{item.contractType}</td>
                               <td>{item.dateOfResignation}</td>
                               <td>{item.lastWorkingDate}</td>
-                              <td>{item.modeOfSeparationReasonId}</td>
+                              <td>{item.reasonForResignation}</td>
                               <td>{item.managerName}</td>
                               <td>{item.contractType.toLowerCase() === 'internship' ?"NA":
                             (item.department == "AFS" ||item.department == "IT" ||item.department == "Legal" ||item.department == "Finance")?2:1}</td>
 
                               <td>
-                                {(item.status === 4||item.status === 5)?<Edit2/>:<Link to={"/employee-info/" + item.employeeId}>
+                                {(item.status === 3||item.status === 5)?<Edit2/>:(item.status === 0 ||item.status === 8)?<Link to={"/exit-action/" + item.employeeId}>
+                                  <Edit2
+                                    onClick={() => {
+                                      fetchEmployeeDetails(item.employeeId);
+                                    }}
+                                  />
+                                </Link>:<Link to={"/employee-info/" + item.employeeId}>
                                   <Edit2
                                     onClick={() => {
                                       fetchEmployeeDetails(item.employeeId);

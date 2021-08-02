@@ -1,10 +1,8 @@
-import React, { createContext, useReducer, useState } from "react";
+import React, { createContext, useReducer,useContext,useState } from "react";
 import EmployeeSeparationReducer from "../reducers/EmployeeSeparationReducer";
 import { client } from "../utils/axios";
 import { toast } from "react-toastify";
-
-export const EmployeeSeparationContext = createContext();
-
+// import { SeparationContext } from "./SepearationState";
 const initial_state = {
   EmployeeSeparationList: [],
   EmployeeSeparationExitList:[],
@@ -15,17 +13,23 @@ const initial_state = {
   employeeId: "",
   employeeProfileData: {},
   relivingLetterData: [],
+  terminationLetterData:[],
   terminationConfirmationStatus: "",
   resignationConfirmationStatus: "",
 };
 
-export const EmploeeSeparationProvider = (props) => {
+export const EmployeeSeparationContext = createContext();
+
+
+export const EmploeeSeparationProvider = ({children}) => {
   const [loader, setLoader] = useState(false);
   const [DisciplinaryTermination, setDisciplinarytermination] = useState(false);
   const [state, dispatch] = useReducer(
     EmployeeSeparationReducer,
     initial_state
   );
+  // const {MakeCostCenterDataNull} = useContext(SeparationContext)
+
   const changeEmployeeId = (employeeId) => {
     setLoader(true);
     state.employeeId = employeeId;
@@ -103,7 +107,8 @@ export const EmploeeSeparationProvider = (props) => {
         console.log(state.total);
         console.log(response);
         ModeOfSeparationView();
-
+        // makeEmployeeDataNull()
+        // MakeCostCenterDataNull()
         return dispatch({
           type: "EMPLOYEE_SEPARATION_LISTING",
           payload: state.EmployeeSeparationList,
@@ -132,7 +137,7 @@ export const EmploeeSeparationProvider = (props) => {
         console.log(state.total);
         console.log(response);
         ModeOfSeparationView();
-
+        makeEmployeeDataNull()
         return dispatch({
           type: "EMPLOYEE_SEPARATION_LISTING_EXIT",
           payload: state.EmployeeSeparationExitList,
@@ -191,6 +196,19 @@ export const EmploeeSeparationProvider = (props) => {
         return dispatch({
           type: "FETCH_RELIEVING_LETTER_DATA",
           payload: state.relivingLetterData,
+        });
+      });
+  };
+  const fetchTerminationLetterData = (empId) => {
+    console.log(empId, "empId000000777");
+    client
+      .get("/api/v1/separation/employee-exit/termination/" + empId)
+      .then((response) => {
+        console.log(response.data.data);
+        state.terminationLetterData = response.data.data;
+        return dispatch({
+          type: "FETCH_TERMINATION_LETTER_DATA",
+          payload: state.terminationLetterData,
         });
       });
   };
@@ -274,6 +292,7 @@ export const EmploeeSeparationProvider = (props) => {
         ViewEmployeeProfile,
         CreateEmplyoeeExist,
         fetchRelievingLetterData,
+        fetchTerminationLetterData,
         makeEmployeeDataNull,
         terminationConfirmation,
         resignationConfirmation,
@@ -289,12 +308,13 @@ export const EmploeeSeparationProvider = (props) => {
         terminationConfirmationStatus: state.terminationConfirmationStatus,
         employeeData: state.employeeData,
         relivingLetterData: state.relivingLetterData,
+        terminationLetterData:state.terminationLetterData,
         loader: loader,
         DisciplinaryTermination: DisciplinaryTermination,
         total: state.total,
       }}
     >
-      {props.children}
+      {children}
     </EmployeeSeparationContext.Provider>
   );
 };

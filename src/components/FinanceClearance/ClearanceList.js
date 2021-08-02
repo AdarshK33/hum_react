@@ -161,7 +161,7 @@ const FinanceClearanceList = () => {
       setCleranceData(formData);
      saveFinanceClearanceData(formData, searchValue, pageCount,actionStatus, costCenter);
     toast.info("Finance Clearance fetched successfully")
-    }else if(formData.financeClearanceStatus == 1 ){
+    }else if(formData.financeClearanceStatus == 1 && formData.financeAmount == 0){
       formData['disabled'] = true
       console.log(formData,"1")
       setCleranceData(formData);
@@ -174,7 +174,8 @@ const FinanceClearanceList = () => {
      saveFinanceClearanceData(formData, searchValue, pageCount,actionStatus, costCenter);
     toast.info("Finance Clearance fetched successfully")
     }else{
-      toast.error("Please enter finance-remarks")
+      toast.error(formData.financeClearanceStatus == 1?"Please enter finance-remarks and financeAmount should be zero":"Please enter finance-remarks");
+
     }
     }else{
       toast.error("please enter finance status and remarks")

@@ -11,7 +11,7 @@ import { EmployeeSeparationContext } from "../../context/EmployeeSeparationState
 const EmpResignation = () => {
   const [regDate, setRegDate] = useState(new Date());
   const [noticePeriod,setNoticePeriod] = useState(0)
-  const [lastDate, setLastDate] = useState(new Date(new Date().setMonth(new Date().getMonth() + (noticePeriod + 1) )));
+  const [lastDate, setLastDate] = useState();
   const [reasonOfSepration, setReasonOfSepration] = useState("");
   const [emailId, setEmailId] = useState("");
   const [approver, setApprover] = useState("");
@@ -20,6 +20,7 @@ const EmpResignation = () => {
   const [submitted, setSubmitted] = useState(false);
   const [withdrwaThis, setWithdrawThis] = useState(false);
   const [reasonOfSeparationList, setReasonOfSeparationList] = useState([]);
+  const [lastDateSelection ,setLastDateSelection] = useState(new Date())
   const { locationDetails, locationDetailsList } = useContext(
     PermissionContext
   );
@@ -67,6 +68,8 @@ const EmpResignation = () => {
     if(employeeData == null){
     ViewEmployeeDataById(user.employeeId);
     setSubmitted(false)
+    setReasonOfSepration("");
+      setComments()
     modeOfSeparation();
     ModeOfSeparationView(); 
     }
@@ -102,7 +105,7 @@ const EmpResignation = () => {
   }, [managerList]);
 
   useEffect(() => {
-    console.log("profile data", user, employeeData);
+    console.log("profile data", user,"profile data1", employeeData);
     if (
       user !== null &&
       user !== undefined &&
@@ -111,12 +114,33 @@ const EmpResignation = () => {
         Object.keys(employeeData).length > 0)
     ) {
       console.log("profile data", user);
-      setEmailId(user.email);
-      if(user.department == "AFS" || user.department == "IT" ||user.department == "Legal" ||user.department == "Finance"){
-        setNoticePeriod(2)
-      }else{
-        setNoticePeriod(1)
-      }
+      setEmailId(user.personalEmail);
+      // if(user.department == "AFS" || user.department == "IT" ||user.department == "Legal" ||user.department == "Finance"){
+      //   setNoticePeriod(2)
+      // }else{
+      //   setNoticePeriod(1)
+      // }
+     
+    }
+    if((user !== null &&
+      user !== undefined) && (user.department == "AFS" || user.department == "IT" ||user.department == "Legal" ||user.department == "Finance") && (user.contractType === "permanent" ||user.contractType === "parttime" )){
+      setNoticePeriod(2)
+      var dateValue =  new Date(new Date().setMonth(new Date().getMonth() + (2)))
+      let aboveDateValue = new Date(new Date().setMonth(new Date().getMonth() + (parseInt(2) + 1)))
+    ;
+      setLastDateSelection(aboveDateValue)
+      setEmailId(user.personalEmail);
+      setLastDate(dateValue)
+      console.log(dateValue,aboveDateValue,"2")
+    }else{
+      setNoticePeriod(1)
+      var dateValue =  new Date(new Date().setMonth(new Date().getMonth() + (1)))
+      let aboveDateValue = new Date(new Date().setMonth(new Date().getMonth() + (parseInt(1) + 1)))
+      setLastDateSelection(aboveDateValue)
+      setLastDate(dateValue)
+      setEmailId(user.personalEmail);
+      console.log(dateValue,aboveDateValue,"1")
+
     }
   }, [user]);
 
@@ -130,17 +154,31 @@ const EmpResignation = () => {
     ) {
       console.log(employeeData,"inuse")
       setRegDate(new Date(employeeData.dateOfResignation));
-      setLastDate(new Date(employeeData.lastWorkingDate));
+      var noticeValue = 0
+      // setLastDate(new Date(employeeData.lastWorkingDate));
       if(employeeData.department == "AFS" || employeeData.department == "IT" ||employeeData.department == "Legal" ||employeeData.department == "Finance"){
         setNoticePeriod(2)
+        var dateValue =  new Date(new Date().setMonth(new Date().getMonth() + (2)))
+        let aboveDateValue = new Date(new Date().setMonth(new Date().getMonth() + (parseInt(2) + 1)))
+      ;
+        setLastDateSelection(aboveDateValue)
+        setLastDate(dateValue)
+        console.log(dateValue,aboveDateValue,"2")
       }else{
         setNoticePeriod(1)
+        var dateValue =  new Date(new Date().setMonth(new Date().getMonth() + (1)))
+        let aboveDateValue = new Date(new Date().setMonth(new Date().getMonth() + (parseInt(1) + 1)))
+        setLastDateSelection(aboveDateValue)
+        setLastDate(dateValue)
+        console.log(dateValue,aboveDateValue,"1")
+
       }
+     
       setReasonOfSepration("");
-      setEmailId(employeeData.emailId);
+      setEmailId(employeeData.personalEmailId);
       setSubmitted(true);
       setComments(employeeData.employeeComment);
-      console.log(noticePeriod,"98098098098")
+      console.log(employeeData,"98098098098")
     }
   }, [employeeData]);
 console.log(employeeData)
@@ -203,7 +241,7 @@ console.log(employeeData)
         setRegDate();
         setLastDate();
         setReasonOfSepration("");
-        setEmailId(user.email);
+        setEmailId(user.personalEmail);
         if (
           managerList &&
           managerList &&
@@ -273,7 +311,7 @@ console.log(employeeData)
       costCentreManagerName: null,
       costCentreName: user.costCentre,
       dateOfResignation: regDate,
-      emailId: emailId,
+      personalEmail: emailId,
       empName: user.firstName + user.lastName,
       employeeComment: comments,
       employeeId: user.employeeId,
@@ -322,6 +360,10 @@ console.log(employeeData)
     setWithdrawThis(true);
     ViewEmployeeDataById(user.employeeId);
     managerData(user.costCentre);
+    setReasonOfSepration("");
+  
+      setComments("");
+     setReasonOfSepration("");
 
     // if (
     //   employeeData &&
@@ -627,6 +669,7 @@ console.log(employeeData)
                           value={moment(lastDate).format("DD/MM/YYYY")}
                           selected={lastDate}
                           minDate={moment().toDate()}
+                          maxDate={lastDateSelection}
                           onChange={(date) => setLastDate(date)}
                           className="form-control non-disable readTextBlue"
                           dateFormat="yyyy-MM-dd"

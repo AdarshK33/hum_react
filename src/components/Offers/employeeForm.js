@@ -44,6 +44,7 @@ const EmployeeForm = (props) => {
     createCandidateResponse,
     editCandidate,
     viewCandidateId,
+    candidateData,
   } = useContext(OfferContext);
 
   const handleClose = () => setModal(false);
@@ -92,6 +93,20 @@ const EmployeeForm = (props) => {
         : ""
     );
   }, [searchEmpData2]);
+  var candidateRefData =
+    candidateData !== null &&
+    candidateData !== undefined &&
+    candidateData.candidateInformation;
+  var data1 =
+    candidateRefData !== undefined &&
+    candidateRefData.candidateReferences !== null &&
+    candidateRefData.candidateReferences !== undefined &&
+    candidateRefData.candidateReferences[0];
+  var data2 =
+    candidateRefData !== undefined &&
+    candidateRefData.candidateReferences !== null &&
+    candidateRefData.candidateReferences !== undefined &&
+    candidateRefData.candidateReferences[1];
 
   useEffect(() => {
     if (empName1 === "") {
@@ -288,13 +303,15 @@ const EmployeeForm = (props) => {
             designation: desgination1 !== null ? desgination1 : null,
             email: refEmail1 !== null ? refEmail1 : null,
             employeeName: empName1 !== null ? empName1 : null,
-            referenceId: 0,
+            referenceId:
+              data1 !== null && data1 !== undefined ? data1.referenceId : 0,
           },
           {
             designation: desgination2 !== null ? desgination2 : null,
             email: refEmail2 !== null ? refEmail2 : null,
             employeeName: empName2 !== null ? empName2 : null,
-            referenceId: 0,
+            referenceId:
+              data2 !== null && data2 !== undefined ? data2.referenceId : 0,
           },
         ],
         createdDate: null,
@@ -472,6 +489,22 @@ const EmployeeForm = (props) => {
   const editHandler = () => {
     setDisabled(false);
     console.log("state", state);
+    if (
+      createCandidateResponse !== null &&
+      createCandidateResponse !== undefined &&
+      Object.keys(createCandidateResponse).length !== 0
+    ) {
+      viewCandidateId(createCandidateResponse.candidateId);
+    }
+    if (
+      candidateData !== null &&
+      candidateData !== undefined &&
+      candidateData.candidateInformation !== null &&
+      candidateData.candidateInformation !== undefined &&
+      Object.keys(candidateData.candidateInformation).length !== 0
+    ) {
+      viewCandidateId(candidateData.candidateInformation.candidateId);
+    }
   };
   return (
     <Fragment>
