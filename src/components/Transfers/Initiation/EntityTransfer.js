@@ -661,12 +661,12 @@ const EntityTransfer = () => {
                 controlId="transferInitiationCostCentre"
               >
                 <Col md={2}>
-                  <Form.Label>Bonus (%):</Form.Label>
+                  <Form.Label>Bonus:</Form.Label>
                 </Col>
                 <Col md={4} className="text-primary">
                   <Form.Control
                     type="text"
-                    placeholder="Bonus In Percent"
+                    placeholder="Bonus"
                     value={bonus}
                     className="text-primary"
                     id="transferInitiationBonusPercent"

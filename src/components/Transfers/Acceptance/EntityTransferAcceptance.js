@@ -316,9 +316,9 @@ const EntityTransferAcceptance = () => {
     if (relocationBonus === "") {
       validForm = false;
       setRelocationBonusErrMsg("Please enter relocation bonus");
-    } else if (relocationBonus.length !== 2) {
+    } else if (!Valid.test(relocationBonus)) {
       validForm = false;
-      setRelocationBonusErrMsg("Please enter two digits figure");
+      setRelocationBonusErrMsg("Please enter  digits");
     }
     if (newGross === "") {
       validForm = false;
@@ -1027,7 +1027,7 @@ const EntityTransferAcceptance = () => {
                           controlId="transferInitiationCostCentre"
                         >
                           <Col md={2}>
-                            <Form.Label>Bonus (%):</Form.Label>
+                            <Form.Label>Bonus:</Form.Label>
                           </Col>
                           <Col md={4} className="text-primary">
                             <Form.Control

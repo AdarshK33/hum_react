@@ -41,6 +41,7 @@ const TRANSFER_TABLE_HEADERS = {
     effDate: "Effective Date",
     dateOfReturn: "Date Of Return",
     termOfProject: "Term Of Project",
+    contractStatus: "Contract Status",
     status: "Status",
     view: "View",
     action: "Action",

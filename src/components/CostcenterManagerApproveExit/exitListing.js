@@ -28,7 +28,7 @@ const ExitListing = () => {
   const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
-    EmployeeSeparationListExitView("all", pageCount,9);
+    EmployeeSeparationListExitView("all", pageCount, 9);
   }, []);
 
   console.log("---->", EmployeeSeparationExitList);
@@ -73,7 +73,9 @@ const ExitListing = () => {
 
             ModeOfSeparationData[i].modeOfSeparationReasonList.map(
               (item1, j) => {
-                if (EmployeeSeparationExitList[r].modeOfSeparationReasonId === 0) {
+                if (
+                  EmployeeSeparationExitList[r].modeOfSeparationReasonId === 0
+                ) {
                   EmployeeSeparationExitList[r].modeOfSeparationReasonId = "";
                 } else if (
                   EmployeeSeparationExitList[r].modeOfSeparationReasonId ===
@@ -112,9 +114,9 @@ console.log(user,"user")
     setPageCount(pageNumber - 1);
     setCurrentPage(pageNumber);
     if (searchValue !== "") {
-      EmployeeSeparationListExitView(searchValue, pageNumber - 1,9);
+      EmployeeSeparationListExitView(searchValue, pageNumber - 1, 9);
     } else {
-      EmployeeSeparationListExitView("all", pageNumber - 1,9);
+      EmployeeSeparationListExitView("all", pageNumber - 1, 9);
     }
     setCurrentRecords(EmployeeSeparationExitList);
   };
@@ -126,9 +128,9 @@ console.log(user,"user")
 
   const searchDataHandler = () => {
     if (searchValue !== "") {
-      EmployeeSeparationListExitView(searchValue, pageCount,9);
+      EmployeeSeparationListExitView(searchValue, pageCount, 9);
     } else {
-      EmployeeSeparationListExitView("all", pageCount,9);
+      EmployeeSeparationListExitView("all", pageCount, 9);
     }
   };
 
@@ -241,8 +243,17 @@ console.log(user,"user")
                               <td>{item.lastWorkingDate}</td>
                               <td>{item.reasonForResignation}</td>
                               <td>{item.managerName}</td>
-                              <td>{item.contractType.toLowerCase() === 'internship' ?"NA":
-                            (item.department == "AFS" ||item.department == "IT" ||item.department == "Legal" ||item.department == "Finance")?2:1}</td>
+                              <td>
+                                {item.contractType.toLowerCase() ===
+                                "internship"
+                                  ? "NA"
+                                  : item.department == "AFS" ||
+                                    item.department == "IT" ||
+                                    item.department == "Legal" ||
+                                    item.department == "Finance"
+                                  ? 2
+                                  : 1}
+                              </td>
 
                               <td>
                               {/* {(item !== null &&
