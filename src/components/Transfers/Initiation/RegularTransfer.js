@@ -410,9 +410,9 @@ const RegularTransfer = () => {
     if (relocationBonus === "") {
       validForm = false;
       setRelocationBonusErrMsg("Please enter relocation bonus");
-    } else if (relocationBonus.length > 2 || !Valid.test(relocationBonus)) {
+    } else if (!Valid.test(relocationBonus)) {
       validForm = false;
-      setRelocationBonusErrMsg("Please enter two digits figure");
+      setRelocationBonusErrMsg("Please enter digits");
     }
 
     if (
@@ -879,12 +879,12 @@ const RegularTransfer = () => {
           </Form.Group> */}
           <Form.Group as={Row} className="mb-3">
             <Form.Label column md={2} className="py-0">
-              Bonus In Percent
+              Bonus
             </Form.Label>
             <Col md={4}>
               <Form.Control
                 type="text"
-                placeholder="Bonus In Percent"
+                placeholder="Bonus"
                 value={bonus}
                 className="text-primary"
                 id="transferInitiationCurrentPercent"
@@ -893,7 +893,7 @@ const RegularTransfer = () => {
               ></Form.Control>
             </Col>
             <Col md={2} className="py-0">
-              Relocation Bonus (%)
+              Relocation Bonus
             </Col>
             <Col md={4}>
               <Form.Control

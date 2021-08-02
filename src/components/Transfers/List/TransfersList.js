@@ -170,6 +170,12 @@ const TransferPage = () => {
             effDate: item.promotedJoiningDate,
             dateOfReturn: item.promotedDateOfReturn,
             termOfProject: item.promotedTermOfProject,
+            contractStatus:
+              item.contractStatus !== "" &&
+              item.contractStatus !== null &&
+              item.contractStatus !== undefined
+                ? item.contractStatus
+                : "NA",
             status:
               item.status === 0 ? "Request Sent To Admin" : item.statusDesc,
             view: {
