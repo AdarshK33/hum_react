@@ -564,13 +564,14 @@ const RegularTransferAcceptance = () => {
                               {costCentreLocationData !== null &&
                                 costCentreLocationData !== undefined &&
                                 Object.keys(costCentreLocationData).length !==
-                                  0 && (
-                                  <option
-                                    value={costCentreLocationData.locationId}
-                                  >
-                                    {costCentreLocationData.locationName}
-                                  </option>
-                                )}
+                                  0 &&
+                                costCentreLocationData.map((item) => {
+                                  return (
+                                    <option value={item.stateId}>
+                                      {item.stateName}
+                                    </option>
+                                  );
+                                })}
                             </Form.Control>
                             {locationErrMsg !== "" && (
                               <span className="text-danger">
