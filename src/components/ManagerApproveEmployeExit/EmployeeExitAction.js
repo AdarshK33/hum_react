@@ -61,18 +61,24 @@ const EmployeeExitAction = () => {
     remarks: "",
   });
   const {
-    EmployeeSeparationListView,
-    EmployeeSeparationList,
-    ViewEmployeeDataById,
+    loader,
     employeeData,
     ModeOfSeparationData,
-    terminationLetterData,
-    UpdateEmplyoeeExist,
+    ViewEmployeeProfile,
+    employeeProfileData,
     employeeId,
-    loader,
-    updateResponse,
+    ViewEmployeeDataById,
+    CreateEmplyoeeExist,
+    makeEmployeeDataNull,
     fetchRelievingLetterData,
     relivingLetterData,
+    terminationLetterData,
+    UpdateEmplyoeeExist,
+    fetchTerminationLetterData,
+    terminationConfirmation,
+    resignationConfirmation,
+    TerminationFromDesciplinary,
+    DisciplinaryTermination,
   } = useContext(EmployeeSeparationContext);
   useEffect(() => {
     ViewEmployeeDataById(employeeId);
@@ -319,9 +325,18 @@ const EmployeeExitAction = () => {
     }
   };
   const relivingLetterClick = (e) => {
+    console.log(e.target.value,"999")
     e.preventDefault();
-    fetchRelievingLetterData(employeeData.employeeId);
-    handleShow();
+    if(e.target.value == '1' || e.target.value == 'Resignation'){
+      fetchRelievingLetterData(employeeData.employeeId);
+      handleShow();
+      console.log("resignation")
+    }else if(e.target.value == '2' || e.target.value == 'Termination'){
+        fetchTerminationLetterData(employeeData.employeeId)
+        handleShow();
+        console.log("termination")
+
+    }
     // setPreviewGeneratedLetter(true);
   };
 
@@ -1165,6 +1180,7 @@ console.log(state)
                       (employeeData.status === 2 || showPreview === true) ? (
                         <button
                           // disabled={!submitted}
+                          value={modeOfSeparation}
                           className={"LettersButtons"}
                           onClick={relivingLetterClick}
                         >
