@@ -120,6 +120,7 @@ const TransferPage = () => {
             action: {
               edit: {
                 active:
+                  // true,
                   item.promotedManagerId === user.employeeId &&
                   item.status === 0
                     ? true

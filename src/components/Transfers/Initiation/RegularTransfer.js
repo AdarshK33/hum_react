@@ -119,8 +119,18 @@ const RegularTransfer = () => {
   }, [newDept]);
 
   useEffect(() => {
-    getCostCentreDetails();
-  }, []);
+    if (
+      initiationEmpData !== null &&
+      initiationEmpData !== undefined &&
+      Object.keys(initiationEmpData).length !== 0 &&
+      newDeptName !== "" &&
+      newDeptName !== undefined &&
+      newDeptName !== null
+    ) {
+      getCostCentreDetails(initiationEmpData.currentCompany, newDeptName);
+    }
+  }, [initiationEmpData, newDeptName]);
+  console.log("costCentreData", costCentreData);
 
   useEffect(() => {
     if (newCostCentre !== "") {
@@ -590,6 +600,55 @@ const RegularTransfer = () => {
           <Form.Group
             as={Row}
             className="mb-3"
+            controlId="transferInitiationDept"
+          >
+            <Form.Label column md={2}>
+              Department
+            </Form.Label>
+            <Col md={4} className="text-primary">
+              {initiationEmpData.currentDepartment}
+            </Col>
+            <Col md={2}>
+              <div className="boxField input">
+                <input
+                  className="largerCheckbox"
+                  type="checkbox"
+                  id="no-dept-change"
+                  checked={depNoChange}
+                  onChange={noChangeDeptHandler}
+                />
+              </div>
+            </Col>
+            <Col md={4}>
+              <Form.Control
+                as="select"
+                className="text-primary"
+                aria-label="transferInitiationDept"
+                value={newDept}
+                placeholder="Select Department"
+                disabled={depNoChange}
+                onChange={departmentChangeHandler}
+              >
+                <option>Select Department</option>
+                {deptDetails !== null &&
+                  deptDetails !== undefined &&
+                  deptDetails.length > 0 &&
+                  deptDetails.map((item) => {
+                    return (
+                      <option key={`dept_${item.deptId}`} value={item.deptId}>
+                        {item.departmentName}
+                      </option>
+                    );
+                  })}
+              </Form.Control>
+              {deptErrMsg !== "" && (
+                <span className="text-danger">{deptErrMsg}</span>
+              )}
+            </Col>
+          </Form.Group>
+          <Form.Group
+            as={Row}
+            className="mb-3"
             controlId="transferInitiationCostCentre"
           >
             <Form.Label column md={2}>
@@ -689,55 +748,7 @@ const RegularTransfer = () => {
               )}
             </Col>
           </Form.Group>
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="transferInitiationDept"
-          >
-            <Form.Label column md={2}>
-              Department
-            </Form.Label>
-            <Col md={4} className="text-primary">
-              {initiationEmpData.currentDepartment}
-            </Col>
-            <Col md={2}>
-              <div className="boxField input">
-                <input
-                  className="largerCheckbox"
-                  type="checkbox"
-                  id="no-dept-change"
-                  checked={depNoChange}
-                  onChange={noChangeDeptHandler}
-                />
-              </div>
-            </Col>
-            <Col md={4}>
-              <Form.Control
-                as="select"
-                className="text-primary"
-                aria-label="transferInitiationDept"
-                value={newDept}
-                placeholder="Select Department"
-                disabled={depNoChange}
-                onChange={departmentChangeHandler}
-              >
-                <option>Select Department</option>
-                {deptDetails !== null &&
-                  deptDetails !== undefined &&
-                  deptDetails.length > 0 &&
-                  deptDetails.map((item) => {
-                    return (
-                      <option key={`dept_${item.deptId}`} value={item.deptId}>
-                        {item.departmentName}
-                      </option>
-                    );
-                  })}
-              </Form.Control>
-              {deptErrMsg !== "" && (
-                <span className="text-danger">{deptErrMsg}</span>
-              )}
-            </Col>
-          </Form.Group>
+
           <Form.Group
             as={Row}
             className="mb-3"

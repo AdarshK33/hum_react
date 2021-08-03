@@ -25,6 +25,15 @@ const RegularTransferView = ({ transferData }) => {
         </Col>
       </Row>
       <Row className="mb-4">
+        <Col md={2}>Department</Col>
+        <Col md={3} className="text-primary">
+          {transferData.currentDepartment}
+        </Col>
+        <Col md={{ span: 3, offset: 2 }} className="text-primary">
+          {transferData.promotedDepartment}
+        </Col>
+      </Row>
+      <Row className="mb-4">
         <Col md={2}>Cost Centre</Col>
         <Col md={3} className="text-primary">
           {transferData.currentCostCentre}
@@ -42,15 +51,7 @@ const RegularTransferView = ({ transferData }) => {
           {transferData.promotedManagerName}
         </Col>
       </Row>
-      <Row className="mb-4">
-        <Col md={2}>Department</Col>
-        <Col md={3} className="text-primary">
-          {transferData.currentDepartment}
-        </Col>
-        <Col md={{ span: 3, offset: 2 }} className="text-primary">
-          {transferData.promotedDepartment}
-        </Col>
-      </Row>
+
       <Row className="mb-4">
         <Col md={2}>Position</Col>
         <Col md={3} className="text-primary">
