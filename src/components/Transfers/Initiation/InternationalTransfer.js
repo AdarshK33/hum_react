@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useMemo } from "react";
 import { Row, Col, Form, Button, Container, Modal } from "react-bootstrap";
 import { Search } from "react-feather";
 import DatePicker from "react-datepicker";
@@ -221,6 +221,22 @@ const InternationalTransfer = () => {
     setReturnDate(date);
     setReturnDateErrMsg("");
   };
+
+  const calProjectTerm = useMemo(() => {
+    const eDate = moment(effectiveDate);
+    const rDate = moment(returnDate);
+    const years = rDate.diff(eDate, "year");
+    eDate.add(years, "years");
+    const months = rDate.diff(eDate, "months");
+    eDate.add(months, "months");
+    const days = rDate.diff(eDate, "days");
+    const projectDuration = `${
+      years > 0 ? (years > 1 ? years + " Years" : years + " Year") : ""
+    } ${
+      months > 0 ? (months > 1 ? months + " months" : months + " month") : ""
+    } ${days > 0 ? (days > 1 ? days + " days" : days + " day") : ""}`;
+    return projectDuration.trim() === "" ? "0 days" : projectDuration.trim();
+  }, [effectiveDate, returnDate]);
 
   const changeCostCentreHandler = (e) => {
     setNewCostCentre(e.target.value);

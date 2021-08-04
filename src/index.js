@@ -32,6 +32,7 @@ import { DocsVerificationProvider } from "./context/DocverificationState";
 import { EmploeeSeparationProvider } from "./context/EmployeeSeparationState";
 import { BonusProvider } from "./context/BonusState";
 import { TransferProvider } from "./context/TransferState";
+import { ModuleReportProvider } from "./context/ModuleReportState";
 import {
   SeparationContext,
   SeparationProvider,
@@ -78,17 +79,19 @@ function Root() {
                                                     <PromotionProvider>
                                                       <BonusProvider>
                                                         <TransferProvider>
-                                                          <BrowserRouter
-                                                            basename={"/"}
-                                                          >
-                                                            <ScrollContext>
-                                                              <WithAxios>
-                                                                <CandidateWithAxios>
-                                                                  <RoutePath />
-                                                                </CandidateWithAxios>
-                                                              </WithAxios>
-                                                            </ScrollContext>
-                                                          </BrowserRouter>
+                                                          <ModuleReportProvider>
+                                                            <BrowserRouter
+                                                              basename={"/"}
+                                                            >
+                                                              <ScrollContext>
+                                                                <WithAxios>
+                                                                  <CandidateWithAxios>
+                                                                    <RoutePath />
+                                                                  </CandidateWithAxios>
+                                                                </WithAxios>
+                                                              </ScrollContext>
+                                                            </BrowserRouter>
+                                                          </ModuleReportProvider>
                                                         </TransferProvider>
                                                       </BonusProvider>
                                                     </PromotionProvider>
