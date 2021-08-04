@@ -39,6 +39,8 @@ const EntityTransfer = () => {
   const [searchInput, setSearchInput] = useState("");
   const [empErrMsg, setEmpErrMsg] = useState("");
   const [newDept, setNewDept] = useState("");
+  const [newDeptName, setNewDeptName] = useState("");
+  const [deptErrMsg, setDeptErrMsg] = useState("");
   const [effectiveDate, setEffectiveDate] = useState(new Date());
   const [effectiveDateErrMsg, setEffectiveDateErrMsg] = useState("");
   const [effectiveJoinigDate, setEffectiveJoinigDate] = useState(new Date());
@@ -77,8 +79,18 @@ const EntityTransfer = () => {
   }, [newDept]);
 
   useEffect(() => {
-    getCostCentreDetails();
-  }, []);
+    if (
+      newEntity !== null &&
+      newEntity !== "" &&
+      newEntity !== undefined &&
+      newDeptName !== null &&
+      newDeptName !== "" &&
+      newDeptName !== undefined
+    ) {
+      getCostCentreDetails(newEntity, newDeptName);
+    }
+  }, [newEntity, newDeptName]);
+  console.log("costCentreData", costCentreData);
 
   useEffect(() => {
     if (newCostCentre !== "") {
@@ -205,6 +217,12 @@ const EntityTransfer = () => {
   const handleLetterSubmitModalClose = () => {
     setShowLetterSubmitModal(false);
   };
+  const departmentChangeHandler = (e) => {
+    setNewDept(e.target.value);
+    setNewDeptName(e.target.options[e.target.selectedIndex].text);
+    setDeptErrMsg("");
+  };
+
   const changeCostCentreHandler = (e) => {
     setNewCostCentre(e.target.value);
     setCostCentreErrMsg("");
@@ -314,7 +332,7 @@ const EntityTransfer = () => {
         promotedCostCentre: newCostCentre,
         promotedCountry: initiationEmpData.promotedCountry,
         promotedDateOfReturn: initiationEmpData.promotedDateOfReturn,
-        promotedDepartment: initiationEmpData.promotedDepartment,
+        promotedDepartment: newDeptName,
         promotedDesignation: initiationEmpData.promotedDesignation,
         promotedEmployeeId: initiationEmpData.promotedEmployeeId,
         promotedFixedGross: initiationEmpData.promotedFixedGross,
@@ -475,6 +493,107 @@ const EntityTransfer = () => {
               <Form.Group
                 as={Row}
                 className="mb-3"
+                controlId="transferInitiationPosition"
+              >
+                <Col md={2}>
+                  <Form.Label>Entity:</Form.Label>
+                </Col>
+                <Col md={4} className="text-primary">
+                  {initiationEmpData.currentCompany}
+                </Col>
+                <Col md={2}>
+                  <Form.Label>Entity:</Form.Label>
+                </Col>
+                <Col md={4}>
+                  <Form.Control
+                    as="select"
+                    className="text-primary"
+                    aria-label="transferInitiationPosition"
+                    value={newEntity}
+                    placeholder="Select Position"
+                    onChange={changeEntityHandler}
+                  >
+                    <option value="">Select New Entity</option>
+
+                    {initiationEmpData !== null &&
+                    initiationEmpData !== undefined &&
+                    Object.keys(initiationEmpData).length !== 0 &&
+                    (initiationEmpData.currentCompany.charAt(0) === "D" ||
+                      initiationEmpData.currentCompany.charAt(0) === "d") ? (
+                      ""
+                    ) : (
+                      <option value="DSI">DSI</option>
+                    )}
+                    {initiationEmpData !== null &&
+                    initiationEmpData !== undefined &&
+                    Object.keys(initiationEmpData).length !== 0 &&
+                    (initiationEmpData.currentCompany.charAt(0) === "I" ||
+                      initiationEmpData.currentCompany.charAt(0) === "i") ? (
+                      ""
+                    ) : (
+                      <option value="INDECA">INDECA</option>
+                    )}
+                    {initiationEmpData !== null &&
+                    initiationEmpData !== undefined &&
+                    Object.keys(initiationEmpData).length !== 0 &&
+                    (initiationEmpData.currentCompany.charAt(0) === "P" ||
+                      initiationEmpData.currentCompany.charAt(0) === "p") ? (
+                      ""
+                    ) : (
+                      <option value="PRODIN">PRODIN</option>
+                    )}
+                  </Form.Control>
+                  {newEntityErrMsg !== "" && (
+                    <span className="text-danger">{newEntityErrMsg}</span>
+                  )}
+                </Col>
+              </Form.Group>
+              <Form.Group
+                as={Row}
+                className="mb-3"
+                controlId="transferInitiationDept"
+              >
+                <Col md={2}>
+                  <Form.Label>Department:</Form.Label>
+                </Col>
+                <Col md={4} className="text-primary">
+                  {initiationEmpData.currentCompany}
+                </Col>
+                <Col md={2}>
+                  <Form.Label>Department:</Form.Label>
+                </Col>
+                <Col md={4}>
+                  <Form.Control
+                    as="select"
+                    className="text-primary"
+                    aria-label="transferInitiationDept"
+                    value={newDept}
+                    placeholder="Select Department"
+                    onChange={departmentChangeHandler}
+                  >
+                    <option>Select Department</option>
+                    {deptDetails !== null &&
+                      deptDetails !== undefined &&
+                      deptDetails.length > 0 &&
+                      deptDetails.map((item) => {
+                        return (
+                          <option
+                            key={`dept_${item.deptId}`}
+                            value={item.deptId}
+                          >
+                            {item.departmentName}
+                          </option>
+                        );
+                      })}
+                  </Form.Control>
+                  {deptErrMsg !== "" && (
+                    <span className="text-danger">{deptErrMsg}</span>
+                  )}
+                </Col>
+              </Form.Group>
+              <Form.Group
+                as={Row}
+                className="mb-3"
                 controlId="transferInitiationDept"
               >
                 <Col md={2}>
@@ -562,64 +681,7 @@ const EntityTransfer = () => {
                   )}
                 </Col>
               </Form.Group>
-              <Form.Group
-                as={Row}
-                className="mb-3"
-                controlId="transferInitiationPosition"
-              >
-                <Col md={2}>
-                  <Form.Label>Entity:</Form.Label>
-                </Col>
-                <Col md={4} className="text-primary">
-                  {initiationEmpData.currentCompany}
-                </Col>
-                <Col md={2}>
-                  <Form.Label>Entity:</Form.Label>
-                </Col>
-                <Col md={4}>
-                  <Form.Control
-                    as="select"
-                    className="text-primary"
-                    aria-label="transferInitiationPosition"
-                    value={newEntity}
-                    placeholder="Select Position"
-                    onChange={changeEntityHandler}
-                  >
-                    <option value="">Select New Entity</option>
 
-                    {initiationEmpData !== null &&
-                    initiationEmpData !== undefined &&
-                    Object.keys(initiationEmpData).length !== 0 &&
-                    (initiationEmpData.currentCompany.charAt(0) === "D" ||
-                      initiationEmpData.currentCompany.charAt(0) === "d") ? (
-                      ""
-                    ) : (
-                      <option value="DSI">DSI</option>
-                    )}
-                    {initiationEmpData !== null &&
-                    initiationEmpData !== undefined &&
-                    Object.keys(initiationEmpData).length !== 0 &&
-                    (initiationEmpData.currentCompany.charAt(0) === "I" ||
-                      initiationEmpData.currentCompany.charAt(0) === "i") ? (
-                      ""
-                    ) : (
-                      <option value="INDECA">INDECA</option>
-                    )}
-                    {initiationEmpData !== null &&
-                    initiationEmpData !== undefined &&
-                    Object.keys(initiationEmpData).length !== 0 &&
-                    (initiationEmpData.currentCompany.charAt(0) === "P" ||
-                      initiationEmpData.currentCompany.charAt(0) === "p") ? (
-                      ""
-                    ) : (
-                      <option value="PRODIN">PRODIN</option>
-                    )}
-                  </Form.Control>
-                  {newEntityErrMsg !== "" && (
-                    <span className="text-danger">{newEntityErrMsg}</span>
-                  )}
-                </Col>
-              </Form.Group>
               <Form.Group
                 as={Row}
                 className="mb-3"

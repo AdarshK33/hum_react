@@ -138,8 +138,17 @@ const EntityTransferAcceptance = () => {
   }, [newDept]);
 
   useEffect(() => {
-    getCostCentreDetails();
-  }, []);
+    if (
+      transferData !== null &&
+      transferData !== undefined &&
+      Object.keys(transferData).length !== 0 &&
+      newDeptName !== "" &&
+      newDeptName !== undefined &&
+      newDeptName !== null
+    ) {
+      getCostCentreDetails(transferData.promotedCompany, newDeptName);
+    }
+  }, [initiationEmpData, newDeptName]);
 
   useEffect(() => {
     if (newCostCentre !== "") {
@@ -781,40 +790,50 @@ const EntityTransferAcceptance = () => {
                             {transferData.promotedCompany}
                           </Col>
                         </Form.Group>
+
                         <Form.Group
                           as={Row}
                           className="mb-3"
                           controlId="transferInitiationCostCentre"
                         >
                           <Col md={2}>
-                            <Form.Label> Fixed Gross:</Form.Label>
+                            <Form.Label> Department:</Form.Label>
                           </Col>
                           <Col md={4} className="text-primary">
-                            {transferData.currentFixedGross}
+                            {transferData.currentDepartment}
                           </Col>
                           <Col md={2}>
-                            <Form.Label> Fixed Gross:</Form.Label>
+                            <Form.Label> Department:</Form.Label>
                           </Col>
-                          {transferData.promotedFixedGross ? (
-                            <Col md={3} className="text-primary">
-                              {transferData.promotedFixedGross}
-                            </Col>
-                          ) : (
-                            <Col md={4} className="text-primary">
-                              <Form.Control
-                                type="text"
-                                placeholder="New Fixed Gross"
-                                value={newGross}
-                                className="text-primary"
-                                onChange={changeGrossHandler}
-                              ></Form.Control>
-                              {grossErrMsg !== "" && (
-                                <span className="text-danger">
-                                  {grossErrMsg}
-                                </span>
-                              )}
-                            </Col>
-                          )}
+
+                          <Col md={4}>
+                            <Form.Control
+                              as="select"
+                              className="text-primary"
+                              aria-label="department"
+                              value={newDept}
+                              placeholder="Select Location"
+                              onChange={departmentChangeHandler}
+                            >
+                              <option>Select Department</option>
+                              {deptDetails !== null &&
+                                deptDetails !== undefined &&
+                                deptDetails.length > 0 &&
+                                deptDetails.map((item) => {
+                                  return (
+                                    <option
+                                      key={`dept_${item.deptId}`}
+                                      value={item.deptId}
+                                    >
+                                      {item.departmentName}
+                                    </option>
+                                  );
+                                })}
+                            </Form.Control>
+                            {deptErrMsg !== "" && (
+                              <span className="text-danger">{deptErrMsg}</span>
+                            )}
+                          </Col>
                         </Form.Group>
 
                         <Form.Group
@@ -918,57 +937,7 @@ const EntityTransferAcceptance = () => {
                             </Col>
                           )}
                         </Form.Group>
-                        <Form.Group
-                          as={Row}
-                          className="mb-3"
-                          controlId="transferInitiationCostCentre"
-                        >
-                          <Col md={2}>
-                            <Form.Label> Department:</Form.Label>
-                          </Col>
-                          <Col md={4} className="text-primary">
-                            {transferData.currentDepartment}
-                          </Col>
-                          <Col md={2}>
-                            <Form.Label> Department:</Form.Label>
-                          </Col>
-                          {transferData.promotedDepartment ? (
-                            <Col md={4} className="text-primary">
-                              {transferData.promotedDepartment}
-                            </Col>
-                          ) : (
-                            <Col md={4}>
-                              <Form.Control
-                                as="select"
-                                className="text-primary"
-                                aria-label="department"
-                                value={newDept}
-                                placeholder="Select Location"
-                                onChange={departmentChangeHandler}
-                              >
-                                <option>Select Department</option>
-                                {deptDetails !== null &&
-                                  deptDetails !== undefined &&
-                                  deptDetails.length > 0 &&
-                                  deptDetails.map((item) => {
-                                    return (
-                                      <option
-                                        key={`dept_${item.deptId}`}
-                                        value={item.deptId}
-                                      >
-                                        {item.departmentName}
-                                      </option>
-                                    );
-                                  })}
-                              </Form.Control>
-                              {deptErrMsg !== "" && (
-                                <span className="text-danger">
-                                  {deptErrMsg}
-                                </span>
-                              )}
-                            </Col>
-                          )}
-                        </Form.Group>
+
                         <Form.Group
                           as={Row}
                           className="mb-3"
@@ -1015,6 +984,41 @@ const EntityTransferAcceptance = () => {
                               {positionErrMsg !== "" && (
                                 <span className="text-danger">
                                   {positionErrMsg}
+                                </span>
+                              )}
+                            </Col>
+                          )}
+                        </Form.Group>
+                        <Form.Group
+                          as={Row}
+                          className="mb-3"
+                          controlId="transferInitiationCostCentre"
+                        >
+                          <Col md={2}>
+                            <Form.Label> Fixed Gross:</Form.Label>
+                          </Col>
+                          <Col md={4} className="text-primary">
+                            {transferData.currentFixedGross}
+                          </Col>
+                          <Col md={2}>
+                            <Form.Label> Fixed Gross:</Form.Label>
+                          </Col>
+                          {transferData.promotedFixedGross ? (
+                            <Col md={3} className="text-primary">
+                              {transferData.promotedFixedGross}
+                            </Col>
+                          ) : (
+                            <Col md={4} className="text-primary">
+                              <Form.Control
+                                type="text"
+                                placeholder="New Fixed Gross"
+                                value={newGross}
+                                className="text-primary"
+                                onChange={changeGrossHandler}
+                              ></Form.Control>
+                              {grossErrMsg !== "" && (
+                                <span className="text-danger">
+                                  {grossErrMsg}
                                 </span>
                               )}
                             </Col>
